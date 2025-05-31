@@ -94,6 +94,7 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/Asylum.cs
 
 //cs_include Scripts/Story/Banished.cs
+//cs_include Scripts/Story/BaseCamp.cs
 //cs_include Scripts/Story/BattleUnder.cs
 //cs_include Scripts/Story/BeleensDream.cs
 //cs_include Scripts/Story/BloodMoon.cs
@@ -323,6 +324,7 @@ public class AllStories
     public Asylum Asylum = new();
 
     public Banished Banished = new();
+    public BaseCamp BaseCamp = new();
     public BattleUnder BattleUnder = new();
     public BeleensDream BeleensDream = new();
     public BloodMoon BloodMoon = new();
@@ -684,6 +686,9 @@ public class AllStories
 
         Banished.doall();
         Core.Logger($"Story: Banished - Complete");
+
+        BaseCamp.StoryLine();
+        Core.Logger($"Story: Base Camp - Complete");
 
         BattleUnder.BattleUnderAll();
         Core.Logger($"Story: BattleUnder - Complete");
