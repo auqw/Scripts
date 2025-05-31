@@ -26029,6 +26029,138 @@ case ""Example Item"":
 
     "
 },
+{
+    "Golden Shadow Breaker",
+    @"
+case ""Golden Shadow Breaker"":
+                    Core.FarmingLogger(""Golden Shadow Breaker"", quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(857);
+                    Core.HuntMonster(""citadel"", ""Grand Inquisitor"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Banana",
+    @"
+case ""Banana"":
+                    Core.FarmingLogger(""Banana"", quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(52924);
+                    Core.HuntMonster(""arcangrove"", ""Gorillaphant"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Ingredients?",
+    @"
+case ""Ingredients?"":
+                    Core.FarmingLogger(""Ingredients?"", quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(52925);
+                    Core.HuntMonster(""doomvault"", ""Binky"", req.Name, quant, req.Temp, false, true);
+                    break;
+    "
+},
+{
+    "Binky Companion",
+    @"
+case ""Binky Companion"":
+                    Core.FarmingLogger(""Ingredients?"", quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(52925);
+                    Core.HuntMonster(""doomvault"", ""Binky"", req.Name, quant, req.Temp, false, true);
+                    break;
+    "
+},
+{
+    "Iron Draconian Sword",
+    @"
+case ""Iron Draconian Sword"":
+                    Core.FarmingLogger(""Iron Draconian Sword"", quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(571);
+                    Core.HuntMonster(""lair"", ""Purple Draconian"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Water Draconian Sword",
+    @"
+case ""Water Draconian Sword"":
+                    Core.FarmingLogger(""Water Draconian Sword"", quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(568);
+                    Core.HuntMonster(""lair"", ""Water Draconian"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Venom Draconian Sword",
+    @"
+case ""Venom Draconian Sword"":
+                    Core.FarmingLogger(""Venom Draconian Sword"", quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(570);
+                    Core.HuntMonster(""lair"", ""Venom Draconian"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Spear of the Deep One",
+    @"
+case ""Spear of the Deep One"":
+                    Core.FarmingLogger(""Spear of the Deep One"", quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(79498);
+                    Core.HuntMonster(""deepchaos"", ""Kathool"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "1st Lord Of Chaos Helm",
+    @"
+case ""1st Lord Of Chaos Helm"":
+                    Core.FarmingLogger(""1st Lord Of Chaos Helm"", quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(1173);
+                    Core.KillEscherion(req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Chaos King Crown",
+    @"
+case ""Chaos King Crown"":
+                    Core.FarmingLogger(""Chaos King Crown"", quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(20671);
+                    Core.HuntMonster(""swordhavenfalls"", ""Chaos Lord Alteon"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Chaos Lord Alteon",
+    @"
+case ""Chaos Lord Alteon"":
+                    Core.FarmingLogger(""Chaos King Crown"", quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(20671);
+                    Core.HuntMonster(""swordhavenfalls"", ""Chaos Lord Alteon"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Tainted Soul",
+    @"
+case ""Tainted Soul"":
+                    Core.FarmingLogger(""Tainted Soul"", quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(4960);
+                    Core.HuntMonster(""evilmarsh"", ""Tainted Soul"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic)
