@@ -559,7 +559,7 @@ public class CoreAOR
 
         // Caretaker's Shadow 9735 
         Story.MapItemQuest(9735, "castleeblana", 13204);
-        Story.KillQuest(9735, "castleeblana", new[] { "Skye Warrior", "Skye Executor" });
+        Story.KillQuest(9735, "castleeblana", new[] { "Skye Warrior", "Skye Executor", "Skye Executor" });
 
         // Harbinger's Tears 9736 
         Story.KillQuest(9736, "castleeblana", "Bananach Raven");
@@ -593,8 +593,8 @@ public class CoreAOR
         Story.PreLoad(this);
 
         // Wicker Magic (9755)
-        Story.KillQuest(9755, "loughshine", "Skye Cailleach");
         Story.MapItemQuest(9755, "loughshine", 13273);
+        Story.KillQuest(9755, "loughshine", "Skye Cailleach");
 
         // Maigh Eo (9756)
         Story.KillQuest(9756, "loughshine", "Scorched Elder Yew");

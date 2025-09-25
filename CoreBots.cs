@@ -7204,7 +7204,10 @@ public class CoreBots
             blackListedCells.Add("Eggs");
 
         // Jump to a viable cell (or retry)
-        IEnumerable<string> viableCells = Bot.Map.Cells?.Except(BlackListedJumptoCells.Concat(blackListedCells)) ?? Enumerable.Empty<string>();
+        IEnumerable<string> viableCells = Bot.Map.Cells?
+        .Except(BlackListedJumptoCells
+        .Concat(blackListedCells), StringComparer.OrdinalIgnoreCase) ?? Enumerable.Empty<string>();
+
         (string, string) cellPad = viableCells.Any()
             ? (viableCells.First(), Bot.Map.Name == "battleon" ? "Spawn" : "Left")
             : (Bot.Player.Cell, Bot.Player.Pad);
@@ -7734,28 +7737,6 @@ public class CoreBots
                 Bot.Wait.ForCellChange(cell ?? "Enter");
                 break;
             #endregion baconcat.. is annoying
-
-            #region Maps that cant be private and you must do yourself. (thanks AE)
-                // Skua.Core.Models.DialogResult ForcePublic = Bot.ShowMessageBox(
-                //                     $"Do you want to join the Following map: \"{map}\"\n" +
-                //                     "using a public room?\n" +
-                //                     "(Bot will stop otherwise)", "PublicRoom Only",
-                //                     "Yes", "No"
-                //                 );
-
-                // if (ForcePublic.Value == 1)
-                //     Logger("Unfortunitaly AE forgot to make these maps privateable only\n" +
-                //     "to continue \"yes\" must be selcted, otherwise for `allstories` just comment it out with 2 /'s", stopBot: true);
-                // else
-                // {
-                //     Logger("You've Chosen to bot publicly... good luck in this *public only* map.");
-                //     JumpWait();
-                //     if (Bot.Map.Name != null && Bot.Map.Name != map)
-                //         Bot.Map.Join(map);
-                //     Bot.Wait.ForMapLoad(map);
-                // }
-                // break;
-            #endregion
 
             #region Bypass Banned
             // This doesn't mean that you cant do a bypass inside the boat itself, it just can't be in Join because it fucks up CanBuy
@@ -8601,70 +8582,78 @@ public class CoreBots
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
 
+        // If SoloClass is already set and no additional class specified, do nothing
         if (!string.IsNullOrEmpty(SoloClass) && string.IsNullOrEmpty(additionalClass))
             return;
 
         string[] classesToCheck = new[] { "TimeKeeper", "TimeKiller", "Verus DoomKnight", "Void Highlord", "Void HighLord (IoDA)", "ArchPaladin" };
+
+        // If additionalClass is specified, equip it only if not already equipped
         if (!string.IsNullOrEmpty(additionalClass) && CheckInventory(additionalClass))
         {
-            Unbank(additionalClass);
-            Equip(additionalClass);
-            Bot.Wait.ForItemEquip(additionalClass);
-            Bot.Wait.ForActionCooldown(GameActions.EquipItem);
-            Logger($"Using {additionalClass}");
-        }
-        else
-        {
-            foreach (string Class in classesToCheck)
+            if (Bot.Player.CurrentClass?.Name != additionalClass)
             {
-                if (!CheckInventory(Class, toInv: Class != "TimeKeeper" || SoloClass == Class))
-                    continue;
-
-
-                Unbank(Class);
-                Equip(Class);
-
-                switch (Class)
-                {
-                    case "TimeKeeper":
-                        if (SoloClass != Class)
-                            continue;
-                        else
-                            Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Base);
-                        break;
-
-                    case "ArchPaladin":
-                        Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Base);
-                        break;
-
-                    case "Void Highlord":
-                    case "Void HighLord (IoDA)":
-                    case "Verus DoomKnight":
-                        Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Def);
-                        break;
-
-                    case "Yami no Ronin":
-                        Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Solo);
-                        break;
-
-                    case "Chaos Avenger":
-                        Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Base);
-                        break;
-
-                    default:
-                        Unbank(SoloClass);
-                        Equip(SoloClass);
-                        break;
-                }
-
+                Unbank(additionalClass);
+                Equip(additionalClass);
+                Bot.Wait.ForItemEquip(additionalClass);
                 Bot.Wait.ForActionCooldown(GameActions.EquipItem);
-                Bot.Wait.ForItemEquip(CheckInventory(Class) ? Class : SoloClass);
-                Logger($"Using {(CheckInventory(Class) ? Class : SoloClass)}");
+                Logger($"Using {additionalClass}");
+            }
+            return;
+        }
+
+        // Otherwise, loop through the priority list
+        foreach (string Class in classesToCheck)
+        {
+            if (!CheckInventory(Class, toInv: Class != "TimeKeeper" || SoloClass == Class))
+                continue;
+
+            if (Bot.Player.CurrentClass?.Name == Class)
+            {
+                Logger($"Already using {Class}");
                 break;
             }
 
-        }
+            Unbank(Class);
+            Equip(Class);
 
+            switch (Class)
+            {
+                case "TimeKeeper":
+                    if (SoloClass != Class)
+                        continue;
+                    Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Base);
+                    break;
+
+                case "ArchPaladin":
+                    Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Base);
+                    break;
+
+                case "Void Highlord":
+                case "Void HighLord (IoDA)":
+                case "Verus DoomKnight":
+                    Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Def);
+                    break;
+
+                case "Yami no Ronin":
+                    Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Solo);
+                    break;
+
+                case "Chaos Avenger":
+                    Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Base);
+                    break;
+
+                default:
+                    Unbank(SoloClass);
+                    Equip(SoloClass);
+                    break;
+            }
+
+            Bot.Wait.ForActionCooldown(GameActions.EquipItem);
+            Bot.Wait.ForItemEquip(CheckInventory(Class) ? Class : SoloClass);
+            Logger($"Using {(CheckInventory(Class) ? Class : SoloClass)}");
+            break;
+        }
     }
 
     /// <summary>

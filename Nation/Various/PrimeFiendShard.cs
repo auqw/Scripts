@@ -57,27 +57,46 @@ public class PrimeFiendShard
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-    private static Originul_Story Originul { get => _Originul ??= new Originul_Story(); set => _Originul = value; }    private static Originul_Story _Originul;
-    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }    private static CoreVHL _VHL;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static VoidRefugeMerge VoidRefugeMerge { get => _VoidRefugeMerge ??= new VoidRefugeMerge(); set => _VoidRefugeMerge = value; }    private static VoidRefugeMerge _VoidRefugeMerge;
-    private static TempleDelveMerge TempleDelveMerge { get => _TempleDelveMerge ??= new TempleDelveMerge(); set => _TempleDelveMerge = value; }    private static TempleDelveMerge _TempleDelveMerge;
-    private static DirtlickersMerge DirtlickersMerge { get => _DirtlickersMerge ??= new DirtlickersMerge(); set => _DirtlickersMerge = value; }    private static DirtlickersMerge _DirtlickersMerge;
-    private static VoidPaladin VoidPaladin { get => _VoidPaladin ??= new VoidPaladin(); set => _VoidPaladin = value; }    private static VoidPaladin _VoidPaladin;
-    private static NulgathDiamondMerge NulgathDiamondMerge { get => _NulgathDiamondMerge ??= new NulgathDiamondMerge(); set => _NulgathDiamondMerge = value; }    private static NulgathDiamondMerge _NulgathDiamondMerge;
-    private static VoidSpartan VoidSpartan { get => _VoidSpartan ??= new VoidSpartan(); set => _VoidSpartan = value; }    private static VoidSpartan _VoidSpartan;
-    private static SwirlingTheAbyss SwirlingTheAbyss { get => _SwirlingTheAbyss ??= new SwirlingTheAbyss(); set => _SwirlingTheAbyss = value; }    private static SwirlingTheAbyss _SwirlingTheAbyss;
-    private static TradingandStuffSingle TradingandStuffSingle { get => _TradingandStuffSingle ??= new TradingandStuffSingle(); set => _TradingandStuffSingle = value; }    private static TradingandStuffSingle _TradingandStuffSingle;
-    private static VoidAvengerScythe VoidAvengerScythe { get => _VoidAvengerScythe ??= new VoidAvengerScythe(); set => _VoidAvengerScythe = value; }    private static VoidAvengerScythe _VoidAvengerScythe;
-    private static NulgathDemandsWork NulgathDemandsWork { get => _NulgathDemandsWork ??= new NulgathDemandsWork(); set => _NulgathDemandsWork = value; }    private static NulgathDemandsWork _NulgathDemandsWork;
-    private static ArchfiendDeathLord ArchfienddDeathLord { get => _ArchfienddDeathLord ??= new ArchfiendDeathLord(); set => _ArchfienddDeathLord = value; }    private static ArchfiendDeathLord _ArchfienddDeathLord;
-    private static WrathofNulgath WrathofNulgath { get => _WrathofNulgath ??= new WrathofNulgath(); set => _WrathofNulgath = value; }    private static WrathofNulgath _WrathofNulgath;
-    private static DilligasMerge DilligasMerge { get => _DilligasMerge ??= new DilligasMerge(); set => _DilligasMerge = value; }    private static DilligasMerge _DilligasMerge;
-    private static VoidChasmMerge VoidChasmMerge { get => _VoidChasmMerge ??= new VoidChasmMerge(); set => _VoidChasmMerge = value; }    private static VoidChasmMerge _VoidChasmMerge;
-    private static NationMerge NationMerge { get => _NationMerge ??= new NationMerge(); set => _NationMerge = value; }    private static NationMerge _NationMerge;
+    private static Originul_Story Originul { get => _Originul ??= new Originul_Story(); set => _Originul = value; }
+    private static Originul_Story _Originul;
+    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }
+    private static CoreVHL _VHL;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static VoidRefugeMerge VoidRefugeMerge { get => _VoidRefugeMerge ??= new VoidRefugeMerge(); set => _VoidRefugeMerge = value; }
+    private static VoidRefugeMerge _VoidRefugeMerge;
+    private static TempleDelveMerge TempleDelveMerge { get => _TempleDelveMerge ??= new TempleDelveMerge(); set => _TempleDelveMerge = value; }
+    private static TempleDelveMerge _TempleDelveMerge;
+    private static DirtlickersMerge DirtlickersMerge { get => _DirtlickersMerge ??= new DirtlickersMerge(); set => _DirtlickersMerge = value; }
+    private static DirtlickersMerge _DirtlickersMerge;
+    private static VoidPaladin VoidPaladin { get => _VoidPaladin ??= new VoidPaladin(); set => _VoidPaladin = value; }
+    private static VoidPaladin _VoidPaladin;
+    private static NulgathDiamondMerge NulgathDiamondMerge { get => _NulgathDiamondMerge ??= new NulgathDiamondMerge(); set => _NulgathDiamondMerge = value; }
+    private static NulgathDiamondMerge _NulgathDiamondMerge;
+    private static VoidSpartan VoidSpartan { get => _VoidSpartan ??= new VoidSpartan(); set => _VoidSpartan = value; }
+    private static VoidSpartan _VoidSpartan;
+    private static SwirlingTheAbyss SwirlingTheAbyss { get => _SwirlingTheAbyss ??= new SwirlingTheAbyss(); set => _SwirlingTheAbyss = value; }
+    private static SwirlingTheAbyss _SwirlingTheAbyss;
+    private static TradingandStuffSingle TradingandStuffSingle { get => _TradingandStuffSingle ??= new TradingandStuffSingle(); set => _TradingandStuffSingle = value; }
+    private static TradingandStuffSingle _TradingandStuffSingle;
+    private static VoidAvengerScythe VoidAvengerScythe { get => _VoidAvengerScythe ??= new VoidAvengerScythe(); set => _VoidAvengerScythe = value; }
+    private static VoidAvengerScythe _VoidAvengerScythe;
+    private static NulgathDemandsWork NulgathDemandsWork { get => _NulgathDemandsWork ??= new NulgathDemandsWork(); set => _NulgathDemandsWork = value; }
+    private static NulgathDemandsWork _NulgathDemandsWork;
+    private static ArchfiendDeathLord ArchfienddDeathLord { get => _ArchfienddDeathLord ??= new ArchfiendDeathLord(); set => _ArchfienddDeathLord = value; }
+    private static ArchfiendDeathLord _ArchfienddDeathLord;
+    private static WrathofNulgath WrathofNulgath { get => _WrathofNulgath ??= new WrathofNulgath(); set => _WrathofNulgath = value; }
+    private static WrathofNulgath _WrathofNulgath;
+    private static DilligasMerge DilligasMerge { get => _DilligasMerge ??= new DilligasMerge(); set => _DilligasMerge = value; }
+    private static DilligasMerge _DilligasMerge;
+    private static VoidChasmMerge VoidChasmMerge { get => _VoidChasmMerge ??= new VoidChasmMerge(); set => _VoidChasmMerge = value; }
+    private static VoidChasmMerge _VoidChasmMerge;
+    private static NationMerge NationMerge { get => _NationMerge ??= new NationMerge(); set => _NationMerge = value; }
+    private static NationMerge _NationMerge;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -108,7 +127,11 @@ public class PrimeFiendShard
 
         Core.Logger("If you're going to use insingias for the roents, please do so before starting the script, as it will stop otherwise if dont have them.");
 
+        // Required Class
         VHL.GetVHL();
+
+        // Check for 10 roents
+        VHL.VHLChallenge(10);
 
         // Prime Fiend Shard [required to accept]
         VoidChasmMerge.BuyAllMerge("Prime Fiend Shard");
@@ -221,9 +244,6 @@ public class PrimeFiendShard
         if (!Story.QuestProgression(9559))
         {
             Core.EnsureAccept(9559);
-
-            //10x roent
-            VHL.VHLChallenge(10);
 
             Nation.FarmUni13(13);
             Nation.FarmTaintedGem(750);

@@ -139,7 +139,7 @@ public class InfernalArena
             // Lord of the Scarred Barrens  9377
             Core.JumpWait();
             // Core.DodgeClass();
-            Core.BossClass(Core.CheckInventory("Chaos Avenger") ? "Chaos Avengeur" : Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
+            Core.BossClass(Core.CheckInventory("Chaos Avenger") ? "Chaos Avenger" : Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
             Core.Logger("Boss: [Na'al]");
             Core.Logger("this may take an hr or 2... or u may first try\n" +
             "it so good luck(a kill has been gotten with vhl\n" +

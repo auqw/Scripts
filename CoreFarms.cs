@@ -2685,16 +2685,15 @@ public class CoreFarms
         if (FactionRank("Death Pit Brawl") >= rank)
             return;
 
+        Core.Logger($"Farming \"DeathPitBrawlREP\" rank {rank}");
         Core.AddDrop("Death Pit Token");
         Core.EquipClass(ClassType.Solo);
         ToggleBoost(BoostType.Reputation);
         Core.ToggleAggro(false);
 
-        Core.Logger($"Farming rank {rank}");
-        Core.Logger("Checking if farm quests are unlocked--");
         if (Core.isCompletedBefore(5157))
         {
-            Core.Logger("Unlocking farm quets");
+            Core.Logger("Checking if farm quests are unlocked--");
             if (!Core.isCompletedBefore(5155))
             {
                 Core.EnsureAccept(5155);
@@ -2723,19 +2722,18 @@ public class CoreFarms
 
     void RunDeathPitBrawl(string? item = null, int quant = 1, int rank = 10, bool canSoloBoss = true)
     {
-        foreach (int QID in new[] { 5153, 5156, 5157, 5165 })
+        // Create and start timer
+        var runTimer = new System.Diagnostics.Stopwatch();
+        runTimer.Start();
+
+        foreach (int QID in new[] { 5156, 5165 })
         {
             if (Bot.Quests.IsUnlocked(QID))
                 Core.RegisterQuests(QID);
         }
 
-        if (Bot.Map.Name == "deathpitbrawl")
-        {
-            Core.Logger("Started in PvP map, which doesnt allow us to equip things if needed and can cause issues. Joining whitemap first.");
-            Core.Join("whitemap");
-        }
-
-        canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
+        Core.Logger("Started in PvP map, which doesnt allow us to equip things if needed and can cause issues. Joining whitemap first.");
+        Core.Join("whitemap");
 
         // Find the first matching amulet in inventory or bank
         string? amulet = AcceptablePvPAmulets
@@ -2748,78 +2746,67 @@ public class CoreFarms
             Core.Equip(amulet);
         }
 
-        Core.Logger($"Kill Additional mobs (more trophies - slower depending on gear): {KillAds}");
-        Core.FarmingLogger(item, quant, "RunDeathPitBrawl");
-
-        KillAds = new[] { "Brawler Token", "Restorer Token" }.Contains(item!);
-
-        int ExitAttempt = 0;
-        int Death = 0;
+        if (item != null)
+            Core.FarmingLogger(item, quant, "RunDeathPitBrawl");
+        int RunCount = 1;
 
     Start:
-        while (!Bot.ShouldExit && ((item != null && !Core.CheckInventory(item, quant)) || (item == null && FactionRank("Death Pit Brawl") < rank)))
+        while (!Bot.ShouldExit && (item != null && !Core.CheckInventory(item, quant) && FactionRank("Death Pit Brawl") < rank
+        || (item == null && FactionRank("Death Pit Brawl") < rank)))
         {
             while (!Bot.ShouldExit && Bot.Map.Name != "deathpitbrawl")
             {
-                Core.Logger("Joining Brawl");
-                Core.Join("deathpitbrawl-999999", "Enter0", "Spawn");
-                Core.Sleep();
+                Bot.Map.Join("deathpitbrawl-999999", "Enter0", "Spawn", autoCorrect: false);
+                Bot.Wait.ForMapLoad("deathpitbrawl");
             }
 
-            int Move = 1;
             Core.PvPMove(5, "Morale0C", 228, 291);
-            Core.Logger($"Move: {Move++}");
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
             Core.PvPMove(4, "Morale0B", 936, 397);
             Core.PvPMove(7, "Morale0A", 946, 394);
             Core.PvPMove(9, "Crosslower", 948, 400);
-            Core.PvPMove(14, "Crossupper", 903, 324);
-            Core.PvPMove(18, "Resource1A", 482, 295);
 
-            if (KillAds)
-            {
-                Core.PVPKilling();
-                if (!Bot.Player.Alive)
-                    goto RestartOnDeath;
-            }
+            #region Restorers
+            Core.PvPMove(14, "Crossupper", 903, 324);
+
+            Core.PvPMove(18, "Resource1A", 482, 295);
+            Core.PVPKilling();
+            if (!Bot.Player.Alive)
+                goto RestartOnDeath;
 
             Core.PvPMove(20, "Resource1B", 938, 400);
-
-            if (KillAds)
-            {
-                Core.PVPKilling();
-                if (!Bot.Player.Alive)
-                    goto RestartOnDeath;
-            }
+            Core.PVPKilling();
+            if (!Bot.Player.Alive)
+                goto RestartOnDeath;
 
             Core.PvPMove(21, "Resource1A", 9, 435);
             Core.PvPMove(19, "Crossupper", 461, 315);
             Core.PvPMove(17, "Crosslower", 54, 339);
-            Core.PvPMove(15, "Morale1A", 522, 286);
+            #endregion Restorers
 
-            Bot.Kill.Monster(13);
+            #region  Brawlers area
+            Core.PvPMove(15, "Morale1A", 509, 286);
+            Core.PVPKilling();
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-            Core.PvPMove(23, "Morale1B", 948, 403);
-
-            Bot.Kill.Monster(14);
+            Core.PvPMove(23, "Morale1B", 941, 406);
+            Core.PVPKilling();
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-            Core.PvPMove(25, "Morale1C", 945, 397);
-
-            Bot.Kill.Monster(15);
+            Core.PvPMove(25, "Morale1C", 938, 405);
+            Core.PVPKilling();
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
+            #endregion  Brawlers area
 
+            #region Captain & Exit
             Core.PvPMove(28, "Captain1", 943, 404);
-
-            Bot.Kill.Monster(16);
+            Core.PVPKilling();
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
-
 
             if (!string.IsNullOrEmpty(item))
             {
@@ -2830,42 +2817,33 @@ public class CoreFarms
             }
             Core.Sleep(1500);
             goto Exit;
+        #endregion Captain & Exit
 
         Exit:
+            // Stop timer and log elapsed time for pvp run
+            runTimer.Stop();
+            TimeSpan ts = runTimer.Elapsed;
+            Core.Logger($"Run #{RunCount++} completed in {ts.Minutes:00}:{ts.Seconds:00}");
+
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
-                Core.Logger($"Attempting Exit {ExitAttempt++}.");
                 Bot.Combat.CancelTarget();
                 Bot.Wait.ForCombatExit();
-                Bot.Map.Join("battleon-999999");
-                Core.Sleep(1500);
-                if (Bot.Map.Name != "battleon")
-                    Core.Logger("Failed!? HOW.. try agian");
-                else
-                {
-                    Core.Logger("Successful!");
-                    ExitAttempt = 0;
+                Bot.Map.Join("battleon-999999", "Enter", "Spawn", autoCorrect: false);
+                Bot.Wait.ForMapLoad("battleon");
+                if (Bot.Map.Name == "battleon")
                     goto Start;
-                }
             }
 
         RestartOnDeath:
-            Core.Logger($"Death: {Death++}, resetting");
             while (!Bot.ShouldExit)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
-                Core.Logger($"Attempting Death Exit {ExitAttempt++}.");
-                Bot.Map.Join("battleon-999999");
+                Bot.Map.Join("battleon-999999", "Enter", "Spawn", autoCorrect: false);
                 Bot.Wait.ForMapLoad("battleon");
                 Core.Sleep(1500);
-                if (Bot.Map.Name != "battleon")
-                    Core.Logger("Failed!? HOW.. try agian");
-                else
-                {
-                    Core.Logger("Successful!");
-                    ExitAttempt = 0;
+                if (Bot.Map.Name == "battleon")
                     goto Start;
-                }
             }
         }
 

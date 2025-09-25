@@ -36,6 +36,8 @@ public class FrostSpiritReaver
             return;
 
         Glacera.DoAll();
+        // Attempt to relog so the rep works.
+        Core.Relogin();
         Farm.GlaceraREP();
         Dailies.Cryomancer();
         if (!Core.CheckInventory("Cryomancer") && !Core.CheckInventory("Frost Sigil"))
