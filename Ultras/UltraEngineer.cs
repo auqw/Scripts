@@ -1,4 +1,4 @@
-//cs_include Scripts/WIP/CoreUltras.cs
+//cs_include Scripts/Ultras/CoreUltras.cs
 
 using System;
 using System.Dynamic;
@@ -30,3 +30,4 @@ public class UltraEngineer
             Core.KillWithPriority("Ultra Engineer", 3, "Defense Drone", 2, "Attack Drone", 1);
     }
 }
+
