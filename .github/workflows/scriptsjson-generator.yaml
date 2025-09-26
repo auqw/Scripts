@@ -99,7 +99,7 @@ jobs:
     - name: Setup .NET Core SDK
       uses: actions/setup-dotnet@v4.2.0
       with:
-        dotnet-version: '6.0.x'
+        dotnet-version: '8.0.x'
 
     # === Step: Build the Project ===
     - name: Build the project
@@ -107,7 +107,7 @@ jobs:
 
     # === Step: Run C# File ===
     - name: Run C# file
-      run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj > scripts.json
+      run: dotnet run --project SkuaScriptsGenerator/SkuaScriptsGenerator.csproj 2>/dev/null > scripts.json
 
     # === Step: Upload Artifact (only if changes are detected) ===
     - name: Upload artifact
