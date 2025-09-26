@@ -73,7 +73,6 @@ public class CoreUltras
 
         Bot.Lite.HidePlayers = false;
         Bot.Events.ExtensionPacketReceived -= ChargeListener;
-        Bot.Events.ExtensionPacketReceived -= ZoneSetListener;
 
         _cts?.Cancel();
         _runSkills?.Wait(TimeSpan.FromSeconds(2));
@@ -99,61 +98,78 @@ public class CoreUltras
                ?? Array.Empty<string>();
     }
 
-    public void ForItem(string monsters, string name, int quantity = 1, bool isTemp = false, bool useBestGear = false, bool alt = false, string cell = null, string pad = "Left")
+    private void ForItemCore(string monsters, int quantity, bool isTemp, bool useBestGear, bool alt, string? cell, string pad, bool priority, Action ensureInBank, Func<int> ownedCount, Action pickup, string itemLabel)
     {
-        if (string.IsNullOrWhiteSpace(name) || quantity <= 0) return;
-        if (!isTemp)
-            InBank(name);
-        if (Owned(name, isTemp) >= quantity)
-            return;
+        if (quantity <= 0) return;
+
         ChooseBestCell(monsters, alt, cell, pad);
-        if (useBestGear)
-            ChooseBestGear(monsters);
+        if (useBestGear) ChooseBestGear(monsters);
         var m = ParseNames(monsters) ?? Array.Empty<string>();
 
-        Alert("FARMING", $"Killing {monsters} for {quantity}x {name}");
+        ensureInBank();
+
+        if (ownedCount() >= quantity) return;
+
+        Alert("FARMING", $"Killing {monsters} for {quantity}x {itemLabel}");
         EnableSkills();
+
+        var i = 0;
         while (!Bot.ShouldExit)
         {
-            if (Owned(name, isTemp) >= quantity)
+            if (_chargeDetected) UsePotion();
+
+            if (ownedCount() >= quantity)
             {
-                Alert("SUCCESS", $"Acquired {quantity}x {name}");
+                Alert("SUCCESS", $"Acquired {quantity}x {itemLabel}");
                 DisableSkills();
                 StopAttack();
                 return;
             }
-            PickupItems(name);
-            _Attack(m);
+
+            pickup();
+
+            if (priority)
+            {
+                if (m.Length > 0)
+                    KillWithPriority(m.Select(MonsterKey.FromName).ToArray());
+            }
+            else
+            {
+                if (m.Length > 0)
+                {
+                    Kill(m[i % m.Length]);
+                    i++;
+                }
+            }
         }
     }
 
-    public void ForItem(string monsters, int itemId, int quantity = 1, bool isTemp = false, bool useBestGear = false, bool alt = false, string cell = null, string pad = "Left")
+    public void ForItem(string monsters, string name, int quantity = 1, bool isTemp = false, bool useBestGear = false, bool alt = false, string? cell = null, string pad = "Left", bool priority = false)
+    {
+        if (string.IsNullOrWhiteSpace(name) || quantity <= 0) return;
+
+        ForItemCore(
+            monsters, quantity, isTemp, useBestGear, alt, cell, pad, priority,
+            ensureInBank: () => { if (!isTemp) InBank(name); },
+            ownedCount: () => Owned(name, isTemp),
+            pickup: () => PickupItems(name),
+            itemLabel: name
+        );
+    }
+
+    public void ForItem(string monsters, int itemId, int quantity = 1, bool isTemp = false, bool useBestGear = false, bool alt = false, string? cell = null, string pad = "Left", bool priority = false)
     {
         if (itemId <= 0 || quantity <= 0) return;
-        if (!isTemp)
-            InBank(itemId);
-        if (Owned(itemId, isTemp) >= quantity)
-            return;
-        ChooseBestCell(monsters, alt, cell, pad);
-        if (useBestGear)
-            ChooseBestGear(monsters);
-        var m = ParseNames(monsters) ?? Array.Empty<string>();
 
-        var itemName = GetDropItem(itemId)?.Name ?? $"Item#{itemId}";
-        Alert("FARMING", $"Killing {monsters} for {quantity}x {itemName}");
-        EnableSkills();
-        while (!Bot.ShouldExit)
-        {
-            if (Owned(itemId, isTemp) >= quantity)
-            {
-                Alert("SUCCESS", $"Acquired {quantity}x {itemName}");
-                DisableSkills();
-                StopAttack();
-                return;
-            }
-            PickupItems(itemId);
-            _Attack(m);
-        }
+        var itemLabel = GetDropItem(itemId)?.Name ?? $"Item#{itemId}";
+
+        ForItemCore(
+            monsters, quantity, isTemp, useBestGear, alt, cell, pad, priority,
+            ensureInBank: () => { if (!isTemp) InBank(itemId); },
+            ownedCount: () => Owned(itemId, isTemp),
+            pickup: () => PickupItems(itemId),
+            itemLabel: itemLabel
+        );
     }
 
     public void EquipBestClass(List<(string name, int rank)> priorities)
@@ -210,15 +226,6 @@ public class CoreUltras
         if (Owned(name) < 1) return;
         if (Bot.Inventory.IsEquipped(name)) return;
         Bot.Inventory.EquipUsableItem(name);
-        Bot.Sleep(d3);
-    }
-
-    public void EquipConsumable(int id)
-    {
-        StopAttack();
-        if (Owned(id) < 1) return;
-        if (Bot.Inventory.IsEquipped(id)) return;
-        Bot.Inventory.EquipUsableItem(id);
         Bot.Sleep(d3);
     }
 
@@ -300,114 +307,127 @@ public class CoreUltras
 
     #region Combat
 
-    public void _Attack(IEnumerable<string> monsters, bool foundation = false)
+    public record MonsterKey(int? MapId = null, string? Name = null, int? Id = null)
     {
-        if (!Bot.Player.Alive) return;
+        public static MonsterKey FromName(string name) => new(Name: name);
+        public static MonsterKey FromId(int id) => new(Id: id);
+        public static MonsterKey FromMapId(int mapId) => new(MapId: mapId);
+    }
 
-        List<string> counterAuras = new List<string> { "Counter Attack", "Shapeshifted", "Prophetic Vision" };
+    private bool IsAliveByMapId(int? mapId = null, string? name = null, int? id = null)
+    {
+        var monsters = Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>();
 
-        if (HasAnyAura(counterAuras))
-        {
-            int sec = Math.Max(0, GetAuraSecondsRemaining(counterAuras.FirstOrDefault(a => HasAura(a)) ?? ""));
-            while (Bot.Player.HasTarget && !Bot.ShouldExit)
-            {
-                Bot.Combat.CancelAutoAttack();
-                Bot.Combat.CancelTarget();
-                DisableSkills();
-            }
-            Bot.Sleep(sec * 1500);
-            EnableSkills();
-        }
+        if (mapId.HasValue)
+            monsters = monsters.Where(m => m.MapID == mapId.Value);
+        if (name != null)
+            monsters = monsters.Where(m => m.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true);
+        if (id.HasValue)
+            monsters = monsters.Where(m => m.ID == id.Value);
 
-        var names = (monsters ?? Array.Empty<string>())
-            .Select(s => s?.Trim())
-            .Where(s => !string.IsNullOrWhiteSpace(s))
-            .ToArray();
+        return monsters.Any(m => m.Alive);
+    }
 
-        bool wildcard = names.Contains("*");
+    private bool IsAlive(MonsterKey key)
+        => IsAliveByMapId(key.MapId, key.Name, key.Id);
 
-        List<Monster> allMonsters = Bot.Monsters.MapMonsters ?? new List<Monster>();
-        var alive = allMonsters
-            .Where(m => m != null && m.HP > 0)
-            .ToList();
+    private void Attack(MonsterKey key)
+    {
+        if (key.Id.HasValue) Bot.Combat.Attack(key.Id.Value);
+        else if (key.MapId.HasValue) Bot.Combat.Attack(key.MapId.Value);
+        else if (key.Name != null) Bot.Combat.Attack(key.Name);
+    }
 
-        if (alive.Count == 0)
-            return;
-
-        IEnumerable<Monster> cands = wildcard
-            ? alive
-            : alive.Where(m => names.Any(n =>
-                string.Equals(m.Name?.Trim(), n, StringComparison.OrdinalIgnoreCase)));
-
-        if (!cands.Any()) return;
-
-        bool sameCell = cands.Any(m => m.Cell == Bot.Player.Cell);
-        if (sameCell) cands = cands.Where(m => m.Cell == Bot.Player.Cell);
-
-        var firstPriority = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "Staff of Inversion", "Stalagbite" };
-        var secondPriority = new HashSet<string>(StringComparer.OrdinalIgnoreCase) { "Test" };
-
-        bool IsFirstPriority(Monster monster) => firstPriority.Contains(monster.Name?.Trim() ?? string.Empty);
-        bool IsSecondPriority(Monster monster) => secondPriority.Contains(monster.Name?.Trim() ?? string.Empty);
-
-        var firstPriorityTargets = alive.Where(IsFirstPriority);
-
-        if (firstPriorityTargets.Any())
-        {
-            if (firstPriorityTargets.Any(m => m.Cell == Bot.Player.Cell))
-                firstPriorityTargets = firstPriorityTargets.Where(m => m.Cell == Bot.Player.Cell);
-
-            cands = firstPriorityTargets;
-        }
-        else
-        {
-            var secondPriorityTargets = alive.Where(IsSecondPriority);
-
-            if (secondPriorityTargets.Any())
-            {
-                if (secondPriorityTargets.Any(m => m.Cell == Bot.Player.Cell))
-                    secondPriorityTargets = secondPriorityTargets.Where(m => m.Cell == Bot.Player.Cell);
-
-                cands = secondPriorityTargets;
-            }
-        }
-
-        Monster target = cands
-            .OrderBy(m => IsFirstPriority(m) ? 0 : 1)
-            .ThenBy(m => IsSecondPriority(m) ? 0 : 1)
-            .ThenBy(m => m.HP)
-            .ThenBy(m => m.MapID)
-            .First();
-
-        MonsterSetup(target.Name, foundation);
-
-        if (Bot.Player.Cell != _bestCell)
-        {
-            Bot.Map.Jump(_bestCell, "Left");
-            Bot.Wait.ForCellChange(_bestCell);
-        }
-
-        Bot.Combat.Attack(target);
+    public void Kill(MonsterKey key)
+    {
+        if (!IsAlive(key)) return;
+        EnsureMonsterSetup(key);
+        Attack(key);
         Bot.Sleep(d1);
     }
 
-    public void MonsterSetup(string monsterName, bool foundation)
+    public void KillWithPriority(params MonsterKey[] keys)
     {
-        string monster = monsterName?.ToLowerInvariant() ?? string.Empty;
-
-        if (monster.Contains("chaos harpy") || monster.Contains("ultra chaos harpy")) ChaosHarpy();
-        else if (monster.Contains("ultra xiang") || monster.Contains("chaos lord xiang")) ChaosXiang();
-        else if (monster.Contains("doomkitten")) DoomKitten();
-
-        // --- bosses handlers ---------------------------------------------------------------
-        void ChaosHarpy()
+        foreach (var k in keys)
         {
-            string POT = "Shriekward Potion";
-            //if (Owned(POT) < 1) BuyItem("mirrorportal", 774, POT, 30);
-            EquipConsumable(POT);
+            if (IsAlive(k))
+            {
+                EnsureMonsterSetup(k);
+                Attack(k);
+                Bot.Sleep(d1);
+                return;
+            }
+        }
+        Bot.Sleep(d1);
+    }
+
+    // --- overloads ---------------------------------------------------------------
+
+    public void Kill(string name)
+        => Kill(MonsterKey.FromName(name));
+
+    public void Kill(params string[] names)
+    {
+        if (names == null || names.Length == 0) return;
+        var keys = names
+            .Where(n => !string.IsNullOrWhiteSpace(n))
+            .Select(MonsterKey.FromName)
+            .ToArray();
+
+        if (keys.Length == 0) return;
+        KillWithPriority(keys);
+    }
+
+    public void Kill(int id)
+        => Kill(MonsterKey.FromId(id));
+
+    public void KillAtMapId(int mapId)
+        => Kill(MonsterKey.FromMapId(mapId));
+
+    public void KillWithPriority(string primaryName, string priorityName1)
+        => KillWithPriority(MonsterKey.FromName(priorityName1), MonsterKey.FromName(primaryName));
+
+    public void KillWithPriority(int primaryId, int priorityId1)
+        => KillWithPriority(MonsterKey.FromId(priorityId1), MonsterKey.FromId(primaryId));
+
+    public void KillWithPriorityAtMapId(int primaryMapId, int priorityMapId1)
+        => KillWithPriority(MonsterKey.FromMapId(priorityMapId1), MonsterKey.FromMapId(primaryMapId));
+
+    public void KillWithPriority(string primaryName, string priorityName1, string priorityName2)
+        => KillWithPriority(MonsterKey.FromName(priorityName1), MonsterKey.FromName(priorityName2), MonsterKey.FromName(primaryName));
+
+    public void KillWithPriority(int primaryId, int priorityId1, int priorityId2)
+        => KillWithPriority(MonsterKey.FromId(priorityId1), MonsterKey.FromId(priorityId2), MonsterKey.FromId(primaryId));
+
+    public void KillWithPriorityAtMapId(int primaryMapId, int priorityMapId1, int priorityMapId2)
+        => KillWithPriority(MonsterKey.FromMapId(priorityMapId1), MonsterKey.FromMapId(priorityMapId2), MonsterKey.FromMapId(primaryMapId));
+
+    // --- helpers ---------------------------------------------------------------
+
+    private readonly HashSet<string> _preparedMonsters = new(StringComparer.OrdinalIgnoreCase);
+
+    private void MonsterSetup(string monsterName)
+    {
+        if (string.IsNullOrWhiteSpace(monsterName)) return;
+
+        string m = monsterName.ToLowerInvariant();
+
+        if (m.Contains("ultra chaos harpy") || m.Contains("chaos harpy"))
+            SetupChaosHarpy();
+        else if (m.Contains("ultra xiang") || m.Contains("chaos lord xiang"))
+            SetupChaosXiang();
+        else if (m.Contains("doomkitten"))
+            SetupDoomKitten();
+
+        void SetupChaosHarpy()
+        {
+            Bot.Events.ExtensionPacketReceived += ChaosHarpyListener;
+            const string Pot = "Shriekward Potion";
+            if (Owned(Pot) < 1) BuyItem("mirrorportal", 774, Pot, 30);
+            EquipConsumable(Pot);
         }
 
-        void ChaosXiang()
+        void SetupChaosXiang()
         {
             var classes = new List<(string name, int rank)>
             {
@@ -418,7 +438,7 @@ public class CoreUltras
             EquipBestClass(classes);
         }
 
-        void DoomKitten()
+        void SetupDoomKitten()
         {
             var classes = new List<(string name, int rank)>
             {
@@ -429,6 +449,31 @@ public class CoreUltras
             EquipBestClass(classes);
         }
     }
+
+    private string? ResolveMonsterName(MonsterKey key)
+    {
+        if (!string.IsNullOrWhiteSpace(key.Name))
+            return key.Name;
+
+        var list = Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>();
+        if (key.Id.HasValue)
+            return list.FirstOrDefault(m => m.ID == key.Id.Value)?.Name;
+        if (key.MapId.HasValue)
+            return list.FirstOrDefault(m => m.MapID == key.MapId.Value)?.Name;
+
+        return null;
+    }
+
+    private void EnsureMonsterSetup(MonsterKey key)
+    {
+        var name = ResolveMonsterName(key);
+        if (string.IsNullOrWhiteSpace(name)) return;
+
+        if (_preparedMonsters.Add(name))
+            MonsterSetup(name);
+    }
+
+    private void ResetMonsterSetupCache() => _preparedMonsters.Clear();
 
     #endregion
 
@@ -520,104 +565,65 @@ public class CoreUltras
 
     public void ChooseBestGear(string monsterNames)
     {
-        var monsters = GetTargetMonsters(monsterNames).Where(m => m?.Race != null).ToList();
-        if (monsters.Count == 0) return;
+        var monsters = GetMonsters(monsterNames).Where(m => m?.Race != null).ToList();
+        if (!monsters.Any()) return;
 
         string race = monsters.GroupBy(m => m.Race)
                              .OrderByDescending(g => g.Count())
                              .First().Key;
 
-        if (race.Equals("None", StringComparison.OrdinalIgnoreCase))
-            race = "allDmg";
+        if (race.Equals("None", StringComparison.OrdinalIgnoreCase)) race = "allDmg";
 
-        var items = GetDamageBoosters(race).ToList();
-        if (items.Count == 0) return;
+        var items = GetItems(race).ToList();
+        if (!items.Any()) return;
 
-        var bestCombo = items.Where(a => a.All > 0)
-                            .SelectMany(a => items.Where(r => r.Race > 0 && r.Group != a.Group)
-                                                  .Select(r => (a, r, Total: a.All + r.Race)))
-                            .OrderByDescending(x => x.Total)
-                            .FirstOrDefault();
+        // Try combo first
+        var combo = items.Where(a => a.All > 0)
+                        .SelectMany(a => items.Where(r => r.Race > 0 && r.Group != a.Group)
+                                              .Select(r => (a, r, Total: a.All + r.Race)))
+                        .OrderByDescending(x => x.Total)
+                        .FirstOrDefault();
 
-        if (bestCombo.a.Name != null)
+        if (combo.a.Name != null)
         {
-            EnsureInInventory(bestCombo.a);
-            EnsureInInventory(bestCombo.r);
-            // TODO: Equip both items
-            return;
+            Equip(combo.a);
+            Equip(combo.r);
         }
-
-        var bestSingle = items.OrderByDescending(i => Math.Max(i.Race, i.All)).First();
-        EnsureInInventory(bestSingle);
-        // TODO: Equip best single item
-    }
-
-    private IEnumerable<Monster> GetTargetMonsters(string monsterNames)
-    {
-        var names = monsterNames.Split(',', StringSplitOptions.RemoveEmptyEntries)
-                               .Select(n => n.Trim())
-                               .Where(n => !string.IsNullOrEmpty(n) && n != "*")
-                               .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
-        var allMonsters = Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>();
-        return names.Count == 0 ? allMonsters : allMonsters.Where(m => names.Contains(m.Name));
-    }
-
-    private IEnumerable<(string Name, string Group, bool FromBank, double All, double Race)> GetDamageBoosters(string race)
-    {
-        var validGroups = new HashSet<string> { "Weapon", "he", "ba", "co", "pe" };
-        bool isMember = Bot.Player.IsMember;
-
-        return Bot.Inventory.Items.Concat(Bot.Bank.Items)
-            .Where(i => validGroups.Contains(i.ItemGroup) && (!i.Upgrade || isMember))
-            .Select(i => (
-                i.Name,
-                Group: i.ItemGroup switch { "he" => "Helm", "ba" => "Back", "co" => "Armor", "pe" => "Pet", _ => i.ItemGroup },
-                FromBank: Bot.Bank.Items.Contains(i),
-                All: ParseMeta(i.Meta, "allDmg"),
-                Race: ParseMeta(i.Meta, race)
-            ))
-            .Where(x => x.All > 0 || x.Race > 0);
-    }
-
-    double ParseMeta(string meta, string key)
-    {
-        if (string.IsNullOrWhiteSpace(meta) || string.IsNullOrWhiteSpace(key))
-            return 0d;
-
-        string k = key.Trim();
-        bool isAllDmg = k.Equals("allDmg", StringComparison.OrdinalIgnoreCase);
-
-        string[] lines = meta.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-
-        foreach (var line in lines)
+        else
         {
-            var pairs = line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var pair in pairs)
-            {
-                var parts = pair.Split(new[] { ':' }, StringSplitOptions.RemoveEmptyEntries);
-                if (parts.Length != 2) continue;
-
-                string lhs = parts[0].Trim();
-                if (!lhs.Equals(k, StringComparison.OrdinalIgnoreCase) &&
-                    !(isAllDmg && lhs.Equals("dmgAll", StringComparison.OrdinalIgnoreCase)))
-                    continue;
-
-                if (double.TryParse(parts[1].Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, out var v))
-                    return v - 1d;
-                return 0d;
-            }
+            Equip(items.OrderByDescending(i => Math.Max(i.Race, i.All)).First());
         }
-        return 0d;
     }
 
-    private void EnsureInInventory((string Name, string Group, bool FromBank, double All, double Race) item)
+    IEnumerable<Monster> GetMonsters(string names) =>
+       string.IsNullOrEmpty(names) || names == "*"
+           ? Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>()
+           : (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
+               .Where(m => names.Split(',').Any(n => n.Trim().Equals(m.Name, StringComparison.OrdinalIgnoreCase)));
+
+    IEnumerable<(string Name, string Group, bool FromBank, double All, double Race)> GetItems(string race) =>
+       Bot.Inventory.Items.Concat(Bot.Bank.Items)
+           .Where(i => new[] { "Weapon", "he", "ba", "co", "pe" }.Contains(i.ItemGroup) &&
+                      (!i.Upgrade || Bot.Player.IsMember))
+           .Select(i => (i.Name, i.ItemGroup, Bot.Bank.Items.Contains(i),
+                        ParseMeta(i.Meta, "allDmg"), ParseMeta(i.Meta, race)))
+           .Where(x => x.Item4 > 0 || x.Item5 > 0);
+
+    double ParseMeta(string meta, string key) =>
+       string.IsNullOrWhiteSpace(meta) ? 0 :
+       meta.Split('\n', '\r').SelectMany(line => line.Split(','))
+           .Where(pair => pair.Contains(':'))
+           .Select(pair => pair.Split(':'))
+           .Where(parts => parts.Length == 2 &&
+                  (parts[0].Trim().Equals(key, StringComparison.OrdinalIgnoreCase) ||
+                   (key == "allDmg" && parts[0].Trim().Equals("dmgAll", StringComparison.OrdinalIgnoreCase))))
+           .Select(parts => double.TryParse(parts[1].Trim(), out var v) ? v - 1 : 0)
+           .FirstOrDefault();
+
+    void Equip((string Name, string Group, bool FromBank, double All, double Race) item)
     {
-        if (item.FromBank)
-        {
-            InBank(item.Name);
-            Alert("GEAR", $"Moved {item.Name} from bank");
-        }
+        if (item.FromBank) InBank(item.Name);
+        // TODO: Actual equip logic
     }
 
     #endregion
@@ -955,6 +961,7 @@ public class CoreUltras
             Bot.Send.Packet($"%xt%zm%cmd%{Bot.Map.RoomID}%tfer%{Bot.Player.Username}%{target}%{cell}%{pad}%");
             Bot.Wait.ForMapLoad(mapName);
         }
+        ResetMonsterSetupCache();
     }
 
     public void ChooseBestCell(string monsterNames, bool alt = false, string setCell = null, string setPad = "Spawn")
@@ -967,7 +974,7 @@ public class CoreUltras
         bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
         string pad = string.IsNullOrWhiteSpace(setPad) ? "Left" : setPad;
 
-        // get monsters directly
+        // Get monsters directly without using helper methods
         var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
             .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
             .Where(m => wildcard || names.Any(name =>
@@ -1027,7 +1034,7 @@ public class CoreUltras
         return (int)(nonNeg % range) + min;
     }
 
-    double GetLowestHpPercentage() // fetch map players hp, not only self
+    double GetLowestHpPercentage()
     {
         try
         {
@@ -1073,7 +1080,7 @@ public class CoreUltras
 
     public bool Cast(int index) // basic
     {
-        if (!Bot.Skills.CanUseSkill(index)) // canuseskill need flash-side rework
+        if (!Bot.Skills.CanUseSkill(index))
             return false;
 
         Bot.Skills.UseSkill(index);
@@ -1219,7 +1226,7 @@ public class CoreUltras
         if (Dissonance <= 2)
             if (Cast(2)) return;
         if (Magnitude)
-            if (Cast(4)) return; // huge damage
+            if (Cast(4)) return;
         if (Cast(1)) return;
     }
 
@@ -1236,7 +1243,7 @@ public class CoreUltras
             if (anyHealth < 85 || myHealth < 85 && !NoxiousDecay)
                 if (Cast(2)) return;
             if (!RighteousSeal)
-                if (Cast(4)) return; // damage + defense; don't consume stacks
+                if (Cast(4)) return;
             if (Cast(3)) return;
             if (Cast(1)) return;
         }
@@ -1245,7 +1252,7 @@ public class CoreUltras
             if (anyHealth < 85 || myHealth < 85)
                 if (Cast(2)) return;
             if (RighteousSeal)
-                if (Cast(4)) return; // combo for damage
+                if (Cast(4)) return;
             if (Cast(3)) return;
             if (Cast(1)) return;
         }
@@ -1268,10 +1275,24 @@ public class CoreUltras
 
     void ChaosAvengerClass()
     {
-        if (Cast(2)) return;
-        if (Cast(4)) return;
-        if (Cast(1)) return;
-        if (Cast(3)) return;
+        if (Bot.Map.Name == "ultradage")
+        {
+            bool Focus = HasAura("Focus");
+
+            if (Cast(2)) return;
+            if (Cast(4)) return;
+            if (!Focus)
+                if (Cast(5)) return;
+            if (Cast(1)) return;
+            if (Cast(3)) return;
+        }
+        else
+        {
+            if (Cast(2)) return;
+            if (Cast(4)) return;
+            if (Cast(1)) return;
+            if (Cast(3)) return;
+        }
     }
 
     void LightCasterClass()
@@ -1279,18 +1300,20 @@ public class CoreUltras
         double myHealth = GetHealthPercentage();
         double anyHealth = GetLowestHpPercentage();
 
-        if (anyHealth < 85 || myHealth < 85)
+        bool NoxiousDecay = HasAura("Noxious Decay", true); // Ultra Dage
+
+        if (anyHealth < 85 || myHealth < 85 && !NoxiousDecay)
             if (Cast(3)) return;
         if (Cast(4)) return;
         if (Cast(1)) return;
         if (Cast(2)) return;
     }
 
-    void LegionDoomKnightClass() // Made to work with ultra dage; wip for general purposes
+    void LegionDoomKnightClass()
     {
         bool Focus = HasAura("Focus");
 
-        if (chargeDetected)
+        if (_chargeDetected)
         {
             Bot.Sleep(8000);
             if (Cast(4)) return;
@@ -1309,11 +1332,11 @@ public class CoreUltras
         bool Convergence = HasAura("Convergence", true);
         bool Discordance = HasAura("Discordance", true);
 
-        if (myHealth < 80)
+        if (myHealth < 95)
             if (Cast(2)) return;
         if (Convergence)
             if (Cast(3)) return;
-        if (myHealth > 70)
+        if (myHealth > 60)
             if (Cast(4)) return;
         if (Cast(1)) return;
     }
@@ -1491,61 +1514,100 @@ public class CoreUltras
 
     #region Listeners
 
-    public volatile bool chargeDetected;
+    private volatile bool _chargeDetected;
+    private int _chargeCount;
 
-    public async void ChargeListener(dynamic packet)
+    private bool ChargeDetected
     {
-        if (packet?["params"]?.type?.ToString() != "json") return;
-
-        dynamic data = packet["params"].dataObj;
-        if (data?.cmd?.ToString() != "ct") return;
-
-        var anims = data.anims as System.Collections.IEnumerable;
-        if (anims == null) return;
-
-        foreach (var a in anims)
+        get => _chargeDetected;
+        set
         {
-            string animStr = (a as dynamic)?.animStr?.ToString();
-            if (!string.IsNullOrEmpty(animStr) &&
-                animStr.Equals("Charge", StringComparison.OrdinalIgnoreCase))
+            if (_chargeDetected == value) return;
+            _chargeDetected = value;
+            Bot.Log($"[PACKET] chargeDetected={value.ToString().ToLowerInvariant()}");
+        }
+    }
+
+    public async Task PulseChargeAsync(int ms = 2000)
+    {
+        System.Threading.Interlocked.Increment(ref _chargeCount);
+        ChargeDetected = true;
+
+        try
+        {
+            await Task.Delay(ms).ConfigureAwait(false);
+        }
+        finally
+        {
+            if (System.Threading.Interlocked.Decrement(ref _chargeCount) <= 0)
             {
-                chargeDetected = true;
-                Bot.Log("[PACKET] Charge detected.");
-                await Task.Delay(2000);
-                chargeDetected = false;
-                break;
+                _chargeCount = 0;
+                ChargeDetected = false;
             }
         }
     }
 
-    public async void ZoneSetListener(dynamic packet)
+    public async void ChargeListener(dynamic packet)
     {
-        if (packet?["params"]?.type?.ToString() != "json") return;
-
-        dynamic data = packet["params"].dataObj;
-        if (data?.cmd?.ToString() != "event") return;
-
-        string zone = data?.args?.zoneSet?.ToString();
-
-        if (string.Equals(zone, "A", System.StringComparison.OrdinalIgnoreCase))
+        try
         {
-            Bot.Log("[PACKET] zoneSet = A");
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%122%411%8%");
-            return;
+            if (packet?["params"]?.type?.ToString() != "json") return;
+
+            dynamic data = packet["params"].dataObj;
+            if (data?.cmd?.ToString() != "ct") return;
+
+            var anims = data?.anims as System.Collections.IEnumerable;
+            if (anims == null) return;
+
+            foreach (var a in anims)
+            {
+                string animStr = (a as dynamic)?.animStr?.ToString();
+                if (!string.IsNullOrEmpty(animStr) &&
+                    animStr.Equals("Charge", StringComparison.OrdinalIgnoreCase))
+                {
+                    await PulseChargeAsync(2000).ConfigureAwait(false);
+                    break;
+                }
+            }
         }
-        if (string.Equals(zone, "B", System.StringComparison.OrdinalIgnoreCase))
+        catch (Exception ex)
         {
-            Bot.Log("[PACKET] zoneSet = B");
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%856%422%8%");
-
-            return;
+            Bot.Log($"[PACKET] ChargeListener error: {ex.Message}");
         }
-        if (string.IsNullOrEmpty(zone))
-        {
-            Bot.Log("[PACKET] zoneSet = null/empty");
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%491%421%8%");
+    }
 
-            return;
+    async void ChaosHarpyListener(dynamic packet)
+    {
+        try
+        {
+            if (packet?["params"]?.type?.ToString() != "json") return;
+
+            dynamic data = packet["params"].dataObj;
+            if (data?.cmd?.ToString() != "ct") return;
+
+            var anims = data?.anims as System.Collections.IEnumerable;
+            if (anims == null) return;
+
+            foreach (var a in anims)
+            {
+                string animStr = (a as dynamic)?.animStr?.ToString();
+                if (!string.IsNullOrEmpty(animStr) &&
+                    animStr.Equals("Charge", StringComparison.OrdinalIgnoreCase))
+                {
+                    //await PulseChargeAsync(2000).ConfigureAwait(false);
+                    DisableSkills();
+                    Bot.Sleep(d1);
+                    await Task.Delay(500);
+                    Bot.Skills.UseSkill(5);
+                    await Task.Delay(500);
+                    EnableSkills();
+                    break;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Bot.Log($"[PACKET] ChargeListener error: {ex.Message}");
         }
     }
 
@@ -1568,7 +1630,7 @@ public class CoreUltras
         if (HasClassEquipped(name))
         {
             Bot.Combat.Attack(monster); Bot.Sleep(checkDelay);
-            if (chargeDetected) UsePotion();
+            if (_chargeDetected) UsePotion();
         }
     }
 
@@ -1632,12 +1694,6 @@ public class CoreUltras
         Bot.Sleep(150);
     }
 
-    public void Attack(string monsterName, bool foundation = true)
-    {
-        if (string.IsNullOrWhiteSpace(monsterName)) return;
-        _Attack(new[] { monsterName }, foundation);
-    }
-
     public void KillWithPriority(string primaryName, int primaryMapId, string priorityName1, int priorityMapId1, string priorityName2, int priorityMapId2)
     {
         if (IsAliveByMapId(priorityMapId1, name: priorityName1))
@@ -1650,10 +1706,8 @@ public class CoreUltras
     }
 
     // --- helpers ---------------------------------------------------
-    Monster? FindByMapId(int mapId)
-        => Bot.Monsters.MapMonsters.FirstOrDefault(m => m.MapID == mapId);
 
-    private bool IsAliveByMapId(int? mapId = null, string? name = null, int? id = null)
+    /*private bool IsAliveByMapId(int? mapId = null, string? name = null, int? id = null)
     {
         var monsters = Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>();
 
@@ -1665,7 +1719,7 @@ public class CoreUltras
             monsters = monsters.Where(m => m.ID == id.Value);
 
         return monsters.Any(m => m.Alive);
-    }
+    }*/
 
     public void KillByMapId(int mapId, string? name = null, int? id = null)
     {
