@@ -1,4 +1,4 @@
-//cs_include Scripts/WIP/CoreUltras.cs
+//cs_include Scripts/Ultras/CoreUltras.cs
 
 using System;
 using System.Dynamic;
@@ -44,3 +44,4 @@ public class UltraDrago
                 Core.KillWithPriority("King Drago", "Bowmaster Algie", "Executioner Dene");
     }
 }
+
