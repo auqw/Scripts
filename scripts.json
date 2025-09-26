@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 36477,
+    "size": 34944,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 398901,
+    "size": 403092,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -13746,7 +13746,7 @@
       "null"
     ],
     "path": "Other/MergeShops/TowerofWindsMerge.cs",
-    "size": 8953,
+    "size": 8952,
     "fileName": "TowerofWindsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/TowerofWindsMerge.cs"
   },
@@ -21531,6 +21531,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/DragonCapitalStory.cs"
   },
   {
+    "name": "Gravelyn's Undead Doom Parrot",
+    "description": "This script will complete the quest to obtain Gravelyn's Undead Doom Parrot pet.",
+    "tags": [
+      "undead doom parrot",
+      "gravelyn",
+      "seasonal",
+      "tlapd",
+      "talk like a pirate day",
+      "pet",
+      "celebrate the successful siege",
+      "doom pirate",
+      "dusk"
+    ],
+    "path": "Seasonal/TalkLikeaPirateDay/GravelynsUndeadDoomParrot.cs",
+    "size": 1750,
+    "fileName": "GravelynsUndeadDoomParrot.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/GravelynsUndeadDoomParrot.cs"
+  },
+  {
     "name": "Blood Isles Story",
     "description": "This will finish the Blood Isles story.",
     "tags": [
@@ -29051,7 +29070,7 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/Nulgath/TempleDelve.cs",
-    "size": 4011,
+    "size": 4078,
     "fileName": "TempleDelve.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/Nulgath/TempleDelve.cs"
   },

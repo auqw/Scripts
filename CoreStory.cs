@@ -390,41 +390,19 @@ public class CoreStory
                 }
                 else
                 {
-                    string message2 = $"Quest \"{QuestData.Name}\" [{QuestID}] is not unlocked.|" +
-                                     $"Expected value = [{QuestData.Value - 1}/{QuestData.Slot}], recieved = [{currentValue}/{QuestData.Slot}]|" +
-                                      prevQuestExplain +
-                                      "Please fill in the Skua Scripts Form to report this.|" +
-                                      "Do you wish to be brought to the form?";
-                    Core.Logger(message2.Replace("|", " "));
-                    if (Bot.ShowMessageBox(message2.Replace("|", "\n"), "Quest not unlocked", true) == true)
+                    string message2 = $"Quest \"{QuestData.Name}\" [{QuestID}] is not unlocked.\n" +
+                    $"Expected value = [{QuestData.Value - 1}/{QuestData.Slot}], received = [{currentValue}/{QuestData.Slot}]\n" +
+                    prevQuestExplain +
+                    "Please join the Skua Discord to report this.\n" +
+                    "Do you wish to be brought to the Discord?";
+
+                    Core.Logger(message2);
+
+                    if (Bot.ShowMessageBox(message2, "Quest not unlocked", true) == true)
                     {
-                        string url =
-                            $"\"https://docs.google.com/forms/d/e/1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg/viewform?usp=pp_url&" +
-
-                            "entry.209396189=Skua&" +
-                            "entry.2118425091=Bug+Report&" +
-                            $"entry.290078150={Core.loadedBot}&" +
-                            "entry.1803231651=I+got+a+popup+saying+a+quest+was+not+unlocked&" +
-
-                            $"entry.1918245848={QuestData.ID}&" +
-                            $"entry.1809007115={QuestData.Value - 1}/{QuestData.Slot}&" +
-                            $"entry.493943632={currentValue}/{QuestData.Slot}&" +
-                            $"entry.148016785={QuestData.Name}";
-
-                        if (prevQuest != null)
-                            url +=
-                                $"&entry.77289389={prevQuest.ID}&" +
-                                $"entry.2130921787={prevQuest.Name}&" +
-                                $"entry.1966808403={prevQuestReq ?? string.Empty}&" +
-                                $"entry.914792808={prevQuestAReq ?? string.Empty}";
-                        url += "\"";
-
-                        Process p = new();
-                        p.StartInfo.FileName = "rundll32";
-                        p.StartInfo.Arguments = "url,OpenURL " + url;
-                        p.StartInfo.WorkingDirectory = Environment.GetFolderPath(Environment.SpecialFolder.System).Split('\\').First() + "\\";
-                        p.Start();
+                        Process.Start("explorer", "https://discord.com/channels/1090693457586176013/1090741396970938399");
                     }
+
                     Bot.Stop(true);
                 }
             }

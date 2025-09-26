@@ -33,8 +33,8 @@ using System.Text;
 using System.Globalization;
 using Skua.Core.Models.Auras;
 using System.Windows.Forms;
-using System.Drawing;
 using Newtonsoft.Json.Linq;
+using System.Drawing;
 
 public class CoreBots
 {
@@ -3138,7 +3138,7 @@ public class CoreBots
                 Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
 
             // Commented out to reduce spam
-            // Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
+            Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
             return complete;
         }
 
@@ -8819,114 +8819,216 @@ public class CoreBots
     #endregion
 
     #region AutoReport
+    // public void AutoReport(AutoReportType type, Exception? e = null, LockedQuestData? lqd = null)
+    // {
+    //     if (e == null && lqd == null)
+    //         return;
 
+    //     string path = loadedBot;
+    //     string idPath = Path.Combine(ClientFileSources.SkuaDIR, "AutoReportIdentity.txt");
+    //     if (File.Exists(idPath))
+    //     {
+    //         string identity = File.ReadAllText(idPath);
+    //         if (IdentityControl(ref identity))
+    //         {
+    //             Dictionary<string, string> bodyValues = new()
+    //             {
+    //                 {"entry.2118425091", "Bug Report"},
+    //                 {"entry.290078150", path},
+    //                 {"entry.1700030786", identity},
+    //             };
+
+    //             switch (type)
+    //             {
+    //                 case AutoReportType.ScriptCrash:
+    //                     if (e == null)
+    //                         return;
+
+    //                     List<string> ScriptLogs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script);
+
+    //                     bodyValues.Add("entry.1803231651", "It stopped at the wrong time (crash)");
+    //                     bodyValues.Add("entry.1954840906", ScriptLogs.Skip(ScriptLogs.Count - 6).Join("\n"));
+    //                     bodyValues.Add("entry.285894207", e.ToString());
+    //                     break;
+
+    //                 case AutoReportType.LockedQuest:
+    //                     if (lqd == null)
+    //                         return;
+
+    //                     bodyValues.Add("entry.1803231651", "I got a popup saying a quest was not unlocked");
+    //                     bodyValues.Add("entry.1918245848", $"{lqd.ID}");
+    //                     bodyValues.Add("entry.1809007115", $"{lqd.ExpectedValue}/{lqd.Slot}");
+    //                     bodyValues.Add("entry.493943632", $"{lqd.CurrentValue}/{lqd.Slot}");
+    //                     bodyValues.Add("entry.148016785", lqd.Name);
+    //                     break;
+    //             }
+
+    //             FormUrlEncodedContent content = new(bodyValues);
+    //             WebClient.PostAsync(
+    //                             "https://docs.google.com/forms/d/e/" +
+    //                             "1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg" +
+    //                             "/formResponse",
+    //                             content);
+    //         }
+    //         else ManualReport();
+    //     }
+    //     else ManualReport();
+    //     Bot.Stop(type == AutoReportType.LockedQuest);
+
+    //     void ManualReport()
+    //     {
+    //         switch (type)
+    //         {
+    //             case AutoReportType.ScriptCrash:
+    //                 if (e == null)
+    //                     break;
+
+    //                 string scriptCrashMessage = "A crash has been detected\n" + e.ToString();
+    //                 Logger(scriptCrashMessage);
+    //                 if (Bot.ShowMessageBox(scriptCrashMessage + "\n\nPress Yes to be be brought to the report form", "Quest not unlocked", true) == true)
+    //                 {
+    //                     List<string> ScriptLogs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script);
+
+    //                     Process.Start("explorer", $"\"https://docs.google.com/forms/d/e/1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg/viewform?usp=pp_url&" +
+    //                                                  "entry.2118425091=Bug+Report&" +
+    //                                                 $"entry.290078150={path}&" +
+    //                                                  "entry.1803231651=It+stopped+at+the+wrong+time+(crash)&" +
+    //                                                 $"entry.1954840906={ScriptLogs.Skip(ScriptLogs.Count - 6).Join("\n")}&" +
+    //                                                 $"entry.285894207={e}\"");
+    //                 }
+    //                 break;
+
+    //             case AutoReportType.LockedQuest:
+    //                 if (lqd == null)
+    //                     break;
+
+    //                 string lockedQuestMessage = $"Quest \"{lqd.Name}\" [{lqd.ID}] is not unlocked.\n" +
+    //                                             $"Expected value = [{lqd.ExpectedValue}/{lqd.Slot}], but received = [{lqd.CurrentValue}/{lqd.Slot}]\n" +
+    //                                              "Please Join the discord, and @Tato2 or @Bogalj with a screenshot of the issue (The `Logs` button > `Scripts` tab) + the ingame \"Current Quest\" area.\n" +
+    //                                              "Do you wish to be brought to the discord?";
+    //                 Logger(lockedQuestMessage);
+    //                 if (Bot.ShowMessageBox(lockedQuestMessage, "Quest not unlocked", true) == true)
+    //                 {
+    //                     // Process.Start("explorer", $"\"https://docs.google.com/forms/d/e/1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg/viewform?usp=pp_url&" +
+    //                     //                              "entry.2118425091=Bug+Report&" +
+    //                     //                             $"entry.290078150={path}&" +
+    //                     //                              "entry.1803231651=I+got+a+popup+saying+a+quest+was+not+unlocked&" +
+    //                     //                             $"entry.1918245848={lqd.ID}&" +
+    //                     //                             $"entry.1809007115={lqd.ExpectedValue}/{lqd.Slot}&" +
+    //                     //                             $"entry.493943632={lqd.CurrentValue}/{lqd.Slot}&" +
+    //                     //                             $"entry.148016785={lqd.Name}\"");
+    //                     Process.Start("explorer", $"https://discord.com/channels/1090693457586176013/1090741396970938399");
+
+    //                 }
+    //                 break;
+    //         }
+    //     }
+    // }
     public void AutoReport(AutoReportType type, Exception? e = null, LockedQuestData? lqd = null)
     {
         if (e == null && lqd == null)
             return;
 
         string path = loadedBot;
-        string idPath = Path.Combine(ClientFileSources.SkuaDIR, "AutoReportIdentity.txt");
-        if (File.Exists(idPath))
+
+        string message;
+
+        switch (type)
         {
-            string identity = File.ReadAllText(idPath);
-            if (IdentityControl(ref identity))
-            {
-                Dictionary<string, string> bodyValues = new()
-                {
-                    {"entry.2118425091", "Bug Report"},
-                    {"entry.290078150", path},
-                    {"entry.1700030786", identity},
-                };
+            case AutoReportType.ScriptCrash:
+                if (e == null)
+                    return;
 
-                switch (type)
-                {
-                    case AutoReportType.ScriptCrash:
-                        if (e == null)
-                            return;
+                List<string> ScriptLogs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script);
+                string recentLogs = ScriptLogs.Skip(Math.Max(0, ScriptLogs.Count - 6)).Join("\n");
 
-                        List<string> ScriptLogs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script);
+                message = $"A script crash has been detected:\n{e}\n\n" +
+                          $"Recent script logs:\n{recentLogs}\n\n" +
+                          "Please join the Skua Discord to report this.\n" +
+                          "Do you wish to be brought to the Discord?";
+                break;
 
-                        bodyValues.Add("entry.1803231651", "It stopped at the wrong time (crash)");
-                        bodyValues.Add("entry.1954840906", ScriptLogs.Skip(ScriptLogs.Count - 6).Join("\n"));
-                        bodyValues.Add("entry.285894207", e.ToString());
-                        break;
+            case AutoReportType.LockedQuest:
+                if (lqd == null)
+                    return;
 
-                    case AutoReportType.LockedQuest:
-                        if (lqd == null)
-                            return;
+                message = $"Quest \"{lqd.Name}\" [{lqd.ID}] is not unlocked.\n" +
+                          $"Expected value = [{lqd.ExpectedValue}/{lqd.Slot}], received = [{lqd.CurrentValue}/{lqd.Slot}]\n" +
+                          "Please join the Skua Discord to report this.\n" +
+                          "Do you wish to be brought to the Discord?";
+                break;
 
-                        bodyValues.Add("entry.1803231651", "I got a popup saying a quest was not unlocked");
-                        bodyValues.Add("entry.1918245848", $"{lqd.ID}");
-                        bodyValues.Add("entry.1809007115", $"{lqd.ExpectedValue}/{lqd.Slot}");
-                        bodyValues.Add("entry.493943632", $"{lqd.CurrentValue}/{lqd.Slot}");
-                        bodyValues.Add("entry.148016785", lqd.Name);
-                        break;
-                }
-
-                FormUrlEncodedContent content = new(bodyValues);
-                WebClient.PostAsync(
-                                "https://docs.google.com/forms/d/e/" +
-                                "1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg" +
-                                "/formResponse",
-                                content);
-            }
-            else ManualReport();
+            default:
+                return;
         }
-        else ManualReport();
+
+        Logger(message);
+
+        if (Bot.ShowMessageBox(message, "Skua Report", true) == true)
+            Process.Start("explorer", "https://discord.com/channels/1090693457586176013/1090741396970938399");
+
         Bot.Stop(type == AutoReportType.LockedQuest);
-
-        void ManualReport()
-        {
-            switch (type)
-            {
-                case AutoReportType.ScriptCrash:
-                    if (e == null)
-                        break;
-
-                    string scriptCrashMessage = "A crash has been detected\n" + e.ToString();
-                    Logger(scriptCrashMessage);
-                    if (Bot.ShowMessageBox(scriptCrashMessage + "\n\nPress Yes to be be brought to the report form", "Quest not unlocked", true) == true)
-                    {
-                        List<string> ScriptLogs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script);
-
-                        Process.Start("explorer", $"\"https://docs.google.com/forms/d/e/1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg/viewform?usp=pp_url&" +
-                                                     "entry.2118425091=Bug+Report&" +
-                                                    $"entry.290078150={path}&" +
-                                                     "entry.1803231651=It+stopped+at+the+wrong+time+(crash)&" +
-                                                    $"entry.1954840906={ScriptLogs.Skip(ScriptLogs.Count - 6).Join("\n")}&" +
-                                                    $"entry.285894207={e}\"");
-                    }
-                    break;
-
-                case AutoReportType.LockedQuest:
-                    if (lqd == null)
-                        break;
-
-                    string lockedQuestMessage = $"Quest \"{lqd.Name}\" [{lqd.ID}] is not unlocked.\n" +
-                                                $"Expected value = [{lqd.ExpectedValue}/{lqd.Slot}], but received = [{lqd.CurrentValue}/{lqd.Slot}]\n" +
-                                                 "Please fill in the Skua Scripts Form to report this.\n" +
-                                                 "Do you wish to be brought to the form?";
-                    Logger(lockedQuestMessage);
-                    if (Bot.ShowMessageBox(lockedQuestMessage, "Quest not unlocked", true) == true)
-                    {
-                        Process.Start("explorer", $"\"https://docs.google.com/forms/d/e/1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg/viewform?usp=pp_url&" +
-                                                     "entry.2118425091=Bug+Report&" +
-                                                    $"entry.290078150={path}&" +
-                                                     "entry.1803231651=I+got+a+popup+saying+a+quest+was+not+unlocked&" +
-                                                    $"entry.1918245848={lqd.ID}&" +
-                                                    $"entry.1809007115={lqd.ExpectedValue}/{lqd.Slot}&" +
-                                                    $"entry.493943632={lqd.CurrentValue}/{lqd.Slot}&" +
-                                                    $"entry.148016785={lqd.Name}\"");
-                    }
-                    break;
-            }
-        }
     }
 
+
+    // public bool IdentityControl(ref string identity)
+    // {
+    //     identity = identity.Trim().Replace("​", ""); //There is a 0-width charactr in the first ""
+    //     while (identity.Contains("  "))
+    //         identity = identity.Replace("  ", " ");
+
+    //     if (identity.Length < 7)
+    //     {
+    //         FaultyInput("It's too short");
+    //         return false;
+    //     }
+    //     if (identity.Length > 37)
+    //     {
+    //         FaultyInput("It's too long");
+    //         return false;
+    //     }
+
+    //     if (!identity.Contains('#'))
+    //     {
+    //         FaultyInput("It doesn't contain a '#'");
+    //         return false;
+    //     }
+    //     if (identity[^5..^4] != "#")
+    //     {
+    //         FaultyInput("It doesn't have a '#' in the right location");
+    //         return false;
+    //     }
+
+    //     if (!int.TryParse(identity[^4..], out int _numbers))
+    //     {
+    //         FaultyInput("It's missing the 4 digits at the end");
+    //         return false;
+    //     }
+
+    //     foreach (string s in new string[] { "@", "#", ":", "```", "discord" })
+    //     {
+    //         if (!identity[..^5].Contains(s))
+    //             continue;
+
+    //         if (s == "#")
+    //             FaultyInput("There can only be one '#', which is near the end");
+    //         else FaultyInput($"It's not able to contain the character '{s}'");
+    //         return false;
+    //     }
+
+    //     if (identity[..^5].ToLower() == "everyone" || identity[..^5].ToLower() == "here")
+    //     {
+    //         FaultyInput($"It cannot be {identity[..^5]}");
+    //         return false;
+    //     }
+
+    //     return true;
+
+    //     void FaultyInput(string text) => Bot.ShowMessageBox($"Invalid Discord username detected:\n{text}!", "Invalid AutoReport Identity");
+    // }
     public bool IdentityControl(ref string identity)
     {
-        identity = identity.Trim().Replace("​", ""); //There is a 0-width charactr in the first ""
+        identity = identity.Trim().Replace("\u200B", ""); // Remove zero-width character
         while (identity.Contains("  "))
             identity = identity.Replace("  ", " ");
 
@@ -8935,6 +9037,7 @@ public class CoreBots
             FaultyInput("It's too short");
             return false;
         }
+
         if (identity.Length > 37)
         {
             FaultyInput("It's too long");
@@ -8946,7 +9049,8 @@ public class CoreBots
             FaultyInput("It doesn't contain a '#'");
             return false;
         }
-        if (identity[^5..^4] != "#")
+
+        if (identity.Length < 5 || identity[^5] != '#')
         {
             FaultyInput("It doesn't have a '#' in the right location");
             return false;
@@ -8958,20 +9062,25 @@ public class CoreBots
             return false;
         }
 
-        foreach (string s in new string[] { "@", "#", ":", "```", "discord" })
-        {
-            if (!identity[..^5].Contains(s))
-                continue;
+        string usernamePart = identity[..^5].ToLower();
 
-            if (s == "#")
-                FaultyInput("There can only be one '#', which is near the end");
-            else FaultyInput($"It's not able to contain the character '{s}'");
-            return false;
+        foreach (string s in new[] { "@", ":", "```", "discord", "#" })
+        {
+            if (s == "#" && identity[..^5].Contains("#"))
+            {
+                FaultyInput("There can only be one '#' near the end");
+                return false;
+            }
+            if (s != "#" && usernamePart.Contains(s))
+            {
+                FaultyInput($"It cannot contain '{s}'");
+                return false;
+            }
         }
 
-        if (identity[..^5].ToLower() == "everyone" || identity[..^5].ToLower() == "here")
+        if (usernamePart == "everyone" || usernamePart == "here")
         {
-            FaultyInput($"It cannot be {identity[..^5]}");
+            FaultyInput($"It cannot be '{usernamePart}'");
             return false;
         }
 
@@ -8979,8 +9088,8 @@ public class CoreBots
 
         void FaultyInput(string text) => Bot.ShowMessageBox($"Invalid Discord username detected:\n{text}!", "Invalid AutoReport Identity");
     }
-
-    public class LockedQuestData
+ 
+   public class LockedQuestData
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -8999,8 +9108,7 @@ public class CoreBots
             Slot = q.Slot;
         }
     }
-
-    #endregion
+    #endregion AutoReport
 
     #region Flash-Call Assistance
 

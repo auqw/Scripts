@@ -131,7 +131,7 @@ public static CoreAdvanced _sAdv;
                     Core.RegisterQuests(3956);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        ///Quick as silver 3956
+                        //Quick as silver 3956
                         Core.HuntMonster("frozenruins", "Arctic Eel", "Quicker Silver");
                         Bot.Wait.ForPickup(req.Name);
                     }

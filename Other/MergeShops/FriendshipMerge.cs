@@ -78,7 +78,7 @@ private static CoreAdvanced _sAdv;
                     {
                         Core.HuntMonster("battleodium", "Widowing", "Roses", 1, false, false);
                         Core.KillMonster("battleodium", "r6", "Left", "*", "Strawberries", 1, false, false);
-                        while (!Bot.ShouldExit && !Core.CheckInventory(76286)) ///multiple items with name "Rubies"
+                        while (!Bot.ShouldExit && !Core.CheckInventory(76286))  //multiple items with name "Rubies"
                             Core.KillMonster("battleodium", "r6", "Left", "*", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
