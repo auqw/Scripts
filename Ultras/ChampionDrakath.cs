@@ -34,8 +34,10 @@ public class ChampionDrakath
             if (Core.HasClassEquipped(taunterClass))
                 Core.DrakathTaunter();
             else
-                Core.Attack("Champion Drakath");
+                Core.Kill("Champion Drakath");
         }
     }
 }
+
+
 
