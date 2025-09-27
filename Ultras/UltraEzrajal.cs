@@ -27,7 +27,8 @@ public class UltraEzrajal
         Core.EnableSkills();
 
         while (Core.MonsterAlive("Ultra Ezrajal") && !Bot.ShouldExit)
-            Core.Attack("Ultra Ezrajal");
+            Core.Kill("Ultra Ezrajal");
     }
 }
+
 
