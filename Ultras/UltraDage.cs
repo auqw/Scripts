@@ -10,12 +10,20 @@ public class UltraDage
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "UltraDage";
+    public List<IOption> Options = new()
+    {
+        new Option<string>("primaryTaunter", "First Taunter Class", "Insert the name of the class that will taunt", "Chaos Avenger"),
+        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", "Legion DoomKnight"),
+    };
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.Boot();
         Bot.Events.ExtensionPacketReceived += UltraDageListener;
 
-        Kill(primaryTaunter: "Chaos Avenger", secondaryTaunter: "Legion DoomKnight");
+        Kill(primaryTaunter: Bot.Config.Get<string>("primaryTaunter"), secondaryTaunter: Bot.Config.Get<string>("secondaryTaunter"));
 
         Bot.Events.ExtensionPacketReceived -= UltraDageListener;
         Bot.Stop();
@@ -39,7 +47,7 @@ public class UltraDage
             else if (Core.HasClassEquipped(secondaryTaunter))
                 Core.TauntCycle(secondaryTaunter, "Dage the Dark Lord", "Focus", 700);
             else
-                Core.Attack("Dage the Dark Lord");
+                Core.Kill("Dage the Dark Lord");
         }
     }
 
@@ -71,4 +79,5 @@ public class UltraDage
         }
     }
 }
+
 
