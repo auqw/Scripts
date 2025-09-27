@@ -33,7 +33,8 @@ public class UltraWarden
             if (Core.HasClassEquipped(taunterClass))
                 Core.UltraWardenTaunter();
             else
-                Core.Attack("Ultra Warden");
+                Core.Kill("Ultra Warden");
     }
 }
+
 
