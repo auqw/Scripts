@@ -37,10 +37,10 @@ public class CoreUltras
 
     #region Settings
 
-    int d1 = 250;
-    int d2 = 700;
-    int d3 = 1400;
-    int d4 = 2800;
+    int D1 = 250;
+    int D2 = 700;
+    int D3 = 1400;
+    int D4 = 2800;
 
     public void Boot()
     {
@@ -174,133 +174,244 @@ public class CoreUltras
 
     public void EquipBestClass(List<(string name, int rank)> priorities)
     {
+        if (priorities == null || priorities.Count == 0) return;
+
         string currentClassName = GetCurrentClassName();
         bool isMaxRank = IsCurrentClassMaxRank();
 
         foreach (var (name, rank) in priorities)
         {
-            if (Owned(name) < 1) continue;
-
-            if (HasClassEquipped(name))
+            try
             {
-                if (isMaxRank || Bot.Player.CurrentClassRank >= rank) return;
-            }
+                if (string.IsNullOrWhiteSpace(name) || Owned(name) < 1) continue;
 
-            if (!Bot.Inventory.IsEquipped(name))
-            {
-                Bot.Inventory.EquipItem(name);
-                Bot.Sleep(d3);
-                return;
+                if (HasClassEquipped(name))
+                {
+                    if (isMaxRank || Bot.Player.CurrentClassRank >= rank) return;
+                }
+
+                if (!Bot.Inventory.IsEquipped(name))
+                {
+                    Bot.Inventory.EquipItem(name);
+                    Bot.Sleep(D3);
+                    return;
+                }
             }
+            catch { continue; }
         }
     }
 
     public void EquipBestClass(List<(int id, int rank)> priorities)
     {
+        if (priorities == null || priorities.Count == 0) return;
+
         string currentClassName = GetCurrentClassName();
         bool isMaxRank = IsCurrentClassMaxRank();
 
         foreach (var (id, rank) in priorities)
         {
-            if (Owned(id) < 1) continue;
-            var item = Bot.Inventory.Items.FirstOrDefault(i => i.ID == id);
-            if (item == null) continue;
-
-            if (HasClassEquipped(item.Name))
+            try
             {
-                if (isMaxRank || Bot.Player.CurrentClassRank >= rank) return;
-            }
+                if (id <= 0 || Owned(id) < 1) continue;
 
-            if (!Bot.Inventory.IsEquipped(id))
-            {
-                Bot.Inventory.EquipItem(id);
-                Bot.Sleep(d3);
-                return;
+                var item = Bot.Inventory.Items.FirstOrDefault(i => i.ID == id);
+                if (item == null) continue;
+
+                if (HasClassEquipped(item.Name))
+                {
+                    if (isMaxRank || Bot.Player.CurrentClassRank >= rank) return;
+                }
+
+                if (!Bot.Inventory.IsEquipped(id))
+                {
+                    Bot.Inventory.EquipItem(id);
+                    Bot.Sleep(D3);
+                    return;
+                }
             }
+            catch { continue; }
         }
     }
 
     public void EquipConsumable(string name)
     {
-        StopAttack();
-        if (Owned(name) < 1) return;
-        if (Bot.Inventory.IsEquipped(name)) return;
-        Bot.Inventory.EquipUsableItem(name);
-        Bot.Sleep(d3);
+        if (string.IsNullOrWhiteSpace(name)) return;
+
+        try
+        {
+            StopAttack();
+
+            if (Owned(name) < 1) return;
+            if (Bot.Inventory.IsEquipped(name)) return;
+
+            Bot.Inventory.EquipUsableItem(name);
+            Bot.Sleep(D3);
+        }
+        catch { }
     }
 
     public bool InBank(string name)
     {
-        if (Bot.Bank.Contains(name))
+        if (string.IsNullOrWhiteSpace(name)) return false;
+        if (!Bot.Bank.Contains(name)) return false;
+
+        try
         {
             int quantity = Bot.Bank.GetQuantity(name);
             StopAttack();
+
             Bot.Bank.ToInventory(name);
-            Bot.Sleep(d2);
-            Alert("BANK", $"Moved {quantity}x {name} from bank to inventory");
+            Bot.Sleep(D2);
             return true;
         }
-        return false;
+        catch { return false; }
     }
 
     public bool InBank(int id)
     {
-        if (Bot.Bank.Contains(id))
+        if (id <= 0) return false;
+        if (!Bot.Bank.Contains(id)) return false;
+
+        try
         {
             int quantity = Bot.Bank.GetQuantity(id);
             var item = Bot.Bank.Items.FirstOrDefault(i => i.ID == id);
             string itemName = item?.Name ?? $"Item#{id}";
+
             StopAttack();
+
             Bot.Bank.ToInventory(id);
-            Bot.Sleep(d2);
-            Alert("BANK", $"Moved {quantity}x {itemName} from bank to inventory");
+            Bot.Sleep(D2);
             return true;
         }
-        return false;
+        catch { return false; }
     }
 
     public bool ToBank(string name)
     {
-        if (Bot.Inventory.Contains(name))
+        if (string.IsNullOrWhiteSpace(name)) return false;
+        if (!Bot.Inventory.Contains(name)) return false;
+
+        try
         {
             int quantity = Bot.Inventory.GetQuantity(name);
             StopAttack();
+
             Bot.Inventory.ToBank(name);
-            Bot.Sleep(d2);
-            Alert("INVENTORY", $"Moved {quantity}x {name} from inventory to bank");
+            Bot.Sleep(D2);
             return true;
         }
-        return false;
+        catch { return false; }
     }
 
     public bool ToBank(int id)
     {
-        if (Bot.Inventory.Contains(id))
+        if (id <= 0) return false;
+        if (!Bot.Inventory.Contains(id)) return false;
+
+        try
         {
             int quantity = Bot.Inventory.GetQuantity(id);
             var item = Bot.Inventory.Items.FirstOrDefault(i => i.ID == id);
             string itemName = item?.Name ?? $"Item#{id}";
+
             StopAttack();
+
             Bot.Inventory.ToBank(id);
-            Bot.Sleep(d2);
-            Alert("INVENTORY", $"Moved {quantity}x {itemName} from inventory to bank");
+            Bot.Sleep(D2);
             return true;
         }
-        return false;
+        catch { return false; }
     }
 
     public int Owned(string name, bool isTemp = false)
     {
-        if (string.IsNullOrWhiteSpace(name)) return 0;
-        if (isTemp) return Bot.TempInv?.GetQuantity(name) ?? 0;
-        return Bot.Inventory?.GetQuantity(name) ?? 0;
+        try
+        {
+            if (string.IsNullOrWhiteSpace(name)) return 0;
+            if (isTemp) return Bot.TempInv?.GetQuantity(name) ?? 0;
+            return Bot.Inventory?.GetQuantity(name) ?? 0;
+        }
+        catch { return 0; }
     }
 
     public int Owned(int id, bool isTemp = false)
     {
-        if (id <= 0) return 0;
-        if (isTemp) return Bot.TempInv?.GetQuantity(id) ?? 0;
-        return Bot.Inventory?.GetQuantity(id) ?? 0;
+        try
+        {
+            if (id <= 0) return 0;
+            if (isTemp) return Bot.TempInv?.GetQuantity(id) ?? 0;
+            return Bot.Inventory?.GetQuantity(id) ?? 0;
+        }
+        catch { return 0; }
+    }
+
+    #endregion
+
+    #region Find Item by Enhancement
+
+    string EnhancementName(int id) => id switch
+    {
+        1 => "Adventurer",
+        2 => "Fighter",
+        3 => "Thief",
+        4 => "Armsman",
+        5 => "Hybrid",
+        6 => "Wizard",
+        7 => "Healer",
+        8 => "Spellbreaker",
+        9 => "Lucky",
+        10 => "Forge",
+        11 => "Absolution",
+        12 => "Avarice",
+        23 => "Depths",
+        24 => "Vainglory",
+        25 => "Vim",
+        26 => "Examen",
+        27 => "Pneuma",
+        28 => "Anima",
+        29 => "Penitence",
+        30 => "Lament",
+        32 => "Hearty",
+        _ => null
+    };
+
+    bool EnhancementIs(InventoryItem i, string name) =>
+        EnhancementName(i?.EnhancementPatternID ?? -1)?
+            .Equals(name, StringComparison.OrdinalIgnoreCase) == true;
+
+    InventoryItem EnsureItemWithEnhancement(int patternId)
+    {
+        var inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+        var hit = inv.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
+        if (hit != null) return hit;
+
+        var bank = Bot.Bank.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+        var fromBank = bank.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
+        if (fromBank == null) return null;
+
+        ToBank(fromBank.Name);
+
+        inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+        return inv.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
+    }
+
+    InventoryItem EnsureItemWithEnhancement(string enhancementName)
+    {
+        if (string.IsNullOrWhiteSpace(enhancementName)) return null;
+
+        var inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+        var hit = inv.FirstOrDefault(i => EnhancementIs(i, enhancementName));
+        if (hit != null) return hit;
+
+        var bank = Bot.Bank.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+        var fromBank = bank.FirstOrDefault(i => EnhancementIs(i, enhancementName));
+        if (fromBank == null) return null;
+
+        ToBank(fromBank.Name);
+
+        inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+        return inv.FirstOrDefault(i => EnhancementIs(i, enhancementName));
     }
 
     #endregion
@@ -331,7 +442,7 @@ public class CoreUltras
     private bool IsAlive(MonsterKey key)
         => IsAliveByMapId(key.MapId, key.Name, key.Id);
 
-    private void Attack(MonsterKey key)
+    public void Attack(MonsterKey key)
     {
         if (key.Id.HasValue) Bot.Combat.Attack(key.Id.Value);
         else if (key.MapId.HasValue) Bot.Combat.Attack(key.MapId.Value);
@@ -343,7 +454,7 @@ public class CoreUltras
         if (!IsAlive(key)) return;
         EnsureMonsterSetup(key);
         Attack(key);
-        Bot.Sleep(d1);
+        Bot.Sleep(D1);
     }
 
     public void KillWithPriority(params MonsterKey[] keys)
@@ -354,11 +465,11 @@ public class CoreUltras
             {
                 EnsureMonsterSetup(k);
                 Attack(k);
-                Bot.Sleep(d1);
+                Bot.Sleep(D1);
                 return;
             }
         }
-        Bot.Sleep(d1);
+        Bot.Sleep(D1);
     }
 
     // --- overloads ---------------------------------------------------------------
@@ -482,10 +593,13 @@ public class CoreUltras
     public void UsePotion()
     {
         DisableSkills();
-        Bot.Sleep(d1);
-        Bot.Skills.UseSkill(5);
-        Bot.Sleep(d2);
-        EnableSkills();
+        try
+        {
+            Bot.Sleep(D1);
+            Bot.Skills.UseSkill(5);
+            Bot.Sleep(D2);
+        }
+        finally { EnableSkills(); }
     }
 
     public void GetScrollOfEnrage()
@@ -502,7 +616,7 @@ public class CoreUltras
                     Join("underworld");
                     ForItem("Undead Infantry", "Mystic Parchment", 2);
                 }
-                BuyItem("dragonrune", 549, "Zealous Ink", 5);
+                BuyItem("dragonrune", 549, "Zealous Ink", 1);
             }
 
             Join("spellcraft");
@@ -530,7 +644,7 @@ public class CoreUltras
                     Join("underworld");
                     ForItem("Undead Infantry", "Mystic Parchment", 2);
                 }
-                BuyItem("dragonrune", 549, "Zealous Ink", 5);
+                BuyItem("dragonrune", 549, "Zealous Ink", 1);
             }
 
             Join("spellcraft");
@@ -565,6 +679,8 @@ public class CoreUltras
 
     public void ChooseBestGear(string monsterNames)
     {
+        if (Bot?.Monsters == null || Bot?.Inventory == null || Bot?.Bank == null) return;
+
         var monsters = GetMonsters(monsterNames).Where(m => m?.Race != null).ToList();
         if (!monsters.Any()) return;
 
@@ -572,111 +688,165 @@ public class CoreUltras
                              .OrderByDescending(g => g.Count())
                              .First().Key;
 
-        if (race.Equals("None", StringComparison.OrdinalIgnoreCase)) race = "allDmg";
+        if (race?.Equals("None", StringComparison.OrdinalIgnoreCase) == true)
+            race = "allDmg";
 
         var items = GetItems(race).ToList();
         if (!items.Any()) return;
 
-        // Try combo first
         var combo = items.Where(a => a.All > 0)
                         .SelectMany(a => items.Where(r => r.Race > 0 && r.Group != a.Group)
                                               .Select(r => (a, r, Total: a.All + r.Race)))
                         .OrderByDescending(x => x.Total)
                         .FirstOrDefault();
 
-        if (combo.a.Name != null)
+        if (!string.IsNullOrWhiteSpace(combo.a.Name))
         {
-            Equip(combo.a);
-            Equip(combo.r);
+            EquipGear(combo.a);
+            EquipGear(combo.r);
         }
         else
         {
-            Equip(items.OrderByDescending(i => Math.Max(i.Race, i.All)).First());
+            var bestItem = items.OrderByDescending(i => Math.Max(i.Race, i.All)).FirstOrDefault();
+            if (!string.IsNullOrWhiteSpace(bestItem.Name))
+            {
+                EquipGear(bestItem);
+            }
         }
     }
 
-    IEnumerable<Monster> GetMonsters(string names) =>
-       string.IsNullOrEmpty(names) || names == "*"
-           ? Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>()
-           : (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
-               .Where(m => names.Split(',').Any(n => n.Trim().Equals(m.Name, StringComparison.OrdinalIgnoreCase)));
-
-    IEnumerable<(string Name, string Group, bool FromBank, double All, double Race)> GetItems(string race) =>
-       Bot.Inventory.Items.Concat(Bot.Bank.Items)
-           .Where(i => new[] { "Weapon", "he", "ba", "co", "pe" }.Contains(i.ItemGroup) &&
-                      (!i.Upgrade || Bot.Player.IsMember))
-           .Select(i => (i.Name, i.ItemGroup, Bot.Bank.Items.Contains(i),
-                        ParseMeta(i.Meta, "allDmg"), ParseMeta(i.Meta, race)))
-           .Where(x => x.Item4 > 0 || x.Item5 > 0);
-
-    double ParseMeta(string meta, string key) =>
-       string.IsNullOrWhiteSpace(meta) ? 0 :
-       meta.Split('\n', '\r').SelectMany(line => line.Split(','))
-           .Where(pair => pair.Contains(':'))
-           .Select(pair => pair.Split(':'))
-           .Where(parts => parts.Length == 2 &&
-                  (parts[0].Trim().Equals(key, StringComparison.OrdinalIgnoreCase) ||
-                   (key == "allDmg" && parts[0].Trim().Equals("dmgAll", StringComparison.OrdinalIgnoreCase))))
-           .Select(parts => double.TryParse(parts[1].Trim(), out var v) ? v - 1 : 0)
-           .FirstOrDefault();
-
-    void Equip((string Name, string Group, bool FromBank, double All, double Race) item)
+    IEnumerable<Monster> GetMonsters(string names)
     {
+        if (Bot?.Monsters?.MapMonsters == null) return Enumerable.Empty<Monster>();
+
+        if (string.IsNullOrEmpty(names) || names == "*")
+            return Bot.Monsters.MapMonsters;
+
+        var nameArray = names.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                             .Select(n => n?.Trim())
+                             .Where(n => !string.IsNullOrWhiteSpace(n))
+                             .ToArray();
+
+        if (nameArray.Length == 0) return Bot.Monsters.MapMonsters;
+
+        return Bot.Monsters.MapMonsters.Where(m => m?.Name != null &&
+            nameArray.Any(n => n.Equals(m.Name, StringComparison.OrdinalIgnoreCase)));
+    }
+
+    IEnumerable<(string Name, string Group, bool FromBank, double All, double Race)> GetItems(string race)
+    {
+        if (Bot?.Inventory?.Items == null || Bot?.Bank?.Items == null)
+            return Enumerable.Empty<(string, string, bool, double, double)>();
+
+        if (string.IsNullOrWhiteSpace(race)) race = "allDmg";
+
+        var validGroups = new[] { "Weapon", "he", "ba", "co", "pe" };
+
+        var inventoryItems = Bot.Inventory.Items ?? Enumerable.Empty<InventoryItem>();
+        var bankItems = Bot.Bank.Items ?? Enumerable.Empty<InventoryItem>();
+
+        return inventoryItems.Concat(bankItems)
+            .Where(i => i != null &&
+                       !string.IsNullOrWhiteSpace(i.ItemGroup) &&
+                       validGroups.Contains(i.ItemGroup) &&
+                       (!i.Upgrade || Bot?.Player?.IsMember == true))
+            .Select(i => (
+                Name: i.Name ?? "",
+                Group: i.ItemGroup ?? "",
+                FromBank: bankItems.Contains(i),
+                All: ParseMeta(i.Meta, "allDmg"),
+                Race: ParseMeta(i.Meta, race)
+            ))
+            .Where(x => x.All > 0 || x.Race > 0);
+    }
+
+    double ParseMeta(string meta, string key)
+    {
+        if (string.IsNullOrWhiteSpace(meta) || string.IsNullOrWhiteSpace(key)) return 0;
+
+        try
+        {
+            return meta.Split('\n', '\r')
+                      .SelectMany(line => line.Split(','))
+                      .Where(pair => !string.IsNullOrWhiteSpace(pair) && pair.Contains(':'))
+                      .Select(pair => pair.Split(':'))
+                      .Where(parts => parts.Length == 2 &&
+                             (parts[0]?.Trim()?.Equals(key, StringComparison.OrdinalIgnoreCase) == true ||
+                              (key == "allDmg" && parts[0]?.Trim()?.Equals("dmgAll", StringComparison.OrdinalIgnoreCase) == true)))
+                      .Select(parts => double.TryParse(parts[1]?.Trim(), out var v) ? Math.Max(0, v - 1) : 0)
+                      .FirstOrDefault();
+        }
+        catch { return 0; }
+    }
+
+    void EquipGear((string Name, string Group, bool FromBank, double All, double Race) item)
+    {
+        if (string.IsNullOrWhiteSpace(item.Name)) return;
+
         if (item.FromBank) InBank(item.Name);
-        // TODO: Actual equip logic
+
+        // Bot.Inventory.EquipItem(item.Name);
     }
 
     #endregion
 
     #region Shop
 
-    private bool EnsureShopLoaded(string map, int shopId)
-    {
-        if (!string.IsNullOrWhiteSpace(map))
-            Join(map);
-
-        Bot.Shops.Load(shopId);
-        Bot.Sleep(800);
-
-        return Bot.Shops.IsLoaded && Bot.Shops.ID == shopId;
-    }
-
     public bool BuyItem(string map, int shopId, string itemName, int quantity, bool considerBank = true)
     {
-        if (string.IsNullOrWhiteSpace(itemName) || quantity <= 0)
-            return false;
+        if (string.IsNullOrWhiteSpace(itemName) || quantity <= 0) return false;
 
-        if (!EnsureShopLoaded(map, shopId))
-            return false;
+        if (!EnsureShopLoaded(map, shopId)) return false;
 
         if (considerBank)
             InBank(itemName);
 
         int have = Owned(itemName, isTemp: false);
         int need = Math.Max(0, quantity - have);
-        if (need == 0)
-            return true;
+        if (need == 0) return true;
 
         var item = GetShopItem(itemName);
-        if (item == null)
-            return false;
+        if (item == null) return false;
 
-        if (!CanBuyItem(itemName))
-            return false;
+        if (!CanBuyItem(itemName)) return false;
 
-        Bot.Shops.BuyItem(item.ID, item.ShopItemID, need);
-        Bot.Sleep(400);
-        return true;
+        try
+        {
+            Bot.Shops.BuyItem(item.ID, item.ShopItemID, need);
+            Bot.Sleep(D4);
+            return true;
+        }
+        catch { return false; }
     }
 
-    public ShopItem GetShopItem(string name)
+    private bool EnsureShopLoaded(string map, int shopId)
     {
+        if (!string.IsNullOrWhiteSpace(map))
+            Join(map);
+
+        try
+        {
+            Bot.Shops.Load(shopId);
+            Bot.Sleep(D4);
+            return Bot.Shops?.IsLoaded == true && Bot.Shops.ID == shopId;
+        }
+        catch { return false; }
+    }
+
+    private ShopItem GetShopItem(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return null;
+        if (Bot?.Shops?.Items == null) return null;
+
         return Bot.Shops.Items.FirstOrDefault(i =>
-            i.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            i?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true);
     }
 
-    public bool CanBuyItem(string itemName)
+    private bool CanBuyItem(string itemName)
     {
+        if (string.IsNullOrWhiteSpace(itemName)) return false;
+        if (Bot?.Player == null) return false;
+
         var item = GetShopItem(itemName);
         if (item == null) return false;
 
@@ -685,11 +855,13 @@ public class CoreUltras
                MeetsRepRequirement(itemName);
     }
 
-    public bool MeetsRepRequirement(string itemName)
+    private bool MeetsRepRequirement(string itemName)
     {
+        if (string.IsNullOrWhiteSpace(itemName)) return true;
+        if (Bot?.Reputation == null) return true;
+
         var item = GetShopItem(itemName);
-        if (item == null || string.IsNullOrEmpty(item.Faction))
-            return true;
+        if (item == null || string.IsNullOrWhiteSpace(item.Faction)) return true;
 
         return Bot.Reputation.GetRank(item.Faction) >= item.RequiredReputation;
     }
@@ -698,57 +870,115 @@ public class CoreUltras
 
     #region Drops
 
-    public bool HasDrop(string name) =>
-        Bot.Drops.CurrentDrops.Any(d =>
-            string.Equals(d, name, StringComparison.OrdinalIgnoreCase));
+    public bool HasDrop(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return false;
+        return Bot?.Drops?.CurrentDrops?.Any(d =>
+            string.Equals(d, name, StringComparison.OrdinalIgnoreCase)) ?? false;
+    }
 
-    public bool HasDrop(int id) =>
-        Bot.Drops.CurrentDropInfos.Any(i => i.ID == id);
+    public bool HasDrop(int id)
+    {
+        if (id <= 0) return false;
+        return Bot?.Drops?.CurrentDropInfos?.Any(i => i.ID == id) ?? false;
+    }
 
-    public ItemBase GetDropItem(string name) =>
-        Bot.Drops.CurrentDropInfos.FirstOrDefault(i =>
+    public ItemBase GetDropItem(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name)) return null;
+        return Bot?.Drops?.CurrentDropInfos?.FirstOrDefault(i =>
             string.Equals(i.Name, name, StringComparison.OrdinalIgnoreCase));
+    }
 
-    public ItemBase GetDropItem(int id) =>
-        Bot.Drops.CurrentDropInfos.FirstOrDefault(i => i.ID == id);
+    public ItemBase GetDropItem(int id)
+    {
+        if (id <= 0) return null;
+        return Bot?.Drops?.CurrentDropInfos?.FirstOrDefault(i => i.ID == id);
+    }
 
     public void PickupItems(params string[] names)
     {
+        if (names == null || names.Length == 0) return;
+
         foreach (string name in names)
+        {
+            if (string.IsNullOrWhiteSpace(name)) continue;
+
             if (HasDrop(name))
+            {
                 Bot.Drops.Pickup(name);
+                Bot.Sleep(D1);
+            }
+        }
     }
 
     public void PickupItems(params int[] ids)
     {
+        if (ids == null || ids.Length == 0) return;
+
         foreach (int id in ids)
+        {
+            if (id <= 0) continue;
+
             if (HasDrop(id))
             {
                 var item = GetDropItem(id);
                 if (item != null)
-                    Bot.Drops.Pickup(item.Name);
+                {
+                    Bot.Drops.Pickup(id);
+                    Bot.Sleep(D1);
+                }
             }
+        }
     }
 
-    public void WaitForDrop(string name, int timeout = 30000)
+    public bool WaitForDrop(string name, int timeout = 30000)
     {
+        if (string.IsNullOrWhiteSpace(name)) return false;
+
         var sw = System.Diagnostics.Stopwatch.StartNew();
-        while (!HasDrop(name) && sw.ElapsedMilliseconds < timeout)
-            Bot.Sleep(100);
+        try
+        {
+            while (!HasDrop(name) && sw.ElapsedMilliseconds < timeout)
+                Bot.Sleep(D1);
+
+            return HasDrop(name);
+        }
+        finally
+        {
+            sw?.Stop();
+        }
     }
 
-    public void WaitForDrop(int id, int timeout = 30000)
+    public bool WaitForDrop(int id, int timeout = 30000)
     {
+        if (id <= 0) return false;
+
         var sw = System.Diagnostics.Stopwatch.StartNew();
-        while (!HasDrop(id) && sw.ElapsedMilliseconds < timeout)
-            Bot.Sleep(100);
+        try
+        {
+            while (!HasDrop(id) && sw.ElapsedMilliseconds < timeout)
+                Bot.Sleep(D1);
+
+            return HasDrop(id);
+        }
+        finally
+        {
+            sw?.Stop();
+        }
     }
 
-    public bool HasAnyDrop(params string[] names) =>
-        names.Any(name => HasDrop(name));
+    public bool HasAnyDrop(params string[] names)
+    {
+        if (names == null || names.Length == 0) return false;
+        return names.Any(name => !string.IsNullOrWhiteSpace(name) && HasDrop(name));
+    }
 
-    public bool HasAnyDrop(params int[] ids) =>
-        ids.Any(id => HasDrop(id));
+    public bool HasAnyDrop(params int[] ids)
+    {
+        if (ids == null || ids.Length == 0) return false;
+        return ids.Any(id => id > 0 && HasDrop(id));
+    }
 
     #endregion
 
@@ -756,12 +986,14 @@ public class CoreUltras
 
     public double GetHealthPercentage()
     {
-        return Bot.Player.MaxHealth > 0 ? (double)Bot.Player.Health / Bot.Player.MaxHealth * 100 : 0;
+        if (Bot?.Player == null || Bot.Player.MaxHealth <= 0) return 0;
+        return (double)Bot.Player.Health / Bot.Player.MaxHealth * 100;
     }
 
     public double GetManaPercentage()
     {
-        return Bot.Player.MaxMana > 0 ? (double)Bot.Player.Mana / Bot.Player.MaxMana * 100 : 0;
+        if (Bot?.Player == null || Bot.Player.MaxMana <= 0) return 0;
+        return (double)Bot.Player.Mana / Bot.Player.MaxMana * 100;
     }
 
     public bool IsHealthLow(double percentage = 30)
@@ -786,11 +1018,13 @@ public class CoreUltras
 
     public bool IsFullHealth()
     {
+        if (Bot?.Player == null) return false;
         return Bot.Player.Health >= Bot.Player.MaxHealth;
     }
 
     public bool IsFullMana()
     {
+        if (Bot?.Player == null) return false;
         return Bot.Player.Mana >= Bot.Player.MaxMana;
     }
 
@@ -801,16 +1035,20 @@ public class CoreUltras
 
     public bool IsDead()
     {
+        if (Bot?.Player == null) return true; // Assume dead if can't check
         return Bot.Player.State == 0;
     }
 
     public bool IsIdle()
     {
+        if (Bot?.Player == null) return false;
         return Bot.Player.State == 1;
     }
 
     public double GetDistanceTo(int x, int y)
     {
+        if (Bot?.Player == null) return double.MaxValue;
+
         int deltaX = Bot.Player.X - x;
         int deltaY = Bot.Player.Y - y;
         return Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -823,22 +1061,25 @@ public class CoreUltras
 
     public string GetCurrentClassName()
     {
-        return Bot.Player.CurrentClass?.Name ?? "No Class";
+        return Bot?.Player?.CurrentClass?.Name ?? "No Class";
     }
 
     public bool HasClassEquipped(string className)
     {
-        return Bot.Player.CurrentClass?.Name?.Equals(className, StringComparison.OrdinalIgnoreCase) == true;
+        if (string.IsNullOrWhiteSpace(className)) return false;
+        return Bot?.Player?.CurrentClass?.Name?.Equals(className, StringComparison.OrdinalIgnoreCase) == true;
     }
 
     public bool IsCurrentClassMaxRank()
     {
+        if (Bot?.Player == null) return false;
         return Bot.Player.CurrentClassRank >= 10;
     }
 
     public bool IsInCell(string cellName)
     {
-        return Bot.Player.Cell?.Equals(cellName, StringComparison.OrdinalIgnoreCase) == true;
+        if (string.IsNullOrWhiteSpace(cellName)) return false;
+        return Bot?.Player?.Cell?.Equals(cellName, StringComparison.OrdinalIgnoreCase) == true;
     }
 
     public bool NeedsRest(double healthThreshold = 50, double manaThreshold = 50)
@@ -848,23 +1089,25 @@ public class CoreUltras
 
     public bool ShouldRest()
     {
+        if (Bot?.Player == null) return false;
         return !Bot.Player.InCombat && !IsFullHealthAndMana();
     }
 
     public string GetTargetName()
     {
-        return Bot.Player.Target?.Name ?? string.Empty;
+        return Bot?.Player?.Target?.Name ?? string.Empty;
     }
 
     public double GetTargetHealthPercentage()
     {
-        if (Bot.Player.Target == null || Bot.Player.Target.MaxHP == 0) return 0;
-        return (double)Bot.Player.Target.HP / Bot.Player.Target.MaxHP * 100;
+        var target = Bot?.Player?.Target;
+        if (target == null || target.MaxHP <= 0) return 0;
+        return (double)target.HP / target.MaxHP * 100;
     }
 
     public bool IsTargetAlive()
     {
-        return Bot.Player.Target?.Alive == true;
+        return Bot?.Player?.Target?.Alive == true;
     }
 
     public bool IsTargetHealthLow(double percentage = 30)
@@ -874,17 +1117,20 @@ public class CoreUltras
 
     public bool HasEnoughGold(int amount)
     {
+        if (Bot?.Player == null) return false;
         return Bot.Player.Gold >= amount;
     }
 
     public PlayerStats GetPlayerStats()
     {
-        return Bot.Player.Stats ?? new PlayerStats();
+        return Bot?.Player?.Stats ?? new PlayerStats();
     }
 
     public int GetStatValue(string statName)
     {
-        var stats = Bot.Player.Stats;
+        if (string.IsNullOrWhiteSpace(statName)) return 0;
+
+        var stats = Bot?.Player?.Stats;
         if (stats == null) return 0;
 
         return statName.ToUpper() switch
@@ -903,26 +1149,27 @@ public class CoreUltras
 
     public float GetCriticalChance()
     {
-        return Bot.Player.Stats?.CriticalChance ?? 0f;
+        return Bot?.Player?.Stats?.CriticalChance ?? 0f;
     }
 
     public float GetCriticalMultiplier()
     {
-        return Bot.Player.Stats?.CriticalMultiplier ?? 0f;
+        return Bot?.Player?.Stats?.CriticalMultiplier ?? 0f;
     }
 
     public float GetEvasionChance()
     {
-        return Bot.Player.Stats?.EvasionChance ?? 0f;
+        return Bot?.Player?.Stats?.EvasionChance ?? 0f;
     }
 
     public float GetHaste()
     {
-        return Bot.Player.Stats?.Haste ?? 0f;
+        return Bot?.Player?.Stats?.Haste ?? 0f;
     }
 
     public bool IsReadyForCombat()
     {
+        if (Bot?.Player == null) return false;
         return Bot.Player.Alive && Bot.Player.Loaded;
     }
 
@@ -936,6 +1183,7 @@ public class CoreUltras
     public void Join(string map, string cell = "Enter", string pad = "Spawn", bool publicRoom = false, int? roomNumber = null)
     {
         if (string.IsNullOrWhiteSpace(map)) return;
+        if (Bot?.Map == null || Bot?.Player == null) return;
 
         string mapName = map.Split('-')[0].Trim();
 
@@ -952,20 +1200,27 @@ public class CoreUltras
                 ? $"{mapName}-{roomNumber.Value}"
                 : (map.Contains("-") ? map : $"{mapName}-{GenerateRoomID(10000, 100000)}");
 
-        if (Bot.Map.Name.Equals(mapName, StringComparison.OrdinalIgnoreCase))
+        if (Bot.Map.Name?.Equals(mapName, StringComparison.OrdinalIgnoreCase) == true)
             return;
 
-        while (!Bot.ShouldExit && !Bot.Map.Name.Equals(mapName, StringComparison.OrdinalIgnoreCase))
+        while (!Bot.ShouldExit && Bot.Map.Name?.Equals(mapName, StringComparison.OrdinalIgnoreCase) != true)
         {
             StopAttack();
-            Bot.Send.Packet($"%xt%zm%cmd%{Bot.Map.RoomID}%tfer%{Bot.Player.Username}%{target}%{cell}%{pad}%");
-            Bot.Wait.ForMapLoad(mapName);
+
+            try
+            {
+                Bot.Send.Packet($"%xt%zm%cmd%{Bot.Map.RoomID}%tfer%{Bot.Player.Username}%{target}%{cell}%{pad}%");
+                Bot.Wait.ForMapLoad(mapName);
+            }
+            catch { break; }
         }
         ResetMonsterSetupCache();
     }
 
     public void ChooseBestCell(string monsterNames, bool alt = false, string setCell = null, string setPad = "Spawn")
     {
+        if (Bot?.Monsters == null || Bot?.Map == null || Bot?.Player == null) return;
+
         var names = (monsterNames?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>())
             .Select(n => n?.Trim())
             .Where(n => !string.IsNullOrWhiteSpace(n))
@@ -974,15 +1229,13 @@ public class CoreUltras
         bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
         string pad = string.IsNullOrWhiteSpace(setPad) ? "Left" : setPad;
 
-        // Get monsters directly without using helper methods
         var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
             .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
             .Where(m => wildcard || names.Any(name =>
                 (m.Name ?? "").Equals(name, StringComparison.OrdinalIgnoreCase)))
             .ToList();
 
-        if (monsters.Count == 0)
-            return;
+        if (monsters.Count == 0) return;
 
         string targetCell =
             !string.IsNullOrWhiteSpace(setCell) ? setCell
@@ -992,17 +1245,21 @@ public class CoreUltras
                       .First().Key;
 
         var mapCells = Bot.Map.Cells as IEnumerable<string> ?? Array.Empty<string>();
-        if (!mapCells.Contains(targetCell))
-            return;
+        if (!mapCells.Contains(targetCell)) return;
 
         _bestCell = targetCell;
         _bestPad = pad;
 
-        if (!string.IsNullOrWhiteSpace(targetCell) && !string.Equals(Bot.Player.Cell, targetCell, StringComparison.Ordinal))
+        if (!string.IsNullOrWhiteSpace(targetCell) &&
+            !string.Equals(Bot.Player.Cell, targetCell, StringComparison.Ordinal))
         {
-            Bot.Map.Jump(targetCell, pad);
-            Bot.Wait.ForCellChange(targetCell);
-            Bot.Player.SetSpawnPoint();
+            try
+            {
+                Bot.Map.Jump(targetCell, pad);
+                Bot.Wait.ForCellChange(targetCell);
+                Bot.Player.SetSpawnPoint();
+            }
+            catch { }
         }
     }
 
@@ -1019,7 +1276,7 @@ public class CoreUltras
                 ) as string;
                 if (!string.IsNullOrWhiteSpace(v)) return v;
             }
-            catch { /* non-Windows placeh */ }
+            catch { /* non-Windows fallback */ }
 
             return $"{Environment.MachineName}|{Environment.UserName}";
         }
@@ -1036,39 +1293,35 @@ public class CoreUltras
 
     double GetLowestHpPercentage()
     {
-        try
+        if (Bot?.Map?.PlayerNames == null) return 100.0;
+
+        var playerNames = Bot.Map.PlayerNames;
+        if (playerNames.Count == 0) return 100.0;
+
+        double lowestHpPercentage = 100.0;
+
+        foreach (string playerName in playerNames)
         {
-            List<string> playerNames = Bot.Map.PlayerNames;
-            if (playerNames == null || playerNames.Count == 0) return 100.0;
-            double lowestHpPercentage = 100.0;
+            if (string.IsNullOrWhiteSpace(playerName)) continue;
 
-            foreach (string playerName in playerNames)
+            try
             {
-                try
-                {
-                    int currentHp = Bot.Flash.GetGameObject<int>($"world.uoTree.{playerName}.intHP");
-                    int maxHp = Bot.Flash.GetGameObject<int>($"world.uoTree.{playerName}.intHPMax");
-                    if (maxHp <= 0 || currentHp < 0) continue;
+                int currentHp = Bot.Flash.GetGameObject<int>($"world.uoTree.{playerName}.intHP");
+                int maxHp = Bot.Flash.GetGameObject<int>($"world.uoTree.{playerName}.intHPMax");
 
-                    double hpPercentage = (double)currentHp / maxHp * 100.0;
+                if (maxHp <= 0 || currentHp < 0) continue;
 
-                    if (hpPercentage < lowestHpPercentage)
-                    {
-                        lowestHpPercentage = hpPercentage;
-                    }
-                }
-                catch (System.Exception playerEx)
+                double hpPercentage = (double)currentHp / maxHp * 100.0;
+
+                if (hpPercentage < lowestHpPercentage)
                 {
-                    continue;
+                    lowestHpPercentage = hpPercentage;
                 }
             }
+            catch { continue; }
+        }
 
-            return lowestHpPercentage;
-        }
-        catch (System.Exception ex)
-        {
-            return 100.0;
-        }
+        return lowestHpPercentage;
     }
 
     #endregion
@@ -1078,30 +1331,50 @@ public class CoreUltras
     readonly int skillsDelay = 50;
     public bool supportMode = false;
 
-    public bool Cast(int index) // basic
+    public bool Cast(int index)
     {
-        if (!Bot.Skills.CanUseSkill(index))
-            return false;
+        if (index < 1 || index > 4) return false;
+        if (Bot?.Skills == null) return false;
 
-        Bot.Skills.UseSkill(index);
+        if (!Bot.Skills.CanUseSkill(index)) return false;
 
-        return true;
+        try
+        {
+            Bot.Skills.UseSkill(index);
+            return true;
+        }
+        catch { return false; }
     }
 
     public void DisableSkills()
     {
-        _cts?.Cancel();
-        _runSkills = null;
-        _cts = null;
+        try
+        {
+            _cts?.Cancel();
+        }
+        catch { }
+        finally
+        {
+            _runSkills = null;
+            _cts = null;
+        }
     }
 
     public void EnableSkills()
     {
-        if (_runSkills != null && !_runSkills.IsCompleted)
-            return;
+        if (_runSkills != null && !_runSkills.IsCompleted) return;
 
-        _cts = new CancellationTokenSource();
-        _runSkills = Task.Run(() => SkillsAsync(_cts.Token));
+        try
+        {
+            _cts = new CancellationTokenSource();
+            _runSkills = Task.Run(() => SkillsAsync(_cts.Token));
+        }
+        catch
+        {
+            _cts?.Dispose();
+            _cts = null;
+            _runSkills = null;
+        }
     }
 
     async Task SkillsAsync(CancellationToken token)
@@ -1112,37 +1385,36 @@ public class CoreUltras
             {
                 Skills();
             }
-            catch (Exception ex)
-            {
-                Alert("ERROR", $"Skills error: {ex.Message}");
-            }
+            catch { }
 
             try
             {
                 await Task.Delay(skillsDelay, token);
             }
-            catch (TaskCanceledException)
+            catch (TaskCanceledException) { break; }
+            catch
             {
-                break;
-            }
-            catch (Exception ex)
-            {
-                Alert("ERROR", $"Delay error: {ex.Message}");
-                await Task.Delay(1000);
+                try
+                {
+                    await Task.Delay(1000, token);
+                }
+                catch (TaskCanceledException) { break; }
+                catch { }
             }
         }
     }
 
     void Skills()
     {
+        if (Bot?.Player == null) return;
         if (!Bot.Player.HasTarget) return;
 
-        string c = Bot.Player.CurrentClass?.Name;
-        string className = c.ToLower();
+        string className = Bot.Player.CurrentClass?.Name?.ToLower();
+        if (string.IsNullOrWhiteSpace(className)) return;
 
         switch (className)
         {
-            // --- ultra classes ---------------------------------------------------------------
+            // Ultra classes
             case "legion revenant": LegionRevenantClass(); break;
             case "archpaladin": ArchPaladinClass(); break;
             case "stonecrusher": StoneCrusherClass(); break;
@@ -1154,24 +1426,28 @@ public class CoreUltras
             case "dragon of time": DragonOfTimeClass(); break;
             case "archmage": ArchmageClass(); break;
 
-            // --- chrono classes ---------------------------------------------------------------
+            // Chrono classes
             case "chrono dataknight": ChronoDataKnightClass(); break;
             case "shadowweaver of time": ShadowWeaverOfTime(); break;
 
-            // --- common classes ---------------------------------------------------------------
+            // Common classes
             case "master ranger": MasterRangerClass(); break;
             case "dragonslayer general": DragonslayerGeneralClass(); break;
             case "cryomancer": CryomancerClass(); break;
+            case "dragon knight": DragonKnightClass(); break;
 
-            // --- basic classes ---------------------------------------------------------------
+            // Basic classes
             case "mage": MageClass(); break;
             case "dragonslayer": DragonslayerClass(); break;
 
-            default: Alert("SKILL", $"No rotation for: {className}"); break;
+            default:
+                // No rotation available - just return silently
+                break;
         }
     }
 
     // --- ultra classes ---------------------------------------------------------------
+
     void LegionRevenantClass()
     {
         if (Cast(3)) return;
@@ -1358,6 +1634,7 @@ public class CoreUltras
     }
 
     // --- chrono classes ---------------------------------------------------------------
+
     void ChronoDataKnightClass()
     {
         int TemporalRift = GetAuraStacks("Temporal Rift", true);
@@ -1385,6 +1662,7 @@ public class CoreUltras
     }
 
     // --- common classes ---------------------------------------------------------------
+
     void MasterRangerClass()
     {
         int Marks = GetAuraStacks("Marks", true);
@@ -1440,7 +1718,21 @@ public class CoreUltras
         if (Cast(1)) return;
     }
 
+    void DragonKnightClass()
+    {
+        bool Flammable = HasAura("Flammable");
+        bool Dumbfounded = HasAura("Dumbfounded");
+
+        if (Cast(1)) return;
+        if (Flammable)
+            if (Cast(4)) return;
+        if (Cast(2)) return;
+        if (Dumbfounded)
+            if (Cast(3)) return;
+    }
+
     // --- basic classes ---------------------------------------------------------------
+
     void MageClass()
     {
         bool Scorched = HasAura("Scorched");
@@ -1461,11 +1753,16 @@ public class CoreUltras
     #region Auras
 
     public IEnumerable<Aura> GetAuras(bool self) =>
-         (self ? Bot?.Self?.Auras : Bot?.Target?.Auras) ?? Enumerable.Empty<Aura>();
+        (self ? Bot?.Self?.Auras : Bot?.Target?.Auras) ?? Enumerable.Empty<Aura>();
 
-    public Aura GetAuraByName(string auraName, bool self) =>
-         string.IsNullOrWhiteSpace(auraName) ? null : GetAuras(self).FirstOrDefault(a => a != null &&
-         !string.IsNullOrWhiteSpace(a.Name) && auraName.Equals(a.Name, StringComparison.OrdinalIgnoreCase));
+    public Aura GetAuraByName(string auraName, bool self)
+    {
+        if (string.IsNullOrWhiteSpace(auraName)) return null;
+
+        return GetAuras(self).FirstOrDefault(a => a != null &&
+            !string.IsNullOrWhiteSpace(a.Name) &&
+            auraName.Equals(a.Name, StringComparison.OrdinalIgnoreCase));
+    }
 
     public bool HasAura(string auraName, bool self = false)
     {
@@ -1474,9 +1771,11 @@ public class CoreUltras
 
     public bool HasAnyAura(List<string> auraNames)
     {
+        if (auraNames == null || auraNames.Count == 0) return false;
+
         foreach (string aura in auraNames)
         {
-            if (HasAura(aura))
+            if (!string.IsNullOrWhiteSpace(aura) && HasAura(aura))
                 return true;
         }
         return false;
@@ -1486,28 +1785,38 @@ public class CoreUltras
     {
         if (string.IsNullOrWhiteSpace(auraName)) return 0;
 
-        object v = self ? Bot?.Self?.GetAuraValue(auraName)
-                          : Bot?.Target?.GetAuraValue(auraName);
-        if (v == null) return 0;
+        try
+        {
+            object v = self ? Bot?.Self?.GetAuraValue(auraName)
+                            : Bot?.Target?.GetAuraValue(auraName);
 
-        return v is int i ? i
-             : v is long l ? (int)l
-             : v is double d ? (int)Math.Round(d)
-             : v is float f ? (int)Math.Round(f)
-             : int.TryParse(v.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var n) ? n
-             : 0;
+            if (v == null) return 0;
+
+            return v is int i ? i
+                 : v is long l ? (int)l
+                 : v is double d ? (int)Math.Round(d)
+                 : v is float f ? (int)Math.Round(f)
+                 : int.TryParse(v.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var n) ? n
+                 : 0;
+        }
+        catch { return 0; }
     }
 
     public int GetAuraSecondsRemaining(string auraName, bool self = false)
     {
-        var aura = GetAuraByName(auraName, self);
-        if (aura == null || aura.Timestamp <= 0 || aura.Duration <= 0)
-            return 0;
+        if (string.IsNullOrWhiteSpace(auraName)) return 0;
 
-        var applied = DateTimeOffset.FromUnixTimeMilliseconds(aura.Timestamp);
-        var expires = applied.AddSeconds(aura.Duration);
-        var remaining = (int)(expires - DateTimeOffset.Now).TotalSeconds;
-        return Math.Max(0, remaining);
+        var aura = GetAuraByName(auraName, self);
+        if (aura == null || aura.Timestamp <= 0 || aura.Duration <= 0) return 0;
+
+        try
+        {
+            var applied = DateTimeOffset.FromUnixTimeMilliseconds(aura.Timestamp);
+            var expires = applied.AddSeconds(aura.Duration);
+            var remaining = (int)(expires - DateTimeOffset.Now).TotalSeconds;
+            return Math.Max(0, remaining);
+        }
+        catch { return 0; }
     }
 
     #endregion
@@ -1570,10 +1879,7 @@ public class CoreUltras
                 }
             }
         }
-        catch (Exception ex)
-        {
-            Bot.Log($"[PACKET] ChargeListener error: {ex.Message}");
-        }
+        catch (Exception ex) { }
     }
 
     async void ChaosHarpyListener(dynamic packet)
@@ -1594,9 +1900,8 @@ public class CoreUltras
                 if (!string.IsNullOrEmpty(animStr) &&
                     animStr.Equals("Charge", StringComparison.OrdinalIgnoreCase))
                 {
-                    //await PulseChargeAsync(2000).ConfigureAwait(false);
                     DisableSkills();
-                    Bot.Sleep(d1);
+                    Bot.Sleep(D1);
                     await Task.Delay(500);
                     Bot.Skills.UseSkill(5);
                     await Task.Delay(500);
@@ -1605,10 +1910,7 @@ public class CoreUltras
                 }
             }
         }
-        catch (Exception ex)
-        {
-            Bot.Log($"[PACKET] ChargeListener error: {ex.Message}");
-        }
+        catch (Exception ex) { }
     }
 
     #endregion
@@ -1617,44 +1919,61 @@ public class CoreUltras
 
     public void TauntCycle(string name, string monster, string aura, int checkDelay)
     {
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(monster) || string.IsNullOrWhiteSpace(aura)) return;
+        if (Bot?.Combat == null) return;
+
         if (HasClassEquipped(name))
         {
-            int Effect = GetAuraSecondsRemaining(aura);
-            Bot.Combat.Attack(monster); Bot.Sleep(checkDelay);
-            if (Effect < 2) UsePotion();
+            int effect = GetAuraSecondsRemaining(aura);
+            Bot.Combat.Attack(monster);
+
+            if (checkDelay > 0)
+                Bot.Sleep(checkDelay);
+
+            if (effect < 2)
+                UsePotion();
         }
     }
 
     public void TauntCharge(string name, string monster, string aura, int checkDelay)
     {
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(monster)) return;
+        if (Bot?.Combat == null) return;
+
         if (HasClassEquipped(name))
         {
-            Bot.Combat.Attack(monster); Bot.Sleep(checkDelay);
-            if (_chargeDetected) UsePotion();
+            Bot.Combat.Attack(monster);
+
+            if (checkDelay > 0)
+                Bot.Sleep(checkDelay);
+
+            if (_chargeDetected)
+                UsePotion();
         }
     }
 
-    public void UltraWardenTaunter() // custom
+    public void UltraWardenTaunter()
     {
         const string USED_THRESHOLDS_KEY = "warden.usedThresholds";
 
+        if (Bot?.Combat == null || Bot?.Player == null) return;
+
         Bot.Combat.Attack("Ultra Warden");
-        var t = Bot?.Player?.Target;
+        var t = Bot.Player.Target;
         if (t?.HP == null || t.HP <= 0 || t.MaxHP <= 0) return;
 
         int currentHp = t.HP;
         int maxHp = t.MaxHP;
-
         int currentThreshold = (currentHp * 100) / maxHp;
         int thresholdBand = (currentThreshold / 5) * 5;
 
+        HashSet<int> usedThresholds;
         var usedObj = AppDomain.CurrentDomain.GetData(USED_THRESHOLDS_KEY);
-        var usedThresholds = usedObj as HashSet<int> ?? new HashSet<int>();
+        usedThresholds = usedObj as HashSet<int> ?? new HashSet<int>();
 
         if (!usedThresholds.Contains(thresholdBand))
         {
             double percentRemaining = ((double)currentHp / maxHp) * 100;
-
             usedThresholds.Add(thresholdBand);
             AppDomain.CurrentDomain.SetData(USED_THRESHOLDS_KEY, usedThresholds);
 
@@ -1665,22 +1984,24 @@ public class CoreUltras
         Bot.Sleep(150);
     }
 
-    public void DrakathTaunter() // custom
+    public void DrakathTaunter()
     {
         const string THRESHOLD_KEY = "drakath.lastThreshold";
+
+        if (Bot?.Combat == null || Bot?.Player == null) return;
+
         var bands = new (int thr, int rng)[] {
-                    (18_000_000, 120_000), (16_000_000, 120_000), (14_000_000, 120_000),
-                    (12_000_000, 120_000), (10_000_000, 120_000), (8_000_000, 80_000),
-                    (6_000_000, 80_000), (4_000_000, 80_000), (2_000_000, 80_000)
-                };
+            (18_000_000, 120_000), (16_000_000, 120_000), (14_000_000, 120_000),
+            (12_000_000, 120_000), (10_000_000, 120_000), (8_000_000, 80_000),
+            (6_000_000, 80_000), (4_000_000, 80_000), (2_000_000, 80_000)
+        };
 
         Bot.Combat.Attack("Champion Drakath");
-        var t = Bot?.Player?.Target;
+        var t = Bot.Player.Target;
         if (t?.HP == null || t.HP <= 0) return;
 
         int hp = t.HP;
         var lastThreshold = AppDomain.CurrentDomain.GetData(THRESHOLD_KEY) as int? ?? int.MinValue;
-
         var matchingBand = Array.Find(bands, band => Math.Abs(hp - band.thr) <= band.rng);
 
         if (matchingBand != default && lastThreshold != matchingBand.thr)
@@ -1696,33 +2017,24 @@ public class CoreUltras
 
     public void KillWithPriority(string primaryName, int primaryMapId, string priorityName1, int priorityMapId1, string priorityName2, int priorityMapId2)
     {
-        if (IsAliveByMapId(priorityMapId1, name: priorityName1))
+        if (string.IsNullOrWhiteSpace(primaryName)) return;
+
+        if (!string.IsNullOrWhiteSpace(priorityName1) && IsAliveByMapId(priorityMapId1, name: priorityName1))
             KillByMapId(priorityMapId1, name: priorityName1);
-        else if (IsAliveByMapId(priorityMapId2, name: priorityName2))
+        else if (!string.IsNullOrWhiteSpace(priorityName2) && IsAliveByMapId(priorityMapId2, name: priorityName2))
             KillByMapId(priorityMapId2, name: priorityName2);
         else
             KillByMapId(primaryMapId, name: primaryName);
-        Bot.Sleep(d1);
+
+        Bot.Sleep(D1);
     }
 
     // --- helpers ---------------------------------------------------
 
-    /*private bool IsAliveByMapId(int? mapId = null, string? name = null, int? id = null)
-    {
-        var monsters = Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>();
-
-        if (mapId.HasValue)
-            monsters = monsters.Where(m => m.MapID == mapId.Value);
-        if (name != null)
-            monsters = monsters.Where(m => m.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true);
-        if (id.HasValue)
-            monsters = monsters.Where(m => m.ID == id.Value);
-
-        return monsters.Any(m => m.Alive);
-    }*/
-
     public void KillByMapId(int mapId, string? name = null, int? id = null)
     {
+        if (Bot?.Combat == null) return;
+
         if (IsAliveByMapId(mapId, name, id))
         {
             Bot.Combat.Attack(mapId);
@@ -1732,54 +2044,54 @@ public class CoreUltras
 
     public void WaitForArmy(int quantity)
     {
+        if (Bot?.Map == null) return;
+
         int need = Math.Max(0, quantity);
         int required = need + 1; // + you
 
         if (Bot.Map.PlayerCount >= required)
         {
             int othersNow = Math.Max(0, Bot.Map.PlayerCount - 1);
-            Alert("ARMY", $"Ready: have {othersNow} others + you (needed {need}).");
             return;
         }
 
         while (!Bot.ShouldExit && Bot.Map.PlayerCount < required)
         {
             int others = Math.Max(0, Bot.Map.PlayerCount - 1);
-            Alert("ARMY", $"Waiting for {need} additional players. Current: {others} others + you");
-        }
-
-        if (!Bot.ShouldExit)
-        {
-            int othersNow = Math.Max(0, Bot.Map.PlayerCount - 1);
-            Alert("ARMY", $"Ready: have {othersNow} others + you (needed {need}).");
+            Bot.Sleep(1000);
         }
     }
 
     public bool MonsterAlive(string name)
     {
+        if (string.IsNullOrWhiteSpace(name)) return false;
+        if (Bot?.Monsters?.MapMonsters == null) return false;
+
         return Bot.Monsters.MapMonsters
-            .Any(m => m.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true && m.Alive);
+            .Any(m => m?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true && m.Alive);
     }
 
     public void StopAttack()
     {
+        if (Bot?.Combat == null || Bot?.Map == null || Bot?.Player == null) return;
+
         Bot.Combat.CancelAutoAttack();
         Bot.Combat.CancelTarget();
 
         var cellsList = Bot.Map.Cells ?? new List<string>();
-        var monstersList = Bot.Monsters.MapMonsters ?? new List<Monster>();
+        var monstersList = Bot.Monsters?.MapMonsters ?? new List<Monster>();
 
         string safeCell = cellsList
-            .Where(c => !string.IsNullOrWhiteSpace(c)
-                        && !c.Equals("Wait", StringComparison.OrdinalIgnoreCase)
-                        && !c.Equals("Blank", StringComparison.OrdinalIgnoreCase)
-                        && !c.StartsWith("Cut", StringComparison.OrdinalIgnoreCase))
-            .OrderBy(c => monstersList.Count(m => m != null && m.Cell == c))
+            .Where(c => !string.IsNullOrWhiteSpace(c) &&
+                       !c.Equals("Wait", StringComparison.OrdinalIgnoreCase) &&
+                       !c.Equals("Blank", StringComparison.OrdinalIgnoreCase) &&
+                       !c.StartsWith("Cut", StringComparison.OrdinalIgnoreCase))
+            .OrderBy(c => monstersList.Count(m => m?.Cell == c))
             .FirstOrDefault() ?? Bot.Player.Cell;
 
         string pad = string.IsNullOrWhiteSpace(Bot.Player.Pad) ? "Left" : Bot.Player.Pad;
 
-        // hop until we’re out
+        // hop until we're out
         while (!Bot.ShouldExit && Bot.Player.State == 2)
         {
             if (!string.Equals(Bot.Player.Cell, safeCell, StringComparison.Ordinal))
@@ -1787,9 +2099,21 @@ public class CoreUltras
                 Bot.Map.Jump(safeCell, pad);
                 Bot.Wait.ForCellChange(safeCell);
             }
-            Bot.Sleep(d1);
+            Bot.Sleep(D1);
         }
-        Bot.Sleep(d3);
+        Bot.Sleep(D3);
+    }
+
+    public void DontAttack()
+    {
+        if (Bot?.Combat == null || Bot?.Map == null || Bot?.Player == null) return;
+
+        Bot.Combat.CancelAutoAttack();
+        Bot.Combat.CancelTarget();
+
+        DisableSkills();
+        Bot.Sleep(5000);
+        EnableSkills();
     }
 
     #endregion
