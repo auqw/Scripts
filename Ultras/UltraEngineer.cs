@@ -21,13 +21,20 @@ public class UltraEngineer
 
     void Kill()
     {
+        Core.UseAlchemyPotions(Core.GetBestTonicPotion());
+        Core.UseAlchemyPotions(Core.GetBestElixirPotion());
+        Core.BuyAlchemyPotion("Potent Honor Potion");
+        Core.EquipConsumable("Potent Honor Potion");
+
         Core.Join("ultraengineer");
         Core.WaitForArmy(3);
         Core.ChooseBestCell("Ultra Engineer");
         Core.EnableSkills();
 
         while (Core.MonsterAlive("Ultra Engineer") && !Bot.ShouldExit)
+        {
             Core.KillWithPriority("Ultra Engineer", 3, "Defense Drone", 2, "Attack Drone", 1);
+            Bot.Skills.UseSkill(5);
+        }
     }
 }
-
