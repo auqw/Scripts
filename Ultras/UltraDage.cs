@@ -10,31 +10,46 @@ public class UltraDage
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
+    public string taunterClass;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraDage";
-    public List<IOption> Options = new()
-    {
-        new Option<string>("primaryTaunter", "First Taunter Class", "Insert the name of the class that will taunt", "Chaos Avenger"),
-        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", "Legion DoomKnight"),
+    public List<IOption> Options = new() {
+        new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", "")
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
+        taunterClass = Bot.Config.Get<string>("taunterClass") ?? string.Empty;
+        if (string.IsNullOrEmpty(taunterClass))
+        {
+            Bot.Log("Taunter not filled in! Please edit Script Options.");
+            Bot.Stop();
+        }
+
         Core.Boot();
         Bot.Events.ExtensionPacketReceived += UltraDageListener;
 
-        Kill(primaryTaunter: Bot.Config.Get<string>("primaryTaunter"), secondaryTaunter: Bot.Config.Get<string>("secondaryTaunter"));
+        PreparePotions(taunterClass);
+        Kill(taunterClass);
 
         Bot.Events.ExtensionPacketReceived -= UltraDageListener;
         Bot.Stop();
     }
 
-    void Kill(string primaryTaunter, string secondaryTaunter)
+    void PreparePotions(string taunterClass)
     {
-        if (Core.HasClassEquipped(primaryTaunter) || Core.HasClassEquipped(secondaryTaunter))
+        Core.UseAlchemyPotions(Core.GetBestTonicPotion());
+        Core.UseAlchemyPotions(Core.GetBestElixirPotion());
+
+        Core.BuyAlchemyPotion("Potent Honor Potion");
+        Core.EquipConsumable("Potent Honor Potion");
+
+        if (Core.HasClassEquipped(taunterClass))
             Core.GetScrollOfEnrage();
+    }
 
-
+    void Kill(string taunterClass)
+    {
         Core.Join("ultradage");
         Core.WaitForArmy(3);
         Core.ChooseBestCell("Dage the Dark Lord");
@@ -42,12 +57,13 @@ public class UltraDage
 
         while (Core.MonsterAlive("Dage the Dark Lord") && !Bot.ShouldExit)
         {
-            if (Core.HasClassEquipped(primaryTaunter))
-                Core.TauntCycle(primaryTaunter, "Dage the Dark Lord", "Focus", 250);
-            else if (Core.HasClassEquipped(secondaryTaunter))
-                Core.TauntCycle(secondaryTaunter, "Dage the Dark Lord", "Focus", 700);
+            if (Core.HasClassEquipped(taunterClass))
+                Core.TauntCycle(taunterClass, "Dage the Dark Lord", "Focus", 250);
             else
+            {
                 Core.Kill("Dage the Dark Lord");
+                Bot.Skills.UseSkill(5);
+            }
         }
     }
 
@@ -68,16 +84,12 @@ public class UltraDage
         if (string.Equals(zone, "B", System.StringComparison.OrdinalIgnoreCase))
         {
             Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%856%422%8%");
-
             return;
         }
         if (string.IsNullOrEmpty(zone))
         {
             Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%491%421%8%");
-
             return;
         }
     }
 }
-
-
