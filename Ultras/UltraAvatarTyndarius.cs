@@ -1,20 +1,21 @@
-//cs_include Scripts/Ultras/CoreUltras.cs
-
-using System;
-using System.Dynamic;
-using Skua.Core.Interfaces;
-using Skua.Core.Options;
-
 public class UltraAvatarTyndarius
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "UltraAvatarTyndarius";
+    public List<IOption> Options = new()
+    {
+        new Option<string>("primaryTaunter", "First Taunter Class", "Insert the name of the class that will taunt", "ArchPaladin"),
+        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", "Lord Of Order"),
+    };
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.Boot();
 
-        Kill(primaryTaunter: "", secondaryTaunter: "");
+        Kill(primaryTaunter: Bot.Config.Get<string>("primaryTaunter"), secondaryTaunter: Bot.Config.Get<string>("secondaryTaunter"));
 
         Bot.Stop();
     }
@@ -40,4 +41,3 @@ public class UltraAvatarTyndarius
         }
     }
 }
-
