@@ -1,3 +1,10 @@
+//cs_include Scripts/Ultras/CoreUltras.cs
+
+using System;
+using System.Dynamic;
+using Skua.Core.Interfaces;
+using Skua.Core.Options;
+
 public class ChampionDrakath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
@@ -35,3 +42,4 @@ public class ChampionDrakath
         }
     }
 }
+
