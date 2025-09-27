@@ -10,11 +10,15 @@ public class Xyfrag
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "Xyfrag";
+    public List<IOption> Options = new() { new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", "Legion Revenant"), };
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.Boot();
 
-        Kill(taunterClass: "");
+        Kill(taunterClass: Bot.Config.Get<string>("taunterClass"));
 
         Bot.Stop();
     }
@@ -37,7 +41,7 @@ public class Xyfrag
             if (Core.HasClassEquipped(taunterClass))
                 Core.TauntCharge(taunterClass, "Xyfrag", "Focus", 250);
             else
-                Core.Attack("Xyfrag");
+                Core.Kill("Xyfrag");
         }
     }
 }
