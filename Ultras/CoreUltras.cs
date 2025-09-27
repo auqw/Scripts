@@ -603,12 +603,12 @@ public class CoreUltras
             Join("dragonrune");
             Bot.Shops.Load(549);
             if (Owned("Zealous Ink") < 1)
-                Bot.Shops.BuyItem("Zealous Ink", 5);
+                Bot.Shops.BuyItem(13286, 1639, 5);
 
             Join("spellcraft");
-            Bot.Drops.Add("Scroll of Enrage");
             Bot.Send.Packet("%xt%zm%crafting%1%spellOnStart%7%1555%Spell%"); Bot.Sleep(5000);
-            Bot.Send.Packet("%xt%zm%crafting%1%spellComplete%7%2330%Enrage%");
+            Bot.Send.Packet("%xt%zm%crafting%1%spellComplete%7%2330%Enrage%"); Bot.Sleep(D3);
+            Bot.Drops.Pickup("Scroll of Enrage");
         }
         EquipConsumable("Scroll of Enrage");
     }
