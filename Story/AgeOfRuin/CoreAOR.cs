@@ -53,6 +53,7 @@ public class CoreAOR
         ThelimaCity();
         MountMaleno();
         SanctuaryAiwass();
+        ForgeAlbedo();
     }
 
     private bool isSeaVoiceCalled = false;
@@ -903,6 +904,8 @@ public class CoreAOR
         if (Core.isCompletedBefore(10368))
             return;
 
+        ThelimaCity();
+
         Story.PreLoad(this);
 
         #region Useable Monsters
@@ -987,6 +990,8 @@ public class CoreAOR
         if (Core.isCompletedBefore(10384))
             return;
 
+        MountMaleno();
+
         Story.PreLoad(this);
 
         // 10375 - Raw Dove x12 (Dropped by Dove)
@@ -1055,6 +1060,95 @@ public class CoreAOR
 
         // 10384 - Commune with Aiwass x1 (Dropped by Anima Animus Aiwass)
         Story.KillQuest(10384, "sanctuaryaiwass", "Anima Animus Aiwass");
+    }
+
+    public void ForgeAlbedo()
+    {
+        if (Core.isCompletedBefore(10422))
+            return;
+
+        SanctuaryAiwass();
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Albedo Elemental", // UseableMonsters[0],
+	"Defensive Turret", // UseableMonsters[1],
+	"Runehawk Husk", // UseableMonsters[2],
+	"Collapsed Husk", // UseableMonsters[3],
+	"Albedo Match", // UseableMonsters[4],
+	"Defense Droid", // UseableMonsters[5],
+	"Flame of Albedo", // UseableMonsters[6]
+};
+        #endregion Useable Monsters
+
+        // 10413 | Discerning Threats
+        if (!Story.QuestProgression(10413))
+        {
+            Core.HuntMonsterQuest(10413,
+                ("forgealbedo", UseableMonsters[0], ClassType.Farm));
+        }
+
+
+        // 10414 | Model Students
+        Story.MapItemQuest(10414, "forgealbedo", new[] { 14959, 14960, 14961 });
+
+
+        // 10415 | System Delusion
+        Story.KillQuest(10415, "forgealbedo", UseableMonsters[1]);
+        Story.MapItemQuest(10415, "forgealbedo", 14962);
+
+
+        // 10416 | The Leap that Never Landed
+        Story.MapItemQuest(10416, "forgealbedo", 14963, 4);
+        Story.KillQuest(10416, "forgealbedo", UseableMonsters[2]);
+
+
+        // 10417 | Insistent Existence
+        Story.KillQuest(10417, "forgealbedo", UseableMonsters[3]);
+        Story.MapItemQuest(10417, "forgealbedo", 14964, 4);
+
+
+        // 10418 | Failed Reflection
+        if (!Story.QuestProgression(10418))
+        {
+            Core.HuntMonsterQuest(10418,
+                ("forgealbedo", UseableMonsters[4], ClassType.Farm));
+        }
+
+
+        // 10419 | Technically Aware
+        if (!Story.QuestProgression(10419))
+        {
+            Core.HuntMonsterQuest(10419,
+                ("forgealbedo", UseableMonsters[5], ClassType.Solo));
+        }
+
+
+        // 10420 | Mental Barrier
+        Story.KillQuest(10420, "forgealbedo", UseableMonsters[1]);
+        Story.MapItemQuest(10420, "forgealbedo", 14965, 6);
+
+
+        // 10421 | Lost Admin Privileges
+        if (!Story.QuestProgression(10421))
+        {
+            Core.HuntMonsterQuest(10421,
+                ("forgealbedo", UseableMonsters[1], ClassType.Farm),
+                ("forgealbedo", UseableMonsters[5], ClassType.Farm));
+        }
+
+
+        // 10422 | Conscious Unconsciousness
+        if (!Story.QuestProgression(10422))
+        {
+            Core.HuntMonsterQuest(10422,
+                ("forgealbedo", UseableMonsters[6], ClassType.Solo));
+        }
+
+
     }
 
     // Mostly for `Skye's Lightning` for the Merge

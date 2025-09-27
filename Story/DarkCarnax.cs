@@ -61,6 +61,7 @@ public class DarkCarnaxStory
     }
 
     private Task? carnaxMovementTask;
+    private CancellationTokenSource? carnaxMovementCts;
     private string currentCarnaxZone = "";
     private DateTime lastCarnaxMove = DateTime.MinValue;
     private readonly TimeSpan CarnaxMoveCooldown = TimeSpan.FromSeconds(2);
@@ -76,6 +77,9 @@ public class DarkCarnaxStory
         Bot.Options.AttackWithoutTarget = true;
 
         Bot.Events.RunToArea += DarkCarnaxMove;
+        
+        // Initialize cancellation token for movement tasks
+        carnaxMovementCts = new CancellationTokenSource();
 
         if (Core.CheckInventory("Dragon of Time"))
         {
@@ -101,6 +105,12 @@ public class DarkCarnaxStory
         Adv.GearStore(true);
 
         Bot.Events.RunToArea -= DarkCarnaxMove;
+        
+        // Cancel any pending movement tasks and dispose resources
+        carnaxMovementCts?.Cancel();
+        carnaxMovementCts?.Dispose();
+        carnaxMovementCts = null;
+        carnaxMovementTask = null;
     }
 
     private void DarkCarnaxMove(string zone)
@@ -120,20 +130,27 @@ public class DarkCarnaxStory
 
         carnaxMovementTask = Task.Run(async () =>
         {
-            await Task.Delay(Bot.Random.Next(1000, 1500));
-
-            int y = Bot.Random.Next(380, 475);
-            int x = zoneLower switch
+            try
             {
-                "a" => Bot.Random.Next(600, 931),
-                "b" => Bot.Random.Next(25, 326),
-                _ => Bot.Random.Next(325, 601)
-            };
+                await Task.Delay(Bot.Random.Next(1000, 1500), carnaxMovementCts?.Token ?? default);
 
-            Bot.Player.WalkTo(x, y);
+                int y = Bot.Random.Next(380, 475);
+                int x = zoneLower switch
+                {
+                    "a" => Bot.Random.Next(600, 931),
+                    "b" => Bot.Random.Next(25, 326),
+                    _ => Bot.Random.Next(325, 601)
+                };
 
-            await Task.Delay(Bot.Random.Next(1500, 2500));
-        });
+                Bot.Player.WalkTo(x, y);
+
+                await Task.Delay(Bot.Random.Next(1500, 2500), carnaxMovementCts?.Token ?? default);
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected when cancellation is requested - no action needed
+            }
+        }, carnaxMovementCts?.Token ?? default);
     }
 
 }

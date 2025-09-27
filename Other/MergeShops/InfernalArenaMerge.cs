@@ -21,8 +21,8 @@ public class InfernalArenaMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
     private static InfernalArena IA { get => _IA ??= new InfernalArena(); set => _IA = value; }
     private static InfernalArena _IA;
@@ -77,7 +77,7 @@ private static CoreAdvanced _sAdv;
                 case "Champion's Seal":
                 case "Tainted Dagger of Na'al":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.BossClass(Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
+                    Core.BossClass(Core.CheckInventory("Chaos Avenger") ? "Chaos Avenger" : Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
                     Core.HuntMonster("infernalarena", "Na'al", req.Name, quant, false, false);
                     break;
 

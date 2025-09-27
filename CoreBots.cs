@@ -532,10 +532,18 @@ public class CoreBots
             {
                 Task.Run(async () =>
                 {
-                    await Bot.Manager.RestartScriptAsync();
-                    if (Bot.Player.LoggedIn)
-                        return;
-                    Logger("Bot stopped due to Auto-Relogin failure.");
+                    try
+                    {
+                        using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+                        await Bot.Manager.RestartScriptAsync();
+                        if (Bot.Player.LoggedIn)
+                            return;
+                        Logger("Bot stopped due to Auto-Relogin failure.");
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        Logger("Auto-relogin timed out after 30 seconds.");
+                    }
                 });
             }
             else Logger("Bot stopped due to player logout.");

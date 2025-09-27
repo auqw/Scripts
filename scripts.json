@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 141322,
+    "size": 141505,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 403092,
+    "size": 403446,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -662,6 +662,19 @@
     "size": 3380,
     "fileName": "MergeTemplate.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/MergeTemplate.cs"
+  },
+  {
+    "name": "Task Extensions",
+    "description": "Helper extensions for safer Task operations",
+    "tags": [
+      "core",
+      "extensions",
+      "async"
+    ],
+    "path": "Core/TaskExtensions.cs",
+    "size": 2302,
+    "fileName": "TaskExtensions.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Core/TaskExtensions.cs"
   },
   {
     "name": "null",
@@ -2279,7 +2292,7 @@
       "dark-carnax"
     ],
     "path": "Story/DarkCarnax.cs",
-    "size": 4617,
+    "size": 5369,
     "fileName": "DarkCarnax.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DarkCarnax.cs"
   },
@@ -9805,7 +9818,7 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 42318,
+    "size": 44911,
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -9938,10 +9951,15 @@
       "thelima",
       "thelimacity",
       "mount maleno",
-      "mountmaleno"
+      "mountmaleno",
+      "sanctuary",
+      "aiwass",
+      "sanctuaryaiwass",
+      "forgealbedo",
+      "forge albedo"
     ],
     "path": "Story/AgeOfRuin/00DoAll.cs",
-    "size": 1125,
+    "size": 1184,
     "fileName": "00DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/00DoAll.cs"
   },
@@ -10038,6 +10056,23 @@
     "size": 826,
     "fileName": "04TwilightZone.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/04TwilightZone.cs"
+  },
+  {
+    "name": "Forge Albedo",
+    "description": "Completes the Forge Albedo storyline.",
+    "tags": [
+      "forgealbedo",
+      "storyline",
+      "aor",
+      "age of ruin",
+      "albedo",
+      "aleister",
+      "jaania"
+    ],
+    "path": "Story/AgeOfRuin/20ForgeAlbedo.cs",
+    "size": 821,
+    "fileName": "20ForgeAlbedo.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/20ForgeAlbedo.cs"
   },
   {
     "name": "Naoise Grave",
@@ -14059,7 +14094,7 @@
       "horns"
     ],
     "path": "Other/MergeShops/InfernalArenaMerge.cs",
-    "size": 9740,
+    "size": 9805,
     "fileName": "InfernalArenaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/InfernalArenaMerge.cs"
   },
@@ -14712,6 +14747,32 @@
     "size": 4627,
     "fileName": "FellBeastMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FellBeastMerge.cs"
+  },
+  {
+    "name": "Carcossa Canteen Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Carcossa Canteen Merge [2624] in /forgealbedo",
+    "tags": [
+      "carcossa",
+      "canteen",
+      "merge",
+      "forgealbedo",
+      "knight",
+      "noelle",
+      "squire",
+      "morph",
+      "winged",
+      "capella",
+      "shrine",
+      "scorched",
+      "warlic",
+      "warlics",
+      "ponytail",
+      "bob"
+    ],
+    "path": "Other/MergeShops/CarcossaCanteenMerge.cs",
+    "size": 8798,
+    "fileName": "CarcossaCanteenMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CarcossaCanteenMerge.cs"
   },
   {
     "name": "4DPyramidHouseMerge",
@@ -21448,7 +21509,7 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/BlazeBeardStory.cs",
-    "size": 3425,
+    "size": 3467,
     "fileName": "BlazeBeardStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/BlazeBeardStory.cs"
   },
@@ -26446,7 +26507,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 25188,
+    "size": 25882,
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },

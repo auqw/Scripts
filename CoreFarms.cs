@@ -2702,7 +2702,11 @@ public class CoreFarms
             }
 
             if (!Core.isCompletedBefore(5156))
-                Core.ChainComplete(5156);
+            {
+                Core.EnsureAccept(5156);
+                DeathPitToken(quant: 15);
+                Core.EnsureAccept(5156);
+            }
 
             if (!Core.isCompletedBefore(5157))
             {
@@ -2732,8 +2736,11 @@ public class CoreFarms
                 Core.RegisterQuests(QID);
         }
 
-        Core.Logger("Started in PvP map, which doesnt allow us to equip things if needed and can cause issues. Joining whitemap first.");
-        Core.Join("whitemap");
+        if (Bot.Map.Name == "deathpitbrawl")
+        {
+            Core.Logger("Started in PvP map, which doesnt allow us to equip things if needed and can cause issues. Joining whitemap first.");
+            Core.Join("whitemap");
+        }
 
         // Find the first matching amulet in inventory or bank
         string? amulet = AcceptablePvPAmulets

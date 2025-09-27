@@ -577,6 +577,7 @@ public class CoreArchMage
     private readonly TimeSpan moveCooldown = TimeSpan.FromSeconds(2);
     private string currentZone = "";
     private Task? moveTask;
+    private CancellationTokenSource? moveTaskCts;
 
     private void MoveNightmareCarnax(string zone)
     {
@@ -589,20 +590,27 @@ public class CoreArchMage
 
         moveTask = Task.Run(async () =>
         {
-            await Task.Delay(300);
-
-            int y = Bot.Random.Next(380, 475);
-            int x = zoneLower switch
+            try
             {
-                "a" => Bot.Random.Next(600, 931),
-                "b" => Bot.Random.Next(25, 326),
-                _ => Bot.Random.Next(325, 601)
-            };
+                await Task.Delay(300, moveTaskCts?.Token ?? default);
 
-            Bot.Player.WalkTo(x, y);
+                int y = Bot.Random.Next(380, 475);
+                int x = zoneLower switch
+                {
+                    "a" => Bot.Random.Next(600, 931),
+                    "b" => Bot.Random.Next(25, 326),
+                    _ => Bot.Random.Next(325, 601)
+                };
 
-            await Task.Delay(2500);
-        });
+                Bot.Player.WalkTo(x, y);
+
+                await Task.Delay(2500, moveTaskCts?.Token ?? default);
+            }
+            catch (OperationCanceledException)
+            {
+                // Expected when cancellation is requested - no action needed
+            }
+        }, moveTaskCts?.Token ?? default);
     }
 
     private void FarmDarkCarnax(bool attemptSolo = true)
@@ -617,6 +625,9 @@ public class CoreArchMage
         Bot.Options.AttackWithoutTarget = true;
 
         Bot.Events.RunToArea += MoveNightmareCarnax;
+        
+        // Initialize cancellation token for movement tasks
+        moveTaskCts = new CancellationTokenSource();
 
         if (attemptSolo)
         {
@@ -660,6 +671,12 @@ public class CoreArchMage
         Adv.GearStore(true);
 
         Bot.Events.RunToArea -= MoveNightmareCarnax;
+        
+        // Cancel any pending movement tasks and dispose resources
+        moveTaskCts?.Cancel();
+        moveTaskCts?.Dispose();
+        moveTaskCts = null;
+        moveTask = null;
     }
 
 

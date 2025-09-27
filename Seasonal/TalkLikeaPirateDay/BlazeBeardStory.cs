@@ -28,7 +28,7 @@ public class BlazeBeard
 
     public void TokenQuests()
     {
-        if (!Core.isSeasonalMapActive("BlazeBeard"))
+        if (Core.CheckInventory("Pirate Booty XV") || !Core.isSeasonalMapActive("BlazeBeard"))
             return;
 
         Story.PreLoad(this);
