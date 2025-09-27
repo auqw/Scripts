@@ -2394,6 +2394,9 @@ public class CoreUltras
         while (!Bot.ShouldExit && Bot.Map.PlayerCount < required)
         {
             int others = Math.Max(0, Bot.Map.PlayerCount - 1);
+            Bot.Skills.UseSkill(1);
+            Bot.Skills.UseSkill(2);
+            Bot.Skills.UseSkill(3);
             Bot.Sleep(1000);
         }
     }
