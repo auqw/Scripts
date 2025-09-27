@@ -65,6 +65,8 @@ public class UltraNulgath
 
         Core.Join("ultranulgath");
         Core.WaitForArmy(3);
+        if (!Core.HasClassEquipped(primaryTaunter) || !Core.HasClassEquipped(secondaryTaunter))
+            Bot.Sleep(2000);
         Core.ChooseBestCell("Nulgath the Archfiend");
         Core.EnableSkills();
 
@@ -81,3 +83,4 @@ public class UltraNulgath
 
     }
 }
+
