@@ -620,7 +620,10 @@ public class CoreUltras
         while (Owned("Scroll of Decay") < 10)
         {
             ForItem("Undead Infantry", "underworld", "Mystic Parchment", 2);
-            BuyItem("dragonrune", 549, "Zealous Ink", 5);
+            Join("dragonrune");
+            Bot.Shops.Load(549);
+            if (Owned("Zealous Ink") < 1)
+                Bot.Shops.BuyItem("Zealous Ink", 5);
 
             Join("spellcraft");
             Bot.Drops.Add("Scroll of Decay");
