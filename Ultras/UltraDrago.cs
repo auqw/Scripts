@@ -10,11 +10,19 @@ public class UltraDrago
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "UltraDrago";
+    public List<IOption> Options = new()
+    {
+        new Option<string>("primaryTaunter", "First Taunter Class", "Insert the name of the class that will taunt", "ArchPaladin"),
+        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", "Lord Of Order"),
+    };
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.Boot();
 
-        Kill(primaryTaunter: "ArchPaladin", secondaryTaunter: "Lord Of Order");
+        Kill(primaryTaunter: Bot.Config.Get<string>("primaryTaunter"), secondaryTaunter: Bot.Config.Get<string>("secondaryTaunter"));
 
         Bot.Stop();
     }
@@ -44,4 +52,6 @@ public class UltraDrago
                 Core.KillWithPriority("King Drago", "Bowmaster Algie", "Executioner Dene");
     }
 }
+
+
 
