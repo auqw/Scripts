@@ -10,11 +10,16 @@ public class UltraWarden
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "UltraWarden";
+    public List<IOption> Options = new() { new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", "StoneCrusher"), };
+
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.Boot();
 
-        Kill(taunterClass: "StoneCrusher");
+        Kill(taunterClass: Bot.Config.Get<string>("taunterClass"));
 
         Bot.Stop();
     }
