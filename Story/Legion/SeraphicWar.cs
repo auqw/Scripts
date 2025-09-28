@@ -11,7 +11,8 @@ public class SeraphicWar_Story
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -41,8 +42,8 @@ public class SeraphicWar_Story
         //Plutonium For Power
         Story.KillQuest(6242, "worldsoul", "Radioactive Hydra");
         //Defeat the Undead
-        Story.KillQuest(6243, "worldsoul", "Legion Dreadmarch");
         Story.MapItemQuest(6243, "worldsoul", 5680);
+        Story.KillQuest(6243, "worldsoul", "Legion Dreadmarch");
         //Remove the Ward
         if (!Story.QuestProgression(6244))
         {

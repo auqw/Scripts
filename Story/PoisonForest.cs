@@ -8,13 +8,16 @@ tags: story, quest, poison-forest
 //cs_include Scripts/Story/Manor.cs
 
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Quests;
 
 public class PoisonForest
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static Manor Manor { get => _Manor ??= new Manor(); set => _Manor = value; }    private static Manor _Manor;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static Manor Manor { get => _Manor ??= new Manor(); set => _Manor = value; }
+    private static Manor _Manor;
 
 
     public void ScriptMain(IScriptInterface bot)
@@ -44,7 +47,13 @@ public class PoisonForest
         if (!Story.QuestProgression(1949) || (!Core.CheckInventory("Combustible Krialo Moss") && !Core.isCompletedBefore(1954)))
         {
             Core.EnsureAccept(1949);
-            Core.GetMapItem(963, 9, "PoisonForest");
+            Quest Q = Core.InitializeWithRetries(() => Core.EnsureLoad(1949));
+            if (Q.Requirements?.FirstOrDefault(x => x != null && x.ID == 11803).Quantity != 9)
+            {
+                Core.Logger("This Quest is literaly impossible until AE fixes the quest ( when fixed will autoprogress and this message wont appear anymopre)", "PosionForest - AE Broke it");
+                return;
+            }
+            else Core.GetMapItem(963, 9, "PoisonForest");
             Core.GetMapItem(971, 1, "PoisonForest");
             Core.HuntMonster("PoisonForest", "Marsh Lurker", "Toxic Gallstones");
             Core.EnsureComplete(1949);

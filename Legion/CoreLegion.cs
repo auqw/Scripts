@@ -766,15 +766,16 @@ public class CoreLegion
         if (Core.isCompletedBefore(793))
             return;
 
+        var SellUW = Bot.ShowMessageBox(
+                    "Do you want the bot to sell the \"Undead Warrior\" armor after it has succesfully joined the legion. This will return 1080 AC to you",
+                    "Sell \"Undead Warrior\"?",
+                    true);
+
         if (!Core.isCompletedBefore(792))
             Farm.BludrutBrawlBoss(quant: 200);
-
-        Core.BuyItem("underworld", 215, "Undead Warrior");
-        var SellUW = Bot.ShowMessageBox(
-            "Do you want the bot to sell the \"Undead Warrior\" armor after it has succesfully joined the legion. This will return 1080 AC to you",
-            "Sell \"Undead Warrior\"?",
-            true);
-
+            
+        if (!Core.CheckInventory("Undead Warrior"))
+            Core.BuyItem("underworld", 215, "Undead Warrior");
 
         // Undead Champion Initiation
         if (!Story.QuestProgression(789))
@@ -811,6 +812,7 @@ public class CoreLegion
 
         if (SellUW == true)
             Core.SellItem("Undead Warrior", all: true);
+
         Adv.BuyItem("underworld", 216, "Undead Champion");
     }
 
@@ -892,7 +894,7 @@ public class CoreLegion
             Core.PvPMove(12, "r12", 758, 338);
 
             if (!canSoloBoss)
-            Core.PVPKilling();
+                Core.PVPKilling();
 
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
             {
@@ -913,7 +915,7 @@ public class CoreLegion
             Core.PvPMove(25, "r14", 846, 181);
 
             if (!canSoloBoss)
-            Core.PVPKilling();
+                Core.PVPKilling();
 
             if (!Bot.Player.Alive || Bot.Player.Cell == "Enter0")
             {
