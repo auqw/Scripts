@@ -684,12 +684,14 @@ public class CoreUltras
         switch (name)
         {
             case "Might Tonic":
-                Join("alchemyacademy");
+                /*Join("alchemyacademy");
                 Bot.Shops.Load(2036);
                 if (Owned(61043) < 2)
                     Bot.Shops.BuyItem(61043, 8421, 2);
                 if (Owned(11623) < 1)
-                    Bot.Shops.BuyItem(11623, 8798, 10);
+                    Bot.Shops.BuyItem(11623, 8798, 10);*/
+                BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 2);
+                BuyItem("alchemyacademy", 2036, "Might Tonic", 10, calculateRemaining: false);
                 break;
             case "Sage Tonic":
                 /*Join("alchemyacademy");
@@ -709,23 +711,27 @@ public class CoreUltras
                 if (Owned(11745) < 1)
                     Bot.Shops.BuyItem(11745, 9825, 8);*/
                 BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 4);
-                BuyItem("alchemyacademy", 2036, "Sage Tonic", 8, calculateRemaining: false);
+                BuyItem("alchemyacademy", 2036, "Potent Malevolence Elixir", 8, calculateRemaining: false);
                 break;
             case "Potent Battle Elixir":
-                Join("alchemyacademy");
+                /*Join("alchemyacademy");
                 Bot.Shops.Load(2036);
                 if (Owned(61043) < 4)
                     Bot.Shops.BuyItem(61043, 8421, 4);
                 if (Owned(11741) < 1)
-                    Bot.Shops.BuyItem(11741, 9824, 8);
+                    Bot.Shops.BuyItem(11741, 9824, 8);*/
+                BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 4);
+                BuyItem("alchemyacademy", 2036, "Potent Battle Elixir", 8, calculateRemaining: false);
                 break;
             case "Potent Honor Potion":
-                Join("alchemyacademy");
+                /*Join("alchemyacademy");
                 Bot.Shops.Load(2036);
                 if (Owned(61043) < 1)
                     Bot.Shops.BuyItem(61043, 8421, 1);
                 if (Owned(11736) < 1)
-                    Bot.Shops.BuyItem(11736, 8826, 5);
+                    Bot.Shops.BuyItem(11736, 8826, 5);*/
+                BuyItem("alchemyacademy", 2036, "Gold Voucher 500k");
+                BuyItem("alchemyacademy", 2036, "Potent Honor Potion", 5, calculateRemaining: false);
                 break;
             default: return;
         }
