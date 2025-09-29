@@ -2042,6 +2042,9 @@ public class CoreUltras
 
     public void SetClassRotation(string className, string mode)
     {
+        if (string.IsNullOrWhiteSpace(className) || string.IsNullOrWhiteSpace(mode))
+            return;
+
         _classRotationMode[className] = mode;
         Alert("Rotation", $"{className} set to {mode} mode");
     }
