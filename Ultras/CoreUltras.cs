@@ -326,7 +326,7 @@ public class CoreUltras
 
     #region Find Item by Enhancement
 
-    string EnhancementName(int id) => id switch
+    public string EnhancementName(int id) => id switch
     {
         1 => "Adventurer",
         2 => "Fighter",
@@ -352,11 +352,11 @@ public class CoreUltras
         _ => null
     };
 
-    bool EnhancementIs(InventoryItem i, string name) =>
+    public bool EnhancementIs(InventoryItem i, string name) =>
         EnhancementName(i?.EnhancementPatternID ?? -1)?
             .Equals(name, StringComparison.OrdinalIgnoreCase) == true;
 
-    InventoryItem EnsureItemWithEnhancement(int patternId)
+    public InventoryItem EnsureItemWithEnhancement(int patternId)
     {
         var inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
         var hit = inv.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
@@ -372,7 +372,7 @@ public class CoreUltras
         return inv.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
     }
 
-    InventoryItem EnsureItemWithEnhancement(string enhancementName)
+    public InventoryItem EnsureItemWithEnhancement(string enhancementName)
     {
         if (string.IsNullOrWhiteSpace(enhancementName)) return null;
 
@@ -763,7 +763,7 @@ public class CoreUltras
             if (Owned(name) < 1) return;
             if (Bot.Inventory.IsEquipped(name)) return;
 
-            ToSafeMap();
+            WhiteMap();
             Bot.Inventory.EquipUsableItem(name);
             Bot.Sleep(D3);
             EnableSkills();
@@ -1498,7 +1498,12 @@ public class CoreUltras
         return lowestHpPercentage;
     }
 
-    void ToSafeMap() => Join("whitemap");
+    bool IsArmyHealthLow(double percentage = 30.0)
+    {
+        return GetLowestHpPercentage() < percentage;
+    }
+
+    void WhiteMap() => Join("whitemap");
 
     #endregion
 
@@ -1612,6 +1617,9 @@ public class CoreUltras
             case "dragonslayer general": DragonslayerGeneralClass(); break;
             case "cryomancer": CryomancerClass(); break;
             case "dragon knight": DragonKnightClass(); break;
+            case "shaman": ShamanClass(); break;
+            case "necromancer": NecromancerClass(); break;
+            case "chrono assassin": ChronoAssassinClass(); break;
 
             // Basic classes
             case "mage": MageClass(); break;
@@ -1635,76 +1643,42 @@ public class CoreUltras
 
     void LordsOfOrderClass()
     {
-        double myHealth = GetHealthPercentage();
-        double anyHealth = GetLowestHpPercentage();
-
-        int Empowerment = GetAuraSecondsRemaining("Empowerment", true);
-        int Clarity = GetAuraSecondsRemaining("Clarity", true);
-
-        if (supportMode)
-        {
-            bool NoxiousDecay = HasAura("Noxious Decay", true);
-
-            if (Cast(4)) return;
-            if (anyHealth < 90 || myHealth < 90 && !NoxiousDecay)
-                if (Cast(2)) return;
-            if (Empowerment <= 2)
-                if (Cast(1)) return;
-            if (Clarity <= 2)
-                if (Cast(3)) return;
-        }
-        else
-        {
-            if (Cast(4)) return;
-            if (anyHealth < 70 || myHealth < 70)
-                if (Cast(2)) return;
-            if (Empowerment <= 2)
-                if (Cast(1)) return;
-            if (Clarity <= 2)
-                if (Cast(3)) return;
-            if (Cast(4)) return;
-        }
+        if (IsHealthLow(80) || IsArmyHealthLow(80) && !HasAura("Noxious Decay", true))
+            if (Cast(2)) return;
+        if (Cast(4)) return;
+        if (Left("Empowerment", 1, true))
+            if (Cast(1)) return;
+        if (Left("Clarity", 1, true))
+            if (Cast(3)) return;
     }
 
     void StoneCrusherClass()
     {
-        double myHealth = GetHealthPercentage();
-        double anyHealth = GetLowestHpPercentage();
-
-        int Dissonance = GetAuraSecondsRemaining("Dissonance", true);
-        bool Magnitude = HasAura("Magnitude", true);
-
-        if (anyHealth < 95 || myHealth < 95)
+        if (IsHealthLow(80) || IsArmyHealthLow(80))
             if (Cast(3)) return;
-        if (Dissonance <= 2)
-            if (Cast(2)) return;
-        if (Magnitude)
+        if (HasAura("Magnitude", true))
             if (Cast(4)) return;
+        if (Left("Dissonance", 1, true))
+            if (Cast(2)) return;
         if (Cast(1)) return;
     }
 
     void ArchPaladinClass()
     {
-        double myHealth = GetHealthPercentage();
-        double anyHealth = GetLowestHpPercentage();
-
-        bool RighteousSeal = HasAura("Righteous Seal");
-        bool NoxiousDecay = HasAura("Noxious Decay", true);
-
         if (supportMode)
         {
-            if (anyHealth < 85 || myHealth < 85 && !NoxiousDecay)
+            if (IsHealthLow(85) || IsArmyHealthLow(85) && !HasAura("Noxious Decay", true))
                 if (Cast(2)) return;
-            if (!RighteousSeal)
+            if (!HasAura("Righteous Seal"))
                 if (Cast(4)) return;
             if (Cast(3)) return;
             if (Cast(1)) return;
         }
         else
         {
-            if (anyHealth < 85 || myHealth < 85)
+            if (IsHealthLow(85) || IsArmyHealthLow(85))
                 if (Cast(2)) return;
-            if (RighteousSeal)
+            if (HasAura("Righteous Seal"))
                 if (Cast(4)) return;
             if (Cast(3)) return;
             if (Cast(1)) return;
@@ -1713,49 +1687,26 @@ public class CoreUltras
 
     void VoidHighlordClass()
     {
-        double myHealth = GetHealthPercentage();
-
-        bool Unshackled = HasAura("Unshackled", true);
-
-        if (Unshackled)
+        if (HasAura("Unshackled", true))
             if (Cast(4)) return;
-        if (myHealth > 50)
+        if (IsHealthHigh(60))
             if (Cast(1)) return;
         if (Cast(2)) return;
-        if (myHealth > 50)
+        if (IsHealthHigh(60))
             if (Cast(3)) return;
     }
 
     void ChaosAvengerClass()
     {
-        if (Bot.Map.Name == "ultradage")
-        {
-            bool Focus = HasAura("Focus");
-
-            if (Cast(2)) return;
-            if (Cast(4)) return;
-            if (!Focus)
-                if (Cast(5)) return;
-            if (Cast(1)) return;
-            if (Cast(3)) return;
-        }
-        else
-        {
-            if (Cast(2)) return;
-            if (Cast(4)) return;
-            if (Cast(1)) return;
-            if (Cast(3)) return;
-        }
+        if (Cast(2)) return;
+        if (Cast(4)) return;
+        if (Cast(1)) return;
+        if (Cast(3)) return;
     }
 
     void LightCasterClass()
     {
-        double myHealth = GetHealthPercentage();
-        double anyHealth = GetLowestHpPercentage();
-
-        bool NoxiousDecay = HasAura("Noxious Decay", true); // Ultra Dage
-
-        if (anyHealth < 85 || myHealth < 85 && !NoxiousDecay)
+        if (IsHealthLow(85) || IsArmyHealthLow(85) || Left("Illuminated", 1, true))
             if (Cast(3)) return;
         if (Cast(4)) return;
         if (Cast(1)) return;
@@ -1772,43 +1723,30 @@ public class CoreUltras
 
     void DragonOfTimeClass()
     {
-        double myHealth = GetHealthPercentage();
-
-        bool Convergence = HasAura("Convergence", true);
-        bool Discordance = HasAura("Discordance", true);
-
-        if (myHealth < 95)
+        if (IsHealthLow(95))
             if (Cast(2)) return;
-        if (Convergence)
+        if (HasAura("Convergence", true))
             if (Cast(3)) return;
-        if (myHealth > 60)
+        if (IsHealthHigh(60))
             if (Cast(4)) return;
         if (Cast(1)) return;
     }
 
     void ArchmageClass()
     {
-        double myHealth = GetHealthPercentage();
-        double myMana = GetManaPercentage();
-
-        bool Cryostasis = HasAura("Cryostasis");
-        bool ArcaneFlux = HasAura("Arcane Flux", true);
-
-        if (!Cryostasis || myMana < 30)
+        if (IsManaLow(30))
             if (Cast(2)) return;
-        if (ArcaneFlux && myHealth >= 30)
+        if (HasAura("Arcane Flux", true) && IsHealthHigh(50))
             if (Cast(4)) return;
-        if (Cast(3)) return;
         if (Cast(1)) return;
+        if (Cast(3)) return;
     }
 
     // --- chrono classes ---------------------------------------------------------------
 
     void ChronoDataKnightClass()
     {
-        int TemporalRift = GetAuraStacks("Temporal Rift", true);
-
-        if (TemporalRift == 4)
+        if (Stacks("Temporal Rift", 4, true))
             if (Cast(4)) return;
         if (Cast(1)) return;
         if (Cast(2)) return;
@@ -1817,14 +1755,9 @@ public class CoreUltras
 
     void ShadowWeaverOfTimeClass()
     {
-        double myHealth = GetHealthPercentage();
-        double myMana = GetManaPercentage();
-
-        int ChaosRift = GetAuraStacks("Chaos Rift", true);
-
-        if (myHealth < 50 || myMana < 30)
+        if (IsHealthLow(50) || IsManaLow(30))
             if (Cast(3)) return;
-        if (ChaosRift == 4)
+        if (Stacks("Chaos Rift", 4, true))
             if (Cast(4)) return;
         if (Cast(1)) return;
         if (Cast(2)) return;
@@ -1832,12 +1765,9 @@ public class CoreUltras
 
     void QuantumChronomancerClass()
     {
-        bool QuantumRestructure = HasAura("Quantum Restructure", true);
-        int TemporalRift = GetAuraStacks("Temporal Rift", true);
-
-        if (TemporalRift == 4)
+        if (Stacks("Temporal Rift", 4, true))
             if (Cast(3)) return;
-        if (QuantumRestructure)
+        if (HasAura("Quantum Restructure", true))
             if (Cast(4)) return;
         if (Cast(2)) return;
         if (Cast(1)) return;
@@ -1847,25 +1777,20 @@ public class CoreUltras
 
     void MasterRangerClass()
     {
-        int Marks = GetAuraStacks("Marks", true);
-        bool VampiricShot = HasAura("Vampiric Shot", true);
-
-        if (VampiricShot)
+        if (HasAura("Vampiric Shot", true))
             if (Cast(3)) return;
-        if (Marks == 6)
+        if (Stacks("Marks", 6, true))
             if (Cast(4)) return;
-        if (Marks == 4)
+        if (Stacks("Marks", 3, true))
             if (Cast(2)) return;
         if (Cast(1)) return;
     }
 
     void DragonslayerGeneralClass()
     {
-        bool Dragonsbane = HasAura("General's Dragonbane");
-
-        if (Dragonsbane)
+        if (HasAura("General's Dragonbane"))
             if (Cast(2)) return;
-        if (Dragonsbane)
+        if (HasAura("General's Dragonbane"))
             if (Cast(3)) return;
         if (Cast(4)) return;
         if (Cast(1)) return;
@@ -1873,14 +1798,9 @@ public class CoreUltras
 
     void CryomancerClass()
     {
-        double myHealth = GetHealthPercentage();
-
-        bool PolarVortex = HasAura("Polar Vortex", true);
-        bool Frozen = HasAura("Frozen");
-
-        if (myHealth < 60 && PolarVortex)
+        if (IsHealthLow(60) && HasAura("Polar Vortex", true))
             if (Cast(3)) return;
-        if (PolarVortex && Frozen)
+        if (HasAura("Frozen") && HasAura("Polar Vortex", true))
             if (Cast(2)) return;
         if (Cast(1)) return;
         if (Cast(4)) return;
@@ -1888,13 +1808,9 @@ public class CoreUltras
 
     void DragonslayerClass()
     {
-        bool InfectedWound = HasAura("Infected Wound");
-        bool Weakened = HasAura("Weakened");
-        bool Dragonbane = HasAura("Dragonbane");
-
-        if (Dragonbane && !InfectedWound)
+        if (HasAura("Dragonbane") && !HasAura("Infected Wound"))
             if (Cast(2)) return;
-        if (Dragonbane && !Weakened)
+        if (HasAura("Dragonbane") && !HasAura("Weakened"))
             if (Cast(3)) return;
         if (Cast(4)) return;
         if (Cast(1)) return;
@@ -1902,30 +1818,63 @@ public class CoreUltras
 
     void DragonKnightClass()
     {
-        bool Flammable = HasAura("Flammable");
-        bool Dumbfounded = HasAura("Dumbfounded");
-
         if (Cast(1)) return;
-        if (Flammable)
+        if (HasAura("Flammable"))
             if (Cast(4)) return;
         if (Cast(2)) return;
-        if (Dumbfounded)
+        if (HasAura("Dumbfounded"))
             if (Cast(3)) return;
+    }
+
+    void ShamanClass()
+    {
+        // solo rotation
+        if (Left("Elemental Embrace", 5))
+            if (Cast(4)) return;
+        if (HasAura("Elemental Embrace"))
+            if (Cast(3)) return;
+        if (HasAura("Scorched Spirit"))
+            if (Cast(2)) return;
+        if (Cast(1)) return;
+    }
+
+    void NecromancerClass()
+    {
+        if (IsManaLow(90) && IsHealthHigh(80) && !HasAura("Deadly Frenzy", true))
+            if (Cast(3)) return;
+        if (IsManaLow(30) && IsHealthHigh(80) && HasAura("Deadly Frenzy", true))
+            if (Cast(3)) return;
+        if (IsManaHigh(80) && IsHealthHigh(80))
+            if (Cast(4)) return;
+        if (HasAura("Deadly Frenzy", true))
+            if (Cast(1)) return;
+        if (Cast(2)) return;
+    }
+
+    void ChronoAssassinClass()
+    {
+        if (HasAura("Reverse Time", true))
+        {
+            if (Cast(4)) return;
+        }
+        else
+        {
+            if (Cast(3)) return;
+            if (Cast(1)) return;
+        }
+        if (Cast(2)) return;
+
     }
 
     // --- basic classes ---------------------------------------------------------------
 
     void MageClass()
     {
-        bool Scorched = HasAura("Scorched");
-        bool FrozenBlood = HasAura("Frozen Blood");
-        int ArcaneShield = GetAuraSecondsRemaining("Arcane Shield");
-
-        if (ArcaneShield < 2)
+        if (Left("Arcane Shield", 1, true))
             if (Cast(4)) return;
-        if (FrozenBlood)
+        if (HasAura("Frozen Blood"))
             if (Cast(1)) return;
-        if (Scorched)
+        if (HasAura("Scorched"))
             if (Cast(3)) return;
         if (Cast(2)) return;
     }
@@ -1940,7 +1889,6 @@ public class CoreUltras
     public Aura GetAuraByName(string auraName, bool self)
     {
         if (string.IsNullOrWhiteSpace(auraName)) return null;
-
         return GetAuras(self).FirstOrDefault(a => a != null &&
             !string.IsNullOrWhiteSpace(a.Name) &&
             auraName.Equals(a.Name, StringComparison.OrdinalIgnoreCase));
@@ -1951,13 +1899,12 @@ public class CoreUltras
         return GetAuraByName(auraName, self) != null;
     }
 
-    public bool HasAnyAura(List<string> auraNames)
+    public bool HasAnyAura(List<string> auraNames, bool self = false)
     {
         if (auraNames == null || auraNames.Count == 0) return false;
-
         foreach (string aura in auraNames)
         {
-            if (!string.IsNullOrWhiteSpace(aura) && HasAura(aura))
+            if (!string.IsNullOrWhiteSpace(aura) && HasAura(aura, self))
                 return true;
         }
         return false;
@@ -1966,14 +1913,11 @@ public class CoreUltras
     public int GetAuraStacks(string auraName, bool self = false)
     {
         if (string.IsNullOrWhiteSpace(auraName)) return 0;
-
         try
         {
             object v = self ? Bot?.Self?.GetAuraValue(auraName)
                             : Bot?.Target?.GetAuraValue(auraName);
-
             if (v == null) return 0;
-
             return v is int i ? i
                  : v is long l ? (int)l
                  : v is double d ? (int)Math.Round(d)
@@ -1987,10 +1931,8 @@ public class CoreUltras
     public int GetAuraSecondsRemaining(string auraName, bool self = false)
     {
         if (string.IsNullOrWhiteSpace(auraName)) return 0;
-
         var aura = GetAuraByName(auraName, self);
         if (aura == null || aura._timeStamp <= 0 || aura.Duration <= 0) return 0;
-
         try
         {
             var applied = DateTimeOffset.FromUnixTimeMilliseconds(aura._timeStamp);
@@ -1999,6 +1941,20 @@ public class CoreUltras
             return Math.Max(0, remaining);
         }
         catch { return 0; }
+    }
+
+    public bool Stacks(string name, int quantity, bool self = false)
+    {
+        if (string.IsNullOrWhiteSpace(name) || quantity <= 0) return false;
+        int stacks = GetAuraStacks(name, self);
+        return stacks >= quantity;
+    }
+
+    public bool Left(string name, int duration, bool self = false)
+    {
+        if (string.IsNullOrWhiteSpace(name) || duration < 0) return false;
+        int rem = GetAuraSecondsRemaining(name, self); // returns 0 if expired/missing
+        return rem <= duration;
     }
 
     #endregion

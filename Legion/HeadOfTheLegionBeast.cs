@@ -11,9 +11,17 @@ tags: head, legion, beast, LOTLB, seven, circles, war, penance, essence, wrath, 
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+using Skua.Core.Options;
 
 public class HeadoftheLegionBeast
 {
+    public string OptionsStorage = "hotlb"; //<--rename this
+    public bool DontPreconfigure = true; //<- Leave this alone.
+    public List<IOption> Options = new()
+    {
+        CoreBots.Instance.SkipOptions,
+        new Option<bool>("badge", "Farm Badge", "Set to true to farm the Head of the Legion Beast char page badge", false)
+    };
     public string[] HeadLegionBeast =
     {
         "Penance",
@@ -34,11 +42,16 @@ public class HeadoftheLegionBeast
 
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static SevenCircles Circles { get => _Circles ??= new SevenCircles(); set => _Circles = value; }    private static SevenCircles _Circles;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion _Legion;
+    private static SevenCircles Circles { get => _Circles ??= new SevenCircles(); set => _Circles = value; }
+    private static SevenCircles _Circles;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -50,9 +63,9 @@ public class HeadoftheLegionBeast
         Core.SetOptions(false);
     }
 
-    public void LegionBeastHead()
+    public void LegionBeastHead(bool badge = false)
     {
-        if (Core.CheckInventory("Head of the Legion Beast"))
+        if (Core.CheckInventory("Head of the Legion Beast") && (!badge || Core.HasWebBadge("Head of the Legion Beast")))
             return;
 
         Circles.CirclesWar();
@@ -68,6 +81,16 @@ public class HeadoftheLegionBeast
         Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "Beast Soul", 15, isTemp: false, publicRoom: true, log: false);
 
         Adv.BuyItem("sevencircleswar", 1984, "Head of the Legion Beast");
+
+        if (badge)
+        {
+            // Head of the Legion Beast (8082)
+            Core.Unbank("Head of the Legion Beast");
+            Core.EnsureAccept(8082);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("sevencircleswar", "The Beast", "Beast Slain");
+            Core.EnsureComplete(8082);
+        }
     }
 
     public void HelmSevenCircles()

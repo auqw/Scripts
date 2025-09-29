@@ -19,7 +19,7 @@ public class JuggernautItemsofNulgath
     private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
 
 
-    public string OptionsStorage = "Reward Select";
+    public string OptionsStorage = "JuggernautItemsofNulgath";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {

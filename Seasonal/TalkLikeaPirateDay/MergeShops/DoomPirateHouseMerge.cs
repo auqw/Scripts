@@ -72,7 +72,7 @@ private static CoreAdvanced _sAdv;
                 #endregion
 
                 case "Gallaeon's Piece of Eight":
-                    Core.FarmingLogger("Gallaeon's Piece of Eight", 99);
+                    Core.FarmingLogger(req.Name, req.Quantity);
                     Core.RegisterQuests(9355);
                     Core.EquipClass(ClassType.Solo);
                     Core.Join("doompirate", "r5", "Left");
@@ -80,7 +80,7 @@ private static CoreAdvanced _sAdv;
                     bool restartKills = false;
 
                 RestartKills:
-                    while (!Bot.ShouldExit && !Core.CheckInventory("Gallaeon's Piece of Eight", 99))
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
                     {
                         if (restartKills)
                         {
