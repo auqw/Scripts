@@ -14,7 +14,7 @@ public class UltraDage
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraDage";
     public List<IOption> Options = new() {
-        new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", "Chaos Avenger")
+        new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", "")
     };
 
     public void ScriptMain(IScriptInterface bot)

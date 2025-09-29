@@ -14,7 +14,7 @@ public class ChampionDrakath
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ChampionDrakath";
     public List<IOption> Options = new() {
-        new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", "ArchPaladin")
+        new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", "")
     };
 
     public void ScriptMain(IScriptInterface bot)
