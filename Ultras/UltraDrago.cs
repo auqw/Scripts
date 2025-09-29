@@ -16,8 +16,8 @@ public class UltraDrago
     public string OptionsStorage = "UltraDrago";
     public List<IOption> Options = new()
     {
-        new Option<string>("primaryTaunter", "First Taunter Class", "Insert the name of the class that will taunt", ""),
-        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", ""),
+        new Option<string>("primaryTaunter", "First Taunter Class", "Insert the name of the class that will taunt", "Lord Of Order"),
+        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", "ArchPaladin"),
     };
 
     public void ScriptMain(IScriptInterface bot)

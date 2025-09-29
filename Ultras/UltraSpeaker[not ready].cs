@@ -23,58 +23,11 @@ public class UltraSpeaker
         Bot.Stop();
     }
 
-    // --- roles ---
-    enum Role { MagiaSoaker, StasisSoaker, EqualizeA, EqualizeB, None }
-    Role MyRole = Role.None; // auto-set from class on first run
-
-    // --- class → role mapping ---
-    // Change these if you prefer a different assignment.
-    // Default suggestions:
-    //  - StoneCrusher  -> Magia Soaker (perma-out, keeps auras up)
-    //  - Legion Revenant -> Stasis Soaker (can eat periodic 6s stuns, great sustain)
-    //  - ArchPaladin   -> Equalize A (durable spike soaker)
-    //  - Chaos Avenger -> Equalize B (durable spike soaker)
-    void AssignRoleFromClass()
-    {
-        if (Core.HasClassEquipped("StoneCrusher")) MyRole = Role.MagiaSoaker;
-        else if (Core.HasClassEquipped("Legion Revenant")) MyRole = Role.StasisSoaker;
-        else if (Core.HasClassEquipped("ArchPaladin")) MyRole = Role.EqualizeA;
-        else if (Core.HasClassEquipped("Chaos Avenger")) MyRole = Role.EqualizeB;
-        else MyRole = Role.EqualizeA; // fallback
-    }
-
-    // --- detectors (you provide these flags elsewhere) ---
-    bool listenDetected = false; // Energy Draw charge ("You shall listen.")
-    bool truthDetected = false; // Magia Draw charge ("I will make you see the truth.")
-    bool equalDetected = false; // Power Split charge ("All stand equal...")
-
-    bool prevListen = false, prevTruth = false, prevEqual = false;
-
-    // --- state ---
-    int equalCastIndex = -1; // increments on Power Split charge start
-
-    // --- helpers ---
-    bool CanEnterRedZone()
-    {
-        var debuffs = new List<string> { "Magia Burn", "Stasis", "Sanctity" };
-        return !Core.HasAnyAura(debuffs, true);
-    }
-
-    bool IsMyTurnToSoakEqualize()
-    {
-        // Rotation: EqualizeA -> EqualizeB -> StasisSoaker -> (repeat)
-        int slot = ((equalCastIndex % 3) + 3) % 3; // 0..2
-        return (MyRole == Role.EqualizeA && slot == 0)
-            || (MyRole == Role.EqualizeB && slot == 1)
-            || (MyRole == Role.StasisSoaker && slot == 2);
-    }
-
     void Taunt() => Core.UsePotion();
 
     void MoveOut() => Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%881%363%10%");
     void MoveIn() => Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%506%351%10%");
 
-    // --- main ---
     void Kill()
     {
         Core.GetScrollOfEnrage();

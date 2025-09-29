@@ -805,6 +805,7 @@ public class CoreUltras
         switch (name)
         {
             case "Might Tonic":
+                if (FactionRank("Alchemy") < 8) return;
                 /*Join("alchemyacademy");
                 Bot.Shops.Load(2036);
                 if (Owned(61043) < 2)
@@ -815,6 +816,7 @@ public class CoreUltras
                 BuyItem("Might Tonic", 2036, "alchemyacademy", 10, calculateRemaining: false);
                 break;
             case "Sage Tonic":
+                if (FactionRank("Alchemy") < 8) return;
                 /*Join("alchemyacademy");
                 Bot.Shops.Load(2036);
                 if (Owned(61043) < 2)
@@ -845,6 +847,7 @@ public class CoreUltras
                 BuyItem("Potent Battle Elixir", 2036, "alchemyacademy", 8, calculateRemaining: false);
                 break;
             case "Potent Honor Potion":
+                if (FactionRank("Good") < 10) return;
                 /*Join("alchemyacademy");
                 Bot.Shops.Load(2036);
                 if (Owned(61043) < 1)
@@ -1660,6 +1663,10 @@ public class CoreUltras
         }
     }
 
+    bool NotUltraDage() =>
+        !string.Equals(Bot.Map.Name, "ultradage", StringComparison.OrdinalIgnoreCase);
+
+
     void Skills()
     {
         if (Bot?.Player == null) return;
@@ -1686,6 +1693,7 @@ public class CoreUltras
             case "chrono dataknight": ChronoDataKnightClass(); break;
             case "shadowweaver of time": ShadowWeaverOfTimeClass(); break;
             case "quantum chronomancer": QuantumChronomancerClass(); break;
+            case "necrotic chronomancer": NecroticChronomancerClass(); break;
 
             // Common classes
             case "master ranger": MasterRangerClass(); break;
@@ -1720,7 +1728,7 @@ public class CoreUltras
 
     void LordsOfOrderClass()
     {
-        if (IsHealthLow(80) || IsArmyHealthLow(80) && !HasAura("Noxious Decay", true))
+        if ((IsHealthLow(80) || IsArmyHealthLow(80)) && NotUltraDage())
             if (Cast(2)) return;
         if (Cast(4)) return;
         if (Left("Empowerment", 1, true))
@@ -1760,7 +1768,7 @@ public class CoreUltras
 
         if (mode == "Ultra")
         {
-            if (IsHealthLow(85) || IsArmyHealthLow(85) && !HasAura("Noxious Decay", true))
+            if ((IsHealthLow(85) || IsArmyHealthLow(85)) && NotUltraDage())
                 if (Cast(2)) return;
             if (!HasAura("Righteous Seal"))
                 if (Cast(4)) return;
@@ -1769,7 +1777,7 @@ public class CoreUltras
         }
         else
         {
-            if (IsHealthLow(85) || IsArmyHealthLow(85))
+            if ((IsHealthLow(85) || IsArmyHealthLow(85)) && NotUltraDage())
                 if (Cast(2)) return;
             if (HasAura("Righteous Seal"))
                 if (Cast(4)) return;
@@ -1861,6 +1869,16 @@ public class CoreUltras
         if (Stacks("Temporal Rift", 4, true))
             if (Cast(3)) return;
         if (HasAura("Quantum Restructure", true))
+            if (Cast(4)) return;
+        if (Cast(2)) return;
+        if (Cast(1)) return;
+    }
+
+    void NecroticChronomancerClass()
+    {
+        if (Stacks("Chaos Rift", 4, true))
+            if (Cast(3)) return;
+        if (Left("Debilitated", 2))
             if (Cast(4)) return;
         if (Cast(2)) return;
         if (Cast(1)) return;

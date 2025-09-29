@@ -26,7 +26,7 @@ public class TestZone
         //Core.ChooseBestEnhancementFor("Helm", "Pneuma", "Wizard");
         //Core.ChooseBestEnhancementFor("Class", "Wizard");
         //Core.ChooseBestEnhancementFor("Cape", "Absolution", "Healer");
-        Core.SetClassRotation("StoneCrusher", "Ultra");
+        // Core.SetClassRotation("StoneCrusher", "Ultra");
 
         //Core.ChooseBestGear("*"); // for the most common race in the map
         //Core.ChooseBestGear("Random Monster"); // for a specific monster
