@@ -325,71 +325,192 @@ public class CoreUltras
     #endregion
 
     #region Find Item by Enhancement
+    /*
+        public InventoryItem ChooseBestEnhancementFor(string itemGroup, params string[] enhancementPriority)
+        {
+            if (enhancementPriority == null || enhancementPriority.Length == 0)
+            {
+                Alert("Enhancement", $"No enhancements provided for {itemGroup}");
+                return null;
+            }
 
-    public string EnhancementName(int id) => id switch
-    {
-        1 => "Adventurer",
-        2 => "Fighter",
-        3 => "Thief",
-        4 => "Armsman",
-        5 => "Hybrid",
-        6 => "Wizard",
-        7 => "Healer",
-        8 => "Spellbreaker",
-        9 => "Lucky",
-        10 => "Forge",
-        11 => "Absolution",
-        12 => "Avarice",
-        23 => "Depths",
-        24 => "Vainglory",
-        25 => "Vim",
-        26 => "Examen",
-        27 => "Pneuma",
-        28 => "Anima",
-        29 => "Penitence",
-        30 => "Lament",
-        32 => "Hearty",
-        _ => null
-    };
+            itemGroup = NormalizeItemGroup(itemGroup);
+            Alert("Enhancement", $"Searching for best {itemGroup} with priority: {string.Join(" > ", enhancementPriority)}");
 
-    public bool EnhancementIs(InventoryItem i, string name) =>
-        EnhancementName(i?.EnhancementPatternID ?? -1)?
-            .Equals(name, StringComparison.OrdinalIgnoreCase) == true;
+            foreach (var enhancementName in enhancementPriority)
+            {
+                if (string.IsNullOrWhiteSpace(enhancementName))
+                    continue;
 
-    public InventoryItem EnsureItemWithEnhancement(int patternId)
-    {
-        var inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
-        var hit = inv.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
-        if (hit != null) return hit;
+                Alert("Enhancement", $"Looking for {enhancementName} {itemGroup} in inventory...");
 
-        var bank = Bot.Bank.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
-        var fromBank = bank.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
-        if (fromBank == null) return null;
+                var inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+                var hit = inv.FirstOrDefault(i =>
+                    i?.ItemGroup?.Equals(itemGroup, StringComparison.OrdinalIgnoreCase) == true &&
+                    (EnhancementIs(i, enhancementName) || ProcIs(i, enhancementName) || AweEnhancementIs(i, enhancementName)));
 
-        ToBank(fromBank.Name);
+                if (hit != null)
+                {
+                    Alert("Enhancement", $"Found {hit.Name} with {enhancementName} in inventory");
+                    if (!Bot.Inventory.IsEquipped(hit.ID))
+                    {
+                        Alert("Enhancement", $"Equipping {hit.Name}");
+                        Bot.Inventory.EquipItem(hit.ID);
+                        Bot.Sleep(D3);
+                    }
+                    else
+                    {
+                        Alert("Enhancement", $"{hit.Name} already equipped");
+                    }
+                    return hit;
+                }
 
-        inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
-        return inv.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
-    }
+                Alert("Enhancement", $"Not in inventory. Checking bank...");
 
-    public InventoryItem EnsureItemWithEnhancement(string enhancementName)
-    {
-        if (string.IsNullOrWhiteSpace(enhancementName)) return null;
+                var bank = Bot.Bank.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+                var fromBank = bank.FirstOrDefault(i =>
+                    i?.ItemGroup?.Equals(itemGroup, StringComparison.OrdinalIgnoreCase) == true &&
+                    (EnhancementIs(i, enhancementName) || ProcIs(i, enhancementName) || AweEnhancementIs(i, enhancementName)));
 
-        var inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
-        var hit = inv.FirstOrDefault(i => EnhancementIs(i, enhancementName));
-        if (hit != null) return hit;
+                if (fromBank != null)
+                {
+                    Alert("Enhancement", $"Found {fromBank.Name} with {enhancementName} in bank. Retrieving...");
+                    ToBank(fromBank.Name);
+                    inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+                    var retrieved = inv.FirstOrDefault(i =>
+                        i?.ItemGroup?.Equals(itemGroup, StringComparison.OrdinalIgnoreCase) == true &&
+                        (EnhancementIs(i, enhancementName) || ProcIs(i, enhancementName) || AweEnhancementIs(i, enhancementName)));
 
-        var bank = Bot.Bank.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
-        var fromBank = bank.FirstOrDefault(i => EnhancementIs(i, enhancementName));
-        if (fromBank == null) return null;
+                    if (retrieved != null)
+                    {
+                        Alert("Enhancement", $"Retrieved {retrieved.Name}. Equipping...");
+                        if (!Bot.Inventory.IsEquipped(retrieved.ID))
+                        {
+                            Bot.Inventory.EquipItem(retrieved.ID);
+                            Bot.Sleep(D3);
+                        }
+                        return retrieved;
+                    }
+                    else
+                    {
+                        Alert("Enhancement", $"Failed to retrieve {fromBank.Name} from bank");
+                    }
+                }
+                else
+                {
+                    Alert("Enhancement", $"{enhancementName} {itemGroup} not found in bank either");
+                }
+            }
 
-        ToBank(fromBank.Name);
+            Alert("Enhancement", $"No suitable {itemGroup} found with any of the requested enhancements");
+            return null;
+        }
 
-        inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
-        return inv.FirstOrDefault(i => EnhancementIs(i, enhancementName));
-    }
+        public string EnhancementName(int id) => id switch
+        {
+            1 => "Adventurer",
+            2 => "Fighter",
+            3 => "Thief",
+            4 => "Armsman",
+            5 => "Hybrid",
+            6 => "Wizard",
+            7 => "Healer",
+            8 => "Spellbreaker",
+            9 => "Lucky",
+            10 => "Forge",
+            11 => "Absolution",
+            12 => "Avarice",
+            23 => "Depths",
+            24 => "Vainglory",
+            25 => "Vim",
+            26 => "Examen",
+            27 => "Pneuma",
+            28 => "Anima",
+            29 => "Penitence",
+            30 => "Lament",
+            32 => "Hearty",
+            _ => null
+        };
 
+        public string AweEnhancementName(int id) => id switch
+        {
+            2 => "Spiral Carve",
+            3 => "Awe Blast",
+            4 => "Health Vamp",
+            5 => "Mana Vamp",
+            6 => "Powerword Die",
+            _ => null
+        };
+
+        public string ProcName(int id) => id switch
+        {
+            7 => "Lacerate",
+            8 => "Smite",
+            9 => "Valiance",
+            10 => "Arcana's Concerto",
+            11 => "Acheron",
+            12 => "Elysium",
+            13 => "Praxis",
+            14 => "Dauntless",
+            15 => "Ravenous",
+            _ => null
+        };
+
+        public bool AweEnhancementIs(InventoryItem i, string name) =>
+                AweEnhancementName(i?.ProcID ?? -1)?
+                    .Equals(name, StringComparison.OrdinalIgnoreCase) == true;
+
+        public bool ProcIs(InventoryItem i, string name) =>
+            ProcName(i?.ProcID ?? -1)?
+                .Equals(name, StringComparison.OrdinalIgnoreCase) == true;
+
+        public bool EnhancementIs(InventoryItem i, string name) =>
+            EnhancementName(i?.EnhancementPatternID ?? -1)?
+                .Equals(name, StringComparison.OrdinalIgnoreCase) == true;
+
+        public InventoryItem EnsureItemWithEnhancement(int patternId)
+        {
+            var inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+            var hit = inv.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
+            if (hit != null) return hit;
+
+            var bank = Bot.Bank.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+            var fromBank = bank.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
+            if (fromBank == null) return null;
+
+            ToBank(fromBank.Name);
+
+            inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+            return inv.FirstOrDefault(i => i?.EnhancementPatternID == patternId);
+        }
+
+        public InventoryItem EnsureItemWithEnhancement(string enhancementName)
+        {
+            if (string.IsNullOrWhiteSpace(enhancementName)) return null;
+
+            var inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+            var hit = inv.FirstOrDefault(i => EnhancementIs(i, enhancementName));
+            if (hit != null) return hit;
+
+            var bank = Bot.Bank.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+            var fromBank = bank.FirstOrDefault(i => EnhancementIs(i, enhancementName));
+            if (fromBank == null) return null;
+
+            ToBank(fromBank.Name);
+
+            inv = Bot.Inventory.Items?.OfType<InventoryItem>() ?? Enumerable.Empty<InventoryItem>();
+            return inv.FirstOrDefault(i => EnhancementIs(i, enhancementName));
+        }
+
+        private string NormalizeItemGroup(string itemGroup) => itemGroup?.ToLower() switch
+        {
+            "weapon" => "Weapon",
+            "helm" or "he" => "he",
+            "back" or "ba" => "ba",
+            "class" or "co" => "co",
+            _ => itemGroup
+        };
+    */
     #endregion
 
     #region Combat
@@ -690,8 +811,8 @@ public class CoreUltras
                     Bot.Shops.BuyItem(61043, 8421, 2);
                 if (Owned(11623) < 1)
                     Bot.Shops.BuyItem(11623, 8798, 10);*/
-                BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 2);
-                BuyItem("alchemyacademy", 2036, "Might Tonic", 10, calculateRemaining: false);
+                BuyItem("Gold Voucher 500k", 2036, "alchemyacademy", 2);
+                BuyItem("Might Tonic", 2036, "alchemyacademy", 10, calculateRemaining: false);
                 break;
             case "Sage Tonic":
                 /*Join("alchemyacademy");
@@ -700,8 +821,8 @@ public class CoreUltras
                     Bot.Shops.BuyItem(61043, 8421, 2);
                 if (Owned(11635) < 1)
                     Bot.Shops.BuyItem(11635, 8800, 10);*/
-                BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 2);
-                BuyItem("alchemyacademy", 2036, "Sage Tonic", 10, calculateRemaining: false);
+                BuyItem("Gold Voucher 500k", 2036, "alchemyacademy", 2);
+                BuyItem("Sage Tonic", 2036, "alchemyacademy", 10, calculateRemaining: false);
                 break;
             case "Potent Malevolence Elixir":
                 /*Join("alchemyacademy");
@@ -710,8 +831,8 @@ public class CoreUltras
                     Bot.Shops.BuyItem(61043, 8421, 4);
                 if (Owned(11745) < 1)
                     Bot.Shops.BuyItem(11745, 9825, 8);*/
-                BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 4);
-                BuyItem("alchemyacademy", 2036, "Potent Malevolence Elixir", 8, calculateRemaining: false);
+                BuyItem("Gold Voucher 500k", 2036, "alchemyacademy", 4);
+                BuyItem("Potent Malevolence Elixir", 2036, "alchemyacademy", 8, calculateRemaining: false);
                 break;
             case "Potent Battle Elixir":
                 /*Join("alchemyacademy");
@@ -720,8 +841,8 @@ public class CoreUltras
                     Bot.Shops.BuyItem(61043, 8421, 4);
                 if (Owned(11741) < 1)
                     Bot.Shops.BuyItem(11741, 9824, 8);*/
-                BuyItem("alchemyacademy", 2036, "Gold Voucher 500k", 4);
-                BuyItem("alchemyacademy", 2036, "Potent Battle Elixir", 8, calculateRemaining: false);
+                BuyItem("Gold Voucher 500k", 2036, "alchemyacademy", 4);
+                BuyItem("Potent Battle Elixir", 2036, "alchemyacademy", 8, calculateRemaining: false);
                 break;
             case "Potent Honor Potion":
                 /*Join("alchemyacademy");
@@ -730,8 +851,8 @@ public class CoreUltras
                     Bot.Shops.BuyItem(61043, 8421, 1);
                 if (Owned(11736) < 1)
                     Bot.Shops.BuyItem(11736, 8826, 5);*/
-                BuyItem("alchemyacademy", 2036, "Gold Voucher 500k");
-                BuyItem("alchemyacademy", 2036, "Potent Honor Potion", 5, calculateRemaining: false);
+                BuyItem("Gold Voucher 500k", 2036, "alchemyacademy");
+                BuyItem("Potent Honor Potion", 2036, "alchemyacademy", 5, calculateRemaining: false);
                 break;
             default: return;
         }
@@ -1512,52 +1633,6 @@ public class CoreUltras
     readonly int skillsDelay = 50;
     public bool supportMode = false;
 
-    public bool Cast(int index)
-    {
-        if (index < 1 || index > 4) return false;
-        if (Bot?.Skills == null) return false;
-
-        if (!Bot.Skills.CanUseSkill(index)) return false;
-
-        try
-        {
-            Bot.Skills.UseSkill(index);
-            return true;
-        }
-        catch { return false; }
-    }
-
-    public void DisableSkills()
-    {
-        try
-        {
-            _cts?.Cancel();
-        }
-        catch { }
-        finally
-        {
-            _runSkills = null;
-            _cts = null;
-        }
-    }
-
-    public void EnableSkills()
-    {
-        if (_runSkills != null && !_runSkills.IsCompleted) return;
-
-        try
-        {
-            _cts = new CancellationTokenSource();
-            _runSkills = Task.Run(() => SkillsAsync(_cts.Token));
-        }
-        catch
-        {
-            _cts?.Dispose();
-            _cts = null;
-            _runSkills = null;
-        }
-    }
-
     async Task SkillsAsync(CancellationToken token)
     {
         while (!token.IsCancellationRequested)
@@ -1618,6 +1693,8 @@ public class CoreUltras
             case "cryomancer": CryomancerClass(); break;
             case "dragon knight": DragonKnightClass(); break;
             case "shaman": ShamanClass(); break;
+            case "evolved shaman": EvolvedShamanClass(); break;
+            case "dark legendary hero": DarkLegendaryHeroClass(); break;
             case "necromancer": NecromancerClass(); break;
             case "chrono assassin": ChronoAssassinClass(); break;
 
@@ -1654,18 +1731,34 @@ public class CoreUltras
 
     void StoneCrusherClass()
     {
-        if (IsHealthLow(80) || IsArmyHealthLow(80))
-            if (Cast(3)) return;
-        if (HasAura("Magnitude", true))
+        var mode = GetMode("StoneCrusher");
+
+        if (mode == "Ultra")
+        {
+            if (IsHealthLow(80) || IsArmyHealthLow(80) && HasAura("Magnitude", true))
+                if (Cast(3)) return;
+            if (Left("Dissonance", 1, true))
+                if (Cast(2)) return;
             if (Cast(4)) return;
-        if (Left("Dissonance", 1, true))
-            if (Cast(2)) return;
-        if (Cast(1)) return;
+            if (Cast(1)) return;
+        }
+        else
+        {
+            if (IsHealthLow(80) || IsArmyHealthLow(80))
+                if (Cast(3)) return;
+            if (HasAura("Magnitude", true))
+                if (Cast(4)) return;
+            if (Left("Dissonance", 1, true))
+                if (Cast(2)) return;
+            if (Cast(1)) return;
+        }
     }
 
     void ArchPaladinClass()
     {
-        if (supportMode)
+        var mode = GetMode("ArchPaladin");
+
+        if (mode == "Ultra")
         {
             if (IsHealthLow(85) || IsArmyHealthLow(85) && !HasAura("Noxious Decay", true))
                 if (Cast(2)) return;
@@ -1828,13 +1921,31 @@ public class CoreUltras
 
     void ShamanClass()
     {
-        // solo rotation
         if (Left("Elemental Embrace", 5))
             if (Cast(4)) return;
         if (HasAura("Elemental Embrace"))
             if (Cast(3)) return;
         if (HasAura("Scorched Spirit"))
             if (Cast(2)) return;
+        if (Cast(1)) return;
+    }
+
+    void EvolvedShamanClass()
+    {
+        if (IsHealthLow(80) || IsArmyHealthLow(80))
+            if (Cast(3)) return;
+        if (Left("Elemental Grasp", 5))
+            if (Cast(4)) return;
+        if (Cast(2)) return;
+        if (Cast(1)) return;
+    }
+
+    void DarkLegendaryHeroClass()
+    {
+        if (IsHealthLow(30) || IsArmyHealthLow(30))
+            if (Cast(4)) return;
+        if (Cast(3)) return;
+        if (Cast(2)) return;
         if (Cast(1)) return;
     }
 
@@ -1878,6 +1989,65 @@ public class CoreUltras
             if (Cast(3)) return;
         if (Cast(2)) return;
     }
+
+    // --- helpers ---------------------------------------------------------------
+
+    public bool Cast(int index)
+    {
+        if (index < 1 || index > 4) return false;
+        if (Bot?.Skills == null) return false;
+
+        if (!Bot.Skills.CanUseSkill(index)) return false;
+
+        try
+        {
+            Bot.Skills.UseSkill(index);
+            return true;
+        }
+        catch { return false; }
+    }
+
+    public void DisableSkills()
+    {
+        try
+        {
+            _cts?.Cancel();
+        }
+        catch { }
+        finally
+        {
+            _runSkills = null;
+            _cts = null;
+        }
+    }
+
+    public void EnableSkills()
+    {
+        if (_runSkills != null && !_runSkills.IsCompleted) return;
+
+        try
+        {
+            _cts = new CancellationTokenSource();
+            _runSkills = Task.Run(() => SkillsAsync(_cts.Token));
+        }
+        catch
+        {
+            _cts?.Dispose();
+            _cts = null;
+            _runSkills = null;
+        }
+    }
+
+    private Dictionary<string, string> _classRotationMode = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+
+    public void SetClassRotation(string className, string mode)
+    {
+        _classRotationMode[className] = mode;
+        Alert("Rotation", $"{className} set to {mode} mode");
+    }
+
+    private string GetMode(string className) =>
+        _classRotationMode.TryGetValue(className, out var mode) ? mode : "Default";
 
     #endregion
 
@@ -2125,13 +2295,12 @@ public class CoreUltras
     public void DrakathTaunter()
     {
         const string THRESHOLD_KEY = "drakath.lastThreshold";
-
         if (Bot?.Combat == null || Bot?.Player == null) return;
 
         var bands = new (int thr, int rng)[] {
-            (18_000_000, 200_000), (16_000_000, 200_000), (14_000_000, 200_000),
-            (12_000_000, 200_000), (10_000_000, 200_000), (8_000_000, 120_000),
-            (6_000_000, 120_000), (4_000_000, 120_000), (2_000_000, 120_000)
+            (18_000_000, 180_000), (16_000_000, 180_000), (14_000_000, 180_000),
+            (12_000_000, 180_000), (10_000_000, 180_000), (8_000_000, 100_000),
+            (6_000_000, 100_000), (4_000_000, 100_000), (2_000_000, 100_000)
         };
 
         Bot.Combat.Attack("Champion Drakath");
@@ -2139,15 +2308,29 @@ public class CoreUltras
         if (t?.HP == null || t.HP <= 0) return;
 
         int hp = t.HP;
-        var lastThreshold = AppDomain.CurrentDomain.GetData(THRESHOLD_KEY) as int? ?? int.MinValue;
-        var matchingBand = Array.Find(bands, band => Math.Abs(hp - band.thr) <= band.rng);
+        var lastThreshold = AppDomain.CurrentDomain.GetData(THRESHOLD_KEY) as int? ?? int.MaxValue;
 
-        if (matchingBand != default && lastThreshold != matchingBand.thr)
+        var matchingBand = Array.FindLast(bands, band =>
+            hp <= (band.thr + band.rng) &&
+            band.thr < lastThreshold);
+
+        if (matchingBand != default)
         {
+            Alert("Drakath", $"Triggering threshold at {hp:N0} HP (target: {matchingBand.thr:N0})");
             AppDomain.CurrentDomain.SetData(THRESHOLD_KEY, matchingBand.thr);
 
-            while (MonsterAlive("Champion Drakath") && !HasAura("Focus") && !Bot.ShouldExit)
+            int attempts = 0;
+            while (MonsterAlive("Champion Drakath") && !HasAura("Focus") && !Bot.ShouldExit && attempts < 50)
+            {
                 UsePotion();
+                Bot.Sleep(100);
+                attempts++;
+            }
+
+            if (HasAura("Focus"))
+                Alert("Drakath", $"Focus obtained at {Bot.Player.Target?.HP:N0} HP");
+            else
+                Alert("Drakath", $"Warning: Failed to get Focus (attempts: {attempts})");
         }
 
         Bot.Sleep(150);
