@@ -1705,6 +1705,8 @@ public class CoreUltras
             case "dark legendary hero": DarkLegendaryHeroClass(); break;
             case "necromancer": NecromancerClass(); break;
             case "chrono assassin": ChronoAssassinClass(); break;
+            case "guardian": GuardianClass(); break;
+            case "great thief": GreatThiefClass(); break;
 
             // Basic classes
             case "mage": MageClass(); break;
@@ -1993,6 +1995,25 @@ public class CoreUltras
         }
         if (Cast(2)) return;
 
+    }
+
+    void GuardianClass()
+    {
+        if ((HasAura("Hypercritical", true) || HasAura("Void Imbue", true)) && Stacks("Guardian Spirit", 20))
+            if (Cast(4)) return;
+        if (IsManaLow(40))
+            if (Cast(3)) return;
+        if (Cast(1)) return;
+        if (Cast(2)) return;
+    }
+
+    void GreatThiefClass()
+    {
+        if (HasAura("Hidden Blade", true))
+            if (Cast(4)) return;
+        if (Cast(3)) return;
+        if (Cast(1)) return;
+        if (Cast(2)) return;
     }
 
     // --- basic classes ---------------------------------------------------------------
