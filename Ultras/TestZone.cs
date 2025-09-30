@@ -29,7 +29,7 @@ public class TestZone
         //Core.ChooseBestGear("*"); // for the most common race in the map
         //Core.ChooseBestGear("Random Monster"); // for a specific monster
 
-        Core.BuyItem("Shriekward Potion", 774, "mirrorportal", 30);
-        //Core.ForItem("Onyx Lava Dragon", "lair", "Celestial Staff", useBestGear: true);
+        //Core.BuyItem("Shriekward Potion", 774, "mirrorportal", 30);
+        Core.ForItem("Boss Dummy", "classhall", "Celestial Staff", useBestGear: true);
     }
 }

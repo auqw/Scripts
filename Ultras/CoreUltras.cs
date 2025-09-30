@@ -1231,31 +1231,20 @@ public class CoreUltras
 
     public void Join(string map, string cell = "Enter", string pad = "Spawn", bool publicRoom = false, int? roomNumber = null)
     {
-        if (string.IsNullOrWhiteSpace(map)) return;
-        if (Bot?.Map == null || Bot?.Player == null) return;
+        if (string.IsNullOrWhiteSpace(map) || Bot?.Map == null || Bot?.Player == null) return;
 
         string mapName = map.Split('-')[0].Trim();
 
-        var supportMaps = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
-        {
-            "championdrakath", "ultraezrajal", "ultrawarden", "ultraengineer", "ultradage",
-            "ultratyndarius"
-        };
-        supportMode = supportMaps.Contains(mapName);
+        string target = publicRoom ? mapName
+            : roomNumber.HasValue ? $"{mapName}-{roomNumber.Value}"
+            : map.Contains("-") ? map
+            : $"{mapName}-{GenerateRoomID()}";
 
-        string target = publicRoom
-            ? mapName
-            : roomNumber.HasValue
-                ? $"{mapName}-{roomNumber.Value}"
-                : (map.Contains("-") ? map : $"{mapName}-{GenerateRoomID(10000, 100000)}");
-
-        if (Bot.Map.Name?.Equals(mapName, StringComparison.OrdinalIgnoreCase) == true)
-            return;
+        if (Bot.Map.Name?.Equals(mapName, StringComparison.OrdinalIgnoreCase) == true) return;
 
         while (!Bot.ShouldExit && Bot.Map.Name?.Equals(mapName, StringComparison.OrdinalIgnoreCase) != true)
         {
             StopAttack();
-
             try
             {
                 Bot.Send.Packet($"%xt%zm%cmd%{Bot.Map.RoomID}%tfer%{Bot.Player.Username}%{target}%{cell}%{pad}%");
@@ -1286,8 +1275,7 @@ public class CoreUltras
 
         if (monsters.Count == 0) return;
 
-        string targetCell =
-            !string.IsNullOrWhiteSpace(setCell) ? setCell
+        string targetCell = !string.IsNullOrWhiteSpace(setCell) ? setCell
             : alt ? monsters.First().Cell
             : monsters.GroupBy(m => m.Cell)
                       .OrderByDescending(g => g.Count())
@@ -1312,71 +1300,48 @@ public class CoreUltras
         }
     }
 
-    int GenerateRoomID(int min = 1000, int max = 10000)
+    int GenerateRoomID()
     {
-        if (min >= max) (min, max) = (1000, 10000);
-
-        static string GetStableMachineId()
+        // Creates a stable room ID (1000-99999) based on machine + date
+        // All accounts on same PC share the same room for the day
+        string machineId;
+        try
         {
-            try
-            {
-                var v = Microsoft.Win32.Registry.GetValue(
-                    @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography", "MachineGuid", null
-                ) as string;
-                if (!string.IsNullOrWhiteSpace(v)) return v;
-            }
-            catch { /* non-Windows fallback */ }
-
-            return $"{Environment.MachineName}|{Environment.UserName}";
+            machineId = Microsoft.Win32.Registry.GetValue(
+                @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography", "MachineGuid", null
+            ) as string ?? Environment.MachineName;
         }
+        catch { machineId = Environment.MachineName; }
 
-        var id = GetStableMachineId();
-        var hash = SHA256.HashData(Encoding.UTF8.GetBytes(id));
-
-        int seed = BitConverter.ToInt32(hash, 0);
-        uint nonNeg = seed == int.MinValue ? 0u : (uint)Math.Abs(seed);
-
-        int range = (max - min + 1);
-        return (int)(nonNeg % range) + min;
+        string seed = $"{machineId}|{DateTime.UtcNow:yyyyMMdd}";
+        var hash = SHA256.HashData(Encoding.UTF8.GetBytes(seed));
+        uint roomSeed = BitConverter.ToUInt32(hash, 0);
+        return (int)(roomSeed % 99000) + 1000;
     }
 
     double GetLowestHpPercentage()
     {
-        if (Bot?.Map?.PlayerNames == null) return 100.0;
+        if (Bot?.Map?.PlayerNames?.Count == 0) return 100.0;
 
-        var playerNames = Bot.Map.PlayerNames;
-        if (playerNames.Count == 0) return 100.0;
+        double lowest = 100.0;
 
-        double lowestHpPercentage = 100.0;
-
-        foreach (string playerName in playerNames)
+        foreach (var playerName in Bot.Map.PlayerNames.Where(p => !string.IsNullOrWhiteSpace(p)))
         {
-            if (string.IsNullOrWhiteSpace(playerName)) continue;
-
             try
             {
-                int currentHp = Bot.Flash.GetGameObject<int>($"world.uoTree.{playerName}.intHP");
+                int hp = Bot.Flash.GetGameObject<int>($"world.uoTree.{playerName}.intHP");
                 int maxHp = Bot.Flash.GetGameObject<int>($"world.uoTree.{playerName}.intHPMax");
 
-                if (maxHp <= 0 || currentHp < 0) continue;
-
-                double hpPercentage = (double)currentHp / maxHp * 100.0;
-
-                if (hpPercentage < lowestHpPercentage)
-                {
-                    lowestHpPercentage = hpPercentage;
-                }
+                if (maxHp > 0 && hp >= 0)
+                    lowest = Math.Min(lowest, (double)hp / maxHp * 100.0);
             }
-            catch { continue; }
+            catch { }
         }
 
-        return lowestHpPercentage;
+        return lowest;
     }
 
-    bool IsArmyHealthLow(double percentage = 30.0)
-    {
-        return GetLowestHpPercentage() < percentage;
-    }
+    bool IsArmyHealthLow(double percentage = 30.0) => GetLowestHpPercentage() < percentage;
 
     void WhiteMap() => Join("whitemap");
 
@@ -1438,6 +1403,7 @@ public class CoreUltras
             case "legion doomknight": LegionDoomKnightClass(); break;
             case "dragon of time": DragonOfTimeClass(); break;
             case "archmage": ArchmageClass(); break;
+            case "verus doomknight": VerusDoomKnight(); break;
 
             // Chrono classes
             case "chrono dataknight": ChronoDataKnightClass(); break;
@@ -1593,6 +1559,15 @@ public class CoreUltras
         if (HasAura("Arcane Flux", true) && IsHealthHigh(50))
             if (Cast(4)) return;
         if (Cast(1)) return;
+        if (Cast(3)) return;
+    }
+
+    void VerusDoomKnight()
+    {
+        if (Stacks("Doom", 10, true))
+            if (Cast(4)) return;
+        if (Cast(1)) return;
+        if (Cast(2)) return;
         if (Cast(3)) return;
     }
 
