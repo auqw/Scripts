@@ -1564,10 +1564,11 @@ public class CoreUltras
 
     void VerusDoomKnight()
     {
+        if (IsHealthLow(50))
+            if (Cast(2)) return;
         if (Stacks("Doom", 10, true))
             if (Cast(4)) return;
         if (Cast(1)) return;
-        if (Cast(2)) return;
         if (Cast(3)) return;
     }
 
@@ -1913,91 +1914,72 @@ public class CoreUltras
     private volatile bool _chargeDetected;
     private int _chargeCount;
 
-    private bool ChargeDetected
-    {
-        get => _chargeDetected;
-        set
-        {
-            if (_chargeDetected == value) return;
-            _chargeDetected = value;
-            Bot.Log($"[PACKET] chargeDetected={value.ToString().ToLowerInvariant()}");
-        }
-    }
-
-    public async Task PulseChargeAsync(int ms = 2000)
+    void PulseCharge(int ms = 2000)
     {
         System.Threading.Interlocked.Increment(ref _chargeCount);
-        ChargeDetected = true;
-
-        try
+        _chargeDetected = true;
+        Task.Run(async () =>
         {
-            await Task.Delay(ms).ConfigureAwait(false);
-        }
-        finally
-        {
+            await Task.Delay(ms);
             if (System.Threading.Interlocked.Decrement(ref _chargeCount) <= 0)
             {
                 _chargeCount = 0;
-                ChargeDetected = false;
+                _chargeDetected = false;
             }
-        }
+        });
     }
 
-    public async void ChargeListener(dynamic packet)
+    public void ChargeListener(dynamic packet)
     {
         try
         {
             if (packet?["params"]?.type?.ToString() != "json") return;
-
             dynamic data = packet["params"].dataObj;
             if (data?.cmd?.ToString() != "ct") return;
 
             var anims = data?.anims as System.Collections.IEnumerable;
             if (anims == null) return;
 
-            foreach (var a in anims)
+            foreach (var anim in anims)
             {
-                string animStr = (a as dynamic)?.animStr?.ToString();
-                if (!string.IsNullOrEmpty(animStr) &&
-                    animStr.Equals("Charge", StringComparison.OrdinalIgnoreCase))
+                if ((anim as dynamic)?.animStr?.ToString()?.Equals("Charge", StringComparison.OrdinalIgnoreCase) == true)
                 {
-                    await PulseChargeAsync(2000).ConfigureAwait(false);
+                    PulseCharge(2000);
                     break;
                 }
             }
         }
-        catch (Exception ex) { }
+        catch { }
     }
 
-    async void ChaosHarpyListener(dynamic packet)
+    void ChaosHarpyListener(dynamic packet)
     {
         try
         {
             if (packet?["params"]?.type?.ToString() != "json") return;
-
             dynamic data = packet["params"].dataObj;
             if (data?.cmd?.ToString() != "ct") return;
 
             var anims = data?.anims as System.Collections.IEnumerable;
             if (anims == null) return;
 
-            foreach (var a in anims)
+            foreach (var anim in anims)
             {
-                string animStr = (a as dynamic)?.animStr?.ToString();
-                if (!string.IsNullOrEmpty(animStr) &&
-                    animStr.Equals("Charge", StringComparison.OrdinalIgnoreCase))
+                if ((anim as dynamic)?.animStr?.ToString()?.Equals("Charge", StringComparison.OrdinalIgnoreCase) == true)
                 {
-                    DisableSkills();
-                    Bot.Sleep(D1);
-                    await Task.Delay(500);
-                    Bot.Skills.UseSkill(5);
-                    await Task.Delay(500);
-                    EnableSkills();
+                    Task.Run(async () =>
+                    {
+                        DisableSkills();
+                        await Task.Delay(500);
+                        Bot.Skills.UseSkill(5);
+                        await Task.Delay(500);
+                        EnableSkills();
+                    });
                     break;
                 }
             }
         }
-        catch (Exception ex) { }
+        catch { }
     }
 
     #endregion

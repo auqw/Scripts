@@ -21,23 +21,21 @@ public class UltraEzrajal
 
     void Kill()
     {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion());
-        Core.UseAlchemyPotions(Core.GetBestElixirPotion());
-        Core.BuyAlchemyPotion("Potent Honor Potion");
-        Core.EquipConsumable("Potent Honor Potion");
+        //Core.UseAlchemyPotions(Core.GetBestTonicPotion());
+        //Core.UseAlchemyPotions(Core.GetBestElixirPotion());
+        //Core.BuyAlchemyPotion("Potent Honor Potion");
+        //Core.EquipConsumable("Potent Honor Potion");
 
         Core.Join("ultraezrajal");
-        Core.WaitForArmy(3);
+        //Core.WaitForArmy(3);
         Core.ChooseBestCell("Ultra Ezrajal");
         Core.EnableSkills();
 
         while (Core.MonsterAlive("Ultra Ezrajal") && !Bot.ShouldExit)
+        {
             if (Core.HasAura("Counter Attack"))
                 Core.DontAttack();
-            else
-            {
-                Core.Kill("Ultra Ezrajal");
-                Bot.Skills.UseSkill(5);
-            }
+            Core.Kill("Ultra Ezrajal");
+        }
     }
 }
