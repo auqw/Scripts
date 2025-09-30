@@ -845,7 +845,7 @@
       "luxuria"
     ],
     "path": "Legion/HeadOfTheLegionBeast.cs",
-    "size": 10639,
+    "size": 11764,
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
   },
@@ -856,7 +856,7 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 38619,
+    "size": 38720,
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -1971,7 +1971,7 @@
       "poison-forest"
     ],
     "path": "Story/PoisonForest.cs",
-    "size": 3308,
+    "size": 3766,
     "fileName": "PoisonForest.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/PoisonForest.cs"
   },
@@ -6305,14 +6305,14 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionTokens/ThanatosParagon.cs"
   },
   {
-    "name": "Best Available Token",
+    "name": "Best Available Legion Token",
     "description": "uses the best pet you have for legion token farming",
     "tags": [
       "legion",
       "legion token"
     ],
     "path": "Legion/LegionTokens/0BestAvailableLegionTokens.cs",
-    "size": 918,
+    "size": 925,
     "fileName": "0BestAvailableLegionTokens.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/LegionTokens/0BestAvailableLegionTokens.cs"
   },
@@ -7527,7 +7527,7 @@
       "seraphic-war"
     ],
     "path": "Story/Legion/SeraphicWar.cs",
-    "size": 1895,
+    "size": 1896,
     "fileName": "SeraphicWar.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/SeraphicWar.cs"
   },
@@ -23813,7 +23813,7 @@
       "null"
     ],
     "path": "Nation/Various/JuggernautItems.cs",
-    "size": 4635,
+    "size": 4646,
     "fileName": "JuggernautItems.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/JuggernautItems.cs"
   },
@@ -28620,7 +28620,7 @@
       "statue"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHouseMerge.cs",
-    "size": 7277,
+    "size": 7259,
     "fileName": "DoomPirateHouseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHouseMerge.cs"
   },
@@ -28788,7 +28788,7 @@
       "crimson"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs",
-    "size": 9183,
+    "size": 9165,
     "fileName": "DoomPirateHaulMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs"
   },

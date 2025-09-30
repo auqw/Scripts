@@ -1,5 +1,5 @@
 /*
-name: Best Available Token
+name: Best Available Legion Token
 description: uses the best pet you have for legion token farming
 tags: legion, legion token
 */
