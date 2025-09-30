@@ -883,152 +883,87 @@ public class CoreUltras
 
     public bool BuyItem(string itemName, int shopId, string map, int quantity = 1, bool calculateRemaining = true, bool skipIfHaveEnough = true, bool considerBank = true)
     {
-        if (string.IsNullOrWhiteSpace(itemName) || quantity <= 0)
-        {
-            Alert("Shop", $"Invalid parameters: itemName='{itemName}', quantity={quantity}");
-            return false;
-        }
+        if (string.IsNullOrWhiteSpace(itemName) || quantity <= 0) return false;
 
         try
         {
-            if (!string.IsNullOrWhiteSpace(map) && !JoinMapSafely(map))
+            if (!string.IsNullOrWhiteSpace(map) && Bot?.Map?.Name?.Equals(map, StringComparison.OrdinalIgnoreCase) != true)
             {
-                Alert("Shop", $"Failed to join map: {map}");
-                return false;
+                Join(map);
+                Bot.Sleep(D4);
+                if (Bot?.Map?.Name?.Equals(map, StringComparison.OrdinalIgnoreCase) != true)
+                {
+                    Alert("Shop", $"Failed to join map: {map}");
+                    return false;
+                }
             }
 
-            if (!LoadShopSafely(shopId))
+            Bot.Shops.Load(shopId);
+            Bot.Sleep(D4);
+
+            if (Bot?.Shops?.Items?.Any() != true)
             {
                 Alert("Shop", $"Failed to load shop: {shopId}");
                 return false;
             }
 
-            if (considerBank) BankItemSafely(itemName);
+            if (considerBank) { InBank(itemName); Bot.Sleep(D3); }
 
-            int current = GetCurrentQuantity(itemName);
+            int current = Owned(itemName);
 
-            // Check if we already have enough (applies to both calculateRemaining modes)
-            if (skipIfHaveEnough && current >= quantity)
-            {
-                Alert("Shop", $"Already have enough {itemName}: {current}/{quantity}");
-                return true;
-            }
+            if (skipIfHaveEnough && current >= quantity) return true;
 
-            int buyQuantity = quantity;
-            if (calculateRemaining)
-            {
-                buyQuantity = Math.Max(0, quantity - current);
-                Alert("Shop", $"Have {current}, need {quantity}, buying {buyQuantity}");
-                if (buyQuantity == 0) return true;
-            }
-            else
-            {
-                Alert("Shop", $"Buying exact quantity: {quantity} (have {current})");
-            }
+            int buyQuantity = calculateRemaining ? Math.Max(0, quantity - current) : quantity;
+            if (buyQuantity == 0) return true;
 
-            var item = GetValidatedShopItem(itemName);
+            var item = Bot.Shops.Items.FirstOrDefault(i =>
+                i?.Name?.Equals(itemName, StringComparison.OrdinalIgnoreCase) == true);
+
             if (item == null)
             {
                 Alert("Shop", $"Item not found in shop: {itemName}");
                 return false;
             }
 
-            Alert("Shop", $"Found item: {item.Name} (Cost: {item.Cost})");
+            long totalCost = (long)item.Cost * buyQuantity;
 
-            if (!ValidatePurchaseRequirements(item, buyQuantity))
+            if (Bot.Player.Gold < totalCost)
             {
-                Alert("Shop", $"Purchase requirements not met");
+                Alert("Shop", $"Insufficient gold: need {totalCost}, have {Bot.Player.Gold}");
                 return false;
             }
 
-            return ExecutePurchase(item, buyQuantity);
+            if (Bot.Player.Level < item.Level)
+            {
+                Alert("Shop", $"Level too low: need {item.Level}, have {Bot.Player.Level}");
+                return false;
+            }
+
+            if (Bot.Inventory.FreeSlots <= 0)
+            {
+                Alert("Shop", "No inventory space");
+                return false;
+            }
+
+            int before = current;
+            Bot.Shops.BuyItem(item.ID, item.ShopItemID, buyQuantity);
+            Bot.Sleep(D3);
+
+            int after = Owned(itemName);
+            bool success = after > before;
+
+            if (success)
+                Alert("Shop", $"Purchased {after - before}x {itemName}");
+            else
+                Alert("Shop", $"Purchase failed for {itemName}");
+
+            return success;
         }
         catch (Exception ex)
         {
-            Alert("Shop", $"Exception: {ex.Message}");
+            Alert("Shop", $"Error buying {itemName}: {ex.Message}");
             return false;
         }
-    }
-
-    private bool JoinMapSafely(string map)
-    {
-        if (Bot?.Map?.Name?.Equals(map, StringComparison.OrdinalIgnoreCase) == true) return true;
-        Join(map);
-        Bot.Sleep(D4);
-        return Bot?.Map?.Name?.Equals(map, StringComparison.OrdinalIgnoreCase) == true;
-    }
-
-    private bool LoadShopSafely(int shopId)
-    {
-        Bot.Shops.Load(shopId);
-        Bot.Sleep(D4);
-        bool loaded = Bot?.Shops?.Items?.Any() == true;
-        Alert("Shop", $"Shop {shopId} loaded: {loaded} ({Bot?.Shops?.Items?.Count ?? 0} items)");
-        return loaded;
-    }
-
-    private bool BankItemSafely(string itemName)
-    {
-        try { InBank(itemName); Bot.Sleep(D3); return true; }
-        catch { return false; }
-    }
-
-    private int GetCurrentQuantity(string itemName)
-    {
-        try { return Owned(itemName, isTemp: false); }
-        catch { return 0; }
-    }
-
-    private ShopItem GetValidatedShopItem(string itemName)
-    {
-        return Bot?.Shops?.Items?.FirstOrDefault(i =>
-            i?.Name?.Equals(itemName, StringComparison.OrdinalIgnoreCase) == true);
-    }
-
-    private bool ValidatePurchaseRequirements(ShopItem item, int quantity)
-    {
-        if (Bot?.Player == null)
-        {
-            Alert("Shop", "Bot.Player is null");
-            return false;
-        }
-
-        long totalCost = (long)item.Cost * quantity;
-        if (Bot.Player.Gold < totalCost)
-        {
-            Alert("Shop", $"Insufficient gold: need {totalCost}, have {Bot.Player.Gold}");
-            return false;
-        }
-
-        if (Bot.Player.Level < item.Level)
-        {
-            Alert("Shop", $"Level too low: need {item.Level}, have {Bot.Player.Level}");
-            return false;
-        }
-
-        if (Bot?.Inventory?.FreeSlots <= 0)
-        {
-            Alert("Shop", "No inventory space");
-            return false;
-        }
-
-        Alert("Shop", $"Requirements met: gold={Bot.Player.Gold}, level={Bot.Player.Level}");
-        return true;
-    }
-
-    private bool ExecutePurchase(ShopItem item, int quantity)
-    {
-        int before = GetCurrentQuantity(item.Name);
-        Alert("Shop", $"Attempting purchase: {quantity} of {item.Name} (before: {before})");
-
-        Bot.Shops.BuyItem(item.ID, item.ShopItemID, quantity);
-        Bot.Sleep(D3);
-
-        int after = GetCurrentQuantity(item.Name);
-        bool success = after > before;
-        Alert("Shop", $"Purchase result: {success} (after: {after}, bought: {after - before})");
-
-        return success;
     }
 
     #endregion
