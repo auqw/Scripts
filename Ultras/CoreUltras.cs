@@ -1999,7 +1999,7 @@ public class CoreUltras
 
     void GuardianClass()
     {
-        if ((HasAura("Hypercritical", true) || HasAura("Void Imbue", true)) && Stacks("Guardian Spirit", 20))
+        if ((HasAura("Hypercritical", true) || HasAura("Void Imbue", true)) && Stacks("Guardian Spirit", 15, true))
             if (Cast(4)) return;
         if (IsManaLow(40))
             if (Cast(3)) return;
