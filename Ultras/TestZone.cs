@@ -24,14 +24,11 @@ public class TestZone
         // priority => ...
         //Core.ChooseBestEnhancementFor("Weapon", "Valiance", "Spiral Carve", "Fighter");
         //Core.ChooseBestEnhancementFor("Helm", "Pneuma", "Wizard");
-        //Core.ChooseBestEnhancementFor("Class", "Wizard");
-        //Core.ChooseBestEnhancementFor("Cape", "Absolution", "Healer");
-        // Core.SetClassRotation("StoneCrusher", "Ultra");
+        //Core.ChooseBestEnhancementFor("Cape", "Vainglory", "Wizard");
 
         //Core.ChooseBestGear("*"); // for the most common race in the map
         //Core.ChooseBestGear("Random Monster"); // for a specific monster
 
-        // Core.ForItem("Khasaanda", "dreamnexus", "Celestial Staff");
-        Core.ForItem("Onyx Lava Dragon", "lair", "Celestial Staff");
+        Core.ForItem("Onyx Lava Dragon", "lair", "Celestial Staff", useBestGear: true);
     }
 }
