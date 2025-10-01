@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using System.Diagnostics;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
@@ -112,7 +113,7 @@ public class CoreUltras
         int i = 0;
         while (!Bot.ShouldExit)
         {
-            if (_chargeDetected) UsePotion();
+            //if (_chargeDetected) UsePotion();
 
             if (ownedCount() >= quantity)
             {
@@ -1302,8 +1303,8 @@ public class CoreUltras
 
     int GenerateRoomID()
     {
-        // Creates a stable room ID (1000-99999) based on machine + date
-        // All accounts on same PC share the same room for the day
+        // Creates a stable room ID (1000-99999) based on machine only
+        // All accounts on same PC share the same room permanently
         string machineId;
         try
         {
@@ -1313,7 +1314,7 @@ public class CoreUltras
         }
         catch { machineId = Environment.MachineName; }
 
-        string seed = $"{machineId}|{DateTime.UtcNow:yyyyMMdd}";
+        string seed = machineId;
         var hash = SHA256.HashData(Encoding.UTF8.GetBytes(seed));
         uint roomSeed = BitConverter.ToUInt32(hash, 0);
         return (int)(roomSeed % 99000) + 1000;
@@ -1350,7 +1351,6 @@ public class CoreUltras
     #region Skills
 
     readonly int skillsDelay = 50;
-    public bool supportMode = false;
 
     async Task SkillsAsync(CancellationToken token)
     {
@@ -1406,11 +1406,11 @@ public class CoreUltras
             case "verus doomknight": VerusDoomKnight(); break;
 
             // Chrono classes
-            case "chrono dataknight": ChronoDataKnightClass(); break;
-            case "shadowweaver of time": ShadowWeaverOfTimeClass(); break;
-            case "quantum chronomancer": QuantumChronomancerClass(); break;
-            case "necrotic chronomancer": NecroticChronomancerClass(); break;
-            case "obsidian paladin chronomancer": ObsidianPaladinChronomancerClass(); break;
+            case "chrono dragonknight": case "chrono dataknight": ChronoDataKnightClass(); break;
+            case "shadowstalker of time": case "shadowweaver of time": ShadowWeaverOfTimeClass(); break;
+            case "continuum chronomancer": case "quantum chronomancer": QuantumChronomancerClass(); break;
+            case "nechronomancer": case "necrotic chronomancer": NecroticChronomancerClass(); break;
+            case "legion paladin": case "obsidian paladin chronomancer": ObsidianPaladinChronomancerClass(); break;
 
             // Common classes
             case "master ranger": MasterRangerClass(); break;
@@ -1569,6 +1569,7 @@ public class CoreUltras
         if (Stacks("Doom", 10, true))
             if (Cast(4)) return;
         if (Cast(1)) return;
+        if (Cast(2)) return;
         if (Cast(3)) return;
     }
 
@@ -1868,12 +1869,15 @@ public class CoreUltras
             object v = self ? Bot?.Self?.GetAuraValue(auraName)
                             : Bot?.Target?.GetAuraValue(auraName);
             if (v == null) return 0;
-            return v is int i ? i
+
+            int rawValue = v is int i ? i
                  : v is long l ? (int)l
                  : v is double d ? (int)Math.Round(d)
                  : v is float f ? (int)Math.Round(f)
                  : int.TryParse(v.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var n) ? n
                  : 0;
+
+            return rawValue + 1;
         }
         catch { return 0; }
     }
@@ -1986,38 +1990,36 @@ public class CoreUltras
 
     #region Experimental Ultras
 
-    public void TauntCycle(string name, string monster, string aura, int checkDelay)
+    private void TauntCore(string className, MonsterKey target, int delayMs, Func<bool> shouldPot)
     {
-        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(monster) || string.IsNullOrWhiteSpace(aura)) return;
-        if (Bot?.Combat == null) return;
+        if (string.IsNullOrWhiteSpace(className) || Bot?.Combat == null || target == null) return;
+        if (!HasClassEquipped(className)) return;
 
-        if (HasClassEquipped(name))
-        {
-            int effect = GetAuraSecondsRemaining(aura);
-            Bot.Combat.Attack(monster);
-
-            if (checkDelay > 0)
-                Bot.Sleep(checkDelay);
-
-            if (effect < 2)
-                UsePotion();
-        }
+        Attack(target);
+        if (delayMs > 0) Bot.Sleep(delayMs);
+        if (shouldPot()) UsePotion();
     }
 
-    public void TauntCharge(string name, string monster, string aura, int checkDelay)
+    public void TauntCycle(string className, string monsterName, string aura, int delayMs)
+        => TauntCore(className, MonsterKey.FromName(monsterName), delayMs, () => GetAuraSecondsRemaining(aura) < 2);
+
+    public void TauntCharge(string className, string monsterName, int delayMs)
+        => TauntCore(className, MonsterKey.FromName(monsterName), delayMs, () => _chargeDetected);
+
+    public void TauntCycle(string className, int mapId, string aura, int delayMs)
+        => TauntCore(className, MonsterKey.FromMapId(mapId), delayMs, () => GetAuraSecondsRemaining(aura) < 2);
+
+    public void TauntCharge(string className, int mapId, int delayMs)
+        => TauntCore(className, MonsterKey.FromMapId(mapId), delayMs, () => _chargeDetected);
+
+    public void KillByMapId(int mapId, string? name = null, int? id = null)
     {
-        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(monster)) return;
         if (Bot?.Combat == null) return;
 
-        if (HasClassEquipped(name))
+        if (IsAliveByMapId(mapId, name, id))
         {
-            Bot.Combat.Attack(monster);
-
-            if (checkDelay > 0)
-                Bot.Sleep(checkDelay);
-
-            if (_chargeDetected)
-                UsePotion();
+            Bot.Combat.Attack(mapId);
+            Bot.Sleep(250);
         }
     }
 
@@ -2097,60 +2099,46 @@ public class CoreUltras
         Bot.Sleep(150);
     }
 
-    public void KillWithPriority(string primaryName, int primaryMapId, string priorityName1, int priorityMapId1, string priorityName2, int priorityMapId2)
-    {
-        if (string.IsNullOrWhiteSpace(primaryName)) return;
-
-        if (!string.IsNullOrWhiteSpace(priorityName1) && IsAliveByMapId(priorityMapId1, name: priorityName1))
-            KillByMapId(priorityMapId1, name: priorityName1);
-        else if (!string.IsNullOrWhiteSpace(priorityName2) && IsAliveByMapId(priorityMapId2, name: priorityName2))
-            KillByMapId(priorityMapId2, name: priorityName2);
-        else
-            KillByMapId(primaryMapId, name: primaryName);
-
-        Bot.Sleep(D1);
-    }
-
     // --- helpers ---------------------------------------------------
 
-    public void KillByMapId(int mapId, string? name = null, int? id = null)
-    {
-        if (Bot?.Combat == null) return;
-
-        if (IsAliveByMapId(mapId, name, id))
-        {
-            Bot.Combat.Attack(mapId);
-            Bot.Sleep(250);
-        }
-    }
-
-    public void WaitForArmy(int quantity, int bufferTimeMs = 3000)
+    public void WaitForArmy(int quantity, int bufferTimeMs = 3000, int tickMs = 500, int timeoutMs = 0)
     {
         if (Bot?.Map == null) return;
 
-        int required = quantity + 1;
+        int required = Math.Max(1, quantity) + 1;
+        var sw = Stopwatch.StartNew();
 
-        while (!Bot.ShouldExit && Bot.Map.PlayerCount < required)
+        while (!Bot.ShouldExit &&
+               Bot.Map.PlayerCount < required &&
+               (timeoutMs <= 0 || sw.ElapsedMilliseconds < timeoutMs))
         {
             int others = Math.Max(0, Bot.Map.PlayerCount - 1);
             Alert("Army", $"Waiting for army: {others}/{quantity} players ready");
 
-            Bot.Skills.UseSkill(1);
-            Bot.Skills.UseSkill(2);
-            Bot.Skills.UseSkill(3);
-            Bot.Sleep(1000);
+            if (!IsManaLow(50))
+            {
+                Bot.Skills.UseSkill(1);
+                Bot.Skills.UseSkill(2);
+                Bot.Skills.UseSkill(3);
+                Bot.Player.Rest(true);
+            }
+
+            Bot.Sleep(tickMs);
         }
 
         if (Bot.ShouldExit) return;
 
         Alert("Army", $"All players ready ({Bot.Map.PlayerCount}), final buffing...");
-        Bot.Skills.UseSkill(1);
-        Bot.Skills.UseSkill(2);
-        Bot.Skills.UseSkill(3);
+        if (!IsManaLow(50))
+        {
+            Bot.Skills.UseSkill(1);
+            Bot.Skills.UseSkill(2);
+            Bot.Skills.UseSkill(3);
+            Bot.Player.Rest(true);
+        }
 
         Alert("Army", $"Waiting {bufferTimeMs}ms for coordination...");
         Bot.Sleep(bufferTimeMs);
-
         Alert("Army", "Ready to proceed!");
     }
 
