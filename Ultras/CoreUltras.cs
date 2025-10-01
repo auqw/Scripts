@@ -1990,39 +1990,49 @@ public class CoreUltras
 
     #region Experimental Ultras
 
-    private void TauntCore(string className, MonsterKey target, int delayMs, Func<bool> shouldPot)
+    public void TauntCycle(string name, string monster, string aura, int checkDelay)
     {
-        if (string.IsNullOrWhiteSpace(className) || Bot?.Combat == null || target == null) return;
-        if (!HasClassEquipped(className)) return;
-
-        Attack(target);
-        if (delayMs > 0) Bot.Sleep(delayMs);
-        if (shouldPot()) UsePotion();
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(monster) || string.IsNullOrWhiteSpace(aura)) return;
+        if (Bot?.Combat == null) return;
+        if (HasClassEquipped(name))
+        {
+            int effect = GetAuraSecondsRemaining(aura);
+            Bot.Combat.Attack(monster);
+            if (checkDelay > 0) Bot.Sleep(checkDelay);
+            if (effect < 2) UsePotion();
+        }
     }
 
-    public void TauntCycle(string className, string monsterName, string aura, int delayMs)
-        => TauntCore(className, MonsterKey.FromName(monsterName), delayMs, () => GetAuraSecondsRemaining(aura) < 2);
+    public void TauntCharge(string name, string monster, string aura, int checkDelay)
+    {
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(monster)) return;
+        if (Bot?.Combat == null) return;
+        if (HasClassEquipped(name))
+        {
+            Bot.Combat.Attack(monster);
+            if (checkDelay > 0) Bot.Sleep(checkDelay);
+            if (_chargeDetected) UsePotion();
+        }
+    }
 
-    public void TauntCharge(string className, string monsterName, int delayMs)
-        => TauntCore(className, MonsterKey.FromName(monsterName), delayMs, () => _chargeDetected);
-
-    public void TauntCycle(string className, int mapId, string aura, int delayMs)
-        => TauntCore(className, MonsterKey.FromMapId(mapId), delayMs, () => GetAuraSecondsRemaining(aura) < 2);
-
-    public void TauntCharge(string className, int mapId, int delayMs)
-        => TauntCore(className, MonsterKey.FromMapId(mapId), delayMs, () => _chargeDetected);
+    public void KillWithPriority(string primaryName, int primaryMapId, string priorityName1, int priorityMapId1, string priorityName2, int priorityMapId2)
+    {
+        if (string.IsNullOrWhiteSpace(primaryName)) return;
+        if (!string.IsNullOrWhiteSpace(priorityName1) && IsAliveByMapId(priorityMapId1, name: priorityName1)) KillByMapId(priorityMapId1, name: priorityName1);
+        else if (!string.IsNullOrWhiteSpace(priorityName2) && IsAliveByMapId(priorityMapId2, name: priorityName2)) KillByMapId(priorityMapId2, name: priorityName2);
+        else KillByMapId(primaryMapId, name: primaryName);
+        Bot.Sleep(D1);
+    }
 
     public void KillByMapId(int mapId, string? name = null, int? id = null)
     {
         if (Bot?.Combat == null) return;
-
         if (IsAliveByMapId(mapId, name, id))
         {
             Bot.Combat.Attack(mapId);
             Bot.Sleep(250);
         }
     }
-
     public void UltraWardenTaunter()
     {
         const string USED_THRESHOLDS_KEY = "warden.usedThresholds";
