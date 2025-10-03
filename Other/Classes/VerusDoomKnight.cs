@@ -55,7 +55,8 @@ public class VerusDoomKnightClass
     private static TerminaTempleMerge _TTMerge;
     private static DoomPirateHaulMerge DPHM { get => _DPHM ??= new DoomPirateHaulMerge(); set => _DPHM = value; }
     private static DoomPirateHaulMerge _DPHM;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -90,6 +91,7 @@ public class VerusDoomKnightClass
         // Of the Same Cloak (9412)
         if (!Story.QuestProgression(9412))
         {
+            Farm.Experience(50);
             Core.EnsureAccept(9412);
             Core.HuntMonsterMapID("necrodungeon", 47, "The Mask of the Skulls", isTemp: false);
             Core.HuntMonster("lumafortress", "Corrupted Luma", "Doom Worshipper's Blade Of Doom", isTemp: false);
@@ -106,6 +108,7 @@ public class VerusDoomKnightClass
         // Refracted Light (9413)
         if (!Story.QuestProgression(9413))
         {
+            Farm.Experience(60);
             Core.EnsureAccept(9413);
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("brightshadow", "Shadowflame Paladin", "Shadowflame Spike", 150, false);
@@ -120,6 +123,8 @@ public class VerusDoomKnightClass
         // Life Carve (9417)
         if (!Story.QuestProgression(9417))
         {
+            Farm.Experience(70);
+            Farm.EvilREP();
             Bot.Quests.UpdateQuest(3773);
             Core.EnsureAccept(9417);
             Core.Logger("The map \"Wanders\", is a bit broke,\n" +
@@ -151,6 +156,7 @@ public class VerusDoomKnightClass
         // Doom Spikes (9418)
         if (!Story.QuestProgression(9418))
         {
+            Farm.Experience(80);
             Core.EnsureAccept(9418);
             Adv.GearStore();
             Core.KillDoomKitten("Doomkitten's Molar", 20, false);
