@@ -1484,7 +1484,7 @@ public class CoreUltras
             bool hasJudgement = HasAura("XX - Judgement", true);
             bool hasFool = HasAura("0 - The Fool", true);
             // Second check in case it has "0 - The Fool" for some reason but no other
-            // self active auras. It can get stuck waiting for the fool to expire otherwise.
+            // self active auras. It can get stuck waiting for The Fool to expire otherwise.
             bool needsFool = !hasFool || !HasAnyAuraOtherThan("0 - The Fool", true);
 
             if ((hasJudgement && hasFool) || needsFool)
