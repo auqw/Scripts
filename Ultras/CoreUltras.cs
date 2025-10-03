@@ -1268,7 +1268,7 @@ public class CoreUltras
             // Ultra classes
             case "legion revenant": LegionRevenantClass(); break;
             case "archpaladin": ArchPaladinClass(); break;
-            case "stonecrusher": StoneCrusherClass(); break;
+            case "stonecrusher": case "infinity titan": StoneCrusherClass(); break;
             case "lord of order": LordsOfOrderClass(); break;
             case "void highlord": VoidHighlordClass(); break;
             case "chaos avenger": ChaosAvengerClass(); break;
@@ -1277,6 +1277,7 @@ public class CoreUltras
             case "dragon of time": DragonOfTimeClass(); break;
             case "archmage": ArchmageClass(); break;
             case "verus doomknight": VerusDoomKnight(); break;
+            case "arcana invoker": ArcanaInvokerClass(); break;
 
             // Chrono classes
             case "chrono dragonknight": case "chrono dataknight": ChronoDataKnightClass(); break;
@@ -1431,6 +1432,28 @@ public class CoreUltras
             if (Cast(4)) return;
         if (Cast(1)) return;
         if (Cast(2)) return;
+        if (Cast(3)) return;
+    }
+
+    void ArcanaInvokerClass()
+    {
+        // TODO: keep The World active and nuke with 1 when its about to expire
+        // Nukes when about to expire
+        // if (Left("XXI - The World", 10, true))
+        //     if (Cast(1)) return;
+        // if (HasAura("XXI - The World", true))
+        //     if (Cast(2)) return;
+        //     if (Cast(4)) return;
+        //     if (Cast(3)) return;
+        if (HasAura("XX - Judgement", true) && HasAura("0 - The Fool", true))
+            if (Cast(1)) return;
+        if (!HasAura("0 - The Fool", true) || !HasAnyAuraOtherThan("0 - The Fool", true))
+            if (Cast(1)) return;
+        if (HasAura("0 - The Fool", true))
+            if (Cast(2)) return;
+            if (Cast(4)) return;
+            if (Cast(3)) return;
+        if (Cast(4)) return;
         if (Cast(3)) return;
     }
 
@@ -1720,6 +1743,16 @@ public class CoreUltras
                 return true;
         }
         return false;
+    }
+
+    public bool HasAnyAuraOtherThan(string excludeAura, bool self = false)
+    {
+        if (string.IsNullOrWhiteSpace(excludeAura)) return false;
+
+        var auras = GetAuras(self);
+        return auras.Any(a => a != null &&
+                            !string.IsNullOrWhiteSpace(a.Name) &&
+                            !excludeAura.Equals(a.Name, StringComparison.OrdinalIgnoreCase));
     }
 
     public int GetAuraStacks(string auraName, bool self = false)
