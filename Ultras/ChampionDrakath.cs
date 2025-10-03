@@ -25,7 +25,7 @@ public class ChampionDrakath
 
         if (string.IsNullOrEmpty(taunterPrimary) && string.IsNullOrEmpty(taunterBackup))
         {
-            Core.Alert("Setup", "Fill at least one taunter class (Primary or Backup) in Script Options.");
+            Core.Log("Setup", "Fill at least one taunter class (Primary or Backup) in Script Options.");
             Bot.Stop();
             return;
         }
@@ -52,7 +52,7 @@ public class ChampionDrakath
         const string boss = "Champion Drakath";
 
         Core.Join(map);
-        Core.WaitForArmy(3);
+        Core.WaitForArmy(3, @"C:\SkuaSync\champion_drakath_sync.txt");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 

@@ -55,7 +55,7 @@ public class UltraWarden
         const string boss = "Ultra Warden";
 
         Core.Join(map);
-        Core.WaitForArmy(3);
+        Core.WaitForArmy(3, @"C:\SkuaSync\ultra_warden_sync.txt");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 

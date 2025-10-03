@@ -59,7 +59,7 @@ public class Xyfrag
         const string boss = "Xyfrag";
 
         Core.Join(map);
-        Core.WaitForArmy(6);
+        Core.WaitForArmy(6, @"C:\SkuaSync\xyfrag_sync.txt");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
