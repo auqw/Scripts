@@ -1268,7 +1268,8 @@ public class CoreUltras
             // Ultra classes
             case "legion revenant": LegionRevenantClass(); break;
             case "archpaladin": ArchPaladinClass(); break;
-            case "stonecrusher": case "infinity titan": StoneCrusherClass(); break;
+            case "stonecrusher": StoneCrusherClass(); break;
+            case "infinity titan": InfinityTitanClass(); break;
             case "lord of order": LordsOfOrderClass(); break;
             case "void highlord": VoidHighlordClass(); break;
             case "chaos avenger": ChaosAvengerClass(); break;
@@ -1350,6 +1351,32 @@ public class CoreUltras
             if (HasAura("Magnitude", true))
                 if (Cast(4)) return;
             if (Left("Dissonance", 1, true))
+                if (Cast(2)) return;
+            if (Cast(1)) return;
+        }
+    }
+
+    // Same as StoneCrusher class, but with different aura names.
+    void InfinityTitanClass()
+        {
+        var mode = GetMode("InfinityTitan");
+
+        if (mode == "Ultra")
+        {
+            if (IsHealthLow(80) || IsArmyHealthLow(80) && HasAura("Anima", true))
+                if (Cast(3)) return;
+            if (Left("Universal Power", 1, true))
+                if (Cast(2)) return;
+            if (Cast(4)) return;
+            if (Cast(1)) return;
+        }
+        else
+        {
+            if (IsHealthLow(80) || IsArmyHealthLow(80))
+                if (Cast(3)) return;
+            if (HasAura("Anima", true))
+                if (Cast(4)) return;
+            if (Left("Universal Power", 1, true))
                 if (Cast(2)) return;
             if (Cast(1)) return;
         }
@@ -1437,32 +1464,37 @@ public class CoreUltras
 
     void ArcanaInvokerClass()
     {
-        if (HasAura("XXI - The World", true))
+        void standardRotation()
         {
-            // Nukes when about to expire
-            if (Left("XXI - The World", 5, true))
-                if (Cast(1)) return;
-
             if (Cast(2)) return;
             if (Cast(4)) return;
             if (Cast(3)) return;
         }
+
+        if (HasAura("XXI - The World", true))
+        {
+            // Nukes when about to expire
+            if (Left("XXI - The World", 8, true))
+                if (Cast(1)) return;
+
+            standardRotation();
+        }
         else
         {
-            if (HasAura("XX - Judgement", true) && HasAura("0 - The Fool", true))
+            bool hasJudgement = HasAura("XX - Judgement", true);
+            bool hasFool = HasAura("0 - The Fool", true);
+            // Second check in case it has "0 - The Fool" for some reason but no other
+            // self active auras. It can get stuck waiting for the fool to expire otherwise.
+            bool needsFool = !hasFool || !HasAnyAuraOtherThan("0 - The Fool", true);
+
+            if ((hasJudgement && hasFool) || needsFool)
                 if (Cast(1)) return;
-            if (!HasAura("0 - The Fool", true) || !HasAnyAuraOtherThan("0 - The Fool", true))
-                if (Cast(1)) return;
-            if (HasAura("0 - The Fool", true))
+
+            if (hasFool)
             {
-                if (Cast(2)) return;
-                if (Cast(4)) return;
-                if (Cast(3)) return;
+                standardRotation();
             }
         }
-
-        if (Cast(4)) return;
-        if (Cast(3)) return;
     }
 
     // --- chrono classes ---------------------------------------------------------------
