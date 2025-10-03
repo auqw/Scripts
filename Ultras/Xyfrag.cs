@@ -37,17 +37,15 @@ public class Xyfrag
         Bot.Stop();
     }
 
+    bool IsTaunter() => Core.HasClassEquipped(taunter);
+
     void Prep()
     {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
-
-        if (Core.HasClassEquipped(taunter))
-        {
-            Bot.Events.ExtensionPacketReceived += Core.ChargeListener;
+        if (IsTaunter())
             Core.GetScrollOfEnrage();
-        }
         else
         {
+            Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
             Core.BuyAlchemyPotion("Potent Honor Potion");
             Core.EquipConsumable("Potent Honor Potion");
         }

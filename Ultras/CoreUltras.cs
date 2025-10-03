@@ -244,6 +244,112 @@ public class CoreUltras
     public bool Owned(string name, int quantity, bool isTemp = false) => Owned(name, isTemp) >= quantity;
     public bool Owned(int id, int quantity, bool isTemp = false) => Owned(id, isTemp) >= quantity;
 
+    public void EquipRandomClassAndReequip(int holdMs = 1000)
+    {
+        if (Bot?.Inventory == null || Bot.Player == null) return;
+
+        bool IsClass(InventoryItem it)
+        {
+            if (it == null) return false;
+
+            // Prefer the parsed enum if available; fall back to CategoryString text match.
+            try
+            {
+                // Some InventoryItem derives from ItemBase with .Category/.CategoryString
+                // Using both guards us against inconsistent fills.
+                if (it is ItemBase ib)
+                {
+                    if (ib.Category == Skua.Core.Models.Items.ItemCategory.Class) return true;
+                    if (!string.IsNullOrWhiteSpace(ib.CategoryString) &&
+                        ib.CategoryString.Equals("Class", StringComparison.OrdinalIgnoreCase)) return true;
+                }
+            }
+            catch { /* ignore and keep checking */ }
+
+            // Fallback: some builds only expose CategoryString directly on InventoryItem
+            var catProp = it.GetType().GetProperty("CategoryString");
+            if (catProp != null)
+            {
+                var cs = catProp.GetValue(it) as string;
+                if (!string.IsNullOrWhiteSpace(cs) &&
+                    cs.Equals("Class", StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+
+            return false;
+        }
+
+        var inv = Bot.Inventory.Items;
+        if (inv == null) return;
+
+        // --- find currently equipped class (by ID + Name for safe re-equip) ---
+        int curId = -1;
+        string curName = null;
+        foreach (var it in inv)
+        {
+            if (it == null) continue;
+            if (it.Equipped == true && IsClass(it))
+            {
+                curId = it.ID;
+                curName = it.Name;
+                break;
+            }
+        }
+        if (curId <= 0 && string.IsNullOrWhiteSpace(curName)) return;
+
+        // --- collect candidate classes (not the one we already wear) ---
+        var candidates = new List<InventoryItem>();
+        foreach (var it in inv)
+        {
+            if (it == null) continue;
+            if (!IsClass(it)) continue;
+            if (it.Equipped == true) continue;  // skip current
+            candidates.Add(it);
+        }
+        if (candidates.Count == 0) return;
+
+        // --- pick random candidate ---
+        var rng = new Random(unchecked((int)Environment.TickCount));
+        var rnd = candidates[rng.Next(0, candidates.Count)];
+
+        // --- equip random (by ID), retry a few times ---
+        if (!Bot.Inventory.IsEquipped(rnd.ID))
+        {
+            for (int t = 0; t < 3 && !Bot.ShouldExit; t++)
+            {
+                Bot.Inventory.EquipItem(rnd.ID);
+                Bot.Sleep(500);
+                if (Bot.Inventory.IsEquipped(rnd.ID)) break;
+            }
+        }
+        if (!Bot.Inventory.IsEquipped(rnd.ID)) return;
+
+        // --- hold for a bit (e.g., to trigger passives/auras/UI sync) ---
+        if (holdMs > 0) Bot.Sleep(holdMs);
+
+        // --- re-equip original (prefer ID; fallback to name) ---
+        if (curId > 0)
+        {
+            for (int t = 0; t < 3 && !Bot.ShouldExit; t++)
+            {
+                if (Bot.Inventory.IsEquipped(curId)) break;
+                Bot.Inventory.EquipItem(curId);
+                Bot.Sleep(500);
+            }
+            if (Bot.Inventory.IsEquipped(curId)) return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(curName))
+        {
+            for (int t = 0; t < 3 && !Bot.ShouldExit; t++)
+            {
+                if (Bot.Inventory.IsEquipped(curName)) break;
+                Bot.Inventory.EquipItem(curName);
+                Bot.Sleep(500);
+            }
+        }
+    }
+
     #endregion
 
     #region Best Enhancement
@@ -652,7 +758,7 @@ public class CoreUltras
         DisableSkills();
         try
         {
-            Bot.Sleep(D1);
+            Bot.Sleep(D2);
             Bot.Skills.UseSkill(5);
             Bot.Sleep(D2);
         }
@@ -684,6 +790,7 @@ public class CoreUltras
         }
 
         EquipConsumable(scroll);
+        EquipRandomClassAndReequip();
     }
 
     public void GetScrollOfDecay()
@@ -1854,7 +1961,7 @@ public class CoreUltras
 
     void ArchmageClass()
     {
-        if (IsManaLow(30) || !HasAura("Cryostasis"))
+        if (IsManaLow(30))
             if (Cast(2)) return;
         if (HasAura("Arcane Flux", true) && !HasAura("Corporeal Ascension", true) && !HasAura("Astral Ascension", true))
             if (Cast(4)) return;

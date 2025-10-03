@@ -36,18 +36,20 @@ public class UltraWarden
         Bot.Stop();
     }
 
+    bool IsTaunter() => Core.HasClassEquipped(taunterPrimary) || Core.HasClassEquipped(taunterBackup);
+
     void Prep()
     {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
-
-        if (Core.HasClassEquipped(taunterPrimary) || Core.HasClassEquipped(taunterBackup))
+        if (IsTaunter())
             Core.GetScrollOfEnrage();
         else
         {
+            Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
             Core.BuyAlchemyPotion("Potent Honor Potion");
             Core.EquipConsumable("Potent Honor Potion");
         }
     }
+
 
     void Fight()
     {

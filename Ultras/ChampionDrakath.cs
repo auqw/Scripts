@@ -36,14 +36,18 @@ public class ChampionDrakath
         Bot.Stop();
     }
 
+    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
+
     void Prep()
     {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
-        Core.BuyAlchemyPotion("Potent Honor Potion");
-        Core.EquipConsumable("Potent Honor Potion");
-
-        if (Core.HasClassEquipped(taunterPrimary) || Core.HasClassEquipped(taunterBackup))
+        if (IsTaunter())
             Core.GetScrollOfEnrage();
+        else
+        {
+            Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
+            Core.BuyAlchemyPotion("Potent Honor Potion");
+            Core.EquipConsumable("Potent Honor Potion");
+        }
     }
 
     void Fight()

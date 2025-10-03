@@ -36,9 +36,14 @@ public class UltraAvatarTyndarius
 
     void Prep()
     {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
-        if (IsTaunter()) Core.GetScrollOfEnrage();
-        else { Core.BuyAlchemyPotion("Potent Honor Potion"); Core.EquipConsumable("Potent Honor Potion"); }
+        if (IsTaunter())
+            Core.GetScrollOfEnrage();
+        else
+        {
+            Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
+            Core.BuyAlchemyPotion("Potent Honor Potion");
+            Core.EquipConsumable("Potent Honor Potion");
+        }
     }
 
     void Fight()

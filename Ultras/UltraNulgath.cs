@@ -36,10 +36,11 @@ public class UltraNulgath
 
     void Prep()
     {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
-        if (IsTaunter()) Core.GetScrollOfEnrage();
+        if (IsTaunter())
+            Core.GetScrollOfEnrage();
         else
         {
+            Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
             Core.BuyAlchemyPotion("Potent Honor Potion");
             Core.EquipConsumable("Potent Honor Potion");
         }
