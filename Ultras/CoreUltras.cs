@@ -1437,22 +1437,30 @@ public class CoreUltras
 
     void ArcanaInvokerClass()
     {
-        // TODO: keep The World active and nuke with 1 when its about to expire
-        // Nukes when about to expire
-        // if (Left("XXI - The World", 10, true))
-        //     if (Cast(1)) return;
-        // if (HasAura("XXI - The World", true))
-        //     if (Cast(2)) return;
-        //     if (Cast(4)) return;
-        //     if (Cast(3)) return;
-        if (HasAura("XX - Judgement", true) && HasAura("0 - The Fool", true))
-            if (Cast(1)) return;
-        if (!HasAura("0 - The Fool", true) || !HasAnyAuraOtherThan("0 - The Fool", true))
-            if (Cast(1)) return;
-        if (HasAura("0 - The Fool", true))
+        if (HasAura("XXI - The World", true))
+        {
+            // Nukes when about to expire
+            if (Left("XXI - The World", 5, true))
+                if (Cast(1)) return;
+
             if (Cast(2)) return;
             if (Cast(4)) return;
             if (Cast(3)) return;
+        }
+        else
+        {
+            if (HasAura("XX - Judgement", true) && HasAura("0 - The Fool", true))
+                if (Cast(1)) return;
+            if (!HasAura("0 - The Fool", true) || !HasAnyAuraOtherThan("0 - The Fool", true))
+                if (Cast(1)) return;
+            if (HasAura("0 - The Fool", true))
+            {
+                if (Cast(2)) return;
+                if (Cast(4)) return;
+                if (Cast(3)) return;
+            }
+        }
+
         if (Cast(4)) return;
         if (Cast(3)) return;
     }
@@ -1617,7 +1625,6 @@ public class CoreUltras
             if (Cast(1)) return;
         }
         if (Cast(2)) return;
-
     }
 
     void GuardianClass()
