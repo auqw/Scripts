@@ -22,7 +22,7 @@ public class UltraDage
         b = (Bot.Config.Get<string>("secondaryTaunter") ?? "").Trim();
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
-            Core.Alert("Setup", "Fill both taunter classes in Script Options.");
+            Core.Log("Setup", "Fill both taunter classes in Script Options.");
             Bot.Stop(); return;
         }
 

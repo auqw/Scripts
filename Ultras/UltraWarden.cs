@@ -25,7 +25,7 @@ public class UltraWarden
 
         if (string.IsNullOrEmpty(taunterPrimary) && string.IsNullOrEmpty(taunterBackup))
         {
-            Core.Alert("Setup", "Fill at least one taunter class (Primary or Backup) in Script Options.");
+            Core.Log("Setup", "Fill at least one taunter class (Primary or Backup) in Script Options.");
             Bot.Stop();
             return;
         }

@@ -20,7 +20,7 @@ public class Xyfrag
         taunter = (Bot.Config.Get<string>("taunterClass") ?? "").Trim();
         if (string.IsNullOrEmpty(taunter))
         {
-            Core.Alert("Setup", "Fill the taunter class in Script Options.");
+            Core.Log("Setup", "Fill the taunter class in Script Options.");
             Bot.Stop(); return;
         }
 
