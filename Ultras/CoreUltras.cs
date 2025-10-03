@@ -246,7 +246,7 @@ public class CoreUltras
 
     #endregion
 
-    #region Best Enhancement (KISS, no LINQ)
+    #region Best Enhancement
 
     public InventoryItem ChooseBestEnhancement(string itemGroup, params string[] priority)
     {
