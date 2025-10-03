@@ -1320,7 +1320,7 @@ public class CoreUltras
 
     void LordsOfOrderClass()
     {
-        if ((IsHealthLow(80) || IsArmyHealthLow(80)) && NotUltraDage())
+        if ((IsHealthLow(85) || IsArmyHealthLow(85)) && NotUltraDage())
             if (Cast(2)) return;
         if (Cast(4)) return;
         if (Left("Empowerment", 1, true))
@@ -1356,7 +1356,7 @@ public class CoreUltras
 
     void ArchPaladinClass()
     {
-        if ((IsHealthLow(85) || IsArmyHealthLow(85)) && NotUltraDage())
+        if ((IsHealthLow(70) || IsArmyHealthLow(70)) && NotUltraDage())
             if (Cast(2)) return;
         if (!HasAura("Righteous Seal"))
             if (Cast(4)) return;
