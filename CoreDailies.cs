@@ -463,32 +463,7 @@ public class CoreDailies
             Core.BuyItem("xancave", 447, 12812, shopItemID: 1278);
         Core.ToBank("Shurpu Blaze Token");
     }
-
-    public void DeathKnightLord()
-    {
-        if (!Core.IsMember)
-            return;
-
-        Core.Logger("Daily: Death KnightLord Class");
-
-        if (Core.CheckInventory(34780, toInv: false))
-        {
-            Core.Logger("You already own DeathKnight Lord Class, Skipped");
-            return;
-        }
-
-        if (!CheckDailyv2(492, true, true, "Shadow Skull"))
-            return;
-
-        DailyRoutine(492, "bludrut4", "Shadow Serpent", "Shadow Scales", 5);
-
-        Core.FarmingLogger("Shadow Skull", 30);
-        if (Core.CheckInventory("Shadow Skull", 30))
-            Core.BuyItem("bonecastle", 1242, 34780, shopItemID: 4397);
-
-        Core.ToBank("Shadow Skull");
-    }
-
+    
     public void ShadowScytheClass()
     {
         Core.Logger("Daily: ShadowScythe General Class");

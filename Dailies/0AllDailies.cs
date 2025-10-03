@@ -71,7 +71,6 @@ public class FarmAllDailies
             Core.Logger($"Doing selected set of dailies: Recommended");
             LOO.GetLoO();
             Daily.Pyromancer();
-            Daily.DeathKnightLord();
             Daily.ShadowScytheClass();
             Daily.WheelofDoom();
             Daily.FreeDailyBoost();
@@ -90,7 +89,6 @@ public class FarmAllDailies
             Core.Logger($"Doing selected set of dailies: All");
             LOO.GetLoO();
             Daily.Pyromancer();
-            Daily.DeathKnightLord();
             Daily.ShadowScytheClass();
             Daily.WheelofDoom();
             Daily.FreeDailyBoost();

@@ -1,32 +1,26 @@
 /*
-name: BonecastleMerge
-description: null
-tags: null
+name: Bonecastle Merge
+description: This bot will farm the items belonging to the selected mode for the Bonecastle Merge [1242] in /bonecastle
+tags: bonecastle, merge, bonecastle, piercer, plate, face, accoutrements, tomb, tombstone, vadens, enchanted, deathknight, deathknights, royal, deathbringer, cloak, sabre, pile, bone, skulls, silver, golden, castle, house, lord
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/CoreDailies.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
 public class BonecastleMerge
 {
-    public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private IScriptInterface Bot => IScriptInterface.Instance;
+    private CoreBots Core => CoreBots.Instance;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -36,13 +30,12 @@ public static CoreAdvanced _sAdv;
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
-    public void ScriptMain(IScriptInterface bot)
+    public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Bonecastle Token", "Vaden Helm Token", "Shadow Skull " });
+        Core.BankingBlackList.AddRange(new[] { "Bonecastle Token", "Vaden Helm Token", "Shadow Skull", "DeathKnight Lord Armor" });
         Core.SetOptions();
 
         BuyAllMerge();
-
         Core.SetOptions(false);
     }
 
@@ -71,6 +64,8 @@ public static CoreAdvanced _sAdv;
                     break;
                 #endregion
 
+                #region Known items
+
                 case "Bonecastle Token":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("bonecastlec", "Undead Golden Knight", req.Name, quant, false);
@@ -82,10 +77,77 @@ public static CoreAdvanced _sAdv;
                     break;
 
                 case "Shadow Skull":
-                    Daily.DeathKnightLord();
-                    if (!Core.CheckInventory(req.Name, quant))
-                        Core.Logger($"Not enough \"Shadow Skull\", please do the daily {30 - Bot.Inventory.GetQuantity("Shadow Skull")} more times (not today)", messageBox: true);
+                    Core.RegisterQuests(4993);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
+                    {
+                        if (!Core.CheckInventory("Silver DeathKnight Lord"))
+                            Core.BuyItem("towersilver", 1243, "Silver DeathKnight Lord");
+                        if (!Core.CheckInventory("Golden DeathKnight Lord"))
+                            Core.BuyItem("towergold", 1243, "Golden DeathKnight Lord");
+
+
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("bonecastle", "Green Rat", "Gamey Rat Meat", 3);
+                        Core.HuntMonster("bonecastle", "Undead Waiter", "Waiter's Notepad", 1);
+                        Core.HuntMonster("bonecastle", "Turtle", "Turtle's Eggs", 6);
+                        Core.HuntMonster("bonecastle", "Ghoul", "Ghoul \"Vinegar\"", 6);
+                        Core.HuntMonster("bonecastle", "Grateful Undead", "Spices", 2);
+
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("bonecastle", "The Butcher", "Bag of Bone Flour", 1);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
                     break;
+
+                case "DeathKnight Lord Armor":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+                    string[] RequiredItems = new[]
+                    {
+"DeathKnight Lord Gauntlets",
+"DeathKnight Lord Greaves",
+"DeathKnight Lord Chest Plate",
+"DeathKnight Lord Hauberk",
+"DeathKnight Lord Boots"
+};
+                    foreach (string item in RequiredItems)
+                        Core.HuntMonster("bonecastle", "Vaden", item, isTemp: false);
+
+
+                    // BoneCastle Amulet
+                    Core.RegisterQuests(4993);
+                    while (!Bot.ShouldExit && !Core.CheckInventory("Bonecastle Amulet", 30))
+                    {
+                        if (!Core.CheckInventory("Silver DeathKnight Lord"))
+                            Core.BuyItem("towersilver", 1243, "Silver DeathKnight Lord");
+                        if (!Core.CheckInventory("Golden DeathKnight Lord"))
+                            Core.BuyItem("towergold", 1243, "Golden DeathKnight Lord");
+
+
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("bonecastle", "Green Rat", "Gamey Rat Meat", 3);
+                        Core.HuntMonster("bonecastle", "Undead Waiter", "Waiter's Notepad", 1);
+                        Core.HuntMonster("bonecastle", "Turtle", "Turtle's Eggs", 6);
+                        Core.HuntMonster("bonecastle", "Ghoul", "Ghoul \"Vinegar\"", 6);
+                        Core.HuntMonster("bonecastle", "Grateful Undead", "Spices", 2);
+
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("bonecastle", "The Butcher", "Bag of Bone Flour", 1);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    if (RequiredItems.All(x => Core.CheckInventory(x))
+                    && Core.CheckInventory("Bonecastle Amulet", 30))
+                    {
+                        Core.BuyItem("bonecastle", 1242, req.Name);
+                    }
+                    Bot.Wait.ForItemBuy(req.ID);
+                    break;
+                    #endregion
 
             }
         }
@@ -113,7 +175,7 @@ public static CoreAdvanced _sAdv;
         new Option<bool>("34666", "Pile of Bone Skulls", "Mode: [select] only\nShould the bot buy \"Pile of Bone Skulls\" ?", false),
         new Option<bool>("34665", "Pile of Silver Skulls", "Mode: [select] only\nShould the bot buy \"Pile of Silver Skulls\" ?", false),
         new Option<bool>("34664", "Pile of Golden Skulls", "Mode: [select] only\nShould the bot buy \"Pile of Golden Skulls\" ?", false),
-        // new Option<bool>("34723", "Bone Castle House", "Mode: [select] only\nShould the bot buy \"Bone Castle House\" ?", false), //costs 2k acs
+        new Option<bool>("34723", "Bone Castle House", "Mode: [select] only\nShould the bot buy \"Bone Castle House\" ?", false),
         new Option<bool>("34780", "DeathKnight Lord", "Mode: [select] only\nShould the bot buy \"DeathKnight Lord\" ?", false),
-    };
+   };
 }

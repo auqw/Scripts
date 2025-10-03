@@ -39,8 +39,10 @@ public class SanctifiedLightofDestiny
         Core.AddDrop("Sanctified Light of Destiny", "Pious Platinum");
         Core.EnsureAccept(8112);
 
-        BLOD.UpgradeMetal(MineCraftingMetalsEnum.Gold);
-        BLOD.UpgradeMetal(MineCraftingMetalsEnum.Platinum);
+        if (!Core.CheckInventory("Glorious Gold of Destiny"))
+            BLOD.UpgradeMetal(MineCraftingMetalsEnum.Gold);
+        if (!Core.CheckInventory("Pious Platinum of Destiny"))
+            BLOD.UpgradeMetal(MineCraftingMetalsEnum.Platinum);
         Farm.BattleUnderB("Bone Dust", 300);
         BLOD.LoyalSpiritOrb(25);
         Core.HuntMonster("Extinction", "Cyworg", "Refined Metal", 5);

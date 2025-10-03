@@ -1,7 +1,4 @@
 //cs_include Scripts/Ultras/CoreUltras.cs
-
-using System;
-using System.Dynamic;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -10,47 +7,37 @@ public class UltraNulgath
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
-    public string primaryTaunter;
-    public string secondaryTaunter;
+    string a, b;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraNulgath";
     public List<IOption> Options = new()
     {
-        new Option<string>("primaryTaunter", "First Taunter Class", "Insert the name of the class that will taunt", ""),
-        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", ""),
+        new Option<string>("primaryTaunter",   "First Taunter Class",  "Insert the name of the class that will taunt", ""),
+        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", "")
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        primaryTaunter = Bot.Config.Get<string>("primaryTaunter") ?? string.Empty;
-        if (string.IsNullOrEmpty(primaryTaunter))
+        a = (Bot.Config.Get<string>("primaryTaunter") ?? "").Trim();
+        b = (Bot.Config.Get<string>("secondaryTaunter") ?? "").Trim();
+        if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
-            Bot.Log("First taunter not filled in! Please edit Script Options.");
-            Bot.Stop();
-        }
-
-        secondaryTaunter = Bot.Config.Get<string>("secondaryTaunter") ?? string.Empty;
-        if (string.IsNullOrEmpty(secondaryTaunter))
-        {
-            Bot.Log("Second taunter not filled in! Please edit Script Options.");
-            Bot.Stop();
+            Core.Alert("Setup", "Fill both taunter classes in Script Options.");
+            Bot.Stop(); return;
         }
 
         Core.Boot();
-
-        PreparePotions(primaryTaunter, secondaryTaunter);
-        Kill(primaryTaunter, secondaryTaunter);
-
+        Prep();
+        Fight();
         Bot.Stop();
     }
 
-    void PreparePotions(string primaryTaunter, string secondaryTaunter)
-    {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion());
-        Core.UseAlchemyPotions(Core.GetBestElixirPotion());
+    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
 
-        if (Core.HasClassEquipped(primaryTaunter) || Core.HasClassEquipped(secondaryTaunter))
-            Core.GetScrollOfEnrage();
+    void Prep()
+    {
+        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
+        if (IsTaunter()) Core.GetScrollOfEnrage();
         else
         {
             Core.BuyAlchemyPotion("Potent Honor Potion");
@@ -58,30 +45,29 @@ public class UltraNulgath
         }
     }
 
-    void Kill(string primaryTaunter, string secondaryTaunter)
+    void Fight()
     {
-        if (Core.HasClassEquipped(primaryTaunter) || Core.HasClassEquipped(secondaryTaunter))
-            Core.GetScrollOfEnrage();
+        const string map = "ultranulgath";
+        const string boss = "Nulgath the Archfiend";
+        const string blade = "Overfiend Blade";
 
-        Core.Join("ultranulgath");
+        Core.Join(map);
         Core.WaitForArmy(3);
-        if (!Core.HasClassEquipped(primaryTaunter) || !Core.HasClassEquipped(secondaryTaunter))
-            Bot.Sleep(5000);
-        Core.ChooseBestCell("Nulgath the Archfiend");
+
+        if (!IsTaunter()) Bot.Sleep(5000);
+
+        Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Core.MonsterAlive("Nulgath the Archfiend") && !Bot.ShouldExit)
-            if (Core.HasClassEquipped(primaryTaunter))
-                Core.TauntCycle(primaryTaunter, "Nulgath the Archfiend", "Focus", 250);
-            else if (Core.HasClassEquipped(secondaryTaunter))
-                Core.TauntCycle(secondaryTaunter, "Nulgath the Archfiend", "Focus", 700);
+        while (Core.MonsterAlive(boss) && !Bot.ShouldExit)
+        {
+            if (Core.HasClassEquipped(a)) Core.TauntCycle(a, boss, "Focus", 250);
+            else if (Core.HasClassEquipped(b)) Core.TauntCycle(b, boss, "Focus", 700);
             else
             {
-                Core.KillWithPriority("Nulgath the Archfiend", "Overfiend Blade");
+                Core.KillWithPriority(boss, blade);
                 Bot.Skills.UseSkill(5);
             }
-
+        }
     }
 }
-
-

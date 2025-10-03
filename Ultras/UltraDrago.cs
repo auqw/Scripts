@@ -1,7 +1,4 @@
 //cs_include Scripts/Ultras/CoreUltras.cs
-
-using System;
-using System.Dynamic;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -10,48 +7,38 @@ public class UltraDrago
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
-    public string primaryTaunter;
-    public string secondaryTaunter;
+    string a, b;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraDrago";
     public List<IOption> Options = new()
     {
-        new Option<string>("primaryTaunter", "First Taunter Class", "Insert the name of the class that will taunt", ""),
-        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", ""),
+        new Option<string>("primaryTaunter",   "First Taunter Class",  "Insert the name of the class that will taunt", ""),
+        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", "")
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        primaryTaunter = Bot.Config.Get<string>("primaryTaunter") ?? string.Empty;
-        if (string.IsNullOrEmpty(primaryTaunter))
+        a = (Bot.Config.Get<string>("primaryTaunter") ?? "").Trim();
+        b = (Bot.Config.Get<string>("secondaryTaunter") ?? "").Trim();
+        if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
-            Bot.Log("First taunter not filled in! Please edit Script Options.");
-            Bot.Stop();
-        }
-
-        secondaryTaunter = Bot.Config.Get<string>("secondaryTaunter") ?? string.Empty;
-        if (string.IsNullOrEmpty(secondaryTaunter))
-        {
-            Bot.Log("Second taunter not filled in! Please edit Script Options.");
-            Bot.Stop();
+            Core.Alert("Setup", "Fill both taunter classes in Script Options.");
+            Bot.Stop(); return;
         }
 
         Core.Boot();
-
         Bot.Quests.UpdateQuest(8395);
-        PreparePotions(primaryTaunter, secondaryTaunter);
-        Kill(primaryTaunter, secondaryTaunter);
-
+        Prep();
+        Fight();
         Bot.Stop();
     }
 
-    void PreparePotions(string primaryTaunter, string secondaryTaunter)
-    {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion());
-        Core.UseAlchemyPotions(Core.GetBestElixirPotion());
+    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
 
-        if (Core.HasClassEquipped(primaryTaunter) || Core.HasClassEquipped(secondaryTaunter))
-            Core.GetScrollOfEnrage();
+    void Prep()
+    {
+        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
+        if (IsTaunter()) Core.GetScrollOfEnrage();
         else
         {
             Core.BuyAlchemyPotion("Potent Honor Potion");
@@ -59,28 +46,33 @@ public class UltraDrago
         }
     }
 
-    void Kill(string primaryTaunter, string secondaryTaunter)
+    void Fight()
     {
-        Core.Join("ultradrago");
+        const string map = "ultradrago";
+        const string boss = "King Drago";
+        const string executioner = "Executioner Dene";
+        const string bowmaster = "Bowmaster Algie";
+
+        Core.Join(map);
         Core.WaitForArmy(3);
-        Core.ChooseBestCell("King Drago");
+        Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Core.MonsterAlive("King Drago") && !Bot.ShouldExit)
-            if (Core.HasClassEquipped(primaryTaunter) || Core.HasClassEquipped(secondaryTaunter))
+        while (Core.MonsterAlive(boss) && !Bot.ShouldExit)
+        {
+            if (IsTaunter())
             {
-                while (Core.MonsterAlive("Executioner Dene") && !Bot.ShouldExit)
+                while (Core.MonsterAlive(executioner) && !Bot.ShouldExit)
                 {
-                    if (Core.HasClassEquipped(primaryTaunter))
-                        Core.TauntCycle(primaryTaunter, "Executioner Dene", "Focus", 250);
-                    else if (Core.HasClassEquipped(secondaryTaunter))
-                        Core.TauntCycle(secondaryTaunter, "Executioner Dene", "Focus", 700);
+                    if (Core.HasClassEquipped(a)) Core.TauntCycle(a, executioner, "Focus", 250);
+                    else if (Core.HasClassEquipped(b)) Core.TauntCycle(b, executioner, "Focus", 700);
                 }
             }
             else
             {
-                Core.KillWithPriority("King Drago", "Bowmaster Algie", "Executioner Dene");
+                Core.KillWithPriority(boss, bowmaster, executioner);
                 Bot.Skills.UseSkill(5);
             }
+        }
     }
 }

@@ -20,10 +20,11 @@ public class BonecastleTowerMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
+    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }
+    private static CoreToD _TOD;
 
-    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }    private static CoreToD _TOD;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -35,13 +36,9 @@ private static CoreAdvanced _sAdv;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "DeathKnight Lord Gauntlets", "DeathKnight Lord Greaves", "DeathKnight Lord Chest Plate", "DeathKnight Lord Hauberk", "DeathKnight Lord Boots", "Bonecastle Amulet", "Silver DeathKnight Lord Gauntlets", "Silver DeathKnight Lord Greaves", "Silver DeathKnight Lord Chest Plate", "Silver DeathKnight Lord Hauberk", "Silver DeathKnight Lord Boots", "SilverSkull Amulet", "Golden DeathKnight Lord Gauntlets", "Golden DeathKnight Lord Greaves", "Golden DeathKnight Lord Chest Plate", "Golden DeathKnight Lord Hauberk", "Golden DeathKnight Lord Boots", "GoldSkull Amulet" });
+        Core.BankingBlackList.AddRange(new[] { "DeathKnight Lord Gauntlets", "DeathKnight Lord Greaves", "DeathKnight Lord Chest Plate", "DeathKnight Lord Hauberk", "DeathKnight Lord Boots", "Bonecastle Amulet", "Silver DeathKnight Lord Gauntlets", "Silver DeathKnight Lord Greaves", "Silver DeathKnight Lord Chest Plate", "Silver DeathKnight Lord Hauberk", "Silver DeathKnight Lord Boots", "SilverSkull Amulet", "Golden DeathKnight Lord Gauntlets", "Golden DeathKnight Lord Greaves", "Golden DeathKnight Lord Chest Plate", "Golden DeathKnight Lord Hauberk", "Golden DeathKnight Lord Boots", "GoldSkull Amulet", "Shadow Skull" });
         Core.SetOptions();
-        // Required:
-        BuyAllMerge("Silver DeathKnight Lord");
-        BuyAllMerge("Golden DeathKnight Lord");
 
-        // Start the rest:
         BuyAllMerge();
         Core.SetOptions(false);
     }
@@ -49,7 +46,6 @@ private static CoreAdvanced _sAdv;
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         TOD.BoneTowerAll();
-
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("towersilver", 1243, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -74,39 +70,23 @@ private static CoreAdvanced _sAdv;
                 #endregion
 
                 case "Bonecastle Amulet":
-
+                case "Shadow Skull":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(4993);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
+                        Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("bonecastle", "Green Rat", "Gamey Rat Meat", 3);
                         Core.HuntMonster("bonecastle", "Undead Waiter", "Waiter's Notepad");
                         Core.HuntMonster("bonecastle", "Turtle", "Turtle's Eggs", 6);
                         Core.HuntMonster("bonecastle", "Ghoul", "Ghoul \"Vinegar\"", 6);
                         Core.HuntMonster("bonecastle", "Grateful Undead", "Spices", 2);
+                        Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("bonecastle", "The Butcher", "Bag of Bone Flour");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
-                case "SilverSkull Amulet":
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
-                    Core.RegisterQuests(5009);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("towersilver", "Fallen DeathKnight", "Chef Ramskull's Apron");
-                        Core.HuntMonster("towersilver", "Undead Knight", "Chef Ramskull's Hat");
-                        Core.HuntMonster("towersilver", "Undead Warrior", "Chef Ramskull's Cookbook");
-                        Core.HuntMonster("towersilver", "Ghoul", "Chef Ramskull's Spatula");
-                        Core.HuntMonster("towersilver", "Undead Guard", "Chef Ramskull's Skillet");
-                        Bot.Wait.ForPickup(req.Name);
-                    }
-                    Core.CancelRegisteredQuests();
-                    break;
-
                 case "GoldSkull Amulet":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -120,13 +100,25 @@ private static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
+                case "SilverSkull Amulet":
+                    Core.RegisterQuests(5010);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("towersilver", "Bloody Scary", req.Name, req.Quantity, isTemp: req.Temp);
+                    break;
 
                 case "DeathKnight Lord Gauntlets":
                 case "DeathKnight Lord Greaves":
                 case "DeathKnight Lord Chest Plate":
                 case "DeathKnight Lord Hauberk":
                 case "DeathKnight Lord Boots":
-                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(
+                        "DeathKnight Lord Gauntlets",
+                        "DeathKnight Lord Greaves",
+                        "DeathKnight Lord Chest Plate",
+                        "DeathKnight Lord Hauberk",
+                        "DeathKnight Lord Boots"
+                    );
                     Core.HuntMonster("bonecastle", "Vaden", req.Name, isTemp: false);
                     break;
 
@@ -135,7 +127,14 @@ private static CoreAdvanced _sAdv;
                 case "Silver DeathKnight Lord Chest Plate":
                 case "Silver DeathKnight Lord Hauberk":
                 case "Silver DeathKnight Lord Boots":
-                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(
+                          "Silver DeathKnight Lord Gauntlets",
+                          "Silver DeathKnight Lord Greaves",
+                          "Silver DeathKnight Lord Chest Plate",
+                          "Silver DeathKnight Lord Hauberk",
+                          "Silver DeathKnight Lord Boots",
+                          "SilverSkull Amulet"
+                      );
                     Core.HuntMonster("towersilver", "Flester the Silver", req.Name, isTemp: false);
                     break;
 
@@ -144,7 +143,18 @@ private static CoreAdvanced _sAdv;
                 case "Golden DeathKnight Lord Chest Plate":
                 case "Golden DeathKnight Lord Hauberk":
                 case "Golden DeathKnight Lord Boots":
-                    Core.EquipClass(ClassType.Solo);
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+                    Core.AddDrop(
+                        "Golden DeathKnight Lord Gauntlets",
+                        "Golden DeathKnight Lord Greaves",
+                        "Golden DeathKnight Lord Chest Plate",
+                        "Golden DeathKnight Lord Hauberk",
+                        "Golden DeathKnight Lord Boots"
+                    );
                     Core.HuntMonster("towergold", "Yurrod the Gold", req.Name, isTemp: false);
                     break;
 
@@ -154,7 +164,7 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("34717", "DeathKnight Lord", "Mode: [select] only\nShould the bot buy \"DeathKnight Lord\" ?", false),
+        new Option<bool>("34717", "DeathKnight Lord Armor", "Mode: [select] only\nShould the bot buy \"DeathKnight Lord Armor\" ?", false),
         new Option<bool>("34726", "DeathKnight's Blade", "Mode: [select] only\nShould the bot buy \"DeathKnight's Blade\" ?", false),
         new Option<bool>("34729", "DeathKnight Helm", "Mode: [select] only\nShould the bot buy \"DeathKnight Helm\" ?", false),
         new Option<bool>("34724", "Silver DeathKnight Lord", "Mode: [select] only\nShould the bot buy \"Silver DeathKnight Lord\" ?", false),
@@ -164,5 +174,6 @@ private static CoreAdvanced _sAdv;
         new Option<bool>("34728", "Golden DeathKnight's Blade", "Mode: [select] only\nShould the bot buy \"Golden DeathKnight's Blade\" ?", false),
         new Option<bool>("34731", "Golden DeathKnight Helm", "Mode: [select] only\nShould the bot buy \"Golden DeathKnight Helm\" ?", false),
         new Option<bool>("34744", "DeathKnight Lord Cape", "Mode: [select] only\nShould the bot buy \"DeathKnight Lord Cape\" ?", false),
-    };
+        new Option<bool>("34780", "DeathKnight Lord", "Mode: [select] only\nShould the bot buy \"DeathKnight Lord\" ?", false),
+   };
 }

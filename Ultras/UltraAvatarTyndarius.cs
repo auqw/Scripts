@@ -1,7 +1,4 @@
 //cs_include Scripts/Ultras/CoreUltras.cs
-
-using System;
-using System.Dynamic;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -10,70 +7,57 @@ public class UltraAvatarTyndarius
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
-    public string primaryTaunter;
-    public string secondaryTaunter;
+    string a, b; // two taunters on boss
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraAvatarTyndarius";
     public List<IOption> Options = new()
     {
-        new Option<string>("primaryTaunter", "First Taunter Class", "Insert the name of the class that will taunt", ""),
-        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", ""),
+        new Option<string>("primaryTaunter",   "First Taunter Class",  "Insert the name of the class that will taunt", ""),
+        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", "")
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        primaryTaunter = Bot.Config.Get<string>("primaryTaunter") ?? string.Empty;
-        if (string.IsNullOrEmpty(primaryTaunter))
+        a = (Bot.Config.Get<string>("primaryTaunter") ?? "").Trim();
+        b = (Bot.Config.Get<string>("secondaryTaunter") ?? "").Trim();
+        if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
-            Bot.Log("First taunter not filled in! Please edit Script Options.");
-            Bot.Stop();
-        }
-
-        secondaryTaunter = Bot.Config.Get<string>("secondaryTaunter") ?? string.Empty;
-        if (string.IsNullOrEmpty(secondaryTaunter))
-        {
-            Bot.Log("Second taunter not filled in! Please edit Script Options.");
-            Bot.Stop();
+            Core.Alert("Setup", "Fill both taunter classes in Script Options.");
+            Bot.Stop(); return;
         }
 
         Core.Boot();
-
-        PreparePotions(primaryTaunter, secondaryTaunter);
-        Kill(primaryTaunter, secondaryTaunter);
-
+        Prep();
+        Fight();
         Bot.Stop();
     }
 
-    void PreparePotions(string primaryTaunter, string secondaryTaunter)
-    {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion());
-        Core.UseAlchemyPotions(Core.GetBestElixirPotion());
+    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
 
-        if (Core.HasClassEquipped(primaryTaunter) || Core.HasClassEquipped(secondaryTaunter))
-            Core.GetScrollOfEnrage();
-        else
-        {
-            Core.BuyAlchemyPotion("Potent Honor Potion");
-            Core.EquipConsumable("Potent Honor Potion");
-        }
+    void Prep()
+    {
+        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
+        if (IsTaunter()) Core.GetScrollOfEnrage();
+        else { Core.BuyAlchemyPotion("Potent Honor Potion"); Core.EquipConsumable("Potent Honor Potion"); }
     }
 
-    void Kill(string primaryTaunter, string secondaryTaunter)
+    void Fight()
     {
-        Core.Join("ultratyndarius");
+        const string map = "ultratyndarius";
+        const string boss = "Ultra Avatar Tyndarius";
+
+        Core.Join(map);
         Core.WaitForArmy(3);
-        Core.ChooseBestCell("Ultra Avatar Tyndarius");
+        Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Core.MonsterAlive("Ultra Avatar Tyndarius") && !Bot.ShouldExit)
+        while (Core.MonsterAlive(boss) && !Bot.ShouldExit)
         {
-            if (Core.HasClassEquipped(primaryTaunter))
-                Core.TauntCycle(primaryTaunter, "Ultra Avatar Tyndarius", "Focus", 250);
-            else if (Core.HasClassEquipped(secondaryTaunter))
-                Core.TauntCycle(secondaryTaunter, "Ultra Avatar Tyndarius", "Focus", 700);
+            if (Core.HasClassEquipped(a)) Core.TauntCycle(a, boss, "Focus", 250);
+            else if (Core.HasClassEquipped(b)) Core.TauntCycle(b, boss, "Focus", 700);
             else
             {
-                Core.KillWithPriority("Ultra Avatar Tyndarius", 2, "Ultra Fire Orb", 3, "Ultra Fire Orb", 1);
+                Core.KillWithPriority(boss, 2, "Ultra Fire Orb", 3, "Ultra Fire Orb", 1);
                 Bot.Skills.UseSkill(5);
             }
         }

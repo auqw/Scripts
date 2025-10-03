@@ -12,7 +12,8 @@ public class CoreMogloween
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -296,6 +297,7 @@ public class CoreMogloween
             Core.HuntMonster("crusher", "Gothic Chest", "Gourd Medicine Vial");
             Core.EnsureComplete(3834);
         }
+
         //Her Herbalism 3835
         Story.MapItemQuest(3835, "crusher", 2941, 2);
         Story.MapItemQuest(3835, "crusher", 2942, 3);
@@ -437,9 +439,17 @@ public class CoreMogloween
         Story.KillQuest(6568, "twigsarcade", new[] { "Scotty Sneevil", "Clucky Moo" });
 
         //Gather the Goods 6569
-        Story.MapItemQuest(6569, "twigsarcade", 6069, 3);
-        Story.MapItemQuest(6569, "twigsarcade", 6070, 3);
-        Story.KillQuest(6569, "twigsarcade", "Scotty Sneevil");
+        if (!Story.QuestProgression(6569))
+        {
+            // Hinge
+            Story.MapItemQuest(6569, "twigsarcade", 6069, 3);
+            
+            // Fully Charged Battery
+            Story.MapItemQuest(6569, "twigsarcade", 6070, 3);
+
+            // Wires && Small Screw
+            Story.KillQuest(6569, "twigsarcade", new[] { "Scotty Sneevil", "Clucky Moo" });
+        }
 
         //Spooky Casings 6570
         Story.KillQuest(6570, "twigsarcade", "Scotty Sneevil");

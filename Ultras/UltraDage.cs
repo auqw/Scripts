@@ -1,7 +1,4 @@
 //cs_include Scripts/Ultras/CoreUltras.cs
-
-using System;
-using System.Dynamic;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -10,59 +7,63 @@ public class UltraDage
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
-    public string taunterClass;
+    string a, b;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraDage";
-    public List<IOption> Options = new() {
-        new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", "")
+    public List<IOption> Options = new()
+    {
+        new Option<string>("primaryTaunter",   "First Taunter Class",  "Insert the name of the class that will taunt", ""),
+        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", "")
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        taunterClass = Bot.Config.Get<string>("taunterClass") ?? string.Empty;
-        if (string.IsNullOrEmpty(taunterClass))
+        a = (Bot.Config.Get<string>("primaryTaunter") ?? "").Trim();
+        b = (Bot.Config.Get<string>("secondaryTaunter") ?? "").Trim();
+        if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
-            Bot.Log("Taunter not filled in! Please edit Script Options.");
-            Bot.Stop();
+            Core.Alert("Setup", "Fill both taunter classes in Script Options.");
+            Bot.Stop(); return;
         }
 
         Core.Boot();
         Bot.Events.ExtensionPacketReceived += UltraDageListener;
 
         Bot.Quests.UpdateQuest(793);
-        PreparePotions(taunterClass);
-        Kill(taunterClass);
+        Prep();
+        Fight();
 
         Bot.Events.ExtensionPacketReceived -= UltraDageListener;
         Bot.Stop();
     }
 
-    void PreparePotions(string taunterClass)
-    {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion());
-        Core.UseAlchemyPotions(Core.GetBestElixirPotion());
+    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
 
+    void Prep()
+    {
+        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
         Core.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");
-
-        if (Core.HasClassEquipped(taunterClass))
-            Core.GetScrollOfEnrage();
+        if (IsTaunter()) Core.GetScrollOfEnrage();
     }
 
-    void Kill(string taunterClass)
+    void Fight()
     {
-        Core.Join("ultradage");
+        const string map = "ultradage";
+        const string boss = "Dage the Dark Lord";
+
+        Core.Join(map);
         Core.WaitForArmy(3);
-        Core.ChooseBestCell("Dage the Dark Lord");
+        Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Core.MonsterAlive("Dage the Dark Lord") && !Bot.ShouldExit)
+        while (Core.MonsterAlive(boss) && !Bot.ShouldExit)
         {
-            if (Core.HasClassEquipped(taunterClass))
-                Core.TauntCycle(taunterClass, "Dage the Dark Lord", "Focus", 250);
+            if (Core.HasClassEquipped(a)) Core.TauntCycle(a, boss, "Focus", 250);
+            else if (Core.HasClassEquipped(b)) Core.TauntCycle(b, boss, "Focus", 700);
             else
             {
-                Core.Kill("Dage the Dark Lord");
+                Core.Kill(boss);
                 Bot.Skills.UseSkill(5);
             }
         }
@@ -78,19 +79,12 @@ public class UltraDage
         string zone = data?.args?.zoneSet?.ToString();
 
         if (string.Equals(zone, "A", System.StringComparison.OrdinalIgnoreCase))
-        {
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%122%411%8%");
-            return;
-        }
+        { Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%122%411%8%"); return; }
+
         if (string.Equals(zone, "B", System.StringComparison.OrdinalIgnoreCase))
-        {
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%856%422%8%");
-            return;
-        }
+        { Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%856%422%8%"); return; }
+
         if (string.IsNullOrEmpty(zone))
-        {
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%491%421%8%");
-            return;
-        }
+        { Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%491%421%8%"); return; }
     }
 }

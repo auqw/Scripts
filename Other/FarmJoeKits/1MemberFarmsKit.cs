@@ -3,6 +3,8 @@ name: Member Farms Kit
 description: This kit contains all Member farms that you can profit off after your membership expires
 tags: member, kit, expire, legend
 */
+
+#region includes
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreDailies.cs
@@ -162,7 +164,7 @@ tags: member, kit, expire, legend
 //cs_include Scripts/Other/Classes/Dragonslayer.cs
 //cs_include Scripts/Other/Classes/FrostSpiritReaver.cs
 //cs_include Scripts/Seasonal/Frostvale/NorthlandsMonk.cs
-
+#endregion
 using Skua.Core.Interfaces;
 
 public class MemberFarm
@@ -211,6 +213,8 @@ public class MemberFarm
     private static TarosPrismaticManslayers _TarosItems;
     private static EvolvedShadowOrb ShadowOrb { get => _ShadowOrb ??= new EvolvedShadowOrb(); set => _ShadowOrb = value; }
     private static EvolvedShadowOrb _ShadowOrb;
+    public static BonecastleTowerMerge BCM { get => _BCM ??= new BonecastleTowerMerge(); set => BCM = value; }
+    private static BonecastleTowerMerge _BCM;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -230,7 +234,6 @@ public class MemberFarm
         }
 
         //Dailies
-        Daily.DeathKnightLord();
         Daily.MonthlyTreasureChestKeys();
         Daily.WheelofDoom();
         Daily.FreeDailyBoost();
@@ -259,7 +262,6 @@ public class MemberFarm
         Tendurr.TendurrItems();
         Core.ToBank(Tendurr.Rewards);
 
-        //Evolved Orb Item Quest (Need ACs for this quest)
 
         Core.ToBank(Nation.bagDrops);
 
@@ -284,6 +286,8 @@ public class MemberFarm
         //Class
         ChronoAssassin.GetChronoAss();
         Core.ToBank("Chrono Assassin");
+        BCM.BuyAllMerge("DeathKnight Lord");
+        Core.ToBank("DeathKnight Lord");
 
         //Reputations
         Farm.BeastMasterREP();

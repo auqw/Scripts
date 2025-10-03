@@ -1,7 +1,4 @@
 //cs_include Scripts/Ultras/CoreUltras.cs
-
-using System;
-using System.Dynamic;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -10,49 +7,50 @@ public class UltraWarden
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
-    public string taunterClass;
+    string taunter;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraWarden";
-    public List<IOption> Options = new() { new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", ""), };
+    public List<IOption> Options = new()
+    {
+        new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", "")
+    };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        taunterClass = Bot.Config.Get<string>("taunterClass") ?? string.Empty;
-        if (string.IsNullOrEmpty(taunterClass))
+        taunter = (Bot.Config.Get<string>("taunterClass") ?? "").Trim();
+        if (string.IsNullOrEmpty(taunter))
         {
-            Bot.Log("Taunter not filled in! Please edit Script Options.");
-            Bot.Stop();
+            Core.Alert("Setup", "Fill the taunter class in Script Options.");
+            Bot.Stop(); return;
         }
 
         Core.Boot();
-
-        Kill(taunterClass);
-
+        Prep();
+        Fight();
         Bot.Stop();
     }
 
-    void Kill(string taunterClass)
+    void Prep()
     {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion());
-        Core.UseAlchemyPotions(Core.GetBestElixirPotion());
+        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
+        if (Core.HasClassEquipped(taunter)) Core.GetScrollOfEnrage();
+        else { Core.BuyAlchemyPotion("Potent Honor Potion"); Core.EquipConsumable("Potent Honor Potion"); }
+    }
 
-        if (Core.HasClassEquipped(taunterClass))
-            Core.GetScrollOfEnrage();
-        else
-        {
-            Core.BuyAlchemyPotion("Potent Honor Potion");
-            Core.EquipConsumable("Potent Honor Potion");
-        }
+    void Fight()
+    {
+        const string map = "ultrawarden";
+        const string boss = "Ultra Warden";
 
-        Core.Join("ultrawarden");
+        Core.Join(map);
         Core.WaitForArmy(3);
-        Core.ChooseBestCell("Ultra Warden");
+        Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Core.MonsterAlive("Ultra Warden") && !Bot.ShouldExit)
-            if (Core.HasClassEquipped(taunterClass))
-                Core.UltraWardenTaunter();
-            else
-                Core.Kill("Ultra Warden");
+        while (Core.MonsterAlive(boss) && !Bot.ShouldExit)
+        {
+            if (Core.HasClassEquipped(taunter)) Core.UltraWardenTaunter();
+            else Core.Kill(boss);
+        }
     }
 }

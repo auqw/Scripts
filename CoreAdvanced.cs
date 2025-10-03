@@ -2869,6 +2869,7 @@ public class CoreAdvanced
 
                 #region Lucky - Forge - Mana Vamp
                 case "legendary elemental warrior":
+                case "mythic elemental warrior":
                 case "ultra elemental warrior":
                     if (!uForgeCape())
                         goto default;
@@ -3455,6 +3456,7 @@ public class CoreAdvanced
                 case "blood ancient":
                 case "blood sorceress":
                 case "blood titan":
+                case "frostblood titan":
                 case "cardclasher":
                 case "chaos avenger member preview":
                 case "chaos champion prime":
@@ -3659,6 +3661,7 @@ public class CoreAdvanced
                 case "blademaster assassin":
                 case "blademaster":
                 case "blood titan":
+                case "frostblood titan":
                 case "cardclasher":
                 case "chaos avenger member preview":
                 case "chaos champion prime":
@@ -3767,6 +3770,7 @@ public class CoreAdvanced
                 case "glacial berserker test":
                 case "heroic naval commander":
                 case "legendary elemental warrior":
+                case "mythic elemental warrior":
                 case "horc evader":
                 case "legendary naval commander":
                 case "legion revenant member test":

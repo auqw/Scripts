@@ -172,6 +172,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Story/DreamPalace.cs
 //cs_include Scripts/Other/MergeShops/DreampalaceMerge.cs
 //cs_include Scripts/Other/MergeShops/BonecastleMerge.cs
+//cs_include Scripts/Other/MergeShops/BonecastleTowerMerge.cs
 //cs_include Scripts/Other/MergeShops/CelestialRealmMerge.cs
 //cs_include Scripts/Other/MergeShops/3LittleWolvesHousesMerge.cs
 //cs_include Scripts/Other/Various/Potions.cs
@@ -268,6 +269,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Prototypes/Grimgaol.cs
 //cs_include Scripts/Story/7DeadlyDragons/Extra/HatchTheEgg.cs
 //cs_include Scripts/Other/MergeShops/InfernalArenaMerge.cs
+//cs_include Scripts/Other/Classes/DeathKnightLord[mem].cs
 #endregion includes
 
 using Skua.Core.Interfaces;
@@ -278,7 +280,8 @@ public class AllClasses
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     #region Dailies
     private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
@@ -331,6 +334,8 @@ public class AllClasses
     #region Member
     private static AlphaOmega AO { get => _AO ??= new AlphaOmega(); set => _AO = value; }
     private static AlphaOmega _AO;
+    private static DeathKnightLord DKL { get => _DKL ??= new DeathKnightLord(); set => _DKL = value; }
+    private static DeathKnightLord _DKL;
     private static Acolyte Acolyte { get => _Acolyte ??= new Acolyte(); set => _Acolyte = value; }
     private static Acolyte _Acolyte;
     private static Bard Bard { get => _Bard ??= new Bard(); set => _Bard = value; }
@@ -542,7 +547,6 @@ public class AllClasses
         CheckAndExecute("Blaze Binder", () => BB.GetClass(rankUpClass));
         CheckAndExecute("The Collector", Daily.CollectorClass);
         CheckAndExecute("Cryomancer", () => Cryo.DoCryomancer(rankUpClass));
-        CheckAndExecute("Death KnightLord", Daily.DeathKnightLord);
         CheckAndExecute("Lord of Order", () => LOO.GetLoO(rankUpClass));
         Adv.GearStore(true, true);
         Core.ToBank(new[] { "Blaze Binder", "The Collector", "Cryomancer", "Death KnightLord", "Lord of Order" });
@@ -600,6 +604,7 @@ public class AllClasses
         CheckAndExecute("Blood Titan", () => BT.Getclass(rankUpClass));
         CheckAndExecute("Chrono Assassin", () => CA.GetChronoAss(rankUpClass));
         CheckAndExecute("DeathKnight", () => DK.GetDK(rankUpClass));
+        CheckAndExecute("Death KnightLord", () => DKL.DKL());
         CheckAndExecute("DoomKnight", () => DoomK.GetDoomKnight(rankUpClass));
         CheckAndExecute("Drakel Warlord", () => DW.GetClass(rankUpClass));
         CheckAndExecute("Legion DoomKnight", () => LDK.GetLDK(rankUpClass));

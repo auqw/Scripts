@@ -1,7 +1,4 @@
 //cs_include Scripts/Ultras/CoreUltras.cs
-
-using System;
-using System.Dynamic;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -13,27 +10,29 @@ public class UltraEngineer
     public void ScriptMain(IScriptInterface bot)
     {
         Core.Boot();
-
-        Kill();
-
+        Fight();
         Bot.Stop();
     }
 
-    void Kill()
+    void Fight()
     {
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion());
-        Core.UseAlchemyPotions(Core.GetBestElixirPotion());
+        const string map = "ultraengineer";
+        const string boss = "Ultra Engineer";
+        const string priority1 = "Defense Drone";
+        const string priority2 = "Attack Drone";
+
+        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
         Core.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");
 
-        Core.Join("ultraengineer");
+        Core.Join(map);
         Core.WaitForArmy(3);
-        Core.ChooseBestCell("Ultra Engineer");
+        Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Core.MonsterAlive("Ultra Engineer") && !Bot.ShouldExit)
+        while (Core.MonsterAlive(boss) && !Bot.ShouldExit)
         {
-            Core.KillWithPriority("Ultra Engineer", 3, "Defense Drone", 2, "Attack Drone", 1);
+            Core.KillWithPriority(boss, 3, priority1, 2, priority2, 1);
             Bot.Skills.UseSkill(5);
         }
     }

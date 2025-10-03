@@ -740,6 +740,7 @@ public class CoreFarms
 
         Core.ByPassCheck();
         // Farming between levels 35-50
+        Core.RegisterQuests(6629);
         while (!Bot.ShouldExit && Bot.Player.Level >= 35 && Bot.Player.Level < 50)
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
@@ -761,7 +762,7 @@ public class CoreFarms
                 Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
                 Bot.Wait.ForMapLoad("icestormarena");
             }
-            if (Bot.Player.Cell != "r14")
+            if (Bot.Player.Cell != "r11")
             {
                 Core.Jump("r14", "Left");
                 Bot.Wait.ForCellChange("r14");
@@ -771,6 +772,8 @@ public class CoreFarms
             Bot.Combat.Attack("*");
             Core.Sleep();
         }
+        Bot.Quests.UnregisterQuests(6629);
+        Core.AbandonQuest(6629);
 
         Core.ByPassCheck();
         // Farming between levels 50-61
