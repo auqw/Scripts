@@ -156,7 +156,7 @@ public class GrimskullTrollingRep
         Core.SetOptions(false);
     }
 
-    public void DoGrimskullTrollingRep(int rank = 12)
+    public void DoGrimskullTrollingRep(int rank = 10)
     {
         if (Farm.FactionRank("Grimskull Trolling") >= rank)
         {

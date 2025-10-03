@@ -1065,7 +1065,7 @@ public class Grimgaol
                         return;
                     }
 
-                    if (!Bot.Player.HasTarget || !Bot.Player.InCombat)
+                    if (!Bot.Player!.HasTarget || !Bot.Player.InCombat)
                         Bot.Combat.Attack(m!.MapID);
 
                     if (Bot.Player.Target?.HP <= 0 || m?.HP <= 0 || m?.State == 0 || m?.Alive == false)
@@ -1379,7 +1379,7 @@ public class Grimgaol
                     return;
                 }
 
-                if (!Bot.Player.HasTarget
+                if (!Bot.Player!.HasTarget
                 || !Bot.Player.InCombat
                 || (Bot.Player.HasTarget && !Bot.Target.HasActiveAura("Crit Damage Amplified")))
                     Bot.Combat.Attack(m!.MapID);
