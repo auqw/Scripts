@@ -36,7 +36,7 @@ public class ChampionDrakath
         Bot.Stop();
     }
 
-    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
+    bool IsTaunter() => Core.HasClassEquipped(taunterPrimary) || Core.HasClassEquipped(taunterBackup);
 
     void Prep()
     {
