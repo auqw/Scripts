@@ -612,7 +612,7 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 70263,
+    "size": 70561,
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
@@ -11120,7 +11120,7 @@
       "verata's necronomicon"
     ],
     "path": "Farm/REP/GrimskullTrollingRep.cs",
-    "size": 7459,
+    "size": 7485,
     "fileName": "GrimskullTrollingRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/REP/GrimskullTrollingRep.cs"
   },
@@ -12613,7 +12613,7 @@
       "class"
     ],
     "path": "Other/Classes/VerusDoomKnight.cs",
-    "size": 15019,
+    "size": 15180,
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
@@ -12696,7 +12696,7 @@
       "legion"
     ],
     "path": "Other/Classes/Lich.cs",
-    "size": 13043,
+    "size": 13090,
     "fileName": "Lich.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/Lich.cs"
   },
