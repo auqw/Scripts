@@ -149,14 +149,15 @@ public class Lich
     private static ColossalWaresMerge _ColossalWaresMerge;
     private static GrimskullTrollingRep GrimskullTrollingRep { get => _GrimskullTrollingRep ??= new GrimskullTrollingRep(); set => _GrimskullTrollingRep = value; }
     private static GrimskullTrollingRep _GrimskullTrollingRep;
-public static Grimgaol GRunOptions
-{
-    get => _GRunOptions ??= new Grimgaol();
-    set => _GRunOptions = value;
-}
-public static Grimgaol _GRunOptions;
+    public static Grimgaol GRunOptions
+    {
+        get => _GRunOptions ??= new Grimgaol();
+        set => _GRunOptions = value;
+    }
+    public static Grimgaol _GRunOptions;
 
-    private static Grimgaol GrimGaolRun { get => _GrimGaolRun ??= new Grimgaol(); set => _GrimGaolRun = value; }    private static Grimgaol _GrimGaolRun;
+    private static Grimgaol GrimGaolRun { get => _GrimGaolRun ??= new Grimgaol(); set => _GrimGaolRun = value; }
+    private static Grimgaol _GrimGaolRun;
 
 
     public bool DontPreconfigure = true;
@@ -165,7 +166,7 @@ public static Grimgaol _GRunOptions;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.SetOptions();
+        Core.SetOptions(disableClassSwap: true);
 
         Example();
 

@@ -151,12 +151,12 @@ public class GrimskullTrollingRep
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.SetOptions();
+        Core.SetOptions(disableClassSwap: true);
         DoGrimskullTrollingRep();
         Core.SetOptions(false);
     }
 
-    public void DoGrimskullTrollingRep(int rank = 10)
+    public void DoGrimskullTrollingRep(int rank = 12)
     {
         if (Farm.FactionRank("Grimskull Trolling") >= rank)
         {
@@ -164,6 +164,6 @@ public class GrimskullTrollingRep
             return;
         }
 
-        GrimGaolRun.DoGrimGaol();
+        GrimGaolRun.DoGrimGaol(rank);
     }
 }

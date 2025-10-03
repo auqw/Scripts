@@ -410,7 +410,7 @@ public class Grimgaol
 
                     // Treasure Chest - VHL
                     case "r4":
-                        RVHL(Bot.Player.Cell);
+                        RVDK(Bot.Player.Cell);
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r4\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player?.Cell != "r5")
@@ -604,7 +604,7 @@ public class Grimgaol
                 Bot.Combat.CancelAutoAttack();
                 Bot.Combat.StopAttacking = true;
 
-                Bot.Sleep(500);
+                Bot.Sleep(1000);
 
                 // Wait until the target has the "Retaliate" aura
                 Bot.Wait.ForTrue(() => Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Retaliate") == true, 20);
@@ -614,6 +614,7 @@ public class Grimgaol
                 Bot.Combat.StopAttacking = false;
                 skillIndex = 0;
                 Bot.Skills.Start();
+                Bot.Sleep(1000);
             }
 
             if (!Bot.Player.HasTarget)
@@ -643,99 +644,98 @@ public class Grimgaol
         }
     }
 
-    private void R2()
-    {
-        if (Bot.Player?.Cell != "r2")
-        {
-            Core.Logger("jump to r2");
-            Bot.Map.Jump("r2", "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange("r2");
-        }
-        Bot.Sleep(1000);
+    // private void R2()
+    // {
+    //     if (Bot.Player?.Cell != "r2")
+    //     {
+    //         Core.Logger("jump to r2");
+    //         Bot.Map.Jump("r2", "Left", autoCorrect: false);
+    //         Bot.Wait.ForCellChange("r2");
+    //     }
+    //     Bot.Sleep(1000);
 
-        if (!monsterAvail())
-        {
-            runTimer.Stop();
-            return;
-        }
-        Bot.Player?.SetSpawnPoint();
+    //     if (!monsterAvail())
+    //     {
+    //         runTimer.Stop();
+    //         return;
+    //     }
+    //     Bot.Player?.SetSpawnPoint();
 
-        #region Equipment Setup
-        EquipIfAvailable(voidhighlord);
+    //     #region Equipment Setup
+    //     EquipIfAvailable(voidhighlord);
+    //     EquipIfAvailable(Bot.Config!.Get<string>(Daunt ? "Dauntless" : "Valiance"));
+    //     EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm") ?? Bot.Config!.Get<string>("LuckHelm"));
+    //     EquipIfAvailable(Bot.Config!.Get<string>("Vainglory") ?? Bot.Config!.Get<string>("Penitence"));
 
-        EquipIfAvailable(Bot.Config!.Get<string>(Daunt ? "Dauntless" : "Valiance"));
-        EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm") ?? Bot.Config!.Get<string>("LuckHelm"));
-        EquipIfAvailable(Bot.Config!.Get<string>("Vainglory") ?? Bot.Config!.Get<string>("Penitence"));
+    //     #endregion
+    //     runTimer.Start();
 
-        #endregion
-        runTimer.Start();
+    //     int skillIndex = 0;
+    //     int[] skillList = { 1, 4, 2, 3 };
 
-        int skillIndex = 0;
-        int[] skillList = { 1, 4, 2, 3 };
+    // Restart:
+    //     foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
+    //     {
+    //         if (m == null || m?.HP <= 0 || m?.State == 0)
+    //             continue;
 
-    Restart:
-        foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
-        {
-            if (m == null || m?.HP <= 0 || m?.State == 0)
-                continue;
+    //         while (!Bot.ShouldExit)
+    //         {
+    //             if (!Bot.Player!.Alive)
+    //             {
+    //                 Bot.Sleep(100);
+    //                 if (Bot.Player.Alive)
+    //                     skillIndex = 0;
+    //                 goto Restart;
+    //             }
 
-            while (!Bot.ShouldExit)
-            {
-                if (!Bot.Player!.Alive)
-                {
-                    Bot.Sleep(100);
-                    if (Bot.Player.Alive)
-                        skillIndex = 0;
-                    goto Restart;
-                }
+    //             // Ensure we're still in the right cell
+    //             if (Bot.Player?.Cell != "r2")
+    //             {
+    //                 Bot.Map.Jump("r2", "Left", autoCorrect: false);
+    //                 Bot.Wait.ForCellChange("r2");
+    //             }
 
-                // Ensure we're still in the right cell
-                if (Bot.Player?.Cell != "r2")
-                {
-                    Bot.Map.Jump("r2", "Left", autoCorrect: false);
-                    Bot.Wait.ForCellChange("r2");
-                }
+    //             if (!monsterAvail())
+    //             {
+    //                 runTimer.Stop();
+    //                 return;
+    //             }
 
-                if (!monsterAvail())
-                {
-                    runTimer.Stop();
-                    return;
-                }
+    //             // Start attack if no target
+    //             if (!Bot.Player!.HasTarget)
+    //                 Bot.Combat.Attack("*");
 
-                // Start attack if no target
-                if (!Bot.Player!.HasTarget)
-                    Bot.Combat.Attack(m!.MapID);
+    //             if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+    //             {
+    //                 Bot.Combat.CancelAutoAttack();
+    //                 Bot.Combat.CancelTarget();
+    //                 break;
+    //             }
 
-                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                {
-                    Bot.Combat.CancelAutoAttack();
-                    Bot.Combat.CancelTarget();
-                    break;
-                }
+    //             if (Bot.Player.Health <= 2500 && Bot.Skills.CanUseSkill(2))
+    //                 Bot.Skills.UseSkill(2);
 
-                if (Bot.Player.Health <= 2500 && Bot.Skills.CanUseSkill(2))
-                    Bot.Skills.UseSkill(2);
+    //             else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && !Bot.Self.HasActiveAura("Shackled") && skillIndex == 0
+    //               && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+    //             {
+    //                 Bot.Skills.UseSkill(skillList[skillIndex]);
+    //                 skillIndex = (skillIndex + 1) % skillList.Length;
+    //             }
 
-                else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && !Bot.Self.HasActiveAura("Shackled") && skillIndex == 0
-                  && Bot.Skills.CanUseSkill(skillList[skillIndex]))
-                {
-                    Bot.Skills.UseSkill(skillList[skillIndex]);
-                    skillIndex = (skillIndex + 1) % skillList.Length;
-                }
+    //             else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
+    //               && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+    //             {
+    //                 Bot.Skills.UseSkill(skillList[skillIndex]);
+    //             }
+    //             skillIndex = (skillIndex + 1) % skillList.Length;
+    //             Bot.Sleep(200);
 
-                else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-                  && Bot.Skills.CanUseSkill(skillList[skillIndex]))
-                {
-                    Bot.Skills.UseSkill(skillList[skillIndex]);
-                }
-                skillIndex = (skillIndex + 1) % skillList.Length;
-                Bot.Sleep(200);
-
-            }
-        }
+    //         }
+    //     }
 
 
-    }
+    // }
 
     private void R6()
     {
@@ -994,7 +994,6 @@ public class Grimgaol
             if (monsId == "*") doPriorityAttackId(new int[] { 16, 17, 18, 19 });
             else doPriorityAttackId(new int[] { monsIdInt });
 
-
             if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
             && Bot.Skills.CanUseSkill(skillList[skillIndex]))
             {
@@ -1066,14 +1065,13 @@ public class Grimgaol
                         return;
                     }
 
-                    // Start attack if no target
-                    if (!Bot.Player!.HasTarget)
+                    if (!Bot.Player.HasTarget || !Bot.Player.InCombat)
                         Bot.Combat.Attack(m!.MapID);
 
-                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                    if (Bot.Player.Target?.HP <= 0 || m?.HP <= 0 || m?.State == 0 || m?.Alive == false)
                     {
-                        Bot.Combat.CancelAutoAttack();
-                        Bot.Combat.CancelTarget();
+                        if (Bot.Player.InCombat)
+                            Bot.Combat.CancelTarget();
                         break;
                     }
 
@@ -1381,14 +1379,15 @@ public class Grimgaol
                     return;
                 }
 
-                // Start attack if no target
-                if (!Bot.Player!.HasTarget || (Bot.Player.HasTarget && !Bot.Target.HasActiveAura("Crit Damage Amplified")))
+                if (!Bot.Player.HasTarget
+                || !Bot.Player.InCombat
+                || (Bot.Player.HasTarget && !Bot.Target.HasActiveAura("Crit Damage Amplified")))
                     Bot.Combat.Attack(m!.MapID);
 
-                if (Bot.Player.HasTarget && (Bot.Player.Target?.HP <= 0))
+                if (Bot.Player.Target?.HP <= 0 || m?.HP <= 0 || m?.State == 0 || m?.Alive == false)
                 {
-                    Bot.Combat.CancelAutoAttack();
-                    Bot.Combat.CancelTarget();
+                    if (Bot.Player.InCombat)
+                        Bot.Combat.CancelTarget();
                     break;
                 }
 
@@ -1640,7 +1639,7 @@ public class Grimgaol
             }
             foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
             {
-                if (m == null || m?.HP <= 0 || m?.State == 0)
+                if (m == null || m?.HP <= 0 || m?.State == 0 || m?.Alive == false)
                     continue;
 
                 while (!Bot.ShouldExit)
@@ -1657,13 +1656,13 @@ public class Grimgaol
                         skillIndex = 0;
                     }
 
-                    if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != m!.MapID)
+                    if (!Bot.Player.HasTarget || !Bot.Player.InCombat)
                         Bot.Combat.Attack(m!.MapID);
 
-                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                    if (Bot.Player.Target?.HP <= 0 || m?.HP <= 0 || m?.State == 0 || m?.Alive == false)
                     {
-                        Bot.Combat.CancelAutoAttack();
-                        Bot.Combat.CancelTarget();
+                        if (Bot.Player.InCombat)
+                            Bot.Combat.CancelTarget();
                         break;
                     }
 
