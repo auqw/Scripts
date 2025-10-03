@@ -1356,7 +1356,6 @@ public class CoreUltras
         }
     }
 
-    // Same as StoneCrusher class, but with different aura names.
     void InfinityTitanClass()
         {
         var mode = GetMode("InfinityTitan");
@@ -1473,7 +1472,6 @@ public class CoreUltras
 
         if (HasAura("XXI - The World", true))
         {
-            // Nukes when about to expire
             if (Left("XXI - The World", 8, true))
                 if (Cast(1)) return;
 
@@ -1483,8 +1481,6 @@ public class CoreUltras
         {
             bool hasJudgement = HasAura("XX - Judgement", true);
             bool hasFool = HasAura("0 - The Fool", true);
-            // Second check in case it has "0 - The Fool" for some reason but no other
-            // self active auras. It can get stuck waiting for The Fool to expire otherwise.
             bool needsFool = !hasFool || !HasAnyAuraOtherThan("0 - The Fool", true);
 
             if ((hasJudgement && hasFool) || needsFool)
@@ -1784,7 +1780,7 @@ public class CoreUltras
         return false;
     }
 
-    public bool HasAnyAuraOtherThan(string excludeAura, bool self = false)
+    public bool HasAnyAuraOtherThan(string auraName, bool self = false)
     {
         if (string.IsNullOrWhiteSpace(excludeAura)) return false;
 
