@@ -1262,6 +1262,7 @@ public class CoreUltras
             case "legion revenant": LegionRevenantClass(); break;
             case "archpaladin": ArchPaladinClass(); break;
             case "stonecrusher": StoneCrusherClass(); break;
+            case "infinity titan": InfinityTitanClass(); break;
             case "lord of order": LordsOfOrderClass(); break;
             case "void highlord": VoidHighlordClass(); break;
             case "chaos avenger": ChaosAvengerClass(); break;
@@ -1270,6 +1271,7 @@ public class CoreUltras
             case "dragon of time": DragonOfTimeClass(); break;
             case "archmage": ArchmageClass(); break;
             case "verus doomknight": VerusDoomKnight(); break;
+            case "arcana invoker": ArcanaInvokerClass(); break;
 
             // Chrono classes
             case "chrono dragonknight": case "chrono dataknight": ChronoDataKnightClass(); break;
@@ -1342,6 +1344,31 @@ public class CoreUltras
             if (HasAura("Magnitude", true))
                 if (Cast(4)) return;
             if (Left("Dissonance", 1, true))
+                if (Cast(2)) return;
+            if (Cast(1)) return;
+        }
+    }
+
+    void InfinityTitanClass()
+        {
+        var mode = GetMode("InfinityTitan");
+
+        if (mode == "Ultra")
+        {
+            if (IsHealthLow(80) || IsArmyHealthLow(80) && HasAura("Anima", true))
+                if (Cast(3)) return;
+            if (Left("Universal Power", 1, true))
+                if (Cast(2)) return;
+            if (Cast(4)) return;
+            if (Cast(1)) return;
+        }
+        else
+        {
+            if (IsHealthLow(80) || IsArmyHealthLow(80))
+                if (Cast(3)) return;
+            if (HasAura("Anima", true))
+                if (Cast(4)) return;
+            if (Left("Universal Power", 1, true))
                 if (Cast(2)) return;
             if (Cast(1)) return;
         }
@@ -1425,6 +1452,38 @@ public class CoreUltras
         if (Cast(1)) return;
         if (Cast(2)) return;
         if (Cast(3)) return;
+    }
+
+    void ArcanaInvokerClass()
+    {
+        void standardRotation()
+        {
+            if (Cast(2)) return;
+            if (Cast(4)) return;
+            if (Cast(3)) return;
+        }
+
+        if (HasAura("XXI - The World", true))
+        {
+            if (Left("XXI - The World", 8, true))
+                if (Cast(1)) return;
+
+            standardRotation();
+        }
+        else
+        {
+            bool hasJudgement = HasAura("XX - Judgement", true);
+            bool hasFool = HasAura("0 - The Fool", true);
+            bool needsFool = !hasFool || !HasAnyAuraOtherThan("0 - The Fool", true);
+
+            if ((hasJudgement && hasFool) || needsFool)
+                if (Cast(1)) return;
+
+            if (hasFool)
+            {
+                standardRotation();
+            }
+        }
     }
 
     // --- chrono classes ---------------------------------------------------------------
@@ -1587,7 +1646,6 @@ public class CoreUltras
             if (Cast(1)) return;
         }
         if (Cast(2)) return;
-
     }
 
     void GuardianClass()
@@ -1713,6 +1771,16 @@ public class CoreUltras
                 return true;
         }
         return false;
+    }
+
+    public bool HasAnyAuraOtherThan(string auraName, bool self = false)
+    {
+        if (string.IsNullOrWhiteSpace(excludeAura)) return false;
+
+        var auras = GetAuras(self);
+        return auras.Any(a => a != null &&
+                            !string.IsNullOrWhiteSpace(a.Name) &&
+                            !excludeAura.Equals(a.Name, StringComparison.OrdinalIgnoreCase));
     }
 
     public int GetAuraStacks(string auraName, bool self = false)
