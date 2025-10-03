@@ -7,21 +7,27 @@ public class UltraWarden
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreUltras Core = new();
 
-    string taunter;
+    string taunterPrimary;
+    string taunterBackup;
+
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraWarden";
     public List<IOption> Options = new()
     {
-        new Option<string>("taunterClass", "Taunter Class", "Insert the name of the class that will taunt", "")
+        new Option<string>("taunterClass", "Taunter Class (Primary)", "Class name that will taunt first", ""),
+        new Option<string>("taunterBackupClass", "Taunter Class (Backup)",  "Backup taunter class", "")
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        taunter = (Bot.Config.Get<string>("taunterClass") ?? "").Trim();
-        if (string.IsNullOrEmpty(taunter))
+        taunterPrimary = (Bot.Config.Get<string>("taunterClass") ?? "").Trim();
+        taunterBackup = (Bot.Config.Get<string>("taunterBackupClass") ?? "").Trim();
+
+        if (string.IsNullOrEmpty(taunterPrimary) && string.IsNullOrEmpty(taunterBackup))
         {
-            Core.Alert("Setup", "Fill the taunter class in Script Options.");
-            Bot.Stop(); return;
+            Core.Alert("Setup", "Fill at least one taunter class (Primary or Backup) in Script Options.");
+            Bot.Stop();
+            return;
         }
 
         Core.Boot();
@@ -33,8 +39,14 @@ public class UltraWarden
     void Prep()
     {
         Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
-        if (Core.HasClassEquipped(taunter)) Core.GetScrollOfEnrage();
-        else { Core.BuyAlchemyPotion("Potent Honor Potion"); Core.EquipConsumable("Potent Honor Potion"); }
+
+        if (Core.HasClassEquipped(taunterPrimary) || Core.HasClassEquipped(taunterBackup))
+            Core.GetScrollOfEnrage();
+        else
+        {
+            Core.BuyAlchemyPotion("Potent Honor Potion");
+            Core.EquipConsumable("Potent Honor Potion");
+        }
     }
 
     void Fight()
@@ -49,8 +61,18 @@ public class UltraWarden
 
         while (Core.MonsterAlive(boss) && !Bot.ShouldExit)
         {
-            if (Core.HasClassEquipped(taunter)) Core.UltraWardenTaunter();
-            else Core.Kill(boss);
+            if (Core.HasClassEquipped(taunterPrimary))
+            {
+                Core.UltraWardenTaunter();
+            }
+            else if (Core.HasClassEquipped(taunterBackup))
+            {
+                Core.UltraWardenTaunter();
+            }
+            else
+            {
+                Core.Kill(boss);
+            }
         }
     }
 }

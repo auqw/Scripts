@@ -408,7 +408,6 @@ public class CoreUltras
         }
     }
 
-
     public void Kill(string name) => Kill(MonsterKey.FromName(name));
     public void Kill(params string[] names)
     {
@@ -527,14 +526,11 @@ public class CoreUltras
         if (Owned("Scroll of Enrage") < 10)
         {
             ForItem("Undead Infantry", "underworld", "Mystic Parchment", 2);
-            Join("dragonrune");
-            Bot.Shops.Load(549);
-            if (Owned("Zealous Ink") < 1)
-                Bot.Shops.BuyItem(13286, 1639, 5);
+            BuyItem("Zealous Ink", 549, "dragonrune", 5, calculateRemaining: false);
 
             Join("spellcraft");
             Bot.Send.Packet("%xt%zm%crafting%1%spellOnStart%7%1555%Spell%"); Bot.Sleep(5000);
-            Bot.Send.Packet("%xt%zm%crafting%1%spellComplete%7%2330%Enrage%"); Bot.Sleep(D3);
+            Bot.Send.Packet("%xt%zm%crafting%1%spellComplete%7%2330%Enrage%");
             Bot.Drops.Pickup("Scroll of Enrage");
         }
         EquipConsumable("Scroll of Enrage");
@@ -547,10 +543,7 @@ public class CoreUltras
         while (Owned("Scroll of Decay") < 10)
         {
             ForItem("Undead Infantry", "underworld", "Mystic Parchment", 2);
-            Join("dragonrune");
-            Bot.Shops.Load(549);
-            if (Owned("Zealous Ink") < 1)
-                Bot.Shops.BuyItem("Zealous Ink", 5);
+            BuyItem("Zealous Ink", 549, "dragonrune", 5, calculateRemaining: false);
 
             Join("spellcraft");
             Bot.Drops.Add("Scroll of Decay");
@@ -1929,46 +1922,80 @@ public class CoreUltras
 
     public void DrakathTaunter()
     {
-        const string THRESHOLD_KEY = "drakath.lastThreshold";
+        const string LAST_THR_KEY = "drakath.lastThreshold";
+        const string PREV_HP_KEY = "drakath.prevHp";
+        const string LAST_FIRE_KEY = "drakath.lastFireTicks";
+
         if (Bot?.Combat == null || Bot?.Player == null) return;
 
         var bands = new (int thr, int rng)[] {
             (18_000_000, 180_000), (16_000_000, 180_000), (14_000_000, 180_000),
-            (12_000_000, 180_000), (10_000_000, 180_000), (8_000_000, 100_000),
-            (6_000_000, 100_000), (4_000_000, 100_000), (2_000_000, 100_000)
+            (12_000_000, 180_000), (10_000_000, 180_000), ( 8_000_000, 100_000),
+            ( 6_000_000, 100_000), ( 4_000_000, 100_000), ( 2_000_000, 100_000)
         };
 
-        Bot.Combat.Attack("Champion Drakath");
+        EnsureDrakathTarget();
+
         var t = Bot.Player.Target;
         if (t?.HP == null || t.HP <= 0) return;
 
+        int lastThreshold = AppDomain.CurrentDomain.GetData(LAST_THR_KEY) as int? ?? int.MaxValue;
+        int prevHp = AppDomain.CurrentDomain.GetData(PREV_HP_KEY) as int? ?? int.MaxValue;
+        long lastFireTicks = AppDomain.CurrentDomain.GetData(LAST_FIRE_KEY) as long? ?? 0L;
+
         int hp = t.HP;
-        var lastThreshold = AppDomain.CurrentDomain.GetData(THRESHOLD_KEY) as int? ?? int.MaxValue;
+        long nowTicks = DateTime.UtcNow.Ticks;
+        bool cooldownOver = (new TimeSpan(nowTicks - lastFireTicks).TotalMilliseconds >= 1200); // 1.2s debounce
 
-        var matchingBand = Array.FindLast(bands, band =>
-            hp <= (band.thr + band.rng) &&
-            band.thr < lastThreshold);
+        var band = Array.FindLast(bands, b =>
+            b.thr < lastThreshold &&
+            prevHp > (b.thr + b.rng) &&
+            hp <= (b.thr + b.rng));
 
-        if (matchingBand != default)
+        if (cooldownOver && band != default)
         {
-            Alert("Drakath", $"Triggering threshold at {hp:N0} HP (target: {matchingBand.thr:N0})");
-            AppDomain.CurrentDomain.SetData(THRESHOLD_KEY, matchingBand.thr);
+            Alert("Drakath", $"Crossed into band {band.thr:N0} (hp now {hp:N0}). Attempting Focus...");
+            AppDomain.CurrentDomain.SetData(LAST_THR_KEY, band.thr);
+            AppDomain.CurrentDomain.SetData(LAST_FIRE_KEY, nowTicks);
 
-            int attempts = 0;
-            while (MonsterAlive("Champion Drakath") && !HasAura("Focus") && !Bot.ShouldExit && attempts < 50)
+            var end = DateTime.UtcNow.AddMilliseconds(1800);
+            int tries = 0;
+            while (MonsterAlive("Champion Drakath") && !Bot.ShouldExit && DateTime.UtcNow < end)
             {
+                EnsureDrakathTarget();
                 UsePotion();
-                Bot.Sleep(100);
-                attempts++;
+                tries++;
+                if (HasAura("Focus")) break;
+                Bot.Sleep(120);
             }
 
             if (HasAura("Focus"))
-                Alert("Drakath", $"Focus obtained at {Bot.Player.Target?.HP:N0} HP");
+                Alert("Drakath", $"Focus obtained at {Bot.Player.Target?.HP:N0} HP (tries: {tries})");
             else
-                Alert("Drakath", $"Warning: Failed to get Focus (attempts: {attempts})");
+                Alert("Drakath", $"Warning: Failed to get Focus (tries: {tries}, hp now {Bot.Player.Target?.HP:N0})");
         }
 
-        Bot.Sleep(150);
+        AppDomain.CurrentDomain.SetData(PREV_HP_KEY, hp);
+
+        Bot.Sleep(120);
+    }
+
+    private void EnsureDrakathTarget()
+    {
+        var list =
+            Bot?.Monsters?.CurrentMonsters
+            ?? Bot?.Monsters?.MapMonsters
+            ?? Enumerable.Empty<Skua.Core.Models.Monsters.Monster>();
+
+        var drak = list.FirstOrDefault(m => m != null && m.Name == "Champion Drakath" && m.Alive);
+
+        if (drak != null)
+        {
+            Bot.Combat.Attack(drak.MapID);
+            return;
+        }
+
+        Bot.Combat.Attack("Champion Drakath");
     }
 
     // --- helpers ---------------------------------------------------
