@@ -27,6 +27,10 @@ public class ArchMage
     private static CoreArchMage AM { get => _AM ??= new CoreArchMage(); set => _AM = value; }
     private static CoreArchMage _AM;
 
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = AM.OptionsStorage;
+    public List<IOption> Options = AM.Options;
+
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();

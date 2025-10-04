@@ -157,7 +157,6 @@ public class CoreStory
         }
 
         Core.EnsureAccept(QuestID);
-        Core.Join(MapName);
         Core.GetMapItem(MapItemID, Amount, MapName);
         TryComplete(QuestData, AutoCompleteQuest);
     }
@@ -393,7 +392,7 @@ public class CoreStory
                     string message2 = $"Quest \"{QuestData.Name}\" [{QuestID}] is not unlocked.\n" +
                     $"Expected value = [{QuestData.Value - 1}/{QuestData.Slot}], received = [{currentValue}/{QuestData.Slot}]\n" +
                     prevQuestExplain +
-                    "Please join the Skua Discord to report this.\n" +
+                    "First try stopping the script, relogging, and then restarting it, if this happens again, then join the Skua Discord to report this.\n" +
                     "Do you wish to be brought to the Discord?";
 
                     Core.Logger(message2);

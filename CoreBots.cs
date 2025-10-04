@@ -5297,99 +5297,8 @@ public class CoreBots
     /// <param name="log"></param>
     public void KillNulgathFiendShard(string? item = null, int quant = 1, bool isTemp = false, bool log = false)
     {
-        if (CheckInventory(item, quant))
-            return;
-
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
-
-        Join("fiendshard", "r9", "Left");
-        if (Bot.Player.Cell != "r9")
-        {
-            Jump("r9", "Left");
-            Sleep();
-        }
-
-
-        if (item != null && log)
-            FarmingLogger(item, quant);
-
-        bool PreFarmKill = false;
-
-        Monster? monster = Bot.Monsters.MapMonsters.FirstOrDefault(m => m.MapID == 15);
-
-        if (item == null)
-        {
-            _KillFiendShard();
-        }
-        else
-        {
-            if (log)
-                Logger("Killing Nulgath's FiendShard");
-            if (!isTemp)
-                AddDrop(item);
-
-            while (!Bot.ShouldExit && !CheckInventory(item, quant))
-                _KillFiendShard();
-
-            Bot.Wait.ForPickup(item);
-            Jump("Enter", "Spawn");
-            Rest();
-        }
-        Jump("Enter", "Spawn");
-        Bot.Wait.ForCellChange("Enter");
-        Bot.Wait.ForPickup(item!);
-        Bot.Options.AttackWithoutTarget = false;
-
-        void _KillFiendShard()
-        {
-            if (monster == null)
-            {
-                Logger("Monster with MapID 15 not found.");
-                return;
-            }
-            // Initialize combat (to set hp)
-            if (!PreFarmKill)
-            {
-
-                CheckCell(monster.Cell ?? "r9");
-                Logger("PreFarm kill to set Hp");
-                Bot.Kill.Monster(monster.MapID);
-                Bot.Wait.ForMonsterSpawn(monster.MapID);
-                PreFarmKill = true;
-            }
-            CheckCell(monster?.Cell ?? "r9");
-            monster = Bot.Monsters.MapMonsters.FirstOrDefault(x => x.MapID == 15);
-            if (monster == null)
-            {
-                Logger("Monster with MapID 15 not found after respawn.");
-                return;
-            }
-
-            if (monster?.State == 1 || monster?.State == 2)
-            {
-                CheckCell(monster.Cell ?? "r9");
-                Bot.Kill.Monster(monster.MapID);
-                Bot.Combat.CancelTarget();
-            }
-            else if (monster?.State == 0)
-            {
-                CheckCell(monster?.Cell ?? "r9");
-                Bot.Combat.Attack("*");
-                Sleep();
-            }
-        }
-
-        void CheckCell(string? cell = null, string pad = "left")
-        {
-            if (Bot.Player.Cell == cell)
-                return;
-
-            if (Bot.Player.Cell != cell)
-                Bot.Map.Jump(cell ?? "r9", pad);
-            Bot.Wait.ForCellChange(cell ?? "r9");
-            Bot.Player.SetSpawnPoint();
-        }
+        //Void no longer in use) 
+        return;
     }
 
     public void _KillForItem(Monster name, string? item, int quantity, bool isTemp = false, bool rejectElse = false, bool log = true, string? cell = null)
@@ -8300,11 +8209,8 @@ public class CoreBots
         if (items == null)
             return;
 
-        if (map != null)
+        if (Bot.Map!.Name != map)
             Join(map);
-
-        JumpWait();
-        Sleep();
 
         foreach ((int itemID, int quant) in items)
             AcquireMapItem(itemID, quant);
@@ -8318,20 +8224,18 @@ public class CoreBots
     {
         if (Bot.TempInv.Contains(itemID, quant))
         {
-            Logger($"Map item {itemID} already acquired ({quant})");
+            Logger($"Map item {itemID} already acquired (x{quant})");
             return;
         }
 
-        int attempts = 0;
-
         while (!Bot.ShouldExit && !Bot.TempInv.Contains(itemID, quant))
         {
-            Bot.Map.GetMapItem(itemID);
             Bot.Wait.ForActionCooldown(GameActions.GetMapItem);
-            attempts++;
+            Bot.Map.GetMapItem(itemID);
+            Bot.Sleep(500);
 
             // Safety stop in case of bugged item or wrong map
-            if (attempts > quant + 10 || Bot.TempInv.Contains(itemID, quant))
+            if (Bot.TempInv.Contains(itemID, quant))
                 break;
         }
 

@@ -3860,7 +3860,7 @@ case ""Shard of the Shard"":
                     //De-shard the Shard 7901
                     Core.RegisterQuests(7901);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.KillNulgathFiendShard(""Piece of the Shard"", isTemp: true);
+                    Core.KillMonster(""fiendshard"", ""r9"", ""Left"", 15, ""Nulgath's Shard Shaving"", 3);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;

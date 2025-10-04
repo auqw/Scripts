@@ -400,7 +400,7 @@ public class CoreArchMage
         while (!Bot.ShouldExit && !Core.CheckInventory(73333, quant))
         {
             Core.EnsureAccept(8910);
-            Core.KillNulgathFiendShard("Infernal Ether");
+            Core.KillMonster("fiendshard", "r9", "Left", 15, "Infernal Ether", isTemp: false);
             Core.HuntMonster("celestialarenad", "Aranx", "Celestial Ether", isTemp: false);
             Core.HuntMonster("eternalchaos", "Eternal Drakath", "Chaotic Ether", isTemp: false);
             Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Mortal Ether", isTemp: false);
@@ -625,7 +625,7 @@ public class CoreArchMage
         Bot.Options.AttackWithoutTarget = true;
 
         Bot.Events.RunToArea += MoveNightmareCarnax;
-        
+
         // Initialize cancellation token for movement tasks
         moveTaskCts = new CancellationTokenSource();
 
@@ -671,7 +671,7 @@ public class CoreArchMage
         Adv.GearStore(true);
 
         Bot.Events.RunToArea -= MoveNightmareCarnax;
-        
+
         // Cancel any pending movement tasks and dispose resources
         moveTaskCts?.Cancel();
         moveTaskCts?.Dispose();

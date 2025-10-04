@@ -12,8 +12,10 @@ public class Fiendshard_Story
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static Originul_Story Originul { get => _Originul ??= new Originul_Story(); set => _Originul = value; }    private static Originul_Story _Originul;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static Originul_Story Originul { get => _Originul ??= new Originul_Story(); set => _Originul = value; }
+    private static Originul_Story _Originul;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -36,6 +38,8 @@ public class Fiendshard_Story
         Core.Logger("Making sure portal quest is done.. appaerntly its required...? (though not stated?)");
         Core.Join("tercessuinotlim");
 
+        Core.EquipClass(ClassType.Farm);
+        
         // Sneak Attack
         if (!Story.QuestProgression(7892))
         {
@@ -74,23 +78,22 @@ public class Fiendshard_Story
         Story.KillQuest(7896, "Fiendshard", "Paladin Fiend");
 
         // Defeat Dirtlicker
-        Story.KillQuest(7897, "Fiendshard", new[] { "Fiend Shard", "Dirtlicker" });
+        if (!Story.QuestProgression(7897))
+        {
+            Core.EquipClass(ClassType.Solo);
+            Story.KillQuest(7897, "Fiendshard", new[] { "Fiend Shard", "Dirtlicker" });
+            Core.Jump("Enter", "Spawn");
+        }
 
         // Destroy the Fiend Shard
         // Archfiend DeathLord quests can be done without finishing this quest.
         if (!Story.QuestProgression(7898))
         {
-            Core.Join("fiendshard", "r9");
-            while (!Bot.ShouldExit && Bot.Player.Cell != "r9")
-            {
-                Core.Sleep(2500);
-                Core.Jump("r9");
-            }
+            Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(7898);
-            Core.KillNulgathFiendShard("Nulgath's Fiend Shard Destroyed", isTemp: true);
             Core.KillMonster("fiendshard", "r9", "Left", "Paladin Fiend", "Fiends Fended Off", 15);
+            Core.KillMonster("fiendshard", "r9", "Left", 15, 59059, 1);
             Core.Jump("Enter", "Spawn");
-            Bot.Wait.ForCombatExit();
             Core.EnsureComplete(7898);
         }
     }

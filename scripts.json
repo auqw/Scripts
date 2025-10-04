@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 34944,
+    "size": 35003,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 401486,
+    "size": 398780,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -5111,7 +5111,7 @@
       "do all"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/0RunAll.cs",
-    "size": 1913,
+    "size": 1921,
     "fileName": "0RunAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/0RunAll.cs"
   },
@@ -9225,7 +9225,7 @@
       "fiendshard"
     ],
     "path": "Story/Nation/Fiendshard.cs",
-    "size": 3432,
+    "size": 3426,
     "fileName": "Fiendshard.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Nation/Fiendshard.cs"
   },
@@ -9326,7 +9326,7 @@
       "nation"
     ],
     "path": "Story/Nation/Tercessuinotlim.cs",
-    "size": 4136,
+    "size": 4149,
     "fileName": "Tercessuinotlim.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Nation/Tercessuinotlim.cs"
   },
@@ -16357,6 +16357,34 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/FiendPastMerge.cs"
   },
   {
+    "name": "Argyrons Wares Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Argyrons Wares Merge [2626] in /abaddoncave",
+    "tags": [
+      "argyrons",
+      "wares",
+      "merge",
+      "abaddoncave",
+      "arachnosapien",
+      "abaddon",
+      "hybrid",
+      "spineback",
+      "horned",
+      "tarsus",
+      "abdomen",
+      "broodmaster",
+      "venom",
+      "plague",
+      "xl",
+      "guest",
+      "abbadon",
+      "guard"
+    ],
+    "path": "Other/MergeShops/ArgyronsWaresMerge.cs",
+    "size": 6572,
+    "fileName": "ArgyronsWaresMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/ArgyronsWaresMerge.cs"
+  },
+  {
     "name": "ShadowScytheGeneralMerge",
     "description": "null",
     "tags": [
@@ -23050,7 +23078,7 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 959039,
+    "size": 959057,
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -24320,7 +24348,7 @@
       "null"
     ],
     "path": "Nation/MergeShops/FiendshardMerge.cs",
-    "size": 5883,
+    "size": 5920,
     "fileName": "FiendshardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/MergeShops/FiendshardMerge.cs"
   },
@@ -25709,7 +25737,7 @@
       "null"
     ],
     "path": "Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs",
-    "size": 1772,
+    "size": 1780,
     "fileName": "EmptyTemplate[Basics].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs"
   },
@@ -26519,7 +26547,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/0ArchMage.cs",
-    "size": 1140,
+    "size": 1283,
     "fileName": "0ArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/0ArchMage.cs"
   },
@@ -26530,7 +26558,7 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 25882,
+    "size": 25903,
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },

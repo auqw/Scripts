@@ -17,17 +17,21 @@ public class FiendshardMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static Fiendshard_Story Fiendshard { get => _Fiendshard ??= new Fiendshard_Story(); set => _Fiendshard = value; }    private static Fiendshard_Story _Fiendshard;
+    private static Fiendshard_Story Fiendshard { get => _Fiendshard ??= new Fiendshard_Story(); set => _Fiendshard = value; }
+    private static Fiendshard_Story _Fiendshard;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -79,7 +83,8 @@ public static CoreAdvanced _sAdv;
                     //De-shard the Shard 7901
                     Core.RegisterQuests(7901);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.KillNulgathFiendShard("Piece of the Shard", isTemp: true);
+                        Core.KillMonster("fiendshard", "r9", "Left", 15, "Piece of the Shard");
+
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
