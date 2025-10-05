@@ -398,56 +398,50 @@ public class CoreEngine
 
         int N(int? v, int d = -1) => v ?? d;
 
-        string Enh(int id)
+        string Enh(int id) => id switch
         {
-            switch (id)
-            {
-                case 1: return "Adventurer";
-                case 2: return "Fighter";
-                case 3: return "Thief";
-                case 4: return "Armsman";
-                case 5: return "Hybrid";
-                case 6: return "Wizard";
-                case 7: return "Healer";
-                case 8: return "Spellbreaker";
-                case 9: return "Lucky";
-                case 10: return "Forge";
-                case 11: return "Absolution";
-                case 12: return "Avarice";
-                case 23: return "Depths";
-                case 24: return "Vainglory";
-                case 25: return "Vim";
-                case 26: return "Examen";
-                case 27: return "Pneuma";
-                case 28: return "Anima";
-                case 29: return "Penitence";
-                case 30: return "Lament";
-                case 32: return "Hearty";
-                default: return null;
-            }
-        }
+            1 => "Adventurer",
+            2 => "Fighter",
+            3 => "Thief",
+            4 => "Armsman",
+            5 => "Hybrid",
+            6 => "Wizard",
+            7 => "Healer",
+            8 => "Spellbreaker",
+            9 => "Lucky",
+            10 => "Forge",
+            11 => "Absolution",
+            12 => "Avarice",
+            23 => "Depths",
+            24 => "Vainglory",
+            25 => "Vim",
+            26 => "Examen",
+            27 => "Pneuma",
+            28 => "Anima",
+            29 => "Penitence",
+            30 => "Lament",
+            32 => "Hearty",
+            _ => null
+        };
 
-        string WeaponTrait(int id)
+        string WeaponTrait(int id) => id switch
         {
-            switch (id)
-            {
-                case 2: return "Spiral Carve";
-                case 3: return "Awe Blast";
-                case 4: return "Health Vamp";
-                case 5: return "Mana Vamp";
-                case 6: return "Powerword Die";
-                case 7: return "Lacerate";
-                case 8: return "Smite";
-                case 9: return "Valiance";
-                case 10: return "Arcana's Concerto";
-                case 11: return "Acheron";
-                case 12: return "Elysium";
-                case 13: return "Praxis";
-                case 14: return "Dauntless";
-                case 15: return "Ravenous";
-                default: return null;
-            }
-        }
+            2 => "Spiral Carve",
+            3 => "Awe Blast",
+            4 => "Health Vamp",
+            5 => "Mana Vamp",
+            6 => "Powerword Die",
+            7 => "Lacerate",
+            8 => "Smite",
+            9 => "Valiance",
+            10 => "Arcana's Concerto",
+            11 => "Acheron",
+            12 => "Elysium",
+            13 => "Praxis",
+            14 => "Dauntless",
+            15 => "Ravenous",
+            _ => null
+        };
 
         bool GroupMatch(InventoryItem i, string grp)
         {
@@ -506,52 +500,45 @@ public class CoreEngine
         bool mem = Bot.Player.IsMember == true;
 
         var wants = new List<string>();
-        if (priority != null)
-            foreach (var p in priority)
-                if (!string.IsNullOrWhiteSpace(p)) wants.Add(p);
+        foreach (var p in priority ?? Array.Empty<string>())
+            if (!string.IsNullOrWhiteSpace(p)) wants.Add(p);
+
+        Log("ENHANCEMENT", $"🛠️ {grp}: {string.Join(", ", wants)}");
 
         foreach (var want in wants)
         {
-            var inv = Bot.Inventory.Items;
-            var hit = FindIn(inv, want, grp, mem);
-            if (Equip(hit)) return hit;
+            // try inventory
+            var hit = FindIn(Bot.Inventory.Items, want, grp, mem);
+            if (hit != null)
+            {
+                if (Equip(hit)) { Log("ENHANCEMENT", $"✅ {grp}: {hit.Name} ({want})"); return hit; }
+                Log("ENHANCEMENT", $"❌ Equip failed (inv): {hit.Name} ({want})");
+            }
 
-            var bank = Bot.Bank.Items;
-            var fromBank = FindIn(bank, want, grp, mem);
+            // try bank
+            var fromBank = FindIn(Bot.Bank.Items, want, grp, mem);
             if (fromBank != null)
             {
+                Log("ENHANCEMENT", $"🏦 Pulling {fromBank.Name} ({want})");
                 InBank(fromBank.Name);
                 Bot.Sleep(500);
 
-                var inv2 = Bot.Inventory.Items;
-                InventoryItem pulled = null;
-                if (inv2 != null)
-                {
-                    foreach (var i in inv2)
-                        if (i != null && i.ID == fromBank.ID) { pulled = i; break; }
-                }
-                if (pulled == null)
-                {
-                    pulled = FindIn(inv2, want, grp, mem);
-                }
+                InventoryItem pulled = Bot.Inventory.Items?.FirstOrDefault(i => i?.ID == fromBank.ID)
+                                       ?? FindIn(Bot.Inventory.Items, want, grp, mem);
 
                 if (Equip(pulled))
                 {
-                    var inv3 = Bot.Inventory.Items;
-                    if (inv3 != null)
-                    {
-                        foreach (var i in inv3)
-                            if (i != null && Bot.Inventory.IsEquipped(i.ID))
-                                return i;
-                    }
-                    return pulled;
+                    var equipped = Bot.Inventory.Items?.FirstOrDefault(i => i != null && Bot.Inventory.IsEquipped(i.ID));
+                    Log("ENHANCEMENT", $"✅ {grp}: {(equipped?.Name ?? pulled?.Name)} ({want})");
+                    return equipped ?? pulled;
                 }
+                Log("ENHANCEMENT", $"❌ Equip failed (bank): {fromBank.Name} ({want})");
             }
 
             Bot.Sleep(500);
         }
 
-        Log("Enhancement", $"No {grp} matched: {string.Join(", ", wants)}");
+        Log("ENHANCEMENT", $"🚫 No {grp} matched: {string.Join(", ", wants)}");
         return null;
     }
 
