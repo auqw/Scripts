@@ -252,11 +252,8 @@ public class CoreUltras
         {
             if (it == null) return false;
 
-            // Prefer the parsed enum if available; fall back to CategoryString text match.
             try
             {
-                // Some InventoryItem derives from ItemBase with .Category/.CategoryString
-                // Using both guards us against inconsistent fills.
                 if (it is ItemBase ib)
                 {
                     if (ib.Category == Skua.Core.Models.Items.ItemCategory.Class) return true;
@@ -264,9 +261,8 @@ public class CoreUltras
                         ib.CategoryString.Equals("Class", StringComparison.OrdinalIgnoreCase)) return true;
                 }
             }
-            catch { /* ignore and keep checking */ }
+            catch { }
 
-            // Fallback: some builds only expose CategoryString directly on InventoryItem
             var catProp = it.GetType().GetProperty("CategoryString");
             if (catProp != null)
             {
@@ -282,7 +278,6 @@ public class CoreUltras
         var inv = Bot.Inventory.Items;
         if (inv == null) return;
 
-        // --- find currently equipped class (by ID + Name for safe re-equip) ---
         int curId = -1;
         string curName = null;
         foreach (var it in inv)
@@ -297,22 +292,19 @@ public class CoreUltras
         }
         if (curId <= 0 && string.IsNullOrWhiteSpace(curName)) return;
 
-        // --- collect candidate classes (not the one we already wear) ---
         var candidates = new List<InventoryItem>();
         foreach (var it in inv)
         {
             if (it == null) continue;
             if (!IsClass(it)) continue;
-            if (it.Equipped == true) continue;  // skip current
+            if (it.Equipped == true) continue;
             candidates.Add(it);
         }
         if (candidates.Count == 0) return;
 
-        // --- pick random candidate ---
         var rng = new Random(unchecked((int)Environment.TickCount));
         var rnd = candidates[rng.Next(0, candidates.Count)];
 
-        // --- equip random (by ID), retry a few times ---
         if (!Bot.Inventory.IsEquipped(rnd.ID))
         {
             for (int t = 0; t < 3 && !Bot.ShouldExit; t++)
@@ -324,10 +316,8 @@ public class CoreUltras
         }
         if (!Bot.Inventory.IsEquipped(rnd.ID)) return;
 
-        // --- hold for a bit (e.g., to trigger passives/auras/UI sync) ---
         if (holdMs > 0) Bot.Sleep(holdMs);
 
-        // --- re-equip original (prefer ID; fallback to name) ---
         if (curId > 0)
         {
             for (int t = 0; t < 3 && !Bot.ShouldExit; t++)
@@ -349,6 +339,73 @@ public class CoreUltras
             }
         }
     }
+
+    #endregion
+
+    #region Bank
+
+    public record BankItem(int ItemID, string sName, int iQty, int iStk, int iType, string sType, int iCost, bool bUpg, bool bCoins, bool bEquip, bool bBank, string sES, string sMeta, int CharItemID, int EnhID, int EnhLvl, int EnhPatternID);
+
+    public List<BankItem> GetBankItems(bool forceReload = false)
+    {
+        if (!forceReload)
+        {
+            string json = Bot.Flash.GetGameObject("world.bankinfo.items");
+            if (!string.IsNullOrEmpty(json) && json != "null" && json != "[]")
+            {
+                return ParseBankItems(json);
+            }
+        }
+
+        Bot.Bank.Open();
+        Bot.Bank.Load();
+        Bot.Wait.ForTrue(() => Bot.Bank.Items.Count > 0, 20);
+
+        string finalJson = Bot.Flash.GetGameObject("world.bankinfo.items");
+        return string.IsNullOrEmpty(finalJson) ? new List<BankItem>() : ParseBankItems(finalJson);
+    }
+
+    private List<BankItem> ParseBankItems(string json)
+    {
+        var raw = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
+        return raw.Select(it => new BankItem(
+            Convert.ToInt32(it["ItemID"]),
+            it["sName"].ToString(),
+            Convert.ToInt32(it["iQty"]),
+            Convert.ToInt32(it["iStk"]),
+            Convert.ToInt32(it["iType"]),
+            it["sType"].ToString(),
+            Convert.ToInt32(it["iCost"]),
+            Convert.ToBoolean(it["bUpg"]),
+            Convert.ToBoolean(it["bCoins"]),
+            Convert.ToBoolean(it["bEquip"]),
+            Convert.ToBoolean(it["bBank"]),
+            it["sES"].ToString(),
+            it.ContainsKey("sMeta") ? it["sMeta"]?.ToString() ?? "" : "",
+            Convert.ToInt32(it["CharItemID"]),
+            it.ContainsKey("EnhID") ? Convert.ToInt32(it["EnhID"]) : 0,
+            it.ContainsKey("EnhLvl") ? Convert.ToInt32(it["EnhLvl"]) : 0,
+            it.ContainsKey("EnhPatternID") ? Convert.ToInt32(it["EnhPatternID"]) : 0
+        )).ToList();
+    }
+
+    public BankItem Find(List<BankItem> items, string nameOrId)
+        => int.TryParse(nameOrId, out var id)
+           ? items.FirstOrDefault(i => i.ItemID == id)
+           : items.FirstOrDefault(i => i.sName.Equals(nameOrId, StringComparison.OrdinalIgnoreCase));
+
+    public bool HasBankItem(List<BankItem> items, string nameOrId, int qty = 1)
+        => int.TryParse(nameOrId, out var id)
+           ? items.Where(i => i.ItemID == id).Sum(i => i.iQty) >= qty
+           : items.Where(i => i.sName.Equals(nameOrId, StringComparison.OrdinalIgnoreCase)).Sum(i => i.iQty) >= qty;
+
+    public int CountBankType(List<BankItem> items, string type)
+        => items.Count(i => i.sType.Equals(type, StringComparison.OrdinalIgnoreCase));
+
+    public List<BankItem> BankACOnly(List<BankItem> items) => items.Where(i => i.bCoins).ToList();
+    public List<BankItem> BankMemberOnly(List<BankItem> items) => items.Where(i => i.bUpg).ToList();
+    public List<BankItem> BankEnhanced(List<BankItem> items) => items.Where(i => i.EnhLvl > 0).ToList();
+    public List<BankItem> BankEquipped(List<BankItem> items) => items.Where(i => i.bEquip).ToList();
 
     #endregion
 
@@ -748,6 +805,57 @@ public class CoreUltras
         var need = minRank < 0 ? 0 : minRank;
         return Rank(name) >= need;
     }
+
+    /*
+    public record Faction(int FactionID, string sName, int iRank, int iSpillRep, int iRepToRank, int CharFactionID)
+    {
+        public int RepNeeded => iRank == 10 ? 0 : iRepToRank - iSpillRep;
+    };
+
+    public List<Faction> GetFactions(bool forceReload = false)
+    {
+        if (!forceReload)
+        {
+            string json = Bot.Flash.GetGameObject("world.myAvatar.factions");
+            if (!string.IsNullOrEmpty(json) && json != "null" && json != "[]")
+            {
+                return ParseFactions(json);
+            }
+        }
+        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
+        string finalJson = Bot.Flash.GetGameObject("world.myAvatar.factions");
+        return string.IsNullOrEmpty(finalJson) ? new List<Faction>() : ParseFactions(finalJson);
+    }
+
+    private List<Faction> ParseFactions(string json)
+    {
+        var raw = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
+        return raw.Select(f => new Faction(
+            int.Parse(f["FactionID"].ToString()),
+            f["sName"].ToString(),
+            Convert.ToInt32(f["iRank"]),
+            Convert.ToInt32(f["iSpillRep"]),
+            Convert.ToInt32(f["iRepToRank"]),
+            int.Parse(f["CharFactionID"].ToString())
+        )).ToList();
+    }
+
+    public Faction FindFaction(List<Faction> factions, string nameOrId)
+        => int.TryParse(nameOrId, out var id)
+           ? factions.FirstOrDefault(f => f.FactionID == id)
+           : factions.FirstOrDefault(f => f.sName.Equals(nameOrId, StringComparison.OrdinalIgnoreCase));
+
+    public bool IsFactionMaxed(Faction faction) => faction.iRank == 10;
+
+    public List<Faction> MaxedFactions(List<Faction> factions)
+        => factions.Where(f => f.iRank == 10).ToList();
+
+    public List<Faction> InProgressFactions(List<Faction> factions)
+        => factions.Where(f => f.iRank < 10).OrderByDescending(f => f.iSpillRep).ToList();
+
+    public int TotalSpillRep(List<Faction> factions)
+        => factions.Where(f => f.iRank == 10).Sum(f => f.iSpillRep);
+    */
 
     #endregion
 
@@ -1154,14 +1262,15 @@ public class CoreUltras
 
     #region Shop
 
-    public bool BuyItem(object itemKey, int shopId, string map, int quantity = 1, bool calculateRemaining = true, bool skipIfHaveEnough = true, bool considerBank = true)
+    public bool BuyItem(object itemKey, int shopId, string map, int quantity = 1, bool ensureMap = true, bool calculateRemaining = true, bool skipIfHaveEnough = true, bool considerBank = true, bool checkGold = true, bool checkLevel = true, bool checkInvSpace = true, int loadTimeoutMs = 5000)
     {
         if (itemKey is not (int or string)) { Log("Shop", "Invalid item key type."); return false; }
         if (quantity <= 0) return false;
         if (Bot == null || Bot.Player == null || Bot.Shops == null) return false;
 
-        bool EnsureMap(string m)
+        bool EnsureMapJoin(string m)
         {
+            if (!ensureMap) return true;
             if (string.IsNullOrWhiteSpace(m)) return true;
             if (Bot.Map?.Name?.Equals(m, StringComparison.OrdinalIgnoreCase) == true) return true;
             Join(m);
@@ -1176,7 +1285,7 @@ public class CoreUltras
                 Bot.Shops.Load(id);
 
                 long t0 = Environment.TickCount64;
-                while (!Bot.ShouldExit && Environment.TickCount64 - t0 < 5000)
+                while (!Bot.ShouldExit && Environment.TickCount64 - t0 < loadTimeoutMs)
                 {
                     int items = Bot.Shops.Items?.Count ?? 0;
                     int cache = Bot.Shops.LoadedCache?.Count ?? 0;
@@ -1196,8 +1305,7 @@ public class CoreUltras
             {
                 case int id when id > 0:
                     foreach (var it in list)
-                        if (it != null && it.ID == id)
-                            return it;
+                        if (it != null && it.ID == id) return it;
                     break;
 
                 case string s when !string.IsNullOrWhiteSpace(s):
@@ -1213,46 +1321,45 @@ public class CoreUltras
             return null;
         }
 
-        int Have(string name, bool includeBank)
+        int Have(string name)
         {
-            if (includeBank) InBank(name);
+            if (considerBank) InBank(name);
             return Owned(name);
         }
 
         int Need(string name, int want)
         {
-            int cur = Have(name, considerBank);
+            int cur = Have(name);
             if (skipIfHaveEnough && cur >= want) return 0;
             return calculateRemaining ? Math.Max(0, want - cur) : want;
         }
 
-        bool HasInvSpace()
-        {
-            return (Bot.Inventory?.FreeSlots ?? 0) > 0;
-        }
+        bool HasInvSpace() => (Bot.Inventory?.FreeSlots ?? 0) > 0;
 
-        if (!EnsureMap(map)) { Log("Shop", $"Failed to join {map}"); return false; }
+        // ----- flow -----
+        if (!EnsureMapJoin(map)) { Log("Shop", $"Failed to join {map}"); return false; }
         if (!LoadShop(shopId)) { Log("Shop", $"Failed to load shop {shopId}"); return false; }
 
         var it = FindItem(itemKey);
         if (it == null) { Log("Shop", $"Item not found: {itemKey}"); return false; }
 
-        string itemName = it.Name; if (string.IsNullOrWhiteSpace(itemName)) { Log("Shop", "Item has no valid name."); return false; }
+        string itemName = it.Name;
+        if (string.IsNullOrWhiteSpace(itemName)) { Log("Shop", "Item has no valid name."); return false; }
 
         int need = Need(itemName, quantity);
         if (need == 0) return true;
 
         long price = (long)it.Cost * need;
-        if (Bot.Player.Gold < price)
+        if (checkGold && Bot.Player.Gold < price)
         { Log("Shop", $"Gold needed {price}, have {Bot.Player.Gold}"); return false; }
 
-        if (Bot.Player.Level < it.Level)
+        if (checkLevel && Bot.Player.Level < it.Level)
         { Log("Shop", $"Level {it.Level}+ required"); return false; }
 
-        if (!HasInvSpace())
+        if (checkInvSpace && !HasInvSpace())
         { Log("Shop", "No inventory space"); return false; }
 
-        int before = Have(itemName, includeBank: false);
+        int before = Owned(itemName); // inventory only
         Bot.Shops.BuyItem(it.ID, it.ShopItemID, need);
 
         long t0c = Environment.TickCount64;
@@ -1807,6 +1914,7 @@ public class CoreUltras
             case "continuum chronomancer": case "quantum chronomancer": QuantumChronomancerClass(); break;
             case "nechronomancer": case "necrotic chronomancer": NecroticChronomancerClass(); break;
             case "legion paladin": case "obsidian paladin chronomancer": ObsidianPaladinChronomancerClass(); break;
+            case "chrono shadowslayer": ChronoShadowSlayerClass(); break;
 
             // Common classes
             case "master ranger": MasterRangerClass(); break;
@@ -2064,6 +2172,20 @@ public class CoreUltras
         if (Stacks("Temporal Rift", 4, true))
             if (Cast(4)) return;
         if (Cast(1)) return;
+    }
+
+    void ChronoShadowSlayerClass()
+    {
+        if (HasAura("Rounds Empty", true))
+            if (Cast(1)) return;
+        if (HasAura("Gunslinger Stance", true))
+            if (Cast(0)) return;
+        if (Stacks("Temporal Rift", 4, true))
+            if (Cast(1)) return;
+        if (HasAura("Chaos Rift", true) && !HasAura("Gunslinger Stance", true))
+            if (Cast(4)) return;
+        if (!HasAura("FMJ Rounds", true) && !HasAura("Tracer Rounds", true))
+            if (Cast(3)) return;
     }
 
     // --- common classes ---------------------------------------------------------------
@@ -2928,8 +3050,8 @@ public class CoreUltras
             {
                 if (!IsManaLow(50))
                 {
-                    Bot.Skills.UseSkill(1);
-                    Bot.Skills.UseSkill(2);
+                    Bot.Skills.UseSkill(1); Bot.Sleep(300);
+                    Bot.Skills.UseSkill(2); Bot.Sleep(300);
                     Bot.Skills.UseSkill(3);
                 }
                 Bot.Sleep(100);

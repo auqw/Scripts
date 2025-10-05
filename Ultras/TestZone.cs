@@ -1,6 +1,7 @@
 //cs_include Scripts/Ultras/CoreUltras.cs
 
 using System;
+using System.Linq;
 using System.Dynamic;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
@@ -14,7 +15,6 @@ public class TestZone
     {
         Core.Boot();
 
-        Test();
 
         Bot.Stop();
     }
