@@ -60,8 +60,12 @@ public class CoreUltras
         StopAttack();
 
         Bot.Bank.Open();
-        Bot.Bank.Load();
-        Bot.Wait.ForTrue(() => Bot.Bank.Items.Any(), 20);
+
+        if (Bot.Bank.Items == null || Bot.Bank.Items.Count == 0)
+        {
+            Bot.Bank.Load();
+            Bot.Wait.ForTrue(() => Bot.Bank.Items.Count > 0, 20);
+        }
 
         Bot.Options.SafeTimings = true;
         Bot.Options.InfiniteRange = true;
@@ -339,73 +343,6 @@ public class CoreUltras
             }
         }
     }
-
-    #endregion
-
-    #region Bank
-
-    public record BankItem(int ItemID, string sName, int iQty, int iStk, int iType, string sType, int iCost, bool bUpg, bool bCoins, bool bEquip, bool bBank, string sES, string sMeta, int CharItemID, int EnhID, int EnhLvl, int EnhPatternID);
-
-    public List<BankItem> GetBankItems(bool forceReload = false)
-    {
-        if (!forceReload)
-        {
-            string json = Bot.Flash.GetGameObject("world.bankinfo.items");
-            if (!string.IsNullOrEmpty(json) && json != "null" && json != "[]")
-            {
-                return ParseBankItems(json);
-            }
-        }
-
-        Bot.Bank.Open();
-        Bot.Bank.Load();
-        Bot.Wait.ForTrue(() => Bot.Bank.Items.Count > 0, 20);
-
-        string finalJson = Bot.Flash.GetGameObject("world.bankinfo.items");
-        return string.IsNullOrEmpty(finalJson) ? new List<BankItem>() : ParseBankItems(finalJson);
-    }
-
-    private List<BankItem> ParseBankItems(string json)
-    {
-        var raw = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
-        return raw.Select(it => new BankItem(
-            Convert.ToInt32(it["ItemID"]),
-            it["sName"].ToString(),
-            Convert.ToInt32(it["iQty"]),
-            Convert.ToInt32(it["iStk"]),
-            Convert.ToInt32(it["iType"]),
-            it["sType"].ToString(),
-            Convert.ToInt32(it["iCost"]),
-            Convert.ToBoolean(it["bUpg"]),
-            Convert.ToBoolean(it["bCoins"]),
-            Convert.ToBoolean(it["bEquip"]),
-            Convert.ToBoolean(it["bBank"]),
-            it["sES"].ToString(),
-            it.ContainsKey("sMeta") ? it["sMeta"]?.ToString() ?? "" : "",
-            Convert.ToInt32(it["CharItemID"]),
-            it.ContainsKey("EnhID") ? Convert.ToInt32(it["EnhID"]) : 0,
-            it.ContainsKey("EnhLvl") ? Convert.ToInt32(it["EnhLvl"]) : 0,
-            it.ContainsKey("EnhPatternID") ? Convert.ToInt32(it["EnhPatternID"]) : 0
-        )).ToList();
-    }
-
-    public BankItem Find(List<BankItem> items, string nameOrId)
-        => int.TryParse(nameOrId, out var id)
-           ? items.FirstOrDefault(i => i.ItemID == id)
-           : items.FirstOrDefault(i => i.sName.Equals(nameOrId, StringComparison.OrdinalIgnoreCase));
-
-    public bool HasBankItem(List<BankItem> items, string nameOrId, int qty = 1)
-        => int.TryParse(nameOrId, out var id)
-           ? items.Where(i => i.ItemID == id).Sum(i => i.iQty) >= qty
-           : items.Where(i => i.sName.Equals(nameOrId, StringComparison.OrdinalIgnoreCase)).Sum(i => i.iQty) >= qty;
-
-    public int CountBankType(List<BankItem> items, string type)
-        => items.Count(i => i.sType.Equals(type, StringComparison.OrdinalIgnoreCase));
-
-    public List<BankItem> BankACOnly(List<BankItem> items) => items.Where(i => i.bCoins).ToList();
-    public List<BankItem> BankMemberOnly(List<BankItem> items) => items.Where(i => i.bUpg).ToList();
-    public List<BankItem> BankEnhanced(List<BankItem> items) => items.Where(i => i.EnhLvl > 0).ToList();
-    public List<BankItem> BankEquipped(List<BankItem> items) => items.Where(i => i.bEquip).ToList();
 
     #endregion
 
@@ -805,57 +742,6 @@ public class CoreUltras
         var need = minRank < 0 ? 0 : minRank;
         return Rank(name) >= need;
     }
-
-    /*
-    public record Faction(int FactionID, string sName, int iRank, int iSpillRep, int iRepToRank, int CharFactionID)
-    {
-        public int RepNeeded => iRank == 10 ? 0 : iRepToRank - iSpillRep;
-    };
-
-    public List<Faction> GetFactions(bool forceReload = false)
-    {
-        if (!forceReload)
-        {
-            string json = Bot.Flash.GetGameObject("world.myAvatar.factions");
-            if (!string.IsNullOrEmpty(json) && json != "null" && json != "[]")
-            {
-                return ParseFactions(json);
-            }
-        }
-        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
-        string finalJson = Bot.Flash.GetGameObject("world.myAvatar.factions");
-        return string.IsNullOrEmpty(finalJson) ? new List<Faction>() : ParseFactions(finalJson);
-    }
-
-    private List<Faction> ParseFactions(string json)
-    {
-        var raw = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Dictionary<string, object>>>(json);
-        return raw.Select(f => new Faction(
-            int.Parse(f["FactionID"].ToString()),
-            f["sName"].ToString(),
-            Convert.ToInt32(f["iRank"]),
-            Convert.ToInt32(f["iSpillRep"]),
-            Convert.ToInt32(f["iRepToRank"]),
-            int.Parse(f["CharFactionID"].ToString())
-        )).ToList();
-    }
-
-    public Faction FindFaction(List<Faction> factions, string nameOrId)
-        => int.TryParse(nameOrId, out var id)
-           ? factions.FirstOrDefault(f => f.FactionID == id)
-           : factions.FirstOrDefault(f => f.sName.Equals(nameOrId, StringComparison.OrdinalIgnoreCase));
-
-    public bool IsFactionMaxed(Faction faction) => faction.iRank == 10;
-
-    public List<Faction> MaxedFactions(List<Faction> factions)
-        => factions.Where(f => f.iRank == 10).ToList();
-
-    public List<Faction> InProgressFactions(List<Faction> factions)
-        => factions.Where(f => f.iRank < 10).OrderByDescending(f => f.iSpillRep).ToList();
-
-    public int TotalSpillRep(List<Faction> factions)
-        => factions.Where(f => f.iRank == 10).Sum(f => f.iSpillRep);
-    */
 
     #endregion
 
@@ -1731,72 +1617,43 @@ public class CoreUltras
 
     public void ChooseBestCell(string monsterNames, bool alt = false, string setCell = null, string setPad = "Spawn")
     {
-        if (Bot?.Monsters?.MapMonsters == null || Bot?.Map?.Cells == null || Bot?.Player == null) return;
+        var names = (monsterNames?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>())
+            .Select(n => n?.Trim())
+            .Where(n => !string.IsNullOrWhiteSpace(n))
+            .ToArray();
 
-        var nameSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        if (!string.IsNullOrWhiteSpace(monsterNames))
-        {
-            var span = monsterNames.AsSpan();
-            int i = 0;
-            while (i < span.Length)
-            {
-                int j = i;
-                while (j < span.Length && span[j] != ',') j++;
-                var piece = span.Slice(i, j - i).ToString().Trim();
-                if (piece.Length > 0) nameSet.Add(piece);
-                i = j + 1;
-            }
-        }
-        bool wildcard = nameSet.Count == 0 || (nameSet.Count == 1 && nameSet.Contains("*"));
-
+        bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
         string pad = string.IsNullOrWhiteSpace(setPad) ? "Left" : setPad;
 
-        var mobs = Bot.Monsters.MapMonsters;
-        var cellCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-        var firstCell = (string)null;
+        // Get monsters directly without using helper methods
+        var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
+            .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
+            .Where(m => wildcard || names.Any(name =>
+                (m.Name ?? "").Equals(name, StringComparison.OrdinalIgnoreCase)))
+            .ToList();
 
-        foreach (var m in mobs)
-        {
-            if (m == null || string.IsNullOrWhiteSpace(m.Cell)) continue;
-            if (!wildcard)
-            {
-                var mn = m.Name;
-                if (string.IsNullOrWhiteSpace(mn) || !nameSet.Contains(mn)) continue;
-            }
+        if (monsters.Count == 0)
+            return;
 
-            if (firstCell == null) firstCell = m.Cell;
+        string targetCell =
+            !string.IsNullOrWhiteSpace(setCell) ? setCell
+            : alt ? monsters.First().Cell
+            : monsters.GroupBy(m => m.Cell)
+                      .OrderByDescending(g => g.Count())
+                      .First().Key;
 
-            if (!cellCounts.TryGetValue(m.Cell, out var c)) cellCounts[m.Cell] = 1;
-            else cellCounts[m.Cell] = c + 1;
-        }
+        var mapCells = Bot.Map.Cells as IEnumerable<string> ?? Array.Empty<string>();
+        if (!mapCells.Contains(targetCell))
+            return;
 
-        if (cellCounts.Count == 0 && string.IsNullOrWhiteSpace(setCell)) return;
-
-        string target = !string.IsNullOrWhiteSpace(setCell) ? setCell
-                     : alt && firstCell != null ? firstCell
-                     : BestCell(cellCounts);
-
-        bool exists = false;
-        var cells = Bot.Map.Cells;
-        if (cells != null)
-            foreach (var c in cells)
-                if (!string.IsNullOrWhiteSpace(c) && c.Equals(target, StringComparison.OrdinalIgnoreCase)) { exists = true; break; }
-        if (!exists) return;
-
-        _bestCell = target;
+        _bestCell = targetCell;
         _bestPad = pad;
 
-        if (!string.Equals(Bot.Player.Cell, target, StringComparison.OrdinalIgnoreCase))
+        if (!string.IsNullOrWhiteSpace(targetCell) && !string.Equals(Bot.Player.Cell, targetCell, StringComparison.Ordinal))
         {
-            try { Bot.Map.Jump(target, pad); Bot.Wait.ForCellChange(target); Bot.Player.SetSpawnPoint(); }
-            catch { /* no-op */ }
-        }
-
-        string BestCell(Dictionary<string, int> counts)
-        {
-            string best = null; int max = int.MinValue;
-            foreach (var kv in counts) if (kv.Value > max) { max = kv.Value; best = kv.Key; }
-            return best ?? setCell ?? "Enter";
+            Bot.Map.Jump(targetCell, pad);
+            Bot.Wait.ForCellChange(targetCell);
+            Bot.Player.SetSpawnPoint();
         }
     }
 
@@ -1928,6 +1785,10 @@ public class CoreUltras
             case "chrono assassin": ChronoAssassinClass(); break;
             case "guardian": GuardianClass(); break;
             case "great thief": GreatThiefClass(); break;
+            case "chaos slayer berserker":
+            case "chaos slayer cleric":
+            case "chaos slayer mystic":
+            case "chaos slayer thief": ChaosSlayerClass(); break;
 
             // Basic classes
             case "mage": MageClass(); break;
@@ -2311,6 +2172,15 @@ public class CoreUltras
     void GreatThiefClass()
     {
         if (HasAura("Hidden Blade", true))
+            if (Cast(4)) return;
+        if (Cast(3)) return;
+        if (Cast(1)) return;
+        if (Cast(2)) return;
+    }
+
+    void ChaosSlayerClass()
+    {
+        if ((HasAura("Impasse") || HasAura("Delusion") || HasAura("Angustied")) && !HasAura("Corageous", true))
             if (Cast(4)) return;
         if (Cast(3)) return;
         if (Cast(1)) return;

@@ -15,6 +15,7 @@ public class TestZone
     {
         Core.Boot();
 
+        Test();
 
         Bot.Stop();
     }
