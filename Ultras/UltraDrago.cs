@@ -1,25 +1,28 @@
-//cs_include Scripts/Ultras/CoreUltras.cs
+//cs_include Scripts/Ultras/CoreEngine.cs
+//cs_include Scripts/Ultras/CoreUltra.cs
+
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
 public class UltraDrago
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreUltras Core = new();
+    public CoreEngine Core = new();
+    public CoreUltra Ultra = new();
 
     string a, b;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraDrago";
     public List<IOption> Options = new()
     {
-        new Option<string>("primaryTaunter",   "First Taunter Class",  "Insert the name of the class that will taunt", ""),
-        new Option<string>("secondaryTaunter", "Second Taunter Class", "Insert the name of the class that will taunt", "")
+        new Option<string>("a",   "First Taunter Class",  "Insert the name of the class that will taunt", ""),
+        new Option<string>("b", "Second Taunter Class", "Insert the name of the class that will taunt", "")
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        a = (Bot.Config.Get<string>("primaryTaunter") ?? "").Trim();
-        b = (Bot.Config.Get<string>("secondaryTaunter") ?? "").Trim();
+        a = (Bot.Config.Get<string>("a") ?? "").Trim();
+        b = (Bot.Config.Get<string>("b") ?? "").Trim();
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
             Core.Log("Setup", "Fill both taunter classes in Script Options.");
@@ -38,11 +41,11 @@ public class UltraDrago
     void Prep()
     {
         if (IsTaunter())
-            Core.GetScrollOfEnrage();
+            Ultra.GetScrollOfEnrage();
         else
         {
-            Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
-            Core.BuyAlchemyPotion("Potent Honor Potion");
+            Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+            Ultra.BuyAlchemyPotion("Potent Honor Potion");
             Core.EquipConsumable("Potent Honor Potion");
         }
     }
@@ -55,18 +58,18 @@ public class UltraDrago
         const string bowmaster = "Bowmaster Algie";
 
         Core.Join(map);
-        Core.WaitForArmy(3, @"C:\SkuaSync\ultra_drago_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_drago_sync.txt");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Core.MonsterAlive(boss) && !Bot.ShouldExit)
+        while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
         {
             if (IsTaunter())
             {
-                while (Core.MonsterAlive(executioner) && !Bot.ShouldExit)
+                while (Ultra.MonsterAlive(executioner) && !Bot.ShouldExit)
                 {
-                    if (Core.HasClassEquipped(a)) Core.TauntCycle(a, executioner, "Focus", 250);
-                    else if (Core.HasClassEquipped(b)) Core.TauntCycle(b, executioner, "Focus", 700);
+                    if (Core.HasClassEquipped(a)) Ultra.TauntCycle(a, executioner, "Focus", 250);
+                    else if (Core.HasClassEquipped(b)) Ultra.TauntCycle(b, executioner, "Focus", 700);
                 }
             }
             else

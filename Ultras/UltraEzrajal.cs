@@ -1,11 +1,14 @@
-//cs_include Scripts/Ultras/CoreUltras.cs
+//cs_include Scripts/Ultras/CoreEngine.cs
+//cs_include Scripts/Ultras/CoreUltra.cs
+
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
 public class UltraEzrajal
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreUltras Core = new();
+    public CoreEngine Core = new();
+    public CoreUltra Ultra = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -19,18 +22,18 @@ public class UltraEzrajal
         const string map = "ultraezrajal";
         const string boss = "Ultra Ezrajal";
 
-        Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
-        Core.BuyAlchemyPotion("Potent Honor Potion");
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        Ultra.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");
 
         Core.Join(map);
-        Core.WaitForArmy(3, @"C:\SkuaSync\ultra_ezrajal_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_ezrajal_sync.txt");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Core.MonsterAlive(boss) && !Bot.ShouldExit)
+        while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
         {
-            if (Core.HasAura("Counter Attack")) Core.DontAttack();
+            if (Core.HasAura("Counter Attack")) Ultra.DontAttack();
             else Core.Kill(boss);
         }
     }

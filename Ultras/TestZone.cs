@@ -1,4 +1,5 @@
-//cs_include Scripts/Ultras/CoreUltras.cs
+//cs_include Scripts/Ultras/CoreEngine.cs
+//cs_include Scripts/Ultras/CoreUltra.cs
 
 using System;
 using System.Linq;
@@ -9,7 +10,8 @@ using Skua.Core.Options;
 public class TestZone
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreUltras Core = new();
+    public CoreEngine Core = new();
+    public CoreUltra Ultra = new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -22,6 +24,8 @@ public class TestZone
 
     void Test()
     {
+
+        //Ultra.Test();
         // priority => ...
         //Core.ChooseBestEnhancement("Weapon", "Valiance", "Spiral Carve", "Fighter");
         //Core.ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
@@ -31,8 +35,8 @@ public class TestZone
         //Core.ChooseBestGear("Random Monster"); // for a specific monster
         //Core.BuyAlchemyPotion("Potent Honor Potion");
         //Core.BuyItem("Shriekward Potion", 774, "mirrorportal", 30);
-        //Core.ForItem("Onyx Lava Dragon", "lair", "Celestial Staff", useBestGear: true);
-        Core.ForItem("Mini Boss Dummy", "classhall", "Celestial Staff");
+        Core.ForItem("Onyx Lava Dragon", "lair", "Celestial Staff", useBestGear: true);
+        //Core.ForItem("Mini Boss Dummy", "classhall", "Celestial Staff");
         //Core.ForItem("Purple Draconian, Venom Draconian, Bronze Draconian", "lair", "Celestial Staff");
         //Core.GetScrollOfEnrage();
         //Core.GetScrollOfDecay();

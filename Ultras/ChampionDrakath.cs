@@ -1,29 +1,30 @@
-//cs_include Scripts/Ultras/CoreUltras.cs
+//cs_include Scripts/Ultras/CoreEngine.cs
+//cs_include Scripts/Ultras/CoreUltra.cs
+
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
 public class ChampionDrakath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreUltras Core = new();
+    public CoreEngine Core = new();
+    public CoreUltra Ultra = new();
 
-    string taunterPrimary;
-    string taunterBackup;
-
+    string a, b;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ChampionDrakath";
     public List<IOption> Options = new()
     {
-        new Option<string>("taunterClass", "Taunter Class (Primary)", "Class name that will taunt first", ""),
-        new Option<string>("taunterBackupClass", "Taunter Class (Backup)",  "Backup taunter class", "")
+        new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", ""),
+        new Option<string>("b", "Taunter Class (Backup)",  "Backup taunter class", "")
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        taunterPrimary = (Bot.Config.Get<string>("taunterClass") ?? "").Trim();
-        taunterBackup = (Bot.Config.Get<string>("taunterBackupClass") ?? "").Trim();
+        a = (Bot.Config.Get<string>("a") ?? "").Trim();
+        b = (Bot.Config.Get<string>("b") ?? "").Trim();
 
-        if (string.IsNullOrEmpty(taunterPrimary) && string.IsNullOrEmpty(taunterBackup))
+        if (string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
         {
             Core.Log("Setup", "Fill at least one taunter class (Primary or Backup) in Script Options.");
             Bot.Stop();
@@ -36,16 +37,16 @@ public class ChampionDrakath
         Bot.Stop();
     }
 
-    bool IsTaunter() => Core.HasClassEquipped(taunterPrimary) || Core.HasClassEquipped(taunterBackup);
+    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
 
     void Prep()
     {
         if (IsTaunter())
-            Core.GetScrollOfEnrage();
+            Ultra.GetScrollOfEnrage();
         else
         {
-            Core.UseAlchemyPotions(Core.GetBestTonicPotion(), Core.GetBestElixirPotion());
-            Core.BuyAlchemyPotion("Potent Honor Potion");
+            Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+            Ultra.BuyAlchemyPotion("Potent Honor Potion");
             Core.EquipConsumable("Potent Honor Potion");
         }
     }
@@ -56,19 +57,19 @@ public class ChampionDrakath
         const string boss = "Champion Drakath";
 
         Core.Join(map);
-        Core.WaitForArmy(3, @"C:\SkuaSync\champion_drakath_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\champion_drakath_sync.txt");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Core.MonsterAlive(boss) && !Bot.ShouldExit)
+        while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
         {
-            if (Core.HasClassEquipped(taunterPrimary))
+            if (Core.HasClassEquipped(a))
             {
-                Core.DrakathTaunter();
+                Ultra.DrakathTaunter();
             }
-            else if (Core.HasClassEquipped(taunterBackup))
+            else if (Core.HasClassEquipped(b))
             {
-                Core.DrakathTaunter();
+                Ultra.DrakathTaunter();
             }
             else
             {

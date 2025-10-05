@@ -1,4 +1,4 @@
-//cs_include Scripts/Ultras/CoreUltras.cs
+//cs_include Scripts/Ultras/CoreEngine.cs
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using Skua.Core.Options;
 public class UltraSpeaker
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
-    public CoreUltras Core = new();
+    public CoreEngine Core = new();
 
     public void ScriptMain(IScriptInterface bot)
     {

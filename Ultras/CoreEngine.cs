@@ -24,7 +24,7 @@ using Skua.Core.Models.Skills;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-public class CoreUltras
+public class CoreEngine
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
 
@@ -39,10 +39,10 @@ public class CoreUltras
 
     #region Settings
 
-    int D1 = 250;
-    int D2 = 700;
-    int D3 = 1400;
-    int D4 = 2800;
+    public int D1 = 250;
+    public int D2 = 700;
+    public int D3 = 1400;
+    public int D4 = 2800;
 
     public void Boot()
     {
@@ -57,7 +57,9 @@ public class CoreUltras
         _cts = new CancellationTokenSource();
         _runSkills = Task.Run(() => SkillsAsync(_cts.Token));
 
-        StopAttack();
+        Log("SKUA", "System online");
+
+        Chill();
 
         Bot.Bank.Open();
 
@@ -71,16 +73,13 @@ public class CoreUltras
         Bot.Options.InfiniteRange = true;
         Bot.Options.SkipCutscenes = true;
         Bot.Lite.HidePlayers = true;
-
-        Log("CORE", "System online");
     }
 
     bool OnScriptStopping(Exception e)
     {
-        Log("CORE", "System offline");
+        Log("SKUA", "System offline");
 
         Bot.Lite.HidePlayers = false;
-        Bot.Events.ExtensionPacketReceived -= ChargeListener;
 
         _cts?.Cancel();
         _runSkills?.Wait(TimeSpan.FromSeconds(2));
@@ -103,20 +102,17 @@ public class CoreUltras
     public void ForItem(string monsters, string? map, object key, int quantity = 1, bool isTemp = false, bool useBestGear = false, bool alt = false, string? cell = null, string pad = "Left", bool priority = false)
     {
         if (key is null || quantity <= 0) return;
-        if (!string.IsNullOrWhiteSpace(map))
-            Join(map);
+
         var targets = (monsters ?? string.Empty)
             .Replace('|', ',')
             .Split(',', StringSplitOptions.RemoveEmptyEntries)
             .Select(t => t.Trim())
             .Where(t => t.Length > 0)
             .ToArray();
-        ChooseBestCell(monsters, alt, cell, pad);
-        if (useBestGear) ChooseBestGear(monsters);
+
         MonsterKey[] prioKeys = Array.Empty<MonsterKey>();
         if (priority && targets.Length > 0)
             prioKeys = targets.Select(MonsterKey.FromName).ToArray();
-
         MonsterKey[] targetKeys = targets.Select(MonsterKey.FromName).ToArray();
 
         Func<int> qty = key switch
@@ -125,52 +121,69 @@ public class CoreUltras
             string s => () => Owned(s, isTemp),
             _ => () => 0
         };
+
         Action pullFromBank = () =>
         {
             if (isTemp) return;
             if (key is int id) InBank(id);
             else if (key is string s) InBank(s);
         };
+
         Action pickupKey = () =>
         {
             if (key is int id) Pickup(id);
             else if (key is string s) Pickup(s);
         };
+
         pullFromBank();
-        if (qty() >= quantity) return;
-        string keyLabel = key is int id2 ? (GetDropItem(id2)?.Name ?? $"Item#{id2}") : key.ToString() ?? "Item";
-        Log("FARMING", $"Killing {monsters} for {quantity}x {keyLabel}");
-        if (targets.Length == 0)
+        pickupKey();
+
+        string keyLabel = key is int id2 ? (GetDropItem(id2)?.Name ?? $"Item#{id2}") : (key.ToString() ?? "Item");
+
+        int haveNow = qty();
+        if (haveNow >= quantity)
         {
-            Log("FARMING", "No targets specified; aborting.");
-            DisableSkills();
-            StopAttack();
+            Log("FARMING", $"✅ Already have {haveNow}× {keyLabel} (need {quantity})");
             return;
         }
+
+        if (targets.Length == 0)
+        {
+            Log("FARMING", "❌ No monster targets");
+            DisableSkills();
+            Chill();
+            return;
+        }
+
+        if (!string.IsNullOrWhiteSpace(map)) Join(map);
+        ChooseBestCell(monsters, alt, cell, pad);
+        if (useBestGear) ChooseBestGear(monsters);
+
+        Log("FARMING", $"⚔️ {string.Join(", ", targets)} → {quantity}× {keyLabel}");
+
         EnableSkills();
         int i = 0;
+
         while (!Bot.ShouldExit)
         {
             if (qty() >= quantity)
             {
-                Log("SUCCESS", $"Acquired {quantity}x {keyLabel}");
+                Log("SUCCESS", $"✅ Got {quantity}× {keyLabel}");
                 DisableSkills();
-                StopAttack();
+                Chill();
                 return;
             }
+
             pickupKey();
+
             if (priority)
-            {
                 KillWithPriority(prioKeys);
-            }
             else
-            {
-                var idx = i++ % targetKeys.Length;
-                Kill(targetKeys[idx]);
-            }
+                Kill(targetKeys[i++ % targetKeys.Length]);
         }
+
         DisableSkills();
-        StopAttack();
+        Chill();
     }
 
     void EquipBestClassCore<T>(IEnumerable<(T key, int rank)> prefs, Func<T, bool> owned, Func<T, bool> equipped, Action<T> equip)
@@ -183,14 +196,22 @@ public class CoreUltras
             try
             {
                 if (!owned(k)) continue;
-                if (equipped(k) && (maxed || Bot.Player.CurrentClassRank >= r)) return;
 
+                if (equipped(k) && (maxed || Bot.Player.CurrentClassRank >= r))
+                {
+                    Log("CLASS", $"✅ Already using suitable class: {k}");
+                    return;
+                }
+
+                Log("CLASS", $"🎓 Equipping: {k}");
                 equip(k);
                 Bot.Sleep(D3);
                 return;
             }
             catch { }
         }
+
+        Log("CLASS", "❌ No preferred class owned");
     }
 
     public void EquipBestClass(List<(string name, int rank)> priorities) =>
@@ -212,25 +233,25 @@ public class CoreUltras
     public bool InBank(string name)
     {
         if (string.IsNullOrWhiteSpace(name) || !Bot.Bank.Contains(name)) return false;
-        try { StopAttack(); Bot.Bank.ToInventory(name); Bot.Sleep(D2); return true; } catch { return false; }
+        try { Chill(); Bot.Bank.ToInventory(name); Bot.Sleep(D2); Log("BANK", $"🏦→🎒 {name}"); return true; } catch { Log("BANK", $"❌ Move failed: {name}"); return false; }
     }
 
     public bool InBank(int id)
     {
         if (id <= 0 || !Bot.Bank.Contains(id)) return false;
-        try { StopAttack(); Bot.Bank.ToInventory(id); Bot.Sleep(D2); return true; } catch { return false; }
+        try { Chill(); Bot.Bank.ToInventory(id); Bot.Sleep(D2); Log("BANK", $"🏦→🎒 #{id}"); return true; } catch { Log("BANK", $"❌ Move failed: #{id}"); return false; }
     }
 
     public bool ToBank(string name)
     {
-        if (string.IsNullOrWhiteSpace(name) || !Bot.Inventory.Contains(name)) return false;
-        try { StopAttack(); Bot.Inventory.ToBank(name); Bot.Sleep(D2); return true; } catch { return false; }
+        if (string.IsNullOrWhiteSpace(name) || !Bot.Inventory.Contains(name)) { Log("BANK", $"❌ Not in inv: {name}"); return false; }
+        try { Chill(); Bot.Inventory.ToBank(name); Bot.Sleep(D2); Log("BANK", $"🎒→🏦 {name}"); return true; } catch { Log("BANK", $"❌ Move failed: {name}"); return false; }
     }
 
     public bool ToBank(int id)
     {
-        if (id <= 0 || !Bot.Inventory.Contains(id)) return false;
-        try { StopAttack(); Bot.Inventory.ToBank(id); Bot.Sleep(D2); return true; } catch { return false; }
+        if (id <= 0 || !Bot.Inventory.Contains(id)) { Log("BANK", $"❌ Not in inv: #{id}"); return false; }
+        try { Chill(); Bot.Inventory.ToBank(id); Bot.Sleep(D2); Log("BANK", $"🎒→🏦 #{id}"); return true; } catch { Log("BANK", $"❌ Move failed: #{id}"); return false; }
     }
 
     public int Owned(string name, bool isTemp = false)
@@ -294,7 +315,7 @@ public class CoreUltras
                 break;
             }
         }
-        if (curId <= 0 && string.IsNullOrWhiteSpace(curName)) return;
+        if (curId <= 0 && string.IsNullOrWhiteSpace(curName)) { Log("CLASS", "❌ No current class found"); return; }
 
         var candidates = new List<InventoryItem>();
         foreach (var it in inv)
@@ -304,7 +325,7 @@ public class CoreUltras
             if (it.Equipped == true) continue;
             candidates.Add(it);
         }
-        if (candidates.Count == 0) return;
+        if (candidates.Count == 0) { Log("CLASS", "❌ No alternate class available"); return; }
 
         var rng = new Random(unchecked((int)Environment.TickCount));
         var rnd = candidates[rng.Next(0, candidates.Count)];
@@ -318,8 +339,9 @@ public class CoreUltras
                 if (Bot.Inventory.IsEquipped(rnd.ID)) break;
             }
         }
-        if (!Bot.Inventory.IsEquipped(rnd.ID)) return;
+        if (!Bot.Inventory.IsEquipped(rnd.ID)) { Log("CLASS", $"❌ Failed to equip {rnd.Name}"); return; }
 
+        Log("CLASS", $"🔀 Swapped to {rnd.Name}");
         if (holdMs > 0) Bot.Sleep(holdMs);
 
         if (curId > 0)
@@ -330,7 +352,7 @@ public class CoreUltras
                 Bot.Inventory.EquipItem(curId);
                 Bot.Sleep(500);
             }
-            if (Bot.Inventory.IsEquipped(curId)) return;
+            if (Bot.Inventory.IsEquipped(curId)) { Log("CLASS", $"↩️ Back to {curName ?? ("#" + curId)}"); return; }
         }
 
         if (!string.IsNullOrWhiteSpace(curName))
@@ -341,6 +363,8 @@ public class CoreUltras
                 Bot.Inventory.EquipItem(curName);
                 Bot.Sleep(500);
             }
+            if (Bot.Inventory.IsEquipped(curName)) Log("CLASS", $"↩️ Back to {curName}");
+            else Log("CLASS", $"❌ Failed to re-equip {curName}");
         }
     }
 
@@ -617,41 +641,6 @@ public class CoreUltras
         Bot.Sleep(D1);
     }
 
-    public void KillUntilDead(MonsterKey k)
-    {
-        var target = LowestHpTarget(k);
-        if (target == null) return;
-
-        var targetKey = MonsterKey.FromMapId(target.MapID);
-
-        while (!Bot.ShouldExit)
-        {
-            bool alive = false;
-            foreach (var m in Match(targetKey))
-            {
-                if (m.MapID == target.MapID && m.Alive) { alive = true; break; }
-            }
-            if (!alive) break;
-
-            Bot.Combat.Attack(target.MapID);
-            Bot.Sleep(D1);
-        }
-    }
-
-    public void AttackFor(MonsterKey boss, int ms)
-    {
-        long end = Environment.TickCount64 + ms;
-        while (!Bot.ShouldExit && Environment.TickCount64 < end)
-        {
-            var target = LowestHpTarget(boss);
-            if (target == null) break;
-
-            Bot.Combat.Attack(target.MapID);
-            Bot.Skills.UseSkill(5);
-            Bot.Sleep(D1);
-        }
-    }
-
     public void Kill(string name) => Kill(MonsterKey.FromName(name));
     public void Kill(params string[] names)
     {
@@ -662,7 +651,6 @@ public class CoreUltras
         if (tmp.Count == 0) return;
         KillWithPriority(tmp.ToArray());
     }
-    public void Kill(int id) => Kill(MonsterKey.FromId(id));
     public void KillAtMapId(int mapId) => Kill(MonsterKey.FromMapId(mapId));
 
     public void KillWithPriority(string primaryName, string priorityName1)
@@ -674,78 +662,10 @@ public class CoreUltras
 
     public void KillWithPriority(string primaryName, string priorityName1, string priorityName2)
         => KillWithPriority(MonsterKey.FromName(priorityName1), MonsterKey.FromName(priorityName2), MonsterKey.FromName(primaryName));
-    public void KillWithPriority(int primaryId, int priorityId1, int priorityId2)
-        => KillWithPriority(MonsterKey.FromId(priorityId1), MonsterKey.FromId(priorityId2), MonsterKey.FromId(primaryId));
     public void KillWithPriorityAtMapId(int primaryMapId, int priorityMapId1, int priorityMapId2)
         => KillWithPriority(MonsterKey.FromMapId(priorityMapId1), MonsterKey.FromMapId(priorityMapId2), MonsterKey.FromMapId(primaryMapId));
 
     // --- helpers -----------------------------------------------------------------
-
-    readonly HashSet<string> _preparedMonsters = new(StringComparer.OrdinalIgnoreCase);
-    bool _harpyHooked = false;
-
-    void MonsterSetup(string monsterName)
-    {
-        if (string.IsNullOrWhiteSpace(monsterName)) return;
-        string m = monsterName.ToLowerInvariant();
-
-        if (m.Contains("ultra chaos harpy") || m.Contains("chaos harpy"))
-        {
-            if (!_harpyHooked)
-            {
-                Bot.Events.ExtensionPacketReceived += ChaosHarpyListener;
-                _harpyHooked = true;
-            }
-            const string Pot = "Shriekward Potion";
-            if (Owned(Pot) < 1) BuyItem(Pot, 774, "mirrorportal", 30); // itemKey, shopId, map, qty
-            EquipConsumable(Pot);
-        }
-        else if (m.Contains("ultra xiang") || m.Contains("chaos lord xiang"))
-        {
-            var classes = new List<(string name, int rank)>
-        {
-            ("Dragon of Time", 10),
-            ("Healer (Rare)", 1),
-            ("Healer", 1)
-        };
-            EquipBestClass(classes);
-        }
-        else if (m.Contains("doomkitten"))
-        {
-            var classes = new List<(string name, int rank)>
-        {
-            ("Dragon of Time", 10),
-            ("Legion Revenant", 10),
-            ("Blaze Binder", 10)
-        };
-            EquipBestClass(classes);
-        }
-    }
-
-    string? ResolveMonsterName(MonsterKey k)
-    {
-        if (!string.IsNullOrWhiteSpace(k.Name)) return k.Name;
-
-        var list = Bot?.Monsters?.MapMonsters;
-        if (list == null) return null;
-
-        foreach (var m in list)
-        {
-            if (m == null) continue;
-            if (k.Id.HasValue && m.ID == k.Id.Value) return m.Name;
-            if (k.MapId.HasValue && m.MapID == k.MapId.Value) return m.Name;
-        }
-        return null;
-    }
-
-    void EnsureMonsterSetup(MonsterKey k)
-    {
-        var name = ResolveMonsterName(k);
-        if (string.IsNullOrWhiteSpace(name)) return;
-        if (_preparedMonsters.Add(name)) MonsterSetup(name);
-    }
-
-    void ResetMonsterSetupCache() => _preparedMonsters.Clear();
 
     #endregion
 
@@ -767,7 +687,7 @@ public class CoreUltras
         return 0;
     }
 
-    bool Faction(string name, int minRank = 0)
+    public bool Faction(string name, int minRank = 0)
     {
         var need = minRank < 0 ? 0 : minRank;
         return Rank(name) >= need;
@@ -789,164 +709,12 @@ public class CoreUltras
         finally { EnableSkills(); }
     }
 
-    public void GetScrollOfEnrage()
-    {
-        if (!Faction("SpellCrafting", 5)) return;
-
-        const string parchment = "Mystic Parchment";
-        const string ink = "Zealous Ink";
-        const string scroll = "Scroll of Enrage";
-
-        if (Owned(scroll) < 10)
-        {
-            // Mats
-            ForItem("Undead Infantry", "underworld", parchment, 2);
-            BuyItem(ink, 549, "dragonrune", 5, calculateRemaining: false);
-
-            // Craft
-            Join("spellcraft");
-            Bot.Drops.Add(scroll);
-            Bot.Send.Packet("%xt%zm%crafting%1%spellOnStart%7%1555%Spell%"); Bot.Sleep(5000);
-            Bot.Send.Packet("%xt%zm%crafting%1%spellComplete%7%2330%Enrage%");
-
-            WaitForDrop(scroll, 10000);
-            Pickup(scroll);
-        }
-
-        EquipConsumable(scroll);
-        EquipRandomClassAndReequip();
-    }
-
-    public void GetScrollOfDecay()
-    {
-        if (!Faction("SpellCrafting", 5)) return;
-
-        const string parchment = "Mystic Parchment";
-        const string ink = "Zealous Ink";
-        const string scroll = "Scroll of Decay";
-
-        while (Owned(scroll) < 10 && !Bot.ShouldExit)
-        {
-            ForItem("Undead Infantry", "underworld", parchment, 2);
-            BuyItem(ink, 549, "dragonrune", 5, calculateRemaining: false);
-
-            Join("spellcraft");
-            Bot.Drops.Add(scroll);
-            Bot.Send.Packet("%xt%zm%crafting%1%spellOnStart%7%1555%Spell%"); Bot.Sleep(5000);
-            Bot.Send.Packet("%xt%zm%crafting%1%spellComplete%7%2331%Decay%");
-
-            WaitForDrop(scroll, 5000);
-            Pickup(scroll);
-        }
-
-        EquipConsumable(scroll);
-    }
-
-    public void GetDivineElixir()
-    {
-        ForItem("Xavier Lionfang", "poisonforest", "Divine Elixir");
-        EquipConsumable("Divine Elixir");
-        UsePotion();
-    }
-
-    public void UseAlchemyPotions(params string[] names)
-    {
-        if (names == null || names.Length == 0) return;
-
-        string Aura(string p) => p switch { "Might Tonic" => "Might", "Sage Tonic" => "Sage", _ => p };
-
-        var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        foreach (var raw in names)
-        {
-            if (string.IsNullOrWhiteSpace(raw)) continue;
-            if (!seen.Add(raw)) continue;
-
-            var aura = Aura(raw);
-            if (HasAura(aura, true)) continue;
-
-            BuyAlchemyPotion(raw);
-
-            for (int t = 0; t < 3 && !HasAura(aura, true) && !Bot.ShouldExit; t++)
-            {
-                EquipConsumable(raw);
-                if (Bot.Inventory.IsEquipped(raw))
-                {
-                    UsePotion();
-                    long t0 = Environment.TickCount64;
-                    while (!Bot.ShouldExit && !HasAura(aura, true) && Environment.TickCount64 - t0 < 1500)
-                        Bot.Sleep(50);
-                }
-                else Bot.Sleep(200);
-            }
-        }
-    }
-
-    public void BuyAlchemyPotion(string n)
-    {
-        if (string.IsNullOrWhiteSpace(n) || Owned(n) >= 1) return;
-
-        int S = 2036;
-        string M = "alchemyacademy";
-        string GV = "Gold Voucher 500k";
-
-        void Vouchers(int need)
-        {
-            int missing = Math.Max(0, need - Owned(GV));
-            if (missing > 0) BuyItem(GV, S, M, missing);
-        }
-
-        void Bundle(int size) =>
-            BuyItem(n, S, M, size, calculateRemaining: false);
-
-        switch (n)
-        {
-            case "Might Tonic":
-                if (!Faction("Alchemy", 8)) return;
-                Vouchers(2); Bundle(10);
-                break;
-
-            case "Sage Tonic":
-                if (!Faction("Alchemy", 8)) return;
-                Vouchers(2); Bundle(10);
-                break;
-
-            case "Potent Malevolence Elixir":
-                Vouchers(4); Bundle(8);
-                break;
-
-            case "Potent Battle Elixir":
-                Vouchers(4); Bundle(8);
-                break;
-
-            case "Potent Honor Potion":
-                if (!Faction("Good", 10)) return;
-                Vouchers(1); Bundle(5);
-                break;
-
-            default: return;
-        }
-    }
-
-    public string GetBestTonicPotion()
-    {
-        var str = GetStatValue("STR");
-        var intel = GetStatValue("INT");
-        return str > intel ? "Might Tonic" : "Sage Tonic";
-    }
-
-    public string GetBestElixirPotion()
-    {
-        var str = GetStatValue("STR");
-        var intel = GetStatValue("INT");
-        return str > intel ? "Potent Battle Elixir" : "Potent Malevolence Elixir";
-    }
-
     public void EquipConsumable(string name)
     {
         if (string.IsNullOrWhiteSpace(name)) return;
 
         DisableSkills();
-        StopAttack();
+        Chill();
         try
         {
             if (Owned(name) < 1) return;
@@ -1059,8 +827,13 @@ public class CoreUltras
                 if (g.FromBank) InBank(g.Name);
                 Bot.Inventory.EquipItem(g.Name);
                 Bot.Sleep(500);
-                if (Equipped(g.Name)) break;
+                if (Equipped(g.Name))
+                {
+                    Log("GEAR", $"✅ Equipped {g.Name}");
+                    return;
+                }
             }
+            Log("GEAR", $"❌ Failed to equip {g.Name}");
         }
 
         var selected = ParseNameSet(names);
@@ -1082,6 +855,7 @@ public class CoreUltras
             int maxRaceCount = 0;
             foreach (var kv in raceCount)
                 if (kv.Value > maxRaceCount) { maxRaceCount = kv.Value; race = kv.Key; }
+            Log("GEAR", $"🎯 Target race: {race}");
         }
 
         // scan inventory + bank
@@ -1126,7 +900,11 @@ public class CoreUltras
         foreach (var it in inv) Consider(it);
         foreach (var it in bank) Consider(it);
 
-        if (bestAll.Count == 0 && bestRace.Count == 0) return;
+        if (bestAll.Count == 0 && bestRace.Count == 0)
+        {
+            Log("GEAR", "❌ No gear with bonuses found");
+            return;
+        }
 
         // choose best combo
         Gear bestA = null, bestR = null;
@@ -1149,6 +927,7 @@ public class CoreUltras
 
         if (bestA != null && bestR != null)
         {
+            Log("GEAR", $"🧩 Combo: {bestA.Name} + {bestR.Name}");
             Equip(bestA);
             Equip(bestR);
             return;
@@ -1171,7 +950,11 @@ public class CoreUltras
             if (s > bestScore) { bestScore = s; bestItem = g; }
         }
 
-        if (bestItem != null) Equip(bestItem);
+        if (bestItem != null)
+        {
+            Log("GEAR", $"✨ Best: {bestItem.Name}");
+            Equip(bestItem);
+        }
     }
 
     #endregion
@@ -1180,7 +963,7 @@ public class CoreUltras
 
     public bool BuyItem(object itemKey, int shopId, string map, int quantity = 1, bool ensureMap = true, bool calculateRemaining = true, bool skipIfHaveEnough = true, bool considerBank = true, bool checkGold = true, bool checkLevel = true, bool checkInvSpace = true, int loadTimeoutMs = 5000)
     {
-        if (itemKey is not (int or string)) { Log("Shop", "Invalid item key type."); return false; }
+        if (itemKey is not (int or string)) { Log("SHOP", "❌ Invalid item key type."); return false; }
         if (quantity <= 0) return false;
         if (Bot == null || Bot.Player == null || Bot.Shops == null) return false;
 
@@ -1253,27 +1036,27 @@ public class CoreUltras
         bool HasInvSpace() => (Bot.Inventory?.FreeSlots ?? 0) > 0;
 
         // ----- flow -----
-        if (!EnsureMapJoin(map)) { Log("Shop", $"Failed to join {map}"); return false; }
-        if (!LoadShop(shopId)) { Log("Shop", $"Failed to load shop {shopId}"); return false; }
+        if (!EnsureMapJoin(map)) { Log("SHOP", $"❌ Failed to join {map}"); return false; }
+        if (!LoadShop(shopId)) { Log("SHOP", $"❌ Failed to load shop {shopId}"); return false; }
 
         var it = FindItem(itemKey);
-        if (it == null) { Log("Shop", $"Item not found: {itemKey}"); return false; }
+        if (it == null) { Log("SHOP", $"❌ Item not found: {itemKey}"); return false; }
 
         string itemName = it.Name;
-        if (string.IsNullOrWhiteSpace(itemName)) { Log("Shop", "Item has no valid name."); return false; }
+        if (string.IsNullOrWhiteSpace(itemName)) { Log("SHOP", "❌ Item has no valid name."); return false; }
 
         int need = Need(itemName, quantity);
         if (need == 0) return true;
 
         long price = (long)it.Cost * need;
         if (checkGold && Bot.Player.Gold < price)
-        { Log("Shop", $"Gold needed {price}, have {Bot.Player.Gold}"); return false; }
+        { Log("SHOP", $"💰 Not enough gold: need {price}, have {Bot.Player.Gold}"); return false; }
 
         if (checkLevel && Bot.Player.Level < it.Level)
-        { Log("Shop", $"Level {it.Level}+ required"); return false; }
+        { Log("SHOP", $"⬆️ Level {it.Level}+ required"); return false; }
 
         if (checkInvSpace && !HasInvSpace())
-        { Log("Shop", "No inventory space"); return false; }
+        { Log("SHOP", "📦 Inventory full"); return false; }
 
         int before = Owned(itemName); // inventory only
         Bot.Shops.BuyItem(it.ID, it.ShopItemID, need);
@@ -1287,7 +1070,7 @@ public class CoreUltras
 
         int gained = Owned(itemName) - before;
         bool ok = gained > 0;
-        Log("Shop", ok ? $"Purchased {gained}x {itemName}" : $"Purchase failed: {itemName}");
+        Log("SHOP", ok ? $"🛒 Purchased {gained}x {itemName}" : $"❌ Purchase failed: {itemName}");
         return ok;
     }
 
@@ -1303,30 +1086,17 @@ public class CoreUltras
                 {
                     var infos = Bot?.Drops?.CurrentDropInfos;
                     if (infos == null) return false;
-                    foreach (var i in infos)
-                        if (i?.ID == id) return true;
+                    foreach (var i in infos) if (i?.ID == id) return true;
                     return false;
                 }
-
             case string s when !string.IsNullOrWhiteSpace(s):
                 {
-                    // fast check
                     var names = Bot?.Drops?.CurrentDrops;
-                    if (names != null)
-                        foreach (var n in names)
-                            if (string.Equals(n, s, StringComparison.OrdinalIgnoreCase))
-                                return true;
-
-                    // confirm
+                    if (names != null) foreach (var n in names) if (string.Equals(n, s, StringComparison.OrdinalIgnoreCase)) return true;
                     var infos = Bot?.Drops?.CurrentDropInfos;
-                    if (infos != null)
-                        foreach (var i in infos)
-                            if (string.Equals(i?.Name, s, StringComparison.OrdinalIgnoreCase))
-                                return true;
-
+                    if (infos != null) foreach (var i in infos) if (string.Equals(i?.Name, s, StringComparison.OrdinalIgnoreCase)) return true;
                     return false;
                 }
-
             default:
                 return false;
         }
@@ -1336,57 +1106,54 @@ public class CoreUltras
     {
         var infos = Bot?.Drops?.CurrentDropInfos;
         if (infos == null) return null;
-
         switch (key)
         {
             case int id when id > 0:
-                foreach (var i in infos)
-                    if (i?.ID == id) return i;
+                foreach (var i in infos) if (i?.ID == id) return i;
                 break;
-
             case string s when !string.IsNullOrWhiteSpace(s):
-                foreach (var i in infos)
-                    if (string.Equals(i?.Name, s, StringComparison.OrdinalIgnoreCase))
-                        return i;
+                foreach (var i in infos) if (string.Equals(i?.Name, s, StringComparison.OrdinalIgnoreCase)) return i;
                 break;
         }
         return null;
     }
 
-    void Pickup(params object[] keys)
+    public void Pickup(params object[] keys)
     {
         if (keys == null || keys.Length == 0) return;
-
         foreach (var k in keys)
         {
             switch (k)
             {
                 case int id when id > 0:
-                    if (HasDrop(id)) { Bot.Drops.Pickup(id); Bot.Sleep(D1); }
+                    if (HasDrop(id))
+                    {
+                        Bot.Drops.Pickup(id);
+                        Bot.Sleep(D1);
+                    }
                     break;
-
                 case string s when !string.IsNullOrWhiteSpace(s):
-                    if (HasDrop(s)) { Bot.Drops.Pickup(s); Bot.Sleep(D1); }
+                    if (HasDrop(s))
+                    {
+                        Bot.Drops.Pickup(s);
+                        Bot.Sleep(D1);
+                    }
                     break;
             }
         }
     }
 
-    bool WaitForDrop(object key, int timeout = 30000)
+    public bool WaitForDrop(object key, int timeout = 30000)
     {
         if (key is not (int or string)) return false;
-
         long t0 = Environment.TickCount64;
-        while (!Bot.ShouldExit && !HasDrop(key) && Environment.TickCount64 - t0 < timeout)
-            Bot.Sleep(D1);
-
+        while (!Bot.ShouldExit && !HasDrop(key) && Environment.TickCount64 - t0 < timeout) Bot.Sleep(D1);
         return HasDrop(key);
     }
 
-    bool HasAny(params object[] keys)
+    public bool HasAny(params object[] keys)
     {
         if (keys == null || keys.Length == 0) return false;
-
         foreach (var k in keys)
         {
             switch (k)
@@ -1400,6 +1167,7 @@ public class CoreUltras
             }
         }
         return false;
+
     }
 
     #endregion
@@ -1595,123 +1363,7 @@ public class CoreUltras
         return Bot.Player.Alive && Bot.Player.Loaded;
     }
 
-    #endregion
-
-    #region Map
-
-    string _bestCell = null;
-    string _bestPad = "Left";
-
-    public void Join(string map, string cell = "Enter", string pad = "Spawn", bool publicRoom = false, int? roomNumber = null)
-    {
-        if (string.IsNullOrWhiteSpace(map) || Bot?.Map == null || Bot?.Player == null) return;
-
-        string mapName = map.Split('-')[0].Trim();
-
-        string target = publicRoom ? mapName
-            : roomNumber.HasValue ? $"{mapName}-{roomNumber.Value}"
-            : map.Contains("-") ? map
-            : $"{mapName}-{GenerateRoomID()}";
-
-        if (Bot.Map.Name?.Equals(mapName, StringComparison.OrdinalIgnoreCase) == true)
-        {
-            if (!string.IsNullOrWhiteSpace(cell))
-            {
-                Bot.Map.Jump(cell, pad);
-                Bot.Wait.ForCellChange(cell);
-            }
-            return;
-        }
-
-        StopAttack();
-
-        int attempts = 0;
-        while (!Bot.ShouldExit && attempts < 5)
-        {
-            Bot.Send.Packet($"%xt%zm%cmd%{Bot.Map.RoomID}%tfer%{Bot.Player.Username}%{target}%{cell}%{pad}%");
-            long t0 = Environment.TickCount64;
-            while (!Bot.ShouldExit && Environment.TickCount64 - t0 < 8000)
-            {
-                if (Bot.Map.Name?.Equals(mapName, StringComparison.OrdinalIgnoreCase) == true)
-                    goto joined;
-                Bot.Sleep(100);
-            }
-
-            attempts++;
-            Bot.Sleep(300);
-        }
-
-    joined:
-        ResetMonsterSetupCache();
-    }
-
-    public void ChooseBestCell(string monsterNames, bool alt = false, string setCell = null, string setPad = "Spawn")
-    {
-        var names = (monsterNames ?? string.Empty)
-            .Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries)
-            .Select(n => n.Trim())
-            .Where(n => n.Length > 0)
-            .ToArray();
-
-        bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
-        string pad = string.IsNullOrWhiteSpace(setPad) ? "Left" : setPad;
-
-        var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
-            .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
-            .Where(m => wildcard || names.Any(name =>
-                string.Equals(m.Name ?? string.Empty, name, StringComparison.OrdinalIgnoreCase)))
-            .ToList();
-
-        if (monsters.Count == 0)
-            return;
-
-        string targetCell =
-            !string.IsNullOrWhiteSpace(setCell) ? setCell
-            : alt ? monsters.FirstOrDefault()?.Cell
-            : monsters.GroupBy(m => m.Cell, StringComparer.Ordinal)
-                      .OrderByDescending(g => g.Count())
-                      .Select(g => g.Key)
-                      .FirstOrDefault();
-
-        if (string.IsNullOrWhiteSpace(targetCell))
-            return;
-
-        var mapCells = new HashSet<string>(Bot.Map.Cells as IEnumerable<string> ?? Array.Empty<string>(),
-                                           StringComparer.Ordinal);
-        if (!mapCells.Contains(targetCell))
-            return;
-
-        _bestCell = targetCell;
-        _bestPad = pad;
-
-        if (!string.Equals(Bot.Player.Cell, targetCell, StringComparison.Ordinal))
-        {
-            Bot.Map.Jump(targetCell, pad);
-            Bot.Wait.ForCellChange(targetCell);
-            Bot.Player.SetSpawnPoint();
-        }
-    }
-
-    int GenerateRoomID()
-    {
-        // Creates a stable room ID (1000-99999) based on machine only
-        // All accounts on same PC share the same room permanently
-        string machineId;
-        try
-        {
-            machineId = Microsoft.Win32.Registry.GetValue(
-                @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography", "MachineGuid", null
-            ) as string ?? Environment.MachineName;
-        }
-        catch { machineId = Environment.MachineName; }
-
-        string seed = machineId;
-        var hash = SHA256.HashData(Encoding.UTF8.GetBytes(seed));
-        uint roomSeed = BitConverter.ToUInt32(hash, 0);
-        return (int)(roomSeed % 99000) + 1000;
-    }
-
-    double GetLowestHpPercentage()
+    public double GetLowestHpPercentage()
     {
         var names = Bot?.Map?.PlayerNames;
         if (names == null || names.Count == 0) return 100.0;
@@ -1735,7 +1387,134 @@ public class CoreUltras
         return lowest;
     }
 
-    bool IsArmyHealthLow(double percentage = 30.0) => GetLowestHpPercentage() < percentage;
+    public bool IsArmyHealthLow(double percentage = 30.0)
+        => GetLowestHpPercentage() < percentage;
+
+    public bool InLoadedMap(string name) =>
+       Bot?.Map?.Loaded == true && Bot.Map.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true;
+
+    #endregion
+
+    #region Map
+
+    string _bestCell = null;
+    string _bestPad = "Left";
+
+    public void Join(string map, string cell = "Enter", string pad = "Spawn", bool publicRoom = false, int? roomNumber = null)
+    {
+        if (string.IsNullOrWhiteSpace(map) || Bot?.Map == null || Bot?.Player == null) return;
+
+        string mapName = map.Split('-')[0].Trim();
+        string target = publicRoom ? mapName
+                      : roomNumber is int n ? $"{mapName}-{n}"
+                      : map.Contains("-") ? map
+                      : $"{mapName}-{GenerateRoomID()}";
+
+        if (InLoadedMap(mapName))
+        {
+            if (!string.IsNullOrWhiteSpace(cell) && !IsInCell(cell)) Bot.Map.Jump(cell, pad);
+            return;
+        }
+
+        Chill();
+
+        for (int i = 0; i < 5 && !Bot.ShouldExit && !InLoadedMap(mapName); i++)
+        {
+            Bot.Send.Packet($"%xt%zm%cmd%{Bot.Map.RoomID}%tfer%{Bot.Player.Username}%{target}%{cell}%{pad}%");
+
+            long end = Environment.TickCount64 + 8000; // up to 8s per try
+            while (!Bot.ShouldExit && !InLoadedMap(mapName) && Environment.TickCount64 < end) Bot.Sleep(100);
+
+            if (!InLoadedMap(mapName)) Bot.Sleep(300);
+        }
+
+        if (InLoadedMap(mapName))
+        {
+            Log("MAP", $"🌍 Joined {mapName} ({target})");
+            if (!string.IsNullOrWhiteSpace(cell) && !IsInCell(cell)) Bot.Map.Jump(cell, pad);
+        }
+        else
+        {
+            Log("MAP", $"❌ Failed to join {mapName} ({target})");
+        }
+    }
+
+    public void ChooseBestCell(string monsterNames, bool alt = false, string setCell = null, string setPad = "Spawn")
+    {
+        var names = (monsterNames ?? string.Empty)
+            .Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(n => n.Trim())
+            .Where(n => n.Length > 0)
+            .ToArray();
+
+        bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
+        string pad = string.IsNullOrWhiteSpace(setPad) ? "Left" : setPad;
+
+        var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
+            .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
+            .Where(m => wildcard || names.Any(name =>
+                string.Equals(m.Name ?? string.Empty, name, StringComparison.OrdinalIgnoreCase)))
+            .ToList();
+
+        if (monsters.Count == 0)
+        {
+            Log("MAP", "❌ No matching monsters found");
+            return;
+        }
+
+        string targetCell =
+            !string.IsNullOrWhiteSpace(setCell) ? setCell
+            : alt ? monsters.FirstOrDefault()?.Cell
+            : monsters.GroupBy(m => m.Cell, StringComparer.Ordinal)
+                      .OrderByDescending(g => g.Count())
+                      .Select(g => g.Key)
+                      .FirstOrDefault();
+
+        if (string.IsNullOrWhiteSpace(targetCell))
+        {
+            Log("MAP", "❌ No valid target cell");
+            return;
+        }
+
+        var mapCells = new HashSet<string>(Bot.Map.Cells as IEnumerable<string> ?? Array.Empty<string>(),
+                                           StringComparer.Ordinal);
+        if (!mapCells.Contains(targetCell))
+        {
+            Log("MAP", $"❌ Cell not in map: {targetCell}");
+            return;
+        }
+
+        _bestCell = targetCell;
+        _bestPad = pad;
+
+        if (!string.Equals(Bot.Player.Cell, targetCell, StringComparison.Ordinal))
+        {
+            Log("MAP", $"⁀➴ Jumping to '{targetCell}' ({pad})");
+            Bot.Map.Jump(targetCell, pad);
+            Bot.Player.SetSpawnPoint();
+        }
+        else
+        {
+            Log("MAP", $"✅ Already in {targetCell}");
+        }
+    }
+
+    int GenerateRoomID()
+    {
+        string machineId;
+        try
+        {
+            machineId = Microsoft.Win32.Registry.GetValue(
+                @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography", "MachineGuid", null
+            ) as string ?? Environment.MachineName;
+        }
+        catch { machineId = Environment.MachineName; }
+
+        string seed = machineId;
+        var hash = SHA256.HashData(Encoding.UTF8.GetBytes(seed));
+        uint roomSeed = BitConverter.ToUInt32(hash, 0);
+        return (int)(roomSeed % 99000) + 1000;
+    }
 
     void WhiteMap() => Join("whitemap");
 
@@ -2390,695 +2169,38 @@ public class CoreUltras
 
     #endregion
 
-    #region Listeners
-
-    private volatile bool _chargeDetected;
-    private int _chargeCount;
-
-    void PulseCharge(int ms = 2000)
-    {
-        System.Threading.Interlocked.Increment(ref _chargeCount);
-        _chargeDetected = true;
-        Task.Run(async () =>
-        {
-            await Task.Delay(ms);
-            if (System.Threading.Interlocked.Decrement(ref _chargeCount) <= 0)
-            {
-                _chargeCount = 0;
-                _chargeDetected = false;
-            }
-        });
-    }
-
-    public void ChargeListener(dynamic packet)
-    {
-        try
-        {
-            if (packet?["params"]?.type?.ToString() != "json") return;
-            dynamic data = packet["params"].dataObj;
-            if (data?.cmd?.ToString() != "ct") return;
-
-            var anims = data?.anims as System.Collections.IEnumerable;
-            if (anims == null) return;
-
-            foreach (var anim in anims)
-            {
-                if ((anim as dynamic)?.animStr?.ToString()?.Equals("Charge", StringComparison.OrdinalIgnoreCase) == true)
-                {
-                    PulseCharge(2000);
-                    break;
-                }
-            }
-        }
-        catch { }
-    }
-
-    void ChaosHarpyListener(dynamic packet)
-    {
-        try
-        {
-            if (packet?["params"]?.type?.ToString() != "json") return;
-            dynamic data = packet["params"].dataObj;
-            if (data?.cmd?.ToString() != "ct") return;
-
-            var anims = data?.anims as System.Collections.IEnumerable;
-            if (anims == null) return;
-
-            foreach (var anim in anims)
-            {
-                if ((anim as dynamic)?.animStr?.ToString()?.Equals("Charge", StringComparison.OrdinalIgnoreCase) == true)
-                {
-                    Task.Run(async () =>
-                    {
-                        DisableSkills();
-                        await Task.Delay(500);
-                        Bot.Skills.UseSkill(5);
-                        await Task.Delay(500);
-                        EnableSkills();
-                    });
-                    break;
-                }
-            }
-        }
-        catch { }
-    }
-
-    #endregion
-
-    #region Experimental Ultras
-
-    public void TauntCycle(string name, string monster, string aura, int checkDelay)
-    {
-        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(monster) || string.IsNullOrWhiteSpace(aura)) return;
-        if (Bot?.Combat == null) return;
-        if (HasClassEquipped(name))
-        {
-            int effect = GetAuraSecondsRemaining(aura);
-            Bot.Combat.Attack(monster);
-            if (checkDelay > 0) Bot.Sleep(checkDelay);
-            if (effect < 2) UsePotion();
-        }
-    }
-
-    public void TauntCharge(string name, string monster, string aura, int checkDelay)
-    {
-        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(monster)) return;
-        if (Bot?.Combat == null) return;
-        if (HasClassEquipped(name))
-        {
-            Bot.Combat.Attack(monster);
-            if (checkDelay > 0) Bot.Sleep(checkDelay);
-            if (_chargeDetected) UsePotion();
-        }
-    }
-
-    public void KillWithPriority(string primaryName, int primaryMapId, string priorityName1, int priorityMapId1, string priorityName2, int priorityMapId2)
-    {
-        if (string.IsNullOrWhiteSpace(primaryName)) return;
-        if (!string.IsNullOrWhiteSpace(priorityName1) && IsAliveByMapId(priorityMapId1, name: priorityName1)) KillByMapId(priorityMapId1, name: priorityName1);
-        else if (!string.IsNullOrWhiteSpace(priorityName2) && IsAliveByMapId(priorityMapId2, name: priorityName2)) KillByMapId(priorityMapId2, name: priorityName2);
-        else KillByMapId(primaryMapId, name: primaryName);
-        Bot.Sleep(D1);
-    }
-
-    public void KillByMapId(int mapId, string? name = null, int? id = null)
-    {
-        if (Bot?.Combat == null) return;
-        if (IsAliveByMapId(mapId, name, id))
-        {
-            Bot.Combat.Attack(mapId);
-            Bot.Sleep(250);
-        }
-    }
-
-    public void UltraWardenTaunter()
-    {
-        if (Bot == null) return;
-        if (Bot.Combat == null) return;
-        if (Bot.Player == null) return;
-
-        Bot.Combat.Attack("Ultra Warden");
-
-        var enemy = Bot.Player.Target;
-        if (enemy == null) return;
-        if (enemy.HP == null) return;
-        if (enemy.HP <= 0) return;
-        if (enemy.MaxHP <= 0) return;
-
-        int hpNow = enemy.HP;
-        int hpMax = enemy.MaxHP;
-
-        int percentage = hpNow * 100;
-        percentage = percentage / hpMax;
-
-        int band = percentage / 5;
-        band = band * 5;
-
-        HashSet<int> bandsUsed;
-
-        object savedBands = AppDomain.CurrentDomain.GetData("warden.usedThresholds");
-        if (savedBands == null) bandsUsed = new HashSet<int>();
-        else bandsUsed = (HashSet<int>)savedBands;
-
-        bool alreadyUsed = bandsUsed.Contains(band);
-
-        if (!alreadyUsed)
-        {
-            double exactPercent = hpNow;
-            exactPercent = exactPercent / hpMax;
-            exactPercent = exactPercent * 100;
-
-            bandsUsed.Add(band);
-            AppDomain.CurrentDomain.SetData("warden.usedThresholds", bandsUsed);
-
-            bool keepGoing = true;
-            while (keepGoing)
-            {
-                bool wardenAlive = MonsterAlive("Ultra Warden");
-                bool haveFocus = HasAura("Focus");
-                bool shouldStop = Bot.ShouldExit;
-
-                if (!wardenAlive) keepGoing = false;
-                else if (haveFocus) keepGoing = false;
-                else if (shouldStop) keepGoing = false;
-                else UsePotion();
-            }
-        }
-
-        Bot.Sleep(150);
-    }
-
-    public void DrakathTaunter()
-    {
-        if (Bot == null) return;
-        if (Bot.Combat == null) return;
-        if (Bot.Player == null) return;
-
-        int[] hpLevels = new int[9];
-        hpLevels[0] = 18000000;
-        hpLevels[1] = 16000000;
-        hpLevels[2] = 14000000;
-        hpLevels[3] = 12000000;
-        hpLevels[4] = 10000000;
-        hpLevels[5] = 8000000;
-        hpLevels[6] = 6000000;
-        hpLevels[7] = 4000000;
-        hpLevels[8] = 2000000;
-
-        int[] extraHP = new int[9];
-        extraHP[0] = 180000;
-        extraHP[1] = 180000;
-        extraHP[2] = 180000;
-        extraHP[3] = 180000;
-        extraHP[4] = 180000;
-        extraHP[5] = 100000;
-        extraHP[6] = 100000;
-        extraHP[7] = 100000;
-        extraHP[8] = 100000;
-
-        EnsureDrakathTarget();
-
-        var enemy = Bot.Player.Target;
-        if (enemy == null) return;
-        if (enemy.HP == null) return;
-        if (enemy.HP <= 0) return;
-
-        int lastLevel = int.MaxValue;
-        int oldHP = int.MaxValue;
-        long oldTime = 0;
-
-        object tempLastLevel = AppDomain.CurrentDomain.GetData("drakath.lastThreshold");
-        if (tempLastLevel != null) lastLevel = (int)tempLastLevel;
-
-        object tempOldHP = AppDomain.CurrentDomain.GetData("drakath.prevHp");
-        if (tempOldHP != null) oldHP = (int)tempOldHP;
-
-        object tempOldTime = AppDomain.CurrentDomain.GetData("drakath.lastFireTicks");
-        if (tempOldTime != null) oldTime = (long)tempOldTime;
-
-        int nowHP = enemy.HP;
-        long nowTime = DateTime.UtcNow.Ticks;
-
-        long timeDifference = nowTime - oldTime;
-        TimeSpan timeGap = new TimeSpan(timeDifference);
-        double millisecondsWaited = timeGap.TotalMilliseconds;
-
-        bool enoughTimeWaited = false;
-        if (millisecondsWaited >= 1200) enoughTimeWaited = true;
-
-        bool crossedThreshold = false;
-        int whichLevel = 0;
-        int whichExtra = 0;
-
-        int i = 8;
-        while (i >= 0)
-        {
-            int checkLevel = hpLevels[i];
-            int checkExtra = extraHP[i];
-
-            bool belowLastLevel = false;
-            if (checkLevel < lastLevel) belowLastLevel = true;
-
-            if (belowLastLevel)
-            {
-                int upperLimit = checkLevel + checkExtra;
-
-                bool wasAbove = false;
-                bool nowBelow = false;
-
-                if (oldHP > upperLimit) wasAbove = true;
-                if (nowHP <= upperLimit) nowBelow = true;
-
-                if (wasAbove && nowBelow)
-                {
-                    crossedThreshold = true;
-                    whichLevel = checkLevel;
-                    whichExtra = checkExtra;
-                    i = -1;
-                }
-            }
-
-            i = i - 1;
-        }
-
-        if (enoughTimeWaited && crossedThreshold)
-        {
-            string message1 = "Crossed into band " + whichLevel.ToString("N0");
-            string message2 = " (hp now " + nowHP.ToString("N0") + "). Attempting Focus...";
-            Log("Drakath", message1 + message2);
-
-            AppDomain.CurrentDomain.SetData("drakath.lastThreshold", whichLevel);
-            AppDomain.CurrentDomain.SetData("drakath.lastFireTicks", nowTime);
-
-            DateTime stopTime = DateTime.UtcNow.AddMilliseconds(1800);
-            int howManyTries = 0;
-
-            bool keepTrying = true;
-            while (keepTrying)
-            {
-                bool drakathAlive = MonsterAlive("Champion Drakath");
-                bool shouldExit = Bot.ShouldExit;
-                bool timeLeft = DateTime.UtcNow < stopTime;
-
-                if (!drakathAlive || shouldExit || !timeLeft) keepTrying = false;
-                else
-                {
-                    EnsureDrakathTarget();
-                    UsePotion();
-                    howManyTries = howManyTries + 1;
-
-                    bool gotFocus = HasAura("Focus");
-                    if (gotFocus) keepTrying = false;
-                    else Bot.Sleep(120);
-                }
-            }
-
-            bool hasFocusNow = HasAura("Focus");
-
-            int finalHP = 0;
-            if (Bot.Player.Target != null) if (Bot.Player.Target.HP != null) finalHP = Bot.Player.Target.HP;
-
-            if (hasFocusNow)
-            {
-                string msg = "Focus obtained at " + finalHP.ToString("N0") + " HP (tries: " + howManyTries + ")";
-                Log("Drakath", msg);
-            }
-            else
-            {
-                string msg = "Warning: Failed to get Focus (tries: " + howManyTries + ", hp now " + finalHP.ToString("N0") + ")";
-                Log("Drakath", msg);
-            }
-        }
-
-        AppDomain.CurrentDomain.SetData("drakath.prevHp", nowHP);
-
-        Bot.Sleep(120);
-    }
-
-    private void EnsureDrakathTarget()
-    {
-        var monsterList = new List<Skua.Core.Models.Monsters.Monster>();
-
-        if (Bot != null && Bot.Monsters != null && Bot.Monsters.CurrentMonsters != null) monsterList = Bot.Monsters.CurrentMonsters.ToList();
-        else if (Bot != null && Bot.Monsters != null && Bot.Monsters.MapMonsters != null) monsterList = Bot.Monsters.MapMonsters.ToList();
-        else monsterList = new List<Skua.Core.Models.Monsters.Monster>();
-
-        Skua.Core.Models.Monsters.Monster foundDrakath = null;
-
-        int i = 0;
-        while (i < monsterList.Count)
-        {
-            var monster = monsterList[i];
-
-            if (monster != null)
-            {
-                bool rightName = false;
-                if (monster.Name == "Champion Drakath") rightName = true;
-
-                bool isAlive = false;
-                if (monster.Alive) isAlive = true;
-
-                if (rightName && isAlive)
-                {
-                    foundDrakath = monster;
-                    i = monsterList.Count;
-                }
-            }
-
-            i = i + 1;
-        }
-
-        if (foundDrakath != null)
-        {
-            int monsterID = foundDrakath.MapID;
-            Bot.Combat.Attack(monsterID);
-            return;
-        }
-
-        Bot.Combat.Attack("Champion Drakath");
-    }
-
-    // --- helpers ---------------------------------------------------
-
-    public void WaitForArmy(int quantity, string syncFilePath = "army_sync.txt", int bufferTimeMs = 3000, int tickMs = 500, int timeoutMs = 0)
-    {
-        if (Bot == null || Bot.Map == null) return;
-
-        string ResolvePath(string requestedPath)
-        {
-            string EnsureWritable(string fullPath)
-            {
-                try
-                {
-                    var dir = Path.GetDirectoryName(fullPath);
-                    if (string.IsNullOrWhiteSpace(dir)) return string.Empty;
-                    if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
-                    using (var fs = new FileStream(fullPath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite))
-                        fs.Flush(true);
-                    return fullPath;
-                }
-                catch (Exception ex) { Log("Army", $"[sync-path] {ex.Message}"); return string.Empty; }
-            }
-
-            if (Path.IsPathRooted(requestedPath))
-            {
-                var ok = EnsureWritable(requestedPath);
-                if (!string.IsNullOrEmpty(ok)) return ok;
-            }
-
-            var bases = new[]
-            {
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SkuaSync"),
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonDocuments), "SkuaSync"),
-                Path.Combine(Path.GetTempPath(), "SkuaSync")
-            };
-            foreach (var b in bases)
-            {
-                var ok = EnsureWritable(Path.Combine(b, requestedPath));
-                if (!string.IsNullOrEmpty(ok)) return ok;
-            }
-            return EnsureWritable(Path.GetFullPath(requestedPath));
-        }
-
-        void Truncate(string filePath)
-        {
-            try { using var fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.Write, FileShare.ReadWrite); fs.SetLength(0); fs.Flush(true); }
-            catch (Exception ex) { Log("Army", $"[sync-trunc] {ex.Message}"); }
-        }
-
-        bool IsAllTrue(string filePath)
-        {
-            try
-            {
-                using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                using var sr = new StreamReader(fs, Encoding.UTF8, true, 1024, leaveOpen: true);
-                var text = sr.ReadToEnd();
-                if (string.IsNullOrWhiteSpace(text)) return false;
-
-                bool sawAny = false;
-                foreach (var raw in text.Split('\n'))
-                {
-                    var line = raw.Trim();
-                    if (line.Length == 0 || line.StartsWith("#")) continue;
-                    if (line.EndsWith(": true", StringComparison.Ordinal)) { sawAny = true; continue; }
-                    if (line.Contains(":")) return false;
-                }
-                return sawAny;
-            }
-            catch { return false; }
-        }
-
-        void InitFile(string filePath, int maxAgeMinutes)
-        {
-            try
-            {
-                if (!File.Exists(filePath))
-                {
-                    using var fs = new FileStream(filePath, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.ReadWrite);
-                    fs.Flush(true);
-                    return;
-                }
-                var last = File.GetLastWriteTimeUtc(filePath);
-                if (DateTime.UtcNow - last > TimeSpan.FromMinutes(maxAgeMinutes) || IsAllTrue(filePath))
-                    Truncate(filePath);
-            }
-            catch (Exception ex) { Log("Army", $"[sync-init] {ex.Message}"); Truncate(filePath); }
-        }
-
-        void GetOrCreateEntry(string filePath, string key)
-        {
-            for (int attempt = 0; attempt < 12; attempt++)
-            {
-                try
-                {
-                    using var fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
-
-                    string text;
-                    using (var sr = new StreamReader(fs, Encoding.UTF8, true, 1024, leaveOpen: true))
-                        text = sr.ReadToEnd();
-
-                    var lines = new List<string>();
-                    if (!string.IsNullOrWhiteSpace(text))
-                        foreach (var raw in text.Split('\n'))
-                        {
-                            var ln = raw.Trim();
-                            if (ln.Length > 0) lines.Add(ln);
-                        }
-
-                    // If our exact key already exists, do nothing
-                    int idx = lines.FindIndex(l => l.StartsWith(key + ":", StringComparison.Ordinal));
-                    if (idx >= 0) return;
-
-                    // Otherwise add "Key: false"
-                    lines.Add($"{key}: false");
-
-                    fs.SetLength(0);
-                    using (var sw = new StreamWriter(fs, Encoding.UTF8, 1024, leaveOpen: true))
-                    {
-                        for (int i = 0; i < lines.Count; i++)
-                        {
-                            sw.Write(lines[i]);
-                            if (i < lines.Count - 1) sw.Write("\n");
-                        }
-                        sw.Flush();
-                    }
-                    fs.Flush(true);
-                    return;
-                }
-                catch (IOException) { Bot.Sleep(40); }
-                catch (Exception ex) { Log("Army", $"[sync-get] {ex.Message}"); return; }
-            }
-            Log("Army", "[sync-get] retries exhausted.");
-        }
-
-        void SetReady(string filePath, string entryName, bool ready)
-        {
-            var want = $"{entryName}: {(ready ? "true" : "false")}";
-            for (int attempt = 0; attempt < 8; attempt++)
-            {
-                try
-                {
-                    using var fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.ReadWrite);
-                    string text; using (var sr = new StreamReader(fs, Encoding.UTF8, true, 1024, leaveOpen: true)) text = sr.ReadToEnd();
-
-                    var lines = new List<string>();
-                    if (!string.IsNullOrWhiteSpace(text))
-                        foreach (var raw in text.Split('\n')) { var ln = raw.Trim(); if (ln.Length > 0) lines.Add(ln); }
-
-                    bool found = false;
-                    for (int i = 0; i < lines.Count; i++)
-                        if (lines[i].StartsWith(entryName + ":", StringComparison.Ordinal)) { lines[i] = want; found = true; break; }
-                    if (!found) lines.Add(want);
-
-                    fs.SetLength(0);
-                    using (var sw = new StreamWriter(fs, Encoding.UTF8, 1024, leaveOpen: true))
-                    {
-                        for (int i = 0; i < lines.Count; i++) { sw.Write(lines[i]); if (i < lines.Count - 1) sw.Write("\n"); }
-                        sw.Flush();
-                    }
-                    fs.Flush(true);
-                    return;
-                }
-                catch (IOException) { Bot.Sleep(40); }
-                catch (Exception ex) { Log("Army", $"[sync-set] {ex.Message}"); return; }
-            }
-            Log("Army", "[sync-set] retries exhausted.");
-        }
-
-        int CountReady(string filePath)
-        {
-            for (int attempt = 0; attempt < 8; attempt++)
-            {
-                try
-                {
-                    if (!File.Exists(filePath)) return 0;
-                    using var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                    string text; using (var sr = new StreamReader(fs, Encoding.UTF8, true, 1024, leaveOpen: true)) text = sr.ReadToEnd();
-                    if (string.IsNullOrWhiteSpace(text)) return 0;
-
-                    int c = 0;
-                    foreach (var raw in text.Split('\n'))
-                        if (raw.TrimEnd().EndsWith(": true", StringComparison.Ordinal)) c++;
-                    return c;
-                }
-                catch (IOException) { Bot.Sleep(40); }
-                catch (Exception ex) { Log("Army", $"[sync-read] {ex.Message}"); return 0; }
-            }
-            Log("Army", "[sync-read] retries exhausted."); return 0;
-        }
-
-        void FinalSpamAndStart()
-        {
-            Log("Army", "Final prep: spamming skills before pull...");
-            var until = DateTime.UtcNow.AddMilliseconds(1200);
-            while (DateTime.UtcNow < until && !Bot.ShouldExit)
-            {
-                if (!IsManaLow(50))
-                {
-                    Bot.Skills.UseSkill(1); Bot.Sleep(300);
-                    Bot.Skills.UseSkill(2); Bot.Sleep(300);
-                    Bot.Skills.UseSkill(3);
-                }
-                Bot.Sleep(100);
-            }
-
-            const int startMs = 3000;
-            Log("Army", $"Everyone ready! Starting in {startMs}ms...");
-            Bot.Sleep(startMs);
-        }
-
-        string RosterKey()
-        {
-            string user = (Bot?.Player?.Username ?? Guid.NewGuid().ToString("N").Substring(0, 6)).Trim();
-            string cls = (Bot?.Player?.CurrentClass?.Name ?? "UnknownClass").Trim();
-
-            string San(string s) => s.Replace(":", "-").Replace("\r", "").Replace("\n", "").Trim();
-
-            return $"{San(user)} | {San(cls)}";
-        }
-
-        string path = ResolvePath(syncFilePath);
-        Log("Army", $"Sync file: {path}");
-        InitFile(path, maxAgeMinutes: 15);
-
-        string myName = RosterKey();
-
-        GetOrCreateEntry(path, myName);
-        SetReady(path, myName, false);
-
-
-        int needed = Math.Max(1, quantity) + 1;
-
-        var timer = new Stopwatch(); timer.Start();
-        while (true)
-        {
-            if (Bot.ShouldExit) { Truncate(path); return; }
-            int playersNow = Bot.Map.PlayerCount;
-            if (playersNow >= needed) break;
-
-            Log("Army", $"Waiting for army: {Math.Max(0, playersNow - 1)}/{quantity} players in map");
-
-            if (timeoutMs > 0 && timer.ElapsedMilliseconds >= timeoutMs)
-            {
-                Log("Army", "Timeout while waiting for players to join map.");
-                break;
-            }
-            Bot.Sleep(tickMs);
-        }
-        if (Bot.ShouldExit) { Truncate(path); return; }
-
-        SetReady(path, myName, true);
-        Log("Army", $"Marked ready: {myName}");
-
-        while (!Bot.ShouldExit)
-        {
-            int ready = CountReady(path);
-            Log("Army", $"Sync: {ready}/{needed} ready");
-            if (ready >= needed) break;
-            Bot.Sleep(tickMs);
-        }
-        if (Bot.ShouldExit) { Truncate(path); return; }
-
-        FinalSpamAndStart();
-        Truncate(path);
-        Log("Army", "GO!");
-    }
-
-    public bool MonsterAlive(string name)
-    {
-        if (string.IsNullOrWhiteSpace(name)) return false;
-        if (Bot?.Monsters?.MapMonsters == null) return false;
-
-        return Bot.Monsters.MapMonsters
-            .Any(m => m?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true && m.Alive);
-    }
-
-    public void StopAttack()
+    public void Chill()
     {
         if (Bot?.Combat == null || Bot?.Map == null || Bot?.Player == null) return;
 
         Bot.Combat.CancelAutoAttack();
         Bot.Combat.CancelTarget();
 
-        var cellsList = Bot.Map.Cells ?? new List<string>();
-        var monstersList = Bot.Monsters?.MapMonsters ?? new List<Monster>();
+        var cells = Bot.Map.Cells ?? new List<string>();
+        var mobs = Bot.Monsters?.MapMonsters ?? new List<Monster>();
 
-        string safeCell = cellsList
-            .Where(c => !string.IsNullOrWhiteSpace(c) &&
-                       !c.Equals("Wait", StringComparison.OrdinalIgnoreCase) &&
-                       !c.Equals("Blank", StringComparison.OrdinalIgnoreCase) &&
-                       !c.StartsWith("Cut", StringComparison.OrdinalIgnoreCase))
-            .OrderBy(c => monstersList.Count(m => m?.Cell == c))
+        string safeCell = cells
+            .Where(c => !string.IsNullOrWhiteSpace(c)
+                     && !c.Equals("Wait", StringComparison.OrdinalIgnoreCase)
+                     && !c.Equals("Blank", StringComparison.OrdinalIgnoreCase)
+                     && !c.StartsWith("Cut", StringComparison.OrdinalIgnoreCase))
+            .OrderBy(c => mobs.Count(m => m?.Cell == c))
             .FirstOrDefault() ?? Bot.Player.Cell;
 
         string pad = string.IsNullOrWhiteSpace(Bot.Player.Pad) ? "Left" : Bot.Player.Pad;
 
-        // hop until we're out
+        Log("CHILL", $"🍃 Safe place: {safeCell} ({pad})");
+
         while (!Bot.ShouldExit && Bot.Player.State == 2)
         {
-            if (!string.Equals(Bot.Player.Cell, safeCell, StringComparison.Ordinal))
-            {
+            if (!IsInCell(safeCell))
                 Bot.Map.Jump(safeCell, pad);
-                Bot.Wait.ForCellChange(safeCell);
-            }
+
             Bot.Sleep(D1);
         }
+
         Bot.Sleep(D3);
     }
-
-    public void DontAttack()
-    {
-        if (Bot?.Combat == null || Bot?.Map == null || Bot?.Player == null) return;
-
-        Bot.Combat.CancelAutoAttack();
-        Bot.Combat.CancelTarget();
-
-        DisableSkills();
-        Bot.Sleep(5000);
-        EnableSkills();
-    }
-
-    #endregion
 
     bool HasChanged<T>(string key, T newValue)
     {
