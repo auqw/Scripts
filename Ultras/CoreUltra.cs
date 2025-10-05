@@ -647,6 +647,8 @@ public class CoreUltra
         Core.UsePotion();
     }
 
+    #region Alchemy
+
     public void UseAlchemyPotions(params string[] names)
     {
         if (names == null || names.Length == 0) return;
@@ -660,8 +662,13 @@ public class CoreUltra
             if (!seen.Add(raw)) continue;
 
             var aura = Aura(raw);
-            if (Core.HasAura(aura, true)) continue;
+            if (Core.HasAura(aura, true))
+            {
+                Core.Log("POTION", $"🟢 Already active: {aura}");
+                continue;
+            }
 
+            Core.Log("POTION", $"🧪 Need: {raw} ({aura})");
             BuyAlchemyPotion(raw);
 
             for (int t = 0; t < 3 && !Core.HasAura(aura, true) && !Bot.ShouldExit; t++)
@@ -676,12 +683,15 @@ public class CoreUltra
                 }
                 else Bot.Sleep(200);
             }
+
+            if (Core.HasAura(aura, true)) Core.Log("POTION", $"✅ Applied: {aura}");
+            else Core.Log("POTION", $"❌ Failed: {raw} ({aura})");
         }
     }
 
     public void BuyAlchemyPotion(string n)
     {
-        if (string.IsNullOrWhiteSpace(n) || Core.Owned(n) >= 1) return;
+        if (string.IsNullOrWhiteSpace(n) || Core.Owned(n) >= 1) { if (!string.IsNullOrWhiteSpace(n)) Core.Log("POTION", $"🧴 Have: {n}"); return; }
 
         int S = 2036;
         string M = "alchemyacademy";
@@ -690,21 +700,28 @@ public class CoreUltra
         void Vouchers(int need)
         {
             int missing = Math.Max(0, need - Core.Owned(GV));
-            if (missing > 0) Core.BuyItem(GV, S, M, missing);
+            if (missing > 0)
+            {
+                Core.Log("POTION", $"💰 Need {missing}× {GV}");
+                Core.BuyItem(GV, S, M, missing);
+            }
         }
 
-        void Bundle(int size) =>
+        void Bundle(int size)
+        {
+            Core.Log("POTION", $"🛒 {n} ×{size}");
             Core.BuyItem(n, S, M, size, calculateRemaining: false);
+        }
 
         switch (n)
         {
             case "Might Tonic":
-                if (!Core.Faction("Alchemy", 8)) return;
+                if (!Core.Faction("Alchemy", 8)) { Core.Log("POTION", "⛔ Alchemy rep 8 required"); return; }
                 Vouchers(2); Bundle(10);
                 break;
 
             case "Sage Tonic":
-                if (!Core.Faction("Alchemy", 8)) return;
+                if (!Core.Faction("Alchemy", 8)) { Core.Log("POTION", "⛔ Alchemy rep 8 required"); return; }
                 Vouchers(2); Bundle(10);
                 break;
 
@@ -717,11 +734,13 @@ public class CoreUltra
                 break;
 
             case "Potent Honor Potion":
-                if (!Core.Faction("Good", 10)) return;
+                if (!Core.Faction("Good", 10)) { Core.Log("POTION", "⛔ Good rep 10 required"); return; }
                 Vouchers(1); Bundle(5);
                 break;
 
-            default: return;
+            default:
+                Core.Log("POTION", $"❓ Unknown: {n}");
+                return;
         }
     }
 
@@ -729,15 +748,21 @@ public class CoreUltra
     {
         var str = Core.GetStatValue("STR");
         var intel = Core.GetStatValue("INT");
-        return str > intel ? "Might Tonic" : "Sage Tonic";
+        var pick = str > intel ? "Might Tonic" : "Sage Tonic";
+        Core.Log("Potion", $"🧪 Tonic → {pick} (STR {str}, INT {intel})");
+        return pick;
     }
 
     public string GetBestElixirPotion()
     {
         var str = Core.GetStatValue("STR");
         var intel = Core.GetStatValue("INT");
-        return str > intel ? "Potent Battle Elixir" : "Potent Malevolence Elixir";
+        var pick = str > intel ? "Potent Battle Elixir" : "Potent Malevolence Elixir";
+        Core.Log("Potion", $"🧪 Elixir → {pick} (STR {str}, INT {intel})");
+        return pick;
     }
+
+    #endregion
 
     // --- next set ---------------------------------------------------------------
 
