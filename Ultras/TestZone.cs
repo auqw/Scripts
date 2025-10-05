@@ -32,7 +32,8 @@ public class TestZone
         //Core.BuyAlchemyPotion("Potent Honor Potion");
         //Core.BuyItem("Shriekward Potion", 774, "mirrorportal", 30);
         //Core.ForItem("Onyx Lava Dragon", "lair", "Celestial Staff", useBestGear: true);
-        Core.ForItem("Boss Dummy", "classhall", "Celestial Staff");
+        Core.ForItem("Mini Boss Dummy", "classhall", "Celestial Staff");
+        //Core.ForItem("Purple Draconian, Venom Draconian, Bronze Draconian", "lair", "Celestial Staff");
         //Core.GetScrollOfEnrage();
         //Core.GetScrollOfDecay();
     }

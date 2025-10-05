@@ -100,43 +100,46 @@ public class CoreUltras
 
     #region Items
 
-    int Qty(object key, bool temp = false) =>
-        key is int id ? Owned(id, temp) :
-        key is string s ? Owned(s, temp) : 0;
-
-    bool PullFromBank(object key)
-    {
-        return key is int id ? InBank(id)
-             : key is string s ? InBank(s)
-             : false;
-    }
-
-    public void ForItem(string monsters, string map, object key, int quantity = 1, bool isTemp = false, bool useBestGear = false, bool alt = false, string? cell = null, string pad = "Left", bool priority = false)
+    public void ForItem(string monsters, string? map, object key, int quantity = 1, bool isTemp = false, bool useBestGear = false, bool alt = false, string? cell = null, string pad = "Left", bool priority = false)
     {
         if (key is null || quantity <= 0) return;
-
-        if (!string.IsNullOrWhiteSpace(map)) Join(map);
+        if (!string.IsNullOrWhiteSpace(map))
+            Join(map);
+        var targets = (monsters ?? string.Empty)
+            .Replace('|', ',')
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(t => t.Trim())
+            .Where(t => t.Length > 0)
+            .ToArray();
         ChooseBestCell(monsters, alt, cell, pad);
         if (useBestGear) ChooseBestGear(monsters);
-
-        var targets = monsters?.Split('|', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
         MonsterKey[] prioKeys = Array.Empty<MonsterKey>();
         if (priority && targets.Length > 0)
+            prioKeys = targets.Select(MonsterKey.FromName).ToArray();
+
+        MonsterKey[] targetKeys = targets.Select(MonsterKey.FromName).ToArray();
+
+        Func<int> qty = key switch
         {
-            prioKeys = new MonsterKey[targets.Length];
-            for (int t = 0; t < targets.Length; t++)
-                prioKeys[t] = MonsterKey.FromName(targets[t]);
-        }
-
-        if (!isTemp) PullFromBank(key);
-
-        if (Qty(key, isTemp) >= quantity) return;
-
-        string keyLabel = key is int id ? (GetDropItem(id)?.Name ?? $"Item#{id}") : key.ToString();
+            int id => () => Owned(id, isTemp),
+            string s => () => Owned(s, isTemp),
+            _ => () => 0
+        };
+        Action pullFromBank = () =>
+        {
+            if (isTemp) return;
+            if (key is int id) InBank(id);
+            else if (key is string s) InBank(s);
+        };
+        Action pickupKey = () =>
+        {
+            if (key is int id) Pickup(id);
+            else if (key is string s) Pickup(s);
+        };
+        pullFromBank();
+        if (qty() >= quantity) return;
+        string keyLabel = key is int id2 ? (GetDropItem(id2)?.Name ?? $"Item#{id2}") : key.ToString() ?? "Item";
         Log("FARMING", $"Killing {monsters} for {quantity}x {keyLabel}");
-
-        EnableSkills();
-
         if (targets.Length == 0)
         {
             Log("FARMING", "No targets specified; aborting.");
@@ -144,31 +147,28 @@ public class CoreUltras
             StopAttack();
             return;
         }
-
+        EnableSkills();
         int i = 0;
         while (!Bot.ShouldExit)
         {
-            if (Qty(key, isTemp) >= quantity)
+            if (qty() >= quantity)
             {
                 Log("SUCCESS", $"Acquired {quantity}x {keyLabel}");
                 DisableSkills();
                 StopAttack();
                 return;
             }
-
-            Pickup(key);
-
+            pickupKey();
             if (priority)
             {
                 KillWithPriority(prioKeys);
             }
             else
             {
-                var idx = i++ % targets.Length;
-                Kill(targets[idx]);
+                var idx = i++ % targetKeys.Length;
+                Kill(targetKeys[idx]);
             }
         }
-
         DisableSkills();
         StopAttack();
     }
@@ -577,36 +577,63 @@ public class CoreUltras
 
     public void Kill(MonsterKey k)
     {
-        if (!IsAlive(k)) return;
-        EnsureMonsterSetup(k);
-        Attack(k);
+        var target = Match(k)
+            .Where(m => m.Alive)
+            .OrderBy(m => m.HP)
+            .ThenBy(m => m.MapID)
+            .FirstOrDefault();
+
+        if (target == null) return;
+
+        var hpKey = MonsterKey.FromMapId(target.MapID);
+        Attack(hpKey);
         Bot.Sleep(D1);
+    }
+
+    Monster? LowestHpTarget(params MonsterKey[] keys)
+    {
+        Monster? best = null;
+        foreach (var k in keys)
+        {
+            foreach (var m in Match(k))
+            {
+                if (!m.Alive) continue;
+                if (best == null || m.HP < best.HP)
+                    best = m;
+            }
+        }
+        return best;
     }
 
     public void KillWithPriority(params MonsterKey[] keys)
     {
         if (keys == null || keys.Length == 0) { Bot.Sleep(D1); return; }
 
-        MonsterKey? target = null;
-        foreach (var k in keys)
-        {
-            if (IsAlive(k)) { target = k; break; }
-        }
-
+        var target = LowestHpTarget(keys);
         if (target == null) { Bot.Sleep(D1); return; }
-        EnsureMonsterSetup(target);
-        Attack(target);
+
+        var targetKey = MonsterKey.FromMapId(target.MapID);
+        Bot.Combat.Attack(target.MapID);
         Bot.Sleep(D1);
     }
 
     public void KillUntilDead(MonsterKey k)
     {
-        if (!IsAlive(k)) return;
-        EnsureMonsterSetup(k);
+        var target = LowestHpTarget(k);
+        if (target == null) return;
 
-        while (!Bot.ShouldExit && IsAlive(k))
+        var targetKey = MonsterKey.FromMapId(target.MapID);
+
+        while (!Bot.ShouldExit)
         {
-            Attack(k);
+            bool alive = false;
+            foreach (var m in Match(targetKey))
+            {
+                if (m.MapID == target.MapID && m.Alive) { alive = true; break; }
+            }
+            if (!alive) break;
+
+            Bot.Combat.Attack(target.MapID);
             Bot.Sleep(D1);
         }
     }
@@ -614,9 +641,12 @@ public class CoreUltras
     public void AttackFor(MonsterKey boss, int ms)
     {
         long end = Environment.TickCount64 + ms;
-        while (!Bot.ShouldExit && IsAlive(boss) && Environment.TickCount64 < end)
+        while (!Bot.ShouldExit && Environment.TickCount64 < end)
         {
-            Attack(boss);
+            var target = LowestHpTarget(boss);
+            if (target == null) break;
+
+            Bot.Combat.Attack(target.MapID);
             Bot.Skills.UseSkill(5);
             Bot.Sleep(D1);
         }
@@ -1617,9 +1647,10 @@ public class CoreUltras
 
     public void ChooseBestCell(string monsterNames, bool alt = false, string setCell = null, string setPad = "Spawn")
     {
-        var names = (monsterNames?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>())
-            .Select(n => n?.Trim())
-            .Where(n => !string.IsNullOrWhiteSpace(n))
+        var names = (monsterNames ?? string.Empty)
+            .Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(n => n.Trim())
+            .Where(n => n.Length > 0)
             .ToArray();
 
         bool wildcard = names.Length == 0 || (names.Length == 1 && names[0] == "*");
@@ -1628,7 +1659,7 @@ public class CoreUltras
         var monsters = (Bot.Monsters.MapMonsters ?? Enumerable.Empty<Monster>())
             .Where(m => m != null && !string.IsNullOrWhiteSpace(m.Cell))
             .Where(m => wildcard || names.Any(name =>
-                (m.Name ?? "").Equals(name, StringComparison.OrdinalIgnoreCase)))
+                string.Equals(m.Name ?? string.Empty, name, StringComparison.OrdinalIgnoreCase)))
             .ToList();
 
         if (monsters.Count == 0)
@@ -1636,19 +1667,24 @@ public class CoreUltras
 
         string targetCell =
             !string.IsNullOrWhiteSpace(setCell) ? setCell
-            : alt ? monsters.First().Cell
-            : monsters.GroupBy(m => m.Cell)
+            : alt ? monsters.FirstOrDefault()?.Cell
+            : monsters.GroupBy(m => m.Cell, StringComparer.Ordinal)
                       .OrderByDescending(g => g.Count())
-                      .First().Key;
+                      .Select(g => g.Key)
+                      .FirstOrDefault();
 
-        var mapCells = Bot.Map.Cells as IEnumerable<string> ?? Array.Empty<string>();
+        if (string.IsNullOrWhiteSpace(targetCell))
+            return;
+
+        var mapCells = new HashSet<string>(Bot.Map.Cells as IEnumerable<string> ?? Array.Empty<string>(),
+                                           StringComparer.Ordinal);
         if (!mapCells.Contains(targetCell))
             return;
 
         _bestCell = targetCell;
         _bestPad = pad;
 
-        if (!string.IsNullOrWhiteSpace(targetCell) && !string.Equals(Bot.Player.Cell, targetCell, StringComparison.Ordinal))
+        if (!string.Equals(Bot.Player.Cell, targetCell, StringComparison.Ordinal))
         {
             Bot.Map.Jump(targetCell, pad);
             Bot.Wait.ForCellChange(targetCell);
