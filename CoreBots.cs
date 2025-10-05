@@ -4818,7 +4818,7 @@ public class CoreBots
 
         if (item is not null && !isTemp)
             AddDrop(item);
-        Bot.Events.ExtensionPacketReceived += StaffRespawnListner;
+        // Bot.Events.ExtensionPacketReceived += StaffRespawnListner;
         if (item is null)
         {
             if (log)
@@ -4867,8 +4867,11 @@ public class CoreBots
 
 
                     // Attack staff
-                    if (m?.MapID == 2 && m?.HP > 0)
-                        Bot.Kill.Monster(2);
+                    if (Bot.Player.Target?.MapID == 3 && Bot.Player.Target?.State == 2)
+                        while (!Bot.ShouldExit && Bot.Player.Target?.HP > 0)
+                            Bot.Combat.Attack(2);
+                    // if (m?.MapID == 2 && m?.HP > 0)
+                    //     Bot.Kill.Monster(2);
                     // Attack Escherion when staff is down
                     else Bot.Combat.Attack(3);
 
@@ -4914,7 +4917,7 @@ public class CoreBots
         #endregion new staff killing method
 
 
-        Bot.Events.ExtensionPacketReceived -= StaffRespawnListner;
+        // Bot.Events.ExtensionPacketReceived -= StaffRespawnListner;
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
         Jump();
@@ -8196,7 +8199,54 @@ public class CoreBots
     /// <param name="quant">Desired quantity of the item</param>
     /// <param name="map">Map where the item is</param>
     public void GetMapItem(int itemID, int quant = 1, string? map = null)
-        => GetMapItems(new[] { (itemID, quant) }, map);
+    {
+        // Early exit if item already present in sufficient quantity
+        if (Bot.TempInv.Contains(itemID, quant))
+        {
+            Logger($"Map item {itemID} already acquired ({quant})");
+            return;
+        }
+
+        if (map != null)
+            Join(map);
+
+        JumpWait();
+        Sleep();
+
+        List<ItemBase>? initialItems = Bot.TempInv.Items?.ToList();
+        ItemBase? newItem = null;
+
+        for (int i = 0; i < quant; i++)
+        {
+            Bot.Map.GetMapItem(itemID);
+            Sleep(1000);
+
+            if (newItem != null)
+                continue;
+
+            // Try to find the newly acquired item
+            List<ItemBase>? newItems = Bot.TempInv.Items?.Except(initialItems ?? Enumerable.Empty<ItemBase>()).ToList();
+            newItem = newItems?.FirstOrDefault(x => x.ID == itemID) ?? newItems?.FirstOrDefault();
+        }
+
+        if (quant > 1 && newItem != null)
+        {
+            int attempts = 0;
+            while (Bot.TempInv.GetQuantity(newItem.Name) < quant &&
+                   Bot.TempInv.TryGetItem(newItem.Name, out ItemBase? item) &&
+                   (item?.Quantity < item?.MaxStack))
+            {
+                Bot.Map.GetMapItem(itemID);
+                Sleep(1000);
+                attempts++;
+
+                if (attempts > quant + 10 || Bot.TempInv.Contains(newItem.Name, quant))
+                    break;
+            }
+        }
+
+        Logger($"Map item {itemID} ({quant}) acquired");
+    }
 
 
     /// <summary>
@@ -8209,37 +8259,53 @@ public class CoreBots
         if (items == null)
             return;
 
-        if (Bot.Map!.Name != map)
+        if (map != null)
             Join(map);
 
+        JumpWait();
+        Sleep();
+
         foreach ((int itemID, int quant) in items)
-            AcquireMapItem(itemID, quant);
-    }
-
-
-    /// <summary>
-    /// Handles logic for acquiring a single map item.
-    /// </summary>
-    private void AcquireMapItem(int itemID, int quant)
-    {
-        if (Bot.TempInv.Contains(itemID, quant))
         {
-            Logger($"Map item {itemID} already acquired (x{quant})");
-            return;
-        }
-
-        while (!Bot.ShouldExit && !Bot.TempInv.Contains(itemID, quant))
-        {
-            Bot.Wait.ForActionCooldown(GameActions.GetMapItem);
-            Bot.Map.GetMapItem(itemID);
-            Bot.Sleep(500);
-
-            // Safety stop in case of bugged item or wrong map
             if (Bot.TempInv.Contains(itemID, quant))
-                break;
-        }
+            {
+                Logger($"Map item {itemID} already acquired ({quant})");
+                continue;
+            }
 
-        Logger($"Map item {itemID} ({quant}) acquired");
+            List<ItemBase>? initialItems = Bot.TempInv.Items?.ToList();
+            ItemBase? newItem = null;
+
+            for (int i = 0; i < quant; i++)
+            {
+                Bot.Map.GetMapItem(itemID);
+                Sleep(1000);
+
+                if (newItem != null)
+                    continue;
+
+                List<ItemBase>? newItems = Bot.TempInv.Items?.Except(initialItems ?? Enumerable.Empty<ItemBase>()).ToList();
+                newItem = newItems?.FirstOrDefault(x => x.ID == itemID) ?? newItems?.FirstOrDefault();
+            }
+
+            if (quant > 1 && newItem != null)
+            {
+                int attempts = 0;
+                while (Bot.TempInv.GetQuantity(newItem.Name) < quant &&
+                       Bot.TempInv.TryGetItem(newItem.Name, out ItemBase? item) &&
+                       (item?.Quantity < item?.MaxStack))
+                {
+                    Bot.Map.GetMapItem(itemID);
+                    Sleep(1000);
+                    attempts++;
+
+                    if (attempts > quant + 10 || Bot.TempInv.Contains(newItem.Name, quant))
+                        break;
+                }
+            }
+
+            Logger($"Map item {itemID} ({quant}) acquired");
+        }
     }
 
 
@@ -8942,8 +9008,8 @@ public class CoreBots
 
         void FaultyInput(string text) => Bot.ShowMessageBox($"Invalid Discord username detected:\n{text}!", "Invalid AutoReport Identity");
     }
-
-    public class LockedQuestData
+ 
+   public class LockedQuestData
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -9765,9 +9831,9 @@ public class CoreBots
                             progressBar.Paint += (sender, e) =>
                             {
 #if WINDOWS
-                                e.Graphics.DrawString($"{progressBar.Value}%",
-                                    new Font("Arial", 10), Brushes.White,
-                                    new PointF((progressBar.Width / 2) - 20, progressBar.Height / 2 - 10));
+                e.Graphics.DrawString($"{progressBar.Value}%", 
+                    new Font("Arial", 10), Brushes.White, 
+                    new PointF((progressBar.Width / 2) - 20, progressBar.Height / 2 - 10));
 #endif
                             };
 
