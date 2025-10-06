@@ -4844,8 +4844,8 @@ public class CoreBots
             bool done = false;
             while (!Bot.ShouldExit && !done)
             {
-                if (!Bot.Player.Alive)
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                if (!(Bot.Player?.Alive ?? false))
+                    Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
 
                 if (Bot.Map.Name != "escherion")
                 {
@@ -4861,7 +4861,7 @@ public class CoreBots
                     }
                 }
 
-                if (Bot.Player.Cell != "Boss")
+                if (!string.Equals(Bot.Player?.Cell, "Boss", StringComparison.Ordinal))
                 {
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange("Boss");
@@ -4872,8 +4872,8 @@ public class CoreBots
                     if (m == null || m?.HP <= 0)
                         continue;
 
-                    if (!Bot.Player.Alive)
-                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    if (!(Bot.Player?.Alive ?? false))
+                        Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
 
                     if (Bot.Map.Name != "escherion")
                         Join("escherion", "Boss", "Left");
@@ -4885,12 +4885,17 @@ public class CoreBots
                     }
 
                     // Attack staff
-                    if (Bot.Player.Target?.MapID == 3 && Bot.Player.Target?.State == 2)
-                        while (!Bot.ShouldExit && Bot.Player.Target?.HP > 0)
+                    Monster? target = Bot.Player?.Target;
+                    if ((target?.MapID ?? -1) == 3 && (target?.State ?? -1) == 2)
+                    {
+                        while (!Bot.ShouldExit && ((Bot.Player?.Target?.HP ?? 0) > 0))
                             Bot.Combat.Attack(2);
-
-                    // Attack Escherion when staff is down
-                    else Bot.Combat.Attack(3);
+                    }
+                    else
+                    {
+                        // Attack Escherion when staff is down
+                        Bot.Combat.Attack(3);
+                    }
 
 
 
@@ -4913,7 +4918,9 @@ public class CoreBots
             // Sell voucher area
             if (item != "Voucher of Nulgath" && SellVoucher && CheckInventory("Voucher of Nulgath"))
             {
-                while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
+                while (!Bot.ShouldExit
+                    && ((Bot.Player?.HasTarget ?? false) || (Bot.Player?.InCombat ?? false))
+                    && !string.Equals(Bot.Player?.Cell, "Enter", StringComparison.Ordinal))
                 {
                     Bot.Combat.CancelTarget();
                     Bot.Wait.ForCombatExit();
@@ -4921,7 +4928,7 @@ public class CoreBots
                     Sleep();
                 }
 
-                if (Bot.Player.Gold < 100000000)
+                if ((Bot.Player?.Gold ?? 0) < 100000000)
                 {
                     Bot.Wait.ForPickup("Voucher of Nulgath");
                     SellItem("Voucher of Nulgath", all: true);
@@ -6253,8 +6260,13 @@ public class CoreBots
         try
         {
             Bot.Log($"⚡ Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
-            Bot.Servers.SetLoginInfo(Bot.Player?.Username, Bot.Player?.Password);
-
+            // NEW: Only set login info if we have both
+            string? username = Bot.Player?.Username;
+            string? password = Bot.Player?.Password;
+            if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
+                Bot.Servers.SetLoginInfo(username, password);
+            else
+                Bot.Log("ℹ️ No cached credentials found; continuing without SetLoginInfo.");
             int tries = 0;
             int maxTries = 5;
             string? lastTriedServer = null;
@@ -6270,7 +6282,7 @@ public class CoreBots
                     Bot.Log("🔒 Logging out current session...");
                 }
 
-                Bot.Wait.ForTrue(() => !Bot.Player.LoggedIn, 20);
+                Bot.Wait.ForTrue(() => !(Bot.Player?.LoggedIn ?? false), 20);
                 Bot.Sleep(2000);
 
                 var servers = Bot.Servers.GetServers(true).GetAwaiter().GetResult();
@@ -6281,15 +6293,14 @@ public class CoreBots
                 }
 
                 Bot.Servers.Login();
-                Bot.Wait.ForTrue(() => Bot.Player.LoggedIn, 20);
+                Bot.Wait.ForTrue(() => (Bot.Player?.LoggedIn ?? false), 20);
 
                 // Pick target server
                 Server? targetServer = servers.FirstOrDefault(s => s.IP == Bot.Servers.LastIP)
                                        ?? servers.FirstOrDefault(s => s.Name == "Twilly");
 
-                string serverName = targetServer?.Name;
-                if (string.IsNullOrWhiteSpace(serverName))
-                    serverName = "Twilly";
+                string serverName = string.IsNullOrWhiteSpace(targetServer?.Name) ? "Twilly" : targetServer!.Name;
+
 
                 string targetIP = targetServer?.IP ?? "";
                 lastTriedServer = serverName;
@@ -6305,7 +6316,7 @@ public class CoreBots
                 else
                     Bot.Log("⚠️ No suitable server found to connect!");
 
-                if (!Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20))
+                if (!Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
                 {
                     tries++;
                     Bot.Log($"⏳ Load failed. Retrying... 🔄 ({tries}/{maxTries})");
@@ -6324,10 +6335,10 @@ public class CoreBots
                 : "Twilly";
 
             Bot.Log($"⚡ Max relogin attempts reached. Trying fallback server: {fallbackServer} 🔄");
-            if (Bot.Servers.EnsureRelogin(fallbackServer) && Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20))
+            if (Bot.Servers.EnsureRelogin(fallbackServer) && Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
             {
                 Bot.Log($"✅ Fallback relogin to {fallbackServer} successful! 🎉");
-                Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
+                Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
                 return;
             }
 
@@ -6355,7 +6366,7 @@ public class CoreBots
         void SendPlayerToHouse(string serverName, string reason = "")
         {
             Bot.Log($"🏠 Relogin successful! Sending to house from {serverName}{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")} ✨");
-            Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
+            Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
 
             if (!Bot.Wait.ForMapLoad("house", 20))
             {
@@ -7175,7 +7186,7 @@ public class CoreBots
 
             case "escherion":
                 // Blacklist "Boss" plus all cells like "e" followed by digits
-                blackListedCells.UnionWith(Bot.Map?.Cells?.Where(c => Regex.IsMatch(c, @"^e\d+$")));
+                blackListedCells.UnionWith(Bot.Map?.Cells?.Where(c => Regex.IsMatch(c, @"^e\d+$")) ?? Array.Empty<string>());
                 blackListedCells.Add("Boss");
                 break;
 
@@ -7268,13 +7279,13 @@ public class CoreBots
             blackListedCells.Add("Eggs");
 
         // Jump to a viable cell (or retry)
-        IEnumerable<string> viableCells = Bot.Map.Cells?
-        .Except(BlackListedJumptoCells
-        .Concat(blackListedCells), StringComparer.OrdinalIgnoreCase) ?? Enumerable.Empty<string>();
+        var cells = Bot.Map?.Cells ?? Enumerable.Empty<string>();
+        IEnumerable<string> viableCells = cells
+            .Except(BlackListedJumptoCells.Concat(blackListedCells), StringComparer.OrdinalIgnoreCase);
 
         (string, string) cellPad = viableCells.Any()
-            ? (viableCells.First(), Bot.Map.Name == "battleon" ? "Spawn" : "Left")
-            : (Bot.Player.Cell, Bot.Player.Pad);
+    ? (viableCells.First(), string.Equals(Bot.Map?.Name, "battleon", StringComparison.OrdinalIgnoreCase) ? "Spawn" : "Left")
+    : (Bot.Player?.Cell ?? "Enter", Bot.Player?.Pad ?? "Left");
         PerformJump(cellPad, viableCells.Any() ? 1 : 2);
     }
 

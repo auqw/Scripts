@@ -97,6 +97,326 @@ public class CoreEngine
 
     #endregion
 
+    #region Quest
+
+    public void WaitQuest(int questId)
+    {
+        if (Bot.Quests.HasBeenCompleted(questId))
+            return;
+
+        if (!IsAvailable(questId))
+            return;
+
+        PreloadQuestAccept(questId);
+
+        while (!CanCompleteFullCheck(questId) && !Bot.ShouldExit)
+            Bot.Sleep(2000);
+
+        if (CanCompleteFullCheck(questId))
+        {
+            Bot.Quests.Complete(questId);
+            Bot.Wait.ForQuestComplete(questId);
+        }
+    }
+
+    public void KillQuest(int questId, string map, string monster, string item, int quantity, string jumpCell)
+        => KillQuestCore(questId, map, monster, item, quantity, true, false, false, jumpCell, "Left", false);
+
+    public void KillQuest(int questId, string map, string monster, string item, int quantity, string jumpCell, string jumpPad)
+        => KillQuestCore(questId, map, monster, item, quantity, true, false, false, jumpCell, jumpPad, false);
+
+    public void KillQuest(int questId, string map, string monster, string item, int quantity = 1, bool isTemp = true, bool useBestGear = false, bool altJump = false)
+        => KillQuestCore(questId, map, monster, item, quantity, isTemp, useBestGear, altJump, null, "Left", false);
+
+    public void KillQuest(int questId, string map, string monster, string item, int quantity, bool isTemp, bool useBestGear, bool altJump, string? jumpCell, string jumpPad, bool priority)
+        => KillQuestCore(questId, map, monster, item, quantity, isTemp, useBestGear, altJump, jumpCell, jumpPad, priority);
+
+    private void KillQuestCore(
+    int questId,
+    string map,
+    string monster,
+    string item,
+    int quantity,
+    bool isTemp,
+    bool useBestGear,
+    bool altJump,
+    string? jumpCell,
+    string jumpPad = "Left",
+    bool priority = false)
+    {
+        Log("KillQuest", $"BEGIN: questId={questId}, map={map}, monster={monster}, item={item}, " +
+                         $"qtyArg={quantity}, isTemp={isTemp}, bestGear={useBestGear}, altJump={altJump}, " +
+                         $"cell={(jumpCell ?? "null")}, pad={jumpPad}, priority={priority}");
+
+        try
+        {
+            if (Bot.Quests.HasBeenCompleted(questId))
+            {
+                Log("KillQuest", $"Quest {questId} already completed → early return.");
+                return;
+            }
+
+            if (!IsAvailable(questId))
+            {
+                Log("KillQuest", $"Quest {questId} not available → early return (see IsAvailable logs).");
+                return;
+            }
+
+            Quest? quest = Bot.Quests.EnsureLoad(questId);
+            if (quest is null)
+            {
+                Log("KillQuest", $"EnsureLoad failed: quest {questId} is null → abort.");
+                return;
+            }
+
+            string slotInfo = quest.GetType().GetProperty("Slot") is null ? "" : $" Slot={quest.GetType().GetProperty("Slot")!.GetValue(quest)}";
+
+            Log("KillQuest", $"Loaded quest: '{quest.Name}' [ID={quest.ID}{slotInfo}] " +
+                             $"Reqs={quest.Requirements?.Count ?? 0}, AcceptReqs={quest.AcceptRequirements?.Count ?? 0}");
+
+            int originalQty = quantity;
+            if (quantity <= 1 && quest.Requirements is not null && quest.Requirements.Count > 0)
+            {
+                var match = quest.Requirements.FirstOrDefault(r =>
+                    r?.Name != null &&
+                    item != null &&
+                    string.Equals(r.Name, item, StringComparison.OrdinalIgnoreCase));
+
+                if (match is not null)
+                {
+                    Log("KillQuest", $"Requirement match found for '{item}': requiredQty={match.Quantity}");
+                    if (match.Quantity > 0)
+                        quantity = match.Quantity;
+                    else
+                        Log("KillQuest", $"Requirement quantity is 0 or invalid; keeping qty={quantity}");
+                }
+                else
+                {
+                    Log("KillQuest", $"No requirement match for '{item}' in quest requirements; keeping qty={quantity}");
+                }
+            }
+
+            if (quantity != originalQty)
+                Log("KillQuest", $"Quantity auto-adjusted: {originalQty} → {quantity}");
+
+            Log("KillQuest", $"Preloading / accepting quest {questId}…");
+            PreloadQuestAccept(questId);
+
+            Log("KillQuest", $"Joining map: {map}…");
+            Join(map);
+            Log("KillQuest", $"Join done. CurrentRoom={Bot.Map.Name} RoomID={Bot.Map.RoomID}");
+
+            Log("KillQuest", $"ForItem BEGIN → monsters='{monster}', map='{map}', key='{item}', " +
+                             $"qty={quantity}, isTemp={isTemp}, bestGear={useBestGear}, alt={altJump}, " +
+                             $"cell={(jumpCell ?? "null")}, pad={jumpPad}, priority={priority}");
+
+            ForItem(monster, map, item, quantity, isTemp, useBestGear, altJump, jumpCell, jumpPad, priority);
+
+            Log("KillQuest", "ForItem END");
+
+            bool canComplete = CanCompleteFullCheck(questId);
+            Log("KillQuest", $"Completion check for quest {questId}: {canComplete}");
+
+            if (canComplete)
+            {
+                Log("KillQuest", "Chill() + EnsureComplete + Wait.ForQuestComplete + Sleep(500) sequence START");
+                Chill();
+                Bot.Quests.EnsureComplete(questId);
+                Bot.Wait.ForQuestComplete(questId);
+                Bot.Sleep(500);
+                Log("KillQuest", "Turn-in sequence DONE");
+            }
+            else
+            {
+                Log("KillQuest", $"Cannot complete quest {questId} yet — requirements not fully met.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Log("KillQuest", $"ERROR: {ex.GetType().Name}: {ex.Message}\n{ex.StackTrace}");
+            throw;
+        }
+        finally
+        {
+            Log("KillQuest", $"END questId={questId}");
+        }
+    }
+
+    public bool IsAvailable(int id)
+    {
+        Quest? quest = Bot.Quests.EnsureLoad(id);
+
+        if (quest is null)
+        {
+            Log("Quest", $"[{id}] not found.");
+            return false;
+        }
+
+        if (Bot.Quests.IsDailyComplete(quest))
+        {
+            Log("Quest", $"{quest.Name} [{id}] is already marked as daily complete.");
+            return false;
+        }
+
+        if (!Bot.Quests.IsUnlocked(quest))
+        {
+            Log("Quest", $"{quest.Name} [{id}] is locked.");
+            return false;
+        }
+
+        if (quest.Upgrade && !Bot.Player.IsMember)
+        {
+            Log("Quest", $"{quest.Name} [{id}] requires membership.");
+            return false;
+        }
+
+        if (Bot.Player.Level < quest.Level)
+        {
+            Log("Quest", $"{quest.Name} [{id}] requires level {quest.Level}, current {Bot.Player.Level}.");
+            return false;
+        }
+
+        if (quest.RequiredClassID > 0)
+        {
+            int cp = Bot.Flash.CallGameFunction<int>("world.myAvatar.getCPByID", quest.RequiredClassID);
+            if (cp < quest.RequiredClassPoints)
+            {
+                Log("Quest", $"{quest.Name} [{id}] requires {quest.RequiredClassPoints} CP, current {cp}.");
+                return false;
+            }
+        }
+
+        if (quest.RequiredFactionId > 1)
+        {
+            int rep = Bot.Flash.CallGameFunction<int>("world.myAvatar.getRep", quest.RequiredFactionId);
+            if (rep < quest.RequiredFactionRep)
+            {
+                Log("Quest", $"{quest.Name} [{id}] requires faction rep {quest.RequiredFactionRep}, current {rep}.");
+                return false;
+            }
+        }
+
+        if (!quest.AcceptRequirements.All(r => Owned(r.Name, r.Quantity)))
+        {
+            Log("Quest", $"{quest.Name} [{id}] missing required items.");
+            return false;
+        }
+
+        return true;
+    }
+
+    public bool CanCompleteFullCheck(int id)
+    {
+        if (Bot.Quests.CanComplete(id))
+            return true;
+
+        Quest? quest = Bot.Quests.EnsureLoad(id);
+        if (quest is null)
+        {
+            Log("Quest", $"Quest [{id}] not found.");
+            return false;
+        }
+
+        List<ItemBase> requirements = new();
+        requirements.AddRange(quest.Requirements);
+        requirements.AddRange(quest.AcceptRequirements);
+
+        if (requirements.Count == 0)
+            return true;
+
+        foreach (ItemBase item in requirements)
+        {
+            if (Owned(item.Name, item.Quantity, false))
+                continue;
+
+            return false;
+        }
+
+        return true;
+    }
+
+    public void SwitchAlignment(int id)
+    {
+        string alignment = id switch
+        {
+            1 => "Good",
+            2 => "Evil",
+            3 => "Chaos",
+            _ => "Unknown"
+        };
+
+        Bot.Send.Packet($"%xt%zm%updateQuest%{Bot.Map.RoomID}%41%{id}%");
+
+        Log("Alignment", $"Switched to {alignment} ({id}).");
+    }
+
+    public bool IsMember(string npcName)
+    {
+        bool member = Bot.Player.IsMember;
+
+        Log("Membership", $"Skipping {npcName} quests — requires membership.");
+        return false;
+    }
+
+    public bool HasBeenCompleted(string storyName, int lastQuestId)
+    {
+        if (Bot.Quests.HasBeenCompleted(lastQuestId))
+        {
+            Log("Storyline", $"Skipping storyline '{storyName}' — already completed.");
+            return false;
+        }
+
+        Log("Storyline", $"Starting storyline '{storyName}'.");
+        return true;
+    }
+
+    private void PreloadQuestAccept(int questId)
+    {
+        int[] blacklistedQuestIds = { 2920, 2922, 2924, 2926, 2928, 2930 };
+
+        if (!Bot.Quests.IsInProgress(questId))
+        {
+            bool hadNoActive = (Bot.Quests.Active?.Count ?? 0) == 0;
+            var firstQ = Bot.Quests.EnsureLoad(questId);
+
+            Bot.Quests.EnsureAccept(questId);
+            Bot.Wait.ForQuestAccept(questId);
+
+            if (hadNoActive && firstQ is not null && !blacklistedQuestIds.Contains(questId))
+            {
+                int slot = firstQ.Slot;
+                var ids = Enumerable.Range(questId, 10).ToArray();
+                Bot.Quests.Load(ids);
+                Bot.Sleep(1000);
+
+                var sameSlotIds = new List<int>();
+                foreach (int id in ids)
+                {
+                    if (id == questId)
+                        continue;
+
+                    if (blacklistedQuestIds.Contains(id))
+                        continue;
+
+                    if (Bot.Quests.TryGetQuest(id, out var q) && q is not null && q.Slot == slot && !Bot.Quests.HasBeenCompleted(id))
+                        sameSlotIds.Add(id);
+                }
+
+                foreach (int id in sameSlotIds)
+                {
+                    if (!Bot.Quests.IsInProgress(id) && !Bot.Quests.HasBeenCompleted(id) && !blacklistedQuestIds.Contains(id))
+                    {
+                        Bot.Quests.EnsureAccept(id);
+                        Bot.Wait.ForQuestAccept(id);
+                        Bot.Sleep(1000);
+                    }
+                }
+            }
+        }
+    }
+
+    #endregion
+
     #region Items
 
     public void ForItem(string monsters, string? map, object key, int quantity = 1, bool isTemp = false, bool useBestGear = false, bool alt = false, string? cell = null, string pad = "Left", bool priority = false)

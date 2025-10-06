@@ -25,19 +25,15 @@ public class CoreUltra
         switch (mode)
         {
             case "aura":
-                if (!string.IsNullOrWhiteSpace(aura) && Core.GetAuraSecondsRemaining(aura) < 2)
-                    Core.UsePotion();
+                if (!string.IsNullOrWhiteSpace(aura) && Core.GetAuraSecondsRemaining(aura) < 1)
+                    UseTaunt();
                 break;
 
             case "charge":
-                if (_chargeDetected)
-                    Core.UsePotion();
+                if ((_chargeDetected) && !Core.HasAura("Focus"))
+                    UseTaunt();
                 break;
         }
-
-        //Usage:
-        //Taunt("Class", "Boss", "aura", 250, "Focus");
-        //Taunt("Class", "Boss", "charge", 250);
     }
 
     public void WaitForAuraFade(string auraName)
@@ -340,11 +336,13 @@ public class CoreUltra
     public void UseTaunt()
     {
         Core.DisableSkills();
+
         while (!Core.HasAura("Focus"))
         {
             Bot.Skills.UseSkill(5);
             Bot.Sleep(100);
         }
+
         Core.EnableSkills();
     }
 
@@ -505,7 +503,6 @@ public class CoreUltra
     }
 
     #endregion
-
 
     // --- next set ---------------------------------------------------------------
 

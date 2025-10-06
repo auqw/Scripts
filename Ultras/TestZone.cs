@@ -24,6 +24,64 @@ public class TestZone
 
     void Test()
     {
+        // Minimal “just go kill and collect” into a specific cell
+        // Core.KillQuest(1234, "battleon", "Slime", "Goo", 3, "r2");
+
+        // Same, but jump to pad "Right"
+        // Core.KillQuest(1234, "battleon", "Slime", "Goo", 3, "r2", "Right");
+
+        // Rely on defaults: temp item, no best gear, no alt jump, no cell/pad
+        // Core.KillQuest(1234, "battleon", "Slime", "Goo"); // quantity defaults to 1
+
+        // Non-temp drop, use best gear, alt jump, still no cell/pad
+        // Core.KillQuest(1234, "battleon", "Slime", "Goo", quantity: 5, isTemp: false, useBestGear: true, altJump: true);
+
+        // Full control: set cell, pad, and raise priority
+        /*Core.KillQuest(
+            questId: 1234,
+            map: "battleon",
+            monster: "Slime",
+            item: "Goo",
+            quantity: 10,
+            isTemp: false,
+            useBestGear: true,
+            altJump: true,
+            jumpCell: "r5",
+            jumpPad: "Spawn",
+            priority: true
+        );*/
+
+        //Core.KillQuest(1234, "battleon", "Slime", "Goo");
+
+        //  - Dragonslayer Veteran
+        Core.KillQuest(0000, "lair", "Water Draconian|Wyvern", "Dragonslayer Veteran Medal");
+
+        //  - Dragonslayer Sergeant
+        Core.KillQuest(0000, "lair", "monster", "Dragonslayer Sergeant Medal");
+
+        //  - Dragonslayer Captain
+        Core.KillQuest(0000, "lair", "monster", "item");
+
+        //  - Dragonslayer Marshal
+        Core.KillQuest(0000, "lair", "monster", "item");
+
+        //  - Dragonslayer Reward(Bonus Quest)
+        Core.KillQuest(0000, "lair", "monster", "item");
+
+        //  - Dragonbane(Bonus Quest)
+        Core.KillQuest(0000, "lair", "monster", "item");
+
+        //  - Dragon Scales(Bonus Quest)
+        Core.KillQuest(0000, "lair", "monster", "item");
+
+        //  - Dragon Souvenirs(Bonus Quest)
+        Core.KillQuest(0000, "lair", "monster", "item");
+
+        //  - Dragonslayer(Bonus Quest)
+        Core.KillQuest(0000, "lair", "monster", "item");
+
+
+
         //Ultra.Test();
         // priority => ...
         //Core.ChooseBestEnhancement("Weapon", "Valiance", "Spiral Carve", "Fighter");
@@ -153,40 +211,4 @@ public class TestZone
             // safe to assume not present (or engine returned 0)
         }
     }
-
-    void DropsDemo()
-    {
-        // Check by NAME / ID
-        bool hasSlime = Core.HasDrop("Slime Gel");
-        bool hasId = Core.HasDrop(12345);
-
-        // Get drop info (name/id lookup)
-        var infoByName = Core.GetDropItem("Slime Gel");
-        var infoById = Core.GetDropItem(12345);
-
-        // Pick up specific drops (name or id)
-        Core.Pickup("Slime Gel");
-        Core.Pickup(12345);
-
-        // Pick up multiple at once
-        Core.Pickup("Slime Gel", "Frogzard Scale", 12345, 67890);
-
-        // Wait for a drop (returns false on timeout)
-        if (Core.WaitForDrop("Slime Gel", timeout: 15000))
-            Core.Log("Drops", "Got Slime Gel");
-        else
-            Core.Log("Drops", "⏱Timeout waiting Slime Gel");
-
-        // Check if ANY among a set is on the ground
-        bool anyWanted = Core.HasAny("Slime Gel", "Frogzard Scale", 12345);
-        if (anyWanted) Core.Pickup("Slime Gel", "Frogzard Scale", 12345);
-
-        // Typical pattern during a farm loop:
-        //  - periodically pick up drops
-        //  - or block until a key drop appears
-        Core.Pickup("Quest Item A", "Quest Item B");
-        if (!Core.WaitForDrop("Quest Item A", 10000))
-            Core.Log("Drops", "'Quest Item A' didn’t drop in time");
-    }
-
 }
