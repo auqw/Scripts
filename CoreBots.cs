@@ -7190,6 +7190,13 @@ public class CoreBots
                 blackListedCells.Add("Boss");
                 break;
 
+            case "yokaigrave":
+                blackListedCells.UnionWith(new[] { "Quest" });
+                break;
+
+            case "pyramid":
+                blackListedCells.UnionWith(new[] { "Game" });
+                break;
 
             case "stalagbite":
                 blackListedCells.UnionWith(new[] { "Enter", "r1", "CutShow" });
@@ -7311,7 +7318,7 @@ public class CoreBots
 
     // Combined static and dynamic blacklist
     public string[] BlackListedJumptoCells = new[]
-    { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "Fall", "Move", "Cut", "Movie" };
+    { "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "Quest", "Fall", "Move", "Cut", "Movie" };
 
     /// <summary>
     /// Joins a map and does bonus steps for said map if needed

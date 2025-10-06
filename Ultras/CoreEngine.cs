@@ -107,8 +107,6 @@ public class CoreEngine
         if (!IsAvailable(questId))
             return;
 
-        PreloadQuestAccept(questId);
-
         while (!CanCompleteFullCheck(questId) && !Bot.ShouldExit)
             Bot.Sleep(2000);
 
@@ -119,126 +117,58 @@ public class CoreEngine
         }
     }
 
-    public void KillQuest(int questId, string map, string monster, string item, int quantity, string jumpCell)
-        => KillQuestCore(questId, map, monster, item, quantity, true, false, false, jumpCell, "Left", false);
+    public void KillQuest(int questId, string map, string monster)
+        => KillQuestCore(questId, map, monster, /*item*/ "", /*quantity*/ 1, /*isTemp*/ true,
+                         /*useBestGear*/ false, /*altJump*/ false, /*jumpCell*/ null, /*pad*/ "Left", /*priority*/ false);
 
-    public void KillQuest(int questId, string map, string monster, string item, int quantity, string jumpCell, string jumpPad)
-        => KillQuestCore(questId, map, monster, item, quantity, true, false, false, jumpCell, jumpPad, false);
+    public void KillQuest(int questId, string map, string monster, string jumpCell)
+        => KillQuestCore(questId, map, monster, /*item*/ "", /*quantity*/ 1, /*isTemp*/ true,
+                         /*useBestGear*/ false, /*altJump*/ false, /*jumpCell*/ jumpCell, /*pad*/ "Left", /*priority*/ false);
 
-    public void KillQuest(int questId, string map, string monster, string item, int quantity = 1, bool isTemp = true, bool useBestGear = false, bool altJump = false)
-        => KillQuestCore(questId, map, monster, item, quantity, isTemp, useBestGear, altJump, null, "Left", false);
+    public void KillQuest(int questId, string map, string monster, string jumpCell, string jumpPad)
+        => KillQuestCore(questId, map, monster, /*item*/ "", /*quantity*/ 1, /*isTemp*/ true,
+                         /*useBestGear*/ false, /*altJump*/ false, /*jumpCell*/ jumpCell, /*pad*/ jumpPad, /*priority*/ false);
 
-    public void KillQuest(int questId, string map, string monster, string item, int quantity, bool isTemp, bool useBestGear, bool altJump, string? jumpCell, string jumpPad, bool priority)
-        => KillQuestCore(questId, map, monster, item, quantity, isTemp, useBestGear, altJump, jumpCell, jumpPad, priority);
+    public void KillQuest(int questId, string map, string monster, int quantity = 1, bool isTemp = true, bool useBestGear = false, bool altJump = false)
+        => KillQuestCore(questId, map, monster, /*item*/ "", quantity, isTemp, useBestGear, altJump,
+                         /*jumpCell*/ null, /*pad*/ "Left", /*priority*/ false);
 
-    private void KillQuestCore(
-    int questId,
-    string map,
-    string monster,
-    string item,
-    int quantity,
-    bool isTemp,
-    bool useBestGear,
-    bool altJump,
-    string? jumpCell,
-    string jumpPad = "Left",
-    bool priority = false)
+    public void KillQuest(int questId, string map, string monster, int quantity, bool isTemp, bool useBestGear, bool altJump, string? jumpCell, string jumpPad, bool priority)
+        => KillQuestCore(questId, map, monster, /*item*/ "", quantity, isTemp, useBestGear, altJump, jumpCell, jumpPad, priority);
+
+    private void KillQuestCore(int questId, string map, string monster, string item, int quantity, bool isTemp, bool useBestGear, bool altJump, string? jumpCell, string jumpPad = "Left", bool priority = false)
     {
-        Log("KillQuest", $"BEGIN: questId={questId}, map={map}, monster={monster}, item={item}, " +
-                         $"qtyArg={quantity}, isTemp={isTemp}, bestGear={useBestGear}, altJump={altJump}, " +
-                         $"cell={(jumpCell ?? "null")}, pad={jumpPad}, priority={priority}");
+        if (!IsAvailable(questId)) return;
 
-        try
+        var q = Bot.Quests.EnsureLoad(questId);
+        if (q is null) return;
+
+        if (string.IsNullOrWhiteSpace(item))
         {
-            if (Bot.Quests.HasBeenCompleted(questId))
-            {
-                Log("KillQuest", $"Quest {questId} already completed → early return.");
-                return;
-            }
-
-            if (!IsAvailable(questId))
-            {
-                Log("KillQuest", $"Quest {questId} not available → early return (see IsAvailable logs).");
-                return;
-            }
-
-            Quest? quest = Bot.Quests.EnsureLoad(questId);
-            if (quest is null)
-            {
-                Log("KillQuest", $"EnsureLoad failed: quest {questId} is null → abort.");
-                return;
-            }
-
-            string slotInfo = quest.GetType().GetProperty("Slot") is null ? "" : $" Slot={quest.GetType().GetProperty("Slot")!.GetValue(quest)}";
-
-            Log("KillQuest", $"Loaded quest: '{quest.Name}' [ID={quest.ID}{slotInfo}] " +
-                             $"Reqs={quest.Requirements?.Count ?? 0}, AcceptReqs={quest.AcceptRequirements?.Count ?? 0}");
-
-            int originalQty = quantity;
-            if (quantity <= 1 && quest.Requirements is not null && quest.Requirements.Count > 0)
-            {
-                var match = quest.Requirements.FirstOrDefault(r =>
-                    r?.Name != null &&
-                    item != null &&
-                    string.Equals(r.Name, item, StringComparison.OrdinalIgnoreCase));
-
-                if (match is not null)
-                {
-                    Log("KillQuest", $"Requirement match found for '{item}': requiredQty={match.Quantity}");
-                    if (match.Quantity > 0)
-                        quantity = match.Quantity;
-                    else
-                        Log("KillQuest", $"Requirement quantity is 0 or invalid; keeping qty={quantity}");
-                }
-                else
-                {
-                    Log("KillQuest", $"No requirement match for '{item}' in quest requirements; keeping qty={quantity}");
-                }
-            }
-
-            if (quantity != originalQty)
-                Log("KillQuest", $"Quantity auto-adjusted: {originalQty} → {quantity}");
-
-            Log("KillQuest", $"Preloading / accepting quest {questId}…");
-            PreloadQuestAccept(questId);
-
-            Log("KillQuest", $"Joining map: {map}…");
-            Join(map);
-            Log("KillQuest", $"Join done. CurrentRoom={Bot.Map.Name} RoomID={Bot.Map.RoomID}");
-
-            Log("KillQuest", $"ForItem BEGIN → monsters='{monster}', map='{map}', key='{item}', " +
-                             $"qty={quantity}, isTemp={isTemp}, bestGear={useBestGear}, alt={altJump}, " +
-                             $"cell={(jumpCell ?? "null")}, pad={jumpPad}, priority={priority}");
-
-            ForItem(monster, map, item, quantity, isTemp, useBestGear, altJump, jumpCell, jumpPad, priority);
-
-            Log("KillQuest", "ForItem END");
-
-            bool canComplete = CanCompleteFullCheck(questId);
-            Log("KillQuest", $"Completion check for quest {questId}: {canComplete}");
-
-            if (canComplete)
-            {
-                Log("KillQuest", "Chill() + EnsureComplete + Wait.ForQuestComplete + Sleep(500) sequence START");
-                Chill();
-                Bot.Quests.EnsureComplete(questId);
-                Bot.Wait.ForQuestComplete(questId);
-                Bot.Sleep(500);
-                Log("KillQuest", "Turn-in sequence DONE");
-            }
-            else
-            {
-                Log("KillQuest", $"Cannot complete quest {questId} yet — requirements not fully met.");
-            }
+            var reqs = q.Requirements;
+            if (reqs is null || reqs.Count == 0) return;
+            if (reqs.Count != 1 || string.IsNullOrWhiteSpace(reqs[0]?.Name)) return;
+            item = reqs[0]!.Name!;
         }
-        catch (Exception ex)
+
+        if (quantity <= 1 && q.Requirements is not null)
         {
-            Log("KillQuest", $"ERROR: {ex.GetType().Name}: {ex.Message}\n{ex.StackTrace}");
-            throw;
+            var r = q.Requirements.FirstOrDefault(x =>
+                !string.IsNullOrWhiteSpace(x?.Name) &&
+                x!.Name.Equals(item, StringComparison.OrdinalIgnoreCase));
+            if (r is not null && r.Quantity > 0) quantity = r.Quantity;
         }
-        finally
+
+        PreloadQuestAccept(questId);
+        Join(map);
+
+        ForItem(monster, map, item, quantity, isTemp, useBestGear, altJump, jumpCell, jumpPad, priority);
+
+        if (CanCompleteFullCheck(questId))
         {
-            Log("KillQuest", $"END questId={questId}");
+            Chill(false);
+            Bot.Quests.EnsureComplete(questId);
+            Bot.Wait.ForQuestComplete(questId);
         }
     }
 
@@ -248,31 +178,31 @@ public class CoreEngine
 
         if (quest is null)
         {
-            Log("Quest", $"[{id}] not found.");
+            Log("QUEST", $"[{id}] not found.");
             return false;
         }
 
         if (Bot.Quests.IsDailyComplete(quest))
         {
-            Log("Quest", $"{quest.Name} [{id}] is already marked as daily complete.");
+            Log("QUEST", $"{quest.Name} [{id}] is already marked as daily complete.");
             return false;
         }
 
         if (!Bot.Quests.IsUnlocked(quest))
         {
-            Log("Quest", $"{quest.Name} [{id}] is locked.");
+            Log("QUEST", $"{quest.Name} [{id}] is locked.");
             return false;
         }
 
         if (quest.Upgrade && !Bot.Player.IsMember)
         {
-            Log("Quest", $"{quest.Name} [{id}] requires membership.");
+            Log("QUEST", $"{quest.Name} [{id}] requires membership.");
             return false;
         }
 
         if (Bot.Player.Level < quest.Level)
         {
-            Log("Quest", $"{quest.Name} [{id}] requires level {quest.Level}, current {Bot.Player.Level}.");
+            Log("QUEST", $"{quest.Name} [{id}] requires level {quest.Level}, current {Bot.Player.Level}.");
             return false;
         }
 
@@ -281,7 +211,7 @@ public class CoreEngine
             int cp = Bot.Flash.CallGameFunction<int>("world.myAvatar.getCPByID", quest.RequiredClassID);
             if (cp < quest.RequiredClassPoints)
             {
-                Log("Quest", $"{quest.Name} [{id}] requires {quest.RequiredClassPoints} CP, current {cp}.");
+                Log("QUEST", $"{quest.Name} [{id}] requires {quest.RequiredClassPoints} CP, current {cp}.");
                 return false;
             }
         }
@@ -291,14 +221,14 @@ public class CoreEngine
             int rep = Bot.Flash.CallGameFunction<int>("world.myAvatar.getRep", quest.RequiredFactionId);
             if (rep < quest.RequiredFactionRep)
             {
-                Log("Quest", $"{quest.Name} [{id}] requires faction rep {quest.RequiredFactionRep}, current {rep}.");
+                Log("QUEST", $"{quest.Name} [{id}] requires faction rep {quest.RequiredFactionRep}, current {rep}.");
                 return false;
             }
         }
 
         if (!quest.AcceptRequirements.All(r => Owned(r.Name, r.Quantity)))
         {
-            Log("Quest", $"{quest.Name} [{id}] missing required items.");
+            Log("QUEST", $"{quest.Name} [{id}] missing required items.");
             return false;
         }
 
@@ -313,7 +243,7 @@ public class CoreEngine
         Quest? quest = Bot.Quests.EnsureLoad(id);
         if (quest is null)
         {
-            Log("Quest", $"Quest [{id}] not found.");
+            Log("QUEST", $"Quest [{id}] not found.");
             return false;
         }
 
@@ -347,72 +277,71 @@ public class CoreEngine
 
         Bot.Send.Packet($"%xt%zm%updateQuest%{Bot.Map.RoomID}%41%{id}%");
 
-        Log("Alignment", $"Switched to {alignment} ({id}).");
-    }
-
-    public bool IsMember(string npcName)
-    {
-        bool member = Bot.Player.IsMember;
-
-        Log("Membership", $"Skipping {npcName} quests — requires membership.");
-        return false;
+        Log("ALIGNMENT", $"Switched to {alignment} ({id}).");
     }
 
     public bool HasBeenCompleted(string storyName, int lastQuestId)
     {
         if (Bot.Quests.HasBeenCompleted(lastQuestId))
         {
-            Log("Storyline", $"Skipping storyline '{storyName}' — already completed.");
+            Log("STORY", $"Skipping storyline '{storyName}' — already completed.");
             return false;
         }
 
-        Log("Storyline", $"Starting storyline '{storyName}'.");
+        Log("STORY", $"Starting storyline '{storyName}'.");
         return true;
     }
 
     private void PreloadQuestAccept(int questId)
     {
-        int[] blacklistedQuestIds = { 2920, 2922, 2924, 2926, 2928, 2930 };
+        if (Bot.Quests.IsInProgress(questId)) return;
 
-        if (!Bot.Quests.IsInProgress(questId))
+        var q0 = Bot.Quests.EnsureLoad(questId);
+        if (q0 is null || (q0.Upgrade && !Bot.Player.IsMember)) return;
+
+        Bot.Quests.EnsureAccept(questId);
+        Bot.Wait.ForQuestAccept(questId);
+
+        var ids = Enumerable.Range(questId, 10).ToArray();
+
+        for (int tries = 0; tries < 3; tries++)
         {
-            bool hadNoActive = (Bot.Quests.Active?.Count ?? 0) == 0;
-            var firstQ = Bot.Quests.EnsureLoad(questId);
+            Bot.Quests.Load(ids);
+            Bot.Sleep(500);
+        }
 
-            Bot.Quests.EnsureAccept(questId);
-            Bot.Wait.ForQuestAccept(questId);
+        int slot = q0.Slot;
+        var seenReqs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        var r0 = q0.Requirements?.FirstOrDefault()?.Name;
+        if (!string.IsNullOrWhiteSpace(r0)) seenReqs.Add(r0);
 
-            if (hadNoActive && firstQ is not null && !blacklistedQuestIds.Contains(questId))
+        bool changed;
+        do
+        {
+            changed = false;
+            foreach (int id in ids)
             {
-                int slot = firstQ.Slot;
-                var ids = Enumerable.Range(questId, 10).ToArray();
-                Bot.Quests.Load(ids);
-                Bot.Sleep(1000);
+                if (id == questId) continue;
 
-                var sameSlotIds = new List<int>();
-                foreach (int id in ids)
+                if (Bot.Quests.TryGetQuest(id, out var q) &&
+                    q is not null &&
+                    q.Slot == slot &&
+                    q.Value != -1 &&
+                    !(q.Upgrade && !Bot.Player.IsMember) &&
+                    !Bot.Quests.IsInProgress(id))
                 {
-                    if (id == questId)
-                        continue;
+                    var reqName = q.Requirements?.FirstOrDefault()?.Name;
+                    if (!string.IsNullOrWhiteSpace(reqName) && seenReqs.Contains(reqName))
+                        continue; // same requirement already active
 
-                    if (blacklistedQuestIds.Contains(id))
-                        continue;
-
-                    if (Bot.Quests.TryGetQuest(id, out var q) && q is not null && q.Slot == slot && !Bot.Quests.HasBeenCompleted(id))
-                        sameSlotIds.Add(id);
-                }
-
-                foreach (int id in sameSlotIds)
-                {
-                    if (!Bot.Quests.IsInProgress(id) && !Bot.Quests.HasBeenCompleted(id) && !blacklistedQuestIds.Contains(id))
-                    {
-                        Bot.Quests.EnsureAccept(id);
-                        Bot.Wait.ForQuestAccept(id);
-                        Bot.Sleep(1000);
-                    }
+                    Bot.Quests.EnsureAccept(id);
+                    Bot.Wait.ForQuestAccept(id);
+                    Bot.Sleep(700);
+                    if (!string.IsNullOrWhiteSpace(reqName)) seenReqs.Add(reqName);
+                    changed = true;
                 }
             }
-        }
+        } while (changed);
     }
 
     #endregion
@@ -499,7 +428,7 @@ public class CoreEngine
             if (priority)
                 KillWithPriority(prioKeys);
             else
-                Kill(targetKeys[i++ % targetKeys.Length]);
+                KillAmong(targetKeys);
         }
 
         DisableSkills();
@@ -921,6 +850,27 @@ public class CoreEngine
         Bot.Sleep(D1);
     }
 
+    public void KillAmong(params MonsterKey[] keys)
+    {
+        if (keys == null || keys.Length == 0) return;
+
+        var myCell = Bot.Player.Cell;
+
+        var target = keys
+            .SelectMany(k => Match(k))
+            .Where(m => m.Alive && string.Equals(m.Cell, myCell, StringComparison.OrdinalIgnoreCase))
+            .OrderBy(m => m.HP)
+            .ThenBy(m => m.MapID)
+            .FirstOrDefault();
+
+        if (target == null) return;
+
+        var hpKey = MonsterKey.FromMapId(target.MapID);
+        Attack(hpKey);
+        Bot.Sleep(D1);
+    }
+
+
     Monster? LowestHpTarget(params MonsterKey[] keys)
     {
         Monster? best = null;
@@ -971,8 +921,6 @@ public class CoreEngine
         => KillWithPriority(MonsterKey.FromName(priorityName1), MonsterKey.FromName(priorityName2), MonsterKey.FromName(primaryName));
     public void KillWithPriorityAtMapId(int primaryMapId, int priorityMapId1, int priorityMapId2)
         => KillWithPriority(MonsterKey.FromMapId(priorityMapId1), MonsterKey.FromMapId(priorityMapId2), MonsterKey.FromMapId(primaryMapId));
-
-    // --- helpers -----------------------------------------------------------------
 
     #endregion
 
@@ -1519,6 +1467,7 @@ public class CoreEngine
     public void Pickup(params object[] keys)
     {
         if (keys == null || keys.Length == 0) return;
+        RejectExcept(keys);
         foreach (var k in keys)
         {
             switch (k)
@@ -1566,6 +1515,30 @@ public class CoreEngine
         }
         return false;
 
+    }
+
+    public void RejectExcept(params object[] keys)
+    {
+        static string? ToName(object k, Func<object, ItemBase> getDrop)
+        {
+            switch (k)
+            {
+                case int id when id > 0:
+                    return getDrop(id)?.Name ?? id.ToString();
+                case string s when !string.IsNullOrWhiteSpace(s):
+                    return s;
+                default:
+                    return null;
+            }
+        }
+
+        var names = keys?
+            .Select(k => ToName(k, GetDropItem))
+            .Where(n => !string.IsNullOrWhiteSpace(n))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+
+        Bot.Flash.Call("rejectExcept", (names != null && names.Length > 0) ? string.Join(",", names) : "");
     }
 
     #endregion
@@ -1920,7 +1893,7 @@ public class CoreEngine
 
     #region Utils
 
-    public void Chill()
+    public void Chill(bool sleepMore = true)
     {
         if (Bot?.Combat == null || Bot?.Map == null || Bot?.Player == null) return;
 
@@ -1950,7 +1923,8 @@ public class CoreEngine
             Bot.Sleep(D1);
         }
 
-        Bot.Sleep(D3);
+        if (sleepMore)
+            Bot.Sleep(D3);
     }
 
     bool HasChanged<T>(string key, T newValue)

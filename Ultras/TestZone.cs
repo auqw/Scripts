@@ -54,31 +54,31 @@ public class TestZone
         //Core.KillQuest(1234, "battleon", "Slime", "Goo");
 
         //  - Dragonslayer Veteran
-        Core.KillQuest(0000, "lair", "Water Draconian|Wyvern", "Dragonslayer Veteran Medal");
+        Core.KillQuest(165, "lair", "Water Draconian|Wyvern");
 
         //  - Dragonslayer Sergeant
-        Core.KillQuest(0000, "lair", "monster", "Dragonslayer Sergeant Medal");
+        Core.KillQuest(166, "lair", "Bronze Draconian|Purple Draconian|Venom Draconian");
 
         //  - Dragonslayer Captain
-        Core.KillQuest(0000, "lair", "monster", "item");
+        Core.KillQuest(167, "lair", "Dark Draconian|Golden Draconian");
 
         //  - Dragonslayer Marshal
-        Core.KillQuest(0000, "lair", "monster", "item");
+        Core.KillQuest(168, "lair", "Red Dragon");
 
-        //  - Dragonslayer Reward(Bonus Quest)
-        Core.KillQuest(0000, "lair", "monster", "item");
+        //  - Dragonslayer Reward (Bonus Quest)
+        Core.KillQuest(169, "lair", "Bronze Draconian|Purple Draconian|Venom Draconian");
 
-        //  - Dragonbane(Bonus Quest)
-        Core.KillQuest(0000, "lair", "monster", "item");
+        //  - Dragonbane (Bonus Quest)
+        Core.KillQuest(109, "lair", "Bronze Draconian|Purple Draconian|Venom Draconian");
 
-        //  - Dragon Scales(Bonus Quest)
-        Core.KillQuest(0000, "lair", "monster", "item");
+        //  - Dragon Scales (Bonus Quest)
+        Core.KillQuest(110, "lair", "Bronze Draconian|Purple Draconian|Venom Draconian");
 
-        //  - Dragon Souvenirs(Bonus Quest)
-        Core.KillQuest(0000, "lair", "monster", "item");
+        //  - Dragon Souvenirs (Bonus Quest)
+        Core.KillQuest(111, "lair", "Bronze Draconian|Purple Draconian|Venom Draconian");
 
-        //  - Dragonslayer(Bonus Quest)
-        Core.KillQuest(0000, "lair", "monster", "item");
+        //  - Dragonslayer (Bonus Quest)
+        //Core.KillQuest(112, "lair", "Red Dragon");
 
 
 
@@ -92,7 +92,7 @@ public class TestZone
         //Ultra.BuyAlchemyPotion("Potent Honor Potion");
         //Core.BuyItem("Shriekward Potion", 774, "mirrorportal", 30);
         //Core.ForItem("Onyx Lava Dragon", "lair", "Celestial Staff", useBestGear: true);
-        Core.ForItem("Mini Boss Dummy", "classhall", "Celestial Staff");
+        //Core.ForItem("Mini Boss Dummy", "classhall", "Celestial Staff");
         //Core.ForItem("Purple Draconian, Venom Draconian, Bronze Draconian", "lair", "Celestial Staff");
         //Core.GetScrollOfEnrage();
         //Core.GetScrollOfDecay();
