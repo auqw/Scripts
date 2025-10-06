@@ -55,7 +55,7 @@ public class UltraAvatarTyndarius
         const string boss = "Ultra Avatar Tyndarius";
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_tyndarius_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_tyndarius.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 

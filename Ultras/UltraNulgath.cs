@@ -56,7 +56,7 @@ public class UltraNulgath
         const string blade = "Overfiend Blade";
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_nulgath_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_nulgath.sync");
 
         if (!IsTaunter()) Bot.Sleep(5000);
 

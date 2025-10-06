@@ -29,7 +29,7 @@ public class UltraEngineer
         Core.EquipConsumable("Potent Honor Potion");
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_engineer_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_engineer.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 

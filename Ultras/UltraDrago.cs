@@ -58,7 +58,7 @@ public class UltraDrago
         const string bowmaster = "Bowmaster Algie";
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_drago_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_drago.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 

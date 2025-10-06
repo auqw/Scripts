@@ -51,14 +51,13 @@ public class UltraWarden
         }
     }
 
-
     void Fight()
     {
         const string map = "ultrawarden";
         const string boss = "Ultra Warden";
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_warden_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_warden.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 

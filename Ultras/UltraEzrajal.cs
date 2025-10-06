@@ -27,7 +27,7 @@ public class UltraEzrajal
         Core.EquipConsumable("Potent Honor Potion");
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_ezrajal_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_ezrajal.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 

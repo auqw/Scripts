@@ -59,7 +59,7 @@ public class UltraDage
         const string boss = "Dage the Dark Lord";
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_dage_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_dage.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 

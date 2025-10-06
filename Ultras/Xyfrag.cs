@@ -57,7 +57,7 @@ public class Xyfrag
         const string boss = "Xyfrag";
 
         Core.Join(map);
-        Ultra.WaitForArmy(6, @"C:\SkuaSync\xyfrag_sync.txt");
+        Ultra.WaitForArmy(6, @"C:\SkuaSync\xyfrag.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
