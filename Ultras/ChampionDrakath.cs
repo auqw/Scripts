@@ -32,7 +32,7 @@ public class ChampionDrakath
         }
 
         Core.Boot();
-        //Prep();
+        Prep();
         Fight();
         Bot.Stop();
     }

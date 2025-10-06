@@ -386,7 +386,12 @@ public class CoreUltra
     {
         if (names == null || names.Length == 0) return;
 
-        string Aura(string p) => p switch { "Might Tonic" => "Might", "Sage Tonic" => "Sage", _ => p };
+        string Aura(string x) => x switch
+        {
+            "Might Tonic" => "Might",
+            "Sage Tonic" => "Sage",
+            _ => x
+        };
 
         var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var raw in names)
@@ -397,14 +402,14 @@ public class CoreUltra
             var aura = Aura(raw);
             if (Core.HasAura(aura, true))
             {
-                Core.Log("POTION", $"🟢 Already active: {aura}");
+                Core.Log("POTION", $"🟢 Already on: {aura}");
                 continue;
             }
 
-            Core.Log("POTION", $"🧪 Need: {raw} ({aura})");
+            Core.Log("POTION", $"🧪 Queueing: {raw} ({aura})");
             BuyAlchemyPotion(raw);
 
-            for (int t = 0; t < 3 && !Core.HasAura(aura, true) && !Bot.ShouldExit; t++)
+            for (int tries = 0; tries < 3 && !Core.HasAura(aura, true) && !Bot.ShouldExit; tries++)
             {
                 Core.EquipConsumable(raw);
                 if (Bot.Inventory.IsEquipped(raw))
@@ -418,57 +423,61 @@ public class CoreUltra
             }
 
             if (Core.HasAura(aura, true)) Core.Log("POTION", $"✅ Applied: {aura}");
-            else Core.Log("POTION", $"❌ Failed: {raw} ({aura})");
+            else Core.Log("POTION", $"❌ Nope: {raw} ({aura})");
         }
     }
 
     public void BuyAlchemyPotion(string n)
     {
-        if (string.IsNullOrWhiteSpace(n) || Core.Owned(n) >= 1) { if (!string.IsNullOrWhiteSpace(n)) Core.Log("POTION", $"🧴 Have: {n}"); return; }
-
-        int S = 2036;
-        string M = "alchemyacademy";
-        string GV = "Gold Voucher 500k";
-
-        void Vouchers(int need)
+        if (string.IsNullOrWhiteSpace(n) || Core.Owned(n) >= 1)
         {
-            int missing = Math.Max(0, need - Core.Owned(GV));
-            if (missing > 0)
+            if (!string.IsNullOrWhiteSpace(n)) Core.Log("POTION", $"🧴 Have: {n}");
+            return;
+        }
+
+        int shop = 2036;
+        string map = "alchemyacademy";
+        string voucher = "Gold Voucher 500k";
+
+        void NeedV(int want)
+        {
+            int miss = Math.Max(0, want - Core.Owned(voucher));
+            if (miss > 0)
             {
-                Core.Log("POTION", $"💰 Need {missing}× {GV}");
-                Core.BuyItem(GV, S, M, missing);
+                Core.Log("POTION", $"💰 Need {miss}× {voucher}");
+                Core.BuyItem(voucher, shop, map, miss);
             }
         }
 
-        void Bundle(int size)
+        void Grab(int count)
         {
-            Core.Log("POTION", $"🛒 {n} ×{size}");
-            Core.BuyItem(n, S, M, size, calculateRemaining: false);
+            Core.Log("POTION", $"🛒 {n} ×{count}");
+            Core.BuyItem(n, shop, map, count, calculateRemaining: false);
         }
 
         switch (n)
         {
             case "Might Tonic":
                 if (!Core.Faction("Alchemy", 8)) { Core.Log("POTION", "⛔ Alchemy rep 8 required"); return; }
-                Vouchers(2); Bundle(10);
+                NeedV(2); Grab(10);
                 break;
 
             case "Sage Tonic":
                 if (!Core.Faction("Alchemy", 8)) { Core.Log("POTION", "⛔ Alchemy rep 8 required"); return; }
-                Vouchers(2); Bundle(10);
+                NeedV(2); Grab(10);
                 break;
 
             case "Potent Malevolence Elixir":
-                Vouchers(4); Bundle(8);
+                NeedV(4); Grab(8);
                 break;
 
             case "Potent Battle Elixir":
-                Vouchers(4); Bundle(8);
+                NeedV(4); Grab(8);
                 break;
 
             case "Potent Honor Potion":
                 if (!Core.Faction("Good", 10)) { Core.Log("POTION", "⛔ Good rep 10 required"); return; }
-                Vouchers(1); Bundle(5);
+                NeedV(1); Grab(5);
                 break;
 
             default:
@@ -496,6 +505,7 @@ public class CoreUltra
     }
 
     #endregion
+
 
     // --- next set ---------------------------------------------------------------
 
