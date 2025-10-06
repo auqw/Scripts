@@ -34,9 +34,16 @@ public class UltraEzrajal
         while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
         {
             if (Core.HasAura("Counter Attack"))
-                Ultra.WaitForAuraFade("Counter Attack");
+            {
+                Bot.Combat.CancelAutoAttack();
+                Bot.Combat.CancelTarget();
+                Core.DisableSkills();
+                Bot.Sleep(3000);
+                Core.EnableSkills();
+            }
             else
                 Core.Kill(boss);
         }
     }
 }
+
