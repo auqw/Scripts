@@ -904,8 +904,32 @@ public class CoreNation
                             }
                             DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
-                            if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Item.Name != "Voucher of Nulgath (non-mem)" && Core.CheckInventory("Essence of Nulgath", 60))
-                                Core.EnsureCompleteMulti(4778);
+                            if (Core.CheckInventory("Voucher of Nulgath (non-mem)")
+                                && Core.CheckInventory("Essence of Nulgath", 60))
+                            {
+                                bool diamondsMaxed = Core.CheckInventory("Diamond of Nulgath", 1000);
+                                bool totemsMaxed = Core.CheckInventory("Totem of Nulgath", 100);
+
+                                if (item?.Equals("Diamond of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
+                                {
+                                    if (diamondsMaxed && !totemsMaxed)
+                                        Core.EnsureCompleteMulti(4778, 5357, 100); // Totems
+                                }
+                                else if (item?.Equals("Totem of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
+                                {
+                                    if (totemsMaxed && !diamondsMaxed)
+                                        Core.EnsureCompleteMulti(4778, 6136, 1000); // Diamonds
+                                }
+                                else // item == null or any other item
+                                {
+                                    if (!totemsMaxed)
+                                        Core.EnsureCompleteMulti(4778, 5357, 100); // Prioritize Totems
+                                    else if (!diamondsMaxed)
+                                        Core.EnsureCompleteMulti(4778, 6136, 1000); // Then Diamonds
+                                }
+                            }
+
+
                         }
                     }
                 }
@@ -971,8 +995,31 @@ public class CoreNation
 
                     DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
-                    if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && item != "Voucher of Nulgath (non-mem)" && Core.CheckInventory("Essence of Nulgath", 60))
-                        Core.EnsureCompleteMulti(4778);
+                    if (Core.CheckInventory("Voucher of Nulgath (non-mem)")
+    && Core.CheckInventory("Essence of Nulgath", 60))
+                    {
+                        bool diamondsMaxed = Core.CheckInventory("Diamond of Nulgath", 1000);
+                        bool totemsMaxed = Core.CheckInventory("Totem of Nulgath", 100);
+
+                        if (item?.Equals("Diamond of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
+                        {
+                            if (diamondsMaxed && !totemsMaxed)
+                                Core.EnsureCompleteMulti(4778, itemID: 5357); // Totems
+                        }
+                        else if (item?.Equals("Totem of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
+                        {
+                            if (totemsMaxed && !diamondsMaxed)
+                                Core.EnsureCompleteMulti(4778, itemID: 6136); // Diamonds
+                        }
+                        else // item == null or any other item
+                        {
+                            if (!totemsMaxed)
+                                Core.EnsureCompleteMulti(4778, itemID: 5357); // Prioritize Totems
+                            else if (!diamondsMaxed)
+                                Core.EnsureCompleteMulti(4778, itemID: 6136); // Then Diamonds
+                        }
+                    }
+
                 }
             }
         }
@@ -1135,8 +1182,31 @@ public class CoreNation
 
                     DoSwindlesReturnArea(returnPolicyDuringSupplies, Reward.ToString().Replace("_", ""));
 
-                    if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
-                        Core.EnsureCompleteMulti(4778);
+                    if (Core.CheckInventory("Voucher of Nulgath (non-mem)")
+    && Core.CheckInventory("Essence of Nulgath", 60))
+                    {
+                        bool diamondsMaxed = Core.CheckInventory("Diamond of Nulgath", 1000);
+                        bool totemsMaxed = Core.CheckInventory("Totem of Nulgath", 100);
+
+                        if (item?.Equals("Diamond of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
+                        {
+                            if (diamondsMaxed && !totemsMaxed)
+                                Core.EnsureCompleteMulti(4778, itemID: 5357); // Totems
+                        }
+                        else if (item?.Equals("Totem of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
+                        {
+                            if (totemsMaxed && !diamondsMaxed)
+                                Core.EnsureCompleteMulti(4778, itemID: 6136); // Diamonds
+                        }
+                        else // item == null or any other item
+                        {
+                            if (!totemsMaxed)
+                                Core.EnsureCompleteMulti(4778, itemID: 5357); // Prioritize Totems
+                            else if (!diamondsMaxed)
+                                Core.EnsureCompleteMulti(4778, itemID: 6136); // Then Diamonds
+                        }
+                    }
+
                 }
             }
             Core.CancelRegisteredQuests();
@@ -1146,7 +1216,7 @@ public class CoreNation
             Core.FarmingLogger(item, quant);
             while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             {
-                LogMobItemQuant(item, quant);
+                LogMobItemQuant(item!, quant);
                 if (farmGold)
                     Farm.Gold(1000000);
 
@@ -1157,8 +1227,31 @@ public class CoreNation
 
                 DoSwindlesReturnArea(returnPolicyDuringSupplies, Reward.ToString().Replace("_", ""));
 
-                if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
-                    Core.EnsureCompleteMulti(4778);
+                if (Core.CheckInventory("Voucher of Nulgath (non-mem)")
+     && Core.CheckInventory("Essence of Nulgath", 60))
+                {
+                    bool diamondsMaxed = Core.CheckInventory("Diamond of Nulgath", 1000);
+                    bool totemsMaxed = Core.CheckInventory("Totem of Nulgath", 100);
+
+                    if (item?.Equals("Diamond of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
+                    {
+                        if (diamondsMaxed && !totemsMaxed)
+                            Core.EnsureCompleteMulti(4778, itemID: 5357); // Totems
+                    }
+                    else if (item?.Equals("Totem of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
+                    {
+                        if (totemsMaxed && !diamondsMaxed)
+                            Core.EnsureCompleteMulti(4778, itemID: 6136); // Diamonds
+                    }
+                    else // item == null or any other item
+                    {
+                        if (!totemsMaxed)
+                            Core.EnsureCompleteMulti(4778, itemID: 5357); // Prioritize Totems
+                        else if (!diamondsMaxed)
+                            Core.EnsureCompleteMulti(4778, itemID: 6136); // Then Diamonds
+                    }
+                }
+
             }
         }
         if (returnPolicyDuringSupplies && Reward != SwindlesReturnReward.None)
@@ -1348,8 +1441,32 @@ public class CoreNation
                 if (returnPolicyDuringSupplies && (item == "Diamond of Nulgath" || item == null) && !Core.CheckInventory("Diamond of Nulgath", 1000))
                     CragsThirst();
 
-                if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
-                    Core.EnsureCompleteMulti(4778);
+                if (Core.CheckInventory("Voucher of Nulgath (non-mem)")
+                    && Core.CheckInventory("Essence of Nulgath", 60))
+                {
+                    bool diamondsMaxed = Core.CheckInventory("Diamond of Nulgath", 1000);
+                    bool totemsMaxed = Core.CheckInventory("Totem of Nulgath", 100);
+
+                    if (item?.Equals("Diamond of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
+                    {
+                        if (diamondsMaxed && !totemsMaxed)
+                            Core.EnsureCompleteMulti(4778, itemID: 5357); // Totems
+                    }
+                    else if (item?.Equals("Totem of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
+                    {
+                        if (totemsMaxed && !diamondsMaxed)
+                            Core.EnsureCompleteMulti(4778, itemID: 6136); // Diamonds
+                    }
+                    else // item == null or any other item
+                    {
+                        if (!totemsMaxed)
+                            Core.EnsureCompleteMulti(4778, itemID: 5357); // Prioritize Totems
+                        else if (!diamondsMaxed)
+                            Core.EnsureCompleteMulti(4778, itemID: 6136); // Then Diamonds
+                    }
+                }
+
+
             }
             else
             {
@@ -2012,8 +2129,17 @@ public class CoreNation
             // if `Blood Gem of the Archfiend` isnt max stack, do the quest if enabled.
             if (!Core.CheckInventory("Blood Gem of the Archfiend", 100))
                 DoSwindlesReturnArea(returnPolicyDuringSupplies, "Blood Gem of the Archfiend");
-            if (Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
-                Core.EnsureCompleteMulti(4778);
+            if (Core.CheckInventory("Voucher of Nulgath (non-mem)")
+     && Core.CheckInventory("Essence of Nulgath", 60)
+     && (!Core.CheckInventory("Diamond of Nulgath", 1000) || !Core.CheckInventory("Totem of Nulgath", 100)))
+            {
+                Core.EnsureCompleteMulti(
+                    4778,
+                    !Core.CheckInventory("Diamond of Nulgath", 1000) ? 6136 : 5357,
+                    !Core.CheckInventory("Diamond of Nulgath", 1000) ? 1000 : 100
+                );
+            }
+
 
             if (betrayalBlade == null)
             {

@@ -946,6 +946,97 @@ public class CoreEngine
 
     #endregion
 
+    #region Auras
+
+    public IEnumerable<Aura> GetAuras(bool self) =>
+        (self ? Bot?.Self?.Auras : Bot?.Target?.Auras) ?? Enumerable.Empty<Aura>();
+
+    public Aura GetAuraByName(string auraName, bool self)
+    {
+        if (string.IsNullOrWhiteSpace(auraName)) return null;
+        return GetAuras(self).FirstOrDefault(a => a != null &&
+            !string.IsNullOrWhiteSpace(a.Name) &&
+            auraName.Equals(a.Name, StringComparison.OrdinalIgnoreCase));
+    }
+
+    public bool HasAura(string auraName, bool self = false)
+    {
+        return GetAuraByName(auraName, self) != null;
+    }
+
+    public bool HasAnyAura(List<string> auraNames, bool self = false)
+    {
+        if (auraNames == null || auraNames.Count == 0) return false;
+        foreach (string aura in auraNames)
+        {
+            if (!string.IsNullOrWhiteSpace(aura) && HasAura(aura, self))
+                return true;
+        }
+        return false;
+    }
+
+    public bool HasAnyAuraOtherThan(string auraName, bool self = false)
+    {
+        if (string.IsNullOrWhiteSpace(auraName)) return false;
+
+        var auras = GetAuras(self);
+        return auras.Any(a => a != null &&
+                            !string.IsNullOrWhiteSpace(a.Name) &&
+                            !auraName.Equals(a.Name, StringComparison.OrdinalIgnoreCase));
+    }
+
+    public int GetAuraStacks(string auraName, bool self = false)
+    {
+        if (string.IsNullOrWhiteSpace(auraName)) return 0;
+        try
+        {
+            object v = self ? Bot?.Self?.GetAuraValue(auraName)
+                            : Bot?.Target?.GetAuraValue(auraName);
+            if (v == null) return 0;
+
+            int rawValue = v is int i ? i
+                 : v is long l ? (int)l
+                 : v is double d ? (int)Math.Round(d)
+                 : v is float f ? (int)Math.Round(f)
+                 : int.TryParse(v.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var n) ? n
+                 : 0;
+
+            return rawValue + 1;
+        }
+        catch { return 0; }
+    }
+
+    public int GetAuraSecondsRemaining(string auraName, bool self = false)
+    {
+        if (string.IsNullOrWhiteSpace(auraName)) return 0;
+        var aura = GetAuraByName(auraName, self);
+        if (aura == null || aura._timeStamp <= 0 || aura.Duration <= 0) return 0;
+        try
+        {
+            var applied = DateTimeOffset.FromUnixTimeMilliseconds(aura._timeStamp);
+            var expires = applied.AddSeconds(aura.Duration);
+            var remaining = (int)(expires - DateTimeOffset.Now).TotalSeconds;
+            return Math.Max(0, remaining);
+        }
+        catch { return 0; }
+    }
+
+    public bool Stacks(string name, int quantity, bool self = false)
+    {
+        if (string.IsNullOrWhiteSpace(name) || quantity <= 0) return false;
+        int stacks = GetAuraStacks(name, self);
+        return stacks >= quantity;
+    }
+
+    public bool Left(string name, int duration, bool self = false)
+    {
+        if (string.IsNullOrWhiteSpace(name) || duration < 0) return false;
+        int rem = GetAuraSecondsRemaining(name, self); // returns 0 if expired/missing
+        return rem <= duration;
+    }
+
+    #endregion
+
     #region Shop
 
     public bool BuyItem(object itemKey, int shopId, string map, int quantity = 1, bool ensureMap = true, bool calculateRemaining = true, bool skipIfHaveEnough = true, bool considerBank = true, bool checkGold = true, bool checkLevel = true, bool checkInvSpace = true, int loadTimeoutMs = 5000)
@@ -1424,6 +1515,23 @@ public class CoreEngine
         {
             Log("MAP", $"❌ Failed to join {mapName} ({target})");
         }
+
+        int GenerateRoomID()
+        {
+            string machineId;
+            try
+            {
+                machineId = Microsoft.Win32.Registry.GetValue(
+                    @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography", "MachineGuid", null
+                ) as string ?? Environment.MachineName;
+            }
+            catch { machineId = Environment.MachineName; }
+
+            string seed = machineId;
+            var hash = SHA256.HashData(Encoding.UTF8.GetBytes(seed));
+            uint roomSeed = BitConverter.ToUInt32(hash, 0);
+            return (int)(roomSeed % 99000) + 1000;
+        }
     }
 
     public void ChooseBestCell(string monsterNames, bool alt = false, string setCell = null, string setPad = "Spawn")
@@ -1486,24 +1594,78 @@ public class CoreEngine
         }
     }
 
-    int GenerateRoomID()
-    {
-        string machineId;
-        try
-        {
-            machineId = Microsoft.Win32.Registry.GetValue(
-                @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography", "MachineGuid", null
-            ) as string ?? Environment.MachineName;
-        }
-        catch { machineId = Environment.MachineName; }
+    void WhiteMap() => Join("whitemap");
 
-        string seed = machineId;
-        var hash = SHA256.HashData(Encoding.UTF8.GetBytes(seed));
-        uint roomSeed = BitConverter.ToUInt32(hash, 0);
-        return (int)(roomSeed % 99000) + 1000;
+    #endregion
+
+    #region Utils
+
+    public void Chill()
+    {
+        if (Bot?.Combat == null || Bot?.Map == null || Bot?.Player == null) return;
+
+        Bot.Combat.CancelAutoAttack();
+        Bot.Combat.CancelTarget();
+
+        var cells = Bot.Map.Cells ?? new List<string>();
+        var mobs = Bot.Monsters?.MapMonsters ?? new List<Monster>();
+
+        string safeCell = cells
+            .Where(c => !string.IsNullOrWhiteSpace(c)
+                     && !c.Equals("Wait", StringComparison.OrdinalIgnoreCase)
+                     && !c.Equals("Blank", StringComparison.OrdinalIgnoreCase)
+                     && !c.StartsWith("Cut", StringComparison.OrdinalIgnoreCase))
+            .OrderBy(c => mobs.Count(m => m?.Cell == c))
+            .FirstOrDefault() ?? Bot.Player.Cell;
+
+        string pad = string.IsNullOrWhiteSpace(Bot.Player.Pad) ? "Left" : Bot.Player.Pad;
+
+        Log("CHILL", $"🍃 Safe cell: {safeCell} ({pad})");
+
+        while (!Bot.ShouldExit && Bot.Player.State == 2)
+        {
+            if (!IsInCell(safeCell))
+                Bot.Map.Jump(safeCell, pad);
+
+            Bot.Sleep(D1);
+        }
+
+        Bot.Sleep(D3);
     }
 
-    void WhiteMap() => Join("whitemap");
+    bool HasChanged<T>(string key, T newValue)
+    {
+        if (string.IsNullOrWhiteSpace(key)) return false;
+
+        if (_cache.TryGetValue(key, out var prev) && prev is T p &&
+            EqualityComparer<T>.Default.Equals(p, newValue))
+            return false;
+
+        _cache[key] = newValue;
+        return true;
+    }
+
+    public bool Log(string category, string message)
+    {
+        if (string.IsNullOrWhiteSpace(category) || string.IsNullOrWhiteSpace(message))
+            return false;
+
+        category = category.Trim();
+        message = message.Trim();
+
+        if (!HasChanged(category, message))
+            return false;
+
+        var key = $"{category}:{message}";
+        var now = DateTime.UtcNow;
+
+        if (_throttle.TryGetValue(key, out var last) && now - last < ThrottleDuration)
+            return false;
+
+        _throttle[key] = now;
+        OnSignal?.Invoke(category, message);
+        return true;
+    }
 
     #endregion
 
@@ -2064,162 +2226,4 @@ public class CoreEngine
         _classRotationMode.TryGetValue(className, out var mode) ? mode : "Default";
 
     #endregion
-
-    #region Auras
-
-    public IEnumerable<Aura> GetAuras(bool self) =>
-        (self ? Bot?.Self?.Auras : Bot?.Target?.Auras) ?? Enumerable.Empty<Aura>();
-
-    public Aura GetAuraByName(string auraName, bool self)
-    {
-        if (string.IsNullOrWhiteSpace(auraName)) return null;
-        return GetAuras(self).FirstOrDefault(a => a != null &&
-            !string.IsNullOrWhiteSpace(a.Name) &&
-            auraName.Equals(a.Name, StringComparison.OrdinalIgnoreCase));
-    }
-
-    public bool HasAura(string auraName, bool self = false)
-    {
-        return GetAuraByName(auraName, self) != null;
-    }
-
-    public bool HasAnyAura(List<string> auraNames, bool self = false)
-    {
-        if (auraNames == null || auraNames.Count == 0) return false;
-        foreach (string aura in auraNames)
-        {
-            if (!string.IsNullOrWhiteSpace(aura) && HasAura(aura, self))
-                return true;
-        }
-        return false;
-    }
-
-    public bool HasAnyAuraOtherThan(string auraName, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(auraName)) return false;
-
-        var auras = GetAuras(self);
-        return auras.Any(a => a != null &&
-                            !string.IsNullOrWhiteSpace(a.Name) &&
-                            !auraName.Equals(a.Name, StringComparison.OrdinalIgnoreCase));
-    }
-
-    public int GetAuraStacks(string auraName, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(auraName)) return 0;
-        try
-        {
-            object v = self ? Bot?.Self?.GetAuraValue(auraName)
-                            : Bot?.Target?.GetAuraValue(auraName);
-            if (v == null) return 0;
-
-            int rawValue = v is int i ? i
-                 : v is long l ? (int)l
-                 : v is double d ? (int)Math.Round(d)
-                 : v is float f ? (int)Math.Round(f)
-                 : int.TryParse(v.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var n) ? n
-                 : 0;
-
-            return rawValue + 1;
-        }
-        catch { return 0; }
-    }
-
-    public int GetAuraSecondsRemaining(string auraName, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(auraName)) return 0;
-        var aura = GetAuraByName(auraName, self);
-        if (aura == null || aura._timeStamp <= 0 || aura.Duration <= 0) return 0;
-        try
-        {
-            var applied = DateTimeOffset.FromUnixTimeMilliseconds(aura._timeStamp);
-            var expires = applied.AddSeconds(aura.Duration);
-            var remaining = (int)(expires - DateTimeOffset.Now).TotalSeconds;
-            return Math.Max(0, remaining);
-        }
-        catch { return 0; }
-    }
-
-    public bool Stacks(string name, int quantity, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(name) || quantity <= 0) return false;
-        int stacks = GetAuraStacks(name, self);
-        return stacks >= quantity;
-    }
-
-    public bool Left(string name, int duration, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(name) || duration < 0) return false;
-        int rem = GetAuraSecondsRemaining(name, self); // returns 0 if expired/missing
-        return rem <= duration;
-    }
-
-    #endregion
-
-    public void Chill()
-    {
-        if (Bot?.Combat == null || Bot?.Map == null || Bot?.Player == null) return;
-
-        Bot.Combat.CancelAutoAttack();
-        Bot.Combat.CancelTarget();
-
-        var cells = Bot.Map.Cells ?? new List<string>();
-        var mobs = Bot.Monsters?.MapMonsters ?? new List<Monster>();
-
-        string safeCell = cells
-            .Where(c => !string.IsNullOrWhiteSpace(c)
-                     && !c.Equals("Wait", StringComparison.OrdinalIgnoreCase)
-                     && !c.Equals("Blank", StringComparison.OrdinalIgnoreCase)
-                     && !c.StartsWith("Cut", StringComparison.OrdinalIgnoreCase))
-            .OrderBy(c => mobs.Count(m => m?.Cell == c))
-            .FirstOrDefault() ?? Bot.Player.Cell;
-
-        string pad = string.IsNullOrWhiteSpace(Bot.Player.Pad) ? "Left" : Bot.Player.Pad;
-
-        Log("CHILL", $"🍃 Safe place: {safeCell} ({pad})");
-
-        while (!Bot.ShouldExit && Bot.Player.State == 2)
-        {
-            if (!IsInCell(safeCell))
-                Bot.Map.Jump(safeCell, pad);
-
-            Bot.Sleep(D1);
-        }
-
-        Bot.Sleep(D3);
-    }
-
-    bool HasChanged<T>(string key, T newValue)
-    {
-        if (string.IsNullOrWhiteSpace(key)) return false;
-
-        if (_cache.TryGetValue(key, out var prev) && prev is T p &&
-            EqualityComparer<T>.Default.Equals(p, newValue))
-            return false;
-
-        _cache[key] = newValue;
-        return true;
-    }
-
-    public bool Log(string category, string message)
-    {
-        if (string.IsNullOrWhiteSpace(category) || string.IsNullOrWhiteSpace(message))
-            return false;
-
-        category = category.Trim();
-        message = message.Trim();
-
-        if (!HasChanged(category, message))
-            return false;
-
-        var key = $"{category}:{message}";
-        var now = DateTime.UtcNow;
-
-        if (_throttle.TryGetValue(key, out var last) && now - last < ThrottleDuration)
-            return false;
-
-        _throttle[key] = now;
-        OnSignal?.Invoke(category, message);
-        return true;
-    }
 }

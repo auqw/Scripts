@@ -63,8 +63,13 @@ public class Xyfrag
 
         while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
         {
-            if (Core.HasClassEquipped(taunter)) Ultra.TauntCharge(taunter, boss, "Focus", 250);
-            else { Core.Kill(boss); Bot.Skills.UseSkill(5); }
+            if (Core.HasClassEquipped(taunter))
+                Ultra.Taunt(taunter, boss, "charge", 250);
+            else
+            {
+                Core.Kill(boss);
+                Bot.Skills.UseSkill(5);
+            }
         }
     }
 }

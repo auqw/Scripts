@@ -88,7 +88,7 @@ public class ArgyronsWaresMerge
 
 
                 case "Gold Voucher 100k":
-                    Adv.BuyItem("abaddoncave", 2626, req.Name);
+                    Farm.Voucher(req.Name, req.Quantity);
                     break;
 
                 default:

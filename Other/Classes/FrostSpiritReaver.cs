@@ -16,10 +16,14 @@ public class FrostSpiritReaver
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static GlaceraStory Glacera { get => _Glacera ??= new GlaceraStory(); set => _Glacera = value; }    private static GlaceraStory _Glacera;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }    private static CoreDailies _Dailies;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static GlaceraStory Glacera { get => _Glacera ??= new GlaceraStory(); set => _Glacera = value; }
+    private static GlaceraStory _Glacera;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }
+    private static CoreDailies _Dailies;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -36,9 +40,12 @@ public class FrostSpiritReaver
             return;
 
         Glacera.DoAll();
-        // Attempt to relog so the rep works.
-        Core.Relogin();
-        Farm.GlaceraREP();
+        if (Farm.FactionRank("Glacera") < 10)
+        {
+            // Attempt to relog so the rep works.
+            Core.Relogin("\"GlaceraREP\" wont work, unless its relogged after doing the story... ae really needs to fix this.");
+            Farm.GlaceraREP();
+        }
         Dailies.Cryomancer();
         if (!Core.CheckInventory("Cryomancer") && !Core.CheckInventory("Frost Sigil"))
         {

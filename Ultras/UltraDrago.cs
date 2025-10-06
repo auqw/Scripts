@@ -68,8 +68,10 @@ public class UltraDrago
             {
                 while (Ultra.MonsterAlive(executioner) && !Bot.ShouldExit)
                 {
-                    if (Core.HasClassEquipped(a)) Ultra.TauntCycle(a, executioner, "Focus", 250);
-                    else if (Core.HasClassEquipped(b)) Ultra.TauntCycle(b, executioner, "Focus", 700);
+                    if (Core.HasClassEquipped(a))
+                        Ultra.Taunt(b, executioner, "aura", 250, "Focus");
+                    else if (Core.HasClassEquipped(b))
+                        Ultra.Taunt(b, executioner, "aura", 700, "Focus");
                 }
             }
             else

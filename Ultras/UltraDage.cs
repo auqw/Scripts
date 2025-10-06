@@ -65,8 +65,10 @@ public class UltraDage
 
         while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
         {
-            if (Core.HasClassEquipped(a)) Ultra.TauntCycle(a, boss, "Focus", 250);
-            else if (Core.HasClassEquipped(b)) Ultra.TauntCycle(b, boss, "Focus", 700);
+            if (Core.HasClassEquipped(a))
+                Ultra.Taunt(a, boss, "aura", 250, "Focus");
+            else if (Core.HasClassEquipped(b))
+                Ultra.Taunt(b, boss, "aura", 700, "Focus");
             else
             {
                 Core.Kill(boss);

@@ -16,17 +16,21 @@ public class IceDungeonMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static GlaceraStory Glacera { get => _Glacera ??= new GlaceraStory(); set => _Glacera = value; }    private static GlaceraStory _Glacera;
+    private static GlaceraStory Glacera { get => _Glacera ??= new GlaceraStory(); set => _Glacera = value; }
+    private static GlaceraStory _Glacera;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -48,6 +52,7 @@ public static CoreAdvanced _sAdv;
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        Glacera.IceDungeon();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("icedungeon", 1948, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -72,7 +77,7 @@ public static CoreAdvanced _sAdv;
                 #endregion
 
                 case "Icy Token I":
-                    Glacera.IceDungeon();
+
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(7838);
@@ -88,7 +93,7 @@ public static CoreAdvanced _sAdv;
                     break;
 
                 case "Icy Token II":
-                    Glacera.IceDungeon();
+
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(7839);
@@ -104,7 +109,7 @@ public static CoreAdvanced _sAdv;
                     break;
 
                 case "Icy Token III":
-                    Glacera.IceDungeon();
+
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(7840);
@@ -120,7 +125,7 @@ public static CoreAdvanced _sAdv;
                     break;
 
                 case "Icy Token IV":
-                    Glacera.IceDungeon();
+
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(7841);

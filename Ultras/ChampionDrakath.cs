@@ -32,7 +32,7 @@ public class ChampionDrakath
         }
 
         Core.Boot();
-        Prep();
+        //Prep();
         Fight();
         Bot.Stop();
     }
@@ -57,7 +57,7 @@ public class ChampionDrakath
         const string boss = "Champion Drakath";
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\champion_drakath_sync.txt");
+        Ultra.WaitForArmy(3, @"C:\SkuaSync\champion_drakath.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
@@ -77,6 +77,7 @@ public class ChampionDrakath
                 if (Core.GetTargetHealthPercentage() < 10)
                     Bot.Skills.UseSkill(5);
             }
+            Bot.Sleep(250);
         }
     }
 }

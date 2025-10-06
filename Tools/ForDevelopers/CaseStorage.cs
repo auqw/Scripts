@@ -10987,7 +10987,7 @@ case ""CatchResult"":
     "Icy Token I",
     @"
 case ""Icy Token I"":
-                    Glacera.IceDungeon();
+                    // Glacera.IceDungeon();
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(7838);
@@ -11007,7 +11007,7 @@ case ""Icy Token I"":
     "Icy Token II",
     @"
 case ""Icy Token II"":
-                    Glacera.IceDungeon();
+                    // Glacera.IceDungeon();
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(7839);
@@ -11027,7 +11027,7 @@ case ""Icy Token II"":
     "Icy Token III",
     @"
 case ""Icy Token III"":
-                    Glacera.IceDungeon();
+                    // Glacera.IceDungeon();
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(7840);
@@ -11047,7 +11047,7 @@ case ""Icy Token III"":
     "Icy Token IV",
     @"
 case ""Icy Token IV"":
-                    Glacera.IceDungeon();
+                    // Glacera.IceDungeon();
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(7841);
