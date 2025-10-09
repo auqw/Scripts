@@ -36,22 +36,6 @@ public class CoreUltra
         }
     }
 
-    public void WaitForAuraFade(string auraName)
-    {
-        if (string.IsNullOrWhiteSpace(auraName))
-            return;
-
-        Bot.Combat.CancelAutoAttack();
-        Bot.Combat.CancelTarget();
-        Core.DisableSkills();
-
-        int seconds = Core.GetAuraSecondsRemaining(auraName);
-        if (seconds > 0)
-            Bot.Sleep(seconds * 1000);
-
-        Core.EnableSkills();
-    }
-
     public void KillWithPriority(string primaryName, int primaryMapId, string priorityName1, int priorityMapId1, string priorityName2, int priorityMapId2)
     {
         if (string.IsNullOrWhiteSpace(primaryName)) return;
@@ -553,13 +537,22 @@ public class CoreUltra
         string zone = data?.args?.zoneSet?.ToString();
 
         if (string.Equals(zone, "A", System.StringComparison.OrdinalIgnoreCase))
-        { Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%122%411%8%"); return; }
+        {
+            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%122%411%8%");
+            return;
+        }
 
         if (string.Equals(zone, "B", System.StringComparison.OrdinalIgnoreCase))
-        { Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%856%422%8%"); return; }
+        {
+            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%856%422%8%");
+            return;
+        }
 
         if (string.IsNullOrEmpty(zone))
-        { Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%491%421%8%"); return; }
+        {
+            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%491%421%8%");
+            return;
+        }
     }
 
     #endregion
