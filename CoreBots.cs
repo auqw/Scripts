@@ -4812,30 +4812,27 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-        if (!FromSupplies)
-            if (item is not null && log)
-                FarmingLogger(item, quant);
+        if (!FromSupplies && item != null && log)
+            FarmingLogger($"⚔️ {item}", quant);
 
-        if (item is not null && !isTemp)
+        if (item != null && !isTemp)
             AddDrop(item);
-        // Bot.Events.ExtensionPacketReceived += StaffRespawnListner;
-        if (item is null)
+
+        if (item == null)
         {
             if (log)
-                Logger("Killing Escherion");
+                Logger("💀 Killing Escherion");
 
             _KillEscherion();
         }
         else
         {
             _KillEscherion(item, quant, isTemp);
-
             Rest();
         }
 
         void _KillEscherion(string? item = null, int quant = 1, bool isTemp = false)
         {
-            #region new staff killing method
             Bot.Options.AggroMonsters = true;
 
             if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
@@ -4850,8 +4847,6 @@ public class CoreBots
                 if (Bot.Map.Name != "escherion")
                 {
                     Join("escherion", "Boss", "Left");
-
-                    // CutScene (due to quest progress) -- attempted fix
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Sleep(1500);
                     if (Bot.Player?.Cell == "Cut1")
@@ -4861,89 +4856,51 @@ public class CoreBots
                     }
                 }
 
-                if (!string.Equals(Bot.Player?.Cell, "Boss", StringComparison.Ordinal))
+                if (Bot.Player?.Cell != "Boss")
                 {
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange("Boss");
                 }
 
-                foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
+                if (Bot.Player?.Cell == "Cut1")
                 {
-                    if (m == null || m?.HP <= 0)
-                        continue;
-
-                    if (!(Bot.Player?.Alive ?? false))
-                        Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
-
-                    if (Bot.Map.Name != "escherion")
-                        Join("escherion", "Boss", "Left");
-
-                    if (Bot.Player?.Cell == "Cut1")
-                    {
-                        Bot.Map.Jump("Boss", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("Boss");
-                    }
-
-                    // Attack staff
-                    Monster? target = Bot.Player?.Target;
-                    if ((target?.MapID ?? -1) == 3 && (target?.State ?? -1) == 2)
-                    {
-                        while (!Bot.ShouldExit && ((Bot.Player?.Target?.HP ?? 0) > 0))
-                            Bot.Combat.Attack(2);
-                    }
-                    else
-                    {
-                        // Attack Escherion when staff is down
-                        Bot.Combat.Attack(3);
-                    }
-
-
-
-                    if (item == null)
-                    {
-                        Logger("No item selected, killing Escherion once");
-                        done = true;
-                        break;
-                    }
-                    else if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-                    {
-                        done = true;
-                        break;
-                    }
-
-                    Sleep();
+                    Bot.Map.Jump("Boss", "Left", autoCorrect: false);
+                    Bot.Wait.ForCellChange("Boss");
                 }
+
+                // MonsterMapIDs:
+                // 2 = Staff
+                // 3 = Escherion
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack(3);
+                else
+                    Bot.Combat.Attack((Bot.Player?.Target?.MapID == 3 /* Escherion */
+                    && Bot.Player?.Target?.State == 2 /* Invulnerable */ )
+                        ? 2 /* Staff of Inversion */
+                        : 3 /* Escherion */);
+                Bot.Sleep(500);
+
+                // Bot.Wait.ForTrue(() => Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x?.State != 2 && x?.HP > 0), 20);
+
+                if (item == null)
+                {
+                    if (log) Logger("💀 No item selected, killing Escherion once");
+                    done = true;
+                    break;
+                }
+                else if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+                {
+                    done = true;
+                    break;
+                }
+
             }
 
-            // Sell voucher area
-            if (item != "Voucher of Nulgath" && SellVoucher && CheckInventory("Voucher of Nulgath"))
-            {
-                while (!Bot.ShouldExit
-                    && ((Bot.Player?.HasTarget ?? false) || (Bot.Player?.InCombat ?? false))
-                    && !string.Equals(Bot.Player?.Cell, "Enter", StringComparison.Ordinal))
-                {
-                    Bot.Combat.CancelTarget();
-                    Bot.Wait.ForCombatExit();
-                    JumpWait();
-                    Sleep();
-                }
-
-                if ((Bot.Player?.Gold ?? 0) < 100000000)
-                {
-                    Bot.Wait.ForPickup("Voucher of Nulgath");
-                    SellItem("Voucher of Nulgath", all: true);
-                    Bot.Wait.ForItemSell();
-                }
-            }
-            DoSwindlesReturnArea(ReturnDuring, ReturnItem);
+            Bot.Options.AggroMonsters = false;
+            if (!isTemp && item != null)
+                Bot.Wait.ForPickup(item);
         }
-        Bot.Options.AggroMonsters = false;
-        if (!isTemp && item != null)
-            Bot.Wait.ForPickup(item);
-        #endregion new staff killing method
 
-
-        // Bot.Events.ExtensionPacketReceived -= StaffRespawnListner;
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
         Jump();
@@ -4951,7 +4908,6 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
-
 
         void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
         {
