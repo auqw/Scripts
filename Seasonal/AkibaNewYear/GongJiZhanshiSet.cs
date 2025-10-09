@@ -58,8 +58,8 @@ public class GongJiZhanshiSet
         Story.PreLoad(this);
 
         //Red Chicken Dance (5663)
-        Story.KillQuest(5663, "akibacny", "Red Chicken");
         Story.MapItemQuest(5663, "akibacny", 5132);
+        Story.KillQuest(5663, "akibacny", "Red Chicken");
 
         //Year of Fire FIght (5664)
         Story.KillQuest(5664, "akibacny", "Fiery Lantern");

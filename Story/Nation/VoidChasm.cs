@@ -42,26 +42,26 @@ public class VoidChasm
         Story.KillQuest(9544, "voidchasm", "Nation Outrider");
 
         // Hyperspace-Plasia 9545
-        Story.KillQuest(9545, "voidchasm", "Paladin Ascendant");
         Story.MapItemQuest(9545, "voidchasm", 12619, 6);
+        Story.KillQuest(9545, "voidchasm", "Paladin Ascendant");
 
         // Tangled Aortas 9546        
         Story.MapItemQuest(9546, "voidchasm", new[] { 12620, 12621 });
 
         // Nation Code 9547
-        Story.KillQuest(9547, "voidchasm", "Nation Outrider");
         Story.MapItemQuest(9547, "voidchasm", 12622);
+        Story.KillQuest(9547, "voidchasm", "Nation Outrider");
 
         // Snake Ears 9548
         Story.KillQuest(9548, "voidchasm", "Void Fang");
 
         // Faustian Leftovers 9549
-        Story.KillQuest(9549, "voidchasm", "The Hushed");
         Story.MapItemQuest(9549, "voidchasm", new[] { 12623, 12627, 12628 });
+        Story.KillQuest(9549, "voidchasm", "The Hushed");
 
         // Broken Lives 9550
-        Story.KillQuest(9550, "voidchasm", new[] { "The Hushed", "Void Fang" });
         Story.MapItemQuest(9550, "voidchasm", 12624, 4);
+        Story.KillQuest(9550, "voidchasm", new[] { "The Hushed", "Void Fang" });
 
         // Call of the Fiend 9551
         Core.EquipClass(ClassType.Solo);

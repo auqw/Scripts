@@ -51,8 +51,8 @@ public class CoreDageBirthday
         Story.KillQuest(6220, "darkpath", "Dark Makai");
 
         //Open the Portal (6221)
-        Story.KillQuest(6221, "darkpath", "Void Elemental");
         Story.MapItemQuest(6221, "darkpath", 5663, 5);
+        Story.KillQuest(6221, "darkpath", "Void Elemental");
 
         //Go Through the Portal (6222)
         Story.MapItemQuest(6222, "darkpath", 5664);
@@ -74,8 +74,8 @@ public class CoreDageBirthday
         Story.MapItemQuest(6225, "darkpath", 5665);
 
         //Open the Vault (6226)
-        Story.KillQuest(6226, "darkpath", new[] { "Void Makai", "Void Wyrm" });
         Story.MapItemQuest(6226, "darkpath", 5666);
+        Story.KillQuest(6226, "darkpath", new[] { "Void Makai", "Void Wyrm" });
 
         //Examine the Souls (6227)
         Story.KillQuest(6227, "darkpath", "Wandering Soul");
@@ -87,15 +87,15 @@ public class CoreDageBirthday
         Story.KillQuest(6229, "darkpath", "Void Makai");
 
         //Pass Through the Shadows (6230)
-        Story.KillQuest(6230, "darkpath", new[] { "Void Makai", "Void Elemental" });
         Story.MapItemQuest(6230, "darkpath", 5668, 5);
+        Story.KillQuest(6230, "darkpath", new[] { "Void Makai", "Void Elemental" });
 
         //Find Contract (6231)
         Story.MapItemQuest(6231, "darkpath", 5669);
 
         //Battle the Void Army (6233)
-        Story.KillQuest(6233, "voidvault", "Void Knight");
         Story.MapItemQuest(6233, "voidvault", 5673);
+        Story.KillQuest(6233, "voidvault", "Void Knight");
 
         //Defeat Zeph'gorog (6234)
         Story.KillQuest(6234, "voidvault", "Zeph'gorog");
@@ -130,8 +130,8 @@ public class CoreDageBirthday
         Story.MapItemQuest(5728, "futurelegion", 5167);
 
         //Destory the Force Field 5729
-        Story.KillQuest(5729, "futurelegion", "UW3017 Blaster");
         Story.MapItemQuest(5729, "futurelegion", 5168);
+        Story.KillQuest(5729, "futurelegion", "UW3017 Blaster");
 
         //Obtain Ozar's Soul 5730
         Story.KillQuest(5730, "futurelegion", "Commander Ozar");
@@ -222,8 +222,8 @@ public class CoreDageBirthday
         Story.KillQuest(9615, "legionbarracks", "Enlightened Master");
 
         // Reap What's Sown (9616)
-        Story.KillQuest(9616, "legionbarracks", "Overdriven paladin");
         Story.MapItemQuest(9616, "legionbarracks", 12775);
+        Story.KillQuest(9616, "legionbarracks", "Overdriven paladin");
 
 
         // Wails of Unrest (9617)

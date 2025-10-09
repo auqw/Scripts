@@ -40,8 +40,8 @@ public class MustyCave
         //Find Twilly (7038)
         Story.MapItemQuest(7038, "mustycave", 6588);
         //Free Twilly! (7039)
-        Story.KillQuest(7039, "mustycave", "Guard Drone");
         Story.MapItemQuest(7039, "mustycave", 6589);
+        Story.KillQuest(7039, "mustycave", "Guard Drone");
         //Free the Moglins (7040)
         Story.MapItemQuest(7040, "mustycave", 6590, 6);
         //Essence-ial (7041)

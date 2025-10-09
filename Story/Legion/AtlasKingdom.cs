@@ -48,8 +48,8 @@ public class AtlasKingdom
         #endregion Useable Monsters
 
         // 10116 | Knight's Honor
-        Story.KillQuest(10116, "atlaskingdom", UseableMonsters[0]);
         Story.MapItemQuest(10116, "atlaskingdom", 14252);
+        Story.KillQuest(10116, "atlaskingdom", UseableMonsters[0]);
 
 
         // 10117 | Drawn Light

@@ -114,8 +114,8 @@ public class CoreHarvestDay
         }
 
         //Fruit of the Loot (135)
-        Story.KillQuest(135, "harvest", "*");
         Story.MapItemQuest(135, "harvest", 37);
+        Story.KillQuest(135, "harvest", "*");
 
         //The Turdraken (136)
         Story.KillQuest(136, "harvest", "Turdraken");
@@ -724,12 +724,12 @@ public class CoreHarvestDay
         Story.MapItemQuest(8979, "birdswithharms", 10917);
 
         // 8980 Bully Birdies
-        Story.KillQuest(8980, "birdswithharms", "Bully Owl");
         Story.MapItemQuest(8980, "birdswithharms", 10918, 6);
+        Story.KillQuest(8980, "birdswithharms", "Bully Owl");
 
         // 8981 Hoo Are You?
-        Story.KillQuest(8981, "birdswithharms", "Knight Owl");
         Story.MapItemQuest(8981, "birdswithharms", 10919, 2);
+        Story.KillQuest(8981, "birdswithharms", "Knight Owl");
 
         // 8982 Hoodini's Magic Act
         Story.KillQuest(8982, "birdswithharms", "Hoodini");
@@ -816,24 +816,24 @@ public class CoreHarvestDay
         // 9472 | Bug Blight
         if (!Story.QuestProgression(9472))
         {
-            Story.KillQuest(9472, "blightharvest", UseableMonsters[0]);
             Story.MapItemQuest(9472, "blightharvest", 12334);
+            Story.KillQuest(9472, "blightharvest", UseableMonsters[0]);
         }
 
 
         // 9473 | Struggle Soup
         if (!Story.QuestProgression(9473))
         {
-            Story.KillQuest(9473, "blightharvest", UseableMonsters[1]);
             Story.MapItemQuest(9473, "blightharvest", 12335);
+            Story.KillQuest(9473, "blightharvest", UseableMonsters[1]);
         }
 
 
         // 9474 | Fetid Feast
         if (!Story.QuestProgression(9474))
         {
-            Story.KillQuest(9474, "blightharvest", new[] { UseableMonsters[0], UseableMonsters[1] });
             Story.MapItemQuest(9474, "blightharvest", 12336, 3);
+            Story.KillQuest(9474, "blightharvest", new[] { UseableMonsters[0], UseableMonsters[1] });
         }
 
 
@@ -852,8 +852,8 @@ public class CoreHarvestDay
         // 9477 | Harrowing Hike
         if (!Story.QuestProgression(9477))
         {
-            Story.KillQuest(9477, "blightharvest", UseableMonsters[3]);
             Story.MapItemQuest(9477, "blightharvest", 12339);
+            Story.KillQuest(9477, "blightharvest", UseableMonsters[3]);
         }
 
 
@@ -872,8 +872,8 @@ public class CoreHarvestDay
         if (!Story.QuestProgression(9480))
         {
 
-            Story.KillQuest(9480, "blightharvest", new[] { UseableMonsters[1], UseableMonsters[3] });
             Story.MapItemQuest(9480, "blightharvest", 12342);
+            Story.KillQuest(9480, "blightharvest", new[] { UseableMonsters[1], UseableMonsters[3] });
         }
 
 
@@ -894,8 +894,8 @@ public class CoreHarvestDay
 
 
         // 9966 | Philosopher's Pumpkin
-        Story.KillQuest(9966, "manaharvest", UMManaHarvest[0]);
         Story.MapItemQuest(9966, "manaharvest", 13837);
+        Story.KillQuest(9966, "manaharvest", UMManaHarvest[0]);
 
 
         // 9967 | Cosmic Surprise
@@ -912,14 +912,14 @@ public class CoreHarvestDay
 
 
         // 9969 | Impossible Meat
-        Story.KillQuest(9969, "manaharvest", UMManaHarvest[2]);
         Story.MapItemQuest(9969, "manaharvest", 13840);
+        Story.KillQuest(9969, "manaharvest", UMManaHarvest[2]);
 
 
 
         // 9970 | Forbidden Fruit
-        Story.KillQuest(9970, "manaharvest", UMManaHarvest[3]);
         Story.MapItemQuest(9970, "manaharvest", 13841);
+        Story.KillQuest(9970, "manaharvest", UMManaHarvest[3]);
 
 
         // 9976 | Mananania

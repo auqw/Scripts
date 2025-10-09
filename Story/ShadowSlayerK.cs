@@ -240,8 +240,8 @@ public class ShadowSlayerK
         if (!Story.QuestProgression(9842))
         {
             Story.MapItemQuest(9842, "badmoon", 13448, 3);
-            Story.KillQuest(9842, "badmoon", UseableMonsters[1]);
             Story.MapItemQuest(9842, "badmoon", 13449);
+            Story.KillQuest(9842, "badmoon", UseableMonsters[1]);
         }
 
 

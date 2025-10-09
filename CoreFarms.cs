@@ -50,83 +50,157 @@ public class CoreFarms
         Core.RunCore();
     }
 
+    // public void ToggleBoost(BoostType type, bool enabled = true)
+    // {
+    //     if (enabled)
+    //     {
+    //         if (Core.CBOBool("doGoldBoost", out bool _doGoldBoost))
+    //             doGoldBoost = _doGoldBoost;
+    //         if (Core.CBOBool("doClassBoost", out bool _doClassBoost))
+    //             doClassBoost = _doClassBoost;
+    //         if (Core.CBOBool("doRepBoost", out bool _doRepBoost))
+    //             doRepBoost = _doRepBoost;
+    //         if (Core.CBOBool("doExpBoost", out bool _doExpBoost))
+    //             doExpBoost = _doExpBoost;
+
+    //         switch (type)
+    //         {
+    //             case BoostType.Gold:
+    //                 if (!doGoldBoost || Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100000000)
+    //                     return;
+    //                 Bot.Boosts.SetGoldBoostID();
+    //                 Bot.Boosts.UseGoldBoost = true;
+    //                 break;
+
+    //             case BoostType.Class:
+    //                 if (!doClassBoost || Bot.Boosts.UseClassBoost)
+    //                     return;
+    //                 Bot.Boosts.SetClassBoostID();
+    //                 Bot.Boosts.UseClassBoost = true;
+    //                 break;
+
+    //             case BoostType.Reputation:
+    //                 if (!doRepBoost || Bot.Boosts.UseReputationBoost)
+    //                     return;
+    //                 Bot.Boosts.SetReputationBoostID();
+    //                 Bot.Boosts.UseReputationBoost = true;
+    //                 break;
+
+    //             case BoostType.Experience:
+    //                 if (!doExpBoost || Bot.Boosts.UseExperienceBoost || Bot.Player.Level == 100)
+    //                     return;
+    //                 Bot.Boosts.SetExperienceBoostID();
+    //                 Bot.Boosts.UseExperienceBoost = true;
+    //                 break;
+    //         }
+    //         Bot.Boosts.Start();
+    //     }
+    //     else
+    //     {
+    //         switch (type)
+    //         {
+    //             case BoostType.Gold:
+    //                 if (!Bot.Boosts.UseGoldBoost)
+    //                     return;
+    //                 Bot.Boosts.UseGoldBoost = false;
+    //                 break;
+
+    //             case BoostType.Class:
+    //                 if (!Bot.Boosts.UseClassBoost)
+    //                     return;
+    //                 Bot.Boosts.UseClassBoost = false;
+    //                 break;
+
+    //             case BoostType.Reputation:
+    //                 if (!Bot.Boosts.UseReputationBoost)
+    //                     return;
+    //                 Bot.Boosts.UseReputationBoost = false;
+    //                 break;
+
+    //             case BoostType.Experience:
+    //                 if (!Bot.Boosts.UseExperienceBoost)
+    //                     return;
+    //                 Bot.Boosts.UseExperienceBoost = false;
+    //                 break;
+    //         }
+    //         if (new[] { Bot.Boosts.UseGoldBoost, Bot.Boosts.UseClassBoost, Bot.Boosts.UseReputationBoost, Bot.Boosts.UseExperienceBoost }.All(on => !on))
+    //             Bot.Boosts.Stop();
+    //     }
+    // }
     public void ToggleBoost(BoostType type, bool enabled = true)
     {
         if (enabled)
         {
-            if (Core.CBOBool("doGoldBoost", out bool _doGoldBoost))
-                doGoldBoost = _doGoldBoost;
-            if (Core.CBOBool("doClassBoost", out bool _doClassBoost))
-                doClassBoost = _doClassBoost;
-            if (Core.CBOBool("doRepBoost", out bool _doRepBoost))
-                doRepBoost = _doRepBoost;
-            if (Core.CBOBool("doExpBoost", out bool _doExpBoost))
-                doExpBoost = _doExpBoost;
-
             switch (type)
             {
                 case BoostType.Gold:
-                    if (!doGoldBoost || Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100000000)
-                        return;
+                    if (Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100_000_000)
+                    {
+                        Core.Logger($"💰 Gold boost skipped (already active or max gold).");
+                        break;
+                    }
                     Bot.Boosts.SetGoldBoostID();
                     Bot.Boosts.UseGoldBoost = true;
+                    Core.Logger($"💰 Gold boost activated!");
                     break;
 
                 case BoostType.Class:
-                    if (!doClassBoost || Bot.Boosts.UseClassBoost)
-                        return;
+                    if (Bot.Boosts.UseClassBoost)
+                    {
+                        Core.Logger($"🛡️ Class boost skipped (already active).");
+                        break;
+                    }
                     Bot.Boosts.SetClassBoostID();
                     Bot.Boosts.UseClassBoost = true;
+                    Core.Logger($"🛡️ Class boost activated!");
                     break;
 
                 case BoostType.Reputation:
-                    if (!doRepBoost || Bot.Boosts.UseReputationBoost)
-                        return;
+                    if (Bot.Boosts.UseReputationBoost)
+                    {
+                        Core.Logger($"🏰 Reputation boost skipped (already active).");
+                        break;
+                    }
                     Bot.Boosts.SetReputationBoostID();
                     Bot.Boosts.UseReputationBoost = true;
+                    Core.Logger($"🏰 Reputation boost activated!");
                     break;
 
                 case BoostType.Experience:
-                    if (!doExpBoost || Bot.Boosts.UseExperienceBoost || Bot.Player.Level == 100)
-                        return;
+                    if (Bot.Boosts.UseExperienceBoost || Bot.Player.Level == 100)
+                    {
+                        Core.Logger($"📚 Experience boost skipped (already active or max level).");
+                        break;
+                    }
                     Bot.Boosts.SetExperienceBoostID();
                     Bot.Boosts.UseExperienceBoost = true;
+                    Core.Logger($"📚 Experience boost activated!");
                     break;
             }
+
+            // Start all active boosts
             Bot.Boosts.Start();
         }
         else
         {
             switch (type)
             {
-                case BoostType.Gold:
-                    if (!Bot.Boosts.UseGoldBoost)
-                        return;
-                    Bot.Boosts.UseGoldBoost = false;
-                    break;
-
-                case BoostType.Class:
-                    if (!Bot.Boosts.UseClassBoost)
-                        return;
-                    Bot.Boosts.UseClassBoost = false;
-                    break;
-
-                case BoostType.Reputation:
-                    if (!Bot.Boosts.UseReputationBoost)
-                        return;
-                    Bot.Boosts.UseReputationBoost = false;
-                    break;
-
-                case BoostType.Experience:
-                    if (!Bot.Boosts.UseExperienceBoost)
-                        return;
-                    Bot.Boosts.UseExperienceBoost = false;
-                    break;
+                case BoostType.Gold: Bot.Boosts.UseGoldBoost = false; Core.Logger($"💰 Gold boost deactivated."); break;
+                case BoostType.Class: Bot.Boosts.UseClassBoost = false; Core.Logger($"🛡️ Class boost deactivated."); break;
+                case BoostType.Reputation: Bot.Boosts.UseReputationBoost = false; Core.Logger($"🏰 Reputation boost deactivated."); break;
+                case BoostType.Experience: Bot.Boosts.UseExperienceBoost = false; Core.Logger($"📚 Experience boost deactivated."); break;
             }
-            if (new[] { Bot.Boosts.UseGoldBoost, Bot.Boosts.UseClassBoost, Bot.Boosts.UseReputationBoost, Bot.Boosts.UseExperienceBoost }.All(on => !on))
+
+            // Stop boosts if none are active
+            if (!Bot.Boosts.UseGoldBoost && !Bot.Boosts.UseClassBoost &&
+                !Bot.Boosts.UseReputationBoost && !Bot.Boosts.UseExperienceBoost)
+            {
                 Bot.Boosts.Stop();
+                Core.Logger("🛑 All boosts stopped.");
+            }
         }
     }
+
 
     #region Gold
     public void Gold(int quant = 100000000)
@@ -947,7 +1021,142 @@ public class CoreFarms
         ToggleBoost(BoostType.Experience, false);
     }
 
+    // private class LevelRange
+    // {
+    //     public int Min { get; set; }
+    //     public int Max { get; set; }
+    //     public string Map { get; set; } = "";
+    //     public string Cell { get; set; } = "";
+    //     public string Pad { get; set; } = "Left";
+    //     public int[]? Quests { get; set; } // null if no quest
+    //     public ClassType ClassType { get; set; } = ClassType.Farm;
+    //     public bool RequiresRankUpClass { get; set; } = false; // for special rank-up cases
+    // }
 
+    // /// <summary>
+    // /// Farms levels in Ice Storm Arena (or related maps) with proper level ranges and rank-up handling.
+    // /// </summary>
+    // /// <param name="level">Target level</param>
+    // /// <param name="rankUpClass">Whether to rank up the class</param>
+    // public void IcestormArena(int level = 100, bool rankUpClass = false)
+    // {
+    //     if (Bot.Player.Level >= level && (!rankUpClass || Core.CheckClassRank(true) >= 10))
+    //     {
+    //         Core.Logger("💯 Already at target level and rank-up complete (if requested)!");
+    //         return;
+    //     }
+
+    //     LevelRange[] levelRanges = new[]
+    //     {
+    //     new LevelRange { Min = 1, Max = 5, Map = "icestormarena", Cell = "r4", Pad = "Bottom", ClassType = ClassType.Farm },
+    //     new LevelRange { Min = 5, Max = 10, Map = "icestormarena", Cell = "r5", Pad = "Left", ClassType = ClassType.Farm },
+    //     new LevelRange { Min = 10, Max = 20, Map = "icestormarena", Cell = "r6", Pad = "Left", ClassType = ClassType.Farm },
+    //     new LevelRange { Min = 20, Max = 25, Map = "icestormarena", Cell = "r7", Pad = "Left", Quests = new[] { 6628 }, ClassType = ClassType.Farm },
+    //     new LevelRange { Min = 25, Max = 30, Map = "icestormarena", Cell = "r10", Pad = "Left", ClassType = ClassType.Farm },
+    //     new LevelRange { Min = 30, Max = 35, Map = "icestormarena", Cell = "r11", Pad = "Left", Quests = new[] { 6629 }, ClassType = ClassType.Solo },
+    //     new LevelRange { Min = 35, Max = 50, Map = "icestormarena", Cell = "r14", Pad = "Left", Quests = new[] { 6629 }, ClassType = ClassType.Farm },
+    //     new LevelRange { Min = 50, Max = 61, Map = "icestormarena", Cell = "r16", Pad = "Left", ClassType = ClassType.Farm },
+    //     new LevelRange { Min = 61, Max = 75, Map = "icestormarena", Cell = "r17", Pad = "Left", Quests = new[] { 3991, 3992 }, ClassType = ClassType.Farm },
+    //     new LevelRange { Min = 75, Max = 100, Map = "icestormunder", Cell = "r2", Pad = "Top", ClassType = ClassType.Farm }
+    // };
+
+    //     Core.Logger("🚀 Starting IcestormArena leveling routine...");
+    //     Bot.Options.AttackWithoutTarget = false;
+    //     Bot.Options.AggroAllMonsters = false;
+    //     Bot.Options.AggroMonsters = false;
+    //     Core.ToggleAggro(true);
+
+    //     foreach (var range in levelRanges)
+    //     {
+    //         if (Bot.Player.Level >= level && (!rankUpClass || Core.CheckClassRank(true) >= 10))
+    //             break;
+    //         if (Bot.Player.Level >= range.Max) continue;
+
+    //         if (range.Map == "battlegrounde" && rankUpClass && Core.CheckClassRank(true) < 10)
+    //             continue;
+    //         if (range.Map == "icestormarena" && rankUpClass && Core.CheckClassRank(true) >= 10)
+    //             continue;
+
+    //         Core.Logger($"🗺️ Moving to map {range.Map} for levels {range.Min}-{range.Max}!");
+
+    //         if (range.Quests != null)
+    //         {
+    //             Core.Logger($"📜 Registering quests: {string.Join(", ", range.Quests)}");
+    //             Core.RegisterQuests(range.Quests);
+    //         }
+
+    //         if (Bot.Player.Level < 100) ToggleBoost(BoostType.Experience);
+    //         if (rankUpClass) ToggleBoost(BoostType.Class);
+    //         Bot.Options.RestPackets = true;
+
+    //         while (!Bot.ShouldExit && !(Bot.Player.Level >= level && (!rankUpClass || Core.CheckClassRank(true) >= 10)))
+    //         {
+    //             if (Bot.Map.Name != range.Map)
+    //             {
+    //                 Core.Logger($"↪ Joining map {range.Map}...");
+    //                 Core.Join(range.Map, publicRoom: Core.PrivateRooms);
+    //                 Bot.Wait.ForMapLoad(range.Map);
+    //             }
+
+    //             if (Bot.Player.Cell != range.Cell)
+    //             {
+    //                 Core.Logger($"↪ Jumping to cell {range.Cell} ({range.Pad})");
+    //                 Core.Jump(range.Cell, range.Pad);
+    //                 Bot.Wait.ForCellChange(range.Cell);
+    //             }
+
+    //             while (!Bot.ShouldExit)
+    //             {
+    //                 if (Bot.Player.Level >= level && (!rankUpClass || Core.CheckClassRank(true) >= 10))
+    //                     break;
+
+    //                 if (!Bot.Player.Alive)
+    //                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+    //                 // Attack any alive monster in the current snapshot
+    //                 foreach (Monster monster in Bot.Monsters.CurrentAvailableMonsters.Where(m => m != null && m.HP > 0))
+    //                 {
+    //                     if (monster == null || monster?.HP <= 0 || !monster.Alive || monster.State == 0)
+    //                         continue;
+                            
+    //                     while (!Bot.ShouldExit)
+    //                     {
+    //                         if (Bot.Player.Target?.HP <= 0)
+    //                         {
+    //                             Bot.Combat.CancelAutoAttack();
+    //                             Bot.Combat.CancelTarget();
+    //                             Bot.Sleep(200);
+    //                             break;
+    //                         }
+
+    //                         if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != monster.MapID)
+    //                             Bot.Combat.Attack(monster.MapID);
+
+    //                         Bot.Sleep(200);
+    //                     }
+
+    //                     if (Bot.Player.Level >= level && (!rankUpClass || Core.CheckClassRank(true) >= 10))
+    //                         break;
+    //                 }
+    //             }
+    //         }
+
+    //         if (range.Quests != null)
+    //         {
+    //             Core.Logger($"✅ Unregistering quests: {string.Join(", ", range.Quests)}");
+    //             Bot.Quests.UnregisterQuests(range.Quests);
+    //             Core.AbandonQuest(range.Quests);
+    //         }
+    //     }
+
+    //     Core.Logger("🏁 Finished leveling routine.");
+    //     Core.ToggleAggro(false);
+    //     Bot.Options.AggroMonsters = false;
+    //     Core.JumpWait();
+    //     Core.Rest();
+    //     ToggleBoost(BoostType.Class, false);
+    //     ToggleBoost(BoostType.Experience, false);
+    // }
 
 
     /// <summary>

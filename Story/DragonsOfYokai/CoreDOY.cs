@@ -11,7 +11,8 @@ public class CoreDOY
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -153,20 +154,20 @@ public class CoreDOY
         Story.KillQuest(9590, "hakuvillage", "Tsukumogami");
 
         // Red and Blue (9591)
-        Story.KillQuest(9591, "hakuvillage", "Mountain Oni");
         Story.MapItemQuest(9591, "hakuvillage", 12706);
+        Story.KillQuest(9591, "hakuvillage", "Mountain Oni");
 
         // Cold Sunshower (9592)
-        Story.KillQuest(9592, "hakuvillage", "Tsukumogami");
         Story.MapItemQuest(9592, "hakuvillage", 12707);
+        Story.KillQuest(9592, "hakuvillage", "Tsukumogami");
 
         // Inari Boom (9593)
         Story.MapItemQuest(9593, "hakuvillage", new[] { 12708, 12709 });
         Story.KillQuest(9593, "hakuvillage", "Kitsune Spy");
 
         // Cui Niao (9594)
-        Story.KillQuest(9594, "hakuvillage", "Nagami");
         Story.MapItemQuest(9594, "hakuvillage", 12710);
+        Story.KillQuest(9594, "hakuvillage", "Nagami");
 
         // Huli Jing (9595)
         Story.KillQuest(9595, "hakuvillage", "Kitsune Spy");
@@ -246,8 +247,8 @@ public class CoreDOY
         Story.MapItemQuest(9671, "yokaiportal", new[] { 12987, 12988 });
 
         // Simple Wishes (9672)
-        Story.KillQuest(9672, "yokaiportal", "Snake Shikigami");
         Story.MapItemQuest(9672, "yokaiportal", new[] { 12989, 12995, 12990 });
+        Story.KillQuest(9672, "yokaiportal", "Snake Shikigami");
 
         // Left Behind (9673)
         Story.KillQuest(9673, "yokaiportal", "Puppeted Dragonling");
@@ -256,8 +257,8 @@ public class CoreDOY
         Story.MapItemQuest(9674, "yokaiportal", new[] { 12991, 12992, 12993 });
 
         // Amano Iwato (9675)
-        Story.KillQuest(9675, "yokaiportal", new[] { "Kitsune Spirits", "Puppeted Dragonling" });
         Story.MapItemQuest(9675, "yokaiportal", 12994);
+        Story.KillQuest(9675, "yokaiportal", new[] { "Kitsune Spirits", "Puppeted Dragonling" });
 
         // Corrupted Protector (9676)
         if (!Core.isCompletedBefore(9676))
@@ -352,7 +353,7 @@ public class CoreDOY
         if (!Story.QuestProgression(9801))
         {
             Bot.Quests.UpdateQuest(9607);
-            Story.KillQuest(9801, "hakuwar", new[] { "Zmey Warrior", "Zakhvatchik" });
+            Story.KillQuest(9801, "hakuwar", new[] { "Zakhvatchik", "Zmey Warrior" });
         }
         // Hoshiyoru 9802
         Core.EquipClass(ClassType.Solo);

@@ -14,8 +14,10 @@ public class Core13LoC
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -113,7 +115,7 @@ public class Core13LoC
         Story.KillQuest(6218, "chaoscrypt", "Chaorrupted Knight");
 
         //Forest of Chaos
-        Story.KillQuest(6219, "forestchaos", new[] { "Chaorrupted Wolf", "Chaorrupted Bear" });
+        Story.KillQuest(6219, "forestchaos", new[] { "Chaorrupted Bear", "Chaorrupted Wolf" });
     }
 
     public void Escherion()
@@ -322,7 +324,7 @@ public class Core13LoC
         if (!Bot.Quests.IsUnlocked(354))
         {
             Core.AddDrop("Thermite"); // for the next quest
-            
+
             Core.EnsureAccept(353);
             Core.HuntMonster("dwarfprison", "Balboa", "Balboa Core", 4);
             Core.HuntMonster("dwarfprison", "Chaos Drow", "Magnesium Flare");
@@ -585,7 +587,7 @@ public class Core13LoC
         Story.KillQuest(534, "lycan", "Dire Wolf");
 
         //No Respect
-        Story.KillQuest(535, "lycan", new[] { "Lycan", "Lycan Knight" });
+        Story.KillQuest(535, "lycan", new[] { "Lycan Knight", "Lycan" });
 
         //Vampire Knights
         Story.KillQuest(536, "lycan", "Chaos Vampire Knight");
@@ -648,7 +650,7 @@ public class Core13LoC
         Story.PreLoad(this);
 
         //Stairway to Heaven
-        Story.KillQuest(648, "stairway", new[] { "Rock Lobster", "Grateful Undead" });
+        Story.KillQuest(648, "stairway", new[] { "Grateful Undead", "Rock Lobster" });
 
         //Rolling Stones
         Story.KillQuest(649, "stairway", "Rock Lobster");
@@ -1112,8 +1114,8 @@ public class Core13LoC
         Story.KillQuest(1282, "ravinetemple", "Temple Guardian");
 
         //Defend the UnderMountain
-        Story.KillQuest(1283, "ravinetemple", "Temple Guardian");
         Story.MapItemQuest(1283, "ravinetemple", 557, 10);
+        Story.KillQuest(1283, "ravinetemple", "Temple Guardian");
 
         //Alliance Defiance
         Story.KillQuest(1284, "ravinetemple", "Temple Guardian");
@@ -1152,8 +1154,8 @@ public class Core13LoC
         Story.KillQuest(1424, "ancienttemple", "Chaotic Vulture");
 
         //Chaorruption Cure?
-        Story.KillQuest(1425, "ancienttemple", "Chaotic Vulture");
         Story.MapItemQuest(1425, "ancienttemple", 706, 7);
+        Story.KillQuest(1425, "ancienttemple", "Chaotic Vulture");
 
         //Guardian Salvation
         Story.KillQuest(1426, "ancienttemple", "Chaos Troll Spirit");
@@ -1168,8 +1170,8 @@ public class Core13LoC
         Story.MapItemQuest(1456, "orecavern", 717);
 
         //Light in Underhome
-        Story.KillQuest(1457, "orecavern", "Crashroom");
         Story.MapItemQuest(1457, "orecavern", 719, 5);
+        Story.KillQuest(1457, "orecavern", "Crashroom");
 
         //Truth is its Own Light
         Story.MapItemQuest(1458, "orecavern", 718, 5);
@@ -1293,7 +1295,7 @@ public class Core13LoC
         }
 
         //The Time Grows Closer
-        Story.KillQuest(1227, "crossroads", new[] { "Koalion", "Lemurphant" });
+        Story.KillQuest(1227, "crossroads", new[] { "Lemurphant", "Koalion" });
 
         //Like Calls to Like
         if (!Story.QuestProgression(1228))
@@ -1356,8 +1358,8 @@ public class Core13LoC
         Story.KillQuest(1276, "ravinetemple", "Temple Guardian");
 
         //Too Little, Too Late. Still Needed
-        Story.KillQuest(1277, "ravinetemple", "Temple Guardian");
         Story.MapItemQuest(1277, "ravinetemple", 557, 10);
+        Story.KillQuest(1277, "ravinetemple", "Temple Guardian");
 
         //Alliance Defiance
         Story.KillQuest(1278, "ravinetemple", "Temple Guardian");
@@ -1384,8 +1386,8 @@ public class Core13LoC
         Story.KillQuest(1419, "ancienttemple", "Chaotic Vulture");
 
         //Ancient Ointment
-        Story.KillQuest(1420, "ancienttemple", "Chaotic Vulture");
         Story.MapItemQuest(1420, "ancienttemple", 706, 7);
+        Story.KillQuest(1420, "ancienttemple", "Chaotic Vulture");
 
         //Anoint the Ancients
         Story.KillQuest(1421, "ancienttemple", "Chaos Troll Spirit");
@@ -1400,8 +1402,8 @@ public class Core13LoC
         Story.MapItemQuest(1451, "orecavern", 717);
 
         //Out of the Darkness
-        Story.KillQuest(1452, "orecavern", "Crashroom");
         Story.MapItemQuest(1452, "orecavern", 719, 5);
+        Story.KillQuest(1452, "orecavern", "Crashroom");
 
         //Shine a Light on Deception
         Story.MapItemQuest(1453, "orecavern", 718, 5);
@@ -1500,11 +1502,11 @@ public class Core13LoC
         }
 
         //Time to Prove Yourself
-        Story.MapItemQuest(2255, "timevoid", 1439, 15);
-        Story.KillQuest(2255, "timevoid", new[] { "Time-Travel Fairy", "Ephemerite" });
+        Story.MapItemQuest(2255, "timevoid", 1439, 12);
+        Story.KillQuest(2255, "timevoid", new[] { "Ephemerite", "Time-Travel Fairy" });
 
         //Fill the Empty Hours
-        Story.KillQuest(2256, "timevoid", new[] { "Void Phoenix", "Time-Travel Fairy" });
+        Story.KillQuest(2256, "timevoid", new[] { "Time-Travel Fairy", "Void Phoenix" });
 
         //Clock of the Long Now
         Story.MapItemQuest(2257, "timevoid", new[] { 1440, 1441, 1442, 1443 });
@@ -1523,12 +1525,12 @@ public class Core13LoC
         Story.MapItemQuest(2378, "aqlesson", 1469);
 
         //Bolster the Elements
-        Story.KillQuest(2379, "aqlesson", new[] { "Eternite Ore", "Water Elemental" });
         Story.MapItemQuest(2379, "aqlesson", new[] { 1470, 1471 }, 3);
+        Story.KillQuest(2379, "aqlesson", new[] { "Eternite Ore", "Water Elemental" });
 
         //Maintain Elemental Strength
-        Story.KillQuest(2380, "aqlesson", new[] { "Ice Elemental", "Fire Elemental" });
         Story.MapItemQuest(2380, "aqlesson", new[] { 1473, 1472 }, 3);
+        Story.KillQuest(2380, "aqlesson", new[] { "Ice Elemental", "Fire Elemental" });
 
         //Rescue the Innocent
         Story.KillQuest(2381, "aqlesson", "Void Dragon");
@@ -1590,7 +1592,7 @@ public class Core13LoC
         Story.KillQuest(2476, "dflesson", "Chaorrupted Evil Soldier");
 
         //Defend the Town!
-        Story.KillQuest(2477, "dflesson", new[] { "Fire Elemental", "Lava Golem" });
+        Story.KillQuest(2477, "dflesson", new[] { "Lava Golem", "Fire Elemental" });
 
         //ChickenCows, Bacon, and Battle!
         Story.KillQuest(2478, "dflesson", new[] { "Chaotic Horcboar", "Chaotic Chicken" });
@@ -1818,8 +1820,8 @@ public class Core13LoC
         Story.MapItemQuest(2732, "deathpits", 1694, 12);
 
         //Destroy Wrathful Vestis and Secure The Tears
-        Story.KillQuest(2740, "deathpits", "Wrathful Vestis");
         Story.MapItemQuest(2740, "deathpits", 1695, 1);
+        Story.KillQuest(2740, "deathpits", "Wrathful Vestis");
 
         //Surveillance for Sir Valence
         Story.MapItemQuest(2792, "venomvaults", 1724);
@@ -1987,8 +1989,8 @@ public class Core13LoC
         Story.KillQuest(3166, "reddeath", "Fire Leech");
 
         //Nope, Still a Ghost
-        Story.KillQuest(3167, "reddeath", "Reddeath Moglin");
         Story.MapItemQuest(3167, "reddeath", new[] { 2178, 2179 });
+        Story.KillQuest(3167, "reddeath", "Reddeath Moglin");
 
         //First We Need a Beacon...
         Story.MapItemQuest(3168, "reddeath", 2180);
@@ -2097,8 +2099,8 @@ public class Core13LoC
         Story.KillQuest(3079, "archives", new[] { "Chaos Bandit", "Camouflaged Sp-eye" });
 
         //Locate the Source
-        Story.KillQuest(3080, "archives", "Chaos Bandit");
         Story.MapItemQuest(3080, "archives", 1937);
+        Story.KillQuest(3080, "archives", "Chaos Bandit");
 
         //Plagued Rats
         Story.KillQuest(3081, "archives", "Chaos Rat");
@@ -2107,7 +2109,7 @@ public class Core13LoC
         Story.KillQuest(3082, "archives", "Chaos Spider");
 
         //Still More Research To Be Done!
-        Story.KillQuest(3083, "archives", new[] { "Chaos Spider", "Chaos Rat" });
+        Story.KillQuest(3083, "archives", new[] { "Chaos Rat", "Chaos Spider" });
 
         //That's One Big Sludgebeast.
         Story.KillQuest(3084, "archives", "Sludgelord");
@@ -2116,14 +2118,14 @@ public class Core13LoC
         Story.KillQuest(3094, "armory", "Chaorrupted Prisoner");
 
         //We May Need A Militia
-        Story.KillQuest(3095, "armory", "Chaorrupted Prisoner");
         Story.MapItemQuest(3095, "armory", 1956, 4);
+        Story.KillQuest(3095, "armory", "Chaorrupted Prisoner");
 
         //An Ounce Of Prevention
         Story.KillQuest(3096, "armory", "Chaos Drifter");
 
-        //Axe Them To Leave! / Freeze 'Em Out! / Burn 'Em Up!
-        Story.KillQuest(3096, "armory", "Chaorrupted Prisoner");
+        //Axe Them To Leave! 
+        Story.KillQuest(3089, "armory", "Chaorrupted Prisoner");
 
         //Freeze 'Em Out!
         Story.KillQuest(3090, "armory", "Chaos Mage");

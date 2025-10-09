@@ -33,8 +33,8 @@ public class DanceGuru
         Story.KillQuest(7943, "danceguru", new[] { "Palm Treeant", "Palm Treeant" });
 
         //Gift Giving (7944)
-        Story.KillQuest(7944, "danceguru", "Crow");
         Story.MapItemQuest(7944, "danceguru", 8177, 5);
+        Story.KillQuest(7944, "danceguru", "Crow");
 
         //Clear the Forest (7945)
         Story.KillQuest(7945, "danceguru", "Crow");

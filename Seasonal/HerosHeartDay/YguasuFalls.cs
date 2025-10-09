@@ -46,9 +46,8 @@ public class YguasuFalls
         Story.KillQuest(9584, "yguasu", "Lobisomen");
 
         // Rocked My Life 9585
-        Story.KillQuest(9585, "yguasu", "Boiuna");
-
         Story.MapItemQuest(9585, "yguasu", 12689);
+        Story.KillQuest(9585, "yguasu", "Boiuna");
 
         // Reaching Palm Fronds 9586
         Story.MapItemQuest(9586, "yguasu", 12690);

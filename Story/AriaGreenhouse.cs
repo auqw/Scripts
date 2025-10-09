@@ -55,8 +55,8 @@ public class AriaGreenhouse
 
         // 10181 | Aconite
         Core.AddDrop(Core.QuestRewards(10181));
-        Story.KillQuest(10181, "cloister", "Karasu");
         Story.MapItemQuest(10181, "cloister", 14394);
+        Story.KillQuest(10181, "cloister", "Karasu");
 
 
         // 10182 | Blood Red Carnations
@@ -140,8 +140,8 @@ public class AriaGreenhouse
 
         // 10192 | Water and Oil
         Farm.Experience(60);
-        Story.KillQuest(10192, "feverfew", "Coral Creeper");
         Story.MapItemQuest(10192, "feverfew", 14399);
+        Story.KillQuest(10192, "feverfew", "Coral Creeper");
 
         // 10193 | Black Silk and White Fleece
         if (!Story.QuestProgression(10193))
@@ -224,8 +224,8 @@ public class AriaGreenhouse
 
 
         // 10207 | Feldspar Silica
-        Story.KillQuest(10207, "mafic", "Living Fire");
         Story.MapItemQuest(10207, "mafic", 14402);
+        Story.KillQuest(10207, "mafic", "Living Fire");
 
 
         // 10208 | Convective Conversation
@@ -253,8 +253,8 @@ public class AriaGreenhouse
 
 
         // 10211 | Scattered Embers
-        Story.KillQuest(10211, "fireplanewar", "Shadefire Onslaught");
         Story.MapItemQuest(10211, "fireplanewar", 14403, 11);
+        Story.KillQuest(10211, "fireplanewar", "Shadefire Onslaught");
 
 
         // 10212 | Tempered Restraint
@@ -302,8 +302,8 @@ public class AriaGreenhouse
 
 
         // 10217 | Solid Clouds
-        Story.KillQuest(10217, "stormtemple", "Chaonslaught Warrior");
         Story.MapItemQuest(10217, "stormtemple", 14405, 8);
+        Story.KillQuest(10217, "stormtemple", "Chaonslaught Warrior");
 
 
         // 10218 | Electric Rivalry

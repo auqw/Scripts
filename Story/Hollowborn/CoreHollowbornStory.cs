@@ -39,16 +39,16 @@ public class CoreHollowbornStory
         Story.KillQuest(8289, "trygve", "Vindicator Recruit");
 
         //Berkana (8290)
-        Story.KillQuest(8290, "trygve", "Blood Eagle");
         Story.MapItemQuest(8290, "trygve", 9036);
+        Story.KillQuest(8290, "trygve", "Blood Eagle");
 
         //Algiz, Reversed (8291)
-        Story.KillQuest(8291, "trygve", "Vindicator Recruit");
         Story.MapItemQuest(8291, "trygve", 9037);
+        Story.KillQuest(8291, "trygve", "Vindicator Recruit");
 
         //Gebo (8292)
-        Story.KillQuest(8292, "trygve", "Rune Boar");
         Story.MapItemQuest(8292, "trygve", 9038);
+        Story.KillQuest(8292, "trygve", "Rune Boar");
 
         //Eihwaz (8293)
         Story.MapItemQuest(8293, "trygve", 9039, 3);
@@ -339,8 +339,8 @@ public class CoreHollowbornStory
 
 
         // 9979 | Algiz, Reversed - Realized
-        Story.KillQuest(9979, "dawnsanctum", UseableMonsters[2]);
         Story.MapItemQuest(9979, "dawnsanctum", 13853);
+        Story.KillQuest(9979, "dawnsanctum", UseableMonsters[2]);
 
         // 9980 | Gebo - Realized
         if (!Story.QuestProgression(9980))
@@ -351,8 +351,8 @@ public class CoreHollowbornStory
 
 
         // 9981 | Eihwaz - Realized
-        Story.KillQuest(9981, "dawnsanctum", UseableMonsters[4]);
         Story.MapItemQuest(9981, "dawnsanctum", 13854);
+        Story.KillQuest(9981, "dawnsanctum", UseableMonsters[4]);
 
 
         // 9982 | Hagalaz - Realized

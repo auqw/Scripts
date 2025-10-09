@@ -36,8 +36,8 @@ public class Necromance
         Story.MapItemQuest(4039, "necromance", 3151);
 
         // Last Minute Gift Ideas (4040)
-        Story.KillQuest(4040, "love", new[] {"Love Shrub", "Huggy-Bear"});
         Story.MapItemQuest(4040, "love", 3152, 12);
+        Story.KillQuest(4040, "love", new[] {"Love Shrub", "Huggy-Bear"});
 
         // Cravin' a Raven (4041)
         Story.KillQuest(4041, "judgement", "Raven");

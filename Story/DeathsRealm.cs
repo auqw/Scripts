@@ -58,8 +58,8 @@ public class DeathsRealm
         Story.KillQuest(2424, "deathsrealm", "Undead Mage");
 
         // Master Death's Realm (2425)
-        Story.KillQuest(2425, "deathsrealm", "Undead Mage");
         Story.MapItemQuest(2425, "deathsrealm", 1485);
+        Story.KillQuest(2425, "deathsrealm", "Undead Mage");
 
         // Real Live Hero-Training (2426)
         Story.MapItemQuest(2426, "trainers", 1491, AutoCompleteQuest: false);

@@ -74,19 +74,19 @@ public class BloodIsles
         Story.KillQuest(9877, "bloodisles", UseableMonsters[1]);
 
         // 9878 | False Triton
-        Story.KillQuest(9878, "bloodisles", UseableMonsters[2]);
         Story.MapItemQuest(9878, "bloodisles", 13655);
+        Story.KillQuest(9878, "bloodisles", UseableMonsters[2]);
 
         // 9879 | Blood Moonglade
         Story.KillQuest(9879, "bloodisles", UseableMonsters[3]);
 
         // 9880 | Aye Eye
-        Story.KillQuest(9880, "bloodisles", UseableMonsters[4]);
         Story.MapItemQuest(9880, "bloodisles", 13656);
+        Story.KillQuest(9880, "bloodisles", UseableMonsters[4]);
 
         // 9881 | Fang Profile
-        Story.KillQuest(9881, "bloodisles", UseableMonsters[5]);
         Story.MapItemQuest(9881, "bloodisles", 13657);
+        Story.KillQuest(9881, "bloodisles", UseableMonsters[5]);
 
         // 9882 | Necro-Putrefaction
         Story.KillQuest(9882, "bloodisles", new[] { UseableMonsters[2], UseableMonsters[5] });

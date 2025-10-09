@@ -11,7 +11,8 @@ public class GlaceraStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -84,7 +85,7 @@ public class GlaceraStory
 
         // Save the Astronomer Apprentice
         Story.MapItemQuest(3920, "frozentower", 3020);
-        Story.KillQuest(3920, "frozentower", new[] { "Ice Wolf", "Polar Elemental" });
+        Story.KillQuest(3920, "frozentower", new[] { "Polar Elemental", "Ice Wolf" });
 
         // Glacial Elixir
         Story.MapItemQuest(3921, "frozentower", 3017, 6);
@@ -149,16 +150,16 @@ public class GlaceraStory
             Core.EnsureComplete(3936);
         }
 
+        // Defeat the FrostSpawn Invaders
+        if (!Story.QuestProgression(3937))
+        {
+            Core.EnsureAccept(3937);
+            Core.HuntMonster("frozentower", "Frost Fangbeast", "Fangbeasts defeated", 15);
+            Core.EnsureComplete(3937);
+        }
+
         if (Cryomancer)
             return;
-
-        // Defeat the FrostSpawn Invaders
-            if (!Story.QuestProgression(3937))
-            {
-                Core.EnsureAccept(3937);
-                Core.HuntMonster("frozentower", "Frost Fangbeast", "Fangbeasts defeated", 15);
-                Core.EnsureComplete(3937);
-            }
     }
 
     public void FrozenRuins()
@@ -184,9 +185,9 @@ public class GlaceraStory
         Story.KillQuest(3944, "frozenruins", "Frost Reaper");
 
         // Form the Lock
+        Story.MapItemQuest(3945, "frozenruins", 3050, 10);
         Story.KillQuest(3945, "frozenruins", "Frozen Moglinster");
 
-        Story.MapItemQuest(3945, "frozenruins", 3050, 10);
         // Glacera
         if (!Story.QuestProgression(3946))
         {
@@ -258,7 +259,7 @@ public class GlaceraStory
         // Northstar
 
         // From Refugee to Enemy
-        Story.KillQuest(3958, "northstar", new[] { "Frost Invader", "Monstrous Refugee" });
+        Story.KillQuest(3958, "northstar", new[] { "Monstrous Refugee", "Frost Invader" });
 
         // Fangs and Blades
         Story.KillQuest(3959, "northstar", new[] { "Frost Fangbeast", "Frost Invader" });
@@ -298,8 +299,17 @@ public class GlaceraStory
 
         // Key to the Fortress
         Story.KillQuest(3948, "Glacera", "Frost Invader");
+
         // Breaking Boulders
+        if (!Story.QuestProgression(3949))
+        {
+            Core.EnsureAccept(3949);
+            Core.GetMapItem(3049, 6, "glacera");
+            Core.EnsureComplete(3949);
+        }
+        
         Story.MapItemQuest(3949, "Glacera", 3049, 6);
+
         // The Scythe of Vengeance
         Story.MapItemQuest(3950, "Glacera", 3047);
     }
@@ -384,7 +394,7 @@ public class GlaceraStory
         IceWindPass();
 
         // Cold Open
-        Story.KillQuest(7832, "IceDungeon", new[] { "Frosted Banshee", "Frozen Undead", "Ice Symbiote" });
+        Story.KillQuest(7832, "IceDungeon", new[] { "Ice Symbiote", "Frosted Banshee", "Frozen Undead" });
 
         // Frost Fight
         Story.KillQuest(7833, "IceDungeon", new[] { "Spirit of Ice", "Ice Crystal", "Frigid Spirit" });

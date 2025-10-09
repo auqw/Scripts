@@ -11,7 +11,8 @@ public class CelestialPast
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -42,7 +43,7 @@ public class CelestialPast
 
         //Gather the Artifacts 7677
         Story.MapItemQuest(7677, "CelestialPast", 7594);
-        Story.KillQuest(7677, "CelestialPast", new[] { "Blessed Deer", "Blessed Bear", "Blessed Centaur", "Blessed Hydra" });
+        Story.KillQuest(7677, "CelestialPast", new[] { "Blessed Deer", "Blessed Centaur", "Blessed Hydra", "Blessed Bear" });
 
         //Oh Well, Oh Well Guardian 7678
         Story.MapItemQuest(7678, "CelestialPast", 7595);

@@ -145,8 +145,8 @@ public class BattleUnder
 
         Story.PreLoad(this);
 
-        Story.KillQuest(5927, "battleundere", "Lava Guard");
         Story.MapItemQuest(5927, "battleundere", 5362);
+        Story.KillQuest(5927, "battleundere", "Lava Guard");
         Story.KillQuest(5928, "battleundere", "Hot Mama");
     }
 

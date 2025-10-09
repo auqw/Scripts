@@ -11,7 +11,8 @@ public class CoreAstravia
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -47,8 +48,8 @@ public class CoreAstravia
         Core.Sleep(2000);
 
         //Lost Breadcrumbs
-        Story.KillQuest(7769, "eridani", "Maggot-Like Creature");
         Story.MapItemQuest(7769, "eridani", 7783);
+        Story.KillQuest(7769, "eridani", "Maggot-Like Creature");
 
         //Dirty Laundry
         if (!Story.QuestProgression(7770))
@@ -88,8 +89,8 @@ public class CoreAstravia
         }
 
         //No Good Dead
-        Story.KillQuest(7775, "eridani", "Wolf-Like Creature");
         Story.MapItemQuest(7775, "eridani", 7785);
+        Story.KillQuest(7775, "eridani", "Wolf-Like Creature");
 
         //The Black Goat in The Dark
         if (!Story.QuestProgression(7776))
@@ -115,8 +116,8 @@ public class CoreAstravia
         }
 
         //The Gentlest Truth
-        Story.KillQuest(7778, "eridani", "Door");
         Story.MapItemQuest(7778, "eridani", 7786);
+        Story.KillQuest(7778, "eridani", "Door");
 
         //Time Moves the Moon
         Core.EquipClass(ClassType.Solo);
@@ -144,10 +145,8 @@ public class CoreAstravia
         Story.KillQuest(7994, "astravia", "Drago's Spy");
 
         //A Castled King
+        Story.MapItemQuest(7995, "astravia", new[] { 8264, 8265, 8266 });
         Story.KillQuest(7995, "astravia", "Astravian Mercenary");
-        Story.MapItemQuest(7995, "astravia", 8264);
-        Story.MapItemQuest(7995, "astravia", 8265);
-        Story.MapItemQuest(7995, "astravia", 8266);
 
         //Principle of Weakness
         if (!Story.QuestProgression(7996))
@@ -204,8 +203,8 @@ public class CoreAstravia
 
 
         //Euterpe, the Spiteful
-        Story.KillQuest(8249, "astraviacastle", "Creature 20");
         Story.MapItemQuest(8249, "astraviacastle", 8892, 6);
+        Story.KillQuest(8249, "astraviacastle", "Creature 20");
 
         //Urania, the Origin
         if (!Core.isCompletedBefore(8250))
@@ -230,8 +229,8 @@ public class CoreAstravia
         Story.KillQuest(8253, "astraviacastle", "Astravian Royal Guard");
 
         //Erato, the Inconsolable
-        Story.KillQuest(8254, "astraviacastle", "Storage Spider");
         Story.MapItemQuest(8254, "astraviacastle", 8895, 3);
+        Story.KillQuest(8254, "astraviacastle", "Storage Spider");
 
         //Thalia, the Truth
         Story.MapItemQuest(8255, "astraviacastle", 8896);
@@ -272,12 +271,12 @@ public class CoreAstravia
 
 
         //Kalasutra
-        Story.KillQuest(8390, "astraviajudge", "Trumpeter");
         Story.MapItemQuest(8390, "astraviajudge", 9276);
+        Story.KillQuest(8390, "astraviajudge", "Trumpeter");
 
         //Padma
-        Story.KillQuest(8391, "astraviajudge", "Hand");
         Story.MapItemQuest(8391, "astraviajudge", 9277, 8);
+        Story.KillQuest(8391, "astraviajudge", "Hand");
 
         //Maharaurava
         Story.KillQuest(8392, "astraviajudge", "Trumpeter");
@@ -291,8 +290,8 @@ public class CoreAstravia
         }
 
         //Avici
-        Story.KillQuest(8394, "astraviajudge", "Shades");
         Story.MapItemQuest(8394, "astraviajudge", 9278);
+        Story.KillQuest(8394, "astraviajudge", "Shades");
 
         //Mahapadma
         Core.EquipClass(ClassType.Solo);
@@ -326,8 +325,8 @@ public class CoreAstravia
         Story.KillQuest(8524, "eridanipast", "Bandit");
 
         //Mixolydian
-        Story.KillQuest(8525, "eridanipast", "Bat");
         Story.MapItemQuest(8525, "eridanipast", 9677);
+        Story.KillQuest(8525, "eridanipast", "Bat");
 
         //Hypomixolydian
         Story.MapItemQuest(8526, "eridanipast", 9678);
@@ -384,8 +383,8 @@ public class CoreAstravia
         Story.KillQuest(8595, "astraviapast", "Panicked Citizen");
 
         //Tzigane
-        Story.KillQuest(8596, "astraviapast", "Astravian Soldier");
         Story.MapItemQuest(8596, "astraviapast", 10020);
+        Story.KillQuest(8596, "astraviapast", "Astravian Soldier");
 
         //Ride of the Valkyrie
         Core.EquipClass(ClassType.Solo);

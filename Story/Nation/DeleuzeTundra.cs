@@ -88,24 +88,24 @@ public class DeleuzeTundraStory
         // 10028 | Sleepflying
         if (!Story.QuestProgression(10028))
         {
-            Story.KillQuest(10028, "deleuzetundra", UseableMonsters[0]);
             Story.MapItemQuest(10028, "deleuzetundra", 14052);
+            Story.KillQuest(10028, "deleuzetundra", UseableMonsters[0]);
         }
 
 
         // 10029 | Battle-Weary
         if (!Story.QuestProgression(10029))
         {
-            Story.KillQuest(10029, "deleuzetundra", UseableMonsters[1]);
             Story.MapItemQuest(10029, "deleuzetundra", 14053, 5);
+            Story.KillQuest(10029, "deleuzetundra", UseableMonsters[1]);
         }
 
 
         // 10030 | Self-Destructive Spell
         if (!Story.QuestProgression(10030))
         {
-            Story.KillQuest(10030, "deleuzetundra", UseableMonsters[2]);
             Story.MapItemQuest(10030, "deleuzetundra", 14054);
+            Story.KillQuest(10030, "deleuzetundra", UseableMonsters[2]);
         }
 
 

@@ -45,8 +45,8 @@ public class WheeleOfLove
         Story.MapItemQuest(5685, "wheeloflove", 5146, 6);
 
         // Get out of here
-        Story.KillQuest(5686, "wheeloflove", "Lava Slime");
         Story.MapItemQuest(5686, "wheeloflove", 5147, 4);
+        Story.KillQuest(5686, "wheeloflove", "Lava Slime");
 
         // Spooky Cupid
         Story.KillQuest(5687, "wheeloflove", "Undead Cherub");

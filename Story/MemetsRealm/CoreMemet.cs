@@ -44,12 +44,12 @@ public class MemetsRealm
         Story.KillQuest(7001, "beachparty", "Boiling Elemental");
 
         //7002 | Poor Trees.Pour Trees?
-        Story.KillQuest(7002, "beachparty", "Water Elemental");
         Story.MapItemQuest(7002, "beachparty", 6563, 7);
+        Story.KillQuest(7002, "beachparty", "Water Elemental");
 
         //7003 | Put out the Flames
-        Story.KillQuest(7003, "beachparty", "Sun Flare");
         Story.MapItemQuest(7003, "beachparty", 6564, 8);
+        Story.KillQuest(7003, "beachparty", "Sun Flare");
 
         //7004 | Sunscream
         Story.KillQuest(7004, "beachparty", "Solar Elemental");
@@ -64,8 +64,8 @@ public class MemetsRealm
         Story.MapItemQuest(7007, "beachparty", 6565, 8);
 
         //7008 | Ice, Ice Maybe?
-        Story.KillQuest(7008, "beachparty", "Frozen Water");
         Story.MapItemQuest(7008, "beachparty", 6566, 8);
+        Story.KillQuest(7008, "beachparty", "Frozen Water");
 
         //7009 | Chill Out!
         Story.KillQuest(7009, "beachparty", "Steaming Dragon");
@@ -97,8 +97,8 @@ public class MemetsRealm
         Story.MapItemQuest(5560, "freakitiki", 5038);
 
         //5561 | Drink #2: the El Captain Rhubarb
-        Story.KillQuest(5561, "freakitiki", new[] { "Spineapple", "Palm Treeant" });
         Story.MapItemQuest(5561, "freakitiki", 5035, 5);
+        Story.KillQuest(5561, "freakitiki", new[] { "Spineapple", "Palm Treeant" });
 
         //5562 | Needs a Little Kick
         Story.KillQuest(5562, "pirates", new[] { "Undead Pirate", "Undead Pirate" });
@@ -178,13 +178,13 @@ public class MemetsRealm
         Story.KillQuest(6094, "moonlab", "Chlorine Trifluoride");
 
         //Flame On! (6095)
-        Story.KillQuest(6095, "moonlab", "Slime Mold");
         Story.MapItemQuest(6095, "moonlab", 5525, 8);
         Story.MapItemQuest(6095, "moonlab", 5526);
+        Story.KillQuest(6095, "moonlab", "Slime Mold");
 
         //Open the Cages! (6096)
-        Story.KillQuest(6096, "moonlab", "Engorged Slime Mold");
         Story.MapItemQuest(6096, "moonlab", 5528, 8);
+        Story.KillQuest(6096, "moonlab", "Engorged Slime Mold");
 
         //Get Rid of the Blockage! (6097)
         Story.KillQuest(6097, "moonlab", "Infected Cat");
@@ -193,8 +193,8 @@ public class MemetsRealm
         Story.MapItemQuest(6098, "moonlab", new[] { 5529, 5530 });
 
         //Find the Source (6099)
-        Story.KillQuest(6099, "moonlab", "Mutated Slime Mold");
         Story.MapItemQuest(6099, "moonlab", 5531, 3);
+        Story.KillQuest(6099, "moonlab", "Mutated Slime Mold");
 
         //Find the Key (6100)
         Story.KillQuest(6100, "moonlab", new[] { "Infected Scientist", "Infected Scientist" });
@@ -249,8 +249,8 @@ public class MemetsRealm
         Story.KillQuest(6662, "dreammaster", "Prison Wall");
 
         //Freedom! (6663)
-        Story.KillQuest(6663, "dreammaster", "Guard Llama");
         Story.MapItemQuest(6663, "dreammaster", 6176);
+        Story.KillQuest(6663, "dreammaster", "Guard Llama");
 
         //Make the Glitter Fade (6664)
         Story.KillQuest(6664, "dreammaster", "Sparkle Guard");
@@ -397,8 +397,8 @@ public class MemetsRealm
         Story.KillQuest(7530, "byrodax", "Security Droid");
 
         //Test the Goop (7531)
-        Story.KillQuest(7531, "byrodax", "Space Goop");
         Story.MapItemQuest(7531, "byrodax", 7398);
+        Story.KillQuest(7531, "byrodax", "Space Goop");
 
         //Goop-Be-Gone (7532)
         Story.MapItemQuest(7532, "byrodax", 7399, 10);

@@ -145,9 +145,9 @@ public class CoreQOM
         Story.KillQuest(5374, "infernalspire", new[] { "Fallen Knight", "Underworld Hound" });
 
         //Gone Without A Trace
-        Story.KillQuest(5375, "infernalspire", new[] { "Fallen Knight", "Underworld Hound" });
         Story.MapItemQuest(5375, "infernalspire", 4729);
         Story.MapItemQuest(5375, "infernalspire", 4730);
+        Story.KillQuest(5375, "infernalspire", new[] { "Fallen Knight", "Underworld Hound" });
 
         //Helzekiel
         Core.EquipClass(ClassType.Solo);
@@ -160,8 +160,8 @@ public class CoreQOM
         Story.MapItemQuest(5378, "infernalspire", 4731, 6);
 
         //Energy Needed
-        Story.KillQuest(5379, "infernalspire", "Dungeon Fiend");
         Story.MapItemQuest(5379, "infernalspire", 4732, 6);
+        Story.KillQuest(5379, "infernalspire", "Dungeon Fiend");
 
         //Interrogate the Jailer
         Story.KillQuest(5380, "infernalspire", "Garvodeus");
@@ -238,8 +238,8 @@ public class CoreQOM
         Story.MapItemQuest(5409, "doompally", 4758);
 
         //The Dark Thicket
-        Story.KillQuest(5410, "doompally", "Doomwood Bonemuncher");
         Story.MapItemQuest(5410, "doompally", 4759, 5);
+        Story.KillQuest(5410, "doompally", "Doomwood Bonemuncher");
 
         //Emily
         Story.MapItemQuest(5411, "doompally", 4761);
@@ -820,12 +820,12 @@ public class CoreQOM
         Story.KillQuest(8049, "forestreach", "Chaos Spitter");
 
         //8050 | Get the Reagents
-        Story.KillQuest(8050, "forestreach", "Chaos Sp-eye");
         Story.MapItemQuest(8050, "forestreach", 8362, 5);
+        Story.KillQuest(8050, "forestreach", "Chaos Sp-eye");
 
         //8051 | Samples for Comparison
-        Story.KillQuest(8051, "forestreach", "Chaos Spitter");
         Story.MapItemQuest(8051, "forestreach", 8363, 5);
+        Story.KillQuest(8051, "forestreach", "Chaos Spitter");
 
         //8052 | More Testing Required
         Story.KillQuest(8052, "forestreach", new[] { "EldritchWing", "Chaos Sp-eye" });
@@ -958,8 +958,8 @@ public class CoreQOM
         Story.KillQuest(8097, "downbelow", "Rumbling Rubble");
 
         //8098 | Open the Way
-        Story.KillQuest(8098, "downbelow", "Monstrous Flame");
         Story.MapItemQuest(8098, "downbelow", 8491);
+        Story.KillQuest(8098, "downbelow", "Monstrous Flame");
 
         //8099 | Follow the Trail
         Story.MapItemQuest(8099, "downbelow", 8492);
@@ -983,8 +983,8 @@ public class CoreQOM
         Story.KillQuest(8104, "downbelow", "Living Rage");
 
         //8105 | Through the Fire
-        Story.KillQuest(8105, "downbelow", "Living Rage");
         Story.MapItemQuest(8105, "downbelow", 8495);
+        Story.KillQuest(8105, "downbelow", "Living Rage");
 
         //8106 | Heart of the Power
         Core.EquipClass(ClassType.Solo);

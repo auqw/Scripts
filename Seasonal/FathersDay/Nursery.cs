@@ -52,15 +52,15 @@ public class Nursery
         Story.KillQuest(6942, "nursery", "Skeletal Minion");
 
         //Conduction Function (6943)
-        Story.KillQuest(6943, "nursery", "Skeletal Minion");
         Story.MapItemQuest(6943, "nursery", 6471, 6);
+        Story.KillQuest(6943, "nursery", "Skeletal Minion");
 
         //Gross (6944)
         Story.KillQuest(6944, "nursery", new[] { "Flesh Golem", "Flesh Golem", "Flesh Golem", "Flesh Golem" });
 
         //Time to Clean (6945)
-        Story.KillQuest(6945, "nursery", "Spilled Ink");
         Story.MapItemQuest(6945, "nursery", new[] { 6473, 6474 });
+        Story.KillQuest(6945, "nursery", "Spilled Ink");
 
         //Find the Progeny (Again) (6946)
         Story.MapItemQuest(6946, "nursery", 6472);

@@ -64,8 +64,8 @@ public class XansLair
         Story.KillQuest(1249, "volcano", "Flamethrower Dwakel");
 
         // Level 9 1250
-        Story.KillQuest(1250, "volcano", "Fire Imp");
         Story.MapItemQuest(1250, "volcano", 529, 8);
+        Story.KillQuest(1250, "volcano", "Fire Imp");
 
         // Level 10 1251
         Story.KillQuest(1251, "volcano", "Flamethrower Dwakel");

@@ -85,8 +85,8 @@ public class KillerCatacombs
         Story.KillQuest(3675, "killercatacombs", new[] { "Starved Maw ", "Ravenous Maw", "Living Armor " });
         
         // The Moment of Silence
-        Story.KillQuest(3676, "killercatacombs", "Living Armor");
         Story.MapItemQuest(3676, "killercatacombs", 2763, 10);
+        Story.KillQuest(3676, "killercatacombs", "Living Armor");
 
         // Eternal Servitude
         Story.KillQuest(3677, "killercatacombs", new[] { "Living Armor ", "Sundered Darkblood ", "Unstable Spirit Orb " });

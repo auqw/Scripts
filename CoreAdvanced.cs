@@ -2184,12 +2184,13 @@ public class CoreAdvanced
             bool specialOnCape = item.Category == ItemCategory.Cape && cSpecial != CapeSpecial.None;
             bool specialOnHelm = item.Category == ItemCategory.Helm && hSpecial != HelmSpecial.None;
             bool specialOnWeapon = item.ItemGroup == "Weapon" && wSpecial.ToString() != "None";
-            List<ShopItem> shopItems = Core.GetShopItems(map ?? Bot.Map.Name, shopID);
+            string mapName = map ?? Bot.Map?.Name ?? "whitemap";
+            List<ShopItem> shopItems = Core.GetShopItems(mapName, shopID);
 
             // Shopdata complete check
             if (!shopItems.Any(x => x.Category == ItemCategory.Enhancement) || shopItems.Count == 0)
             {
-                Core.Logger($"Enhancement Failed for {item.Name}[{item.ID}], (EnhancementLevel: {item.EnhancementLevel}, map: {map ?? Bot.Map.Name}, shopID: {shopID}):\n" + $"Couldn't find enhancements in shop {shopID}");
+                Core.Logger($"Enhancement Failed for {item.Name}[{item.ID}], (EnhancementLevel: {item.EnhancementLevel}, map: {mapName}, shopID: {shopID}):\n" + $"Couldn't find enhancements in shop {shopID}");
                 return;
             }
 
@@ -2301,7 +2302,9 @@ public class CoreAdvanced
             }
 
             // Enhancing the item
-            Bot.Send.Packet($"%xt%zm%enhanceItemShop%{Bot.Map.RoomID}%{item.ID}%{bestEnhancement.ID}%{shopID}%");
+            int roomId = Bot.Map?.RoomID ?? 1;
+
+            Bot.Send.Packet($"%xt%zm%enhanceItemShop%{roomId}%{item.ID}%{bestEnhancement.ID}%{shopID}%");
 
             // Final logging
             if (specialOnCape)

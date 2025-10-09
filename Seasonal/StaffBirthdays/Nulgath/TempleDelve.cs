@@ -40,12 +40,12 @@ public class TempleDelve
         Story.KillQuest(9080, "templedelve", "Overdriven Paladin");
 
         //Stone Proxy (9081)
-        Story.KillQuest(9081, "templedelve", "Doomed Troll");
         Story.MapItemQuest(9081, "templedelve", new[] { 11160, 11161 }, 2);
+        Story.KillQuest(9081, "templedelve", "Doomed Troll");
 
         //The Deepness of Shadows... (9082)
-        Story.KillQuest(9082, "templedelve", "Doomed Beast");
         Story.MapItemQuest(9082, "templedelve", 11162, 4);
+        Story.KillQuest(9082, "templedelve", "Doomed Beast");
 
         //...Begets the Glare of the Light (9083)
         if (!Core.isCompletedBefore(9083))
@@ -67,8 +67,8 @@ public class TempleDelve
         Story.MapItemQuest(9086, "templedelve", 11165);
 
         //Prephosphorus (9087)
-        Story.KillQuest(9087, "templedelve", "Delirious Elemental");
         Story.MapItemQuest(9087, "templedelve", new[] { 11166, 11167 });
+        Story.KillQuest(9087, "templedelve", "Delirious Elemental");
 
         //Sunspotty (9088)
         Story.KillQuest(9088, "templedelve", new[] { "Delirious Elemental", "Infested Nation" });
@@ -94,16 +94,16 @@ public class TempleDelve
         Story.KillQuest(9138, "siegefortress", "Shadow Traitor");
 
         // Anatomical Example 9139
-        Story.KillQuest(9139, "siegefortress", "Shadow Traitor");
         Story.MapItemQuest(9139, "siegefortress", 11314, 4);
+        Story.KillQuest(9139, "siegefortress", "Shadow Traitor");
 
         // Bloodless Daisy 9140
         Story.MapItemQuest(9140, "siegefortress", 11315);
         Story.KillQuest(9140, "siegefortress", "Enslaved Elemental");
 
         // Shadows of Espionage 9141
-        Story.KillQuest(9141, "siegefortress", new[] { "Shadow Traitor", "Enslaved Elemental" });
         Story.MapItemQuest(9141, "siegefortress", 11316, 2);
+        Story.KillQuest(9141, "siegefortress", new[] { "Shadow Traitor", "Enslaved Elemental" });
 
         // Foul Duke of Light 9142
         Story.KillQuest(9142, "siegefortress", "Enslaved Astero");

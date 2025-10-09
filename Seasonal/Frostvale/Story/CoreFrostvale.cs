@@ -98,12 +98,12 @@ public class CoreFrostvale
         Story.KillQuest(456, "icecave", "Frosty");
 
         // Find Page 2
-        Story.KillQuest(457, "icecave", "Frozen Moglin");
         Story.MapItemQuest(457, "yulgar", 85);
+        Story.KillQuest(457, "icecave", "Frozen Moglin");
 
         // Find Page 3
-        Story.KillQuest(458, "icecave", "Frozen Moglin");
         Story.MapItemQuest(458, "battleontown", 86);
+        Story.KillQuest(458, "icecave", "Frozen Moglin");
 
         // Find Page 4
         Story.KillQuest(459, "factory", "Sneevil Toy Maker");
@@ -142,8 +142,8 @@ public class CoreFrostvale
         Story.KillQuest(909, "snowglobe", "Garaja");
 
         // Springing Traps
-        Story.KillQuest(910, "goldenruins", "Golden Warrior");
         Story.MapItemQuest(910, "goldenruins", 244, 10);
+        Story.KillQuest(910, "goldenruins", "Golden Warrior");
 
         // Frost Lions
         Story.KillQuest(911, "goldenruins", "Frost Lion");
@@ -187,8 +187,8 @@ public class CoreFrostvale
         Story.KillQuest(1513, "alpine", "Wendigo");
 
         // Snow Turning Back!
-        Story.KillQuest(1519, "icevolcano", new[] { "Snow Golem", "Dead-ly Ice Elemental" });
         Story.MapItemQuest(1519, "icevolcano", 761, 10);
+        Story.KillQuest(1519, "icevolcano", new[] { "Snow Golem", "Dead-ly Ice Elemental" });
 
         // Venom in Your Veins
         Story.KillQuest(1520, "icevolcano", "Ice Symbiote");
@@ -351,23 +351,23 @@ public class CoreFrostvale
         Story.KillQuest(6123, "coldwindvalley", "Hail Elemental");
 
         // Arm the Mob
-        Story.KillQuest(6124, "farm", "Scarecrow");
         Story.MapItemQuest(6124, "coldwindvalley", 5551, 5);
+        Story.KillQuest(6124, "farm", "Scarecrow");
 
         // Gather Bait
         Story.KillQuest(6125, "coldwindvalley", "Arctic Wolf");
 
         // Bait the Trap
-        Story.KillQuest(6126, "coldwindvalley", "Ice Master Yeti");
         Story.MapItemQuest(6126, "coldwindvalley", 5552);
+        Story.KillQuest(6126, "coldwindvalley", "Ice Master Yeti");
 
         // Gather Snowman Pieces
-        Story.KillQuest(6127, "coldwindvalley", "Snow Golem");
         Story.MapItemQuest(6127, "coldwindvalley", 5553, 2);
+        Story.KillQuest(6127, "coldwindvalley", "Snow Golem");
 
         // Gather Snowman Decorations
-        Story.KillQuest(6128, "coldwindvalley", "Coal Imp");
         Story.MapItemQuest(6128, "coldwindvalley", 5554);
+        Story.KillQuest(6128, "coldwindvalley", "Coal Imp");
 
         // Grab some Garb
         Story.KillQuest(6129, "coldwindvalley", "Frost Goblin");
@@ -380,8 +380,8 @@ public class CoreFrostvale
         Story.KillQuest(6131, "coldwindvalley", "Arctusk");
 
         // Holly and Ice
-        Story.KillQuest(6132, "coldwindvalley", "Snow Golem");
         Story.MapItemQuest(6132, "coldwindvalley", 5557, 8);
+        Story.KillQuest(6132, "coldwindvalley", "Snow Golem");
     }
 
     public void Battlefield(bool ReturnEarly = false)
@@ -498,8 +498,8 @@ public class CoreFrostvale
 
         // Blizzy's
         // Find the Source 7843
-        Story.KillQuest(7843, "howardshill", "Frozen Wisp");
         Story.MapItemQuest(7843, "howardshill", 7921);
+        Story.KillQuest(7843, "howardshill", "Frozen Wisp");
 
         // Try the Door 7844
         Story.MapItemQuest(7844, "howardshill", 7922);
@@ -530,8 +530,8 @@ public class CoreFrostvale
         Story.KillQuest(7852, "howardshill", "Frozen Wisp");
 
         // Return to Blizzy 7853
-        Story.KillQuest(7853, "howardshill", "Chillybones");
         Story.MapItemQuest(7853, "howardshill", 7924);
+        Story.KillQuest(7853, "howardshill", "Chillybones");
 
         // Howard's Grief 7854
         Story.KillQuest(7854, "howardshill", "Howard's Grief");
@@ -833,12 +833,12 @@ public class CoreFrostvale
         Story.KillQuest(9008, "snowview", "Tundra Steed");
 
         //Eggcellent Trade (9009)
-        Story.KillQuest(9009, "snowview", "Arctic Fox");
         Story.MapItemQuest(9009, "snowview", 10991);
+        Story.KillQuest(9009, "snowview", "Arctic Fox");
 
         //Homemade Stars (9010)
-        Story.KillQuest(9010, "snowview", "Mountain Owl");
         Story.MapItemQuest(9010, "snowview", 10992, 4);
+        Story.KillQuest(9010, "snowview", "Mountain Owl");
 
         //Rooted Remedy (9011)
         Story.MapItemQuest(9011, "snowview", 10993, 5);
@@ -851,8 +851,8 @@ public class CoreFrostvale
         Story.KillQuest(9013, "snowview", new[] { "Mountain Owl", "Arctic Fox" });
 
         //Together from Afar (9014)
-        Story.KillQuest(9014, "snowview", "Tundra Steed");
         Story.MapItemQuest(9014, "snowview", 10995);
+        Story.KillQuest(9014, "snowview", "Tundra Steed");
 
         //Intruder From the Stars (9015)
         Story.KillQuest(9015, "snowview", "Vaderix");
@@ -868,8 +868,8 @@ public class CoreFrostvale
         Story.PreLoad(this);
 
         //Encroaching Frost (9017)
-        Story.KillQuest(9017, "snowviewrace", "Mountain Owl");
         Story.MapItemQuest(9017, "snowviewrace", 11010);
+        Story.KillQuest(9017, "snowviewrace", "Mountain Owl");
 
         //Horse Vision (9018)
         Story.KillQuest(9018, "snowviewrace", "Tundra Steed");
@@ -878,12 +878,12 @@ public class CoreFrostvale
         Story.MapItemQuest(9019, "snowviewrace", new[] { 11011, 11012, 11013 });
 
         //Hiding Cavities (9020)
-        Story.KillQuest(9020, "snowviewrace", new[] { "Mountain Owl", "Tundra Steed" });
         Story.MapItemQuest(9020, "snowviewrace", 11014);
+        Story.KillQuest(9020, "snowviewrace", new[] { "Mountain Owl", "Tundra Steed" });
 
         //Cosmic Interference (9021)
-        Story.KillQuest(9021, "snowviewrace", "Juvenile Vaderix");
         Story.MapItemQuest(9021, "snowviewrace", 11015);
+        Story.KillQuest(9021, "snowviewrace", "Juvenile Vaderix");
 
         //Cold Resistance (9022)
         Story.KillQuest(9022, "snowviewrace", "Juvenile Vaderix");
@@ -912,15 +912,15 @@ public class CoreFrostvale
         Story.PreLoad(this);
 
         // 8423 Scout the Area,
-        Story.KillQuest(8423, "deerhunt", "Deer?");
         Story.MapItemQuest(8423, "deerhunt", 9372);
+        Story.KillQuest(8423, "deerhunt", "Deer?");
 
         // 8424 Deer?
         Story.KillQuest(8424, "deerhunt", "Deer?");
 
         // 8425 Comparing Claws
-        Story.KillQuest(8425, "deerhunt", new[] { "Scared Wolf", "Frightened Owl" });
         Story.MapItemQuest(8425, "deerhunt", 9373, 4);
+        Story.KillQuest(8425, "deerhunt", new[] { "Scared Wolf", "Frightened Owl" });
 
         // 8426 Lair Investigated
         Story.MapItemQuest(8426, "deerhunt", new[] { 9374, 9375 });
@@ -1128,29 +1128,29 @@ public class CoreFrostvale
         //Faceless Hunters
         if (!Story.QuestProgression(8440))
         {
-            Story.KillQuest(8440, "MountOtzi", "Sluagh Warrior");
             Story.MapItemQuest(8440, "MountOtzi", 9391);
+            Story.KillQuest(8440, "MountOtzi", "Sluagh Warrior");
         }
 
         //Stitch Work
         if (!Story.QuestProgression(8441))
         {
-            Story.KillQuest(8441, "MountOtzi", "Mangled Stag");
             Story.MapItemQuest(8441, "MountOtzi", 9392);
+            Story.KillQuest(8441, "MountOtzi", "Mangled Stag");
         }
 
         //Killer Promotion
         if (!Story.QuestProgression(8442))
         {
-            Story.KillQuest(8442, "MountOtzi", "Sluagh Warrior");
             Story.MapItemQuest(8442, "MountOtzi", 9393, 7);
+            Story.KillQuest(8442, "MountOtzi", "Sluagh Warrior");
         }
 
         //Cold Pleasures
         if (!Story.QuestProgression(8443))
         {
-            Story.KillQuest(8443, "MountOtzi", "Sluagh Warrior");
             Story.MapItemQuest(8443, "MountOtzi", 9394);
+            Story.KillQuest(8443, "MountOtzi", "Sluagh Warrior");
         }
 
         //Corvus Mellori
@@ -1309,14 +1309,14 @@ public class CoreFrostvale
 
 
         // 10006 | Fool's Gold
-        Story.KillQuest(10006, "holidayhorror", UseableMonsters[0]);
         Story.MapItemQuest(10006, "holidayhorror", 13994);
+        Story.KillQuest(10006, "holidayhorror", UseableMonsters[0]);
 
 
 
         // 10007 | Acid Reflux
-        Story.KillQuest(10007, "holidayhorror", UseableMonsters[1]);
         Story.MapItemQuest(10007, "holidayhorror", 13995, 4);
+        Story.KillQuest(10007, "holidayhorror", UseableMonsters[1]);
 
 
         // 10008 | Sour Notes
@@ -1359,8 +1359,8 @@ public class CoreFrostvale
 
 
         // 10013 | Arrived by Compulsion?
-        Story.KillQuest(10013, "holidayhorror", UseableMonsters[10]);
         Story.MapItemQuest(10013, "holidayhorror", 13999);
+        Story.KillQuest(10013, "holidayhorror", UseableMonsters[10]);
 
 
         // 10014 | Empty Nest

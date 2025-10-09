@@ -41,8 +41,8 @@ public class BlazingBeachStory
         Story.KillQuest(8703, "blazingbeach", new[] { "Magma Pirate", "Magma Pirate", "Scalding Shooter" });
 
         // Canned Heat
-        Story.KillQuest(8704, "blazingbeach", "Burning Bombadier");
         Story.MapItemQuest(8704, "blazingbeach", 10252);
+        Story.KillQuest(8704, "blazingbeach", "Burning Bombadier");
 
         // Dau Go
         if (!Story.QuestProgression(8705))

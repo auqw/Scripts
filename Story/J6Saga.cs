@@ -198,7 +198,7 @@ public class J6Saga
         Story.KillQuest(2849, "alley", "Thug Boss");
 
         //Security Breach
-        Story.KillQuest(2844, "alley", new[] { "Guard Robot", "Security Cam" });
+        Story.KillQuest(2844, "alley", new[] { "Security Cam"," Guard Robot" });
 
         //No Sniffin' Around
         Story.KillQuest(2845, "alley", "Guard Dog Robot");

@@ -471,9 +471,9 @@ public class CoreDoomwood
         Story.KillQuest(2053, "necrodungeon", "Doom Crawler");
 
         //2054    Underground RailRoad... to DOOM!
-        Story.KillQuest(2054, "necrodungeon", "Ghoul");
         Story.MapItemQuest(2054, "necrodungeon", 1009);
         Story.MapItemQuest(2054, "necrodungeon", 1018, 8);
+        Story.KillQuest(2054, "necrodungeon", "Ghoul");
 
         //2055    Retrieve the Past, Room 10
         Story.MapItemQuest(2055, "necrodungeon", 1010);
@@ -565,11 +565,11 @@ public class CoreDoomwood
         Story.PreLoad(this);
 
         //7589    Bullies
-        Story.KillQuest(7589, "thorngarde", new[] { "CryptHacker", "NecroMech", "NecroDrone" });
+        Story.KillQuest(7589, "thorngarde", new[] { "CryptHacker", "NecroDrone", "NecroMech"  });
 
         //7590    Free the People
-        Story.KillQuest(7590, "thorngarde", "NecroMech");
         Story.MapItemQuest(7590, "thorngarde", 7485, 5);
+        Story.KillQuest(7590, "thorngarde", "NecroMech");
 
         //7591    Sample It
         Story.KillQuest(7591, "thorngarde", "NecroMech");
@@ -591,12 +591,12 @@ public class CoreDoomwood
         Story.MapItemQuest(7594, "thorngarde", 7486);
 
         //7595    Find my Stuff
-        Story.KillQuest(7595, "thorngarde", "NecroDrone");
         Story.MapItemQuest(7595, "thorngarde", new[] { 7487, 7488 });
+        Story.KillQuest(7595, "thorngarde", "NecroDrone");
 
         //7596    Save my Friends
-        Story.KillQuest(7596, "thorngarde", "NecroMech");
         Story.MapItemQuest(7596, "thorngarde", new[] { 7489, 7490, 7491 });
+        Story.KillQuest(7596, "thorngarde", "NecroMech");
 
         //7597    Pull the Wires
         Story.KillQuest(7597, "thorngarde", "CryptHacker");
@@ -642,8 +642,8 @@ public class CoreDoomwood
         Story.KillQuest(7603, "stonewood", "NecroDrone");
 
         //7604    Gather Spell Components
-        Story.KillQuest(7604, "stonewood", "Doomwood Treeant");
         Story.MapItemQuest(7604, "stonewood", 7510, 6);
+        Story.KillQuest(7604, "stonewood", "Doomwood Treeant");
 
         //7605    A Few Things More
         Story.KillQuest(7605, "stonewood", new[] { "NecroDrone", "NecroMech" });
@@ -847,8 +847,8 @@ public class CoreDoomwood
         Story.KillQuest(7639, "techfortress", "CryptHacker");
 
         //7640    Signal Flare
-        Story.KillQuest(7640, "techfortress", "NecroDrone");
         Story.MapItemQuest(7640, "techfortress", 7561);
+        Story.KillQuest(7640, "techfortress", "NecroDrone");
 
         //7641    Medal Time
         if (!Story.QuestProgression(7641))

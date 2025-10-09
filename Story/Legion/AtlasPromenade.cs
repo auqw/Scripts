@@ -74,8 +74,8 @@ public class AtlasPromenade
         if (!Story.QuestProgression(10109))
         {
             Core.EquipClass(ClassType.Solo);
-            Story.KillQuest(10109, "atlaspromenade", UseableMonsters[2]);
             Story.MapItemQuest(10109, "atlaspromenade", 14206);
+            Story.KillQuest(10109, "atlaspromenade", UseableMonsters[2]);
         }
 
 
@@ -83,8 +83,8 @@ public class AtlasPromenade
         if (!Story.QuestProgression(10110))
         {
             Core.EquipClass(ClassType.Solo);
-            Story.KillQuest(10110, "atlaspromenade", UseableMonsters[3]);
             Story.MapItemQuest(10110, "atlaspromenade", 14207);
+            Story.KillQuest(10110, "atlaspromenade", UseableMonsters[3]);
         }
 
 

@@ -602,8 +602,8 @@ public class CoreToD
             Story.KillQuest(5125, "baconcatlair", new[] { "Shark Invader", "Shark Invader" });
 
             //Sharks like Honey? 5126
-            Story.KillQuest(5126, "baconcatlair", "Robo Shark");
             Story.MapItemQuest(5126, "baconcatlair", 4480, 6);
+            Story.KillQuest(5126, "baconcatlair", "Robo Shark");
 
             //At Least They Like to Party 5127
             Story.MapItemQuest(5127, "baconcatlair", 4479, 3);
@@ -942,8 +942,8 @@ public class CoreToD
 
         // Yo Mummy
         Core.EquipClass(ClassType.Solo);
-        Story.KillQuest(5192, "fourdpyramid", "Sekt's Mummy");
         Story.MapItemQuest(5192, "fourdpyramid", 4557, 1);
+        Story.KillQuest(5192, "fourdpyramid", "Sekt's Mummy");
 
         // Find the Secret Brick
         Story.MapItemQuest(5193, "fourdpyramid", 4558, 1);
@@ -956,8 +956,8 @@ public class CoreToD
         Story.MapItemQuest(5195, "fourdpyramid", 4559, 1);
 
         // A Jarring Solution
-        Story.KillQuest(5196, "fourdpyramid", new[] { "Nega Mummy", "Guardian of Anubyx" });
         Story.MapItemQuest(5196, "fourdpyramid", 4560, 1);
+        Story.KillQuest(5196, "fourdpyramid", new[] { "Nega Mummy", "Guardian of Anubyx" });
 
         // Ra of Light
         Story.MapItemQuest(5197, "fourdpyramid", 4561, 1);
@@ -991,8 +991,8 @@ public class CoreToD
         Story.MapItemQuest(5204, "fourdpyramid", 4567, 1);
 
         // Fighting in 4D
-        Story.KillQuest(5205, "fourdpyramid", "Tesseract Sprite");
         Story.MapItemQuest(5205, "fourdpyramid", 4568, 1);
+        Story.KillQuest(5205, "fourdpyramid", "Tesseract Sprite");
 
         // Lever-age    
         Story.MapItemQuest(5206, "fourdpyramid", 4569, 1);
@@ -1240,8 +1240,8 @@ public class CoreToD
         Story.KillQuest(5314, "towerofmirrors", new[] { "Glassgoyle", "Glass Serpent" });
 
         // The Key To Success
-        Story.KillQuest(5315, "towerofmirrors", "Silver Elemental");
         Story.MapItemQuest(5315, "towerofmirrors", new[] { 4691, 4692 });
+        Story.KillQuest(5315, "towerofmirrors", "Silver Elemental");
 
         // Phanatics
         Story.KillQuest(5316, "towerofmirrors", new[] { "Phans", "Phans" });
@@ -1256,8 +1256,8 @@ public class CoreToD
         }
 
         // True Love
-        Story.KillQuest(5318, "towerofmirrors", "Silver Elemental");
         Story.MapItemQuest(5318, "towerofmirrors", new[] { 4687, 4693 });
+        Story.KillQuest(5318, "towerofmirrors", "Silver Elemental");
 
         // Turn to the Left
         Story.KillQuest(5319, "towerofmirrors", new[] { "Runway Wraith", "Runway Wraith", "Runway Wraith", "Runway Wraith" });
@@ -1272,8 +1272,8 @@ public class CoreToD
         }
 
         // Or Maybe THIS Is True Love
-        Story.KillQuest(5321, "towerofmirrors", "Silver Elemental");
         Story.MapItemQuest(5321, "towerofmirrors", new[] { 4688, 4694 });
+        Story.KillQuest(5321, "towerofmirrors", "Silver Elemental");
 
         // Those Harpies!
         Story.KillQuest(5322, "towerofmirrors", new[] { "Pageant Mom", "Pageant Mom" });
@@ -1288,8 +1288,8 @@ public class CoreToD
         }
 
         // Oh Sure, Why Not
-        Story.KillQuest(5324, "towerofmirrors", "Silver Elemental");
         Story.MapItemQuest(5324, "towerofmirrors", new[] { 4689, 4695 });
+        Story.KillQuest(5324, "towerofmirrors", "Silver Elemental");
 
         // Behind the Scenes
         if (!Story.QuestProgression(5325))
@@ -1310,8 +1310,8 @@ public class CoreToD
         }
 
         // Oh, I Give Up
-        Story.KillQuest(5327, "towerofmirrors", "Silver Elemental");
         Story.MapItemQuest(5327, "towerofmirrors", new[] { 4690, 4696 });
+        Story.KillQuest(5327, "towerofmirrors", "Silver Elemental");
 
         // We Gotta Wendi-GO
         if (!Story.QuestProgression(5328))

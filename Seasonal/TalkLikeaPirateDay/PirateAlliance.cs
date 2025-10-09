@@ -48,8 +48,8 @@ public class PirateAlliance
         #endregion Useable Monsters
 
         // 10400 | A Pirate's Stake
-        Story.KillQuest(10400, "piratealliance", UseableMonsters[0]);
         Story.MapItemQuest(10400, "piratealliance", 14926);
+        Story.KillQuest(10400, "piratealliance", UseableMonsters[0]);
 
 
 

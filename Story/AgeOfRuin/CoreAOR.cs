@@ -68,12 +68,12 @@ public class CoreAOR
         Story.PreLoad(this);
 
         // Familiar Faces (9213)
-        Story.KillQuest(9213, "terminatemple", "Termina Defender");
         Story.MapItemQuest(9213, "terminatemple", new[] { 11625, 11626, 11627 });
+        Story.KillQuest(9213, "terminatemple", "Termina Defender");
 
         // Loaded Resume (9214)
-        Story.KillQuest(9214, "terminatemple", "Clandestine Guard");
         Story.MapItemQuest(9214, "terminatemple", new[] { 11628, 11629, 11630 });
+        Story.KillQuest(9214, "terminatemple", "Clandestine Guard");
 
         if (!seaVoice && !coldThunder)
             return;
@@ -111,30 +111,30 @@ public class CoreAOR
         Story.KillQuest(9225, "ashray", "Kitefin Shark Bait");
 
         // Angry Angler (9226)
-        Story.KillQuest(9226, "ashray", "Ashray Fisherman");
         Story.MapItemQuest(9226, "ashray", new[] { 11663, 11664 });
+        Story.KillQuest(9226, "ashray", "Ashray Fisherman");
 
         // Slimy Scavenger (9227)
         Story.KillQuest(9227, "ashray", "Ghostly Eel");
 
         // Troubled Waters (9228)
-        Story.KillQuest(9228, "ashray", "Stagnant Water");
         Story.MapItemQuest(9228, "ashray", 11665);
+        Story.KillQuest(9228, "ashray", "Stagnant Water");
 
         // Washed Ink (9229)
-        Story.KillQuest(9229, "ashray", "Ashray Fisherman");
         Story.MapItemQuest(9229, "ashray", 11666);
+        Story.KillQuest(9229, "ashray", "Ashray Fisherman");
 
         // Fishy Hospitality (9230)
         Story.KillQuest(9230, "ashray", "Kitefin Shark Bait");
 
         // Doctoring Papers (9231)
-        Story.KillQuest(9231, "ashray", "Ghostly Eel");
         Story.MapItemQuest(9231, "ashray", 11667);
+        Story.KillQuest(9231, "ashray", "Ghostly Eel");
 
         // Psychic Pollution (9232)
-        Story.KillQuest(9232, "ashray", "Stagnant Water");
         Story.MapItemQuest(9232, "ashray", 11668);
+        Story.KillQuest(9232, "ashray", "Stagnant Water");
 
         // Duck Dive (9233)
         Story.MapItemQuest(9233, "ashray", new[] { 11669, 11670 });
@@ -159,12 +159,12 @@ public class CoreAOR
         Story.KillQuest(9243, "sunlightzone", "Spectral Jellyfish");
 
         // Efficient Division (9244)
-        Story.KillQuest(9244, "sunlightzone", "Blighted Water");
         Story.MapItemQuest(9244, "sunlightzone", new[] { 11705, 11706 });
+        Story.KillQuest(9244, "sunlightzone", "Blighted Water");
 
         // Tech Illiterate (9245)
-        Story.KillQuest(9245, "sunlightzone", "Spectral Jellyfish");
         Story.MapItemQuest(9245, "sunlightzone", 11707, 3);
+        Story.KillQuest(9245, "sunlightzone", "Spectral Jellyfish");
 
         // Plugging Leaks (9246)
         Story.KillQuest(9246, "sunlightzone", new[] { "Spectral Jellyfish", "Blighted Water" });
@@ -173,12 +173,12 @@ public class CoreAOR
         Story.MapItemQuest(9247, "sunlightzone", new[] { 11708, 11709, 11710 });
 
         // Flat Scares (9248)
-        Story.KillQuest(9248, "sunlightzone", "Astravian Illusion");
         Story.MapItemQuest(9248, "sunlightzone", 11711);
+        Story.KillQuest(9248, "sunlightzone", "Astravian Illusion");
 
         // Fishy Bully (9249)
-        Story.KillQuest(9249, "sunlightzone", "Infernal Illusion");
         Story.MapItemQuest(9249, "sunlightzone", 11712, 5);
+        Story.KillQuest(9249, "sunlightzone", "Infernal Illusion");
 
         // Faint Howls (9250)
         Story.MapItemQuest(9250, "sunlightzone", 11713);
@@ -282,8 +282,8 @@ public class CoreAOR
         Story.MapItemQuest(9292, "midnightzone", new[] { 11842, 11843, 11844 });
 
         // Radical Renovation (9293)
-        Story.KillQuest(9293, "midnightzone", "Polymelia Lamprey");
         Story.MapItemQuest(9293, "midnightzone", 11845);
+        Story.KillQuest(9293, "midnightzone", "Polymelia Lamprey");
 
         // Graveyard Shift (9294)
         Story.KillQuest(9294, "midnightzone", new[] { "Vowed ShadowSlayer", "Vowed ShadowSlayer" });
@@ -293,8 +293,8 @@ public class CoreAOR
         Story.KillQuest(9295, "midnightzone", "Undead Prisoner");
 
         // Vows For Ignorance (9296)
-        Story.KillQuest(9296, "midnightzone", new[] { "Undead Prisoner", "Vowed ShadowSlayer" });
         Story.MapItemQuest(9296, "midnightzone", 11847);
+        Story.KillQuest(9296, "midnightzone", new[] { "Undead Prisoner", "Vowed ShadowSlayer" });
 
         // Protein Shake (9297)
         Story.MapItemQuest(9297, "midnightzone", 11848, 3);
@@ -330,8 +330,8 @@ public class CoreAOR
         Story.PreLoad(this);
 
         // Shark Kiting (9306)
-        Story.KillQuest(9306, "abyssalzone", "Kitefin Shark Bait");
         Story.MapItemQuest(9306, "abyssalzone", 11914);
+        Story.KillQuest(9306, "abyssalzone", "Kitefin Shark Bait");
 
         // Suckered Blockade (9307)
         Story.MapItemQuest(9307, "abyssalzone", 11893, 6);
@@ -341,15 +341,15 @@ public class CoreAOR
         Story.KillQuest(9308, "abyssalzone", "Blighted Water");
 
         // Sodden Secrets (9309)
-        Story.KillQuest(9309, "abyssalzone", "Shadow Viscera");
         Story.MapItemQuest(9309, "abyssalzone", 11895, 3);
+        Story.KillQuest(9309, "abyssalzone", "Shadow Viscera");
 
         // The Hidden Corpse (9310)
         Story.KillQuest(9310, "abyssalzone", new[] { "Shadow Viscera", "Blighted Water" });
 
         // Octo-Flake Fish Feed (9311)
-        Story.KillQuest(9311, "abyssalzone", "Foam Scavenger");
         Story.MapItemQuest(9311, "abyssalzone", 11896);
+        Story.KillQuest(9311, "abyssalzone", "Foam Scavenger");
 
         // Completely Surrounded (9312)
         Story.MapItemQuest(9312, "abyssalzone", 11897, 6);
@@ -359,8 +359,8 @@ public class CoreAOR
         Story.KillQuest(9313, "abyssalzone", "Necro Adipocere");
 
         // In the Grip of Justice (9314)
-        Story.KillQuest(9314, "abyssalzone", new[] { "Necro Adipocere", "Foam Scavenger" });
         Story.MapItemQuest(9314, "abyssalzone", 11899);
+        Story.KillQuest(9314, "abyssalzone", new[] { "Necro Adipocere", "Foam Scavenger" });
 
         // Together as One (9315)
         if (!Story.QuestProgression(9315))
@@ -382,8 +382,8 @@ public class CoreAOR
         Story.PreLoad(this);
 
         // Unsung Heroes (9329)
-        Story.KillQuest(9329, "trenchobserve", "Venerated Wraith");
         Story.MapItemQuest(9329, "trenchobserve", 11975);
+        Story.KillQuest(9329, "trenchobserve", "Venerated Wraith");
 
         // Watertight Guarantee (9330)
         if (!Story.QuestProgression(9330))
@@ -417,8 +417,8 @@ public class CoreAOR
         Story.KillQuest(9336, "trenchobserve", "Necro Adipocere");
 
         // Hadal Havoc (9337)
-        Story.KillQuest(9337, "trenchobserve", new[] { "Necro Adipocere", "Sea Spirit" });
         Story.MapItemQuest(9337, "trenchobserve", 11982);
+        Story.KillQuest(9337, "trenchobserve", new[] { "Necro Adipocere", "Sea Spirit" });
 
         // See You on the Other Side (9338)
         if (!Story.QuestProgression(9338))
@@ -505,8 +505,8 @@ public class CoreAOR
         Story.MapItemQuest(9722, "balemorale", new[] { 13177, 13178 });
 
         // Chaotic Roots (9723)
-        Story.KillQuest(9723, "balemorale", "Chaos Spider");
         Story.MapItemQuest(9723, "balemorale", new[] { 13179, 13180 });
+        Story.KillQuest(9723, "balemorale", "Chaos Spider");
 
         // Eroding Era (9724)
         Story.KillQuest(9724, "balemorale", "Chaos Crystal");
@@ -516,8 +516,8 @@ public class CoreAOR
         Story.MapItemQuest(9725, "balemorale", 13182);
 
         // Abandoned Cradle (9726)
-        Story.KillQuest(9726, "balemorale", new[] { "Chaos Spider", "Chaos Crystal" });
         Story.MapItemQuest(9726, "balemorale", 13183);
+        Story.KillQuest(9726, "balemorale", new[] { "Chaos Spider", "Chaos Crystal" });
 
         // Shockwaves (9727)
         Story.KillQuest(9727, "balemorale", "Skye Warrior");
@@ -614,16 +614,16 @@ public class CoreAOR
         Story.KillQuest(9760, "loughshine", "Skye Executor");
 
         // Grace of Three (9761)
-        Story.KillQuest(9761, "loughshine", "Energy Elemental");
         Story.MapItemQuest(9761, "loughshine", 13277);
+        Story.KillQuest(9761, "loughshine", "Energy Elemental");
 
         // Iubhair (9762)
         Story.MapItemQuest(9762, "loughshine", 13278, 5);
         Story.MapItemQuest(9762, "loughshine", 13279);
 
         // Parting the Clouds (9763)
-        Story.KillQuest(9763, "loughshine", new[] { "Energy Elemental", "Skye Executor" });
         Story.MapItemQuest(9763, "loughshine", 13280);
+        Story.KillQuest(9763, "loughshine", new[] { "Energy Elemental", "Skye Executor" });
 
         // Arrester (9764)
         if (!Story.QuestProgression(9764))
@@ -644,19 +644,19 @@ public class CoreAOR
         Story.PreLoad(this);
 
         // Till When? (9768)
-        Story.KillQuest(9768, "naoisegrave", "Bananach Raven");
         Story.MapItemQuest(9768, "naoisegrave", 13296);
+        Story.KillQuest(9768, "naoisegrave", "Bananach Raven");
 
         // Energetic Feud (9769)
-        Story.KillQuest(9769, "naoisegrave", "Energy Elemental");
         Story.MapItemQuest(9769, "naoisegrave", 13297);
+        Story.KillQuest(9769, "naoisegrave", "Energy Elemental");
 
         // Glacial Seal (9774)
         Story.MapItemQuest(9774, "naoisegrave", new[] { 13298, 13299 });
 
         // The Cold Wind Guides (9770)
-        Story.KillQuest(9770, "naoisegrave", new[] { "Energy Elemental", "Bananach Raven" });
         Story.MapItemQuest(9770, "naoisegrave", 13300);
+        Story.KillQuest(9770, "naoisegrave", new[] { "Energy Elemental", "Bananach Raven" });
 
         // Cold Callers (9771)
         Story.KillQuest(9771, "naoisegrave", "Ice Guardian");
@@ -666,8 +666,8 @@ public class CoreAOR
 
         // Of The Sorrows (9773)
         Core.EquipClass(ClassType.Solo);
-        Story.KillQuest(9773, "naoisegrave", "Warden Iseul");
         Story.MapItemQuest(9773, "naoisegrave", 13301);
+        Story.KillQuest(9773, "naoisegrave", "Warden Iseul");
 
         // Cold-Blooded Torture (9775)
         Story.KillQuest(9775, "naoisegrave", "Ice Guardian");
@@ -712,19 +712,19 @@ public class CoreAOR
         }
 
         // Last Snowfall (9810)
-        Story.KillQuest(9810, "liatarahill", new[] { "Undead Garde", "Garde Wraith" });
         Story.MapItemQuest(9810, "liatarahill", 13368);
+        Story.KillQuest(9810, "liatarahill", new[] { "Undead Garde", "Garde Wraith" });
 
         // Spring Melt (9811)
-        Story.KillQuest(9811, "liatarahill", "Ice Guardian");
         Story.MapItemQuest(9811, "liatarahill", 13366);
+        Story.KillQuest(9811, "liatarahill", "Ice Guardian");
 
         // Connla (9812)
         Story.KillQuest(9812, "liatarahill", "Skye Cailleach");
 
         // Dumha na nGiall (9813)
-        Story.KillQuest(9813, "liatarahill", new[] { "Ice Guardian", "Skye Cailleach" });
         Story.MapItemQuest(9813, "liatarahill", 13367);
+        Story.KillQuest(9813, "liatarahill", new[] { "Ice Guardian", "Skye Cailleach" });
 
         // Changeling (9814)
         if (!Story.QuestProgression(9814))
@@ -746,8 +746,8 @@ public class CoreAOR
         Story.PreLoad(this);
 
         // Needs of the Few (9819)
-        Story.KillQuest(9819, "castlegaheris", "Energy Elemental");
         Story.MapItemQuest(9819, "castlegaheris", 13378);
+        Story.KillQuest(9819, "castlegaheris", "Energy Elemental");
 
         // Lost and Numb (9820)
         Story.KillQuest(9820, "castlegaheris", "Ice Guardian");
@@ -920,8 +920,8 @@ public class CoreAOR
         #endregion Useable Monsters
 
         // 10359 | A-Luring Song
-        Story.KillQuest(10359, "mountmaleno", "Soul Raven");
         Story.MapItemQuest(10359, "mountmaleno", 14805);
+        Story.KillQuest(10359, "mountmaleno", "Soul Raven");
 
 
         // 10360 | Splendid Ashes, Pompous Grave
@@ -1097,8 +1097,8 @@ public class CoreAOR
 
 
         // 10415 | System Delusion
-        Story.KillQuest(10415, "forgealbedo", UseableMonsters[1]);
         Story.MapItemQuest(10415, "forgealbedo", 14962);
+        Story.KillQuest(10415, "forgealbedo", UseableMonsters[1]);
 
 
         // 10416 | The Leap that Never Landed
@@ -1107,8 +1107,8 @@ public class CoreAOR
 
 
         // 10417 | Insistent Existence
-        Story.KillQuest(10417, "forgealbedo", UseableMonsters[3]);
         Story.MapItemQuest(10417, "forgealbedo", 14964, 4);
+        Story.KillQuest(10417, "forgealbedo", UseableMonsters[3]);
 
 
         // 10418 | Failed Reflection
@@ -1128,8 +1128,8 @@ public class CoreAOR
 
 
         // 10420 | Mental Barrier
-        Story.KillQuest(10420, "forgealbedo", UseableMonsters[1]);
         Story.MapItemQuest(10420, "forgealbedo", 14965, 6);
+        Story.KillQuest(10420, "forgealbedo", UseableMonsters[1]);
 
 
         // 10421 | Lost Admin Privileges

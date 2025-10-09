@@ -51,8 +51,8 @@ public class DarkonGarden
         Story.KillQuest(7491, "garden", "Creature 83");
 
         //Big, MEAN Bunnies 7492
-        Story.KillQuest(7492, "garden", "Creature 35");
         Story.MapItemQuest(7492, "garden", 7326);
+        Story.KillQuest(7492, "garden", "Creature 35");
 
         //What Crack? 7493
         Story.MapItemQuest(7493, "garden", 7327);

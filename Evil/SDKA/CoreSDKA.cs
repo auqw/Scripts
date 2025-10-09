@@ -9,6 +9,7 @@ tags: null
 //cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Quests;
 using Skua.Core.Options;
 using Skua.Core.Utils;
 
@@ -17,10 +18,14 @@ public class CoreSDKA
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public static CoreBots sCore => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public string OptionsStorage = "SupulchuresDoomKnightArmorOptions";
     public bool DontPreconfigure = true;
@@ -272,8 +277,10 @@ public class CoreSDKA
             return;
 
         // Check for squire quest to be completed if !completed unlock via metal upgrade quest
-        if (!Bot.Quests.IsUnlocked(2144))
+        if (!Story.QuestProgression(2144, Log: false))
         {
+            Core.Logger("DoomSquire Weapon Kit Quest not unlocked, lets fix that.");
+
             string[] Metals = new[] { "Arsenic", "Beryllium", "Chromium", "Palladium", "Rhodium", "Thorium", "Mercury" };
             string metalName = Bot.Inventory.Items.Concat(Bot.Bank.Items)
                 .FirstOrDefault(x => x != null && Metals.Any(m => x.Name == m))?.Name ?? "Arsenic";
@@ -690,6 +697,7 @@ public class CoreSDKA
         string fullMetalName = string.Empty;
         int upgradeMetalQuest = 0;
         int forgeKeyQuest = 0;
+        int forgekeyitemID = 0;
         switch (metal)
         {
             case HardCoreMetalsEnum.Arsenic:
@@ -729,8 +737,12 @@ public class CoreSDKA
                 break;
         }
 
-        if (Core.CheckInventory(fullMetalName))
-            return;
+
+        // Initialize quest data for forge key quest
+        Quest ForgeQuestdata = Core.InitializeWithRetries(() => Core.EnsureLoad(forgeKeyQuest));
+
+        // Get the forge key itemid for the quest
+        forgekeyitemID = ForgeQuestdata.Requirements.FirstOrDefault(x => x != null && x.Name == "Forge Key").ID;
 
         string upgradeMetalName = string.Join(' ', fullMetalName.Split(' ')[..2]);
         Core.FarmingLogger(fullMetalName, 1);
@@ -743,7 +755,7 @@ public class CoreSDKA
             Core.EnsureAccept(upgradeMetalQuest);
 
             if (!Core.CheckInventory((int)metal))
-                Daily.MineCrafting(new[] { metal.ToString() });
+                Daily.HardCoreMetals(new[] { metal.ToString() });
             if (!Core.CheckInventory((int)metal))
                 Core.Logger($"Can't complete {fullMetalName.Split(' ')[..2].Join(' ')} Enchantment (missing {metal}).\n" +
                             "This requires a daily, please run the bot again after the daily reset has occurred.", messageBox: true, stopBot: true);
@@ -764,7 +776,8 @@ public class CoreSDKA
         // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]
         Core.AddDrop(fullMetalName);
         Core.EnsureAccept(forgeKeyQuest);
-        Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
+        while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
+            Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
         Core.EnsureComplete(forgeKeyQuest);
         Bot.Wait.ForPickup(fullMetalName);
     }

@@ -50,8 +50,8 @@ public class LostVilla
         Story.KillQuest(9562, "lostvilla", "Gorewyrm");
 
         // Relics of Bygone Days (9563)
-        Story.KillQuest(9563, "lostvilla", "Eldritch Parasite");
         Story.MapItemQuest(9563, "lostvilla", 12651);
+        Story.KillQuest(9563, "lostvilla", "Eldritch Parasite");
 
         // Rapacious Desires (9564)
         Story.MapItemQuest(9564, "lostvilla", 12652, 3);
@@ -65,8 +65,8 @@ public class LostVilla
         Story.KillQuest(9566, "lostvilla", "Diabolical Hoard");
 
         // Proper Procedures (9567)
-        Story.KillQuest(9567, "noxustower", "Lightguard Caster");
         Story.MapItemQuest(9567, "lostvilla", 12654);
+        Story.KillQuest(9567, "noxustower", "Lightguard Caster");
 
         // A Peculiar Feast (9568)
         Story.KillQuest(9568, "lostvilla", "Mutilated Atrocity");

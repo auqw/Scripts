@@ -9,6 +9,8 @@ tags: acs, free, thefamily, army.
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
+//cs_include Scripts/Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs
+
 using Skua.Core.Interfaces;
 
 public class ArmyFreeAcs
@@ -19,106 +21,27 @@ public class ArmyFreeAcs
     private static CoreArmyLite _Army;
     private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static FreeAcs ACs { get => _ACs ??= new FreeAcs(); set => _ACs = value; }
+    private static FreeAcs _ACs;
 
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
 
-        // Core.Logger("Quest has been Removed, blame AE");
-        FreeAcs();
+        Doit();
 
         Core.SetOptions(false);
     }
 
-    #region 2024
-    private void FreeAcs()
+    private void Doit()
     {
         Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
 
         while (!Bot.ShouldExit && Army.doForAll())
         {
-            if (Bot.Quests.IsAvailable(10035) && !Core.isCompletedBefore(10035))
-            {
-                Bot.Quests.UpdateQuest(7522);
-                Core.EquipClass(ClassType.Solo);
-                Core.EnsureAccept(10035);
-                Core.KillMonster("borgars", "r2", "Left", "*", "Cookie Dough");
-                Core.EnsureComplete(10035);
-                Bot.Wait.ForQuestComplete(10035);
-            }
+            ACs.GetYourAcsHere();
         }
     }
-
-    // private void FreeAcs()
-    // {
-    //     List<string> warnings = new();
-    //     Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
-
-    //     while (!Bot.ShouldExit && Army.doForAll())
-    //     {
-    //         if (!Story.QuestProgression(9937))
-    //         {
-    //             Core.EnsureAccept(9937);
-    //             Core.HuntMonster("yulgar", "Agitated Orb", "Free ACs... and Yogurt");
-    //             Core.EnsureComplete(9937);
-    //         }
-    //     }
-    // }
-
-    // public void FreeAcs()
-    // {
-    //     List<string> warnings = new();
-    //     Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
-
-    //     while (!Bot.ShouldExit && Army.doForAll())
-    //     {
-    //         // Verified Email
-    //         if (Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified"))
-    //         {
-    //             if (!Core.isCompletedBefore(9578))
-    //             {
-    //                 Core.EnsureAccept(9578);
-    //                 Bot.Quests.UpdateQuest(7522);
-    //                 Core.EquipClass(ClassType.Solo);
-    //                 Core.HuntMonster("borgars", "Burglinster", "Cookie Dough");
-    //                 Core.EnsureComplete(9578);
-    //             }
-    //         }
-    //         else
-    //         {
-    //             Core.Logger($"Unverified Email: {Core.Username()} - Skipping");
-    //             continue;
-    //         }
-
-
-    //     }
-    // }
-    #endregion 2024
 }
-
-
-#region Preious years (just copy and paste, then comment out)
-
-#region 2023
-/*
-2023: ID: 9444
-2024: ID: 9937
-while (!Bot.ShouldExit && Army.doForAll())
-{
-
-    if (Story.QuestProgression(9937))
-    {
-        Core.Logger("Quest not avaible / is already completed.");
-    }
-    else
-    {
-        Core.EnsureAccept(9937);
-        Core.HuntMonster("yulgar", "Agitated Orb", "Free ACs... and Yogurt");
-        Core.EnsureComplete(9937);
-    }
-}
-*/
-#endregion 2023
-
-#endregion Preious years (just copy and paste, then comment out)

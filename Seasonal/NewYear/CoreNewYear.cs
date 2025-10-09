@@ -105,8 +105,8 @@ public class CoreNewYear
         Story.KillQuest(2591, "darksun", "Aku");
 
         //Fight the Darkness 2592
-        Story.KillQuest(2592, "darkoviagrave", "Albino Bat");
         Story.MapItemQuest(2592, "darkoviaforest", 1604);
+        Story.KillQuest(2592, "darkoviagrave", "Albino Bat");
 
         //Cloaked in Darkness 2593
         Story.MapItemQuest(2593, "darksun", 1597);

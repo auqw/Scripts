@@ -50,8 +50,8 @@ public class Bingwen
         Story.MapItemQuest(7334, "akibacny", 6984, 5);
 
         //Make Some Traps (7335)
-        Story.KillQuest(7335, "akibacny", "Red Chicken");
         Story.MapItemQuest(7335, "akibacny", 6985, 6);
+        Story.KillQuest(7335, "akibacny", "Red Chicken");
 
         //Those Rats are Mean (7336)
         Story.KillQuest(7336, "akibacny", "Mean Rat");

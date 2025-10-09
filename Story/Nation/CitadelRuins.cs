@@ -251,19 +251,19 @@ public class CitadelRuins
         }
 
         //search the labs
-        Story.KillQuest(6177, "citadelruins", "Inquisitor Hobo");
         Story.MapItemQuest(6177, "citadelruins", new[] { 5594, 5595, 5596 });
+        Story.KillQuest(6177, "citadelruins", "Inquisitor Hobo");
 
         //break another seal
-        Story.KillQuest(6178, "citadelruins", "Mana Sprites");
         Story.MapItemQuest(6178, "citadelruins", 5597);
+        Story.KillQuest(6178, "citadelruins", "Mana Sprites");
 
         //inspect time
         Story.MapItemQuest(6179, "citadelruins", 5598);
 
         //find the parts
-        Story.KillQuest(6180, "citadelruins", "Inquisitor Hobo");
         Story.MapItemQuest(6180, "citadelruins", new[] { 5599, 5600, 5601 });
+        Story.KillQuest(6180, "citadelruins", "Inquisitor Hobo");
 
         //defeat the grand inquisitor
         Story.KillQuest(6181, "citadelruins", "Grand Inquisitor Murry");

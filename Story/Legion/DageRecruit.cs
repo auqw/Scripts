@@ -66,8 +66,8 @@ public class DageRecruitStory
         }
 
         //Island Sightseeing
-        Story.KillQuest(8561, "dagerecruit", "Scared Wildcat");
         Story.MapItemQuest(8561, "dagerecruit", 9885);
+        Story.KillQuest(8561, "dagerecruit", "Scared Wildcat");
 
         //Lure Crafted
         if (!Story.QuestProgression(8562))

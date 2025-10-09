@@ -35,8 +35,8 @@ public class IcePlane
         Story.KillQuest(5777, "iceplane", "Spirit of Ice");
 
         // Make a Bridge (5778)
-        Story.KillQuest(5778, "iceplane", "Frozen Jellyfish");
         Story.MapItemQuest(5778, "iceplane", 5218);
+        Story.KillQuest(5778, "iceplane", "Frozen Jellyfish");
 
         // Don't Fall (5779)
         Story.MapItemQuest(5779, "iceplane", new[] { 5219, 5220 });
@@ -45,8 +45,8 @@ public class IcePlane
         if (!Core.isCompletedBefore(5780))
         {
             Core.EquipClass(ClassType.Solo);
-            Story.KillQuest(5780, "iceplane", "Crystalline Shade");
             Story.MapItemQuest(5780, "iceplane", 5221);
+            Story.KillQuest(5780, "iceplane", "Crystalline Shade");
             Core.EquipClass(ClassType.Farm);
         }
 

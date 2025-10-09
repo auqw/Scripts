@@ -36,8 +36,8 @@ public class MidnightWar
         Story.MapItemQuest(5389, "midnightcrown", new[] { 4746, 4747 }, 4);
 
         // Gunpowder, Lots! (5390)
-        Story.KillQuest(5390, "midnightcrown", "Scoundrel");
         Story.MapItemQuest(5390, "midnightcrown", 4748, 5);
+        Story.KillQuest(5390, "midnightcrown", "Scoundrel");
 
         // Boar-ed of Seafood (5391)
         Story.KillQuest(5391, "midnightcrown", "Island Boar");
@@ -50,8 +50,8 @@ public class MidnightWar
         Story.MapItemQuest(5393, "midnightcrown", 4752);
 
         // It Pays To Be Prepared! (5394)
-        Story.KillQuest(5394, "midnightcrown", "Scoundrel");
         Story.MapItemQuest(5394, "midnightcrown", 4753);
+        Story.KillQuest(5394, "midnightcrown", "Scoundrel");
 
         // A Bit O' Protein (5395)
         Story.KillQuest(5395, "midnightcrown", "Island Boar");

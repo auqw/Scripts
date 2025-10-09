@@ -40,8 +40,8 @@ public class Arcadia
         Story.MapItemQuest(8508, "Arcadia", 9625);
 
         // Melty Blood 8509
-        Story.KillQuest(8509, "Arcadia", "Shadowfall Warrior");
         Story.MapItemQuest(8509, "Arcadia", 9626);
+        Story.KillQuest(8509, "Arcadia", "Shadowfall Warrior");
 
         // Poincare Recurrence 8510
         Story.MapItemQuest(8510, "Arcadia", 9630);
@@ -55,8 +55,8 @@ public class Arcadia
         Story.MapItemQuest(8512, "Arcadia", 9632, 4);
 
         // Tea Diffusion  8513
-        Story.KillQuest(8513, "Arcadia", "Phantasm");
         Story.MapItemQuest(8513, "Arcadia", 9627);
+        Story.KillQuest(8513, "Arcadia", "Phantasm");
 
         // Road Not Taken  8514
         Story.MapItemQuest(8514, "Arcadia", 9633, 4);

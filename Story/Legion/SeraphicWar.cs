@@ -37,8 +37,8 @@ public class SeraphicWar_Story
         //Get the Fire
         Story.KillQuest(6240, "worldsoul", "Divine Fire Elemental");
         //Gather Armaments
-        Story.KillQuest(6241, "worldsoul", "Skeletal Squatter");
         Story.MapItemQuest(6241, "worldsoul", 5681, 3);
+        Story.KillQuest(6241, "worldsoul", "Skeletal Squatter");
         //Plutonium For Power
         Story.KillQuest(6242, "worldsoul", "Radioactive Hydra");
         //Defeat the Undead

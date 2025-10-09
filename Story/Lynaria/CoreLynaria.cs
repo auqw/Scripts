@@ -47,8 +47,8 @@ public class CoreLynaria
         #endregion Useable Monsters
 
         // 10230 | Sleeping Diana
-        Story.KillQuest(10230, "bocklingrove", UseableMonsters[0]);
         Story.MapItemQuest(10230, "bocklingrove", 14429);
+        Story.KillQuest(10230, "bocklingrove", UseableMonsters[0]);
 
 
         // 10231 | At the Edge of the Forest
@@ -138,8 +138,8 @@ public class CoreLynaria
         #endregion Useable Monsters
 
         // 10243 | Roger and Angelica
-        Story.KillQuest(10243, "bocklincastle", UseableMonsters[0]);
         Story.MapItemQuest(10243, "bocklincastle", 14446);
+        Story.KillQuest(10243, "bocklincastle", UseableMonsters[0]);
 
 
         // 10244 | The Way to Emmaus
@@ -172,8 +172,8 @@ public class CoreLynaria
 
 
         // 10248 | Killer Pursued by Furies
-        Story.KillQuest(10248, "bocklincastle", UseableMonsters[3]);
         Story.MapItemQuest(10248, "bocklincastle", 14448);
+        Story.KillQuest(10248, "bocklincastle", UseableMonsters[3]);
 
 
         // 10249 | Vestal
@@ -181,8 +181,8 @@ public class CoreLynaria
 
 
         // 10250 | Abandoned Venus
-        Story.KillQuest(10250, "bocklincastle", UseableMonsters[4]);
         Story.MapItemQuest(10250, "bocklincastle", 14450);
+        Story.KillQuest(10250, "bocklincastle", UseableMonsters[4]);
 
 
         // 10251 | Bacchanalia
@@ -270,8 +270,8 @@ public class CoreLynaria
         if (!Story.QuestProgression(10261))
         {
             Core.EquipClass(ClassType.Farm);
-            Story.KillQuest(10261, "bocklinsanctum", UseableMonsters[3]);
             Story.MapItemQuest(10261, "bocklinsanctum", 14480);
+            Story.KillQuest(10261, "bocklinsanctum", UseableMonsters[3]);
         }
 
 

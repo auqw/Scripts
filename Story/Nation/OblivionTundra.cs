@@ -51,8 +51,8 @@ public class OblivionTundra
         #endregion Useable Monsters
 
         // 10036 | Indignant Stubbornness
-        Story.KillQuest(10036, "obliviontundra", UseableMonsters[0]);
         Story.MapItemQuest(10036, "obliviontundra", 14064);
+        Story.KillQuest(10036, "obliviontundra", UseableMonsters[0]);
 
 
         // 10037 | Over the Edge

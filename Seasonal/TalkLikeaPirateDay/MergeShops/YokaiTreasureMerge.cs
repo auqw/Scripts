@@ -20,8 +20,8 @@ public class YokaiTreasureMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
     private static CoreDOY DOY { get => _DOY ??= new CoreDOY(); set => _DOY = value; }
     private static CoreDOY _DOY;
@@ -77,7 +77,7 @@ private static CoreAdvanced _sAdv;
                         Core.HuntMonster("yokaitreasure", "Admiral Zheng", "Shapeshifting Pearl", log: false);
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("yokaitreasure", "Needle Mouth", "Condemned Brand", 4, log: false);
-                        Core.HuntMonster("yokaitreasure", "Imperial Warrior", log: false);
+                        Core.HuntMonster("yokaitreasure", "Imperial Warrior", "Imperial Seal", 4, log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

@@ -66,6 +66,10 @@ public class DragonRoad
         if (!Story.QuestProgression(4537))
         {
             Core.EnsureAccept(4537);
+
+            // Force join and jump, as xantown is force aggroed
+            Core.Join("XanTown");
+            Core.Jump("r12");
             Core.GetMapItem(3756, 1, "XanTown");
             Core.GetMapItem(3763, 1, "DragonRoad");
             Core.EnsureComplete(4537);

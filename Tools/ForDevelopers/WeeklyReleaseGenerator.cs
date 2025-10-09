@@ -37,107 +37,131 @@ public class WeeklyReleaseGenerator
         Core.SetOptions(false);
     }
 
-    public void Generator()
+   public void Generator()
+{
+    if (Bot.Config == null)
     {
-        if (Bot.Config == null)
-        {
-            Core.Logger("Config is not set properly.");
-            return;
-        }
+        Core.Logger("⚠️ Config is not set properly.");
+        return;
+    }
 
-        int startID = Bot.Config.Get<int>("QuestIDRangeStart");
-        int endID = Bot.Config.Get<int>("QuestIDRangeEnd");
-        string mapName = Bot.Config.Get<string>("MapName") ?? string.Empty;
+    int startID = Bot.Config.Get<int>("QuestIDRangeStart");
+    int endID = Bot.Config.Get<int>("QuestIDRangeEnd");
+    string mapName = Bot.Config.Get<string>("MapName") ?? string.Empty;
 
-        if (string.IsNullOrEmpty(mapName))
-        {
-            Core.Logger("MapName is not set properly.");
-            return;
-        }
+    if (string.IsNullOrEmpty(mapName))
+    {
+        Core.Logger("⚠️ MapName is not set properly.");
+        return;
+    }
 
-        // Join the map first
-        Core.Join(mapName.ToLower());
-        Bot.Wait.ForMapLoad(mapName.ToLower());
+    Core.Logger($"🔹 Joining map: {mapName.ToLower()}");
+    Core.Join(mapName.ToLower());
+    Bot.Wait.ForMapLoad(mapName.ToLower());
+    Core.Logger("✅ Map loaded successfully.");
 
-        // Initialize a list to store generated lines
-        List<string> generatedLines = new()
+    List<string> generatedLines = new()
     {
         $"if (Core.isCompletedBefore({endID}))",
         "    return;",
-        string.Empty, // Add a line break after the initial checks
+        string.Empty,
         "Story.PreLoad(this);",
-        string.Empty // Add a line break after PreLoad
+        string.Empty
     };
 
-        // Collect monster names from the map and ensure uniqueness
-        List<string> monsterNames = Bot.Monsters.MapMonsters
-            .Select(m => m.Name)
-            .Distinct()
-            .ToList();
+    // Collect monster names
+    List<string> monsterNames = Bot.Monsters.MapMonsters
+        .Select(m => m.Name)
+        .Distinct()
+        .ToList();
 
-        // Add Useable Monsters section to generated lines
-        generatedLines.Add("#region Useable Monsters");
-        generatedLines.Add("string[] UseableMonsters = new[]");
+    // Generate UseableMonsters array
+    generatedLines.Add("#region Useable Monsters");
+    generatedLines.Add("string[] UseableMonsters = new[]");
+    generatedLines.Add("{");
+    generatedLines.AddRange(monsterNames.Select((name, index) =>
+        $"\t\"{name}\", // UseableMonsters[{index}]{(index < monsterNames.Count - 1 ? "," : "")}"));
+    generatedLines.Add("};");
+    generatedLines.Add("#endregion Useable Monsters");
+
+    var sortedQuests = Core.EnsureLoad(Core.FromTo(startID, endID))
+                            .OrderBy(q => q.ID)
+                            .ToList();
+
+    string[] mapItemKeywords = { "click", "talk", "find", "read", "investigate" };
+
+    foreach (Quest q in sortedQuests)
+    {
+        generatedLines.Add(string.Empty);
+        generatedLines.Add($"// {q.ID} | {q.Name}");
+        generatedLines.Add($"if (!Story.QuestProgression({q.ID}))");
         generatedLines.Add("{");
-        generatedLines.AddRange(monsterNames.Select((name, index) =>
-            $"\t\"{name}\", // UseableMonsters[{index}]{(index < monsterNames.Count - 1 ? "," : "")}"));
-        generatedLines.Add("};");
-        generatedLines.Add("#endregion Useable Monsters");
 
+        Core.Logger($"🔹 Generating quest {q.ID}: {q.Name}");
 
+        bool addedMapItemQuest = false;
 
-        // Ensure quests are processed in numerical order
-        var sortedQuests = Core.EnsureLoad(Core.FromTo(startID, endID))
-                                .OrderBy(q => q.ID)
-                                .ToList();
-
-        foreach (Quest q in sortedQuests)
+        // Detect quest-level map item
+        if ((q.Description?.IndexOfAny(mapItemKeywords.SelectMany(s => s).ToArray()) ?? -1) >= 0 ||
+            (q.Name?.IndexOfAny(mapItemKeywords.SelectMany(s => s).ToArray()) ?? -1) >= 0)
         {
-            // Add a blank line for separation
-            generatedLines.Add(string.Empty);
-
-            // Log the quest ID and name
-            var questLogMessage = $"// {q.ID} | {q.Name}";
-            generatedLines.Add(questLogMessage);
-
-            // Start the QuestProgression check for the current quest
-            generatedLines.Add($"if (!Story.QuestProgression({q.ID}))");
-            generatedLines.Add("{");
-
-            if (q.Requirements.Count == 0)
-            {
-                // Handle case where there are no requirements
-                generatedLines.Add($"    Core.ChainQuest({q.ID});");
-            }
-            else
-            {
-                // Handle cases with requirements
-                generatedLines.Add($"    Core.HuntMonsterQuest({q.ID},  ");
-
-                foreach (var req in q.Requirements.Select((r, index) => new { r, index }))
-                {
-                    string monsterName = $"UseableMonsters[{req.index}]";
-                    generatedLines.Add($"        (\"{mapName}\", {monsterName}, ClassType.Solo),");
-                }
-
-                // Remove the last comma and close the array
-                generatedLines[^1] = generatedLines.Last().TrimEnd(',') + " );";
-            }
-
-            // Close the QuestProgression check block
-            generatedLines.Add("}");
-
-            // Add an extra new line for readability between different quests
-            generatedLines.Add(string.Empty);
+            generatedLines.Add($"    Story.MapItemQuest({q.ID}, \"{mapName}\", FillmeIn);");
+            addedMapItemQuest = true;
+            Core.Logger($"📜 MapItemQuest detected for quest {q.ID}");
         }
 
-        // Write generated lines to a temporary file
-        string tempFilePath = Path.GetTempFileName();
-        File.WriteAllLines(tempFilePath, generatedLines);
+        // Process requirements
+        if (q.Requirements.Count > 0)
+        {
+            // Add MapItemQuest first if needed
+            foreach (var req in q.Requirements)
+            {
+                string reqLower = req.Name?.ToLower() ?? "";
+                if (mapItemKeywords.Any(k => reqLower.Contains(k)))
+                {
+                    generatedLines.Add($"    Story.MapItemQuest({q.ID}, \"{mapName}\", FillmeIn);");
+                    addedMapItemQuest = true;
+                    Core.Logger($"📜 Requirement '{req.Name}' detected as MapItemQuest");
+                }
+            }
 
-        // Open the file automatically
-        System.Diagnostics.Process.Start("notepad.exe", tempFilePath);
+            // Add HuntMonsterQuest if there are any non-mapitem requirements
+            if (q.Requirements.Any(r => !mapItemKeywords.Any(k => (r.Name?.ToLower() ?? "").Contains(k))))
+            {
+                generatedLines.Add($"    Core.HuntMonsterQuest({q.ID},");
+                foreach (var req in q.Requirements.Select((r, i) => new { r, i }))
+                {
+                    string reqLower = req.r.Name?.ToLower() ?? "";
+                    if (mapItemKeywords.Any(k => reqLower.Contains(k)))
+                        continue;
+
+                    // Always use UseableMonsters[0] for simplicity
+                    generatedLines.Add($"        (\"{mapName}\", UseableMonsters[0], ClassType.Solo),");
+                    Core.Logger($"🗡️ Requirement parsed: '{req.r.Name}' → UseableMonsters[0] → ClassType.Solo");
+                }
+
+                // Remove last comma and close
+                generatedLines[^1] = generatedLines.Last().TrimEnd(',') + " );";
+            }
+        }
+
+        // Fallback: if no requirements at all
+        if (!addedMapItemQuest && q.Requirements.Count == 0)
+        {
+            generatedLines.Add($"    Core.ChainQuest({q.ID});");
+            Core.Logger($"⚡ ChainQuest fallback for quest {q.ID}");
+        }
+
+        generatedLines.Add("}");
+        generatedLines.Add(string.Empty);
     }
+
+    // Write to temporary file
+    string tempFilePath = Path.GetTempFileName();
+    File.WriteAllLines(tempFilePath, generatedLines);
+    Core.Logger($"🔹 Generation complete! File saved to {tempFilePath}");
+    System.Diagnostics.Process.Start("notepad.exe", tempFilePath);
+}
 
 
 

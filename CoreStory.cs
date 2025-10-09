@@ -45,400 +45,427 @@ public class CoreStory
         Core.RunCore();
     }
 
+    #region  KillQuest
     /// <summary>
-    /// Kills a monster for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
+    /// Completes a quest by killing a single specified monster until all required items are obtained.
     /// </summary>
-    /// <param name="QuestID">ID of the quest</param>
-    /// <param name="MapName">Map where the <paramref name="MonsterName"/> are</param>
-    /// <param name="MonsterName">Monster to kill</param>
-    /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
-    /// <param name="Reward">What item should be added with AddDrop</param>
-    /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
-    // public void KillQuest(int QuestID, string MapName, string MonsterName, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
-    // {
-    //     Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
-    //     if (QuestProgression(QuestID, GetReward, Reward))
-    //     {
-    //         return;
-    //     }
-
-    //     SmartKillMonster(QuestID, MapName, MonsterName);
-    //     if (AutoCompleteQuest)
-    //     {
-    //         if (QuestData == null)
-    //         {
-    //             Core.Logger($"Quest with ID {QuestID} not found");
-    //             return;
-    //         }
-    //         foreach (ItemBase item in QuestData.Requirements)
-    //         {
-    //             Bot.Wait.ForPickup(item.ID);
-    //         }
-    //     }
-    //     TryComplete(QuestData, AutoCompleteQuest);
-
-    //     void SmartKillMonster(int questID, string map, string monster)
-    //     {
-    //         Core.EnsureAccept(questID);
-    //         _AddRequirement(questID);
-    //         Core.Join(map);
-    //         _SmartKill(map, monster, 20);
-    //         CurrentRequirements.Clear();
-    //     }
-    // }
+    /// <param name="QuestID">The ID of the quest to complete.</param>
+    /// <param name="MapName">The map in which the quest takes place.</param>
+    /// <param name="MonsterName">The name of the monster to hunt.</param>
+    /// <param name="GetReward">Whether to receive the quest reward upon completion. Default is true.</param>
+    /// <param name="Reward">The reward to pick up; "All" by default.</param>
+    /// <param name="AutoCompleteQuest">Whether to automatically complete the quest after farming items. Default is true.</param>
+    /// <remarks>
+    /// Uses <see cref="_MonsterHuntBatch"/> internally to farm items. Clears <see cref="CurrentRequirements"/> after completion
+    /// </remarks>
     public void KillQuest(int QuestID, string MapName, string MonsterName, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
+        if (string.IsNullOrEmpty(MapName))
+            throw new ArgumentException("MapName cannot be null or empty", nameof(MapName));
+        if (string.IsNullOrEmpty(MonsterName))
+            throw new ArgumentException("MonsterName cannot be null or empty", nameof(MonsterName));
+
+        Core.DebugLogger(this, $"Starting KillQuest: QuestID={QuestID}, Map={MapName}, Monster={MonsterName}");
+
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
-        if (QuestData == null || QuestProgression(QuestID, GetReward, Reward) || QuestData.Requirements.Count == 0 || string.IsNullOrEmpty(MonsterName))
+        if (QuestData == null)
+        {
+            Core.DebugLogger(this, $"Quest {QuestID} could not be loaded.");
+            return;
+        }
+
+        if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
-        // Accept the quest
+        if (QuestData.Requirements.Count == 0)
+        {
+            Core.DebugLogger(this, $"Quest {QuestID} has no requirements. Nothing to farm.");
+            return;
+        }
+
+        //Prevent turnin spam
+        Core.AcceptandCompleteTries = 5;
+
+        // Filter valid requirements and exclude items already obtained
+        List<ItemBase> validRequirements = QuestData.Requirements
+            .Where(r => r != null && !string.IsNullOrEmpty(r.Name))
+            .Where(r => !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
+            .ToList();
+
+        if (validRequirements.Count == 0)
+        {
+            Core.DebugLogger(this, $"All quest requirements for Quest {QuestID} are already satisfied.");
+            return;
+        }
+
+        // Accept the quest and join the map
+        Core.DebugLogger(this, $"Accepting quest {QuestID} and joining map {MapName}");
         Core.EnsureAccept(QuestID);
         Core.Join(MapName);
 
+        // Snapshot CurrentRequirements
         CurrentRequirements.Clear();
-        CurrentRequirements.AddRange(QuestData.Requirements);
+        CurrentRequirements.AddRange(validRequirements);
 
-        var drops = CurrentRequirements.Where(r => !r.Temp).Select(r => r.Name).ToArray();
-        if (drops.Length > 0) Core.AddDrop(drops);
+        // Add drops for quest items
+        var drops = CurrentRequirements
+            .Where(r => !r.Temp && !string.IsNullOrEmpty(r.Name))
+            .Select(r => r.Name)
+            .ToArray();
 
+        if (drops.Length > 0)
+        {
+            Core.AddDrop(drops);
+            Core.DebugLogger(this, $"Added drops for quest {QuestID}: [{string.Join(", ", drops)}]");
+        }
+
+        // Farming loop
         while (CurrentRequirements.Count > 0)
         {
+            // Remove already obtained items
             CurrentRequirements.RemoveAll(r => r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity));
             if (CurrentRequirements.Count == 0)
                 break;
 
-            List<string> itemsToFarm = CurrentRequirements.Select(r => r.Name).ToList();
-            _MonsterHuntBatch(MapName, MonsterName, itemsToFarm);
+            List<string> itemsToFarm = CurrentRequirements.Select(r => r.Name).Where(n => !string.IsNullOrEmpty(n)).ToList();
+            if (itemsToFarm.Count == 0)
+                break;
+
+            _MonsterHuntBatch(MapName, MonsterName, itemsToFarm, QuestID);
+
+            //a little extra check for if it got turned in by itself...
+            if (QuestProgression(QuestID, GetReward, Reward, false))
+                return;
         }
 
+        // Snapshot items farmed
+        var farmedItems = validRequirements.Select(r => r.Name).ToArray();
+        AutoCompleteQuest = QuestData.Once;
+
+        // Complete the quest
+        Core.DebugLogger(this, $"Attempting to complete quest {QuestID}");
         TryComplete(QuestData, AutoCompleteQuest);
+
+        // Delay & cleanup
+        Bot.Sleep(200);
+        CurrentRequirements.Clear();
+
+        Core.DebugLogger(this, $"Finished KillQuest: QuestID={QuestID}. Items farmed: [{string.Join(", ", farmedItems)}]");
     }
 
     /// <summary>
-    /// Kills an array of monsters for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
+    /// Completes a quest by killing one or more specified monsters until all required items are obtained.
     /// </summary>
-    /// <param name="QuestID">ID of the quest</param>
-    /// <param name="MapName">Map where the monsters are</param>
-    /// <param name="MonsterNames">Array of monster names to kill</param>
-    /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
-    /// <param name="Reward">What item should be added with AddDrop</param>
-    /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
-    // public void KillQuest(int QuestID, string MapName, string[] MonsterNames, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
-    // {
-
-    //     Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
-    //     if (QuestProgression(QuestID, GetReward, Reward))
-    //     {
-    //         return;
-    //     }
-
-    //     SmartKillMonster(QuestID, MapName, MonsterNames);
-    //     if (AutoCompleteQuest)
-    //     {
-    //         if (QuestData == null)
-    //         {
-    //             Core.Logger($"Quest with ID {QuestID} not found");
-    //             return;
-    //         }
-    //         foreach (ItemBase item in QuestData.Requirements)
-    //         {
-    //             Bot.Wait.ForPickup(item.ID);
-    //         }
-    //     }
-    //     TryComplete(QuestData, AutoCompleteQuest);
-
-    //     void SmartKillMonster(int questID, string map, string[] monsters)
-    //     {
-    //         Core.EnsureAccept(questID);
-    //         _AddRequirement(questID);
-    //         Core.Join(map);
-    //         foreach (string monster in monsters)
-    //         {
-    //             _SmartKill(map, monster, 20);
-    //         }
-    //         CurrentRequirements.Clear();
-    //     }
-    // }
-    public void KillQuest(int QuestID, string MapName, string[]? MonsterNames, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
+    /// <param name="QuestID">The ID of the quest to complete.</param>
+    /// <param name="MapName">The map in which the quest takes place.</param>
+    /// <param name="MonsterNames">Array of monster names corresponding to each quest item. If fewer than items, the last non-empty name is used.</param>
+    /// <param name="GetReward">Whether to receive the quest reward upon completion. Default is true.</param>
+    /// <param name="Reward">The reward to pick up; "All" by default.</param>
+    /// <param name="AutoCompleteQuest">Whether to automatically complete the quest after farming items. Default is true.</param>
+    /// <remarks>
+    /// Maps quest requirements to the specified monsters and uses <see cref="_MonsterHuntBatch"/> to farm each group.
+    /// Logs the items farmed and quest progress using Core.DebugLogger.
+    /// </remarks>
+    public void KillQuest(int QuestID, string MapName, string[] MonsterNames, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
+        if (string.IsNullOrEmpty(MapName))
+            throw new ArgumentException("MapName cannot be null or empty", nameof(MapName));
+        if (MonsterNames == null || MonsterNames.Length == 0 || MonsterNames.All(string.IsNullOrEmpty))
+            throw new ArgumentException("MonsterNames cannot be null or empty", nameof(MonsterNames));
+
+        Core.DebugLogger(this, $"Starting KillQuest: QuestID={QuestID}, Map={MapName}, Monsters=[{string.Join(", ", MonsterNames)}]");
+
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
-        if (QuestData == null || QuestProgression(QuestID, GetReward, Reward) || QuestData.Requirements.Count == 0)
+        if (QuestData == null)
+        {
+            Core.DebugLogger(this, $"Quest {QuestID} could not be loaded.");
+            return;
+        }
+
+        if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
-        MonsterNames ??= new string[] { MapName };
+        if (QuestData.Requirements.Count == 0)
+        {
+            Core.DebugLogger(this, $"Quest {QuestID} has no requirements. Nothing to farm.");
+            return;
+        }
 
-        // Accept the quest
+        AutoCompleteQuest = QuestData.Once;
+        //Prevent turnin spam
+        Core.AcceptandCompleteTries = 5;
+
+        // Filter valid requirements and exclude items already obtained
+        List<ItemBase> validRequirements = QuestData.Requirements
+            .Where(r => r != null && !string.IsNullOrEmpty(r.Name))
+            .Where(r => !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
+            .ToList();
+
+        if (validRequirements.Count == 0)
+        {
+            Core.DebugLogger(this, $"All quest requirements for Quest {QuestID} are already satisfied.");
+            return;
+        }
+
+        Core.DebugLogger(this, $"Accepting quest {QuestID} and joining map {MapName}");
         Core.EnsureAccept(QuestID);
         Core.Join(MapName);
 
+        // Map each requirement to a monster name (use last non-empty if not enough provided)
         Dictionary<string, string> itemToMonster = new();
-        for (int i = 0; i < QuestData.Requirements.Count; i++)
-            itemToMonster[QuestData.Requirements[i].Name] = MonsterNames.Length > i ? MonsterNames[i] : MonsterNames.Last();
-
-        CurrentRequirements.Clear();
-        CurrentRequirements.AddRange(QuestData.Requirements);
-
-        var drops = CurrentRequirements.Where(r => !r.Temp).Select(r => r.Name).ToArray();
-        if (drops.Length > 0) Core.AddDrop(drops);
-
-        while (CurrentRequirements.Count > 0)
+        string lastMonster = MonsterNames.Last(m => !string.IsNullOrEmpty(m));
+        for (int i = 0; i < validRequirements.Count; i++)
         {
+            string monster = i < MonsterNames.Length && !string.IsNullOrEmpty(MonsterNames[i])
+                ? MonsterNames[i]
+                : lastMonster;
+
+            itemToMonster[validRequirements[i].Name] = monster;
+            Core.Logger($"Requirement {validRequirements[i].Name} mapped to monster {monster}");
+        }
+
+        // Snapshot CurrentRequirements to avoid nulls
+        CurrentRequirements.Clear();
+        CurrentRequirements.AddRange(validRequirements);
+
+        // Add drops for items not already in inventory
+        var drops = CurrentRequirements
+            .Where(r => !r.Temp && !string.IsNullOrEmpty(r.Name))
+            .Select(r => r.Name)
+            .ToArray();
+
+        if (drops.Length > 0)
+        {
+            Core.AddDrop(drops);
+            Core.DebugLogger(this, $"Added drops: [{string.Join(", ", drops)}]");
+        }
+
+        // Main farming loop
+        while (CurrentRequirements.Any(r => !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity))))
+        {
+            // Remove completed items from CurrentRequirements
             CurrentRequirements.RemoveAll(r => r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity));
+
             if (CurrentRequirements.Count == 0)
                 break;
 
-            var monsterGroups = CurrentRequirements.GroupBy(r => itemToMonster[r.Name]);
+            // Group remaining items by monster
+            var monsterGroups = CurrentRequirements
+                .Where(r => !string.IsNullOrEmpty(r.Name))
+                .GroupBy(r => itemToMonster[r.Name]);
+
             foreach (var group in monsterGroups)
             {
                 string monster = group.Key;
                 if (string.IsNullOrEmpty(monster))
+                {
+                    Core.DebugLogger(this, "Skipped group with empty monster name.");
                     continue;
+                }
 
-                List<string> itemsToFarm = group.Select(r => r.Name).ToList();
-                _MonsterHuntBatch(MapName, monster, itemsToFarm);
+                var itemsToFarm = group
+                    .Where(r => !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
+                    .Select(r => r.Name)
+                    .Where(n => !string.IsNullOrEmpty(n))
+                    .ToList();
+
+                if (itemsToFarm.Count == 0)
+                {
+                    Core.DebugLogger(this, $"No valid items to farm for monster {monster}, skipping.");
+                    continue;
+                }
+
+                _MonsterHuntBatch(MapName, monster, itemsToFarm, QuestID);
             }
         }
 
+        // Complete the quest
+        Core.DebugLogger(this, $"Attempting to complete quest {QuestID}");
         TryComplete(QuestData, AutoCompleteQuest);
+
+        // Small delay and cleanup
+        Bot.Sleep(200);
+        CurrentRequirements.Clear();
+
+        Core.DebugLogger(this, $"Finished KillQuest: QuestID={QuestID}. Items farmed: [{string.Join(", ", validRequirements.Select(r => r.Name))}]");
     }
 
-    private void _MonsterHuntBatch(string map, string monster, List<string> itemNames)
+    /// <summary>
+    /// Internal method to hunt a monster for specific quest items.
+    /// </summary>
+    /// <param name="map">The map where the monster is located.</param>
+    /// <param name="monster">The name of the monster to hunt.</param>
+    /// <param name="itemNames">List of item names required from the monster.</param>
+    /// <param name="Qid">The ID of the quest these items belong to.</param>
+    /// <remarks>
+    /// Dynamically checks <see cref="CurrentRequirements"/> to avoid null references and stops when the quest is completed
+    /// or all items are obtained. Moves the player to the optimal cell, attacks available monsters, and picks up drops.
+    /// Uses minimal logging for important events and avoids spamming logs during repeated attack cycles.
+    /// </remarks>
+    private void _MonsterHuntBatch(string map, string monster, List<string> itemNames, int Qid)
     {
-        if (string.IsNullOrEmpty(monster) || itemNames.Count == 0)
-            return;
-
-        var neededItems = CurrentRequirements
-            .Where(r => itemNames.Contains(r.Name) &&
-                !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
-            .ToList();
-
-        if (neededItems.Count == 0)
+        if (string.IsNullOrEmpty(map))
         {
-            Core.Logger($"All requested items for \"{monster}\" are already satisfied: {string.Join(", ", itemNames)}", "_MonsterHuntBatch");
+            Bot.Log("Map is null or empty");
             return;
         }
 
+        if (string.IsNullOrEmpty(monster))
+        {
+            Bot.Log("Monster name is null or empty");
+            return;
+        }
+
+        if (itemNames == null || itemNames.Count == 0)
+        {
+            Bot.Log("itemNames list is empty");
+            return;
+        }
+
+        // Ensure we are on the correct map
         if (Bot.Map?.Name != map)
         {
             Core.Join(map);
             Bot.Wait.ForMapLoad(map);
         }
 
-        Core.Logger($"Hunting \"{monster}\" for {string.Join(", ", neededItems.Select(r => $"{r.Name} x{r.Quantity}"))}", "_MonsterHuntBatch");
+        // Refresh needed items once before the loop for the initial log
+        List<ItemBase> neededItems = (CurrentRequirements ?? new List<ItemBase>())
+    .Where(r => r != null && itemNames.Contains(r.Name) &&
+                !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
+    .ToList();
 
-        // Find the cell with the most total monsters of that type
-        var targetCellGroup = Bot.Monsters.MapMonsters
-            .Where(m => m?.Name.FormatForCompare() == monster.FormatForCompare())
-            .GroupBy(m => m.Cell)
-            .OrderByDescending(g => g.Count())
-            .FirstOrDefault();
-
-        if (targetCellGroup == null)
+        if (neededItems.Count == 0)
         {
-            Bot.Sleep(500);
+            Core.Logger($"All requested items for \"{monster}\" are already satisfied: [{string.Join(", ", itemNames)}]", "_MonsterHuntBatch");
             return;
         }
 
-        string targetCell = targetCellGroup.Key;
-        while (!Bot.ShouldExit && neededItems.Count > 0)
-        {
-            // Jump to that cell if needed
-            if (Bot.Player.Cell != targetCell)
-            {
-                Core.Logger($"Jumping to cell '{targetCell}' with {targetCellGroup.Count()} {monster}s", "_MonsterHuntBatch");
-                Bot.Map.Jump(targetCell, "Left", autoCorrect: false);
-                Bot.Wait.ForCellChange(targetCell);
-                Bot.Player.SetSpawnPoint();
-            }
-           
+        // **Important log moved here** — logs once per call
+        Core.Logger($"Farming monster \"{monster}\" for items: [{string.Join(", ", neededItems.Select(r => $"{r?.Name} x{r?.Quantity}"))}]", "_MonsterHuntBatch");
 
-            // Attack target
-            if (!Bot.Player.Alive)
+        while (!Bot.ShouldExit)
+        {
+            neededItems = (CurrentRequirements ?? new List<ItemBase>())
+    .Where(r => r != null && itemNames.Contains(r.Name) &&
+                !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
+    .ToList();
+
+            if (neededItems.Count == 0)
+                break;
+
+            var targetCellGroup = Bot.Monsters.MapMonsters?
+                .Where(m => m != null && m.Name.FormatForCompare() == monster.FormatForCompare())
+                .GroupBy(m => m.Cell)
+                .OrderByDescending(g => g.Count())
+                .FirstOrDefault();
+
+            string? targetCell = targetCellGroup?.Key ?? "Enter";
+
+            string? currentCell = Bot.Player?.Cell;
+            if (!string.Equals(currentCell, targetCell, StringComparison.OrdinalIgnoreCase))
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                Core.DebugLogger(this, $"Jumping to cell '{targetCell}' with {targetCellGroup?.Count() ?? 0} {monster}s", "_MonsterHuntBatch");
+
+                IScriptMap? mapApi = Bot.Map;
+                if (!string.Equals(mapApi?.Name, map, StringComparison.OrdinalIgnoreCase))
+                {
+                    Core.Join(map);
+                    Bot.Wait.ForMapLoad(map);
+                    mapApi = Bot.Map; // refresh after load
+                }
+
+                // jump only if player not already there (null-safe)
+                if (!string.Equals(Bot.Player?.Cell, targetCell, StringComparison.OrdinalIgnoreCase))
+                {
+                    mapApi?.Jump(targetCell, "Left");
+                    Bot.Wait.ForCellChange(targetCell);
+                    Bot.Player?.SetSpawnPoint();
+                }
+            }
+
+            bool isAlive = Bot.Player?.Alive ?? false;
+            if (!isAlive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
                 continue;
             }
 
-            if (!Bot.Player.HasTarget || Bot.Player.Target?.HP <= 0)
-                Bot.Combat.Attack(monster?.FormatForCompare());
-
-            Bot.Sleep(500);
-
-            // Refresh needed items and pick up drops
-            neededItems = CurrentRequirements
-                .Where(r => itemNames.Contains(r.Name) &&
-                    !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
-                .ToList();
-
-            Bot.Drops.Pickup(neededItems.Select(r => r.Name).ToArray());
-
-            // Stop combat if done or target dead
-            if (neededItems.Count == 0)
+            foreach (Monster M in Bot.Monsters.CurrentAvailableMonsters?.Where(m => m != null && m.Name.FormatForCompare() == monster.FormatForCompare())
+                     ?? Enumerable.Empty<Monster>())
             {
-                Bot.Combat.CancelAutoAttack();
-                Bot.Combat.CancelTarget();
-                break;
+                if (M == null || M.HP <= 0)
+                    continue;
+
+                while (!Bot.ShouldExit && neededItems.Count > 0)
+                {
+                    bool hasTarget = Bot.Player?.HasTarget ?? false;
+                    int targetHP = Bot.Player?.Target?.HP ?? 0;
+
+                    IScriptMap? innerMap = Bot.Map;
+                    if (!string.Equals(innerMap?.Name, map, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Core.Join(map);
+                        Bot.Wait.ForMapLoad(map);
+                        innerMap = Bot.Map; // refresh after load
+                    }
+
+                    // null-safe cell check and jump
+                    if (!string.Equals(Bot.Player?.Cell, targetCell, StringComparison.OrdinalIgnoreCase))
+                    {
+                        innerMap?.Jump(targetCell, "Left");
+                        Bot.Wait.ForCellChange(targetCell);
+                        Bot.Player?.SetSpawnPoint();
+                    }
+                    if (!hasTarget || targetHP <= 0)
+                    {
+                        Bot.Combat.Attack(M.MapID);
+                        Bot.Sleep(500);
+                    }
+
+                    if (hasTarget && targetHP <= 0)
+                    {
+                        Bot.Combat.CancelAutoAttack();
+                        Bot.Combat.CancelTarget();
+                        break;
+                    }
+
+                    string[] names = neededItems.Where(r => r != null).Select(r => r.Name).ToArray();
+                    if (names.Length > 0 && Bot.Drops.CurrentDrops.Any(d => d != null && names.Contains(d)))
+                        Bot.Drops.Pickup(names);
+
+                    neededItems = (CurrentRequirements ?? Enumerable.Empty<ItemBase>())
+                        .Where(r => r != null && itemNames.Contains(r.Name) &&
+                                    !(r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)))
+                        .ToList();
+                }
+            }
+
+            if (CurrentRequirements is { Count: > 0 } reqs)
+            {
+                reqs.RemoveAll(r =>
+                    r != null &&
+                    itemNames.Contains(r.Name) &&
+                    (r.Temp
+                        ? Bot.TempInv.Contains(r.Name, r.Quantity)
+                        : Core.CheckInventory(r.ID, r.Quantity)));
             }
         }
-
-        // Cleanup
-        CurrentRequirements.RemoveAll(r => itemNames.Contains(r.Name) &&
-            (r.Temp ? Bot.TempInv.Contains(r.Name, r.Quantity) : Core.CheckInventory(r.ID, r.Quantity)));
     }
 
+    #endregion
 
-    // /// <summary>
-    // /// Gets a MapItem X times for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
-    // /// </summary>
-    // /// <param name="QuestID">ID of the quest</param>
-    // /// <param name="MapName">Map where the items are</param>
-    // /// <param name="MapItemID">ID of the item</param>
-    // /// <param name="Amount">The amount of <paramref name="MapItemID"/> to grab</param>
-    // /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
-    // /// <param name="Reward">What item should be added with AddDrop</param>
-    // /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
-    // public void MapItemQuest(int QuestID, string MapName, int MapItemID, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
-    // {
-    //     Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
-    //     if (QuestData == null)
-    //     {
-    //         Core.Logger($"Quest with ID {QuestID} not found");
-    //         return;
-    //     }
-
-    //     if (QuestProgression(QuestID, GetReward, Reward))
-    //     {
-    //         return;
-    //     }
-
-    //     Core.EnsureAccept(QuestID);
-    //     Core.GetMapItem(MapItemID, Amount, MapName);
-    //     TryComplete(QuestData, AutoCompleteQuest);
-    // }
-
-    // /// <summary>
-    // /// Gets a MapItem X times for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
-    // /// </summary>
-    // /// <param name="QuestID">ID of the quest</param>
-    // /// <param name="MapName">Map where the items are</param>
-    // /// <param name="MapItemIDs">ID of the items</param>
-    // /// <param name="Amount">The amount of <paramref name="MapItemIDs"/> to grab</param>
-    // /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
-    // /// <param name="Reward">What item should be added with AddDrop</param>
-    // /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
-    // public void MapItemQuest(int QuestID, string MapName, int[] MapItemIDs, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
-    // {
-    //     Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
-    //     if (QuestData == null)
-    //     {
-    //         Core.Logger($"Quest with ID {QuestID} not found");
-    //         return;
-    //     }
-
-    //     if (QuestProgression(QuestID, GetReward, Reward))
-    //     {
-    //         return;
-    //     }
-
-    //     Core.EnsureAccept(QuestID);
-    //     Core.Join(MapName);
-    //     foreach (int MapItemID in MapItemIDs)
-    //     {
-    //         Core.GetMapItem(MapItemID, Amount, MapName);
-    //     }
-    //     TryComplete(QuestData, AutoCompleteQuest);
-    // }
-
-    // /// <summary>
-    // /// Gets multiple MapItems from different maps for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
-    // /// </summary>
-    // /// <param name="QuestID">ID of the quest</param>
-    // /// <param name="MapItems">Array of tuples where each tuple contains the MapItemID, amount, and MapName</param>
-    // /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
-    // /// <param name="Reward">What item should be added with AddDrop</param>
-    // /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
-    // public void MapItemQuest(int QuestID, (int MapItemID, int Amount, string MapName)[] MapItems, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
-    // {
-    //     Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
-    //     if (QuestData == null)
-    //     {
-    //         Core.Logger($"Quest with ID {QuestID} not found");
-    //         return;
-    //     }
-
-    //     if (QuestProgression(QuestID, GetReward, Reward))
-    //     {
-    //         return;
-    //     }
-
-    //     Core.EnsureAccept(QuestID);
-    //     foreach (var (MapItemID, Amount, MapName) in MapItems)
-    //     {
-    //         Core.Join(MapName);
-    //         Core.GetMapItem(MapItemID, Amount, MapName);
-    //     }
-    //     TryComplete(QuestData, AutoCompleteQuest);
-    // }
-
-    // /// <summary>
-    // /// Buys an item X times for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
-    // /// </summary>
-    // /// <param name="QuestID">ID of the quest</param>
-    // /// <param name="MapName">Map where the shop is located</param>
-    // /// <param name="ShopID">ID of the shop</param>
-    // /// <param name="ItemName">Name of the item to buy</param>
-    // /// <param name="Amount">The amount of <paramref name="ItemName"/> to buy</param>
-    // /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
-    // /// <param name="Reward">What item should be added with AddDrop</param>
-    // /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
-    // public void BuyQuest(int QuestID, string MapName, int ShopID, string ItemName, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
-    // {
-    //     Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
-    //     if (QuestData == null)
-    //     {
-    //         Core.Logger($"Quest with ID {QuestID} not found");
-    //         return;
-    //     }
-
-    //     if (QuestProgression(QuestID, GetReward, Reward))
-    //         return;
-
-    //     Core.EnsureAccept(QuestID);
-    //     Core.BuyItem(MapName, ShopID, ItemName, Amount);
-    //     TryComplete(QuestData, AutoCompleteQuest);
-    // }
-
-    // /// <summary>
-    // /// Accepts a quest and then turns it in again
-    // /// </summary>
-    // /// <param name="QuestID">ID of the quest</param>
-    // /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
-    // /// <param name="Reward">What item should be added with AddDrop</param>
-    // /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
-    // public void ChainQuest(int QuestID, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
-    // {
-    //     Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
-    //     if (QuestData == null)
-    //     {
-    //         Core.Logger($"Quest with ID {QuestID} not found");
-    //         return;
-    //     }
-
-    //     if (QuestProgression(QuestID, GetReward, Reward))
-    //         return;
-
-    //     Core.Sleep();
-    //     if (AutoCompleteQuest)
-    //         Core.ChainComplete(QuestID);
-    //     else
-    //     {
-    //         Core.EnsureAccept(QuestID);
-    //     }
-    //     Bot.Wait.ForQuestComplete(QuestID);
-    //     Core.Logger($"Completed \"{QuestData.Name}\" [{QuestID}]");
-    //     Core.Sleep();
-    // }
+    #region  MapItemQuest
+    /// <summary>
+    /// Gets a MapItem X times for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
+    /// </summary>
+    /// <param name="QuestID">ID of the quest</param>
+    /// <param name="MapName">Map where the items are</param>
+    /// <param name="MapItemID">ID of the item</param>
+    /// <param name="Amount">The amount of <paramref name="MapItemID"/> to grab</param>
+    /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
+    /// <param name="Reward">What item should be added with AddDrop</param>
+    /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void MapItemQuest(int QuestID, string MapName, int MapItemID, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
@@ -448,13 +475,30 @@ public class CoreStory
             return;
         }
         if (QuestProgression(QuestID, GetReward, Reward))
+        {
             return;
+        }
+
+        AutoCompleteQuest = QuestData.Once;
+
+        if (Bot.Map.Name != MapName)
+            Core.Join(MapName);
 
         Core.EnsureAccept(QuestID);
         Core.GetMapItem(MapItemID, Amount, MapName);
         TryComplete(QuestData, AutoCompleteQuest);
     }
 
+    /// <summary>
+    /// Completes a quest by collecting map items.
+    /// </summary>
+    /// <param name="QuestID">The quest ID to complete.</param>
+    /// <param name="MapName">The map to grab items from.</param>
+    /// <param name="MapItemIDs">IDs of the map items required.</param>
+    /// <param name="Amount">Quantity of each item to collect.</param>
+    /// <param name="GetReward">Whether to collect the reward if completed.</param>
+    /// <param name="Reward">Which reward to pick ("All" by default).</param>
+    /// <param name="AutoCompleteQuest">Whether to auto-complete the quest after collecting items.</param>
     public void MapItemQuest(int QuestID, string MapName, int[] MapItemIDs, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
@@ -463,16 +507,37 @@ public class CoreStory
             Core.Logger($"Quest with ID {QuestID} not found");
             return;
         }
+
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
+        AutoCompleteQuest = QuestData.Once;
         Core.EnsureAccept(QuestID);
-        Core.Join(MapName);
-        foreach (int id in MapItemIDs ?? Array.Empty<int>())
-            Core.GetMapItem(id, Amount, MapName);
+
+        // Build the list of map items to grab
+        var itemsToGrab = MapItemIDs
+            .Where(id => !Bot.TempInv.Contains(id, Amount))
+            .Select(id => (ItemID: id, Quantity: Amount))
+            .ToList();
+
+        if (itemsToGrab.Count > 0)
+        {
+            Core.Logger($"Grabbing items from map {MapName}: {string.Join(", ", itemsToGrab.Select(i => $"{i.ItemID} x{i.Quantity}"))}");
+            Core.GetMapItems(itemsToGrab, MapName); // <-- updated to use the tuple overload
+        }
+
         TryComplete(QuestData, AutoCompleteQuest);
     }
 
+
+    /// <summary>
+    /// Completes a quest by collecting multiple map items, batching them per map.
+    /// </summary>
+    /// <param name="QuestID">The quest ID to complete.</param>
+    /// <param name="MapItems">Array of tuples containing MapItemID, Amount, and MapName.</param>
+    /// <param name="GetReward">Whether to collect the reward if completed.</param>
+    /// <param name="Reward">Which reward to pick ("All" by default).</param>
+    /// <param name="AutoCompleteQuest">Whether to auto-complete the quest after collecting items.</param>
     public void MapItemQuest(int QuestID, (int MapItemID, int Amount, string MapName)[] MapItems, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
@@ -481,21 +546,48 @@ public class CoreStory
             Core.Logger($"Quest with ID {QuestID} not found");
             return;
         }
+
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
+        AutoCompleteQuest = QuestData.Once;
         Core.EnsureAccept(QuestID);
-        foreach (var (MapItemID, Amount, MapName) in MapItems ?? Array.Empty<(int, int, string)>())
-        {
-            if (string.IsNullOrWhiteSpace(MapName))
-                continue;
 
-            Core.Join(MapName);
-            Core.GetMapItem(MapItemID, Amount, MapName);
+        // Group items by map
+        var itemsGroupedByMap = MapItems
+            .Where(mi => !Bot.TempInv.Contains(mi.MapItemID, mi.Amount)) // only items not already in temp inv
+            .GroupBy(mi => mi.MapName);
+
+        foreach (var group in itemsGroupedByMap)
+        {
+            string map = group.Key;
+            var itemsToGrab = group.Select(mi => (ItemID: mi.MapItemID, Quantity: mi.Amount)).ToArray();
+
+            if (itemsToGrab.Length > 0)
+            {
+                Core.Logger($"Grabbing items from map {map}: {string.Join(", ", itemsToGrab.Select(i => $"{i.ItemID} x{i.Quantity}"))}");
+                Core.Join(map);
+                Core.GetMapItems(itemsToGrab, map);
+            }
         }
+
         TryComplete(QuestData, AutoCompleteQuest);
     }
 
+    #endregion
+
+    #region MiscQuest
+    /// <summary>
+    /// Buys an item X times for a Quest, and turns in the quest if possible. Automatically checks if the next quest is unlocked. If it is, it will skip this one.
+    /// </summary>
+    /// <param name="QuestID">ID of the quest</param>
+    /// <param name="MapName">Map where the shop is located</param>
+    /// <param name="ShopID">ID of the shop</param>
+    /// <param name="ItemName">Name of the item to buy</param>
+    /// <param name="Amount">The amount of <paramref name="ItemName"/> to buy</param>
+    /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
+    /// <param name="Reward">What item should be added with AddDrop</param>
+    /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void BuyQuest(int QuestID, string MapName, int ShopID, string ItemName, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
@@ -504,20 +596,23 @@ public class CoreStory
             Core.Logger($"Quest with ID {QuestID} not found");
             return;
         }
+
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
-        if (string.IsNullOrWhiteSpace(MapName) || string.IsNullOrWhiteSpace(ItemName))
-        {
-            Core.Logger($"Invalid MapName or ItemName for BuyQuest [{QuestID}]");
-            return;
-        }
-
+        AutoCompleteQuest = QuestData.Once;
         Core.EnsureAccept(QuestID);
         Core.BuyItem(MapName, ShopID, ItemName, Amount);
         TryComplete(QuestData, AutoCompleteQuest);
     }
 
+    /// <summary>
+    /// Accepts a quest and then turns it in again
+    /// </summary>
+    /// <param name="QuestID">ID of the quest</param>
+    /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
+    /// <param name="Reward">What item should be added with AddDrop</param>
+    /// <param name="AutoCompleteQuest">If the method should turn in the quest for you when the quest can be completed</param>
     public void ChainQuest(int QuestID, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
@@ -526,24 +621,16 @@ public class CoreStory
             Core.Logger($"Quest with ID {QuestID} not found");
             return;
         }
+
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
-        Core.Sleep();
-        if (AutoCompleteQuest)
-            Core.ChainComplete(QuestID);
-        else
-            Core.EnsureAccept(QuestID);
-
-        Bot.Wait.ForQuestComplete(QuestID);
-        Core.Logger($"Completed \"{QuestData.Name}\" [{QuestID}]");
-        Core.Sleep();
+        AutoCompleteQuest = QuestData.Once;
+        TryComplete(QuestData, AutoCompleteQuest);
     }
+    #endregion
 
-
-
-
-    public void QuestComplete(int questID) => TryComplete(Core.EnsureLoad(questID), true);
+    public void QuestComplete(int questID) => TryComplete(Core.InitializeWithRetries(() => Core.EnsureLoad(questID), 20), true);
 
     private void TryComplete(Quest? QuestData, bool autoCompleteQuest)
     {
@@ -569,6 +656,11 @@ public class CoreStory
         {
             Core.EnsureComplete(questData.ID);
         }
+        
+        // if the quest is turned in by the game, wait a second
+        if (autoCompleteQuest == false)
+            Core.Sleep();
+
 
         Bot.Wait.ForQuestComplete(questData.ID);
         Core.Logger($"Completed Quest: [{questData.ID}] - \"{questData.Name}\"", "QuestProgression");
@@ -582,7 +674,8 @@ public class CoreStory
     /// <param name="QuestID">ID of the quest</param>
     /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
     /// <param name="Reward">What item should be added with AddDrop</param>
-    public bool QuestProgression(int QuestID, bool GetReward = true, string Reward = "All")
+    /// <param name="Log"></param>
+    public bool QuestProgression(int QuestID, bool GetReward = true, string Reward = "All", bool Log = true)
     {
         if (QuestID != 0 && PreviousQuestID == QuestID)
             return PreviousQuestState;
@@ -668,9 +761,10 @@ public class CoreStory
 
         if (Core.isCompletedBefore(QuestID) && (!TestBot || QuestData.Once))
         {
-            if (TestBot)
-                Core.Logger($"Skipped (Once = true): [{QuestID}] - \"{QuestData.Name}\"");
-            else Core.Logger($"Already Completed: [{QuestID}] - \"{QuestData.Name}\"");
+            if (Log)
+                if (TestBot)
+                    Core.Logger($"Skipped (Once = true): [{QuestID}] - \"{QuestData.Name}\"");
+                else Core.Logger($"Already Completed: [{QuestID}] - \"{QuestData.Name}\"");
             PreviousQuestState = true;
             return true;
         }
@@ -851,9 +945,9 @@ public class CoreStory
         ScriptSlice = ScriptSlice[(classStartIndex)..classEndIndex];
 
         int methodStartIndex = -1;
-        foreach (string p in new string[] { "public", "private" })
+        foreach (string p in new[] { "public", "private" })
         {
-            foreach (string s in new string[] { "void", "bool", "string", "int" })
+            foreach (string s in new[] { "void", "bool", "string", "int" })
             {
                 methodStartIndex = Array.FindIndex(ScriptSlice, l => l.Contains($"{p} {s} {caller}"));
                 if (methodStartIndex > -1)
@@ -869,53 +963,46 @@ public class CoreStory
         }
 
         int methodIndentCount = ScriptSlice[methodStartIndex + 1].IndexOf('{');
-        string indent = "";
-        for (int i = 0; i < methodIndentCount; i++)
-            indent += " ";
+        string indent = new string(' ', methodIndentCount);
         int methodEndIndex = Array.FindIndex(ScriptSlice, methodStartIndex, l => l == indent + "}") + 1;
 
         ScriptSlice = ScriptSlice[methodStartIndex..methodEndIndex];
 
         string[] SearchParam = {
-            "Story.KillQuest",
-            "Story.MapItemQuest",
-            "Story.BuyQuest",
-            "Story.ChainQuest",
-            "Story.QuestProgression",
-            "Core.EnsureAccept",
-            "Core.EnsureComplete",
-            "Core.EnsureCompleteChoose",
-            "Core.ChainComplete"
-        };
+        "Story.KillQuest",
+        "Story.MapItemQuest",
+        "Story.BuyQuest",
+        "Story.ChainQuest",
+        "Story.QuestProgression",
+        "Core.EnsureAccept",
+        "Core.EnsureComplete",
+        "Core.EnsureCompleteChoose",
+        "Core.ChainComplete"
+    };
 
         foreach (string Line in ScriptSlice)
         {
             if (!Line.Any(char.IsDigit))
                 continue;
 
-            string EdittedLine = Line
-                                    .Replace(" ", "")
-                                    .Replace("!", "")
-                                    .Replace("(", "")
-                                    .Replace("if", "")
-                                    .Replace("else", "");
+            string EdittedLine = Line.Replace(" ", "")
+                                     .Replace("!", "")
+                                     .Replace("(", "")
+                                     .Replace("if", "")
+                                     .Replace("else", "");
 
             if (!SearchParam.Any(x => EdittedLine.StartsWith(x)))
                 continue;
 
             char[] digits = Line.SkipWhile(c => !char.IsDigit(c)).TakeWhile(char.IsDigit).ToArray();
-            string sQuestID = new(digits);
-            int QuestID = int.Parse(sQuestID);
+            int QuestID = int.Parse(new string(digits));
 
             if (!QuestIDs.Contains(QuestID) && !Bot.Quests.Tree.Exists(x => x.ID == QuestID))
                 QuestIDs.Add(QuestID);
         }
 
-        if (QuestIDs.Count + Bot.Quests.Tree.Count > Core.LoadedQuestLimit
-            && QuestIDs.Count < Core.LoadedQuestLimit)
-        {
+        if (QuestIDs.Count + Bot.Quests.Tree.Count > Core.LoadedQuestLimit && QuestIDs.Count < Core.LoadedQuestLimit)
             Bot.Flash.SetGameObject("world.questTree", new ExpandoObject());
-        }
         else if (QuestIDs.Count > (Core.LoadedQuestLimit - Bot.Quests.Tree.Count))
         {
             Core.Logger($"Found {QuestIDs.Count} Quests, this exceeds the max amount of loaded quests ({Core.LoadedQuestLimit}). No quests will be loaded.");
@@ -923,12 +1010,17 @@ public class CoreStory
         }
 
         Core.Logger($"Loading {QuestIDs.Count} Quests.");
+
         if (QuestIDs.Count > 30)
-            Core.Logger($"Estimated Loading Time: {Convert.ToInt32(QuestIDs.Count / 30 * 1.6)}s");
+        {
+            double estimatedTime = (QuestIDs.Count / 30.0) * 1.6;
+            Core.Logger($"Estimated Loading Time: {Math.Ceiling(estimatedTime)}s");
+        }
 
         for (int i = 0; i < QuestIDs.Count; i += 30)
         {
-            Bot.Quests.Load(QuestIDs.ToArray()[i..(QuestIDs.Count > i ? QuestIDs.Count : i + 30)]);
+            int end = Math.Min(i + 30, QuestIDs.Count);
+            Bot.Quests.Load(QuestIDs.GetRange(i, end - i).ToArray());
             Core.Sleep(1500);
         }
     }

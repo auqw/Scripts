@@ -45,12 +45,12 @@ public class FortressDelve
         Story.MapItemQuest(9161, "fortressdelve", 11347, 3);
 
         //Humans DNI 9162
-        Story.KillQuest(9162, "fortressdelve", "Doomed Beast");
         Story.MapItemQuest(9162, "fortressdelve", 11348);
+        Story.KillQuest(9162, "fortressdelve", "Doomed Beast");
 
         //Scion's Privilege 9163
-        Story.KillQuest(9163, "fortressdelve", "Doom Worm");
         Story.MapItemQuest(9163, "fortressdelve", 11349);
+        Story.KillQuest(9163, "fortressdelve", "Doom Worm");
 
         //A Man-Cave and a Box of Scraps 9164
         Story.MapItemQuest(9164, "fortressdelve", 11350);

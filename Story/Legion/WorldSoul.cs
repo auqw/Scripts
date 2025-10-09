@@ -11,7 +11,8 @@ public class WorldSoul
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -39,14 +40,20 @@ public class WorldSoul
             Core.EnsureComplete(6238);
         }
         Story.KillQuest(6239, "worldsoul", "Divine Water Elemental");
+
         Story.KillQuest(6240, "worldsoul", "Divine Fire Elemental");
-        Story.KillQuest(6241, "worldsoul", "Skeletal Squatter");
+
         Story.MapItemQuest(6241, "worldsoul", 5681, 3);
+        Story.KillQuest(6241, "worldsoul", "Skeletal Squatter");
+
         Story.KillQuest(6242, "worldsoul", "Radioactive Hydra");
-        Story.KillQuest(6243, "worldsoul", "Legion Dreadmarch");
+
         Story.MapItemQuest(6243, "worldsoul", 5680);
-        Story.KillQuest(6244, "worldsoul", "Legion Dreadmarch");
+        Story.KillQuest(6243, "worldsoul", "Legion Dreadmarch");
+
         Story.MapItemQuest(6244, "worldsoul", 5682);
+        Story.KillQuest(6244, "worldsoul", "Legion Dreadmarch");
+
         Story.KillQuest(6245, "worldsoul", "Core Guardian");
     }
 }
