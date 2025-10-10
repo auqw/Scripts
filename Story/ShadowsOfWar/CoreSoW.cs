@@ -15,8 +15,10 @@ public class CoreSoW
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     public string[] MainyuDrops = { "Mainyu Rune", "Mainyu Tail", "Mainyu Wings" };
 
@@ -1155,7 +1157,7 @@ public class CoreSoW
 
         // In The Eye 9123
         Story.MapItemQuest(9123, "manacradle", 11271);
-        Story.KillQuest(9123, "manacradle", new[] { "Dark Tainted Mana", "Darkness Elemental" });
+        Story.KillQuest(9123, "manacradle", new[] { "Darkness Elemental", "Dark Tainted Mana" });
 
         string[] DodgeClasses = new[] { "Yami no Ronin", "TimeKeeper", "Void Highlord", "Void HighLord (IoDA)" };
         if (Core.CheckInventory(DodgeClasses, any: true))

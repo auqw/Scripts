@@ -4731,48 +4731,38 @@ public class CoreBots
                     Bot.Wait.ForCellChange("Boss");
                 }
 
-                foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
+                if (Bot.Player?.Cell == "Cut1")
                 {
-                    if (m == null || m.HP <= 0)
-                        continue;
-
-                    if (!(Bot.Player?.Alive ?? false))
-                        Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
-
-                    if (Bot.Map.Name != "escherion")
-                        Join("escherion", "Boss", "Left");
-
-                    if (Bot.Player?.Cell == "Cut1")
-                    {
-                        Bot.Map.Jump("Boss", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("Boss");
-                    }
-
-                    Monster? target = Bot.Player?.Target;
-                    if ((target?.MapID ?? -1) == 3 && (target?.State ?? -1) == 2)
-                    {
-                        while (!Bot.ShouldExit && ((Bot.Player?.Target?.HP ?? 0) > 0))
-                            Bot.Combat.Attack(2);
-                    }
-                    else
-                    {
-                        Bot.Combat.Attack(3);
-                    }
-
-                    if (item == null)
-                    {
-                        if (log) Logger("💀 No item selected, killing Escherion once");
-                        done = true;
-                        break;
-                    }
-                    else if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-                    {
-                        done = true;
-                        break;
-                    }
-
-                    Sleep();
+                    Bot.Map.Jump("Boss", "Left", autoCorrect: false);
+                    Bot.Wait.ForCellChange("Boss");
                 }
+
+                // MonsterMapIDs:
+                // 2 = Staff
+                // 3 = Escherion
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack(3);
+                else
+                    Bot.Combat.Attack((Bot.Player?.Target?.MapID == 3 /* Escherion */
+                    && Bot.Player?.Target?.State == 2 /* Invulnerable */ )
+                        ? 2 /* Staff of Inversion */
+                        : 3 /* Escherion */);
+                Bot.Sleep(500);
+
+                // Bot.Wait.ForTrue(() => Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x?.State != 2 && x?.HP > 0), 20);
+
+                if (item == null)
+                {
+                    if (log) Logger("💀 No item selected, killing Escherion once");
+                    done = true;
+                    break;
+                }
+                else if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+                {
+                    done = true;
+                    break;
+                }
+
             }
 
             Bot.Options.AggroMonsters = false;
@@ -4787,6 +4777,56 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
+        
+        void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
+        {
+            // Return if the policy isn't active or required items are missing
+            if (!returnPolicyActive || !CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
+                return;
+
+            bool retry = true;
+
+            while (!Bot.ShouldExit && retry)
+            {
+                retry = false; // Reset retry flag
+                ResetQuest(7551);
+                DarkMakaiItem("Dark Makai Rune");
+
+                // Load quest and find rewards
+                Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+                if (quest == null)
+                {
+                    Logger("Failed to load quest 7551, retrying...");
+                    Sleep();
+                    retry = true;
+                    continue;
+                }
+
+                // Handle null `item` by skipping directly to reward selection
+                ItemBase? targetReward = item == null
+                    ? null
+                    : quest.Rewards.FirstOrDefault(r => r.Name == item && r.Name != "Receipt of Swindle");
+
+                int rewardID = targetReward?.ID ??
+                               quest.Rewards.FirstOrDefault(r => !CheckInventory(r.ID, r.MaxStack))?.ID ?? -1;
+
+                if (rewardID != -1 && Bot.Quests.CanCompleteFullCheck(7551))
+                {
+                    Logger($"Completing with: {quest.Rewards.First(r => r.ID == rewardID).Name} [ID: {rewardID}]");
+                    EnsureComplete(7551, rewardID);
+                }
+                else
+                {
+                    Logger("All rewards maxed. Completing with fallback reward ID: -1 (\"Receipt of Swindle\").");
+                    EnsureComplete(7551);
+                }
+            }
+        }
+
+
+        string Uni(int nr)
+            => $"Unidentified {nr}";
+
     }
 
     /// <summary>

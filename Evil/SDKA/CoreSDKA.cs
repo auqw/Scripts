@@ -9,6 +9,7 @@ tags: null
 //cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Quests;
 using Skua.Core.Options;
 using Skua.Core.Utils;
 
@@ -17,10 +18,14 @@ public class CoreSDKA
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public static CoreBots sCore => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public string OptionsStorage = "SupulchuresDoomKnightArmorOptions";
     public bool DontPreconfigure = true;
@@ -692,6 +697,7 @@ public class CoreSDKA
         string fullMetalName = string.Empty;
         int upgradeMetalQuest = 0;
         int forgeKeyQuest = 0;
+        int forgekeyitemID = 0;
         switch (metal)
         {
             case HardCoreMetalsEnum.Arsenic:
@@ -731,44 +737,59 @@ public class CoreSDKA
                 break;
         }
 
-        if (Core.CheckInventory(fullMetalName))
+
+        if (Core.CheckInventory(fullMetalName) && Core.isCompletedBefore(2144))
             return;
 
-        string upgradeMetalName = string.Join(' ', fullMetalName.Split(' ')[..2]);
-        Core.FarmingLogger(fullMetalName, 1);
 
-        // Getting the partially upgraded metal
-        if (!Core.CheckInventory(upgradeMetalName))
+        // Initialize quest data for forge key quest
+        Quest ForgeQuestdata = Core.InitializeWithRetries(() => Core.EnsureLoad(forgeKeyQuest));
+
+        // Get the forge key itemid for the quest
+        forgekeyitemID = ForgeQuestdata.Requirements.FirstOrDefault(x => x != null && x.Name == "Forge Key").ID;
+
+        if (!Core.CheckInventory(fullMetalName))
         {
-            Core.AddDrop(upgradeMetalName);
-            Core.FarmingLogger(upgradeMetalName, 1);
-            Core.EnsureAccept(upgradeMetalQuest);
 
-            if (!Core.CheckInventory((int)metal))
-                Daily.MineCrafting(new[] { metal.ToString() });
-            if (!Core.CheckInventory((int)metal))
-                Core.Logger($"Can't complete {fullMetalName.Split(' ')[..2].Join(' ')} Enchantment (missing {metal}).\n" +
-                            "This requires a daily, please run the bot again after the daily reset has occurred.", messageBox: true, stopBot: true);
+            string upgradeMetalName = string.Join(' ', fullMetalName.Split(' ')[..2]);
+            Core.FarmingLogger(fullMetalName, 1);
+            // Getting the partially upgraded metal
+            if (!Core.CheckInventory(upgradeMetalName))
+            {
+                Core.AddDrop(upgradeMetalName);
+                Core.FarmingLogger(upgradeMetalName, 1);
+                Core.EnsureAccept(upgradeMetalQuest);
 
-            DSO(6);
-            Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
-            Core.HuntMonster("bludrut4", "Shadow Serpent", "Dark Energy", 26, isTemp: false);
+                if (!Core.CheckInventory((int)metal))
+                    Daily.HardCoreMetals(new[] { metal.ToString() });
+                if (!Core.CheckInventory((int)metal))
+                    Core.Logger($"Can't complete {fullMetalName.Split(' ')[..2].Join(' ')} Enchantment (missing {metal}).\n" +
+                                "This requires a daily, please run the bot again after the daily reset has occurred.", messageBox: true, stopBot: true);
 
-            Core.EnsureComplete(upgradeMetalQuest);
-            Bot.Wait.ForPickup(upgradeMetalName);
+                DSO(6);
+                Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
+                Core.HuntMonster("bludrut4", "Shadow Serpent", "Dark Energy", 26, isTemp: false);
+
+                Core.EnsureComplete(upgradeMetalQuest);
+                Bot.Wait.ForPickup(upgradeMetalName);
+            }
+
+            // Getting the fully upgraded metal
+            DoomKnightWK("Corrupt Spirit Orb", 5);
+            DoomKnightWK("Ominous Aura", 2);
+            Core.BuyItem("dwarfhold", 434, fullMetalName);
         }
 
-        // Getting the fully upgraded metal
-        DoomKnightWK("Corrupt Spirit Orb", 5);
-        DoomKnightWK("Ominous Aura", 2);
-        Core.BuyItem("dwarfhold", 434, fullMetalName);
-
         // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]
-        Core.AddDrop(fullMetalName);
-        Core.EnsureAccept(forgeKeyQuest);
-        Core.HuntMonster("dwarfhold", "Albino Bat", "Forge Key", isTemp: false);
-        Core.EnsureComplete(forgeKeyQuest);
-        Bot.Wait.ForPickup(fullMetalName);
+        if (!Core.isCompletedBefore(2144))
+        {
+            Core.AddDrop(fullMetalName);
+            Core.EnsureAccept(forgeKeyQuest);
+            while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
+                Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
+            Core.EnsureComplete(forgeKeyQuest);
+            Bot.Wait.ForPickup(fullMetalName);
+        }
     }
 }
 

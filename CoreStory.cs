@@ -140,6 +140,7 @@ public class CoreStory
 
         // Snapshot items farmed
         var farmedItems = validRequirements.Select(r => r.Name).ToArray();
+        AutoCompleteQuest = QuestData.Once;
 
         // Complete the quest
         Core.DebugLogger(this, $"Attempting to complete quest {QuestID}");
@@ -190,6 +191,7 @@ public class CoreStory
             return;
         }
 
+        AutoCompleteQuest = QuestData.Once;
         //Prevent turnin spam
         Core.AcceptandCompleteTries = 5;
 
@@ -472,11 +474,12 @@ public class CoreStory
             Core.Logger($"Quest with ID {QuestID} not found");
             return;
         }
-
         if (QuestProgression(QuestID, GetReward, Reward))
         {
             return;
         }
+
+        AutoCompleteQuest = QuestData.Once;
 
         if (Bot.Map.Name != MapName)
             Core.Join(MapName);
@@ -508,6 +511,7 @@ public class CoreStory
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
+        AutoCompleteQuest = QuestData.Once;
         Core.EnsureAccept(QuestID);
 
         // Build the list of map items to grab
@@ -546,6 +550,7 @@ public class CoreStory
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
+        AutoCompleteQuest = QuestData.Once;
         Core.EnsureAccept(QuestID);
 
         // Group items by map
@@ -595,6 +600,7 @@ public class CoreStory
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
+        AutoCompleteQuest = QuestData.Once;
         Core.EnsureAccept(QuestID);
         Core.BuyItem(MapName, ShopID, ItemName, Amount);
         TryComplete(QuestData, AutoCompleteQuest);
@@ -619,16 +625,8 @@ public class CoreStory
         if (QuestProgression(QuestID, GetReward, Reward))
             return;
 
-        Core.Sleep();
-        if (AutoCompleteQuest)
-            Core.ChainComplete(QuestID);
-        else
-        {
-            Core.EnsureAccept(QuestID);
-        }
-        Bot.Wait.ForQuestComplete(QuestID);
-        Core.Logger($"Completed \"{QuestData.Name}\" [{QuestID}]");
-        Core.Sleep();
+        AutoCompleteQuest = QuestData.Once;
+        TryComplete(QuestData, AutoCompleteQuest);
     }
     #endregion
 
@@ -658,6 +656,11 @@ public class CoreStory
         {
             Core.EnsureComplete(questData.ID);
         }
+        
+        // if the quest is turned in by the game, wait a second
+        if (autoCompleteQuest == false)
+            Core.Sleep();
+
 
         Bot.Wait.ForQuestComplete(questData.ID);
         Core.Logger($"Completed Quest: [{questData.ID}] - \"{questData.Name}\"", "QuestProgression");

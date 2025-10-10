@@ -120,7 +120,7 @@ public class Awescended
         }
 
         //Which Came First, the Dragon or the Dragonoid?
-        Story.KillQuest(8039, "crashsite", new[] { "Dwakel Warrior", "Barrier Bot", "Mithril Man", "ProtoSartorium" });
+        Story.KillQuest(8039, "crashsite", new[] {  "Barrier Bot", "Dwakel Warrior","Mithril Man", "ProtoSartorium" });
 
         //Artifact Hunting
         if (!Story.QuestProgression(8040))

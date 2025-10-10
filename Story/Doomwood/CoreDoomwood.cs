@@ -565,7 +565,7 @@ public class CoreDoomwood
         Story.PreLoad(this);
 
         //7589    Bullies
-        Story.KillQuest(7589, "thorngarde", new[] { "CryptHacker", "NecroMech", "NecroDrone" });
+        Story.KillQuest(7589, "thorngarde", new[] { "CryptHacker", "NecroDrone", "NecroMech"  });
 
         //7590    Free the People
         Story.MapItemQuest(7590, "thorngarde", 7485, 5);

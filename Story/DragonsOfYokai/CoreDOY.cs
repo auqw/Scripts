@@ -11,7 +11,8 @@ public class CoreDOY
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -352,7 +353,7 @@ public class CoreDOY
         if (!Story.QuestProgression(9801))
         {
             Bot.Quests.UpdateQuest(9607);
-            Story.KillQuest(9801, "hakuwar", new[] { "Zmey Warrior", "Zakhvatchik" });
+            Story.KillQuest(9801, "hakuwar", new[] { "Zakhvatchik", "Zmey Warrior" });
         }
         // Hoshiyoru 9802
         Core.EquipClass(ClassType.Solo);

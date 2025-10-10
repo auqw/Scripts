@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 49524,
+    "size": 49722,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 400019,
+    "size": 401602,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -1363,7 +1363,7 @@
       "glacera"
     ],
     "path": "Story/Glacera.cs",
-    "size": 12903,
+    "size": 13039,
     "fileName": "Glacera.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Glacera.cs"
   },
@@ -1659,7 +1659,7 @@
       "DVG"
     ],
     "path": "Story/DwarvesVsGiants.cs",
-    "size": 1729,
+    "size": 1731,
     "fileName": "DwarvesVsGiants.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DwarvesVsGiants.cs"
   },
@@ -4333,7 +4333,7 @@
       "army."
     ],
     "path": "Army/OneClient/AccsForAll.cs",
-    "size": 3836,
+    "size": 1468,
     "fileName": "AccsForAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/OneClient/AccsForAll.cs"
   },
@@ -7124,7 +7124,7 @@
       "null"
     ],
     "path": "Story/Doomwood/CoreDoomwood.cs",
-    "size": 30659,
+    "size": 30660,
     "fileName": "CoreDoomwood.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Doomwood/CoreDoomwood.cs"
   },
@@ -7671,7 +7671,7 @@
       "null"
     ],
     "path": "Story/ShadowsOfWar/CoreSoW.cs",
-    "size": 38176,
+    "size": 38178,
     "fileName": "CoreSoW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ShadowsOfWar/CoreSoW.cs"
   },
@@ -9157,7 +9157,7 @@
       "null"
     ],
     "path": "Story/DragonsOfYokai/CoreDOY.cs",
-    "size": 10817,
+    "size": 10818,
     "fileName": "CoreDOY.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DragonsOfYokai/CoreDOY.cs"
   },
@@ -12015,50 +12015,15 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/ZodiacQuests/PiscesVenarisMaterRewards.cs"
   },
   {
-    "name": "Free Birthday AC Gift 2023",
-    "description": "This script will kill Agitated Orb for free 500 ACs.",
+    "name": "[Script Name Here]",
+    "description": "[Brief description of what this script does]",
     "tags": [
-      "ac",
-      "free",
-      "500",
-      "2023",
-      "birthday"
+      "[comma-separated tags relevant to this script]"
     ],
-    "path": "Other/FreeAcGifts[Yearly]/2024BirthdayAcGift.cs",
-    "size": 775,
-    "fileName": "2024BirthdayAcGift.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/2024BirthdayAcGift.cs"
-  },
-  {
-    "name": "Holdiay Ac Gift 2024",
-    "description": "This script will kill burlingster in /borgars to get free 500 AC.",
-    "tags": [
-      "ac",
-      "free",
-      "500",
-      "2024"
-    ],
-    "path": "Other/FreeAcGifts[Yearly]/2024HolidayAcGift.cs",
-    "size": 916,
-    "fileName": "2024HolidayAcGift.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/2024HolidayAcGift.cs"
-  },
-  {
-    "name": "Free Holiday AC Gift 2023",
-    "description": "This script will kill Burlingster in /borgars to get free 500 AC.",
-    "tags": [
-      "free",
-      "ac",
-      "burlingster",
-      "borgars",
-      "500",
-      "2023",
-      "holiday"
-    ],
-    "path": "Other/FreeAcGifts[Yearly]/2023HolidayAcGift.cs",
-    "size": 1449,
-    "fileName": "2023HolidayAcGift.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/2023HolidayAcGift.cs"
+    "path": "Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs",
+    "size": 1604,
+    "fileName": "202xFreeAcs[TBD].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs"
   },
   {
     "name": "DarknessShard",
@@ -24719,7 +24684,7 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 32796,
+    "size": 33549,
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
@@ -24985,7 +24950,7 @@
       "null"
     ],
     "path": "Good/BLoD/CoreBLOD.cs",
-    "size": 22902,
+    "size": 24633,
     "fileName": "CoreBLOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Good/BLoD/CoreBLOD.cs"
   },
