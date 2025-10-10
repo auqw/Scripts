@@ -2032,7 +2032,7 @@ public class CoreEngine
             case "continuum chronomancer": case "quantum chronomancer": QuantumChronomancerClass(); break;
             case "nechronomancer": case "necrotic chronomancer": NecroticChronomancerClass(); break;
             case "legion paladin": case "obsidian paladin chronomancer": ObsidianPaladinChronomancerClass(); break;
-            case "chrono shadowslayer": ChronoShadowSlayerClass(); break;
+            case "chrono shadowslayer": case "chrono shadowhunter": ChronoShadowSlayerClass(); break;
 
             // Common classes
             case "master ranger": MasterRangerClass(); break;
