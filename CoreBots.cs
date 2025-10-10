@@ -4762,7 +4762,7 @@ public class CoreBots
                     done = true;
                     break;
                 }
-
+                DoSwindlesReturnArea(ReturnDuring, ReturnItem);
             }
 
             Bot.Options.AggroMonsters = false;
@@ -4777,7 +4777,7 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
-        
+
         void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
         {
             // Return if the policy isn't active or required items are missing

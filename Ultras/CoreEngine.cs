@@ -889,11 +889,16 @@ public class CoreEngine
     {
         if (keys == null || keys.Length == 0) { Bot.Sleep(D1); return; }
 
-        var target = LowestHpTarget(keys);
-        if (target == null) { Bot.Sleep(D1); return; }
+        foreach (var k in keys)
+        {
+            if (IsAlive(k))
+            {
+                Attack(k);
+                Bot.Sleep(D1);
+                return;
+            }
+        }
 
-        var targetKey = MonsterKey.FromMapId(target.MapID);
-        Bot.Combat.Attack(target.MapID);
         Bot.Sleep(D1);
     }
 

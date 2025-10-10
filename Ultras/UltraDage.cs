@@ -15,7 +15,7 @@ public class UltraDage
     public string OptionsStorage = "UltraDage";
     public List<IOption> Options = new()
     {
-        new Option<string>("a",   "First Taunter Class",  "Insert the name of the class that will taunt", ""),
+        new Option<string>("a", "First Taunter Class", "Insert the name of the class that will taunt", ""),
         new Option<string>("b", "Second Taunter Class", "Insert the name of the class that will taunt", "")
     };
 
@@ -32,7 +32,7 @@ public class UltraDage
         Core.Boot();
         Prep();
         Fight();
-        Bot.Events.ExtensionPacketReceived -= Ultra.UltraDageListener;
+        Bot.Events.ExtensionPacketReceived -= UltraDageListener;
         Bot.Stop();
     }
 
@@ -40,8 +40,9 @@ public class UltraDage
 
     void Prep()
     {
-        Bot.Events.ExtensionPacketReceived += Ultra.UltraDageListener;
+        Bot.Events.ExtensionPacketReceived += UltraDageListener;
         Bot.Quests.UpdateQuest(793);
+        Core.ChooseBestEnhancement("Weapon", "Health Vamp");
 
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
@@ -72,8 +73,38 @@ public class UltraDage
             else
             {
                 Core.Kill(boss);
-                Bot.Skills.UseSkill(5);
             }
+        }
+    }
+
+    public async void UltraDageListener(dynamic packet)
+    {
+        if (packet?["params"]?.type?.ToString() != "json") return;
+
+        dynamic data = packet["params"].dataObj;
+        if (data?.cmd?.ToString() != "event") return;
+
+        string zone = data?.args?.zoneSet?.ToString();
+
+        if (string.Equals(zone, "A", System.StringComparison.OrdinalIgnoreCase))
+        {
+            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%122%411%8%");
+            //Bot.Player.WalkTo(122, 411);
+            return;
+        }
+
+        if (string.Equals(zone, "B", System.StringComparison.OrdinalIgnoreCase))
+        {
+            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%856%422%8%");
+            //Bot.Player.WalkTo(856, 422);
+            return;
+        }
+
+        if (string.IsNullOrEmpty(zone))
+        {
+            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%491%421%8%");
+            //Bot.Player.WalkTo(491, 421);
+            return;
         }
     }
 }

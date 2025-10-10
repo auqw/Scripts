@@ -527,33 +527,5 @@ public class CoreUltra
         catch { }
     }
 
-    public async void UltraDageListener(dynamic packet)
-    {
-        if (packet?["params"]?.type?.ToString() != "json") return;
-
-        dynamic data = packet["params"].dataObj;
-        if (data?.cmd?.ToString() != "event") return;
-
-        string zone = data?.args?.zoneSet?.ToString();
-
-        if (string.Equals(zone, "A", System.StringComparison.OrdinalIgnoreCase))
-        {
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%122%411%8%");
-            return;
-        }
-
-        if (string.Equals(zone, "B", System.StringComparison.OrdinalIgnoreCase))
-        {
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%856%422%8%");
-            return;
-        }
-
-        if (string.IsNullOrEmpty(zone))
-        {
-            Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%491%421%8%");
-            return;
-        }
-    }
-
     #endregion
 }

@@ -23,11 +23,6 @@ public class UltraSpeaker
         Bot.Stop();
     }
 
-    void Taunt() => Core.UsePotion();
-
-    void MoveOut() => Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%881%363%10%");
-    void MoveIn() => Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%506%351%10%");
-
     void Kill()
     {
         Core.GetScrollOfEnrage();
@@ -40,9 +35,9 @@ public class UltraSpeaker
         while (Core.MonsterAlive("The First Speaker") && !Bot.ShouldExit)
         {
             if (equalDetected && CanEnterRedZone())
-                MoveIn();
+                Bot.Player.WalkTo(945, 312); // Move out
             else
-                MoveOut();
+                Bot.Player.WalkTo(506, 351); // Move in
         }
     }
 

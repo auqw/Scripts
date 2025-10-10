@@ -84,9 +84,9 @@ public class TestZone
 
         //Ultra.Test();
         // priority => ...
-        //Core.ChooseBestEnhancement("Weapon", "Valiance", "Spiral Carve", "Fighter");
-        //Core.ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-        //Core.ChooseBestEnhancement("Cape", "Vainglory", "Wizard");
+        Core.ChooseBestEnhancement("Weapon", "Valiance", "Spiral Carve", "Fighter");
+        Core.ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
+        Core.ChooseBestEnhancement("Cape", "Vainglory", "Wizard");
         //Core.ChooseBestGear("*"); // for the most common race in the map
         //Core.ChooseBestGear("Random Monster"); // for a specific monster
         //Ultra.BuyAlchemyPotion("Potent Honor Potion");
