@@ -805,7 +805,12 @@ public class CoreLegion
         }
 
         // Player vs Power
-        Story.ChainQuest(792);
+        if (!Story.QuestProgression(792))
+        {
+            if (!Core.CheckInventory("Combat Trophy", 200))
+                Farm.BludrutBrawlBoss(quant: 200);
+            Core.ChainComplete(792);
+        }
 
         // Fail to the King
         Story.KillQuest(793, "prison", "King Alteon's Knight");
