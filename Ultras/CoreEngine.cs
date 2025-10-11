@@ -2340,7 +2340,6 @@ public class CoreEngine
 
     void ArcanaInvokerClass()
     {
-        var mode = GetMode("ArcanaInvoker");
         void standardRotation()
         {
             if (Cast(2)) return;
