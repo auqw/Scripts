@@ -1570,6 +1570,7 @@ public class CoreFarms
         if (Core.IsMember)
             SkyguardREP();
         SomniaREP();
+        SkyeREP()
         SpellCraftingREP();
         SwordhavenREP();
         ThunderForgeREP();
