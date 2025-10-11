@@ -727,9 +727,6 @@ public class CoreEngine
 
         string normalizedClassName = className.ToLowerInvariant();
 
-        if (normalizedClassName.Contains("("))
-            normalizedClassName = normalizedClassName.Substring(0, normalizedClassName.IndexOf("(")).Trim();
-
          normalizedClassName = normalizedClassName.Replace(" (ioda)", "");
 
         return normalizedClassName switch
