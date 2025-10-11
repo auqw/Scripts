@@ -211,18 +211,13 @@ public class GlaceraStory
         {
             Core.EnsureAccept(3947);
             Core.Join("glacera");
+            Bot.Wait.ForMapLoad("glacera");
             Core.GetMapItem(3048, 1, "glacera");
             Core.EnsureComplete(3947);
         }
 
         // Key to the Fortress
         Story.KillQuest(3948, "glacera", "Frost Invader");
-
-        // Ravage the Reapers
-        Story.MapItemQuest(3949, "glacera", 3049, 6);
-
-        // Oh the Humanity
-        Story.MapItemQuest(3950, "glacera", 3047);
 
     }
 
@@ -268,10 +263,8 @@ public class GlaceraStory
         Story.KillQuest(3960, "northstar", "Frost Reaper");
 
         // Saving Syrrus' Spirit
-        Story.MapItemQuest(3961, "northstar", 3060, 5); //plush bear
-        Story.MapItemQuest(3961, "northstar", 3061, 7); //snowdrop blossom
-        Story.MapItemQuest(3961, "northstar", 3073, 5); //journal page
-        Story.KillQuest(3961, "northstar", "Frost Reaper"); //loadstone peice
+        Story.MapItemQuest(3961, new[] { (3060, 5, "northstar"), (3061, 7, "northstar"), (3073, 5, "northstar") });
+        Story.KillQuest(3961, "northstar", "Frost Reaper");
 
         // It's a Trap!
         Story.MapItemQuest(3972, "northstar", 3063, 10);
@@ -301,12 +294,7 @@ public class GlaceraStory
         Story.KillQuest(3948, "Glacera", "Frost Invader");
 
         // Breaking Boulders
-        if (!Core.isCompletedBefore(3950))
-        {
-            Core.EnsureAccept(3949);
-            Core.GetMapItem(3049, 6, "glacera");
-            Core.EnsureComplete(3949);
-        }
+        Story.MapItemQuest(3949, "glacera", 3049);
 
         // The Scythe of Vengeance
         Story.MapItemQuest(3950, "Glacera", 3047);

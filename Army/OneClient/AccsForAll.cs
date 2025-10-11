@@ -9,7 +9,7 @@ tags: acs, free, thefamily, army.
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
-//cs_include Scripts/Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs
+//cs_include Scripts/Other/FreeAcGifts[Yearly]/202xFreeAcs.cs
 
 using Skua.Core.Interfaces;
 

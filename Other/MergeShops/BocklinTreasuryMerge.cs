@@ -32,8 +32,8 @@ public class BocklinTreasuryMerge
     private static BocklinGroveMerge _BocklinGroveM;
     private static BocklinArmoryMerge BocklinArmoryM { get => _BocklinArmoryM ??= new BocklinArmoryMerge(); set => _BocklinArmoryM = value; }
     private static BocklinArmoryMerge _BocklinArmoryM;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
 
     public bool DontPreconfigure = true;
@@ -112,11 +112,9 @@ private static CoreAdvanced _sAdv;
 
                 case "Enthralling Gem Shard":
                     Core.FarmingLogger(req.Name, quant);
-                    if (Core.IsMember)
-                        Core.RegisterQuests(10242);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(10240,
+                        Core.HuntMonsterQuest(Core.IsMember ? 10242 : 10240,
                         ("bocklingrove", "Elder Necromancer", ClassType.Solo),
                         ("bocklingrove", "Undead Garde", ClassType.Farm),
                         ("bocklingrove", "Garde Wraith", ClassType.Farm));
@@ -129,11 +127,9 @@ private static CoreAdvanced _sAdv;
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    if (Core.IsMember)
-                        Core.RegisterQuests(10255);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonsterQuest(10253,
+                        Core.HuntMonsterQuest(Core.IsMember ? 10255 : 10253,
                         ("bocklincastle", "Faceless Ritualist", ClassType.Farm),
                         ("bocklincastle", "Headless Knight", ClassType.Solo),
                         ("bocklincastle", "Warped Revenant", ClassType.Farm)

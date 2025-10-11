@@ -12,8 +12,10 @@ public class SkyGuardSaga
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -193,7 +195,7 @@ public class SkyGuardSaga
 
         // Bridge the Gap 2038
         Story.MapItemQuest(2038, "highcommand", 997, 4);
-        Story.KillQuest(2038, "highcommand", new[] { "Bronze Sky Pirate", "Storagebox" });
+        Story.KillQuest(2038, "highcommand", new[] { "Storagebox", "Bronze Sky Pirate" });
 
         // Crack the Code 2039
         Story.MapItemQuest(2039, "highcommand", 1000);

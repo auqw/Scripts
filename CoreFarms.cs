@@ -127,71 +127,76 @@ public class CoreFarms
     //             Bot.Boosts.Stop();
     //     }
     // }
+    /// <summary>
+    /// Enables or disables a specified boost based on the provided <see cref="BoostType"/> and the user's CBO settings.
+    /// </summary>
+    /// <param name="type">The type of boost to toggle (Gold, Class, Reputation, Experience).</param>
+    /// <param name="enabled">
+    /// True to enable the boost, false to disable it.  
+    /// When enabling, the boost will only activate if the corresponding CBO setting is true and the boost is not already active.  
+    /// When disabling, the boost is deactivated and all boosts are stopped if none remain active.
+    /// </param>
+    /// <remarks>
+    /// - Gold boost is skipped if already active or the player's gold is at the maximum.  
+    /// - Experience boost is skipped if already active or the player is at max level (100).  
+    /// - All other boosts are skipped if already active.  
+    /// - Logs activation or deactivation status for each boost.  
+    /// - Starts boosts immediately upon enabling; stops all boosts if none are active upon disabling.
+    /// </remarks>
     public void ToggleBoost(BoostType type, bool enabled = true)
     {
+        // Only allow enabling if the corresponding CBO is true
         if (enabled)
         {
             switch (type)
             {
                 case BoostType.Gold:
-                    if (Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100_000_000)
-                    {
-                        Core.Logger($"💰 Gold boost skipped (already active or max gold).");
-                        break;
-                    }
+                    if (!Core.CBOBool("doGoldBoost", out bool _doGoldBoost) || !_doGoldBoost || Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100_000_000)
+                        return;
                     Bot.Boosts.SetGoldBoostID();
                     Bot.Boosts.UseGoldBoost = true;
-                    Core.Logger($"💰 Gold boost activated!");
+                    Core.Logger("💰 Gold boost activated!");
                     break;
 
                 case BoostType.Class:
-                    if (Bot.Boosts.UseClassBoost)
-                    {
-                        Core.Logger($"🛡️ Class boost skipped (already active).");
-                        break;
-                    }
+                    if (!Core.CBOBool("doClassBoost", out bool _doClassBoost) || !_doClassBoost || Bot.Boosts.UseClassBoost || Core.CheckClassRank(true) == 10)
+                        return;
                     Bot.Boosts.SetClassBoostID();
                     Bot.Boosts.UseClassBoost = true;
-                    Core.Logger($"🛡️ Class boost activated!");
+                    Core.Logger("🛡️ Class boost activated!");
                     break;
 
                 case BoostType.Reputation:
-                    if (Bot.Boosts.UseReputationBoost)
-                    {
-                        Core.Logger($"🏰 Reputation boost skipped (already active).");
-                        break;
-                    }
+                    if (!Core.CBOBool("doRepBoost", out bool _doRepBoost) || !_doRepBoost || Bot.Boosts.UseReputationBoost)
+                        return;
                     Bot.Boosts.SetReputationBoostID();
                     Bot.Boosts.UseReputationBoost = true;
-                    Core.Logger($"🏰 Reputation boost activated!");
+                    Core.Logger("🏰 Reputation boost activated!");
                     break;
 
                 case BoostType.Experience:
-                    if (Bot.Boosts.UseExperienceBoost || Bot.Player.Level == 100)
-                    {
-                        Core.Logger($"📚 Experience boost skipped (already active or max level).");
-                        break;
-                    }
+                    if (!Core.CBOBool("doExpBoost", out bool _doExpBoost) || !_doExpBoost || Bot.Boosts.UseExperienceBoost || Bot.Player.Level >= 100)
+                        return;
                     Bot.Boosts.SetExperienceBoostID();
                     Bot.Boosts.UseExperienceBoost = true;
-                    Core.Logger($"📚 Experience boost activated!");
+                    Core.Logger("📚 Experience boost activated!");
                     break;
             }
 
-            // Start all active boosts
             Bot.Boosts.Start();
         }
         else
         {
+            // Disable the boost
             switch (type)
             {
-                case BoostType.Gold: Bot.Boosts.UseGoldBoost = false; Core.Logger($"💰 Gold boost deactivated."); break;
-                case BoostType.Class: Bot.Boosts.UseClassBoost = false; Core.Logger($"🛡️ Class boost deactivated."); break;
-                case BoostType.Reputation: Bot.Boosts.UseReputationBoost = false; Core.Logger($"🏰 Reputation boost deactivated."); break;
-                case BoostType.Experience: Bot.Boosts.UseExperienceBoost = false; Core.Logger($"📚 Experience boost deactivated."); break;
+                case BoostType.Gold: Bot.Boosts.UseGoldBoost = false; Core.Logger("💰 Gold boost deactivated."); break;
+                case BoostType.Class: Bot.Boosts.UseClassBoost = false; Core.Logger("🛡️ Class boost deactivated."); break;
+                case BoostType.Reputation: Bot.Boosts.UseReputationBoost = false; Core.Logger("🏰 Reputation boost deactivated."); break;
+                case BoostType.Experience: Bot.Boosts.UseExperienceBoost = false; Core.Logger("📚 Experience boost deactivated."); break;
             }
 
-            // Stop boosts if none are active
+            // Stop all boosts if none are active
             if (!Bot.Boosts.UseGoldBoost && !Bot.Boosts.UseClassBoost &&
                 !Bot.Boosts.UseReputationBoost && !Bot.Boosts.UseExperienceBoost)
             {
@@ -1118,7 +1123,7 @@ public class CoreFarms
     //                 {
     //                     if (monster == null || monster?.HP <= 0 || !monster.Alive || monster.State == 0)
     //                         continue;
-                            
+
     //                     while (!Bot.ShouldExit)
     //                     {
     //                         if (Bot.Player.Target?.HP <= 0)

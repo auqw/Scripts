@@ -765128,5 +765128,43 @@
         "sMeta": null
       }
     ]
+  },
+  {
+    "ID": 10455,
+    "Slot": 622,
+    "Value": 1,
+    "Name": "Forge Your 2025 ACs Gift",
+    "Once": true,
+    "Field": null,
+    "Index": 0,
+    "Upgrade": false,
+    "Level": 20,
+    "RequiredClassID": 0,
+    "RequiredClassPoints": 0,
+    "RequiredFactionId": 1,
+    "RequiredFactionRep": 0,
+    "Gold": 0,
+    "XP": 0,
+    "AcceptRequirements": [],
+    "Requirements": [
+      {
+        "ItemID": 96261,
+        "sName": "Free ACs...",
+        "sDesc": " ",
+        "iQty": 1,
+        "iStk": 1,
+        "bUpg": "0",
+        "bCoins": "0",
+        "sType": "Quest Item",
+        "Category": "Unknown",
+        "bTemp": "1",
+        "sES": "None",
+        "sLink": "",
+        "sFile": null,
+        "sMeta": null
+      }
+    ],
+    "Rewards": [],
+    "SimpleRewards": []
   }
 ]

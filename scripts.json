@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 151740,
+    "size": 152591,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 401600,
+    "size": 401550,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -1363,7 +1363,7 @@
       "glacera"
     ],
     "path": "Story/Glacera.cs",
-    "size": 13039,
+    "size": 12665,
     "fileName": "Glacera.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Glacera.cs"
   },
@@ -1389,7 +1389,7 @@
       "watch-tower"
     ],
     "path": "Story/WatchTower.cs",
-    "size": 2010,
+    "size": 2009,
     "fileName": "WatchTower.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/WatchTower.cs"
   },
@@ -1878,7 +1878,7 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 48482,
+    "size": 48510,
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -2309,7 +2309,7 @@
       "skyguard-saga"
     ],
     "path": "Story/SkyGuardSaga.cs",
-    "size": 9867,
+    "size": 9869,
     "fileName": "SkyGuardSaga.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/SkyGuardSaga.cs"
   },
@@ -4333,7 +4333,7 @@
       "army."
     ],
     "path": "Army/OneClient/AccsForAll.cs",
-    "size": 1468,
+    "size": 1463,
     "fileName": "AccsForAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/OneClient/AccsForAll.cs"
   },
@@ -12020,10 +12020,10 @@
     "tags": [
       "[comma-separated tags relevant to this script]"
     ],
-    "path": "Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs",
-    "size": 1604,
-    "fileName": "202xFreeAcs[TBD].cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs"
+    "path": "Other/FreeAcGifts[Yearly]/202xFreeAcs.cs",
+    "size": 1539,
+    "fileName": "202xFreeAcs.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs.cs"
   },
   {
     "name": "DarknessShard",
@@ -16971,7 +16971,7 @@
       "dress"
     ],
     "path": "Other/MergeShops/BocklinTreasuryMerge.cs",
-    "size": 8924,
+    "size": 8798,
     "fileName": "BocklinTreasuryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BocklinTreasuryMerge.cs"
   },
@@ -29065,7 +29065,7 @@
       "birthday"
     ],
     "path": "Seasonal/StaffBirthdays/Nulgath/TempleSiege.cs",
-    "size": 2509,
+    "size": 2497,
     "fileName": "TempleSiege.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/StaffBirthdays/Nulgath/TempleSiege.cs"
   },
