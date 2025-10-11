@@ -68,7 +68,7 @@ public class CoreEngine
         { ("chrono shadowslayer", "Ultra"), (new[] { "Dauntless", "Valiance" }, new[] { "Vim" }, new[] { "Vainglory" }, "Lucky") },
 
         // Common classes
-        { ("master ranger", "Ultra"), (new[] { "Ravenous","Elysium", "Valiance" }, new[] { "Anima" }, new[] { "Vainglory", "Avarice" }, "Lucky") },
+        { ("master ranger", "Ultra"), (new[] { "Ravenous", "Elysium", "Valiance" }, new[] { "Anima" }, new[] { "Vainglory", "Avarice" }, "Lucky") },
         { ("dragonslayer general", "Ultra"), (new[] { "Ravenous", "Dauntless" }, new[] { "Vim", "Anima" }, new[] { "Vainglory" }, "Lucky") },
         { ("cryomancer", "Ultra"), (new[] { "Valiance" }, new[] { "Pneuma" }, new[] { "Vainglory" }, "Wizard") },
         { ("dragonslayer", "Ultra"), (new[] { "Dauntless" }, new[] { "Vim" }, new[] { "Vainglory" }, "Lucky") },
@@ -726,8 +726,7 @@ public class CoreEngine
             return string.Empty;
 
         string normalizedClassName = className.ToLowerInvariant();
-
-         normalizedClassName = normalizedClassName.Replace(" (ioda)", "");
+        normalizedClassName = normalizedClassName.Replace(" (ioda)", "");
 
         return normalizedClassName switch
         {
