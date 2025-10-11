@@ -36,10 +36,62 @@ public class CoreEngine
     CancellationTokenSource _cts;
     Task _runSkills;
 
+    #region Enhancement settings
+
+    private static readonly (string[] weapon, string[] helm, string[] cape, string fallbackType) _defaultClassEnhancements =
+        (new[] { "Valiance" }, new[] { "Forge" }, new[] { "Vainglory" }, "Lucky");
+
+    private readonly Dictionary<(string className, string mode), (string[] weapon, string[] helm, string[] cape, string fallbackType)> _classEnhancements = new()
+    {
+        // Ultra classes
+        { ("legion revenant", "Ultra"), (new[] { "Valiance", "Praxis", "Awe Blast" }, new[] { "Pneuma" }, new[] { "Vainglory", "Avarice" }, "Wizard") },
+        { ("lord of order", "Ultra"), (new[] { "Arcana's Concerto", "Awe Blast" }, new[] { "Forge" }, new[] { "Absolution" }, "Lucky") },
+        { ("stonecrusher", "Ultra"), (new[] { "Arcana's Concerto", "Awe Blast" }, new[] { "Forge" }, new[] { "Absolution" }, "Wizard") },
+        { ("infinity titan", "Ultra"), (new[] { "Arcana's Concerto", "Awe Blast" }, new[] { "Forge" }, new[] { "Absolution" }, "Wizard") },
+        { ("archpaladin", "Ultra"), (new[] { "Awe Blast" }, new[] { "Forge" }, new[] { "Vainglory", "Lament" }, "Lucky") },
+        { ("void highlord", "Ultra"), (new[] { "Ravenous", "Smite", "Dauntless", "Awe Blast" }, new[] { "Anima" }, new[] { "Vainglory" }, "Lucky") },
+        { ("chaos avenger", "Ultra"), (new[] { "Ravenous", "Dauntless", "Awe Blast" }, new[] { "Anima" }, new[] { "Vainglory", "Avarice" }, "Lucky") },
+        { ("lightcaster", "Ultra"), (new[] { "Valiance", "Praxis" }, new[] { "Pneuma" }, new[] { "Vainglory", "Lament" }, "Wizard") },
+        { ("legion doomknight", "Ultra"), (new[] { "Dauntless", "Valiance" }, new[] { "Forge", "Anima" }, new[] { "Lament" }, "Lucky") },
+        { ("dragon of time", "Ultra"), (new[] { "Elysium" }, new[] { "Pneuma" }, new[] { "Vainglory" }, "Wizard") },
+        { ("archmage", "Ultra"), (new[] { "Valiance" }, new[] { "Pneuma" }, new[] { "Vainglory", "Avarice" }, "Wizard") },
+        { ("verus doomknight", "Ultra"), (new[] { "Ravenous", "Dauntless", "Valiance" }, new[] { "Anima" }, new[] { "Vainglory" }, "Lucky") },
+        { ("arcana invoker", "Ultra"), (new[] { "Ravenous", "Valiance" }, new[] { "Pneuma" }, new[] { "Vainglory", "Lament" }, "Wizard") },
+        { ("arcana invoker", "Default"), (new[] { "Elysium", "Valiance", "Mana Vamp" }, new[] { "Examen" }, new[] { "Vainglory", "Lament" }, "Wizard") },
+
+        // Chrono classes
+        { ("chrono dataknight", "Ultra"), (new[] { "Valiance", "Elysium" }, new[] { "Pneuma" }, new[] { "Lament", "Vainglory" }, "Wizard") },
+        { ("shadowstalker of time", "Ultra"), (new[] { "Dauntless", "Smite" }, new[] { "Vim" }, new[] { "Vainglory" }, "Lucky") },
+        { ("continuum chronomancer", "Ultra"), (new[] { "Ravenous", "Dauntless" }, new[] { "Forge" }, new[] { "Vainglory" }, "Lucky") },
+        { ("necrotic chronomancer", "Ultra"), (new[] { "Arcana's Concerto", "Dauntless" }, new[] { "Anima" }, new[] { "Vainglory" }, "Lucky") },
+        { ("obsidian paladin chronomancer", "Ultra"), (new[] { "Ravenous", "Valiance" }, new[] { "Pneuma" }, new[] { "Vainglory" }, "Wizard") },
+        { ("chrono shadowslayer", "Ultra"), (new[] { "Dauntless", "Valiance" }, new[] { "Vim" }, new[] { "Vainglory" }, "Lucky") },
+
+        // Common classes
+        { ("master ranger", "Ultra"), (new[] { "Ravenous","Elysium", "Valiance" }, new[] { "Anima" }, new[] { "Vainglory", "Avarice" }, "Lucky") },
+        { ("dragonslayer general", "Ultra"), (new[] { "Ravenous", "Dauntless" }, new[] { "Vim", "Anima" }, new[] { "Vainglory" }, "Lucky") },
+        { ("cryomancer", "Ultra"), (new[] { "Valiance" }, new[] { "Pneuma" }, new[] { "Vainglory" }, "Wizard") },
+        { ("dragonslayer", "Ultra"), (new[] { "Dauntless" }, new[] { "Vim" }, new[] { "Vainglory" }, "Lucky") },
+        { ("dragon knight", "Ultra"), (new[] { "Ravenous", "Valiance" }, new[] { "Pneuma" }, new[] { "Lament" }, "Wizard") },
+        { ("shaman", "Ultra"), (new[] { "Ravenous", "Valiance" }, new[] { "Pneuma" }, new[] { "Vainglory" }, "Lucky") },
+        { ("evolved shaman", "Ultra"), (new[] { "Mana Vamp" }, new[] { "Pneuma" }, new[] { "Absolution", "Vainglory" }, "Wizard") },
+        { ("dark legendary hero", "Ultra"), (new[] { "Ravenous", "Arcana's Concerto" }, new[] { "Forge" }, new[] { "Absolution", "Vainglory" }, "Lucky") },
+        { ("necromancer", "Ultra"), (new[] { "Ravenous", "Dauntless" }, new[] { "Vim" }, new[] { "Vainglory" }, "Lucky") },
+        { ("chrono assassin", "Ultra"), (new[] { "Arcana's Concerto" }, new[] { "Vim" }, new[] { "Vainglory" }, "Lucky") },
+        { ("guardian", "Ultra"), (new[] { "Ravenous", "Valiance" }, new[] { "Vim" }, new[] { "Penitence" }, "Lucky") },
+        { ("great thief", "Ultra"), (new[] { "Dauntless" }, new[] { "Vim" }, new[] { "Lament" }, "Lucky") },
+        { ("chaos slayer", "Ultra"), (new[] { "Ravenous", "Dauntless", "Elysium" }, new[] { "Anima" }, new[] { "Vainglory", "Avarice" }, "Lucky") },
+
+        // Basic classes
+        { ("mage", "Ultra"), (new[] { "Valiance" }, new[] { "Pneuma" }, new[] { "Vainglory" }, "Wizard") },
+    };
+
+    #endregion
+
     public TimeSpan ThrottleDuration { get; set; } = TimeSpan.FromSeconds(3);
     public event Action<string, string> OnSignal;
 
-    #region Settings
+    #region General settings
 
     public int D1 = 250;
     public int D2 = 700;
@@ -70,6 +122,9 @@ public class CoreEngine
             Bot.Bank.Load();
             Bot.Wait.ForTrue(() => Bot.Bank.Items.Count > 0, 20);
         }
+
+        string className = Bot.Player.CurrentClass?.Name?.ToLower();
+        if (!string.IsNullOrWhiteSpace(className)) EquipClassEnhancements(className);
 
         Bot.Options.SafeTimings = true;
         Bot.Options.InfiniteRange = true;
@@ -622,6 +677,75 @@ public class CoreEngine
     #endregion
 
     #region Best Enhancement
+
+    private void ApplyEnhancement(string itemType, string[] options, string fallback)
+    {
+        var withFallback = options.Append(fallback).ToArray();
+        var result = ChooseBestEnhancement(itemType, withFallback);
+    }
+
+    public bool EquipClassEnhancements(string className)
+    {
+        if (IsGeneralBestEnhancementEquipped) return true;
+
+        string mode = GetMode(className);
+        string normalizedName = NormalizeClassName(className);
+
+        // TODO: remove this when every class is correctly mapped with every mode in `_classEnhancements`.
+        // This check should be temporary, also need to better understand what are the expected modes in the future.
+        if (mode == "Default") mode = "Ultra";
+
+        if (_classEnhancements.TryGetValue((normalizedName, mode), out var enhancements))
+        {
+            var (weaponOptions, helmOptions, capeOptions, fallbackType) = enhancements;
+
+            ApplyEnhancement("Weapon", weaponOptions, fallbackType);
+            ApplyEnhancement("Helm", helmOptions, fallbackType);
+            ApplyEnhancement("Cape", capeOptions, fallbackType);
+
+            Log("ENHANCEMENT", $"✨ Applied enhancements for {className}" + (mode != "Ultra" ? $" ({mode} mode)" : ""));
+
+            IsGeneralBestEnhancementEquipped = true;
+            return true;
+        }
+
+        var (defWeapon, defHelm, defCape, defFallback) = _defaultClassEnhancements;
+        ApplyEnhancement("Weapon", defWeapon, defFallback);
+        ApplyEnhancement("Helm", defHelm, defFallback);
+        ApplyEnhancement("Cape", defCape, defFallback);
+
+        Log("ENHANCEMENT", $"❌ No specific enhancements found for {className}, using defaults");
+
+        IsGeneralBestEnhancementEquipped = true;
+        return true;
+    }
+
+    private string NormalizeClassName(string className)
+    {
+        if (string.IsNullOrWhiteSpace(className))
+            return string.Empty;
+
+        string normalizedClassName = className.ToLowerInvariant();
+
+        if (normalizedClassName.Contains("("))
+            normalizedClassName = normalizedClassName.Substring(0, normalizedClassName.IndexOf("(")).Trim();
+
+         normalizedClassName = normalizedClassName.Replace(" (ioda)", "");
+
+        return normalizedClassName switch
+        {
+            "chrono dragonknight" => "chrono dataknight",
+            "quantum chronomancer" => "continuum chronomancer",
+            "shadowweaver of time" => "shadowstalker of time",
+            "nechronomancer" => "necrotic chronomancer",
+            "legion paladin" => "obsidian paladin chronomancer",
+            "chaos slayer berserker" => "chaos slayer",
+            "chaos slayer cleric" => "chaos slayer",
+            "chaos slayer mystic" => "chaos slayer",
+            "chaos slayer thief" => "chaos slayer",
+            _ => normalizedClassName
+        };
+    }
 
     public InventoryItem ChooseBestEnhancement(string itemGroup, params string[] priority)
     {
@@ -1519,8 +1643,8 @@ public class CoreEngine
                     break;
             }
         }
-        return false;
 
+        return false;
     }
 
     public void RejectExcept(params object[] keys)
@@ -2067,15 +2191,6 @@ public class CoreEngine
 
     void LegionRevenantClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Valiance", "Praxis", "Awe Blast", "Lucky");
-            ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-            ChooseBestEnhancement("Cape", "Vainglory", "Avarice", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (Cast(3)) return;
         if (Cast(2)) return;
         if (Cast(1)) return;
@@ -2084,15 +2199,6 @@ public class CoreEngine
 
     void LordsOfOrderClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Arcana's Concerto", "Awe Blast", "Lucky");
-            ChooseBestEnhancement("Helm", "Forge", "Lucky");
-            ChooseBestEnhancement("Cape", "Absolution", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if ((IsHealthLow(85) || IsArmyHealthLow(85)) && NotUltraDage())
             if (Cast(2)) return;
         if (Cast(4)) return;
@@ -2104,15 +2210,6 @@ public class CoreEngine
 
     void StoneCrusherClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Arcana's Concerto", "Awe Blast", "Wizard");
-            ChooseBestEnhancement("Helm", "Forge", "Wizard");
-            ChooseBestEnhancement("Cape", "Absolution", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         var mode = GetMode("StoneCrusher");
 
         if (mode == "Ultra")
@@ -2138,15 +2235,6 @@ public class CoreEngine
 
     void InfinityTitanClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Arcana's Concerto", "Awe Blast", "Wizard");
-            ChooseBestEnhancement("Helm", "Forge", "Wizard");
-            ChooseBestEnhancement("Cape", "Absolution", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         var mode = GetMode("InfinityTitan");
 
         if (mode == "Ultra")
@@ -2172,15 +2260,6 @@ public class CoreEngine
 
     void ArchPaladinClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Awe Blast", "Lucky");
-            ChooseBestEnhancement("Helm", "Forge", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lament", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if ((IsHealthLow(70) || IsArmyHealthLow(70)) && NotUltraDage())
             if (Cast(2)) return;
         if (!HasAura("Righteous Seal"))
@@ -2191,15 +2270,6 @@ public class CoreEngine
 
     void VoidHighlordClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Ravenous", "Smite", "Dauntless", "Awe Blast", "Lucky");
-            ChooseBestEnhancement("Helm", "Anima", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (HasAura("Unshackled", true))
             if (Cast(4)) return;
         if (IsHealthHigh(60))
@@ -2211,15 +2281,6 @@ public class CoreEngine
 
     void ChaosAvengerClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Ravenous", "Dauntless", "Awe Blast", "Lucky");
-            ChooseBestEnhancement("Helm", "Anima", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Avarice", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (Cast(2)) return;
         if (Cast(4)) return;
         if (Cast(1)) return;
@@ -2228,15 +2289,6 @@ public class CoreEngine
 
     void LightCasterClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Valiance", "Praxis", "Wizard");
-            ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lament", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (IsHealthLow(85) || IsArmyHealthLow(85) || Left("Illuminated", 1, true))
             if (Cast(3)) return;
         if (Cast(4)) return;
@@ -2246,15 +2298,6 @@ public class CoreEngine
 
     void LegionDoomKnightClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Dauntless", "Valiance", "Lucky");
-            ChooseBestEnhancement("Helm", "Forge", "Anima", "Lucky");
-            ChooseBestEnhancement("Cape", "Lament", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (Cast(4)) return;
         if (Cast(1)) return;
         if (Cast(2)) return;
@@ -2263,15 +2306,6 @@ public class CoreEngine
 
     void DragonOfTimeClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Elysium", "Wizard");
-            ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-            ChooseBestEnhancement("Cape", "Vainglory", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (IsHealthLow(95))
             if (Cast(2)) return;
         if (HasAura("Convergence", true))
@@ -2283,16 +2317,6 @@ public class CoreEngine
 
     void ArchmageClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            // Based on ArchMage (Astral) from wizard classes
-            ChooseBestEnhancement("Weapon", "Valiance", "Wizard");
-            ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-            ChooseBestEnhancement("Cape", "Vainglory", "Avarice", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (IsManaLow(30))
             if (Cast(2)) return;
         if (HasAura("Arcane Flux", true) && !HasAura("Corporeal Ascension", true) && !HasAura("Astral Ascension", true))
@@ -2305,15 +2329,6 @@ public class CoreEngine
 
     void VerusDoomKnight()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Dauntless", "Valiance", "Lucky");
-            ChooseBestEnhancement("Helm", "Anima", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (IsHealthLow(50))
             if (Cast(2)) return;
         if (Stacks("Doom", 10, true))
@@ -2326,25 +2341,6 @@ public class CoreEngine
     void ArcanaInvokerClass()
     {
         var mode = GetMode("ArcanaInvoker");
-
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            if (mode == "Ultra")
-            {
-                ChooseBestEnhancement("Weapon", "Ravenous", "Valiance", "Wizard");
-                ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-                ChooseBestEnhancement("Cape", "Vainglory", "Lament", "Wizard");
-            }
-            else
-            {
-                ChooseBestEnhancement("Weapon", "Elysium", "Valiance", "Mana Vamp", "Wizard");
-                ChooseBestEnhancement("Helm", "Examen", "Wizard");
-                ChooseBestEnhancement("Cape", "Vainglory", "Lament", "Wizard");
-            }
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         void standardRotation()
         {
             if (Cast(2)) return;
@@ -2379,15 +2375,6 @@ public class CoreEngine
 
     void ChronoDataKnightClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Valiance", "Elysium", "Wizard");
-            ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-            ChooseBestEnhancement("Cape", "Lament", "Vainglory", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (Stacks("Temporal Rift", 4, true))
             if (Cast(4)) return;
         if (Cast(1)) return;
@@ -2397,15 +2384,6 @@ public class CoreEngine
 
     void ShadowWeaverOfTimeClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Dauntless", "Smite", "Lucky");
-            ChooseBestEnhancement("Helm", "Vim", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (IsHealthLow(50) || IsManaLow(30))
             if (Cast(3)) return;
         if (Stacks("Chaos Rift", 4, true))
@@ -2416,15 +2394,6 @@ public class CoreEngine
 
     void QuantumChronomancerClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Ravenous", "Dauntless", "Lucky");
-            ChooseBestEnhancement("Helm", "Forge", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (Stacks("Temporal Rift", 4, true))
             if (Cast(3)) return;
         if (HasAura("Quantum Restructure", true))
@@ -2435,15 +2404,6 @@ public class CoreEngine
 
     void NecroticChronomancerClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Arcana's Concerto", "Dauntless", "Lucky");
-            ChooseBestEnhancement("Helm", "Anima", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (Stacks("Chaos Rift", 4, true))
             if (Cast(3)) return;
         if (Left("Debilitated", 2))
@@ -2454,15 +2414,6 @@ public class CoreEngine
 
     void ObsidianPaladinChronomancerClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Ravenous", "Valiance", "Wizard");
-            ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-            ChooseBestEnhancement("Cape", "Vainglory", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (IsHealthLow(50) || IsArmyHealthLow(50))
             if (Cast(3)) return;
         if (IsHealthLow(80) || IsArmyHealthLow(80))
@@ -2474,15 +2425,6 @@ public class CoreEngine
 
     void ChronoShadowSlayerClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Dauntless", "Valiance", "Lucky");
-            ChooseBestEnhancement("Helm", "Vim", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (HasAura("Rounds Empty", true))
             if (Cast(1)) return;
         if (HasAura("Gunslinger Stance", true))
@@ -2499,15 +2441,6 @@ public class CoreEngine
 
     void MasterRangerClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Elysium", "Valiance", "Lucky");
-            ChooseBestEnhancement("Helm", "Anima", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Avarice", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (HasAura("Vampiric Shot", true))
             if (Cast(3)) return;
         if (Stacks("Marks", 6, true))
@@ -2519,15 +2452,6 @@ public class CoreEngine
 
     void DragonslayerGeneralClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Dauntless", "Ravenous", "Lucky");
-            ChooseBestEnhancement("Helm", "Vim", "Anima", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (HasAura("General's Dragonbane"))
             if (Cast(2)) return;
         if (HasAura("General's Dragonbane"))
@@ -2538,15 +2462,6 @@ public class CoreEngine
 
     void CryomancerClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Valiance", "Wizard");
-            ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-            ChooseBestEnhancement("Cape", "Vainglory", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (IsHealthLow(60) && HasAura("Polar Vortex", true))
             if (Cast(3)) return;
         if (HasAura("Frozen") && HasAura("Polar Vortex", true))
@@ -2557,15 +2472,6 @@ public class CoreEngine
 
     void DragonslayerClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Dauntless", "Lucky");
-            ChooseBestEnhancement("Helm", "Vim", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (HasAura("Dragonbane") && !HasAura("Infected Wound"))
             if (Cast(2)) return;
         if (HasAura("Dragonbane") && !HasAura("Weakened"))
@@ -2576,15 +2482,6 @@ public class CoreEngine
 
     void DragonKnightClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Valiance", "Wizard");
-            ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-            ChooseBestEnhancement("Cape", "Lament", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (Cast(1)) return;
         if (HasAura("Flammable"))
             if (Cast(4)) return;
@@ -2595,15 +2492,6 @@ public class CoreEngine
 
     void ShamanClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Valiance", "Lucky");
-            ChooseBestEnhancement("Helm", "Pneuma", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (Left("Elemental Embrace", 5))
             if (Cast(4)) return;
         if (HasAura("Elemental Embrace"))
@@ -2615,15 +2503,6 @@ public class CoreEngine
 
     void EvolvedShamanClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Mana Vamp", "Wizard");
-            ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-            ChooseBestEnhancement("Cape", "Absolution", "Vainglory", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (IsHealthLow(80) || IsArmyHealthLow(80))
             if (Cast(3)) return;
         if (Left("Elemental Grasp", 5))
@@ -2634,15 +2513,6 @@ public class CoreEngine
 
     void DarkLegendaryHeroClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Ravenous", "Arcana's Concerto", "Lucky");
-            ChooseBestEnhancement("Helm", "Forge", "Lucky");
-            ChooseBestEnhancement("Cape", "Absolution", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (IsHealthLow(30) || IsArmyHealthLow(30))
             if (Cast(4)) return;
         if (Cast(3)) return;
@@ -2652,15 +2522,6 @@ public class CoreEngine
 
     void NecromancerClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Ravenous", "Dauntless", "Lucky");
-            ChooseBestEnhancement("Helm", "Vim", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (IsManaLow(90) && IsHealthHigh(80) && !HasAura("Deadly Frenzy", true))
             if (Cast(3)) return;
         if (IsManaLow(30) && IsHealthHigh(80) && HasAura("Deadly Frenzy", true))
@@ -2674,15 +2535,6 @@ public class CoreEngine
 
     void ChronoAssassinClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Arcana's Concerto", "Lucky");
-            ChooseBestEnhancement("Helm", "Vim", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (HasAura("Reverse Time", true))
         {
             if (Cast(4)) return;
@@ -2697,15 +2549,6 @@ public class CoreEngine
 
     void GuardianClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Ravenous", "Valiance", "Lucky");
-            ChooseBestEnhancement("Helm", "Vim", "Lucky");
-            ChooseBestEnhancement("Cape", "Penitence", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if ((HasAura("Hypercritical", true) || HasAura("Void Imbue", true)) && Stacks("Guardian Spirit", 15, true))
             if (Cast(4)) return;
         if (IsManaLow(70))
@@ -2716,15 +2559,6 @@ public class CoreEngine
 
     void GreatThiefClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Dauntless", "Lucky");
-            ChooseBestEnhancement("Helm", "Vim", "Lucky");
-            ChooseBestEnhancement("Cape", "Lament", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (HasAura("Hidden Blade", true))
             if (Cast(4)) return;
         if (Cast(3)) return;
@@ -2734,15 +2568,6 @@ public class CoreEngine
 
     void ChaosSlayerClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Ravenous", "Dauntless", "Elysium", "Lucky");
-            ChooseBestEnhancement("Helm", "Anima", "Lucky");
-            ChooseBestEnhancement("Cape", "Vainglory", "Avarice", "Lucky");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if ((HasAura("Impasse") || HasAura("Delusion") || HasAura("Angustied")) && !HasAura("Corageous", true))
             if (Cast(4)) return;
         if (Cast(3)) return;
@@ -2754,15 +2579,6 @@ public class CoreEngine
 
     void MageClass()
     {
-        if (!IsGeneralBestEnhancementEquipped)
-        {
-            ChooseBestEnhancement("Weapon", "Valiance", "Wizard");
-            ChooseBestEnhancement("Helm", "Pneuma", "Wizard");
-            ChooseBestEnhancement("Cape", "Vainglory", "Wizard");
-
-            IsGeneralBestEnhancementEquipped = true;
-        }
-
         if (Left("Arcane Shield", 1, true))
             if (Cast(4)) return;
         if (HasAura("Frozen Blood"))
