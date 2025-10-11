@@ -404,7 +404,6 @@ public class CoreBots
                         Bot.Lite.DisableSelfAnimation = changeTo;
                         Bot.Lite.DisableWeaponAnimation = changeTo;
                         Bot.Lite.DisableSkillAnimation = changeTo;
-                        Bot.Lite.DisableSkillAnimations = changeTo;
 
                         Bot.Flash.SetGameObject("stage.frameRate", 10);
                         if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
