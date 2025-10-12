@@ -39,7 +39,7 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 49722,
+    "size": 49912,
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreStory.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 401532,
+    "size": 401897,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -842,7 +842,7 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 38899,
+    "size": 39089,
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -877,7 +877,7 @@
       "king"
     ],
     "path": "Legion/JoinLegion.cs",
-    "size": 941,
+    "size": 1024,
     "fileName": "JoinLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/JoinLegion.cs"
   },
@@ -7600,7 +7600,7 @@
       "war"
     ],
     "path": "Story/Legion/SevenCircles(War).cs",
-    "size": 4685,
+    "size": 4561,
     "fileName": "SevenCircles(War).cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Legion/SevenCircles(War).cs"
   },
@@ -12568,6 +12568,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/GrimNecromancer[600kAC].cs"
   },
   {
+    "name": "KingsEchoClassPrerequisites",
+    "description": "King's Echo Class Prerequisites",
+    "tags": [
+      "prerequisites",
+      "king's",
+      "king",
+      "echo",
+      "class"
+    ],
+    "path": "Other/Classes/KingsEcho[Prereqs].cs",
+    "size": 2512,
+    "fileName": "KingsEcho[Prereqs].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/KingsEcho[Prereqs].cs"
+  },
+  {
     "name": "Verus DoomKnight Class",
     "description": "This script will farm Verus DoomKnight Class.",
     "tags": [
@@ -13875,7 +13890,7 @@
       "aquitaine"
     ],
     "path": "Other/MergeShops/BocklinGroveMerge.cs",
-    "size": 6510,
+    "size": 6451,
     "fileName": "BocklinGroveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BocklinGroveMerge.cs"
   },
@@ -16438,7 +16453,7 @@
       "kris"
     ],
     "path": "Other/MergeShops/BocklinArmoryMerge.cs",
-    "size": 10083,
+    "size": 10024,
     "fileName": "BocklinArmoryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BocklinArmoryMerge.cs"
   },
@@ -23540,7 +23555,7 @@
       "null"
     ],
     "path": "Nation/Various/TarosPrismaticManslayers.cs",
-    "size": 2751,
+    "size": 2795,
     "fileName": "TarosPrismaticManslayers.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/Various/TarosPrismaticManslayers.cs"
   },
