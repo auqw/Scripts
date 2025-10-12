@@ -6530,7 +6530,7 @@ case ""Diabolical Minion's Seed"":
     @"
 case ""Thronekeeper's Rune"":
                     Core.FarmingLogger(""Thronekeeper's Rune"", quant);
-                    Core.EquipClass(ClassType.Farm);
+                    Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(92791);
                     // Members get x2, non-members get x1 drops
                     Core.RegisterQuests(Core.IsMember ? 10266 : 10267);

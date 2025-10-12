@@ -21,8 +21,8 @@ public class BocklinArmoryMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
     private static CoreLynaria Lyn { get => _Lyn ??= new CoreLynaria(); set => _Lyn = value; }
     private static CoreLynaria _Lyn;
@@ -76,11 +76,9 @@ private static CoreAdvanced _sAdv;
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    if (Core.IsMember)
-                        Core.RegisterQuests(10255);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonsterQuest(10253,
+                        Core.HuntMonsterQuest(Core.IsMember ? 10255 : 10253,
                             ("bocklincastle", "Faceless Ritualist", ClassType.Farm),
                             ("bocklincastle", "Headless Knight", ClassType.Solo),
                         ("bocklincastle", "Warped Revenant", ClassType.Farm)

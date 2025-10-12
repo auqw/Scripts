@@ -379,9 +379,9 @@ public class CoreFarms
                     Core.KillMonster("swordhavenundead", "Gates", "Left", "Undead Giant", log: false);
                 Core.CancelRegisteredQuests();
             }
-        }
 
-        IcestormArena(level, rankUpClass);
+            IcestormArena(level, rankUpClass);
+        }
 
         if (rankUpClass)
             ToggleBoost(BoostType.Class, false);
@@ -557,10 +557,6 @@ public class CoreFarms
     //     }
 
     // }
-
-
-
-
     /// <summary>
     /// Farms level in Ice Storm Arena
     /// </summary>

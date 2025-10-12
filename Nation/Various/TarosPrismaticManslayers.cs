@@ -11,13 +11,17 @@ tags: null
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
+using System.Linq;
 public class TarosPrismaticManslayers
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static TarosManslayer Taro { get => _Taro ??= new TarosManslayer(); set => _Taro = value; }    private static TarosManslayer _Taro;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static TarosManslayer Taro { get => _Taro ??= new TarosManslayer(); set => _Taro = value; }
+    private static TarosManslayer _Taro;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -55,7 +59,7 @@ public class TarosPrismaticManslayers
             Taro.GuardianTaro();
 
         // Reverse the array so the battlepet is last
-        foreach (ItemBase reward in Q.Rewards.ToArray().Reverse())
+        foreach (ItemBase reward in System.Linq.Enumerable.Reverse(Q.Rewards.ToArray()))
         {
             if (Core.CheckInventory(reward.Name, toInv: false))
             {

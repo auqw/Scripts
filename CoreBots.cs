@@ -517,7 +517,24 @@ public class CoreBots
 
                 if (EquipmentBeforeBot.Any())
                 {
-                    JumpWait();
+                    string[] PVPMaps = new[]
+                        {
+                            "bludrutbrawl",
+                            "darkoviapvp",
+                            "dagepvp",
+                            "deathpitbrawl",
+                            "frostbrawl",
+                            "chaosbrawl",
+                            "doomarenaa",
+                            "doomarenab",
+                            "doomarenac",
+                            "doomarenad"
+                        };
+
+                    if (PVPMaps.Contains(Bot.Map.Name))
+                        Join("whitemap");
+                    else JumpWait();
+
                     Equip(EquipmentBeforeBot.ToArray());
                 }
             }
@@ -870,7 +887,6 @@ public class CoreBots
 
         foreach (string item in items)
         {
-            // Skip if item is already in house or inventory, or nowhere at all (not found in any)
             bool inHouse = Bot.House.Contains(item);
             bool inInventory = Bot.Inventory.Contains(item);
             bool inBank = Bot.Bank.Contains(item);
@@ -880,12 +896,11 @@ public class CoreBots
                 continue;
             }
 
-            // Check inventory space before attempting to unbank
             if (inBank && (!inInventory || !inHouse))
             {
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
-                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please make {requiredSpaces} space(s), and restart the bot", messageBox: true, stopBot: true);
+                    Logger($"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}) — please make {requiredSpaces} space(s) and restart the bot.", messageBox: true, stopBot: true);
                     return;
                 }
 
@@ -899,7 +914,7 @@ public class CoreBots
                 {
                     if (bankItem == null)
                     {
-                        Logger($"Failed to get bank item for '{item}', skipping.");
+                        Logger($"❌ Failed to get bank item for '{item}', skipping.");
                         continue;
                     }
                     for (int i = 0; i < 20; i++)
@@ -929,11 +944,11 @@ public class CoreBots
 
                 if (!success)
                 {
-                    Logger($"Failed to unbank {item}, skipping it");
+                    Logger($"🚫 Failed to unbank {item}, skipping it.");
                     continue;
                 }
 
-                Logger($"{item} moved from bank");
+                Logger($"✅ {item} successfully moved from bank! 🏦➡️🎒");
             }
         }
     }
@@ -960,7 +975,6 @@ public class CoreBots
             bool inInventory = Bot.Inventory.Contains(itemID);
             bool inBank = Bot.Bank.Contains(itemID);
 
-            // Skip if item is already in house or inventory, or nowhere at all
             if (inHouse || inInventory || (!inHouse && !inInventory && !inBank))
             {
                 requiredSpaces--;
@@ -972,14 +986,13 @@ public class CoreBots
                 ItemBase? bankItem = Bot.Bank.Items?.FirstOrDefault(x => x?.ID == itemID);
                 if (bankItem == null)
                 {
-                    Logger($"Failed to find item with ID {itemID}, skipping it");
+                    Logger($"❌ Failed to find item with ID {itemID}, skipping it.");
                     continue;
                 }
 
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
-                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please make {requiredSpaces} space(s), and restart the bot",
-                        messageBox: true, stopBot: true);
+                    Logger($"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}) — please make {requiredSpaces} space(s) and restart the bot.", messageBox: true, stopBot: true);
                     return;
                 }
 
@@ -1017,11 +1030,11 @@ public class CoreBots
 
                 if (!success)
                 {
-                    Logger($"Failed to unbank {bankItem.Name}, skipping it");
+                    Logger($"🚫 Failed to unbank {bankItem.Name}, skipping it.");
                     continue;
                 }
 
-                Logger($"{bankItem.Name} moved from bank");
+                Logger($"✅ {bankItem.Name} successfully moved from bank! 🏦➡️🎒");
             }
         }
     }
@@ -1040,7 +1053,7 @@ public class CoreBots
         JumpWait();
 
         List<ItemCategory> whiteList = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.Resource, ItemCategory.QuestItem };
-        int?[] Extras = { 18927, 38575 }; // Blacklisted item IDs
+        int?[] Extras = { 18927, 38575 };
 
         foreach (string? item in items)
         {
@@ -1049,7 +1062,7 @@ public class CoreBots
 
             if (Bot.Inventory.IsEquipped(item) || Bot.House.IsEquipped(item))
             {
-                Logger($"Can't bank an equipped item: {item}");
+                Logger($"⚔️ Can't bank equipped item: {item}");
                 continue;
             }
 
@@ -1057,14 +1070,14 @@ public class CoreBots
             bool inInventoryOrHouse = Bot.Inventory.Contains(item) || Bot.House.Contains(item);
             if (inBank && !inInventoryOrHouse)
             {
-                Logger($"Item {item} is already in the bank, skipping it");
+                Logger($"ℹ️ {item} is already in bank, skipping.");
                 continue;
             }
 
             ItemBase? inventoryItem = Bot.Inventory.Items.Concat(Bot.House.Items).FirstOrDefault(x => x?.Name == item);
             if (inventoryItem == null)
             {
-                Logger($"{item} not found in inventory, skipping it");
+                Logger($"❌ {item} not found in inventory, skipping.");
                 continue;
             }
 
@@ -1072,7 +1085,6 @@ public class CoreBots
                                   houseItem != null &&
                                   (houseItem.CategoryString == "House" || houseItem.CategoryString == "Wall Item" || houseItem.CategoryString == "Floor Item");
 
-            // Check whitelist, blacklist, and Extras exclusions
             if (((whiteList.Contains(inventoryItem.Category)) || inventoryItem.Coins) &&
                 !BankingBlackList.Contains(item) && !Extras.Contains(inventoryItem.ID) &&
                 (Bot.Inventory.Contains(item) || (itemIsForHouse && Bot.House.Contains(item) && houseItem?.Equipped != true)))
@@ -1084,7 +1096,7 @@ public class CoreBots
 
                     if (!Bot.Inventory.EnsureToBank(item) && !Bot.Bank.Contains(item))
                     {
-                        Logger($"Failed to bank {item}, skipping it");
+                        Logger($"🚫 Failed to bank {item}, skipping it.");
                         continue;
                     }
                 }
@@ -1097,13 +1109,13 @@ public class CoreBots
 
                         if (Bot.House.Items.Any(x => x?.Name == item))
                         {
-                            Logger($"Failed to bank {item} in house bank, skipping it");
+                            Logger($"🚫 Failed to bank {item} in house bank, skipping it.");
                             continue;
                         }
                     }
                 }
 
-                Logger($"{item} moved to bank");
+                Logger($"💰 {item} moved to bank successfully! 🎒➡️🏦");
             }
         }
     }
@@ -1122,7 +1134,7 @@ public class CoreBots
         JumpWait();
 
         List<ItemCategory> whiteList = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.Resource, ItemCategory.QuestItem };
-        int?[] Extras = { 18927, 38575 }; // Blacklisted item IDs
+        int?[] Extras = { 18927, 38575 };
 
         foreach (int itemID in items)
         {
@@ -1130,12 +1142,9 @@ public class CoreBots
                 continue;
 
             ItemBase? inventoryItem = Bot.Inventory.Items.Concat(Bot.House?.Items ?? Enumerable.Empty<ItemBase>())
-                                             .FirstOrDefault(x => x?.ID == itemID);
+                                                 .FirstOrDefault(x => x?.ID == itemID);
             if (inventoryItem == null)
-            {
-                // Logger($"Item with ID {itemID} not found in Inventory or House.");
                 continue;
-            }
 
             bool itemIsForHouse = Bot.House?.Items?.Any(x => x?.ID == itemID &&
                                                            (x.CategoryString == "House" ||
@@ -1161,9 +1170,9 @@ public class CoreBots
                     }
 
                     if (success)
-                        Logger($"{inventoryItem.Name ?? $"ID: {itemID}"} moved to bank.");
+                        Logger($"💰 {inventoryItem.Name ?? $"ID: {itemID}"} moved to bank! 🎒➡️🏦");
                     else
-                        Logger($"Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} after 20 attempts.");
+                        Logger($"🚫 Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} after 20 attempts.");
                 }
                 else
                 {
@@ -1175,18 +1184,16 @@ public class CoreBots
 
                         if (Bot.House?.Items?.Any(x => x?.ID == itemID) == true)
                         {
-                            Logger($"Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} in house bank.");
+                            Logger($"🚫 Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} in house bank.");
                             continue;
                         }
 
-                        Logger($"{inventoryItem.Name ?? $"ID: {itemID}"} moved to house bank.");
+                        Logger($"🏠💰 {inventoryItem.Name ?? $"ID: {itemID}"} moved to house bank!");
                     }
                 }
             }
             else
-            {
-                Logger($"Item {inventoryItem?.Name ?? $"ID: {itemID}"} is blacklisted or excluded.");
-            }
+                Logger($"⛔ {inventoryItem?.Name ?? $"ID: {itemID}"} is blacklisted or excluded.");
         }
     }
 
@@ -1215,11 +1222,11 @@ public class CoreBots
             {
                 if (!Bot.House.EnsureToBank(item))
                 {
-                    Logger($"Failed to bank {item}, skipping it");
+                    Logger($"🚫 Failed to bank {item}, skipping it.");
                     continue;
                 }
 
-                Logger($"{item} moved to house bank");
+                Logger($"🏠💰 {item} moved to house bank successfully!");
             }
         }
     }
@@ -1249,11 +1256,11 @@ public class CoreBots
             {
                 if (!Bot.House.EnsureToBank(itemID))
                 {
-                    Logger($"Failed to bank {itemID}, skipping it");
+                    Logger($"🚫 Failed to bank {itemID}, skipping it.");
                     continue;
                 }
 
-                Logger($"{itemID} moved to house bank");
+                Logger($"🏠💰 Item ID {itemID} moved to house bank successfully!");
             }
         }
     }

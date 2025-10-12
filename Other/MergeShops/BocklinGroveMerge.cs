@@ -20,8 +20,8 @@ public class BocklinGroveMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
     private static CoreLynaria Lyn { get => _Lyn ??= new CoreLynaria(); set => _Lyn = value; }
     private static CoreLynaria _Lyn;
@@ -71,11 +71,9 @@ private static CoreAdvanced _sAdv;
 
                 case "Enthralling Gem Shard":
                     Core.FarmingLogger(req.Name, quant);
-                    if (Core.IsMember)
-                        Core.RegisterQuests(10242);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(10240,
+                        Core.HuntMonsterQuest(Core.IsMember ? 10242 : 10240,
                         ("bocklingrove", "Elder Necromancer", ClassType.Solo),
                         ("bocklingrove", "Undead Garde", ClassType.Farm),
                         ("bocklingrove", "Garde Wraith", ClassType.Farm));

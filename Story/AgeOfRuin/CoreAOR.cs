@@ -304,7 +304,7 @@ public class CoreAOR
         Story.KillQuest(9298, "midnightzone", "Venerated Wraith");
 
         // Designated Taunters (9299)
-        Story.KillQuest(9299, "midnightzone", new[] { "Venerated Wraith", "Shadow Viscera" });
+        Story.KillQuest(9299, "midnightzone", new[] { "Shadow Viscera", "Venerated Wraith" });
 
         // Beloved Simulacrum (9230)
         Story.MapItemQuest(9300, "midnightzone", 11849, 4);
@@ -605,7 +605,7 @@ public class CoreAOR
         Story.MapItemQuest(9757, "loughshine", 13275);
 
         // Wisened Yew (9758)
-        Story.KillQuest(9758, "loughshine", new[] { "Scorched Elder Yew", "Skye Cailleach" });
+        Story.KillQuest(9758, "loughshine", new[] { "Skye Cailleach", "Scorched Elder Yew" });
 
         // Dragonflare (9759)
         Story.MapItemQuest(9759, "loughshine", 13276);
@@ -623,7 +623,7 @@ public class CoreAOR
 
         // Parting the Clouds (9763)
         Story.MapItemQuest(9763, "loughshine", 13280);
-        Story.KillQuest(9763, "loughshine", new[] { "Energy Elemental", "Skye Executor" });
+        Story.KillQuest(9763, "loughshine", new[] { "Skye Executor", "Energy Elemental" });
 
         // Arrester (9764)
         if (!Story.QuestProgression(9764))

@@ -773,13 +773,14 @@ public class CoreLegion
 
         if (!Core.isCompletedBefore(792))
             Farm.BludrutBrawlBoss(quant: 200);
-            
+
         if (!Core.CheckInventory("Undead Warrior"))
             Core.BuyItem("underworld", 215, "Undead Warrior");
 
         // Undead Champion Initiation
         if (!Story.QuestProgression(789))
         {
+            Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(789);
             Core.HuntMonster("greenguardwest", "Black Knight", "Black Knight's Eternal Contract");
             Core.EnsureComplete(789);
@@ -788,6 +789,7 @@ public class CoreLegion
         // Mourn the Soldiers
         if (!Story.QuestProgression(790))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(790);
             Core.HuntMonster("dwarfhold", "Chaos Drow", "Chaos Drow slain");
             Core.HuntMonster("swordhavenundead", "Skeletal Soldier", "Skeletal Soldier slain");
@@ -797,6 +799,7 @@ public class CoreLegion
         }
 
         // Understanding Undead Champions
+        Core.EquipClass(ClassType.Solo);
         if (!Story.QuestProgression(791))
         {
             Core.EnsureAccept(791);
@@ -807,18 +810,19 @@ public class CoreLegion
         // Player vs Power
         if (!Story.QuestProgression(792))
         {
-            if (!Core.CheckInventory("Combat Trophy", 200))
-                Farm.BludrutBrawlBoss(quant: 200);
-            Core.ChainComplete(792);
+            Story.ChainQuest(792);
         }
 
         // Fail to the King
+        Core.EquipClass(ClassType.Farm);
         Story.KillQuest(793, "prison", "King Alteon's Knight");
 
-        if (SellUW == true)
+        Adv.BuyItem("underworld", 216, "Undead Champion");
+
+        if (SellUW == true && Core.isCompletedBefore(792) && Core.CheckInventory("Undead Champion"))
             Core.SellItem("Undead Warrior", all: true);
 
-        Adv.BuyItem("underworld", 216, "Undead Champion");
+        Core.Logger("You're now part of the legion! Hail... Dage?");
     }
 
     public void ObsidianRock(int quant = 666)
