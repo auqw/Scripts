@@ -7090,8 +7090,8 @@ public class CoreBots
     // Combined static and regex-based blacklist patterns
     public string[] BlackListedJumptoCells = new[]
     {
-    "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame",
-    "Quest", "Game", "Fall", "Move", "Cut", "Movie",
+    "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "MoveFrame", "Moveframe",
+    "Quest", "Game", "Fall", "Move", "Cut", "Movie", "movie",
     @"^Frame\d+$", // matches Frame1, Frame2, Frame10, etc.
     @"^e\d+$"      // matches e1, e2, e55, etc.
 };

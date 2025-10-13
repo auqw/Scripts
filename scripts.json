@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 401897,
+    "size": 401882,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -1363,7 +1363,7 @@
       "glacera"
     ],
     "path": "Story/Glacera.cs",
-    "size": 12665,
+    "size": 12770,
     "fileName": "Glacera.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Glacera.cs"
   },
@@ -1580,7 +1580,7 @@
       "etherstorm-wastes"
     ],
     "path": "Story/EtherstormWastes.cs",
-    "size": 15310,
+    "size": 15311,
     "fileName": "EtherstormWastes.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/EtherstormWastes.cs"
   },
@@ -6958,7 +6958,7 @@
       "null"
     ],
     "path": "Story/SepulchureSaga/CoreSepulchure.cs",
-    "size": 15854,
+    "size": 15855,
     "fileName": "CoreSepulchure.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/SepulchureSaga/CoreSepulchure.cs"
   },
@@ -9804,7 +9804,7 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 44953,
+    "size": 45032,
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -12752,7 +12752,7 @@
       "null"
     ],
     "path": "Other/Classes/FrostSpiritReaver.cs",
-    "size": 10871,
+    "size": 10898,
     "fileName": "FrostSpiritReaver.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/FrostSpiritReaver.cs"
   },

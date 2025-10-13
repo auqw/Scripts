@@ -101,7 +101,7 @@ public class CoreSepulchure
         Story.KillQuest(6341, "scarsgarde", "Garde Captain");
 
         // Arm the Army 6342
-        Story.KillQuest(6342, "scarsgarde", new[] { "Garde Watch", "Garde Pikeman", "Garde Knight" });
+        Story.KillQuest(6342, "scarsgarde", new[] { "Garde Knight", "Garde Watch", "Garde Pikeman"  });
     }
     #endregion
 

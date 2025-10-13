@@ -1055,8 +1055,8 @@ public class CoreToD
             Core.AddDrop("Preserved Venom", "Preserved Venom Sac of Mehensi");
             Core.EnsureAccept(5219);
             Core.GetMapItem(4579, 1, "yasaris");
-            Core.EnsureComplete(5219);
             Bot.Wait.ForPickup("Preserved Venom");
+            Core.EnsureComplete(5219);
             Bot.Wait.ForPickup("Preserved Venom Sac of Mehensi");
         }
 

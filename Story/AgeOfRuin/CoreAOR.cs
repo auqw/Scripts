@@ -1304,10 +1304,6 @@ public class CoreAOR
         Core.Logger($"{ItemUsed} [Vigil] Equiped? {Bot.Inventory.IsEquipped("Vigil")}");
 
         Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m.MapID == mobMapID);
-        if (targetAuraName != null)
-        {
-            Aura? targetAura = Bot.Target.Auras.Concat(Bot.Self.Auras).FirstOrDefault(a => a.Name == targetAuraName);
-        }
 
         if (Bot.Player.Cell != mob!.Cell)
             Core.Jump(mob.Cell);
@@ -1336,15 +1332,19 @@ public class CoreAOR
                     Core.Sleep();
             }
             #endregion
-
             if (targetAuraName != null)
+            {
+                Aura? targetAura = Bot.Target.Auras.Concat(Bot.Self.Auras).FirstOrDefault(a => a.Name == targetAuraName);
                 AuraHandling(targetAuraName);
+            }
 
             if (Bot.Player.Alive && !Bot.Self.HasActiveAura(targetAuraName!) && !Bot.Target.HasActiveAura(targetAuraName!))
+            {
                 Bot.Combat.Attack(mob);
-            Core.Sleep();
+                Bot.Sleep(500);
+            }
 
-            if (isTemp ? Bot.TempInv.Contains(item!, quant) : Core.CheckInventory(item, quant))
+            if (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant))
             {
                 break;
             }
@@ -1354,7 +1354,7 @@ public class CoreAOR
         {
             foreach (Aura A in Bot.Target.Auras.Concat(Bot.Self.Auras))
             {
-                if (targetAuraName == null)
+                if (Bot.Target.Auras.Concat(Bot.Self.Auras).FirstOrDefault(a => a.Name == targetAuraName) == null)
                     continue;
 
                 switch (A.Name)

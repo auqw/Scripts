@@ -206,7 +206,7 @@ public class GlaceraStory
         FrozenRuins();
         // Glaera     
 
-        //A Frost Welcome
+        //A Frosty Welcome
         if (!Story.QuestProgression(3947))
         {
             Core.EnsureAccept(3947);
@@ -214,6 +214,8 @@ public class GlaceraStory
             Bot.Wait.ForMapLoad("glacera");
             Core.GetMapItem(3048, 1, "glacera");
             Core.EnsureComplete(3947);
+            // Ensure we're out of a potent cutscene/move cell
+            Core.Jump("Enter", "Spawn");
         }
 
         // Key to the Fortress
