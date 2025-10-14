@@ -28,10 +28,10 @@ public class GlaceraStory
         FrozenTower(Cryomancer);
         FrozenRuins();
         Glacera();
+        Glacera1();
         FrozenRuins2();
         Northstar();
-        Glacera1();
-        FrostRuins1();
+        FrostRuins();
         IceWindPass();
         IceDungeon();
     }
@@ -161,7 +161,6 @@ public class GlaceraStory
         if (Cryomancer)
             return;
     }
-
     public void FrozenRuins()
     {
         if (Core.isCompletedBefore(3946))
@@ -197,7 +196,6 @@ public class GlaceraStory
             Core.EnsureComplete(3946);
         }
     }
-
     public void Glacera()
     {
         if (Core.isCompletedBefore(3950))
@@ -222,17 +220,29 @@ public class GlaceraStory
         Story.KillQuest(3948, "glacera", "Frost Invader");
 
     }
+    public void Glacera1()
+    {
+        if (Core.isCompletedBefore(3950))
+            return;
 
+        Glacera();
+
+        // Breaking Boulders
+        Story.MapItemQuest(3949, "glacera", 3049, 6);
+
+        // The Scythe of Vengeance
+        Story.MapItemQuest(3950, "Glacera", 3047);
+    }
     public void FrozenRuins2()
     {
         if (Core.isCompletedBefore(3954))
             return;
 
-        Glacera();
+        Glacera1();
 
         // FrozenRuins encore
 
-        // Rescue the Refugees
+        // // Rescue the Refugees
         Story.KillQuest(3951, "frozenruins", new[] { "Frost Invader", "Frozen Moglinster" });
 
         // Defeat the Fangbeasts
@@ -244,8 +254,6 @@ public class GlaceraStory
         // FrostSpawn General Takedown
         Story.KillQuest(3954, "frozenruins", "Frost General");
     }
-
-
     public void Northstar()
     {
         if (Core.isCompletedBefore(3971))
@@ -283,26 +291,7 @@ public class GlaceraStory
         // Defeat Karok!
         Story.KillQuest(3971, "northstar", "Karok The Fallen");
     }
-
-
-    public void Glacera1()
-    {
-        if (Core.isCompletedBefore(3950))
-            return;
-
-        Northstar();
-
-        // Key to the Fortress
-        Story.KillQuest(3948, "Glacera", "Frost Invader");
-
-        // Breaking Boulders
-        Story.MapItemQuest(3949, "glacera", 3049);
-
-        // The Scythe of Vengeance
-        Story.MapItemQuest(3950, "Glacera", 3047);
-    }
-
-    public void FrostRuins1()
+    public void FrostRuins()
     {
         if (Core.isCompletedBefore(3954))
             return;
@@ -320,12 +309,11 @@ public class GlaceraStory
         // FrostSpawn General Takedown        
         Story.KillQuest(3954, "frozenruins", "Frost General");
     }
-
     public void IceWindPass()
     {
         if (Core.isCompletedBefore(5601))
             return;
-        FrostRuins1();
+        FrostRuins();
 
         // Where is Karok?
         Story.MapItemQuest(5587, "IceWindPass", 5074, 5);
@@ -374,7 +362,6 @@ public class GlaceraStory
         // What is THAT?
         Story.KillQuest(5601, "icewindwar", "Soricomorpha");
     }
-
     public void IceDungeon()
     {
         if (Core.isCompletedBefore(7841))

@@ -39,7 +39,7 @@ public class Fiendshard_Story
         Core.Join("tercessuinotlim");
 
         Core.EquipClass(ClassType.Farm);
-        
+
         // Sneak Attack
         if (!Story.QuestProgression(7892))
         {
@@ -81,7 +81,7 @@ public class Fiendshard_Story
         if (!Story.QuestProgression(7897))
         {
             Core.EquipClass(ClassType.Solo);
-            Story.KillQuest(7897, "Fiendshard", new[] { "Fiend Shard", "Dirtlicker" });
+            Story.KillQuest(7897, "Fiendshard", new[] { "Dirtlicker", "Fiend Shard" });
             Core.Jump("Enter", "Spawn");
         }
 

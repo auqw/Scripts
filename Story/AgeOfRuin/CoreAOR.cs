@@ -1344,7 +1344,7 @@ public class CoreAOR
                 Bot.Sleep(500);
             }
 
-            if (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant))
+            if (isTemp ? Bot.TempInv.Contains(item!, quant) : Core.CheckInventory(item, quant))
             {
                 break;
             }

@@ -357,7 +357,7 @@ public class CoreShadowofDoom
         if (!Story.QuestProgression(9962))
         {
             Story.MapItemQuest(9962, "hiddenduat", 13818);
-            Story.KillQuest(9962, "hiddenduat", new[] { UseableMonsters[4], UseableMonsters[3] });
+            Story.KillQuest(9962, "hiddenduat", new[] { UseableMonsters[3], UseableMonsters[4] });
         }
 
 

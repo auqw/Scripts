@@ -426,10 +426,10 @@ public class CoreLegion
 
         Core.FarmingLogger("Legion Token", quant);
         Core.AddDrop("Legion Token");
-        Core.RegisterQuests(3968);
+        Core.RegisterQuests(3968,3969);
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
         {
-            Core.KillMonster("frozentower", "Enter", "Spawn", "*");
+            Core.KillMonster("frozenruins", "r1", "Left", "*");
             if (Core.CheckInventory("Legion Token", quant))
                 break;
         }

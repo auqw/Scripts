@@ -917,7 +917,7 @@ public class CoreSoW
         Story.MapItemQuest(8778, "ruinedcrown", new[] { 10380, 10382, 10383 });
 
         // 8779 Scraping the Barrel
-        Story.KillQuest(8779, "ruinedcrown", new[] { "Mana-Burdened Minion", "Mana-Burdened Knight" });
+        Story.KillQuest(8779, "ruinedcrown", new[] { "Mana-Burdened Knight", "Mana-Burdened Minion" });
 
         // 8780 Fractals
         Story.MapItemQuest(8780, "ruinedcrown", 10384, 6);
@@ -926,7 +926,7 @@ public class CoreSoW
         Story.KillQuest(8781, "ruinedcrown", "Mana-Burdened Mage");
 
         // 8782 Deafening Silence
-        Story.KillQuest(8782, "ruinedcrown", new[] { "Mana-Burdened Minion", "Mana-Burdened Knight" });
+        Story.KillQuest(8782, "ruinedcrown", new[] { "Mana-Burdened Knight", "Mana-Burdened Minion" });
 
         // 8784 Stilled Mind (Yes 8784 before 8783)
         Story.MapItemQuest(8784, "ruinedcrown", 10385, 6);

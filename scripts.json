@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 152591,
+    "size": 145880,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 401932,
+    "size": 401850,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -842,7 +842,7 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 39089,
+    "size": 39090,
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -1350,7 +1350,7 @@
       "NPC"
     ],
     "path": "Story/Friendship.cs",
-    "size": 3667,
+    "size": 3668,
     "fileName": "Friendship.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Friendship.cs"
   },
@@ -1363,7 +1363,7 @@
       "glacera"
     ],
     "path": "Story/Glacera.cs",
-    "size": 12770,
+    "size": 12671,
     "fileName": "Glacera.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Glacera.cs"
   },
@@ -1672,7 +1672,7 @@
       "crux-ship"
     ],
     "path": "Story/CruxShip.cs",
-    "size": 5283,
+    "size": 5497,
     "fileName": "CruxShip.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/CruxShip.cs"
   },
@@ -7124,7 +7124,7 @@
       "null"
     ],
     "path": "Story/Doomwood/CoreDoomwood.cs",
-    "size": 30660,
+    "size": 30659,
     "fileName": "CoreDoomwood.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Doomwood/CoreDoomwood.cs"
   },
@@ -8931,7 +8931,7 @@
       "null"
     ],
     "path": "Story/Fireisland/CoreFireisland.cs",
-    "size": 18324,
+    "size": 18325,
     "fileName": "CoreFireisland.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Fireisland/CoreFireisland.cs"
   },
@@ -8942,7 +8942,7 @@
       "null"
     ],
     "path": "Story/Lynaria/CoreLynaria.cs",
-    "size": 8631,
+    "size": 8705,
     "fileName": "CoreLynaria.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Lynaria/CoreLynaria.cs"
   },
@@ -9225,7 +9225,7 @@
       "fiendshard"
     ],
     "path": "Story/Nation/Fiendshard.cs",
-    "size": 3426,
+    "size": 3418,
     "fileName": "Fiendshard.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/Nation/Fiendshard.cs"
   },
@@ -9804,7 +9804,7 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 45032,
+    "size": 45033,
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -18593,6 +18593,73 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/BeleensPartyPresentsMerge.cs"
   },
   {
+    "name": "Castle Party Story",
+    "description": "This will finish the storyline of Castle Party.",
+    "tags": [
+      "castle party",
+      "castleparty",
+      "seasonal",
+      "aqwbirthday",
+      "tara",
+      "story",
+      "gifts"
+    ],
+    "path": "Seasonal/AqwBirthday/CastleParty.cs",
+    "size": 3243,
+    "fileName": "CastleParty.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/CastleParty.cs"
+  },
+  {
+    "name": "17th Birthday Castle Party Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the 17th Birthday Castle Party Merge [2627] in /castleparty",
+    "tags": [
+      "17th",
+      "birthday",
+      "castle",
+      "party",
+      "merge",
+      "castleparty",
+      "arcane",
+      "guardian",
+      "morph",
+      "founder",
+      "spectacles",
+      "evolution",
+      "asclepius",
+      "ether",
+      "creation",
+      "spear",
+      "royal",
+      "fortune",
+      "greatsword",
+      "greatswords",
+      "bejeweled",
+      "bounty",
+      "bow",
+      "warden",
+      "hours",
+      "scarf",
+      "cowl",
+      "shadowbound",
+      "magus",
+      "cloak",
+      "dominating",
+      "shadowbinder",
+      "sigil",
+      "gold",
+      "jamboree",
+      "top",
+      "jubilee",
+      "triumph",
+      "radiant",
+      "euphoria"
+    ],
+    "path": "Seasonal/AqwBirthday/17thBirthdayCastlePartyMerge.cs",
+    "size": 13201,
+    "fileName": "17thBirthdayCastlePartyMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/17thBirthdayCastlePartyMerge.cs"
+  },
+  {
     "name": "Aspiring Necromancer Merge",
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
@@ -18606,15 +18673,65 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/AspiringNecromancerMerge.cs"
   },
   {
-    "name": "Zorbak's Merge Shop",
-    "description": "This will get all or selected items on this merge shop.",
+    "name": "Zorbaks Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Zorbaks Merge [1640] in /birthday",
     "tags": [
-      "zorbaks-merge",
-      "seasonal",
-      "aqw-anniversary"
+      "zorbaks",
+      "merge",
+      "birthday",
+      "copper",
+      "dragon",
+      "statue",
+      "r",
+      "gold",
+      "platinum",
+      "sepulchure",
+      "l",
+      "royal",
+      "shadowslayer",
+      "shadowslayers",
+      "cap",
+      "",
+      "coat",
+      "elite",
+      "exalted",
+      "honor",
+      "glasses",
+      "escherion",
+      "plushie",
+      "mace",
+      "xang",
+      "vath",
+      "kitsune",
+      "wolfwing",
+      "kimberly",
+      "ledgermayne",
+      "tibicenas",
+      "khasaanda",
+      "iadoa",
+      "lionfang",
+      "alteon",
+      "drakath",
+      "xing",
+      "plushies",
+      "gilded",
+      "knight",
+      "armet",
+      "haloed",
+      "sallet",
+      "grand",
+      "great",
+      "cloak",
+      "spear",
+      "zweihander",
+      "dread",
+      "draconic",
+      "chrono",
+      "raven",
+      "sneevil"
     ],
     "path": "Seasonal/AqwBirthday/ZorbaksMerge.cs",
-    "size": 13895,
+    "size": 14355,
     "fileName": "ZorbaksMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/ZorbaksMerge.cs"
   },
@@ -24699,7 +24816,7 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 33549,
+    "size": 33971,
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
@@ -24965,7 +25082,7 @@
       "null"
     ],
     "path": "Good/BLoD/CoreBLOD.cs",
-    "size": 24633,
+    "size": 24988,
     "fileName": "CoreBLOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Good/BLoD/CoreBLOD.cs"
   },

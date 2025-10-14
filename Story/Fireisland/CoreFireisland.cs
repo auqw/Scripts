@@ -11,7 +11,8 @@ public class CoreFireIsland
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -226,7 +227,7 @@ public class CoreFireIsland
 
 
         //The Power to Heal
-        Story.KillQuest(4139, "feverfew", new[] { "Locked Chest", "Feverfew Vase", "Twisted Undine" });
+        Story.KillQuest(4139, "feverfew", new[] { "Feverfew Vase", "Twisted Undine", "Locked Chest" });
 
         //The Deadsea Caverns
         Story.KillQuest(4140, "feverfew", new[] { "Coral Creeper", "Twisted Undine", "Salamander" });

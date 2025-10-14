@@ -743,10 +743,20 @@ public class CoreSDKA
 
 
         // Initialize quest data for forge key quest
-        Quest ForgeQuestdata = Core.InitializeWithRetries(() => Core.EnsureLoad(forgeKeyQuest));
+        Quest? ForgeQuestdata = Core.InitializeWithRetries(() => Core.EnsureLoad(forgeKeyQuest));
+        if (ForgeQuestdata == null)
+        {
+            Core.Logger($"Failed to load quest data for quest ID {forgeKeyQuest}. Cannot proceed with metal upgrade.");
+            return;
+        }
 
         // Get the forge key itemid for the quest
-        forgekeyitemID = ForgeQuestdata.Requirements.FirstOrDefault(x => x != null && x.Name == "Forge Key").ID;
+        forgekeyitemID = ForgeQuestdata.Requirements.FirstOrDefault(x => x != null && x.Name == "Forge Key")?.ID ?? 0;
+        if (forgekeyitemID == 0)
+        {
+            Core.Logger($"Failed to find the item ID for 'Forge Key' in quest ID {forgeKeyQuest}. Cannot proceed with metal upgrade.");
+            return;
+        }
 
         if (!Core.CheckInventory(fullMetalName))
         {

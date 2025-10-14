@@ -11,7 +11,8 @@ public class CruxShip
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -32,14 +33,20 @@ public class CruxShip
         Core.EquipClass(ClassType.Farm);
 
         //By the Power of the Moon 4598
-        Story.KillQuest(4598, "CruxShip", "Shadow Locust");
-
+        if (!Story.QuestProgression(4598))
+        {
+            Core.EnsureAccept(4598);
+            Core.KillMonster("CruxShip", "r2", "Left", "Shadow Locust", "Locusts Defeated", 10);
+            Core.EnsureComplete(4598);
+        }
+        
         //Clear the Swarm 4599
         if (!Story.QuestProgression(4599))
         {
             Core.EnsureAccept(4599);
+            Core.GetMapItem(3901, 2, "CruxShip");
             Core.KillMonster("CruxShip", "r2", "Left", "Shadow Locust", "Locusts Defeated", 5);
-            Story.MapItemQuest(4599, "CruxShip", 3901, 2);
+            Core.EnsureComplete(4599);
         }
 
         //Act 1 Complete 4600
@@ -55,7 +62,7 @@ public class CruxShip
         //Defend the Ship! 4601 && Act 2 Complete 4602
         if (!Bot.Quests.IsUnlocked(4603))
         {
-            Core.EnsureAcceptmultiple( new[] { 4601, 4602 });
+            Core.EnsureAcceptmultiple(new[] { 4601, 4602 });
             Core.Join("cruxship", "Enter", "Spawn");
             Core.Jump("r5", "Left");
             Core.Sleep(1500);
