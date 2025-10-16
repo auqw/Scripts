@@ -67,7 +67,7 @@ public class CoreFireIsland
         Story.PreLoad(this);
 
         //Flee the Flames
-        Story.KillQuest(4070, "pyrewatch", new[] { "Fyreborn Tiger", "Caustocrush", "Lavazard" });
+        Story.KillQuest(4070, "pyrewatch", new[] { "Lavazard", "Fyreborn Tiger", "Caustocrush" });
 
         //Taste of their own Medicine
         Story.KillQuest(4071, "pyrewatch", "Fire Pikeman");
@@ -175,7 +175,8 @@ public class CoreFireIsland
 
         //Rumors and Smoke
         Story.MapItemQuest(4131, "feverfew", 3245);
-        Story.KillQuest(4131, "feverfew", new[] { "Firestorm Knight", "Firestorm Knight", "Firestorm Major", "Firestorm Major" });
+        Story.KillQuest(4131, "feverfew", new[]
+        { "Firestorm Knight", "Firestorm Major", "Firestorm Knight", "Firestorm Major" });
 
         //Dam the Flood
         Story.MapItemQuest(4132, "feverfew", 3244, 5);

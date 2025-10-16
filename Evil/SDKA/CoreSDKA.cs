@@ -276,39 +276,40 @@ public class CoreSDKA
         if (Core.CheckInventory("DoomSquire Weapon Kit", quant))
             return;
 
-        // Check for squire quest to be completed if !completed unlock via metal upgrade quest
+        // Ensure DoomSquire Weapon Kit quest is unlocked
         if (!Story.QuestProgression(2144, Log: false))
         {
-            Core.Logger("DoomSquire Weapon Kit Quest not unlocked, lets fix that.");
+            Core.Logger("DoomSquire Weapon Kit Quest not unlocked, unlocking via metal upgrade...");
 
-            string[] Metals = new[] { "Arsenic", "Beryllium", "Chromium", "Palladium", "Rhodium", "Thorium", "Mercury" };
-            string metalName = Bot.Inventory.Items.Concat(Bot.Bank.Items)
-                .FirstOrDefault(x => x != null && Metals.Any(m => x.Name == m))?.Name ?? "Arsenic";
-            HardCoreMetalsEnum metalEnum = Enum.TryParse<HardCoreMetalsEnum>(metalName, out var parsedEnum) ? parsedEnum : HardCoreMetalsEnum.Arsenic;
-            string fullMetalName = metalEnum switch
-            {
-                HardCoreMetalsEnum.Arsenic => "Accursed Arsenic of Doom",
-                HardCoreMetalsEnum.Beryllium => "Baneful Beryllium of Doom",
-                HardCoreMetalsEnum.Chromium => "Calamitous Chromium of Doom",
-                HardCoreMetalsEnum.Palladium => "Pernicious Palladium of Doom",
-                HardCoreMetalsEnum.Rhodium => "Reprehensible Rhodium of Doom",
-                HardCoreMetalsEnum.Thorium => "Treacherous Thorium of Doom",
-                HardCoreMetalsEnum.Mercury => "Malefic Mercury of Doom",
-                _ => "Accursed Arsenic of Doom"
-            };
+            string[] Metals = { "Arsenic", "Beryllium", "Chromium", "Palladium", "Rhodium", "Thorium", "Mercury" };
+
+            // All items in inventory + bank
+            var allItems = Bot.Inventory.Items.Concat(Bot.Bank.Items).Where(x => x != null);
+
+            // Pick the first metal you own, or default to Arsenic if none
+            string metalName = allItems.FirstOrDefault(x => Metals.Contains(x.Name, StringComparer.OrdinalIgnoreCase))?.Name
+                ?? "Arsenic";
+
+            if (!Enum.TryParse<HardCoreMetalsEnum>(metalName, out var metalEnum))
+                metalEnum = HardCoreMetalsEnum.Arsenic;
+
             UpgradeMetal(metalEnum);
         }
 
+        // Prepare farming
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger("DoomSquire Weapon Kit", quant);
         Core.AddDrop("DoomSquire Weapon Kit");
 
         Core.RegisterQuests(2144);
-        while (!Bot.ShouldExit && (!Core.CheckInventory("DoomSquire Weapon Kit", quant)))
+
+        while (!Bot.ShouldExit && !Core.CheckInventory("DoomSquire Weapon Kit", quant))
         {
+            // Buy Iron Hammer if available, otherwise farm it
             if (Core.CheckInventory(319))
                 Core.BuyItem("swordhaven", 179, "Iron Hammer");
-            else Core.HuntMonster("battleundera", "Skeletal Warrior", "Iron Hammer", isTemp: false);
+            else
+                Core.HuntMonster("battleundera", "Skeletal Warrior", "Iron Hammer", isTemp: false);
 
             Core.HuntMonster("sandcastle", "War Mummy", "War Mummy Wrap", isTemp: false, log: false);
             Core.HuntMonster("noobshire", "Horc Noob", "Noob Blade Oil", log: false);
@@ -320,6 +321,7 @@ public class CoreSDKA
 
             Bot.Wait.ForPickup("DoomSquire Weapon Kit");
         }
+
         Core.CancelRegisteredQuests();
     }
 
@@ -327,6 +329,9 @@ public class CoreSDKA
     {
         if (Core.CheckInventory("DoomSoldier Weapon Kit", quant))
             return;
+
+        if (!Core.isCompletedBefore(2164))
+            DoomSquireWK();
 
         Core.FarmingLogger("DoomSoldier Weapon Kit", quant);
         Core.RegisterQuests(2164);
@@ -354,6 +359,9 @@ public class CoreSDKA
     {
         if (Core.CheckInventory(item, quant))
             return;
+
+        if (!Core.isCompletedBefore(2165))
+            DoomSoldierWK();
 
         Core.AddDrop("DoomKnight Weapon Kit", "Dark Spirit Orb", "Corrupt Spirit Orb", "Ominous Aura", "Grumpy Warhammer");
         Core.EquipClass(ClassType.Solo);

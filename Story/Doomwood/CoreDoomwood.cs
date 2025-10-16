@@ -535,7 +535,7 @@ public class CoreDoomwood
         //2072    The Tale Never Dies
         Story.MapItemQuest(2072, "necrocavern", 1044);
         Story.MapItemQuest(2072, "necrocavern", 1045, 3);
-        Story.KillQuest(2072, "necrocavern", new[] { "Shadowstone Elemental", "Shadow Imp" });
+        Story.KillQuest(2072, "necrocavern", new[] { "Shadow Imp", "Shadowstone Elemental" });
 
         //2073    Doom Outside the Dome
         Story.KillQuest(2073, "necrocavern", "Shadowstone Elemental");

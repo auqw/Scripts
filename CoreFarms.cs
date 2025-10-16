@@ -965,9 +965,6 @@ public class CoreFarms
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Bot.Send.ClientPacket(
-                    "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                    type: "json");
                 Bot.Sleep(1000);
                 continue;
             }
@@ -994,13 +991,11 @@ public class CoreFarms
             if (rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= level)
                 break;
 
-            // Misc checks
-            Core.ByPassCheck();
             Core.CanWeAggro();
 
             // Attack first living mob (fallback: first non-null)
             Monster? target = Bot.Monsters.CurrentAvailableMonsters
-                .FirstOrDefault(x => x?.HP > 0)
+                .FirstOrDefault(x => x != null && x?.HP > 0)
                 ?? Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null);
 
             if (target != null)

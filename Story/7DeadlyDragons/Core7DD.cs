@@ -11,7 +11,8 @@ public class Core7DD
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -55,7 +56,7 @@ public class Core7DD
         Story.MapItemQuest(5907, "Gluttony", 5345);
 
         // Glowworms not Glowsticks 5908
-        if(!Story.QuestProgression(5908))
+        if (!Story.QuestProgression(5908))
         {
             Core.EnsureAccept(5908);
             Core.GetMapItem(5347, 10, "Gluttony");
@@ -391,7 +392,7 @@ public class Core7DD
         Story.KillQuest(6003, "Maloth", "Golgar");
 
         // Hand over the Entry Code 6004
-        Story.KillQuest(6004, "Maloth", new[] { "Castle Guard", "Scroll Keeper", "Nervous Serf", "Locked Chest", "Golgar" });
+        Story.KillQuest(6004, "Maloth", new[] { "Golgar", "Castle Guard", "Scroll Keeper", "Nervous Serf", "Locked Chest", });
 
         // Confront the Dragon King 6005
         Story.KillQuest(6005, "Maloth", "Maloth");

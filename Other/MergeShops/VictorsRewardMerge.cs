@@ -1,7 +1,7 @@
 /*
 name: Victors Reward Merge
 description: This bot will farm the items belonging to the selected mode for the Victors Reward Merge [2594] in /coliseum
-tags: victors, reward, merge, coliseum, floating, sapphire, orbs, manifestation, void, phantasm, tail, black, moon, deep, marauder, berserker, morph, fugitive, mutative, orb, pet, rippling, katana, katanas, sheathed, ivory, thorn, crux, nyx, cruxes, violet, sharp, crew, cut, professional, acidic, raylock, abandoned, undead, skull, arena, forked, scorpions, stinger, ominous, bloodstaff, arrogant, angel, spines, gilded, gunslinger, bounty, hunter, ornate, gold, pistol, pistols, shotgun, rush, knife, knives, beard, , backup
+tags: victors, reward, merge, coliseum, floating, sapphire, orbs, manifestation, void, phantasm, tail, black, moon, deep, marauder, berserker, morph, fugitive, mutative, orb, pet, rippling, katana, katanas, sheathed, ivory, thorn, crux, nyx, cruxes, violet, sharp, crew, cut, professional, acidic, raylock, abandoned, undead, skull, arena, forked, scorpions, stinger, ominous, bloodstaff, arrogant, angel, spines, gilded, gunslinger, bounty, hunter, ornate, gold, pistol, pistols, shotgun, rush, knife, knives, beard, , backup, keelia, master, aeris, battlespire
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -18,8 +18,8 @@ public class VictorsRewardMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
 
     public bool DontPreconfigure = true;
@@ -207,5 +207,7 @@ private static CoreAdvanced _sAdv;
         new Option<bool>("93405", "Gilded Gunslinger Hat + Locks", "Mode: [select] only\nShould the bot buy \"Gilded Gunslinger Hat + Locks\" ?", false),
         new Option<bool>("93406", "Gilded Gunslinger Hat", "Mode: [select] only\nShould the bot buy \"Gilded Gunslinger Hat\" ?", false),
         new Option<bool>("93410", "Back-Up Ornate Gold Shotgun", "Mode: [select] only\nShould the bot buy \"Back-Up Ornate Gold Shotgun\" ?", false),
+        new Option<bool>("95658", "Keelia the Arena Master", "Mode: [select] only\nShould the bot buy \"Keelia the Arena Master\" ?", false),
+        new Option<bool>("95659", "Aeris BattleSpire Arena Master", "Mode: [select] only\nShould the bot buy \"Aeris BattleSpire Arena Master\" ?", false),
    };
 }

@@ -786,13 +786,12 @@ public class CoreNation
                 quest.Rewards.FirstOrDefault(r => r.Name == drop) is { } reward
                 && Core.CheckInventory(drop, reward.MaxStack)))
             return;
-
         //warning for idiots that wont read it
         Core.Logger("if Swindles is enabled, it will only accept the quest when it has the required Unis it needs");
 
         bool sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher == true;
         bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
-
+        UltraAlteon = Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon == true;
         if (KeepVoucher && sellMemVoucher)
         {
             Core.Logger("KeepVoucher is enabled via the script, Overriding Cbo Setting, Voucher of Nulgath will be kept");
@@ -2011,7 +2010,7 @@ public class CoreNation
         {
             Core.KillEscherion("Escherion's Helm", isTemp: false);
             Core.KillVath("Shattered Legendary Sword of Dragon Control", isTemp: false);
-            Core.HuntMonster("hydrachallenge", "Hydra Head 85", "Hydra Scale Piece", 200, false);
+            Core.HuntMonster("hydrachallenge", "Hydra Head 85", "Hydra Scale Piece", 200, false, publicRoom: Core.PublicDifficult);
         }
 
         Core.CancelRegisteredQuests();

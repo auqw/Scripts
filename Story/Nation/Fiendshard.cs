@@ -28,21 +28,18 @@ public class Fiendshard_Story
 
     public void Fiendshard_QuestlineP1()
     {
-        if (Core.isCompletedBefore(7900))
-            return;
-
         Story.PreLoad(this);
 
         Originul.Originul_Questline();
 
-        Core.Logger("Making sure portal quest is done.. appaerntly its required...? (though not stated?)");
+        Core.Logger("Making sure portal quest is done.. appearntly its required...? (though not stated?)");
         Core.Join("tercessuinotlim");
 
-        Core.EquipClass(ClassType.Farm);
 
         // Sneak Attack
         if (!Story.QuestProgression(7892))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(7892);
             Core.KillMonster("Fiendshard", "r2", "Left", "Rogue Fiend", "Rogue Fiends Defeated", 4);
             Story.MapItemQuest(7892, "Fiendshard", 7983);
@@ -51,6 +48,7 @@ public class Fiendshard_Story
         // Fiend-terrogation
         if (!Story.QuestProgression(7893))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(7893);
             Core.KillMonster("Fiendshard", "r2", "Left", "Rogue Fiend", "Fiends Interrogated", 3);
             Core.EnsureComplete(7893);
@@ -59,6 +57,7 @@ public class Fiendshard_Story
         // Key Difference Between Human and Fiend
         if (!Story.QuestProgression(7894))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(7894);
             Core.KillMonster("Fiendshard", "r2", "Left", "Rogue Fiend", "Key Fragments Located", 4);
             Core.EnsureComplete(7894);
@@ -67,6 +66,7 @@ public class Fiendshard_Story
         // Unlock the Door
         if (!Story.QuestProgression(7895))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(7895);
             Core.KillMonster("fiendshard", "r2", "Left", "Rogue Fiend", "Rogue Fiend Defeated", 5);
             Core.KillMonster("fiendshard", "r5", "Left", "Paladin Fiend", "Paladin Fiend Defeated", 5);

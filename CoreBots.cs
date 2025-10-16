@@ -4257,17 +4257,25 @@ public class CoreBots
         #endregion exit aggro
     }
 
+
     /// <summary>
-    /// Hunts monsters based on the requirements of a specified quest and an optional array of map and monster names.
+    /// Old-compatible signature: forwards to the new overload with log = true so existing calls keep working.
+    /// </summary>
+    public void HuntMonsterQuest(int questId, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
+        => HuntMonsterQuest(questId, log: true, MapMonsterClassPairs);
+
+    /// <summary>
+    /// Loads the quest, unbanks required items, adds non-temp drops, iterates requirements (using provided map/monster/class tuples) to call HuntMonster() for each, then attempts to complete the quest.
     /// </summary>
     /// <param name="questId">The ID of the quest to load requirements from.</param>
+    /// <param name="log">Whether to log each hunt action (forwarded to HuntMonster)</param>
     /// <param name="MapMonsterClassPairs">Array of map name, monster name, and class type tuples.</param>
-    public void HuntMonsterQuest(int questId, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
+    public void HuntMonsterQuest(int questId, bool log = true, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
     {
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"❌ Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true); // ❌
+            Logger($"❌ Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
             return;
         }
 
@@ -4281,10 +4289,10 @@ public class CoreBots
 
         // Add the non-temp items to the drop pickup list
         Bot.Drops.Add(quest.AcceptRequirements.Concat(quest.Requirements)
-                                .Where(x => x != null && !x.Temp)
-                                .Select(x => x.ID)
-                                .Distinct()
-                                .ToArray()); // 💎🛒
+                            .Where(x => x != null && !x.Temp)
+                            .Select(x => x.ID)
+                            .Distinct()
+                            .ToArray());
 
         // If no MapMonsterClassPairs are provided, auto-generate default values
         if (MapMonsterClassPairs.Length == 0)
@@ -4300,19 +4308,24 @@ public class CoreBots
             var (mapName, monsterName, classType) = MapMonsterClassPairs[i];
 
             if (CheckInventory(requirement.ID, requirement.Quantity))
-                continue; // 💎✅
+                continue;
 
             // Equip the class before hunting
-            EquipClass(classType); // 🛡️⚔️
+            EquipClass(classType);
 
             if (!Bot.Quests.IsInProgress(questId))
-                EnsureAccept(questId); // 📝
+                EnsureAccept(questId);
 
-            HuntMonster(mapName ?? Bot.Map.Name, monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp); // ⚔️💎
+            HuntMonster(mapName ?? Bot.Map.Name,
+                        monsterName ?? "*",
+                        requirement.Name ?? string.Empty,
+                        requirement.Quantity,
+                        requirement.Temp,
+                        log);
         }
 
         if (!Bot.Quests.EnsureComplete(questId))
-            EnsureCompleteMulti(questId); // 🏆
+            EnsureCompleteMulti(questId);
     }
 
     /// <summary>
@@ -5779,7 +5792,7 @@ public class CoreBots
 
         if (CurrentClass && Bot.Player.CurrentClass != null)
         {
-            Logger($"Current Class: {Bot.Player.CurrentClass} | Current Rank: {Bot.Player.CurrentClassRank}");
+            DebugLogger(this, $"Current Class: {Bot.Player.CurrentClass} | Current Rank: {Bot.Player.CurrentClassRank}");
             return Bot.Player.CurrentClassRank;
         }
         else
@@ -5816,7 +5829,7 @@ public class CoreBots
                         break;
                 }
 
-                Logger($"Class Rank (based on ClassXP): {classRank}");
+                DebugLogger(this, $"Class Rank (based on ClassXP): {classRank}");
                 return classRank;
             }
         }
@@ -6179,8 +6192,7 @@ public class CoreBots
 
             while (!Bot.ShouldExit && equipedClass != className)
             {
-                if (Bot.Player.InCombat)
-                    Bot.Combat.Exit();
+                JumpWait();
 
                 Equip(Bot.Inventory.Items.Concat(Bot.Bank.Items).First(x => x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class).ID);
                 Bot.Wait.ForItemEquip(Bot.Inventory.Items.Concat(Bot.Bank.Items).First(x => x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class).ID);
@@ -6948,7 +6960,7 @@ public class CoreBots
              )
      )
      .ToHashSet(StringComparer.OrdinalIgnoreCase);
-        
+
 
         switch (Bot.Map.Name)
         {
@@ -6959,6 +6971,9 @@ public class CoreBots
             case "escherion":
                 blackListedCells.UnionWith(Bot.Map?.Cells?.Where(c => Regex.IsMatch(c, @"^(Frame|e)\d+$")) ?? Array.Empty<string>());
                 blackListedCells.Add("Boss");
+                break;
+            case "originul":
+                blackListedCells.UnionWith(new[] { "r10" });
                 break;
 
             case "yokaigrave":

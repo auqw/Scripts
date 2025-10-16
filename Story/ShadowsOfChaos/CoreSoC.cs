@@ -14,7 +14,8 @@ public class CoreSoC
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
     private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
     private static CoreSoW _SoW;
 
@@ -241,7 +242,7 @@ public class CoreSoC
         Story.KillQuest(7730, "Shadowoff", "Shadowflame Militia");
 
         //Clue me in
-        Story.KillQuest(7731, "Shadowoff", new[] { "Shadowflame Sorcerer", "Shadowflame Militia", "Shadowflame Scout" });
+        Story.KillQuest(7731, "Shadowoff", new[] { "Shadowflame Militia", "Shadowflame Scout", "Shadowflame Sorcerer" });
 
         //So Familiar
         Story.KillQuest(7732, "Shadowoff", "Shadowflame Paladin");

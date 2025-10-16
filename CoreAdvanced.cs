@@ -2205,6 +2205,14 @@ public class CoreAdvanced
                         return;
                     }
                 }
+                else if (specialOnHelm)
+                {
+                    if ((int)hSpecial == item.EnhancementPatternID)
+                    {
+                        skipCounter++;
+                        return;
+                    }
+                }
                 else if (specialOnWeapon)
                 {
                     if (((int)wSpecial <= 6 ? (int)type : 10) == item.EnhancementPatternID && ((int)wSpecial == getProcID(item) || ((int)wSpecial == 99 && getProcID(item) == 0)))

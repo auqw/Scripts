@@ -132,8 +132,7 @@ public static CoreAdvanced _sAdv;
                     break;
 
                 case "Gold Voucher 25k":
-                    Adv.BuyItem("sunlightzone", 2288, 57304, quant, 7782);
-                    Bot.Wait.ForPickup(req.Name);
+                    Farm.Voucher(req.Name, req.Quantity);
                     break;
 
                 case "Tactical Agent Alpha":

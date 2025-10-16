@@ -90,12 +90,7 @@ private static CoreAdvanced _sAdv;
                     break;
 
                 case "Gold Voucher 25k":
-                    Core.FarmingLogger(req.Name, quant);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Adv.BuyItem("battleunderb", 1990, "Gold Voucher 25k", quant, Log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                   Farm.Voucher(req.Name, req.Quantity);
                     break;
 
             }

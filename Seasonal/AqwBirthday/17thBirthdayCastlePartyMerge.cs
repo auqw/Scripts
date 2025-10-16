@@ -80,6 +80,10 @@ public class CastlePartyMerge
                     Core.HuntMonster("castleparty", "Legion Partycrasher", req.Name, quant, req.Temp, false);
                     break;
 
+                case "Gold Voucher 25k":
+                    Farm.Voucher(req.Name, req.Quantity);
+                    break;
+
 
                 case "Gilded Gem":
                     if (req.Upgrade && !Core.IsMember)

@@ -114,7 +114,7 @@ public class BocklinTreasuryMerge
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(Core.IsMember ? 10242 : 10240,
+                        Core.HuntMonsterQuest(Core.IsMember ? 10242 : 10240, false,
                         ("bocklingrove", "Elder Necromancer", ClassType.Solo),
                         ("bocklingrove", "Undead Garde", ClassType.Farm),
                         ("bocklingrove", "Garde Wraith", ClassType.Farm));

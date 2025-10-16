@@ -62,7 +62,7 @@ public class LordOfOrder
         if (!Core.isCompletedBefore(7156))
         {
             Core.EnsureAccept(7156);
-
+            Core.AddDrop(Core.QuestRewards(7156));
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("watchtower", "Chaorrupted Knight", "Pristine Blades of Order", isTemp: false);
             Core.BuyItem("dreadrock", 1221, "Dreadrock Donation Receipt");
@@ -87,6 +87,7 @@ public class LordOfOrder
         if (!Core.isCompletedBefore(7157))
         {
             Core.EnsureAccept(7157);
+            Core.AddDrop(Core.QuestRewards(7157));
 
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("dwarfprison", "Warden Elfis", "Warden Elfis Detained", isTemp: false);
@@ -103,6 +104,7 @@ public class LordOfOrder
         if (!Core.isCompletedBefore(7158))
         {
             Core.EnsureAccept(7158);
+            Core.AddDrop(Core.QuestRewards(7158));
 
             Core.EquipClass(ClassType.Solo);
 
@@ -121,6 +123,7 @@ public class LordOfOrder
         if (!Core.isCompletedBefore(7159))
         {
             Core.EnsureAccept(7159);
+            Core.AddDrop(Core.QuestRewards(7159));
 
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("gaiazor", "Gaiazor", "Gaiazor's Cornerstone", isTemp: false, publicRoom: Core.PublicDifficult);
@@ -140,6 +143,7 @@ public class LordOfOrder
         if (!Core.isCompletedBefore(7160))
         {
             Core.EnsureAccept(7160);
+            Core.AddDrop(Core.QuestRewards(7160));
 
             Core.EquipClass(ClassType.Solo);
             Core.KillKitsune("Hanzamune Dragon Koi Blade");
@@ -169,6 +173,7 @@ public class LordOfOrder
         if (!Core.isCompletedBefore(7161))
         {
             Core.EnsureAccept(7161);
+            Core.AddDrop(Core.QuestRewards(7161));
 
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("elemental", "Tree of Destiny", "Unity of Life", isTemp: false);
@@ -187,6 +192,7 @@ public class LordOfOrder
         if (!Core.isCompletedBefore(7162))
         {
             Core.EnsureAccept(7162);
+            Core.AddDrop(Core.QuestRewards(7162));
 
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("newfinale", "Alliance Healer", "Acolyte's Braille", isTemp: false);
@@ -206,6 +212,7 @@ public class LordOfOrder
         if (!Core.isCompletedBefore(7163))
         {
             Core.EnsureAccept(7163);
+            Core.AddDrop(Core.QuestRewards(7163));
 
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("elfhame", "Guardian Spirit", "Law of Nature", isTemp: false);
@@ -224,6 +231,7 @@ public class LordOfOrder
         if (!Core.isCompletedBefore(7164))
         {
             Core.EnsureAccept(7164);
+            Core.AddDrop(Core.QuestRewards(7164));
 
             Core.EquipClass(ClassType.Solo);
             Core.KillMonster("doomvaultb", "r26", "Left", "Undead Raxgore", "Weapon Imprint", 15, false);
@@ -241,28 +249,23 @@ public class LordOfOrder
         }
 
         // The Final Challenge
-        if (getExtras)
-            Bot.Drops.Add(Core.QuestRewards(7165));
+        Bot.Drops.Add(Core.QuestRewards(7165));
 
         Core.EnsureAccept(7165);
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("ultradrakath", "Champion of Chaos", "Champion of Chaos Confronted", isTemp: false, publicRoom: Core.PublicDifficult);
         Bot.Drops.Add(50741);
         // If quest 7165 is not completed and either missing extras or missing key items
-        if (!Core.isCompletedBefore(7165) &&
-            (!Core.CheckInventory(new[] { 50741, 50576 }, any: true, toInv: false) || !getExtras))
+        if (!Core.isCompletedBefore(7165))
         {
             Core.EnsureComplete(7165, 50741);
             Bot.Wait.ForPickup(50741);
 
+            Core.EnsureCompleteChoose(7165);
+            Core.ToBank(Core.QuestRewards(7165).Except("Lord Of Order"));
+
             if (rankUpClass)
                 Adv.RankUpClass("Lord Of Order");
         }
-        else
-        {
-            Core.EnsureCompleteChoose(7165);
-            Core.ToBank(Core.QuestRewards(7165).Except("Lord Of Order"));
-        }
-
     }
 }
