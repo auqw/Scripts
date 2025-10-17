@@ -58,7 +58,7 @@ public class Friendship
 
         // Darkness Distress (9103)
         Story.MapItemQuest(9103, "greyguard", 11205);
-        Story.KillQuest(9103, "greyguard", new[] { "Fearweaver", "Darkbark", "Twilighteeth", "Maulignant", "Gloombloom", "Carcass Creeper" });
+        Story.KillQuest(9103, "greyguard", new[] { "Gloombloom", "Carcass Creeper", "Fearweaver", "Darkbark", "Twilighteeth", "Maulignant", });
 
         // Your New FF (9104)
         if (!Story.QuestProgression(9104))

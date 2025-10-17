@@ -65,9 +65,7 @@ public class AiwassBlessingsMerge
             {
                 #region Gold
                 case "Gold Voucher 100K":
-                    Core.FarmingLogger(req.Name, quant);
-                    Farm.Gold(100000 * quant);
-                    Core.BuyItem("sanctuaryaiwass", 2619, req.Name, quant);
+                    Farm.Voucher(req.Name, req.Quantity);
                     break;
                 #endregion
 

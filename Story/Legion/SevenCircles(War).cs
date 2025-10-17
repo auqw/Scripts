@@ -63,7 +63,6 @@ public class SevenCircles
         Story.KillQuest(7975, "sevencircles", "Avarice Guard");
 
         //Greed the Room
-        Story.KillQuest(7976, "sevencircles", new[] { "Limbo Guard", "Luxuria Guard", "Gluttony Guard", "Avarice Guard" });
         if (!Story.QuestProgression(7976))
         {
             Core.EnsureAccept(7976);

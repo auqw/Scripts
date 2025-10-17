@@ -42,7 +42,7 @@ public class TempleSiege
         //Blind Devotion || 9060
         if (!Story.QuestProgression(9060))
         {
-            Core.EnsureAccept(9060);            
+            Core.EnsureAccept(9060);
             //due to duplcate item names, using ItemIDs this way.
             while (!Bot.ShouldExit && !Core.CheckInventory(75700, 5))
                 Core.HuntMonster("templesiege", "Overdriven Paladin");
@@ -68,7 +68,7 @@ public class TempleSiege
         Story.KillQuest(9065, "templesiege", "Doomed Troll");
 
         //The Emperor's Shadow || 9066
-        Story.KillQuest(9066, "templesiege", new[] { "Doomed Beast", "Doomed Troll" });
+        Story.KillQuest(9066, "templesiege", new[] { "Doomed Troll", "Doomed Beast" });
 
         //Throat Sores || 9067
         Story.KillQuest(9067, "templesiege", "Doomed Oblivion");

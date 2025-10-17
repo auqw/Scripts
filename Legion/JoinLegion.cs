@@ -19,7 +19,9 @@ public class JointheLegion
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.SetOptions();
+        Core.BankingBlackList.Add("Combat Trophy");
+        
+        Core.SetOptions(disableClassSwap: true);
 
         Legion.JoinLegion();
 

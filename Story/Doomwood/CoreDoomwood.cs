@@ -297,7 +297,7 @@ public class CoreDoomwood
         Story.MapItemQuest(1129, "temple", 458, 12);
 
         //1130    Level 8
-        Story.KillQuest(1130, "temple", new[] { "Skeletal Fire Mage", "Doomwood Ectomancer" });
+        Story.KillQuest(1130, "temple", new[] { "Doomwood Ectomancer", "Skeletal Fire Mage" });
 
         //1131    Level 9
         Story.MapItemQuest(1131, "temple", 459, 8);
@@ -535,7 +535,7 @@ public class CoreDoomwood
         //2072    The Tale Never Dies
         Story.MapItemQuest(2072, "necrocavern", 1044);
         Story.MapItemQuest(2072, "necrocavern", 1045, 3);
-        Story.KillQuest(2072, "necrocavern", new[] { "Shadowstone Elemental", "Shadow Imp" });
+        Story.KillQuest(2072, "necrocavern", new[] { "Shadow Imp", "Shadowstone Elemental" });
 
         //2073    Doom Outside the Dome
         Story.KillQuest(2073, "necrocavern", "Shadowstone Elemental");
@@ -565,7 +565,7 @@ public class CoreDoomwood
         Story.PreLoad(this);
 
         //7589    Bullies
-        Story.KillQuest(7589, "thorngarde", new[] { "CryptHacker", "NecroDrone", "NecroMech"  });
+        Story.KillQuest(7589, "thorngarde", new[] { "CryptHacker", "NecroDrone", "NecroMech" });
 
         //7590    Free the People
         Story.MapItemQuest(7590, "thorngarde", 7485, 5);

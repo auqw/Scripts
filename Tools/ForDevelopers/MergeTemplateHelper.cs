@@ -112,7 +112,7 @@ public static CoreAdvanced _sAdv;
 
         foreach (ShopItem item in shopItems)
         {
-            if (item.Requirements == null || item.Name.StartsWith("Gold Voucher"))
+            if (item.Requirements == null)
                 continue;
 
             shopItemNames.Add($"        new Option<bool>(\"{item.ID}\", \"{item.Name}\", \"Mode: [select] only\\nShould the bot buy \\\"{item.Name}\\\" ?\", false),");

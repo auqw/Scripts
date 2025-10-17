@@ -29,8 +29,8 @@ public class ShadowrealmMerge
     private static YulgarsUndineMerge _YUM;
     private static DawnFortressMerge DFM { get => _DFM ??= new DawnFortressMerge(); set => _DFM = value; }
     private static DawnFortressMerge _DFM;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
 
     public bool DontPreconfigure = true;
@@ -84,7 +84,7 @@ private static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.EnsureAcceptmultiple( new[ ]{ 7553, 7555});
+                        Core.EnsureAcceptmultiple(new[] { 7553, 7555 });
                         Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
                         Core.KillMonster("shadowrealm", "r2", "Left", "Shadow Guardian", "Shadow Medallion", 5, log: false);
                         Core.EnsureComplete(7553);
@@ -134,8 +134,7 @@ private static CoreAdvanced _sAdv;
                     break;
 
                 case "Gold Voucher 25k":
-                    Adv.BuyItem("sunlightzone", 2288, 57304, quant, 7782);
-                    Bot.Wait.ForPickup(req.Name);
+                    Farm.Voucher(req.Name, req.Quantity);
                     break;
 
                 case "Vindicator Archer's Hat + Locks":

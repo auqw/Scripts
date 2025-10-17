@@ -34,7 +34,7 @@ public class WatchTower
         Story.KillQuest(2602, "watchtower", new[] { "Chaorrupted Wolf", "Chaotic Gorillaphant" });
 
         //Hunt for Answers 2603
-        Story.KillQuest(2603, "watchtower", new[] { "Storagebox", "Chaos Spider" });
+        Story.KillQuest(2603, "watchtower", new[] { "Chaos Spider","Storagebox" });
 
         //Decryption Hunt 2604
         Story.MapItemQuest(2604, "watchtower", 1606);

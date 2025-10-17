@@ -438,7 +438,7 @@ public class CoreAstravia
         Story.MapItemQuest(8636, "FirstObservatory", new[] { 10086, 10087 });
 
         //Auriga
-        Story.KillQuest(8637, "FirstObservatory", new[] { "Ancient Creature", "Ancient Turret" });
+        Story.KillQuest(8637, "FirstObservatory", new[] { "Ancient Turret", "Ancient Creature" });
 
         //Pisces Alrescha
         Story.MapItemQuest(8638, "FirstObservatory", new[] { 10088, 10089 });

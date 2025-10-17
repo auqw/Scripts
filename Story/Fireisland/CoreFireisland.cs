@@ -11,7 +11,8 @@ public class CoreFireIsland
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -66,7 +67,7 @@ public class CoreFireIsland
         Story.PreLoad(this);
 
         //Flee the Flames
-        Story.KillQuest(4070, "pyrewatch", new[] { "Fyreborn Tiger", "Caustocrush", "Lavazard" });
+        Story.KillQuest(4070, "pyrewatch", new[] { "Lavazard", "Fyreborn Tiger", "Caustocrush" });
 
         //Taste of their own Medicine
         Story.KillQuest(4071, "pyrewatch", "Fire Pikeman");
@@ -174,7 +175,8 @@ public class CoreFireIsland
 
         //Rumors and Smoke
         Story.MapItemQuest(4131, "feverfew", 3245);
-        Story.KillQuest(4131, "feverfew", new[] { "Firestorm Knight", "Firestorm Knight", "Firestorm Major", "Firestorm Major" });
+        Story.KillQuest(4131, "feverfew", new[]
+        { "Firestorm Knight", "Firestorm Major", "Firestorm Knight", "Firestorm Major" });
 
         //Dam the Flood
         Story.MapItemQuest(4132, "feverfew", 3244, 5);
@@ -226,7 +228,7 @@ public class CoreFireIsland
 
 
         //The Power to Heal
-        Story.KillQuest(4139, "feverfew", new[] { "Locked Chest", "Feverfew Vase", "Twisted Undine" });
+        Story.KillQuest(4139, "feverfew", new[] { "Feverfew Vase", "Twisted Undine", "Locked Chest" });
 
         //The Deadsea Caverns
         Story.KillQuest(4140, "feverfew", new[] { "Coral Creeper", "Twisted Undine", "Salamander" });

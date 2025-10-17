@@ -304,7 +304,7 @@ public class CoreAOR
         Story.KillQuest(9298, "midnightzone", "Venerated Wraith");
 
         // Designated Taunters (9299)
-        Story.KillQuest(9299, "midnightzone", new[] { "Venerated Wraith", "Shadow Viscera" });
+        Story.KillQuest(9299, "midnightzone", new[] { "Shadow Viscera", "Venerated Wraith" });
 
         // Beloved Simulacrum (9230)
         Story.MapItemQuest(9300, "midnightzone", 11849, 4);
@@ -605,7 +605,7 @@ public class CoreAOR
         Story.MapItemQuest(9757, "loughshine", 13275);
 
         // Wisened Yew (9758)
-        Story.KillQuest(9758, "loughshine", new[] { "Scorched Elder Yew", "Skye Cailleach" });
+        Story.KillQuest(9758, "loughshine", new[] { "Skye Cailleach", "Scorched Elder Yew" });
 
         // Dragonflare (9759)
         Story.MapItemQuest(9759, "loughshine", 13276);
@@ -623,7 +623,7 @@ public class CoreAOR
 
         // Parting the Clouds (9763)
         Story.MapItemQuest(9763, "loughshine", 13280);
-        Story.KillQuest(9763, "loughshine", new[] { "Energy Elemental", "Skye Executor" });
+        Story.KillQuest(9763, "loughshine", new[] { "Skye Executor", "Energy Elemental" });
 
         // Arrester (9764)
         if (!Story.QuestProgression(9764))
@@ -1304,10 +1304,6 @@ public class CoreAOR
         Core.Logger($"{ItemUsed} [Vigil] Equiped? {Bot.Inventory.IsEquipped("Vigil")}");
 
         Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m.MapID == mobMapID);
-        if (targetAuraName != null)
-        {
-            Aura? targetAura = Bot.Target.Auras.Concat(Bot.Self.Auras).FirstOrDefault(a => a.Name == targetAuraName);
-        }
 
         if (Bot.Player.Cell != mob!.Cell)
             Core.Jump(mob.Cell);
@@ -1336,13 +1332,17 @@ public class CoreAOR
                     Core.Sleep();
             }
             #endregion
-
             if (targetAuraName != null)
+            {
+                Aura? targetAura = Bot.Target.Auras.Concat(Bot.Self.Auras).FirstOrDefault(a => a.Name == targetAuraName);
                 AuraHandling(targetAuraName);
+            }
 
             if (Bot.Player.Alive && !Bot.Self.HasActiveAura(targetAuraName!) && !Bot.Target.HasActiveAura(targetAuraName!))
+            {
                 Bot.Combat.Attack(mob);
-            Core.Sleep();
+                Bot.Sleep(500);
+            }
 
             if (isTemp ? Bot.TempInv.Contains(item!, quant) : Core.CheckInventory(item, quant))
             {
@@ -1354,7 +1354,7 @@ public class CoreAOR
         {
             foreach (Aura A in Bot.Target.Auras.Concat(Bot.Self.Auras))
             {
-                if (targetAuraName == null)
+                if (Bot.Target.Auras.Concat(Bot.Self.Auras).FirstOrDefault(a => a.Name == targetAuraName) == null)
                     continue;
 
                 switch (A.Name)

@@ -1,7 +1,7 @@
 /*
-name: Zorbak's Merge Shop
-description: This will get all or selected items on this merge shop.
-tags: zorbaks-merge, seasonal, aqw-anniversary
+name: Zorbaks Merge
+description: This bot will farm the items belonging to the selected mode for the Zorbaks Merge [1640] in /birthday
+tags: zorbaks, merge, birthday, copper, dragon, statue, r, gold, platinum, sepulchure, l, royal, shadowslayer, shadowslayers, cap, , coat, elite, exalted, honor, glasses, escherion, plushie, mace, xang, vath, kitsune, wolfwing, kimberly, ledgermayne, tibicenas, khasaanda, iadoa, lionfang, alteon, drakath, xing, plushies, gilded, knight, armet, haloed, sallet, grand, great, cloak, spear, zweihander, dread, draconic, chrono, raven, sneevil
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -15,15 +15,18 @@ public class ZorbaksMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
 
     public bool DontPreconfigure = true;
@@ -36,7 +39,7 @@ public static CoreAdvanced _sAdv;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Copper Scale", "Gold Scale", "Platinum Scale", "Onyx Scale", "Hero Plushie", "Chaorrupted Button", "Cursed Pinata Candy", "Tinfoil Wrapper", "Knight Armor", "Knight Armet", "Knight Sallet", "Knight Great Helm", "Knight Cloak", "Knight Mace", "Knight Spear", "Knight Zweihander " });
+        Core.BankingBlackList.AddRange(new[] { "Copper Scale", "Gold Scale", "Platinum Scale", "Onyx Scale", "Hero Plushie", "Chaorrupted Button", "Cursed Pinata Candy", "Tinfoil Wrapper", "Knight Armor", "Knight Armet", "Knight Sallet", "Knight Great Helm", "Knight Cloak", "Knight Mace", "Knight Spear", "Knight Zweihander" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -185,5 +188,5 @@ public static CoreAdvanced _sAdv;
         new Option<bool>("54858", "Dread Knight Zweihander", "Mode: [select] only\nShould the bot buy \"Dread Knight Zweihander\" ?", false),
         new Option<bool>("63973", "Chrono Raven", "Mode: [select] only\nShould the bot buy \"Chrono Raven\" ?", false),
         new Option<bool>("63975", "Chrono Sneevil", "Mode: [select] only\nShould the bot buy \"Chrono Sneevil\" ?", false),
-    };
+   };
 }

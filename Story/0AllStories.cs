@@ -3,6 +3,8 @@ name: Complete All Stories
 description: This will complete all stories.
 tags: story, quest, complete, all
 */
+
+#region includes
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreDailies.cs
@@ -208,7 +210,7 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/Yokai.cs
 
 //cs_include Scripts/Story/MemetsRealm/CoreMemet.cs
-
+#endregion
 using Skua.Core.Interfaces;
 
 public class AllStories

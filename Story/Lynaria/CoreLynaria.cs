@@ -11,7 +11,8 @@ public class CoreLynaria
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -138,9 +139,11 @@ public class CoreLynaria
         #endregion Useable Monsters
 
         // 10243 | Roger and Angelica
-        Story.MapItemQuest(10243, "bocklincastle", 14446);
-        Story.KillQuest(10243, "bocklincastle", UseableMonsters[0]);
-
+        if (!Story.QuestProgression(10243))
+        {
+            Story.MapItemQuest(10243, "bocklincastle", 14446);
+            Story.KillQuest(10243, "bocklincastle", UseableMonsters[0]);
+        }
 
         // 10244 | The Way to Emmaus
         if (!Story.QuestProgression(10244))
@@ -286,7 +289,7 @@ public class CoreLynaria
         // 10263 | The Light Protects You
         if (!Story.QuestProgression(10263))
         {
-            Story.MapItemQuest(10263, "bocklinsanctum", new[] {14481, 14482});
+            Story.MapItemQuest(10263, "bocklinsanctum", new[] { 14481, 14482 });
         }
 
 

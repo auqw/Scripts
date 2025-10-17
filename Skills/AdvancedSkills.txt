@@ -138,7 +138,7 @@ Base = Healer = 1 | 2H<50S | 3 H<50 M>50S | 4 = Use if Available
 Base = Healer (Rare) = 1 | 2H<50S | 3 | 4 = Use if Available
 Base = Heavy Metal Necro = 1 | 4H>50S | 2 | 3 | 2 = 100
 Base = Heavy Metal Rockstar = 1 | 4H>50S | 2 | 3 | 2 = 100
-Base = Heroic Naval Commander = 3WW10000 | 4 | 2 | 1 = 100
+Base = Heroic Naval Commander = 3WW1000 | 4 | 2 | 1 = 100
 Base = HighSeas Commander = 1 | 3 | 1 | 4 | 2 | 1 | 1 = 100
 Base = Hobo Highlord = 1 = Use if Available
 Base = Horc Evader = 1 | 2 | 3 | 4 = Use if Available
@@ -159,7 +159,7 @@ Def = Legendary Elemental Warrior = 1 | 3 | 2 | 1 | 2 | 3 = 100
 Base = Legendary ArchFiend = 1 | 2 | 3 | 4 = Use if Available
 Base = Legendary Elemental Warrior = 1 | 3 | 4 | 1 | 2 | 4 | 1 | 3 | 2 | 1 | 4 | 2 = 100
 Base = Legendary Hero = 1 | 2 | 3 | 4 = Use if Available
-Base = Legendary Naval Commander = 3WW10000 | 4 | 2 | 1 = 100
+Base = Legendary Naval Commander = 3WW1000 | 4 | 2 | 1 = 100
 Base = Legion BladeMaster Assassin = 1 | 2 | 3 | 4 = Use if Available
 Base = Legion DoomKnight = 1 | 2 | 3 | 4 = Use if Available
 Base = Legion DoomKnight Tester = 1 | 2 | 3 | 4 = Use if Available
@@ -189,7 +189,7 @@ Base = Martial Artist = 1 | 2 | 2 | 1 = 100
 Base = Mystical Dark Caster = 1 | 2 | 3 | 4 = Use if Available
 Atk = Mythic Elemental Warrior = 1 | 3 | 4 | 1 | 2 | 4 | 1 | 3 | 2 | 1 | 4 | 2 = 100
 Def = Mythic Elemental Warrior = 1 | 3 | 2 | 1 | 2 | 3 = 100
-Base = Naval Commander = 3WW10000 | 4 | 2 | 1 = 100
+Base = Naval Commander = 3WW1000 | 4 | 2 | 1 = 100
 Base = Nechronomancer = 4 H<60S | 3 | 2 | 1 = Use if Available
 Base = Necrotic Chronomancer = 4 H<60S | 3 | 2 | 1 = Use if Available
 Base = Necromancer = 1 | 2 | 3 M<25S H<30S | 4 = Use if Available
@@ -218,7 +218,7 @@ Base = Psionic MindBreaker = 1 | 2M<25S | 3 | 1 | 4 = 100
 Base = Pumpkin Lord = 1 | 2 | 3 | 4 = Use if Available
 Base = PvP Test  |  Bard = 4 | 1 | 3 | 2 = 100
 Base = PvP Test  |  Healer = 4 | 1 | 3 | 2 = 100
-Base = Pyromancer = 2WW20000 | 1 | 4 | 1 | 2 = 100
+Base = Pyromancer = 2WW2000 | 1 | 4 | 1 | 2 = 100
 Base = Renegade = 1 | 2 | 3 | 4 = Use if Available
 Base = Rogue = 2 | 3 | 1 | 4 = Use if Available
 Base = Rogue (Rare) = 2 | 3 | 1 | 4 = Use if Available
@@ -260,7 +260,7 @@ Solo = StoneCrusher = 4M>50S | 2S | 3H<50S | 1 = Use if Available
 Supp = StoneCrusher = 3 | 2 | 4 | 1 = Use if Available
 Base = SwordMaster = 1 | 2 | 3 | 4 = Use if Available
 Base = SwordMaster Assassin = 1 | 2 | 3 | 4 = Use if Available
-Base = The Collector = 1WW20000 | 3 | 4 | 1 = 100
+Base = The Collector = 1WW2000 | 3 | 4 | 1 = 100
 Base = Thief of Hours = 4 | 1 | 3 | 2 = 100
 Base = TimeKeeper = 2 | 4 | 1 | 1 | 1 | 4 | 3 | 2 | 1 | 1 | 4 | 1 | 2 | 1 | 1 | 3 = 100
 Farm = TimeKeeper = 2 | 4 | 1 | 1 | 1 | 3 = 100

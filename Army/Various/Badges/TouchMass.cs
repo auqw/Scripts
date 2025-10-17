@@ -173,10 +173,6 @@ public class TouchMass
         Bot.Lite.DisableSkillAnimation = true;
         Core.Sleep();
 
-        Core.Logger("Disabling Skill Animations");
-        Bot.Lite.DisableSkillAnimations = true;
-        Core.Sleep();
-
         Core.Logger("Disabling Weapon Animation");
         Bot.Lite.DisableWeaponAnimation = true;
         Core.Sleep();

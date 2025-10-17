@@ -32,7 +32,7 @@ public class BirthdayHeroBadge
 
         Core.EquipClass(ClassType.Solo);
 
-        //16th Anniversary Gifts
+        //17th Anniversary Gifts
         Story.KillQuest(6554, "birthday", new[] { "Birthday Cake", "Birthday Cake", "Birthday Cake", "Birthday Cake" });
     }
 

@@ -11,7 +11,8 @@ public class EtherStormWastes
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -49,7 +50,7 @@ public class EtherStormWastes
         Story.MapItemQuest(1384, "dragonplane", new[] { 682, 683, 684, 685, 686 });
 
         //Lots Of Fiber 1385
-        Story.KillQuest(1385, "dragonplane", new[] { "Earth Elemental", "Water Elemental", "Wind Elemental", "Fire Elemental" });
+        Story.KillQuest(1385, "dragonplane", new[] { "Fire Elemental", "Earth Elemental", "Water Elemental", "Wind Elemental" });
 
         //Carrying The Torches 1386
         Story.MapItemQuest(1386, "dragonplane", 687, 6);

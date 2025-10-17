@@ -48,7 +48,13 @@ public class Originul_Story
         Story.KillQuest(7886, "Originul", "Bloodfiend");
         
         // Executed Tasks
-        Story.KillQuest(7887, "Originul", "Dreadfiend");
+        if (!Story.QuestProgression(7887))
+        {
+            Core.EquipClass(ClassType.Farm);
+            Core.EnsureAccept(7887);
+            Core.KillMonster("Originul", "r7", "left", "Dreadfiend", "Dreadfiend Executed", 5);
+            Core.EnsureComplete(7887);
+        }
 
         // Champion Usurper
         Core.EquipClass(ClassType.Solo);

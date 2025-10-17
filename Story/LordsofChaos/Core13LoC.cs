@@ -539,7 +539,7 @@ public class Core13LoC
         Story.KillQuest(311, "greenguardeast", "Spider");
 
         // Lil' Red + Can I axe you something?
-        if (!Story.QuestProgression(514) || !Story.QuestProgression(515))
+        if (!Core.isCompletedBefore(516))
         {
             Core.AddDrop("Red's Big Wolf Slaying Axe");
             Core.EnsureAccept(514);
@@ -551,7 +551,6 @@ public class Core13LoC
             Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Wereboar Documentation");
             Core.EnsureComplete(515);
             Bot.Wait.ForPickup("Red's Big Wolf Slaying Axe");
-            Core.RemoveDrop("Red's Big Wolf Slaying Axe");
             Core.EnsureComplete(514);
         }
 

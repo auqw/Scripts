@@ -127,71 +127,76 @@ public class CoreFarms
     //             Bot.Boosts.Stop();
     //     }
     // }
+    /// <summary>
+    /// Enables or disables a specified boost based on the provided <see cref="BoostType"/> and the user's CBO settings.
+    /// </summary>
+    /// <param name="type">The type of boost to toggle (Gold, Class, Reputation, Experience).</param>
+    /// <param name="enabled">
+    /// True to enable the boost, false to disable it.  
+    /// When enabling, the boost will only activate if the corresponding CBO setting is true and the boost is not already active.  
+    /// When disabling, the boost is deactivated and all boosts are stopped if none remain active.
+    /// </param>
+    /// <remarks>
+    /// - Gold boost is skipped if already active or the player's gold is at the maximum.  
+    /// - Experience boost is skipped if already active or the player is at max level (100).  
+    /// - All other boosts are skipped if already active.  
+    /// - Logs activation or deactivation status for each boost.  
+    /// - Starts boosts immediately upon enabling; stops all boosts if none are active upon disabling.
+    /// </remarks>
     public void ToggleBoost(BoostType type, bool enabled = true)
     {
+        // Only allow enabling if the corresponding CBO is true
         if (enabled)
         {
             switch (type)
             {
                 case BoostType.Gold:
-                    if (Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100_000_000)
-                    {
-                        Core.Logger($"💰 Gold boost skipped (already active or max gold).");
-                        break;
-                    }
+                    if (!Core.CBOBool("doGoldBoost", out bool _doGoldBoost) || !_doGoldBoost || Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100_000_000)
+                        return;
                     Bot.Boosts.SetGoldBoostID();
                     Bot.Boosts.UseGoldBoost = true;
-                    Core.Logger($"💰 Gold boost activated!");
+                    Core.Logger("💰 Gold boost activated!");
                     break;
 
                 case BoostType.Class:
-                    if (Bot.Boosts.UseClassBoost)
-                    {
-                        Core.Logger($"🛡️ Class boost skipped (already active).");
-                        break;
-                    }
+                    if (!Core.CBOBool("doClassBoost", out bool _doClassBoost) || !_doClassBoost || Bot.Boosts.UseClassBoost || Core.CheckClassRank(true) == 10)
+                        return;
                     Bot.Boosts.SetClassBoostID();
                     Bot.Boosts.UseClassBoost = true;
-                    Core.Logger($"🛡️ Class boost activated!");
+                    Core.Logger("🛡️ Class boost activated!");
                     break;
 
                 case BoostType.Reputation:
-                    if (Bot.Boosts.UseReputationBoost)
-                    {
-                        Core.Logger($"🏰 Reputation boost skipped (already active).");
-                        break;
-                    }
+                    if (!Core.CBOBool("doRepBoost", out bool _doRepBoost) || !_doRepBoost || Bot.Boosts.UseReputationBoost)
+                        return;
                     Bot.Boosts.SetReputationBoostID();
                     Bot.Boosts.UseReputationBoost = true;
-                    Core.Logger($"🏰 Reputation boost activated!");
+                    Core.Logger("🏰 Reputation boost activated!");
                     break;
 
                 case BoostType.Experience:
-                    if (Bot.Boosts.UseExperienceBoost || Bot.Player.Level == 100)
-                    {
-                        Core.Logger($"📚 Experience boost skipped (already active or max level).");
-                        break;
-                    }
+                    if (!Core.CBOBool("doExpBoost", out bool _doExpBoost) || !_doExpBoost || Bot.Boosts.UseExperienceBoost || Bot.Player.Level >= 100)
+                        return;
                     Bot.Boosts.SetExperienceBoostID();
                     Bot.Boosts.UseExperienceBoost = true;
-                    Core.Logger($"📚 Experience boost activated!");
+                    Core.Logger("📚 Experience boost activated!");
                     break;
             }
 
-            // Start all active boosts
             Bot.Boosts.Start();
         }
         else
         {
+            // Disable the boost
             switch (type)
             {
-                case BoostType.Gold: Bot.Boosts.UseGoldBoost = false; Core.Logger($"💰 Gold boost deactivated."); break;
-                case BoostType.Class: Bot.Boosts.UseClassBoost = false; Core.Logger($"🛡️ Class boost deactivated."); break;
-                case BoostType.Reputation: Bot.Boosts.UseReputationBoost = false; Core.Logger($"🏰 Reputation boost deactivated."); break;
-                case BoostType.Experience: Bot.Boosts.UseExperienceBoost = false; Core.Logger($"📚 Experience boost deactivated."); break;
+                case BoostType.Gold: Bot.Boosts.UseGoldBoost = false; Core.Logger("💰 Gold boost deactivated."); break;
+                case BoostType.Class: Bot.Boosts.UseClassBoost = false; Core.Logger("🛡️ Class boost deactivated."); break;
+                case BoostType.Reputation: Bot.Boosts.UseReputationBoost = false; Core.Logger("🏰 Reputation boost deactivated."); break;
+                case BoostType.Experience: Bot.Boosts.UseExperienceBoost = false; Core.Logger("📚 Experience boost deactivated."); break;
             }
 
-            // Stop boosts if none are active
+            // Stop all boosts if none are active
             if (!Bot.Boosts.UseGoldBoost && !Bot.Boosts.UseClassBoost &&
                 !Bot.Boosts.UseReputationBoost && !Bot.Boosts.UseExperienceBoost)
             {
@@ -374,9 +379,9 @@ public class CoreFarms
                     Core.KillMonster("swordhavenundead", "Gates", "Left", "Undead Giant", log: false);
                 Core.CancelRegisteredQuests();
             }
-        }
 
-        IcestormArena(level, rankUpClass);
+            IcestormArena(level, rankUpClass);
+        }
 
         if (rankUpClass)
             ToggleBoost(BoostType.Class, false);
@@ -552,10 +557,6 @@ public class CoreFarms
     //     }
 
     // }
-
-
-
-
     /// <summary>
     /// Farms level in Ice Storm Arena
     /// </summary>
@@ -613,7 +614,7 @@ public class CoreFarms
 
             Core.CanWeAggro();
             Bot.Combat.Attack("*");
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+            if (Bot.Player.Alive && rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= 5)
                 break;
         }
 
@@ -649,7 +650,7 @@ public class CoreFarms
             Core.CanWeAggro();
             Core.Sleep();
             Bot.Combat.Attack("*");
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+            if (Bot.Player.Alive && rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= 10)
                 break;
         }
 
@@ -685,7 +686,7 @@ public class CoreFarms
             Core.CanWeAggro();
             Bot.Combat.Attack("*");
             Core.Sleep();
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+            if (Bot.Player.Alive && rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= 20)
                 break;
         }
 
@@ -724,7 +725,7 @@ public class CoreFarms
 
                 Bot.Combat.Attack("*");
                 Core.Sleep();
-                if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+                if (Bot.Player.Alive && rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= 25)
                     break;
             }
             Core.AbandonQuest(6628);
@@ -762,7 +763,7 @@ public class CoreFarms
             Core.CanWeAggro();
             Bot.Combat.Attack("*");
             Core.Sleep();
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+            if (Bot.Player.Alive && rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= 30)
                 break;
         }
 
@@ -803,7 +804,7 @@ public class CoreFarms
 
                 Bot.Combat.Attack("*");
                 Core.Sleep();
-                if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+                if (Bot.Player.Alive && rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= 35)
                     break;
             }
             Core.AbandonQuest(6629);
@@ -845,6 +846,8 @@ public class CoreFarms
             Core.CanWeAggro();
             Bot.Combat.Attack("*");
             Core.Sleep();
+            if (Bot.Player.Alive && rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= 50)
+                break;
         }
         Bot.Quests.UnregisterQuests(6629);
         Core.AbandonQuest(6629);
@@ -881,7 +884,7 @@ public class CoreFarms
 
             Bot.Combat.Attack("*");
             Core.Sleep();
-            if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+            if (Bot.Player.Alive && rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= 61)
                 break;
         }
 
@@ -915,7 +918,7 @@ public class CoreFarms
                     Core.CanWeAggro();
                     Bot.Combat.Attack("*");
                     Core.Sleep();
-                    if (Bot.Player.Alive && rankUpClass && Bot.Player.CurrentClass != null && Bot.Player.CurrentClassRank >= 10)
+                    if (Bot.Player.Alive && rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= 75)
                         break;
                 }
             }
@@ -962,9 +965,6 @@ public class CoreFarms
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Bot.Send.ClientPacket(
-                    "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                    type: "json");
                 Bot.Sleep(1000);
                 continue;
             }
@@ -988,16 +988,14 @@ public class CoreFarms
             if (!rankUpClass && Bot.Player.Level >= level)
                 break;
 
-            if (rankUpClass && Core.CheckClassRank(true) >= 10)
+            if (rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= level)
                 break;
 
-            // Misc checks
-            Core.ByPassCheck();
             Core.CanWeAggro();
 
             // Attack first living mob (fallback: first non-null)
             Monster? target = Bot.Monsters.CurrentAvailableMonsters
-                .FirstOrDefault(x => x?.HP > 0)
+                .FirstOrDefault(x => x != null && x?.HP > 0)
                 ?? Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null);
 
             if (target != null)
@@ -1020,144 +1018,6 @@ public class CoreFarms
             ToggleBoost(BoostType.Class, false);
         ToggleBoost(BoostType.Experience, false);
     }
-
-    // private class LevelRange
-    // {
-    //     public int Min { get; set; }
-    //     public int Max { get; set; }
-    //     public string Map { get; set; } = "";
-    //     public string Cell { get; set; } = "";
-    //     public string Pad { get; set; } = "Left";
-    //     public int[]? Quests { get; set; } // null if no quest
-    //     public ClassType ClassType { get; set; } = ClassType.Farm;
-    //     public bool RequiresRankUpClass { get; set; } = false; // for special rank-up cases
-    // }
-
-    // /// <summary>
-    // /// Farms levels in Ice Storm Arena (or related maps) with proper level ranges and rank-up handling.
-    // /// </summary>
-    // /// <param name="level">Target level</param>
-    // /// <param name="rankUpClass">Whether to rank up the class</param>
-    // public void IcestormArena(int level = 100, bool rankUpClass = false)
-    // {
-    //     if (Bot.Player.Level >= level && (!rankUpClass || Core.CheckClassRank(true) >= 10))
-    //     {
-    //         Core.Logger("💯 Already at target level and rank-up complete (if requested)!");
-    //         return;
-    //     }
-
-    //     LevelRange[] levelRanges = new[]
-    //     {
-    //     new LevelRange { Min = 1, Max = 5, Map = "icestormarena", Cell = "r4", Pad = "Bottom", ClassType = ClassType.Farm },
-    //     new LevelRange { Min = 5, Max = 10, Map = "icestormarena", Cell = "r5", Pad = "Left", ClassType = ClassType.Farm },
-    //     new LevelRange { Min = 10, Max = 20, Map = "icestormarena", Cell = "r6", Pad = "Left", ClassType = ClassType.Farm },
-    //     new LevelRange { Min = 20, Max = 25, Map = "icestormarena", Cell = "r7", Pad = "Left", Quests = new[] { 6628 }, ClassType = ClassType.Farm },
-    //     new LevelRange { Min = 25, Max = 30, Map = "icestormarena", Cell = "r10", Pad = "Left", ClassType = ClassType.Farm },
-    //     new LevelRange { Min = 30, Max = 35, Map = "icestormarena", Cell = "r11", Pad = "Left", Quests = new[] { 6629 }, ClassType = ClassType.Solo },
-    //     new LevelRange { Min = 35, Max = 50, Map = "icestormarena", Cell = "r14", Pad = "Left", Quests = new[] { 6629 }, ClassType = ClassType.Farm },
-    //     new LevelRange { Min = 50, Max = 61, Map = "icestormarena", Cell = "r16", Pad = "Left", ClassType = ClassType.Farm },
-    //     new LevelRange { Min = 61, Max = 75, Map = "icestormarena", Cell = "r17", Pad = "Left", Quests = new[] { 3991, 3992 }, ClassType = ClassType.Farm },
-    //     new LevelRange { Min = 75, Max = 100, Map = "icestormunder", Cell = "r2", Pad = "Top", ClassType = ClassType.Farm }
-    // };
-
-    //     Core.Logger("🚀 Starting IcestormArena leveling routine...");
-    //     Bot.Options.AttackWithoutTarget = false;
-    //     Bot.Options.AggroAllMonsters = false;
-    //     Bot.Options.AggroMonsters = false;
-    //     Core.ToggleAggro(true);
-
-    //     foreach (var range in levelRanges)
-    //     {
-    //         if (Bot.Player.Level >= level && (!rankUpClass || Core.CheckClassRank(true) >= 10))
-    //             break;
-    //         if (Bot.Player.Level >= range.Max) continue;
-
-    //         if (range.Map == "battlegrounde" && rankUpClass && Core.CheckClassRank(true) < 10)
-    //             continue;
-    //         if (range.Map == "icestormarena" && rankUpClass && Core.CheckClassRank(true) >= 10)
-    //             continue;
-
-    //         Core.Logger($"🗺️ Moving to map {range.Map} for levels {range.Min}-{range.Max}!");
-
-    //         if (range.Quests != null)
-    //         {
-    //             Core.Logger($"📜 Registering quests: {string.Join(", ", range.Quests)}");
-    //             Core.RegisterQuests(range.Quests);
-    //         }
-
-    //         if (Bot.Player.Level < 100) ToggleBoost(BoostType.Experience);
-    //         if (rankUpClass) ToggleBoost(BoostType.Class);
-    //         Bot.Options.RestPackets = true;
-
-    //         while (!Bot.ShouldExit && !(Bot.Player.Level >= level && (!rankUpClass || Core.CheckClassRank(true) >= 10)))
-    //         {
-    //             if (Bot.Map.Name != range.Map)
-    //             {
-    //                 Core.Logger($"↪ Joining map {range.Map}...");
-    //                 Core.Join(range.Map, publicRoom: Core.PrivateRooms);
-    //                 Bot.Wait.ForMapLoad(range.Map);
-    //             }
-
-    //             if (Bot.Player.Cell != range.Cell)
-    //             {
-    //                 Core.Logger($"↪ Jumping to cell {range.Cell} ({range.Pad})");
-    //                 Core.Jump(range.Cell, range.Pad);
-    //                 Bot.Wait.ForCellChange(range.Cell);
-    //             }
-
-    //             while (!Bot.ShouldExit)
-    //             {
-    //                 if (Bot.Player.Level >= level && (!rankUpClass || Core.CheckClassRank(true) >= 10))
-    //                     break;
-
-    //                 if (!Bot.Player.Alive)
-    //                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-    //                 // Attack any alive monster in the current snapshot
-    //                 foreach (Monster monster in Bot.Monsters.CurrentAvailableMonsters.Where(m => m != null && m.HP > 0))
-    //                 {
-    //                     if (monster == null || monster?.HP <= 0 || !monster.Alive || monster.State == 0)
-    //                         continue;
-                            
-    //                     while (!Bot.ShouldExit)
-    //                     {
-    //                         if (Bot.Player.Target?.HP <= 0)
-    //                         {
-    //                             Bot.Combat.CancelAutoAttack();
-    //                             Bot.Combat.CancelTarget();
-    //                             Bot.Sleep(200);
-    //                             break;
-    //                         }
-
-    //                         if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != monster.MapID)
-    //                             Bot.Combat.Attack(monster.MapID);
-
-    //                         Bot.Sleep(200);
-    //                     }
-
-    //                     if (Bot.Player.Level >= level && (!rankUpClass || Core.CheckClassRank(true) >= 10))
-    //                         break;
-    //                 }
-    //             }
-    //         }
-
-    //         if (range.Quests != null)
-    //         {
-    //             Core.Logger($"✅ Unregistering quests: {string.Join(", ", range.Quests)}");
-    //             Bot.Quests.UnregisterQuests(range.Quests);
-    //             Core.AbandonQuest(range.Quests);
-    //         }
-    //     }
-
-    //     Core.Logger("🏁 Finished leveling routine.");
-    //     Core.ToggleAggro(false);
-    //     Bot.Options.AggroMonsters = false;
-    //     Core.JumpWait();
-    //     Core.Rest();
-    //     ToggleBoost(BoostType.Class, false);
-    //     ToggleBoost(BoostType.Experience, false);
-    // }
-
 
     /// <summary>
     /// Farms in Seven Circles War for level and items

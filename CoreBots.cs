@@ -1,4 +1,4 @@
-/*
+﻿/*
 name: null
 description: null
 tags: null
@@ -404,7 +404,6 @@ public class CoreBots
                         Bot.Lite.DisableSelfAnimation = changeTo;
                         Bot.Lite.DisableWeaponAnimation = changeTo;
                         Bot.Lite.DisableSkillAnimation = changeTo;
-                        Bot.Lite.DisableSkillAnimations = changeTo;
 
                         Bot.Flash.SetGameObject("stage.frameRate", 10);
                         if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
@@ -518,7 +517,24 @@ public class CoreBots
 
                 if (EquipmentBeforeBot.Any())
                 {
-                    JumpWait();
+                    string[] PVPMaps = new[]
+                        {
+                            "bludrutbrawl",
+                            "darkoviapvp",
+                            "dagepvp",
+                            "deathpitbrawl",
+                            "frostbrawl",
+                            "chaosbrawl",
+                            "doomarenaa",
+                            "doomarenab",
+                            "doomarenac",
+                            "doomarenad"
+                        };
+
+                    if (PVPMaps.Contains(Bot.Map.Name))
+                        Join("whitemap");
+                    else JumpWait();
+
                     Equip(EquipmentBeforeBot.ToArray());
                 }
             }
@@ -871,7 +887,6 @@ public class CoreBots
 
         foreach (string item in items)
         {
-            // Skip if item is already in house or inventory, or nowhere at all (not found in any)
             bool inHouse = Bot.House.Contains(item);
             bool inInventory = Bot.Inventory.Contains(item);
             bool inBank = Bot.Bank.Contains(item);
@@ -881,12 +896,11 @@ public class CoreBots
                 continue;
             }
 
-            // Check inventory space before attempting to unbank
             if (inBank && (!inInventory || !inHouse))
             {
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
-                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please make {requiredSpaces} space(s), and restart the bot", messageBox: true, stopBot: true);
+                    Logger($"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}) — please make {requiredSpaces} space(s) and restart the bot.", messageBox: true, stopBot: true);
                     return;
                 }
 
@@ -900,7 +914,7 @@ public class CoreBots
                 {
                     if (bankItem == null)
                     {
-                        Logger($"Failed to get bank item for '{item}', skipping.");
+                        Logger($"❌ Failed to get bank item for '{item}', skipping.");
                         continue;
                     }
                     for (int i = 0; i < 20; i++)
@@ -930,11 +944,11 @@ public class CoreBots
 
                 if (!success)
                 {
-                    Logger($"Failed to unbank {item}, skipping it");
+                    Logger($"🚫 Failed to unbank {item}, skipping it.");
                     continue;
                 }
 
-                Logger($"{item} moved from bank");
+                Logger($"✅ {item} successfully moved from bank! 🏦➡️🎒");
             }
         }
     }
@@ -961,7 +975,6 @@ public class CoreBots
             bool inInventory = Bot.Inventory.Contains(itemID);
             bool inBank = Bot.Bank.Contains(itemID);
 
-            // Skip if item is already in house or inventory, or nowhere at all
             if (inHouse || inInventory || (!inHouse && !inInventory && !inBank))
             {
                 requiredSpaces--;
@@ -973,14 +986,13 @@ public class CoreBots
                 ItemBase? bankItem = Bot.Bank.Items?.FirstOrDefault(x => x?.ID == itemID);
                 if (bankItem == null)
                 {
-                    Logger($"Failed to find item with ID {itemID}, skipping it");
+                    Logger($"❌ Failed to find item with ID {itemID}, skipping it.");
                     continue;
                 }
 
                 if (Bot.Inventory.FreeSlots <= 0 && Bot.Inventory.Slots != 0 && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots)
                 {
-                    Logger($"Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}), please make {requiredSpaces} space(s), and restart the bot",
-                        messageBox: true, stopBot: true);
+                    Logger($"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}) — please make {requiredSpaces} space(s) and restart the bot.", messageBox: true, stopBot: true);
                     return;
                 }
 
@@ -1018,11 +1030,11 @@ public class CoreBots
 
                 if (!success)
                 {
-                    Logger($"Failed to unbank {bankItem.Name}, skipping it");
+                    Logger($"🚫 Failed to unbank {bankItem.Name}, skipping it.");
                     continue;
                 }
 
-                Logger($"{bankItem.Name} moved from bank");
+                Logger($"✅ {bankItem.Name} successfully moved from bank! 🏦➡️🎒");
             }
         }
     }
@@ -1041,7 +1053,7 @@ public class CoreBots
         JumpWait();
 
         List<ItemCategory> whiteList = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.Resource, ItemCategory.QuestItem };
-        int?[] Extras = { 18927, 38575 }; // Blacklisted item IDs
+        int?[] Extras = { 18927, 38575 };
 
         foreach (string? item in items)
         {
@@ -1050,7 +1062,7 @@ public class CoreBots
 
             if (Bot.Inventory.IsEquipped(item) || Bot.House.IsEquipped(item))
             {
-                Logger($"Can't bank an equipped item: {item}");
+                Logger($"⚔️ Can't bank equipped item: {item}");
                 continue;
             }
 
@@ -1058,14 +1070,14 @@ public class CoreBots
             bool inInventoryOrHouse = Bot.Inventory.Contains(item) || Bot.House.Contains(item);
             if (inBank && !inInventoryOrHouse)
             {
-                Logger($"Item {item} is already in the bank, skipping it");
+                Logger($"ℹ️ {item} is already in bank, skipping.");
                 continue;
             }
 
             ItemBase? inventoryItem = Bot.Inventory.Items.Concat(Bot.House.Items).FirstOrDefault(x => x?.Name == item);
             if (inventoryItem == null)
             {
-                Logger($"{item} not found in inventory, skipping it");
+                Logger($"❌ {item} not found in inventory, skipping.");
                 continue;
             }
 
@@ -1073,7 +1085,6 @@ public class CoreBots
                                   houseItem != null &&
                                   (houseItem.CategoryString == "House" || houseItem.CategoryString == "Wall Item" || houseItem.CategoryString == "Floor Item");
 
-            // Check whitelist, blacklist, and Extras exclusions
             if (((whiteList.Contains(inventoryItem.Category)) || inventoryItem.Coins) &&
                 !BankingBlackList.Contains(item) && !Extras.Contains(inventoryItem.ID) &&
                 (Bot.Inventory.Contains(item) || (itemIsForHouse && Bot.House.Contains(item) && houseItem?.Equipped != true)))
@@ -1085,7 +1096,7 @@ public class CoreBots
 
                     if (!Bot.Inventory.EnsureToBank(item) && !Bot.Bank.Contains(item))
                     {
-                        Logger($"Failed to bank {item}, skipping it");
+                        Logger($"🚫 Failed to bank {item}, skipping it.");
                         continue;
                     }
                 }
@@ -1098,13 +1109,13 @@ public class CoreBots
 
                         if (Bot.House.Items.Any(x => x?.Name == item))
                         {
-                            Logger($"Failed to bank {item} in house bank, skipping it");
+                            Logger($"🚫 Failed to bank {item} in house bank, skipping it.");
                             continue;
                         }
                     }
                 }
 
-                Logger($"{item} moved to bank");
+                Logger($"💰 {item} moved to bank successfully! 🎒➡️🏦");
             }
         }
     }
@@ -1123,7 +1134,7 @@ public class CoreBots
         JumpWait();
 
         List<ItemCategory> whiteList = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.Resource, ItemCategory.QuestItem };
-        int?[] Extras = { 18927, 38575 }; // Blacklisted item IDs
+        int?[] Extras = { 18927, 38575 };
 
         foreach (int itemID in items)
         {
@@ -1131,12 +1142,9 @@ public class CoreBots
                 continue;
 
             ItemBase? inventoryItem = Bot.Inventory.Items.Concat(Bot.House?.Items ?? Enumerable.Empty<ItemBase>())
-                                             .FirstOrDefault(x => x?.ID == itemID);
+                                                 .FirstOrDefault(x => x?.ID == itemID);
             if (inventoryItem == null)
-            {
-                // Logger($"Item with ID {itemID} not found in Inventory or House.");
                 continue;
-            }
 
             bool itemIsForHouse = Bot.House?.Items?.Any(x => x?.ID == itemID &&
                                                            (x.CategoryString == "House" ||
@@ -1162,9 +1170,9 @@ public class CoreBots
                     }
 
                     if (success)
-                        Logger($"{inventoryItem.Name ?? $"ID: {itemID}"} moved to bank.");
+                        Logger($"💰 {inventoryItem.Name ?? $"ID: {itemID}"} moved to bank! 🎒➡️🏦");
                     else
-                        Logger($"Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} after 20 attempts.");
+                        Logger($"🚫 Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} after 20 attempts.");
                 }
                 else
                 {
@@ -1176,18 +1184,16 @@ public class CoreBots
 
                         if (Bot.House?.Items?.Any(x => x?.ID == itemID) == true)
                         {
-                            Logger($"Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} in house bank.");
+                            Logger($"🚫 Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} in house bank.");
                             continue;
                         }
 
-                        Logger($"{inventoryItem.Name ?? $"ID: {itemID}"} moved to house bank.");
+                        Logger($"🏠💰 {inventoryItem.Name ?? $"ID: {itemID}"} moved to house bank!");
                     }
                 }
             }
             else
-            {
-                Logger($"Item {inventoryItem?.Name ?? $"ID: {itemID}"} is blacklisted or excluded.");
-            }
+                Logger($"⛔ {inventoryItem?.Name ?? $"ID: {itemID}"} is blacklisted or excluded.");
         }
     }
 
@@ -1216,11 +1222,11 @@ public class CoreBots
             {
                 if (!Bot.House.EnsureToBank(item))
                 {
-                    Logger($"Failed to bank {item}, skipping it");
+                    Logger($"🚫 Failed to bank {item}, skipping it.");
                     continue;
                 }
 
-                Logger($"{item} moved to house bank");
+                Logger($"🏠💰 {item} moved to house bank successfully!");
             }
         }
     }
@@ -1250,11 +1256,11 @@ public class CoreBots
             {
                 if (!Bot.House.EnsureToBank(itemID))
                 {
-                    Logger($"Failed to bank {itemID}, skipping it");
+                    Logger($"🚫 Failed to bank {itemID}, skipping it.");
                     continue;
                 }
 
-                Logger($"{itemID} moved to house bank");
+                Logger($"🏠💰 Item ID {itemID} moved to house bank successfully!");
             }
         }
     }
@@ -3146,7 +3152,7 @@ public class CoreBots
                 Bot.Flash.CallGameFunction<int>("world.getQuestValue", QuestData.Slot) >= QuestData.Value;
 
             // Commented out to reduce spam
-            DebugLogger(this, $"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
+            Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
             return complete;
         }
 
@@ -4251,17 +4257,25 @@ public class CoreBots
         #endregion exit aggro
     }
 
+
     /// <summary>
-    /// Hunts monsters based on the requirements of a specified quest and an optional array of map and monster names.
+    /// Old-compatible signature: forwards to the new overload with log = true so existing calls keep working.
+    /// </summary>
+    public void HuntMonsterQuest(int questId, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
+        => HuntMonsterQuest(questId, log: true, MapMonsterClassPairs);
+
+    /// <summary>
+    /// Loads the quest, unbanks required items, adds non-temp drops, iterates requirements (using provided map/monster/class tuples) to call HuntMonster() for each, then attempts to complete the quest.
     /// </summary>
     /// <param name="questId">The ID of the quest to load requirements from.</param>
+    /// <param name="log">Whether to log each hunt action (forwarded to HuntMonster)</param>
     /// <param name="MapMonsterClassPairs">Array of map name, monster name, and class type tuples.</param>
-    public void HuntMonsterQuest(int questId, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
+    public void HuntMonsterQuest(int questId, bool log = true, params (string mapName, string monsterName, ClassType classType)[] MapMonsterClassPairs)
     {
         Quest? quest = InitializeWithRetries(() => EnsureLoad(questId));
         if (quest == null)
         {
-            Logger($"❌ Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true); // ❌
+            Logger($"❌ Failed to load quest with ID [{questId}] after multiple attempts.", stopBot: true);
             return;
         }
 
@@ -4275,10 +4289,10 @@ public class CoreBots
 
         // Add the non-temp items to the drop pickup list
         Bot.Drops.Add(quest.AcceptRequirements.Concat(quest.Requirements)
-                                .Where(x => x != null && !x.Temp)
-                                .Select(x => x.ID)
-                                .Distinct()
-                                .ToArray()); // 💎🛒
+                            .Where(x => x != null && !x.Temp)
+                            .Select(x => x.ID)
+                            .Distinct()
+                            .ToArray());
 
         // If no MapMonsterClassPairs are provided, auto-generate default values
         if (MapMonsterClassPairs.Length == 0)
@@ -4294,19 +4308,24 @@ public class CoreBots
             var (mapName, monsterName, classType) = MapMonsterClassPairs[i];
 
             if (CheckInventory(requirement.ID, requirement.Quantity))
-                continue; // 💎✅
+                continue;
 
             // Equip the class before hunting
-            EquipClass(classType); // 🛡️⚔️
+            EquipClass(classType);
 
             if (!Bot.Quests.IsInProgress(questId))
-                EnsureAccept(questId); // 📝
+                EnsureAccept(questId);
 
-            HuntMonster(mapName ?? Bot.Map.Name, monsterName ?? "*", requirement.Name ?? string.Empty, requirement.Quantity, requirement.Temp); // ⚔️💎
+            HuntMonster(mapName ?? Bot.Map.Name,
+                        monsterName ?? "*",
+                        requirement.Name ?? string.Empty,
+                        requirement.Quantity,
+                        requirement.Temp,
+                        log);
         }
 
         if (!Bot.Quests.EnsureComplete(questId))
-            EnsureCompleteMulti(questId); // 🏆
+            EnsureCompleteMulti(questId);
     }
 
     /// <summary>
@@ -4740,7 +4759,7 @@ public class CoreBots
                 // MonsterMapIDs:
                 // 2 = Staff
                 // 3 = Escherion
-                if (!Bot.Player.HasTarget)
+                if (Bot.Player is not { HasTarget: true })
                     Bot.Combat.Attack(3);
                 else
                     Bot.Combat.Attack((Bot.Player?.Target?.MapID == 3 /* Escherion */
@@ -4762,7 +4781,7 @@ public class CoreBots
                     done = true;
                     break;
                 }
-                DoSwindlesReturnArea(ReturnDuring, ReturnItem);
+
             }
 
             Bot.Options.AggroMonsters = false;
@@ -4777,7 +4796,7 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
-
+        
         void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
         {
             // Return if the policy isn't active or required items are missing
@@ -5773,7 +5792,7 @@ public class CoreBots
 
         if (CurrentClass && Bot.Player.CurrentClass != null)
         {
-            Logger($"Current Class: {Bot.Player.CurrentClass} | Current Rank: {Bot.Player.CurrentClassRank}");
+            DebugLogger(this, $"Current Class: {Bot.Player.CurrentClass} | Current Rank: {Bot.Player.CurrentClassRank}");
             return Bot.Player.CurrentClassRank;
         }
         else
@@ -5810,7 +5829,7 @@ public class CoreBots
                         break;
                 }
 
-                Logger($"Class Rank (based on ClassXP): {classRank}");
+                DebugLogger(this, $"Class Rank (based on ClassXP): {classRank}");
                 return classRank;
             }
         }
@@ -6022,7 +6041,8 @@ public class CoreBots
                     break;
                 }
 
-                Bot.Servers.Login();
+                CancellationTokenSource cts = new();
+                Bot.Wait.ForTrue(() => Bot.Servers.EnsureRelogin(cts.Token).Result, 20);
                 Bot.Wait.ForTrue(() => Bot.Player?.LoggedIn ?? false, 20);
 
                 // Pick target server
@@ -6172,8 +6192,7 @@ public class CoreBots
 
             while (!Bot.ShouldExit && equipedClass != className)
             {
-                if (Bot.Player.InCombat)
-                    Bot.Combat.Exit();
+                JumpWait();
 
                 Equip(Bot.Inventory.Items.Concat(Bot.Bank.Items).First(x => x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class).ID);
                 Bot.Wait.ForItemEquip(Bot.Inventory.Items.Concat(Bot.Bank.Items).First(x => x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class).ID);
@@ -6925,22 +6944,23 @@ public class CoreBots
     {
         // Build base blacklist: union of static patterns, regex matches, and logical filters
         blackListedCells = Bot.Monsters.MapMonsters
-            .Select(monster => monster.Cell)
-            .Union(
-                Bot.Map.Cells
-                    .Where(cell => cell != null &&
-                        (
-                            // Inline regex rules for common cases
-                            Regex.IsMatch(cell, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild)$", RegexOptions.IgnoreCase)
-                            // Check against static or regex-defined BlackListedJumptoCells
-                            || BlackListedJumptoCells.Any(pattern =>
-                                Regex.IsMatch(cell, $"^{pattern}$", RegexOptions.IgnoreCase))
-                            // Cells containing "Enter" when not currently in Enter
-                            || (Bot.Player.Cell != "Enter" && cell.Contains("Enter", StringComparison.OrdinalIgnoreCase))
-                        )
-                    )
-            )
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+     .Select(monster => monster.Cell)
+     .Union(
+         Bot.Map.Cells
+             .Where(cell => cell != null &&
+                 (
+                     // Inline regex rules for common cases + added "move\d+", "moveframe", and "game"
+                     Regex.IsMatch(cell, @"(^cut\w*$)|(^\w*cut$)|(^cut$)|(^r\d+$)|^(bs\d+|ar\d+|ms\d+|apo\d+|guild|move\d+|moveframe|game)$", RegexOptions.IgnoreCase)
+                     // Check against static or regex-defined BlackListedJumptoCells
+                     || BlackListedJumptoCells.Any(pattern =>
+                         Regex.IsMatch(cell, $"^{pattern}$", RegexOptions.IgnoreCase))
+                     // Cells containing "Enter" when not currently in Enter
+                     || (Bot.Player.Cell != "Enter" && cell.Contains("Enter", StringComparison.OrdinalIgnoreCase))
+                 )
+             )
+     )
+     .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
 
         switch (Bot.Map.Name)
         {
@@ -6951,6 +6971,9 @@ public class CoreBots
             case "escherion":
                 blackListedCells.UnionWith(Bot.Map?.Cells?.Where(c => Regex.IsMatch(c, @"^(Frame|e)\d+$")) ?? Array.Empty<string>());
                 blackListedCells.Add("Boss");
+                break;
+            case "originul":
+                blackListedCells.UnionWith(new[] { "r10" });
                 break;
 
             case "yokaigrave":
@@ -7083,8 +7106,8 @@ public class CoreBots
     // Combined static and regex-based blacklist patterns
     public string[] BlackListedJumptoCells = new[]
     {
-    "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame",
-    "Quest", "Game", "Fall", "Move", "Cut", "Movie",
+    "Wait", "Blank", "Out", "CutMikoOrochi", "innitRoom", "Video", "Leave", "moveFrame", "MoveFrame", "Moveframe",
+    "Quest", "Game", "Fall", "Move", "Cut", "Movie", "movie",
     @"^Frame\d+$", // matches Frame1, Frame2, Frame10, etc.
     @"^e\d+$"      // matches e1, e2, e55, etc.
 };

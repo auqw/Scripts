@@ -46,8 +46,10 @@ public class FrostSpiritReaver
             Core.Relogin("\"GlaceraREP\" wont work, unless its relogged after doing the story... ae really needs to fix this.");
             Farm.GlaceraREP();
         }
-        Dailies.Cryomancer();
-        if (!Core.CheckInventory("Cryomancer") && !Core.CheckInventory("Frost Sigil"))
+        if (!Core.CheckInventory("Cryomancer"))
+            Dailies.Cryomancer();
+            
+        if (!Core.CheckInventory("Frost Sigil"))
         {
             Core.Logger("Cryomancer Required for \"Frost Sigil\" for \"IceNinth\", Comeback tomarrow.");
             return;
