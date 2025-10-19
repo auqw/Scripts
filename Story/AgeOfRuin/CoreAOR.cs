@@ -97,7 +97,13 @@ public class CoreAOR
         // Tell-Tale Heart (9851)
         if (isColdThunderCalled)
             Story.MapItemQuest(9851, "terminatemple", new[] { 13541, 13542 });
+
+        // Familial Blessing (10438)
+        Story.MapItemQuest(10438, "terminatemple", 15048, 1);
+
+        // last quest is for Echo of the King's Echo class
     }
+        
     public void AshrayVillage()
     {
         if (Core.isCompletedBefore(9234))

@@ -4761,14 +4761,18 @@ public class CoreBots
                 // 3 = Escherion
                 if (Bot.Player is not { HasTarget: true })
                     Bot.Combat.Attack(3);
+                else if (/*Bot.Player?.Target?.MapID == 3 && Bot.Player?.Target?.State == 2 && */ Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x?.MapID == 2).Alive)
+                    // Escherion is invulnerable → attack Staff of Inversion
+                    Bot.Combat.Attack(2);
+                else if (Bot.Player?.Target?.MapID == 2 && Bot.Player?.Target?.HP > 0)
+                    // Staff of Inversion still alive → attack it
+                    Bot.Combat.Attack(2);
                 else
-                    Bot.Combat.Attack((Bot.Player?.Target?.MapID == 3 /* Escherion */
-                    && Bot.Player?.Target?.State == 2 /* Invulnerable */ )
-                        ? 2 /* Staff of Inversion */
-                        : 3 /* Escherion */);
-                Bot.Sleep(500);
+                    // Otherwise, attack Escherion
+                    Bot.Combat.Attack(3);
+                Sleep();
 
-                // Bot.Wait.ForTrue(() => Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x?.State != 2 && x?.HP > 0), 20);
+
 
                 if (item == null)
                 {
@@ -6174,9 +6178,15 @@ public class CoreBots
             if (usingGeneric)
                 return false;
 
-            if (!CheckInventory(className) || !Bot.Inventory.Items.Any(x => x.Name.ToLower().Trim() == className.ToLower().Trim() && x.Category == ItemCategory.Class))
+            if (!CheckInventory(className))
             {
                 Logger("You do not own " + className);
+                return false;
+            }
+            
+            if (!Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(x => x.Name.ToLower().Trim() == className.ToLower().Trim() && x.Category == ItemCategory.Class))
+            {
+                Logger($"Class \"{className}\" found but not categorized as Class item - may be incorrect name");
                 return false;
             }
 

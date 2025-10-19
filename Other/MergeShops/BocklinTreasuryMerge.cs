@@ -153,6 +153,11 @@ public class BocklinTreasuryMerge
                     Core.HuntMonster("bocklincastle", "Garde Wraith", req.Name, quant, req.Temp, false);
                     break;
 
+                case "Gold Voucher 100k":
+                    Farm.Voucher(req.Name, req.Quantity);
+                    break;
+
+
             }
         }
     }
