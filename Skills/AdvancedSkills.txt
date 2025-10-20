@@ -154,6 +154,7 @@ Solo = Infinity Titan = 4M>50S | 2S | 3H<50S | 2S | 3H<50S | 1 | 1 = Use if Avai
 Supp = Infinity Titan = 3 | 2 | 4 | 1 = Use if Available
 Base = Infinity Knight = 4 | 2 | 1 | 1 | 1 | 2 | 1 | 1 | 1 | 2 | 4 | 3 = 100
 Base = Interstellar Knight = 4 | 2 | 1 | 1 | 1 | 2 | 1 | 1 | 1 | 2 | 4 | 3 = 100
+Base = King's Echo = 1 | 2 | 3 | 4 = 100
 Atk = Legendary Elemental Warrior = 1 | 3 | 4 | 1 | 2 | 4 | 1 | 3 | 2 | 1 | 4 | 2 = 100
 Def = Legendary Elemental Warrior = 1 | 3 | 2 | 1 | 2 | 3 = 100
 Base = Legendary ArchFiend = 1 | 2 | 3 | 4 = Use if Available

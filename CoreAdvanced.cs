@@ -3190,6 +3190,7 @@ public class CoreAdvanced
                 case "infinite dark caster":
                 case "infinite legion dark caster":
                 case "infinity titan":
+                case "king's echo":
                 case "legendary naval commander":
                 case "legion blademaster assassin":
                 case "legion doomknight tester":

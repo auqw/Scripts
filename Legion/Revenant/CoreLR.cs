@@ -122,14 +122,14 @@ public class CoreLR
 
             Core.EquipClass(ClassType.Solo);
             //Adv.BestGear(RacialGearBoost.Undead);
-            Core.KillMonster("judgement", "r10a", "Left", "Ultra Aeacus", "Aeacus Empowered", 50, false, publicRoom: true);
+            Core.KillMonster("judgement", "r10a", "Left", "Ultra Aeacus", "Aeacus Empowered", 50, false, publicRoom: Core.PublicDifficult);
 
             Core.EquipClass(ClassType.Farm);
             //Adv.BestGear(GenericGearBoost.dmgAll);
             Core.KillMonster("revenant", "r2", "Left", "*", "Tethered Soul", 300, false);
             Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Darkened Essence", 500, false);
             //Adv.BestGear(RacialGearBoost.Undead);
-            Core.KillMonster("necrodungeon", "r22", "Down", "*", "Dracolich Contract", 1000, false, publicRoom: true);
+            Core.KillMonster("necrodungeon", "r22", "Down", "*", "Dracolich Contract", 1000, false);
 
             Core.EnsureComplete(6897);
             Bot.Wait.ForPickup("Revenant's Spellscroll");

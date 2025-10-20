@@ -4741,6 +4741,7 @@ public class CoreBots
                     {
                         Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                         Bot.Wait.ForCellChange("Boss");
+                        Bot.Player.SetSpawnPoint();
                     }
                 }
 
@@ -4748,12 +4749,14 @@ public class CoreBots
                 {
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange("Boss");
+                    Bot.Player.SetSpawnPoint();
                 }
 
                 if (Bot.Player?.Cell == "Cut1")
                 {
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange("Boss");
+                    Bot.Player.SetSpawnPoint();
                 }
 
                 // MonsterMapIDs:
@@ -4771,6 +4774,29 @@ public class CoreBots
                     // Otherwise, attack Escherion
                     Bot.Combat.Attack(3);
                 Sleep();
+
+
+                // Working 1.3 version:
+                /*
+                  // Initialize by attacking Escherion
+                if (!Bot.Player.HasTarget)
+                {
+                    Bot.Combat.Attack(3);
+                    Bot.Sleep(500);
+                }
+
+                // Player doesnt have target > attack Escherion
+                else if (!Bot.Monsters.MapMonsters.Where(x => x != null && x.HP > 0).Any())
+                {
+                    Bot.Sleep(500);
+                    continue;
+                }
+                else if (Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == 2).HP > 0)
+                    Bot.Combat.Attack(2);
+                else
+                    Bot.Combat.Attack(3);
+                Bot.Sleep(500);
+                */
 
 
 
@@ -6183,7 +6209,7 @@ public class CoreBots
                 Logger("You do not own " + className);
                 return false;
             }
-            
+
             if (!Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(x => x.Name.ToLower().Trim() == className.ToLower().Trim() && x.Category == ItemCategory.Class))
             {
                 Logger($"Class \"{className}\" found but not categorized as Class item - may be incorrect name");
@@ -6712,44 +6738,73 @@ public class CoreBots
         {
             mainMetaValue = 0;
 
-            if (item.Meta == null) return 0;
+            if (string.IsNullOrWhiteSpace(item.Meta))
+                return 0;
 
-            // Clean unwanted meta types from the item's meta string
-            string cleanedMeta = unwantedMetaTypes
-                .Aggregate(item.Meta, (currentMeta, unwanted) =>
-                    currentMeta.Replace(unwanted + ",", string.Empty))
-                .TrimEnd(',')
-                .Replace(",+", ",")
-                .Trim(',');
-
-            // Split the cleaned meta string into key-value pairs
-            var metaPairs = cleanedMeta
-                .Split('\n')
-                .SelectMany(line => line.Split(','))
-                .Select(metaEntry => metaEntry.Split(':'))
-                .Where(metaPair => metaPair.Length == 2); // Ensure it is a valid meta pair
-
-            // Calculate the main meta value and sum other meta scores
-            double totalScore = 0;
-            foreach (var pair in metaPairs)
+            // Remove unwanted meta types everywhere (handles occurrences with or without trailing commas or pluses)
+            string cleanedMeta = item.Meta;
+            foreach (var unwanted in unwantedMetaTypes)
             {
-                string metaKey = pair[0];
-                if (double.TryParse(pair[1], out double metaValue))
+                cleanedMeta = Regex.Replace(cleanedMeta, Regex.Escape(unwanted) + @"[\+,]?", string.Empty, RegexOptions.IgnoreCase);
+            }
+
+            // Normalize separators and trim
+            cleanedMeta = cleanedMeta.Replace(",+", ",").Trim(',', '\n', '\r', ' ');
+
+            // Split into individual meta entries (by newline or comma)
+            var metaEntries = cleanedMeta
+                .Split(new[] { '\n', ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => s.Trim())
+                .Where(s => !string.IsNullOrEmpty(s));
+
+            double totalAdditional = 0;
+
+            foreach (var entry in metaEntries)
+            {
+                // Determine separator (':' preferred, otherwise '+')
+                string key;
+                string valuePart;
+                int colonIdx = entry.IndexOf(':');
+                if (colonIdx >= 0)
                 {
-                    // Check if the current meta is in the desired priorities
-                    if (metaPriorities.Contains(metaKey))
+                    key = entry.Substring(0, colonIdx).Trim();
+                    valuePart = entry.Substring(colonIdx + 1).Trim();
+                }
+                else
+                {
+                    int plusIdx = entry.IndexOf('+');
+                    if (plusIdx >= 0)
                     {
-                        mainMetaValue = Math.Max(mainMetaValue, metaValue); // Save the highest main meta value
+                        key = entry.Substring(0, plusIdx).Trim();
+                        valuePart = entry.Substring(plusIdx + 1).Trim();
                     }
                     else
                     {
-                        totalScore += metaValue; // Sum other meta values as secondary score
+                        // Fallback: try splitting by whitespace
+                        var parts = entry.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
+                        if (parts.Length == 2)
+                        {
+                            key = parts[0].Trim();
+                            valuePart = parts[1].Trim();
+                        }
+                        else
+                            continue; // Unparsable entry
                     }
+                }
+
+                // Normalize the value string (remove trailing '%' and any plus signs)
+                valuePart = valuePart.Replace("%", string.Empty).Replace("+", string.Empty).Trim();
+
+                if (double.TryParse(valuePart, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out double metaValue))
+                {
+                    if (metaPriorities.Any(priority => string.Equals(priority, key, StringComparison.OrdinalIgnoreCase)))
+                        mainMetaValue = Math.Max(mainMetaValue, metaValue);
+                    else
+                        totalAdditional += metaValue;
                 }
             }
 
-            // Return the total score which combines other metas (does not include the mainMetaValue)
-            return totalScore;
+            return totalAdditional;
         }
 
         // Variables to track the best items across categories
@@ -6818,7 +6873,18 @@ public class CoreBots
                 var item = bestItems[category];
                 if (item != null) // Additional null check
                 {
-                    Logger($"Equipping best item: {item.Name} in category {category}.");
+                    // Check if item is already equipped
+                    if (Bot.Inventory.IsEquipped(item.Name))
+                        continue;
+
+                    Logger($"Equipping best {category}: {item.Name} (MainMeta: {bestMainMetaValues[category]}, Additional: {bestAdditionalMetaScores[category]})");
+
+                    // Check if item is in bank and unbank it if needed
+                    if (Bot.Bank.Contains(item.Name))
+                    {
+                        Unbank(item.Name);
+                    }
+
                     Equip(item.ID);
                 }
             }
@@ -9456,34 +9522,40 @@ public class CoreBots
 
         //Class Equipment
         List<string> _SoloGear = new();
-        if (CBOString("Helm1Select", out string _Helm1))
-            _SoloGear.Add(_Helm1);
-        if (CBOString("Armor1Select", out string _Armor1))
-            _SoloGear.Add(_Armor1);
-        if (CBOString("Cape1Select", out string _Cape1))
-            _SoloGear.Add(_Cape1);
-        if (CBOString("Weapon1Select", out string _Weapon1))
-            _SoloGear.Add(_Weapon1);
-        if (CBOString("Pet1Select", out string _Pet1))
-            _SoloGear.Add(_Pet1);
-        if (CBOString("GroundItem1Select", out string _GroundItem1))
-            _SoloGear.Add(_GroundItem1);
+        if (SoloGearOn)
+        {
+            if (CBOString("Helm1Select", out string _Helm1))
+                _SoloGear.Add(_Helm1);
+            if (CBOString("Armor1Select", out string _Armor1))
+                _SoloGear.Add(_Armor1);
+            if (CBOString("Cape1Select", out string _Cape1))
+                _SoloGear.Add(_Cape1);
+            if (CBOString("Weapon1Select", out string _Weapon1))
+                _SoloGear.Add(_Weapon1);
+            if (CBOString("Pet1Select", out string _Pet1))
+                _SoloGear.Add(_Pet1);
+            if (CBOString("GroundItem1Select", out string _GroundItem1))
+                _SoloGear.Add(_GroundItem1);
+        }
         if (_SoloGear.Count > 0)
             SoloGear = _SoloGear.ToArray();
 
         List<string> _FarmGear = new();
-        if (CBOString("Helm2Select", out string _Helm2))
-            _FarmGear.Add(_Helm2);
-        if (CBOString("Armor2Select", out string _Armor2))
-            _FarmGear.Add(_Armor2);
-        if (CBOString("Cape2Select", out string _Cape2))
-            _FarmGear.Add(_Cape2);
-        if (CBOString("Weapon2Select", out string _Weapon2))
-            _FarmGear.Add(_Weapon2);
-        if (CBOString("Pet2Select", out string _Pet2))
-            _FarmGear.Add(_Pet2);
-        if (CBOString("GroundItem2Select", out string _GroundItem2))
-            _FarmGear.Add(_GroundItem2);
+        if (FarmGearOn)
+        {
+            if (CBOString("Helm2Select", out string _Helm2))
+                _FarmGear.Add(_Helm2);
+            if (CBOString("Armor2Select", out string _Armor2))
+                _FarmGear.Add(_Armor2);
+            if (CBOString("Cape2Select", out string _Cape2))
+                _FarmGear.Add(_Cape2);
+            if (CBOString("Weapon2Select", out string _Weapon2))
+                _FarmGear.Add(_Weapon2);
+            if (CBOString("Pet2Select", out string _Pet2))
+                _FarmGear.Add(_Pet2);
+            if (CBOString("GroundItem2Select", out string _GroundItem2))
+                _FarmGear.Add(_GroundItem2);
+        }
         if (_FarmGear.Count > 0)
             FarmGear = _FarmGear.ToArray();
 

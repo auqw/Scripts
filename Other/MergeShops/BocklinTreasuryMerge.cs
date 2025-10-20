@@ -87,7 +87,7 @@ public class BocklinTreasuryMerge
                     Core.RegisterQuests(Core.IsMember ? 10267 : 10266);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                     {
-                        Core.HuntMonster("bocklinsanctum", "Thronekeeper", "Black Armorial Fleur");
+                        Core.HuntMonster("bocklinsanctum", "Thronekeeper", "Black Armorial Fleur", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
