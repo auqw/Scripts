@@ -1369,7 +1369,7 @@ public class CoreAdvanced
     public void RankUpClass(string className, bool gearRestore = true, int itemid = 0)
     {
         // Determine search condition based on itemid
-        Func<InventoryItem, bool> classMatch = i => (itemid > 0 ? i.ID == itemid : i.Name.Equals(className, StringComparison.OrdinalIgnoreCase)) && i.Category == ItemCategory.Class;
+        bool classMatch(InventoryItem i) => (itemid > 0 ? i.ID == itemid : i.Name.Equals(className, StringComparison.OrdinalIgnoreCase)) && i.Category == ItemCategory.Class;
 
         // Find the class item in inventory and bank
         InventoryItem? itemInv = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(classMatch);
@@ -2469,7 +2469,7 @@ public class CoreAdvanced
                 #endregion
 
                 #region Ravenous
-                case "PlaceHodler":
+                case "PlaceHolder":
                     if (!uRavenous())
                         goto default;
 
@@ -3034,6 +3034,18 @@ public class CoreAdvanced
                     break;
                 #endregion
 
+                #region Lucky - Ravenous - Examen - Vainglory
+                case "king's echo":
+                    if (!uRavenous() || !uExamen() || !uVainglory())
+                        goto default;
+
+                    type = EnhancementType.Lucky;
+                    cSpecial = CapeSpecial.Vainglory;
+                    wSpecial = WeaponSpecial.Ravenous;
+                    hSpecial = HelmSpecial.Examen;
+                    break;
+                #endregion
+
                 #region Luck - Val/Smite/Mana - Anima - Vg
                 case "dragonslayer general":
                     type = EnhancementType.Lucky;
@@ -3190,7 +3202,6 @@ public class CoreAdvanced
                 case "infinite dark caster":
                 case "infinite legion dark caster":
                 case "infinity titan":
-                case "king's echo":
                 case "legendary naval commander":
                 case "legion blademaster assassin":
                 case "legion doomknight tester":
@@ -3506,6 +3517,7 @@ public class CoreAdvanced
                 case "martial artist":
                 case "master martial artist":
                 case "antique hunter":
+                case "king's echo":
                     type = EnhancementType.Lucky;
                     wSpecial = WeaponSpecial.Awe_Blast;
                     break;

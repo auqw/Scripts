@@ -1722,6 +1722,14 @@ public class CoreArmyLite
         string[] MemMaps = { "shadowlordpast", "binky", "superlowe" };
         string[] EventMaps = Array.Empty<string>();
 
+        // Map and quests to use to see the boss without doing the story
+        (string Map, int QuestUpdate)[] UpdateQuest = new[]
+        {
+        ("ultradrakath", 3879),
+        ("bocklincastle", 102520),
+        ("bocklingrove", 10239)
+        };
+
         var levelLockedMaps = new[]
         {
         new { Map = "icestormunder", LevelRequired = 75 },
@@ -1845,6 +1853,30 @@ public class CoreArmyLite
         }
         else
         {
+            foreach ((string Map, int QuestUpdate) in UpdateQuest)
+            {
+                if (Bot.ShouldExit)
+                    return;
+
+                if (Bot.Map.Name != Map)
+                {
+                    Bot.Map.Join($"{Map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(Map);
+                }
+
+                Core.Sleep();
+
+                if (QuestUpdate > 0)
+                    Bot.Quests.UpdateQuest(QuestUpdate);
+
+                if (b_playerName != null && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(b_playerName))
+                {
+                    Core.Logger($"Found {b_playerName} in /{Map}");
+                    return;
+                }
+                maptry++;
+            }
+
             foreach (string map in _LockedMapsList)
             {
                 if (Bot.ShouldExit || LockedMapList.Count <= 0)

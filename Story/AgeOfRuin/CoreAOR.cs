@@ -56,8 +56,6 @@ public class CoreAOR
         ForgeAlbedo();
     }
 
-    private bool isSeaVoiceCalled = false;
-    private bool isColdThunderCalled = false;
 
     public void TerminaTemple(bool seaVoice = false, bool coldThunder = false)
     {
@@ -93,11 +91,6 @@ public class CoreAOR
 
         // Tell-Tale Heart (9851)
         Story.MapItemQuest(9851, "terminatemple", new[] { 13541, 13542 });
-
-        // last 2 quests are for Echo of the King's Echo class, done within the class script itself
-        // Familial Blessing (10438)
-        Story.MapItemQuest(10438, "terminatemple", 15048);
-
     }
 
     public void AshrayVillage(bool seaVoice = false, bool coldThunder = false)

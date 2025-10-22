@@ -164,20 +164,24 @@ public class CoreBots
         ReadCBO();
         #region Social Privacy Options
         bool isStarting = changeTo;
-        CBOBool("AntiLag", out bool AntiLagisOn);
-        if (!AntiLagisOn)
-        {
-            if (isStarting == true)  // Only log when starting the script
-            {
-                Logger("[SetOptions] Anti-Lag in CBO is off. Skipping privacy settings.");
-            }
-        }
-        else
-        {
-            bool disabling = isStarting;
-            bool warned = false;
 
-            foreach ((string key, string label) in new Dictionary<string, string>
+        // 1.3 Feature
+        if (Bot.Version.ToString() == "1.3.0.0")
+        {
+            CBOBool("IncognitoMode", out bool IncognitoModeOn);
+            if (!IncognitoModeOn)
+            {
+                if (isStarting == true)
+                {
+                    Logger("Incognito Mode in CBO is off. Skipping privacy settings.");
+                }
+            }
+            else
+            {
+                bool disabling = isStarting;
+                bool warned = false;
+
+                foreach ((string key, string label) in new Dictionary<string, string>
         {
             { "bGoto", "Goto" },
             { "bParty", "Party invites" },
@@ -186,29 +190,30 @@ public class CoreBots
             { "bGuild", "Guild invites" },
             { "bWhisper", "Whisper" }
         })
-            {
-                if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
-                    continue;
-
-                bool current = Bot.Flash.GetGameObject<bool>($"uoPref.{key}");
-                if (disabling ? current : !current)
                 {
-                    if (disabling && !warned)
+                    if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
+                        continue;
+
+                    bool current = Bot.Flash.GetGameObject<bool>($"uoPref.{key}");
+                    if (disabling ? current : !current)
                     {
-                        Logger("[SetOptions] Turning certain \"Social\" options off to help protect you");
-                        warned = true;
+                        if (disabling && !warned)
+                        {
+                            Logger("[SetOptions] Turning certain \"Social\" options off to help protect you");
+                            warned = true;
+                        }
+
+                        Logger($"[SetOptions] {(disabling ? "Turning off" : "Re-enabling")}: {label}");
+                        SendPackets($"%xt%zm%cmd%1%uopref%{key}%{(!disabling).ToString().ToLower()}%");
+                        Bot.Sleep(500);
                     }
-
-                    Logger($"[SetOptions] {(disabling ? "Turning off" : "Re-enabling")}: {label}");
-                    SendPackets($"%xt%zm%cmd%1%uopref%{key}%{(!disabling).ToString().ToLower()}%");
-                    Bot.Sleep(500);
                 }
-            }
 
-            if (disabling)
-                GC.Collect();
+                if (disabling)
+                    GC.Collect();
+            }
         }
-        #endregion Social Privacy Options
+         #endregion Social Privacy Options
 
         // Set the member status
         IsMember = isUpgraded();
@@ -3505,7 +3510,7 @@ public class CoreBots
 
         if (targetMonsters == null || !targetMonsters.Any())
         {
-            Logger($"⚠️ Monster ${monster} not found in cell ${cell}, pad ${pad} in /${map}");
+            Logger($"⚠️ Monster {monster} not found in cell {cell}, pad {pad} in /{map}");
             return;
         }
 
@@ -3621,7 +3626,7 @@ public class CoreBots
         // Log and exit if no monsters are found
         if (!targetMonsters.Any())
         {
-            if (log) Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+            if (log) Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
             return;
         }
 
@@ -3645,7 +3650,7 @@ public class CoreBots
             }
             else
             {
-                Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+                Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
             }
 
         }
@@ -3679,7 +3684,7 @@ public class CoreBots
                     }
                     else
                     {
-                        Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+                        Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
                     }
 
                     if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)) // 💎✅
@@ -3750,7 +3755,7 @@ public class CoreBots
         // Log and exit if no monsters are found
         if (!targetMonsters.Any())
         {
-            if (log) Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+            if (log) Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
             return;
         }
 
@@ -3774,7 +3779,7 @@ public class CoreBots
             }
             else
             {
-                Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+                Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
             }
         }
         else
@@ -3805,7 +3810,7 @@ public class CoreBots
                 }
                 else
                 {
-                    Logger($"⚠️ No monsters with ID ${MonsterMapID} found in cell ${cell}."); // ⚠️🐲
+                    Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
                 }
 
                 if (isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant)) // 💎✅
@@ -4749,7 +4754,7 @@ public class CoreBots
                 {
                     Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                     Bot.Wait.ForCellChange("Boss");
-                    Bot.Player.SetSpawnPoint();
+                    Bot.Player?.SetSpawnPoint();
                 }
 
                 if (Bot.Player?.Cell == "Cut1")
@@ -4764,7 +4769,7 @@ public class CoreBots
                 // 3 = Escherion
                 if (Bot.Player is not { HasTarget: true })
                     Bot.Combat.Attack(3);
-                else if (/*Bot.Player?.Target?.MapID == 3 && Bot.Player?.Target?.State == 2 && */ Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x?.MapID == 2).Alive)
+                else if (/*Bot.Player?.Target?.MapID == 3 && Bot.Player?.Target?.State == 2 && */ Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == 2)?.Alive == true)
                     // Escherion is invulnerable → attack Staff of Inversion
                     Bot.Combat.Attack(2);
                 else if (Bot.Player?.Target?.MapID == 2 && Bot.Player?.Target?.HP > 0)
@@ -4811,7 +4816,7 @@ public class CoreBots
                     done = true;
                     break;
                 }
-
+                DoSwindlesReturnArea(ReturnDuring, ReturnItem);
             }
 
             Bot.Options.AggroMonsters = false;
@@ -4826,7 +4831,7 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
-        
+
         void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
         {
             // Return if the policy isn't active or required items are missing
@@ -4956,12 +4961,37 @@ public class CoreBots
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-        Join("kitsune", "Boss", "Left");
+        if (Bot.Map.Name != "kitsune")
+        {
+            Join("kitsune");
+            Bot.Wait.ForMapLoad("kitsune");
+        }
+
+        if (Bot.Player.Cell != "Boss")
+        {
+            Bot.Map.Jump("Boss", "Left");
+            Bot.Wait.ForCellChange("Boss");
+        }
+
         Bot.Events.ExtensionPacketReceived += KitsuneListener;
 
         if (item == null)
         {
             if (log) Logger("🌀 Killing Kitsune");
+            #region Map & Cell insurance
+            if (Bot.Map.Name != "kitsune")
+            {
+                Join("kitsune", "Boss", "Left");
+                Bot.Wait.ForMapLoad("kitsune");
+            }
+
+            if (Bot.Player.Cell != "Boss")
+            {
+                Bot.Map.Jump("Boss", "Left");
+                Bot.Wait.ForCellChange("Boss");
+            }
+            #endregion
+
             Bot.Kill.Monster("Kitsune");
         }
         else
@@ -4971,7 +5001,24 @@ public class CoreBots
             if (log)
                 Logger($"🌀 Killing Kitsune for {item} ({dynamicQuant(item, isTemp)}/{quant}) [Temp = {isTemp}]");
             while (!Bot.ShouldExit && !CheckInventory(item, quant))
+            {
+                #region Map & Cell insurance
+                if (Bot.Map.Name != "kitsune")
+                {
+                    Join("kitsune", "Boss", "Left");
+                    Bot.Wait.ForMapLoad("kitsune");
+                }
+
+                if (Bot.Player.Cell != "Boss")
+                {
+                    Bot.Map.Jump("Boss", "Left");
+                    Bot.Wait.ForCellChange("Boss");
+                }
+                #endregion
+
                 Bot.Combat.Attack("*");
+                Bot.Sleep(200);
+            }
         }
 
         Bot.Events.ExtensionPacketReceived -= KitsuneListener;
@@ -5548,25 +5595,54 @@ public class CoreBots
     }
 
     // Word wrap function
-    public static string WordWrap(string input, int lineLength)
+    public static string WordWrap(string? input, int lineLength)
     {
+        if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+
         StringBuilder sb = new();
         int length = 0;
+        bool inSentencePause = false;
 
-        foreach (string word in input.Split(' '))
+        foreach (string word in input.Split(' ', StringSplitOptions.RemoveEmptyEntries))
         {
-            if (length + word.Length > lineLength)
+            // Detect punctuation that signals a small pause
+            if (word.EndsWith('.') || word.EndsWith('!') || word.EndsWith('?') ||
+                word.EndsWith(',') || word.EndsWith(';') || word.EndsWith(':'))
+                inSentencePause = true;
+
+            // Handle long words by hard breaking them
+            if (word.Length > lineLength)
+            {
+                if (length > 0) { sb.AppendLine(); length = 0; }
+                for (int i = 0; i < word.Length; i += lineLength)
+                    sb.AppendLine(word.Substring(i, Math.Min(lineLength, word.Length - i)));
+                inSentencePause = false;
+                continue;
+            }
+
+            // Line wrap logic
+            if (length + word.Length + 1 > lineLength)
             {
                 sb.AppendLine();
                 length = 0;
             }
 
-            sb.Append(word + " ");
+            sb.Append(word).Append(' ');
             length += word.Length + 1;
+
+            // Add soft break after punctuation for readability
+            if (inSentencePause && length > lineLength / 1.3)
+            {
+                sb.AppendLine();
+                length = 0;
+                inSentencePause = false;
+            }
         }
 
-        return sb.ToString().Trim();
+        return sb.ToString().TrimEnd();
     }
+
+
 
     /// <summary>
     /// Logs farming activity for a specified item.
@@ -6030,6 +6106,8 @@ public class CoreBots
 
     public void Relogin(string reason = "")
     {
+        Bot.Log($"⚡ Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
+
         // Save original options
         bool origAutoRelog = Bot.Options.AutoRelogin;
         bool origAutoRelogAny = Bot.Options.AutoReloginAny;
@@ -6038,109 +6116,69 @@ public class CoreBots
 
         try
         {
-            Bot.Log($"⚡ Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
-            // NEW: Only set login info if we have both
+            // Set login info if available
             string? username = Bot.Player?.Username;
             string? password = Bot.Player?.Password;
             if (!string.IsNullOrWhiteSpace(username) && !string.IsNullOrWhiteSpace(password))
                 Bot.Servers.SetLoginInfo(username, password);
             else
                 Bot.Log("ℹ️ No cached credentials found; continuing without SetLoginInfo.");
-            int tries = 0;
-            int maxTries = 5;
-            string? lastTriedServer = null;
-            Random rand = new();
 
-            while (!Bot.ShouldExit && tries < maxTries)
-            {
-                ResetReloginOptions();
-
-                if (Bot.Player?.LoggedIn == true)
-                {
-                    Bot.Servers.Logout();
-                    Bot.Log("🔒 Logging out current session...");
-                }
-
-                Bot.Wait.ForTrue(() => !(Bot.Player?.LoggedIn ?? false), 20);
-                Bot.Sleep(2000);
-
-                var servers = Bot.Servers.GetServers(true).GetAwaiter().GetResult();
-                if (servers.Count == 0)
-                {
-                    Bot.Log("❌ Failed to relogin: could not fetch server details.");
-                    break;
-                }
-
-                CancellationTokenSource cts = new();
-                Bot.Wait.ForTrue(() => Bot.Servers.EnsureRelogin(cts.Token).Result, 20);
-                Bot.Wait.ForTrue(() => Bot.Player?.LoggedIn ?? false, 20);
-
-                // Pick target server
-                Server? targetServer = servers.FirstOrDefault(s => s.IP == Bot.Servers.LastIP)
-                                       ?? servers.FirstOrDefault(s => s.Name == "Twilly");
-
-                string serverName = string.IsNullOrWhiteSpace(targetServer?.Name) ? "Twilly" : targetServer!.Name;
-
-
-                string targetIP = targetServer?.IP ?? "";
-                lastTriedServer = serverName;
-
-                // Fun logging with emotes
-                Bot.Log($"🎯 Attempt {tries + 1}/{maxTries} → Connecting to: {serverName} 🌐");
-
-                // Human-like small delay
-                Bot.Sleep(rand.Next(200, 800));
-
-                if (!string.IsNullOrEmpty(targetIP))
-                    Bot.Servers.ConnectIP(targetIP);
-                else
-                    Bot.Log("⚠️ No suitable server found to connect!");
-
-                if (!Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
-                {
-                    tries++;
-                    Bot.Log($"⏳ Load failed. Retrying... 🔄 ({tries}/{maxTries})");
-                    Bot.Sleep(1000 * tries); // progressive backoff
-                    continue;
-                }
-
-                // Success
-                SendPlayerToHouse(serverName, reason);
-                return;
-            }
-
-            // Fallback server logic
-            string fallbackServer = lastTriedServer?.Equals("Twilly", StringComparison.OrdinalIgnoreCase) == true
-                ? "Twig"
-                : "Twilly";
-
-            Bot.Log($"⚡ Max relogin attempts reached. Trying fallback server: {fallbackServer} 🔄");
-            if (Bot.Servers.EnsureRelogin(fallbackServer) && Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
-            {
-                Bot.Log($"✅ Fallback relogin to {fallbackServer} successful! 🎉");
-                Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
-                return;
-            }
-
-            Bot.Log($"❌ Relogin failed after all attempts including {fallbackServer} fallback. 🛑");
-            Bot.Stop();
-        }
-        finally
-        {
-            Bot.Options.AutoRelogin = origAutoRelog;
-            Bot.Options.AutoReloginAny = origAutoRelogAny;
-            Bot.Options.RetryRelogin = origRetryRelogin;
-            Bot.Options.SafeRelogin = origSafeRelogin;
-        }
-
-        // --- Helpers ---
-        void ResetReloginOptions()
-        {
+            // Reset relogin options
             Bot.Options.AutoRelogin = false;
             Bot.Options.AutoReloginAny = false;
             Bot.Options.RetryRelogin = false;
             Bot.Options.SafeRelogin = false;
-            Bot.Sleep(500);
+
+            // Logout if currently logged in
+            if (Bot.Player?.LoggedIn == true)
+            {
+                Bot.Servers.Logout();
+                Bot.Log("🔒 Logging out current session...");
+                Bot.Wait.ForTrue(() => !(Bot.Player?.LoggedIn ?? false), 20);
+                Bot.Sleep(2000);
+            }
+
+            // Try preferred server first (LastIP server or Twilly)
+            string preferredServer = Bot.Servers.LastName ?? "Twilly";
+            Bot.Log($"🎯 Attempting relogin to: {preferredServer} 🌐");
+
+            if (Bot.Servers.EnsureRelogin(preferredServer))
+            {
+                if (Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
+                {
+                    SendPlayerToHouse(preferredServer, reason);
+                    return;
+                }
+            }
+
+            // Fallback servers
+            string[] fallbackServers = { "Twilly", "Twig", "Safiria" };
+            foreach (string server in fallbackServers.Where(s => s != preferredServer))
+            {
+                Bot.Log($"⚡ Trying fallback server: {server} 🔄");
+                if (Bot.Servers.EnsureRelogin(server))
+                {
+                    if (Bot.Wait.ForTrue(() => Bot.Player?.Loaded ?? false, 20))
+                    {
+                        Bot.Log($"✅ Fallback relogin to {server} successful! 🎉");
+                        SendPlayerToHouse(server, reason);
+                        return;
+                    }
+                }
+                Bot.Sleep(1000); // Brief delay between attempts
+            }
+
+            Bot.Log($"❌ Relogin failed after all attempts. 🛑");
+            Bot.Stop();
+        }
+        finally
+        {
+            // Restore original options
+            Bot.Options.AutoRelogin = origAutoRelog;
+            Bot.Options.AutoReloginAny = origAutoRelogAny;
+            Bot.Options.RetryRelogin = origRetryRelogin;
+            Bot.Options.SafeRelogin = origSafeRelogin;
         }
 
         void SendPlayerToHouse(string serverName, string reason = "")

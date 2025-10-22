@@ -1,7 +1,7 @@
 /*
-name: KingsEchoClassPrerequisites
-description: King's Echo Class Prerequisites
-tags: Prerequisites, King's, King, Echo, class
+name: King's Echo Class
+description: King's Echo Class
+tags: King's, King, Echo, class, kingsecho
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -14,11 +14,13 @@ tags: Prerequisites, King's, King, Echo, class
 //cs_include Scripts/Story/Lynaria/CoreLynaria.cs
 //cs_include Scripts/Other/MergeShops/BocklinGroveMerge.cs
 //cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
+//cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
+
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
 
-public class KingsEchoClassPrerequisites
+public class KingsEcho
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
@@ -39,12 +41,12 @@ public class KingsEchoClassPrerequisites
     {
         Core.SetOptions(disableClassSwap: true);
 
-        Prerequisites();
+        GetKE();
 
         Core.SetOptions(false);
     }
 
-    public void Prerequisites(bool rankup = true)
+    public void GetKE(bool rankup = true)
     {
         if (Core.CheckInventory("King's Echo"))
         {
@@ -69,7 +71,12 @@ public class KingsEchoClassPrerequisites
             // Completion of the Rumbling of Cold Thunder saga
             AOR.TerminaTemple(true, true);
 
-            Quest q = Core.InitializeWithRetries(() => Core.EnsureLoad(10439));
+            Quest? q = Core.InitializeWithRetries(() => Core.EnsureLoad(10439));
+            if (q == null)
+            {
+                Core.Logger("Failed to load the quest: 10439");
+                return;
+            }
             foreach (ItemBase item in q.AcceptRequirements)
             {
                 if (Core.CheckInventory(item.ID))
@@ -120,8 +127,15 @@ public class KingsEchoClassPrerequisites
                 }
             }
 
+            // Familial Blessing (10438)
+            Core.EnsureAccept(10438);
+            Core.GetMapItem(15048, 1, "terminatemple");
+            Core.EnsureComplete(10438);
+
             // Echo of the King
             Core.ChainComplete(10439);
+
+            // Buy the class
             Core.BuyItem("TerminaTemple", 2630, 95742);
 
             if (rankup)

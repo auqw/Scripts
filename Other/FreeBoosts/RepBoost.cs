@@ -19,7 +19,7 @@ public class RepBoost
         Core.BankingBlackList.AddRange(new[] { "XREPUTATION Boost! (10 min)", "Fishing Dynamite" });
         Core.SetOptions();
 
-        Farm.GetBoost(10997, "REPUTATION Boost! (10 min)", 9999, 1615, true);
+        Farm.GetBoost("REP", 9999, true);
 
         Core.SetOptions(false);
     }

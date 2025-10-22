@@ -162,11 +162,16 @@ public class CoreFarmerJoe
 {
     //other
     public static IScriptInterface Bot => IScriptInterface.Instance;
-    private static FreeBoosts Boosts { get => _Boosts ??= new FreeBoosts(); set => _Boosts = value; }    private static FreeBoosts _Boosts;
-    private static FarmAllDailies FAD { get => _FAD ??= new FarmAllDailies(); set => _FAD = value; }    private static FarmAllDailies _FAD;
-    private static InventoryEnhancer InvEn { get => _InvEn ??= new InventoryEnhancer(); set => _InvEn = value; }    private static InventoryEnhancer _InvEn;
-    private static SynderesMerge SM { get => _SM ??= new SynderesMerge(); set => _SM = value; }    private static SynderesMerge _SM;
-    private static ArchfiendDeathLord AFDeath { get => _AFDeath ??= new ArchfiendDeathLord(); set => _AFDeath = value; }    private static ArchfiendDeathLord _AFDeath;
+    private static FreeBoosts Boosts { get => _Boosts ??= new FreeBoosts(); set => _Boosts = value; }
+    private static FreeBoosts _Boosts;
+    private static FarmAllDailies FAD { get => _FAD ??= new FarmAllDailies(); set => _FAD = value; }
+    private static FarmAllDailies _FAD;
+    private static InventoryEnhancer InvEn { get => _InvEn ??= new InventoryEnhancer(); set => _InvEn = value; }
+    private static InventoryEnhancer _InvEn;
+    private static SynderesMerge SM { get => _SM ??= new SynderesMerge(); set => _SM = value; }
+    private static SynderesMerge _SM;
+    private static ArchfiendDeathLord AFDeath { get => _AFDeath ??= new ArchfiendDeathLord(); set => _AFDeath = value; }
+    private static ArchfiendDeathLord _AFDeath;
     private static UnlockForgeEnhancements UnlockForgeEnhancements { get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements(); set => _UnlockForgeEnhancements = value; }
     private static UnlockForgeEnhancements _UnlockForgeEnhancements;
     private static ExaltedApotheosisPreReqs ExaltedApotheosisPreReqs { get => _ExaltedApotheosisPreReqs ??= new ExaltedApotheosisPreReqs(); set => _ExaltedApotheosisPreReqs = value; }
@@ -174,49 +179,85 @@ public class CoreFarmerJoe
 
     //Cores
     public static CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CapeOfAwe COA { get => _COA ??= new CapeOfAwe(); set => _COA = value; }    private static CapeOfAwe _COA;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CapeOfAwe COA { get => _COA ??= new CapeOfAwe(); set => _COA = value; }
+    private static CapeOfAwe _COA;
     public static Core13LoC LOC => new();
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }    private static CoreVHL _VHL;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreYnR YNR { get => _YNR ??= new CoreYnR(); set => _YNR = value; }    private static CoreYnR _YNR;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }
+    private static CoreVHL _VHL;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static CoreYnR YNR { get => _YNR ??= new CoreYnR(); set => _YNR = value; }
+    private static CoreYnR _YNR;
 
     //Classes
-    private static MasterRanger MR { get => _MR ??= new MasterRanger(); set => _MR = value; }    private static MasterRanger _MR;
-    private static Shaman Shaman { get => _Shaman ??= new Shaman(); set => _Shaman = value; }    private static Shaman _Shaman;
-    private static GlacialBerserker GB { get => _GB ??= new GlacialBerserker(); set => _GB = value; }    private static GlacialBerserker _GB;
-    private static StoneCrusher SC { get => _SC ??= new StoneCrusher(); set => _SC = value; }    private static StoneCrusher _SC;
-    private static DragonShinobi DS { get => _DS ??= new DragonShinobi(); set => _DS = value; }    private static DragonShinobi _DS;
-    private static ArchPaladin AP { get => _AP ??= new ArchPaladin(); set => _AP = value; }    private static ArchPaladin _AP;
-    private static Dragonslayer DSlayer { get => _DSlayer ??= new Dragonslayer(); set => _DSlayer = value; }    private static Dragonslayer _DSlayer;
-    private static DragonslayerGeneral DSG { get => _DSG ??= new DragonslayerGeneral(); set => _DSG = value; }    private static DragonslayerGeneral _DSG;
-    private static LordOfOrder LOO { get => _LOO ??= new LordOfOrder(); set => _LOO = value; }    private static LordOfOrder _LOO;
-    private static ScarletSorceress SS { get => _SS ??= new ScarletSorceress(); set => _SS = value; }    private static ScarletSorceress _SS;
-    private static EternalInversionist EI { get => _EI ??= new EternalInversionist(); set => _EI = value; }    private static EternalInversionist _EI;
-    private static DarkbloodStormKing DBSK { get => _DBSK ??= new DarkbloodStormKing(); set => _DBSK = value; }    private static DarkbloodStormKing _DBSK;
-    private static DragonOfTime DoT { get => _DoT ??= new DragonOfTime(); set => _DoT = value; }    private static DragonOfTime _DoT;
-    private static BloodSorceress BS { get => _BS ??= new BloodSorceress(); set => _BS = value; }    private static BloodSorceress _BS;
-    private static BlazeBinder Bb { get => _Bb ??= new BlazeBinder(); set => _Bb = value; }    private static BlazeBinder _Bb;
-    private static ArchFiend AF { get => _AF ??= new ArchFiend(); set => _AF = value; }    private static ArchFiend _AF;
-    private static Cryomancer Cryo { get => _Cryo ??= new Cryomancer(); set => _Cryo = value; }    private static Cryomancer _Cryo;
-    private static FrostSpiritReaver FSR { get => _FSR ??= new FrostSpiritReaver(); set => _FSR = value; }    private static FrostSpiritReaver _FSR;
-    private static NorthlandsMonk NM { get => _NM ??= new NorthlandsMonk(); set => _NM = value; }    private static NorthlandsMonk _NM;
+    private static MasterRanger MR { get => _MR ??= new MasterRanger(); set => _MR = value; }
+    private static MasterRanger _MR;
+    private static Shaman Shaman { get => _Shaman ??= new Shaman(); set => _Shaman = value; }
+    private static Shaman _Shaman;
+    private static GlacialBerserker GB { get => _GB ??= new GlacialBerserker(); set => _GB = value; }
+    private static GlacialBerserker _GB;
+    private static StoneCrusher SC { get => _SC ??= new StoneCrusher(); set => _SC = value; }
+    private static StoneCrusher _SC;
+    private static DragonShinobi DS { get => _DS ??= new DragonShinobi(); set => _DS = value; }
+    private static DragonShinobi _DS;
+    private static ArchPaladin AP { get => _AP ??= new ArchPaladin(); set => _AP = value; }
+    private static ArchPaladin _AP;
+    private static Dragonslayer DSlayer { get => _DSlayer ??= new Dragonslayer(); set => _DSlayer = value; }
+    private static Dragonslayer _DSlayer;
+    private static DragonslayerGeneral DSG { get => _DSG ??= new DragonslayerGeneral(); set => _DSG = value; }
+    private static DragonslayerGeneral _DSG;
+    private static LordOfOrder LOO { get => _LOO ??= new LordOfOrder(); set => _LOO = value; }
+    private static LordOfOrder _LOO;
+    private static ScarletSorceress SS { get => _SS ??= new ScarletSorceress(); set => _SS = value; }
+    private static ScarletSorceress _SS;
+    private static EternalInversionist EI { get => _EI ??= new EternalInversionist(); set => _EI = value; }
+    private static EternalInversionist _EI;
+    private static DarkbloodStormKing DBSK { get => _DBSK ??= new DarkbloodStormKing(); set => _DBSK = value; }
+    private static DarkbloodStormKing _DBSK;
+    private static DragonOfTime DoT { get => _DoT ??= new DragonOfTime(); set => _DoT = value; }
+    private static DragonOfTime _DoT;
+    private static BloodSorceress BS { get => _BS ??= new BloodSorceress(); set => _BS = value; }
+    private static BloodSorceress _BS;
+    private static BlazeBinder Bb { get => _Bb ??= new BlazeBinder(); set => _Bb = value; }
+    private static BlazeBinder _Bb;
+    private static ArchFiend AF { get => _AF ??= new ArchFiend(); set => _AF = value; }
+    private static ArchFiend _AF;
+    private static Cryomancer Cryo { get => _Cryo ??= new Cryomancer(); set => _Cryo = value; }
+    private static Cryomancer _Cryo;
+    private static FrostSpiritReaver FSR { get => _FSR ??= new FrostSpiritReaver(); set => _FSR = value; }
+    private static FrostSpiritReaver _FSR;
+    private static NorthlandsMonk NM { get => _NM ??= new NorthlandsMonk(); set => _NM = value; }
+    private static NorthlandsMonk _NM;
 
     //Weapons
-    private static DualChainSawKatanas DCSK { get => _DCSK ??= new DualChainSawKatanas(); set => _DCSK = value; }    private static DualChainSawKatanas _DCSK;
-    private static BurningBlade BB { get => _BB ??= new BurningBlade(); set => _BB = value; }    private static BurningBlade _BB;
-    private static BurningBladeOfAbezeth BBOA { get => _BBOA ??= new BurningBladeOfAbezeth(); set => _BBOA = value; }    private static BurningBladeOfAbezeth _BBOA;
-    private static EnchantedVictoryBladeWeapons EVBW { get => _EVBW ??= new EnchantedVictoryBladeWeapons(); set => _EVBW = value; }    private static EnchantedVictoryBladeWeapons _EVBW;
-    private static ShadowrealmMerge SRM { get => _SRM ??= new ShadowrealmMerge(); set => _SRM = value; }    private static ShadowrealmMerge _SRM;
+    private static DualChainSawKatanas DCSK { get => _DCSK ??= new DualChainSawKatanas(); set => _DCSK = value; }
+    private static DualChainSawKatanas _DCSK;
+    private static BurningBlade BB { get => _BB ??= new BurningBlade(); set => _BB = value; }
+    private static BurningBlade _BB;
+    private static BurningBladeOfAbezeth BBOA { get => _BBOA ??= new BurningBladeOfAbezeth(); set => _BBOA = value; }
+    private static BurningBladeOfAbezeth _BBOA;
+    private static EnchantedVictoryBladeWeapons EVBW { get => _EVBW ??= new EnchantedVictoryBladeWeapons(); set => _EVBW = value; }
+    private static EnchantedVictoryBladeWeapons _EVBW;
+    private static ShadowrealmMerge SRM { get => _SRM ??= new ShadowrealmMerge(); set => _SRM = value; }
+    private static ShadowrealmMerge _SRM;
 
     //Story
-    private static Tutorial Tutorial { get => _Tutorial ??= new Tutorial(); set => _Tutorial = value; }    private static Tutorial _Tutorial;
-    private static CelestialArenaQuests CAQ { get => _CAQ ??= new CelestialArenaQuests(); set => _CAQ = value; }    private static CelestialArenaQuests _CAQ;
-    private static GlaceraStory GS { get => _GS ??= new GlaceraStory(); set => _GS = value; }    private static GlaceraStory _GS;
-    private static Mazumi Mazumi { get => _Mazumi ??= new Mazumi(); set => _Mazumi = value; }    private static Mazumi _Mazumi;
+    private static Tutorial Tutorial { get => _Tutorial ??= new Tutorial(); set => _Tutorial = value; }
+    private static Tutorial _Tutorial;
+    private static CelestialArenaQuests CAQ { get => _CAQ ??= new CelestialArenaQuests(); set => _CAQ = value; }
+    private static CelestialArenaQuests _CAQ;
+    private static GlaceraStory GS { get => _GS ??= new GlaceraStory(); set => _GS = value; }
+    private static GlaceraStory _GS;
+    private static Mazumi Mazumi { get => _Mazumi ??= new Mazumi(); set => _Mazumi = value; }
+    private static Mazumi _Mazumi;
 
     public string OptionsStorage = "FarmerJoePet";
     public bool DontPreconfigure = true;
@@ -225,6 +266,7 @@ public class CoreFarmerJoe
         new Option<bool>("OutFit", "Get a Pre-Made Outfit, Curtious of the Community", "We are farmers, bum ba dum bum bum bum bum", false),
         new Option<bool>("EquipOutfit", "Equip outfit at the end?", "Yay or Nay", false),
         new Option<bool>("SellStarterClasses", "SellStarterClasses", "Yay or Nay", false),
+        new Option<bool>("GetBoosts", "GetBoosts", "Do the \"Free Boosts\" quests to get some 10minute boosts (the droprate is < 1% so itll take awhile)", false),
         new Option<bool>("EquipBoostingGear", "EquipBoostingGear", "use a predetermined set of gear based on what you own, and certain paramiters set, otherwise use whats set for your solo/farm class gear in CBO", true),
         new Option<PetChoice>("PetChoice", "Choose Your Pet", "Extra stuff to choose, if you have any suggestions -form in disc, and put it under request. or dm Tato(the retarded one on disc)", PetChoice.None),
         CoreBots.Instance.SkipOptions,
@@ -303,9 +345,16 @@ public class CoreFarmerJoe
             Daily.EldersBlood();
 
         Core.Logger("Joe will handle each level bracket (0-30, 30-50, 50-55, 55-60, 60-65, 65-75, 75-100) doing the leveling first, then aquireing classes and items after so its prepared and hopefully strong enough to handle the next level bracket.");
-
+        Core.Logger("We'll occasionaly get rep/class/gold boosts throguh out the script to help speed things up a bit.");
         foreach (int Level in Core.FromTo(0, 75))
         {
+            if (Bot.Config!.Get<bool>("GetBoosts"))
+            { // Always ensure we have 10 of each boost type
+                Farm.GetBoost("REP", 10, true);
+                Farm.GetBoost("XP", Bot.Player.Level >= 100 ? 0 : 10, true);
+                Boosts.GetBoostsSelect(Bot.Player.Gold >= 100000000 ? 0 : 10, 10, 0);
+            }
+
             // Handle special cases and leveling
             switch (Level)
             {

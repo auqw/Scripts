@@ -791,7 +791,10 @@ public class CoreNation
 
         bool sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher == true;
         bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
-        UltraAlteon = Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon == true;
+        if (Bot.Version.ToString() == "1.3.0.0")
+            UltraAlteon = UltraAlteon || (Core.CBOBool("UltraAlteonForSupplies", out bool _UltraAlteonForSupplies) && _UltraAlteonForSupplies);
+        else UltraAlteon = UltraAlteon || (Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon);
+
         if (KeepVoucher && sellMemVoucher)
         {
             Core.Logger("KeepVoucher is enabled via the script, Overriding Cbo Setting, Voucher of Nulgath will be kept");

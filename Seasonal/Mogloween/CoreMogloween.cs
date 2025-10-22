@@ -42,6 +42,7 @@ public class CoreMogloween
         NecroCarnival();
         TrickTown();
         CursedCastle();
+        Eldritchbattletown();
     }
 
     public void Mogloween()
@@ -443,7 +444,7 @@ public class CoreMogloween
         {
             // Hinge
             Story.MapItemQuest(6569, "twigsarcade", 6069, 3);
-            
+
             // Fully Charged Battery
             Story.MapItemQuest(6569, "twigsarcade", 6070, 3);
 
@@ -769,4 +770,94 @@ public class CoreMogloween
         // Restless Waltz 9454
         Story.KillQuest(9454, "cursedcastle", "Unborn Brood");
     }
+
+    public void Eldritchbattletown()
+    {
+        if (!Core.isSeasonalMapActive("eldritchbattletown") || Core.isCompletedBefore(10453))
+            return;
+
+        Story.PreLoad(this);
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+                {
+                    "Living Pumpkin", // UseableMonsters[0],
+                    "Dzeza Sapling", // UseableMonsters[1],
+                    "Nudibranch", // UseableMonsters[2],
+                    "Kathool Kultist", // UseableMonsters[3],
+                    "Dzeza Cultist", // UseableMonsters[4],
+                    "Harvest Acromegalia", // UseableMonsters[5]
+                };
+        #endregion Useable Monsters
+
+
+        Core.EquipClass(ClassType.Farm);
+
+        // 10444 | Pumpkin Guts
+        if (!Story.QuestProgression(10444))
+        {
+            Story.MapItemQuest(10444, "eldritchbattletown", 15040);
+            Story.KillQuest(10444, "eldritchbattletown", UseableMonsters[0]);
+        }
+
+        // 10445 | Growth Spurt
+        if (!Story.QuestProgression(10445))
+        {
+            Story.MapItemQuest(10445, "eldritchbattletown", 15041);
+            Story.KillQuest(10445, "eldritchbattletown", UseableMonsters[1]);
+        }
+
+        // 10446 | Mini-Thurians
+        if (!Story.QuestProgression(10446))
+        {
+            Story.MapItemQuest(10446, "eldritchbattletown", 15042);
+            Story.KillQuest(10446, "eldritchbattletown", UseableMonsters[2]);
+        }
+
+        // 10447 | Paper Love Bombs
+        if (!Story.QuestProgression(10447))
+        {
+            Story.MapItemQuest(10447, "eldritchbattletown", 15047, 6);
+        }
+
+        // 10448 | Abomination vs Monstrosity
+        if (!Story.QuestProgression(10448))
+        {
+            Story.KillQuest(10448, "eldritchbattletown", new[] { UseableMonsters[2], UseableMonsters[1] });
+        }
+
+        // 10449 | The Mom Friend
+        if (!Story.QuestProgression(10449))
+        {
+            Story.MapItemQuest(10449, "eldritchbattletown", 15043);
+            Story.KillQuest(10449, "eldritchbattletown", UseableMonsters[3]);
+        }
+
+        Core.EquipClass(ClassType.Solo);
+        // 10450 | Excited Excrescence
+        if (!Story.QuestProgression(10450))
+        {
+            Story.KillQuest(10450, "eldritchbattletown", UseableMonsters[4]);
+        }
+
+        // 10451 | Love It or Condemn It
+        if (!Story.QuestProgression(10451))
+        {
+            Story.MapItemQuest(10451, "eldritchbattletown", new[] { 15044, 15045, 15046 });
+        }
+
+        // 10452 | Recruitment Initiative
+        if (!Story.QuestProgression(10452))
+        {
+            Story.KillQuest(10452, "eldritchbattletown", new[] { UseableMonsters[3], UseableMonsters[4] });
+        }
+
+        Core.EquipClass(ClassType.Solo);
+
+        // 10453 | Galeux D'Eyes
+        if (!Story.QuestProgression(10453))
+        {
+            Story.KillQuest(10453, "eldritchbattletown", UseableMonsters[5]);
+        }
+    }
+
 }
