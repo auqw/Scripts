@@ -6130,27 +6130,17 @@ public class CoreBots
             Bot.Options.RetryRelogin = false;
             Bot.Options.SafeRelogin = false;
 
-            // Logout if currently logged in
-            if (Bot.Player?.LoggedIn == true)
-            {
-                Bot.Servers.Logout();
-                Bot.Log("🔒 Logging out current session...");
-                Bot.Wait.ForTrue(() => !(Bot.Player?.LoggedIn ?? false), 20);
-                Bot.Sleep(2000);
-            }
-
             // Try preferred server first (LastIP server or Twilly)
             string preferredServer = Bot.Servers.LastName ?? "Twilly";
             Bot.Log($"🎯 Attempting relogin to: {preferredServer} 🌐");
 
-            if (Bot.Servers.EnsureRelogin(preferredServer))
-            {
-                if (Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
+            CancellationTokenSource cts = new();
+            Bot.Wait.ForTrue(() => Bot.Servers.EnsureRelogin(cts.Token).Result, 20);
+            if (Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
                 {
                     SendPlayerToHouse(preferredServer, reason);
                     return;
                 }
-            }
 
             // Fallback servers
             string[] fallbackServers = { "Twilly", "Twig", "Safiria" };
@@ -6180,6 +6170,7 @@ public class CoreBots
             Bot.Options.RetryRelogin = origRetryRelogin;
             Bot.Options.SafeRelogin = origSafeRelogin;
         }
+        return;
 
         void SendPlayerToHouse(string serverName, string reason = "")
         {
