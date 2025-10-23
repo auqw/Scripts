@@ -1282,7 +1282,7 @@ public class CoreEngine
     {
         if (string.IsNullOrWhiteSpace(auraName)) return 0;
         var aura = GetAuraByName(auraName, self);
-        if (aura == null || aura._timeStamp <= 0 || aura.Duration <= 0) return 0;
+        if (aura == null || aura.UnixTimeStamp <= 0 || aura.Duration <= 0) return 0;
         try
         {
             var applied = DateTimeOffset.FromUnixTimeMilliseconds(aura._timeStamp);
