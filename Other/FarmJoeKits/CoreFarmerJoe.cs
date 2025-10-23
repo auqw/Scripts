@@ -393,8 +393,8 @@ public class CoreFarmerJoe
 
                 case 55:
                     if (Bot.Player.Level >= 55 &&
-                     Core.CheckInventory(new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" }, any: true, toInv: false) &&
-                     Core.CheckInventory("Dragonslayer General", toInv: false) &&
+                     Core.CheckInventory(new[] { "Archfiend", !Bot.Quests.IsDailyComplete(2209) && !Core.CheckInventory("Blaze Binder") ? "Blaze Binder" : "Scarlet Sorceress" }, any: true, toInv: false) &&
+                     Core.CheckInventory(!Bot.Quests.IsDailyComplete(3966) && !Core.CheckInventory("Cryomancer") ? "Cryomancer" : "Dragonslayer General", toInv: false) &&
                      Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade" }, any: true, toInv: false))
                     {
                         continue;

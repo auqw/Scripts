@@ -270,6 +270,11 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Story/7DeadlyDragons/Extra/HatchTheEgg.cs
 //cs_include Scripts/Other/MergeShops/InfernalArenaMerge.cs
 //cs_include Scripts/Other/Classes/DeathKnightLord[mem].cs
+//cs_include Scripts/Other/MergeShops/BocklinTreasuryMerge.cs
+//cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
+//cs_include Scripts/Story/Lynaria/CoreLynaria.cs
+//cs_include Scripts/Other/MergeShops/BocklinGroveMerge.cs
+//cs_include Scripts/Other/Classes/KingsEcho.cs
 #endregion includes
 
 using Skua.Core.Interfaces;
@@ -455,6 +460,8 @@ public class AllClasses
     private static DragonOfTime _DOT;
     private static HBVNonInsig HBV { get => _HBV ??= new HBVNonInsig(); set => _HBV = value; }
     private static HBVNonInsig _HBV;
+    private static KingsEcho KE { get => _KE ??= new KingsEcho(); set => _KE = value; }
+    private static KingsEcho _KE;
     private static Lich lich { get => _lich ??= new Lich(); set => _lich = value; }
     private static Lich _lich;
     private static LightCaster LC { get => _LC ??= new LightCaster(); set => _LC = value; }
@@ -712,6 +719,7 @@ public class AllClasses
         // Classes that take to long to farm for a bank class:
         // CheckAndExecute("Arcana Invoker", () => AI.GetAI(rankUpClass));
         CheckAndExecute("Hollowborn Vindicator", () => HBV.GetClass(rankUpClass)); // Non Insignia
+        CheckAndExecute("King's Echo", () => KE.GetKE(rankUpClass));
         // CheckAndExecute("Lich", () => lich.Example(rankUpClass));
         CheckAndExecute("ShadowScythe General", Daily.ShadowScytheClass);
         // CheckAndExecute("Sovereign of Storms", () => SOS.GetSOS(rankUpClass));
