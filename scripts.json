@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 406550,
+    "size": 406841,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -2278,7 +2278,7 @@
       "dark-carnax"
     ],
     "path": "Story/DarkCarnax.cs",
-    "size": 5369,
+    "size": 5260,
     "fileName": "DarkCarnax.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DarkCarnax.cs"
   },
@@ -8452,7 +8452,7 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 47929,
+    "size": 47923,
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },

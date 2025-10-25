@@ -12,8 +12,10 @@ public class CoreToD
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
 
     bool doAll = false;
 
@@ -141,7 +143,7 @@ public class CoreToD
         }
 
         // Vaden Says
-        Story.KillQuest(4982, "bonecastle", new[] { "Skeletal Warrior", "Undead Guard", "Undead Knight" });
+        Story.KillQuest(4982, "bonecastle", new[] { "Undead Guard", "Undead Knight", "Skeletal Warrior" });
 
         // The Dead King's Bedroom
         Story.MapItemQuest(4983, "bonecastle", 4352, 1);
@@ -734,7 +736,7 @@ public class CoreToD
             Farm.DeathPitToken(quant: 15);
             Core.EnsureComplete(5156);
         }
-        
+
         // Pummel For Hun'Gar
         if (!Story.QuestProgression(5157))
         {
