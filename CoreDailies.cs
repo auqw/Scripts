@@ -463,7 +463,7 @@ public class CoreDailies
             Core.BuyItem("xancave", 447, 12812, shopItemID: 1278);
         Core.ToBank("Shurpu Blaze Token");
     }
-    
+
     public void ShadowScytheClass()
     {
         Core.Logger("Daily: ShadowScythe General Class");
@@ -1048,7 +1048,8 @@ public class CoreDailies
         // Battleodium
         if (Core.isCompletedBefore(793))
             handleFriendship("Dage the Evil", frGift.Cracked_Opal);
-        handleFriendship("Gravelyn", frGift.Blood_Roseberry);
+        if (Bot.Player.Level >= 80)
+            handleFriendship("Gravelyn", frGift.Blood_Roseberry);
         handleFriendship("Nulgath", frGift.Apples);
         handleFriendship("Twig", frGift.Melons);
         handleFriendship("Twilly", frGift.Apples, frGift.Orchids);
@@ -1061,7 +1062,8 @@ public class CoreDailies
         handleFriendship("Smoglin", frGift.Turqoise, frGift.Apples);
 
         // Greyguard
-        handleFriendship("Drakath", frGift.Chaos_Diemond);
+        if (Bot.Player.Level >= 80)
+            handleFriendship("Drakath", frGift.Chaos_Diemond);
         handleFriendship("Xang", frGift.Emeralds, frGift.Grapes);
         handleFriendship("Linus", frGift.A_Fish);
         handleFriendship("Sally", frGift.Rubies, frGift.Tulips);

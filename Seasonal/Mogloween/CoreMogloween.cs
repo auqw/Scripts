@@ -43,6 +43,7 @@ public class CoreMogloween
         TrickTown();
         CursedCastle();
         Eldritchbattletown();
+        EldritchWorld();
     }
 
     public void Mogloween()
@@ -773,7 +774,7 @@ public class CoreMogloween
 
     public void Eldritchbattletown()
     {
-        if (!Core.isSeasonalMapActive("eldritchbattletown") || Core.isCompletedBefore(10453))
+        if (Core.isCompletedBefore(10453) || !Core.isSeasonalMapActive("eldritchbattletown"))
             return;
 
         Story.PreLoad(this);
@@ -783,7 +784,7 @@ public class CoreMogloween
                     "Living Pumpkin", // UseableMonsters[0],
                     "Dzeza Sapling", // UseableMonsters[1],
                     "Nudibranch", // UseableMonsters[2],
-                    "Kathool Kultist", // UseableMonsters[3],
+                    "Kathool Cultist", // UseableMonsters[3],
                     "Dzeza Cultist", // UseableMonsters[4],
                     "Harvest Acromegalia", // UseableMonsters[5]
                 };
@@ -858,6 +859,75 @@ public class CoreMogloween
         {
             Story.KillQuest(10453, "eldritchbattletown", UseableMonsters[5]);
         }
+    }
+
+    public void EldritchWorld()
+    {
+        if (Core.isCompletedBefore(10467) || !Core.isSeasonalMapActive("eldritchworld"))
+            return;
+
+        Eldritchbattletown();
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Nudibranch", // UseableMonsters[0],
+	"Infested Fisherman", // UseableMonsters[1],
+	"Kathool Cultist", // UseableMonsters[2],
+	"Dzeza Cultist", // UseableMonsters[3],
+	"Dzeza Sapling", // UseableMonsters[4],
+	"Infested Mummy", // UseableMonsters[5],
+	"Mass of Hair", // UseableMonsters[6],
+	"Mass of Teeth", // UseableMonsters[7],
+	"Dzeza the Boundless", // UseableMonsters[8]
+};
+        #endregion Useable Monsters
+
+        // 10465 | World of the Eldritch
+        if (!Story.QuestProgression(10465))
+        {
+            void EnsureItemFromQuest(int sourceQuestId, int monsterIndex, string itemName, int qty = 1)
+            {
+                if (Core.CheckInventory(itemName, qty))
+                    return;
+
+                Core.AddDrop(itemName);
+                Core.HuntMonsterQuest(sourceQuestId, ("eldritchworld", UseableMonsters[monsterIndex], ClassType.Farm));
+            }
+
+            Core.EnsureAccept(10465);
+
+            EnsureItemFromQuest(10458, 0, "Nudibranch Roe");
+            EnsureItemFromQuest(10459, 1, "Barnacle Rash");
+            EnsureItemFromQuest(10460, 2, "Shrimp Noodle Pack");
+            EnsureItemFromQuest(10461, 3, "Dzeza Welcome Pack");
+            EnsureItemFromQuest(10462, 4, "Dzeza Coconuts");
+            EnsureItemFromQuest(10463, 5, "Desiccated Bulbs");
+            EnsureItemFromQuest(10464, 7, "Bucket of Molars");
+            EnsureItemFromQuest(10468, 6, "Head of Hair");
+
+            Core.EnsureComplete(10465);
+        }
+
+
+        // 10466 | Limitless Lengths
+        if (!Story.QuestProgression(10466))
+        {
+            Core.HuntMonsterQuest(10466,
+                ("eldritchworld", UseableMonsters[7], ClassType.Farm),
+                ("eldritchworld", UseableMonsters[6], ClassType.Farm));
+        }
+
+
+        // 10467 | Merely Existing
+        if (!Story.QuestProgression(10467))
+        {
+            Core.HuntMonsterQuest(10467,
+                ("eldritchworld", UseableMonsters[8], ClassType.Solo));
+        }
+
+
     }
 
 }

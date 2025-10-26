@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 54195,
+    "size": 54271,
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreDailies.cs"
   },
@@ -3497,7 +3497,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 108408,
+    "size": 108526,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -3563,7 +3563,7 @@
       "escherion"
     ],
     "path": "Nation/SuppliesToSpinTheWheelofChance.cs",
-    "size": 8101,
+    "size": 8218,
     "fileName": "SuppliesToSpinTheWheelofChance.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/SuppliesToSpinTheWheelofChance.cs"
   },
@@ -20054,6 +20054,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/11ThatStory.cs"
   },
   {
+    "name": "Eldritch World Story",
+    "description": "This will complete the eldritch world Story quest.",
+    "tags": [
+      "story",
+      "quest",
+      "mogloween",
+      "seasonal",
+      "eldritch",
+      "world",
+      "eldritchworld",
+      "elodea"
+    ],
+    "path": "Seasonal/Mogloween/16EldritchWorld.cs",
+    "size": 811,
+    "fileName": "16EldritchWorld.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/16EldritchWorld.cs"
+  },
+  {
     "name": "Chromafection Story",
     "description": "This will complete the Chromafection story quest.",
     "tags": [
@@ -20315,7 +20333,7 @@
       "null"
     ],
     "path": "Seasonal/Mogloween/CoreMogloween.cs",
-    "size": 26689,
+    "size": 28997,
     "fileName": "CoreMogloween.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/CoreMogloween.cs"
   },
@@ -28114,6 +28132,47 @@
     "size": 5075,
     "fileName": "ChromaCandyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/ChromaCandyMerge.cs"
+  },
+  {
+    "name": "Elodeas Candy Haul Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Elodeas Candy Haul Merge [2632] in /eldritchworld",
+    "tags": [
+      "elodeas",
+      "candy",
+      "haul",
+      "merge",
+      "eldritchworld",
+      "gold",
+      "voucher",
+      "k",
+      "horc",
+      "warrior",
+      "thok",
+      "magical",
+      "mariner",
+      "arcana",
+      "cat",
+      "burglar",
+      "metrea",
+      "thunder",
+      "flurry",
+      "juvania",
+      "aegean",
+      "calabaza",
+      "pumpkin",
+      "kings",
+      "twilight",
+      "peril",
+      "kabocha",
+      "killer",
+      "naginata",
+      "nocturne",
+      "penumbra"
+    ],
+    "path": "Seasonal/Mogloween/MergeShops/ElodeasCandyHaulMerge.cs",
+    "size": 15095,
+    "fileName": "ElodeasCandyHaulMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/ElodeasCandyHaulMerge.cs"
   },
   {
     "name": "Mog-GLOW-ween Merge",

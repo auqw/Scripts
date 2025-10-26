@@ -772,8 +772,9 @@ public class CoreNation
     /// <param name="UltraAlteon">Flag indicating if Ultra Alteon should be used.</param>
     /// <param name="KeepVoucher">Flag indicating if the voucher should be kept.</param>
     /// <param name="AssistantDuring">Flag indicating if the assistant should be active during the process.</param>
+    /// <param name="returnPolicyDuringSupplies"></param>
     /// <param name="ReturnItem">Item to return, if any.</param>
-    public void Supplies(string? item = null, int quant = 1, bool UltraAlteon = false, bool KeepVoucher = false, bool AssistantDuring = false, string? ReturnItem = null)
+    public void Supplies(string? item = null, int quant = 1, bool UltraAlteon = false, bool KeepVoucher = false, bool AssistantDuring = false, string? ReturnItem = null, bool returnPolicyDuringSupplies = false)
     {
         // Case 1: item specified and already in inventory
         if (item != null && Core.CheckInventory(item, quant))
@@ -790,7 +791,7 @@ public class CoreNation
         Core.Logger("if Swindles is enabled, it will only accept the quest when it has the required Unis it needs");
 
         bool sellMemVoucher = Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher == true;
-        bool returnPolicyDuringSupplies = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies == true;
+        returnPolicyDuringSupplies = returnPolicyDuringSupplies || (Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies);
         if (Bot.Version.ToString() == "1.3.0.0")
             UltraAlteon = UltraAlteon || (Core.CBOBool("UltraAlteonForSupplies", out bool _UltraAlteonForSupplies) && _UltraAlteonForSupplies);
         else UltraAlteon = UltraAlteon || (Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon);

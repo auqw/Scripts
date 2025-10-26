@@ -492,7 +492,7 @@ public class CoreSoW
         Story.KillQuest(7113, "ghostnexus", "Abumi Guchi");
 
         //Get the Supplies (7114)
-        Story.KillQuest(7114, "ghostnexus", new[] { "Abumi Guchi", "Infernal Knight" });
+        Story.KillQuest(7114, "ghostnexus", new[] { "Infernal Knight", "Abumi Guchi" });
 
         //Defeat the Nether Warlock (7115)
         Story.KillQuest(7115, "ghostnexus", "Nether Warlock");
