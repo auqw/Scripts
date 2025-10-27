@@ -11,7 +11,8 @@ public class AnniversaryofDoom
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -190,7 +191,7 @@ public class AnniversaryofDoom
         Story.KillQuest(8899, "deathofgames", new[] { "8-Bit Skelly", "8-Bit Sepulchure" });
 
         //AQ3Destruction 8900
-        Story.KillQuest(8900, "deathofgames", new[] { "3D Flying Eye", "Clawg", "Trolluk" });
+        Story.KillQuest(8900, "deathofgames", new[] { "3D Flying Eye", "Trolluk", "Clawg" });
 
         //OverSoul Under Attack 8901
         Story.KillQuest(8901, "deathofgames", new[] { "Vampire Knight", "Black Dragon" });
