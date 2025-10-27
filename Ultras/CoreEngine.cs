@@ -1285,7 +1285,7 @@ public class CoreEngine
         if (aura == null || aura.UnixTimeStamp <= 0 || aura.Duration <= 0) return 0;
         try
         {
-            var applied = DateTimeOffset.FromUnixTimeMilliseconds(aura._timeStamp);
+            var applied = DateTimeOffset.FromUnixTimeMilliseconds(aura.UnixTimeStamp);
             var expires = applied.AddSeconds(aura.Duration);
             var remaining = (int)(expires - DateTimeOffset.Now).TotalSeconds;
             return Math.Max(0, remaining);
