@@ -59,7 +59,7 @@ public class LordOfOrder
 
         Farm.Experience(50);
         // Heart of Servitude
-        if (!Core.isCompletedBefore(7156))
+        if (Bot.Quests.IsAvailable(7156) && !Core.isCompletedBefore(7156))
         {
             Core.EnsureAccept(7156);
             Core.AddDrop(Core.QuestRewards(7156));
@@ -84,7 +84,7 @@ public class LordOfOrder
         }
 
         // Spirit of Justice
-        if (!Core.isCompletedBefore(7157))
+        if (Bot.Quests.IsAvailable(7157) && !Core.isCompletedBefore(7157))
         {
             Core.EnsureAccept(7157);
             Core.AddDrop(Core.QuestRewards(7157));
@@ -101,7 +101,7 @@ public class LordOfOrder
         }
 
         // Purification of Chaos
-        if (!Core.isCompletedBefore(7158))
+        if (Bot.Quests.IsAvailable(7158) && !Core.isCompletedBefore(7158))
         {
             Core.EnsureAccept(7158);
             Core.AddDrop(Core.QuestRewards(7158));
@@ -120,7 +120,7 @@ public class LordOfOrder
         }
 
         // Steadfast Will
-        if (!Core.isCompletedBefore(7159))
+        if (Bot.Quests.IsAvailable(7159) && !Core.isCompletedBefore(7159))
         {
             Core.EnsureAccept(7159);
             Core.AddDrop(Core.QuestRewards(7159));
@@ -140,7 +140,7 @@ public class LordOfOrder
         }
 
         // Strike of Order
-        if (!Core.isCompletedBefore(7160))
+        if (Bot.Quests.IsAvailable(7160) && !Core.isCompletedBefore(7160))
         {
             Core.EnsureAccept(7160);
             Core.AddDrop(Core.QuestRewards(7160));
@@ -170,7 +170,7 @@ public class LordOfOrder
         }
 
         // Harmony
-        if (!Core.isCompletedBefore(7161))
+        if (Bot.Quests.IsAvailable(7161) && !Core.isCompletedBefore(7161))
         {
             Core.EnsureAccept(7161);
             Core.AddDrop(Core.QuestRewards(7161));
@@ -189,7 +189,7 @@ public class LordOfOrder
         }
 
         // Ordinance
-        if (!Core.isCompletedBefore(7162))
+        if (Bot.Quests.IsAvailable(7162) && !Core.isCompletedBefore(7162))
         {
             Core.EnsureAccept(7162);
             Core.AddDrop(Core.QuestRewards(7162));
@@ -209,7 +209,7 @@ public class LordOfOrder
         }
 
         // Axiom
-        if (!Core.isCompletedBefore(7163))
+        if (Bot.Quests.IsAvailable(7163) && !Core.isCompletedBefore(7163))
         {
             Core.EnsureAccept(7163);
             Core.AddDrop(Core.QuestRewards(7163));
@@ -228,7 +228,7 @@ public class LordOfOrder
         }
 
         // Blessing of Order
-        if (!Core.isCompletedBefore(7164))
+        if (Bot.Quests.IsAvailable(7164) && !Core.isCompletedBefore(7164))
         {
             Core.EnsureAccept(7164);
             Core.AddDrop(Core.QuestRewards(7164));
@@ -249,23 +249,26 @@ public class LordOfOrder
         }
 
         // The Final Challenge
-        Bot.Drops.Add(Core.QuestRewards(7165));
-
-        Core.EnsureAccept(7165);
-        Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("ultradrakath", "Champion of Chaos", "Champion of Chaos Confronted", isTemp: false, publicRoom: Core.PublicDifficult);
-        Bot.Drops.Add(50741);
-        // If quest 7165 is not completed and either missing extras or missing key items
-        if (!Core.isCompletedBefore(7165))
+        if (Bot.Quests.IsAvailable(7165) && !Core.isCompletedBefore(7165))
         {
-            Core.EnsureComplete(7165, 50741);
-            Bot.Wait.ForPickup(50741);
+            Bot.Drops.Add(Core.QuestRewards(7165));
 
-            Core.EnsureCompleteChoose(7165);
-            Core.ToBank(Core.QuestRewards(7165).Except("Lord Of Order"));
+            Core.EnsureAccept(7165);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("ultradrakath", "Champion of Chaos", "Champion of Chaos Confronted", isTemp: false, publicRoom: Core.PublicDifficult);
+            Bot.Drops.Add(50741);
+            // If quest 7165 is not completed and either missing extras or missing key items
+            if (!Core.isCompletedBefore(7165))
+            {
+                Core.EnsureComplete(7165, 50741);
+                Bot.Wait.ForPickup(50741);
 
-            if (rankUpClass)
-                Adv.RankUpClass("Lord Of Order");
+                Core.EnsureCompleteChoose(7165);
+                Core.ToBank(Core.QuestRewards(7165).Except("Lord Of Order"));
+
+                if (rankUpClass)
+                    Adv.RankUpClass("Lord Of Order");
+            }
         }
     }
 }

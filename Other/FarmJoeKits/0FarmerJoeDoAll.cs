@@ -153,6 +153,7 @@ tags: null
 #endregion includes
 
 using Skua.Core.Interfaces;
+using Skua.Core.Options;
 
 public class FarmerJoeKit0DoAll
 {
@@ -162,6 +163,10 @@ public class FarmerJoeKit0DoAll
     private static CoreFarmerJoe _CFJ;
     private static BankAllItems BAI { get => _BAI ??= new BankAllItems(); set => _BAI = value; }
     private static BankAllItems _BAI;
+
+    public string OptionsStorage = CFJ.OptionsStorage;
+    public List<IOption> Options = CFJ.Options;
+    public bool DontPreconfigure = true;
 
     public void ScriptMain(IScriptInterface Bot)
     {

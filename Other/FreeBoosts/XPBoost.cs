@@ -19,7 +19,7 @@ public class XpBoost
         Core.BankingBlackList.AddRange(new[] { "XP Boost! (10 min)", "Fishing Dynamite" });
         Core.SetOptions();
 
-        Farm.GetBoost(10850, "XP Boost! (10 min)", 9999, 1614, true);
+        Farm.GetBoost("XP", 9999, true);
 
         Core.SetOptions(false);
     }

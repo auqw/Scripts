@@ -492,7 +492,7 @@ public class CoreSoW
         Story.KillQuest(7113, "ghostnexus", "Abumi Guchi");
 
         //Get the Supplies (7114)
-        Story.KillQuest(7114, "ghostnexus", new[] { "Abumi Guchi", "Infernal Knight" });
+        Story.KillQuest(7114, "ghostnexus", new[] { "Infernal Knight", "Abumi Guchi" });
 
         //Defeat the Nether Warlock (7115)
         Story.KillQuest(7115, "ghostnexus", "Nether Warlock");
@@ -763,7 +763,7 @@ public class CoreSoW
         }
 
         // Blaze a Path
-        Story.KillQuest(8141, "shadowfireplane", new[] { "Onslaught Knight", "Shadowfire Corporal" });
+        Story.KillQuest(8141, "shadowfireplane", new[] { "Shadowfire Corporal", "Onslaught Knight" });
 
         // Into the Tiger's Den
         Story.KillQuest(8142, "shadowfireplane", "Shadowfire Tiger");
@@ -917,7 +917,7 @@ public class CoreSoW
         Story.MapItemQuest(8778, "ruinedcrown", new[] { 10380, 10382, 10383 });
 
         // 8779 Scraping the Barrel
-        Story.KillQuest(8779, "ruinedcrown", new[] {  "Mana-Burdened Minion", "Mana-Burdened Knight" });
+        Story.KillQuest(8779, "ruinedcrown", new[] { "Mana-Burdened Minion", "Mana-Burdened Knight" });
 
         // 8780 Fractals
         Story.MapItemQuest(8780, "ruinedcrown", 10384, 6);

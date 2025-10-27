@@ -32,7 +32,7 @@ public class WeeklyReleaseGenerator
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.SetOptions();
+        Core.SetOptions(disableClassSwap: true);
         Generator();
         Core.SetOptions(false);
     }

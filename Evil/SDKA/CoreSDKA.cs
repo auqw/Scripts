@@ -765,6 +765,7 @@ public class CoreSDKA
             Core.Logger($"Failed to find the item ID for 'Forge Key' in quest ID {forgeKeyQuest}. Cannot proceed with metal upgrade.");
             return;
         }
+        else Core.Logger($"ForgeKeyItemID: {forgekeyitemID}, Owned? {Core.CheckInventory(forgekeyitemID)}");
 
         if (!Core.CheckInventory(fullMetalName))
         {

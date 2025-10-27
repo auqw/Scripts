@@ -6,7 +6,7 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 54102,
+    "size": 54271,
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreDailies.cs"
   },
@@ -17,7 +17,7 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 154295,
+    "size": 154794,
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -28,7 +28,7 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 145636,
+    "size": 146043,
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreFarms.cs"
   },
@@ -50,7 +50,7 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 402558,
+    "size": 406566,
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/CoreBots.cs"
   },
@@ -74,7 +74,7 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 76097,
+    "size": 77134,
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -549,7 +549,7 @@
       "khasaanda"
     ],
     "path": "Dailies/LordOfOrder.cs",
-    "size": 11419,
+    "size": 11862,
     "fileName": "LordOfOrder.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Dailies/LordOfOrder.cs"
   },
@@ -1672,7 +1672,7 @@
       "crux-ship"
     ],
     "path": "Story/CruxShip.cs",
-    "size": 5497,
+    "size": 5697,
     "fileName": "CruxShip.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/CruxShip.cs"
   },
@@ -2278,7 +2278,7 @@
       "dark-carnax"
     ],
     "path": "Story/DarkCarnax.cs",
-    "size": 5369,
+    "size": 5260,
     "fileName": "DarkCarnax.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/DarkCarnax.cs"
   },
@@ -2383,7 +2383,7 @@
       "decay"
     ],
     "path": "Farm/BuyScrolls.cs",
-    "size": 4806,
+    "size": 4726,
     "fileName": "BuyScrolls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Farm/BuyScrolls.cs"
   },
@@ -3497,7 +3497,7 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 108200,
+    "size": 108526,
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -3563,7 +3563,7 @@
       "escherion"
     ],
     "path": "Nation/SuppliesToSpinTheWheelofChance.cs",
-    "size": 8101,
+    "size": 8218,
     "fileName": "SuppliesToSpinTheWheelofChance.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Nation/SuppliesToSpinTheWheelofChance.cs"
   },
@@ -4729,7 +4729,7 @@
       "null"
     ],
     "path": "Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs",
-    "size": 8771,
+    "size": 8888,
     "fileName": "CoreHollowbornDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs"
   },
@@ -4744,7 +4744,7 @@
       "hollowborn doomknight character page badge"
     ],
     "path": "Hollowborn/HollowbornDoomKnight/ADarkKnightReturns.cs",
-    "size": 2086,
+    "size": 2111,
     "fileName": "ADarkKnightReturns.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Hollowborn/HollowbornDoomKnight/ADarkKnightReturns.cs"
   },
@@ -5830,7 +5830,7 @@
       "null"
     ],
     "path": "Legion/Revenant/CoreLR.cs",
-    "size": 8502,
+    "size": 8500,
     "fileName": "CoreLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Legion/Revenant/CoreLR.cs"
   },
@@ -7671,7 +7671,7 @@
       "null"
     ],
     "path": "Story/ShadowsOfWar/CoreSoW.cs",
-    "size": 38255,
+    "size": 38254,
     "fileName": "CoreSoW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ShadowsOfWar/CoreSoW.cs"
   },
@@ -8452,7 +8452,7 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 47929,
+    "size": 47923,
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
@@ -9804,7 +9804,7 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 45033,
+    "size": 45643,
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -11759,7 +11759,7 @@
       "sheathe"
     ],
     "path": "Darkon/MergeShops/AstravianMerge.cs",
-    "size": 7608,
+    "size": 7634,
     "fileName": "AstravianMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Darkon/MergeShops/AstravianMerge.cs"
   },
@@ -12043,7 +12043,7 @@
       "null"
     ],
     "path": "Other/FreeBoosts/XPBoost.cs",
-    "size": 696,
+    "size": 667,
     "fileName": "XPBoost.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeBoosts/XPBoost.cs"
   },
@@ -12054,7 +12054,7 @@
       "null"
     ],
     "path": "Other/FreeBoosts/RepBoost.cs",
-    "size": 715,
+    "size": 679,
     "fileName": "RepBoost.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeBoosts/RepBoost.cs"
   },
@@ -12070,7 +12070,7 @@
       "gold"
     ],
     "path": "Other/FreeBoosts/FreeBoostsQuest(10mns)[Rng].cs",
-    "size": 3574,
+    "size": 3875,
     "fileName": "FreeBoostsQuest(10mns)[Rng].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FreeBoosts/FreeBoostsQuest(10mns)[Rng].cs"
   },
@@ -12437,7 +12437,7 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/0FarmerJoeDoAll.cs",
-    "size": 8388,
+    "size": 8558,
     "fileName": "0FarmerJoeDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/0FarmerJoeDoAll.cs"
   },
@@ -12448,7 +12448,7 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 58589,
+    "size": 59419,
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -12478,7 +12478,7 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 41196,
+    "size": 41666,
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -12492,6 +12492,21 @@
     "size": 1348,
     "fileName": "Necromancer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/Necromancer.cs"
+  },
+  {
+    "name": "King's Echo Class",
+    "description": "King's Echo Class",
+    "tags": [
+      "king's",
+      "king",
+      "echo",
+      "class",
+      "kingsecho"
+    ],
+    "path": "Other/Classes/KingsEcho.cs",
+    "size": 6231,
+    "fileName": "KingsEcho.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/KingsEcho.cs"
   },
   {
     "name": "ProtoSartorium (Class)",
@@ -12566,21 +12581,6 @@
     "size": 3026,
     "fileName": "GrimNecromancer[600kAC].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/GrimNecromancer[600kAC].cs"
-  },
-  {
-    "name": "KingsEchoClassPrerequisites",
-    "description": "King's Echo Class Prerequisites",
-    "tags": [
-      "prerequisites",
-      "king's",
-      "king",
-      "echo",
-      "class"
-    ],
-    "path": "Other/Classes/KingsEcho[Prereqs].cs",
-    "size": 2512,
-    "fileName": "KingsEcho[Prereqs].cs",
-    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/KingsEcho[Prereqs].cs"
   },
   {
     "name": "Verus DoomKnight Class",
@@ -12791,7 +12791,7 @@
       "null"
     ],
     "path": "Other/Classes/BloodSorceress.cs",
-    "size": 1279,
+    "size": 1346,
     "fileName": "BloodSorceress.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/BloodSorceress.cs"
   },
@@ -12815,7 +12815,7 @@
       "null"
     ],
     "path": "Other/Classes/ScarletSorceress.cs",
-    "size": 2808,
+    "size": 2761,
     "fileName": "ScarletSorceress.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/Classes/ScarletSorceress.cs"
   },
@@ -16006,7 +16006,7 @@
       "armblades"
     ],
     "path": "Other/MergeShops/CrocriverMerge.cs",
-    "size": 9301,
+    "size": 9309,
     "fileName": "CrocriverMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/CrocriverMerge.cs"
   },
@@ -16990,7 +16990,7 @@
       "dress"
     ],
     "path": "Other/MergeShops/BocklinTreasuryMerge.cs",
-    "size": 8805,
+    "size": 9197,
     "fileName": "BocklinTreasuryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Other/MergeShops/BocklinTreasuryMerge.cs"
   },
@@ -20054,6 +20054,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/11ThatStory.cs"
   },
   {
+    "name": "Eldritch World Story",
+    "description": "This will complete the eldritch world Story quest.",
+    "tags": [
+      "story",
+      "quest",
+      "mogloween",
+      "seasonal",
+      "eldritch",
+      "world",
+      "eldritchworld",
+      "elodea"
+    ],
+    "path": "Seasonal/Mogloween/16EldritchWorld.cs",
+    "size": 811,
+    "fileName": "16EldritchWorld.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/16EldritchWorld.cs"
+  },
+  {
     "name": "Chromafection Story",
     "description": "This will complete the Chromafection story quest.",
     "tags": [
@@ -20294,13 +20312,28 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/PumpkinLord(Class).cs"
   },
   {
+    "name": "Eldritchbattletown",
+    "description": "This will complete the Eldritchbattletown Story quest.",
+    "tags": [
+      "story",
+      "quest",
+      "mogloween",
+      "seasonal",
+      "eldritchbattletown"
+    ],
+    "path": "Seasonal/Mogloween/015Eldritchbattletown.cs",
+    "size": 935,
+    "fileName": "015Eldritchbattletown.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/015Eldritchbattletown.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
       "null"
     ],
     "path": "Seasonal/Mogloween/CoreMogloween.cs",
-    "size": 23701,
+    "size": 28997,
     "fileName": "CoreMogloween.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/CoreMogloween.cs"
   },
@@ -23127,7 +23160,7 @@
       "quest progression"
     ],
     "path": "Tools/ForDevelopers/WeeklyReleaseGenerator.cs",
-    "size": 6306,
+    "size": 6328,
     "fileName": "WeeklyReleaseGenerator.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Tools/ForDevelopers/WeeklyReleaseGenerator.cs"
   },
@@ -24820,7 +24853,7 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 33721,
+    "size": 33831,
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
@@ -25086,7 +25119,7 @@
       "null"
     ],
     "path": "Good/BLoD/CoreBLOD.cs",
-    "size": 24988,
+    "size": 25114,
     "fileName": "CoreBLOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Good/BLoD/CoreBLOD.cs"
   },
@@ -25838,7 +25871,7 @@
       "null"
     ],
     "path": "Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs",
-    "size": 1780,
+    "size": 1802,
     "fileName": "EmptyTemplate[Basics].cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs"
   },
@@ -26409,7 +26442,7 @@
       "extra"
     ],
     "path": "Story/QueenofMonsters/Extra/OrbHunt.cs",
-    "size": 5776,
+    "size": 5777,
     "fileName": "OrbHunt.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/QueenofMonsters/Extra/OrbHunt.cs"
   },
@@ -28101,6 +28134,47 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/ChromaCandyMerge.cs"
   },
   {
+    "name": "Elodeas Candy Haul Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Elodeas Candy Haul Merge [2632] in /eldritchworld",
+    "tags": [
+      "elodeas",
+      "candy",
+      "haul",
+      "merge",
+      "eldritchworld",
+      "gold",
+      "voucher",
+      "k",
+      "horc",
+      "warrior",
+      "thok",
+      "magical",
+      "mariner",
+      "arcana",
+      "cat",
+      "burglar",
+      "metrea",
+      "thunder",
+      "flurry",
+      "juvania",
+      "aegean",
+      "calabaza",
+      "pumpkin",
+      "kings",
+      "twilight",
+      "peril",
+      "kabocha",
+      "killer",
+      "naginata",
+      "nocturne",
+      "penumbra"
+    ],
+    "path": "Seasonal/Mogloween/MergeShops/ElodeasCandyHaulMerge.cs",
+    "size": 15095,
+    "fileName": "ElodeasCandyHaulMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/ElodeasCandyHaulMerge.cs"
+  },
+  {
     "name": "Mog-GLOW-ween Merge",
     "description": "null",
     "tags": [
@@ -28173,6 +28247,33 @@
     "size": 4660,
     "fileName": "VampireLordMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/VampireLordMerge.cs"
+  },
+  {
+    "name": "Ungourdly Gear Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Ungourdly Gear Merge [2629] in /eldritchbattletown",
+    "tags": [
+      "ungourdly",
+      "gear",
+      "merge",
+      "eldritchbattletown",
+      "gold",
+      "voucher",
+      "k",
+      "great",
+      "calabaza",
+      "pumpkin",
+      "kings",
+      "revenge",
+      "fever",
+      "kabocha",
+      "king",
+      "naginata",
+      "wrath"
+    ],
+    "path": "Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs",
+    "size": 5860,
+    "fileName": "UngourdlyGearMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs"
   },
   {
     "name": "Tricktown Merge",

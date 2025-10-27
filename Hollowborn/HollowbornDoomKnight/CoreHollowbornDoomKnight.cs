@@ -32,14 +32,22 @@ public class CoreHollowbornDoomKnight
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }    private static CoreHollowborn _HB;
-    private static CoreHollowbornPaladin HBP { get => _HBP ??= new CoreHollowbornPaladin(); set => _HBP = value; }    private static CoreHollowbornPaladin _HBP;
-    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }    private static CoreSDKA _SDKA;
-    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }    private static CoreNSOD _NSoD;
-    private static SepulchuresOriginalHelm SOH { get => _SOH ??= new SepulchuresOriginalHelm(); set => _SOH = value; }    private static SepulchuresOriginalHelm _SOH;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }
+    private static CoreHollowborn _HB;
+    private static CoreHollowbornPaladin HBP { get => _HBP ??= new CoreHollowbornPaladin(); set => _HBP = value; }
+    private static CoreHollowbornPaladin _HBP;
+    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }
+    private static CoreSDKA _SDKA;
+    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }
+    private static CoreNSOD _NSoD;
+    private static SepulchuresOriginalHelm SOH { get => _SOH ??= new SepulchuresOriginalHelm(); set => _SOH = value; }
+    private static SepulchuresOriginalHelm _SOH;
 
     public string OptionsStorage = "HollowbornDoomKnightOptions";
     public bool DontPreconfigure = true;
@@ -199,12 +207,16 @@ public class CoreHollowbornDoomKnight
         if (Core.CheckInventory(ADKReturnsItems))
             return;
 
-        if (!Core.isCompletedBefore(2090) && !Bot.Player.IsMember)
-            Core.Logger("Completion of the quest \"Dark Spirit Donation\" is required for the \"Dark Energy\" to drop, which is members only");
-
         Core.AddDrop(ADKReturnsItems);
 
         Core.EnsureAccept(8416);
+
+        bool cantcomplete = !Core.isCompletedBefore(2090) && !Bot.Player.IsMember;
+        if (cantcomplete)
+        {
+            Core.Logger("Completion of the quest \"Dark Spirit Donation\" is required for the \"Dark Energy\" to drop, which is members only, we cannot complete this.");
+            return;
+        }
 
         // Requirements 
         SDKA.DoAll();
@@ -218,6 +230,7 @@ public class CoreHollowbornDoomKnight
         ADKRises(10);
         ADK(30);
         Core.EquipClass(ClassType.Farm);
+
         Core.KillMonster("dwarfhold", "r2", "Left", "Chaos Drow", "Dark Energy", 10000, false);
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", 3, false, publicRoom: true);

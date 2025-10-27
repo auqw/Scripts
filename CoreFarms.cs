@@ -3863,45 +3863,51 @@ public class CoreFarms
         }
     }
 
-    public void GetBoost(int itemID, string boostName, int BoostQuant, int quest, bool doOnce = false)
+    /// <summary>
+    /// Farms either the <c>XP Boost! (10 min)</c> (quest 1614) or 
+    /// <c>REPUTATION Boost! (10 min)</c> (quest 1615) up to <paramref name="quantity"/>.
+    /// </summary>
+    /// <param name="type">"XP" or "REP".</param>
+    /// <param name="quantity">Number of boosts to collect. Default is 1.</param>
+    /// <param name="doOnce">If true, completes the quest once regardless of inventory.</param>
+    /// <remarks>
+    /// Ensures Fishing Rank ≥2, completes prerequisites, handles all quest logic, 
+    /// and trashes Fishing Bait and Dynamite after farming.
+    /// </remarks>
+    public void GetBoost(string type, int quantity = 1, bool doOnce = false)
     {
-        //Ensure Rank 2 > fishing rep
-        FishingREP(2, false, false, false);
+        int quest = type.Equals("XP", StringComparison.OrdinalIgnoreCase) ? 1614 : 1615;
+        int itemID = quest == 1614 ? 10850 : 10997;
+        string boostName = quest == 1614 ? "XP Boost! (10 min)" : "REPUTATION Boost! (10 min)";
 
         ItemBase? boostItem = Core.EnsureLoad(quest)?.Rewards.Find(x => x.Name == boostName);
-        if (boostItem != null && Core.CheckInventory(boostItem?.Name, BoostQuant) && !doOnce) return;
+        if (boostItem != null && Core.CheckInventory(boostItem.Name, quantity) && !doOnce) return;
 
-        Core.FarmingLogger(boostName, BoostQuant); // Use boostName directly
-        Core.AddDrop("Fishing Dynamite", boostItem?.Name ?? "DefaultItemName");
+        Core.FarmingLogger(boostName, quantity);
+        Core.AddDrop("Fishing Dynamite", boostItem?.Name ?? boostName);
         Core.EquipClass(ClassType.Farm);
+        if (FactionRank("Fishing") < 2) FishingREP(2, false, false, false);
 
-        string itemName = boostItem?.Name ?? Core.EnsureLoad(quest)?.Rewards.Find(x => x.ID == itemID)?.Name ?? "DefaultItemName";
-        while (!Bot.ShouldExit && (boostItem == null || (boostItem != null && !Core.CheckInventory(boostItem?.Name, BoostQuant)) || doOnce))
+        if (!Core.isCompletedBefore(1615))
         {
-            // Unlock the quest if not completed before (only for quest 1615)
-            if (!Core.isCompletedBefore(1615))
-            {
-                Core.EnsureAccept(1614);
-                GetFish(10850, 30, 1614);
-                Core.HuntMonster("Greenguardwest", "Slime", "Slime Sauce", log: false);
-                Core.EnsureComplete(1614);
-            }
+            Core.EnsureAccept(1614);
+            GetFish(10850, 30, 1614);
+            Core.HuntMonster("Greenguardwest", "Slime", "Slime Sauce", log: false);
+            Core.EnsureComplete(1614);
+        }
 
+        while (!Bot.ShouldExit && (!Core.CheckInventory(boostName, quantity) || doOnce))
+        {
             Core.EnsureAccept(quest);
-
             GetFish(itemID, quest == 1614 ? 30 : 5, quest);
-
             if (quest == 1614)
                 Core.KillMonster("greenguardwest", "West4", "Right", "Slime", "Slime Sauce");
-            else if (quest == 1615)
-                Core.HuntMonster("Greenguardwest", "Frogzard", "Greenguard Seal", log: false);
+            else Core.HuntMonster("Greenguardwest", "Frogzard", "Greenguard Seal", log: false);
             Bot.Wait.ForPickup(quest == 1614 ? "Slime Sauce" : "Greenguard Seal");
-
             Core.EnsureComplete(quest);
         }
 
         if (!doOnce) Core.TrashCan(new[] { "Fishing Bait", "Fishing Dynamite" });
-        Core.CancelRegisteredQuests();
     }
 
 
