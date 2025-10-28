@@ -206,16 +206,30 @@ public class CoreUltra
         {
             for (int i = 0; i < 5; i++)
             {
-                try { return File.ReadAllLines(path).Where(l => l.Trim().Length > 0).ToArray(); }
-                catch (IOException) { Bot.Sleep(50); }
-                catch { return Array.Empty<string>(); }
+                try
+                {
+                    using (var fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite))
+                    using (var sr = new StreamReader(fs))
+                    {
+                        return sr.ReadToEnd()
+                                .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                    }
+                }
+                catch (IOException)
+                {
+                    Bot.Sleep(50);
+                }
+                catch
+                {
+                    return Array.Empty<string>();
+                }
             }
             return Array.Empty<string>();
         }
 
         void Yeet(string path, string[] lines)
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 15; i++)
             {
                 try { File.WriteAllLines(path, lines); return; }
                 catch (IOException) { Bot.Sleep(50); }
@@ -256,21 +270,22 @@ public class CoreUltra
         Poke(syncFile, me, false);
 
         var clock = Stopwatch.StartNew();
-        while (!Bot.ShouldExit)
-        {
-            int peeps = Bot.Map.PlayerCount;
-            if (peeps >= need) break;
-            if (timeoutMs > 0 && clock.ElapsedMilliseconds >= timeoutMs) break;
-            Bot.Sleep(tickMs);
-        }
+        // while (!Bot.ShouldExit)
+        // {
+        //     int peeps = Bot.Map.PlayerCount;
+        //     if (peeps >= need) break;
+        //     if (timeoutMs > 0 && clock.ElapsedMilliseconds >= timeoutMs) break;
+        //     Bot.Sleep(tickMs);
+        // }
         if (Bot.ShouldExit) { try { File.WriteAllText(syncFile, ""); } catch { } return; }
 
-        Poke(syncFile, me, true);
+        // Poke(syncFile, me, true);
 
         while (!Bot.ShouldExit)
         {
             int ready = HowMany(syncFile);
             if (ready >= need) break;
+            if (ready < need) Poke(syncFile, me, true);
             Bot.Sleep(tickMs);
         }
         if (Bot.ShouldExit) { try { File.WriteAllText(syncFile, ""); } catch { } return; }
