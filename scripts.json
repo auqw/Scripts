@@ -1985,7 +1985,7 @@
       "shadow-vault"
     ],
     "path": "Story/ShadowVault.cs",
-    "size": 2476,
+    "size": 2712,
     "fileName": "ShadowVault.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/ShadowVault.cs"
   },
@@ -6958,7 +6958,7 @@
       "null"
     ],
     "path": "Story/SepulchureSaga/CoreSepulchure.cs",
-    "size": 15855,
+    "size": 15854,
     "fileName": "CoreSepulchure.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/SepulchureSaga/CoreSepulchure.cs"
   },
@@ -9512,7 +9512,7 @@
       "null"
     ],
     "path": "Story/QueenofMonsters/CoreQOM.cs",
-    "size": 33725,
+    "size": 33900,
     "fileName": "CoreQOM.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Story/QueenofMonsters/CoreQOM.cs"
   },
@@ -18659,7 +18659,7 @@
       "euphoria"
     ],
     "path": "Seasonal/AqwBirthday/17thBirthdayCastlePartyMerge.cs",
-    "size": 13328,
+    "size": 13283,
     "fileName": "17thBirthdayCastlePartyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/17thBirthdayCastlePartyMerge.cs"
   },
@@ -18782,7 +18782,7 @@
       "seasonal"
     ],
     "path": "Seasonal/AqwBirthday/20thAnniversary.cs",
-    "size": 7118,
+    "size": 7117,
     "fileName": "20thAnniversary.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/AqwBirthday/20thAnniversary.cs"
   },

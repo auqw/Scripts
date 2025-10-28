@@ -218,7 +218,7 @@ public class ElodeasCandyHaulMerge
                     Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonsterQuest(10464, "eldritchworld", "Dzeza Cultist");
+                        Core.HuntMonsterQuest(10464, "eldritchworld", "Mass of Teeth");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

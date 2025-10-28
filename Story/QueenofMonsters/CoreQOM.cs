@@ -12,8 +12,10 @@ public class CoreQOM
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -702,7 +704,12 @@ public class CoreQOM
         Story.KillQuest(6285, "guardiantree", "Myconid");
 
         //Take Down Terrane
-        Story.KillQuest(6286, "guardiantree", "Terrane");
+        if (!Story.QuestProgression(6286))
+        {
+            Core.EnsureAccept(6286);
+            Core.KillMonster("guardiantree", "r12", "Left", "Terrane", "Terrane Defeated");
+            Core.EnsureComplete(6286);
+        }
         if (TerraneMerge)
             return;
 

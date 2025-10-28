@@ -77,7 +77,7 @@ public class CastlePartyMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster("castleparty", "Legion Partycrasher", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster("castleparty", "Legion Partycrasher", req.Name, quant, req.Temp);
                     break;
 
                 case "Gold Voucher 25k":
@@ -95,7 +95,7 @@ public class CastlePartyMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster("castleparty", "Noxus' Gift", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster("castleparty", "Noxus' Gift", req.Name, quant, req.Temp);
                     break;
 
 
@@ -112,7 +112,7 @@ public class CastlePartyMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster("castleparty", "Treasure Chest", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster("castleparty", "Treasure Chest", req.Name, quant, req.Temp);
                     break;
 
 
@@ -159,7 +159,7 @@ public class CastlePartyMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster("castleparty", "Nulgath's Gift", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster("castleparty", "Nulgath's Gift", req.Name, quant, req.Temp);
                     break;
 
 
@@ -173,11 +173,8 @@ public class CastlePartyMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster("castleparty", "Sally's Gift", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster("castleparty", "Sally's Gift", req.Name, quant, req.Temp);
                     break;
-
-
-
 
 
                 case "Giftbox Ribbon":
@@ -191,7 +188,7 @@ public class CastlePartyMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster("castleparty", "Lost Giftbox", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster("castleparty", "Lost Giftbox", req.Name, quant, req.Temp);
                     break;
                     #endregion
 

@@ -200,7 +200,7 @@ public class AnniversaryofDoom
         Story.KillQuest(8902, "deathofgames", new[] { "Rider", "Blaster Master", "Super Death" });
 
         //EpicDuel vs DoG 8907
-        Story.KillQuest(8907, "deathofgames", new[] { "Cyber Hunter", "God of War" });
+        Story.KillQuest(8907, "deathofgames", new[] { "God of War","Cyber Hunter" });
 
         //AQWorlds At Risk 8920
         Story.KillQuest(8920, "deathofgames", new[] { "Skeletal Fire Mage", "Drakath" });

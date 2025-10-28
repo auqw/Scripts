@@ -151,7 +151,7 @@ public class CoreSepulchure
         Story.MapItemQuest(6350, "scarsgarde", 5869);
 
         // Stay Strong Keep Steady 6351
-        Story.KillQuest(6351, "scarsgarde", new[] { "Garde Knight", "Garde Pikeman" });
+        Story.KillQuest(6351, "scarsgarde", new[] { "Garde Pikeman","Garde Knight" });
 
         // The Final Fight 6352
         Core.EquipClass(ClassType.Solo);

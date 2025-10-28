@@ -784,7 +784,7 @@ public class CoreMogloween
                     "Living Pumpkin", // UseableMonsters[0],
                     "Dzeza Sapling", // UseableMonsters[1],
                     "Nudibranch", // UseableMonsters[2],
-                    "Kathool Cultist", // UseableMonsters[3],
+                    "Kathool Kultist", // UseableMonsters[3],
                     "Dzeza Cultist", // UseableMonsters[4],
                     "Harvest Acromegalia", // UseableMonsters[5]
                 };
