@@ -881,7 +881,7 @@ public class CoreAdvanced
 
             EnsureShopLoaded(map, shopID);
             ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
-            if (wasinshop != null)
+            if (wasinshop != null && !wasinshop.Name.Contains("Gold Voucher"))
             {
                 Core.Logger($"Item: \"{Req.Name}  [{Req.ID}\"] is in the shop!");
                 while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
@@ -962,7 +962,7 @@ public class CoreAdvanced
                 int ReqQuant = req.Quantity * craftingQ;
                 ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
 
-                if (wasinshop != null)
+                if (wasinshop != null && !wasinshop.Name.Contains("Gold Voucher"))
                 {
                     Core.Logger($"Item: \"{wasinshop.Name}  [{wasinshop.ID}\"] is in the shop.");
                     ReqQuant = Math.Min(ReqQuant, wasinshop.MaxStack);
