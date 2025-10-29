@@ -874,7 +874,7 @@ public class CoreMogloween
         {
     "Nudibranch", // UseableMonsters[0],
 	"Infested Fisherman", // UseableMonsters[1],
-	"Kathool Cultist", // UseableMonsters[2],
+	"Kathool Kultist", // UseableMonsters[2],
 	"Dzeza Cultist", // UseableMonsters[3],
 	"Dzeza Sapling", // UseableMonsters[4],
 	"Infested Mummy", // UseableMonsters[5],
