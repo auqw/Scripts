@@ -11,7 +11,8 @@ public class ExaltiaTower
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -32,7 +33,7 @@ public class ExaltiaTower
         Core.AddDrop("Exalted Node", "Exalted Forgemetal", "Exalted Relic Piece", "Exalted Artillery Shard");
 
         //Unlocking the Antechamber 8146
-        Story.KillQuest(8146, "timeinn", new[] { "Fire Elemental", "Ice Elemental" });
+        Story.KillQuest(8146, "timeinn", new[] { "Ice Elemental", "Fire Elemental" });
 
         //Ezrajal 8147
         Story.KillQuest(8147, "timeinn", "Ezrajal");
