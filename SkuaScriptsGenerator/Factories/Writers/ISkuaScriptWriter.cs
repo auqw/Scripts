@@ -1,7 +1,6 @@
-﻿namespace SkuaScriptsGenerator.Generators
+﻿namespace SkuaScriptsGenerator.Generators;
+
+public interface ISkuaScriptWriter
 {
-    public interface ISkuaScriptWriter
-    {
-        void Write();
-    }
+    void Write();
 }
