@@ -21533,7 +21533,7 @@
     ],
     "path": "Seasonal/Mogloween/CoreMogloween.cs",
     "size": 28997,
-    "sha256": "a3dd7133fe06dd96f02948aa941144ca0a43a6fafa9fa07516651bb31a732aa7",
+    "sha256": "b6e7c0098ce6d69ca83e5f443f385e3036d936bdbbd06c55a9e4cdddb5a3d9d9",
     "fileName": "CoreMogloween.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/CoreMogloween.cs"
   },
@@ -29853,7 +29853,7 @@
     ],
     "path": "Seasonal/Mogloween/MergeShops/ElodeasCandyHaulMerge.cs",
     "size": 15095,
-    "sha256": "7b7c43831463787aef06c92112f958de4e8d1ba262f0221eef7a35ca504109e7",
+    "sha256": "1f56f33efaea9207805adf3c6cd2eb646b053efeebcea6131fb85411fbb2bc5d",
     "fileName": "ElodeasCandyHaulMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/ElodeasCandyHaulMerge.cs"
   },
@@ -29958,7 +29958,7 @@
     ],
     "path": "Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs",
     "size": 5860,
-    "sha256": "b392a0e89ce1e39440b18af50915c5b589ade4aef0b965068fcaa1a20b8d661f",
+    "sha256": "13a3712bc053fca14b7c19da204348e3fffcde4ba4d7fa9599b6f6928175b613",
     "fileName": "UngourdlyGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs"
   },
