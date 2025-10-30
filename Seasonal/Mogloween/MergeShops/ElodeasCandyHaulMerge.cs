@@ -9,6 +9,7 @@ tags: elodeas, candy, haul, merge, eldritchworld, gold, voucher, k, horc, warrio
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Seasonal/Mogloween/CoreMogloween.cs
 //cs_include Scripts/Seasonal/Mogloween/MergeShops/UngourdlyGearMerge.cs
+//cs_include Scripts/Story/TrainersStory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -27,6 +28,8 @@ public class ElodeasCandyHaulMerge
     private static CoreMogloween _CoreMogloween;
     private static UngourdlyGearMerge UGM { get => _Ungourdly ??= new UngourdlyGearMerge(); set => _Ungourdly = value; }
     private static UngourdlyGearMerge _Ungourdly;
+    private static WarMonger WarMonger { get => _WarMonger ??= new WarMonger(); set => _WarMonger = value; }
+    private static WarMonger _WarMonger;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -47,6 +50,7 @@ public class ElodeasCandyHaulMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        WarMonger.Trainers();
         Mog.EldritchWorld();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("eldritchworld", 2632, findIngredients, buyOnlyThis, buyMode: buyMode);
@@ -232,7 +236,7 @@ public class ElodeasCandyHaulMerge
                         Core.Logger($"{req.Name} requires membership to farm, skipping.");
                         return;
                     }
-                    Adv.BuyItem("classhalla", 170, req.Name, quant);
+                    Core.BuyItem("classhalla", 170, req.Name, quant);
                     break;
 
 
