@@ -85,6 +85,9 @@ jobs:
     # === Step: Checkout Code ===
     - name: Checkout code
       uses: actions/checkout@v4.2.2
+    
+    - name: Configure git to preserve line endings
+      run: git config --global core.autocrlf false
 
     # === Step: Cache NuGet Packages ===
     - name: Cache NuGet packages
