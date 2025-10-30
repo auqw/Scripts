@@ -4,11 +4,6 @@
 * text=auto
 
 ###############################################################################
-# Enforce CRLF line endings for C# files
-###############################################################################
-*.cs text eol=lf
-
-###############################################################################
 # Set default behavior for command prompt diff.
 #
 # This is need for earlier builds of msysgit that does not have it on by
