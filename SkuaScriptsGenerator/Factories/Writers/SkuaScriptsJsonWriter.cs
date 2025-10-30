@@ -44,8 +44,10 @@ public class SkuaScriptsJsonWriter : ISkuaScriptWriter
 
                 var scriptB = File.ReadAllBytes(script);
                 RemoveAllZeroWidth(ref scriptB);
-                scriptInfo.Size = scriptB.Length;
-                scriptInfo.Sha256 = ComputeSha256(scriptB);
+                
+                byte[] normalizedB = NormalizeLineEndings(scriptB);
+                scriptInfo.Size = normalizedB.Length;
+                scriptInfo.Sha256 = ComputeSha256(normalizedB);
 
                 scripts.Add(scriptInfo);
             }
@@ -62,6 +64,13 @@ public class SkuaScriptsJsonWriter : ISkuaScriptWriter
         scriptB = Encoding.UTF8.GetBytes(scriptS);
     }
 
+    private byte[] NormalizeLineEndings(byte[] data)
+    {
+        string text = Encoding.UTF8.GetString(data);
+        text = text.Replace("\r\n", "\n");
+        return Encoding.UTF8.GetBytes(text);
+    }
+    
     private string ComputeSha256(byte[] data)
     {
         using var sha256 = SHA256.Create();
