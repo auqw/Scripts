@@ -818,6 +818,42 @@ public class CoreEngine
         }
     }
 
+    public bool IsMonsterAliveByName(string monName)
+    {
+        bool isAlive = false;
+
+        monName = monName.ToLower();
+
+        try
+        {
+            string jsonData = Bot.Flash.Call("availableMonsters");
+            var monsters = JArray.Parse(jsonData);
+            if (monsters.Count == 0)
+            {
+                return false;
+            }
+
+            foreach (var monster in monsters)
+            {
+                if (monster["strMonName"]?.ToString().ToLower() == monName)
+                {
+                    var intState = monster["intState"]?.ToString();
+
+                    if (string.IsNullOrEmpty(intState) || intState == "1" || intState == "2")
+                    {
+                        isAlive = true;
+                    }
+                }
+            }
+
+            return isAlive;
+        }
+        catch
+        {
+            return true;
+        }
+    }
+
     public bool IsAlive(MonsterKey k)
     {
         foreach (var m in Match(k))
@@ -987,6 +1023,16 @@ public class CoreEngine
         {
             EnableSkills();
         }
+    }
+
+    public void EquipEnrage()
+    {
+         if (Owned("Scroll of Enrage") < 1) return;
+        if (Bot.Inventory.IsEquipped("Scroll of Enrage")) return;
+
+        WhiteMap();
+        Bot.Inventory.EquipUsableItem("Scroll of Enrage");
+        Bot.Sleep(D3);
     }
 
     #endregion
