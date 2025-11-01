@@ -33,7 +33,7 @@ public class ExaltiaTower
         Core.AddDrop("Exalted Node", "Exalted Forgemetal", "Exalted Relic Piece", "Exalted Artillery Shard");
 
         //Unlocking the Antechamber 8146
-        Story.KillQuest(8146, "timeinn", new[] { "Ice Elemental", "Fire Elemental" });
+        Story.KillQuest(8146, "timeinn", new[] { "Fire Elemental", "Ice Elemental" });
 
         //Ezrajal 8147
         Story.KillQuest(8147, "timeinn", "Ezrajal");
