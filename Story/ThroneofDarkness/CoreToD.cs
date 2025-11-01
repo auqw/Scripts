@@ -143,7 +143,14 @@ public class CoreToD
         }
 
         // Vaden Says
-        Story.KillQuest(4982, "bonecastle", new[] { "Undead Guard", "Undead Knight", "Skeletal Warrior" });
+        if(!Story.QuestProgression(4982))
+        {
+            Core.EnsureAccept(4982);
+            Core.KillMonster("bonecastle", "Enter", "Spawn", "Yellow, Green");
+            Core.KillMonster("bonecastle", "r3", "Bottom", "Red, Red");
+            Core.KillMonster("bonecastle", "r8", "Left", "Blue, Green, Red");
+            Core.EnsureComplete(4982);
+        }
 
         // The Dead King's Bedroom
         Story.MapItemQuest(4983, "bonecastle", 4352, 1);
