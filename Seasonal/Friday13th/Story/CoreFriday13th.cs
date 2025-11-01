@@ -701,7 +701,7 @@ public class CoreFriday13th
         Story.KillQuest(6268, "Gonnagetcha", "Shrade");
 
         // Revitalize the Camp 6269
-        Story.KillQuest(6269, "Gonnagetcha", new[] { "Vengeful Ghost", "Shrade Cultist" });
+        Story.KillQuest(6269, "Gonnagetcha", new[] { "Shrade Cultist", "Vengeful Ghost" });
     }
 
     public void Greymoor()
