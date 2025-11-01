@@ -80,7 +80,8 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 77134,
+    "size": 75449,
+    "sha256": "5138329a753745cedfc047b3b84467a53269a4e1770c94f3cc33437a30010bb7",
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -2313,7 +2314,7 @@
     ],
     "path": "Story/ExaltiaTower.cs",
     "size": 1534,
-    "sha256": "060ff501273107ab4f72f9c117217e4bda1882101b8fdde0204d596de473c4bc",
+    "sha256": "fef4cd522d0952a6cbad2406cb2727996d4d3da06f3d81e496f0a311bd7a5c68",
     "fileName": "ExaltiaTower.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ExaltiaTower.cs"
   },
@@ -7828,8 +7829,8 @@
       "null"
     ],
     "path": "Story/Hollowborn/CoreHollowbornStory.cs",
-    "size": 11260,
-    "sha256": "1d379f6b01e4aa0e2fb1f1d4ca4a1d055f874b42de182220e9ed89fcab2d209d",
+    "size": 11261,
+    "sha256": "5650f983d5e614634239938cd9810672111a67a9975c60f1404c88d2bcc57528",
     "fileName": "CoreHollowbornStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Hollowborn/CoreHollowbornStory.cs"
   },
@@ -9505,7 +9506,7 @@
     ],
     "path": "Story/Fireisland/CoreFireisland.cs",
     "size": 18333,
-    "sha256": "4d130887aafb6507ef1ab18efa4420c08b5f13861408567e42a689ad9494a75e",
+    "sha256": "4321e2a27f82e5e18bd5864a163450583adb4bbf203c9ae118e220769e386165",
     "fileName": "CoreFireisland.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Fireisland/CoreFireisland.cs"
   },
