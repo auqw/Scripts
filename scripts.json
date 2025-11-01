@@ -19,7 +19,7 @@
     ],
     "path": "CoreAdvanced.cs",
     "size": 137312,
-    "sha256": "50faf207033751d0876c284c7f67f5981010947df57c2f8eeb3ccd65fe7cf92d",
+    "sha256": "001fb1a89235f7d140f51706de967eeee2435411cb5300a04e9f3f9fec686925",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -8992,8 +8992,8 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 47923,
-    "sha256": "2e1d39c3bd53ea2643bad783c70197669ecfc4cdcaf97d368f89f4ed7343aa52",
+    "size": 48182,
+    "sha256": "abbbdd6bcd908a454ac3d974ea12186c65785903c87c66fe7334b98fb0811bd3",
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
