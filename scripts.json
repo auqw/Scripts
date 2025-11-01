@@ -7402,8 +7402,8 @@
       "null"
     ],
     "path": "Story/SepulchureSaga/CoreSepulchure.cs",
-    "size": 15854,
-    "sha256": "c0b2b202d246f470582906dfb0203de8a64f3c0895c0596bdb7cd1976c5d3373",
+    "size": 15855,
+    "sha256": "d613b82ef41be3828c96859d6695e8ffe3a03ea9daea201ca57509a0d78ff6e6",
     "fileName": "CoreSepulchure.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/SepulchureSaga/CoreSepulchure.cs"
   },
@@ -28744,7 +28744,7 @@
     ],
     "path": "Seasonal/Friday13th/Story/CoreFriday13th.cs",
     "size": 34265,
-    "sha256": "4f1c0ac5db3b0422db04eab1a303becc06c76ac393d42807365b188dca7460a5",
+    "sha256": "478e45af2ddd1fb83f70476ecb7f8082e7613d88849d136d487b1628ea1072c9",
     "fileName": "CoreFriday13th.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/CoreFriday13th.cs"
   },
