@@ -20262,6 +20262,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/07MystcroftForestStory.cs"
   },
   {
+    "name": "Elodea Temple Story",
+    "description": "This will complete the elodea temple Story quest.",
+    "tags": [
+      "story",
+      "quest",
+      "mogloween",
+      "seasonal",
+      "elodea",
+      "temple",
+      "elodeatemple"
+    ],
+    "path": "Seasonal/Mogloween/17ElodeaTemple.cs",
+    "size": 797,
+    "fileName": "17ElodeaTemple.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/17ElodeaTemple.cs"
+  },
+  {
     "name": "Masquerade Story",
     "description": "This will complete the Masquerade story quest.",
     "tags": [
@@ -20333,7 +20350,7 @@
       "null"
     ],
     "path": "Seasonal/Mogloween/CoreMogloween.cs",
-    "size": 28997,
+    "size": 31799,
     "fileName": "CoreMogloween.cs",
     "downloadUrl": "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/Seasonal/Mogloween/CoreMogloween.cs"
   },
