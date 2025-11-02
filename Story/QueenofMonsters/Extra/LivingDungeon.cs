@@ -11,7 +11,8 @@ public class LivingDungeon
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -48,7 +49,7 @@ public class LivingDungeon
         Story.KillQuest(4353, "livingdungeon", "Chia Warrior");
 
         // Leaf me alone!
-        Story.KillQuest(4354, "livingdungeon", new[] { "Seed Spitter", "Evil Plant Horror", "Titan Decay" });
+        Story.KillQuest(4354, "livingdungeon", new[] { "Titan Decay", "Seed Spitter", "Evil Plant Horror" });
 
         // Evil Faerie Ambush!
         Story.KillQuest(4355, "livingdungeon", "Evil Tree Faerie");
