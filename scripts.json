@@ -21457,6 +21457,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/07MystcroftForestStory.cs"
   },
   {
+    "name": "Elodea Temple Story",
+    "description": "This will complete the elodea temple Story quest.",
+    "tags": [
+      "story",
+      "quest",
+      "mogloween",
+      "seasonal",
+      "elodea",
+      "temple",
+      "elodeatemple"
+    ],
+    "path": "Seasonal/Mogloween/17ElodeaTemple.cs",
+    "size": 797,
+    "sha256": "dcbdbfd965f30391a079b1a2d36b8fabd9cc35a21f51e8e179ace2c6a7024492",
+    "fileName": "17ElodeaTemple.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/17ElodeaTemple.cs"
+  },
+  {
     "name": "Masquerade Story",
     "description": "This will complete the Masquerade story quest.",
     "tags": [
@@ -21532,8 +21550,8 @@
       "null"
     ],
     "path": "Seasonal/Mogloween/CoreMogloween.cs",
-    "size": 28997,
-    "sha256": "a3dd7133fe06dd96f02948aa941144ca0a43a6fafa9fa07516651bb31a732aa7",
+    "size": 31799,
+    "sha256": "6f45f495938f22251f198e8adce03ebf6ff3134ac6e31d63de568b286c5f86bb",
     "fileName": "CoreMogloween.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/CoreMogloween.cs"
   },
@@ -29977,6 +29995,53 @@
     "sha256": "d4e59702f1299104a1a5f617b76af58d279118d64e32395058dfd7cef27d2272",
     "fileName": "TricktownMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/TricktownMerge.cs"
+  },
+  {
+    "name": "Feast of the Depths Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Feast of the Depths Merge [2633] in /elodeatemple",
+    "tags": [
+      "feast",
+      "of",
+      "the",
+      "depths",
+      "merge",
+      "elodeatemple",
+      "gold",
+      "voucher",
+      "k",
+      "pumpkin",
+      "warlock",
+      "witch",
+      "ponytail",
+      "long",
+      "twintails",
+      "twintail",
+      "mogloween",
+      "forest",
+      "mangelwurzel",
+      "broom",
+      "pet",
+      "standing",
+      "erudite",
+      "plague",
+      "doctor",
+      "faustian",
+      "moustache",
+      "cloak",
+      "crimson",
+      "darkling",
+      "lamp",
+      "lamps",
+      "iron",
+      "doctors",
+      "cane",
+      "forged"
+    ],
+    "path": "Seasonal/Mogloween/MergeShops/FeastoftheDepthsMerge.cs",
+    "size": 7615,
+    "sha256": "56ae71482525bdcc53b507937db4cbeec02d69022b91cadf545f791600c1beec",
+    "fileName": "FeastoftheDepthsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Mogloween/MergeShops/FeastoftheDepthsMerge.cs"
   },
   {
     "name": "Mogloween Seasonal Merge",
