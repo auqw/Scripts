@@ -905,7 +905,7 @@ public class CoreSoW
         }
 
         //Avatar of Fire 8243
-        Story.KillQuest(8243, "fireavatar", new[] { "Avatar Tyndarius", "Fire Orb" });
+        Story.KillQuest(8243, "fireavatar", new[] { "Fire Orb","Avatar Tyndarius" });
     }
 
     public void RuinedCrown()
