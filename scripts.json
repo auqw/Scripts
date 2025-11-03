@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 146043,
-    "sha256": "23dd70972a59abe28cd3bf28030a801f46f63de2e47017997e5b69b4848cbd23",
+    "size": 142908,
+    "sha256": "1ed26150acaed566a9cb12ad579b11f70e9ccc46fa83a6b0c5a7d54007a83bd2",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -7687,8 +7687,8 @@
       "null"
     ],
     "path": "Story/Summer2015AdventureMap/CoreSummer.cs",
-    "size": 25158,
-    "sha256": "0f9a7c510373a3081d674635a9c7b141c3a8b96ca98306f144b8ea7bf914691d",
+    "size": 25160,
+    "sha256": "a160c0e185fe15018c05ec55828842030e0cda81c237f62a8ff64d72c6480338",
     "fileName": "CoreSummer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Summer2015AdventureMap/CoreSummer.cs"
   },
