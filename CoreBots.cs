@@ -7170,7 +7170,7 @@ public class CoreBots
         {
             for (int i = 0; i < jumpCount; i++)
             {
-                Bot.Map.Jump(cellPad.Cell, cellPad.Pad, PrivateRooms ? true : false);
+                Bot.Map.Jump(cellPad.Cell, cellPad.Pad, PrivateRooms);
                 Bot.Wait.ForTrue(() => Bot.Player.Cell == cellPad.Cell, 20);
             }
 
@@ -8420,16 +8420,12 @@ public class CoreBots
             while (!Bot.ShouldExit)
             {
                 if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(target.MapID);
+                    Bot.Combat.Attack("*");
 
                 Sleep();
 
-                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                {
-                    Bot.Combat.CancelAutoAttack();
-                    Bot.Combat.CancelTarget();
+                if ( Bot.Player?.Target?.HP <= 0)
                     break;
-                }
             }
         }
     }
