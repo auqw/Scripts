@@ -530,6 +530,20 @@ public class CoreAdvanced
 
             EnsureShopLoaded(map, shopID);
             ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
+            
+            // Handle special cases for Gold Vouchers and Dragon Runestones
+            if (wasinshop.Name.Contains("Gold Voucher"))
+            {
+                Farm.Voucher(wasinshop.Name, ReqQuant);
+                return;
+            }
+            
+            if (wasinshop.Name.Contains("Dragon Runestone"))
+            {
+                Farm.DragonRunestone(ReqQuant);
+                return;
+            }
+
             if (wasinshop != null && !wasinshop.Name.Contains("Gold Voucher"))
             {
                 Core.Logger($"Item: \"{Req.Name}  [{Req.ID}\"] is in the shop!");
@@ -538,18 +552,6 @@ public class CoreAdvanced
                     // for requirements that are in the shop, but are just buyable with gold. (excludes ac buyable items)
                     if (wasinshop.Requirements.Count <= 0 && (wasinshop.Coins && wasinshop.Cost <= 0 || !wasinshop.Coins)) //|| wasinshop.Name.Contains("Gold Voucher") || wasinshop.Name.Contains("Dragon Runestone"))
                     {
-                        // // Handle special cases for Gold Vouchers and Dragon Runestones
-                        // if (wasinshop.Name.Contains("Gold Voucher"))
-                        // {
-                        //     Farm.Voucher(wasinshop.Name, ReqQuant);
-                        //     return;
-                        // }
-                        // if (wasinshop.Name.Contains("Dragon Runestone"))
-                        // {
-                        //     Farm.DragonRunestone(ReqQuant);
-                        //     return;
-                        // }
-
                         // Otherwise buy the item directly
                         BuyItem(map, shopID, Req.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
                         Bot.Wait.ForPickup(Req.ID);
@@ -561,25 +563,13 @@ public class CoreAdvanced
                         Core.Logger($"Failed to meet requirements for \"{Req.Name}\" [{Req.ID}] x{ReqQuant}, Retrying the farm (items may have been used).");
                 }
             }
-            else if (wasinshop == null)
+            else 
             {
                 // Items not in the shop, so we have to get it externally
                 externalItem = Req;
                 externalQuant = Req.Quantity;
                 Core.AddDrop(externalItem.ID);
                 Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item (not from this shop), attempting to farm it from The ingredient list.");
-
-                // These are here inacse ae forgot to put vouchers in the original merge... like idiots (more of a fail safe) 
-                if (Req.Name.Contains("Dragon Runestone"))
-                {
-                    Farm.DragonRunestone(ReqQuant);
-                    return;
-                }
-                if (Req.Name.StartsWith("Gold Voucher"))
-                {
-                    Farm.Voucher(Req.Name, ReqQuant);
-                    return;
-                }
 
                 findIngredients();
                 Bot.Wait.ForPickup(externalItem.ID);
