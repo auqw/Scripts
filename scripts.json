@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 54271,
-    "sha256": "3aa01c88dd8c666dbaf52fd013d15a193f7f47eb009c77988a7cc2f102bd4eab",
+    "size": 56364,
+    "sha256": "bb322e17bca075eb31a28e3aadc0697612673042b79e0665338d97c968c9009d",
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreDailies.cs"
   },
@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 137170,
-    "sha256": "04ea265b44ecf22c045148cb538026900b08579de31d69066b50c3bc6a5eeefd",
+    "size": 142903,
+    "sha256": "af61d64e914fa7cc9f8b4a35135bb464e03ddcff8df1e84bd849490bd54220af",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 142908,
-    "sha256": "1ed26150acaed566a9cb12ad579b11f70e9ccc46fa83a6b0c5a7d54007a83bd2",
+    "size": 146975,
+    "sha256": "b362bbadad2977e8184bae578653d7aa34acd42a77c75035bbf6893aabd0cced",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 49912,
-    "sha256": "e50897de36f3a9b3399965925ca000686360055585008f244438500fc0fa0aa6",
+    "size": 44377,
+    "sha256": "2c1087ee7b1b391f11a3e31e994f65d156e02da1ee000fd1291b36052221f59a",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 406693,
-    "sha256": "9ecb9a93b10acbe4d052c157e01046132f09a767d81fb3455fbfed8902410b98",
+    "size": 408472,
+    "sha256": "5eba195a05b44d0b083f91afc50b669baeebdd68c9432ec2b32bddfdc2bdde4c",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -3743,8 +3743,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 108526,
-    "sha256": "c872424a96c6c4535f9a09b5de4d9dc2131a30608cdb4ff4a5640458803bd083",
+    "size": 113073,
+    "sha256": "8eae554316c06b2f7ef050220cf59cbccebd3d87dc77a0ef3072ae2cad3ed581",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -10432,8 +10432,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 45643,
-    "sha256": "09c38b286bf638475f7760033d4cb498f09cf7d4167af60975aea7178b2c77cb",
+    "size": 46550,
+    "sha256": "3e5c9b58a6ad942b04d164a9b50fce9a802f19c76ec01e6281747a6b44fbcfed",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -13247,8 +13247,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 59419,
-    "sha256": "6d1a76c768b8b390185ff681bcea7bddc74f978d741fff9f652b4bdaabda81f0",
+    "size": 55330,
+    "sha256": "eaf8d3b7dc46306e6eadfa648fd6e1186a796ec1456181f5cb7aa57845e7d7e0",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -26304,8 +26304,8 @@
       "null"
     ],
     "path": "Evil/NSoD/CoreNSOD.cs",
-    "size": 21738,
-    "sha256": "4500b730b35d8f0e14b69fd6317d14869aa09634210bad04f22693a92cc3bb27",
+    "size": 21630,
+    "sha256": "806d10ee5a7ca5276fc636c9c626e2ee3dda2e5270c26997c121b216c66d1ad2",
     "fileName": "CoreNSOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/NSoD/CoreNSOD.cs"
   },
@@ -26335,8 +26335,8 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 33831,
-    "sha256": "a48d4bdf2d9c4b452272f6da9bcf39fdb8a79859f47efe85ca764cf8d8e49659",
+    "size": 34972,
+    "sha256": "6c1cc904c022bfbedbddf66b6b1d310885805796c070ee454625fdbdaaaebcb9",
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
