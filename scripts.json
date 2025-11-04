@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 406693,
-    "sha256": "9ecb9a93b10acbe4d052c157e01046132f09a767d81fb3455fbfed8902410b98",
+    "size": 405511,
+    "sha256": "658902fa683099f8f50d642e4cd583d4edde7b3dcd2d2934972f847c73c550ea",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -3743,8 +3743,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 108526,
-    "sha256": "c872424a96c6c4535f9a09b5de4d9dc2131a30608cdb4ff4a5640458803bd083",
+    "size": 108396,
+    "sha256": "4a93aea175db76012627e88ae142cd20062d5bfbecb80c59f717d766a9b8463f",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
