@@ -756,7 +756,7 @@ public class CoreNation
                     if (shouldFarm4778 && Core.CheckInventory("Voucher of Nulgath (non-mem)") && Core.CheckInventory("Essence of Nulgath", 60))
                     {
                         Core.EnsureAccept(4778);
-                        Core.EnsureCompleteMulti(4778, rewardItem?.ID ?? -1);
+                        Core.EnsureCompleteMulti(4778, itemID: rewardItem?.ID ?? -1);
                         Bot.Wait.ForPickup(rewardItem?.ID ?? -1);
                     }
                 }
@@ -886,9 +886,7 @@ public class CoreNation
                                 }
                                 if (Bot.Player.Gold < 100000000)
                                 {
-                                    Bot.Wait.ForPickup("Voucher of Nulgath");
                                     Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
-                                    Bot.Wait.ForItemSell();
                                 }
 
                                 if (Bot.Player.Gold >= 1000000 && AssistantDuring)
@@ -916,19 +914,19 @@ public class CoreNation
                                 if (item?.Equals("Diamond of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
                                 {
                                     if (diamondsMaxed && !totemsMaxed)
-                                        Core.EnsureCompleteMulti(4778, 5357, 100); // Totems
+                                        Core.EnsureCompleteMulti(4778, 100, 5357); // Totems
                                 }
                                 else if (item?.Equals("Totem of Nulgath", StringComparison.OrdinalIgnoreCase) == true)
                                 {
                                     if (totemsMaxed && !diamondsMaxed)
-                                        Core.EnsureCompleteMulti(4778, 6136, 1000); // Diamonds
+                                        Core.EnsureCompleteMulti(4778, 1000, 6136); // Diamonds
                                 }
                                 else // item == null or any other item
                                 {
                                     if (!totemsMaxed)
-                                        Core.EnsureCompleteMulti(4778, 5357, 100); // Prioritize Totems
+                                        Core.EnsureCompleteMulti(4778, 100, 5357); // Prioritize Totems
                                     else if (!diamondsMaxed)
-                                        Core.EnsureCompleteMulti(4778, 6136, 1000); // Then Diamonds
+                                        Core.EnsureCompleteMulti(4778, 1000, 6136); // Then Diamonds
                                 }
                             }
 
@@ -2138,8 +2136,8 @@ public class CoreNation
             {
                 Core.EnsureCompleteMulti(
                     4778,
-                    !Core.CheckInventory("Diamond of Nulgath", 1000) ? 6136 : 5357,
-                    !Core.CheckInventory("Diamond of Nulgath", 1000) ? 1000 : 100
+                    !Core.CheckInventory("Diamond of Nulgath", 1000) ? 1000 : 100,
+                    !Core.CheckInventory("Diamond of Nulgath", 1000) ? 6136 : 5357
                 );
             }
 
