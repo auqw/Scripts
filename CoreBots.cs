@@ -3453,8 +3453,6 @@ public class CoreBots
         if (item != null && !isTemp)
             AddDrop(item); // 💎
 
-        ItemBase? Item = Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).FirstOrDefault(x => x != null && x.Name == item); // 📦
-
         Bot.Options.AggroAllMonsters = false; // ⚔️
 
         if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
@@ -5392,18 +5390,8 @@ public class CoreBots
             }
             else
             {
-                while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
+                while (!Bot.ShouldExit && !CheckInventory(item, quantity))
                 {
-                    // Get a live target dynamically each iteration
-                    // Monster? target = Bot.Monsters.CurrentAvailableMonsters
-                    //     .FirstOrDefault(m => m != null && m.Name == name && m.HP > 0 && m.Alive);
-
-                    // if (target == null)
-                    // {
-                    //     Sleep(500); // No available target, retry
-                    //     continue;
-                    // }
-
                     // Make sure player is alive
                     while (!Bot.ShouldExit && !Bot.Player.Alive)
                         Sleep();
@@ -5415,22 +5403,14 @@ public class CoreBots
                         Bot.Wait.ForCellChange(cell);
                     }
 
-                    // If we already have a valid target, attack it
-                    // if (!Bot.Player.HasTarget || Bot.Player.Target != target)
-                    // {
-                    //     Bot.Combat.CancelAutoAttack(); // Cancel any stale attack
-                    //     Bot.Log($"Attacking {target.MapID}");
-                    //     Bot.Combat.Attack(name);
-                    // }
-                    Bot.Combat.Attack(name.FormatForCompare());
-                    Sleep(500); // short pacing
-
-                    // Cancel attack if target dies mid-fight
-                    // if (!target.Alive || target.HP <= 0)
-                    //     Bot.Combat.CancelAutoAttack();
+                    if (!Bot.Player.HasTarget)
+                    {
+                        Bot.Combat.Attack(name.FormatForCompare());
+                        Sleep(200); // short pacing
+                    }
 
                     // Stop loop if we have the required items
-                    if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
+                    if (CheckInventory(item, quantity))
                         break;
                 }
 
@@ -8424,7 +8404,7 @@ public class CoreBots
 
                 Sleep();
 
-                if ( Bot.Player?.Target?.HP <= 0)
+                if (Bot.Player?.Target?.HP <= 0)
                     break;
             }
         }
