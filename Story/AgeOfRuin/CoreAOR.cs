@@ -60,9 +60,7 @@ public class CoreAOR
     public void TerminaTemple(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(coldThunder ? 9851 : seaVoice ? 9351 : 10438))
-        {
             return;
-        }
 
         SoW.ManaCradle();
         Story.PreLoad(this);
@@ -76,28 +74,20 @@ public class CoreAOR
         Story.KillQuest(9214, "terminatemple", "Clandestine Guard");
 
         if (!seaVoice && !coldThunder)
-        {
             return;
-        }
 
         // If seaVoice or coldThunder & quest isnt unlocked
-        if (seaVoice || (coldThunder && !Core.isCompletedBefore(9348)))
-        {
+        if (seaVoice || coldThunder && !Core.isCompletedBefore(9348))
             SeaVoice();
-        }
 
         // Mopping Up (9351)
         Story.MapItemQuest(9351, "terminatemple", new[] { 12050, 12051 });
 
         if (seaVoice && !coldThunder)
-        {
             return;
-        }
 
         if (coldThunder)
-        {
             ColdThunder();
-        }
 
         // Tell-Tale Heart (9851)
         Story.MapItemQuest(9851, "terminatemple", new[] { 13541, 13542 });
@@ -106,9 +96,7 @@ public class CoreAOR
     public void AshrayVillage(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9234))
-        {
             return;
-        }
 
         TerminaTemple(seaVoice, coldThunder);
 
@@ -151,9 +139,7 @@ public class CoreAOR
     public void SunlightZone(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9251))
-        {
             return;
-        }
 
         AshrayVillage(seaVoice, coldThunder);
 
@@ -196,9 +182,7 @@ public class CoreAOR
     public void TwilightZone(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9268))
-        {
             return;
-        }
 
         SunlightZone(seaVoice, coldThunder);
 
@@ -246,9 +230,7 @@ public class CoreAOR
     public void YulgarAria(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9274))
-        {
             return;
-        }
 
         TwilightZone(seaVoice, coldThunder);
 
@@ -277,9 +259,7 @@ public class CoreAOR
     public void MidnightZone(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9301))
-        {
             return;
-        }
 
         TwilightZone(seaVoice, coldThunder);
 
@@ -328,9 +308,7 @@ public class CoreAOR
     public void AbyssalZone(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9315))
-        {
             return;
-        }
 
         MidnightZone(seaVoice, coldThunder);
 
@@ -380,9 +358,7 @@ public class CoreAOR
     public void DeepWater(bool panopticonMerge = false, bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9338))
-        {
             return;
-        }
 
         AbyssalZone(seaVoice, coldThunder);
 
@@ -405,9 +381,7 @@ public class CoreAOR
         // Guardian Spirits (9332)
         Story.KillQuest(9332, "trenchobserve", "Venerated Wraith");
         if (panopticonMerge)
-        {
             return;
-        }
 
         // Enemy in Need (9333)
         Story.MapItemQuest(9333, "trenchobserve", 11978, 4);
@@ -440,10 +414,7 @@ public class CoreAOR
     public void SeaVoice()
     {
         if (Core.isCompletedBefore(9348))
-        {
             return;
-        }
-
         SoW.ManaCradle();
         DeepWater(panopticonMerge: false, seaVoice: false, coldThunder: false);
         Story.PreLoad(this);
@@ -456,9 +427,7 @@ public class CoreAOR
             string[] PossibleSoloClasses = new[] { "Chaos Avenger", "Verus Doomknight", "Void Highlord", "ArchPaladin" };
 
             if (!Core.CheckInventory(PossibleSoloClasses, any: true))
-            {
                 Core.Logger("no Soloing classes found stopping (go get AP atleast and rerun)", stopBot: true);
-            }
 
             // Find the first available class in inventory or bank
             string? selectedClass = PossibleSoloClasses.FirstOrDefault(className =>
@@ -493,9 +462,7 @@ public class CoreAOR
     public void Balemorale(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9729))
-        {
             return;
-        }
 
         TerminaTemple(false, false);
 
@@ -549,9 +516,7 @@ public class CoreAOR
     public void Castleeblana(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9741))
-        {
             return;
-        }
 
         Balemorale(seaVoice, coldThunder);
 
@@ -596,9 +561,7 @@ public class CoreAOR
     public void Loughshine(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9764))
-        {
             return;
-        }
 
         Castleeblana(seaVoice, coldThunder);
 
@@ -646,9 +609,7 @@ public class CoreAOR
     public void NaoiseGrave(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9777))
-        {
             return;
-        }
 
         Loughshine(seaVoice, coldThunder);
 
@@ -694,9 +655,7 @@ public class CoreAOR
     public void LiaTaraHill(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9814))
-        {
             return;
-        }
 
         NaoiseGrave(seaVoice, coldThunder);
 
@@ -748,9 +707,7 @@ public class CoreAOR
     public void CastleGaheris(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9828))
-        {
             return;
-        }
 
         LiaTaraHill(seaVoice, coldThunder);
 
@@ -794,9 +751,7 @@ public class CoreAOR
     public void ColdThunder()
     {
         if (Core.isCompletedBefore(9851))
-        {
             return;
-        }
 
         CastleGaheris(false, false);
 
@@ -806,7 +761,7 @@ public class CoreAOR
         // 9833 | The Storm Queen
         if (!Story.QuestProgression(9833))
         {
-            Core.Logger("Doing 9833 | The Storm Queen");
+            Core.Logger($"Doing 9833 | The Storm Queen");
             Core.EnsureAccept(9833);
             ColdThunderBoss("Cold Thunder Defeated");
             Core.EnsureComplete(9833);
@@ -816,9 +771,7 @@ public class CoreAOR
     public void ThelimaCity(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(10356))
-        {
             return;
-        }
 
         TerminaTemple(seaVoice, coldThunder);
 
@@ -841,9 +794,7 @@ public class CoreAOR
 
         // 10348 | Starstruck Chivalry
         if (!Story.QuestProgression(10348))
-        {
             Core.HuntMonsterQuest(10348, "thelimacity", UseableMonsters[0]);
-        }
 
 
         // 10349 | Black Dahlia
@@ -911,9 +862,7 @@ public class CoreAOR
     public void MountMaleno(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(10368))
-        {
             return;
-        }
 
         ThelimaCity(seaVoice, true);
 
@@ -997,9 +946,7 @@ public class CoreAOR
     public void SanctuaryAiwass(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(10384))
-        {
             return;
-        }
 
         MountMaleno(seaVoice, coldThunder);
 
@@ -1062,10 +1009,7 @@ public class CoreAOR
         {
             Core.EnsureAccept(10383);
             for (int i = 0; i < 8; i++)
-            {
                 Core.GetMapItem(14869, map: "sanctuaryaiwass"); // Click blue arrows 8 times
-            }
-
             Core.GetMapItem(14870, map: "sanctuaryaiwass"); // Read Strange Scroll
             Core.EnsureComplete(10383);
         }
@@ -1077,9 +1021,7 @@ public class CoreAOR
     public void ForgeAlbedo(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(10422))
-        {
             return;
-        }
 
         SanctuaryAiwass(seaVoice, coldThunder);
 
@@ -1182,9 +1124,7 @@ public class CoreAOR
         Bot.Events.ExtensionPacketReceived += Listener;
 
         if (!isTemp && item != null)
-        {
             Core.AddDrop(item);
-        }
 
         //get, equip, and use safe pot (potions buggy af ae.. fix this)
         Core.BuyItem("mirrorportal", 774, "Shriekward Potion", 99);
@@ -1206,14 +1146,10 @@ public class CoreAOR
         while (!Bot.ShouldExit && item != null && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant)))
         {
             if (Bot.Map.Name != "coldthunder")
-            {
                 Core.Join("coldthunder");
-            }
 
             if (Bot.Player.Cell != "r3")
-            {
                 Core.Jump("r3");
-            }
 
             // Check if potion is needed and handle it
             if (needsPotion && !potionApplied)
@@ -1281,9 +1217,7 @@ public class CoreAOR
                             foreach (var a in data.anims)
                             {
                                 if (a is null)
-                                {
                                     continue;
-                                }
 
                                 if (a.msg is not null && (string)a.msg is "The skies rumble. Prepare yourself!")
                                 {
@@ -1319,19 +1253,14 @@ public class CoreAOR
 
         Core.Equip(Class!);
         if (Class == "Void Highlord")
-        {
             Bot.Skills.StartAdvanced("Void HighLord", true, ClassUseMode.Def);
-        }
-
         Core.Equip(ItemUsed);
         Core.Logger($"{ItemUsed} [Vigil] Equiped? {Bot.Inventory.IsEquipped("Vigil")}");
 
         Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m.MapID == mobMapID);
 
         if (Bot.Player.Cell != mob!.Cell)
-        {
             Core.Jump(mob.Cell);
-        }
 
         #region  UltraSpeaker
         // if (map == "ultraspeaker")
@@ -1344,21 +1273,17 @@ public class CoreAOR
         #endregion
         Bot.Player.SetSpawnPoint();
 
-        while (!Bot.ShouldExit && item != null && isTemp ? !Bot.TempInv.Contains(item!, quant) : !Core.CheckInventory(item, quant))
+        while (!Bot.ShouldExit && item != null && isTemp ? !Bot.TempInv.Contains(item!, quant) : !Core.CheckInventory(item!, quant))
         {
             //Check if/move to /in mob cell && Bot.Player.Alive)
             if (Bot.Player.Cell != mob.Cell)
-            {
                 Core.Jump(mob.Cell);
-            }
 
             #region  UltraSpeaker
             if (map == "ultraspeaker")
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
-                {
                     Core.Sleep();
-                }
             }
             #endregion
             if (targetAuraName != null)
@@ -1384,9 +1309,7 @@ public class CoreAOR
             foreach (Aura A in Bot.Target.Auras.Concat(Bot.Self.Auras))
             {
                 if (Bot.Target.Auras.Concat(Bot.Self.Auras).FirstOrDefault(a => a.Name == targetAuraName) == null)
-                {
                     continue;
-                }
 
                 switch (A.Name)
                 {
@@ -1400,7 +1323,7 @@ public class CoreAOR
                             // Assuming `targetAura` is the aura you're referring to
                             if (Bot.Self.HasActiveAura("Vigil"))
                             {
-                                Core.Logger("Vigil Active!");
+                                Core.Logger($"Vigil Active!");
                                 break;
                             }
                         }
@@ -1415,11 +1338,7 @@ public class CoreAOR
         void UsePotion()
         {
             var skill = Bot.Flash.GetArrayObject<dynamic>("world.actions.active", 5);
-            if (skill == null)
-            {
-                return;
-            }
-
+            if (skill == null) return;
             Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill))!);
         }
     }

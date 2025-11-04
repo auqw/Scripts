@@ -36,6 +36,8 @@ public class CoreNSOD
     private static CoreSDKA _SDKA;
     private static Necromancer Necro { get => _Necro ??= new Necromancer(); set => _Necro = value; }
     private static Necromancer _Necro;
+    private static BattleUnder BattleUnder { get => _BattleUnder ??= new BattleUnder(); set => _BattleUnder = value; }
+    private static BattleUnder _BattleUnder;
 
     public string OptionsStorage = "NecroticSwordOfDoomOptions";
     public bool DontPreconfigure = true;
@@ -80,9 +82,7 @@ public class CoreNSOD
                 PreFarmSteps();
             }
             else
-            {
                 Core.Logger("NSoD: PreFarm Steps skipped, continuing with the farm.");
-            }
 
             Core.Logger("NSoD: Step #10/16: NSAura.");
             NSAura();
@@ -422,10 +422,8 @@ public class CoreNSOD
             i++;
 
         foreach (string Item in Blades)
-        {
             if (Core.CheckInventory(Item))
                 i = i + Array.IndexOf(Blades, Item) + 1;
-        }
 
         i = i + Bot.Inventory.GetQuantity("Barium") + Bot.Inventory.GetQuantity("Barium of Doom");
         if (i >= 4)
@@ -517,7 +515,7 @@ public class CoreNSOD
 
         int TotalVAs = 0; // Requirements will add VAs to this amount for a final calculation.
 
-        const int MergeRequirement = 800; // Always needed to merge NSoD
+        int MergeRequirement = 800; // Always needed to merge NSoD
 
         int HiltVA = 2910;  // 250 (200 + 50 (bone from the void realm x1)) for >> (NS)
                             // + 150 (100 + 50 (bone from the void realm x1))for >> (E) 

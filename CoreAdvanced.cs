@@ -6,12 +6,18 @@ tags: null
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 using System.Diagnostics;
+using System.Dynamic;
+using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Monsters;
+using Skua.Core.Models.Quests;
 using Skua.Core.Models.Shops;
 using Skua.Core.Options;
 using Skua.Core.Utils;
@@ -24,19 +30,20 @@ public class CoreAdvanced
     private static CoreFarms _Farm;
 
     // Thousand-level Constants
-            // 1k
-       // 10k
- // 100k
- // 500k
+    const int OneK = 1000;        // 1k
+    const int TenK = 10000;       // 10k
+    const int OneHundredK = 100000; // 100k
+    const int FiveHundredK = 500000; // 500k
 
     // Million-level Constants
-       // 1m
-  // 5m
-  // 10m
- // 50m
- // 100m
+    const int OneMillion = 1000000;   // 1m
+    const int FiveMillion = 5000000;  // 5m
+    const int TenMillion = 10000000;  // 10m
+    const int FiftyMillion = 50000000; // 50m
+    const int OneHundredMillion = 100000000; // 100m
 
     //Max integer
+    const int maxint = Int32.MaxValue;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -58,9 +65,7 @@ public class CoreAdvanced
     public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         if (Core.CheckInventory(itemName, quant))
-        {
             return;
-        }
 
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
@@ -72,11 +77,9 @@ public class CoreAdvanced
             Bot.Wait.ForCombatExit();
         }
 
-        ShopItem? item = Core.parseShopItem(Core.GetShopItems(map, shopID).Where(x => shopItemID == 0 ? string.Equals(x.Name, itemName, StringComparison.OrdinalIgnoreCase) : x.ShopItemID == shopItemID).ToList(), shopID, itemName);
+        ShopItem? item = Core.parseShopItem(Core.GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.Name.ToLower() == itemName.ToLower() : x.ShopItemID == shopItemID).ToList(), shopID, itemName);
         if (item == null)
-        {
             return;
-        }
 
         _BuyItem(map, shopID, item, quant, item.Quantity, shopItemID, index, Log);
     }
@@ -95,9 +98,7 @@ public class CoreAdvanced
     public void BuyItem(string map, int shopID, int itemID, int quant = 1, int shopQuant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         if (Core.CheckInventory(itemID, quant))
-        {
             return;
-        }
 
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
@@ -111,9 +112,7 @@ public class CoreAdvanced
 
         ShopItem? item = Core.parseShopItem(Core.GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID).ToList(), shopID, itemID.ToString());
         if (item == null)
-        {
             return;
-        }
 
         _BuyItem(map, shopID, item, quant, shopQuant, shopItemID, index, Log);
     }
@@ -164,9 +163,7 @@ public class CoreAdvanced
                         Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
                         Core.Sleep(1000);
                         if (Bot.Shops.ID == shopID)
-                        {
                             break;
-                        }
                     }
 
                     // int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
@@ -179,9 +176,7 @@ public class CoreAdvanced
                         Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
                         Core.Sleep(1000);
                         if (Bot.Shops.ID == shopID)
-                        {
                             break;
-                        }
                     }
 
                     ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
@@ -194,9 +189,9 @@ public class CoreAdvanced
                     else
                     {
                         Core.Logger($"Failed to find shop item: \"{req.Name} [{req.ID}]\" in ({Bot.Shops.Name} [{Bot.Shops.ID}].)\n"
-                        + "Its either a `mob drop` or a `daily`.\n"
+                        + $"Its either a `mob drop` or a `daily`.\n"
                         + $"Check the Wiki: http://aqwwiki.wikidot.com/search:main/fullname/{req.Name.Replace(" ", "-")}.\n"
-                        + "Maybe the bot will just farm in a moment once it returns to the previous code..? if not then its probably from a daily or an mob we cannot kill with skua.");
+                        + $"Maybe the bot will just farm in a moment once it returns to the previous code..? if not then its probably from a daily or an mob we cannot kill with skua.");
                         return;
                     }
                 }
@@ -207,9 +202,7 @@ public class CoreAdvanced
 
             // Rejoin the map here incase getitemreq takes you elsewhere, to ensure that the shopitem is found (hopefully) 
             if (Bot.Map.Name != map)
-            {
                 Core.Join(map);
-            }
 
             // Load shop data
             while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
@@ -219,9 +212,7 @@ public class CoreAdvanced
                 Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
                 Core.Sleep(1000);
                 if (Bot.Shops.ID == shopID)
-                {
                     break;
-                }
             }
 
             // Try to find the exact item match based on ID and ShopItemID
@@ -272,12 +263,12 @@ public class CoreAdvanced
     }
     /// <summary>
     /// Ensures that all necessary requirements (Experience, Reputation, Gold, and specific items)
-    /// are met in order to purchase an item. This includes verifying player level, farming or purchasing
+    /// are met in order to purchase an item. This includes verifying player level, farming or purchasing 
     /// required reputation, acquiring specific items such as Gold Vouchers and Dragon Runestones,
     /// and ensuring enough gold is available for the transaction.
     /// </summary>
     /// <param name="item">
-    /// The <see cref="ShopItem"/> object that contains all the details about the item,
+    /// The <see cref="ShopItem"/> object that contains all the details about the item, 
     /// including its requirements like reputation, level, gold cost, and additional items needed.
     /// </param>
     /// <param name="quant">
@@ -314,25 +305,23 @@ public class CoreAdvanced
         }
 
         // Handle Gold Vouchers (multiple types possible)
-        if (item.Requirements.Any(x => x?.Name.StartsWith("Gold Voucher") == true))
+        if (item.Requirements.Any(x => x != null && x.Name.StartsWith("Gold Voucher")))
         {
-            foreach (ItemBase req in item.Requirements.Where(x => x?.Name.StartsWith("Gold Voucher") == true))
+            foreach (ItemBase req in item.Requirements.Where(x => x != null && x.Name.StartsWith("Gold Voucher")))
             {
                 Farm.Voucher(req.Name, req.Quantity);
             }
         }
 
         // Handle Dragon Runestone farming if required
-        if (item.Requirements.Any(x => x?.Name.StartsWith("Dragon Runestone") == true))
+        if (item.Requirements.Any(x => x != null && x.Name.StartsWith("Dragon Runestone")))
         {
-            Farm.DragonRunestone(item.Requirements.FirstOrDefault(x => x?.Name == "Dragon Runestone").Quantity);
+            Farm.DragonRunestone(item.Requirements.FirstOrDefault(x => x != null && x.Name == "Dragon Runestone").Quantity);
         }
 
         // Warn if a temp item is missing
-        foreach (ItemBase req in item.Requirements.Where(x => x?.Temp == true && x.Quantity > Bot.TempInv.GetQuantity(x.ID)))
-        {
+        foreach (ItemBase req in item.Requirements.Where(x => x != null && x.Temp && x.Quantity > Bot.TempInv.GetQuantity(x.ID)))
             Core.Logger($"Temp item: {req.Name}, quant needed: {req.Quantity}... did the bot not farm them?");
-        }
     }
 
     private void runRep(string faction, int rank)
@@ -384,28 +373,17 @@ public class CoreAdvanced
     public void StartBuyAllMerge(string map, int shopID, Action findIngredients, string? buyOnlyThis = null, string[]? itemBlackList = null, mergeOptionsEnum? buyMode = null, string Group = "First", int ShopItemID = 0, bool Log = true)
     {
         #region Setup and Initialization
-        if (buyOnlyThis == null && buyMode == null && Bot.Config?.Get<bool>(CoreBots.Instance.SkipOptions) == false)
-        {
+        if (buyOnlyThis == null && buyMode == null && Bot.Config != null && !Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
             Bot.Config!.Configure();
-        }
 
         int mode = 0;
         if (buyOnlyThis != null)
-        {
             mode = (int)mergeOptionsEnum.all;
-        }
         else if (buyMode != null)
-        {
             mode = (int)buyMode;
-        }
-        else if (Bot.Config?.MultipleOptions.Any(o => o.Value.Any(x => x.Category == "Generic" && x.Name == "mode")) == true)
-        {
+        else if (Bot.Config != null && Bot.Config.MultipleOptions.Any(o => o.Value.Any(x => x.Category == "Generic" && x.Name == "mode")))
             mode = (int)Bot.Config.Get<mergeOptionsEnum>("Generic", "mode");
-        }
-        else
-        {
-            Core.Logger("Invalid setup detected for StartBuyAllMerge. Please report", messageBox: true, stopBot: true);
-        }
+        else Core.Logger("Invalid setup detected for StartBuyAllMerge. Please report", messageBox: true, stopBot: true);
 
         matsOnly = mode == 2;
 
@@ -427,7 +405,7 @@ public class CoreAdvanced
                                           IOrderedEnumerable<ShopItem> orderedGroup = group.OrderBy(item => item.ShopItemID != group.First().ShopItemID);
                                           return Group == "First" ? orderedGroup.First() : orderedGroup.Last();
                                       })
-                                      .Where(x => !x.Name.EndsWith("insignia", StringComparison.OrdinalIgnoreCase))
+                                      .Where(x => !x.Name.ToLower().EndsWith("insignia"))
                                       .Where(x => !uniqueItemIds.Contains(x.ID))
                                       .ToList();
 
@@ -441,29 +419,21 @@ public class CoreAdvanced
         {
             if (miscCatagories.Contains(item.Category) ||
                     (!string.IsNullOrEmpty(buyOnlyThis) && buyOnlyThis != item.Name) ||
-                    (itemBlackList?.Any(x => string.Equals(x, item.Name, StringComparison.OrdinalIgnoreCase)) == true))
-            {
+                    (itemBlackList != null && itemBlackList.Any(x => x.ToLower() == item.Name.ToLower())))
                 continue;
-            }
 
             if (Core.IsMember || !item.Upgrade
-            || item.Requirements.Any(x => x != null && Bot.Shops.Items.Any(x => x?.Upgrade == true && !Core.IsMember)))
+            || item.Requirements.Any(x => x != null && Bot.Shops.Items.Any(x => x != null && x.Upgrade && !Core.IsMember)))
             {
                 if (mode == 3)
                 {
                     if (Bot.Config!.Get<bool>("Select", $"{item.ID}"))
-                    {
                         items.Add(item);
-                    }
                 }
                 else if (mode != 1)
-                {
                     items.Add(item);
-                }
                 else if (item.Coins)
-                {
                     items.Add(item);
-                }
             }
             else if (mode == 3 && Bot.Config!.Get<bool>("Select", $"{item.ID}"))
             {
@@ -486,9 +456,7 @@ public class CoreAdvanced
         foreach (ShopItem item in items)
         {
             if (Core.CheckInventory(item.ID, toInv: false))
-            {
                 continue;
-            }
 
             if (item.Upgrade && !Core.IsMember)
             {
@@ -510,9 +478,7 @@ public class CoreAdvanced
             if (item.Requirements.All(x => x != null && Core.CheckInventory(x.ID, x.Quantity)))
             {
                 if (!matsOnly)
-                {
                     Core.Logger($"Buying {item.Name} (#{t++}/{items.Count})");
-                }
 
                 // Attempt to purchase the required quantity of the shop item
                 BuyItem(map, shopID, item.ID, shopItemID: item.ShopItemID, Log: Log);
@@ -552,9 +518,7 @@ public class CoreAdvanced
                 Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
                 Core.Sleep(1000);
                 if (Bot.Shops.ID == shopID)
-                {
                     return true;
-                }
             }
             return true;
         }
@@ -562,9 +526,7 @@ public class CoreAdvanced
         void HandleItemRequirements(ItemBase? Req, int ReqQuant, Action findIngredients)
         {
             if (Core.CheckInventory(Req.ID, ReqQuant))
-            {
                 return;
-            }
 
             EnsureShopLoaded(map, shopID);
             ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
@@ -587,13 +549,9 @@ public class CoreAdvanced
                     }
 
                     if (Core.CheckInventory(Req.ID, ReqQuant))
-                    {
                         break;
-                    }
                     else
-                    {
                         Core.Logger($"Failed to meet requirements for \"{Req.Name}\" [{Req.ID}] x{ReqQuant}, Retrying the farm (items may have been used).");
-                    }
                 }
             }
            else  if (Req?.Name?.Contains("Gold Voucher") == true || Req?.Name?.Contains("Dragon Runestone") == true)
@@ -638,30 +596,26 @@ public class CoreAdvanced
             // Ensure we are checking for items in the shop and inventory properly
             if (item == null)
             {
-                Core.Logger("Item not found in the shop.");
+                Core.Logger($"Item not found in the shop.");
                 return;
             }
 
             // If item is already in inventory, no need to continue
             if (Core.CheckInventory(item.ID, item.Quantity))
-            {
                 return;
-            }
 
             // Ensure shop is loaded before proceeding
             EnsureShopLoaded(map, shopID);
             foreach (ItemBase req in item.Requirements)
             {
                 if (Core.CheckInventory(req.ID, req.Quantity))
-                {
                     continue;
-                }
 
                 EnsureShopLoaded(map, shopID);
                 int ReqQuant = req.Quantity * craftingQ;
                 ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
 
-                if (wasinshop?.Name.Contains("Gold Voucher") == false)
+                if (wasinshop != null && !wasinshop.Name.Contains("Gold Voucher"))
                 {
                     Core.Logger($"Item: \"{wasinshop.Name}  [{wasinshop.ID}\"] is in the shop.");
                     ReqQuant = Math.Min(ReqQuant, wasinshop.MaxStack);
@@ -672,11 +626,7 @@ public class CoreAdvanced
                         Bot.Wait.ForPickup(wasinshop.ID);
                     }
 
-                    else
-                    {
-                        IngredientWasintheShop(wasinshop, ReqQuant);
-                    }
-
+                    else IngredientWasintheShop(wasinshop, ReqQuant);
                     continue;
                 }
                 else if (wasinshop == null)
@@ -706,27 +656,21 @@ public class CoreAdvanced
             {
                 // If all requirements are met, attempt to buy the item
                 if (!matsOnly)
-                {
                     Core.Logger($"Buying {item.Name} [{item.ID}] from the shop.");
-                }
 
                 // Attempt to purchase the Requirement of Main / Sub-Main item
                 BuyItem(map, shopID, item.ID, craftingQ, shopItemID: item.ShopItemID, Log: Log);
                 Bot.Wait.ForPickup(item.ID);
             }
             else
-            {
                 // If the purchase was unsuccessful, log the failure
                 Core.Logger($"Failed to meet requirements for {item.Name} [{item.ID}].");
-            }
         }
 
         void HandleNoItemsFound(int mode, bool memSkipped)
         {
             if (buyOnlyThis != null)
-            {
                 return;
-            }
 
             switch (mode)
             {
@@ -736,25 +680,15 @@ public class CoreAdvanced
                     break;
                 case 1:
                     if (shopItems.All(x => !x.Coins))
-                    {
                         Core.Logger("The bot fetched 0 items to farm. This is because none of the items in this shop are AC tagged.");
-                    }
                     else
-                    {
                         Core.Logger("The bot fetched 0 items to farm. Something must have gone wrong.");
-                    }
-
                     break;
                 case 3:
                     if (memSkipped)
-                    {
                         Core.Logger("The bot fetched 0 items to farm. This is because you aren't a member.");
-                    }
                     else
-                    {
                         Core.Logger("The bot fetched 0 items to farm. Something must have gone wrong.");
-                    }
-
                     break;
             }
         }
@@ -805,9 +739,7 @@ public class CoreAdvanced
     public void BoostKillMonster(string map, string cell, string pad, string monster, string item = "", int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
         if (item != "" && Core.CheckInventory(item, quant))
-        {
             return;
-        }
 
         Core.Join(map, cell, pad, publicRoom: publicRoom);
 
@@ -832,9 +764,7 @@ public class CoreAdvanced
     public void BoostKillMonster(string map, string cell, string pad, int monsterID, string item = "", int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
         if (item != "" && Core.CheckInventory(item, quant))
-        {
             return;
-        }
 
         Core.Join(map, cell, pad, publicRoom: publicRoom);
 
@@ -858,9 +788,7 @@ public class CoreAdvanced
     public void BoostHuntMonster(string map, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
         if (item != null && Core.CheckInventory(item, quant))
-        {
             return;
-        }
 
         Core.Join(map, publicRoom: publicRoom);
 
@@ -887,14 +815,9 @@ public class CoreAdvanced
     public void KillUltra(string map, string cell, string pad, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = true, bool forAuto = false)
     {
         if (item != null && Core.CheckInventory(item, quant))
-        {
             return;
-        }
-
         if (item != null && !isTemp)
-        {
             Core.AddDrop(item);
-        }
 
         Core.Join(map, cell, pad, publicRoom: publicRoom);
         // if (!forAuto)
@@ -906,19 +829,13 @@ public class CoreAdvanced
         if (item == null)
         {
             if (log)
-            {
                 Core.Logger($"Killing Ultra-Boss {monster}");
-            }
-
             while (!Bot.ShouldExit && !ded)
             {
                 ded = false;
                 Core.Jump(cell, pad);
                 if (!Bot.Combat.StopAttacking)
-                {
                     Bot.Combat.Attack(monster);
-                }
-
                 Core.Sleep();
             }
             Core.Rest();
@@ -927,16 +844,12 @@ public class CoreAdvanced
         Bot.Events.MonsterKilled -= b => ded = true;
 
         if (log)
-        {
             Core.Logger($"Killing Ultra-Boss {monster} for {item} ({quant}) [Temp = {isTemp}]");
-        }
 
         Bot.Hunt.ForItem(monster, item, quant, isTemp);
 
         if (!forAuto)
-        {
             GearStore(true);
-        }
     }
 
     #region WIP/Proof of Concept Methods(W.I.P)
@@ -952,9 +865,7 @@ public class CoreAdvanced
         CancellationToken cancellationToken = default)
     {
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
-        {
             return;
-        }
 
         DateTime lastAuraTrigger = DateTime.MinValue;
         TimeSpan auraCooldown = TimeSpan.FromSeconds(0);
@@ -969,9 +880,7 @@ public class CoreAdvanced
             int equipSafe = SafeItem > 0 ? SafeItem : fallbackPotion;
 
             if (!Core.CheckInventory(equipSafe))
-            {
                 BuyItem("embersea", 1100, fallbackPotion, 10, 1, 17966);
-            }
 
             EquipRetry(equipSafe);
             Core.Equip(ItemToUse);
@@ -981,45 +890,30 @@ public class CoreAdvanced
         if (item == null)
         {
             if (log)
-            {
                 Core.Logger($"Killing {monster}");
-            }
-
             Bot.Kill.Monster(monster);
         }
         else
         {
             if (!isTemp)
-            {
                 Core.AddDrop(item);
-            }
-
             if (log)
-            {
                 Core.FarmingLogger(item, quant);
-            }
 
             while (!Bot.ShouldExit && !Core.CheckInventory(item, quant) && !cancellationToken.IsCancellationRequested)
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive && !cancellationToken.IsCancellationRequested) { }
 
                 if (Bot.Map.Name != map)
-                {
                     Core.Join(map, cell, pad);
-                }
-
                 if (Bot.Player.Cell != cell)
-                {
                     Core.Jump(cell, pad);
-                }
 
                 Bot.Combat.Attack(monster);
                 Bot.Sleep(500);
 
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : (Bot.Inventory.Contains(item, quant) || Bot.Bank.Contains(item, quant)))
-                {
                     break;
-                }
             }
         }
 
@@ -1028,39 +922,27 @@ public class CoreAdvanced
         void AuraListener(dynamic packet)
         {
             if (cancellationToken.IsCancellationRequested)
-            {
                 return;
-            }
 
             if ((string?)packet["params"]?.type != "json")
-            {
                 return;
-            }
 
             dynamic? data = packet["params"]?.dataObj;
             if (data?.cmd?.ToString() != "ct" || data?.a is null)
-            {
                 return;
-            }
 
             if (data == null)
-            {
                 return;
-            }
 
             foreach (dynamic a in data.a)
             {
                 string? auraName = a?.aura?["nam"]?.ToString();
                 if (string.IsNullOrEmpty(auraName) || !auraNames.Contains(auraName))
-                {
                     continue;
-                }
 
                 // Throttle cooldown
                 if (DateTime.Now - lastAuraTrigger < auraCooldown)
-                {
                     continue;
-                }
 
                 lastAuraTrigger = DateTime.Now;
 
@@ -1189,9 +1071,7 @@ public class CoreAdvanced
 
         // Optionally restore gear
         if (gearRestore)
-        {
             GearStore();
-        }
 
         Core.JumpWait();
 
@@ -1236,22 +1116,16 @@ public class CoreAdvanced
 
         // Check if the class reached Rank 10
         if (classItem.Quantity == 302500)
-        {
             Core.Logger($"\"{classItem.Name}\" is now Rank 10");
-        }
         else
-        {
             Core.Logger($"\"{classItem.Name}\" is somehow... not rank 10??");
-        }
 
         // Deactivate the class boost
         Farm.ToggleBoost(BoostType.Class, false);
 
         // Optionally restore gear
         if (gearRestore)
-        {
             GearStore(true);
-        }
     }
 
     /// <summary>
@@ -1264,21 +1138,13 @@ public class CoreAdvanced
         if (!Restore)
         {
             foreach (InventoryItem Item in Bot.Inventory.Items.FindAll(i => i.Equipped == true))
-            {
                 ReEquippedItems.Add(Item.Name);
-            }
 
             ReEnhanceAfter = CurrentClassEnh();
             if (Bot.Inventory.Items.Any(x => x.Category == ItemCategory.Cape && x.Equipped))
-            {
                 ReCEnhanceAfter = CurrentCapeSpecial();
-            }
-
             if (Bot.Inventory.Items.Any(x => x.Category == ItemCategory.Helm && x.Equipped))
-            {
                 ReHEnhanceAfter = CurrentHelmSpecial();
-            }
-
             ReWEnhanceAfter = CurrentWeaponSpecial();
         }
         else if (ReEquippedItems.Count > 0)
@@ -1286,9 +1152,7 @@ public class CoreAdvanced
             Core.JumpWait();
             Core.Equip(ReEquippedItems.ToArray());
             if (EnhAfter)
-            {
                 EnhanceEquipped(ReEnhanceAfter, ReCEnhanceAfter, ReHEnhanceAfter, ReWEnhanceAfter);
-            }
         }
     }
     private readonly List<string> ReEquippedItems = new();
@@ -1310,7 +1174,7 @@ public class CoreAdvanced
     /// <param name="Monster">The Monster object of the monster</param>
     public void _RaceGear(string Monster)
     {
-        if (!Bot.Monsters.MapMonsters.Any(x => string.Equals(x.Name, Monster, StringComparison.OrdinalIgnoreCase)))
+        if (!Bot.Monsters.MapMonsters.Any(x => x.Name.ToLower() == Monster.ToLower()))
         {
             Core.Logger("Could not find any monster with the name " + Monster);
             return;
@@ -1319,9 +1183,7 @@ public class CoreAdvanced
         string Map = Bot.Map.LastMap;
         string MonsterRace = "";
         if (Monster != "*")
-        {
-            MonsterRace = Bot.Monsters.MapMonsters.First(x => string.Equals(x.Name, Monster, StringComparison.OrdinalIgnoreCase))?.Race ?? "";
-        }
+            MonsterRace = Bot.Monsters.MapMonsters.First(x => x.Name.ToLower() == Monster.ToLower())?.Race ?? "";
         else
         {
             if (Bot.Monsters.CurrentMonsters.Count == 0)
@@ -1333,9 +1195,7 @@ public class CoreAdvanced
         }
 
         if (MonsterRace == null || MonsterRace == "")
-        {
             return;
-        }
 
         // string[] _BestGear = BestGear((RacialGearBoost)Enum.Parse(typeof(RacialGearBoost), MonsterRace), false);
         // if (_BestGear.Length == 0)
@@ -1359,9 +1219,7 @@ public class CoreAdvanced
         string MonsterRace = Bot.Monsters.MapMonsters.First(x => x.ID == MonsterID).Race;
 
         if (MonsterRace == null || MonsterRace == "")
-        {
             return;
-        }
 
         // string[] _BestGear = BestGear((RacialGearBoost)Enum.Parse(typeof(RacialGearBoost), MonsterRace), false);
         // if (_BestGear.Length == 0)
@@ -1393,9 +1251,7 @@ public class CoreAdvanced
     public void EnhanceEquipped(EnhancementType type, CapeSpecial cSpecial = CapeSpecial.None, HelmSpecial hSpecial = HelmSpecial.None, WeaponSpecial wSpecial = WeaponSpecial.None)
     {
         if (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance)
-        {
             return;
-        }
 
         List<InventoryItem> EquippedItems = Bot.Inventory.Items.FindAll(i => i.Equipped == true && EnhanceableCatagories.Contains(i.Category));
         try
@@ -1420,9 +1276,7 @@ public class CoreAdvanced
     public void EnhanceItem(string item, EnhancementType type, CapeSpecial cSpecial = CapeSpecial.None, HelmSpecial hSpecial = HelmSpecial.None, WeaponSpecial wSpecial = WeaponSpecial.None, bool logging = false)
     {
         if (string.IsNullOrEmpty(item) || (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance))
-        {
             return;
-        }
 
         if (!Core.CheckInventory(item))
         {
@@ -1433,10 +1287,7 @@ public class CoreAdvanced
         while (!Bot.ShouldExit && Bot.Player.InCombat)
         {
             if (Bot.Player.HasTarget)
-            {
                 Bot.Combat.CancelTarget();
-            }
-
             Core.JumpWait();
             Core.Sleep();
         }
@@ -1445,10 +1296,7 @@ public class CoreAdvanced
         if (SelectedItem == null)
         {
             if (Bot.Inventory.Items.Any(i => i.Name.ToLower().Trim() == item.ToLower().Trim()))
-            {
                 Core.Logger($"Enhancement Failed: {item} cannot be enhanced");
-            }
-
             return;
         }
 
@@ -1473,31 +1321,19 @@ public class CoreAdvanced
     public void EnhanceItem(string[] items, EnhancementType type, CapeSpecial cSpecial = CapeSpecial.None, HelmSpecial hSpecial = HelmSpecial.None, WeaponSpecial wSpecial = WeaponSpecial.None)
     {
         if (items.Length == 0 || (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance))
-        {
             return;
-        }
 
         // If any of the items in the items array cant be found, return
         List<string>? notFound = new();
         foreach (string item in items)
-        {
             if (!Core.CheckInventory(item))
-            {
                 notFound.Add(item);
-            }
-        }
 
         if (notFound.Count > 0)
         {
             if (notFound.Count == 1)
-            {
                 Core.Logger($"Enhancement Failed: Could not find {notFound.First()}");
-            }
-            else
-            {
-                Core.Logger($"Enhancement Failed: Could not find the following items: {string.Join(", ", notFound)}");
-            }
-
+            else Core.Logger($"Enhancement Failed: Could not find the following items: {string.Join(", ", notFound)}");
             return;
         }
         notFound = null;
@@ -1511,21 +1347,12 @@ public class CoreAdvanced
             List<string> unEnhanceable = new();
 
             foreach (string item in items)
-            {
                 if (!Bot.Inventory.Items.Any(i => i.Name == item && EnhanceableCatagories.Contains(i.Category)))
-                {
                     unEnhanceable.Add(item);
-                }
-            }
 
             if (unEnhanceable.Count == 1)
-            {
                 Core.Logger($"Enhancement Failed: Unenhanceable item found, {unEnhanceable.First()}");
-            }
-            else
-            {
-                Core.Logger($"Enhancement Failed: The following items are unenhanceable, {string.Join(", ", unEnhanceable)}");
-            }
+            else Core.Logger($"Enhancement Failed: The following items are unenhanceable, {string.Join(", ", unEnhanceable)}");
 
             return;
         }
@@ -1539,6 +1366,8 @@ public class CoreAdvanced
             AdvCrash(e);
         }
     }
+
+    private static bool IsEnhancedWithBaseForge(InventoryItem item) => item.EnhancementPatternID == 0 && item.EnhancementLevel > 0;
 
     // private void AdvCrash(Exception e, [CallerMemberName] string? caller = null)
     // {
@@ -1561,9 +1390,7 @@ public class CoreAdvanced
     private void AdvCrash(Exception e, [CallerMemberName] string? caller = null)
     {
         if (e == null || (Bot.ShouldExit && e is OperationCanceledException))
-        {
             return;
-        }
 
         // Determine severity
         string GetSeverity(Exception ex)
@@ -1619,7 +1446,7 @@ public class CoreAdvanced
             "══════════════════════════════════════════\n\n" +
             $"{oneLineSummary}\n\n" +
             $"⚠️ Script will continue without `{caller}`.\n" +
-            "📸 Take a screenshot and post it to Discord.\n\n" +
+            $"📸 Take a screenshot and post it to Discord.\n\n" +
             "────────────── 📜 Last 5 Logs ──────────────\n" +
             string.Join("\n", logs) + "\n" +
             "────────────── 💻 Crash Details ────────────\n" +
@@ -1639,10 +1466,7 @@ public class CoreAdvanced
     {
         int? EnhPatternID = Bot.Player.CurrentClass?.EnhancementPatternID;
         if (EnhPatternID == 1 || EnhPatternID == 23 || EnhPatternID == null)
-        {
             EnhPatternID = 9;
-        }
-
         return (EnhancementType)EnhPatternID;
     }
 
@@ -1654,12 +1478,11 @@ public class CoreAdvanced
     {
         InventoryItem? EquippedCape = Bot.Inventory.Items.Find(i => i.Equipped && i.Category == ItemCategory.Cape);
         if (EquippedCape == null)
-        {
             return CapeSpecial.None;
-        }
-
         int pattern_id = EquippedCape.EnhancementPatternID;
-        return Enum.IsDefined(typeof(EnhancementType), pattern_id) ? CapeSpecial.None : (CapeSpecial)pattern_id;
+        if (Enum.IsDefined(typeof(EnhancementType), pattern_id))
+            return CapeSpecial.None;
+        return (CapeSpecial)pattern_id;
     }
 
     /// <summary>
@@ -1670,12 +1493,11 @@ public class CoreAdvanced
     {
         InventoryItem? EquippedHelm = Bot.Inventory.Items.Find(i => i.Equipped && i.Category == ItemCategory.Helm);
         if (EquippedHelm == null)
-        {
             return HelmSpecial.None;
-        }
-
         int pattern_id = EquippedHelm.EnhancementPatternID;
-        return Enum.IsDefined(typeof(EnhancementType), pattern_id) ? HelmSpecial.None : (HelmSpecial)pattern_id;
+        if (Enum.IsDefined(typeof(EnhancementType), pattern_id))
+            return HelmSpecial.None;
+        return (HelmSpecial)pattern_id;
     }
 
     /// <summary>
@@ -1686,12 +1508,11 @@ public class CoreAdvanced
     {
         InventoryItem? EquippedWeapon = Bot.Inventory.Items.Find(i => i.Equipped && WeaponCatagories.Contains(i.Category));
         if (EquippedWeapon == null)
-        {
             return WeaponSpecial.None;
-        }
-
         int pattern_id = getProcID(EquippedWeapon);
-        return Enum.IsDefined(typeof(EnhancementType), pattern_id) ? WeaponSpecial.None : (WeaponSpecial)pattern_id;
+        if (Enum.IsDefined(typeof(EnhancementType), pattern_id))
+            return WeaponSpecial.None;
+        return (WeaponSpecial)pattern_id;
     }
 
     private static readonly ItemCategory[] EnhanceableCatagories =
@@ -1721,9 +1542,7 @@ public class CoreAdvanced
     {
         // In case the 'CurrentEnhancement()' failed and returned 0
         if (type == 0)
-        {
             return;
-        }
 
         // Empty check
         if (ItemList.Count == 0)
@@ -1740,9 +1559,7 @@ public class CoreAdvanced
 
             // Removing cape from the list because it needs to be enhanced seperately
             if (cape != null)
-            {
                 ItemList.Remove(cape);
-            }
         }
 
         // Defining helm
@@ -1753,9 +1570,7 @@ public class CoreAdvanced
 
             // Removing helm from the list because it needs to be enhanced seperately
             if (helm != null)
-            {
                 ItemList.Remove(helm);
-            }
         }
 
         // Defining weapon
@@ -1767,9 +1582,7 @@ public class CoreAdvanced
 
             // Removing weapon from the list because it needs to be enhanced seperately
             if (weapon != null)
-            {
                 ItemList.Remove(weapon);
-            }
         }
 
         int skipCounter = 0;
@@ -1831,38 +1644,23 @@ public class CoreAdvanced
                     break;
                 case CapeSpecial.Absolution:
                     if (!uAbsolution())
-                    {
                         Fail();
-                    }
-
                     break;
                 case CapeSpecial.Avarice:
                     if (!uAvarice())
-                    {
                         Fail();
-                    }
-
                     break;
                 case CapeSpecial.Vainglory:
                     if (!uVainglory())
-                    {
                         Fail();
-                    }
-
                     break;
                 case CapeSpecial.Penitence:
                     if (!uPenitence())
-                    {
                         Fail();
-                    }
-
                     break;
                 case CapeSpecial.Lament:
                     if (!uLament())
-                    {
                         Fail();
-                    }
-
                     break;
                 default:
                     Core.Logger($"Enhancement Failed:\tInvalid \"CapeSpecial\" given, received {(int)cSpecial} | {cSpecial}");
@@ -1876,13 +1674,8 @@ public class CoreAdvanced
             }
 
             if (canEnhance)
-            {
                 _AutoEnhance(cape, 2143, ((int)cSpecial > 0) ? "forge" : null, logging);
-            }
-            else
-            {
-                skipCounter++;
-            }
+            else skipCounter++;
         }
 
         // Enhancing the helm with the helm special
@@ -1894,45 +1687,27 @@ public class CoreAdvanced
             {
                 case HelmSpecial.Vim:
                     if (!uVim())
-                    {
                         Fail();
-                    }
-
                     break;
                 case HelmSpecial.Examen:
                     if (!uExamen())
-                    {
                         Fail();
-                    }
-
                     break;
                 case HelmSpecial.Forge:
                     if (!uForgeHelm())
-                    {
                         Fail();
-                    }
-
                     break;
                 case HelmSpecial.Anima:
                     if (!uAnima())
-                    {
                         Fail();
-                    }
-
                     break;
                 case HelmSpecial.Pneuma:
                     if (!uPneuma())
-                    {
                         Fail();
-                    }
-
                     break;
                 case HelmSpecial.Hearty:
                     if (!uHearty())
-                    {
                         Fail();
-                    }
-
                     break;
                 default:
                     Core.Logger($"Enhancement Failed:\tInvalid \"HelmSpecial\" given, received {(int)hSpecial} | {hSpecial}");
@@ -1946,13 +1721,8 @@ public class CoreAdvanced
             }
 
             if (canEnhance)
-            {
                 _AutoEnhance(helm, 2164, ((int)hSpecial > 0) ? "forge" : null);
-            }
-            else
-            {
-                skipCounter++;
-            }
+            else skipCounter++;
         }
 
         // Enhancing the weapon with the weapon special
@@ -2002,24 +1772,15 @@ public class CoreAdvanced
                         break;
                     case WeaponSpecial.Lacerate:
                         if (!uLacerate())
-                        {
                             Fail();
-                        }
-
                         break;
                     case WeaponSpecial.Smite:
                         if (!uSmite())
-                        {
                             Fail();
-                        }
-
                         break;
                     case WeaponSpecial.Valiance:
                         if (!uValiance())
-                        {
                             Fail();
-                        }
-
                         break;
                     case WeaponSpecial.Arcanas_Concerto:
                         if (!uArcanasConcerto())
@@ -2030,38 +1791,23 @@ public class CoreAdvanced
                         break;
                     case WeaponSpecial.Elysium:
                         if (!uElysium())
-                        {
                             Fail();
-                        }
-
                         break;
                     case WeaponSpecial.Acheron:
                         if (!uAcheron())
-                        {
                             Fail();
-                        }
-
                         break;
                     case WeaponSpecial.Praxis:
                         if (!uPraxis())
-                        {
                             Fail();
-                        }
-
                         break;
                     case WeaponSpecial.Dauntless:
                         if (!uDauntless())
-                        {
                             Fail();
-                        }
-
                         break;
                     case WeaponSpecial.Ravenous:
                         if (!uRavenous())
-                        {
                             Fail();
-                        }
-
                         break;
 
                     default:
@@ -2079,19 +1825,12 @@ public class CoreAdvanced
             }
 
             if (canEnhance)
-            {
                 _AutoEnhance(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null, logging);
-            }
-            else
-            {
-                skipCounter++;
-            }
+            else skipCounter++;
         }
 
         if (skipCounter > 0)
-        {
             Core.Logger($"Enhancement Skipped:\t{skipCounter} item{(skipCounter > 1 ? 's' : null)}");
-        }
 
         void _AutoEnhance(InventoryItem item, int shopID, string? map = null, bool logging = false)
         {
@@ -2146,17 +1885,11 @@ public class CoreAdvanced
             if (logging)
             {
                 if (specialOnCape)
-                {
                     Core.Logger($"Searching Enhancement:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
-                }
                 else if (specialOnWeapon)
-                {
                     Core.Logger($"Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
-                }
                 else
-                {
                     Core.Logger($"Searching Enhancement:\t{type} - \"{item.Name}\"");
-                }
             }
 
             List<ShopItem> availableEnh = new();
@@ -2174,39 +1907,25 @@ public class CoreAdvanced
 
                 // Cape if cSpecial
                 if (specialOnCape && enhName.Contains(cSpecial.ToString().Replace("_", "").ToLower()))
-                {
                     availableEnh.Add(enh);
-                }
                 // Weapon if wSpecial
                 else if (specialOnWeapon && enhName.Contains(wSpecial.ToString().Replace("_", "").ToLower()))
-                {
                     availableEnh.Add(enh);
-                }
                 //Helm if hSpecial
                 else if (specialOnHelm && enhName.Contains(hSpecial.ToString().Replace("_", "").ToLower()))
-                {
                     availableEnh.Add(enh);
-                }
                 // Class
                 else if (item.Category == ItemCategory.Class && enhName.Contains("armor"))
-                {
                     availableEnh.Add(enh);
-                }
                 // Helm
                 else if (item.Category == ItemCategory.Helm && enhName.Contains("helm"))
-                {
                     availableEnh.Add(enh);
-                }
                 // Cape if not cSpecial
                 else if (item.Category == ItemCategory.Cape && enhName.Contains("cape"))
-                {
                     availableEnh.Add(enh);
-                }
                 // Weapon2 if not wSpecial
                 else if (item.ItemGroup == "Weapon" && enhName.Contains("weapon"))
-                {
                     availableEnh.Add(enh);
-                }
             }
 
             // Empty check
@@ -2214,16 +1933,11 @@ public class CoreAdvanced
             if (availableEnh.Count == 0)
             {
                 if (logging)
-                {
-                    Core.Logger("Enhancement Failed:\t\"availableEnh\" is empty");
-                }
-
+                    Core.Logger($"Enhancement Failed:\t\"availableEnh\" is empty");
                 return;
             }
             else if (availableEnh.Count == 1)
-            {
                 bestEnhancement = availableEnh.First();
-            }
             else
             {
                 // Sorting by level (descending)
@@ -2236,10 +1950,7 @@ public class CoreAdvanced
             if (bestEnhancement == null)
             {
                 if (logging)
-                {
                     Core.Logger($"Enhancement Failed:\tCould not find the best enhancement for \"{item.Name}\"");
-                }
-
                 return;
             }
 
@@ -2247,10 +1958,7 @@ public class CoreAdvanced
             if (bestEnhancement.ID == getEnhID(item) && item.EnhancementLevel > 0 && bestEnhancement.Level == item.EnhancementLevel)
             {
                 if (logging)
-                {
                     Core.Logger($"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\"");
-                }
-
                 return;
             }
 
@@ -2263,23 +1971,17 @@ public class CoreAdvanced
             if (specialOnCape)
             {
                 if (logging)
-                {
                     Core.Logger($"Enhancement Applied:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
-                }
             }
             else if (specialOnWeapon)
             {
                 if (logging)
-                {
                     Core.Logger($"Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
-                }
             }
             else
             {
                 if (logging)
-                {
                     Core.Logger($"Enhancement Applied:\t{type} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
-                }
             }
             Core.Sleep();
         }
@@ -2362,9 +2064,7 @@ public class CoreAdvanced
         }
 
         if (Bot.Player.InCombat)
-        {
             Core.JumpWait();
-        }
 
         // Error correction
         className = className.ToLower().Trim();
@@ -2384,9 +2084,7 @@ public class CoreAdvanced
 
         // If the item doesnt exist in the forge enh lib, or the player doesn't have the Forge enh unlocked, use Awe enh instead
         if (!ForgeEnhancementLibrary())
-        {
             AweEnhancementLibrary();
-        }
 
         // Can't be too careful
         if (type == null)
@@ -2414,9 +2112,7 @@ public class CoreAdvanced
                 #region Luck - Awe_Blast | Arcanas_Concerto - ForgeHelm - Penitence
                 case "lord of order":
                     if (!uAwe() || !uForgeHelm() || !uPenitence())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     wSpecial = uArcanasConcerto() ? WeaponSpecial.Arcanas_Concerto : WeaponSpecial.Awe_Blast;
@@ -2428,9 +2124,7 @@ public class CoreAdvanced
                 #region Ravenous
                 case "PlaceHolder":
                     if (!uRavenous())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Forge;
@@ -2442,9 +2136,7 @@ public class CoreAdvanced
                 #region Lucky - Dauntless - Vim - Lament
                 case "great thief":
                     if (!uDauntless() || !uVim() || !uLament())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Lament;
@@ -2457,9 +2149,7 @@ public class CoreAdvanced
                 case "timekeeper":
                 case "timekiller":
                     if (!uLacerate() || !uVim() || !uLament())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Lament;
@@ -2475,9 +2165,7 @@ public class CoreAdvanced
                 case "immortal chronomancer":
                 case "dark metal necro":
                     if (!uForgeCape())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Forge;
@@ -2488,9 +2176,7 @@ public class CoreAdvanced
                 #region Lucky - Forge - Awe Blast
                 case "glacial berserker":
                     if (!Core.isCompletedBefore(8758))
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Forge;
@@ -2503,9 +2189,7 @@ public class CoreAdvanced
                 case "mythic elemental warrior":
                 case "ultra elemental warrior":
                     if (!uForgeCape())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Forge;
@@ -2516,9 +2200,7 @@ public class CoreAdvanced
                 #region Lucky - Forge - Smite
                 case "Draconic Chronomancer":
                     if (!uSmite() || !uForgeCape())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Forge;
@@ -2530,9 +2212,7 @@ public class CoreAdvanced
                 case "ultra omniknight":
                 case "dark ultra omninight":
                     if (!uElysium() || !uForgeCape())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Forge;
@@ -2545,9 +2225,7 @@ public class CoreAdvanced
                 case "eternal inversionist":
                 case "dragonlord":
                     if (!uVainglory() || !uValiance() || !uAnima())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2564,9 +2242,7 @@ public class CoreAdvanced
                     if (!uPenitence()
                     || (!uDauntless() || !uValiance()) || !uRavenous() || !uValiance()
                     || !uAnima())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2582,9 +2258,7 @@ public class CoreAdvanced
                 case "doom metal necro":
                 case "neo metal necro":
                     if (!uLacerate() || !uForgeHelm() || !uLament())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = uLament() ? CapeSpecial.Lament : CapeSpecial.Vainglory;
@@ -2598,9 +2272,8 @@ public class CoreAdvanced
                 case "martial artist":
                 case "master martial artist":
                     if ((!uDauntless() && !uValiance() && !uSmite()) || !uVainglory() || !uVim())
-                    {
                         goto default;
-                    }
+
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2615,9 +2288,7 @@ public class CoreAdvanced
                 case "nechronomancer":
                 case "necrotic chronomancer":
                     if (!uVainglory() || !uArcanasConcerto() || !uAnima())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2631,9 +2302,7 @@ public class CoreAdvanced
                 case "shadowstalker of time":
                 case "shadowweaver of time":
                     if (!uVainglory() || !uElysium() || !uVim())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2645,9 +2314,7 @@ public class CoreAdvanced
                 #region Lucky - Vainglory - Valiance - None
                 case "legion doomknight":
                     if (!uVainglory() || !uValiance())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2660,9 +2327,7 @@ public class CoreAdvanced
                 case "antique hunter":
                 case "artifact hunter":
                     if (!uVainglory() || !uElysium() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2675,9 +2340,7 @@ public class CoreAdvanced
                 case "abyssal angel":
                 case "abyssal angel's shadow":
                     if (!uLament() || !uElysium() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2689,9 +2352,7 @@ public class CoreAdvanced
                 #region Lucky - Dauntless | Ravenous - Anima | ForgeHelm - Vainglory
                 case "verus doomknight":
                     if (!uRavenous() || !uForgeHelm() || !uVainglory())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2704,9 +2365,7 @@ public class CoreAdvanced
                 case "void highlord":
                 case "void highlord (ioda)":
                     if (!uAnima() || !uValiance() || !uVainglory())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2723,9 +2382,7 @@ public class CoreAdvanced
                 #region Lucky - Avarice - Dauntless - Anima
                 case "flame dragon warrior":
                     if (!uAvarice() || !uDauntless() || !uAnima())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Avarice;
@@ -2741,9 +2398,7 @@ public class CoreAdvanced
                 case "chaos slayer mystic":
                 case "chaos slayer thief":
                     if (!uAvarice() || !uElysium() || !uAnima())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Avarice;
@@ -2755,9 +2410,7 @@ public class CoreAdvanced
                 #region Lucky - Penitence - Ravenous | Praxis | Lacerate - Forge | None 
                 case "archpaladin":
                     if (!uLacerate() || !uForgeHelm() || !uPenitence())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     wSpecial = uRavenous() ? WeaponSpecial.Ravenous : (uPraxis() ? WeaponSpecial.Praxis : WeaponSpecial.Lacerate);
@@ -2769,9 +2422,7 @@ public class CoreAdvanced
                 #region Fighter - Ravenous | Valiance - Anima - Absolution
                 case "stonecrusher":
                     if (!uValiance() || !uAnima() || !uAbsolution())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Fighter;
                     wSpecial = uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance;
@@ -2789,9 +2440,7 @@ public class CoreAdvanced
                     if (!uValiance() || !uPneuma() || !uVainglory())
                     {
                         if (!uLament() || !uPraxis())
-                        {
                             goto default;
-                        }
                     }
                     type = EnhancementType.Wizard;
                     cSpecial = !uVainglory() ? CapeSpecial.Lament : CapeSpecial.Vainglory;
@@ -2803,9 +2452,7 @@ public class CoreAdvanced
                 #region Wizard - Forge - Awe Blast
                 case "infinity knight":
                     if (!uForgeCape())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Forge;
@@ -2819,9 +2466,7 @@ public class CoreAdvanced
                 case "darklord":
                 case "arcana invoker":
                     if (!uVainglory() || !uValiance() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2834,9 +2479,7 @@ public class CoreAdvanced
                 case "master of moglins":
                 case "dark master of moglins":
                     if (!uPenitence() || !uAcheron() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Penitence;
@@ -2849,9 +2492,7 @@ public class CoreAdvanced
                 case "legion revenant":
                 case "legion revenant (ioda)":
                     if (!uVainglory() || !uValiance() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2867,9 +2508,7 @@ public class CoreAdvanced
                 case "darkside":
                 case "dark lord":
                     if (!uAvarice() || !uElysium() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Avarice;
@@ -2881,9 +2520,7 @@ public class CoreAdvanced
                 #region  Wizard - Vainglory - Elysium - Pneuma   
                 case "shaman":
                     if (!uVainglory() || !uElysium() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Vainglory;
@@ -2895,9 +2532,7 @@ public class CoreAdvanced
                 #region Wizard - Avarice - Acheron - Pneuma
                 case "blaze binder":
                     if (!uAvarice() || !uAcheron() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Avarice;
@@ -2909,9 +2544,7 @@ public class CoreAdvanced
                 #region Wizard - Lament - Elysium - Pneuma
                 case "royal battlemage":
                     if (!uLament() || !uElysium() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Lament;
@@ -2923,9 +2556,7 @@ public class CoreAdvanced
                 #region Wizard - Lament - Valiance - Pneuma
                 case "scarlet sorceress":
                     if (!uLament() || !uValiance() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Lament;
@@ -2938,9 +2569,7 @@ public class CoreAdvanced
                 #region Wizard - Vainglory / Forge - Daunt / Ravenous / Forge - Pneuma / Forge       
                 case "sovereign of storms":
                     if (!uVainglory() || !uDauntless() || !uRavenous() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = uVainglory() ? CapeSpecial.Vainglory : CapeSpecial.Forge;
@@ -2953,9 +2582,7 @@ public class CoreAdvanced
                 #region Wizard - Ravenous - Lament - Examen
                 case "lich":
                     if (!(uRavenous() && uLament() && uExamen()))
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Lament;
@@ -2970,9 +2597,7 @@ public class CoreAdvanced
                 #region Healer - Avarice - Elysium - Pneuma
                 case "dragon of time":
                     if (!uAvarice() || !uElysium() || !uPneuma())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Healer;
                     cSpecial = CapeSpecial.Avarice;
@@ -2986,9 +2611,7 @@ public class CoreAdvanced
                 case "obsidian paladin chronomancer":
                 case "paladin chronomancer":
                     if (!uValiance())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Healer;
                     cSpecial = CapeSpecial.None;
@@ -3001,10 +2624,7 @@ public class CoreAdvanced
                 #region Fighter - Ravenous | Valiance - Anima - Absolution
                 case "frostval barbarian":
                     if (!uAbsolution() || !uValiance() || !uAnima())
-                    {
                         goto default;
-                    }
-
                     type = EnhancementType.Fighter;
                     cSpecial = CapeSpecial.Absolution;
                     wSpecial = uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance;
@@ -3015,9 +2635,7 @@ public class CoreAdvanced
                 #region Lucky - Penitence | Absolution - Elysium | Valiance - Vim
                 case "arachnomancer":
                     if (!uAbsolution() || !uAbsolution() || !uVim())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = uPenitence() ? CapeSpecial.Penitence : CapeSpecial.Absolution;
@@ -3060,9 +2678,7 @@ public class CoreAdvanced
                 case "dark glaceran warlord":
                 case "savage glaceran warlord":
                     if (!uVainglory() || !uValiance() || !uAnima())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -3074,9 +2690,7 @@ public class CoreAdvanced
                 #region Lucky - Ravenous - Examen - Vainglory
                 case "king's echo":
                     if (!uRavenous() || !uExamen() || !uVainglory())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -3113,9 +2727,7 @@ public class CoreAdvanced
                 #region Luck - Dauntless | Ravenous - Anima - Vainglory
                 case "chrono chaorruptor":
                     if (!uRavenous() || !uAnima() || !uVainglory())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
@@ -3128,9 +2740,7 @@ public class CoreAdvanced
                 case "chrono dataknight":
                 case "chrono dragonknight":
                     if (!uRavenous() || !uPneuma() || !uVainglory())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Vainglory;
@@ -3142,9 +2752,7 @@ public class CoreAdvanced
                 #region Luck - Ravenous | Valiance - ForgeHelm | Luck - Absolution
                 case "legendary hero":
                     if (!uValiance() || !uForgeHelm() || !uAbsolution())
-                    {
                         goto default;
-                    }
 
                     type = EnhancementType.Wizard;
                     cSpecial = CapeSpecial.Absolution;

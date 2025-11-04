@@ -164,6 +164,10 @@ public class CoreFarmerJoe
     public static IScriptInterface Bot => IScriptInterface.Instance;
     private static FreeBoosts Boosts { get => _Boosts ??= new FreeBoosts(); set => _Boosts = value; }
     private static FreeBoosts _Boosts;
+    private static FarmAllDailies FAD { get => _FAD ??= new FarmAllDailies(); set => _FAD = value; }
+    private static FarmAllDailies _FAD;
+    private static InventoryEnhancer InvEn { get => _InvEn ??= new InventoryEnhancer(); set => _InvEn = value; }
+    private static InventoryEnhancer _InvEn;
     private static SynderesMerge SM { get => _SM ??= new SynderesMerge(); set => _SM = value; }
     private static SynderesMerge _SM;
     private static ArchfiendDeathLord AFDeath { get => _AFDeath ??= new ArchfiendDeathLord(); set => _AFDeath = value; }
@@ -179,11 +183,17 @@ public class CoreFarmerJoe
     private static CoreAdvanced _Adv;
     private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
     private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
     private static CapeOfAwe COA { get => _COA ??= new CapeOfAwe(); set => _COA = value; }
     private static CapeOfAwe _COA;
     public static Core13LoC LOC => new();
     private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
     private static CoreDailies _Daily;
+    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }
+    private static CoreVHL _VHL;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
     private static CoreYnR YNR { get => _YNR ??= new CoreYnR(); set => _YNR = value; }
     private static CoreYnR _YNR;
 
@@ -208,8 +218,14 @@ public class CoreFarmerJoe
     private static LordOfOrder _LOO;
     private static ScarletSorceress SS { get => _SS ??= new ScarletSorceress(); set => _SS = value; }
     private static ScarletSorceress _SS;
+    private static EternalInversionist EI { get => _EI ??= new EternalInversionist(); set => _EI = value; }
+    private static EternalInversionist _EI;
+    private static DarkbloodStormKing DBSK { get => _DBSK ??= new DarkbloodStormKing(); set => _DBSK = value; }
+    private static DarkbloodStormKing _DBSK;
     private static DragonOfTime DoT { get => _DoT ??= new DragonOfTime(); set => _DoT = value; }
     private static DragonOfTime _DoT;
+    private static BloodSorceress BS { get => _BS ??= new BloodSorceress(); set => _BS = value; }
+    private static BloodSorceress _BS;
     private static BlazeBinder Bb { get => _Bb ??= new BlazeBinder(); set => _Bb = value; }
     private static BlazeBinder _Bb;
     private static ArchFiend AF { get => _AF ??= new ArchFiend(); set => _AF = value; }
@@ -222,10 +238,14 @@ public class CoreFarmerJoe
     private static NorthlandsMonk _NM;
 
     //Weapons
+    private static DualChainSawKatanas DCSK { get => _DCSK ??= new DualChainSawKatanas(); set => _DCSK = value; }
+    private static DualChainSawKatanas _DCSK;
     private static BurningBlade BB { get => _BB ??= new BurningBlade(); set => _BB = value; }
     private static BurningBlade _BB;
     private static BurningBladeOfAbezeth BBOA { get => _BBOA ??= new BurningBladeOfAbezeth(); set => _BBOA = value; }
     private static BurningBladeOfAbezeth _BBOA;
+    private static EnchantedVictoryBladeWeapons EVBW { get => _EVBW ??= new EnchantedVictoryBladeWeapons(); set => _EVBW = value; }
+    private static EnchantedVictoryBladeWeapons _EVBW;
     private static ShadowrealmMerge SRM { get => _SRM ??= new ShadowrealmMerge(); set => _SRM = value; }
     private static ShadowrealmMerge _SRM;
 
@@ -234,6 +254,8 @@ public class CoreFarmerJoe
     private static Tutorial _Tutorial;
     private static CelestialArenaQuests CAQ { get => _CAQ ??= new CelestialArenaQuests(); set => _CAQ = value; }
     private static CelestialArenaQuests _CAQ;
+    private static GlaceraStory GS { get => _GS ??= new GlaceraStory(); set => _GS = value; }
+    private static GlaceraStory _GS;
     private static Mazumi Mazumi { get => _Mazumi ??= new Mazumi(); set => _Mazumi = value; }
     private static Mazumi _Mazumi;
 
@@ -252,10 +274,22 @@ public class CoreFarmerJoe
 
     public static void ScriptMain(IScriptInterface bot) => Core.RunCore();
     #region InvClasses
+
     private readonly InventoryItem? ClassNinja = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Ninja".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
     private readonly InventoryItem? ClassRogue = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Rogue".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
     private readonly InventoryItem? ClassMage = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Mage".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassMasterRanger = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Master Ranger".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    // private readonly InventoryItem? ClassShaman = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Shaman".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassScarletSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Scarlet Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassBlazeBinder = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Blaze Binder".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassDragonSoulShinobi = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "DragonSoul Shinobi".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassArchPaladin = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "ArchPaladin".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassArchFiend = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "ArchFiend".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassGlacialBerserker = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Glacial Berserker".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassCryomancer = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Cryomancer".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
     private readonly InventoryItem? ClassDragonofTime = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Dragon of Time".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassDragonslayer = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Dragonslayer".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassDragonslayerGeneral = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Dragonslayer General".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
     #endregion InvClasses
 
     /// <summary>
@@ -571,9 +605,7 @@ public class CoreFarmerJoe
             }
         }
         else if (Core.CheckInventory("Dragon of Time", toInv: false) && ClassDragonofTime?.Quantity < 302500)
-        {
             Adv.RankUpClass("Dragon of Time");
-        }
 
 
         // P2 Chaos Shenanigans
@@ -751,7 +783,7 @@ public class CoreFarmerJoe
     /// <summary>
     /// Manages the acquisition and equipping of pets based on the user's configuration or specified choice.
     /// - **Config-Based Acquisition:** Checks the configuration for the selected pet and acquires it if not already owned.
-    /// - **Specific Pets:**
+    /// - **Specific Pets:** 
     ///   - **Hot Mama:** Acquires and equips the "Hot Mama" pet if selected and not already in inventory.
     ///   - **Akriloth Pet:** Acquires and equips the "Akriloth Pet" if selected and not already in inventory.
     /// </summary>
@@ -813,10 +845,10 @@ public class CoreFarmerJoe
 
     /// <summary>
     /// Sets up a character with essential beginner items and classes. This includes:
-    /// - **Equipping Basic Gear:**
+    /// - **Equipping Basic Gear:** 
     ///   - **Helm and Cape:** Equips the "Battle Oracle Hood" and "Battle Oracle Wings" if not already equipped.
     ///   - **Default Weapons:** Replaces any default weapon with the "Battle Oracle Battlestaff" and sells the default weapon.
-    /// - **Class Preparation:**
+    /// - **Class Preparation:** 
     ///   - **Skipping Setup:** If the character is level 30 or higher and has the required classes, skips further setup.
     ///   - **Initial Setup:** Acquires initial badges, level up to 10, and equips a "Rogue" or "Ninja" class if not already owned.
     ///   - **Final Setup:** Obtains and ranks up the "Ninja" class, and acquires a "Mage" class for farming if not already owned.
