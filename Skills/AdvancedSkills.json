@@ -308,7 +308,7 @@
               "auraTarget": "self"
             }
           ],
-          "multiAuraOperator": "AND", 
+          "multiAuraOperator": "AND",
           "isMultiAura": true
         },
         {
@@ -1531,15 +1531,74 @@
     }
   },
   "Chrono ShadowHunter": {
-    "Atk": {
+    "Solo": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "greater",
+              "auraName": "Rounds Empty!",
+              "auraTarget": "self"
+            }
+          ]
+        },
         {
           "skillId": 3
         },
         {
           "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 15,
+              "comparison": "greater"
+            },
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "greater",
+              "auraName": "Gunslinger Stance!",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "greater",
+              "auraName": "Rounds Empty!",
+              "auraTarget": "self"
+            }
+          ]
         },
         {
           "skillId": 3
@@ -1555,51 +1614,6 @@
         },
         {
           "skillId": 4
-        },
-        {
-          "skillId": 1
-        }
-      ]
-    },
-    "Def": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
-      "skills": [
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
         }
       ]
     }
