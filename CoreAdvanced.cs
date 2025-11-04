@@ -523,56 +523,70 @@ public class CoreAdvanced
             return true;
         }
 
-        void HandleItemRequirements(ItemBase Req, int ReqQuant, Action findIngredients)
+        void HandleItemRequirements(ItemBase? Req, int ReqQuant, Action findIngredients)
         {
             if (Core.CheckInventory(Req.ID, ReqQuant))
                 return;
 
             EnsureShopLoaded(map, shopID);
             ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
-            
-            // Handle special cases for Gold Vouchers and Dragon Runestones
-            if (wasinshop.Name.Contains("Gold Voucher"))
-            {
-                Farm.Voucher(wasinshop.Name, ReqQuant);
-                return;
-            }
-            
-            if (wasinshop.Name.Contains("Dragon Runestone"))
-            {
-                Farm.DragonRunestone(ReqQuant);
-                return;
-            }
 
-            if (wasinshop != null && !wasinshop.Name.Contains("Gold Voucher"))
+            if (wasinshop?.Name.Contains("Gold Voucher") == false)
             {
                 Core.Logger($"Item: \"{Req.Name}  [{Req.ID}\"] is in the shop!");
                 while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
                 {
                     // for requirements that are in the shop, but are just buyable with gold. (excludes ac buyable items)
-                    if (wasinshop.Requirements.Count <= 0 && (wasinshop.Coins && wasinshop.Cost <= 0 || !wasinshop.Coins)) //|| wasinshop.Name.Contains("Gold Voucher") || wasinshop.Name.Contains("Dragon Runestone"))
+                    if (wasinshop.Requirements.Count == 0 && ((wasinshop.Coins && wasinshop.Cost <= 0) || !wasinshop.Coins)) //|| wasinshop.Name.Contains("Gold Voucher") || wasinshop.Name.Contains("Dragon Runestone"))
                     {
                         // Otherwise buy the item directly
                         BuyItem(map, shopID, Req.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
                         Bot.Wait.ForPickup(Req.ID);
                     }
-                    else IngredientWasintheShop(wasinshop, ReqQuant);
+                    else
+                    {
+                        IngredientWasintheShop(wasinshop, ReqQuant);
+                    }
+
                     if (Core.CheckInventory(Req.ID, ReqQuant))
                         break;
                     else
                         Core.Logger($"Failed to meet requirements for \"{Req.Name}\" [{Req.ID}] x{ReqQuant}, Retrying the farm (items may have been used).");
                 }
             }
-            else 
+           else  if (Req?.Name?.Contains("Gold Voucher") == true || Req?.Name?.Contains("Dragon Runestone") == true)
+           {
+                // Handle special cases for Gold Vouchers and Dragon Runestones
+                if (Req.Name?.Contains("Gold Voucher") == true)
+                {
+                    Farm.Voucher(Req.Name, ReqQuant);
+                    return;
+                }
+
+                if (Req.Name?.Contains("Dragon Runestone") == true)
+                {
+                    Farm.DragonRunestone(ReqQuant);
+                    return;
+                }
+            }
+            else if (wasinshop == null)
             {
                 // Items not in the shop, so we have to get it externally
-                externalItem = Req;
-                externalQuant = Req.Quantity;
-                Core.AddDrop(externalItem.ID);
-                Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item (not from this shop), attempting to farm it from The ingredient list.");
+                if (Req != null)
+                {
+                    externalItem = Req;
+                    externalQuant = Req.Quantity;
+                    Core.AddDrop(externalItem.ID);
+                    Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item (not from this shop), attempting to farm it from The ingredient list.");
 
-                findIngredients();
-                Bot.Wait.ForPickup(externalItem.ID);
+                    findIngredients();
+                    Bot.Wait.ForPickup(externalItem.ID);
+                }
+                else
+                {
+                    Core.Logger("Cannot process null requirement item.");
+                    return;
+                }
             }
             Bot.Wait.ForPickup(Req.ID);
         }
