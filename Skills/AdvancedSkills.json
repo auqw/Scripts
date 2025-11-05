@@ -1541,7 +1541,7 @@
             {
               "type": "Aura",
               "value": 1,
-              "comparison": "greater",
+              "comparison": "less",
               "auraName": "Rounds Empty!",
               "auraTarget": "self"
             }
@@ -1587,33 +1587,6 @@
               "auraTarget": "self"
             }
           ]
-        },
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Aura",
-              "value": 1,
-              "comparison": "greater",
-              "auraName": "Rounds Empty!",
-              "auraTarget": "self"
-            }
-          ]
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
         }
       ]
     }
