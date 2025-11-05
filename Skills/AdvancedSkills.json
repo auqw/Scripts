@@ -208,7 +208,7 @@
   "Alpha Pirate": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4
@@ -260,7 +260,7 @@
   "Arcana Invoker": {
     "Solo": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1,
@@ -355,7 +355,7 @@
   "ArchFiend": {
     "Solo": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -373,7 +373,7 @@
     },
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -670,7 +670,7 @@
   "Beast Warrior": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -690,7 +690,7 @@
   "BeastMaster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -790,7 +790,7 @@
   "Blaze Binder": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 2
@@ -896,7 +896,7 @@
   "Chaos Avenger": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4,
@@ -1835,7 +1835,7 @@
   "Classic Alpha Pirate": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4
@@ -1990,7 +1990,7 @@
   "Classic Exalted Soul Cleaver": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2010,7 +2010,7 @@
   "Classic Guardian": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2030,7 +2030,7 @@
   "Classic Legion DoomKnight": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2050,7 +2050,7 @@
   "Classic Paladin": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2070,7 +2070,7 @@
   "Classic Pirate": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2090,7 +2090,7 @@
   "Classic Soul Cleaver": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2110,7 +2110,7 @@
   "ClawSuit": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2230,7 +2230,7 @@
   "Daimon": {
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2280,7 +2280,7 @@
   "Dark Caster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2349,7 +2349,7 @@
   "Dark Harbinger": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2399,7 +2399,7 @@
   "Dark Lord": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2426,7 +2426,7 @@
   "Dark Master of Moglins": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 2
@@ -2479,7 +2479,7 @@
   "Dark Ultra OmniNight": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2499,7 +2499,7 @@
   "Darkblood StormKing": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2519,7 +2519,7 @@
   "Darkside": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2539,7 +2539,7 @@
   "DeathKnight": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2559,7 +2559,7 @@
   "DeathKnight Lord": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2579,7 +2579,7 @@
   "Defender": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2599,7 +2599,7 @@
   "DoomKnight": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2619,7 +2619,7 @@
   "DoomKnight OverLord": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2639,7 +2639,7 @@
   "Dragon Knight": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2739,7 +2739,7 @@
   "Dragonlord": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2759,7 +2759,7 @@
   "Dragonslayer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2779,7 +2779,7 @@
   "Dragonslayer General": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2799,7 +2799,7 @@
   "DragonSoul Shinobi": {
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2891,7 +2891,7 @@
   "Drakel Warlord": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2911,7 +2911,7 @@
   "Drakkar Knight": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -2931,7 +2931,7 @@
   "Elemental Dracomancer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -3060,7 +3060,7 @@
   "Enforcer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -3142,7 +3142,7 @@
   "Eternal Inversionist": {
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 2
@@ -3481,7 +3481,7 @@
   "Frostval Barbarian": {
     "Supp": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -3496,7 +3496,7 @@
     },
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4
@@ -3519,7 +3519,7 @@
   "Giftbox": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -3707,7 +3707,7 @@
   "Great Thief": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 2
@@ -3734,7 +3734,7 @@
   "Grim Necromancer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -3754,7 +3754,7 @@
   "Grunge Rocker": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -3774,7 +3774,7 @@
   "Guardian": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -3794,7 +3794,7 @@
   "Healer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -3833,7 +3833,7 @@
   "Healer (Rare)": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -3975,7 +3975,7 @@
   "Hobo Highlord": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -3986,7 +3986,7 @@
   "Horc Evader": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4006,7 +4006,7 @@
   "hollowborn vindicator member preview": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4026,7 +4026,7 @@
   "hollowborn vindicator": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4143,7 +4143,7 @@
   "Imperial Chunin": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4163,7 +4163,7 @@
   "Infinite Dark Caster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4183,7 +4183,7 @@
   "Infinite Legion Dark Caster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4203,7 +4203,7 @@
   "Infinity Titan": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -4221,7 +4221,7 @@
     },
     "Solo": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4,
@@ -4269,7 +4269,7 @@
     },
     "Supp": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -4521,7 +4521,7 @@
   "Legendary ArchFiend": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4541,7 +4541,7 @@
   "Legendary Hero": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4587,7 +4587,7 @@
   "Legion BladeMaster Assassin": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4607,7 +4607,7 @@
   "Legion DoomKnight": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4627,7 +4627,7 @@
   "Legion DoomKnight Tester": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4647,7 +4647,7 @@
   "Legion Evolved Dark Caster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4667,7 +4667,7 @@
   "Legion Paladin": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4687,7 +4687,7 @@
   "Legion Revenant": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -4707,7 +4707,7 @@
   "Legion Revenant Member Test": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -4727,7 +4727,7 @@
   "Legion SwordMaster Assassin": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4747,7 +4747,7 @@
   "Leprechaun": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4814,7 +4814,7 @@
   "LightCaster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -4834,7 +4834,7 @@
   "LightCaster Test": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -4886,7 +4886,7 @@
   "Lord Of Order": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 2
@@ -4906,7 +4906,7 @@
   "Love Caster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -4992,7 +4992,7 @@
   "Master of Moglins": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 2
@@ -5015,7 +5015,7 @@
   "Master Ranger": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5084,7 +5084,7 @@
   "MechaJouster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5104,7 +5104,7 @@
   "MindBreaker": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5164,7 +5164,7 @@
   "Mystical Dark Caster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5278,7 +5278,7 @@
   "Nechronomancer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4,
@@ -5305,7 +5305,7 @@
   "Necrotic Chronomancer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4,
@@ -5332,7 +5332,7 @@
   "Necromancer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5364,7 +5364,7 @@
   "Neo Metal Necro": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5410,7 +5410,7 @@
   "Ninja Warrior": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5430,7 +5430,7 @@
   "Northlands Monk": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5450,7 +5450,7 @@
   "NOT A MOD": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5470,7 +5470,7 @@
   "Nu Metal Necro": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5490,7 +5490,7 @@
   "Oracle": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5578,7 +5578,7 @@
   "Paladin": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5804,7 +5804,7 @@
   "Obsidian No Class": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5842,7 +5842,7 @@
   "PaladinSlayer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5862,7 +5862,7 @@
   "Pink Romancer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5882,7 +5882,7 @@
   "Pinkomancer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5914,7 +5914,7 @@
   "Pirate": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5934,7 +5934,7 @@
   "Prismatic ClawSuit": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -5954,7 +5954,7 @@
   "ProtoSartorium": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6004,7 +6004,7 @@
   "Pumpkin Lord": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6064,7 +6064,7 @@
   "Pyromancer": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6084,7 +6084,7 @@
   "Renegade": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6104,7 +6104,7 @@
   "Rogue": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 2
@@ -6124,7 +6124,7 @@
   "Rogue (Rare)": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 2
@@ -6144,7 +6144,7 @@
   "Royal BattleMage": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6211,7 +6211,7 @@
   "Rustbucket": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -6312,7 +6312,7 @@
   "Sentinel": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6332,7 +6332,7 @@
   "Shadow Dragon Shinobi": {
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6419,7 +6419,7 @@
   "Shadow Ripper": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6439,7 +6439,7 @@
   "Shadow Rocker": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6459,7 +6459,7 @@
   "ShadowFlame DragonLord": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6479,7 +6479,7 @@
   "ShadowScythe General": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6748,7 +6748,7 @@
   "Shaman": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4
@@ -6766,7 +6766,7 @@
     },
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6790,7 +6790,7 @@
     },
     "Solo": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4
@@ -6822,7 +6822,7 @@
   "Silver Paladin": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6842,7 +6842,7 @@
   "SkyCharged Grenadier": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6862,7 +6862,7 @@
   "SkyGuard Grenadier": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -6949,7 +6949,7 @@
   "Soul Cleaver": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7043,7 +7043,7 @@
   "StarLord": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7063,7 +7063,7 @@
   "StoneCrusher": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -7081,7 +7081,7 @@
     },
     "Solo": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4,
@@ -7113,7 +7113,7 @@
     },
     "Supp": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
@@ -7133,7 +7133,7 @@
   "SwordMaster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7153,7 +7153,7 @@
   "SwordMaster Assassin": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7453,7 +7453,7 @@
   "Timeless Dark Caster": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7473,7 +7473,7 @@
   "Troll Spellsmith": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7493,7 +7493,7 @@
   "Troubador of Love": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7555,7 +7555,7 @@
     },
     "Def": {
       "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7581,7 +7581,7 @@
   "Ultra OmniKnight": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7657,7 +7657,7 @@
   "Unchained Rocker": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7677,7 +7677,7 @@
   "Unchained Rockstar": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7751,7 +7751,7 @@
   "Undead Leperchaun": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -7795,7 +7795,7 @@
   "Unlucky Leperchaun": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -8093,7 +8093,7 @@
     },
     "Def": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -8118,7 +8118,7 @@
     },
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3,
@@ -8230,7 +8230,7 @@
     },
     "Def": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -8255,7 +8255,7 @@
     },
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3,
@@ -8322,7 +8322,7 @@
     },
     "Def": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -8349,7 +8349,7 @@
   "Warlord": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -8369,7 +8369,7 @@
   "Warrior": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -8389,7 +8389,7 @@
   "Warrior (Rare)": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -8409,7 +8409,7 @@
   "WarriorScythe General": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -8429,7 +8429,7 @@
   "Witch": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -8483,7 +8483,7 @@
     },
     "Def": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1
@@ -8500,7 +8500,7 @@
   "": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 250,
+      "skillTimeout": 100,
       "skills": []
     }
   }
