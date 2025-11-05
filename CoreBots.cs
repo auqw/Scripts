@@ -8399,7 +8399,7 @@ public class CoreBots
 
             while (!Bot.ShouldExit)
             {
-                if (!Bot.Player.HasTarget)
+                if (!Bot.Player!.HasTarget)
                     Bot.Combat.Attack("*");
 
                 Sleep();
