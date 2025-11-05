@@ -155,15 +155,12 @@ public class CoreLegion
             //Adv.BestGear(RacialGearBoost.Chaos);
             Core.KillMonster("aqlesson", "Frame9", "Right", "Carnax", "Carnax Eye", publicRoom: true);
             Core.HuntMonster("deepchaos", "Kathool", "Kathool Tentacle", publicRoom: true);
-
-            //More then one item of the same name as drop btoh temp and non-temp.
-            while (!Bot.ShouldExit && !Core.CheckInventory(33257))
-                Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", publicRoom: true);
-
-            //Adv.BestGear(RacialGearBoost.Dragonkin);
             Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang");
-            //Adv.BestGear(RacialGearBoost.Human);
             Core.HuntMonster("bloodtitan", "Blood Titan", "Blood Titan's Blade", publicRoom: true);
+
+            //More then one item of the same name as drop both temp and non-temp.
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains(33257))
+                Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", publicRoom: true);
             foreach (string drop in new[] { "Legion Token", "Diamond Token of Dage" })
                 Bot.Wait.ForPickup(drop);
         }
@@ -426,7 +423,7 @@ public class CoreLegion
 
         Core.FarmingLogger("Legion Token", quant);
         Core.AddDrop("Legion Token");
-        Core.RegisterQuests(3968,3969);
+        Core.RegisterQuests(3968, 3969);
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
         {
             Core.KillMonster("frozenruins", "r1", "Left", "*");
