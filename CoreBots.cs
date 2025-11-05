@@ -130,7 +130,7 @@ public class CoreBots
         if (changeTo)
         {
             Bot.Events.ScriptStopping += CrashDetector;
-            SkuaVersionChecker("1.2.5.4");
+            SkuaVersionChecker("1.3.0.0");
 
             // Start the stopwatch for timing the script run
             _scriptStopwatch = Stopwatch.StartNew();
@@ -6158,8 +6158,9 @@ public class CoreBots
             return;
 
         if (Bot.ShowMessageBox($"This script requires Skua {targetVersion} or above, " +
-        "click OK to open the download page of the latest release", "Outdated Skua detected", "OK").Text == "OK")
-            Process.Start("explorer", "https://github.com/BrenoHenrike/Skua/releases/latest");
+        "click OK to open the Beta Release Channel (discord), if you get sent to the \"Welcome\" channel, click the ✅ to acess the rest of the channels, and find the `skua-beta-release` channel\n" +
+        "for the LATEST Beta Release(x64).", "Outdated Skua detected", "OK").Text == "OK")
+            Process.Start("explorer", "https://discord.com/channels/1090693457586176013/1420350375617232987");
         Logger($"This script requires Skua {targetVersion} or above. Stopping the script", messageBox: true, stopBot: true);
     }
 
