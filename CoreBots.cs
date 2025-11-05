@@ -4766,28 +4766,6 @@ public class CoreBots
                     Bot.Combat.Attack(3);
                 Sleep();
 
-                // Working 1.3 version:
-                /*
-                  // Initialize by attacking Escherion
-                if (!Bot.Player.HasTarget)
-                {
-                    Bot.Combat.Attack(3);
-                    Bot.Sleep(500);
-                }
-
-                // Player doesnt have target > attack Escherion
-                else if (!Bot.Monsters.MapMonsters.Where(x => x != null && x.HP > 0).Any())
-                {
-                    Bot.Sleep(500);
-                    continue;
-                }
-                else if (Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == 2).HP > 0)
-                    Bot.Combat.Attack(2);
-                else
-                    Bot.Combat.Attack(3);
-                Bot.Sleep(500);
-                */
-
                 if (item == null)
                 {
                     if (log) Logger("💀 No item selected, killing Escherion once");
