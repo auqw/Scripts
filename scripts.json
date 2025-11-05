@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 137170,
-    "sha256": "04ea265b44ecf22c045148cb538026900b08579de31d69066b50c3bc6a5eeefd",
+    "size": 137496,
+    "sha256": "11b4f3b82780a4b3ab8431570069b63110feeaff87cbb63c406f89d6b02fee7e",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 405511,
-    "sha256": "658902fa683099f8f50d642e4cd583d4edde7b3dcd2d2934972f847c73c550ea",
+    "size": 405512,
+    "sha256": "140f10c99f24042b423e9b2faf8303afac6fc65b44ca95daa76e8f436101ac86",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -80,8 +80,8 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 75449,
-    "sha256": "5138329a753745cedfc047b3b84467a53269a4e1770c94f3cc33437a30010bb7",
+    "size": 75461,
+    "sha256": "9dd45061abb3d3dddd629e03772cccf27bcf739178a07a3595db99d052929662",
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/CoreArmyLite.cs"
   },

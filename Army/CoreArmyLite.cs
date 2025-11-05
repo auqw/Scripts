@@ -1203,7 +1203,8 @@ public class CoreArmyLite
                 string json = File.ReadAllText(settingsPath);
                 var settings = JsonConvert.DeserializeObject<dynamic>(json);
 
-                if (settings?.manager?.ManagedAccounts == null || settings.manager.ManagedAccounts.Count == 0)
+                IEnumerable<dynamic> managedAccounts = (settings?.manager?.ManagedAccounts as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
+                if (!managedAccounts.Any())
                 {
                     Core.Logger("No managed accounts found in skua.settings.json. Add accounts using The `Skua Manager` app.", "AccountManager", true);
                     Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
@@ -1211,18 +1212,18 @@ public class CoreArmyLite
                     return Array.Empty<(string, string)>();
                 }
 
-                foreach (var account in settings.manager.ManagedAccounts)
+                foreach (var account in managedAccounts)
                 {
                     try
                     {
                         string accountStr = account.ToString();
                         string[] parts = accountStr.Split(new[] { "{=}" }, StringSplitOptions.None);
-                        
+
                         if (parts.Length >= 3)
                         {
                             string username = parts[1].Trim();
                             string password = parts[2].Trim();
-                            
+
                             if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
                                 toReturn.Add((username, password));
                         }

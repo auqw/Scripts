@@ -314,14 +314,17 @@ public class CoreAdvanced
         }
 
         // Handle Dragon Runestone farming if required
-        if (item.Requirements.Any(x => x != null && x.Name.StartsWith("Dragon Runestone")))
+        if (item.Requirements != null && item.Requirements.Any(x => x != null && x.Name.StartsWith("Dragon Runestone")))
         {
-            Farm.DragonRunestone(item.Requirements.FirstOrDefault(x => x != null && x.Name == "Dragon Runestone").Quantity);
+            ItemBase? runestoneReq = item.Requirements.FirstOrDefault(x => x != null && x.Name == "Dragon Runestone");
+            if (runestoneReq != null)
+                Farm.DragonRunestone(runestoneReq.Quantity);
         }
 
         // Warn if a temp item is missing
-        foreach (ItemBase req in item.Requirements.Where(x => x != null && x.Temp && x.Quantity > Bot.TempInv.GetQuantity(x.ID)))
-            Core.Logger($"Temp item: {req.Name}, quant needed: {req.Quantity}... did the bot not farm them?");
+        if (item.Requirements != null)
+            foreach (ItemBase req in item.Requirements.Where(x => x != null && x.Temp && x.Quantity > Bot.TempInv.GetQuantity(x.ID)))
+                Core.Logger($"Temp item: {req.Name}, quant needed: {req.Quantity}... did the bot not farm them?");
     }
 
     private void runRep(string faction, int rank)
@@ -525,6 +528,11 @@ public class CoreAdvanced
 
         void HandleItemRequirements(ItemBase? Req, int ReqQuant, Action findIngredients)
         {
+            if (Req == null)
+            {
+                Core.Logger("Requirement item is null, cannot process.");
+                return;
+            }
             if (Core.CheckInventory(Req.ID, ReqQuant))
                 return;
 
@@ -554,8 +562,8 @@ public class CoreAdvanced
                         Core.Logger($"Failed to meet requirements for \"{Req.Name}\" [{Req.ID}] x{ReqQuant}, Retrying the farm (items may have been used).");
                 }
             }
-           else  if (Req?.Name?.Contains("Gold Voucher") == true || Req?.Name?.Contains("Dragon Runestone") == true)
-           {
+            else if (Req?.Name?.Contains("Gold Voucher") == true || Req?.Name?.Contains("Dragon Runestone") == true)
+            {
                 // Handle special cases for Gold Vouchers and Dragon Runestones
                 if (Req.Name?.Contains("Gold Voucher") == true)
                 {
@@ -588,7 +596,7 @@ public class CoreAdvanced
                     return;
                 }
             }
-            Bot.Wait.ForPickup(Req.ID);
+            Bot.Wait.ForPickup(Req!.ID);
         }
 
         void IngredientWasintheShop(ShopItem item, int craftingQ)
