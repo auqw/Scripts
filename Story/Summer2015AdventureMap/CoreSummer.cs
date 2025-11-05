@@ -385,7 +385,6 @@ public class CoreSummer
         // Leaf me alone!
         Story.KillQuest(4354, "livingdungeon", new[] { "Titan Decay", "Seed Spitter", "Evil Plant Horror" });
 
-
         // Evil Faerie Ambush!
         Story.KillQuest(4355, "livingdungeon", "Evil Tree Faerie");
 
