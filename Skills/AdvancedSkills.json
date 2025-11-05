@@ -4375,45 +4375,6 @@
     }
   },
   "King\u0027s Echo": {
-    "Solo": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
-      "skills": [
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 4,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 20,
-              "comparison": "greater"
-            }
-          ]
-        },
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 20,
-              "comparison": "greater"
-            }
-          ]
-        },
-        {
-          "skillId": 2,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 20,
-              "comparison": "greater"
-            }
-          ]
-        }
-      ]
-    },
     "Base": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
