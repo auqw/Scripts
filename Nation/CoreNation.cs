@@ -776,6 +776,7 @@ public class CoreNation
     /// <param name="ReturnItem">Item to return, if any.</param>
     public void Supplies(string? item = null, int quant = 1, bool UltraAlteon = false, bool KeepVoucher = false, bool AssistantDuring = false, string? ReturnItem = null, bool returnPolicyDuringSupplies = false)
     {
+        #region ignore me
         // Case 1: item specified and already in inventory
         if (item != null && Core.CheckInventory(item, quant))
             return;
@@ -852,6 +853,7 @@ public class CoreNation
             // Convert the entire collection to an array for adding to the drop list
             .ToArray()
         );
+        #endregion ignore me
 
         Core.EquipClass(ClassType.Solo);
         if (item == null)
@@ -875,23 +877,27 @@ public class CoreNation
                                 Core.KillEscherion(item, quant, log: false, FromSupplies: true, SellVoucher: sellMemVoucher, ReturnDuring: returnPolicyDuringSupplies, ReturnItem: ReturnItem);
                             Core.Sleep();
 
-                            if (item != "Voucher of Nulgath" && sellMemVoucher && Core.CheckInventory("Voucher of Nulgath"))
+                            DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
+
+                            // Sell Mem Voucher if enabled
+                            if (sellMemVoucher)
                             {
-                                while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
+                                if (item != "Voucher of Nulgath" && Core.CheckInventory("Voucher of Nulgath"))
+                                {
+                                    if (Bot.Player.Gold < 100000000)
+                                    {
+                                        Core.Jump("Enter", "Spawn");
+                                        Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
+                                    }
+                                }
+                            }
+
+                            // Waste Gold
+                            if (AssistantDuring)
+                            {
+                                if (Bot.Player.Gold >= 100000)
                                 {
                                     Core.Jump("Enter", "Spawn");
-                                    Core.Sleep();
-                                    if (Bot.Player.Cell == "Enter")
-                                        break;
-                                }
-                                if (Bot.Player.Gold < 100000000)
-                                {
-                                    Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
-                                }
-
-                                if (Bot.Player.Gold >= 1000000 && AssistantDuring)
-                                {
-                                    Core.JumpWait();
 
                                     decimal calculatedAmount = Bot.Player.Gold / 100000M;
                                     int quantityToBuy = (int)calculatedAmount;
@@ -900,10 +906,9 @@ public class CoreNation
 
                                     Core.EnsureAccept(2859);
                                     Core.BuyItem("yulgar", 41, "War-Torn Memorabilia", quantityToBuy);
-                                    Core.EnsureCompleteMulti(2859);
+                                    Core.EnsureCompleteMulti(2859, quantityToBuy);
                                 }
                             }
-                            DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
                             if (Core.CheckInventory("Voucher of Nulgath (non-mem)")
                                 && Core.CheckInventory("Essence of Nulgath", 60))
@@ -929,7 +934,6 @@ public class CoreNation
                                         Core.EnsureCompleteMulti(4778, 1000, 6136); // Then Diamonds
                                 }
                             }
-
 
                         }
                     }
