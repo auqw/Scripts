@@ -900,8 +900,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 39090,
-    "sha256": "55b76607db7f627ae84eed1b1c8317710b068922f01885ab52233a12e23bba63",
+    "size": 38985,
+    "sha256": "d020fb2db8e04eb250cab3e0a0af47fa4c701219d4ae70ed4e8d34602905c24b",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
