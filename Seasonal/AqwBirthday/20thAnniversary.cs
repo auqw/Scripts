@@ -200,7 +200,7 @@ public class AnniversaryofDoom
         Story.KillQuest(8902, "deathofgames", new[] { "Rider", "Blaster Master", "Super Death" });
 
         //EpicDuel vs DoG 8907
-        Story.KillQuest(8907, "deathofgames", new[] { "God of War","Cyber Hunter" });
+        Story.KillQuest(8907, "deathofgames", new[] { "God of War", "Cyber Hunter" });
 
         //AQWorlds At Risk 8920
         Story.KillQuest(8920, "deathofgames", new[] { "Skeletal Fire Mage", "Drakath" });
@@ -209,7 +209,7 @@ public class AnniversaryofDoom
         Story.KillQuest(8921, "deathofgames", new[] { "Newbatron Prime", "ShadowScythe Mecha", "SkullCrusher Mecha" });
 
         //DragonFables &amp; Lore 8922
-        Story.KillQuest(8922, "deathofgames", new[] { "Fire Elemental", "Xan", "Titan Fluffy" });
+        Story.KillQuest(8922, "deathofgames", new[] { "Titan Fluffy", "Fire Elemental", "Xan" });
 
         //AdventureQuest for Victory 8923
         Story.KillQuest(8923, "deathofgames", new[] { "Moglin Ghost", "Halenro the Paladin", "Mysterious Stranger" });

@@ -119,7 +119,7 @@ public class CoreFriday13th
         if (Core.IsMember)
         {
             //Me Knickers Got a Big Hole Across th' Bum 3114
-            Story.KillQuest(3114, "Skullpunch", new[] { "Vampirate", "Fishbones" });
+            Story.KillQuest(3114, "Skullpunch", new[] { "Fishbones", "Vampirate" });
 
             // Where'd Me Ship's Cargo? 3115
             Story.KillQuest(3115, "Skullpunch", new[] { "Fishbones", "Fishbones", "Fishbones", "Fishbones" });
