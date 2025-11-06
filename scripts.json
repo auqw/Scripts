@@ -3743,8 +3743,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 108422,
-    "sha256": "1d92786c2c987384615efb2b88f13e6e07f55823b2166c2013159576fb074a06",
+    "size": 108600,
+    "sha256": "dcf99c300951522810d989065503e78e34ed669a88ba4d3bd1e97d20bed0043b",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -24786,8 +24786,8 @@
       "null"
     ],
     "path": "Nation/Materials/BloodGem.cs",
-    "size": 555,
-    "sha256": "9664ad59f979dd54d10d75b318ee28f8196865541ca7ec83c9fc9f53d59a0235",
+    "size": 991,
+    "sha256": "d43b97ec4f4bd06eb8f819d00c6ad311178237c4bfeb89f938a7d0b3d1d84ab3",
     "fileName": "BloodGem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Materials/BloodGem.cs"
   },
