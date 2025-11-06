@@ -900,8 +900,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 38985,
-    "sha256": "d020fb2db8e04eb250cab3e0a0af47fa4c701219d4ae70ed4e8d34602905c24b",
+    "size": 39705,
+    "sha256": "34ecad945756c4f60fdc60ddcec30397e7c80f0245090014f4347f40cc57a992",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -6603,6 +6603,23 @@
     "sha256": "b22ae1661080122083f2f4a761848ee2a15f7ee200bdb0d89731cc89d11d161e",
     "fileName": "HardCoreParagon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/LegionTokens/HardCoreParagon.cs"
+  },
+  {
+    "name": "LegionCastle",
+    "description": "Uses the appropriate pet/item to farm Legion Tokens",
+    "tags": [
+      "legion",
+      "legion token",
+      "legion castle",
+      "legion",
+      "castle",
+      "legioncastle"
+    ],
+    "path": "Legion/LegionTokens/LegionCastleLegionTokens.cs",
+    "size": 874,
+    "sha256": "53c821756c9adb10ab67eb8f65e6ad4562b589159ab2aae0ced62741da1c0290",
+    "fileName": "LegionCastleLegionTokens.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/LegionTokens/LegionCastleLegionTokens.cs"
   },
   {
     "name": "UW3017",
@@ -12432,8 +12449,8 @@
       "voyage"
     ],
     "path": "Darkon/MergeShops/ArcanaInvokerResourceMerge.cs",
-    "size": 37400,
-    "sha256": "43a6d68ca670ccdc37f62b05ba3a4ff0b3ef2d9d3aaad4785b5ac1660c8c172c",
+    "size": 37432,
+    "sha256": "f1e2556be82883e31c6afab278b1a8584f081a3310f277abb76604f547c69c00",
     "fileName": "ArcanaInvokerResourceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/MergeShops/ArcanaInvokerResourceMerge.cs"
   },
@@ -24786,8 +24803,8 @@
       "null"
     ],
     "path": "Nation/Materials/BloodGem.cs",
-    "size": 991,
-    "sha256": "d43b97ec4f4bd06eb8f819d00c6ad311178237c4bfeb89f938a7d0b3d1d84ab3",
+    "size": 992,
+    "sha256": "9c7f42b54669c0d094c09ae181f69aaca8ca3c51608232f7a389d969ace6d0cf",
     "fileName": "BloodGem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Materials/BloodGem.cs"
   },
