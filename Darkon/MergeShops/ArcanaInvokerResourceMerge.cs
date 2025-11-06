@@ -58,35 +58,59 @@ public class ArcanaInvokerResourceMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
-    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }    private static Core13LoC _LOC;
-    private static GooseMerge GooseMerge { get => _GooseMerge ??= new GooseMerge(); set => _GooseMerge = value; }    private static GooseMerge _GooseMerge;
-    private static BrightForestMerge BrightForestMerge { get => _BrightForestMerge ??= new BrightForestMerge(); set => _BrightForestMerge = value; }    private static BrightForestMerge _BrightForestMerge;
-    private static TerminaTempleMerge TerminaTempleMerge { get => _TerminaTempleMerge ??= new TerminaTempleMerge(); set => _TerminaTempleMerge = value; }    private static TerminaTempleMerge _TerminaTempleMerge;
-    private static InfernalArena InfernalArena { get => _InfernalArena ??= new InfernalArena(); set => _InfernalArena = value; }    private static InfernalArena _InfernalArena;
-    private static DoomLegacyMerge DLM { get => _DLM ??= new DoomLegacyMerge(); set => _DLM = value; }    private static DoomLegacyMerge _DLM;
-    private static CelestialChallengerMerge CCM { get => _CCM ??= new CelestialChallengerMerge(); set => _CCM = value; }    private static CelestialChallengerMerge _CCM;
-    private static SpoilsofLightMerge SOLM { get => _SOLM ??= new SpoilsofLightMerge(); set => _SOLM = value; }    private static SpoilsofLightMerge _SOLM;
-    private static ArchiveofTimeMerge AOTM { get => _AOTM ??= new ArchiveofTimeMerge(); set => _AOTM = value; }    private static ArchiveofTimeMerge _AOTM;
-    private static CrocriverMerge CM { get => _CM ??= new CrocriverMerge(); set => _CM = value; }    private static CrocriverMerge _CM;
-    private static SuperSlayinMerge SSM { get => _SSM ??= new SuperSlayinMerge(); set => _SSM = value; }    private static SuperSlayinMerge _SSM;
-    private static DreampalaceMerge DPM { get => _DPM ??= new DreampalaceMerge(); set => _DPM = value; }    private static DreampalaceMerge _DPM;
-    private static BonecastleMerge BCM { get => _BCM ??= new BonecastleMerge(); set => _BCM = value; }    private static BonecastleMerge _BCM;
-    private static CelestialRealmMerge CRM { get => _CRM ??= new CelestialRealmMerge(); set => _CRM = value; }    private static CelestialRealmMerge _CRM;
-    private static ThreeLittleWolvesHousesMerge TLWHM { get => _TLWHM ??= new ThreeLittleWolvesHousesMerge(); set => _TLWHM = value; }    private static ThreeLittleWolvesHousesMerge _TLWHM;
-    private static PotionBuyer PotionBuyer { get => _PotionBuyer ??= new PotionBuyer(); set => _PotionBuyer = value; }    private static PotionBuyer _PotionBuyer;
-    private static MoonlightKhopeshMerge MoonlightKhopeshMerge { get => _MoonlightKhopeshMerge ??= new MoonlightKhopeshMerge(); set => _MoonlightKhopeshMerge = value; }    private static MoonlightKhopeshMerge _MoonlightKhopeshMerge;
-    private static ShadowMerge ShadowMerge { get => _ShadowMerge ??= new ShadowMerge(); set => _ShadowMerge = value; }    private static ShadowMerge _ShadowMerge;
-    private static ThirdspellMerge ThirdspellMerge { get => _ThirdspellMerge ??= new ThirdspellMerge(); set => _ThirdspellMerge = value; }    private static ThirdspellMerge _ThirdspellMerge;
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
-    private static CoreShadowofDoom CoreShadowofDoom { get => _CoreShadowofDoom ??= new CoreShadowofDoom(); set => _CoreShadowofDoom = value; }    private static CoreShadowofDoom _CoreShadowofDoom;
-    private static FableForest FableForest { get => _FableForest ??= new FableForest(); set => _FableForest = value; }    private static FableForest _FableForest;
-    private static VoidRefuge VR { get => _VR ??= new VoidRefuge(); set => _VR = value; }    private static VoidRefuge _VR;
+    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }
+    private static Core13LoC _LOC;
+    private static GooseMerge GooseMerge { get => _GooseMerge ??= new GooseMerge(); set => _GooseMerge = value; }
+    private static GooseMerge _GooseMerge;
+    private static BrightForestMerge BrightForestMerge { get => _BrightForestMerge ??= new BrightForestMerge(); set => _BrightForestMerge = value; }
+    private static BrightForestMerge _BrightForestMerge;
+    private static TerminaTempleMerge TerminaTempleMerge { get => _TerminaTempleMerge ??= new TerminaTempleMerge(); set => _TerminaTempleMerge = value; }
+    private static TerminaTempleMerge _TerminaTempleMerge;
+    private static InfernalArena InfernalArena { get => _InfernalArena ??= new InfernalArena(); set => _InfernalArena = value; }
+    private static InfernalArena _InfernalArena;
+    private static DoomLegacyMerge DLM { get => _DLM ??= new DoomLegacyMerge(); set => _DLM = value; }
+    private static DoomLegacyMerge _DLM;
+    private static CelestialChallengerMerge CCM { get => _CCM ??= new CelestialChallengerMerge(); set => _CCM = value; }
+    private static CelestialChallengerMerge _CCM;
+    private static SpoilsofLightMerge SOLM { get => _SOLM ??= new SpoilsofLightMerge(); set => _SOLM = value; }
+    private static SpoilsofLightMerge _SOLM;
+    private static ArchiveofTimeMerge AOTM { get => _AOTM ??= new ArchiveofTimeMerge(); set => _AOTM = value; }
+    private static ArchiveofTimeMerge _AOTM;
+    private static CrocriverMerge CM { get => _CM ??= new CrocriverMerge(); set => _CM = value; }
+    private static CrocriverMerge _CM;
+    private static SuperSlayinMerge SSM { get => _SSM ??= new SuperSlayinMerge(); set => _SSM = value; }
+    private static SuperSlayinMerge _SSM;
+    private static DreampalaceMerge DPM { get => _DPM ??= new DreampalaceMerge(); set => _DPM = value; }
+    private static DreampalaceMerge _DPM;
+    private static BonecastleMerge BCM { get => _BCM ??= new BonecastleMerge(); set => _BCM = value; }
+    private static BonecastleMerge _BCM;
+    private static CelestialRealmMerge CRM { get => _CRM ??= new CelestialRealmMerge(); set => _CRM = value; }
+    private static CelestialRealmMerge _CRM;
+    private static ThreeLittleWolvesHousesMerge TLWHM { get => _TLWHM ??= new ThreeLittleWolvesHousesMerge(); set => _TLWHM = value; }
+    private static ThreeLittleWolvesHousesMerge _TLWHM;
+    private static PotionBuyer PotionBuyer { get => _PotionBuyer ??= new PotionBuyer(); set => _PotionBuyer = value; }
+    private static PotionBuyer _PotionBuyer;
+    private static MoonlightKhopeshMerge MoonlightKhopeshMerge { get => _MoonlightKhopeshMerge ??= new MoonlightKhopeshMerge(); set => _MoonlightKhopeshMerge = value; }
+    private static MoonlightKhopeshMerge _MoonlightKhopeshMerge;
+    private static ShadowMerge ShadowMerge { get => _ShadowMerge ??= new ShadowMerge(); set => _ShadowMerge = value; }
+    private static ShadowMerge _ShadowMerge;
+    private static ThirdspellMerge ThirdspellMerge { get => _ThirdspellMerge ??= new ThirdspellMerge(); set => _ThirdspellMerge = value; }
+    private static ThirdspellMerge _ThirdspellMerge;
+    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }
+    private static CoreDarkon _Darkon;
+    private static CoreShadowofDoom CoreShadowofDoom { get => _CoreShadowofDoom ??= new CoreShadowofDoom(); set => _CoreShadowofDoom = value; }
+    private static CoreShadowofDoom _CoreShadowofDoom;
+    private static FableForest FableForest { get => _FableForest ??= new FableForest(); set => _FableForest = value; }
+    private static FableForest _FableForest;
+    private static VoidRefuge VR { get => _VR ??= new VoidRefuge(); set => _VR = value; }
+    private static VoidRefuge _VR;
     private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
     private static CoreAOR _AOR;
-    private static CoreSepulchure CoreSS { get => _CoreSS ??= new CoreSepulchure(); set => _CoreSS = value; }    private static CoreSepulchure _CoreSS;
+    private static CoreSepulchure CoreSS { get => _CoreSS ??= new CoreSepulchure(); set => _CoreSS = value; }
+    private static CoreSepulchure _CoreSS;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
