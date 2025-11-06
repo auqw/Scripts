@@ -48,6 +48,18 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
   {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "CoreBots.cs",
+    "size": 404327,
+    "sha256": "d306d6f83910b91930286b0a493eb0471559b9b14d2ec8c5a463aebef6d8db3f",
+    "fileName": "CoreBots.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
+  },
+  {
     "name": "Aggro Monster Creator",
     "description": "This bot will allow you to start a custom AggroMon bot. It also allows you to save it to a file for later.",
     "tags": [
