@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 404389,
-    "sha256": "d2506d361b06f3f8733b007e1493c357d9016f566acbdf39f3955fe4cb52d060",
+    "size": 408853,
+    "sha256": "98aedc7706394bfc1cc29578a30213a2830b7869bbb42b2d60b50f96c6318188",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -2665,8 +2665,8 @@
       "null"
     ],
     "path": "ShadowsOfWar/CoreSoWMats.cs",
-    "size": 6297,
-    "sha256": "d36a55c83bc58d1c223bad273fe8b18fdbcdaf31778f8ccccc4c1f99c14faed9",
+    "size": 6300,
+    "sha256": "fd5d53b33c6a0a1329a108656c9e907dc229ef47806fc73056a17f39cf14d542",
     "fileName": "CoreSoWMats.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/CoreSoWMats.cs"
   },
@@ -2677,8 +2677,8 @@
       "null"
     ],
     "path": "Darkon/CoreDarkon.cs",
-    "size": 15030,
-    "sha256": "5bd50ac6101a6f6d743403d9e4b36e1ab67fc87080600508737a287ed315bdd7",
+    "size": 15033,
+    "sha256": "40705d2974c48a76b5b72cc94c55586e72c48598c8f8a0989c89696589e203c7",
     "fileName": "CoreDarkon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/CoreDarkon.cs"
   },
@@ -3061,8 +3061,8 @@
       "perpetuum"
     ],
     "path": "Other/CelestialOfMysteries.cs",
-    "size": 4212,
-    "sha256": "7642ecd6cc45801c1ee7783625b26b7f847aaa0949c7d452bbf9e60632262edc",
+    "size": 4230,
+    "sha256": "cf55c5b99b777d80293be82fbcd0c2d35cd5d577c7ea91b5c95ab7dc4c5d2972",
     "fileName": "CelestialOfMysteries.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/CelestialOfMysteries.cs"
   },
@@ -4184,8 +4184,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 48544,
-    "sha256": "c3f7ef3b1357fbe687e13489ff2ab34861d90eb4a052ae891134383830af432d",
+    "size": 48550,
+    "sha256": "74e8cd692331b4ec22819edb4bba7579b6ae5f32648298587e20baea4fd01cb1",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -7052,8 +7052,8 @@
       "eclipses"
     ],
     "path": "Legion/MergeShops/AtlasFallsGearMerge.cs",
-    "size": 11949,
-    "sha256": "ba9bd4e71c57a014031e1da3d3afc9f707db759ffd979802be52c7ba602fbc74",
+    "size": 11961,
+    "sha256": "723587cd007246c78e012e52e471b454d8a6da406a826506758653c105f00842",
     "fileName": "AtlasFallsGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/AtlasFallsGearMerge.cs"
   },
@@ -7993,8 +7993,8 @@
       "atlasfalls"
     ],
     "path": "Story/Legion/AtlasFalls.cs",
-    "size": 5107,
-    "sha256": "5a3267dbe6242dbe6a740387f21018d1d5c24ffafbf3b7dab5cdac8a721694c8",
+    "size": 5111,
+    "sha256": "c1928a5f7f47da020c47087963d10613e59ecd43e7203f12bdc5a073de6669f4",
     "fileName": "AtlasFalls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Legion/AtlasFalls.cs"
   },
@@ -8176,8 +8176,8 @@
       "null"
     ],
     "path": "Story/ShadowsOfWar/CoreSoW.cs",
-    "size": 38253,
-    "sha256": "a4c5f235ad2d5cc3f16a8f14d02cd6d109cc2e1075166a5bf71e617cb382e635",
+    "size": 38257,
+    "sha256": "ef1810d387275158a402bd055fa3a81206f554942374b2a76173aea87bccd39e",
     "fileName": "CoreSoW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ShadowsOfWar/CoreSoW.cs"
   },
@@ -12036,8 +12036,8 @@
       "null"
     ],
     "path": "ShadowsOfWar/MergeShops/ManaCradleMerge.cs",
-    "size": 6228,
-    "sha256": "b7b88bd2248aecaf6d02e89c603585bca68e38eed002511a528217dc9e952bcf",
+    "size": 6239,
+    "sha256": "17b8bc535c0c75fee8350ba5538ec0f59441921c25bc58729e99dcd2e038962b",
     "fileName": "ManaCradleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/MergeShops/ManaCradleMerge.cs"
   },
@@ -12449,8 +12449,8 @@
       "voyage"
     ],
     "path": "Darkon/MergeShops/ArcanaInvokerResourceMerge.cs",
-    "size": 37432,
-    "sha256": "f1e2556be82883e31c6afab278b1a8584f081a3310f277abb76604f547c69c00",
+    "size": 37435,
+    "sha256": "3291a2215c52acbd880202998b45f67a76c14c48e5f8eab86bf7c4c6b464d44c",
     "fileName": "ArcanaInvokerResourceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/MergeShops/ArcanaInvokerResourceMerge.cs"
   },
@@ -13420,7 +13420,7 @@
     ],
     "path": "Other/Classes/VerusDoomKnight.cs",
     "size": 15184,
-    "sha256": "e8f6a55dd3bc112778780c2e96c34fe14e9b0a3ecadb7610bd747ece9a08d85d",
+    "sha256": "94f9b7b789d1949914eccfb2d01e7da19f10698606f19fbc09d39e413e57232f",
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
@@ -14444,8 +14444,8 @@
       "fifty one"
     ],
     "path": "Other/Various/SinoftheUndying(NoInsignia).cs",
-    "size": 6559,
-    "sha256": "aac987359ab74cd3e26fe7c6743d27f5ed91b037c4057b3fc1ed71576afaaaa5",
+    "size": 6562,
+    "sha256": "b82c408389dd1b59ed98bbafee2d9fb5e381b3b1ee2fbb674337de215e5e9aac",
     "fileName": "SinoftheUndying(NoInsignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/SinoftheUndying(NoInsignia).cs"
   },
@@ -14992,8 +14992,8 @@
       "horns"
     ],
     "path": "Other/MergeShops/InfernalArenaMerge.cs",
-    "size": 9805,
-    "sha256": "d5aacf084e0b1bc99d516a1cee3d7b9ebad168da2c2739ce431d8576493e44ad",
+    "size": 9820,
+    "sha256": "b230b0eed18c9a1f11aaf19bc6347c8819c2527be4c9108e35ca743bc2d67b13",
     "fileName": "InfernalArenaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/InfernalArenaMerge.cs"
   },
@@ -24601,8 +24601,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 971560,
-    "sha256": "047f715fad67cce4978e638a27cac1d6e6c9855cb9927d2f3439c8f64aa0b9d5",
+    "size": 971584,
+    "sha256": "da6da59dc8fb197f679195d03d48120f9226b9fee7ce6d80d75fee1636246ea2",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -27439,8 +27439,8 @@
       "null"
     ],
     "path": "Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs",
-    "size": 1802,
-    "sha256": "78decf6a080b89893e122eecbd1b3c0a52145f0d7bc55dd66449fc622a87452b",
+    "size": 2271,
+    "sha256": "fb6fbbdf8cc6984deaabc3297187c12b0cb4c75e550434ba192fe18ea6806e73",
     "fileName": "EmptyTemplate[Basics].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs"
   },
@@ -27978,8 +27978,8 @@
       "dungeon"
     ],
     "path": "Story/QueenofMonsters/Extra/InfernalArena.cs",
-    "size": 5720,
-    "sha256": "3bd8ea7c282f01ed65b2713d52bcb5cb7629a959f736a2b874209d1e5aa9a5fa",
+    "size": 5739,
+    "sha256": "e78ee44fef636663ba985a7676cec7f4ea4cd5afc76184e191ff0ac8527b505a",
     "fileName": "InfernalArena.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/Extra/InfernalArena.cs"
   },
@@ -28318,8 +28318,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 25898,
-    "sha256": "67e18583f0e7e09e21a6ff38e8068f005cd142fcab7d64864607046cb746d669",
+    "size": 25907,
+    "sha256": "045333f8d241e289e9dd079ec5a51c5abe156d84f5289b05f85ed651fa4a22a6",
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },
