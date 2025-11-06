@@ -1791,7 +1791,8 @@ public class CoreNation
     /// Farms Blood Gem of the Archfiend with the best method available
     /// </summary>
     /// <param name="quant">Desired quantity, 100 = max stack</param>
-    public void FarmBloodGem(int quant = 100)
+    /// <param name="HydraLevel"></param>
+    public void FarmBloodGem(int quant = 100, int HydraLevel = 85)
     {
         if (Core.CheckInventory("Blood Gem of the Archfiend", quant))
             return;
@@ -1801,7 +1802,7 @@ public class CoreNation
         FarmContractExchage("Blood Gem of the Archfiend", quant);
         NewWorldsNewOpportunities("Blood Gem of the Archfiend", quant);
         VoidKnightSwordQuest("Blood Gem of the Archfiend", quant);
-        BloodyChaos(quant, true);
+        BloodyChaos(quant, true, HydraLevel);
         KisstheVoid(quant);
     }
 
@@ -1998,7 +1999,8 @@ public class CoreNation
     /// </summary>
     /// <param name="quant">Desired quantity, 100 = max stack.</param>
     /// <param name="relic">Indicates if Relic of Chaos supplies are used.</param>
-    public void BloodyChaos(int quant = 100, bool relic = false)
+    /// <param name="HydraLevel"></param>
+    public void BloodyChaos(int quant = 100, bool relic = false, int HydraLevel = 85)
     {
         if (Core.CheckInventory("Blood Gem of the Archfiend", quant) || Bot.Player.Level < 80)
             return;
@@ -2010,13 +2012,12 @@ public class CoreNation
         Core.FarmingLogger("Blood Gem of the Archfiend", quant);
 
         Core.RegisterQuests(relic ? new[] { 7816, 2857 } : new[] { 7816 });
-
         Core.EquipClass(ClassType.Solo);
         while (!Bot.ShouldExit && !Core.CheckInventory("Blood Gem of the Archfiend", quant))
         {
             Core.KillEscherion("Escherion's Helm", isTemp: false);
             Core.KillVath("Shattered Legendary Sword of Dragon Control", isTemp: false);
-            Core.HuntMonster("hydrachallenge", "Hydra Head 85", "Hydra Scale Piece", 200, false, publicRoom: Core.PublicDifficult);
+            Core.HuntMonster("hydrachallenge", $"Hydra Head {HydraLevel}", "Hydra Scale Piece", 200, false);
         }
 
         Core.CancelRegisteredQuests();
@@ -2648,4 +2649,9 @@ public enum VoucherItemTotem
 {
     Totem_of_Nulgath = 5357,
     Gem_of_Nulgath = 6136
+}
+public enum HydraLevel
+{
+    Hydra_Head_85,
+    Hydra_Head_90
 }
