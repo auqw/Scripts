@@ -649,6 +649,25 @@ public class CoreLegion
         Core.CancelRegisteredQuests();
     }
 
+    public void LTCastle(int quant = 50000)
+    {
+        if (!Core.CheckInventory("Legion Castle") || Core.CheckInventory("Legion Token", quant))
+        {
+            return;
+        }
+
+        var rewards = Core.QuestRewards(6822);
+        Core.AddDrop(rewards);
+
+        Core.RegisterQuests(6822, 6742, 6743);
+        while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
+        {
+            Core.KillMonster("legionarena", "r2", "Left", "*", "Challenger Slain", 12, publicRoom: Core.PrivateRooms);
+            Core.KillMonster("legionarena", "Boss", "Left", "Legion Fiend Rider", "Legion Fiend Rider Slain", publicRoom: Core.PrivateRooms);
+        }
+        Core.CancelRegisteredQuests();
+    }
+
     public void LTArcaneParagon(int quant = 50000)
     {
         if (Core.CheckInventory("Legion Token", quant) || !Core.CheckInventory("Arcane Paragon Pet"))
