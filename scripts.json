@@ -19887,8 +19887,8 @@
       "seasonal"
     ],
     "path": "Seasonal/AqwBirthday/20thAnniversary.cs",
-    "size": 7117,
-    "sha256": "c14ed688dd4b8de60280f581f012d6869b4aee351f5c44ebcec4e1e4d32ec6f2",
+    "size": 7118,
+    "sha256": "ae108ae4d77ae78388bb08e4bd688c7a01444873af700b654fb4341f0aa041e2",
     "fileName": "20thAnniversary.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AqwBirthday/20thAnniversary.cs"
   },
@@ -28762,7 +28762,7 @@
     ],
     "path": "Seasonal/Friday13th/Story/CoreFriday13th.cs",
     "size": 34265,
-    "sha256": "478e45af2ddd1fb83f70476ecb7f8082e7613d88849d136d487b1628ea1072c9",
+    "sha256": "02d089e7e44693cac4f9843702e19a50fe2ee37a74b0738ab0e8b09572575699",
     "fileName": "CoreFriday13th.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/Story/CoreFriday13th.cs"
   },
