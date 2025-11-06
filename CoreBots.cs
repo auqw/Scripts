@@ -8522,78 +8522,7 @@ public class CoreBots
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
 
-        // If SoloClass is already set and no additional class specified, do nothing
-        if (!string.IsNullOrEmpty(SoloClass) && string.IsNullOrEmpty(additionalClass))
-            return;
-
-        string[] classesToCheck = new[] { "TimeKeeper", "TimeKiller", "Verus DoomKnight", "Void Highlord", "Void HighLord (IoDA)", "ArchPaladin" };
-
-        // If additionalClass is specified, equip it only if not already equipped
-        if (!string.IsNullOrEmpty(additionalClass) && CheckInventory(additionalClass))
-        {
-            if (Bot.Player.CurrentClass?.Name != additionalClass)
-            {
-                Unbank(additionalClass);
-                Equip(additionalClass);
-                Bot.Wait.ForItemEquip(additionalClass);
-                Bot.Wait.ForActionCooldown(GameActions.EquipItem);
-                Logger($"Using {additionalClass}");
-            }
-            return;
-        }
-
-        // Otherwise, loop through the priority list
-        foreach (string Class in classesToCheck)
-        {
-            if (!CheckInventory(Class, toInv: Class != "TimeKeeper" || SoloClass == Class))
-                continue;
-
-            if (Bot.Player.CurrentClass?.Name == Class)
-            {
-                Logger($"Already using {Class}");
-                break;
-            }
-
-            Unbank(Class);
-            Equip(Class);
-
-            switch (Class)
-            {
-                case "TimeKeeper":
-                    if (SoloClass != Class)
-                        continue;
-                    Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Base);
-                    break;
-
-                case "ArchPaladin":
-                    Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Base);
-                    break;
-
-                case "Void Highlord":
-                case "Void HighLord (IoDA)":
-                case "Verus DoomKnight":
-                    Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Def);
-                    break;
-
-                case "Yami no Ronin":
-                    Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Solo);
-                    break;
-
-                case "Chaos Avenger":
-                    Bot.Skills.StartAdvanced(Class, false, ClassUseMode.Base);
-                    break;
-
-                default:
-                    Unbank(SoloClass);
-                    Equip(SoloClass);
-                    break;
-            }
-
-            Bot.Wait.ForActionCooldown(GameActions.EquipItem);
-            Bot.Wait.ForItemEquip(CheckInventory(Class) ? Class : SoloClass);
-            Logger($"Using {(CheckInventory(Class) ? Class : SoloClass)}");
-            break;
-        }
+        EquipClass(ClassType.Boss);
     }
 
     /// <summary>
@@ -8605,59 +8534,7 @@ public class CoreBots
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
 
-        // Check if CurrentClass is not null
-        string currentClassName = Bot.Player.CurrentClass?.Name ?? string.Empty;
-
-        // Create the list of classes to check
-        List<string> classesToCheck = new() { "Yami no Ronin", "Chrono Assassin", "Spy", "Rogue" };
-        if (!string.IsNullOrEmpty(currentClassName))
-        {
-            classesToCheck.Add(currentClassName);
-        }
-        if (!string.IsNullOrEmpty(additionalClass) && CheckInventory(additionalClass))
-        {
-            Unbank(additionalClass);
-            Equip(additionalClass);
-            Bot.Wait.ForItemEquip(additionalClass);
-            Logger($"Using {additionalClass}");
-        }
-        else
-        {
-            foreach (string Class in classesToCheck)
-            {
-                switch (Class)
-                {
-                    case "Yami no Ronin":
-                        Bot.Skills.StartAdvanced(Class, true, ClassUseMode.Solo);
-                        break;
-
-                    case "Chrono Assassin":
-                        Bot.Skills.StartAdvanced(Class, true, ClassUseMode.Base);
-                        break;
-
-                    default:
-                        Bot.Skills.StartAdvanced(Class, true, ClassUseMode.Base);
-                        break;
-                }
-
-                if (!CheckInventory(Class))
-                    Logger($"{Class} Not Found, skipping");
-                else
-                {
-                    Bot.Wait.ForItemEquip(CheckInventory(Class) ? Class : SoloClass);
-                    Logger($"Using {Bot.Player.CurrentClass?.Name}");
-                    break;
-                }
-            }
-        }
-
-        if (!string.IsNullOrEmpty(additionalClass) && CheckInventory(additionalClass))
-        {
-            Unbank(additionalClass);
-            Equip(additionalClass);
-            Bot.Wait.ForItemEquip(additionalClass);
-            Logger($"Using {additionalClass}");
-        }
+        EquipClass(ClassType.Boss);
     }
 
     /// <summary>
