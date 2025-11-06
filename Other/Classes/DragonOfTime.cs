@@ -28,17 +28,28 @@ public class DragonOfTime
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
-    private static GoldenBladeOfFate GBoF { get => _GBoF ??= new GoldenBladeOfFate(); set => _GBoF = value; }    private static GoldenBladeOfFate _GBoF;
-    private static PinkBladeOfDestruciton PBoD { get => _PBoD ??= new PinkBladeOfDestruciton(); set => _PBoD = value; }    private static PinkBladeOfDestruciton _PBoD;
-    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }    private static CoreQOM _QOM;
-    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }    private static CoreToD _TOD;
-    private static MysteriousEgg Egg { get => _Egg ??= new MysteriousEgg(); set => _Egg = value; }    private static MysteriousEgg _Egg;
-    private static CoreSummer Coll { get => _Coll ??= new CoreSummer(); set => _Coll = value; }    private static CoreSummer _Coll;
-    private static Borgars Borgars { get => _Borgars ??= new Borgars(); set => _Borgars = value; }    private static Borgars _Borgars;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }
+    private static CoreDarkon _Darkon;
+    private static GoldenBladeOfFate GBoF { get => _GBoF ??= new GoldenBladeOfFate(); set => _GBoF = value; }
+    private static GoldenBladeOfFate _GBoF;
+    private static PinkBladeOfDestruciton PBoD { get => _PBoD ??= new PinkBladeOfDestruciton(); set => _PBoD = value; }
+    private static PinkBladeOfDestruciton _PBoD;
+    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }
+    private static CoreQOM _QOM;
+    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }
+    private static CoreToD _TOD;
+    private static MysteriousEgg Egg { get => _Egg ??= new MysteriousEgg(); set => _Egg = value; }
+    private static MysteriousEgg _Egg;
+    private static CoreSummer Coll { get => _Coll ??= new CoreSummer(); set => _Coll = value; }
+    private static CoreSummer _Coll;
+    private static Borgars Borgars { get => _Borgars ??= new Borgars(); set => _Borgars = value; }
+    private static Borgars _Borgars;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -153,7 +164,7 @@ public class DragonOfTime
             Core.EnsureComplete(7719);
 
         }
-        
+
         // If we are only getting the armor, we can return here.
         if (DotArmorOnly)
             return;
@@ -193,9 +204,9 @@ public class DragonOfTime
             {
                 Core.AddDrop("Semiramis Feather");
                 // Take Down Terrane 6286
-                Core.EnsureAccept(6286);
                 Core.EquipClass(ClassType.Solo);
-                Core.HuntMonster("guardiantree", "Terrane", "Terrane Defeated");
+                Core.EnsureAccept(6286);
+                Core.KillMonster("guardiantree", "r12", "Left", "Terrane");
                 Core.EnsureComplete(6286);
                 Bot.Wait.ForPickup("Semiramis Feather");
             }

@@ -707,7 +707,7 @@ public class CoreQOM
         if (!Story.QuestProgression(6286))
         {
             Core.EnsureAccept(6286);
-            Core.KillMonster("guardiantree", "r12", "Left", "Terrane", "Terrane Defeated");
+            Core.KillMonster("guardiantree", "r12", "Left", "Terrane");
             Core.EnsureComplete(6286);
         }
         if (TerraneMerge)
