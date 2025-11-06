@@ -78,7 +78,7 @@ public class CoreSoWMats
 
         Adv.GearStore();
 
-        Core.BossClass();
+        Core.UseBossClass();
         Core.RegisterQuests(9126);
         while (!Bot.ShouldExit && !Core.CheckInventory("Elemental Core", Quantity))
         {

@@ -126,7 +126,7 @@ public class SinoftheSinoftheUndyingNoInsignia
         {
             if (Core.CheckInventory("Chaos Avenger"))
             {
-                Core.BossClass();
+                Core.UseBossClass();
                 while (!Bot.ShouldExit && !Core.CheckInventory("Atlas Regalia", 20))
                 {
                     Core.HuntMonsterQuest(10137, "atlasfalls", "King Zedek");

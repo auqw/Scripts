@@ -109,7 +109,7 @@ public class CoreDarkon
         while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
         {
             Adv.GearStore();
-            Core.DodgeClass();
+            Core.UseDodgeClass();
             Core.HuntMonster("tercessuinotlim", "Nulgath", "Nulgath's mask", 1, false, publicRoom: true);
             Bot.Wait.ForPickup("Darkon's Receipt");
         }

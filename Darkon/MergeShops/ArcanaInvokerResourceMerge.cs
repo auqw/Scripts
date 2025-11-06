@@ -221,7 +221,7 @@ public class ArcanaInvokerResourceMerge
 
                 case "Crowned Skull of Na'al":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.DodgeClass();
+                    Core.UseDodgeClass();
                     Core.Logger($"Doing story first: {!Core.isCompletedBefore(9373)}");
                     if (!Core.isCompletedBefore(9377))
                     {

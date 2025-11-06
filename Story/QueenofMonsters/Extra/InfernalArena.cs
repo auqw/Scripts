@@ -110,25 +110,25 @@ public class InfernalArena
         // Reviled Returner 9373
         //this ones barely soloable so gl
         Core.JumpWait();
-        Core.BossClass(Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
+        Core.UseBossClass(Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
         Core.Logger("Boss: [Deadly Duo]");
         Story.KillQuest(9373, "infernalarena", "Deadly Duo");
 
         // Reign of the Deer 9374
         Core.JumpWait();
-        Core.BossClass(Core.CheckInventory("Legion DoomKnight") ? "Legion DoomKnight" : "Classic Legion DoomKnight");
+        Core.UseBossClass(Core.CheckInventory("Legion DoomKnight") ? "Legion DoomKnight" : "Classic Legion DoomKnight");
         Core.Logger("Boss: [Cervus Malus]");
         Story.KillQuest(9374, "infernalarena", "Cervus Malus");
 
         // Ars Infernum 9375
         Core.JumpWait();
-        Core.BossClass("Dragon of Time");
+        Core.UseBossClass("Dragon of Time");
         Core.Logger("Boss: [Key of Sholemoh]");
         Story.KillQuest(9375, "infernalarena", "Key of Sholemoh");
 
         // Unrepentant Culler 9376
         Core.JumpWait();
-        Core.DodgeClass(Core.CheckInventory("Yami no Ronin") ? "Yami no Ronin" : "Lord of Order");
+        Core.UseDodgeClass(Core.CheckInventory("Yami no Ronin") ? "Yami no Ronin" : "Lord of Order");
         Core.Logger("Boss: [Azalith's Scythe]");
         Bot.Options.AttackWithoutTarget = true;
         Story.KillQuest(9376, "infernalarena", "Azalith's Scythe");
@@ -138,8 +138,8 @@ public class InfernalArena
         {
             // Lord of the Scarred Barrens  9377
             Core.JumpWait();
-            // Core.DodgeClass();
-            Core.BossClass(Core.CheckInventory("Chaos Avenger") ? "Chaos Avenger" : Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
+            //  Core.UseDodgeClass();
+            Core.UseBossClass(Core.CheckInventory("Chaos Avenger") ? "Chaos Avenger" : Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
             Core.Logger("Boss: [Na'al]");
             Core.Logger("this may take an hr or 2... or u may first try\n" +
             "it so good luck(a kill has been gotten with vhl\n" +

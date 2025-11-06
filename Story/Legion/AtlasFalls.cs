@@ -16,7 +16,8 @@ public class AtlasFalls
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
     private static AtlasKingdom AtlasKingdom { get => _AtlasKingdom ??= new AtlasKingdom(); set => _AtlasKingdom = value; }
     private static AtlasKingdom _AtlasKingdom;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
@@ -144,7 +145,7 @@ public class AtlasFalls
         {
             if (Core.CheckInventory("Chaos Avenger"))
             {
-                Core.BossClass();
+                Core.UseBossClass();
                 Story.KillQuest(10136, "atlasfalls", UseableMonsters[9]);
             }
             else Core.Logger("You need to have \"Chaos Avenger\" to kill \"King Zedek\".");

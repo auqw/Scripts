@@ -2966,7 +2966,7 @@ case ""King Klunk's Crown"":
     @"
 case ""Crowned Skull of Na'al"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.DodgeClass();
+                     Core.UseDodgeClass();
                     Core.Logger($""Doing story first: {!Core.isCompletedBefore(9373)}"");
                     if (!Core.isCompletedBefore(9377))
                     {
@@ -11321,7 +11321,7 @@ case ""Infernal Incantation"":
     "Scythe Shard",
     @"
 case ""Scythe Shard"":
-                    Core.DodgeClass(""Lord Of Order"");
+                     Core.UseDodgeClass(""Lord Of Order"");
                     Core.HuntMonster(""infernalarena"", ""Azalith's Scythe"", req.Name, quant, false, false);
                     break;
     "
@@ -11331,7 +11331,7 @@ case ""Scythe Shard"":
     @"
 case ""Duo's Dinner"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.BossClass();
+                     Core.UseBossClass();
                     Core.HuntMonster(""infernalarena"", ""Deadly Duo"", req.Name, quant, false, false);
                     break;
     "
@@ -25888,7 +25888,7 @@ case ""Mainyu Rune"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
                     Adv.GearStore();
-                    Core.BossClass();
+                     Core.UseBossClass();
                     Core.HuntMonster(""manacradle"", ""The Mainyu"", req.Name, isTemp: false);
                     Adv.GearStore(true);
                     break;
@@ -25902,7 +25902,7 @@ case ""Mainyu Wings"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
                     Adv.GearStore();
-                    Core.BossClass();
+                     Core.UseBossClass();
                     Core.HuntMonster(""manacradle"", ""The Mainyu"", req.Name, isTemp: false);
                     Adv.GearStore(true);
                     break;
@@ -25916,7 +25916,7 @@ case ""Mainyu Tail"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
                     Adv.GearStore();
-                    Core.BossClass();
+                     Core.UseBossClass();
                     Core.HuntMonster(""manacradle"", ""The Mainyu"", req.Name, isTemp: false);
                     Adv.GearStore(true);
                     break;

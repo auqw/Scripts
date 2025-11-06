@@ -24,8 +24,8 @@ public class AtlasFallsGearMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
     private static AtlasFalls AF { get => _AF ??= new AtlasFalls(); set => _AF = value; }
     private static AtlasFalls _AF;
@@ -42,7 +42,7 @@ private static CoreAdvanced _sAdv;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Atlas Regalia", "Arethusa's Black Steel", "Sundered Soul of Atlas", "Atlas Crest", "Legion Token"});
+        Core.BankingBlackList.AddRange(new[] { "Atlas Regalia", "Arethusa's Black Steel", "Sundered Soul of Atlas", "Atlas Crest", "Legion Token" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -79,7 +79,7 @@ private static CoreAdvanced _sAdv;
                     Core.FarmingLogger(req.Name, quant);
                     if (Core.CheckInventory("Chaos Avenger"))
                     {
-                        Core.BossClass();
+                        Core.UseBossClass();
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
                             Core.HuntMonsterQuest(10137, "atlasfalls", "King Zedek");

@@ -521,14 +521,14 @@ public class CoreArchMage
 
                 case "Vital Exanima":
                     Adv.GearStore();
-                    Core.BossClass();
+                    Core.UseBossClass();
                     Core.KillMonster("dage", "Boss", "Right", "Dage the Evil", item, isTemp: false);
                     Adv.GearStore(true);
                     break;
 
                 case "Everlight Flame":
                     Adv.GearStore();
-                    Core.BossClass();
+                    Core.UseBossClass();
                     Core.KillMonster("fireavatar", "r9", "Left", "Avatar Tyndarius", item, isTemp: false);
                     Adv.GearStore(true);
                     break;
@@ -541,7 +541,7 @@ public class CoreArchMage
 
                 case "The Mortal Coil":
                     Adv.GearStore();
-                    Core.DodgeClass();
+                    Core.UseDodgeClass();
                     Core.KillMonster("tercessuinotlim", "Boss2", "Right", "Nulgath", item, isTemp: false);
                     Adv.GearStore(true);
                     break;

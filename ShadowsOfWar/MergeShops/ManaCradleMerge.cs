@@ -22,8 +22,8 @@ public class ManaCradleMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
     private static CoreSoWMats SOWM { get => _SOWM ??= new CoreSoWMats(); set => _SOWM = value; }
     private static CoreSoWMats _SOWM;
@@ -105,7 +105,7 @@ private static CoreAdvanced _sAdv;
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
                     Adv.GearStore();
-                    Core.BossClass();
+                    Core.UseBossClass();
                     Core.HuntMonster("manacradle", "The Mainyu", req.Name, isTemp: false);
                     Adv.GearStore(true);
                     break;

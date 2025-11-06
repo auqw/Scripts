@@ -39,7 +39,18 @@ public class DefaultTemplate
     public void Example(bool TestMode = false)
     {
         // Test Area vv
-        
+        Core.Logger($"Equipping: {Core.SoloClass}");
+        Core.EquipClass(ClassType.Solo);
+        Bot.Sleep(1500);
+        Core.Logger($"Equipping: {Core.FarmClass}");
+        Core.EquipClass(ClassType.Farm);
+        Bot.Sleep(1500);
+        Core.Logger($"Equipping: {Core.DodgeClass}");
+        Core.EquipClass(ClassType.Dodge);
+        Bot.Sleep(1500);
+        Core.Logger($"Equipping: {Core.BossClass}");
+        Core.EquipClass(ClassType.Boss);
+        Bot.Sleep(1500);
         // Test Area ^^
 
         // Optional Test Mode

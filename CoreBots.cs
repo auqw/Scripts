@@ -85,6 +85,22 @@ public class CoreBots
     public bool FarmGearOn { get; set; } = true;
     // [Can Change] Names of your farming equipment
     public string[] FarmGear { get; set; } = Array.Empty<string>();
+    // [Can Change] Name of your dodge class
+    public string DodgeClass { get; set; } = "GenericDodge";
+    // [Can Change] Mode of dodge class, if it has multiple.
+    public ClassUseMode DodgeUseMode { get; set; } = ClassUseMode.Base;
+    // [Can Change] Whether you wish to equip dodge equipment
+    public bool DodgeGearOn { get; set; } = true;
+    // [Can Change] Names of your dodge equipment
+    public string[] DodgeGear { get; set; } = Array.Empty<string>();
+    // [Can Change] Name of your bossing class
+    public string BossClass { get; set; } = "GenericBoss";
+    // [Can Change] Mode of boss class, if it has multiple.
+    public ClassUseMode BossUseMode { get; set; } = ClassUseMode.Base;
+    // [Can Change] Whether you wish to equip bossing equipment
+    public bool BossGearOn { get; set; } = true;
+    // [Can Change] Names of your bossing equipment
+    public string[] BossGear { get; set; } = Array.Empty<string>();
     // [Can Change] Some Sagas use the hero alignment to give extra reputation, change to your desired rep (Alignment.Evil or Alignment.Good).
     public int HeroAlignment { get; set; } = (int)Alignment.Evil;
     // [Can Change] Member Status
@@ -290,6 +306,8 @@ public class CoreBots
             currentClass = ClassType.None;
             usingSoloGeneric = SoloClass.ToLower() == "generic";
             usingFarmGeneric = FarmClass.ToLower() == "generic";
+            usingDodgeGeneric = DodgeClass.ToLower() == "generic";
+            usingBossGeneric = BossClass.ToLower() == "generic";
             EquipClass(disableClassSwap ? ClassType.None : ClassType.Solo);
 
             Bot.Events.ScriptStopping += StopBotEvent;
@@ -1043,8 +1061,17 @@ public class CoreBots
 
         foreach (string? item in items)
         {
-            if (string.IsNullOrEmpty(item) || item == SoloClass || item == FarmClass || FarmGear.Contains(item) || SoloGear.Contains(item))
+            if (string.IsNullOrEmpty(item)
+            || item == FarmClass
+            || item == SoloClass
+            || item == DodgeClass
+            || item == BossClass
+            || FarmGear.Contains(item)
+            || SoloGear.Contains(item)
+            || DodgeGear.Contains(item)
+            || BossGear.Contains(item))
                 continue;
+
 
             if (Bot.Inventory.IsEquipped(item) || Bot.House.IsEquipped(item))
             {
@@ -6129,6 +6156,9 @@ public class CoreBots
     ClassType currentClass = ClassType.None;
     bool usingSoloGeneric = false;
     bool usingFarmGeneric = false;
+    bool usingDodgeGeneric = false;
+    bool usingBossGeneric = false;
+
     /// <summary>
     /// Equips either the FarmClass or SoloClass from the CanChange section at the top of CoreBots
     /// </summary>
@@ -6151,6 +6181,17 @@ public class CoreBots
                 if (_equipClass(usingSoloGeneric, SoloClass, SoloUseMode, SoloGearOn, SoloGear))
                     return;
                 break;
+
+            case ClassType.Dodge:
+                if (_equipClass(usingDodgeGeneric, DodgeClass, DodgeUseMode, DodgeGearOn, DodgeGear))
+                    return;
+                break;
+
+            case ClassType.Boss:
+                if (_equipClass(usingBossGeneric, BossClass, BossUseMode, BossGearOn, BossGear))
+                    return;
+                break;
+
         }
 
         Bot.Skills.StartAdvanced(Bot.Player.CurrentClass?.Name ?? "generic", false);
@@ -8476,7 +8517,7 @@ public class CoreBots
     /// Automatic Class Selection for certain bosses.
     /// </summary>
     /// <param name="additionalClass">Additional class to swap into for said boss</param>
-    public void BossClass(string? additionalClass = null)
+    public void UseBossClass(string? additionalClass = null)
     {
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
@@ -8559,7 +8600,7 @@ public class CoreBots
     /// Switches between specified classes and equips necessary items based on the provided additional class.
     /// </summary>
     /// <param name="additionalClass">Optional additional class to switch to.</param>
-    public void DodgeClass(string? additionalClass = null)
+    public void UseDodgeClass(string? additionalClass = null)
     {
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
@@ -9450,6 +9491,21 @@ public class CoreBots
         if (CBOString("FarmModeSelect", out string _FarmModeSelect))
             FarmUseMode = (ClassUseMode)Enum.Parse(typeof(ClassUseMode), string.IsNullOrEmpty(_FarmModeSelect) ? "Base" : _FarmModeSelect);
 
+        if (CBOString("DodgeClassSelect", out string _DodgeClassSelect))
+            DodgeClass = string.IsNullOrEmpty(_DodgeClassSelect) ? "GenericDodge" : _DodgeClassSelect;
+        if (CBOBool("DodgeEquipCheck", out bool _DodgeGearOn))
+            DodgeGearOn = _DodgeGearOn;
+        if (CBOString("DodgeModeSelect", out string _DodgeModeSelect))
+            DodgeUseMode = (ClassUseMode)Enum.Parse(typeof(ClassUseMode), string.IsNullOrEmpty(_DodgeModeSelect) ? "Base" : _DodgeModeSelect);
+
+        if (CBOString("BossClassSelect", out string _BossClassSelect))
+            BossClass = string.IsNullOrEmpty(_BossClassSelect) ? "GenericBoss" : _BossClassSelect;
+        if (CBOBool("BossEquipCheck", out bool _BossGearOn))
+            BossGearOn = _BossGearOn;
+        if (CBOString("BossModeSelect", out string _BossModeSelect))
+            BossUseMode = (ClassUseMode)Enum.Parse(typeof(ClassUseMode), string.IsNullOrEmpty(_BossModeSelect) ? "Base" : _BossModeSelect);
+
+
         //Advanced
         if (CBOBool("MessageBoxCheck", out bool _ForceOffMessageboxes))
             ForceOffMessageboxes = _ForceOffMessageboxes;
@@ -9507,6 +9563,47 @@ public class CoreBots
         }
         if (_FarmGear.Count > 0)
             FarmGear = _FarmGear.ToArray();
+
+        // Dodge gear
+        List<string> _DodgeGear = new();
+        if (DodgeGearOn)
+        {
+            if (CBOString("HelmDodgeSelect", out string _HelmDodge))
+                _DodgeGear.Add(_HelmDodge);
+            if (CBOString("ArmorDodgeSelect", out string _ArmorDodge))
+                _DodgeGear.Add(_ArmorDodge);
+            if (CBOString("CapeDodgeSelect", out string _CapeDodge))
+                _DodgeGear.Add(_CapeDodge);
+            if (CBOString("WeaponDodgeSelect", out string _WeaponDodge))
+                _DodgeGear.Add(_WeaponDodge);
+            if (CBOString("PetDodgeSelect", out string _PetDodge))
+                _DodgeGear.Add(_PetDodge);
+            if (CBOString("GroundItemDodgeSelect", out string _GroundItemDodge))
+                _DodgeGear.Add(_GroundItemDodge);
+        }
+        if (_DodgeGear.Count > 0)
+            DodgeGear = _DodgeGear.ToArray();
+
+        // Boss gear
+        List<string> _BossGear = new();
+        if (BossGearOn)
+        {
+            if (CBOString("HelmBossSelect", out string _HelmBoss))
+                _BossGear.Add(_HelmBoss);
+            if (CBOString("ArmorBossSelect", out string _ArmorBoss))
+                _BossGear.Add(_ArmorBoss);
+            if (CBOString("CapeBossSelect", out string _CapeBoss))
+                _BossGear.Add(_CapeBoss);
+            if (CBOString("WeaponBossSelect", out string _WeaponBoss))
+                _BossGear.Add(_WeaponBoss);
+            if (CBOString("PetBossSelect", out string _PetBoss))
+                _BossGear.Add(_PetBoss);
+            if (CBOString("GroundItemBossSelect", out string _GroundItemBoss))
+                _BossGear.Add(_GroundItemBoss);
+        }
+        if (_BossGear.Count > 0)
+            BossGear = _BossGear.ToArray();
+
 
         var item = Bot.Inventory.Items.Concat(Bot.Bank.Items)
                      .FirstOrDefault(x => x.Name == "Infernal ArchFiend" || x.Name == "Celestial ArchFiend" || x.Name == "Radiant Goddess of War");
@@ -10152,6 +10249,8 @@ public enum ClassType
 {
     Solo,
     Farm,
+    Dodge,
+    Boss,
     None
 }
 

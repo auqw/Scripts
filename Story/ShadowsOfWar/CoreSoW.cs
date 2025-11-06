@@ -118,7 +118,7 @@ public class CoreSoW
             Bot.Options.AttackWithoutTarget = true;
             Core.EnsureAccept(6852);
             Adv.GearStore();
-            Core.BossClass();
+            Core.UseBossClass();
             Core.HuntMonster("malgor", "Malgor", "Defeat Malgor", log: false);
             Adv.GearStore(true);
             Bot.Options.AttackWithoutTarget = false;
@@ -905,7 +905,7 @@ public class CoreSoW
         }
 
         //Avatar of Fire 8243
-        Story.KillQuest(8243, "fireavatar", new[] { "Fire Orb","Avatar Tyndarius" });
+        Story.KillQuest(8243, "fireavatar", new[] { "Fire Orb", "Avatar Tyndarius" });
     }
 
     public void RuinedCrown()

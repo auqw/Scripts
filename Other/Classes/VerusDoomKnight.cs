@@ -165,10 +165,10 @@ public class VerusDoomKnightClass
             {
                 Core.Logger("InfernalArena is a **SOLO ONLY** map!");
                 Adv.GearStore();
-                Core.BossClass(Core.CheckInventory(new[] { "Void Highlord", "Void Highlord (IoDA)" }, any: true)
-                ? (Core.CheckInventory("Void Highlord (IoDA)")
-                ? "Void Highlord (IoDA)" : "Void Highlord")
-                : "ArchPaladin");
+                Core.UseBossClass(Core.CheckInventory(new[] { "Void Highlord", "Void Highlord (IoDA)" }, any: true)
+               ? (Core.CheckInventory("Void Highlord (IoDA)")
+               ? "Void Highlord (IoDA)" : "Void Highlord")
+               : "ArchPaladin");
                 Core.JumpWait();
                 Core.Sleep();
                 Core.HuntMonster("infernalarena", "Deadly Duo", "Deadly Duo's Decayed Denture", 10, false);
