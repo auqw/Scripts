@@ -875,9 +875,7 @@ public class CoreLegion
     public void DagePvP(int trophyQuant = 4000, int techniqueQuant = 1000, int scrollQuant = 1000, bool canSoloBoss = true, bool enableDebug = false)
     {
 
-        if (Core.CheckInventory("Legion Combat Trophy", trophyQuant) &&
-            Core.CheckInventory("Technique Observed", techniqueQuant) &&
-            Core.CheckInventory("Sword Scroll Fragment", scrollQuant))
+        if (CheckInventoryCompletion())
             return;
 
         canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool _canSoloBoss);
@@ -887,14 +885,13 @@ public class CoreLegion
 
 
         int exitAttempt = 0;
-        bool FarmComplete = false;
 
         if (enableDebug)
             Core.DL_Enable();
 
         Start:
         exitAttempt = 0;
-        while (!Bot.ShouldExit && !FarmComplete)
+        while (!Bot.ShouldExit && !CheckInventoryCompletion())
         {
             LogFarmingProgress();
 
@@ -964,8 +961,16 @@ public class CoreLegion
             Bot.Wait.ForPickup("Legion Combat Trophy");
             LogFarmingProgress();
             Exit("Enter0", exitAttempt: ref exitAttempt);
-            FarmComplete = CheckInventoryCompletion();
+            if (CheckInventoryCompletion())
+            {
+                Core.Join("Battleon-99999");
+                break;
+            }
+
         }
+        // Ensure we exit the map before going esle where
+        if (Bot.Map.Name == "dagepvp")
+            Core.Join("Battleon-99999");
 
         void LogFarmingProgress()
         {
