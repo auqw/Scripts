@@ -28,7 +28,7 @@ public class BloodGem
     {
         Core.SetOptions();
 
-        Nation.FarmBloodGem(100, (int)bot.Config.Get<HydraLevel>("HydraLevel"));
+        Nation.FarmBloodGem(100, (int)bot.Config!.Get<HydraLevel>("HydraLevel"));
 
         Core.SetOptions(false);
     }
