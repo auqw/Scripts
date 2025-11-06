@@ -21,22 +21,6 @@ public class CoreDailies
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    // Thousand-level Constants
-    const int OneK = 1000;        // 1k
-    const int TenK = 10000;       // 10k
-    const int OneHundredK = 100000; // 100k
-    const int FiveHundredK = 500000; // 500k
-
-    // Million-level Constants
-    const int OneMillion = 1000000;   // 1m
-    const int FiveMillion = 5000000;  // 5m
-    const int TenMillion = 10000000;  // 10m
-    const int FiftyMillion = 50000000; // 50m
-    const int OneHundredMillion = 100000000; // 100m
-
-    //Max integer
-    const int maxint = Int32.MaxValue;
-
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.RunCore();
