@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 54271,
-    "sha256": "3aa01c88dd8c666dbaf52fd013d15a193f7f47eb009c77988a7cc2f102bd4eab",
+    "size": 53746,
+    "sha256": "cf7624c911dd1eb508855a2d1395f6abccea8fad802c044f2cda8345e8c14222",
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreDailies.cs"
   },
@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 137496,
-    "sha256": "11b4f3b82780a4b3ab8431570069b63110feeaff87cbb63c406f89d6b02fee7e",
+    "size": 136971,
+    "sha256": "3e62cfe3d51cdc50def35f1b7a327c56a469d884f6b0ff08c2484be2582dbd69",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 142908,
-    "sha256": "1ed26150acaed566a9cb12ad579b11f70e9ccc46fa83a6b0c5a7d54007a83bd2",
+    "size": 142370,
+    "sha256": "71c49a90e57ab8e399b1a7774838b0fa6184fd07f278e1efb32e5a90bdd93db8",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 49912,
-    "sha256": "e50897de36f3a9b3399965925ca000686360055585008f244438500fc0fa0aa6",
+    "size": 49387,
+    "sha256": "e3fcca47ef7d252d0c2be27fe38fe5e642760ca5a3946d300e8938d80c61394d",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 404914,
-    "sha256": "f4d7b6aa2ec7e5bcbf5754a04b0410791f76446884ae0cf61c5045eda5533b18",
+    "size": 404389,
+    "sha256": "d2506d361b06f3f8733b007e1493c357d9016f566acbdf39f3955fe4cb52d060",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -9009,8 +9009,8 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 48182,
-    "sha256": "abbbdd6bcd908a454ac3d974ea12186c65785903c87c66fe7334b98fb0811bd3",
+    "size": 48183,
+    "sha256": "fa818f4986f6187532f11f2e2f9f67d3229bd52eb1c647d8dee79c546029e60e",
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
