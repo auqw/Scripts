@@ -10122,8 +10122,8 @@
       "null"
     ],
     "path": "Story/QueenofMonsters/CoreQOM.cs",
-    "size": 33900,
-    "sha256": "559fc8d1202d82a57e7aa03e5b6f3881bbb29389a1f432b9a33cc0873ccace69",
+    "size": 33880,
+    "sha256": "83df6643a7efa466ab293e28665a45a9db3079c96ba49f83cf5882d86d001799",
     "fileName": "CoreQOM.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/CoreQOM.cs"
   },
@@ -13339,8 +13339,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 14702,
-    "sha256": "3a80b915f439af55daa659dbbfe7a2a9d40e5931519dfba65210f8645996c71b",
+    "size": 14700,
+    "sha256": "90df7d91278bccd1e32e9b833d041faf914f77687acea9900ba01daf993834c3",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
@@ -28301,8 +28301,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 25903,
-    "sha256": "2698ae7648454b9b8fdb77e3290672ca62dc0bf2adfc3a822610bdd861c57043",
+    "size": 25898,
+    "sha256": "67e18583f0e7e09e21a6ff38e8068f005cd142fcab7d64864607046cb746d669",
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },
