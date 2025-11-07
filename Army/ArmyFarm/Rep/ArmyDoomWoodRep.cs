@@ -60,5 +60,5 @@ public class ArmyDoomWoodRep
         Core.SetOptions(false);
     }
 
-    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true); ArmyDoomWoodRep();
+    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
 }

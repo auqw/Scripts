@@ -60,5 +60,5 @@ public class ArmyMonsterHunterRep
         Core.SetOptions(false);
     }
 
-    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true); ArmyMonsterHunterRep();
+    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true); 
 }

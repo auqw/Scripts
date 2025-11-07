@@ -62,6 +62,6 @@ public class ArmyRavenlossRep
         Core.SetOptions(false);
     }
 
-    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true); ArmyRavenlossRep();
+    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
 
 }

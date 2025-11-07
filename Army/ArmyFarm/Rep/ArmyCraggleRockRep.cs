@@ -61,5 +61,5 @@ public class ArmyCraggleRockRep
         Core.SetOptions(false);
     }
 
-    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true); ArmyCraggleRockRep();
+    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
 }

@@ -64,5 +64,5 @@ public class ArmyBrethwrenRep
         Core.SetOptions(false);
     }
 
-    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true); ArmyBrethwrenRep();
+    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
 }
