@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 404126,
-    "sha256": "898ce8569664536574a1bf1234ba07051d4b6a79250191e00e18b9e3013a7f52",
+    "size": 403853,
+    "sha256": "955b1d235c82c94493e0edd79308f1dcdc52ce3f89a039bdc63f57459f7eb69b",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -3743,8 +3743,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 108600,
-    "sha256": "dcf99c300951522810d989065503e78e34ed669a88ba4d3bd1e97d20bed0043b",
+    "size": 107648,
+    "sha256": "4b7ebf45ce1038e5e6549a2be9df24e3a50b3367a25f56db3542c11c84f472bc",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -4246,8 +4246,8 @@
       "army"
     ],
     "path": "Army/ArmyHollowBorn/ArmyHollowSoul.cs",
-    "size": 3425,
-    "sha256": "9aec58e888f5ec620dd167966c002b7ece194b69bbbd5c984f60826a1bdfadec",
+    "size": 3559,
+    "sha256": "884f6531ea0e984f7b9c26659a56176d6b17ca55ee950f76f6d230bf5bfb2cc8",
     "fileName": "ArmyHollowSoul.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyHollowBorn/ArmyHollowSoul.cs"
   },
@@ -4290,8 +4290,8 @@
       "fealty"
     ],
     "path": "Army/ArmyLegion/ArmyLRFull.cs",
-    "size": 28022,
-    "sha256": "0e9d2e12c72593b35287bd784afe410192ad759b2d9b529ba52db8a849415636",
+    "size": 27844,
+    "sha256": "bfdc2361d16a79303d844d72ce1bf2a9ce50ff8fc42d35178b07cce9dd25a189",
     "fileName": "ArmyLRFull.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyLegion/ArmyLRFull.cs"
   },
@@ -4304,8 +4304,8 @@
       "army"
     ],
     "path": "Army/ArmyLegion/ArmyObsidianRock.cs",
-    "size": 1714,
-    "sha256": "95102417008686a77b9f3afa25531e36460fa8e487c8f9d7235fd5833aeab97b",
+    "size": 1830,
+    "sha256": "df4bdfdf6dd4c04be0d6504d8cf1772be8915d5c6de1a62f7513f44ca85d8978",
     "fileName": "ArmyObsidianRock.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyLegion/ArmyObsidianRock.cs"
   },
@@ -4333,8 +4333,8 @@
       "legion arena"
     ],
     "path": "Army/ArmyLegion/ArmyLegionToken.cs",
-    "size": 19315,
-    "sha256": "ae0a613151d42ea98f3fb8e78e2a0ccc645535b8cc56019858c904a51211e64d",
+    "size": 19443,
+    "sha256": "70d0d888b703fff0513f9372b15f168dc47486a71f9e93adcd720f7d036cef45",
     "fileName": "ArmyLegionToken.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyLegion/ArmyLegionToken.cs"
   },
@@ -4350,8 +4350,8 @@
       ""
     ],
     "path": "Army/ArmyLegion/ArmySingleRib.cs",
-    "size": 4351,
-    "sha256": "b3d49cffb582f2e095566506ab38fb3e0395200c7bf244c990426324903ebc42",
+    "size": 4468,
+    "sha256": "a50af95779f4c8e6a7da29aaabaf72bc95b5c3e11c602ab29e23bfecde3c61ed",
     "fileName": "ArmySingleRib.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyLegion/ArmySingleRib.cs"
   },
@@ -4364,8 +4364,8 @@
       "seraphicwardage"
     ],
     "path": "Army/ArmyLegion/ArmyDarkToken.cs",
-    "size": 2687,
-    "sha256": "cb92e0fa901d8c92ce396059a8270a45fcb6955cdf5601cdae51588a53d8555d",
+    "size": 2794,
+    "sha256": "30dece52cd9cf6aa69201e43e10d837a0b212051d04dc1b2a096f4b085f9c2cb",
     "fileName": "ArmyDarkToken.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyLegion/ArmyDarkToken.cs"
   },
@@ -4378,8 +4378,8 @@
       "nation round 4 medal"
     ],
     "path": "Army/ArmyNulgath/ArmyEmblemOfNulgath.cs",
-    "size": 3218,
-    "sha256": "f55ff70d914ec62b56d262a015789cadd5fd9e6e05e0a0fed20b9ded43936a3f",
+    "size": 3342,
+    "sha256": "3076881effe01e924b73687816d70f203f5791e70eae2e41e37149d09ef97191",
     "fileName": "ArmyEmblemOfNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyNulgath/ArmyEmblemOfNulgath.cs"
   },
@@ -4391,8 +4391,8 @@
       "army"
     ],
     "path": "Army/ArmyNulgath/ArmyEmblemofDage.cs",
-    "size": 2989,
-    "sha256": "0c0b3ce9bbc99dc5960288c72b9081724ebacb813c0b09a3c8f2f0b3451e4e22",
+    "size": 3123,
+    "sha256": "5655292a9708094f4da365d881342b58f19045949efb07d2560669be6f930797",
     "fileName": "ArmyEmblemofDage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyNulgath/ArmyEmblemofDage.cs"
   },
@@ -4406,8 +4406,8 @@
       "reagents"
     ],
     "path": "Army/ArmyNulgath/ArmySupplies.cs",
-    "size": 8078,
-    "sha256": "89daf956a35edb1d299ab8a550d093d9edd0cf0e0accd3d6181c43c3988a3af4",
+    "size": 8207,
+    "sha256": "1651744826b50fc62ec074a5a171035ed4dac48d9e84704b8e7e09d8f0859915",
     "fileName": "ArmySupplies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyNulgath/ArmySupplies.cs"
   },
@@ -4419,8 +4419,8 @@
       "army"
     ],
     "path": "Army/ArmyNulgath/ArmyBloodyChaos.cs",
-    "size": 7470,
-    "sha256": "e8bd5605eaadd6726d244a583e3345e4871ebc9e1ed1264a941867596abf700b",
+    "size": 7586,
+    "sha256": "687132a14557d816d6c959b3d3c3231b7b3e32fb4e804fa33643e21d23e0258a",
     "fileName": "ArmyBloodyChaos.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyNulgath/ArmyBloodyChaos.cs"
   },
@@ -4433,8 +4433,8 @@
       "army"
     ],
     "path": "Army/ArmyNulgath/ArmyApprovalFavour.cs",
-    "size": 2542,
-    "sha256": "10a789a120535e2b1fd0fbe3e82b17170128c73d92319e20a500efd0a49a6c20",
+    "size": 2668,
+    "sha256": "d251524d75993641e2aeea08c55edc020f6ffd049230de48e5c23a621bb64569",
     "fileName": "ArmyApprovalFavour.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyNulgath/ArmyApprovalFavour.cs"
   },
@@ -4448,8 +4448,8 @@
       "voucher item totem of nulgath"
     ],
     "path": "Army/ArmyNulgath/ArmyVoucherItemofNulgath.cs",
-    "size": 4730,
-    "sha256": "25241b75aaa68c3b1d3fac27ea6783ae4d325713e32007d56dc5d7d127b07ec2",
+    "size": 4862,
+    "sha256": "23dff1fb702139924ec70568312a01378934464463e6fcda080315bbf3f63ca3",
     "fileName": "ArmyVoucherItemofNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyNulgath/ArmyVoucherItemofNulgath.cs"
   },
@@ -4471,8 +4471,8 @@
       "army"
     ],
     "path": "Army/ArmyNulgath/ArmyTaintedGem.cs",
-    "size": 3126,
-    "sha256": "0eae647c85bbacd885402d3cfc5687adb6bfcb8f15e5d6388437c03f27bd7296",
+    "size": 3250,
+    "sha256": "ec0b40250d50af5b629188d41c1b312ebd413d394304c3733f465d3701447a16",
     "fileName": "ArmyTaintedGem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyNulgath/ArmyTaintedGem.cs"
   },
@@ -4485,8 +4485,8 @@
       "army"
     ],
     "path": "Army/Classes/ArmyVoidHighlord.cs",
-    "size": 31535,
-    "sha256": "407c163febde29caa550ab71410323db48c2fdde81090544e70fd926a97f5733",
+    "size": 31409,
+    "sha256": "af74ba4549c418fa51b2795b7629a16c4a2776edf0b2f1e5e30a9bedb5d270b0",
     "fileName": "ArmyVoidHighlord.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyVoidHighlord.cs"
   },
@@ -4499,8 +4499,8 @@
       "army"
     ],
     "path": "Army/Classes/DragonofTimeArmy.cs",
-    "size": 33782,
-    "sha256": "8a7f4801e92135041a995b7c4317f54bb817908ca42519ea4da3de1b378f8937",
+    "size": 33639,
+    "sha256": "74d25bbd6d880fd599b0775ce95da64917a68c999fe8e8190389b5cdb8a96b2e",
     "fileName": "DragonofTimeArmy.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/DragonofTimeArmy.cs"
   },
@@ -4514,8 +4514,8 @@
       "artist"
     ],
     "path": "Army/Classes/ArmyMartialArtist.cs",
-    "size": 8260,
-    "sha256": "b35f41677802069be18f3616d0fe4ee1cdf9e1a1810ce7c88e30cfe433b60d2a",
+    "size": 8171,
+    "sha256": "de9cd02a4273c489e06df6514e547b2901003ea5e54e50ae951cfa65e9bb9442",
     "fileName": "ArmyMartialArtist.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyMartialArtist.cs"
   },
@@ -4529,8 +4529,8 @@
       "rquirements"
     ],
     "path": "Army/ArmyMerge/ArmyLowTideMergeReqs.cs",
-    "size": 2483,
-    "sha256": "fb9a6aa9a096c32a75fbb659d6f047a0b91a072ecc59084a849bbbed8b704dc9",
+    "size": 2622,
+    "sha256": "c8788e0436d4b793ce7a4d8818bbe6ea823d4d31fbb3f0ff1add9b9029071819",
     "fileName": "ArmyLowTideMergeReqs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyMerge/ArmyLowTideMergeReqs.cs"
   },
@@ -4668,8 +4668,8 @@
       "icestorm arena"
     ],
     "path": "Army/ArmyFarm/ArmyIceWing.cs",
-    "size": 3773,
-    "sha256": "c5aabda195687eae0882798bf9e4562dfc0e28aefc6a99580773907fa0f04106",
+    "size": 3907,
+    "sha256": "65e08b2620a8dea39489fd918645a2f3866f5ec30cd8ab5baca7f350d4a85f65",
     "fileName": "ArmyIceWing.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/ArmyIceWing.cs"
   },
@@ -4715,8 +4715,8 @@
       "battleunderb"
     ],
     "path": "Army/ArmyFarm/ArmyBattleUnderB.cs",
-    "size": 2374,
-    "sha256": "4cbd96bb22a60d45e59e85be484e395d7adbf56eeffed817648314fd2829fbae",
+    "size": 2498,
+    "sha256": "824bba2f6723cc9614df55ab5b9556141cb717496971c53f62d0d6e8aeca2a9f",
     "fileName": "ArmyBattleUnderB.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/ArmyBattleUnderB.cs"
   },
@@ -4938,8 +4938,8 @@
       "celestial"
     ],
     "path": "Army/ArmySeasonal/ArmyPoly.cs",
-    "size": 4690,
-    "sha256": "03e12b877ba57a47fdd337d71c01db78cc9ef76ac017a9b09533cdf8ddc51243",
+    "size": 4814,
+    "sha256": "e5050bf3dfe15190c7b458afa2884ffed8fa4b04f802c445e670b5a830f679e1",
     "fileName": "ArmyPoly.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmySeasonal/ArmyPoly.cs"
   },
@@ -4956,8 +4956,8 @@
       "higure"
     ],
     "path": "Army/ArmySeasonal/ArmyHigure.cs",
-    "size": 22296,
-    "sha256": "bb3242bc40adf0763b359b89fbc6598dd070631e12525f26bc1d33b441fbc276",
+    "size": 22424,
+    "sha256": "042e0250cf81e6a6b12cf8954c1c9b5e4ee781063ddff17f62efc89be69bf0c5",
     "fileName": "ArmyHigure.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmySeasonal/ArmyHigure.cs"
   },
@@ -26812,8 +26812,8 @@
       "craggle rock"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyCraggleRockRep.cs",
-    "size": 2161,
-    "sha256": "e293edfb31371db4ecc0cd127553d1893babceedc06fde6d62e230d7c20c8bca",
+    "size": 2278,
+    "sha256": "c322260a1be597e072293d38833b53e993fc264dd64e25156717a4107450fd9b",
     "fileName": "ArmyCraggleRockRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyCraggleRockRep.cs"
   },
@@ -26826,8 +26826,8 @@
       "druid grove"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyDruidGroveRep.cs",
-    "size": 2167,
-    "sha256": "fc31e2b15145951b5c1f4fe8c70da8184419169a48696bca2ab0b9f4b32c0327",
+    "size": 2284,
+    "sha256": "2f51e3a699529ea6956fbcab9af45a7a3072714722c21edc34cf79ca21b55cdd",
     "fileName": "ArmyDruidGroveRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyDruidGroveRep.cs"
   },
@@ -26854,8 +26854,8 @@
       "etherstorm"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyEtherstormRep.cs",
-    "size": 2120,
-    "sha256": "e7360039d5275c1e08df347a3343c6a9fc6c17d6079e582a54cdae4b77f59308",
+    "size": 2237,
+    "sha256": "24c440e20375a3f79c7a7c6e8b2efec7f650da9711128c849ef201dcb1fc32ce",
     "fileName": "ArmyEtherstormRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyEtherstormRep.cs"
   },
@@ -26868,8 +26868,8 @@
       "lore master"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyLoremasterRep.cs",
-    "size": 2122,
-    "sha256": "e303460d3a028ad94bff460737f4bfb38e243c42275ddeeb3177b3e2e0c83f61",
+    "size": 2239,
+    "sha256": "4031ef746cc6fffab0701277ba354a3e715a80f6725120c8a6b63f748a72e353",
     "fileName": "ArmyLoremasterRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyLoremasterRep.cs"
   },
@@ -26882,8 +26882,8 @@
       "dwarfhold"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyDwarfholdRep.cs",
-    "size": 2159,
-    "sha256": "db2a6eb4b91e78e89b151eb659dc047060d5e887ba9223d54854b089299b65bf",
+    "size": 2276,
+    "sha256": "976c195c7ca82238f8e98d22bfac030853b6ff38cf813c5a6f862483f871b3ba",
     "fileName": "ArmyDwarfholdRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyDwarfholdRep.cs"
   },
@@ -26896,8 +26896,8 @@
       "elemental master"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyElementalMasterRep.cs",
-    "size": 2198,
-    "sha256": "c3cd2477e99180bf4568546effb077b493251b93978a5acb44ed4126484345a4",
+    "size": 2315,
+    "sha256": "702b5bffca40f407d3e46a41cde54bfd79e73377727524fc9b07a4f5317f9dea",
     "fileName": "ArmyElementalMasterRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyElementalMasterRep.cs"
   },
@@ -26910,8 +26910,8 @@
       "hollowborn"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyHollowbornRep.cs",
-    "size": 2125,
-    "sha256": "38e932429a1598e9e86adc1834b19c2276ef72491e4687547eaedfe614b7d0cf",
+    "size": 2242,
+    "sha256": "eb59b4d66ef6d62890f9cac0807e6cd0c8e04dfb47191deb86bfb45447a75c5e",
     "fileName": "ArmyHollowbornRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyHollowbornRep.cs"
   },
@@ -26924,8 +26924,8 @@
       "infernal army"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyInfernalArmyRep.cs",
-    "size": 2179,
-    "sha256": "c530b6cde19005206a7f1d30d2aec6457aa2dc888290261720237896a4b3fc04",
+    "size": 2296,
+    "sha256": "f551279aebceed6e843d084d016fe0ebff93b91e42fe9aaa6e10b6b3fedc71de",
     "fileName": "ArmyInfernalArmyRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyInfernalArmyRep.cs"
   },
@@ -26938,8 +26938,8 @@
       "all reputation"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyAllRep.cs",
-    "size": 2135,
-    "sha256": "23d0744037c0f98ba9e45a4611ee5eb0d5532d3268a1bc0576274a2c1b33a188",
+    "size": 2254,
+    "sha256": "ada69f1fa31427b4a6d2fa61cfb2fa9cf9ce3c5175a2d30aeae1ff542f1d144f",
     "fileName": "ArmyAllRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyAllRep.cs"
   },
@@ -26952,8 +26952,8 @@
       "baconcat"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyBaconCatRep.cs",
-    "size": 2230,
-    "sha256": "712421e28c5b10cb4f29c4711ae908389476252cdb94a47b33bda266371a9865",
+    "size": 2347,
+    "sha256": "79796db2bc6d3179d9cc29742f66c742cdd63075f089704f9676ca5f75b1564d",
     "fileName": "ArmyBaconCatRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyBaconCatRep.cs"
   },
@@ -26966,8 +26966,8 @@
       "chrono span"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyChronoSpanRep.cs",
-    "size": 2122,
-    "sha256": "baa550613a8625ecbd0849c20e0e233ee9a82ba1ff74158ce39800afa3d41d6f",
+    "size": 2239,
+    "sha256": "8b9a82e69d2e944399e533b05a4cf4c6b144cc5a99e3de57618068aa97ff9ecc",
     "fileName": "ArmyChronoSpanRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyChronoSpanRep.cs"
   },
@@ -26980,8 +26980,8 @@
       "blacksmithing"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyBlackSmithRep.cs",
-    "size": 4680,
-    "sha256": "c2dcde45358f482452a09f5b84f414cd3b743e0bf4e5a51e8c7e939f28dfd6f6",
+    "size": 4808,
+    "sha256": "af544fc9bba08224c1b81e5611a3f5c977b4950f7498c199f20cd5443e724926",
     "fileName": "ArmyBlackSmithRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyBlackSmithRep.cs"
   },
@@ -26994,8 +26994,8 @@
       "ravenloss"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyRavenlossRep.cs",
-    "size": 2162,
-    "sha256": "1f1c73a89f6cb1a2e2f6cff6d36397426f817fb4e57149cd6604c0e4e4cba8df",
+    "size": 2279,
+    "sha256": "69a0a1173f06fb1dde4702fbf7e5c738c256fcc061625fe0e67ef9ce6112ebf5",
     "fileName": "ArmyRavenlossRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyRavenlossRep.cs"
   },
@@ -27008,8 +27008,8 @@
       "chaos militia"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyChaosMilitiaRep.cs",
-    "size": 2111,
-    "sha256": "ea0fc50e2ecc1fc92074d87e90fe9592257eef6edf20b55c8ee056d0eb3da9d0",
+    "size": 2228,
+    "sha256": "cc94077cc2e2e39e6311bd98b08bbe465dc2d3df9f6bc303135f798f5f484bc7",
     "fileName": "ArmyChaosMilitiaRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyChaosMilitiaRep.cs"
   },
@@ -27022,8 +27022,8 @@
       "brethwren"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyBrethwrenRep.cs",
-    "size": 2330,
-    "sha256": "869b1f4a0414963492d574e08ee556407af3b6e35ba35f25414641bb49427304",
+    "size": 2447,
+    "sha256": "9c6b8b78e6ba17d7a6603378707d2cd727aa459e3d9130a96fbb014d16d20702",
     "fileName": "ArmyBrethwrenRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyBrethwrenRep.cs"
   },
@@ -27036,8 +27036,8 @@
       "eternal"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyEternalRep.cs",
-    "size": 2139,
-    "sha256": "16993bdf9273831516b43bc139dea506c45d5006c7151c71d3ed4de7c65e6fa5",
+    "size": 2256,
+    "sha256": "a65db59cc22e099128da5257d1058e4a4453272d24b065378c49ed93e19e0df7",
     "fileName": "ArmyEternalRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyEternalRep.cs"
   },
@@ -27050,8 +27050,8 @@
       "north pointe"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyNorthpoienteRep.cs",
-    "size": 2173,
-    "sha256": "dbae31cfade4f54807a0904be452ab516bac9bb71def87ee5f61be5e1a0cab27",
+    "size": 2290,
+    "sha256": "acf9263af5313ba72e45cdc03537ec49e050734814278962bfeac52013834d6e",
     "fileName": "ArmyNorthpoienteRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyNorthpoienteRep.cs"
   },
@@ -27064,8 +27064,8 @@
       "somnia"
     ],
     "path": "Army/ArmyFarm/Rep/ArmySomniaRep.cs",
-    "size": 2143,
-    "sha256": "2d664bafd64b21d2b2b063016c16d226ccdceafd98c289d34a18cb9d71014627",
+    "size": 2260,
+    "sha256": "c24277ebcd608241ccb24c60b80b5b6a5295bca29e25667430eb125596485cd1",
     "fileName": "ArmySomniaRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmySomniaRep.cs"
   },
@@ -27092,8 +27092,8 @@
       "skye"
     ],
     "path": "Army/ArmyFarm/Rep/ArmySkyeRep.cs",
-    "size": 2120,
-    "sha256": "721eae6292ffd48b4b427f380f41e6edb10e6b1eca63f2b0a4c22982a2ddb050",
+    "size": 2239,
+    "sha256": "6e1681ee409502213fe3a5ae68bca68564fe05f4c1df105824a36e65bb119e73",
     "fileName": "ArmySkyeRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmySkyeRep.cs"
   },
@@ -27106,8 +27106,8 @@
       "dreadrock"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyDreadrockRep.cs",
-    "size": 2159,
-    "sha256": "524874ef53d221a79d3447f0dc9125f77cf260da9269247390a649e26b17faa7",
+    "size": 2276,
+    "sha256": "d0e9153cd87721197efe992fd0ffe9c46115ad125a72d9c9017d50ea21b3e4fe",
     "fileName": "ArmyDreadrockRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyDreadrockRep.cs"
   },
@@ -27120,8 +27120,8 @@
       "dreadfire"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyDreadfireRep.cs",
-    "size": 2114,
-    "sha256": "1b69ec1e644d4f91633959bbdd25ef51338e90b09e0510424b9369ba7c297e0e",
+    "size": 2231,
+    "sha256": "0c15ebd51303f7f0f71c895cdf5dd8c28fe6d5f0263877a5f11559882d4e4799",
     "fileName": "ArmyDreadfireRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyDreadfireRep.cs"
   },
@@ -27135,8 +27135,8 @@
       "evil"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyGoodEvilRep.cs",
-    "size": 1870,
-    "sha256": "e2bd76bead37b6f24cc77abc134a98254c63585a0e5407b07f5f93cbe70357fd",
+    "size": 1979,
+    "sha256": "b65d31df8e5f308f9ecaf7ead35e65e54793194faa9d46776db6edc8cfa288ab",
     "fileName": "ArmyGoodEvilRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyGoodEvilRep.cs"
   },
@@ -27149,8 +27149,8 @@
       "arcangrove"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyArcangroveRep.cs",
-    "size": 2120,
-    "sha256": "bc31c681789badaeeac809f4561127c343437238e52493ad4ef38263e1965c9c",
+    "size": 2237,
+    "sha256": "81a68ddce96677ca0f9d2cae080bb61023a3672d0f95b52fa1983b57c1af74ae",
     "fileName": "ArmyArcangroveRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyArcangroveRep.cs"
   },
@@ -27163,8 +27163,8 @@
       "lycan"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyLycanRep.cs",
-    "size": 2135,
-    "sha256": "8d0b6bdd815456961bf6a7b1981ae8864d03b3618ba93bf25bf2c223abc4375d",
+    "size": 2252,
+    "sha256": "2fda3d561197469fe685d115a0377733ebd80b5bb3fa7eb25acf010c620197aa",
     "fileName": "ArmyLycanRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyLycanRep.cs"
   },
@@ -27177,8 +27177,8 @@
       "embersea"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyEmberseaRep.cs",
-    "size": 2108,
-    "sha256": "8fe823ebb252a3506d99d34c462d13b989c2fb5129dd0798affdd480f75591b3",
+    "size": 2225,
+    "sha256": "09bcd00c1737ea67ac509d2f64d6b618f8b89d7f3587f44d81ff74d11c214809",
     "fileName": "ArmyEmberseaRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyEmberseaRep.cs"
   },
@@ -27191,8 +27191,8 @@
       "mythsong"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyMythsongRep.cs",
-    "size": 2153,
-    "sha256": "8a18c5d640d824d44ca4b089b1d7504be399526c58201479859bad86d69c0b83",
+    "size": 2270,
+    "sha256": "5d6128fd754ce19facec3664c492fcd1e82f43a7bd384e40297545e0e9dc382a",
     "fileName": "ArmyMythsongRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyMythsongRep.cs"
   },
@@ -27205,8 +27205,8 @@
       "chaos"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyChaosRep.cs",
-    "size": 2180,
-    "sha256": "e35952f46ac33f5f6e78903ee16f43a406d976c90777aaaebdea37210e4bbdeb",
+    "size": 2297,
+    "sha256": "575df4e1e6ff74de7f0d7328a44079e5a0d7e4812adb325960a8a6af072fd6e5",
     "fileName": "ArmyChaosRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyChaosRep.cs"
   },
@@ -27233,8 +27233,8 @@
       "necro crypt"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyNecroCryptRep.cs",
-    "size": 2144,
-    "sha256": "7c5f7c5f802869c7619a1157d9ef2b76f928c50f098850b1b1140e73fe6f349a",
+    "size": 2261,
+    "sha256": "33301cce0d1980d77e93532fb5ce4a97a6b93db1278297a9659f3e2ef0eb253e",
     "fileName": "ArmyNecroCryptRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyNecroCryptRep.cs"
   },
@@ -27247,8 +27247,8 @@
       "aegis"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyAegisRep.cs",
-    "size": 2090,
-    "sha256": "2d3f6fec62d12b7dff4ab10ed6b29edeaab3203f9169b3ebeb226f982dc5b6f7",
+    "size": 2191,
+    "sha256": "ff9c105cde2608ad89ba1a01e7dcee9869f3187160383c163662dfb0eec07e25",
     "fileName": "ArmyAegisRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyAegisRep.cs"
   },
@@ -27275,8 +27275,8 @@
       "monster hunter"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyMonsterHunterRep.cs",
-    "size": 2186,
-    "sha256": "36ff07db1be083966c1f099f618131b1f98799837f865ed5056afae903c3f90c",
+    "size": 2303,
+    "sha256": "319f88322729878c15cb4141c8f7d76ec951c19ed62aaff9899704c8b82b3dad",
     "fileName": "ArmyMonsterHunterRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyMonsterHunterRep.cs"
   },
@@ -27303,8 +27303,8 @@
       "mysterious dungeon"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyMysteriousDungeonRep.cs",
-    "size": 2209,
-    "sha256": "59637fd0c11421b5d67d229b9106955273dd8871bd7186a3c62ffd33fb10f81d",
+    "size": 2326,
+    "sha256": "f25fd5a4e92b3672ca9ae53d56c5954fa658ff9a65c39062ce00656f96fdd9b7",
     "fileName": "ArmyMysteriousDungeonRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyMysteriousDungeonRep.cs"
   },
@@ -27331,8 +27331,8 @@
       "doomwood"
     ],
     "path": "Army/ArmyFarm/Rep/ArmyDoomWoodRep.cs",
-    "size": 2108,
-    "sha256": "4c51644ceb66e5bd7353cad6f5cb438aff268332f0bb9db42dc4e33dfb8697a6",
+    "size": 2225,
+    "sha256": "8204c7e3823ef6290498e7fba17c5097446d15fa2b65a55733b45b6d3ca95ef2",
     "fileName": "ArmyDoomWoodRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/Rep/ArmyDoomWoodRep.cs"
   },
