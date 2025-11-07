@@ -3527,12 +3527,8 @@ public class CoreBots
                 }
 
                 if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(monster); // ⚔️
-                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                {
-                    Sleep(200); // 💤
-                    return;
-                }
+                    Bot.Kill.Monster(monster); // ⚔️
+
                 Sleep(200); // 💤
 
             }
