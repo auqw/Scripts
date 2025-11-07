@@ -122,7 +122,7 @@ public class CoreToD
         Story.KillQuest(4978, "bonecastle", "Skeletal Warrior");
 
         // Putting Your Hands All over Everything
-        Story.MapItemQuest(4980, "bonecastle", new[] { 4349, 4350, 4351 });
+        Story.MapItemQuest(4979, "bonecastle", new[] { 4349, 4350, 4351 });
         Story.KillQuest(4979, "bonecastle", "Skeletal Warrior");
 
         // Paladin Rock
