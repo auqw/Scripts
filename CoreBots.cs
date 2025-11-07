@@ -3527,10 +3527,14 @@ public class CoreBots
                 }
 
                 if (!Bot.Player.HasTarget)
-                    Bot.Kill.Monster(monster); // ⚔️
+                    Bot.Combat.Attack("*"); // ⚔️
 
-                Sleep(200); // 💤
+                Sleep(500); // 💤
 
+                // Check if player doenst havea  target after the attacking
+                // if not then its dead and we can move on
+                if (!Bot.Player.HasTarget)
+                    break;
             }
         }
         else
@@ -3637,8 +3641,27 @@ public class CoreBots
             Monster? monsterToAttack = targetMonsters.FirstOrDefault(x => x != null);
             if (monsterToAttack != null)
             {
-                Bot.Combat.Attack(monsterToAttack); // ⚔️
-                Sleep(); // 💤
+                while (!Bot.ShouldExit)
+                {
+                    if (!Bot.Player.Alive)
+                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20); // 💀➡️💖
+
+                    if (cell != null && Bot.Player.Cell != cell)
+                    {
+                        Bot.Map.Jump(cell, pad); // ➡️
+                        Bot.Wait.ForCellChange(cell); // ⏳
+                    }
+
+                    if (!Bot.Player.HasTarget)
+                        Bot.Combat.Attack(MonsterMapID); // ⚔️
+
+                    Sleep(500); // 💤
+
+                    // Check if player doenst havea  target after the attacking
+                    // if not then its dead and we can move on
+                    if (!Bot.Player.HasTarget)
+                        break;
+                }
             }
             else
             {
