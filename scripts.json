@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 404327,
-    "sha256": "d306d6f83910b91930286b0a493eb0471559b9b14d2ec8c5a463aebef6d8db3f",
+    "size": 404302,
+    "sha256": "e7a1262ad1ad4f4acfdf8c50d38e076e2cee62bb7f873a98963dace952caae8c",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -28318,8 +28318,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 25907,
-    "sha256": "045333f8d241e289e9dd079ec5a51c5abe156d84f5289b05f85ed651fa4a22a6",
+    "size": 25927,
+    "sha256": "e1f5df4e757cb33b327caefc5b29fb76c81d03ebd75fe55f9def173c13ee7745",
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },
