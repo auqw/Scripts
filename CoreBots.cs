@@ -4687,10 +4687,7 @@ public class CoreBots
     /// <param name="log"></param>
     /// <param name="publicRoom"></param>
     /// <param name="FromSupplies"></param>
-    /// <param name="SellVoucher"></param>
-    /// <param name="ReturnDuring"></param>
-    /// <param name="ReturnItem"></param>
-    public void KillEscherion(string? item = null, int quant = 1, bool isTemp = false, bool log = true, bool publicRoom = false, bool FromSupplies = false, bool SellVoucher = false, bool ReturnDuring = false, string? ReturnItem = null)
+    public void KillEscherion(string? item = null, int quant = 1, bool isTemp = false, bool log = true, bool publicRoom = false, bool FromSupplies = false)
     {
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
@@ -4781,7 +4778,6 @@ public class CoreBots
                     done = true;
                     break;
                 }
-                DoSwindlesReturnArea(ReturnDuring, ReturnItem);
             }
 
             Bot.Options.AggroMonsters = false;
