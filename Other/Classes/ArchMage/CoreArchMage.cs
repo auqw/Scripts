@@ -372,7 +372,7 @@ public class CoreArchMage
             {
                 Core.AddDrop("Semiramis Feather");
                 Core.EnsureAccept(6286);
-                Core.KillMonster("guardiantree", "r12", "Left", "Terrane");
+                Core.KillMonster("guardiantree", "r12", "Left", "Terrane", "Terrane Defeated");
                 Core.EnsureComplete(6286);
                 Bot.Wait.ForPickup("Semiramis Feather");
             }
