@@ -4815,54 +4815,6 @@ public class CoreBots
         JumpWait();
         Rest();
         Bot.Options.HidePlayers = false;
-
-        void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
-        {
-            // Return if the policy isn't active or required items are missing
-            if (!returnPolicyActive || !CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
-                return;
-
-            bool retry = true;
-
-            while (!Bot.ShouldExit && retry)
-            {
-                retry = false; // Reset retry flag
-                ResetQuest(7551);
-                DarkMakaiItem("Dark Makai Rune");
-
-                // Load quest and find rewards
-                Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
-                if (quest == null)
-                {
-                    Logger("Failed to load quest 7551, retrying...");
-                    Sleep();
-                    retry = true;
-                    continue;
-                }
-
-                // Handle null `item` by skipping directly to reward selection
-                ItemBase? targetReward = item == null
-                    ? null
-                    : quest.Rewards.FirstOrDefault(r => r.Name == item && r.Name != "Receipt of Swindle");
-
-                int rewardID = targetReward?.ID ??
-                               quest.Rewards.FirstOrDefault(r => !CheckInventory(r.ID, r.MaxStack))?.ID ?? -1;
-
-                if (rewardID != -1 && Bot.Quests.CanCompleteFullCheck(7551))
-                {
-                    Logger($"Completing with: {quest.Rewards.First(r => r.ID == rewardID).Name} [ID: {rewardID}]");
-                    EnsureComplete(7551, rewardID);
-                }
-                else
-                {
-                    Logger("All rewards maxed. Completing with fallback reward ID: -1 (\"Receipt of Swindle\").");
-                    EnsureComplete(7551);
-                }
-            }
-        }
-
-        string Uni(int nr)
-            => $"Unidentified {nr}";
     }
 
     /// <summary>
