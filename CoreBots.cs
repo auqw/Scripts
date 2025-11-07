@@ -3528,17 +3528,14 @@ public class CoreBots
 
                 if (!Bot.Player.HasTarget)
                     Bot.Combat.Attack(monster); // ⚔️
-
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                 {
                     Sleep(200); // 💤
-                    break;
+                    return;
                 }
-
                 Sleep(200); // 💤
-            }
 
-            return;
+            }
         }
         else
         {
@@ -5395,8 +5392,8 @@ public class CoreBots
                     if (!Bot.Player.HasTarget)
                     {
                         Bot.Combat.Attack(name.FormatForCompare());
-                        Sleep(200); // short pacing
                     }
+                    Sleep(500); // short pacing
 
                     // Stop loop if we have the required items
                     if (CheckInventory(item, quantity))
