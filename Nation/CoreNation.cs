@@ -872,25 +872,18 @@ public class CoreNation
                         while (!Bot.ShouldExit && !Core.CheckInventory(Item.ID, Item.MaxStack))
                         {
                             if (UltraAlteon)
-                                Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Alteon", log: false);
+                                Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Alteon", "Relic of Chaos", isTemp: false, log: false);
                             else
-                                Core.KillEscherion(item, quant, log: false, FromSupplies: true, SellVoucher: sellMemVoucher, ReturnDuring: returnPolicyDuringSupplies, ReturnItem: ReturnItem);
+                                Core.KillEscherion("Relic of Chaos", log: false, FromSupplies: true);
                             Core.Sleep();
 
-                            DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
-
-                            // Sell Mem Voucher if enabled
-                            if (sellMemVoucher)
+                            // Sell voucher area
+                            if (Core.CheckInventory("Voucher of Nulgath") && item != "Voucher of Nulgath" && sellMemVoucher && KeepVoucher == false && Bot.Player.Gold < 100000000)
                             {
-                                if (item != "Voucher of Nulgath" && Core.CheckInventory("Voucher of Nulgath"))
-                                {
-                                    if (Bot.Player.Gold < 100000000)
-                                    {
-                                        Core.Jump("Enter", "Spawn");
-                                        Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
-                                    }
-                                }
+                                Core.Jump("Enter", "Spawn");
+                                Core.SellItem("Voucher of Nulgath", all: true);
                             }
+
 
                             // Waste Gold
                             if (AssistantDuring)
@@ -976,32 +969,21 @@ public class CoreNation
                 while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                 {
                     if (UltraAlteon)
-                        Core.KillMonster("ultraalteon", "r10", "Left", "*", log: false);
+                        Core.KillMonster("ultraalteon", "r10", "Left", "*", "Relic of Chaos", isTemp: false, log: false);
                     else
-                        Core.KillEscherion(item, quant, log: false, FromSupplies: true, SellVoucher: sellMemVoucher, ReturnDuring: returnPolicyDuringSupplies, ReturnItem: ReturnItem);
+                        Core.KillEscherion("Relic of Chaos", log: false, FromSupplies: true);
 
                     // Sell voucher area
-                    if (item != "Voucher of Nulgath" && sellMemVoucher && Core.CheckInventory("Voucher of Nulgath"))
+                    if (Core.CheckInventory("Voucher of Nulgath") && item != "Voucher of Nulgath" && sellMemVoucher && KeepVoucher == false && Bot.Player.Gold < 100000000)
                     {
-                        while (!Bot.ShouldExit && (Bot.Player.HasTarget || Bot.Player.InCombat) && Bot.Player.Cell != "Enter")
-                        {
-                            Bot.Combat.CancelTarget();
-                            Bot.Wait.ForCombatExit();
-                            Core.JumpWait();
-                            Core.Sleep();
-                        }
-                        if (Bot.Player.Gold < 100000000)
-                        {
-                            Bot.Wait.ForPickup("Voucher of Nulgath");
-                            Core.SellItem("Voucher of Nulgath", KeepVoucher ? 1 : 0, !KeepVoucher);
-                            Bot.Wait.ForItemSell();
-                        }
+                        Core.Jump("Enter", "Spawn");
+                        Core.SellItem("Voucher of Nulgath", all: true);
                     }
 
                     DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
                     if (Core.CheckInventory("Voucher of Nulgath (non-mem)")
-    && Core.CheckInventory("Essence of Nulgath", 60))
+                        && Core.CheckInventory("Essence of Nulgath", 60))
                     {
                         bool diamondsMaxed = Core.CheckInventory("Diamond of Nulgath", 1000);
                         bool totemsMaxed = Core.CheckInventory("Totem of Nulgath", 100);
