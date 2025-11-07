@@ -27439,8 +27439,8 @@
       "null"
     ],
     "path": "Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs",
-    "size": 2271,
-    "sha256": "fb6fbbdf8cc6984deaabc3297187c12b0cb4c75e550434ba192fe18ea6806e73",
+    "size": 1794,
+    "sha256": "f8fdbb5234cb8abe7d7ecb4f24869c651501d1c00e97eb461139a286577f08c0",
     "fileName": "EmptyTemplate[Basics].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs"
   },
