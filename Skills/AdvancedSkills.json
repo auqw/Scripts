@@ -282,20 +282,20 @@
             {
               "type": "MultiAura",
               "value": 0,
-              "comparison": "less",
+              "comparison": "greater",
               "auraName": "XXI - The World",
               "auraTarget": "self"
             }
           ],
-          "multiAuraOperator": "AND",
-          "isMultiAura": true
+          "isMultiAura": true,
+          "multiAuraOperator": "AND"
         },
         {
           "skillId": 1,
           "rules": [
             {
               "type": "MultiAura",
-              "value": 1,
+              "value": 0.5,
               "comparison": "greater",
               "auraName": "XX - Judgement",
               "auraTarget": "self"
@@ -303,13 +303,13 @@
             {
               "type": "MultiAura",
               "value": 0,
-              "comparison": "less",
+              "comparison": "greater",
               "auraName": "XXI - The World",
               "auraTarget": "self"
             }
           ],
-          "multiAuraOperator": "AND",
-          "isMultiAura": true
+          "isMultiAura": true,
+          "multiAuraOperator": "AND"
         },
         {
           "skillId": 4
