@@ -51,11 +51,12 @@ public class ArmyLegionToken
         Core.BankingBlackList.Add("Legion Token");
         Core.SetOptions(disableClassSwap: false);
 
-        Method? method = Bot.Config?.Get<Method>("Method");
-        if (method != null)
-        {
-            Setup(method.Value, 50001);
-        }
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        // Method? method = Bot.Config?.Get<Method>("Method");
+        // if (method != null)
+        // {
+        //     Setup(method.Value, 50001);
+        // }
 
         Core.SetOptions(false);
     }

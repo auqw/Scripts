@@ -32,13 +32,13 @@ public class ArmyBrethwrenRep
     private static CoreArmyRep CAR { get => _CAR ??= new CoreArmyRep(); set => _CAR = value; }
     private static CoreArmyRep _CAR;
 
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 
-private static CoreBots _sCore;
+    private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
 
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyBrethwrenRep";
@@ -64,5 +64,5 @@ private static CoreArmyLite _sArmy;
         Core.SetOptions(false);
     }
 
-    public void Setup() => CAR.ArmyBrethwrenRep();
+    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true); ArmyBrethwrenRep();
 }

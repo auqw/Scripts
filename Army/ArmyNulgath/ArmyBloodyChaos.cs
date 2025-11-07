@@ -40,7 +40,8 @@ public class ArmyBloodyChaos
         Core.BankingBlackList.AddRange(Loot);
         Core.SetOptions(disableClassSwap: true);
 
-        Setup(Bot.Config!.Get<Cell>("mob"));
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        // Setup(Bot.Config!.Get<Cell>("mob"));
 
         Core.SetOptions(false);
     }

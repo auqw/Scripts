@@ -22,15 +22,16 @@ public class ArmyMartialArtist
     private static CoreAdvanced _Adv;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 
-private static CoreBots _sCore;
+    private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
 
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyMartialArtist";
@@ -52,8 +53,7 @@ private static CoreArmyLite _sArmy;
         Core.BankingBlackList.AddRange(Loot);
         Core.SetOptions();
 
-        Core.Logger("This script has been disabled by the author as it is not working as intended. " +
-    "There are current no plans to fix army scripts -- use grim from the `#grimlite-ligma-info` channel on disc.");
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
 
         Core.SetOptions(false);
     }

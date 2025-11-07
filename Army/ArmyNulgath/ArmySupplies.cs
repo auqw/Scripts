@@ -16,9 +16,12 @@ public class SuppliesWheelArmy
 {
     public static IScriptInterface Bot => IScriptInterface.Instance;
     public static CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }    private static CoreArmyLite _Army;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
 
     private static readonly CoreArmyLite sArmy = new();
 
@@ -73,10 +76,12 @@ public class SuppliesWheelArmy
 
         Core.SetOptions();
 
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
-        Core.OneTimeMessage("Dark Makai Rune/Sigil Solution", "Randomizing location for \"Dark Makai\"\n" +
-        "as the drop can randomly stop showing up", forcedMessageBox: false);
-        ArmySupplies();
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+
+        // Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        // Core.OneTimeMessage("Dark Makai Rune/Sigil Solution", "Randomizing location for \"Dark Makai\"\n" +
+        // "as the drop can randomly stop showing up", forcedMessageBox: false);
+        // ArmySupplies();
 
         Core.SetOptions(false);
     }

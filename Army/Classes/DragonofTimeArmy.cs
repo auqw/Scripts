@@ -33,27 +33,38 @@ public class DoTArmy
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
+    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }
+    private static CoreDarkon _Darkon;
 
-    private static GoldenBladeOfFate GBoF { get => _GBoF ??= new GoldenBladeOfFate(); set => _GBoF = value; }    private static GoldenBladeOfFate _GBoF;
+    private static GoldenBladeOfFate GBoF { get => _GBoF ??= new GoldenBladeOfFate(); set => _GBoF = value; }
+    private static GoldenBladeOfFate _GBoF;
 
-    private static PinkBladeOfDestruciton PBoD { get => _PBoD ??= new PinkBladeOfDestruciton(); set => _PBoD = value; }    private static PinkBladeOfDestruciton _PBoD;
+    private static PinkBladeOfDestruciton PBoD { get => _PBoD ??= new PinkBladeOfDestruciton(); set => _PBoD = value; }
+    private static PinkBladeOfDestruciton _PBoD;
 
-    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }    private static CoreQOM _QOM;
+    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }
+    private static CoreQOM _QOM;
 
-    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }    private static CoreToD _TOD;
+    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }
+    private static CoreToD _TOD;
 
-    private static MysteriousEgg Egg { get => _Egg ??= new MysteriousEgg(); set => _Egg = value; }    private static MysteriousEgg _Egg;
+    private static MysteriousEgg Egg { get => _Egg ??= new MysteriousEgg(); set => _Egg = value; }
+    private static MysteriousEgg _Egg;
 
-    private static CoreSummer Coll { get => _Coll ??= new CoreSummer(); set => _Coll = value; }    private static CoreSummer _Coll;
+    private static CoreSummer Coll { get => _Coll ??= new CoreSummer(); set => _Coll = value; }
+    private static CoreSummer _Coll;
 
-    private static Borgars Borgars { get => _Borgars ??= new Borgars(); set => _Borgars = value; }    private static Borgars _Borgars;
+    private static Borgars Borgars { get => _Borgars ??= new Borgars(); set => _Borgars = value; }
+    private static Borgars _Borgars;
 
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
@@ -217,9 +228,7 @@ public class DoTArmy
         Core.BankingBlackList.AddRange(QuestRewards);
         Core.SetOptions(disableClassSwap: true);
 
-        Core.Logger("This script has been disabled by the author as it is not working as intended. " +
-    "Please use the Solo version of this script instead.\n" +
-    $"Location: {Path.Combine(ClientFileSources.SkuaScriptsDIR, @"Other\Classes\DragonOfTime.cs")}");
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
 
         // DoT(Bot.Config!.Get<bool>("sellToSync"));
 

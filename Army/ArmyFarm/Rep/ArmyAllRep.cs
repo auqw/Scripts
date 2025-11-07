@@ -21,20 +21,22 @@ public class ArmyAllRep
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
     private static CoreArmyRep CAR { get => _CAR ??= new CoreArmyRep(); set => _CAR = value; }
     private static CoreArmyRep _CAR;
 
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 
-private static CoreBots _sCore;
+    private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
 
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyAllRep";
@@ -60,5 +62,5 @@ private static CoreArmyLite _sArmy;
         Core.SetOptions(false);
     }
 
-    public void Setup() => CAR.DoAll();
+    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true); DoAll();
 }

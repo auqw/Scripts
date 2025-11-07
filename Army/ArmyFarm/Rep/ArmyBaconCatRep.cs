@@ -31,13 +31,13 @@ public class ArmyBaconCatRep
     private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }
     private static CoreToD _TOD;
 
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 
-private static CoreBots _sCore;
+    private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
 
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyBaconCatRep";
@@ -63,5 +63,5 @@ private static CoreArmyLite _sArmy;
         Core.SetOptions(false);
     }
 
-    public void Setup() => CAR.ArmyBaconCatRep();
+    public void Setup() => Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true); ArmyBaconCatRep();
 }
