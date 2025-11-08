@@ -1118,7 +1118,7 @@ public class CoreArmyLite
     #endregion
     #region OneClient
 
-    public bool doForAll(bool randomServers = false)
+    public bool doForAll()
     {
         if (Bot.ShouldExit || _doForAllIndex >= (doForAllAccountDetails ??= readManager()).Length)
             return false;
@@ -1144,18 +1144,13 @@ public class CoreArmyLite
             Bot.Servers.Login(name, pass);
             Core.Sleep(3000);
 
-            var availableServers = randomServers
-        ? Bot.Servers.ServerList
-            .Where(x => !BlacklistedServers.Contains(x.Name.ToLower()) && !x.Upgrade && x.Online)
-            .ToList() // Convert to List<Server> to match CachedServers
-        : Bot.Servers.CachedServers;
+            Server[] availableServers = ServerList
+              .Where(x => !BlacklistedServers.Contains(x.Name.ToLower()) && (Core.IsMember || !x.Upgrade) && x.Online)
+              .ToArray();
 
-
-            if (availableServers.Count > 0)
+            if (availableServers.Length > 0)
             {
-                var targetServer = randomServers
-                    ? availableServers[Bot.Random.Next(0, Math.Min(availableServers.Count, 5))]
-                    : availableServers.First(x => x.Name == Bot.Options.ReloginServer);
+                var targetServer = availableServers.First(x => x.Name == Bot.Options.ReloginServer);
 
                 Bot.Servers.Connect(targetServer);
             }
