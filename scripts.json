@@ -17298,6 +17298,33 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/PovoHeroicoMerge.cs"
   },
   {
+    "name": "Shanhaijing Bounty Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Shanhaijing Bounty Merge [2634] in /shizaistrath",
+    "tags": [
+      "shanhaijing",
+      "bounty",
+      "merge",
+      "shizaistrath",
+      "gold",
+      "voucher",
+      "k",
+      "refined",
+      "blossom",
+      "fan",
+      "fans",
+      "purified",
+      "luntai",
+      "taotie",
+      "nopperabo",
+      "samurai"
+    ],
+    "path": "Other/MergeShops/ShanhaijingBountyMerge.cs",
+    "size": 4149,
+    "sha256": "040bc8de0d015812a2bdf7b439663e67f095e089563d7d9a9bc37341f0ff0856",
+    "fileName": "ShanhaijingBountyMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ShanhaijingBountyMerge.cs"
+  },
+  {
     "name": "SpiritHunter Merge",
     "description": "This bot will farm the items belonging to the selected mode for the SpiritHunter Merge [375] in /bludrut",
     "tags": [
@@ -24580,8 +24607,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelper.cs",
-    "size": 13917,
-    "sha256": "550427674cd52ea5a0a71071a4076a6ff5a44d8d711fa7e3cc1cdb316f974a3c",
+    "size": 13982,
+    "sha256": "8061709fcaf19f86560475430ed950c16efa8c2d13e215493ed8108369c97ea0",
     "fileName": "MergeTemplateHelper.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper.cs"
   },
