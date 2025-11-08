@@ -1051,8 +1051,8 @@
       "doom-vault-a"
     ],
     "path": "Story/DoomVault.cs",
-    "size": 6124,
-    "sha256": "1c1fcd8b1b84ff6b9b080f1ce15b2b67951e8a0f723c8d9132ca67c01264666f",
+    "size": 6074,
+    "sha256": "b872189e1a0501d99c2966621dc499c4b647b6fa9952b84eab975351a09bfbca",
     "fileName": "DoomVault.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/DoomVault.cs"
   },
