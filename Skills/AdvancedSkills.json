@@ -2776,7 +2776,7 @@
       ]
     }
   },
-  "Dragonslayer General": {
+    "Dragonslayer General": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
@@ -2791,7 +2791,16 @@
           "skillId": 3
         },
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "less",
+              "auraName": "Forgone Conclusion",
+              "auraTarget": "self"
+            }
+          ]
         }
       ]
     }
