@@ -3923,10 +3923,10 @@ public class CoreBots
                     Bot.Player!.SetSpawnPoint();
                 }
 
-                if (!Bot.Player!.HasTarget)
-                    Bot.Combat.Attack(targetMonster!.Name);
+                if (!Bot.Player.HasTarget && targetMonster != null)
+                    Bot.Combat.Attack(targetMonster.Name);
 
-                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                if (!Bot.Player.HasTarget)
                     return;
 
                 Sleep();
@@ -3958,9 +3958,6 @@ public class CoreBots
 
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
-
-                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                    continue;
             }
 
             Bot.Options.AttackWithoutTarget = false;
@@ -4741,38 +4738,24 @@ public class CoreBots
             if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
                 return;
 
+            CheckMap();
+
+            Bot.Options.AggroAllMonsters = false; // ⚔️
+            if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
+            {
+                Bot.Options.AggroMonsters = true; // 👹
+                Bot.Options.HidePlayers = true; // 🙈
+            }
+            else Bot.Options.AggroMonsters = false; // ❌
+
+
             bool done = false;
             while (!Bot.ShouldExit && !done)
             {
                 if (!(Bot.Player?.Alive ?? false))
                     Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
 
-                if (Bot.Map.Name != "escherion")
-                {
-                    Join("escherion", "Boss", "Left");
-                    Bot.Map.Jump("Boss", "Left", autoCorrect: false);
-                    Bot.Sleep(1500);
-                    if (Bot.Player?.Cell == "Cut1")
-                    {
-                        Bot.Map.Jump("Boss", "Left", autoCorrect: false);
-                        Bot.Wait.ForCellChange("Boss");
-                        Bot.Player.SetSpawnPoint();
-                    }
-                }
-
-                if (Bot.Player?.Cell != "Boss")
-                {
-                    Bot.Map.Jump("Boss", "Left", autoCorrect: false);
-                    Bot.Wait.ForCellChange("Boss");
-                    Bot.Player?.SetSpawnPoint();
-                }
-
-                if (Bot.Player?.Cell == "Cut1")
-                {
-                    Bot.Map.Jump("Boss", "Left", autoCorrect: false);
-                    Bot.Wait.ForCellChange("Boss");
-                    Bot.Player.SetSpawnPoint();
-                }
+                CheckMap();
 
                 // MonsterMapIDs:
                 // 2 = Staff
@@ -4790,9 +4773,9 @@ public class CoreBots
                     Bot.Combat.Attack(3);
                 Sleep();
 
-                if (item == null)
+                if (item == null && !Bot.Player.HasTarget)
                 {
-                    if (log) Logger("💀 No item selected, killing Escherion once");
+                    if (log) Logger("💀 No item selected, killed Escherion once");
                     done = true;
                     break;
                 }
@@ -4807,7 +4790,31 @@ public class CoreBots
             if (!isTemp && item != null)
                 Bot.Wait.ForPickup(item);
         }
+        void CheckMap()
+        {
+            if (Bot.Map.Name == "escherion"
+            && Bot.Player?.Cell != "Cut1"
+            && Bot.Player?.Cell == "Boss")
+                return;
 
+            if (Bot.Map.Name != "escherion")
+            {
+                Join("escherion", "Boss", "Left");
+            }
+            if (Bot.Player?.Cell != "Boss")
+            {
+                Bot.Map.Jump("Boss", "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange("Boss");
+                Bot.Player?.SetSpawnPoint();
+            }
+            if (Bot.Player?.Cell == "Cut1")
+            {
+                Bot.Map.Jump("Boss", "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange("Boss");
+                Bot.Player.SetSpawnPoint();
+            }
+
+        }
         Bot.Options.AttackWithoutTarget = false;
         ToggleAggro(false);
         Jump();
