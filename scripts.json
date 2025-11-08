@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 404775,
-    "sha256": "a5ab4e49cde19fe16e6742204b66f99b2cbe3f026c7bcfa920be4adc370465f6",
+    "size": 402859,
+    "sha256": "8960c6c19c344709bbbbbfd8be30df0adce9ad995216556574ff1e15ff0268ca",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -9009,8 +9009,8 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 48084,
-    "sha256": "dc80693bc4c52248352ec820327a1f3084117450cb0b4179ef6a4d2153cd0c2f",
+    "size": 48083,
+    "sha256": "7141b5f2b2345776af3a2feea81d7b6b7b73cff7787014c25c51e86d9621bf56",
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },

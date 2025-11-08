@@ -131,7 +131,7 @@ public class CoreToD
             Core.EnsureAccept(4980);
             Story.MapItemQuest(4980, "bonecastle", new[] { 4354, 4355 });
             Core.HuntMonster("bonecastle", "Grateful Undead", "Song Requested Ticked", 5);
-            Core.HuntMonster("bonecastle", "That 70's Zombie", "Sweet Dancing Shoes ", 2);
+            Core.HuntMonster("bonecastle", "That 70's Zombie", "Sweet Dancing Shoes", 2);
             Core.EnsureComplete(4980);
         }
 
