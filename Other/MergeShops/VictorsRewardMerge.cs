@@ -1,7 +1,7 @@
 /*
 name: Victors Reward Merge
 description: This bot will farm the items belonging to the selected mode for the Victors Reward Merge [2594] in /coliseum
-tags: victors, reward, merge, coliseum, floating, sapphire, orbs, manifestation, void, phantasm, tail, black, moon, deep, marauder, berserker, morph, fugitive, mutative, orb, pet, rippling, katana, katanas, sheathed, ivory, thorn, crux, nyx, cruxes, violet, sharp, crew, cut, professional, acidic, raylock, abandoned, undead, skull, arena, forked, scorpions, stinger, ominous, bloodstaff, arrogant, angel, spines, gilded, gunslinger, bounty, hunter, ornate, gold, pistol, pistols, shotgun, rush, knife, knives, beard, , backup, keelia, master, aeris, battlespire
+tags: victors, reward, merge, coliseum, gold, voucher, k, floating, sapphire, orbs, manifestation, void, phantasm, tail, black, moon, deep, marauder, berserker, morph, fugitive, mutative, orb, pet, rippling, katana, katanas, sheathed, ivory, thorn, crux, nyx, cruxes, violet, sharp, crew, cut, professional, acidic, raylock, abandoned, undead, skull, arena, forked, scorpions, stinger, ominous, bloodstaff, arrogant, angel, spines, gilded, gunslinger, bounty, hunter, ornate, pistol, pistols, shotgun, rush, knife, knives, beard, , backup, keelia, master, aeris, battlespire, gildead, red, dead, dread, rottouched
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -159,6 +159,9 @@ public class VictorsRewardMerge
 
     public List<IOption> Select = new()
     {
+        new Option<bool>("57304", "Gold Voucher 25k", "Mode: [select] only\nShould the bot buy \"Gold Voucher 25k\" ?", false),
+        new Option<bool>("62747", "Gold Voucher 7.5k", "Mode: [select] only\nShould the bot buy \"Gold Voucher 7.5k\" ?", false),
+        new Option<bool>("62749", "Gold Voucher 100k", "Mode: [select] only\nShould the bot buy \"Gold Voucher 100k\" ?", false),
         new Option<bool>("30953", "Floating Sapphire Orbs", "Mode: [select] only\nShould the bot buy \"Floating Sapphire Orbs\" ?", false),
         new Option<bool>("75306", "Manifestation of the Void", "Mode: [select] only\nShould the bot buy \"Manifestation of the Void\" ?", false),
         new Option<bool>("82170", "Phantasm Tail", "Mode: [select] only\nShould the bot buy \"Phantasm Tail\" ?", false),
@@ -209,5 +212,24 @@ public class VictorsRewardMerge
         new Option<bool>("93410", "Back-Up Ornate Gold Shotgun", "Mode: [select] only\nShould the bot buy \"Back-Up Ornate Gold Shotgun\" ?", false),
         new Option<bool>("95658", "Keelia the Arena Master", "Mode: [select] only\nShould the bot buy \"Keelia the Arena Master\" ?", false),
         new Option<bool>("95659", "Aeris BattleSpire Arena Master", "Mode: [select] only\nShould the bot buy \"Aeris BattleSpire Arena Master\" ?", false),
+        new Option<bool>("93400", "GilDead Gunslinger", "Mode: [select] only\nShould the bot buy \"GilDead Gunslinger\" ?", false),
+        new Option<bool>("93404", "Red Dead Skull", "Mode: [select] only\nShould the bot buy \"Red Dead Skull\" ?", false),
+        new Option<bool>("93407", "Red Dead Locks", "Mode: [select] only\nShould the bot buy \"Red Dead Locks\" ?", false),
+        new Option<bool>("93408", "Red Dead Beard", "Mode: [select] only\nShould the bot buy \"Red Dead Beard\" ?", false),
+        new Option<bool>("93433", "Dread Gunslinger", "Mode: [select] only\nShould the bot buy \"Dread Gunslinger\" ?", false),
+        new Option<bool>("93434", "Dread Bounty Hunter", "Mode: [select] only\nShould the bot buy \"Dread Bounty Hunter\" ?", false),
+        new Option<bool>("93435", "Dread Dead Gunslinger", "Mode: [select] only\nShould the bot buy \"Dread Dead Gunslinger\" ?", false),
+        new Option<bool>("93436", "Dread Dead Skull", "Mode: [select] only\nShould the bot buy \"Dread Dead Skull\" ?", false),
+        new Option<bool>("93437", "Dread Gunslinger Locks", "Mode: [select] only\nShould the bot buy \"Dread Gunslinger Locks\" ?", false),
+        new Option<bool>("93438", "Dread Gunslinger Hat", "Mode: [select] only\nShould the bot buy \"Dread Gunslinger Hat\" ?", false),
+        new Option<bool>("93439", "Dread Dead Locks", "Mode: [select] only\nShould the bot buy \"Dread Dead Locks\" ?", false),
+        new Option<bool>("93440", "Dread Dead Beard", "Mode: [select] only\nShould the bot buy \"Dread Dead Beard\" ?", false),
+        new Option<bool>("93442", "Backup Rot-Touched Shotgun", "Mode: [select] only\nShould the bot buy \"Backup Rot-Touched Shotgun\" ?", false),
+        new Option<bool>("93443", "Rot-Touched Pistol", "Mode: [select] only\nShould the bot buy \"Rot-Touched Pistol\" ?", false),
+        new Option<bool>("93444", "Rot-Touched Pistols", "Mode: [select] only\nShould the bot buy \"Rot-Touched Pistols\" ?", false),
+        new Option<bool>("93445", "Rot-Touched Shotgun", "Mode: [select] only\nShould the bot buy \"Rot-Touched Shotgun\" ?", false),
+        new Option<bool>("93446", "Rot-Touched Knife", "Mode: [select] only\nShould the bot buy \"Rot-Touched Knife\" ?", false),
+        new Option<bool>("93447", "Rot-Touched Knives", "Mode: [select] only\nShould the bot buy \"Rot-Touched Knives\" ?", false),
+        new Option<bool>("93448", "Rot-Touched Guns", "Mode: [select] only\nShould the bot buy \"Rot-Touched Guns\" ?", false),
    };
 }
