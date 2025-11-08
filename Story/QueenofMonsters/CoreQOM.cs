@@ -322,7 +322,7 @@ public class CoreQOM
         Story.KillQuest(5501, "SafiriaInvasion", "Fallen Knight");
 
         //Revenant Slayer
-        Story.KillQuest(5502, "SafiriaInvasion", new[] { "Revenant", "Shadow Imp" });
+        Story.KillQuest(5502, "SafiriaInvasion", new[] { "Shadow Imp", "Revenant" });
 
         //Noddharath
         Story.KillQuest(5503, "SafiriaInvasion", "Noddharath");
