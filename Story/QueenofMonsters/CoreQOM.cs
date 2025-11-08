@@ -305,7 +305,7 @@ public class CoreQOM
         Story.MapItemQuest(5496, "LycanInvasion", 4900);
 
         //The Best Way To Slay An Infernal
-        Story.KillQuest(5497, "LycanInvasion", new[] { "Fallen Knight", "Infernal Knight" });
+        Story.KillQuest(5497, "LycanInvasion", new[] { "Infernal Knight", "Fallen Knight" });
 
         //A Dire Situation
         Story.KillQuest(5498, "LycanInvasion", "Dire Wolf");
