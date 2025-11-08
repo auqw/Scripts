@@ -13,9 +13,12 @@ public class DoomVaultA
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -83,8 +86,7 @@ public class DoomVaultA
         {
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(2966);
-            Core.CutSceneFixer("doomvault", "r14", "initRoom");
-            Core.HuntMonsterMapID("doomvault", 21, "Hand of the Princess");
+            Core.KillMonster("doomvault", "r14", "Left", "*", "Hand of the Princess");
             Core.EnsureComplete(2966);
             Core.EquipClass(ClassType.Farm);
         }
