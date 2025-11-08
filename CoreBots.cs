@@ -308,6 +308,7 @@ public class CoreBots
             usingFarmGeneric = FarmClass.ToLower() == "generic";
             usingDodgeGeneric = DodgeClass.ToLower() == "generic";
             usingBossGeneric = BossClass.ToLower() == "generic";
+            Bot.Skills.StartAdvanced(Bot.Player.CurrentClass?.Name ?? "generic", false);
 
             Bot.Events.ScriptStopping += StopBotEvent;
 
