@@ -308,7 +308,6 @@ public class CoreBots
             usingFarmGeneric = FarmClass.ToLower() == "generic";
             usingDodgeGeneric = DodgeClass.ToLower() == "generic";
             usingBossGeneric = BossClass.ToLower() == "generic";
-            EquipClass(disableClassSwap ? ClassType.None : ClassType.Solo);
 
             Bot.Events.ScriptStopping += StopBotEvent;
 
