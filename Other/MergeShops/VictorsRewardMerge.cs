@@ -159,9 +159,6 @@ public class VictorsRewardMerge
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("57304", "Gold Voucher 25k", "Mode: [select] only\nShould the bot buy \"Gold Voucher 25k\" ?", false),
-        new Option<bool>("62747", "Gold Voucher 7.5k", "Mode: [select] only\nShould the bot buy \"Gold Voucher 7.5k\" ?", false),
-        new Option<bool>("62749", "Gold Voucher 100k", "Mode: [select] only\nShould the bot buy \"Gold Voucher 100k\" ?", false),
         new Option<bool>("30953", "Floating Sapphire Orbs", "Mode: [select] only\nShould the bot buy \"Floating Sapphire Orbs\" ?", false),
         new Option<bool>("75306", "Manifestation of the Void", "Mode: [select] only\nShould the bot buy \"Manifestation of the Void\" ?", false),
         new Option<bool>("82170", "Phantasm Tail", "Mode: [select] only\nShould the bot buy \"Phantasm Tail\" ?", false),
