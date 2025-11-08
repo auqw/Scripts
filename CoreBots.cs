@@ -8373,12 +8373,12 @@ public class CoreBots
 
             while (!Bot.ShouldExit)
             {
-                if (!Bot.Player!.HasTarget)
+                if (!Bot.Player.HasTarget)
                     Bot.Combat.Attack("*");
 
                 Sleep();
 
-                if (Bot.Player?.Target?.HP <= 0)
+                if (!Bot.Player.HasTarget)
                     break;
             }
         }
