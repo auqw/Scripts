@@ -410,7 +410,13 @@ public class CoreQOM
         Story.PreLoad(this);
 
         //Stand for Swordhaven
-        Story.KillQuest(5575, "safiriainvasion", new[] { "Fallen Knight", "Infernal Knight" });
+        if (!Story.QuestProgression(5575))
+        {
+            Core.EnsureAccept(5575);
+            Core.KillMonster("safiriainvasion", "r4", "Left", "Fallen Knight", "Fallen Knight's Armor");
+            Core.KillMonster("safiriainvasion", "r4", "Left", "Infernal Knight", "Infernal Knight's Armor");
+            Core.EnsureComplete(5575);
+        }
 
         //Use Their Energy Against Them
         Story.KillQuest(5576, "shadowfallinvasion", "Nethermage");
