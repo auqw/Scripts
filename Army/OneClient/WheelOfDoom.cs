@@ -23,14 +23,19 @@ public class ArmyWheelofDoom
     {
         Core.SetOptions();
 
-        WheelOfDoom(Bot.Config!.Get<bool>("randomServers"));
+        WheelOfDoom();
 
         Core.SetOptions(false);
     }
 
-    public void WheelOfDoom(bool randomServers)
+    public void WheelOfDoom()
     {
         while (!Bot.ShouldExit && Army.doForAll())
+        {
+            if (Bot.Inventory.FreeSlots <= 0)
+                continue;
+
             Dailies.WheelofDoom();
+        }
     }
 }

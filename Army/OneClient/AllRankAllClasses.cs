@@ -20,7 +20,7 @@ public class AllRankAllClasses
     private static CoreArmyLite _Army;
     private static RankUpAll RUA { get => _RUA ??= new RankUpAll(); set => _RUA = value; }
     private static RankUpAll _RUA;
-    
+
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
@@ -33,6 +33,10 @@ public class AllRankAllClasses
     public void DoTheThing()
     {
         while (!Bot.ShouldExit && Army.doForAll())
+        {
+            if (Bot.Inventory.FreeSlots <= 0)
+                continue;
             RUA.RankUpAllClasses();
+        }
     }
 }

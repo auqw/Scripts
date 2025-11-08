@@ -36,7 +36,6 @@ public class ArmyAllDailies
     public string OptionsStorage = "ArmyAllDailies";
     public List<IOption> Options = new()
     {
-        new Option<bool>("randomServers", "Random Servers", "Should the bot use a random server each for each account.", true),
         new Option<FarmAllDailies.DailySet>("Select Dailies Set", "Dailies set: Recommended or All?", "only do the few that we recommend to make it a bit quicker?", FarmAllDailies.DailySet.All),
         CoreBots.Instance.SkipOptions,
     };
@@ -45,14 +44,18 @@ public class ArmyAllDailies
     {
         Core.SetOptions();
 
-        CheckACs(Bot.Config!.Get<bool>("randomServers"));
+        CheckACs();
 
         Core.SetOptions(false);
     }
 
-    public void CheckACs(bool randomServers)
+    public void CheckACs()
     {
-        while (!Bot.ShouldExit && Army.doForAll(randomServers))
+        while (!Bot.ShouldExit && Army.doForAll())
+        {
+            if (Bot.Inventory.FreeSlots <= 0)
+                continue;
             FAD.DoAllDailies(Bot.Config!.Get<FarmAllDailies.DailySet>("Select Dailies Set"));
-    }  
+        }
+    }
 }
