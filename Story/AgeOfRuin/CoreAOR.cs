@@ -241,7 +241,7 @@ public class CoreAOR
         Story.KillQuest(9271, "sunlightzone", "Blighted Water");
 
         // Dollar Store Mogloween Costume (9272)
-        Story.KillQuest(9272, "sunlightzone", new[] { "Astravian Illusion", "Infernal Illusion" });
+        Story.KillQuest(9272, "sunlightzone", new[] { "Infernal Illusion", "Astravian Illusion" });
 
         // Sea Snow Angels (9273)
         Story.KillQuest(9273, "sunlightzone", "Marine Snow");
