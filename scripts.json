@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 402859,
-    "sha256": "8960c6c19c344709bbbbbfd8be30df0adce9ad995216556574ff1e15ff0268ca",
+    "size": 402948,
+    "sha256": "28cf99c0bb51df6458d26b4958ebd3e2f6e7b085d12e1192f008df69b327953b",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -80,8 +80,8 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 75461,
-    "sha256": "9dd45061abb3d3dddd629e03772cccf27bcf739178a07a3595db99d052929662",
+    "size": 75210,
+    "sha256": "82b6a87a1f9f3665513693540926fb13682b79c0dda0c6b6e2404ff1835fc3bf",
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -4652,8 +4652,8 @@
       "oneclient"
     ],
     "path": "Army/OneClient/WheelOfDoom.cs",
-    "size": 1393,
-    "sha256": "a666348ede0e51991f2fc30c32611663ec5452afceeb5f917c2e45d2f37706cc",
+    "size": 1078,
+    "sha256": "a37a237f30d800805950cceb254d5597237bb02b7b242fb92f71caa446c685fb",
     "fileName": "WheelOfDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/WheelOfDoom.cs"
   },
@@ -10140,7 +10140,7 @@
     ],
     "path": "Story/QueenofMonsters/CoreQOM.cs",
     "size": 33880,
-    "sha256": "c74bb12b26f4b58bc0d6132634890e34f8a39fa4e7475239a3cf25e4510e4cb0",
+    "sha256": "3ac53d043a9528946ab5ddde829f8e6981d024ba680fbf03f63ead9e352765dd",
     "fileName": "CoreQOM.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/CoreQOM.cs"
   },
