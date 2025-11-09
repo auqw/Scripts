@@ -16379,8 +16379,8 @@
       "bright"
     ],
     "path": "Other/MergeShops/SpoilsofLightMerge.cs",
-    "size": 7375,
-    "sha256": "9fd99abfc4e3a9c6acbc6137061b329a93df0a2297ff404b5d0cce93fd20df5c",
+    "size": 6443,
+    "sha256": "659f5c50e67439d37b3872180e91fc82d26e1e1153026b865e3b84078d735b5f",
     "fileName": "SpoilsofLightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SpoilsofLightMerge.cs"
   },
@@ -21118,7 +21118,7 @@
     ],
     "path": "Seasonal/HarvestDay/CoreHarvestDay.cs",
     "size": 28809,
-    "sha256": "61a2dd3350a1859ad0347733585432e3c9f7d5653fb47eae5a90357a2f1744bb",
+    "sha256": "e58f9285347c63ca4494636a5d1f496e51031bbc6ebefd9b8ad9408546561b22",
     "fileName": "CoreHarvestDay.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/CoreHarvestDay.cs"
   },

@@ -648,7 +648,7 @@ public class CoreHarvestDay
         Story.MapItemQuest(8946, "ebiltakeover", 10860, 5);
 
         //Drones and Drones 8947
-        Story.KillQuest(8947, "ebiltakeover", new[] { "Traitor Goon", "Ebil Battle Drone" });
+        Story.KillQuest(8947, "ebiltakeover", new[] { "Ebil Battle Drone", "Traitor Goon" });
 
         //Tech Collection 8948
         Story.KillQuest(8948, "ebiltakeover", "Ebil Battle Drone");
