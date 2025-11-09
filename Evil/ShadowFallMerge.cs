@@ -1,7 +1,7 @@
 /*
 name: ShadowFall Merge
 description: This bot will farm the items belonging to the selected mode for the ShadowFall Merge [291] in /shadowfallwar
-tags: shadowfall, merge, shadowfallwar, unholy, tormenter, great, grave, terror, terrors, lich, bane, creature, royal, crown, torch, darkness, bounded, ectoplasmic, skull, mace, doublesided, painblade, accoutrements, skelecommander, skelecommanders
+tags: shadowfall, merge, shadowfallwar, unholy, tormenter, great, grave, terror, terrors, lich, bane, creature, royal, crown, torch, darkness, bounded, ectoplasmic, skull, mace, doublesided, painblade, accoutrements, skelecommander, skelecommanders, necrotic, bonefang, doom
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -18,8 +18,8 @@ public class ShadowFallMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
 
     public bool DontPreconfigure = true;

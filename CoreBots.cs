@@ -4773,7 +4773,7 @@ public class CoreBots
                     Bot.Combat.Attack(3);
                 Sleep();
 
-                if (item == null && !Bot.Player.HasTarget)
+                if (item == null && !Bot.Player!.HasTarget)
                 {
                     if (log) Logger("💀 No item selected, killed Escherion once");
                     done = true;
