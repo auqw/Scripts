@@ -93,9 +93,7 @@ public class SpoilsofLightMerge
 
                     // Combine all relevant quest IDs into one registration
                     Core.RegisterQuests(6560, 6561, 6562, 6563, 6566);
-
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
-                        Core.KillMonster("lightguardwar", "r2", "Left", "Citadel Crusader");
+                    Core.KillMonster("lightguardwar", "r2", "Left", "Citadel Crusader", req.Name, req.Quantity, isTemp: req.Temp);
 
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
