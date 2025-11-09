@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 402954,
-    "sha256": "eeb4884ba611f636022e68927350244a821c79a9abed0d5709d80d00b65076f3",
+    "size": 402955,
+    "sha256": "be04f577f70a7340a03fbb97f03466c7a292f219980498181e1b841cc1981069",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4043,11 +4043,14 @@
       "painblade",
       "accoutrements",
       "skelecommander",
-      "skelecommanders"
+      "skelecommanders",
+      "necrotic",
+      "bonefang",
+      "doom"
     ],
     "path": "Evil/ShadowFallMerge.cs",
-    "size": 5930,
-    "sha256": "898e0a50511bf1fb58c859097c1763f02b24eac14a3f81ecbb8b19272880f1e8",
+    "size": 5964,
+    "sha256": "efd86d2afa542a71d36ea28c1a9b3f76bb20e4dc822816b9514a889a86e8df8e",
     "fileName": "ShadowFallMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/ShadowFallMerge.cs"
   },
