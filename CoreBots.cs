@@ -3923,7 +3923,7 @@ public class CoreBots
                     Bot.Player!.SetSpawnPoint();
                 }
 
-                if (!Bot.Player.HasTarget && targetMonster != null)
+                if (!Bot.Player!.HasTarget && targetMonster != null)
                     Bot.Combat.Attack(targetMonster.Name);
 
                 if (!Bot.Player.HasTarget)
@@ -4779,7 +4779,7 @@ public class CoreBots
                     done = true;
                     break;
                 }
-                else if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+                else if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
                 {
                     done = true;
                     break;
