@@ -20,7 +20,8 @@ public class ArmySingleRib
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
     private static readonly CoreArmyLite sArmy = new();
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion _Legion;
 
     // Comment out one of these depending:
     readonly int[] QuestIDs = { 3393 };
@@ -48,7 +49,8 @@ public class ArmySingleRib
 
         Core.SetOptions();
 
-        WTFisGoingOn();
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        // WTFisGoingOn();
 
         Core.SetOptions(false);
     }

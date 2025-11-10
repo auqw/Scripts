@@ -11,7 +11,8 @@ public class CoreHollowbornStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -58,13 +59,13 @@ public class CoreHollowbornStory
         Story.MapItemQuest(8294, "trygve", 9040, 8);
 
         //Mannaz (8295)
-        Story.KillQuest(8295, "trygve", new[] { "Rune Boar", "Blood Eagle" });
+        Story.KillQuest(8295, "trygve", new[] { "Blood Eagle", "Rune Boar" });
 
         //Thurisaz (8296)
         Story.KillQuest(8296, "trygve", "Vindicator Recruit");
 
         //Othala (8297)
-        Story.KillQuest(8297, "trygve", new[] { "Blood Eagle", "Vindicator Recruit" });
+        Story.KillQuest(8297, "trygve", new[] { "Vindicator Recruit", "Blood Eagle" });
 
         //Isa, Reversed (8298)
         Story.KillQuest(8298, "trygve", "Gramiel");

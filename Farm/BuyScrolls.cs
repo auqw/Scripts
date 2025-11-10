@@ -83,8 +83,6 @@ public class BuyScrolls
             Bot.Wait.ForPickup(scrollName);
             Core.FarmingLogger(scrollName, quant);
         }
-
-        Core.Logger($"Buying complete, you now own {quant} {scrollName}'s");
     }
 
 }

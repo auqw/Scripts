@@ -38,24 +38,25 @@ public class ScarletSorceress
                 Adv.RankUpClass("Scarlet Sorceress");
             return;
         }
-        Core.AddDrop("Scarlet Sorceress", "Blood Sorceress");
+        Core.AddDrop("Scarlet Sorceress");
+        Core.AddDrop(/*Blood Sorceress*/ 36298);
 
-        InventoryItem? BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class);
+        InventoryItem? BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(i => i != null && i.ID == 36298);
 
-        if (!Core.CheckInventory("Blood Sorceress") || BloodSorceress != null && BloodSorceress.Quantity < 302500)
+        if (!Core.CheckInventory(/*Blood Sorceress*/ 36298) || BloodSorceress != null && BloodSorceress.Quantity < 302500)
         {
             TOD.TowerofMirrors();
             BS.GetBSorc();
             Bot.Wait.ForPickup("Blood Sorceress");
         }
 
-        BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(i => i != null && i.Name == "Blood Sorceress" && i.Category == ItemCategory.Class);
+        BloodSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(i => i != null && i.ID == 36298);
 
         // Check if R10, soemtimes the game can get it stuck at r9 with 100% Cxp
         if (BloodSorceress != null && BloodSorceress.Quantity < 302500) //now requires it to be rank 10?
         {
             Core.Relogin("\"Blood Sorceress\" Received from Quest is unenhanced, relogging to properly set its enh. type.");
-            Adv.RankUpClass("Blood Sorceress");
+            Adv.RankUpClass("Blood Sorceress", itemid: 36298);
         }
 
         if (!Core.CheckInventory("Scarlet Sorceress"))

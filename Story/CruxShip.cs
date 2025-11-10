@@ -90,10 +90,16 @@ public class CruxShip
             //jumping here just autocompletes the quest..
             Core.Jump("Cut3", "Left");
             Bot.Wait.ForQuestComplete(4605);
+            Core.Jump("Enter", "Spawn");
         }
 
         //Plague in the Pyramid 4606
-        Story.KillQuest(4606, "CruxShip", "Shadow Locust");
+        if(!Story.QuestProgression(4606))
+        {
+            Core.EnsureAccept(4606);
+            Core.HuntMonster("CruxShip", "Shadow Locust", "Locusts Beaten", 12);
+            Core.EnsureComplete(4606);
+        }
 
         //The Plaguebringer Appears 4607
         if (!Story.QuestProgression(4607))

@@ -39,3 +39,8 @@ Assemblies
 CoreCommunication.cs
 Army/Generated
 WARP.md
+Ultras
+/Skills
+/Templates
+Skills/AdvancedSkills.txt
+Tools/ForDevelopers/ConvertOldmanageraccs.py

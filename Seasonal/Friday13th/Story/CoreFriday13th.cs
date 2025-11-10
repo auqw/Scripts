@@ -119,7 +119,7 @@ public class CoreFriday13th
         if (Core.IsMember)
         {
             //Me Knickers Got a Big Hole Across th' Bum 3114
-            Story.KillQuest(3114, "Skullpunch", new[] { "Vampirate", "Fishbones" });
+            Story.KillQuest(3114, "Skullpunch", new[] { "Fishbones", "Vampirate" });
 
             // Where'd Me Ship's Cargo? 3115
             Story.KillQuest(3115, "Skullpunch", new[] { "Fishbones", "Fishbones", "Fishbones", "Fishbones" });
@@ -701,7 +701,7 @@ public class CoreFriday13th
         Story.KillQuest(6268, "Gonnagetcha", "Shrade");
 
         // Revitalize the Camp 6269
-        Story.KillQuest(6269, "Gonnagetcha", new[] { "Vengeful Ghost", "Shrade Cultist" });
+        Story.KillQuest(6269, "Gonnagetcha", new[] { "Shrade Cultist", "Vengeful Ghost" });
     }
 
     public void Greymoor()

@@ -10,6 +10,7 @@ tags: bocklin, treasury, merge, bocklinsanctum, aldens, liberation, battle, morp
 //cs_include Scripts/Story/Lynaria/CoreLynaria.cs
 //cs_include Scripts/Other/MergeShops/BocklinGroveMerge.cs
 //cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
+//cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
 
 
 using Skua.Core.Interfaces;
@@ -32,6 +33,8 @@ public class BocklinTreasuryMerge
     private static BocklinGroveMerge _BocklinGroveM;
     private static BocklinArmoryMerge BocklinArmoryM { get => _BocklinArmoryM ??= new BocklinArmoryMerge(); set => _BocklinArmoryM = value; }
     private static BocklinArmoryMerge _BocklinArmoryM;
+    private static CoreSepulchure Seppy { get => _Seppy ??= new CoreSepulchure(); set => _Seppy = value; }
+    private static CoreSepulchure _Seppy;
     private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
 
@@ -55,7 +58,10 @@ public class BocklinTreasuryMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        Seppy.ShadowfallRise();
         Lynaria.BocklinSanctum();
+
+        
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("bocklinsanctum", 2578, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -87,7 +93,7 @@ public class BocklinTreasuryMerge
                     Core.RegisterQuests(Core.IsMember ? 10267 : 10266);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                     {
-                        Core.HuntMonster("bocklinsanctum", "Thronekeeper", "Black Armorial Fleur");
+                        Core.HuntMonster("bocklinsanctum", "Thronekeeper", "Black Armorial Fleur", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -152,6 +158,11 @@ public class BocklinTreasuryMerge
                     Core.AddDrop(req.ID);
                     Core.HuntMonster("bocklincastle", "Garde Wraith", req.Name, quant, req.Temp, false);
                     break;
+
+                case "Gold Voucher 100k":
+                    Farm.Voucher(req.Name, req.Quantity);
+                    break;
+
 
             }
         }

@@ -14,23 +14,26 @@ public class ArmyLowTideMergeReqs
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }    private static CoreArmyLite _Army;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite _Army;
 
-public static CoreBots sCore
-{
-    get => _sCore ??= new CoreBots();
-    set => _sCore = value;
-}
-public static CoreBots _sCore;
+    public static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
+    public static CoreBots _sCore;
 
-public static CoreArmyLite sArmy
-{
-    get => _sArmy ??= new CoreArmyLite();
-    set => _sArmy = value;
-}
-public static CoreArmyLite _sArmy;
+    public static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
+    public static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyLowTideMergeReqs";
@@ -53,7 +56,8 @@ public static CoreArmyLite _sArmy;
 
         Core.SetOptions();
 
-        Setup();
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        // Setup();
 
         Core.SetOptions(false);
     }
@@ -75,9 +79,9 @@ public static CoreArmyLite _sArmy;
         Army.DivideOnCells("r4", "r5", "r6");
 
         Core.RegisterQuests(8846);
-        
-        
-            
+
+
+
         while (!Bot.ShouldExit)
             Bot.Combat.Attack("*");
 

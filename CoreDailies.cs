@@ -21,22 +21,6 @@ public class CoreDailies
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    // Thousand-level Constants
-    const int OneK = 1000;        // 1k
-    const int TenK = 10000;       // 10k
-    const int OneHundredK = 100000; // 100k
-    const int FiveHundredK = 500000; // 500k
-
-    // Million-level Constants
-    const int OneMillion = 1000000;   // 1m
-    const int FiveMillion = 5000000;  // 5m
-    const int TenMillion = 10000000;  // 10m
-    const int FiftyMillion = 50000000; // 50m
-    const int OneHundredMillion = 100000000; // 100m
-
-    //Max integer
-    const int maxint = Int32.MaxValue;
-
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.RunCore();
@@ -139,10 +123,10 @@ public class CoreDailies
         Bot.Drops.Add(items);
 
         // Handle LOO dailies for quests within the specified range
-        if (quest >= 7156 && quest < 7166 && !Core.CheckInventory(50741, toInv: false))
+        if (quest >= 7156 && quest < 7166 && !Core.CheckInventory(50741, toInv: false) && !Core.isCompletedBefore(quest))
         {
             foreach (int questId in Enumerable.Range(7156, 10).Distinct())
-                if (!Core.isCompletedBefore(questId))
+                if (!Core.isCompletedBefore(questId) && !Bot.Quests.IsDailyComplete(questId))
                     Bot.Drops.Add(Core.QuestRewards(questId));
         }
 
@@ -463,7 +447,7 @@ public class CoreDailies
             Core.BuyItem("xancave", 447, 12812, shopItemID: 1278);
         Core.ToBank("Shurpu Blaze Token");
     }
-    
+
     public void ShadowScytheClass()
     {
         Core.Logger("Daily: ShadowScythe General Class");
@@ -727,7 +711,7 @@ public class CoreDailies
                     Core.CancelRegisteredQuests();
                 }
                 else Core.HuntMonster("chaoskraken", "Chaos Kraken", "Kraken Doubloon", 13, isTemp: false, publicRoom: true);
-                Core.HuntMonster($"ancienttrigoras", "Ancient Trigoras", "Ancient Trigora's Horns", 3, isTemp: false);
+                Core.KillMonster("ancienttrigoras", "r2a", "Left", "Ancient Trigoras", "Ancient Trigora's Horns", 3, isTemp: false);
                 Core.KillMonster("gravechallenge", "r19", "Left", "Graveclaw the Destroyer", "Graveclaw's Broken Axe", isTemp: false);
                 Core.EnsureComplete(8652);
                 Bot.Wait.ForPickup("Void Aura");
@@ -1048,7 +1032,8 @@ public class CoreDailies
         // Battleodium
         if (Core.isCompletedBefore(793))
             handleFriendship("Dage the Evil", frGift.Cracked_Opal);
-        handleFriendship("Gravelyn", frGift.Blood_Roseberry);
+        if (Bot.Player.Level >= 80)
+            handleFriendship("Gravelyn", frGift.Blood_Roseberry);
         handleFriendship("Nulgath", frGift.Apples);
         handleFriendship("Twig", frGift.Melons);
         handleFriendship("Twilly", frGift.Apples, frGift.Orchids);
@@ -1061,7 +1046,8 @@ public class CoreDailies
         handleFriendship("Smoglin", frGift.Turqoise, frGift.Apples);
 
         // Greyguard
-        handleFriendship("Drakath", frGift.Chaos_Diemond);
+        if (Bot.Player.Level >= 80)
+            handleFriendship("Drakath", frGift.Chaos_Diemond);
         handleFriendship("Xang", frGift.Emeralds, frGift.Grapes);
         handleFriendship("Linus", frGift.A_Fish);
         handleFriendship("Sally", frGift.Rubies, frGift.Tulips);
@@ -1078,7 +1064,7 @@ public class CoreDailies
                 Core.ChainComplete(9108);
                 Core.ToBank("Happy Penguin");
             }
-            Core.Logger("🥺 we don't have the cute little penguin so no badge for you...");
+            else Core.Logger("🥺 we don't have the cute little penguin so no badge for you...");
         }
 
         #region Local methods

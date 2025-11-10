@@ -69,27 +69,27 @@ public class CelestialOfMysteries
 
         // Duo's Dinner
         if (!Core.CheckInventory("Duo's Dinner", 35))
-            Core.BossClass();
+            Core.UseBossClass();
         Core.HuntMonster("infernalarena", "Deadly Duo", "Duo's Dinner", 35, false);
 
         // Cervus Dente
         if (!Core.CheckInventory("Cervus Dente", 35))
-            Core.BossClass();
+            Core.UseBossClass();
         Core.HuntMonster("infernalarena", "Cervus Malus", "Cervus Dente", 35, false);
 
         // Infernal Incantation
         if (!Core.CheckInventory("Infernal Incantation", 35))
-            Core.BossClass("Dragon of Time");
+            Core.UseBossClass("Dragon of Time");
         Core.HuntMonster("infernalarena", "Key of Sholemoh", "Infernal Incantation", 35, false);
 
         // Scythe Shard
         if (!Core.CheckInventory("Scythe Shard", 35))
-            Core.DodgeClass("Lord Of Order");
+            Core.UseDodgeClass("Lord Of Order");
         Core.HuntMonster("infernalarena", "Azalith's Scythe", "Scythe Shard", 35, false);
 
         // Champion's Seal
         if (!Core.CheckInventory("Champion's Seal", 20))
-            Core.BossClass(Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
+            Core.UseBossClass(Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
         Core.HuntMonster("infernalarena", "Na'al", "Champion's Seal", 20, false, false);
 
         // Infernal Down
@@ -98,7 +98,7 @@ public class CelestialOfMysteries
         if (!Core.CheckInventory("The Divine Will"))
         {
             Core.Logger("Farming Azalith for The Divine Will. Azalith is tough, consider using an army to speed it up.");
-            Core.BossClass();
+            Core.UseBossClass();
             Core.HuntMonster("celestialpast", "Azalith", "The Divine Will", 1, false);
         }
 

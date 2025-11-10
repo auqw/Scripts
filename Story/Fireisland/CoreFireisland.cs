@@ -228,7 +228,7 @@ public class CoreFireIsland
 
 
         //The Power to Heal
-        Story.KillQuest(4139, "feverfew", new[] { "Feverfew Vase", "Twisted Undine", "Locked Chest" });
+        Story.KillQuest(4139, "feverfew", new[] { "Locked Chest", "Feverfew Vase", "Twisted Undine" });
 
         //The Deadsea Caverns
         Story.KillQuest(4140, "feverfew", new[] { "Coral Creeper", "Twisted Undine", "Salamander" });

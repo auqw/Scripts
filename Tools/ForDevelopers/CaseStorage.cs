@@ -2966,7 +2966,7 @@ case ""King Klunk's Crown"":
     @"
 case ""Crowned Skull of Na'al"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.DodgeClass();
+                     Core.UseDodgeClass();
                     Core.Logger($""Doing story first: {!Core.isCompletedBefore(9373)}"");
                     if (!Core.isCompletedBefore(9377))
                     {
@@ -11321,7 +11321,7 @@ case ""Infernal Incantation"":
     "Scythe Shard",
     @"
 case ""Scythe Shard"":
-                    Core.DodgeClass(""Lord Of Order"");
+                     Core.UseDodgeClass(""Lord Of Order"");
                     Core.HuntMonster(""infernalarena"", ""Azalith's Scythe"", req.Name, quant, false, false);
                     break;
     "
@@ -11331,7 +11331,7 @@ case ""Scythe Shard"":
     @"
 case ""Duo's Dinner"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.BossClass();
+                     Core.UseBossClass();
                     Core.HuntMonster(""infernalarena"", ""Deadly Duo"", req.Name, quant, false, false);
                     break;
     "
@@ -25888,7 +25888,7 @@ case ""Mainyu Rune"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
                     Adv.GearStore();
-                    Core.BossClass();
+                     Core.UseBossClass();
                     Core.HuntMonster(""manacradle"", ""The Mainyu"", req.Name, isTemp: false);
                     Adv.GearStore(true);
                     break;
@@ -25902,7 +25902,7 @@ case ""Mainyu Wings"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
                     Adv.GearStore();
-                    Core.BossClass();
+                     Core.UseBossClass();
                     Core.HuntMonster(""manacradle"", ""The Mainyu"", req.Name, isTemp: false);
                     Adv.GearStore(true);
                     break;
@@ -25916,7 +25916,7 @@ case ""Mainyu Tail"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
                     Adv.GearStore();
-                    Core.BossClass();
+                     Core.UseBossClass();
                     Core.HuntMonster(""manacradle"", ""The Mainyu"", req.Name, isTemp: false);
                     Adv.GearStore(true);
                     break;
@@ -28840,6 +28840,499 @@ case ""Golden Euphoria Blade"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
                     Core.HuntMonster(""castleparty"", ""Lost Giftbox"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Taotie Emblem",
+    @"
+case ""Taotie Emblem"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10482, ""shizaistrath"", ""Taotie"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Nudibranch Roe",
+    @"
+case ""Nudibranch Roe"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10458, ""eldritchworld"", ""Nudibranch"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Barnacle Rash",
+    @"
+case ""Barnacle Rash"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10459, ""eldritchworld"", ""Infested Fisherman"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Shrimp Noodle Pack",
+    @"
+case ""Shrimp Noodle Pack"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10460, ""eldritchworld"", ""Kathool Cultist"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Dzeza Welcome Pack",
+    @"
+case ""Dzeza Welcome Pack"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10461, ""eldritchworld"", ""Dzeza Cultist"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Dzeza Coconuts",
+    @"
+case ""Dzeza Coconuts"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10462, ""eldritchworld"", ""Dzeza Sapling"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Desiccated Bulbs",
+    @"
+case ""Desiccated Bulbs"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10463, ""eldritchworld"", ""Infested Mummy"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Head of Hair",
+    @"
+case ""Head of Hair"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10468, ""eldritchworld"", ""Mass of Hair"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Bucket of Molars",
+    @"
+case ""Bucket of Molars"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10464, ""eldritchworld"", ""Mass of Teeth"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Thok's War Armor",
+    @"
+case ""Thok's War Armor"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+                    Core.BuyItem(""classhalla"", 170, req.Name, quant);
+                    break;
+    "
+},
+{
+    "Thok's Hair",
+    @"
+case ""Thok's Hair"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+                    Core.BuyItem(""classhalla"", 170, req.Name, quant);
+                    break;
+    "
+},
+{
+    "Arcana's Vesture",
+    @"
+case ""Arcana's Vesture"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Adv.BuyItem(""classhalla"", 174, req.Name, quant);
+                    break;
+    "
+},
+{
+    "Arcana's Locks",
+    @"
+case ""Arcana's Locks"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Adv.BuyItem(""classhalla"", 174, req.Name, quant);
+                    break;
+    "
+},
+{
+    "Metrea's Garb",
+    @"
+case ""Metrea's Garb"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Adv.BuyItem(""classhalla"", 172, req.Name, quant);
+                    break;
+    "
+},
+{
+    "Metrea's Locks",
+    @"
+case ""Metrea's Locks"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Adv.BuyItem(""classhalla"", 172, req.Name, quant);
+                    break;
+    "
+},
+{
+    "Juvania's Robes",
+    @"
+case ""Juvania's Robes"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Adv.BuyItem(""classhalla"", 176, req.Name, quant);
+                    break;
+    "
+},
+{
+    "Juvania's Locks",
+    @"
+case ""Juvania's Locks"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Adv.BuyItem(""classhalla"", 176, req.Name, quant);
+                    break;
+    "
+},
+{
+    "Great Calabaza Blade",
+    @"
+case ""Great Calabaza Blade"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    UGM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Great Calabaza Blades",
+    @"
+case ""Great Calabaza Blades"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    UGM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Pumpkin King's Revenge",
+    @"
+case ""Pumpkin King's Revenge"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    UGM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Dual Pumpkin King's Revenge",
+    @"
+case ""Dual Pumpkin King's Revenge"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    UGM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Pumpkin Fever Staff",
+    @"
+case ""Pumpkin Fever Staff"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    UGM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Kabocha King Naginata",
+    @"
+case ""Kabocha King Naginata"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    UGM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Pumpkin King's Wrath",
+    @"
+case ""Pumpkin King's Wrath"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    UGM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Dual Pumpkin King's Wrath",
+    @"
+case ""Dual Pumpkin King's Wrath"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    UGM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Pumpkin Fever Axe",
+    @"
+case ""Pumpkin Fever Axe"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    UGM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Pumpkin Fever Axes",
+    @"
+case ""Pumpkin Fever Axes"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    UGM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Depths Scale",
+    @"
+case ""Depths Scale"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(Core.IsMember ? 10480 : 10479, ""elodeatemple"", ""Child of the Depths"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Acromegalia Seed",
+    @"
+case ""Acromegalia Seed"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(Core.IsMember ? 10457 : 10454); 
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""eldritchbattletown"", ""Kathool Kultist"", ""Tier 2 Kathool Member Card"", 6, isTemp: false);
+                        Core.HuntMonster(""eldritchbattletown"", ""Dzeza Cultist"", ""Tier 2 Dzeza Member Card"", 6, isTemp: false);
+                        Core.HuntMonster(""eldritchbattletown"", ""Harvest Acromegalia"", ""Gourd Twinning"", isTemp: false);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
                     break;
     "
 },

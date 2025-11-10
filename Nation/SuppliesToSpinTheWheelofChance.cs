@@ -15,7 +15,8 @@ public class SuppliesToSpinTheWheelofChance
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
 
     public string OptionsStorage = "SuppliesOptions";
     public bool DontPreconfigure = true;
@@ -162,8 +163,9 @@ public class SuppliesToSpinTheWheelofChance
                 Bot.Config!.Get<bool>("UltraAlteon"),
                 Bot.Config!.Get<bool>("KeepVoucher"),
                 Bot.Config!.Get<bool>("AssistantDuring"),
-                SwindlesReturnItem ?? item.Name // Use SwindlesReturnItem if set, otherwise use item.Name
-            );
+                SwindlesReturnItem ?? item.Name, // Use SwindlesReturnItem if set, otherwise use item.Name
+                Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies
+                );
         }
     }
 

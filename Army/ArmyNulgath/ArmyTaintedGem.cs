@@ -17,8 +17,8 @@ public class ArmyTaintedGem
     private CoreBots Core => CoreBots.Instance;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyTaintedGem";
@@ -49,7 +49,8 @@ private static CoreArmyLite _sArmy;
 
         Core.SetOptions();
 
-        TaintedGem();
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        // TaintedGem();
 
         Core.SetOptions(false);
     }

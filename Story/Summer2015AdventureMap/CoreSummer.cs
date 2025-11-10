@@ -13,8 +13,10 @@ public class CoreSummer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -134,7 +136,7 @@ public class CoreSummer
         Story.KillQuest(4282, "dreadspace", "Undead Space Marine");
 
         //Crew Cut (4283)
-        Story.KillQuest(4283, "dreadspace", new[] { "Vaderix", "Undead Space Marine", "Undead Space Warrior", "Cyber Horg" });
+        Story.KillQuest(4283, "dreadspace", new[] { "Undead Space Marine", "Undead Space Warrior", "Cyber Horg", "Vaderix" });
 
         //Restore Life Support (4284)
         Story.KillQuest(4284, "dreadspace", "Cyber Horg");
@@ -381,7 +383,7 @@ public class CoreSummer
         Story.KillQuest(4353, "livingdungeon", "Chia Warrior");
 
         // Leaf me alone!
-        Story.KillQuest(4354, "livingdungeon", new[] { "Seed Spitter", "Evil Plant Horror", "Titan Decay" });
+        Story.KillQuest(4354, "livingdungeon", new[] { "Titan Decay", "Seed Spitter", "Evil Plant Horror" });
 
         // Evil Faerie Ambush!
         Story.KillQuest(4355, "livingdungeon", "Evil Tree Faerie");

@@ -155,15 +155,12 @@ public class CoreLegion
             //Adv.BestGear(RacialGearBoost.Chaos);
             Core.KillMonster("aqlesson", "Frame9", "Right", "Carnax", "Carnax Eye", publicRoom: true);
             Core.HuntMonster("deepchaos", "Kathool", "Kathool Tentacle", publicRoom: true);
-
-            //More then one item of the same name as drop btoh temp and non-temp.
-            while (!Bot.ShouldExit && !Core.CheckInventory(33257))
-                Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", publicRoom: true);
-
-            //Adv.BestGear(RacialGearBoost.Dragonkin);
             Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang");
-            //Adv.BestGear(RacialGearBoost.Human);
             Core.HuntMonster("bloodtitan", "Blood Titan", "Blood Titan's Blade", publicRoom: true);
+
+            //More then one item of the same name as drop both temp and non-temp.
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains(33257))
+                Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", publicRoom: true);
             foreach (string drop in new[] { "Legion Token", "Diamond Token of Dage" })
                 Bot.Wait.ForPickup(drop);
         }
@@ -426,7 +423,7 @@ public class CoreLegion
 
         Core.FarmingLogger("Legion Token", quant);
         Core.AddDrop("Legion Token");
-        Core.RegisterQuests(3968,3969);
+        Core.RegisterQuests(3968, 3969);
         while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
         {
             Core.KillMonster("frozenruins", "r1", "Left", "*");
@@ -652,6 +649,25 @@ public class CoreLegion
         Core.CancelRegisteredQuests();
     }
 
+    public void LTCastle(int quant = 50000)
+    {
+        if (!Core.CheckInventory("Legion Castle") || Core.CheckInventory("Legion Token", quant))
+        {
+            return;
+        }
+
+        var rewards = Core.QuestRewards(6822);
+        Core.AddDrop(rewards);
+
+        Core.RegisterQuests(6822, 6742, 6743);
+        while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
+        {
+            Core.KillMonster("legionarena", "r2", "Left", "*", "Challenger Slain", 12, publicRoom: Core.PrivateRooms);
+            Core.KillMonster("legionarena", "Boss", "Left", "Legion Fiend Rider", "Legion Fiend Rider Slain", publicRoom: Core.PrivateRooms);
+        }
+        Core.CancelRegisteredQuests();
+    }
+
     public void LTArcaneParagon(int quant = 50000)
     {
         if (Core.CheckInventory("Legion Token", quant) || !Core.CheckInventory("Arcane Paragon Pet"))
@@ -859,9 +875,7 @@ public class CoreLegion
     public void DagePvP(int trophyQuant = 4000, int techniqueQuant = 1000, int scrollQuant = 1000, bool canSoloBoss = true, bool enableDebug = false)
     {
 
-        if (Core.CheckInventory("Legion Combat Trophy", trophyQuant) &&
-            Core.CheckInventory("Technique Observed", techniqueQuant) &&
-            Core.CheckInventory("Sword Scroll Fragment", scrollQuant))
+        if (CheckInventoryCompletion())
             return;
 
         canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool _canSoloBoss);
@@ -871,14 +885,13 @@ public class CoreLegion
 
 
         int exitAttempt = 0;
-        bool FarmComplete = false;
 
         if (enableDebug)
             Core.DL_Enable();
 
         Start:
         exitAttempt = 0;
-        while (!Bot.ShouldExit && !FarmComplete)
+        while (!Bot.ShouldExit && !CheckInventoryCompletion())
         {
             LogFarmingProgress();
 
@@ -948,8 +961,16 @@ public class CoreLegion
             Bot.Wait.ForPickup("Legion Combat Trophy");
             LogFarmingProgress();
             Exit("Enter0", exitAttempt: ref exitAttempt);
-            FarmComplete = CheckInventoryCompletion();
+            if (CheckInventoryCompletion())
+            {
+                Core.Join("Battleon-99999");
+                break;
+            }
+
         }
+        // Ensure we exit the map before going esle where
+        if (Bot.Map.Name == "dagepvp")
+            Core.Join("Battleon-99999");
 
         void LogFarmingProgress()
         {

@@ -671,7 +671,7 @@ public class UnlockForgeEnhancements
         Core.CancelRegisteredQuests();
 
         Adv.GearStore();
-        Core.DodgeClass();
+        Core.UseDodgeClass();
         Core.HuntMonster("tercessuinotlim", "Nulgath", "The Mortal Coil", isTemp: false);
         Adv.GearStore(true);
         Core.EnsureComplete(8820);
@@ -731,7 +731,7 @@ public class UnlockForgeEnhancements
             if (!Core.CheckInventory("Malgor's ShadowFlame Blade"))
             {
                 Adv.GearStore();
-                Core.BossClass();
+                Core.UseBossClass();
                 SOWM.ElementalCore(20);
                 Adv.GearStore(true);
                 Core.EquipClass(ClassType.Solo);

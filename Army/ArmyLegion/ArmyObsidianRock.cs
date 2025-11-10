@@ -38,7 +38,8 @@ public class Generated_ArmyObsidianRock
     {
         Core.SetOptions();
 
-        ArmyObsidianRock();
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        // ArmyObsidianRock();
         Core.SetOptions(false);
     }
 

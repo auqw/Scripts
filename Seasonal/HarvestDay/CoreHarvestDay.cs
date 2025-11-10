@@ -11,7 +11,8 @@ public class CoreHarvestDay
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
     public string[] UMManaHarvest { get; private set; }
 
     public CoreHarvestDay()
@@ -114,8 +115,13 @@ public class CoreHarvestDay
         }
 
         //Fruit of the Loot (135)
-        Story.MapItemQuest(135, "harvest", 37);
-        Story.KillQuest(135, "harvest", "*");
+        if (!Story.QuestProgression(135))
+        {
+            Core.EnsureAccept(135);
+            Story.MapItemQuest(135, "harvest", 37);
+            Core.KillMonster("harvest", "Room1", "Left", "*", "Seeds");
+            Core.EnsureComplete(135);
+        }
 
         //The Turdraken (136)
         Story.KillQuest(136, "harvest", "Turdraken");
@@ -642,7 +648,7 @@ public class CoreHarvestDay
         Story.MapItemQuest(8946, "ebiltakeover", 10860, 5);
 
         //Drones and Drones 8947
-        Story.KillQuest(8947, "ebiltakeover", new[] { "Traitor Goon", "Ebil Battle Drone" });
+        Story.KillQuest(8947, "ebiltakeover", new[] { "Ebil Battle Drone", "Traitor Goon" });
 
         //Tech Collection 8948
         Story.KillQuest(8948, "ebiltakeover", "Ebil Battle Drone");

@@ -21,13 +21,14 @@ public class MergeTemplateHelper
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public string OptionsStorage = "MergeTemplateHelper";
 
@@ -112,7 +113,7 @@ public static CoreAdvanced _sAdv;
 
         foreach (ShopItem item in shopItems)
         {
-            if (item.Requirements == null)
+            if (item.Requirements == null || item.Name.StartsWith("Gold Voucher"))
                 continue;
 
             shopItemNames.Add($"        new Option<bool>(\"{item.ID}\", \"{item.Name}\", \"Mode: [select] only\\nShould the bot buy \\\"{item.Name}\\\" ?\", false),");

@@ -34,34 +34,32 @@ public class CoreAOR
 
     public void DoAll()
     {
-        TerminaTemple(coldThunder: true);
-        AshrayVillage();
-        SunlightZone();
-        TwilightZone();
-        YulgarAria();
-        MidnightZone();
-        AbyssalZone();
-        DeepWater();
+        TerminaTemple(true, true);
+        AshrayVillage(false, false);
+        SunlightZone(false, false);
+        TwilightZone(false, false);
+        YulgarAria(false, false);
+        MidnightZone(false, false);
+        AbyssalZone(false, false);
+        DeepWater(false, false);
         SeaVoice();
-        Balemorale();
-        Castleeblana();
-        Loughshine();
-        NaoiseGrave();
-        LiaTaraHill();
-        CastleGaheris();
+        Balemorale(false, false);
+        Castleeblana(false, false);
+        Loughshine(false, false);
+        NaoiseGrave(false, false);
+        LiaTaraHill(false, false);
+        CastleGaheris(false, false);
         ColdThunder();
-        ThelimaCity();
-        MountMaleno();
-        SanctuaryAiwass();
+        ThelimaCity(false, false);
+        MountMaleno(false, false);
+        SanctuaryAiwass(false, false);
         ForgeAlbedo();
     }
 
-    private bool isSeaVoiceCalled = false;
-    private bool isColdThunderCalled = false;
 
     public void TerminaTemple(bool seaVoice = false, bool coldThunder = false)
     {
-        if (Core.isCompletedBefore(coldThunder ? 9851 : seaVoice ? 9351 : 9214))
+        if (Core.isCompletedBefore(coldThunder ? 9851 : seaVoice ? 9351 : 10438))
             return;
 
         SoW.ManaCradle();
@@ -78,34 +76,29 @@ public class CoreAOR
         if (!seaVoice && !coldThunder)
             return;
 
-        if (seaVoice && !isSeaVoiceCalled)
-        {
-            isSeaVoiceCalled = true;
+        // If seaVoice or coldThunder & quest isnt unlocked
+        if (seaVoice || coldThunder && !Core.isCompletedBefore(9348))
             SeaVoice();
-        }
 
         // Mopping Up (9351)
-        if (isSeaVoiceCalled)
-            Story.MapItemQuest(9351, "terminatemple", new[] { 12050, 12051 });
+        Story.MapItemQuest(9351, "terminatemple", new[] { 12050, 12051 });
 
-        if (coldThunder && !isColdThunderCalled)
-        {
-            isColdThunderCalled = true;
+        if (seaVoice && !coldThunder)
+            return;
+
+        if (coldThunder)
             ColdThunder();
-        }
 
         // Tell-Tale Heart (9851)
-        if (isColdThunderCalled)
-            Story.MapItemQuest(9851, "terminatemple", new[] { 13541, 13542 });
+        Story.MapItemQuest(9851, "terminatemple", new[] { 13541, 13542 });
     }
-    public void AshrayVillage()
+
+    public void AshrayVillage(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9234))
             return;
 
-        TerminaTemple();
-
-        Story.PreLoad(this);
+        TerminaTemple(seaVoice, coldThunder);
 
         // Big ol' Eyes (9225)
         Story.KillQuest(9225, "ashray", "Kitefin Shark Bait");
@@ -143,14 +136,12 @@ public class CoreAOR
         Story.KillQuest(9234, "ashray", "Seafoam Elemental");
     }
 
-    public void SunlightZone()
+    public void SunlightZone(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9251))
             return;
 
-        AshrayVillage();
-
-        Story.PreLoad(this);
+        AshrayVillage(seaVoice, coldThunder);
 
         // Detergent Shortage (9242)
         Story.KillQuest(9242, "sunlightzone", "Blighted Water");
@@ -188,14 +179,12 @@ public class CoreAOR
         Story.KillQuest(9251, "sunlightzone", "Marine Snow");
     }
 
-    public void TwilightZone()
+    public void TwilightZone(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9268))
             return;
 
-        SunlightZone();
-
-        Story.PreLoad(this);
+        SunlightZone(seaVoice, coldThunder);
 
         // Marshmallows With Bite (9258)
         Story.KillQuest(9258, "twilightzone", "Whale Louse");
@@ -238,14 +227,12 @@ public class CoreAOR
         Story.MapItemQuest(9268, "twilightzone", 11756);
     }
 
-    public void YulgarAria()
+    public void YulgarAria(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9274))
             return;
 
-        TwilightZone();
-
-        Story.PreLoad(this);
+        TwilightZone(seaVoice, coldThunder);
 
         // Octotree (9270)
         Story.KillQuest(9270, "twilightzone", "Polymelia Lamprey");
@@ -254,7 +241,7 @@ public class CoreAOR
         Story.KillQuest(9271, "sunlightzone", "Blighted Water");
 
         // Dollar Store Mogloween Costume (9272)
-        Story.KillQuest(9272, "sunlightzone", new[] { "Astravian Illusion", "Infernal Illusion" });
+        Story.KillQuest(9272, "sunlightzone", new[] { "Infernal Illusion", "Astravian Illusion" });
 
         // Sea Snow Angels (9273)
         Story.KillQuest(9273, "sunlightzone", "Marine Snow");
@@ -269,14 +256,12 @@ public class CoreAOR
         }
     }
 
-    public void MidnightZone()
+    public void MidnightZone(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9301))
             return;
 
-        TwilightZone();
-
-        Story.PreLoad(this);
+        TwilightZone(seaVoice, coldThunder);
 
         // Motivation Malady (9292)
         Story.MapItemQuest(9292, "midnightzone", new[] { 11842, 11843, 11844 });
@@ -320,14 +305,12 @@ public class CoreAOR
         }
     }
 
-    public void AbyssalZone()
+    public void AbyssalZone(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9315))
             return;
 
-        MidnightZone();
-
-        Story.PreLoad(this);
+        MidnightZone(seaVoice, coldThunder);
 
         // Shark Kiting (9306)
         Story.MapItemQuest(9306, "abyssalzone", 11914);
@@ -372,14 +355,12 @@ public class CoreAOR
         }
     }
 
-    public void DeepWater(bool panopticonMerge = false)
+    public void DeepWater(bool panopticonMerge = false, bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9338))
             return;
 
-        AbyssalZone();
-
-        Story.PreLoad(this);
+        AbyssalZone(seaVoice, coldThunder);
 
         // Unsung Heroes (9329)
         Story.MapItemQuest(9329, "trenchobserve", 11975);
@@ -434,10 +415,8 @@ public class CoreAOR
     {
         if (Core.isCompletedBefore(9348))
             return;
-
-        DeepWater();
         SoW.ManaCradle();
-
+        DeepWater(panopticonMerge: false, seaVoice: false, coldThunder: false);
         Story.PreLoad(this);
 
         if (!Core.isCompletedBefore(9348))
@@ -478,17 +457,14 @@ public class CoreAOR
             Core.SellItem("Vigil", all: true);
         }
 
-        TerminaTemple(true);
     }
 
-    public void Balemorale()
+    public void Balemorale(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9729))
             return;
 
-        TerminaTemple(true);
-
-        Story.PreLoad(this);
+        TerminaTemple(false, false);
 
         Core.EquipClass(ClassType.Farm);
 
@@ -537,14 +513,12 @@ public class CoreAOR
         }
     }
 
-    public void Castleeblana()
+    public void Castleeblana(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9741))
             return;
 
-        Balemorale();
-
-        Story.PreLoad(this);
+        Balemorale(seaVoice, coldThunder);
 
         Core.EquipClass(ClassType.Farm);
 
@@ -584,14 +558,12 @@ public class CoreAOR
         Story.KillQuest(9741, "castleeblana", "Warden Indradeep");
     }
 
-    public void Loughshine()
+    public void Loughshine(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9764))
             return;
 
-        Castleeblana();
-
-        Story.PreLoad(this);
+        Castleeblana(seaVoice, coldThunder);
 
         // Wicker Magic (9755)
         Story.MapItemQuest(9755, "loughshine", 13273);
@@ -634,14 +606,12 @@ public class CoreAOR
         }
     }
 
-    public void NaoiseGrave()
+    public void NaoiseGrave(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9777))
             return;
 
-        Loughshine();
-
-        Story.PreLoad(this);
+        Loughshine(seaVoice, coldThunder);
 
         // Till When? (9768)
         Story.MapItemQuest(9768, "naoisegrave", 13296);
@@ -682,14 +652,12 @@ public class CoreAOR
         }
     }
 
-    public void LiaTaraHill()
+    public void LiaTaraHill(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9814))
             return;
 
-        NaoiseGrave();
-
-        Story.PreLoad(this);
+        NaoiseGrave(seaVoice, coldThunder);
 
         // At Ease (9805)
         Story.KillQuest(9805, "liatarahill", "Undead Garde");
@@ -736,14 +704,12 @@ public class CoreAOR
 
     }
 
-    public void CastleGaheris()
+    public void CastleGaheris(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9828))
             return;
 
-        LiaTaraHill();
-
-        Story.PreLoad(this);
+        LiaTaraHill(seaVoice, coldThunder);
 
         // Needs of the Few (9819)
         Story.MapItemQuest(9819, "castlegaheris", 13378);
@@ -787,9 +753,7 @@ public class CoreAOR
         if (Core.isCompletedBefore(9851))
             return;
 
-        CastleGaheris();
-
-        Story.PreLoad(this);
+        CastleGaheris(false, false);
 
         // 9832 | A Friend's Faith
         Story.MapItemQuest(9832, "coldthunder", 13403);
@@ -802,18 +766,14 @@ public class CoreAOR
             ColdThunderBoss("Cold Thunder Defeated");
             Core.EnsureComplete(9833);
         }
-
-        TerminaTemple(coldThunder: true);
     }
 
-    public void ThelimaCity()
+    public void ThelimaCity(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(10356))
             return;
 
-        TerminaTemple(coldThunder: true);
-
-        Story.PreLoad(this);
+        TerminaTemple(seaVoice, coldThunder);
 
         #region Useable Monsters
         string[] UseableMonsters = new[]
@@ -899,14 +859,12 @@ public class CoreAOR
 
     }
 
-    public void MountMaleno()
+    public void MountMaleno(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(10368))
             return;
 
-        ThelimaCity();
-
-        Story.PreLoad(this);
+        ThelimaCity(seaVoice, true);
 
         #region Useable Monsters
         string[] UseableMonsters = new[]
@@ -985,14 +943,12 @@ public class CoreAOR
 
     }
 
-    public void SanctuaryAiwass()
+    public void SanctuaryAiwass(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(10384))
             return;
 
-        MountMaleno();
-
-        Story.PreLoad(this);
+        MountMaleno(seaVoice, coldThunder);
 
         // 10375 - Raw Dove x12 (Dropped by Dove)
         Story.KillQuest(10375, "sanctuaryaiwass", "Dove");
@@ -1062,14 +1018,12 @@ public class CoreAOR
         Story.KillQuest(10384, "sanctuaryaiwass", "Anima Animus Aiwass");
     }
 
-    public void ForgeAlbedo()
+    public void ForgeAlbedo(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(10422))
             return;
 
-        SanctuaryAiwass();
-
-        Story.PreLoad(this);
+        SanctuaryAiwass(seaVoice, coldThunder);
 
         #region Useable Monsters
         string[] UseableMonsters = new[]

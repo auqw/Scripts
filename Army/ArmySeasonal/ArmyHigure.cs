@@ -26,10 +26,11 @@ public class FarmHigure
     private static CoreAdvanced _Adv;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite _sArmy;
 
-    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }    private static CoreAstravia _Astravia;
+    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }
+    private static CoreAstravia _Astravia;
 
     public string OptionsStorage = "ArmyHigure";
     public List<IOption> Options = new()
@@ -50,8 +51,9 @@ private static CoreArmyLite _sArmy;
 
         Core.SetOptions();
 
-        Higure();
-        EndCredits();
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        // Higure();
+        // EndCredits();
 
         Core.SetOptions(false);
     }

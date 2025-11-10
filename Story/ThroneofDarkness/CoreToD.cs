@@ -12,8 +12,10 @@ public class CoreToD
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
 
     bool doAll = false;
 
@@ -116,21 +118,22 @@ public class CoreToD
         Story.KillQuest(4977, "bonecastle", "Skeletal Warrior");
 
         // Moar Loot
-        Story.MapItemQuest(4978, "bonecastle", 4346, 1);
-        Story.MapItemQuest(4978, "bonecastle", 4347, 1);
-        Story.MapItemQuest(4978, "bonecastle", 4348, 1);
+        Story.MapItemQuest(4978, "bonecastle", new[] { 4346, 4347, 4348 });
         Story.KillQuest(4978, "bonecastle", "Skeletal Warrior");
 
         // Putting Your Hands All over Everything
-        Story.MapItemQuest(4979, "bonecastle", 4349, 1);
-        Story.MapItemQuest(4979, "bonecastle", 4350, 1);
-        Story.MapItemQuest(4979, "bonecastle", 4351, 1);
+        Story.MapItemQuest(4979, "bonecastle", new[] { 4349, 4350, 4351 });
         Story.KillQuest(4979, "bonecastle", "Skeletal Warrior");
 
         // Paladin Rock
-        Story.MapItemQuest(4980, "bonecastle", 4354, 1);
-        Story.MapItemQuest(4980, "bonecastle", 4355, 1);
-        Story.KillQuest(4980, "bonecastle", new[] { "Grateful Undead", "That 70's Zombie" });
+        if (!Story.QuestProgression(4980))
+        {
+            Core.EnsureAccept(4980);
+            Story.MapItemQuest(4980, "bonecastle", new[] { 4354, 4355 });
+            Core.HuntMonster("bonecastle", "Grateful Undead", "Song Requested Ticked", 5);
+            Core.HuntMonster("bonecastle", "That 70's Zombie", "Sweet Dancing Shoes", 2);
+            Core.EnsureComplete(4980);
+        }
 
         // Do You Find This Humerus?
         if (!Story.QuestProgression(4981))
@@ -141,7 +144,14 @@ public class CoreToD
         }
 
         // Vaden Says
-        Story.KillQuest(4982, "bonecastle", new[] { "Skeletal Warrior", "Undead Guard", "Undead Knight" });
+        if (!Story.QuestProgression(4982))
+        {
+            Core.EnsureAccept(4982);
+            Core.KillMonster("bonecastle", "Enter", "Spawn", "Yellow, Green");
+            Core.KillMonster("bonecastle", "r3", "Bottom", "Red, Red");
+            Core.KillMonster("bonecastle", "r8", "Left", "Blue, Green, Red");
+            Core.EnsureComplete(4982);
+        }
 
         // The Dead King's Bedroom
         Story.MapItemQuest(4983, "bonecastle", 4352, 1);
@@ -200,7 +210,7 @@ public class CoreToD
         Story.KillQuest(5000, "towersilver", new[] { "Flying Spyball", "Fallen DeathKnight", "Undead Warrior", "Undead Knight", "Undead Guard" });
 
         // Or... Not.
-        Story.MapItemQuest(5001, "towersilver", new[] { 4368, 4369, 4370, 4371, 4372, });
+        Story.MapItemQuest(5001, "towersilver", new[] { 4368, 4369, 4370, 4371, 4372 });
 
         // Mirror, Mirror
         Story.MapItemQuest(5002, "towersilver", 4373, 3);
@@ -303,9 +313,7 @@ public class CoreToD
         Story.KillQuest(5040, "portalmaze", "Time Wraith");
 
         // Where's Twilly?!?
-        Story.MapItemQuest(5041, "portalmaze", 4409, 1);
-        Story.MapItemQuest(5041, "portalmaze", 4408, 1);
-        Story.MapItemQuest(5041, "portalmaze", 4410, 1);
+        Story.MapItemQuest(5041, "portalmaze", new[] { 4408, 4409, 4410 });
 
         // Through the Yulgar Portal!
         Story.KillQuest(5042, "portalmaze", "Time Wraith");
@@ -447,7 +455,7 @@ public class CoreToD
         Story.KillQuest(5095, "baconcat", new[] { "Fart Elemental", "Litter Elemental" });
 
         // King Strong
-        Story.KillQuest(5096, "baconcat", new[] { "Box", "King Strong", "King Strong" });
+        Story.KillQuest(5096, "baconcat", new[] { "King Strong", "Box", "King Strong" });
 
         // Snack Man!
         Story.MapItemQuest(5097, "baconcat", 4469, 4);
@@ -734,7 +742,7 @@ public class CoreToD
             Farm.DeathPitToken(quant: 15);
             Core.EnsureComplete(5156);
         }
-        
+
         // Pummel For Hun'Gar
         if (!Story.QuestProgression(5157))
         {

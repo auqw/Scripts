@@ -1118,7 +1118,7 @@ public class CoreArmyLite
     #endregion
     #region OneClient
 
-    public bool doForAll(bool randomServers = false)
+    public bool doForAll()
     {
         if (Bot.ShouldExit || _doForAllIndex >= (doForAllAccountDetails ??= readManager()).Length)
             return false;
@@ -1144,18 +1144,13 @@ public class CoreArmyLite
             Bot.Servers.Login(name, pass);
             Core.Sleep(3000);
 
-            var availableServers = randomServers
-        ? Bot.Servers.ServerList
-            .Where(x => !BlacklistedServers.Contains(x.Name.ToLower()) && !x.Upgrade && x.Online)
-            .ToList() // Convert to List<Server> to match CachedServers
-        : Bot.Servers.CachedServers;
+            Server[] availableServers = ServerList
+              .Where(x => !BlacklistedServers.Contains(x.Name.ToLower()) && (Core.IsMember || !x.Upgrade) && x.Online)
+              .ToArray();
 
-
-            if (availableServers.Count > 0)
+            if (availableServers.Length > 0)
             {
-                var targetServer = randomServers
-                    ? availableServers[Bot.Random.Next(0, Math.Min(availableServers.Count, 5))]
-                    : availableServers.First(x => x.Name == Bot.Options.ReloginServer);
+                var targetServer = availableServers.First(x => x.Name == Bot.Options.ReloginServer);
 
                 Bot.Servers.Connect(targetServer);
             }
@@ -1181,98 +1176,67 @@ public class CoreArmyLite
 
         return true;
 
-        // Improved readManager method
         (string, string)[] readManager()
         {
-            string dirPath = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                "Skua.Manager");
-
-            if (!Directory.Exists(dirPath))
-            {
-                Core.Logger($"No folders found at {dirPath}. Add accounts using The `Skua Manager` app, Opening now." +
-                "(if the manager does not appear, in the bottom right of your screen click the `^`, and find the `Skua Manager` icon," +
-                "Right click the icon, and click \"Show Manager\")", "AccountManager", true, true);
-                Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
-                return Array.Empty<(string, string)>();
-            }
-
-            string[] dirs = Directory.GetDirectories(dirPath, Bot.Version.ToString(), SearchOption.AllDirectories);
-
-            if (dirs.Length == 0)
-            {
-                dirs = Directory.GetDirectories(dirPath, "1.2.3.0", SearchOption.AllDirectories);
-                if (dirs.Length == 0)
-                    dirs = Directory.GetDirectories(dirPath, "1.2.2.1", SearchOption.AllDirectories);
-            }
-
-            if (dirs.Length != 1)
-            {
-                if (dirs.Length == 0)
-                {
-                    Core.Logger("Found no Folders for `Skua.Manager`, add accounts using The `Skua Manager` app. (Opening now)", "AccountManager", true, true);
-                    Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
-                }
-                if (dirs.Length > 1)
-                {
-                    Core.Logger("Found multiple Folders for `Skua.Manager`," +
-                    "Please delete the ones you don't want to use (if you're not sure, find the folder with the 1.2.4 version inside, you can remove the rest.)" +
-                    "Opening Appdata folder now.", "AccountManager", true, true);
-                    Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Skua.Manager"));
-                }
-                return Array.Empty<(string, string)>();
-            }
-
-            var xml = new XmlDocument();
-            string configPath = Path.Combine(dirs[0], "user.config");
-
-            try
-            {
-                xml.Load(configPath);
-            }
-            catch (Exception ex)
-            {
-                Core.Logger($"Failed to load user.config: {ex.Message}", "AccountManager", true, true);
-                return Array.Empty<(string, string)>();
-            }
-
             List<(string, string)> toReturn = new();
+
             try
             {
-                dynamic[] dyn = JsonConvert.DeserializeObject<dynamic[]>(
-                    JsonConvert.DeserializeObject<dynamic>(
-                        JsonConvert.SerializeXmlNode(xml))!
-                    .configuration
-                    .userSettings
-                    ["Skua.Manager.Properties.Settings"]
-                    .setting.ToString()
-                );
+                string settingsPath = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "Skua",
+                    "skua.settings.json");
 
-                foreach (var d in dyn)
+                if (!File.Exists(settingsPath))
                 {
-                    if (d["@name"] == "ManagedAccounts" && d["value"].ArrayOfString["string"] != null)
+                    Core.Logger("No skua.settings.json file found. Add accounts using The `Skua Manager` app.", "AccountManager", true);
+                    Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
+                    Bot.Stop(true);
+                    return Array.Empty<(string, string)>();
+                }
+
+                string json = File.ReadAllText(settingsPath);
+                var settings = JsonConvert.DeserializeObject<dynamic>(json);
+
+                IEnumerable<dynamic> managedAccounts = (settings?.manager?.ManagedAccounts as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
+                if (!managedAccounts.Any())
+                {
+                    Core.Logger("No managed accounts found in skua.settings.json. Add accounts using The `Skua Manager` app.", "AccountManager", true);
+                    Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
+                    Bot.Stop(true);
+                    return Array.Empty<(string, string)>();
+                }
+
+                foreach (var account in managedAccounts)
+                {
+                    try
                     {
-                        string[] accs = JsonConvert.DeserializeObject<string[]>(d["value"].ArrayOfString["string"].ToString());
-                        foreach (string acc in accs)
+                        string accountStr = account.ToString();
+                        string[] parts = accountStr.Split(new[] { "{=}" }, StringSplitOptions.None);
+
+                        if (parts.Length >= 3)
                         {
-                            string[] info = acc.Split("{=}");
-                            if (info.Length == 3)
-                                toReturn.Add((info[1], info[2]));
+                            string username = parts[1].Trim();
+                            string password = parts[2].Trim();
+
+                            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+                                toReturn.Add((username, password));
                         }
-                        break;
+                    }
+                    catch
+                    {
+                        continue;
                     }
                 }
             }
             catch (Exception ex)
             {
-                Core.Logger($"Failed to parse accounts: {ex.Message}", "AccountManager", true, true);
+                Core.Logger($"Failed to read accounts from skua.settings.json: {ex.Message}", "AccountManager", true, true);
             }
 
             if (toReturn.Count <= 0)
             {
-                Core.Logger("No accounts found. Add accounts using The `Skua Manager` app, Opening now." +
-                "(if the manager does not appear, in the bottom right of your screen click the `^`, and find the `Skua Manager` icon," +
-                "Right click the icon, and click \"Show Manager\")", "AccountManager", true);
+                Core.Logger("No valid accounts found. Add accounts using The `Skua Manager` app.", "AccountManager", true);
                 Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
                 Bot.Stop(true);
             }
@@ -1722,6 +1686,14 @@ public class CoreArmyLite
         string[] MemMaps = { "shadowlordpast", "binky", "superlowe" };
         string[] EventMaps = Array.Empty<string>();
 
+        // Map and quests to use to see the boss without doing the story
+        (string Map, int QuestUpdate)[] UpdateQuest = new[]
+        {
+        ("ultradrakath", 3879),
+        ("bocklincastle", 102520),
+        ("bocklingrove", 10239)
+        };
+
         var levelLockedMaps = new[]
         {
         new { Map = "icestormunder", LevelRequired = 75 },
@@ -1845,6 +1817,30 @@ public class CoreArmyLite
         }
         else
         {
+            foreach ((string Map, int QuestUpdate) in UpdateQuest)
+            {
+                if (Bot.ShouldExit)
+                    return;
+
+                if (Bot.Map.Name != Map)
+                {
+                    Bot.Map.Join($"{Map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Wait.ForMapLoad(Map);
+                }
+
+                Core.Sleep();
+
+                if (QuestUpdate > 0)
+                    Bot.Quests.UpdateQuest(QuestUpdate);
+
+                if (b_playerName != null && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(b_playerName))
+                {
+                    Core.Logger($"Found {b_playerName} in /{Map}");
+                    return;
+                }
+                maptry++;
+            }
+
             foreach (string map in _LockedMapsList)
             {
                 if (Bot.ShouldExit || LockedMapList.Count <= 0)

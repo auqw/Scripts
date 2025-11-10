@@ -21,14 +21,16 @@ public class ArmyBlackSmithRep
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
 
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "ArmyBlackSmithRep";
@@ -49,11 +51,11 @@ private static CoreArmyLite _sArmy;
     {
         Core.BankingBlackList.AddRange(new[] { "Creature Shard", "Monster Trophy", "Hydra Scale Piece" });
 
-        Core.OneTimeMessage("Urgent", "Please Make sure your goto is on in ingame settings so the buttlering system works properly [turn it back off after your done armying please.]", forcedMessageBox: true);
+        // Core.OneTimeMessage("Urgent", "Please Make sure your goto is on in ingame settings so the buttlering system works properly [turn it back off after your done armying please.]", forcedMessageBox: true);
 
         Core.SetOptions();
-
-        Setup();
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        // Setup();
 
         Core.SetOptions(false);
     }

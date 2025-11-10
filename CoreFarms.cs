@@ -26,22 +26,6 @@ public class CoreFarms
     // [Can Change] Use boosts on Experience farming
     public bool doExpBoost { get; set; } = false;
 
-    // Thousand-level Constants
-    const int OneK = 1000;        // 1k
-    const int TenK = 10000;       // 10k
-    const int OneHundredK = 100000; // 100k
-    const int FiveHundredK = 500000; // 500k
-
-    // Million-level Constants
-    const int OneMillion = 1000000;   // 1m
-    const int FiveMillion = 5000000;  // 5m
-    const int TenMillion = 10000000;  // 10m
-    const int FiftyMillion = 50000000; // 50m
-    const int OneHundredMillion = 100000000; // 100m
-
-    //Max integer
-    const int maxint = Int32.MaxValue;
-
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
@@ -50,83 +34,6 @@ public class CoreFarms
         Core.RunCore();
     }
 
-    // public void ToggleBoost(BoostType type, bool enabled = true)
-    // {
-    //     if (enabled)
-    //     {
-    //         if (Core.CBOBool("doGoldBoost", out bool _doGoldBoost))
-    //             doGoldBoost = _doGoldBoost;
-    //         if (Core.CBOBool("doClassBoost", out bool _doClassBoost))
-    //             doClassBoost = _doClassBoost;
-    //         if (Core.CBOBool("doRepBoost", out bool _doRepBoost))
-    //             doRepBoost = _doRepBoost;
-    //         if (Core.CBOBool("doExpBoost", out bool _doExpBoost))
-    //             doExpBoost = _doExpBoost;
-
-    //         switch (type)
-    //         {
-    //             case BoostType.Gold:
-    //                 if (!doGoldBoost || Bot.Boosts.UseGoldBoost || Bot.Player.Gold >= 100000000)
-    //                     return;
-    //                 Bot.Boosts.SetGoldBoostID();
-    //                 Bot.Boosts.UseGoldBoost = true;
-    //                 break;
-
-    //             case BoostType.Class:
-    //                 if (!doClassBoost || Bot.Boosts.UseClassBoost)
-    //                     return;
-    //                 Bot.Boosts.SetClassBoostID();
-    //                 Bot.Boosts.UseClassBoost = true;
-    //                 break;
-
-    //             case BoostType.Reputation:
-    //                 if (!doRepBoost || Bot.Boosts.UseReputationBoost)
-    //                     return;
-    //                 Bot.Boosts.SetReputationBoostID();
-    //                 Bot.Boosts.UseReputationBoost = true;
-    //                 break;
-
-    //             case BoostType.Experience:
-    //                 if (!doExpBoost || Bot.Boosts.UseExperienceBoost || Bot.Player.Level == 100)
-    //                     return;
-    //                 Bot.Boosts.SetExperienceBoostID();
-    //                 Bot.Boosts.UseExperienceBoost = true;
-    //                 break;
-    //         }
-    //         Bot.Boosts.Start();
-    //     }
-    //     else
-    //     {
-    //         switch (type)
-    //         {
-    //             case BoostType.Gold:
-    //                 if (!Bot.Boosts.UseGoldBoost)
-    //                     return;
-    //                 Bot.Boosts.UseGoldBoost = false;
-    //                 break;
-
-    //             case BoostType.Class:
-    //                 if (!Bot.Boosts.UseClassBoost)
-    //                     return;
-    //                 Bot.Boosts.UseClassBoost = false;
-    //                 break;
-
-    //             case BoostType.Reputation:
-    //                 if (!Bot.Boosts.UseReputationBoost)
-    //                     return;
-    //                 Bot.Boosts.UseReputationBoost = false;
-    //                 break;
-
-    //             case BoostType.Experience:
-    //                 if (!Bot.Boosts.UseExperienceBoost)
-    //                     return;
-    //                 Bot.Boosts.UseExperienceBoost = false;
-    //                 break;
-    //         }
-    //         if (new[] { Bot.Boosts.UseGoldBoost, Bot.Boosts.UseClassBoost, Bot.Boosts.UseReputationBoost, Bot.Boosts.UseExperienceBoost }.All(on => !on))
-    //             Bot.Boosts.Stop();
-    //     }
-    // }
     /// <summary>
     /// Enables or disables a specified boost based on the provided <see cref="BoostType"/> and the user's CBO settings.
     /// </summary>
@@ -924,7 +831,7 @@ public class CoreFarms
             }
             else
             {
-                if (Bot.Player.Gold < OneHundredMillion)
+                if (Bot.Player.Gold < 100000000)
                     ToggleBoost(BoostType.Gold);
 
                 Core.RegisterQuests(3991, 3992);
@@ -1905,7 +1812,7 @@ public class CoreFarms
 
                     // Calculate exact gold needed for this transaction
 
-                    int goldNeeded = itemsToBuy * FiveHundredK;
+                    int goldNeeded = itemsToBuy * 500000;
                     Core.Logger($"Gold Needed for {itemsToBuy} vouchers: {goldNeeded}");
 
                     // Only farm as much gold as needed for this batch
@@ -3863,45 +3770,51 @@ public class CoreFarms
         }
     }
 
-    public void GetBoost(int itemID, string boostName, int BoostQuant, int quest, bool doOnce = false)
+    /// <summary>
+    /// Farms either the <c>XP Boost! (10 min)</c> (quest 1614) or 
+    /// <c>REPUTATION Boost! (10 min)</c> (quest 1615) up to <paramref name="quantity"/>.
+    /// </summary>
+    /// <param name="type">"XP" or "REP".</param>
+    /// <param name="quantity">Number of boosts to collect. Default is 1.</param>
+    /// <param name="doOnce">If true, completes the quest once regardless of inventory.</param>
+    /// <remarks>
+    /// Ensures Fishing Rank ≥2, completes prerequisites, handles all quest logic, 
+    /// and trashes Fishing Bait and Dynamite after farming.
+    /// </remarks>
+    public void GetBoost(string type, int quantity = 1, bool doOnce = false)
     {
-        //Ensure Rank 2 > fishing rep
-        FishingREP(2, false, false, false);
+        int quest = type.Equals("XP", StringComparison.OrdinalIgnoreCase) ? 1614 : 1615;
+        int itemID = quest == 1614 ? 10850 : 10997;
+        string boostName = quest == 1614 ? "XP Boost! (10 min)" : "REPUTATION Boost! (10 min)";
 
         ItemBase? boostItem = Core.EnsureLoad(quest)?.Rewards.Find(x => x.Name == boostName);
-        if (boostItem != null && Core.CheckInventory(boostItem?.Name, BoostQuant) && !doOnce) return;
+        if (boostItem != null && Core.CheckInventory(boostItem.Name, quantity) && !doOnce) return;
 
-        Core.FarmingLogger(boostName, BoostQuant); // Use boostName directly
-        Core.AddDrop("Fishing Dynamite", boostItem?.Name ?? "DefaultItemName");
+        Core.FarmingLogger(boostName, quantity);
+        Core.AddDrop("Fishing Dynamite", boostItem?.Name ?? boostName);
         Core.EquipClass(ClassType.Farm);
+        if (FactionRank("Fishing") < 2) FishingREP(2, false, false, false);
 
-        string itemName = boostItem?.Name ?? Core.EnsureLoad(quest)?.Rewards.Find(x => x.ID == itemID)?.Name ?? "DefaultItemName";
-        while (!Bot.ShouldExit && (boostItem == null || (boostItem != null && !Core.CheckInventory(boostItem?.Name, BoostQuant)) || doOnce))
+        if (!Core.isCompletedBefore(1615))
         {
-            // Unlock the quest if not completed before (only for quest 1615)
-            if (!Core.isCompletedBefore(1615))
-            {
-                Core.EnsureAccept(1614);
-                GetFish(10850, 30, 1614);
-                Core.HuntMonster("Greenguardwest", "Slime", "Slime Sauce", log: false);
-                Core.EnsureComplete(1614);
-            }
+            Core.EnsureAccept(1614);
+            GetFish(10850, 30, 1614);
+            Core.HuntMonster("Greenguardwest", "Slime", "Slime Sauce", log: false);
+            Core.EnsureComplete(1614);
+        }
 
+        while (!Bot.ShouldExit && (!Core.CheckInventory(boostName, quantity) || doOnce))
+        {
             Core.EnsureAccept(quest);
-
             GetFish(itemID, quest == 1614 ? 30 : 5, quest);
-
             if (quest == 1614)
                 Core.KillMonster("greenguardwest", "West4", "Right", "Slime", "Slime Sauce");
-            else if (quest == 1615)
-                Core.HuntMonster("Greenguardwest", "Frogzard", "Greenguard Seal", log: false);
+            else Core.HuntMonster("Greenguardwest", "Frogzard", "Greenguard Seal", log: false);
             Bot.Wait.ForPickup(quest == 1614 ? "Slime Sauce" : "Greenguard Seal");
-
             Core.EnsureComplete(quest);
         }
 
         if (!doOnce) Core.TrashCan(new[] { "Fishing Bait", "Fishing Dynamite" });
-        Core.CancelRegisteredQuests();
     }
 
 

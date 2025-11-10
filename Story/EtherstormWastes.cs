@@ -254,7 +254,7 @@ public class EtherStormWastes
         Story.MapItemQuest(1573, "airstorm", 823, 10);
 
         //There's Magic Every-Air 1574
-        Story.KillQuest(1574, "airstorm", new[] { "Air Crystal", "KingCrystal" });
+        Story.KillQuest(1574, "airstorm", new[] { "KingCrystal", "Air Crystal" });
 
         //Dragon's Fire Blossom to be Found 1575
         Story.MapItemQuest(1575, "firestorm", 824, 12);

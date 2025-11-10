@@ -19,25 +19,22 @@ public class ArmyEldersBlood
     private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }
     private static CoreDailies _Dailies;
 
-    public bool DontPreconfigure = true;
-    public string OptionsStorage = "ArmyEldersBlood";
-    public List<IOption> Options = new()
-    {
-        new Option<bool>("randomServers", "Random Servers", "Should the bot use a random server each for each account.", true),
-    };
-
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
 
-        EldersBlood(Bot.Config!.Get<bool>("randomServers"));
+        EldersBlood();
 
         Core.SetOptions(false);
     }
 
-    public void EldersBlood(bool randomServers)
+    public void EldersBlood()
     {
-        while (!Bot.ShouldExit && Army.doForAll(randomServers))
+        while (!Bot.ShouldExit && Army.doForAll())
+        {
+            if (Bot.Inventory.FreeSlots <= 0)
+                continue;
             Dailies.EldersBlood();
+        }
     }
 }

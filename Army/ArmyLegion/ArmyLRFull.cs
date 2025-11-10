@@ -115,10 +115,7 @@ public class ArmyLR
         Core.BankingBlackList.AddRange(LRMaterials.Concat(LF1).Concat(LF2).Concat(LF3).Concat(legionMedals));
         Core.SetOptions();
 
-        Core.Logger("This script has been disabled by the author as it is not working as intended. " +
-     "Please use the Solo version of this script instead.\n" +
-     $"Location: {Path.Combine(ClientFileSources.SkuaScriptsDIR, @"Legion\Revenant\0LegionRevenant.cs")}");
-        // LR();
+        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
 
         Core.SetOptions(false);
     }

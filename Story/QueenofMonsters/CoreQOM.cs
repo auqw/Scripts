@@ -12,8 +12,10 @@ public class CoreQOM
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -303,7 +305,7 @@ public class CoreQOM
         Story.MapItemQuest(5496, "LycanInvasion", 4900);
 
         //The Best Way To Slay An Infernal
-        Story.KillQuest(5497, "LycanInvasion", new[] { "Fallen Knight", "Infernal Knight" });
+        Story.KillQuest(5497, "LycanInvasion", new[] { "Infernal Knight", "Fallen Knight" });
 
         //A Dire Situation
         Story.KillQuest(5498, "LycanInvasion", "Dire Wolf");
@@ -320,7 +322,7 @@ public class CoreQOM
         Story.KillQuest(5501, "SafiriaInvasion", "Fallen Knight");
 
         //Revenant Slayer
-        Story.KillQuest(5502, "SafiriaInvasion", new[] { "Revenant", "Shadow Imp" });
+        Story.KillQuest(5502, "SafiriaInvasion", new[] { "Shadow Imp", "Revenant" });
 
         //Noddharath
         Story.KillQuest(5503, "SafiriaInvasion", "Noddharath");
@@ -408,7 +410,13 @@ public class CoreQOM
         Story.PreLoad(this);
 
         //Stand for Swordhaven
-        Story.KillQuest(5575, "safiriainvasion", new[] { "Fallen Knight", "Infernal Knight" });
+        if (!Story.QuestProgression(5575))
+        {
+            Core.EnsureAccept(5575);
+            Core.KillMonster("safiriainvasion", "r4", "Left", "Fallen Knight", "Fallen Knight's Armor");
+            Core.KillMonster("safiriainvasion", "r4", "Left", "Infernal Knight", "Infernal Knight's Armor");
+            Core.EnsureComplete(5575);
+        }
 
         //Use Their Energy Against Them
         Story.KillQuest(5576, "shadowfallinvasion", "Nethermage");
@@ -702,7 +710,12 @@ public class CoreQOM
         Story.KillQuest(6285, "guardiantree", "Myconid");
 
         //Take Down Terrane
-        Story.KillQuest(6286, "guardiantree", "Terrane");
+        if (!Story.QuestProgression(6286))
+        {
+            Core.EnsureAccept(6286);
+            Core.KillMonster("guardiantree", "r12", "Left", "Terrane");
+            Core.EnsureComplete(6286);
+        }
         if (TerraneMerge)
             return;
 

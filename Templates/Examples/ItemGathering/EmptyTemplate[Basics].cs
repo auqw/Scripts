@@ -29,7 +29,7 @@ public class DefaultTemplate
     public void ScriptMain(IScriptInterface Bot)
     {
         // Core.BankingBlackList.AddRange(new[] { "item1", "Item2", "Etc" });
-        Core.SetOptions();
+        Core.SetOptions(disableClassSwap: true);
 
         Example();
 
@@ -39,7 +39,7 @@ public class DefaultTemplate
     public void Example(bool TestMode = false)
     {
         // Test Area vv
-        
+
         // Test Area ^^
 
         // Optional Test Mode

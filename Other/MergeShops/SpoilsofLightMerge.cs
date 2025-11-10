@@ -15,15 +15,18 @@ public class SpoilsofLightMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
 
     public bool DontPreconfigure = true;
@@ -82,34 +85,16 @@ public static CoreAdvanced _sAdv;
                 case "Apprentice of the Light Locks":
                 case "Citadel's Light Blade":
                 case "Medal of Light":
-                    Core.EquipClass(ClassType.Farm);
-                    Core.AddDrop(req.ID);
-                    Core.FarmingLogger(req.Name, req.Quantity); 
-                    Core.RegisterQuests(6560, 6561);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
-                        Core.KillMonster("lightguardwar", "r2", "Left", "Citadel Crusader");
-                    Bot.Wait.ForPickup(req.Name);
-                    Core.CancelRegisteredQuests();
-                    break;
-
                 case "Medal of Honor":
-                    Core.EquipClass(ClassType.Farm);
-                    Core.AddDrop(req.ID);
-                    Core.FarmingLogger(req.Name, req.Quantity);
-                    Core.RegisterQuests(6562, 6563);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
-                        Core.KillMonster("lightguardwar", "r2", "Left", "Citadel Crusader");
-                    Bot.Wait.ForPickup(req.Name);
-                    Core.CancelRegisteredQuests();
-                    break;
-
                 case "Medal of Justice":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
                     Core.FarmingLogger(req.Name, req.Quantity);
-                    Core.RegisterQuests(6566);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
-                        Core.KillMonster("lightguardwar", "r2", "Left", "Citadel Crusader");
+
+                    // Combine all relevant quest IDs into one registration
+                    Core.RegisterQuests(6560, 6561, 6562, 6563, 6566);
+                    Core.KillMonster("lightguardwar", "r2", "Left", "Citadel Crusader", req.Name, req.Quantity, isTemp: req.Temp);
+
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;

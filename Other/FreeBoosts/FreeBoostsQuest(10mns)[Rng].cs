@@ -14,7 +14,8 @@ public class FreeBoosts
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public static CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
 
     public string OptionsStorage = "Booster";
     public bool DontPreconfigure = true;
@@ -33,13 +34,18 @@ public class FreeBoosts
         Core.SetOptions(false);
     }
 
-    public void GetBoostsSelect(int GoldBoostQuant, int ClassBoostQuant, int RepBoostQuant)
+    public void GetBoostsSelect(int GoldBoostQuant = 9999, int ClassBoostQuant = 9999, int RepBoostQuant = 9999)
     {
         Core.AddDrop("GOLD Boost! (10 min)", "CLASS Boost! (10 min)", "REPUTATION Boost! (10 min)");
-        Core.Logger("Drops are \"randomly\" received, and may take a while... be prepared if quantities are high.");
-        Core.FarmingLogger("GOLD Boost! (10 min)", GoldBoostQuant);
-        Core.FarmingLogger("CLASS Boost! (10 min)", ClassBoostQuant);
-        Core.FarmingLogger("REPUTATION Boost! (10 min)", RepBoostQuant);
+        Core.OneTimeMessage("RNG Quest Rewards", "Drops are \"randomly\" received, and may take a while... be prepared if quantities are high.");
+
+        if (!Core.CheckInventory("GOLD Boost! (10 min)", GoldBoostQuant))
+            Core.FarmingLogger("GOLD Boost! (10 min)", GoldBoostQuant);
+        if (!Core.CheckInventory("CLASS Boost! (10 min)", ClassBoostQuant))
+            Core.FarmingLogger("CLASS Boost! (10 min)", ClassBoostQuant);
+        if (!Core.CheckInventory("REPUTATION Boost! (10 min)", RepBoostQuant))
+            Core.FarmingLogger("REPUTATION Boost! (10 min)", RepBoostQuant);
+
         Core.EquipClass(ClassType.Farm);
 
         bool allQuantitiesMet = Core.CheckInventory("GOLD Boost! (10 min)", GoldBoostQuant) &&
@@ -49,10 +55,9 @@ public class FreeBoosts
         while (!Bot.ShouldExit && !allQuantitiesMet)
         {
             Core.HuntMonsterQuest(6208,
-("bloodtusk", "Trollola Plant", ClassType.Solo),
+        ("bloodtusk", "Trollola Plant", ClassType.Solo),
         ("cloister", "Acornent", ClassType.Farm),
-        ("nibbleon", "Dark Makai", ClassType.Farm)
-);
+        ("nibbleon", "Dark Makai", ClassType.Farm));
 
             if (allQuantitiesMet)
                 break; // Exit the loop when all quantities are met.

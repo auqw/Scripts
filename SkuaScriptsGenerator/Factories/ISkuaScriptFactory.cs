@@ -1,9 +1,8 @@
 ﻿using SkuaScriptsGenerator.Generators;
 
-namespace SkuaScriptsGenerator.Factories
+namespace SkuaScriptsGenerator.Factories;
+
+public interface ISkuaScriptFactory
 {
-    public interface ISkuaScriptFactory
-    {
-        ISkuaScriptWriter Generate(string type);
-    }
+    ISkuaScriptWriter Generate(string type);
 }

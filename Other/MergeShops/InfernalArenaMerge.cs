@@ -77,14 +77,14 @@ public class InfernalArenaMerge
                 case "Champion's Seal":
                 case "Tainted Dagger of Na'al":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.BossClass(Core.CheckInventory("Chaos Avenger") ? "Chaos Avenger" : Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
+                    Core.UseBossClass(Core.CheckInventory("Chaos Avenger") ? "Chaos Avenger" : Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
                     Core.HuntMonster("infernalarena", "Na'al", req.Name, quant, false, false);
                     break;
 
                 case "Cervus Dente":
                     Core.FarmingLogger(req.Name, quant);
                     if (Core.CheckInventory(new[] { "Legion DoomKnight", "Classic Legion DoomKnight" }, any: true))
-                        Core.BossClass(Core.CheckInventory("Legion DoomKnight") ? "Legion DoomKnight" : "Classic Legion DoomKnight");
+                        Core.UseBossClass(Core.CheckInventory("Legion DoomKnight") ? "Legion DoomKnight" : "Classic Legion DoomKnight");
                     Core.HuntMonster("infernalarena", "Cervus Malus", req.Name, quant, false, false);
                     break;
 
@@ -103,18 +103,18 @@ public class InfernalArenaMerge
 
                 case "Infernal Incantation":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.BossClass("Dragon of Time");
+                    Core.UseBossClass("Dragon of Time");
                     Core.HuntMonster("infernalarena", "Key of Sholemoh", req.Name, quant, false, false);
                     break;
 
                 case "Scythe Shard":
-                    Core.DodgeClass("Lord Of Order");
+                    Core.UseDodgeClass("Lord Of Order");
                     Core.HuntMonster("infernalarena", "Azalith's Scythe", req.Name, quant, false, false);
                     break;
 
                 case "Duo's Dinner":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.BossClass();
+                    Core.UseBossClass();
                     Core.HuntMonster("infernalarena", "Deadly Duo", req.Name, quant, false, false);
                     break;
 
