@@ -3917,7 +3917,7 @@ public class CoreBots
                     Bot.Wait.ForCellChange(targetMonster?.Cell ?? "Enter");
                     Bot.Player!.SetSpawnPoint();
                 }
-                if (!Bot.Player.HasTarget && targetMonster != null)
+                if (!Bot.Player!.HasTarget && targetMonster != null)
                     Bot.Combat.Attack(targetMonster.Name);
 
                 if (!Bot.Player.HasTarget)
@@ -4021,7 +4021,7 @@ public class CoreBots
                     Bot.Wait.ForCellChange(target!.Cell);
                 }
 
-                if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
+                if (!Bot.Player!.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
                     Bot.Combat.Attack(target!.MapID);
 
                 Sleep();
@@ -4053,7 +4053,7 @@ public class CoreBots
                     Bot.Wait.ForCellChange(target!.Cell);
                 }
 
-                if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
+                if (!Bot.Player!.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
                     Bot.Combat.Attack(target!.MapID);
 
                 Sleep();

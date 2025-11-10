@@ -17,7 +17,7 @@ public class CoreUltra
     public void Test()
         => Bot.Log("NewCore interface OK!");
 
-    public void Taunt(string className, string target, string mode, int delayMs = 0, string aura = null)
+    public void Taunt(string className, string target, string mode, int delayMs = 0, string? aura = null)
     {
         if (string.IsNullOrWhiteSpace(className) ||
             string.IsNullOrWhiteSpace(target))
@@ -82,7 +82,6 @@ public class CoreUltra
 
         var t = Bot.Player.Target;
         if (t == null) return;
-        if (t.HP == null) return;
         if (t.HP <= 0) return;
         if (t.MaxHP <= 0) return;
 
@@ -122,7 +121,7 @@ public class CoreUltra
         if (Bot == null || Bot.Combat == null || Bot.Player == null) return;
         Bot.Combat.Attack("Champion Drakath");
         var dummy = Bot.Player.Target;
-        if (dummy == null || dummy.HP == null || dummy.HP <= 0) return;
+        if (dummy == null || dummy.HP <= 0) return;
 
         int[] bands = { 90, 80, 70, 60, 50, 40, 30, 20, 10 };
         double wiggle = 1.5;
@@ -130,7 +129,7 @@ public class CoreUltra
         double oldPct = 100.0;
         long oldTicks = 0;
 
-        object tmp = AppDomain.CurrentDomain.GetData("drakath.lastThreshold");
+        object? tmp = AppDomain.CurrentDomain.GetData("drakath.lastThreshold");
         if (tmp != null) lastBand = (int)tmp;
 
         tmp = AppDomain.CurrentDomain.GetData("drakath.prevPercentage");
@@ -200,7 +199,11 @@ public class CoreUltra
                 try
                 {
                     var full = Path.Combine(spot, path);
-                    Directory.CreateDirectory(Path.GetDirectoryName(full));
+                    var dir = Path.GetDirectoryName(full);
+                    if (!string.IsNullOrEmpty(dir))
+                        Directory.CreateDirectory(dir);
+                    else
+                        Bot.Log("Failed to create directory for sync file.");
                     File.AppendAllText(full, "");
                     return full;
                 }
@@ -224,7 +227,7 @@ public class CoreUltra
                 }
                 catch (IOException)
                 {
-                    Bot.Sleep(50);
+                    Bot?.Sleep(50);
                 }
                 catch
                 {
@@ -239,7 +242,7 @@ public class CoreUltra
             for (int i = 0; i < 15; i++)
             {
                 try { File.WriteAllLines(path, lines); return; }
-                catch (IOException) { Bot.Sleep(50); }
+                catch (IOException) { Bot?.Sleep(50); }
                 catch { return; }
             }
         }
@@ -262,7 +265,11 @@ public class CoreUltra
         {
             if (!File.Exists(syncFile))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(syncFile));
+                var dir = Path.GetDirectoryName(syncFile);
+                if (!string.IsNullOrEmpty(dir))
+                    Directory.CreateDirectory(dir);
+                else
+                    Bot.Log("Failed to create directory for sync file.");
                 File.WriteAllText(syncFile, "");
             }
             else if ((DateTime.UtcNow - File.GetLastWriteTimeUtc(syncFile)).TotalMinutes > 15
@@ -284,28 +291,27 @@ public class CoreUltra
         //     if (timeoutMs > 0 && clock.ElapsedMilliseconds >= timeoutMs) break;
         //     Bot.Sleep(tickMs);
         // }
-        if (Bot.ShouldExit) { try { File.WriteAllText(syncFile, ""); } catch { } return; }
-
+        if (Bot?.ShouldExit == true) { try { File.WriteAllText(syncFile, ""); } catch { } return; }
         // Poke(syncFile, me, true);
 
-        while (!Bot.ShouldExit)
+        while (!Bot?.ShouldExit == true)
         {
             int ready = HowMany(syncFile);
             if (ready >= need) break;
             if (ready < need) Poke(syncFile, me, true);
-            Bot.Sleep(tickMs);
+            Bot?.Sleep(tickMs);
         }
-        if (Bot.ShouldExit) { try { File.WriteAllText(syncFile, ""); } catch { } return; }
+        if (Bot?.ShouldExit == true) { try { File.WriteAllText(syncFile, ""); } catch { } return; }
 
         var spam = DateTime.UtcNow.AddMilliseconds(2000);
-        while (DateTime.UtcNow < spam && !Bot.ShouldExit)
+        while (DateTime.UtcNow < spam && !Bot?.ShouldExit == true)
         {
-            Bot.Skills.UseSkill(3); Bot.Sleep(300);
-            Bot.Skills.UseSkill(2); Bot.Sleep(300);
-            Bot.Skills.UseSkill(1); Bot.Sleep(300);
+            Bot?.Skills.UseSkill(3); Bot?.Sleep(300);
+            Bot?.Skills.UseSkill(2); Bot?.Sleep(300);
+            Bot?.Skills.UseSkill(1); Bot?.Sleep(300);
         }
 
-        Bot.Sleep(bufferTimeMs);
+        Bot?.Sleep(bufferTimeMs);
         try { File.WriteAllText(syncFile, ""); } catch { }
     }
 
