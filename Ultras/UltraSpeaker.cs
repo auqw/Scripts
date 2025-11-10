@@ -52,7 +52,7 @@ public class UltraSpeaker
     private static CoreBots CoreBot => CoreBots.Instance;
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
-    string className = null;
+    string? className = null;
     private bool inZone = false;
     private int timeWait;
     private bool forceSkill = false;
@@ -75,7 +75,7 @@ public class UltraSpeaker
         Bot.Events.ExtensionPacketReceived -= UltraSpeakerListener;
         Bot.Stop();
 
-        bool OnScriptStopping(Exception e)
+        bool OnScriptStopping(Exception? e)
         {
             Bot.Events.ExtensionPacketReceived -= UltraSpeakerListener;
             return true;
@@ -157,7 +157,6 @@ public class UltraSpeaker
             {
                 case "event":
                     string zone = data.args?["zoneSet"]!;
-                    string currentClass2 = Bot.Player.CurrentClass?.Name;
                     // Core.Log("ZONE", $"THE ZONE IS {zone}");
                     if (zone is not null && zone == "A" && className == "legion revenant")
                     {
@@ -173,7 +172,7 @@ public class UltraSpeaker
                         return;
                     foreach (var a in anims)
                     {
-                        string msg = (a as dynamic)?.msg?.ToString();
+                        string? msg = (a as dynamic)?.msg?.ToString();
                         if (!string.IsNullOrEmpty(msg))
                         {
                             if (msg.ToLower().Contains("listen") || msg.ToLower().Contains("truth"))
@@ -209,7 +208,7 @@ public class UltraSpeaker
 
     private int speakerCounter = 0;
 
-    private (string, string, string, int) whatAction()
+    private (string?, string?, string?, int) whatAction()
     {
         // who taunt, who zone, in/out, wait skillLR
         switch (speakerCounter)
