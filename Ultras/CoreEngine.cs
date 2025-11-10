@@ -41,7 +41,7 @@ public class CoreEngine
     Task _runSkills;
 
     public TimeSpan ThrottleDuration { get; set; } = TimeSpan.FromSeconds(3);
-    public event Action<string, string> OnSignal;
+    public event Action<string, string>? OnSignal;
 
     #region Settings
 
@@ -72,7 +72,7 @@ public class CoreEngine
         if (Bot.Bank.Items == null || Bot.Bank.Items.Count == 0)
         {
             Bot.Bank.Load();
-            Bot.Wait.ForTrue(() => Bot.Bank.Items.Count > 0, 20);
+            Bot.Wait.ForTrue(() => (Bot.Bank.Items?.Count ?? 0) > 0, 20);
         }
 
         Bot.Options.SafeTimings = true;
@@ -81,7 +81,7 @@ public class CoreEngine
         Bot.Lite.HidePlayers = true;
     }
 
-    bool OnScriptStopping(Exception e)
+    bool OnScriptStopping(Exception? e)
     {
         Log("SKUA", "System offline");
 
@@ -417,7 +417,6 @@ public class CoreEngine
         Log("FARMING", $"⚔️ {string.Join(", ", targets)} → {quantity}× {keyLabel}");
 
         EnableSkills();
-        int i = 0;
 
         while (!Bot.ShouldExit)
         {
@@ -559,7 +558,7 @@ public class CoreEngine
         if (inv == null) return;
 
         int curId = -1;
-        string curName = null;
+        string? curName = null;
         foreach (var it in inv)
         {
             if (it == null) continue;
@@ -627,7 +626,7 @@ public class CoreEngine
 
     #region Best Enhancement
 
-    public InventoryItem ChooseBestEnhancement(string itemGroup, params string[] priority)
+    public InventoryItem? ChooseBestEnhancement(string itemGroup, params string[] priority)
     {
         if (priority == null || priority.Length == 0) return null;
         if (Bot?.Inventory == null || Bot.Bank == null || Bot.Player == null) return null;
@@ -653,7 +652,7 @@ public class CoreEngine
 
         int N(int? v, int d = -1) => v ?? d;
 
-        string Enh(int id) => id switch
+        string? Enh(int id) => id switch
         {
             1 => "Adventurer",
             2 => "Fighter",
@@ -679,7 +678,7 @@ public class CoreEngine
             _ => null
         };
 
-        string WeaponTrait(int id) => id switch
+        string? WeaponTrait(int id) => id switch
         {
             2 => "Spiral Carve",
             3 => "Awe Blast",
@@ -725,7 +724,7 @@ public class CoreEngine
             return false;
         }
 
-        InventoryItem FindIn(IEnumerable<InventoryItem> src, string want, string grp, bool memOnlyIfUpgradeAllowed)
+        InventoryItem? FindIn(IEnumerable<InventoryItem> src, string want, string grp, bool memOnlyIfUpgradeAllowed)
         {
             if (src == null) return null;
             foreach (var i in src)
@@ -738,7 +737,7 @@ public class CoreEngine
             return null;
         }
 
-        bool Equip(InventoryItem it)
+        bool Equip(InventoryItem? it)
         {
             if (it == null) return false;
             if (Bot.Inventory.IsEquipped(it.ID)) return true;
@@ -778,16 +777,21 @@ public class CoreEngine
                 InBank(fromBank.Name);
                 Bot.Sleep(500);
 
-                InventoryItem pulled = Bot.Inventory.Items?.FirstOrDefault(i => i?.ID == fromBank.ID)
+                InventoryItem? pulled = Bot.Inventory.Items.FirstOrDefault(i => i?.ID == fromBank.ID)
                                        ?? FindIn(Bot.Inventory.Items, want, grp, mem);
 
-                if (Equip(pulled))
+                if (pulled == null)
+                {
+                    Log("ENHANCEMENT", $"❌ Pull failed (not in inventory): {fromBank.Name} ({want})");
+                }
+                else if (Equip(pulled))
                 {
                     var equipped = Bot.Inventory.Items?.FirstOrDefault(i => i != null && Bot.Inventory.IsEquipped(i.ID));
-                    Log("ENHANCEMENT", $"✅ {grp}: {(equipped?.Name ?? pulled?.Name)} ({want})");
+                    Log("ENHANCEMENT", $"✅ {grp}: {equipped?.Name ?? pulled?.Name} ({want})");
                     return equipped ?? pulled;
                 }
-                Log("ENHANCEMENT", $"❌ Equip failed (bank): {fromBank.Name} ({want})");
+                else
+                    Log("ENHANCEMENT", $"❌ Equip failed (bank): {fromBank.Name} ({want})");
             }
 
             Bot.Sleep(500);
@@ -832,7 +836,12 @@ public class CoreEngine
 
         try
         {
-            string jsonData = Bot.Flash.Call("availableMonsters");
+            string? jsonData = Bot.Flash.Call("availableMonsters");
+            if (string.IsNullOrEmpty(jsonData))
+            {
+                Log("MONSTER", "No monster data available.");
+                return false;
+            }
             var monsters = JArray.Parse(jsonData);
             if (monsters.Count == 0)
             {
@@ -945,7 +954,7 @@ public class CoreEngine
     }
 
     public void Kill(string name) => Kill(MonsterKey.FromName(name));
-    public void Kill(params string[] names)
+    public void Kill(params string[]? names)
     {
         if (names == null || names.Length == 0) return;
         var tmp = new List<MonsterKey>(names.Length);
@@ -1047,18 +1056,18 @@ public class CoreEngine
 
     public record Gear(string Name, string Group, bool FromBank, double All, double Race);
 
-    public void ChooseBestGear(string names)
+    public void ChooseBestGear(string? names)
     {
         if (Bot?.Monsters?.MapMonsters == null || Bot?.Inventory?.Items == null || Bot?.Bank?.Items == null) return;
 
-        bool IsSelectedMonster(string mName, HashSet<string> set)
+        bool IsSelectedMonster(string? mName, HashSet<string> set)
         {
             if (string.IsNullOrWhiteSpace(mName)) return false;
             if (set == null || set.Count == 0) return true; // "*" or empty -> all
             return set.Contains(mName);
         }
 
-        string NormalizeRace(string r)
+        string NormalizeRace(string? r)
         {
             if (string.IsNullOrWhiteSpace(r)) return "allDmg";
             if (r.Equals("None", StringComparison.OrdinalIgnoreCase)) return "allDmg";
@@ -1147,7 +1156,7 @@ public class CoreEngine
             Log("GEAR", $"❌ Failed to equip {g.Name}");
         }
 
-        var selected = ParseNameSet(names);
+        var selected = ParseNameSet(names ?? string.Empty);
         string race = "allDmg";
         {
             var mobs = Bot.Monsters.MapMonsters;
@@ -1218,7 +1227,7 @@ public class CoreEngine
         }
 
         // choose best combo
-        Gear bestA = null, bestR = null;
+        Gear? bestA = null, bestR = null;
         double bestSum = double.MinValue;
 
         foreach (var kvA in bestAll)
@@ -1245,7 +1254,7 @@ public class CoreEngine
         }
 
         // single best item overall
-        Gear bestItem = null;
+        Gear? bestItem = null;
         double bestScore = double.MinValue;
 
         foreach (var kv in bestAll)
@@ -1275,7 +1284,7 @@ public class CoreEngine
     public IEnumerable<Aura> GetAuras(bool self) =>
         (self ? Bot?.Self?.Auras : Bot?.Target?.Auras) ?? Enumerable.Empty<Aura>();
 
-    public Aura GetAuraByName(string auraName, bool self)
+    public Aura? GetAuraByName(string auraName, bool self)
     {
         if (string.IsNullOrWhiteSpace(auraName)) return null;
         return GetAuras(self).FirstOrDefault(a => a != null &&
@@ -1314,7 +1323,7 @@ public class CoreEngine
         if (string.IsNullOrWhiteSpace(auraName)) return 0;
         try
         {
-            object v = self ? Bot?.Self?.GetAuraValue(auraName)
+            object? v = self ? Bot?.Self?.GetAuraValue(auraName)
                             : Bot?.Target?.GetAuraValue(auraName);
             if (v == null) return 0;
 
@@ -1397,7 +1406,7 @@ public class CoreEngine
             return false;
         }
 
-        ShopItem FindItem(object key)
+        ShopItem? FindItem(object key)
         {
             var list = Bot?.Shops?.Items;
             if (list == null) return null;
@@ -1504,7 +1513,7 @@ public class CoreEngine
         }
     }
 
-    ItemBase GetDropItem(object key)
+    ItemBase? GetDropItem(object key)
     {
         var infos = Bot?.Drops?.CurrentDropInfos;
         if (infos == null) return null;
@@ -1883,7 +1892,7 @@ public class CoreEngine
         }
     }
 
-    public void ChooseBestCell(string monsterNames, bool alt = false, string setCell = null, string setPad = "Spawn")
+    public void ChooseBestCell(string? monsterNames, bool alt = false, string? setCell = null, string setPad = "Spawn")
     {
         var names = (monsterNames ?? string.Empty)
             .Split(new[] { ',', '|' }, StringSplitOptions.RemoveEmptyEntries)
