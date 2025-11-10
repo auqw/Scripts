@@ -34,11 +34,11 @@ public class CoreEngine
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
 
-    readonly ConcurrentDictionary<string, object> _cache = new();
+    readonly ConcurrentDictionary<string, object?> _cache = new();
     readonly ConcurrentDictionary<string, DateTime> _throttle = new();
 
-    CancellationTokenSource _cts;
-    Task _runSkills;
+    CancellationTokenSource? _cts;
+    Task? _runSkills;
 
     public TimeSpan ThrottleDuration { get; set; } = TimeSpan.FromSeconds(3);
     public event Action<string, string>? OnSignal;
@@ -839,7 +839,7 @@ public class CoreEngine
             string? jsonData = Bot.Flash.Call("availableMonsters");
             if (string.IsNullOrEmpty(jsonData))
             {
-                Log("MONSTER", "No monster data available.");
+                Bot.Log("No monster data available.");
                 return false;
             }
             var monsters = JArray.Parse(jsonData);
@@ -1584,7 +1584,7 @@ public class CoreEngine
 
     public void RejectExcept(params object[] keys)
     {
-        static string? ToName(object k, Func<object, ItemBase> getDrop)
+        static string? ToName(object k, Func<object, ItemBase?> getDrop)
         {
             switch (k)
             {
@@ -1810,7 +1810,7 @@ public class CoreEngine
             if (string.IsNullOrWhiteSpace(playerName)) continue;
             try
             {
-                int hp = Bot.Flash.GetGameObject<int>($"world.uoTree.{playerName}.intHP");
+                int hp = Bot!.Flash.GetGameObject<int>($"world.uoTree.{playerName}.intHP");
                 int maxHp = Bot.Flash.GetGameObject<int>($"world.uoTree.{playerName}.intHPMax");
                 if (maxHp > 0 && hp >= 0)
                 {
@@ -1833,7 +1833,7 @@ public class CoreEngine
 
     #region Map
 
-    string _bestCell = null;
+    string? _bestCell = null;
     string _bestPad = "Left";
 
     public void Join(string map, string cell = "Enter", string pad = "Spawn", bool publicRoom = false, int? roomNumber = null)
@@ -1915,7 +1915,7 @@ public class CoreEngine
             return;
         }
 
-        string targetCell =
+        string? targetCell =
             !string.IsNullOrWhiteSpace(setCell) ? setCell
             : alt ? monsters.FirstOrDefault()?.Cell
             : monsters.GroupBy(m => m.Cell, StringComparer.Ordinal)
@@ -2067,7 +2067,7 @@ public class CoreEngine
         if (Bot?.Player == null) return;
         if (!Bot.Player.HasTarget) return;
 
-        string className = Bot.Player.CurrentClass?.Name?.ToLower();
+        string? className = Bot.Player.CurrentClass?.Name?.ToLower();
         if (string.IsNullOrWhiteSpace(className)) return;
 
         switch (className)
