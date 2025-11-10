@@ -185,54 +185,48 @@ public class CoreUltra
 
     public void WaitForArmy(int quantity, string syncFilePath = "army_sync.sync", int bufferTimeMs = 3000, int tickMs = 500, int timeoutMs = 0)
     {
-        if (Bot == null || Bot.Map == null) return;
+        if (Bot?.Map == null) return;
 
+        // --- Resolve safe writable sync path ---
         string FindHome(string path)
         {
-            if (Path.IsPathRooted(path)) return path;
-            var spots = new[] {
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "SkuaSync"),
-                Path.GetTempPath()
-            };
-            foreach (var spot in spots)
+            try
             {
-                try
-                {
-                    var full = Path.Combine(spot, path);
-                    var dir = Path.GetDirectoryName(full);
-                    if (!string.IsNullOrEmpty(dir))
-                        Directory.CreateDirectory(dir);
-                    else
-                        Bot.Log("Failed to create directory for sync file.");
-                    File.AppendAllText(full, "");
-                    return full;
-                }
-                catch { }
+                path = Environment.ExpandEnvironmentVariables(path);
+
+                // Allow absolute path if directory exists
+                string? dir = Path.GetDirectoryName(path);
+                if (Path.IsPathRooted(path) && !string.IsNullOrEmpty(dir) && Directory.Exists(dir))
+                    return path;
+
+                // Default to %AppData%\Skua
+                string baseDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Skua");
+                string full = Path.Combine(baseDir, Path.GetFileName(path));
+                Directory.CreateDirectory(baseDir);
+                File.AppendAllText(full, ""); // ensure file exists
+                return full;
             }
-            return Path.GetFullPath(path);
+            catch (Exception ex)
+            {
+                Bot?.Log($"[WaitForArmy] Path resolution failed: {ex.Message}");
+                return Path.GetFullPath(path);
+            }
         }
 
+        // --- File I/O Helpers ---
         string[] Slurp(string path)
         {
             for (int i = 0; i < 5; i++)
             {
                 try
                 {
-                    using (var fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite))
-                    using (var sr = new StreamReader(fs))
-                    {
-                        return sr.ReadToEnd()
-                                .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                    }
+                    using FileStream fs = new(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite);
+                    using StreamReader sr = new(fs);
+                    return sr.ReadToEnd()
+                             .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 }
-                catch (IOException)
-                {
-                    Bot?.Sleep(50);
-                }
-                catch
-                {
-                    return Array.Empty<string>();
-                }
+                catch (IOException) { Bot?.Sleep(50); }
+                catch { break; }
             }
             return Array.Empty<string>();
         }
@@ -247,71 +241,114 @@ public class CoreUltra
             }
         }
 
+        // Each line: key:ready:timestamp
         void Poke(string path, string key, bool ready)
         {
-            var lines = Slurp(path).ToList();
+            List<string> lines = Slurp(path).ToList();
+            string entry = $"{key}:{(ready ? "1" : "0")}:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
             int idx = lines.FindIndex(l => l.StartsWith(key + ":"));
-            string entry = $"{key}:{(ready ? "1" : "0")}";
             if (idx >= 0) lines[idx] = entry;
             else lines.Add(entry);
             Yeet(path, lines.ToArray());
         }
 
-        int HowMany(string path) => Slurp(path).Count(l => l.EndsWith(":1"));
+        int HowMany(string path)
+        {
+            string[] lines = Slurp(path);
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            const int staleThreshold = 600; // 10 minutes
+            List<string> valid = new();
 
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(':');
+                if (parts.Length < 3) continue;
+
+                string key = parts[0];
+                string status = parts[1];
+                if (!long.TryParse(parts[2], out long ts)) continue;
+
+                if (now - ts <= staleThreshold)
+                    valid.Add(line);
+            }
+
+            // Rewrite file only if we cleaned something out
+            if (valid.Count != lines.Length)
+                Yeet(path, valid.ToArray());
+
+            return valid.Count(l => l.Split(':')[1] == "1");
+        }
+
+        // --- Initialize sync file ---
         string syncFile = FindHome(syncFilePath);
-
         try
         {
-            if (!File.Exists(syncFile))
-            {
-                var dir = Path.GetDirectoryName(syncFile);
-                if (!string.IsNullOrEmpty(dir))
-                    Directory.CreateDirectory(dir);
-                else
-                    Bot.Log("Failed to create directory for sync file.");
-                File.WriteAllText(syncFile, "");
-            }
-            else if ((DateTime.UtcNow - File.GetLastWriteTimeUtc(syncFile)).TotalMinutes > 15
-                || Slurp(syncFile).All(l => l.EndsWith(":1")))
+            string? dir = Path.GetDirectoryName(syncFile);
+            if (!string.IsNullOrEmpty(dir))
+                Directory.CreateDirectory(dir);
+
+            if (!File.Exists(syncFile) ||
+                (DateTime.UtcNow - File.GetLastWriteTimeUtc(syncFile)).TotalMinutes > 15 ||
+                Slurp(syncFile).All(l => l.EndsWith(":1")))
                 File.WriteAllText(syncFile, "");
         }
-        catch { }
+        catch (Exception ex)
+        {
+            Bot?.Log($"[WaitForArmy] Sync file setup failed: {ex.Message}");
+        }
 
         string me = $"{Bot?.Player?.Username ?? "Nobody"}|{Bot?.Player?.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
         int need = Math.Max(1, quantity) + 1;
 
         Poke(syncFile, me, false);
 
-        var clock = Stopwatch.StartNew();
-        // while (!Bot.ShouldExit)
-        // {
-        //     int peeps = Bot.Map.PlayerCount;
-        //     if (peeps >= need) break;
-        //     if (timeoutMs > 0 && clock.ElapsedMilliseconds >= timeoutMs) break;
-        //     Bot.Sleep(tickMs);
-        // }
-        if (Bot?.ShouldExit == true) { try { File.WriteAllText(syncFile, ""); } catch { } return; }
-        // Poke(syncFile, me, true);
+        Stopwatch clock = Stopwatch.StartNew();
+        int lastReady = -1;
 
-        while (!Bot?.ShouldExit == true)
+        // --- Wait for army readiness ---
+        while (!Bot.ShouldExit)
         {
             int ready = HowMany(syncFile);
-            if (ready >= need) break;
-            if (ready < need) Poke(syncFile, me, true);
-            Bot?.Sleep(tickMs);
-        }
-        if (Bot?.ShouldExit == true) { try { File.WriteAllText(syncFile, ""); } catch { } return; }
+            if (ready != lastReady)
+            {
+                lastReady = ready;
+                Bot?.Log($"[WaitForArmy] Ready: {ready}/{need}");
+            }
 
-        var spam = DateTime.UtcNow.AddMilliseconds(2000);
-        while (DateTime.UtcNow < spam && !Bot?.ShouldExit == true)
+            if (ready >= need)
+            {
+                Bot?.Log("[WaitForArmy] All members ready!");
+                break;
+            }
+
+            Poke(syncFile, me, true);
+
+            if (timeoutMs > 0 && clock.ElapsedMilliseconds >= timeoutMs)
+            {
+                Bot?.Log("[WaitForArmy] Timeout reached — continuing anyway.");
+                break;
+            }
+
+            Bot.Sleep(tickMs);
+        }
+
+        if (Bot.ShouldExit)
         {
-            Bot?.Skills.UseSkill(3); Bot?.Sleep(300);
-            Bot?.Skills.UseSkill(2); Bot?.Sleep(300);
-            Bot?.Skills.UseSkill(1); Bot?.Sleep(300);
+            try { File.WriteAllText(syncFile, ""); } catch { }
+            return;
         }
 
-        Bot?.Sleep(bufferTimeMs);
+        // --- Warmup spam to keep clients responsive ---
+        DateTime spam = DateTime.UtcNow.AddMilliseconds(2000);
+        while (DateTime.UtcNow < spam && !Bot.ShouldExit)
+        {
+            Bot.Skills.UseSkill(3); Bot.Sleep(300);
+            Bot.Skills.UseSkill(2); Bot.Sleep(300);
+            Bot.Skills.UseSkill(1); Bot.Sleep(300);
+        }
+
+        Bot.Sleep(bufferTimeMs);
+
         try { File.WriteAllText(syncFile, ""); } catch { }
     }
 
