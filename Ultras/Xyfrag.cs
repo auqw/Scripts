@@ -20,7 +20,7 @@ public class Xyfrag
 
     public void ScriptMain(IScriptInterface bot)
     {
-        taunter = (Bot.Config.Get<string>("taunter") ?? "").Trim();
+        taunter = (Bot.Config!.Get<string>("taunter") ?? "").Trim();
         if (string.IsNullOrEmpty(taunter))
         {
             Core.Log("Setup", "Fill the taunter class in Script Options.");
