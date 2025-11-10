@@ -674,25 +674,25 @@
   },
   {
     "name": "UltraEzrajal",
-    "description": "null",
+    "description": "Ultra Ezrajal helper handling Counter Attack windows with army sync.",
     "tags": [
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 1410,
-    "sha256": "10231424b1176957a61f84122f5641eb066b96eb6f2d00a0a5988518b7605c6a",
+    "size": 1461,
+    "sha256": "7b5795644f1fbd7df36f37639d91c0d84e1cd1e03ed3b663c64ca24f476f50c1",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
   {
     "name": "ChampionDrakath",
-    "description": "null",
+    "description": "Champion Drakath helper with threshold-based taunt timing and army sync.",
     "tags": [
       "ultra"
     ],
     "path": "Ultras/ChampionDrakath.cs",
-    "size": 2502,
-    "sha256": "778e242e5144fe335888f5b75447f0d89755b4bc05f92c442805aed89cc00319",
+    "size": 2557,
+    "sha256": "920a15d9e3d4f45f4d03ff7d7957c8c0034d12f7c6aab2c09d7726b0d29aaf23",
     "fileName": "ChampionDrakath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/ChampionDrakath.cs"
   },
@@ -703,68 +703,80 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 81887,
-    "sha256": "9af683d86c2ef7d9d4da80a97d61ab845a170822bdd404b7c2d4e1a42f9b38af",
+    "size": 81971,
+    "sha256": "3a5bd30fd359037cce11f2ce8fa2e7d5090097a328eec055ab7dc3c7fa231af3",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
   {
     "name": "UltraAvatarTyndarius",
-    "description": "null",
+    "description": "Ultra Avatar Tyndarius helper with taunter rotation and orb priority.",
     "tags": [
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 2454,
-    "sha256": "d901064540ec0ddf56c14a779430d1a0c51a8f23301f6699a755bb64d40490d6",
+    "size": 2506,
+    "sha256": "bf8d8387e33d1d30f2dbd3734c10cd698c4f0089df8c482d1314a374b0385aa6",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
   {
     "name": "UltraEngineer",
-    "description": "null",
+    "description": "Ultra Engineer helper prioritizing drones with army synchronization and consumables.",
     "tags": [
       "ultra"
     ],
     "path": "Ultras/UltraEngineer.cs",
-    "size": 1291,
-    "sha256": "0cf395e33dfab3f32f591aedbc052435008dd1b9ff11daf7804d21a30d4ef358",
+    "size": 1358,
+    "sha256": "b968567f35f04f017054c64d632de6ddf70d887f2583b53a84f4cc30abe07850",
     "fileName": "UltraEngineer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEngineer.cs"
   },
   {
     "name": "UltraSpeaker",
-    "description": "null",
+    "description": "Ultra First Speaker helper with zoning, taunt timing, and custom rotation.",
     "tags": [
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 8133,
-    "sha256": "f6107b9df92faaa6f1fa7e22f8ce2324a782bcaa934574e3a263a3625b6a9c28",
+    "size": 8471,
+    "sha256": "78629b1d9baac6e8569671321613ef80b0c00c1d90247f5a7ed685d67e80ccb3",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
   {
     "name": "UltraDage",
-    "description": "null",
+    "description": "Two-taunter strategy for Ultra Dage with aura-based taunting and army synchronization.",
     "tags": [
       "ultra"
     ],
     "path": "Ultras/UltraDage.cs",
-    "size": 3537,
-    "sha256": "1e4b3a0997f874fc0d855fd6ab061e9f150e0c9c4778fc1a90010433fff0bd1f",
+    "size": 3592,
+    "sha256": "ee93ddcb7c0f6fa17f4944a26f7d550d720ae7fe823503f0ac4d9f35d6cc7585",
     "fileName": "UltraDage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDage.cs"
   },
   {
-    "name": "UltraDrago",
+    "name": "null",
     "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Ultras/Xyfrag.cs",
+    "size": 2185,
+    "sha256": "7edf31de58d5308ac3a6aef92027ba30abb54dd226978f611111e7cb41378cd7",
+    "fileName": "Xyfrag.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Xyfrag.cs"
+  },
+  {
+    "name": "UltraDrago",
+    "description": "Ultra King Drago helper with taunter classes and priority adds.",
     "tags": [
       "ultra"
     ],
     "path": "Ultras/UltraDrago.cs",
-    "size": 2753,
-    "sha256": "9d53080669578b006420e9f99cd84617e702e49bb4292f68c6b607a178a317f6",
+    "size": 2799,
+    "sha256": "79ee2b2a3b7608dcea6ca2d625bc9e001ff60eca959cd49d7d3a575c49c58ec1",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },
@@ -775,32 +787,32 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 19001,
-    "sha256": "5b99532b5c80c90661e83caaa280f53cdffea4d0794ba36df2e5a10ff4891b58",
+    "size": 19139,
+    "sha256": "1f0f45f526a3b58bcd44a2de35dc8fcf056b8c940dc256713cab7e4cdbe0de24",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
   {
     "name": "UltraWarden",
-    "description": "null",
+    "description": "Ultra Warden helper with HP-band taunt trigger and army synchronization.",
     "tags": [
       "ultra"
     ],
     "path": "Ultras/UltraWarden.cs",
-    "size": 2351,
-    "sha256": "6a2f05a111583e3d3d9bc5809b436fa6321e826ee6bc1a06541548988b021e7d",
+    "size": 2406,
+    "sha256": "f2f8f4ef4626858c18da6a9ac02a3aecccdffe36d0d0546a7824e7b6c519136e",
     "fileName": "UltraWarden.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraWarden.cs"
   },
   {
     "name": "UltraNulgath",
-    "description": "null",
+    "description": "Nulgath the Archfiend helper with taunter rotation and blade priority.",
     "tags": [
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 2486,
-    "sha256": "5cd489380428e1855e759428dbdc28a4e5ee66398e5e58468c949d066058f56d",
+    "size": 2539,
+    "sha256": "0f50707e28784700abdf70165be7ddb5ba0aabc2e11428eab1b67b8a43f29275",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
