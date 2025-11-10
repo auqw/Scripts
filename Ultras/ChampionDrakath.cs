@@ -63,7 +63,7 @@ public class ChampionDrakath
         const string boss = "Champion Drakath";
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\champion_drakath.sync");
+        Ultra.WaitForArmy(3, "champion_drakath.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 

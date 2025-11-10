@@ -86,7 +86,7 @@ public class UltraSpeaker
     {
         Bot.Quests.UpdateQuest(9125);
         Core.Join("ultraspeaker");
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_speaker.sync");
+        Ultra.WaitForArmy(3, "ultra_speaker.sync");
         Core.ChooseBestCell("The First Speaker");
         // Core.EnableSkills();
 

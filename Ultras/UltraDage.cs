@@ -66,7 +66,7 @@ public class UltraDage
         const string boss = "Dage the Dark Lord";
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, @"C:\SkuaSync\ultra_dage.sync");
+        Ultra.WaitForArmy(3, "ultra_dage.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
@@ -92,14 +92,14 @@ public class UltraDage
 
         string? zone = data?.args?.zoneSet?.ToString();
 
-        if (string.Equals(zone, "A", System.StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(zone, "A", StringComparison.OrdinalIgnoreCase))
         {
             Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%122%411%8%");
             //Bot.Player.WalkTo(122, 411);
             return;
         }
 
-        if (string.Equals(zone, "B", System.StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(zone, "B", StringComparison.OrdinalIgnoreCase))
         {
             Bot.Send.Packet($"%xt%zm%mv%{Bot.Map.RoomID}%856%422%8%");
             //Bot.Player.WalkTo(856, 422);
