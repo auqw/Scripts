@@ -1,3 +1,9 @@
+/*
+name: UltraSpeaker
+description: null
+tags: Ultra
+*/
+
 //cs_include Scripts/Ultras/CoreEngine.cs
 //cs_include Scripts/Ultras/CoreUltra.cs
 //cs_include Scripts/CoreBots.cs

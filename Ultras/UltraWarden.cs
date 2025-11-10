@@ -1,3 +1,9 @@
+/*
+name: UltraWarden
+description: null
+tags: Ultra
+*/
+
 //cs_include Scripts/Ultras/CoreEngine.cs
 //cs_include Scripts/Ultras/CoreUltra.cs
 

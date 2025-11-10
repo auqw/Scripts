@@ -1,3 +1,9 @@
+/*
+name: null
+description: null
+tags: null
+*/
+
 using System;
 using System.IO;
 using System.Linq;
@@ -1027,7 +1033,7 @@ public class CoreEngine
 
     public void EquipEnrage()
     {
-         if (Owned("Scroll of Enrage") < 1) return;
+        if (Owned("Scroll of Enrage") < 1) return;
         if (Bot.Inventory.IsEquipped("Scroll of Enrage")) return;
 
         WhiteMap();
