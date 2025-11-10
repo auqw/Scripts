@@ -8,7 +8,7 @@ tags: [comma-separated tags relevant to this script]
 //cs_include Scripts/CoreFarms.cs
 using Skua.Core.Interfaces;
 
-public class FreeAcs
+public class FreeAcsTBD
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
