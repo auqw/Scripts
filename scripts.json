@@ -4638,8 +4638,8 @@
       "army."
     ],
     "path": "Army/OneClient/AccsForAll.cs",
-    "size": 1463,
-    "sha256": "dd9020ef9d93b5a96c3d0d64f3e96ae0def810b77b18db1daaf79c5ceecb8439",
+    "size": 1468,
+    "sha256": "c5d8ad8b9ee02e9a2c667037bd835096dda8b3ba0da054fef30e97f68ad5c289",
     "fileName": "AccsForAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AccsForAll.cs"
   },
@@ -12808,6 +12808,18 @@
     "sha256": "434cfbd8d3e13628895ec09e7487a5828351b9551539beb89f7ccd2f38594897",
     "fileName": "202xFreeAcs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs.cs"
+  },
+  {
+    "name": "[Script Name Here]",
+    "description": "[Brief description of what this script does]",
+    "tags": [
+      "[comma-separated tags relevant to this script]"
+    ],
+    "path": "Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs",
+    "size": 1751,
+    "sha256": "3eea32a45ac526e00b3f7cad73bd963cf636091f2e6ec2e0312c85f49a282221",
+    "fileName": "202xFreeAcs[TBD].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs"
   },
   {
     "name": "DarknessShard",
