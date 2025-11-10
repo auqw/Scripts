@@ -4012,7 +4012,7 @@
       ]
     }
   },
-  "hollowborn vindicator member preview": {
+  "Hollowborn Vindicator Member Preview": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
@@ -4032,7 +4032,7 @@
       ]
     }
   },
-  "hollowborn vindicator": {
+  "Hollowborn Vindicator": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
