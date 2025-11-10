@@ -27,7 +27,7 @@ public class UltraDage
 
     public void ScriptMain(IScriptInterface bot)
     {
-        a = (Bot.Config.Get<string>("a") ?? "").Trim();
+        a = (Bot.Config!.Get<string>("a") ?? "").Trim();
         b = (Bot.Config.Get<string>("b") ?? "").Trim();
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
@@ -90,7 +90,7 @@ public class UltraDage
         dynamic data = packet["params"].dataObj;
         if (data?.cmd?.ToString() != "event") return;
 
-        string zone = data?.args?.zoneSet?.ToString();
+        string? zone = data?.args?.zoneSet?.ToString();
 
         if (string.Equals(zone, "A", System.StringComparison.OrdinalIgnoreCase))
         {
