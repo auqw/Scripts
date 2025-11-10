@@ -126,12 +126,12 @@ public class CoreBots
     public void SetOptions(bool changeTo = true, bool disableClassSwap = false)
     {
         EnforceInvariantCulture();
+        SkuaVersionChecker("1.3.0.0");
+        Bot.UltraBossHelper.EnableCounterAttack();
 
         if (changeTo)
         {
             Bot.Events.ScriptStopping += CrashDetector;
-            SkuaVersionChecker("1.3.0.0");
-
             // Start the stopwatch for timing the script run
             _scriptStopwatch = Stopwatch.StartNew();
 
@@ -166,23 +166,20 @@ public class CoreBots
 
         bool isStarting = changeTo;
 
-        // 1.3 Feature
-        if (Bot.Version.ToString() == "1.3.0.0")
+        CBOBool("IncognitoMode", out bool IncognitoModeOn);
+        if (!IncognitoModeOn)
         {
-            CBOBool("IncognitoMode", out bool IncognitoModeOn);
-            if (!IncognitoModeOn)
+            if (isStarting == true)
             {
-                if (isStarting == true)
-                {
-                    Logger("Incognito Mode in CBO is off. Skipping privacy settings.");
-                }
+                Logger("Incognito Mode in CBO is off. Skipping privacy settings.");
             }
-            else
-            {
-                bool disabling = isStarting;
-                bool warned = false;
+        }
+        else
+        {
+            bool disabling = isStarting;
+            bool warned = false;
 
-                foreach ((string key, string label) in new Dictionary<string, string>
+            foreach ((string key, string label) in new Dictionary<string, string>
         {
             { "bGoto", "Goto" },
             { "bParty", "Party invites" },
@@ -191,28 +188,27 @@ public class CoreBots
             { "bGuild", "Guild invites" },
             { "bWhisper", "Whisper" }
         })
+            {
+                if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
+                    continue;
+
+                bool current = Bot.Flash.GetGameObject<bool>($"uoPref.{key}");
+                if (disabling ? current : !current)
                 {
-                    if (label == "Goto" && !loadedBot.ToLower().Contains("butler"))
-                        continue;
-
-                    bool current = Bot.Flash.GetGameObject<bool>($"uoPref.{key}");
-                    if (disabling ? current : !current)
+                    if (disabling && !warned)
                     {
-                        if (disabling && !warned)
-                        {
-                            Logger("[SetOptions] Turning certain \"Social\" options off to help protect you");
-                            warned = true;
-                        }
-
-                        Logger($"[SetOptions] {(disabling ? "Turning off" : "Re-enabling")}: {label}");
-                        SendPackets($"%xt%zm%cmd%1%uopref%{key}%{(!disabling).ToString().ToLower()}%");
-                        Bot.Sleep(500);
+                        Logger("[SetOptions] Turning certain \"Social\" options off to help protect you");
+                        warned = true;
                     }
-                }
 
-                if (disabling)
-                    GC.Collect();
+                    Logger($"[SetOptions] {(disabling ? "Turning off" : "Re-enabling")}: {label}");
+                    SendPackets($"%xt%zm%cmd%1%uopref%{key}%{(!disabling).ToString().ToLower()}%");
+                    Bot.Sleep(500);
+                }
             }
+
+            if (disabling)
+                GC.Collect();
         }
 
         #endregion Social Privacy Options
@@ -309,7 +305,6 @@ public class CoreBots
             usingDodgeGeneric = DodgeClass.ToLower() == "generic";
             usingBossGeneric = BossClass.ToLower() == "generic";
             Bot.Skills.StartAdvanced(Bot.Player.CurrentClass?.Name ?? "generic", false);
-
             Bot.Events.ScriptStopping += StopBotEvent;
 
             // Alive Check handling
@@ -3526,7 +3521,7 @@ public class CoreBots
                     Bot.Wait.ForCellChange(cell); // ⏳
                 }
 
-                if (!Bot.Player.HasTarget)
+                if (!Bot.Combat.StopAttacking)
                     Bot.Combat.Attack("*"); // ⚔️
 
                 Sleep(500); // 💤
@@ -3922,8 +3917,7 @@ public class CoreBots
                     Bot.Wait.ForCellChange(targetMonster?.Cell ?? "Enter");
                     Bot.Player!.SetSpawnPoint();
                 }
-
-                if (!Bot.Player!.HasTarget && targetMonster != null)
+                if (!Bot.Combat.StopAttacking && targetMonster != null)
                     Bot.Combat.Attack(targetMonster.Name);
 
                 if (!Bot.Player.HasTarget)
@@ -3951,7 +3945,7 @@ public class CoreBots
                     Bot.Wait.ForCellChange(cellToJump);
                 }
 
-                if (!Bot.Player.HasTarget && targetMonster != null)
+                if (!Bot.Combat.StopAttacking && targetMonster != null)
                     Bot.Combat.Attack(targetMonster.MapID);
 
                 Sleep();
@@ -3989,182 +3983,6 @@ public class CoreBots
     /// <param name="isTemp">Whether the item is temporary</param>
     /// <param name="log">Whether it will log that it is killing the monster</param>
     /// <param name="publicRoom"></param>
-    // public void HuntMonsterMapID(string map, int monsterMapID, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false, string pad = "Left")
-    // {
-    //     if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
-    //         return;
-
-    //     // Join the specified map
-    //     if (Bot.Map.Name != map)
-    //         Join(map, publicRoom: publicRoom);
-
-    //     Bot.Options.AggroAllMonsters = false;
-    //     Bot.Options.AggroMonsters = false;
-
-    //     Monster? FindMonster()
-    //     {
-    //         return Bot.Monsters.MapMonsters.FirstOrDefault(m => m != null && (m.MapID == monsterMapID || m.ID == monsterMapID));
-    //     }
-
-    //     Monster? targetMonster = FindMonster();
-
-    //     if (log && item != null)
-    //         FarmingLogger(item, quant);
-
-    //     Bot.Options.AggroAllMonsters = false;
-    //     //fuck it lets test it.
-    //     if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any())
-    //     {
-    //         Bot.Options.AggroMonsters = true;
-    //         //hide players to reduce lag (Trust Tato)
-    //         Bot.Options.HidePlayers = true;
-    //     }
-    //     else Bot.Options.AggroMonsters = false;
-
-    //     if (targetMonster == null)
-    //     {
-    //         Logger($"Monster with MapID {monsterMapID} not found in /{map}.");
-    //         return;
-    //     }
-
-    //     if (item == null)
-    //     {
-    //         while (!Bot.ShouldExit)
-    //         {
-    //             if (!Bot.Player.Alive)
-    //                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-    //             if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
-    //             {
-    //                 Jump(targetMonster?.Cell, "Left");
-    //                 Bot.Wait.ForCellChange(targetMonster?.Cell);
-    //                 Bot.Player.SetSpawnPoint();
-    //             }
-
-    //             if (!Bot.Player.HasTarget)
-    //                 Bot.Combat.Attack(targetMonster.MapID);
-
-    //             if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-    //                 break;
-
-    //             Sleep();
-    //         }
-    //         JumpWait();
-    //         Rest();
-    //     }
-    //     else
-    //     {
-    //         if (!isTemp)
-    //             AddDrop(item);
-
-    //         ItemBase? Item = Bot.Inventory.Items
-    //             .Concat(Bot.Bank.Items)
-    //             .Concat(Bot.House.Items)
-    //             .FirstOrDefault(x => x != null && x.Name == item);
-
-    //         if (Item != null && Item.Quantity == Item.MaxStack)
-    //             Bot.Drops.Remove(Item.ID);
-
-    //         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
-    //         {
-    //             foreach (Monster monster in Bot.Monsters.MapMonsters)
-    //             {
-    //                 if (monster == null)
-    //                 {
-    //                     DebugLogger("Monster is null");
-    //                     continue;
-    //                 }
-
-    //                 if (monster.MapID != monsterMapID)
-    //                 {
-    //                     DebugLogger($"Monster MapID mismatch");
-    //                     continue;
-    //                 }
-
-    //                 if (monster?.HP <= 0)
-    //                 {
-    //                     DebugLogger($"Monster HP <= 0");
-    //                     continue;
-    //                 }
-
-    //                 if (monster?.State == 0)
-    //                 {
-    //                     DebugLogger($"MonsterState == 0 (inactive/despawned)");
-    //                     continue;
-    //                 }
-
-    //                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-    //                 {
-    //                     DebugLogger($"Already have enough of {item} (Quantity: {quant})");
-    //                     continue;
-    //                 }
-
-    //                 while (!Bot.ShouldExit)
-    //                 {
-    //                     if (!Bot.Player.Alive)
-    //                         Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-    //                     // Ensure we're in correct map
-    //                     if (Bot.Map.Name != null && Bot.Map.Name != map)
-    //                     {
-    //                         Join(map);
-    //                         Bot.Wait.ForMapLoad(map);
-    //                     }
-
-    //                     // Ensure we're in targetMonster's Cell
-    //                     if (Bot.Player.Cell != null && Bot.Player.Cell != monster?.Cell)
-    //                     {
-    //                         Bot.Map.Jump(monster?.Cell, "Left", autoCorrect: false);
-    //                         Bot.Wait.ForCellChange(monster?.Cell);
-    //                     }
-
-    //                     if (!Bot.Player.HasTarget)
-    //                         Bot.Combat.Attack(monster.MapID);
-
-    //                     Sleep();
-
-    //                     if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-    //                     {
-    //                         break;
-    //                     }
-
-    //                     if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-    //                     {
-    //                         break;
-    //                     }
-    //                 }
-    //             }
-    //         }
-    //         if (Bot.Options.RestPackets)
-    //             Rest();
-
-    //         Bot.Wait.ForPickup(item);
-    //     }
-
-    //     #region exit aggro
-    //     Bot.Options.AttackWithoutTarget = false;
-    //     Bot.Options.AggroAllMonsters = false;
-    //     Bot.Options.AggroMonsters = false;
-
-    //     // Filter out blacklisted cells, cells with monsters, and prioritize based on conditions
-    //     string? targetCell = Bot.Map.Cells
-    //         .Where(c => c != null &&
-    //                     !BlackListedJumptoCells.Contains(c) &&
-    //                     !Bot.Monsters.MapMonsters.Any(monster => monster != null && monster.Cell == c))
-    //         .FirstOrDefault(c => c != null &&
-    //                              (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1 || !c.Contains("Enter")))
-    //         ?? "Enter";
-
-    //     Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left");
-    //     Bot.Wait.ForCellChange(targetCell);
-    //     Sleep();
-    //     JumpWait();
-    //     Rest();
-    //     Bot.Options.HidePlayers = false;
-    //     #endregion exit aggro
-    // }
-
-    //Non-Choose Variants
     public void HuntMonsterMapID(string map, int monsterMapID, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false, string pad = "Left")
     {
         // Join map if needed
@@ -4203,7 +4021,7 @@ public class CoreBots
                     Bot.Wait.ForCellChange(target!.Cell);
                 }
 
-                if (!Bot.Player!.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
+                if (!Bot.Combat.StopAttacking || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
                     Bot.Combat.Attack(target!.MapID);
 
                 Sleep();
@@ -4235,7 +4053,7 @@ public class CoreBots
                     Bot.Wait.ForCellChange(target!.Cell);
                 }
 
-                if (!Bot.Player!.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
+                if (!Bot.Combat.StopAttacking || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID)
                     Bot.Combat.Attack(target!.MapID);
 
                 Sleep();
@@ -5341,7 +5159,8 @@ public class CoreBots
                         Bot.Wait.ForCellChange(cell);
                     }
 
-                    Bot.Combat.Attack("*");
+                    if (!Bot.Combat.StopAttacking)
+                        Bot.Combat.Attack("*");
 
                     Sleep(500);
 
@@ -5363,10 +5182,8 @@ public class CoreBots
                         Bot.Wait.ForCellChange(cell);
                     }
 
-                    if (!Bot.Player.HasTarget)
-                    {
+                    if (!Bot.Combat.StopAttacking)
                         Bot.Combat.Attack(name.FormatForCompare());
-                    }
                     Sleep(500); // short pacing
 
                     // Stop loop if we have the required items
@@ -6118,9 +5935,8 @@ public class CoreBots
             return;
 
         if (Bot.ShowMessageBox($"This script requires Skua {targetVersion} or above, " +
-        "click OK to open the Beta Release Channel (discord), if you get sent to the \"Welcome\" channel, click the ✅ to acess the rest of the channels, and find the `skua-beta-release` channel\n" +
-        "for the LATEST Beta Release(x64).", "Outdated Skua detected", "OK").Text == "OK")
-            Process.Start("explorer", "https://discord.com/channels/1090693457586176013/1420350375617232987");
+        "click OK to open the download page of the latest release", "Outdated Skua detected", "OK").Text == "OK")
+            Process.Start("explorer", "https://github.com/BrenoHenrike/Skua/releases/latest");
         Logger($"This script requires Skua {targetVersion} or above. Stopping the script", messageBox: true, stopBot: true);
     }
 
