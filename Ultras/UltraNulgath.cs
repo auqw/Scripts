@@ -27,7 +27,7 @@ public class UltraNulgath
 
     public void ScriptMain(IScriptInterface bot)
     {
-        a = (Bot.Config.Get<string>("a") ?? "").Trim();
+        a = (Bot.Config!.Get<string>("a") ?? "").Trim();
         b = (Bot.Config.Get<string>("b") ?? "").Trim();
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
