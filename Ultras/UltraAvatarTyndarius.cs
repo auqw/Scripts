@@ -1,6 +1,6 @@
 /*
 name: UltraAvatarTyndarius
-description: null
+description: Ultra Avatar Tyndarius helper with taunter rotation and orb priority.
 tags: Ultra
 */
 

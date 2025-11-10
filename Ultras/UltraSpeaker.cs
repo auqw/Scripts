@@ -1,6 +1,6 @@
 /*
 name: UltraSpeaker
-description: null
+description: Ultra First Speaker helper with zoning, taunt timing, and custom rotation.
 tags: Ultra
 */
 
@@ -57,7 +57,7 @@ public class UltraSpeaker
     private int timeWait;
     private bool forceSkill = false;
     private int skillToForce;
-    private string skills;
+private string skills = "1,2,3,4";
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -146,64 +146,67 @@ public class UltraSpeaker
 
     void _walkFlash(int X, int Y) => Bot.Flash.Call("walkTo", X, Y, 8);
 
-    async void UltraSpeakerListener(dynamic packet)
+async void UltraSpeakerListener(dynamic packet)
     {
-        string type = packet["params"].type;
-        dynamic data = packet["params"].dataObj;
-        if (type is not null and "json")
+        try
         {
-            string cmd = data.cmd;
-            switch (cmd)
+            string type = packet["params"].type;
+            dynamic data = packet["params"].dataObj;
+            if (type is not null and "json")
             {
-                case "event":
-                    string zone = data.args?["zoneSet"]!;
-                    // Core.Log("ZONE", $"THE ZONE IS {zone}");
-                    if (zone is not null && zone == "A" && className == "legion revenant")
-                    {
-                        Core.Log("ZONE", "FORCE SKILL 1");
-                        setForceSkill(1);
-                        return;
-                    }
-                    break;
-
-                case "ct":
-                    var anims = data.anims as System.Collections.IEnumerable;
-                    if (anims == null)
-                        return;
-                    foreach (var a in anims)
-                    {
-                        string? msg = (a as dynamic)?.msg?.ToString();
-                        if (!string.IsNullOrEmpty(msg))
+                string cmd = data.cmd;
+                switch (cmd)
+                {
+                    case "event":
+                        string zone = data.args?["zoneSet"]!;
+                        if (zone is not null && zone == "A" && className == "legion revenant")
                         {
-                            if (msg.ToLower().Contains("listen") || msg.ToLower().Contains("truth"))
+                            Core.Log("ZONE", "FORCE SKILL 1");
+                            setForceSkill(1);
+                            return;
+                        }
+                        break;
+
+                    case "ct":
+                        var anims = data.anims as System.Collections.IEnumerable;
+                        if (anims == null)
+                            return;
+                        foreach (var a in anims)
+                        {
+                            string? msg = (a as dynamic)?.msg?.ToString();
+                            if (!string.IsNullOrEmpty(msg))
                             {
-                                var act = whatAction();
-
-                                speakerCounter++;
-
-                                if (className == act.Item2)
+                                if (msg.ToLower().Contains("listen") || msg.ToLower().Contains("truth"))
                                 {
-                                    if (act.Item3 == "IN")
-                                    {
-                                        inZone = true;
-                                    }
-                                    if (act.Item3 == "OUT")
-                                    {
-                                        inZone = false;
-                                    }
-                                }
+                                    var act = whatAction();
 
-                                if (className == act.Item1)
-                                {
-                                    setForceSkill(5, act.Item4);
-                                }
+                                    speakerCounter++;
 
+                                    if (className == act.Item2)
+                                    {
+                                        if (act.Item3 == "IN")
+                                        {
+                                            inZone = true;
+                                        }
+                                        if (act.Item3 == "OUT")
+                                        {
+                                            inZone = false;
+                                        }
+                                    }
+
+                                    if (className == act.Item1)
+                                    {
+                                        setForceSkill(5, act.Item4);
+                                    }
+
+                                }
                             }
                         }
-                    }
-                    break;
+                        break;
+                }
             }
         }
+        catch { /* ignored */ }
     }
 
     private int speakerCounter = 0;
@@ -252,7 +255,7 @@ public class UltraSpeaker
         timeWait = time;
     }
 
-    private void setSKill()
+private void setSKill()
     {
         switch (className)
         {
@@ -263,6 +266,10 @@ public class UltraSpeaker
             case "archpaladin":
             case "lord of order":
             case "verus doomknight":
+                skills = "1,2,3,4";
+                break;
+
+            default:
                 skills = "1,2,3,4";
                 break;
         }

@@ -1,6 +1,6 @@
 /*
 name: UltraEzrajal
-description: null
+description: Ultra Ezrajal helper handling Counter Attack windows with army sync.
 tags: Ultra
 */
 

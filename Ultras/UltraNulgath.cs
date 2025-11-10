@@ -1,6 +1,6 @@
 /*
 name: UltraNulgath
-description: null
+description: Nulgath the Archfiend helper with taunter rotation and blade priority.
 tags: Ultra
 */
 

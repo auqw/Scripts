@@ -1,6 +1,6 @@
 /*
 name: UltraDage
-description: null
+description: Two-taunter strategy for Ultra Dage with aura-based taunting and army synchronization.
 tags: Ultra
 */
 

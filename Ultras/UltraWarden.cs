@@ -1,6 +1,6 @@
 /*
 name: UltraWarden
-description: null
+description: Ultra Warden helper with HP-band taunt trigger and army synchronization.
 tags: Ultra
 */
 

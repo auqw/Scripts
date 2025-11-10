@@ -1,6 +1,6 @@
 /*
 name: UltraEngineer
-description: null
+description: Ultra Engineer helper prioritizing drones with army synchronization and consumables.
 tags: Ultra
 */
 

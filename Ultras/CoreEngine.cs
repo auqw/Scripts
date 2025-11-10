@@ -475,14 +475,15 @@ public class CoreEngine
             equip: n => { if (!Bot.Inventory.IsEquipped(n)) Bot.Inventory.EquipItem(n); });
 
     public void EquipBestClass(List<(int id, int rank)> priorities) =>
-        EquipBestClassCore(priorities,
-            owned: id => Bot.Inventory.Items.Any(i => i?.ID == id),
-            equipped: id =>
-            {
-                var it = Bot.Inventory.Items.FirstOrDefault(i => i?.ID == id);
-                return it != null && HasClassEquipped(it.Name);
-            },
-            equip: id => { if (!Bot.Inventory.IsEquipped(id)) Bot.Inventory.EquipItem(id); });
+            EquipBestClassCore(priorities,
+                owned: id => (Bot.Inventory.Items?.Any(i => i?.ID == id) ?? false),
+                equipped: id =>
+                {
+                    var items = Bot.Inventory.Items;
+                    var it = items?.FirstOrDefault(i => i?.ID == id);
+                    return it != null && HasClassEquipped(it.Name);
+                },
+                equip: id => { if (!Bot.Inventory.IsEquipped(id)) Bot.Inventory.EquipItem(id); });
 
     public bool InBank(string name)
     {

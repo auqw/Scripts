@@ -1,6 +1,6 @@
 /*
 name: UltraDrago
-description: null
+description: Ultra King Drago helper with taunter classes and priority adds.
 tags: Ultra
 */
 

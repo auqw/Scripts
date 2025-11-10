@@ -1,6 +1,6 @@
 /*
 name: ChampionDrakath
-description: null
+description: Champion Drakath helper with threshold-based taunt timing and army sync.
 tags: Ultra
 */
 

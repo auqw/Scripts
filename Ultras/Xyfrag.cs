@@ -1,3 +1,9 @@
+/*
+name: null
+description: null
+tags: null
+*/
+
 //cs_include Scripts/Ultras/CoreEngine.cs
 //cs_include Scripts/Ultras/CoreUltra.cs
 
