@@ -222,7 +222,6 @@ public class SeaVoiceMerge
             // === Handle Oxidize aura (use potion to cleanse) ===
             if (Bot.Self?.Auras?.Any(a => a?.Name == "Oxidize") == true)
             {
-                Core.Logger("Oxidize detected — using item to cleanse.");
                 while (!Bot.ShouldExit && Bot.Player.Alive && Bot.Skills.CanUseSkill(5))
                 {
                     var skill = Bot.Flash.GetArrayObject<dynamic>("world.actions.active", 5);
@@ -230,6 +229,8 @@ public class SeaVoiceMerge
                     Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill))!);
 
                     Core.Sleep(Core.ActionDelay);
+                    if (!Bot.Skills.CanUseSkill(5))
+                        break;
                 }
 
                 // Wait a bit for aura removal before resuming combat
