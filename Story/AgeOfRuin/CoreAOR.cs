@@ -1272,12 +1272,15 @@ public class CoreAOR
                 Core.Logger("Oxidize detected — using item to cleanse.");
                 while (!Bot.ShouldExit && Bot.Player.Alive && Bot.Skills.CanUseSkill(5))
                 {
-                    Bot.UseItem(itemUsed);
-                    Core.Sleep(100);
+                    var skill = Bot.Flash.GetArrayObject<dynamic>("world.actions.active", 5);
+                    if (skill == null) return;
+                    Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill))!);
+
+                    Core.Sleep(Core.ActionDelay);
                 }
 
                 // Wait a bit for aura removal before resuming combat
-                Core.Sleep(300);
+                Core.Sleep(1000);
                 continue;
             }
 
