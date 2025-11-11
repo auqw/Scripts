@@ -3882,7 +3882,7 @@ public class CoreBots
             {
                 Logger($"⚠️ Map [{map}] | Monster name may have been updated to \"{fallback.Name}\". " +
                        $"This mob will be used instead of \"{monster}\". " +
-                       $"If this is incorrect, please ping Tato or Bogalj.");
+                       $"If this is incorrect, please ping Tato2 or Bogalj on the discord.");
                 targetMonster = fallback;
             }
             else
