@@ -24,7 +24,8 @@ public class EvolvedBloodOrbItems
     private static CoreNation _Nation;
     private static EvolvedBloodOrb EBO { get => _EBO ??= new EvolvedBloodOrb(); set => _EBO = value; }
     private static EvolvedBloodOrb _EBO;
-    private static JuggernautItemsofNulgath juggernaut { get => _juggernaut ??= new JuggernautItemsofNulgath(); set => _juggernaut = value; }    private static JuggernautItemsofNulgath _juggernaut;
+    private static JuggernautItemsofNulgath juggernaut { get => _juggernaut ??= new JuggernautItemsofNulgath(); set => _juggernaut = value; }
+    private static JuggernautItemsofNulgath _juggernaut;
 
     public void ScriptMain(IScriptInterface Bot)
     {
