@@ -240,7 +240,7 @@ public class VerusDoomKnightClass
     void VoTSSolo()
     {
         // Define the possible solo classes
-        string[] PossibleSoloClasses = new[] { "Chaos Avenger", "Verus Doomknight", "Void Highlord", "ArchPaladin" };
+        string[] PossibleSoloClasses = new[] { "King's Echo", "Chaos Avenger", "Verus Doomknight", "Void Highlord", "ArchPaladin" };
 
         if (!Core.CheckInventory(PossibleSoloClasses, any: true))
             Core.Logger("no Soloing classes found stopping (go get AP atleast and rerun)", stopBot: true);
