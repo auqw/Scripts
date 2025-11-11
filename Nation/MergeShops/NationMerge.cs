@@ -14,6 +14,7 @@ tags: nation, merge, shadowblast, polish, pet, soulstealer, horned, void, execut
 //cs_include Scripts/Story/BattleUnder.cs
 //cs_include Scripts/Other/Classes/Necromancer.cs
 //cs_include Scripts/Evil/NSoD/CoreNSOD.cs
+//cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -26,8 +27,8 @@ public class NationMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
     private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
     private static CoreNation _Nation;
