@@ -217,20 +217,21 @@ public class CoreBots
         IsMember = isUpgraded();
 
         // Common Options
+        Bot.Options.RejectAllDrops = false;
         Bot.Options.PrivateRooms = false;
         Bot.Options.AttackWithoutTarget = false;
+        Bot.Lite.ReacceptQuest = false;
+        Bot.Lite.DisableRedWarning = true;
+        Bot.Options.AutoRelogin = true;
+        Bot.Lite.CharacterSelectScreen = false;
         Bot.Options.SafeTimings = changeTo;
         Bot.Options.RestPackets = changeTo && ShouldRest;
-        Bot.Options.AutoRelogin = true;
         Bot.Options.InfiniteRange = changeTo;
         Bot.Options.SkipCutscenes = changeTo;
         Bot.Options.QuestAcceptAndCompleteTries = AcceptandCompleteTries;
         Bot.Drops.RejectElse = changeTo;
         Bot.Lite.UntargetDead = changeTo;
         Bot.Lite.UntargetSelf = changeTo;
-        Bot.Lite.ReacceptQuest = false;
-        Bot.Lite.DisableRedWarning = true;
-        Bot.Lite.CharacterSelectScreen = false;
 
         //adding sommore
         Bot.Lite.SmoothBackground = true;
