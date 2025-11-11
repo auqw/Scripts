@@ -261,113 +261,71 @@ public class VerusDoomKnightClass
         KillThing(
             map: "seavoice",
             mobMapID: 1,
-            targetAuraName: "Oxidize",
-            ItemUsed: 78994,
+            itemUsed: 78994,
             Class: selectedClass,
             item: "Maw of the Sea",
             quant: 10,
             isTemp: false
         );
+
         Adv.GearStore(true, true);
     }
 
-    public void KillThing(string? map = null, int mobMapID = 1, string? targetAuraName = null, int ItemUsed = 1, string? Class = null, string? item = null, int quant = 1, bool isTemp = false)
+    public void KillThing(string map, int mobMapID, int itemUsed, string Class, string item, int quant = 1, bool isTemp = false)
     {
-        Adv.BuyItem("seavoice", 2320, "Vigil", 1000, 12023);
-
         Core.Join(map);
-        Bot.Wait.ForMapLoad(map!);
+        Bot.Wait.ForMapLoad(map);
         Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
 
-        Core.Logger($"map: {map}");
-        Core.Logger($"mobMapID: {mobMapID}");
-        Core.Logger($"targetAuraName: {targetAuraName}");
-        Core.Logger($"ItemUsed: {ItemUsed} [Vigil]");
-        Core.Logger($"Class: {Class}");
-        Core.Logger($"item: {item}");
-        Core.Logger($"quant: {quant}");
-        Core.Logger($"isTemp: {isTemp}");
-
-        Core.Equip(Class!);
+        Core.Equip(Class);
         if (Class == "Void Highlord")
             Bot.Skills.StartAdvanced("Void HighLord", true, ClassUseMode.Def);
-        Core.Equip(ItemUsed);
-        Core.Logger($"{ItemUsed} [Vigil] Equiped? {Bot.Inventory.IsEquipped("Vigil")}");
 
-        Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m.MapID == mobMapID);
-        if (targetAuraName != null)
+        // Locate mob by MapID
+        Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m?.MapID == mobMapID);
+        if (mob == null)
         {
-            Aura? targetAura = Bot.Target.Auras.Concat(Bot.Self.Auras).FirstOrDefault(a => a.Name == targetAuraName);
+            Core.Logger($"KillThing aborted: No mob found with MapID {mobMapID} in {map}.");
+            return;
         }
 
-        if (Bot.Player.Cell != mob!.Cell)
+        // Move to mob cell and set respawn
+        if (Bot.Player.Cell != mob.Cell)
             Core.Jump(mob.Cell);
         Bot.Player.SetSpawnPoint();
 
-        while (!Bot.ShouldExit && item != null && isTemp ? !Bot.TempInv.Contains(item!, quant) : !Core.CheckInventory(item!, quant))
+        while (!Bot.ShouldExit && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant)))
         {
-            //Check if/move to /in mob cell && Bot.Player.Alive)
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
             if (Bot.Player.Cell != mob.Cell)
                 Core.Jump(mob.Cell);
 
-            #region  UltraSpeaker
-            if (map == "ultraspeaker")
+            // === Handle Oxidize aura (use potion to cleanse) ===
+            if (Bot.Self?.Auras?.Any(a => a?.Name == "Oxidize") == true)
             {
-                while (!Bot.ShouldExit && !Bot.Player.Alive)
-                    Core.Sleep();
-            }
-            #endregion
-
-            if (targetAuraName != null)
-                AuraHandling(targetAuraName);
-
-            if (Bot.Player.Alive && !Bot.Self.HasActiveAura(targetAuraName!) && !Bot.Target.HasActiveAura(targetAuraName!))
-                Bot.Combat.Attack(mob);
-            Core.Sleep();
-
-            if (isTemp ? Bot.TempInv.Contains(item!, quant) : Core.CheckInventory(item, quant))
-            {
-                break;
-            }
-        }
-
-        void AuraHandling(string? targetAuraName)
-        {
-            foreach (Aura A in Bot.Target.Auras.Concat(Bot.Self.Auras))
-            {
-                if (targetAuraName == null)
-                    continue;
-
-                switch (A.Name)
+                Core.Logger("Oxidize detected — using item to cleanse.");
+                while (!Bot.ShouldExit && Bot.Player.Alive && Bot.Skills.CanUseSkill(5))
                 {
-                    case "Oxidize":
-                        while (!Bot.ShouldExit && !Bot.Self.HasActiveAura("Vigil"))
-                        {
-                            UsePotion();
-                            Core.Sleep();
-
-                            // Check if targetAura is not null before accessing its SecondsRemaining() method
-                            // Assuming `targetAura` is the aura you're referring to
-                            if (Bot.Self.HasActiveAura("Vigil"))
-                            {
-                                Core.Logger($"Vigil Active!");
-                                break;
-                            }
-                        }
-                        break;
-
-                    case null:
-                        break;
+                    Bot.UseItem(itemUsed);
+                    Core.Sleep(100);
                 }
+
+                // Wait a bit for aura removal before resuming combat
+                Core.Sleep(300);
+                continue;
             }
+
+            // === Attack phase ===
+            Bot.Combat.Attack(mob);
+            Core.Sleep(250);
         }
 
-        void UsePotion()
-        {
-            var skill = Bot.Flash.GetArrayObject<dynamic>("world.actions.active", 5);
-            if (skill == null) return;
-            Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill))!);
-        }
+        Core.Logger($"KillThing completed for {item} ({quant}).");
     }
 
 }
