@@ -188,9 +188,9 @@ public class SeaVoiceMerge
         Bot.Wait.ForMapLoad(map);
         Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
 
-        Core.Equip(Class);
         if (Class == "Void Highlord")
             Bot.Skills.StartAdvanced("Void HighLord", true, ClassUseMode.Def);
+        else Bot.Skills.StartAdvanced(Class ?? Bot.Player.CurrentClass?.Name, true, ClassUseMode.Base);
 
         Core.Equip(itemUsed);
         Core.Logger($"{itemUsed} [Vigil] Equiped? {Bot.Inventory.IsEquipped("Vigil")}");
