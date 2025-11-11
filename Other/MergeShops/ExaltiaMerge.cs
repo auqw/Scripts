@@ -18,8 +18,8 @@ public class ExaltiaMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
 
     public bool DontPreconfigure = true;
@@ -67,9 +67,12 @@ private static CoreAdvanced _sAdv;
                 case "Ezrajal Insignia":
                 case "Warden Insignia":
                 case "Engineer Insignia":
-                case "Exalted Artillery Shard":
                 case "Exalted Drone Pet":
                     Core.Logger($"{req.Name} needs to be farmed manually.");
+                    break;
+
+                case "Exalted Artillery Shard":
+                    Core.HuntMonster("timeinn", "The Engineer", req.Name, req.Quantity, req.Temp);
                     break;
 
                 case "Exalted Node":

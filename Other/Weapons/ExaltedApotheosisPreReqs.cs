@@ -14,8 +14,10 @@ public class ExaltedApotheosisPreReqs
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     private string[] Weps =
     {
@@ -93,27 +95,26 @@ public class ExaltedApotheosisPreReqs
                         bool canBuy = true;
                         foreach (ItemBase req in wepData.Requirements)
                         {
-                            if (!Core.CheckInventory(req.ID, req.Quantity))
+                            if (Core.CheckInventory(req.ID, req.Quantity))
+                                continue;
+                            switch (req.Name)
                             {
-                                switch (req.Name)
-                                {
-                                    case "Exalted Node":
-                                        Core.KillMonster("timeinn", "r3", "Bottom", "*", "Exalted Node", req.Quantity, isTemp: false);
-                                        break;
-                                    case "Exalted Artillery Shard":
-                                        Core.HuntMonster("timeinn", "The Engineer", req.Name, req.Quantity, false);
-                                        break;
-                                    case "Exalted Relic Piece":
-                                        Core.HuntMonster("timeinn", "The Warden", req.Name, req.Quantity, false);
-                                        break;
-                                    case "Exalted Forgemetal":
-                                        Core.HuntMonster("timeinn", "Ezrajal", req.Name, req.Quantity, false);
-                                        break;
-                                    default:
-                                        missingMaterials[req.Name] = req.Quantity - Bot.Inventory?.GetQuantity(req.ID) ?? 0;
-                                        canBuy = false;
-                                        break;
-                                }
+                                case "Exalted Node":
+                                    Core.KillMonster("timeinn", "r3", "Bottom", "*", "Exalted Node", req.Quantity, req.Temp);
+                                    break;
+                                case "Exalted Artillery Shard":
+                                    Core.HuntMonster("timeinn", "The Engineer", req.Name, req.Quantity, req.Temp);
+                                    break;
+                                case "Exalted Relic Piece":
+                                    Core.HuntMonster("timeinn", "The Warden", req.Name, req.Quantity, req.Temp);
+                                    break;
+                                case "Exalted Forgemetal":
+                                    Core.HuntMonster("timeinn", "Ezrajal", req.Name, req.Quantity, req.Temp);
+                                    break;
+                                default:
+                                    missingMaterials[req.Name] = req.Quantity - Bot.Inventory?.GetQuantity(req.ID) ?? 0;
+                                    canBuy = false;
+                                    break;
                             }
                         }
 
