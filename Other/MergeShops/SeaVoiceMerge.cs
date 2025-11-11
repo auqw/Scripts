@@ -163,7 +163,7 @@ public class SeaVoiceMerge
 
             Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
 
-            Adv.SmartEnhance(selectedClass);
+            // Adv.SmartEnhance(selectedClass);
 
             // Call the KillThing method with the specified parameters
             KillThing(
@@ -171,7 +171,7 @@ public class SeaVoiceMerge
                 mobMapID: 1,
                 itemUsed: 78994,
                 Class: selectedClass,
-                item: "Maw of the Sea",
+                item: itemName,
                 quant: 10,
                 isTemp: false
                 );

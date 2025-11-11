@@ -447,9 +447,9 @@ public class CoreAOR
                 mobMapID: 1,
                 itemUsed: 78994,
                 Class: selectedClass,
-                item: "Maw of the Sea",
+                item: "Voice in the Sea Defeated",
                 quant: 10,
-                isTemp: false
+                isTemp: true
                 );
             Adv.GearStore(true);
             Core.EnsureComplete(9348);
@@ -1165,7 +1165,7 @@ public class CoreAOR
 
                     // Check if Bananach's Last Will potion was applied
                     // You might need to adjust the aura name based on what this potion actually provides
-                    if (Bot.Self.HasActiveAura("Bananach's Last Will"))
+                    if (Bot.Self.Auras.Any(a => a != null && a.Name == "Bananach's Last Will"))
                     {
                         potionApplied = true;
                         needsPotion = false;
