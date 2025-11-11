@@ -312,7 +312,7 @@ public class CoreUltra
         int lastReady = -1;
 
         // --- Wait for army readiness ---
-        while (!Bot.ShouldExit)
+        while (!Bot?.ShouldExit == true)
         {
             int ready = HowMany(syncFile);
             if (ready != lastReady)
@@ -335,10 +335,10 @@ public class CoreUltra
                 break;
             }
 
-            Bot.Sleep(tickMs);
+            Bot?.Sleep(tickMs);
         }
 
-        if (Bot.ShouldExit)
+        if (Bot?.ShouldExit == true)
         {
             try { File.WriteAllText(syncFile, ""); } catch { }
             return;
@@ -346,14 +346,14 @@ public class CoreUltra
 
         // --- Warmup spam to keep clients responsive ---
         DateTime spam = DateTime.UtcNow.AddMilliseconds(2000);
-        while (DateTime.UtcNow < spam && !Bot.ShouldExit)
+        while (DateTime.UtcNow < spam && !Bot?.ShouldExit == true)
         {
-            Bot.Skills.UseSkill(3); Bot.Sleep(300);
-            Bot.Skills.UseSkill(2); Bot.Sleep(300);
-            Bot.Skills.UseSkill(1); Bot.Sleep(300);
+            Bot?.Skills.UseSkill(3); Bot?.Sleep(300);
+            Bot?.Skills.UseSkill(2); Bot?.Sleep(300);
+            Bot?.Skills.UseSkill(1); Bot?.Sleep(300);
         }
 
-        Bot.Sleep(bufferTimeMs);
+        Bot?.Sleep(bufferTimeMs);
 
         try { File.WriteAllText(syncFile, ""); } catch { }
     }
