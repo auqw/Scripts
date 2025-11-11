@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 388422,
-    "sha256": "c799ddabf72adfe31fa5599b688674b159e6ccc45f0f2d219c725b0913e77d3b",
+    "size": 388438,
+    "sha256": "6143324b66239995d6a8eafd3991f717a23310afb2b76090a947e975c7da8e06",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -7400,8 +7400,8 @@
       "null"
     ],
     "path": "Legion/MergeShops/DarkPalaceMerge.cs",
-    "size": 5635,
-    "sha256": "d0d41b086fe88c45484886b42ac2c6cd15687a854522d70d43e484aebec701aa",
+    "size": 5551,
+    "sha256": "41dbd3c915ae313befc386b2678128c0f22ad7117f0ec3a70be6793f8fc433d2",
     "fileName": "DarkPalaceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/DarkPalaceMerge.cs"
   },
