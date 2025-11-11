@@ -448,7 +448,7 @@ public class CoreAOR
                 itemUsed: 78994,
                 Class: selectedClass,
                 item: "Voice in the Sea Defeated",
-                quant: 10,
+                quant: 1,
                 isTemp: true
                 );
             Adv.GearStore(true);

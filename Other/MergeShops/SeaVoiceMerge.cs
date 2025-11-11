@@ -73,8 +73,8 @@ public class SeaVoiceMerge
                 case "Calamity Atlanticus Trident":
                 case "Glaucus Mystic":
                 case "Glaucus Companion":
-                    Core.FarmingLogger(req.Name, quant);
-                    AttackVoiceInTheSea(req.Name, quant);
+                    Core.FarmingLogger(req.Name, req.Quantity);
+                    AttackVoiceInTheSea(req.Name, req.Quantity);
                     break;
 
                 case "Dark Elf Pearl":
@@ -172,7 +172,7 @@ public class SeaVoiceMerge
                 itemUsed: 78994,
                 Class: selectedClass,
                 item: itemName,
-                quant: 10,
+                quant: quant,
                 isTemp: false
                 );
         }
