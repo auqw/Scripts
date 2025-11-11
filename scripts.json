@@ -10596,8 +10596,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 43798,
-    "sha256": "325c5f2af3647805dc293d8a8644b3e718c38377e70732b62d285858ab9451ed",
+    "size": 43797,
+    "sha256": "c60e8a0bf0de96e660e35daafe281382c3201ec82ef29508f5a6f24b91012faa",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -13235,8 +13235,8 @@
       "null"
     ],
     "path": "Other/Weapons/ExaltedApotheosisPreReqs.cs",
-    "size": 6874,
-    "sha256": "d5741250c7a30d6aab1aec4bdd232f510729753bd3598ef1ed556bd8b842444d",
+    "size": 6785,
+    "sha256": "ebed2a69d024ddd8f95c7432ca7774c8bc44f2e67b096994d360a54fe07f5437",
     "fileName": "ExaltedApotheosisPreReqs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/ExaltedApotheosisPreReqs.cs"
   },
@@ -18625,8 +18625,8 @@
       "trident"
     ],
     "path": "Other/MergeShops/SeaVoiceMerge.cs",
-    "size": 12207,
-    "sha256": "c0a4ccc7f6cc8be43031d34e2cddbba8b74c98a8424f2d8c343a4b1fa8bc1327",
+    "size": 12224,
+    "sha256": "c4ef9bc89ef6788c7525d45591ffe1b1dbca5016c1a03af8445bbb1a60578253",
     "fileName": "SeaVoiceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SeaVoiceMerge.cs"
   },
@@ -19281,8 +19281,8 @@
       "battlepet"
     ],
     "path": "Other/MergeShops/ExaltiaMerge.cs",
-    "size": 9011,
-    "sha256": "fc49c30c013b4ef03b68272b68669f36887785f3ea2375c8b5482b87a84ee180",
+    "size": 9146,
+    "sha256": "59400f27a9f737337debbb8ca59f0b9d5f28b23a80716577066b812856b333d3",
     "fileName": "ExaltiaMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ExaltiaMerge.cs"
   },
