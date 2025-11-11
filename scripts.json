@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 142370,
-    "sha256": "71c49a90e57ab8e399b1a7774838b0fa6184fd07f278e1efb32e5a90bdd93db8",
+    "size": 136386,
+    "sha256": "5ea7af04d77d7b9e8fdd5d64b69f9a8b9b70ba14a4dfe7b04339e393ea41d6b4",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 388438,
-    "sha256": "6143324b66239995d6a8eafd3991f717a23310afb2b76090a947e975c7da8e06",
+    "size": 387241,
+    "sha256": "583581018bde2bbc3f682ebe0aced0f63d73161deaa544d449c5f7521bd066a1",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -10596,8 +10596,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 45643,
-    "sha256": "d8f5b6d26e5d82bc87e98257af2a6c1a2c68f9a0b39864e94972d871bfbd7406",
+    "size": 43680,
+    "sha256": "dfda27f1b7f5de281e8f31a16b5ef8589a7d555ce1c95e7c8dd16548ce8fe4f0",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -13578,8 +13578,8 @@
       "class"
     ],
     "path": "Other/Classes/VerusDoomKnight.cs",
-    "size": 15184,
-    "sha256": "94f9b7b789d1949914eccfb2d01e7da19f10698606f19fbc09d39e413e57232f",
+    "size": 13643,
+    "sha256": "95cfa3fc55776a61287ae7ad30b4bd1141784cc1e0db71d39170186507c9f1a3",
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
@@ -18625,8 +18625,8 @@
       "trident"
     ],
     "path": "Other/MergeShops/SeaVoiceMerge.cs",
-    "size": 13812,
-    "sha256": "8cca60affd82ca3ae222a5a971dc3f329ba0eb3cdda52fb8e4c0c54e11c8fc9c",
+    "size": 11947,
+    "sha256": "6a7f2fb333a30f3065f3e0e61938c7e67442662f5e0a0e65f08d9cd17cea265b",
     "fileName": "SeaVoiceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SeaVoiceMerge.cs"
   },
