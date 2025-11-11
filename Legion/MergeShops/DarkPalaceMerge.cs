@@ -22,8 +22,8 @@ public class DarkPalaceMerge
     private static CoreAdvanced _Adv;
     private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
     private static CoreLegion _Legion;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
 
     public bool DontPreconfigure = true;
@@ -79,8 +79,7 @@ private static CoreAdvanced _sAdv;
                 case "Dark Palace Token":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster("dagefortress", "Grrrberus", req.Name, isTemp: false, log: false);
+                    Core.HuntMonster("dagefortress", "Grrrberus", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
