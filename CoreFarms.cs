@@ -197,9 +197,21 @@ public class CoreFarms
         Core.RegisterQuests(3991, 3992);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
         {
-            // Core.KillMonster("battlegrounde", "r2", "Left", "*", "Battleground E Opponent Defeated", 10, log: false);
-            // Core.KillMonster("battlegrounde", "r2", "Left", "*", "Battleground D Opponent Defeated", 10, log: false);
-            Core.KillMonster("battlegrounde", "r2", "Left", "*", log: false);
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
+            if (Bot.Map.Name != "battlegrounde")
+                Core.Join("battlegrounde", publicRoom: Core.PrivateRooms);
+            if (Bot.Player.Cell != "r2")
+                Core.Jump("r2", "center");
+
+            Core.CanWeAggro();
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack("*");
+            Core.Sleep();
         }
         Core.CancelRegisteredQuests();
         Core.SavedState(false);
@@ -297,173 +309,6 @@ public class CoreFarms
     }
 
 
-    // /// <summary>
-    // /// Farms level in Ice Storm Arena
-    // /// </summary>
-    // /// <param name="level">Desired level</param>
-    // /// <param name="rankUpClass"></param>
-    // public void IcestormArena(int level = 100, bool rankUpClass = false)
-    // {
-    //     if (Bot.Player.Level >= level && !rankUpClass)
-    //         return;
-
-    //     if (!rankUpClass)
-    //         Core.EquipClass(ClassType.Farm);
-    //     if (rankUpClass)
-    //         ToggleBoost(BoostType.Class);
-    //     Core.ToggleAggro(true);
-    //     Core.SavedState();
-    //     if (NotYetLevel(level) && Bot.Player.Level < 100)
-    //         ToggleBoost(BoostType.Experience, true);
-    //     //Between level 1 and 5
-    //     while (!Bot.ShouldExit && NotYetLevel(5))
-    //     {
-    //         Core.ByPassCheck();
-    //         Core.KillMonster("icestormarena", "r4", "Bottom", "*", log: false, publicRoom: true);
-    //     }
-
-    //     //Between level 5 and 10
-    //     while (!Bot.ShouldExit && NotYetLevel(10))
-    //     {
-    //         Core.ByPassCheck();
-    //         Core.KillMonster("icestormarena", "r5", "Left", "*", log: false, publicRoom: true);
-    //     }
-
-    //     //Between level 10 and 20
-    //     while (!Bot.ShouldExit && NotYetLevel(20))
-    //     {
-    //         Core.ByPassCheck();
-    //         Core.KillMonster("icestormarena", "r6", "Left", "*", log: false, publicRoom: true);
-    //     }
-
-    //     //Between level 20 and 25
-    //     if (NotYetLevel(25))
-    //     {
-    //         Core.RegisterQuests(6628);
-    //         while (!Bot.ShouldExit && NotYetLevel(25))
-    //         {
-    //             Core.ByPassCheck();
-    //             Core.KillMonster("icestormarena", "r7", "Left", "*", log: false, publicRoom: true);
-    //         }
-    //         Core.CancelRegisteredQuests();
-    //     }
-
-    //     //Between level 25 and 30
-    //     while (!Bot.ShouldExit && NotYetLevel(30))
-    //     {
-    //         Core.ByPassCheck();
-    //         Core.KillMonster("icestormarena", "r10", "Left", "*", log: false, publicRoom: true);
-    //     }
-
-    //     //Between level 30 and 35
-    //     if (NotYetLevel(35))
-    //     {
-    //         if (!rankUpClass)
-    //             Core.EquipClass(ClassType.Solo);
-
-    //         Core.RegisterQuests(6629);
-    //         while (!Bot.ShouldExit && NotYetLevel(35))
-    //         {
-    //             Core.ByPassCheck();
-    //             Core.KillMonster("icestormarena", "r11", "Left", "*", log: false, publicRoom: true);
-    //         }
-    //         Core.CancelRegisteredQuests();
-    //     }
-
-    //     if (!rankUpClass)
-    //         Core.EquipClass(ClassType.Farm);
-
-    //     //Between level 35 and 50
-    //     while (!Bot.ShouldExit && NotYetLevel(50))
-    //     {
-    //         Core.ByPassCheck();
-    //         Core.KillMonster("icestormarena", "r14", "Left", "*", log: false, publicRoom: true);
-    //     }
-
-    //     //Between level 50 and 61(for BGE)
-    //     while (!Bot.ShouldExit && NotYetLevel(61))
-    //     {
-    //         Core.ByPassCheck();
-    //         Core.KillMonster("icestormarena", "r16", "Left", "*", log: false, publicRoom: true);
-    //     }
-
-    //     //Between level 61 and 75
-    //     if (NotYetLevel(75))
-    //     {
-    //         if (rankUpClass)
-    //         {
-    //             while (!Bot.ShouldExit && NotYetLevel(75))
-    //             {
-    //                 Core.ByPassCheck();
-    //                 Core.KillMonster("icestormarena", NotYetLevel(65) ? "r17" : NotYetLevel(70) ? "r18" : "r20", "Left", "*", log: false, publicRoom: true);
-    //             }
-    //         }
-    //         else
-    //         {
-    //             ToggleBoost(BoostType.Gold);
-    //             Core.RegisterQuests(3991, 3992);
-    //             while (!Bot.ShouldExit && NotYetLevel(75))
-    //                 Core.KillMonster("battlegrounde", "r2", "Center", "*", log: false, publicRoom: true);
-    //             Core.CancelRegisteredQuests();
-    //             ToggleBoost(BoostType.Gold, false);
-    //         }
-    //     }
-
-    //     //Between level 75 and 100
-    //     while (!Bot.ShouldExit && NotYetLevel(level))
-    //     {
-    //         if (!Bot.Player.IsMember)
-    //             Core.ByPassCheck();
-
-    //         Core.KillMonster(
-    //             Core.IsMember
-    //             ? "nightmare"
-    //             : "icestormunder",
-
-    //             Core.IsMember
-    //             ? "r13"
-    //             : "r2",
-
-    //             Core.IsMember
-    //             ? "Left"
-    //             : "Top",
-
-    //             Core.IsMember
-    //             ? "*"
-    //             : "*",
-
-    //             log: false);
-    //     }
-    //     Core.ToggleAggro(false);
-    //     Core.JumpWait();
-    //     Core.Rest();
-
-    //     if (rankUpClass)
-    //         ToggleBoost(BoostType.Class, false);
-    //     ToggleBoost(BoostType.Experience, false);
-
-    //     bool NotYetLevel(int _level)
-    //     {
-    //         // Check for an equipped class item in the inventory.
-    //         InventoryItem? item = Bot.Inventory.Items
-    //             .FirstOrDefault(x => x != null && x.Equipped && x.Category == ItemCategory.Class);
-
-    //         // If no class item is found, log and return level comparison.
-    //         if (item == null)
-    //         {
-    //             Core.Logger("Class not found.");
-    //             return !rankUpClass
-    //                 ? Bot.Player.Level < _level && Bot.Player.Level < level
-    //                 : Bot.Player.Level <= _level;
-    //         }
-
-    //         // Return level comparison based on class item conditions.
-    //         return !rankUpClass
-    //             ? Bot.Player.Level < _level && Bot.Player.Level < level
-    //             : Bot.Player.Level <= _level && Bot.Player.Level <= level && item.Quantity < 302500;
-    //     }
-
-    // }
     /// <summary>
     /// Farms level in Ice Storm Arena
     /// </summary>
@@ -837,26 +682,19 @@ public class CoreFarms
                 Core.RegisterQuests(3991, 3992);
                 while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
                 {
-                    while (!Bot.ShouldExit && !Bot.Player.Alive)
+                    if (!Bot.Player.Alive)
                     {
-                        if (Bot.Player.Alive)
-                        {
-                            Bot.Sleep(1000);
-                            if (Bot.Player.Cell != "r2")
-                                Core.Jump("r2", "center");
-                            break;
-                        }
-                        else
-                            Bot.Sleep(1000);
+                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                        continue;
                     }
-
                     if (Bot.Map.Name != "battlegrounde")
                         Core.Join("battlegrounde", publicRoom: Core.PrivateRooms);
                     if (Bot.Player.Cell != "r2")
                         Core.Jump("r2", "center");
 
                     Core.CanWeAggro();
-                    Bot.Combat.Attack("*");
+                    if (!Bot.Player.HasTarget)
+                        Bot.Combat.Attack("*");
                     Core.Sleep();
                 }
                 Core.AbandonQuest(3991, 3992);
