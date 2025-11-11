@@ -183,6 +183,7 @@ public class SeaVoiceMerge
 
     public void KillThing(string map, int mobMapID, int itemUsed, string Class, string item, int quant = 1, bool isTemp = false)
     {
+        Adv.BuyItem("seavoice", 2320, "Vigil", 1000, 12023);
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
         Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
@@ -190,6 +191,9 @@ public class SeaVoiceMerge
         Core.Equip(Class);
         if (Class == "Void Highlord")
             Bot.Skills.StartAdvanced("Void HighLord", true, ClassUseMode.Def);
+
+        Core.Equip(itemUsed);
+        Core.Logger($"{itemUsed} [Vigil] Equiped? {Bot.Inventory.IsEquipped("Vigil")}");
 
         // Locate mob by MapID
         Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m?.MapID == mobMapID);
