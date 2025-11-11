@@ -10596,8 +10596,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 43764,
-    "sha256": "bb98f8f24a6f58946aebd0b0f69d79557fc39347063c161ec89eb9b85682c72d",
+    "size": 43798,
+    "sha256": "325c5f2af3647805dc293d8a8644b3e718c38377e70732b62d285858ab9451ed",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -18625,8 +18625,8 @@
       "trident"
     ],
     "path": "Other/MergeShops/SeaVoiceMerge.cs",
-    "size": 12212,
-    "sha256": "78bda83adbed08493e3ed594d002af7de84bd2f140d8e47559c3de51290a03ca",
+    "size": 12207,
+    "sha256": "c0a4ccc7f6cc8be43031d34e2cddbba8b74c98a8424f2d8c343a4b1fa8bc1327",
     "fileName": "SeaVoiceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SeaVoiceMerge.cs"
   },
