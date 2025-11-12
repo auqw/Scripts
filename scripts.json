@@ -715,8 +715,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 2648,
-    "sha256": "c2981d216fc0214f76ef4c3c5fab7122a2caed1fff80508cfc62d167dbced199",
+    "size": 2909,
+    "sha256": "8f45013d265ae70e54e6f8d07c972c21e59f93b2f7beb2ba5b35956e58ebc1df",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -25865,8 +25865,8 @@
       "nothingness"
     ],
     "path": "Nation/EvolvedOrb/EvolvedShadowOrbItems[Mem].cs",
-    "size": 5873,
-    "sha256": "37253f933966f6c896e3238ad1e06339ccf7d410fcdcef33a6065c2f8cfa2718",
+    "size": 8479,
+    "sha256": "e5e728170afd3fb442bb80d28d064d9c65fdd9b0fb3ffc6da5c4048985892f70",
     "fileName": "EvolvedShadowOrbItems[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/EvolvedOrb/EvolvedShadowOrbItems[Mem].cs"
   },
@@ -25937,8 +25937,8 @@
       "null"
     ],
     "path": "Nation/EvolvedOrb/0EvolvedOrb.cs",
-    "size": 2088,
-    "sha256": "cdc0e41ef29cdd8213077d6f8adb0f29d4923787ac9016ad7e9de1c49736c2d9",
+    "size": 2093,
+    "sha256": "b9402e10ddc50110621d30296a7cb42651eca591e3bf944416ae3d954a72b79f",
     "fileName": "0EvolvedOrb.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/EvolvedOrb/0EvolvedOrb.cs"
   },
