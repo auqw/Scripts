@@ -7199,8 +7199,8 @@
       "eclipses"
     ],
     "path": "Legion/MergeShops/AtlasFallsGearMerge.cs",
-    "size": 11961,
-    "sha256": "723587cd007246c78e012e52e471b454d8a6da406a826506758653c105f00842",
+    "size": 11976,
+    "sha256": "ad4363e6fa5522dff09a8be9b1af8f4699ae11363ff860513fbfeb7f16ffb024",
     "fileName": "AtlasFallsGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/AtlasFallsGearMerge.cs"
   },
@@ -17530,8 +17530,8 @@
       "storms"
     ],
     "path": "Other/MergeShops/LothianTreasuryMerge.cs",
-    "size": 6729,
-    "sha256": "402290e308712e91245b1ee4ee0ca33fe6ff20c752ddaa82a40d9b631b9fa596",
+    "size": 6752,
+    "sha256": "babc25bf96120bade424ed80f60a404ba787b57c8ee830251e05c23f90f0f188",
     "fileName": "LothianTreasuryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/LothianTreasuryMerge.cs"
   },
@@ -24678,8 +24678,8 @@
       "orb"
     ],
     "path": "Seasonal/ObrigadoBrasil/IaraMerge.cs",
-    "size": 5817,
-    "sha256": "ee75ff60975e95a1dc62aca1dca1fd1ba1983347563624ddb4c4956bf2383bff",
+    "size": 5840,
+    "sha256": "a1fe334850892440eb9274e272130421a78cb1687eb9c63999087245b22d3570",
     "fileName": "IaraMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/ObrigadoBrasil/IaraMerge.cs"
   },
@@ -24794,8 +24794,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 987326,
-    "sha256": "e7faaaf88381636873f8f443a98d869ba1dd18751177d70c72e8ca2485c15763",
+    "size": 990910,
+    "sha256": "778a71252ae5d3dc50bf88393f06901bb480eace18bd1f61243b79322321c292",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
