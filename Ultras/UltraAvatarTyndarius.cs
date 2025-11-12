@@ -65,8 +65,9 @@ public class UltraAvatarTyndarius
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
+        while (!Bot.ShouldExit)
         {
+            if (!Bot.Player.Alive) Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
             if (Core.HasClassEquipped(a))
                 Ultra.Taunt(a, boss, "aura", 250, "Focus");
             else if (Core.HasClassEquipped(b))
@@ -76,6 +77,8 @@ public class UltraAvatarTyndarius
                 Ultra.KillWithPriority(boss, 2, "Ultra Fire Orb", 3, "Ultra Fire Orb", 1);
                 Bot.Skills.UseSkill(5);
             }
+            if (Bot.Player.Alive && !Ultra.MonsterAlive(boss))
+                break;
         }
     }
 }

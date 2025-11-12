@@ -70,8 +70,9 @@ public class CoreUltra
 
     public bool MonsterAlive(string name)
     {
+        if (!Bot.Player.Alive) Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
         if (string.IsNullOrWhiteSpace(name)) return false;
-        if (Bot?.Monsters?.MapMonsters == null) return false;
+        if (Bot.Monsters?.MapMonsters == null) return false;
 
         return Bot.Monsters.MapMonsters
             .Any(m => m?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true && m.Alive);
