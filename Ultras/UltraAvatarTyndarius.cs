@@ -68,6 +68,13 @@ public class UltraAvatarTyndarius
         while (!Bot.ShouldExit)
         {
             if (!Bot.Player.Alive) Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+            if (Bot.Map.Name != map)
+                Core.Join(map);
+            if (Bot.Player.Cell != "Boss")
+            {
+                Bot.Map.Jump("Boss", "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange("Boss");
+            }
             if (Core.HasClassEquipped(a))
                 Ultra.Taunt(a, boss, "aura", 250, "Focus");
             else if (Core.HasClassEquipped(b))
