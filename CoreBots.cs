@@ -6791,7 +6791,7 @@ public class CoreBots
                 break;
 
             case "xantown":
-                blackListedCells.UnionWith(Bot.Map?.Cells.Where(x => x != null && x != "r12"));
+                blackListedCells.UnionWith(Bot.Map?.Cells?.Where(x => !string.IsNullOrEmpty(x) && x != "r12") ?? Enumerable.Empty<string>());
                 break;
 
             case "darkoviaforest":
