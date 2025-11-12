@@ -3934,6 +3934,13 @@ public class CoreBots
         if (target == null)
             return;
 
+        if (Bot.Map.PlayerNames?.Any(x => x != Bot.Player.Username) == true)
+        {
+            Bot.Options.AggroMonsters = true;
+            Bot.Options.HidePlayers = true; // Trust Tato — reduces lag
+        }
+        else Bot.Options.AggroMonsters = false;
+
         // If item is null -> just kill monster until dead
         if (item == null)
         {
