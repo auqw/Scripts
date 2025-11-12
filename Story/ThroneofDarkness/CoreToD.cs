@@ -129,7 +129,7 @@ public class CoreToD
         if (!Story.QuestProgression(4980))
         {
             Core.EnsureAccept(4980);
-            Story.MapItemQuest(4980, "bonecastle", new[] { 4354, 4355 });
+            Core.GetMapItems(new[] { (4354, 1), (4355, 1) }, "bonecastle");
             Core.HuntMonster("bonecastle", "Grateful Undead", "Song Requested Ticked", 5);
             Core.HuntMonster("bonecastle", "That 70's Zombie", "Sweet Dancing Shoes", 2);
             Core.EnsureComplete(4980);
@@ -139,7 +139,7 @@ public class CoreToD
         if (!Story.QuestProgression(4981))
         {
             Core.EnsureAccept(4981);
-            Core.HuntMonster("bonecastle", "Skeletal Warrior", "Undead Humerus Bones", 5);
+            Core.KillMonster("bonecastle", "r8", "Left", "Skeletal Warrior", "Undead Humerus Bones", 5);
             Core.EnsureComplete(4981);
         }
 
@@ -147,14 +147,14 @@ public class CoreToD
         if (!Story.QuestProgression(4982))
         {
             Core.EnsureAccept(4982);
-            Core.KillMonster("bonecastle", "Enter", "Spawn", "Yellow, Green");
-            Core.KillMonster("bonecastle", "r3", "Bottom", "Red, Red");
-            Core.KillMonster("bonecastle", "r8", "Left", "Blue, Green, Red");
+            Core.KillMonster("bonecastle", "Enter", "Spawn", "Undead Guard", "Yellow, Green");
+            Core.KillMonster("bonecastle", "r3", "Bottom", "Undead Knight", "Red, Red");
+            Core.KillMonster("bonecastle", "r8", "Left", "Skeletal Warrior", "Blue, Green, Red");
             Core.EnsureComplete(4982);
         }
 
         // The Dead King's Bedroom
-        Story.MapItemQuest(4983, "bonecastle", 4352, 1);
+        Story.MapItemQuest(4983, "bonecastle", 4352);
 
         // Game of Porcelain Thrones
         Story.MapItemQuest(4984, "bonecastle", 4353, 4);
