@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 136971,
-    "sha256": "3e62cfe3d51cdc50def35f1b7a327c56a469d884f6b0ff08c2484be2582dbd69",
+    "size": 137660,
+    "sha256": "86cc95efd4d9c095795f76ee9a840a1d3ceaa5cbd19716f5f7527fdb18437783",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 387241,
-    "sha256": "583581018bde2bbc3f682ebe0aced0f63d73161deaa544d449c5f7521bd066a1",
+    "size": 385810,
+    "sha256": "12b22d0d7253205c7944c726ac51c92cdb1ec9d05cf2bde4bd4a93435efbdd66",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -1032,8 +1032,8 @@
       "luxuria"
     ],
     "path": "Legion/HeadOfTheLegionBeast.cs",
-    "size": 11764,
-    "sha256": "bf063d6d8f1d2166f34799ffa7e152167b6bafe98a79a3dd6a5d52dc107149a9",
+    "size": 11716,
+    "sha256": "2335326f733444a7dc6b682930ae15aab809d3c017d67dc4815c1dc6c17cf436",
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
   },
@@ -1044,8 +1044,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 39732,
-    "sha256": "b89ca4e369733d869502449cc8d46c3536cb5cda2c1f1f8d7447293becd9e90f",
+    "size": 38808,
+    "sha256": "1b1623c1f8c73cb62d45ccbf10b467b0bc2f04ddedbbed59bd7de1d01ce9941c",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -1686,8 +1686,8 @@
       "titan-attack"
     ],
     "path": "Story/TitanAttack.cs",
-    "size": 4567,
-    "sha256": "f0a2fa213c606baf597ef60a66a360b79097b88cb7a85e904fb04729e87aecc3",
+    "size": 4521,
+    "sha256": "78b2412a32c8d48512ed65ec39c6e395d92f4ba81612f341158640a4a47d95b1",
     "fileName": "TitanAttack.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TitanAttack.cs"
   },
@@ -1878,8 +1878,8 @@
       "banished"
     ],
     "path": "Story/Banished.cs",
-    "size": 5740,
-    "sha256": "eda9f73372892c6c2c1cdabfa69b972bcc7d1c0655cccbb54944fb9b98a7e906",
+    "size": 5645,
+    "sha256": "84b66db5ce432f1bec9a511ad616760310e53c5bbe41c8d58baacbf92030795b",
     "fileName": "Banished.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Banished.cs"
   },
@@ -2679,8 +2679,8 @@
       "exp"
     ],
     "path": "Farm/Leveling.cs",
-    "size": 964,
-    "sha256": "1d3cd59f22d6ca8f7b7bb1749561215aafd135b999285adb89ec11c6ec28fc1b",
+    "size": 921,
+    "sha256": "7c709f6eb5cd2da5a09e7ac144048510893200275193dabf5b0e47f70efb79d3",
     "fileName": "Leveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/Leveling.cs"
   },
@@ -2712,8 +2712,8 @@
       "legion"
     ],
     "path": "Farm/DarkWarLegionGold.cs",
-    "size": 1408,
-    "sha256": "a2fc9f4d09b1682d21288a0118486eed9d1ce67753ae7d22eba393dcc083b01a",
+    "size": 1364,
+    "sha256": "c4c9ac4b037a7caabd9eefde3aaac72a51d885a8386c72dc681427d71e8dccb8",
     "fileName": "DarkWarLegionGold.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/DarkWarLegionGold.cs"
   },
@@ -2743,8 +2743,8 @@
       "brawl"
     ],
     "path": "Farm/CombatTrophy.cs",
-    "size": 1474,
-    "sha256": "2f54c5dccd0b87226f6e16076a87da9e1a21c26aec4056e68cfcaaf6d716a4c3",
+    "size": 1428,
+    "sha256": "54fa5b07c5c45c366bc6f3ca18e9271bb3275d0208f1838257cfe691bee2f783",
     "fileName": "CombatTrophy.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/CombatTrophy.cs"
   },
@@ -2767,8 +2767,8 @@
       "leveling"
     ],
     "path": "Farm/SevenCirclesWarXP+Gold.cs",
-    "size": 1472,
-    "sha256": "0aa3990adb9cae434a6cc357087af9dfb88eae993719602652e695a43800b703",
+    "size": 1382,
+    "sha256": "da8941cd35b2c3060740c81c197c6abdd050330beade10034e430782dfc09d52",
     "fileName": "SevenCirclesWarXP+Gold.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/SevenCirclesWarXP+Gold.cs"
   },
@@ -2782,8 +2782,8 @@
       "berserker bunny"
     ],
     "path": "Farm/GoldFarm.cs",
-    "size": 1040,
-    "sha256": "b6d8ce734ec75bb020b764329a4739a3014270d645e8f7b097d60ec79efb8862",
+    "size": 996,
+    "sha256": "9bdeec635e261b73b5e2b9ba0ab150dcc548a3e7386ea47ac7b23549db866f12",
     "fileName": "GoldFarm.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/GoldFarm.cs"
   },
@@ -3237,8 +3237,8 @@
       "accoutrements"
     ],
     "path": "Other/DeathKnightLootQuest.cs",
-    "size": 2466,
-    "sha256": "badf82e4324d6c0386767fd72704eefeeab9e3f3abd4cc0287ea6dc99f21da42",
+    "size": 2411,
+    "sha256": "1963a2c28f30ab7c6bc3dc5dae91b4e64abe5442c9ca9f49edca5b3ddaed05e8",
     "fileName": "DeathKnightLootQuest.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/DeathKnightLootQuest.cs"
   },
@@ -3330,8 +3330,8 @@
       "astravian oracle set"
     ],
     "path": "Other/AstravianOracleSet.cs",
-    "size": 2434,
-    "sha256": "907712eec1fc16454ea6834d50864cc773714087b3f9790f528558f5b0bca853",
+    "size": 2337,
+    "sha256": "0e96f429997f96083629a57b9ec5543076e079f6f5a069c90a986ffdb51418ed",
     "fileName": "AstravianOracleSet.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/AstravianOracleSet.cs"
   },
@@ -3469,8 +3469,8 @@
       "emblem"
     ],
     "path": "Other/WarFuryEmblem.cs",
-    "size": 1413,
-    "sha256": "5c2e0fc3423e10626980b77913d7f96df9893a4347bd7c8e3811d014723ca65c",
+    "size": 1367,
+    "sha256": "f89476c4cbcfeb24afe22842c1cf6657bbff8e08f45fb1fb0bc898055e2ba792",
     "fileName": "WarFuryEmblem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/WarFuryEmblem.cs"
   },
@@ -3661,8 +3661,8 @@
       "undead"
     ],
     "path": "Tools/ChooseBestGear(Racial).cs",
-    "size": 2270,
-    "sha256": "62cfa6e3a8fe9c1e6b5145c3de40ea4ad949a2960d14a57d155427f76f7084b1",
+    "size": 2235,
+    "sha256": "992999bb9076020229a85248ed519b1b899d265a63bd0baf3dd55421e265d7e6",
     "fileName": "ChooseBestGear(Racial).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ChooseBestGear(Racial).cs"
   },
@@ -3802,8 +3802,8 @@
       "class points"
     ],
     "path": "Tools/ChooseBestGear(Generic).cs",
-    "size": 2233,
-    "sha256": "3529ed1cb1e0c6582c1e871454996922165ebc8c3ef4d25e7ec6b428d7f672dc",
+    "size": 2198,
+    "sha256": "fc54f5a6f71414de641201aeeca4c999b5ab337da1363d257e2e25c3ae4ef830",
     "fileName": "ChooseBestGear(Generic).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ChooseBestGear(Generic).cs"
   },
@@ -4154,8 +4154,8 @@
       "evil"
     ],
     "path": "Evil/VordredsArmor.cs",
-    "size": 8000,
-    "sha256": "9237b38b22086a5f5a98be065cb231832743d19af127acff3d3dc3491bde2460",
+    "size": 7859,
+    "sha256": "3f335a13c58c235b109bcc913f8181eb0fea536d12bd62990a31e10cc7a8eb6b",
     "fileName": "VordredsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/VordredsArmor.cs"
   },
@@ -4480,8 +4480,8 @@
       "legion arena"
     ],
     "path": "Army/ArmyLegion/ArmyLegionToken.cs",
-    "size": 19443,
-    "sha256": "70d0d888b703fff0513f9372b15f168dc47486a71f9e93adcd720f7d036cef45",
+    "size": 18703,
+    "sha256": "69203a3d222ddc6d19f2f92e8bc39bdb91739e6dad46adff69e8a98b8bc47cf9",
     "fileName": "ArmyLegionToken.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyLegion/ArmyLegionToken.cs"
   },
@@ -4511,8 +4511,8 @@
       "seraphicwardage"
     ],
     "path": "Army/ArmyLegion/ArmyDarkToken.cs",
-    "size": 2794,
-    "sha256": "30dece52cd9cf6aa69201e43e10d837a0b212051d04dc1b2a096f4b085f9c2cb",
+    "size": 2748,
+    "sha256": "37a37c044ed1d1e12eb64c354f15ecb5683ffb7c00af87cc3663c0fc06d353bf",
     "fileName": "ArmyDarkToken.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyLegion/ArmyDarkToken.cs"
   },
@@ -4832,8 +4832,8 @@
       "seven circles war"
     ],
     "path": "Army/ArmyFarm/ArmyGold.cs",
-    "size": 12653,
-    "sha256": "b96ca1a82ff3dfc2c2714df1aa53059ba0abe22882aacd98feff420d7276caf4",
+    "size": 12624,
+    "sha256": "fe43dd2f0ea4e8d83e510a17a18cceb3523c4b489d74cc605c3f6e2a4aea2b75",
     "fileName": "ArmyGold.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyFarm/ArmyGold.cs"
   },
@@ -6364,8 +6364,8 @@
       "null"
     ],
     "path": "Legion/Revenant/CoreLR.cs",
-    "size": 8500,
-    "sha256": "cd92656ec16cd269dac42a9608c77e0dff8e41681ebb7d38a83ca10f9a7ff156",
+    "size": 8089,
+    "sha256": "3c4232c58f1b856be4ff9ce31bbec87325cbb9f943df19eca60a9bb4c2822a2f",
     "fileName": "CoreLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Revenant/CoreLR.cs"
   },
@@ -6635,8 +6635,8 @@
       "null"
     ],
     "path": "Legion/Various/ThanatostheDestroyer.cs",
-    "size": 2368,
-    "sha256": "4024e97a3826e43d0a4bd9b9283fedcc7d4f66036370537ff8b8c355accfef78",
+    "size": 2322,
+    "sha256": "138a2365f7ed55e1a9002a4ec5de34031ba6fefd17640e0cb87bbf95e5f7a304",
     "fileName": "ThanatostheDestroyer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/ThanatostheDestroyer.cs"
   },
@@ -8323,8 +8323,8 @@
       "null"
     ],
     "path": "Story/ShadowsOfWar/CoreSoW.cs",
-    "size": 38257,
-    "sha256": "ef1810d387275158a402bd055fa3a81206f554942374b2a76173aea87bccd39e",
+    "size": 38211,
+    "sha256": "0c4baf4f76c1dda696b40285339b930da4e679268e6fc1ab8efada70ce30aaf4",
     "fileName": "CoreSoW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ShadowsOfWar/CoreSoW.cs"
   },
@@ -10596,8 +10596,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 43797,
-    "sha256": "c60e8a0bf0de96e660e35daafe281382c3201ec82ef29508f5a6f24b91012faa",
+    "size": 43794,
+    "sha256": "384bf7022db8c0fa7cb9a2de3ed5645263382c5e6f846acd0a38f815dc6a3c62",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -11193,8 +11193,8 @@
       "farm"
     ],
     "path": "Farm/REP/AegisREP.cs",
-    "size": 851,
-    "sha256": "5eff150ebd28c80a24c399bbd5789d4091444ab7c7f3abcfcf058f32facda11c",
+    "size": 758,
+    "sha256": "b47cb5f93aa69f4e3a6565c558bc3542e8d4be12da473f91728d7756c0964f4f",
     "fileName": "AegisREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/AegisREP.cs"
   },
@@ -11210,8 +11210,8 @@
       "reputation"
     ],
     "path": "Farm/REP/NorthpointeREP.cs",
-    "size": 889,
-    "sha256": "b47e3f0aef208b66f500337d50a7a8edac69ad55e5ac75c97b590e7258f5b13e",
+    "size": 796,
+    "sha256": "8bf020abb3f4d474d00baa09d6af4581d14c6691a674a419e43549053f25d6f9",
     "fileName": "NorthpointeREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/NorthpointeREP.cs"
   },
@@ -11241,8 +11241,8 @@
       "rep"
     ],
     "path": "Farm/REP/DreadFireREP.cs",
-    "size": 859,
-    "sha256": "b5780e28cf75a1aa7b4500c0dcd7e166a557bf1f303656e7e3580f5816e90999",
+    "size": 766,
+    "sha256": "bad29a196f4d253b8cbdb53bdcfeae4cb9b9ac4e0823d9f1f9699d3f40790ad0",
     "fileName": "DreadFireREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/DreadFireREP.cs"
   },
@@ -11256,8 +11256,8 @@
       "reputation"
     ],
     "path": "Farm/REP/SomniaREP.cs",
-    "size": 837,
-    "sha256": "38ab5d0df5cfaceabeca5da696364b1fc3833bb644b71a1a08e5545602d508d6",
+    "size": 744,
+    "sha256": "fb953d16f092a16cbdb963c37baf8cee34884049de89c7ecc99209a951cd0fbf",
     "fileName": "SomniaREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/SomniaREP.cs"
   },
@@ -11272,8 +11272,8 @@
       "farm"
     ],
     "path": "Farm/REP/BlacksmithingREP.cs",
-    "size": 1525,
-    "sha256": "9f5c287503a773d3fff47d0787bf45e8919ca3003899032143e5c105af3f04f9",
+    "size": 1432,
+    "sha256": "8dcb8b021984ded532629566454b4f7c2c1083c81b3a49fab4a817b53aa374cb",
     "fileName": "BlacksmithingREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/BlacksmithingREP.cs"
   },
@@ -11288,8 +11288,8 @@
       "reputation"
     ],
     "path": "Farm/REP/FishingREP.cs",
-    "size": 856,
-    "sha256": "54cc72b1d3d4cb29e8779d3132c8700d4bd8212327124c6396998a40d625460a",
+    "size": 755,
+    "sha256": "19a09d1bf03b9daf1d1786e2a7fa6d890c34634d3cf73e5575f7c700624e2483",
     "fileName": "FishingREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/FishingREP.cs"
   },
@@ -11303,8 +11303,8 @@
       "reputation"
     ],
     "path": "Farm/REP/DiabolicalREP.cs",
-    "size": 1275,
-    "sha256": "181419c063210853a83c93e408e992fdb036187428f70fdc102e9e6efd920165",
+    "size": 1183,
+    "sha256": "c74b5b2f4513266c8b430d55124f9b5c8e8130bcb79540d2907aea54990ba3fe",
     "fileName": "DiabolicalREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/DiabolicalREP.cs"
   },
@@ -11322,8 +11322,8 @@
       "reputation"
     ],
     "path": "Farm/REP/SpellCraftingREP.cs",
-    "size": 912,
-    "sha256": "2806b7e0f542c485390cf23b3bc221c355563ca2fe4ff537981991d1f8cb155b",
+    "size": 819,
+    "sha256": "1f5946d7fd8fe45e88b3d7b791ced13923e9c581e80b3a662bdcb7e72f25fcd3",
     "fileName": "SpellCraftingREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/SpellCraftingREP.cs"
   },
@@ -11338,8 +11338,8 @@
       "rank"
     ],
     "path": "Farm/REP/CraggleRockREP.cs",
-    "size": 864,
-    "sha256": "4639be52d09ee2e2f3cb318798042f99a3ecef5f3d3eff00e61a017457ac7a41",
+    "size": 771,
+    "sha256": "ff996ff3e088e5f17fe385e19ce55aaf8aa38161b014dc01a9d94e33a0e61beb",
     "fileName": "CraggleRockREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/CraggleRockREP.cs"
   },
@@ -11356,8 +11356,8 @@
       "farm"
     ],
     "path": "Farm/REP/BladeofAweREP.cs",
-    "size": 886,
-    "sha256": "7e67f70e0ff0050bd9b93dc63f46dd59e86c10f8afc31f900c9ec80f9122e231",
+    "size": 793,
+    "sha256": "ea772a699860a5ceb4fdd54eb789399155ff24e54a705649c0f2b8b76f491562",
     "fileName": "BladeofAweREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/BladeofAweREP.cs"
   },
@@ -11371,8 +11371,8 @@
       "reputation"
     ],
     "path": "Farm/REP/TrollREP.cs",
-    "size": 832,
-    "sha256": "10d0e784e698340341799f9f10f43fa3c840a51d6927072b455790ba51869c0f",
+    "size": 739,
+    "sha256": "5a3b6f719b2c7bf27c3f7744ae71ad60ecb7a332b9934a22229342efc156b932",
     "fileName": "TrollREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/TrollREP.cs"
   },
@@ -11389,8 +11389,8 @@
       "reputation"
     ],
     "path": "Farm/REP/TreasureHunterREP.cs",
-    "size": 912,
-    "sha256": "e88686fa2457dc4af3ef7a875788d004553cb9b2fb0be447e761e4b59a43b36d",
+    "size": 819,
+    "sha256": "c72676ea38e6f794d18a6b6a8d94541978792ed7176530ca296a040ee2cc2668",
     "fileName": "TreasureHunterREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/TreasureHunterREP.cs"
   },
@@ -11407,8 +11407,8 @@
       "reps"
     ],
     "path": "Farm/REP/1GetAllRanks.cs",
-    "size": 3140,
-    "sha256": "3c17cd7c57c38b046dbd3a81f11979e87eae64afa67a54697d252682d02b1a6c",
+    "size": 3057,
+    "sha256": "7915c3babb2c16501a486e316e8f23e8fde5c357b024d01136b63abb9b69eb00",
     "fileName": "1GetAllRanks.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/1GetAllRanks.cs"
   },
@@ -11425,8 +11425,8 @@
       "rep"
     ],
     "path": "Farm/REP/EmberseaREP.cs",
-    "size": 1119,
-    "sha256": "bffa1b33166a6a64945439a344f651e8aae9845e133dbff9dd24f66468e3f691",
+    "size": 1027,
+    "sha256": "089fc9d9b2dddc63e295e7b879a73e539d2cd55c274756fa85ea17d197a244a7",
     "fileName": "EmberseaREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/EmberseaREP.cs"
   },
@@ -11442,8 +11442,8 @@
       "rank"
     ],
     "path": "Farm/REP/DeathPitArenaREP.cs",
-    "size": 893,
-    "sha256": "ac6bcaf19a6d998f49aee2eef08e6c7bcb7c7b6457ca81685857ed8cc072f73b",
+    "size": 800,
+    "sha256": "fc992a01539fb18fd468ae38da2db4987a008d288198967a64d176cea4a5a8af",
     "fileName": "DeathPitArenaREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/DeathPitArenaREP.cs"
   },
@@ -11458,8 +11458,8 @@
       "farm"
     ],
     "path": "Farm/REP/BrethwrenREP.cs",
-    "size": 1359,
-    "sha256": "01649005b236491238bfd2d8f9da6404049d16c3567a15210a03fdb6ea39cbe6",
+    "size": 1268,
+    "sha256": "15a296048e26d2bfdd45b610be258796e12863632c4b6bba913e5a6c971e7842",
     "fileName": "BrethwrenREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/BrethwrenREP.cs"
   },
@@ -11476,8 +11476,8 @@
       "reputation"
     ],
     "path": "Farm/REP/ThunderForgeREP.cs",
-    "size": 1199,
-    "sha256": "293781729c3cb943c196843bed39be89080da13dc5e843089bcb913190b4ef9a",
+    "size": 1099,
+    "sha256": "4d5bfc9d411f8b199acf1a412fc007df63259654d6497fb2e3d164fa04615c6c",
     "fileName": "ThunderForgeREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/ThunderForgeREP.cs"
   },
@@ -11491,8 +11491,8 @@
       "reputation"
     ],
     "path": "Farm/REP/GoodREP.cs",
-    "size": 827,
-    "sha256": "968179b22f9e5b70098ec1e7ce87006256d6055d80792de62e258183ac9683d6",
+    "size": 734,
+    "sha256": "9c52545f2a53bbb2f957a7986ef8a620bd5a4b7a42ea132552dc82d79947745e",
     "fileName": "GoodREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/GoodREP.cs"
   },
@@ -11509,8 +11509,8 @@
       "reputation"
     ],
     "path": "Farm/REP/InfernalArmyREP.cs",
-    "size": 900,
-    "sha256": "20601c9f44331bcaa0e117f4710e3eb64bce9a301121a166d1ffc4b412720ded",
+    "size": 807,
+    "sha256": "e698a50dd464d70a8c3542a594b482350db9698ba68cfcb362d29b05f2b3f618",
     "fileName": "InfernalArmyREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/InfernalArmyREP.cs"
   },
@@ -11526,8 +11526,8 @@
       "rank"
     ],
     "path": "Farm/REP/DwarfholdREP.cs",
-    "size": 869,
-    "sha256": "2d4ad4b6184499b906d38a87c1d71e492077cb0b9a349ba64eebd3bb9501d9ce",
+    "size": 776,
+    "sha256": "223d4052b214a56ae7229960a8c6bbc9b66372f322bfa93ea085624001c97ec6",
     "fileName": "DwarfholdREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/DwarfholdREP.cs"
   },
@@ -11543,8 +11543,8 @@
       "rank"
     ],
     "path": "Farm/REP/DeathPitBrawlRep.cs",
-    "size": 1212,
-    "sha256": "553b25eb4117dde18dd50ad665489a3b08dbc72ae0c187872e7af886c4836f31",
+    "size": 1112,
+    "sha256": "2d6cd75dd71959bdfd8f990254fe55adabeb767687bb5e4dad47506eddc45ea3",
     "fileName": "DeathPitBrawlRep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/DeathPitBrawlRep.cs"
   },
@@ -11561,8 +11561,8 @@
       "reputation"
     ],
     "path": "Farm/REP/Mythsong.cs",
-    "size": 1168,
-    "sha256": "dabf469264d3c8bec95c09f0a16ad8301ed20b5c5668959a112ade6ba3a510a8",
+    "size": 1068,
+    "sha256": "1a2889f55aabc8e458c9be24151814a0847579e19ba8bfe432bb1bd76a8287c7",
     "fileName": "Mythsong.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/Mythsong.cs"
   },
@@ -11578,8 +11578,8 @@
       "rank"
     ],
     "path": "Farm/REP/BaconCatREP.cs",
-    "size": 1234,
-    "sha256": "3d3612fbefd5f8462430591822afc5171504241f6c0f690761814be11a724960",
+    "size": 1143,
+    "sha256": "befd71fed46dc2755676acd090a2fac109b268d034dcc8f8f0eaf26fb12b6423",
     "fileName": "BaconCatREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/BaconCatREP.cs"
   },
@@ -11593,8 +11593,8 @@
       "reputation"
     ],
     "path": "Farm/REP/YokaiREP.cs",
-    "size": 833,
-    "sha256": "661f88c9af3f560822eb84bd99d32386e215f5b5464d9e61e74d2b5ede45c0b2",
+    "size": 740,
+    "sha256": "090b94609de66367f567fe7ce053a40a2c15b6884e99311b2033046fa2a3f518",
     "fileName": "YokaiREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/YokaiREP.cs"
   },
@@ -11608,8 +11608,8 @@
       "reputation"
     ],
     "path": "Farm/REP/EvilREP.cs",
-    "size": 827,
-    "sha256": "484defae97ea5111191ef45232260bed7bfed02527e3b014e4db5db1bc843cc6",
+    "size": 734,
+    "sha256": "7698ca576b652c83bb0c5e7bdd4ff711b68f555fa9037271ce3d4167e99c9a2e",
     "fileName": "EvilREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/EvilREP.cs"
   },
@@ -11623,8 +11623,8 @@
       "reputation"
     ],
     "path": "Farm/REP/EternalREP.cs",
-    "size": 1145,
-    "sha256": "a0a8782f0ab8d5d5a39d958f60bbd1787a6a46d150105eca8617d1423a2e9df0",
+    "size": 1053,
+    "sha256": "80b0cef92044f1403d200a1e5c33bf2be90946e0c4a978c702adb8dfa87596e5",
     "fileName": "EternalREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/EternalREP.cs"
   },
@@ -11638,8 +11638,8 @@
       "reputation"
     ],
     "path": "Farm/REP/GlaceraREP.cs",
-    "size": 1116,
-    "sha256": "9068aef690619024881a8e1f5b4c5105c1a498007526ca4d6fe1af74d16212ea",
+    "size": 1024,
+    "sha256": "084f995e5f8c6c58f813e2b01f830e5465e6ef28c73f228f4c6447008081f16e",
     "fileName": "GlaceraREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/GlaceraREP.cs"
   },
@@ -11655,8 +11655,8 @@
       "reputation"
     ],
     "path": "Farm/REP/ElementalMasterREP.cs",
-    "size": 903,
-    "sha256": "f07d69cb4e401c298e2500be6c191643660c9dd1c793f7632c63ff99a8e2889f",
+    "size": 810,
+    "sha256": "fb90fb3f87f80f43ab5f0657d22dc5e4d814d2702bed3ec4fe296098b452674a",
     "fileName": "ElementalMasterREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/ElementalMasterREP.cs"
   },
@@ -11671,8 +11671,8 @@
       "rank"
     ],
     "path": "Farm/REP/ArcangroveREP.cs",
-    "size": 889,
-    "sha256": "861e6e4196e129915ca61ab221ebb2281776f36fe18b44754eafded7360f8a95",
+    "size": 796,
+    "sha256": "3642ab2e341046f6a7a9bd4bd476aac27f4a0656b376616d312429ce506ec85f",
     "fileName": "ArcangroveREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/ArcangroveREP.cs"
   },
@@ -11689,8 +11689,8 @@
       "rank"
     ],
     "path": "Farm/REP/EtherStormREP.cs",
-    "size": 884,
-    "sha256": "cfa2c0b115b743affd32fb6d61744c7728b60263fd14a22425f2cc452239b432",
+    "size": 791,
+    "sha256": "a996a22ef46ece6e054c26dff423e006845725db21ede3f7365ae28d20b6bf96",
     "fileName": "EtherStormREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/EtherStormREP.cs"
   },
@@ -11704,8 +11704,8 @@
       "rank"
     ],
     "path": "Farm/REP/ChaosREP.cs",
-    "size": 832,
-    "sha256": "c58f2166c15a486e661fcfb4203dc78f0f7d6ce7b313903edf9d591ce43d4a72",
+    "size": 739,
+    "sha256": "b30c11513e1058a7228ca3b3eb9dddea55ac50c48806cd08ddf3e20aafa94ead",
     "fileName": "ChaosREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/ChaosREP.cs"
   },
@@ -11721,8 +11721,8 @@
       "rep"
     ],
     "path": "Farm/REP/DoomwoodREP.cs",
-    "size": 859,
-    "sha256": "8b9c9df48166559bff25e9e6c76c2a23c8f81de958437fc7dce7b1898bb84861",
+    "size": 766,
+    "sha256": "6ce9330ce591ccc2059ccb69d2f0894165b46592d47fb696bb1953c077b461c2",
     "fileName": "DoomwoodREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/DoomwoodREP.cs"
   },
@@ -11739,8 +11739,8 @@
       "reputation"
     ],
     "path": "Farm/REP/LoremasterREP.cs",
-    "size": 1113,
-    "sha256": "0146770e1159cf08e8a2cc8d1152be9f7e4a20ae2363b6dfa80cb387c7565392",
+    "size": 1021,
+    "sha256": "c6aaa6838c1ef53ddac44e2e4e820d4edfbb41700421d914c1a3b8d03a84cf47",
     "fileName": "LoremasterREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/LoremasterREP.cs"
   },
@@ -11756,8 +11756,8 @@
       "rank"
     ],
     "path": "Farm/REP/DruidGroveREP.cs",
-    "size": 873,
-    "sha256": "de242138877a32078e1eaef4319da574fed9123ec49ba790b68311bef7764af2",
+    "size": 780,
+    "sha256": "504498c16c532a5b93042cf21d25f27df63041b479a395d142655cf6526d2672",
     "fileName": "DruidGroveREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/DruidGroveREP.cs"
   },
@@ -11773,8 +11773,8 @@
       "rank"
     ],
     "path": "Farm/REP/DreadrockREP.cs",
-    "size": 865,
-    "sha256": "e93dc4426ef7ae1efc99cac456a6dde40814c2e82a9edf0d0ceed110c47beb8d",
+    "size": 772,
+    "sha256": "20e42f640af49d797b54a1abe1e9eb80f95b125b592d3244abcd71a9b15c0eed",
     "fileName": "DreadrockREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/DreadrockREP.cs"
   },
@@ -11788,8 +11788,8 @@
       "reputation"
     ],
     "path": "Farm/REP/LycanREP.cs",
-    "size": 1123,
-    "sha256": "9bbfc5ce73954fb3ec3fb4987c36d21d427c3a812cc8160e67bd1f936af6004d",
+    "size": 1031,
+    "sha256": "ef5fddeac22a776f4d36305b932591189486d0896e8cc058de3ebace75251ef2",
     "fileName": "LycanREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/LycanREP.cs"
   },
@@ -11803,8 +11803,8 @@
       "farm"
     ],
     "path": "Farm/REP/AlchemyREP.cs",
-    "size": 1914,
-    "sha256": "5b51d8e7bf3c90dd0fb36caa5e519cfe7652aa82266b7b75d259c3a6fe99bbe1",
+    "size": 1774,
+    "sha256": "fc7cdcb2244c7a17083c91a76d92ac240375061a6bdc8ba32d4d1b2d3337a67c",
     "fileName": "AlchemyREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/AlchemyREP.cs"
   },
@@ -11819,8 +11819,8 @@
       "reputation"
     ],
     "path": "Farm/REP/SandseaREP.cs",
-    "size": 852,
-    "sha256": "d1cd123bdad3fe8b8ec6353a046456e90e97cbac5b6cb3c66d640a7a1102b595",
+    "size": 759,
+    "sha256": "d9898c41c02403b1843d9e4ba3aa5721d0050c0c08c2eb1808eb0cb4dc9ed655",
     "fileName": "SandseaREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/SandseaREP.cs"
   },
@@ -11834,8 +11834,8 @@
       "reputation"
     ],
     "path": "Farm/REP/HorcREP.cs",
-    "size": 827,
-    "sha256": "592202ef814af8a8fc0f57df61b78b022b09bfef61751cc432db67232bd2121d",
+    "size": 734,
+    "sha256": "04fde8635305f3568eafe12972bcf86559ed351c1e6917764997fd01ffa18cd7",
     "fileName": "HorcREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/HorcREP.cs"
   },
@@ -11852,8 +11852,8 @@
       "reputation"
     ],
     "path": "Farm/REP/SwordhavenREP.cs",
-    "size": 884,
-    "sha256": "54e24e53526a8a5b14cc0e4fe0c6ba61f608ee8e80b26b30c989ba2a549eac8f",
+    "size": 791,
+    "sha256": "b71e21653636559e9629fd51d4f261fa490cf0fbf27619360014b85a88cd996e",
     "fileName": "SwordhavenREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/SwordhavenREP.cs"
   },
@@ -11886,8 +11886,8 @@
       "reputation"
     ],
     "path": "Farm/REP/HollowbornREP.cs",
-    "size": 962,
-    "sha256": "4c847e782f722f3b352d1e25fc31367266ac9ab4a5b9a7e34f37c0da12ba54a3",
+    "size": 866,
+    "sha256": "ce9e0a79be23f6df6444f83c44d19524697e094a461464e027d75bbaa6d9b980",
     "fileName": "HollowbornREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/HollowbornREP.cs"
   },
@@ -11904,8 +11904,8 @@
       "reputation"
     ],
     "path": "Farm/REP/RavenlossREP.cs",
-    "size": 1112,
-    "sha256": "025cf37039af662c08faddc7fe857aca564d4fe99dfaf816c28b1d6777c4c31f",
+    "size": 1020,
+    "sha256": "04325a4f2e45da8a58796babb6ad5f75d8bec936136958cd922ed31598408109",
     "fileName": "RavenlossREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/RavenlossREP.cs"
   },
@@ -11921,8 +11921,8 @@
       "rank"
     ],
     "path": "Farm/REP/BeastMasterREP[Mem].cs",
-    "size": 908,
-    "sha256": "9345c0630943334081fb1e690217c4d3a034c23c086ba71d1d9d02e634c898b8",
+    "size": 815,
+    "sha256": "89b70966640cab451ac5ac7c52d7d91a1a676bc5531a84f74d34eedc2b67232a",
     "fileName": "BeastMasterREP[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/BeastMasterREP[Mem].cs"
   },
@@ -11938,8 +11938,8 @@
       "farm"
     ],
     "path": "Farm/REP/BrightoakREP.cs",
-    "size": 1222,
-    "sha256": "b8ca1b41fbfd120a6a4d9d1e98b75f611987b17914a92b41bf48d3888836f955",
+    "size": 1130,
+    "sha256": "9321d83216bcdb04dd8455e136855c84fd254a59fc16ecc6a31924d3497bec71",
     "fileName": "BrightoakREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/BrightoakREP.cs"
   },
@@ -11956,8 +11956,8 @@
       "reputation"
     ],
     "path": "Farm/REP/MonsterHunterREP.cs",
-    "size": 907,
-    "sha256": "f0e56b51f700bfa1399be4e512d4d242ecb63fdc094f729ab8691709c5d27319",
+    "size": 814,
+    "sha256": "9ec81372dd5d25c4ec7c53290c32a946337f82828da50d55e64b4ffa2e7187b2",
     "fileName": "MonsterHunterREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/MonsterHunterREP.cs"
   },
@@ -11974,8 +11974,8 @@
       "reputation"
     ],
     "path": "Farm/REP/NecroCryptREP.cs",
-    "size": 886,
-    "sha256": "076e6b3d6d3ec611a694093e7ab434212f6ba05ea4f3daf46231c8be424f9bda",
+    "size": 793,
+    "sha256": "9f27887b8cc5e63fb557cdc9dde23643045e2b04ca01b3cd5555c454eb34dd6b",
     "fileName": "NecroCryptREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/NecroCryptREP.cs"
   },
@@ -12028,8 +12028,8 @@
       "reputation"
     ],
     "path": "Farm/REP/MysteriousDungeonREP.cs",
-    "size": 935,
-    "sha256": "ae5b6ee77d4e81da65fc726ca44017961e5acdfdba566ba25b3fbdad84cde371",
+    "size": 842,
+    "sha256": "879cbdeb826a7c65fad5e3868688b11d1b13f15a796b2779d5897ce79bf6f156",
     "fileName": "MysteriousDungeonREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/MysteriousDungeonREP.cs"
   },
@@ -12061,8 +12061,8 @@
       "reputation"
     ],
     "path": "Farm/REP/ChaosMilitiaREP.cs",
-    "size": 891,
-    "sha256": "b8091f82d2d81598412186bf91eeee9e96e39066ff1ad1d02f77e58ddac18ef4",
+    "size": 798,
+    "sha256": "25397a9cca14c1c4eac2e42f015d022250e0b0fa54bc85aa95b82bc02e7cc667",
     "fileName": "ChaosMilitiaREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/ChaosMilitiaREP.cs"
   },
@@ -12078,8 +12078,8 @@
       "rank"
     ],
     "path": "Farm/REP/ChronoSpanREP.cs",
-    "size": 870,
-    "sha256": "2e172ae1461621af6df7a9cb81716b11eb552d7fdbc42ac7151389e81bd8aa87",
+    "size": 777,
+    "sha256": "f1fdbabc1a42a4631c9b8802204375a223050bfb390a9330cef58cb490094a07",
     "fileName": "ChronoSpanREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/ChronoSpanREP.cs"
   },
@@ -12093,8 +12093,8 @@
       "reputation"
     ],
     "path": "Farm/REP/VampireREP.cs",
-    "size": 1133,
-    "sha256": "83866e09608c7e96397e107b5afc1b572aee38d5d8ec2315516e8b2156cb2e3b",
+    "size": 1041,
+    "sha256": "668f877af38912c40239f1fc650e89c6e389b829635fa079b842225956ecd663",
     "fileName": "VampireREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/VampireREP.cs"
   },
@@ -13578,8 +13578,8 @@
       "class"
     ],
     "path": "Other/Classes/VerusDoomKnight.cs",
-    "size": 13727,
-    "sha256": "1489a4a440b7c167cfdaae72a44e43b423eed007e377caf1ee293739c473f0f3",
+    "size": 13724,
+    "sha256": "91c30a710287ec47a018bbf1d7b2ad2f6c5fcda89d36b7a3c85c1b41e91bcdde",
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
@@ -14369,8 +14369,8 @@
       "set"
     ],
     "path": "Other/Pets/SerpentineLarvae.cs",
-    "size": 2507,
-    "sha256": "8e66faf0b6651615e8ed84a62e8c458acd43d2af261e58072300c6b36f2a60cc",
+    "size": 2460,
+    "sha256": "30eb925fe0ac1bdd6222dd3b13501227b007042b758f00d91e534b6af71b81e4",
     "fileName": "SerpentineLarvae.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Pets/SerpentineLarvae.cs"
   },
@@ -14567,8 +14567,8 @@
       "null"
     ],
     "path": "Other/Various/KillYoshinoBoss.cs",
-    "size": 1399,
-    "sha256": "7cd46509696e330acec8e17e1d3ad63b49fe740a6fbd69b93ffb5f225a52a840",
+    "size": 1305,
+    "sha256": "967045d46e10843b938b636e7dc0944feb6bc1decf7dd5bde55a08342fd429b0",
     "fileName": "KillYoshinoBoss.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/KillYoshinoBoss.cs"
   },
@@ -18625,8 +18625,8 @@
       "trident"
     ],
     "path": "Other/MergeShops/SeaVoiceMerge.cs",
-    "size": 12224,
-    "sha256": "c4ef9bc89ef6788c7525d45591ffe1b1dbca5016c1a03af8445bbb1a60578253",
+    "size": 12221,
+    "sha256": "cacbc897482b70e20fabb631c3ced10bf9d9d6eb5f3c5fbd17ae76e8da556c4b",
     "fileName": "SeaVoiceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SeaVoiceMerge.cs"
   },
@@ -19508,8 +19508,8 @@
       "hero-s-valiance"
     ],
     "path": "Other/Armor/FireChampionsArmor.cs",
-    "size": 3607,
-    "sha256": "5a04a27e2058712e8a773fb90ccae0cff5b91fc748c9257c06444824e66cf682",
+    "size": 3517,
+    "sha256": "2dc94a8a7d824f8e977486fb89a377118db913817abbae2e8b1dbf1c883ac3a9",
     "fileName": "FireChampionsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Armor/FireChampionsArmor.cs"
   },
@@ -20565,8 +20565,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/WinterHorrorWarRewardsMerge.cs",
-    "size": 5188,
-    "sha256": "2e731215fbd5ac5d1a8fb2bd5a432d01c6b4d1f6c2b68d169062d07697b8d064",
+    "size": 5134,
+    "sha256": "9a1a3b501121ffcb65cc8ec62d23e41fbd4f6ac5d5851a88c7f30682e2eb73fd",
     "fileName": "WinterHorrorWarRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/WinterHorrorWarRewardsMerge.cs"
   },
@@ -22055,8 +22055,8 @@
       "seasonal"
     ],
     "path": "Seasonal/LuckyDay/PostyMcNobbinsQuestRewards.cs",
-    "size": 3562,
-    "sha256": "547ad58ce4f463e59520cb96b04785476e8526af4987adafdd55ecf1297a1831",
+    "size": 3514,
+    "sha256": "d7a1488cf4047da4315564b7babaa0e10e21c26f4697a94ce3059d4a044a0dda",
     "fileName": "PostyMcNobbinsQuestRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/LuckyDay/PostyMcNobbinsQuestRewards.cs"
   },
@@ -22372,8 +22372,8 @@
       "suns"
     ],
     "path": "Seasonal/StarFestival/ShorinzanMerge.cs",
-    "size": 8536,
-    "sha256": "8cb552432f19eba38b0580e95a485ac2f2032b63de75987609bbc6c8c5979cd4",
+    "size": 8422,
+    "sha256": "2e7b049d5ad2cd81c1f44ada99283f92aa593034ffa5c1a02e039872976dd959",
     "fileName": "ShorinzanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StarFestival/ShorinzanMerge.cs"
   },
@@ -24794,8 +24794,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 987511,
-    "sha256": "37d60d5da196e91a5724ed719cdb0b4a6f77d78569f6d2ac7bb0c8b6f5b0ec51",
+    "size": 987326,
+    "sha256": "e7faaaf88381636873f8f443a98d869ba1dd18751177d70c72e8ca2485c15763",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -26654,8 +26654,8 @@
       "gear"
     ],
     "path": "Good/GearOfAwe/Awescended.cs",
-    "size": 11248,
-    "sha256": "fdaaa9e7058b677d7f722063a0bcc3e9cda7e7814b34081a9f68f8ecc3c43ee7",
+    "size": 11213,
+    "sha256": "34b8759d353c2f4fcfd76f44d6b2b761b3b7abf9a928a4cb7f478fb0e9af054c",
     "fileName": "Awescended.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/GearOfAwe/Awescended.cs"
   },
@@ -31513,8 +31513,8 @@
       "death victor"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/UnderVoidBadgesAll.cs",
-    "size": 5152,
-    "sha256": "d8722bf2c15a4fd8c525535dcbffa20c4b053941b7fa660d7117f2e481982638",
+    "size": 5102,
+    "sha256": "dcf25f95d525b3799cbb29d16f2ca942b21a2aefb030af533c09d8d1f3f6fefb",
     "fileName": "UnderVoidBadgesAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/UnderVoidBadgesAll.cs"
   },
