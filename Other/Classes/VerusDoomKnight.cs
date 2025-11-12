@@ -247,9 +247,15 @@ public class VerusDoomKnightClass
 
         // Find the first available class in inventory or bank
         string? selectedClass = PossibleSoloClasses.FirstOrDefault(className =>
-            Bot.Inventory.Items.Any(item => item.Name == className) ||
-            Bot.Bank.Items.Any(item => item.Name == className)
-        );
+    Bot.Inventory.Items.Any(item => item.Name == className) ||
+    Bot.Bank.Items.Any(item => item.Name == className)
+);
+
+        if (string.IsNullOrWhiteSpace(selectedClass))
+        {
+            Core.Logger("No soloing class found; aborting SeaVoice. Go get a solo class and re-run.");
+            return;
+        }
 
         Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
 
@@ -277,9 +283,22 @@ public class VerusDoomKnightClass
         Bot.Wait.ForMapLoad(map);
         Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
 
+        string? classFromPlayer = Bot.Player.CurrentClass?.Name;
+
         if (Class == "Void Highlord")
+        {
             Bot.Skills.StartAdvanced("Void HighLord", true, ClassUseMode.Def);
-        else Bot.Skills.StartAdvanced(Class ?? Bot.Player.CurrentClass?.Name, true, ClassUseMode.Base);
+        }
+        else
+        {
+            string? classNameToUse = Class ?? classFromPlayer;
+            if (string.IsNullOrWhiteSpace(classNameToUse))
+            {
+                Core.Logger("KillThing aborted: no class specified and player has no current class.");
+                return;
+            }
+            Bot.Skills.StartAdvanced(classNameToUse, true, ClassUseMode.Base);
+        }
 
         // Locate mob by MapID
         Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m?.MapID == mobMapID);
