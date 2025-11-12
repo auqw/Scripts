@@ -2041,11 +2041,23 @@ public class CoreAdvanced
     /// Automatically finds the best Enhancement for the given class and enhances all equipped gear with it too
     /// </summary>
     /// <param name="className">Name of the class you wish to enhance</param>
-    public void SmartEnhance(string? className)
+    /// <param name="ForceEnh">For classes that are recieved unenhanced</param>
+    public void SmartEnhance(string? className, bool ForceEnh = false)
     {
+        // Get CBO bool for DisableAutoEnhance and return if we're not forcing an enh for unenhed (lvl = 0) classes
+        bool EnhDisabled = false;
+        if (Core.CBOBool("DisableAutoEnhance", out bool _AutoEnhance))
+            EnhDisabled = _AutoEnhance;
+
         if (string.IsNullOrEmpty(className))
         {
             Core.Logger($"{className} is null");
+            return;
+        }
+
+        if (EnhDisabled && !ForceEnh)
+        {
+            Core.Logger("AutoEnh turned off in CBO, class/items will *not* be enhanced");
             return;
         }
 
@@ -2089,6 +2101,10 @@ public class CoreAdvanced
         if (SelectedClass.EnhancementLevel <= 0)
         {
             EnhanceItem(SelectedClass.Name ?? className, (EnhancementType)type);
+            // Used only for unenhanced classes usualy gotten from quests (ex: blood/scarlet sorccerer)
+            if (ForceEnh)
+                return;
+
         }
         Core.Equip(SelectedClass.Name ?? className);
         Bot.Wait.ForTrue(() => Bot.Player.CurrentClass?.Name == className, 40);
