@@ -1044,8 +1044,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 38808,
-    "sha256": "1b1623c1f8c73cb62d45ccbf10b467b0bc2f04ddedbbed59bd7de1d01ce9941c",
+    "size": 38655,
+    "sha256": "1fb9def5a33f75eca9167e831b6793b3e17156a79dfd3720b55ac7499510f93d",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -4069,8 +4069,8 @@
       "diamond badge of nulgath"
     ],
     "path": "Nation/NationLoyaltyRewarded.cs",
-    "size": 5475,
-    "sha256": "10c813f28e4025471d979ffb83ca8211ee5c2dec4dac8ddfd4546f1fc01c3065",
+    "size": 5387,
+    "sha256": "763a44449b30f90d886ffc041df09d14b110ee9f0ffaf628458b37fd589dbd09",
     "fileName": "NationLoyaltyRewarded.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/NationLoyaltyRewarded.cs"
   },
@@ -9994,8 +9994,8 @@
       "shadowblast arena"
     ],
     "path": "Story/Nation/ShadowBlastArena.cs",
-    "size": 4850,
-    "sha256": "e4ff3e6002bdd4d8c8e227a84465cfb455f3126d81a8698a43ecc89ad1dd9c59",
+    "size": 4705,
+    "sha256": "6b4297306db6c4319ab489f112c2df484853336b3330a889ca993a7ac3274ec3",
     "fileName": "ShadowBlastArena.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/ShadowBlastArena.cs"
   },
@@ -16880,8 +16880,8 @@
       "null"
     ],
     "path": "Other/MergeShops/TechfortressWarMerge.cs",
-    "size": 10681,
-    "sha256": "85e57cd09d11571416fb1baaab0b821f2699a3848ff5e8a84628a7c1a006c32f",
+    "size": 10537,
+    "sha256": "dda7e304dcfb86486a5d6205ccc57d834fd72db54a48a919fe096cde5a008901",
     "fileName": "TechfortressWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TechfortressWarMerge.cs"
   },
@@ -26357,8 +26357,8 @@
       "exalted"
     ],
     "path": "Nation/MergeShops/ShadowscytheMerge.cs",
-    "size": 6189,
-    "sha256": "ff1ddb10086f25ea71a89dff5301cd0f5e7e92dd701cb01cb62a2a8b95338fd8",
+    "size": 6007,
+    "sha256": "fd24fb862a7bcce6cd92eb478f7ff7c9a6219189f430f57ffdd6bca854deff24",
     "fileName": "ShadowscytheMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/ShadowscytheMerge.cs"
   },
