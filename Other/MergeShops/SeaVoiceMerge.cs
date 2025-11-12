@@ -178,7 +178,7 @@ public class SeaVoiceMerge
                 mobMapID: 1,
                 itemUsed: 78994,
                 Class: selectedClass,
-                item: "Voice in the Sea Defeated",
+                item: itemName,
                 quant: 1,
                 isTemp: true
             );
