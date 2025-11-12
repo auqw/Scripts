@@ -26,24 +26,26 @@ public class ArmyGold
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
     private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
     private static CoreArmyLite _Army;
     private static DarkWarLegionandNation DWLN { get => _DWLN ??= new DarkWarLegionandNation(); set => _DWLN = value; }
     private static DarkWarLegionandNation _DWLN;
-    private static SevenCircles SC { get => _SC ??= new SevenCircles(); set => _SC = value; }    private static SevenCircles _SC;
+    private static SevenCircles SC { get => _SC ??= new SevenCircles(); set => _SC = value; }
+    private static SevenCircles _SC;
     private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
     private static CoreSoW _SoW;
     private static CoreDOY CoreDOY { get => _CoreDOY ??= new CoreDOY(); set => _CoreDOY = value; }
     private static CoreDOY _CoreDOY;
 
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
 
-private static CoreBots _sCore;
+    private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
 
-private static CoreArmyLite _sArmy;
+    private static CoreArmyLite _sArmy;
 
 
     public string OptionsStorage = "Army_Gold";
@@ -79,7 +81,6 @@ private static CoreArmyLite _sArmy;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
         Core.EquipClass(ClassType.Farm);
-        //Adv.BestGear(GenericGearBoost.gold);
         Farm.ToggleBoost(BoostType.Gold);
 
         switch ((int)mapname)

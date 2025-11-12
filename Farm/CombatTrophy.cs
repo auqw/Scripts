@@ -12,8 +12,10 @@ public class CombatTrophy
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -27,7 +29,6 @@ public class CombatTrophy
 
     public void DoCombatTrophy()
     {
-        //Adv.BestGear(GenericGearBoost.dmgAll);
         Core.Logger("90% of this farm is going to be transitioning rooms during pvp. There is nothing we can do to speed this up as it takes 2 return packets from the server a move and a \"mcid\" packet to actualy transition rooms. ( no you can't jump cells as itll soft-lock the map, and yes we've tried teh walking method its **Very** unrelaible as you cna just get stuck at doors.)");
         Farm.BludrutBrawlBoss();
     }

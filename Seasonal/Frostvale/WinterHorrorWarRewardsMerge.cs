@@ -21,10 +21,11 @@ public class WinterHorrorWarRewardsMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreFrostvale FV { get => _FV ??= new CoreFrostvale(); set => _FV = value; }    private static CoreFrostvale _FV;
+    private static CoreFrostvale FV { get => _FV ??= new CoreFrostvale(); set => _FV = value; }
+    private static CoreFrostvale _FV;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -73,7 +74,6 @@ private static CoreAdvanced _sAdv;
                 case "Grief Medal":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    //Adv.BestGear(RacialGearBoost.Elemental);
                     Core.RegisterQuests(7856, 7857);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {

@@ -14,9 +14,12 @@ public class SevenCirclesWarXP
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static SevenCircles SC { get => _SC ??= new SevenCircles(); set => _SC = value; }    private static SevenCircles _SC;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static SevenCircles SC { get => _SC ??= new SevenCircles(); set => _SC = value; }
+    private static SevenCircles _SC;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -31,8 +34,6 @@ public class SevenCirclesWarXP
     {
         SC.CirclesWar(true, true);
 
-        //Adv.BestGear(GenericGearBoost.exp);
-        //Adv.BestGear(GenericGearBoost.gold);
         //Farm.UseBoost(ChangeToBoostID, Skua.Core.Models.Items.BoostType.Experience, true);
 
         Farm.SevenCirclesWar(Bot.Player.Level == 100 ? 101 : 100, 100000000);

@@ -15,9 +15,12 @@ public class DarkWarLegionGold
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static DarkWarLegionandNation DWLaN { get => _DWLaN ??= new DarkWarLegionandNation(); set => _DWLaN = value; }    private static DarkWarLegionandNation _DWLaN;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static DarkWarLegionandNation DWLaN { get => _DWLaN ??= new DarkWarLegionandNation(); set => _DWLaN = value; }
+    private static DarkWarLegionandNation _DWLaN;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -31,7 +34,6 @@ public class DarkWarLegionGold
     public void DoDarkWarLegionGold()
     {
         Core.EquipClass(ClassType.Farm);
-        //Adv.BestGear(GenericGearBoost.gold);
 
         Core.Logger("Doing quest requirements.");
         DWLaN.DarkWarLegion();

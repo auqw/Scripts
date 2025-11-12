@@ -163,7 +163,7 @@ public class SeaVoiceMerge
 
             Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
 
-            // Adv.SmartEnhance(selectedClass);
+            Adv.SmartEnhance(selectedClass);
 
             // Call the KillThing method with the specified parameters
             KillThing(

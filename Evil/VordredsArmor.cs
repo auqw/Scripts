@@ -18,11 +18,16 @@ public class VordredArmor
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreDoomwood DW { get => _DW ??= new CoreDoomwood(); set => _DW = value; }    private static CoreDoomwood _DW;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }    private static CoreSDKA _SDKA;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreDoomwood DW { get => _DW ??= new CoreDoomwood(); set => _DW = value; }
+    private static CoreDoomwood _DW;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }
+    private static CoreSDKA _SDKA;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -45,7 +50,6 @@ public class VordredArmor
 
         DW.DoomwoodPart3();
         Farm.Experience(60);
-        //Adv.BestGear(RacialGearBoost.Undead);
 
         if (!Story.QuestProgression(8376))
         {
@@ -128,7 +132,6 @@ public class VordredArmor
         // Empower Vordred's Armor - 8381
         if (!Story.QuestProgression(8381))
         {
-            //Adv.BestGear(RacialGearBoost.Undead);
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(8381);
             if (!Core.CheckInventory("Sepulchure's DoomKnight Armor"))
@@ -150,7 +153,6 @@ public class VordredArmor
             return;
 
         Core.AddDrop("Especially Unbroken Skull");
-        //Adv.BestGear(RacialGearBoost.Undead);
         Core.EquipClass(ClassType.Farm);
 
         // UNBROKEN SKULLS (Mem) - 8342

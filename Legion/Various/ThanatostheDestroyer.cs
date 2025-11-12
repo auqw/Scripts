@@ -15,8 +15,10 @@ public class ThanatostheDestroyer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreIsleOfFotia CoreIsleOfFotia { get => _CoreIsleOfFotia ??= new CoreIsleOfFotia(); set => _CoreIsleOfFotia = value; }    private static CoreIsleOfFotia _CoreIsleOfFotia;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreIsleOfFotia CoreIsleOfFotia { get => _CoreIsleOfFotia ??= new CoreIsleOfFotia(); set => _CoreIsleOfFotia = value; }
+    private static CoreIsleOfFotia _CoreIsleOfFotia;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
 
@@ -44,7 +46,6 @@ public class ThanatostheDestroyer
         Bot.Drops.Add(QuestRewards);
 
         Core.EquipClass(ClassType.Solo);
-        //Adv.BestGear(RacialGearBoost.Undead);
         Core.RegisterQuests(4101);
         foreach (ItemBase Reward in RewardOptions)
         {

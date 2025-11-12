@@ -15,10 +15,14 @@ public class Banished
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
     private static CoreQOM CoreQOM { get => _CoreQOM ??= new CoreQOM(); set => _CoreQOM = value; }
     private static CoreQOM _CoreQOM;
 
@@ -47,7 +51,6 @@ public class Banished
             return;
 
         Core.EquipClass(ClassType.Solo);
-        //Adv.BestGear(GenericGearBoost.dmgAll);
 
         // The First Task
         Story.KillQuest(7875, "timevoid", "Unending Avatar");
@@ -105,7 +108,6 @@ public class Banished
         if (Core.isCompletedBefore(2027))
             return;
 
-        //Adv.BestGear(GenericGearBoost.dmgAll);
 
         // Knave1's Route to the Void
         Story.MapItemQuest(2022, "northlands", 979);
@@ -162,7 +164,7 @@ public class Banished
         if (!Story.QuestProgression(9042))
         {
             Core.EquipClass(ClassType.Farm);
-            Core.EnsureAcceptmultiple( new[] { 9042, 739 });
+            Core.EnsureAcceptmultiple(new[] { 9042, 739 });
             Core.AddDrop("Racing Trophy");
             while (!Bot.ShouldExit && !Core.CheckInventory("Racing Trophy", 20))
                 Core.ChainComplete(746);

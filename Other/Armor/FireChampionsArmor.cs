@@ -17,11 +17,16 @@ public class FireChampionsArmor
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static DragonslayerGeneral DSG { get => _DSG ??= new DragonslayerGeneral(); set => _DSG = value; }    private static DragonslayerGeneral _DSG;
-    private static WarfuryEmblem WFE { get => _WFE ??= new WarfuryEmblem(); set => _WFE = value; }    private static WarfuryEmblem _WFE;
-    private static Lair Lair { get => _Lair ??= new Lair(); set => _Lair = value; }    private static Lair _Lair;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static DragonslayerGeneral DSG { get => _DSG ??= new DragonslayerGeneral(); set => _DSG = value; }
+    private static DragonslayerGeneral _DSG;
+    private static WarfuryEmblem WFE { get => _WFE ??= new WarfuryEmblem(); set => _WFE = value; }
+    private static WarfuryEmblem _WFE;
+    private static Lair Lair { get => _Lair ??= new Lair(); set => _Lair = value; }
+    private static Lair _Lair;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -75,7 +80,6 @@ public class FireChampionsArmor
         if (Core.CheckInventory("Flame-Forged Metal", Metalquant))
             return;
 
-        //Adv.BestGear(RacialGearBoost.Undead);
         Core.EquipClass(ClassType.Solo);
         Core.AddDrop("Flame-Forged Metal");
 
@@ -92,7 +96,6 @@ public class FireChampionsArmor
         if (Core.CheckInventory("Void Scale", VoidScaleQuant))
             return;
 
-        //Adv.BestGear(RacialGearBoost.Chaos);
         Core.EquipClass(ClassType.Solo);
 
         Core.HuntMonster("underlair", "Archfiend Dragonlord", "Void Scale", VoidScaleQuant, isTemp: false);

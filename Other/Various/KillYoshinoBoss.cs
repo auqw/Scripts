@@ -13,8 +13,10 @@ public class KillYoshinoBoss
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -30,14 +32,12 @@ public class KillYoshinoBoss
             return;
 
         Core.EquipClass(ClassType.Solo);
-        //Adv.BestGear(GenericGearBoost.dmgAll);
 
         Core.AddDrop("Limited Event Coin");
 
         Core.EnsureAccept(5720);
         Core.KillMonster("yoshino", "r1", "Right", "*", "Limited Event Monster Proof");
         Core.JumpWait();
-        //Adv.BestGear(GenericGearBoost.gold);
         Farm.ToggleBoost(BoostType.Gold);
         Core.Sleep();
         Core.EnsureComplete(5720);

@@ -18884,7 +18884,6 @@ case ""Turkey Leg?"":
 case ""Grief Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    //Adv.BestGear(RacialGearBoost.Elemental);
                     Core.RegisterQuests(7856, 7857);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
@@ -24350,7 +24349,6 @@ case ""Simple Wish"":
     @"
 case ""Fallen Star Shard"":
                     Core.EquipClass(ClassType.Solo);
-                    //Adv.BestGear(RacialGearBoost.Elemental);
                     Core.HuntMonster(""starfest"", ""Fallen Star"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
@@ -24361,7 +24359,6 @@ case ""Fallen Star Shard"":
     @"
 case ""Hashihime's Heart"":
                     Core.EquipClass(ClassType.Solo);
-                    //Adv.BestGear(RacialGearBoost.Chaos);
                     Core.HuntMonster(""yokaistarriver"", ""Uji No Hashihime"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;

@@ -439,7 +439,7 @@ public class CoreAOR
 
             Adv.GearStore();
 
-            // Adv.SmartEnhance(selectedClass);
+            Adv.SmartEnhance(selectedClass);
 
             // Call the KillThing method with the specified parameters
             KillThing(

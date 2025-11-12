@@ -16,7 +16,7 @@ public class DeathKnightLootChestQuest
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    
+
     private static AranxQuests AR { get => _AR ??= new AranxQuests(); set => _AR = value; }
     private static AranxQuests _AR;
 
@@ -55,7 +55,6 @@ public class DeathKnightLootChestQuest
         string[] QuestRewards = RewardOptions.Select(x => x.Name).ToArray();
 
         Core.EquipClass(ClassType.Solo);
-        //Adv.BestGear(RacialGearBoost.Elemental);
         Core.RegisterQuests(questID);
         foreach (ItemBase Reward in RewardOptions)
         {

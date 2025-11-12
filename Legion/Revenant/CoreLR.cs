@@ -17,12 +17,18 @@ public class CoreLR
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static InfiniteLegionDC ILDC { get => _ILDC ??= new InfiniteLegionDC(); set => _ILDC = value; }    private static InfiniteLegionDC _ILDC;
-    private static SeraphicWar_Story Seraph { get => _Seraph ??= new SeraphicWar_Story(); set => _Seraph = value; }    private static SeraphicWar_Story _Seraph;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion _Legion;
+    private static InfiniteLegionDC ILDC { get => _ILDC ??= new InfiniteLegionDC(); set => _ILDC = value; }
+    private static InfiniteLegionDC _ILDC;
+    private static SeraphicWar_Story Seraph { get => _Seraph ??= new SeraphicWar_Story(); set => _Seraph = value; }
+    private static SeraphicWar_Story _Seraph;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -121,14 +127,11 @@ public class CoreLR
             Core.EnsureAccept(6897);
 
             Core.EquipClass(ClassType.Solo);
-            //Adv.BestGear(RacialGearBoost.Undead);
             Core.KillMonster("judgement", "r10a", "Left", "Ultra Aeacus", "Aeacus Empowered", 50, false, publicRoom: Core.PublicDifficult);
 
             Core.EquipClass(ClassType.Farm);
-            //Adv.BestGear(GenericGearBoost.dmgAll);
             Core.KillMonster("revenant", "r2", "Left", "*", "Tethered Soul", 300, false);
             Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Darkened Essence", 500, false);
-            //Adv.BestGear(RacialGearBoost.Undead);
             Core.KillMonster("necrodungeon", "r22", "Down", "*", "Dracolich Contract", 1000, false);
 
             Core.EnsureComplete(6897);
@@ -162,20 +165,17 @@ public class CoreLR
         while (!Bot.ShouldExit && ((forquest && !Core.isCompletedBefore(6898)) || !Core.CheckInventory("Conquest Wreath", quant)))
         {
             Core.EnsureAccept(6898);
-            //Adv.BestGear(RacialGearBoost.Undead);
             Core.KillMonster("mummies", "Enter", "Spawn", "*", "Ancient Cohort Conquered", 400, false);
             Core.KillMonster("doomvault", "r1", "Right", "*", "Grim Cohort Conquered", 400, false);
-            //Adv.BestGear(RacialGearBoost.Human);
+
             Core.KillMonster("wrath", "r5", "Left", "*", "Pirate Cohort Conquered", 400, false);
-            //Adv.BestGear(RacialGearBoost.Undead);
             Core.KillMonster("doomwar", "r6", "Left", "*", "Battleon Cohort Conquered", 400, false);
             Core.KillMonster("overworld", "Enter", "Spawn", "*", "Mirror Cohort Conquered", 400, false);
             Core.KillMonster("deathpits", "r1", "Left", "*", "Darkblood Cohort Conquered", 400, false);
             Core.KillMonster("maxius", "r2", "Left", "*", "Vampire Cohort Conquered", 400, false);
             Core.KillMonster("curseshore", "Enter", "Spawn", "*", "Spirit Cohort Conquered", 400, false);
-            //Adv.BestGear(RacialGearBoost.Dragonkin);
+
             Core.KillMonster("dragonbone", "Enter", "Spawn", "*", "Dragon Cohort Conquered", 400, false);
-            //Adv.BestGear(RacialGearBoost.Undead);
             Core.KillMonster("doomwood", "r6", "Right", "*", "Doomwood Cohort Conquered", 400, false);
 
             Core.EnsureComplete(6898);

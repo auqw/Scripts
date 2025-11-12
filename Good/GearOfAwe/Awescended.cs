@@ -36,22 +36,38 @@ public class Awescended
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static ArmorOfAwe AweArmor { get => _AweArmor ??= new ArmorOfAwe(); set => _AweArmor = value; }    private static ArmorOfAwe _AweArmor;
-    private static HelmOfAwe Helm { get => _Helm ??= new HelmOfAwe(); set => _Helm = value; }    private static HelmOfAwe _Helm;
-    private static SEP Pal { get => _Pal ??= new SEP(); set => _Pal = value; }    private static SEP _Pal;
-    private static FandH FaH { get => _FaH ??= new FandH(); set => _FaH = value; }    private static FandH _FaH;
-    private static SRoD SRoD { get => _SRoD ??= new SRoD(); set => _SRoD = value; }    private static SRoD _SRoD;
-    private static GetSDD SDD { get => _SDD ??= new GetSDD(); set => _SDD = value; }    private static GetSDD _SDD;
-    private static DrakathArmorBot Armor { get => _Armor ??= new DrakathArmorBot(); set => _Armor = value; }    private static DrakathArmorBot _Armor;
-    private static SepulchuresOriginalHelm Seppy { get => _Seppy ??= new SepulchuresOriginalHelm(); set => _Seppy = value; }    private static SepulchuresOriginalHelm _Seppy;
-    private static ArchDoomKnight ADK { get => _ADK ??= new ArchDoomKnight(); set => _ADK = value; }    private static ArchDoomKnight _ADK;
-    private static J6Saga J6 { get => _J6 ??= new J6Saga(); set => _J6 = value; }    private static J6Saga _J6;
-    private static BattleUnder Under { get => _Under ??= new BattleUnder(); set => _Under = value; }    private static BattleUnder _Under;
-    private static Bamboozle Bam { get => _Bam ??= new Bamboozle(); set => _Bam = value; }    private static Bamboozle _Bam;
-    private static DjinnGateStory Djinn { get => _Djinn ??= new DjinnGateStory(); set => _Djinn = value; }    private static DjinnGateStory _Djinn;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    private static ArmorOfAwe AweArmor { get => _AweArmor ??= new ArmorOfAwe(); set => _AweArmor = value; }
+    private static ArmorOfAwe _AweArmor;
+    private static HelmOfAwe Helm { get => _Helm ??= new HelmOfAwe(); set => _Helm = value; }
+    private static HelmOfAwe _Helm;
+    private static SEP Pal { get => _Pal ??= new SEP(); set => _Pal = value; }
+    private static SEP _Pal;
+    private static FandH FaH { get => _FaH ??= new FandH(); set => _FaH = value; }
+    private static FandH _FaH;
+    private static SRoD SRoD { get => _SRoD ??= new SRoD(); set => _SRoD = value; }
+    private static SRoD _SRoD;
+    private static GetSDD SDD { get => _SDD ??= new GetSDD(); set => _SDD = value; }
+    private static GetSDD _SDD;
+    private static DrakathArmorBot Armor { get => _Armor ??= new DrakathArmorBot(); set => _Armor = value; }
+    private static DrakathArmorBot _Armor;
+    private static SepulchuresOriginalHelm Seppy { get => _Seppy ??= new SepulchuresOriginalHelm(); set => _Seppy = value; }
+    private static SepulchuresOriginalHelm _Seppy;
+    private static ArchDoomKnight ADK { get => _ADK ??= new ArchDoomKnight(); set => _ADK = value; }
+    private static ArchDoomKnight _ADK;
+    private static J6Saga J6 { get => _J6 ??= new J6Saga(); set => _J6 = value; }
+    private static J6Saga _J6;
+    private static BattleUnder Under { get => _Under ??= new BattleUnder(); set => _Under = value; }
+    private static BattleUnder _Under;
+    private static Bamboozle Bam { get => _Bam ??= new Bamboozle(); set => _Bam = value; }
+    private static Bamboozle _Bam;
+    private static DjinnGateStory Djinn { get => _Djinn ??= new DjinnGateStory(); set => _Djinn = value; }
+    private static DjinnGateStory _Djinn;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -120,7 +136,7 @@ public class Awescended
         }
 
         //Which Came First, the Dragon or the Dragonoid?
-        Story.KillQuest(8039, "crashsite", new[] {  "Barrier Bot", "Dwakel Warrior","Mithril Man", "ProtoSartorium" });
+        Story.KillQuest(8039, "crashsite", new[] { "Barrier Bot", "Dwakel Warrior", "Mithril Man", "ProtoSartorium" });
 
         //Artifact Hunting
         if (!Story.QuestProgression(8040))
@@ -216,7 +232,6 @@ public class Awescended
 
             Core.Unbank($"GOLD Boost! (60 min)", "Doom GOLD Boost! (60 min)", "GOLD Boost! (20 min)");
             Bot.Boosts.UseGoldBoost = true;
-            //Adv.BestGear(GenericGearBoost.gold);
 
             Core.EnsureComplete(8042);
             Bot.Boosts.UseGoldBoost = false;

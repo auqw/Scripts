@@ -38,7 +38,7 @@ public class WarfuryEmblem
         Core.AddDrop("Warfury Emblem");
         Core.FarmingLogger("Warfury Emblems", quant);
         Core.EquipClass(ClassType.Farm);
-        //Adv.BestGear(RacialGearBoost.Human);
+
 
         Core.RegisterQuests(8204);
         Core.HuntMonster("wartraining", "Warfury Soldier", "Warfury Emblem", quant, false);

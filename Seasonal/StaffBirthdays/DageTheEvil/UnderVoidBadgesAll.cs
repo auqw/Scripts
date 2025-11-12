@@ -15,8 +15,10 @@ public class UnderVoidBadgesAll
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies _Daily;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
     private static CoreDageBirthday Dage { get => _Dage ??= new CoreDageBirthday(); set => _Dage = value; }
     private static CoreDageBirthday _Dage;
     public void ScriptMain(IScriptInterface bot)
@@ -53,7 +55,6 @@ public class UnderVoidBadgesAll
         else if (Daily.CheckDailyv2(3411))
         {
             Core.Logger($"Doing UnderVoid Quest for {badge1} badge");
-            //Adv.BestGear(RacialGearBoost.Undead);
             Core.EnsureAccept(3411);
             Core.HuntMonster("undervoid", "Conquest", "Conquest Defeated");
             Core.EnsureComplete(3411);
