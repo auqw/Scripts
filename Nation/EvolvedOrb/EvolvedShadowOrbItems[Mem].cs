@@ -62,51 +62,95 @@ public class EvolvedShadowOrbItems
         RebornDarkSide();
         VoidEmotions();
         ShapeNothingness();
-        //Not yet added
-        // Reborn in the Dark Side (Rare) 4772
-        // Reborn in the Dark Side (Shadow) 4773
     }
-
     public void RebornDarkSide()
     {
-        // Reborn in the Dark Side 4771 (f2p - bard)
-        if (!Core.CheckInventory("Platinum Coin of Nulgath: 2500"))
+        if (!Core.CheckInventory(33198 /*Evolved Shadow Orb */, 33360 /* Platinum Coin of Nulgath: 2500 */))
         {
-            Core.Logger("Platinum Coin of Nulgath 2500 not found");
-            return;
+            Core.Logger("Missing Required Quest Accept Items. CANNOT PROCEED, STOPING THE BOT", stopBot: true);
         }
 
-        Core.AddDrop("Evolved Shadow of Nulgath");
-        Bard.GetBard(true);
-        Nation.FarmUni13(3);
-        Adv.BuyItem("tercessuinotlim", 1951, "Unidentified 25");
-        Nation.FarmVoucher(true);
-
-        if (!Core.CheckInventory("Behemoth Blade of Shadow"))
+        foreach (int Q in new[] { 4771, 4772, 4773 })
         {
-            Core.EquipClass(ClassType.Solo);
-            if (!Core.CheckInventory("Basic War Sword"))
+            switch (Q)
             {
-                Farm.BludrutBrawlBoss(quant: 100);
-                Core.BuyItem("battleon", 222, "Basic War Sword");
-            }
-            if (!Core.CheckInventory("Steel Afterlife"))
-            {
-                Farm.BludrutBrawlBoss(quant: 100);
-                Core.BuyItem("battleon", 222, "Steel Afterlife");
-            }
-            if (!Core.CheckInventory("Behemoth Blade of Shadow"))
-            {
-                Farm.BludrutBrawlBoss(quant: 500);
-                Core.BuyItem("battleon", 222, "Behemoth Blade of Shadow");
+
+                // Reborn in the Dark Side (Rare) 4772
+                case 4773:
+                // Reborn in the Dark Side (Shadow) 4773
+                case 4772:
+                    if (!Core.CheckInventory(
+                        Q == 4772 ? 4813 /* Shadow of Nulgath (Rare) */
+                            : 5430 /* Shadow of Nulgath */)
+                                || !Core.IsMember)
+                        continue;
+
+                    // Lightguardian Spirit Blade
+                    Core.HuntMonster("lightguard", "Mysterious Spirit", "Lightguardian Spirit Blade", isTemp: false);
+                    // Mana Mallet
+                    Adv.BuyItem("citadel", 44, 843);
+                    // Scrolls
+                    if (!Core.CheckInventory("Scroll of Dark Energy", 30))
+                    {
+                        Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
+                        Core.HuntMonster("mobius", "Slugfit", "Mystic Quills", 3, false);
+                        Core.BuyItem("dragonrune", 549, "Ember Ink", 3);
+                        while (!Bot.ShouldExit && Core.CheckInventory("Ember Ink") && !Core.CheckInventory("Scroll of Dark Energy", 30))
+                            Core.ChainComplete(2298);
+                        Bot.Wait.ForPickup("Scroll of Dark Energy");
+                    }
+
+                    if (!Core.CheckInventory("Scroll of Dark Grip", 30))
+                    {
+                        Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
+                        Core.HuntMonster("mobius", "Slugfit", "Mystic Quills", 3, false);
+                        Core.BuyItem("dragonrune", 549, "Runik Ink", 3);
+                        while (!Bot.ShouldExit && Core.CheckInventory("Runik Ink"))
+                            Core.ChainComplete(2349);
+                    }
+                    Nation.EssenceofNulgath(80);
+                    Nation.FarmTotemofNulgath(10);
+                    Core.EnsureComplete(Q);
+                    Bot.Wait.ForPickup(33182);
+                    break;
+
+                // Reborn in the Dark Side 4771 (f2p - bard)
+                case 4771:
+                    Core.AddDrop("Evolved Shadow of Nulgath");
+                    Bard.GetBard(true);
+                    Nation.FarmUni13(3);
+                    Adv.BuyItem("tercessuinotlim", 1951, "Unidentified 25");
+                    Nation.FarmVoucher(true);
+
+                    if (!Core.CheckInventory("Behemoth Blade of Shadow"))
+                    {
+                        Core.EquipClass(ClassType.Solo);
+                        if (!Core.CheckInventory("Basic War Sword"))
+                        {
+                            Farm.BludrutBrawlBoss(quant: 100);
+                            Core.BuyItem("battleon", 222, "Basic War Sword");
+                        }
+                        if (!Core.CheckInventory("Steel Afterlife"))
+                        {
+                            Farm.BludrutBrawlBoss(quant: 100);
+                            Core.BuyItem("battleon", 222, "Steel Afterlife");
+                        }
+                        if (!Core.CheckInventory("Behemoth Blade of Shadow"))
+                        {
+                            Farm.BludrutBrawlBoss(quant: 500);
+                            Core.BuyItem("battleon", 222, "Behemoth Blade of Shadow");
+                        }
+                    }
+
+                    Core.EquipClass(ClassType.Farm);
+                    Nation.ApprovalAndFavor(1, 0);
+                    Nation.FarmFiendToken(30);
+                    BCon.BuyAllMerge("Azure Starblade");
+                    Bot.Wait.ForPickup("Evolved Shadow of Nulgath");
+                    break;
+
             }
         }
-
-        Core.EquipClass(ClassType.Farm);
-        Nation.ApprovalAndFavor(1, 0);
-        Nation.FarmFiendToken(30);
-        BCon.BuyAllMerge("Azure Starblade");
-        Bot.Wait.ForPickup("Evolved Shadow of Nulgath");
     }
 
     public void VoidEmotions()
@@ -129,6 +173,7 @@ public class EvolvedShadowOrbItems
         Core.KillMonster("chaoslord", "r2", "Left", "*", "There is no Myself", isTemp: false);
         Core.EnsureComplete(4774);
         Bot.Wait.ForPickup("Evolved Shadow Helm");
+
     }
 
     public void ShapeNothingness()
@@ -155,7 +200,7 @@ public class EvolvedShadowOrbItems
         Bot.Wait.ForPickup("Evolved Shadow Spear of Nulgath");
     }
 
-    private string[] Rewards =
+    private readonly string[] Rewards =
     {
         "Evolved Shadow of Nulgath",
         "Evolved Shadow Helm",
