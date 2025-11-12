@@ -105,6 +105,9 @@ public class CoreBots
     public int HeroAlignment { get; set; } = (int)Alignment.Evil;
     // [Can Change] Member Status
     public bool IsMember { get; set; }
+    public bool AutoEnhance { get; set; } = true;
+    public bool BestGear { get; set; } = true;
+
 
     private static CoreBots? _instance;
     public static CoreBots Instance => _instance ??= new CoreBots();
@@ -2166,52 +2169,6 @@ public class CoreBots
             Logger("No suitable item found.");
 
         return item;
-    }
-
-    /// <summary>
-    /// Retrieves the names of the best items for specific categories.
-    /// </summary>
-    /// <returns>
-    /// An array of strings where each element corresponds to the best item name for a specific category.
-    /// If no suitable item is found for a category, the array will contain "None" for that category.
-    /// </returns>
-    public string[] BestGear(GenericGearBoostType boostType)
-    {
-        if (CBOBool("DisableBestGear", out bool _DisableBestGear) && _DisableBestGear)
-            return Array.Empty<string>();
-
-        // Initialize the list to hold the best items for each category
-        List<string> bestItems = new();
-
-        // Define categories and their corresponding category strings
-        Dictionary<string, string?> categories = new()
-        {
-        { "Armor", ItemCategory.Armor.ToString() },
-        { "Helm", ItemCategory.Helm.ToString() },
-        { "Cape", ItemCategory.Cape.ToString() },
-        { "Pet", ItemCategory.Pet.ToString() },
-        { "FloorItem", ItemCategory.FloorItem.ToString() }
-    };
-
-        // Add the best item for each defined category
-        foreach (KeyValuePair<string, string?> category in categories)
-        {
-            string bestItem = GetBestItem(boostType, category.Value) ?? "None";
-            if (bestItem == "None")
-                continue;
-
-            bestItems.Add(bestItem);
-        }
-
-        // Add all the best items to the unbanking process
-        Unbank(bestItems.ToArray());
-
-        // Add the best weapon item
-        string bestWeapon = GetBestItem(GenericGearBoostType.dmgAll, null) ?? "None";
-        bestItems.Add(bestWeapon);
-
-        // Return the list as an array
-        return bestItems.ToArray();
     }
 
     /// <summary>
@@ -8985,6 +8942,10 @@ public class CoreBots
 
 
         //Advanced
+        if (CBOBool("DisableBestGear", out bool _BestGear))
+            BestGear = _BestGear;
+        if (CBOBool("DisableAutoEnhance", out bool _AutoEnhance))
+            AutoEnhance = _AutoEnhance;
         if (CBOBool("MessageBoxCheck", out bool _ForceOffMessageboxes))
             ForceOffMessageboxes = _ForceOffMessageboxes;
         if (CBOBool("RestCheck", out bool _ShouldRest))
