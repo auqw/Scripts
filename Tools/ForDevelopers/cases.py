@@ -17,8 +17,8 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # Automatically resolve Skua Scripts directory like in C#
-documents_dir = os.path.join(os.path.expanduser("~"), "Documents")
-SkuaDIR = os.path.join(documents_dir, "Skua")
+appdata_dir = os.getenv("APPDATA")  # Typically C:\Users\<User>\AppData\Roaming
+SkuaDIR = os.path.join(appdata_dir, "Skua")
 SkuaScriptsDIR = os.path.join(SkuaDIR, "Scripts")
 
 # Set root_dir to the Skua Scripts directory
