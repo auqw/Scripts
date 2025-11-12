@@ -179,7 +179,7 @@ public class SeaVoiceMerge
                 itemUsed: 78994,
                 Class: selectedClass,
                 item: itemName,
-                quant: 1,
+                quant: quant,
                 isTemp: true
             );
         }
