@@ -25,8 +25,8 @@ public class LothianTreasuryMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
     private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
     private static CoreAOR _AOR;
@@ -87,7 +87,7 @@ private static CoreAdvanced _sAdv;
                 case "Dark Lightning Gloria":
                 case "Skye Nobility Sash":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.Logger($"{req.Name} requires an ultra boss, you need to farm it manually.");
+                    Core.Logger($"{req.Name} requires an ultra boss, you need to farm it manually.", stopBot: true);
                     break;
 
                 case "Skye's Lightning":

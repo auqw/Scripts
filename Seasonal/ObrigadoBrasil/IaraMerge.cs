@@ -20,8 +20,8 @@ public class IaraMerge
     private static CoreFarms _Farm;
     private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
     private static Iara I { get => _I ??= new Iara(); set => _I = value; }
     private static Iara _I;
@@ -82,7 +82,7 @@ private static CoreAdvanced _sAdv;
                     break;
 
                 case "Iara Insignia":
-                    Core.Logger($"{req.Name}" + " requires ultra boss, you need to farm it manually.");
+                    Core.Logger($"{req.Name}" + " requires ultra boss, you need to farm it manually.", stopBot: true);
                     break;
 
             }

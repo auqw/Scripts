@@ -87,7 +87,7 @@ public class AtlasFallsGearMerge
                         }
                     }
                     else
-                        Core.Logger($"{req.Name} requires army, please farm it manually.");
+                        Core.Logger($"{req.Name} requires army, please farm it manually.", stopBot: true);
                     break;
 
                 case "Arethusa's Black Steel":
