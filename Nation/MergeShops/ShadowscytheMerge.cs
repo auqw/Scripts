@@ -23,8 +23,8 @@ public class ShadowscytheMerge
     private static CoreAdvanced _Adv;
     private static ShadowBlastArena SBA { get => _SBA ??= new ShadowBlastArena(); set => _SBA = value; }
     private static ShadowBlastArena _SBA;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced _sAdv;
 
 
     public bool DontPreconfigure = true;
@@ -87,11 +87,7 @@ private static CoreAdvanced _sAdv;
                         Core.EquipClass(ClassType.Solo);
                         Core.KillMonster("aqlesson", "Frame9", "Right", "Carnax", "Carnax Eye", publicRoom: true);
                         Core.HuntMonster("deepchaos", "Kathool", "Kathool Tentacle", publicRoom: true);
-
-                        //More then one item of the same name as drop btoh temp and non-temp.
-                        while (!Bot.ShouldExit && !Core.CheckInventory(33257))
-                            Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", log: false, publicRoom: true);
-
+                        Core.KillMonster("dflesson", "r12", "Right", 29, 33257, isTemp: true, publicRoom: true);
                         Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang");
                         Core.HuntMonster("bloodtitan", "Blood Titan", "Blood Titan's Blade", publicRoom: true);
 

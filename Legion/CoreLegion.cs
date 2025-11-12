@@ -155,10 +155,8 @@ public class CoreLegion
             Core.HuntMonster("deepchaos", "Kathool", "Kathool Tentacle", publicRoom: true);
             Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang");
             Core.HuntMonster("bloodtitan", "Blood Titan", "Blood Titan's Blade", publicRoom: true);
+            Core.KillMonster("dflesson", "r12", "Right", 29, 33257, isTemp: true, publicRoom: true);
 
-            //More then one item of the same name as drop both temp and non-temp.
-            while (!Bot.ShouldExit && !Bot.TempInv.Contains(33257))
-                Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", publicRoom: true);
             foreach (string drop in new[] { "Legion Token", "Diamond Token of Dage" })
                 Bot.Wait.ForPickup(drop);
         }

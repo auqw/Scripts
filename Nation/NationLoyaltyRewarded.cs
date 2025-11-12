@@ -16,9 +16,12 @@ public class NationLoyaltyRewarded
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation _Nation;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -116,10 +119,7 @@ public class NationLoyaltyRewarded
         {
             Core.EnsureAccept(4749);
 
-            // Kill sequence for required items
-            if (!Core.CheckInventory(33257))
-                Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", log: false);
-
+            Core.KillMonster("dflesson", "r12", "Right", 29, 33257, isTemp: true, publicRoom: true);
             Core.HuntMonster("aqlesson", "Carnax", "Carnax Eye", log: false);
             Core.HuntMonster("deepchaos", "Kathool", "Kathool Tentacle", log: false);
             Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang", log: false);

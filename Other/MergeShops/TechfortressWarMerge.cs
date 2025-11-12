@@ -20,20 +20,26 @@ public class TechfortressWarMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms _Farm;
+    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
 
-    private static PinkBladeOfDestruciton PBOD { get => _PBOD ??= new PinkBladeOfDestruciton(); set => _PBOD = value; }    private static PinkBladeOfDestruciton _PBOD;
-    private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }    private static CoreDailies _Dailies;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
+    private static PinkBladeOfDestruciton PBOD { get => _PBOD ??= new PinkBladeOfDestruciton(); set => _PBOD = value; }
+    private static PinkBladeOfDestruciton _PBOD;
+    private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }
+    private static CoreDailies _Dailies;
+    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD _BLOD;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -128,9 +134,7 @@ public static CoreAdvanced _sAdv;
                     Core.RegisterQuests(7654);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        //More then one item of the same name as drop btoh temp and non-temp.
-                        while (!Bot.ShouldExit && !Core.CheckInventory(55903, 10))
-                            Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", log: false);
+                        Core.KillMonster("dflesson", "r12", "Right", 29, 33257, isTemp: true, publicRoom: true);
                         Core.KillMonster("dflesson", "r3", "Right", "Fire Elemental", "Fire Elemental's Bracer", 5, isTemp: false);
                         Core.KillMonster("dflesson", "r6", "Right", "Tog", "Tog Claw", 5, isTemp: false);
                         Bot.Wait.ForPickup(req.Name);
