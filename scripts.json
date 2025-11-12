@@ -715,8 +715,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 2506,
-    "sha256": "bf8d8387e33d1d30f2dbd3734c10cd698c4f0089df8c482d1314a374b0385aa6",
+    "size": 2648,
+    "sha256": "c2981d216fc0214f76ef4c3c5fab7122a2caed1fff80508cfc62d167dbced199",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -787,8 +787,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 19174,
-    "sha256": "853f815fba518b13a4a4b76739f26354ce08f71786f2577ae0811741cd5fddf6",
+    "size": 19250,
+    "sha256": "8ca4a3b548e8702aea221ef23bccfac37e35c26ac6a083b8609efc37d2689b08",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
