@@ -20,13 +20,29 @@ public class BuyAllGoldVouchers
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -43,16 +59,15 @@ public class BuyAllGoldVouchers
         Core.Logger("This script is pointless... but was requested to waste gold.");
 
         Dictionary<string, int> vouchers = new()
-    {
-        { "Gold Voucher 500k", 300 },
-        { "Gold Voucher 200k", 300 },
-        { "Gold Voucher 100k", 300 },
-        { "Gold Voucher 25k", 300 },
-        { "Gold Voucher 7.5k", 300 }
-    };
+        {
+            { "Gold Voucher 500k", 300 },
+            { "Gold Voucher 200k", 300 },
+            { "Gold Voucher 100k", 300 },
+            { "Gold Voucher 25k", 300 },
+            { "Gold Voucher 7.5k", 300 },
+        };
 
         foreach ((string voucher, int maxQuant) in vouchers)
             Farm.Voucher(voucher, maxQuant);
     }
-
 }

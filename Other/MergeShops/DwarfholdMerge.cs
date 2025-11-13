@@ -16,20 +16,37 @@ public class DwarfholdMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static Core13LoC LoC { get => _LoC ??= new Core13LoC(); set => _LoC = value; }
+    private static Core13LoC LoC
+    {
+        get => _LoC ??= new Core13LoC();
+        set => _LoC = value;
+    }
     private static Core13LoC _LoC;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -54,7 +71,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +84,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Dwarven Metal":
                     Core.FarmingLogger(req.Name, quant);
@@ -75,7 +99,13 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(9237);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("dwarfhold", "Chaos Drow", "Broken Drow Blade", 5, log: false);
+                        Core.HuntMonster(
+                            "dwarfhold",
+                            "Chaos Drow",
+                            "Broken Drow Blade",
+                            5,
+                            log: false
+                        );
                         Core.HuntMonster("dwarfhold", "Chaotic Draconian", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -93,26 +123,95 @@ private static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("77578", "Armored Dwarfhold Prospector", "Mode: [select] only\nShould the bot buy \"Armored Dwarfhold Prospector\" ?", false),
-        new Option<bool>("77579", "Dwarfhold Prospector's Braided Beard", "Mode: [select] only\nShould the bot buy \"Dwarfhold Prospector's Braided Beard\" ?", false),
-        new Option<bool>("77580", "Dwarfhold Prospector's Spectacles", "Mode: [select] only\nShould the bot buy \"Dwarfhold Prospector's Spectacles\" ?", false),
-        new Option<bool>("77581", "Dwarfhold Prospector's Spectacled Locks", "Mode: [select] only\nShould the bot buy \"Dwarfhold Prospector's Spectacled Locks\" ?", false),
-        new Option<bool>("77582", "Practical Dwarfhold Rucksack", "Mode: [select] only\nShould the bot buy \"Practical Dwarfhold Rucksack\" ?", false),
-        new Option<bool>("77583", "Dwarfhold Geometric Silver Axe", "Mode: [select] only\nShould the bot buy \"Dwarfhold Geometric Silver Axe\" ?", false),
-        new Option<bool>("77948", "Dwarfhold Geometric Silver Axes", "Mode: [select] only\nShould the bot buy \"Dwarfhold Geometric Silver Axes\" ?", false),
-        new Option<bool>("77572", "Gilded Dwarfhold Prospector", "Mode: [select] only\nShould the bot buy \"Gilded Dwarfhold Prospector\" ?", false),
-        new Option<bool>("77573", "Gilded Prospector's Braided Beard", "Mode: [select] only\nShould the bot buy \"Gilded Prospector's Braided Beard\" ?", false),
-        new Option<bool>("77574", "Gilded Prospector's Goggles", "Mode: [select] only\nShould the bot buy \"Gilded Prospector's Goggles\" ?", false),
-        new Option<bool>("77575", "Gilded Prospector's Goggles and Locks", "Mode: [select] only\nShould the bot buy \"Gilded Prospector's Goggles and Locks\" ?", false),
-        new Option<bool>("77576", "Versatile Dwarfhold Rucksack", "Mode: [select] only\nShould the bot buy \"Versatile Dwarfhold Rucksack\" ?", false),
-        new Option<bool>("77577", "Honored Gilded Axe", "Mode: [select] only\nShould the bot buy \"Honored Gilded Axe\" ?", false),
-        new Option<bool>("77949", "Honored Gilded Axes", "Mode: [select] only\nShould the bot buy \"Honored Gilded Axes\" ?", false),
+        new Option<bool>(
+            "77578",
+            "Armored Dwarfhold Prospector",
+            "Mode: [select] only\nShould the bot buy \"Armored Dwarfhold Prospector\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77579",
+            "Dwarfhold Prospector's Braided Beard",
+            "Mode: [select] only\nShould the bot buy \"Dwarfhold Prospector's Braided Beard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77580",
+            "Dwarfhold Prospector's Spectacles",
+            "Mode: [select] only\nShould the bot buy \"Dwarfhold Prospector's Spectacles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77581",
+            "Dwarfhold Prospector's Spectacled Locks",
+            "Mode: [select] only\nShould the bot buy \"Dwarfhold Prospector's Spectacled Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77582",
+            "Practical Dwarfhold Rucksack",
+            "Mode: [select] only\nShould the bot buy \"Practical Dwarfhold Rucksack\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77583",
+            "Dwarfhold Geometric Silver Axe",
+            "Mode: [select] only\nShould the bot buy \"Dwarfhold Geometric Silver Axe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77948",
+            "Dwarfhold Geometric Silver Axes",
+            "Mode: [select] only\nShould the bot buy \"Dwarfhold Geometric Silver Axes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77572",
+            "Gilded Dwarfhold Prospector",
+            "Mode: [select] only\nShould the bot buy \"Gilded Dwarfhold Prospector\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77573",
+            "Gilded Prospector's Braided Beard",
+            "Mode: [select] only\nShould the bot buy \"Gilded Prospector's Braided Beard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77574",
+            "Gilded Prospector's Goggles",
+            "Mode: [select] only\nShould the bot buy \"Gilded Prospector's Goggles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77575",
+            "Gilded Prospector's Goggles and Locks",
+            "Mode: [select] only\nShould the bot buy \"Gilded Prospector's Goggles and Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77576",
+            "Versatile Dwarfhold Rucksack",
+            "Mode: [select] only\nShould the bot buy \"Versatile Dwarfhold Rucksack\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77577",
+            "Honored Gilded Axe",
+            "Mode: [select] only\nShould the bot buy \"Honored Gilded Axe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77949",
+            "Honored Gilded Axes",
+            "Mode: [select] only\nShould the bot buy \"Honored Gilded Axes\" ?",
+            false
+        ),
     };
 }

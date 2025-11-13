@@ -12,9 +12,17 @@ public class CoreToD
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
     bool doAll = false;
@@ -67,7 +75,6 @@ public class CoreToD
         //??? - The Stranger
         AntiqueShop();
         MysteriousDungeon();
-
     }
 
     #region Vaden - The DeathKnight
@@ -139,7 +146,14 @@ public class CoreToD
         if (!Story.QuestProgression(4981))
         {
             Core.EnsureAccept(4981);
-            Core.KillMonster("bonecastle", "r8", "Left", "Skeletal Warrior", "Undead Humerus Bones", 5);
+            Core.KillMonster(
+                "bonecastle",
+                "r8",
+                "Left",
+                "Skeletal Warrior",
+                "Undead Humerus Bones",
+                5
+            );
             Core.EnsureComplete(4981);
         }
 
@@ -169,13 +183,21 @@ public class CoreToD
         Story.KillQuest(4987, "bonecastle", "Snuggles, Torturer");
 
         // Game of Bones
-        Story.KillQuest(4988, "bonecastle", new[] { "Jon Bones", "Oberon Marrowtell", "Baskerville", "Knight of Lichens" });
+        Story.KillQuest(
+            4988,
+            "bonecastle",
+            new[] { "Jon Bones", "Oberon Marrowtell", "Baskerville", "Knight of Lichens" }
+        );
 
         // Rot Tin Tin!
         Story.KillQuest(4989, "bonecastle", "Rot Tin Tin");
 
         // Gold Digger
-        Story.KillQuest(4990, "bonecastle", new[] { "Undead Golden Knight", "Undead Golden Knight", "Undead Golden Knight" });
+        Story.KillQuest(
+            4990,
+            "bonecastle",
+            new[] { "Undead Golden Knight", "Undead Golden Knight", "Undead Golden Knight" }
+        );
 
         // Gotta Hand It To Ya
         Story.KillQuest(4991, "bonecastle", new[] { "Undead Knight", "Skeletal Warrior" });
@@ -207,7 +229,18 @@ public class CoreToD
         Story.KillQuest(4998, "towersilver", new[] { "Fallen DeathKnight", "Undead Warrior" });
 
         // Farming For Loot
-        Story.KillQuest(5000, "towersilver", new[] { "Flying Spyball", "Fallen DeathKnight", "Undead Warrior", "Undead Knight", "Undead Guard" });
+        Story.KillQuest(
+            5000,
+            "towersilver",
+            new[]
+            {
+                "Flying Spyball",
+                "Fallen DeathKnight",
+                "Undead Warrior",
+                "Undead Knight",
+                "Undead Guard",
+            }
+        );
 
         // Or... Not.
         Story.MapItemQuest(5001, "towersilver", new[] { 4368, 4369, 4370, 4371, 4372 });
@@ -234,9 +267,20 @@ public class CoreToD
         Story.KillQuest(5008, "towersilver", "Flester The Silver");
 
         // Get my Stuff
-        Story.KillQuest(5009, "towersilver", new[] { "Fallen DeathKnight", "Undead Knight", "Undead Warrior", "Ghoul", "Undead Guard" });
+        Story.KillQuest(
+            5009,
+            "towersilver",
+            new[]
+            {
+                "Fallen DeathKnight",
+                "Undead Knight",
+                "Undead Warrior",
+                "Ghoul",
+                "Undead Guard",
+            }
+        );
 
-        // In the Mix        
+        // In the Mix
         Story.KillQuest(5010, "towersilver", "Bloody Scary");
 
         // They Know We're Coming
@@ -274,7 +318,7 @@ public class CoreToD
         // Take A Mallet To 'Em
         Story.KillQuest(5021, "towergold", "Fallen Emperor Statue");
 
-        // Yurrod the Gold       
+        // Yurrod the Gold
         Story.KillQuest(5022, "towergold", "Yurrod the Gold");
     }
 
@@ -322,7 +366,11 @@ public class CoreToD
         Story.KillQuest(5043, "portalmaze", "Bucket Zombie");
 
         // Sonnet of the Undead
-        Story.KillQuest(5044, "portalmaze", new[] { "Bucket Zombie", "Dancing Zombie", "Tunneling Zombie" });
+        Story.KillQuest(
+            5044,
+            "portalmaze",
+            new[] { "Bucket Zombie", "Dancing Zombie", "Tunneling Zombie" }
+        );
 
         // Through the Zombie Portal!
         Story.KillQuest(5045, "portalmaze", "Time Wraith");
@@ -358,7 +406,6 @@ public class CoreToD
         Story.MapItemQuest(5068, "tachyon", 4446);
         Story.KillQuest(5068, "tachyon", new[] { "Time Wraith", "Timestream Rider" });
 
-
         // This Thing Needs A Bigger Battery
         Story.KillQuest(5069, "tachyon", "Spacetime Anomaly");
 
@@ -387,7 +434,6 @@ public class CoreToD
         // The Central Portal
         Story.MapItemQuest(5078, "tachyon", 4453);
         Story.KillQuest(5078, "tachyon", new[] { "Time Wraith", "Timestream Rider" });
-
 
         // Is There Tech Support For This Thing?
         Story.KillQuest(5079, "tachyon", "Void Serpent");
@@ -532,7 +578,6 @@ public class CoreToD
             Core.Logger("Ziri - The Daimon: Laser Shark Invasion");
         Story.PreLoad(this);
 
-
         // Cloud Sharks!
         Story.KillQuest(5111, "baconcatlair", "Cloud Shark");
 
@@ -626,12 +671,17 @@ public class CoreToD
             //Giant, Huge Cyborg Shark! 5130
             Story.KillQuest(5130, "baconcatlair", "Cyborg Laser Shark");
 
-
             //Wheel of Bacon 5131
             if (!Story.QuestProgression(5131))
             {
                 Core.EnsureAccept(5131);
-                Core.HuntMonster("baconcatlair", "Robo Shark", "Wheel of Bacon Token", 5, isTemp: false);
+                Core.HuntMonster(
+                    "baconcatlair",
+                    "Robo Shark",
+                    "Wheel of Bacon Token",
+                    5,
+                    isTemp: false
+                );
                 Core.EnsureComplete(5131);
             }
         }
@@ -651,7 +701,11 @@ public class CoreToD
         Story.PreLoad(this);
 
         // Mingle
-        Story.MapItemQuest(5133, "DeathPit", new[] { 4484, 4485, 4486, 4487, 4488, 4489, 4490, 4491 });
+        Story.MapItemQuest(
+            5133,
+            "DeathPit",
+            new[] { 4484, 4485, 4486, 4487, 4488, 4489, 4490, 4491 }
+        );
 
         // Those Dummies
         Story.KillQuest(5134, "DeathPit", "Training Dummy");
@@ -759,8 +813,6 @@ public class CoreToD
             Core.EnsureComplete(5165);
         }
     }
-
-
 
     #endregion
 
@@ -1002,7 +1054,7 @@ public class CoreToD
         Story.MapItemQuest(5205, "fourdpyramid", 4568, 1);
         Story.KillQuest(5205, "fourdpyramid", "Tesseract Sprite");
 
-        // Lever-age    
+        // Lever-age
         Story.MapItemQuest(5206, "fourdpyramid", 4569, 1);
 
         // 4D Goblins?
@@ -1032,6 +1084,7 @@ public class CoreToD
         // The Hero's Doom
         Story.MapItemQuest(5212, "fourdpyramid", 4574, 1);
     }
+
     public void Yasaris()
     {
         if (Core.isCompletedBefore(5239))
@@ -1184,7 +1237,6 @@ public class CoreToD
 
         Story.KillQuest(5298, "hedgemaze", "Knight's Reflection");
 
-
         Core.EquipClass(ClassType.Solo);
         if (!Story.QuestProgression(5299))
         {
@@ -1268,7 +1320,11 @@ public class CoreToD
         Story.KillQuest(5318, "towerofmirrors", "Silver Elemental");
 
         // Turn to the Left
-        Story.KillQuest(5319, "towerofmirrors", new[] { "Runway Wraith", "Runway Wraith", "Runway Wraith", "Runway Wraith" });
+        Story.KillQuest(
+            5319,
+            "towerofmirrors",
+            new[] { "Runway Wraith", "Runway Wraith", "Runway Wraith", "Runway Wraith" }
+        );
 
         // Now Turn to the Right
         if (!Story.QuestProgression(5320))
@@ -1351,7 +1407,6 @@ public class CoreToD
             Core.Jump();
             Core.Sleep();
         }
-
 
         // Defeat ... Wait. What?
         if (!Story.QuestProgression(5332))
@@ -1446,12 +1501,16 @@ public class CoreToD
         Story.MapItemQuest(5441, "MysteriousDungeon", 4809);
 
         //seeking answers
-        Story.MapItemQuest(5442, "MysteriousDungeon", new[] { 4810, 4811, 4812, 4813, 4814, 4815, 4816 });
+        Story.MapItemQuest(
+            5442,
+            "MysteriousDungeon",
+            new[] { 4810, 4811, 4812, 4813, 4814, 4815, 4816 }
+        );
 
-        //Curses!        
+        //Curses!
         Story.MapItemQuest(5443, "MysteriousDungeon", 4817);
 
-        //Skudly, Staaaahp!        
+        //Skudly, Staaaahp!
         Story.KillQuest(5444, "MysteriousDungeon", "Skudly");
 
         // Not So Mysterious After All

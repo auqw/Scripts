@@ -13,8 +13,18 @@ public class Mazumi
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -44,15 +54,27 @@ public class Mazumi
             Core.HuntMonster("greenguardwest", "Slime", "Slime-Soaked Wallet", 2);
 
             // Dont use `West1` for Frogzard, as the cell contains an extra frogzard that isnt there.
-            Core.KillMonster("greenguardwest", "West3", "Up", "Frogzard", "Frogzard's Lint Hoard", 2);
-            
-            Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Big Bad Boar's Wallet");
+            Core.KillMonster(
+                "greenguardwest",
+                "West3",
+                "Up",
+                "Frogzard",
+                "Frogzard's Lint Hoard",
+                2
+            );
+
+            Core.KillMonster(
+                "greenguardwest",
+                "West12",
+                "Up",
+                "Big Bad Boar",
+                "Big Bad Boar's Wallet"
+            );
             Core.EnsureComplete(91);
         }
 
         // Hit Job 92
         Core.EquipClass(ClassType.Solo);
         Story.KillQuest(92, "greenguardwest", new[] { "Breken the Vile", "Ogug Stoneaxe" });
-
     }
 }

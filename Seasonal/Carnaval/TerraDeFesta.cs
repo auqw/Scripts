@@ -12,9 +12,17 @@ public class TerraDeFesta
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static Batista Bat { get => _Bat ??= new Batista(); set => _Bat = value; }
+    private static Batista Bat
+    {
+        get => _Bat ??= new Batista();
+        set => _Bat = value;
+    }
     private static Batista _Bat;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -50,10 +58,18 @@ public class TerraDeFesta
         Story.KillQuest(3385, "carnaval", "Mulher de Branco");
 
         //Take 'Em Apart (3386)
-        Story.KillQuest(3386, "terradefesta", new[] { "Voodoo Doll", "Voodoo Doll", "Voodoo Doll", "Voodoo Doll" });
+        Story.KillQuest(
+            3386,
+            "terradefesta",
+            new[] { "Voodoo Doll", "Voodoo Doll", "Voodoo Doll", "Voodoo Doll" }
+        );
 
         //Who Could It Be? (3387)
-        Story.KillQuest(3387, "terradefesta", new[] { "Party Zombie", "Party Zombie", "Party Zombie", "Party Zombie" });
+        Story.KillQuest(
+            3387,
+            "terradefesta",
+            new[] { "Party Zombie", "Party Zombie", "Party Zombie", "Party Zombie" }
+        );
 
         //A Bag For A Talisman (3388)
         Story.KillQuest(3388, "terradefesta", "GreenRat");

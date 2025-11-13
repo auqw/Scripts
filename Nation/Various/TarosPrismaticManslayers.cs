@@ -8,19 +8,32 @@ tags: null
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
 //cs_include Scripts/Nation/Various/TarosManslayer.cs
+using System.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
-using System.Linq;
+
 public class TarosPrismaticManslayers
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static TarosManslayer Taro { get => _Taro ??= new TarosManslayer(); set => _Taro = value; }
+    private static TarosManslayer Taro
+    {
+        get => _Taro ??= new TarosManslayer();
+        set => _Taro = value;
+    }
     private static TarosManslayer _Taro;
 
     public void ScriptMain(IScriptInterface bot)
@@ -32,7 +45,12 @@ public class TarosPrismaticManslayers
         Core.SetOptions(false);
     }
 
-    private string[] Rewards = { "Taro's Prismatic Manslayer", "Taro's Dual Prismatic Manslayers", "Taro's BattleBlade" };
+    private string[] Rewards =
+    {
+        "Taro's Prismatic Manslayer",
+        "Taro's Dual Prismatic Manslayers",
+        "Taro's BattleBlade",
+    };
 
     public void TemptationTest()
     {
@@ -45,7 +63,11 @@ public class TarosPrismaticManslayers
 
         if (Core.CheckInventory(Q.Rewards.Select(x => x.ID).ToArray()) || !Core.IsMember)
         {
-            Core.Logger(!Core.IsMember ? "Membership required for the quest `A Test of Temptation`" : "Rewards already in inventory");
+            Core.Logger(
+                !Core.IsMember
+                    ? "Membership required for the quest `A Test of Temptation`"
+                    : "Rewards already in inventory"
+            );
             return;
         }
 

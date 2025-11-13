@@ -25,15 +25,27 @@ public class TwillySupportsYou
 
     public void GetDrops()
     {
-        if (!Core.CheckInventory("Twilly Supports You!") || Core.CheckInventory(Core.EnsureLoad(9779).Rewards.Select(x => x.Name).ToArray(), toInv: false))
+        if (
+            !Core.CheckInventory("Twilly Supports You!")
+            || Core.CheckInventory(
+                Core.EnsureLoad(9779).Rewards.Select(x => x.Name).ToArray(),
+                toInv: false
+            )
+        )
         {
-            Core.Logger("You either don't have the \"Twilly Supports You!\" pet or already have the rewards.");
+            Core.Logger(
+                "You either don't have the \"Twilly Supports You!\" pet or already have the rewards."
+            );
             return;
         }
 
         List<ItemBase> RewardOptions = Core.EnsureLoad(9779).Rewards;
 
-        foreach (ItemBase item in RewardOptions.Where(x => x != null && !Core.CheckInventory(x.ID, toInv: false)))
+        foreach (
+            ItemBase item in RewardOptions.Where(x =>
+                x != null && !Core.CheckInventory(x.ID, toInv: false)
+            )
+        )
             Bot.Drops.Add(item.ID);
 
         Core.EquipClass(ClassType.Farm);
@@ -53,7 +65,5 @@ public class TwillySupportsYou
             Core.JumpWait();
             Core.ToBank(Reward.ID);
         }
-
     }
 }
-

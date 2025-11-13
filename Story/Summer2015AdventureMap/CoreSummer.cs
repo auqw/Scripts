@@ -13,9 +13,17 @@ public class CoreSummer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -76,7 +84,17 @@ public class CoreSummer
         Story.KillQuest(4268, "dreadspace", "Cyber Horg");
 
         //Fix the Holodeck (4269)
-        Story.KillQuest(4269, "dreadspace", new[] { "Undead Star Ranger", "Cyber Horg", "Undead Space Warrior", "Undead Space Marine" });
+        Story.KillQuest(
+            4269,
+            "dreadspace",
+            new[]
+            {
+                "Undead Star Ranger",
+                "Cyber Horg",
+                "Undead Space Warrior",
+                "Undead Space Marine",
+            }
+        );
 
         //Gorn in 60 Seconds (4270)
         Story.KillQuest(4270, "dreadspace", new[] { "Dra'gorn", "Dra'gorn", "Dra'gorn" });
@@ -136,7 +154,11 @@ public class CoreSummer
         Story.KillQuest(4282, "dreadspace", "Undead Space Marine");
 
         //Crew Cut (4283)
-        Story.KillQuest(4283, "dreadspace", new[] { "Undead Space Marine", "Undead Space Warrior", "Cyber Horg", "Vaderix" });
+        Story.KillQuest(
+            4283,
+            "dreadspace",
+            new[] { "Undead Space Marine", "Undead Space Warrior", "Cyber Horg", "Vaderix" }
+        );
 
         //Restore Life Support (4284)
         Story.KillQuest(4284, "dreadspace", "Cyber Horg");
@@ -310,7 +332,11 @@ public class CoreSummer
         Story.KillQuest(1300, "Terrarium", "Death on Wings");
 
         // Doppelganger Wants to Hit You
-        Story.KillQuest(1308, "Terrarium", new[] { "Doppleganger of Will", "Doppleganger of Fred" });
+        Story.KillQuest(
+            1308,
+            "Terrarium",
+            new[] { "Doppleganger of Will", "Doppleganger of Fred" }
+        );
 
         // Catapult Climb
         Story.MapItemQuest(1309, "Terrarium", 604);
@@ -383,7 +409,11 @@ public class CoreSummer
         Story.KillQuest(4353, "livingdungeon", "Chia Warrior");
 
         // Leaf me alone!
-        Story.KillQuest(4354, "livingdungeon", new[] { "Titan Decay", "Seed Spitter", "Evil Plant Horror" });
+        Story.KillQuest(
+            4354,
+            "livingdungeon",
+            new[] { "Titan Decay", "Seed Spitter", "Evil Plant Horror" }
+        );
 
         // Evil Faerie Ambush!
         Story.KillQuest(4355, "livingdungeon", "Evil Tree Faerie");
@@ -392,10 +422,18 @@ public class CoreSummer
         Story.KillQuest(4356, "livingdungeon", "Vulchurion");
 
         // Committing Tree-son
-        Story.KillQuest(4357, "livingdungeon", new[] { "Evil Plant Horror", "Evil Tree Faerie", "Vulchurion" });
+        Story.KillQuest(
+            4357,
+            "livingdungeon",
+            new[] { "Evil Plant Horror", "Evil Tree Faerie", "Vulchurion" }
+        );
 
         // Heartwood
-        Story.KillQuest(4358, "livingdungeon", new[] { "Evil Plant Horror", "Evil Tree Faerie", "Vulchurion" });
+        Story.KillQuest(
+            4358,
+            "livingdungeon",
+            new[] { "Evil Plant Horror", "Evil Tree Faerie", "Vulchurion" }
+        );
 
         // Drayko BOSS FIGHT!
         Story.KillQuest(4359, "livingdungeon", "Drayko");
@@ -415,9 +453,17 @@ public class CoreSummer
         // EPIC DROP!
         Story.KillQuest(4364, "livingdungeon", "Epic Drop");
 
-
-        Core.AddDrop("Wooden Ring", "Salad!", "Weeping Widowmaker Bone", "Chia in a pot!", "Fairy Phone", "Vulchurion Quill", "Drayko's Medallion", "Giant Dakka Fang");
-        // ------------------------------------------        
+        Core.AddDrop(
+            "Wooden Ring",
+            "Salad!",
+            "Weeping Widowmaker Bone",
+            "Chia in a pot!",
+            "Fairy Phone",
+            "Vulchurion Quill",
+            "Drayko's Medallion",
+            "Giant Dakka Fang"
+        );
+        // ------------------------------------------
         // Drayko Battle!
         if (!Core.CheckInventory("Drayko's Medallion"))
         {
@@ -456,22 +502,42 @@ public class CoreSummer
                                 {
                                     Core.Logger("Wooden Ring not found, finding it for you");
                                     Core.EnsureAccept(4377);
-                                    Core.HuntMonster("livingdungeon", "Root of Evil", "Wooden Ring Piece", 5);
+                                    Core.HuntMonster(
+                                        "livingdungeon",
+                                        "Root of Evil",
+                                        "Wooden Ring Piece",
+                                        5
+                                    );
                                     Core.EnsureComplete(4377);
                                     Bot.Wait.ForPickup("Wooden Ring");
                                     Core.Sleep(1000);
                                 }
-                                Core.HuntMonster("livingdungeon", "Evil Plant Horror", "Evil Plant Horror Leaf", 6);
+                                Core.HuntMonster(
+                                    "livingdungeon",
+                                    "Evil Plant Horror",
+                                    "Evil Plant Horror Leaf",
+                                    6
+                                );
                                 Core.EnsureComplete(4378);
                                 Bot.Wait.ForPickup("Salad!");
                                 Core.Sleep(1000);
                             }
-                            Core.HuntMonster("livingdungeon", "Weeping Widowmaker", "Widowmaker deboned", 5);
+                            Core.HuntMonster(
+                                "livingdungeon",
+                                "Weeping Widowmaker",
+                                "Widowmaker deboned",
+                                5
+                            );
                             Core.EnsureComplete(4379);
                             Bot.Wait.ForPickup("Weeping Widowmaker Bone");
                             Core.Sleep(1000);
                         }
-                        Core.HuntMonster("livingdungeon", "Chia Warrior", "Chia Warrior defeated", 3);
+                        Core.HuntMonster(
+                            "livingdungeon",
+                            "Chia Warrior",
+                            "Chia Warrior defeated",
+                            3
+                        );
                         Core.EnsureComplete(4380);
                         Bot.Wait.ForPickup("Chia in a pot!");
                         Core.Sleep(1000);
@@ -501,12 +567,25 @@ public class CoreSummer
             // Bot.Wait.ForPickup("Giant Dakka Fang");
         }
     }
+
     public void LunaCove()
     {
         if (Core.CheckInventory("Your Moonstone"))
             return;
 
-        Core.AddDrop("Ritual Items", "Stale Chips", "Air Pump", "Shiny Stone", "Were Hair", "For the Horde!", "Werewolf Discovery", "Stolen Lycanstone", "Gravefang's Elixir", "Dis-Lycan this", "Your Moonstone");
+        Core.AddDrop(
+            "Ritual Items",
+            "Stale Chips",
+            "Air Pump",
+            "Shiny Stone",
+            "Were Hair",
+            "For the Horde!",
+            "Werewolf Discovery",
+            "Stolen Lycanstone",
+            "Gravefang's Elixir",
+            "Dis-Lycan this",
+            "Your Moonstone"
+        );
 
         //4399|Time to Rock this Finale!
         if (!Core.CheckInventory("Your Moonstone"))
@@ -542,31 +621,69 @@ public class CoreSummer
                                                 if (!Core.CheckInventory("Ritual Items"))
                                                 {
                                                     Core.EnsureAccept(4389);
-                                                    Core.HuntMonster("lunacove", "Cove Warrior", "Ritual Materials", 15);
-                                                    Core.HuntMonster("lunacove", "Plessie", "Plessie Fang Tooth");
-                                                    Core.HuntMonster("lunacove", "Island Girl", "Candle", 5);
+                                                    Core.HuntMonster(
+                                                        "lunacove",
+                                                        "Cove Warrior",
+                                                        "Ritual Materials",
+                                                        15
+                                                    );
+                                                    Core.HuntMonster(
+                                                        "lunacove",
+                                                        "Plessie",
+                                                        "Plessie Fang Tooth"
+                                                    );
+                                                    Core.HuntMonster(
+                                                        "lunacove",
+                                                        "Island Girl",
+                                                        "Candle",
+                                                        5
+                                                    );
                                                     Core.EnsureComplete(4389);
                                                     Bot.Wait.ForPickup("Ritual Items");
                                                 }
                                                 Core.EnsureAccept(4390);
                                                 Core.GetMapItem(3533, 10, "lunacove");
-                                                Core.HuntMonster("lunacove", "Cove Fisher", "Bag of Chips");
+                                                Core.HuntMonster(
+                                                    "lunacove",
+                                                    "Cove Fisher",
+                                                    "Bag of Chips"
+                                                );
                                                 Core.EnsureComplete(4390);
                                                 Bot.Wait.ForPickup("Stale Chips");
                                             }
                                             Core.EnsureAccept(4391);
-                                            Core.HuntMonster("lunacove", "Lunar Villager", "Chips", 3);
+                                            Core.HuntMonster(
+                                                "lunacove",
+                                                "Lunar Villager",
+                                                "Chips",
+                                                3
+                                            );
                                             Core.EnsureComplete(4391);
                                             Bot.Wait.ForPickup("Air Pump");
                                         }
                                         Core.EnsureAccept(4392);
-                                        Core.HuntMonster("lunacove", "Lunar Villager", "Villager Chastised", 10);
-                                        Core.HuntMonster("lunacove", "Beach Ball", "Deflated Beach Balls", 5);
+                                        Core.HuntMonster(
+                                            "lunacove",
+                                            "Lunar Villager",
+                                            "Villager Chastised",
+                                            10
+                                        );
+                                        Core.HuntMonster(
+                                            "lunacove",
+                                            "Beach Ball",
+                                            "Deflated Beach Balls",
+                                            5
+                                        );
                                         Core.EnsureComplete(4392);
                                         Bot.Wait.ForPickup("Shiny Stone");
                                     }
                                     Core.EnsureAccept(4393);
-                                    Core.HuntMonster("lunacove", "Coral Merdraconian", "Coral Branch", 3);
+                                    Core.HuntMonster(
+                                        "lunacove",
+                                        "Coral Merdraconian",
+                                        "Coral Branch",
+                                        3
+                                    );
                                     Core.HuntMonster("lunacove", "Plessie", "Plessie Scale", 2);
                                     Core.EnsureComplete(4393);
                                     Bot.Wait.ForPickup("Were Hair");
@@ -577,7 +694,12 @@ public class CoreSummer
                                 Bot.Wait.ForPickup("For the Horde!");
                             }
                             Core.EnsureAccept(4394);
-                            Core.HuntMonster("lunacove", "Horde Knight", "Horde Knight Defeated", 7);
+                            Core.HuntMonster(
+                                "lunacove",
+                                "Horde Knight",
+                                "Horde Knight Defeated",
+                                7
+                            );
                             Core.HuntMonster("lunacove", "Horde Lycan", "Horde Lycan Defeated", 8);
                             Core.EnsureComplete(4394);
                             Bot.Wait.ForPickup("Werewolf Discovery");
@@ -604,7 +726,6 @@ public class CoreSummer
             Bot.Wait.ForPickup("Your Moonstone");
         }
     }
-
 
     public void CyserosSecret()
     {

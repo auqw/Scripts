@@ -14,7 +14,12 @@ public class VoidBattleMageSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static LairWar War { get => _War ??= new LairWar(); set => _War = value; }    private static LairWar _War;
+    private static LairWar War
+    {
+        get => _War ??= new LairWar();
+        set => _War = value;
+    }
+    private static LairWar _War;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -45,8 +50,7 @@ public class VoidBattleMageSet
 
         foreach (ItemBase item in RewardOptions)
             Core.ToBank(item.ID);
-            
+
         Core.CancelRegisteredQuests();
     }
-
 }

@@ -28,34 +28,66 @@ tags: versus, verus, doomknight, vdk, class
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/DoomPirateStory.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs
 
+using System.Dynamic;
+using Newtonsoft.Json;
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Auras;
 using Skua.Core.Models.Items;
-using Skua.Core.Models.Skills;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Shops;
-using Newtonsoft.Json;
-using System.Dynamic;
-using Skua.Core.Models.Auras;
+using Skua.Core.Models.Skills;
 
 public class VerusDoomKnightClass
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static SepulchuresOriginalHelm SOH { get => _SOH ??= new SepulchuresOriginalHelm(); set => _SOH = value; }
+    private static SepulchuresOriginalHelm SOH
+    {
+        get => _SOH ??= new SepulchuresOriginalHelm();
+        set => _SOH = value;
+    }
     private static SepulchuresOriginalHelm _SOH;
-    private static ArchDoomKnight ADK { get => _ADK ??= new ArchDoomKnight(); set => _ADK = value; }
+    private static ArchDoomKnight ADK
+    {
+        get => _ADK ??= new ArchDoomKnight();
+        set => _ADK = value;
+    }
     private static ArchDoomKnight _ADK;
-    private static SRoD SRoD { get => _SRoD ??= new SRoD(); set => _SRoD = value; }
+    private static SRoD SRoD
+    {
+        get => _SRoD ??= new SRoD();
+        set => _SRoD = value;
+    }
     private static SRoD _SRoD;
-    private static TerminaTempleMerge TTMerge { get => _TTMerge ??= new TerminaTempleMerge(); set => _TTMerge = value; }
+    private static TerminaTempleMerge TTMerge
+    {
+        get => _TTMerge ??= new TerminaTempleMerge();
+        set => _TTMerge = value;
+    }
     private static TerminaTempleMerge _TTMerge;
-    private static DoomPirateHaulMerge DPHM { get => _DPHM ??= new DoomPirateHaulMerge(); set => _DPHM = value; }
+    private static DoomPirateHaulMerge DPHM
+    {
+        get => _DPHM ??= new DoomPirateHaulMerge();
+        set => _DPHM = value;
+    }
     private static DoomPirateHaulMerge _DPHM;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -94,11 +126,23 @@ public class VerusDoomKnightClass
             Farm.Experience(50);
             Core.EnsureAccept(9412);
             Core.HuntMonsterMapID("necrodungeon", 47, "The Mask of the Skulls", isTemp: false);
-            Core.HuntMonster("lumafortress", "Corrupted Luma", "Doom Worshipper's Blade Of Doom", isTemp: false);
-            Core.Logger(" \"Empress' ShadowCloak\" 's Droprate is fairly low... so dont complain if it takes \"hours\" according to reddit... ");
+            Core.HuntMonster(
+                "lumafortress",
+                "Corrupted Luma",
+                "Doom Worshipper's Blade Of Doom",
+                isTemp: false
+            );
+            Core.Logger(
+                " \"Empress' ShadowCloak\" 's Droprate is fairly low... so dont complain if it takes \"hours\" according to reddit... "
+            );
             Core.HuntMonster("innershadows", "Krahen", "Empress' ShadowCloak", isTemp: false);
             Bot.Quests.UpdateQuest(7646);
-            Core.HuntMonster("techfortress", "MechaVortrix", "Cybernetic Doom Blade", isTemp: false);
+            Core.HuntMonster(
+                "techfortress",
+                "MechaVortrix",
+                "Cybernetic Doom Blade",
+                isTemp: false
+            );
             Core.GhostItem(55823, "Kyger", 1, false, ItemCategory.Pet, "Time for training!", 1);
             Bot.Quests.UpdateQuest(7650);
             Core.HuntMonsterMapID("stonewooddeep", 16, "Asherion Armor", isTemp: false);
@@ -111,9 +155,21 @@ public class VerusDoomKnightClass
             Farm.Experience(60);
             Core.EnsureAccept(9413);
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster("brightshadow", "Shadowflame Paladin", "Shadowflame Spike", 150, false);
+            Core.HuntMonster(
+                "brightshadow",
+                "Shadowflame Paladin",
+                "Shadowflame Spike",
+                150,
+                false
+            );
             Core.HuntMonster("fiendshard", "Paladin Fiend", "Light Fiend Horn", 150, false);
-            Core.HuntMonster("legionarena", "Dark Legion Paladin", "Underworld Soul Glow", 50, false);
+            Core.HuntMonster(
+                "legionarena",
+                "Dark Legion Paladin",
+                "Underworld Soul Glow",
+                50,
+                false
+            );
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("noxustower", "General Goldhammer", "Gold Hammer Chip", isTemp: false);
             Core.HuntMonster("chaoslab", "Chaos Artix", "Shimmering Tentacle", 20, false);
@@ -127,8 +183,10 @@ public class VerusDoomKnightClass
             Farm.EvilREP();
             Bot.Quests.UpdateQuest(3773);
             Core.EnsureAccept(9417);
-            Core.Logger("The map \"Wanders\", is a bit broke,\n" +
-            "it will take a minute to hunt the mosnter");
+            Core.Logger(
+                "The map \"Wanders\", is a bit broke,\n"
+                    + "it will take a minute to hunt the mosnter"
+            );
             Core.HuntMonsterMapID("wanders", 46, "Trace of Light", 8, false); //i hate this map
             Core.HuntMonster("lightguardwar", "Extreme Noxus", "Trace of Dark", 8, false);
             Core.HuntMonster("eternalchaos", "Bandit Drakath", "Trace of Wind", 8, false);
@@ -144,13 +202,15 @@ public class VerusDoomKnightClass
         // Soul Fracture (9416)
         if (!Story.QuestProgression(9416))
         {
-            Core.HuntMonsterQuest(9416,
-            ("ultraalteon", "Ultra Chaos Alteon", ClassType.Solo),
-            ("ebondungeon", "Dethrix", ClassType.Solo),
-            ("shadowstrike", "Sepulchuroth", ClassType.Solo),
-            ("ultradrakath", "Champion of Chaos", ClassType.Solo),
-            ("ebilcorphq", "Gravelyn", ClassType.Solo),
-            ("shadowvoid", "Fragment of Doom", ClassType.Solo));
+            Core.HuntMonsterQuest(
+                9416,
+                ("ultraalteon", "Ultra Chaos Alteon", ClassType.Solo),
+                ("ebondungeon", "Dethrix", ClassType.Solo),
+                ("shadowstrike", "Sepulchuroth", ClassType.Solo),
+                ("ultradrakath", "Champion of Chaos", ClassType.Solo),
+                ("ebilcorphq", "Gravelyn", ClassType.Solo),
+                ("shadowvoid", "Fragment of Doom", ClassType.Solo)
+            );
         }
 
         // Doom Spikes (9418)
@@ -165,13 +225,27 @@ public class VerusDoomKnightClass
             {
                 Core.Logger("InfernalArena is a **SOLO ONLY** map!");
                 Adv.GearStore();
-                Core.UseBossClass(Core.CheckInventory(new[] { "Void Highlord", "Void Highlord (IoDA)" }, any: true)
-               ? (Core.CheckInventory("Void Highlord (IoDA)")
-               ? "Void Highlord (IoDA)" : "Void Highlord")
-               : "ArchPaladin");
+                Core.UseBossClass(
+                    Core.CheckInventory(
+                        new[] { "Void Highlord", "Void Highlord (IoDA)" },
+                        any: true
+                    )
+                        ? (
+                            Core.CheckInventory("Void Highlord (IoDA)")
+                                ? "Void Highlord (IoDA)"
+                                : "Void Highlord"
+                        )
+                        : "ArchPaladin"
+                );
                 Core.JumpWait();
                 Core.Sleep();
-                Core.HuntMonster("infernalarena", "Deadly Duo", "Deadly Duo's Decayed Denture", 10, false);
+                Core.HuntMonster(
+                    "infernalarena",
+                    "Deadly Duo",
+                    "Deadly Duo's Decayed Denture",
+                    10,
+                    false
+                );
                 Core.JumpWait();
                 Adv.GearStore(true, true);
             }
@@ -212,7 +286,13 @@ public class VerusDoomKnightClass
             DPHM.BuyAllMerge("DoomTech DoomKnight");
 
             //Ensure Everything is unbanked.
-            Core.Unbank("Dragonlord of Evil", "DoomTech DoomKnight", "Arch DoomKnight Helm", "Sepulchure's Original Helm", "ShadowReaper Of Doom");
+            Core.Unbank(
+                "Dragonlord of Evil",
+                "DoomTech DoomKnight",
+                "Arch DoomKnight Helm",
+                "Sepulchure's Original Helm",
+                "ShadowReaper Of Doom"
+            );
             Core.EnsureComplete(9414);
         }
 
@@ -225,7 +305,13 @@ public class VerusDoomKnightClass
             Core.HuntMonster("deltavlab", "Pistol Guard", "Refined Metal", 1000000, false);
             Core.HuntMonster("etherwardes", "Earth Dragon Warrior", "Dragon Skin", 1000000, false);
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("necrocavern", "Chaos Vordred", "PaladinSlayer's Skull", 100000, false);
+            Core.HuntMonster(
+                "necrocavern",
+                "Chaos Vordred",
+                "PaladinSlayer's Skull",
+                100000,
+                false
+            );
             Core.EnsureComplete(9419);
         }
 
@@ -235,25 +321,34 @@ public class VerusDoomKnightClass
             Adv.RankUpClass("Verus DoomKnight");
     }
 
-
-
     void VoTSSolo()
     {
         // Define the possible solo classes
-        string[] PossibleSoloClasses = new[] { "Chaos Avenger", "Verus Doomknight", "Void Highlord", "ArchPaladin" };
+        string[] PossibleSoloClasses = new[]
+        {
+            "Chaos Avenger",
+            "Verus Doomknight",
+            "Void Highlord",
+            "ArchPaladin",
+        };
 
         if (!Core.CheckInventory(PossibleSoloClasses, any: true))
-            Core.Logger("no Soloing classes found stopping (go get AP atleast and rerun)", stopBot: true);
+            Core.Logger(
+                "no Soloing classes found stopping (go get AP atleast and rerun)",
+                stopBot: true
+            );
 
         // Find the first available class in inventory or bank
         string? selectedClass = PossibleSoloClasses.FirstOrDefault(className =>
-    Bot.Inventory.Items.Any(item => item.Name == className) ||
-    Bot.Bank.Items.Any(item => item.Name == className)
-);
+            Bot.Inventory.Items.Any(item => item.Name == className)
+            || Bot.Bank.Items.Any(item => item.Name == className)
+        );
 
         if (string.IsNullOrWhiteSpace(selectedClass))
         {
-            Core.Logger("No soloing class found; aborting SeaVoice. Go get a solo class and re-run.");
+            Core.Logger(
+                "No soloing class found; aborting SeaVoice. Go get a solo class and re-run."
+            );
             return;
         }
 
@@ -277,7 +372,15 @@ public class VerusDoomKnightClass
         Adv.GearStore(true, true);
     }
 
-    public void KillThing(string map, int mobMapID, int itemUsed, string Class, string item, int quant = 1, bool isTemp = false)
+    public void KillThing(
+        string map,
+        int mobMapID,
+        int itemUsed,
+        string Class,
+        string item,
+        int quant = 1,
+        bool isTemp = false
+    )
     {
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
@@ -294,7 +397,9 @@ public class VerusDoomKnightClass
             string? classNameToUse = Class ?? classFromPlayer;
             if (string.IsNullOrWhiteSpace(classNameToUse))
             {
-                Core.Logger("KillThing aborted: no class specified and player has no current class.");
+                Core.Logger(
+                    "KillThing aborted: no class specified and player has no current class."
+                );
                 return;
             }
             Bot.Skills.StartAdvanced(classNameToUse, true, ClassUseMode.Base);
@@ -313,7 +418,10 @@ public class VerusDoomKnightClass
             Core.Jump(mob.Cell);
         Bot.Player.SetSpawnPoint();
 
-        while (!Bot.ShouldExit && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant)))
+        while (
+            !Bot.ShouldExit
+            && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant))
+        )
         {
             if (!Bot.Player.Alive)
             {
@@ -330,8 +438,14 @@ public class VerusDoomKnightClass
                 while (!Bot.ShouldExit && Bot.Player.Alive && Bot.Skills.CanUseSkill(5))
                 {
                     var skill = Bot.Flash.GetArrayObject<dynamic>("world.actions.active", 5);
-                    if (skill == null) return;
-                    Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill))!);
+                    if (skill == null)
+                        return;
+                    Bot.Flash.CallGameFunction(
+                        "world.testAction",
+                        JsonConvert.DeserializeObject<ExpandoObject>(
+                            JsonConvert.SerializeObject(skill)
+                        )!
+                    );
 
                     Core.Sleep(Core.ActionDelay);
                     if (!Bot.Skills.CanUseSkill(5))
@@ -350,5 +464,4 @@ public class VerusDoomKnightClass
 
         Core.Logger($"KillThing completed for {item} ({quant}).");
     }
-
 }

@@ -11,15 +11,33 @@ public class StarSinc
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Nova Badge 1.0", "Nova Badge 2.0", "Nova Badge 3.0",
-                                               "Nova Badge 3.0", "Nova Badge 4.0", "Nova Badge 5.0",
-                                               "Nova Badge 6.0", "Nova Badge 7.0", "Nova Badge 8.0",
-                                               "Nova Badge 9.0", "Nova Badge 10.0", "Nova Badge 11.0",
-                                               "SuperNova Badge" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Nova Badge 1.0",
+                "Nova Badge 2.0",
+                "Nova Badge 3.0",
+                "Nova Badge 3.0",
+                "Nova Badge 4.0",
+                "Nova Badge 5.0",
+                "Nova Badge 6.0",
+                "Nova Badge 7.0",
+                "Nova Badge 8.0",
+                "Nova Badge 9.0",
+                "Nova Badge 10.0",
+                "Nova Badge 11.0",
+                "SuperNova Badge",
+            }
+        );
         Core.SetOptions();
 
         StarSincQuests();
@@ -32,11 +50,40 @@ public class StarSinc
         if (Core.CheckInventory("SuperNova Badge"))
             return;
 
-        Bot.Drops.Add(Core.QuestRewards(4400, 4401, 4402, 4403, 4404, 4405, 4406, 4407, 4408, 4409, 4410, 4412));
+        Bot.Drops.Add(
+            Core.QuestRewards(
+                4400,
+                4401,
+                4402,
+                4403,
+                4404,
+                4405,
+                4406,
+                4407,
+                4408,
+                4409,
+                4410,
+                4412
+            )
+        );
 
         Core.EquipClass(ClassType.Farm);
 
-        Story.LegacyQuestManager(QuestLogic, 4400, 4401, 4402, 4403, 4404, 4405, 4406, 4407, 4408, 4409, 4410, 4412);
+        Story.LegacyQuestManager(
+            QuestLogic,
+            4400,
+            4401,
+            4402,
+            4403,
+            4404,
+            4405,
+            4406,
+            4407,
+            4408,
+            4409,
+            4410,
+            4412
+        );
 
         void QuestLogic()
         {
@@ -70,7 +117,14 @@ public class StarSinc
 
                 case 4405: // Chaos Fragments
                     Core.Logger("Nova Badge 6");
-                    Core.KillMonster("watchtower", "Frame2", "Left", "Chaos Spider", "Chaos Fragment", 10);
+                    Core.KillMonster(
+                        "watchtower",
+                        "Frame2",
+                        "Left",
+                        "Chaos Spider",
+                        "Chaos Fragment",
+                        10
+                    );
                     break;
 
                 case 4406: // Kill Them All
@@ -112,5 +166,4 @@ public class StarSinc
             }
         }
     }
-
 }

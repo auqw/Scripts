@@ -12,8 +12,18 @@ public class SoulReaperofNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -29,6 +39,6 @@ public class SoulReaperofNulgath
         if (Core.CheckInventory("item"))
             return;
 
-        //INSERT CODE HERE      
+        //INSERT CODE HERE
     }
 }

@@ -16,13 +16,14 @@ public class ChampionDrakath
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
-    string a, b;
+    string a,
+        b;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ChampionDrakath";
     public List<IOption> Options = new()
     {
         new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", ""),
-        new Option<string>("b", "Taunter Class (Backup)",  "Backup taunter class", "")
+        new Option<string>("b", "Taunter Class (Backup)", "Backup taunter class", ""),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -32,7 +33,10 @@ public class ChampionDrakath
 
         if (string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
         {
-            Core.Log("Setup", "Fill at least one taunter class (Primary or Backup) in Script Options.");
+            Core.Log(
+                "Setup",
+                "Fill at least one taunter class (Primary or Backup) in Script Options."
+            );
             Bot.Stop();
             return;
         }

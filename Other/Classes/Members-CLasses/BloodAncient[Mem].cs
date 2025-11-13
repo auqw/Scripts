@@ -15,9 +15,17 @@ public class BloodAncient
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static BloodAncientMerge BAM { get => _BAM ??= new BloodAncientMerge(); set => _BAM = value; }
+    private static BloodAncientMerge BAM
+    {
+        get => _BAM ??= new BloodAncientMerge();
+        set => _BAM = value;
+    }
     private static BloodAncientMerge _BAM;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -32,7 +40,11 @@ public class BloodAncient
     {
         if (Core.CheckInventory("Blood Ancient") || !Core.IsMember)
         {
-            Core.Logger(Core.CheckInventory("Blood Ancient") ? "You already own Blood Ancient class." : "Membership is required for this class.");
+            Core.Logger(
+                Core.CheckInventory("Blood Ancient")
+                    ? "You already own Blood Ancient class."
+                    : "Membership is required for this class."
+            );
             if (rankUpClass && Core.IsMember)
                 Adv.RankUpClass("Blood Ancient");
             return;

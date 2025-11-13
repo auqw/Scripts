@@ -1,4 +1,3 @@
-
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 //cs_include Scripts/CoreFarms.cs
@@ -11,11 +10,18 @@ public class ArmyDarkonsDebris2
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "ArmyDarkonsDebris2";
     public bool DontPreconfigure = true;
@@ -27,12 +33,7 @@ public class ArmyDarkonsDebris2
         sArmy.player4,
         sArmy.player5,
         sArmy.player6,
-        new Option<string>(
-            "ClassToUse",
-            "your class",
-            "class to use",
-            "classsss"
-        ),
+        new Option<string>("ClassToUse", "your class", "class to use", "classsss"),
         new Option<string>(
             "SafeClass",
             "your safe class",
@@ -40,28 +41,46 @@ public class ArmyDarkonsDebris2
             "classsss"
         ),
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-
         Core.SetOptions(disableClassSwap: false);
 
         //Army.initArmy();
         Army.setLogName(OptionsStorage);
         ArmyHunt("theworld", new[] { "r9" }, "Unfinished Musical Score", "", 0, 22);
-        ArmyHunt("eridanipast", new[] { "r2", "r3", "r10" }, "Bandit's Correspondence", "r10", 8531, 22);
+        ArmyHunt(
+            "eridanipast",
+            new[] { "r2", "r3", "r10" },
+            "Bandit's Correspondence",
+            "r10",
+            8531,
+            22
+        );
         ArmyHunt("astraviapast", new[] { "r6", "r7", "r8", "r4" }, "Suki's Prestige", "", 8602, 22);
-        ArmyHunt("firstobservatory", new[] { "r6", "r7", "r10a" }, "Ancient Remnant", "r10a", 8641, 22);
+        ArmyHunt(
+            "firstobservatory",
+            new[] { "r6", "r7", "r10a" },
+            "Ancient Remnant",
+            "r10a",
+            8641,
+            22
+        );
         ArmyHunt("genesisgarden", new[] { "r6", "r9", "r11" }, "Mourning Flower", "r11", 8688, 22);
-
 
         Core.SetOptions(false);
     }
 
-
-    void ArmyHunt(string map, string[] cells, string item, string priorityCell, int questId, int quant = 1)
+    void ArmyHunt(
+        string map,
+        string[] cells,
+        string item,
+        string priorityCell,
+        int questId,
+        int quant = 1
+    )
     {
         string? safeClass = Bot.Config!.Get<string>("SafeClass");
 

@@ -15,9 +15,17 @@ public class CoreSoWMats
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
     private static CoreSoW _SoW;
 
     public void ScriptMain(IScriptInterface Bot) => Core.RunCore();
@@ -52,7 +60,13 @@ public class CoreSoWMats
         Core.RegisterQuests(8966);
         while (!Bot.ShouldExit && !Core.CheckInventory("Acquiescence", Quantity))
         {
-            Core.HuntMonster("worldscore", "Elemental Attempt", "Cracked Elemental Stone", 14, log: false);
+            Core.HuntMonster(
+                "worldscore",
+                "Elemental Attempt",
+                "Cracked Elemental Stone",
+                14,
+                log: false
+            );
             Core.HuntMonster("worldscore", "Crystalized Mana", "Crystalized Tooth", 14, log: false);
             Core.HuntMonster("worldscore", "Mask of Tranquility", "Creator's Favor", 1, log: false);
         }
@@ -69,7 +83,9 @@ public class CoreSoWMats
 
         if (!Core.isCompletedBefore(9126))
         {
-            Core.Logger("Once Upon Another Time 9126, missing quest progress (Group Boss - skua no can do)");
+            Core.Logger(
+                "Once Upon Another Time 9126, missing quest progress (Group Boss - skua no can do)"
+            );
             return;
         }
 
@@ -129,7 +145,16 @@ public class CoreSoWMats
         Core.EquipClass(ClassType.Farm);
 
         Core.RegisterQuests(8814, 8815);
-        Core.KillMonster("Streamwar", "r3a", "Left", "*", "Prismatic Seams", Quantity, false, false);
+        Core.KillMonster(
+            "Streamwar",
+            "r3a",
+            "Left",
+            "*",
+            "Prismatic Seams",
+            Quantity,
+            false,
+            false
+        );
         Bot.Wait.ForPickup("Prismatic Seams");
         Core.CancelRegisteredQuests();
     }
@@ -175,7 +200,13 @@ public class CoreSoWMats
             Core.HuntMonster("ruinedcrown", "Calamitous Warlic", "Warlic's Favor", log: false);
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("ruinedcrown", "Frenzied Mana", "Mana Residue", 8, log: false);
-            Core.HuntMonster("ruinedcrown", "Mana-Burdened Mage", "Mage's Blood Sample", 8, log: false);
+            Core.HuntMonster(
+                "ruinedcrown",
+                "Mana-Burdened Mage",
+                "Mage's Blood Sample",
+                8,
+                log: false
+            );
         }
         Bot.Wait.ForPickup("Willpower");
         Core.CancelRegisteredQuests();

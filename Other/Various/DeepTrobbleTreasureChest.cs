@@ -6,6 +6,7 @@ tags: deep, trobble, treasure, chest, rewards, grim first mort on yer back, grim
 //cs_include Scripts/CoreBots.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+
 // using Skua.Core.Options;
 
 public class DeepTrobbleTreasureChest
@@ -17,8 +18,12 @@ public class DeepTrobbleTreasureChest
     {
         Core.SetOptions();
 
-        Core.OneTimeMessage("read if u want", "drops P1 [section 1 on wiki] are random\n" +
-        "drops P2[section 2 on wiki] are guaranteed  1 by 1 till u get them all", forcedMessageBox: true);
+        Core.OneTimeMessage(
+            "read if u want",
+            "drops P1 [section 1 on wiki] are random\n"
+                + "drops P2[section 2 on wiki] are guaranteed  1 by 1 till u get them all",
+            forcedMessageBox: true
+        );
 
         DoQuest();
 
@@ -27,7 +32,16 @@ public class DeepTrobbleTreasureChest
 
     public void DoQuest()
     {
-        foreach (string map in new[] { "hiddendepths", "midnightwar", "kaijuwar", "cetoleonwar", "dragoncapital" })
+        foreach (
+            string map in new[]
+            {
+                "hiddendepths",
+                "midnightwar",
+                "kaijuwar",
+                "cetoleonwar",
+                "dragoncapital",
+            }
+        )
             if (!Core.isSeasonalMapActive(map))
                 return;
 
@@ -56,7 +70,6 @@ public class DeepTrobbleTreasureChest
                 Core.FarmingLogger(Reward.Name, 1);
                 while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name, quant, toInv: false))
                 {
-
                     Core.HuntMonster("hiddendepths", "Aquamancer", "Aquamancer's Key");
                     Core.HuntMonster("midnightwar", "Flintfang", "Flintfang's Key");
                     Core.HuntMonster("kaijuwar", "Captain Kraylox", "Kraylox' Key");

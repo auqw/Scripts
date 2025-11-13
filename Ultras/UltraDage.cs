@@ -16,13 +16,24 @@ public class UltraDage
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
-    string a, b;
+    string a,
+        b;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraDage";
     public List<IOption> Options = new()
     {
-        new Option<string>("a", "First Taunter Class", "Insert the name of the class that will taunt", ""),
-        new Option<string>("b", "Second Taunter Class", "Insert the name of the class that will taunt", "")
+        new Option<string>(
+            "a",
+            "First Taunter Class",
+            "Insert the name of the class that will taunt",
+            ""
+        ),
+        new Option<string>(
+            "b",
+            "Second Taunter Class",
+            "Insert the name of the class that will taunt",
+            ""
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -32,7 +43,8 @@ public class UltraDage
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
             Core.Log("Setup", "Fill both taunter classes in Script Options.");
-            Bot.Stop(); return;
+            Bot.Stop();
+            return;
         }
 
         Core.Boot();
@@ -85,10 +97,12 @@ public class UltraDage
 
     public async void UltraDageListener(dynamic packet)
     {
-        if (packet?["params"]?.type?.ToString() != "json") return;
+        if (packet?["params"]?.type?.ToString() != "json")
+            return;
 
         dynamic data = packet["params"].dataObj;
-        if (data?.cmd?.ToString() != "event") return;
+        if (data?.cmd?.ToString() != "event")
+            return;
 
         string? zone = data?.args?.zoneSet?.ToString();
 

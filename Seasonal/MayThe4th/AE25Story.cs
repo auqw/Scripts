@@ -15,9 +15,17 @@ public class AE25Quests
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static TwigguHunt TH { get => _TH ??= new TwigguHunt(); set => _TH = value; }
+    private static TwigguHunt TH
+    {
+        get => _TH ??= new TwigguHunt();
+        set => _TH = value;
+    }
     private static TwigguHunt _TH;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -40,45 +48,39 @@ public class AE25Quests
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Scout Droid", // UseableMonsters[0],
-	"Infantry Droid", // UseableMonsters[1],
-	"Bodyguard Droid", // UseableMonsters[2],
-	"Twiggu's Bodyguard", // UseableMonsters[3],
-	"Twiggu", // UseableMonsters[4],
-	"Obliterator Droid", // UseableMonsters[5]
-};
+            "Scout Droid", // UseableMonsters[0],
+            "Infantry Droid", // UseableMonsters[1],
+            "Bodyguard Droid", // UseableMonsters[2],
+            "Twiggu's Bodyguard", // UseableMonsters[3],
+            "Twiggu", // UseableMonsters[4],
+            "Obliterator Droid", // UseableMonsters[5]
+        };
         #endregion Useable Monsters
 
         // 10224 | Swab the Deck
         if (!Story.QuestProgression(10224))
         {
-            Core.HuntMonsterQuest(10224,
+            Core.HuntMonsterQuest(
+                10224,
                 ("twigguhunt", UseableMonsters[1], ClassType.Farm),
-                ("twigguhunt", UseableMonsters[0], ClassType.Farm));
+                ("twigguhunt", UseableMonsters[0], ClassType.Farm)
+            );
         }
-
 
         // 10225 | Raise the Sails
         if (!Story.QuestProgression(10225))
         {
-            Core.HuntMonsterQuest(10225,
-                ("twigguhunt", UseableMonsters[2], ClassType.Farm));
+            Core.HuntMonsterQuest(10225, ("twigguhunt", UseableMonsters[2], ClassType.Farm));
         }
-
 
         // 10226 | Onward!
         Story.MapItemQuest(10226, "twigguhunt", 14416);
         Story.KillQuest(10226, "twigguhunt", UseableMonsters[2]);
 
-
         // 10227 | Batten Down the Hatches
         if (!Story.QuestProgression(10227))
         {
-            Core.HuntMonsterQuest(10227,
-                ("twigguhunt", UseableMonsters[5], ClassType.Solo));
+            Core.HuntMonsterQuest(10227, ("twigguhunt", UseableMonsters[5], ClassType.Solo));
         }
-
-
     }
-
 }

@@ -11,7 +11,12 @@ public class ExtraCreditAC
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -27,14 +32,10 @@ public class ExtraCreditAC
         "Book of Lore",
         "Casual Black Backpack",
         "Casual Light Backpack",
-        "Dogged Professor"
+        "Dogged Professor",
     };
 
-    public string[] Bully =
-    {
-        "Meanest Bully",
-        "Burning Book"
-    };
+    public string[] Bully = { "Meanest Bully", "Burning Book" };
 
     public string[] Locker =
     {
@@ -47,7 +48,7 @@ public class ExtraCreditAC
         "Sleek Chic Locks",
         "Slick Spikes Hair",
         "Weekend Fun Pigtails Locks",
-        "Winter Uniform"
+        "Winter Uniform",
     };
 
     public void ExtraFunAC()
@@ -55,7 +56,11 @@ public class ExtraCreditAC
         if (!Core.isSeasonalMapActive("extracredit"))
             return;
 
-        if (Core.CheckInventory(Dogear) && Core.CheckInventory(Bully) && Core.CheckInventory(Locker))
+        if (
+            Core.CheckInventory(Dogear)
+            && Core.CheckInventory(Bully)
+            && Core.CheckInventory(Locker)
+        )
             return;
 
         Core.AddDrop(Dogear);

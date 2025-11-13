@@ -14,18 +14,30 @@ public class ThirdspellMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -49,7 +61,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,34 +74,108 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Thirdspell Token":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("thirdspell", "Pure Fire Elemental", req.Name, quant, false);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("30829", "Fiery Flaring Flame", "Mode: [select] only\nShould the bot buy \"Fiery Flaring Flame\" ?", false),
-        new Option<bool>("30830", "Floating Sun Flare", "Mode: [select] only\nShould the bot buy \"Floating Sun Flare\" ?", false),
-        new Option<bool>("30831", "Loyal Sun Flare", "Mode: [select] only\nShould the bot buy \"Loyal Sun Flare\" ?", false),
-        new Option<bool>("30832", "Solar Entity", "Mode: [select] only\nShould the bot buy \"Solar Entity\" ?", false),
-        new Option<bool>("30833", "Solar Morph", "Mode: [select] only\nShould the bot buy \"Solar Morph\" ?", false),
-        new Option<bool>("30834", "Dual Fiery Flame", "Mode: [select] only\nShould the bot buy \"Dual Fiery Flame\" ?", false),
-        new Option<bool>("30882", "Fiery Ephemerite Mace", "Mode: [select] only\nShould the bot buy \"Fiery Ephemerite Mace\" ?", false),
-        new Option<bool>("30890", "Solar Stingers", "Mode: [select] only\nShould the bot buy \"Solar Stingers\" ?", false),
-        new Option<bool>("30904", "Armor of the Sun", "Mode: [select] only\nShould the bot buy \"Armor of the Sun\" ?", false),
-        new Option<bool>("30905", "Cape of the Sun", "Mode: [select] only\nShould the bot buy \"Cape of the Sun\" ?", false),
-        new Option<bool>("30906", "Helmet of the Sun", "Mode: [select] only\nShould the bot buy \"Helmet of the Sun\" ?", false),
-        new Option<bool>("30907", "Lance of the Sun", "Mode: [select] only\nShould the bot buy \"Lance of the Sun\" ?", false),
-        new Option<bool>("30912", "Solar Entity", "Mode: [select] only\nShould the bot buy \"Solar Entity\" ?", false),
-        new Option<bool>("30913", "Solar Morph", "Mode: [select] only\nShould the bot buy \"Solar Morph\" ?", false),
+        new Option<bool>(
+            "30829",
+            "Fiery Flaring Flame",
+            "Mode: [select] only\nShould the bot buy \"Fiery Flaring Flame\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30830",
+            "Floating Sun Flare",
+            "Mode: [select] only\nShould the bot buy \"Floating Sun Flare\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30831",
+            "Loyal Sun Flare",
+            "Mode: [select] only\nShould the bot buy \"Loyal Sun Flare\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30832",
+            "Solar Entity",
+            "Mode: [select] only\nShould the bot buy \"Solar Entity\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30833",
+            "Solar Morph",
+            "Mode: [select] only\nShould the bot buy \"Solar Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30834",
+            "Dual Fiery Flame",
+            "Mode: [select] only\nShould the bot buy \"Dual Fiery Flame\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30882",
+            "Fiery Ephemerite Mace",
+            "Mode: [select] only\nShould the bot buy \"Fiery Ephemerite Mace\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30890",
+            "Solar Stingers",
+            "Mode: [select] only\nShould the bot buy \"Solar Stingers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30904",
+            "Armor of the Sun",
+            "Mode: [select] only\nShould the bot buy \"Armor of the Sun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30905",
+            "Cape of the Sun",
+            "Mode: [select] only\nShould the bot buy \"Cape of the Sun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30906",
+            "Helmet of the Sun",
+            "Mode: [select] only\nShould the bot buy \"Helmet of the Sun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30907",
+            "Lance of the Sun",
+            "Mode: [select] only\nShould the bot buy \"Lance of the Sun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30912",
+            "Solar Entity",
+            "Mode: [select] only\nShould the bot buy \"Solar Entity\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30913",
+            "Solar Morph",
+            "Mode: [select] only\nShould the bot buy \"Solar Morph\" ?",
+            false
+        ),
     };
 }

@@ -8,12 +8,16 @@ tags: sunken treasure, drops, set, pirate, tlapd, talk-like-a-pirate-day, season
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 
-
 public class SunkenTreasure
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -23,27 +23,52 @@ public class SkullDomeMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static BattleConcertClassQuests BCCQ { get => _BCCQ ??= new BattleConcertClassQuests(); set => _BCCQ = value; }
+    private static BattleConcertClassQuests BCCQ
+    {
+        get => _BCCQ ??= new BattleConcertClassQuests();
+        set => _BCCQ = value;
+    }
     private static BattleConcertClassQuests _BCCQ;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Bone Pick", "Cursed Fabric", "Rotten Meat", "Metanoia Shag", "Metanoia Shaggy Locks" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Bone Pick",
+                "Cursed Fabric",
+                "Rotten Meat",
+                "Metanoia Shag",
+                "Metanoia Shaggy Locks",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -62,7 +87,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -73,9 +100,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Bone Pick":
                     Core.FarmingLogger(req.Name, quant);
@@ -115,29 +147,149 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("78040", "Diabolical Techwear", "Mode: [select] only\nShould the bot buy \"Diabolical Techwear\" ?", false),
-        new Option<bool>("78041", "Diabolical Punk Shave", "Mode: [select] only\nShould the bot buy \"Diabolical Punk Shave\" ?", false),
-        new Option<bool>("78042", "Diabolical Punk Locks", "Mode: [select] only\nShould the bot buy \"Diabolical Punk Locks\" ?", false),
-        new Option<bool>("78043", "Diabolical Aviators", "Mode: [select] only\nShould the bot buy \"Diabolical Aviators\" ?", false),
-        new Option<bool>("78044", "Diabolical Aviators + Locks", "Mode: [select] only\nShould the bot buy \"Diabolical Aviators + Locks\" ?", false),
-        new Option<bool>("78045", "Diabolical Street Mask", "Mode: [select] only\nShould the bot buy \"Diabolical Street Mask\" ?", false),
-        new Option<bool>("78046", "Diabolical Street Mask + Locks", "Mode: [select] only\nShould the bot buy \"Diabolical Street Mask + Locks\" ?", false),
-        new Option<bool>("78047", "Diabolical Summer Bag", "Mode: [select] only\nShould the bot buy \"Diabolical Summer Bag\" ?", false),
-        new Option<bool>("78048", "Diabolical Guitar", "Mode: [select] only\nShould the bot buy \"Diabolical Guitar\" ?", false),
-        new Option<bool>("78049", "Diabolical Delinquent Bat", "Mode: [select] only\nShould the bot buy \"Diabolical Delinquent Bat\" ?", false),
-        new Option<bool>("78050", "Diabolical Delinquent Bats", "Mode: [select] only\nShould the bot buy \"Diabolical Delinquent Bats\" ?", false),
-        new Option<bool>("78924", "Necrobard", "Mode: [select] only\nShould the bot buy \"Necrobard\" ?", false),
-        new Option<bool>("78925", "Apprentice Necrobard", "Mode: [select] only\nShould the bot buy \"Apprentice Necrobard\" ?", false),
-        new Option<bool>("78926", "Bony Necrobard Cap", "Mode: [select] only\nShould the bot buy \"Bony Necrobard Cap\" ?", false),
-        new Option<bool>("78927", "Bony Necrobard Cap and Locks", "Mode: [select] only\nShould the bot buy \"Bony Necrobard Cap and Locks\" ?", false),
-        new Option<bool>("78928", "Necrotic Tune", "Mode: [select] only\nShould the bot buy \"Necrotic Tune\" ?", false),
-        new Option<bool>("78929", "Resting Ribcage Guitar", "Mode: [select] only\nShould the bot buy \"Resting Ribcage Guitar\" ?", false),
-        new Option<bool>("78930", "Ribcage Guitar", "Mode: [select] only\nShould the bot buy \"Ribcage Guitar\" ?", false),
-        new Option<bool>("78931", "Sickle of the Undead Masses", "Mode: [select] only\nShould the bot buy \"Sickle of the Undead Masses\" ?", false),
-        new Option<bool>("78932", "Sickles of the Undead Masses", "Mode: [select] only\nShould the bot buy \"Sickles of the Undead Masses\" ?", false),
-        new Option<bool>("78959", "Bone Basher Reverb", "Mode: [select] only\nShould the bot buy \"Bone Basher Reverb\" ?", false),
-        new Option<bool>("78855", "Al Fine Hair", "Mode: [select] only\nShould the bot buy \"Al Fine Hair\" ?", false),
-        new Option<bool>("78856", "Al Fine Locks", "Mode: [select] only\nShould the bot buy \"Al Fine Locks\" ?", false),
-        new Option<bool>("78967", "Neo Metal Necro", "Mode: [select] only\nShould the bot buy \"Neo Metal Necro\" ?", false),
+        new Option<bool>(
+            "78040",
+            "Diabolical Techwear",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Techwear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78041",
+            "Diabolical Punk Shave",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Punk Shave\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78042",
+            "Diabolical Punk Locks",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Punk Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78043",
+            "Diabolical Aviators",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Aviators\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78044",
+            "Diabolical Aviators + Locks",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Aviators + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78045",
+            "Diabolical Street Mask",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Street Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78046",
+            "Diabolical Street Mask + Locks",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Street Mask + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78047",
+            "Diabolical Summer Bag",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Summer Bag\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78048",
+            "Diabolical Guitar",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Guitar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78049",
+            "Diabolical Delinquent Bat",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Delinquent Bat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78050",
+            "Diabolical Delinquent Bats",
+            "Mode: [select] only\nShould the bot buy \"Diabolical Delinquent Bats\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78924",
+            "Necrobard",
+            "Mode: [select] only\nShould the bot buy \"Necrobard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78925",
+            "Apprentice Necrobard",
+            "Mode: [select] only\nShould the bot buy \"Apprentice Necrobard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78926",
+            "Bony Necrobard Cap",
+            "Mode: [select] only\nShould the bot buy \"Bony Necrobard Cap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78927",
+            "Bony Necrobard Cap and Locks",
+            "Mode: [select] only\nShould the bot buy \"Bony Necrobard Cap and Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78928",
+            "Necrotic Tune",
+            "Mode: [select] only\nShould the bot buy \"Necrotic Tune\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78929",
+            "Resting Ribcage Guitar",
+            "Mode: [select] only\nShould the bot buy \"Resting Ribcage Guitar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78930",
+            "Ribcage Guitar",
+            "Mode: [select] only\nShould the bot buy \"Ribcage Guitar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78931",
+            "Sickle of the Undead Masses",
+            "Mode: [select] only\nShould the bot buy \"Sickle of the Undead Masses\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78932",
+            "Sickles of the Undead Masses",
+            "Mode: [select] only\nShould the bot buy \"Sickles of the Undead Masses\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78959",
+            "Bone Basher Reverb",
+            "Mode: [select] only\nShould the bot buy \"Bone Basher Reverb\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78855",
+            "Al Fine Hair",
+            "Mode: [select] only\nShould the bot buy \"Al Fine Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78856",
+            "Al Fine Locks",
+            "Mode: [select] only\nShould the bot buy \"Al Fine Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78967",
+            "Neo Metal Necro",
+            "Mode: [select] only\nShould the bot buy \"Neo Metal Necro\" ?",
+            false
+        ),
     };
 }

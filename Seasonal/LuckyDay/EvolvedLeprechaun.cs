@@ -14,11 +14,24 @@ public class EvolvedLeprechaun
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static LuckyDayShamrockFairMerge LDSFM { get => _LDSFM ??= new LuckyDayShamrockFairMerge(); set => _LDSFM = value; }
+    private static LuckyDayShamrockFairMerge LDSFM
+    {
+        get => _LDSFM ??= new LuckyDayShamrockFairMerge();
+        set => _LDSFM = value;
+    }
     private static LuckyDayShamrockFairMerge _LDSFM;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -30,9 +43,18 @@ public class EvolvedLeprechaun
 
     public void GetClass(bool rankUpClass = true)
     {
-        if (Core.CheckInventory("Evolved Leprechaun") || Core.CheckInventory("Evolved Leprechaun") && !Daily.CheckDailyv2(Core.CheckInventory(971) ? 1761 : 1759) || !Core.isSeasonalMapActive("luck"))
+        if (
+            Core.CheckInventory("Evolved Leprechaun")
+            || Core.CheckInventory("Evolved Leprechaun")
+                && !Daily.CheckDailyv2(Core.CheckInventory(971) ? 1761 : 1759)
+            || !Core.isSeasonalMapActive("luck")
+        )
         {
-            Core.Logger(Core.CheckInventory("Evolved Leprechaun") ? "You already own Evolved Leprechaun class." : "This class is only available during the Good Luck Day event.");
+            Core.Logger(
+                Core.CheckInventory("Evolved Leprechaun")
+                    ? "You already own Evolved Leprechaun class."
+                    : "This class is only available during the Good Luck Day event."
+            );
             return;
         }
 
@@ -40,6 +62,5 @@ public class EvolvedLeprechaun
 
         if (rankUpClass)
             Adv.RankUpClass("Evolved Leprechaun");
-
     }
 }

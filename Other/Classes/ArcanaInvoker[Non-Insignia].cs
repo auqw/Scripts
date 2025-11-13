@@ -58,15 +58,39 @@ public class ArcanaInvoker
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }    private static CoreAstravia _Astravia;
-    private static ArcanaInvokerResourceMerge AIRM { get => _AIRM ??= new ArcanaInvokerResourceMerge(); set => _AIRM = value; }    private static ArcanaInvokerResourceMerge _AIRM;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreAstravia Astravia
+    {
+        get => _Astravia ??= new CoreAstravia();
+        set => _Astravia = value;
+    }
+    private static CoreAstravia _Astravia;
+    private static ArcanaInvokerResourceMerge AIRM
+    {
+        get => _AIRM ??= new ArcanaInvokerResourceMerge();
+        set => _AIRM = value;
+    }
+    private static ArcanaInvokerResourceMerge _AIRM;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
-
         Core.SetOptions();
 
         GetAI();
@@ -106,10 +130,20 @@ public class ArcanaInvoker
         {
             Core.EnsureAccept(9693);
             // ItemBase[] reqs = Core.EnsureLoad(9693).Requirements.ToArray();
-            Core.KillMonster("oaklore", "r1", "Spawn", "Undead Infantry", "0 - The Fool's Humble Beginnings", 1, false);
-            foreach (ItemBase req in Core.EnsureLoad(9693).Requirements
-                    .Where(x => x.Name != "0 - The Fool's Humble Beginnings")
-                    .OrderBy(x => int.Parse(x.Name.Split(' ')[0])))
+            Core.KillMonster(
+                "oaklore",
+                "r1",
+                "Spawn",
+                "Undead Infantry",
+                "0 - The Fool's Humble Beginnings",
+                1,
+                false
+            );
+            foreach (
+                ItemBase req in Core.EnsureLoad(9693)
+                    .Requirements.Where(x => x.Name != "0 - The Fool's Humble Beginnings")
+                    .OrderBy(x => int.Parse(x.Name.Split(' ')[0]))
+            )
             {
                 if (Core.CheckInventory(req.Name, req.Quantity))
                     continue;
@@ -125,9 +159,11 @@ public class ArcanaInvoker
         {
             Core.EnsureAccept(9694);
 
-            foreach (ItemBase req in Core.EnsureLoad(9694).Requirements
-                    .OrderBy(x => int.Parse(x.Name.Split(' ')[0]))
-                    .ToArray())
+            foreach (
+                ItemBase req in Core.EnsureLoad(9694)
+                    .Requirements.OrderBy(x => int.Parse(x.Name.Split(' ')[0]))
+                    .ToArray()
+            )
             {
                 if (Core.CheckInventory(req.Name, req.Quantity))
                     continue;
@@ -141,19 +177,20 @@ public class ArcanaInvoker
             Core.EnsureComplete(9694);
         }
 
-
         // Dawn Before Dusk (9695)
         if (!Story.QuestProgression(9695))
         {
             Core.EnsureAccept(9695);
-            foreach (ItemBase req in Core.EnsureLoad(9695).Requirements
-           .OrderBy(x =>
-           {
-               string[] parts = x.Name.Split(' ');
-               if (parts.Length > 0 && int.TryParse(parts[0], out int number))
-                   return number;
-               return int.MaxValue; // If parsing fails, place it at the end
-           }))
+            foreach (
+                ItemBase req in Core.EnsureLoad(9695)
+                    .Requirements.OrderBy(x =>
+                    {
+                        string[] parts = x.Name.Split(' ');
+                        if (parts.Length > 0 && int.TryParse(parts[0], out int number))
+                            return number;
+                        return int.MaxValue; // If parsing fails, place it at the end
+                    })
+            )
             {
                 if (Core.CheckInventory(req.Name, req.Quantity))
                     continue;
@@ -171,14 +208,16 @@ public class ArcanaInvoker
         {
             Core.EnsureAccept(9696);
 
-            foreach (ItemBase req in Core.EnsureLoad(9696).Requirements
-               .OrderBy(x =>
-               {
-                   string[] parts = x.Name.Split(' ');
-                   if (parts.Length > 0 && int.TryParse(parts[0], out int number))
-                       return number;
-                   return int.MaxValue; // If parsing fails, place it at the end
-               }))
+            foreach (
+                ItemBase req in Core.EnsureLoad(9696)
+                    .Requirements.OrderBy(x =>
+                    {
+                        string[] parts = x.Name.Split(' ');
+                        if (parts.Length > 0 && int.TryParse(parts[0], out int number))
+                            return number;
+                        return int.MaxValue; // If parsing fails, place it at the end
+                    })
+            )
             {
                 if (Core.CheckInventory(req.Name, req.Quantity))
                     continue;
@@ -195,14 +234,16 @@ public class ArcanaInvoker
         if (!Story.QuestProgression(9697))
         {
             Core.EnsureAccept(9697);
-            foreach (ItemBase req in Core.EnsureLoad(9697).Requirements
-                    .OrderBy(x =>
+            foreach (
+                ItemBase req in Core.EnsureLoad(9697)
+                    .Requirements.OrderBy(x =>
                     {
                         string[] parts = x.Name.Split(' ');
                         if (parts.Length > 0 && int.TryParse(parts[0], out int number))
                             return number;
                         return int.MaxValue; // If parsing fails, place it at the end
-                    }))
+                    })
+            )
             {
                 if (Core.CheckInventory(req.Name, req.Quantity))
                     continue;
@@ -214,6 +255,5 @@ public class ArcanaInvoker
             }
             Core.EnsureComplete(9697);
         }
-
     }
 }

@@ -17,9 +17,17 @@ public class TheConquerorOfGlacera
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static GlaceraStory IWP { get => _IWP ??= new GlaceraStory(); set => _IWP = value; }
+    private static GlaceraStory IWP
+    {
+        get => _IWP ??= new GlaceraStory();
+        set => _IWP = value;
+    }
     private static GlaceraStory _IWP;
-    private static FrostSpiritReaver FSR { get => _FSR ??= new FrostSpiritReaver(); set => _FSR = value; }
+    private static FrostSpiritReaver FSR
+    {
+        get => _FSR ??= new FrostSpiritReaver();
+        set => _FSR = value;
+    }
     private static FrostSpiritReaver _FSR;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -41,9 +49,9 @@ public class TheConquerorOfGlacera
         Core.EnsureAccept(9492);
 
         Core.AddDrop("Rime Token", "Glaceran Gem", "Ice Chunk", "Glaceran Attunement");
-        
+
         Core.EquipClass(ClassType.Farm);
-        
+
         // Rime Token
         Core.KillMonster("battlegroundd", "r2", "Left", "*", "Rime Token", 200, false);
 
@@ -67,7 +75,9 @@ public class TheConquerorOfGlacera
                     Core.Sleep();
                 }
 
-                foreach (Monster mob in Bot.Monsters.CurrentAvailableMonsters.Where(m => m.Cell == "r2"))
+                foreach (
+                    Monster mob in Bot.Monsters.CurrentAvailableMonsters.Where(m => m.Cell == "r2")
+                )
                 {
                     Bot.Kill.Monster(mob.MapID);
                     if (Core.CheckInventory("Glaceran Gem", 500))

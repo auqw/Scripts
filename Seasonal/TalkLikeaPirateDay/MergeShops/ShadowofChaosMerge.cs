@@ -17,20 +17,31 @@ public class ShadowofChaosMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreSoC Laguna { get => _Laguna ??= new CoreSoC(); set => _Laguna = value; }    private static CoreSoC _Laguna;
+    private static CoreSoC Laguna
+    {
+        get => _Laguna ??= new CoreSoC();
+        set => _Laguna = value;
+    }
+    private static CoreSoC _Laguna;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -55,7 +66,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,9 +79,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "ShadowChaos Mote":
                     Core.FarmingLogger(req.Name, quant);
@@ -81,31 +99,125 @@ public static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("56158", "Chaotic Sorcerer", "Mode: [select] only\nShould the bot buy \"Chaotic Sorcerer\" ?", false),
-        new Option<bool>("56159", "Chaotic Sorcerer's Hood", "Mode: [select] only\nShould the bot buy \"Chaotic Sorcerer's Hood\" ?", false),
-        new Option<bool>("56160", "Chaotic Sorceress' Visage", "Mode: [select] only\nShould the bot buy \"Chaotic Sorceress' Visage\" ?", false),
-        new Option<bool>("56161", "Sorceress' Visage + Horns", "Mode: [select] only\nShould the bot buy \"Sorceress' Visage + Horns\" ?", false),
-        new Option<bool>("56162", "Chaotic Sorcerer's Visage", "Mode: [select] only\nShould the bot buy \"Chaotic Sorcerer's Visage\" ?", false),
-        new Option<bool>("56163", "Sorcerer's Visage + Horns", "Mode: [select] only\nShould the bot buy \"Sorcerer's Visage + Horns\" ?", false),
-        new Option<bool>("56164", "Chaotic Floating Crystals", "Mode: [select] only\nShould the bot buy \"Chaotic Floating Crystals\" ?", false),
-        new Option<bool>("56165", "Chaotic Energy Claws", "Mode: [select] only\nShould the bot buy \"Chaotic Energy Claws\" ?", false),
-        new Option<bool>("56166", "Chaotic Gem Staff", "Mode: [select] only\nShould the bot buy \"Chaotic Gem Staff\" ?", false),
-        new Option<bool>("56167", "Chaotic Khopesh", "Mode: [select] only\nShould the bot buy \"Chaotic Khopesh\" ?", false),
-        new Option<bool>("56228", "DeepSea Scourge", "Mode: [select] only\nShould the bot buy \"DeepSea Scourge\" ?", false),
-        new Option<bool>("56229", "DeepSea Hunter", "Mode: [select] only\nShould the bot buy \"DeepSea Hunter\" ?", false),
-        new Option<bool>("56230", "Tentacled Hat + Locks", "Mode: [select] only\nShould the bot buy \"Tentacled Hat + Locks\" ?", false),
-        new Option<bool>("56231", "Tentacled Hat", "Mode: [select] only\nShould the bot buy \"Tentacled Hat\" ?", false),
-        new Option<bool>("56232", "DeepSea Hat + Locks", "Mode: [select] only\nShould the bot buy \"DeepSea Hat + Locks\" ?", false),
-        new Option<bool>("56233", "DeepSea Hat", "Mode: [select] only\nShould the bot buy \"DeepSea Hat\" ?", false),
-        new Option<bool>("56234", "Tentacle-Wrapped Pistol", "Mode: [select] only\nShould the bot buy \"Tentacle-Wrapped Pistol\" ?", false),
-        new Option<bool>("56235", "DeepSea Pistol", "Mode: [select] only\nShould the bot buy \"DeepSea Pistol\" ?", false),
-        new Option<bool>("56236", "Dual DeepSea Pistols", "Mode: [select] only\nShould the bot buy \"Dual DeepSea Pistols\" ?", false),
+        new Option<bool>(
+            "56158",
+            "Chaotic Sorcerer",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Sorcerer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56159",
+            "Chaotic Sorcerer's Hood",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Sorcerer's Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56160",
+            "Chaotic Sorceress' Visage",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Sorceress' Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56161",
+            "Sorceress' Visage + Horns",
+            "Mode: [select] only\nShould the bot buy \"Sorceress' Visage + Horns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56162",
+            "Chaotic Sorcerer's Visage",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Sorcerer's Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56163",
+            "Sorcerer's Visage + Horns",
+            "Mode: [select] only\nShould the bot buy \"Sorcerer's Visage + Horns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56164",
+            "Chaotic Floating Crystals",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Floating Crystals\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56165",
+            "Chaotic Energy Claws",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Energy Claws\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56166",
+            "Chaotic Gem Staff",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Gem Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56167",
+            "Chaotic Khopesh",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Khopesh\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56228",
+            "DeepSea Scourge",
+            "Mode: [select] only\nShould the bot buy \"DeepSea Scourge\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56229",
+            "DeepSea Hunter",
+            "Mode: [select] only\nShould the bot buy \"DeepSea Hunter\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56230",
+            "Tentacled Hat + Locks",
+            "Mode: [select] only\nShould the bot buy \"Tentacled Hat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56231",
+            "Tentacled Hat",
+            "Mode: [select] only\nShould the bot buy \"Tentacled Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56232",
+            "DeepSea Hat + Locks",
+            "Mode: [select] only\nShould the bot buy \"DeepSea Hat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56233",
+            "DeepSea Hat",
+            "Mode: [select] only\nShould the bot buy \"DeepSea Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56234",
+            "Tentacle-Wrapped Pistol",
+            "Mode: [select] only\nShould the bot buy \"Tentacle-Wrapped Pistol\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56235",
+            "DeepSea Pistol",
+            "Mode: [select] only\nShould the bot buy \"DeepSea Pistol\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56236",
+            "Dual DeepSea Pistols",
+            "Mode: [select] only\nShould the bot buy \"Dual DeepSea Pistols\" ?",
+            false
+        ),
     };
 }

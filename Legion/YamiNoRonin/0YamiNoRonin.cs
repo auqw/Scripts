@@ -17,7 +17,12 @@ public class YamiNoRonin
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreYnR YNR { get => _YNR ??= new CoreYnR(); set => _YNR = value; }    private static CoreYnR _YNR;
+    private static CoreYnR YNR
+    {
+        get => _YNR ??= new CoreYnR();
+        set => _YNR = value;
+    }
+    private static CoreYnR _YNR;
 
     public void ScriptMain(IScriptInterface bot)
     {

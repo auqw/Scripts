@@ -13,9 +13,17 @@ public class FriendshipDailies
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static Friendship FR { get => _FR ??= new Friendship(); set => _FR = value; }
+    private static Friendship FR
+    {
+        get => _FR ??= new Friendship();
+        set => _FR = value;
+    }
     private static Friendship _FR;
 
     public void ScriptMain(IScriptInterface Bot)

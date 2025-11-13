@@ -12,21 +12,40 @@ public class DragonBladeofNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public readonly string[] TwistedItems =
     {
         "DragonFire of Nulgath",
         "Crimson Plate of Nulgath",
-        "Crimson Face Plate of Nulgath"
+        "Crimson Face Plate of Nulgath",
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.BankingBlackList.AddRange(Nation.bagDrops);
         Core.BankingBlackList.AddRange(TwistedItems);
-        Core.BankingBlackList.AddRange(new[] { "DragonBlade of Nulgath", "Combat Trophy", "Basic War Sword", "Behemoth Blade of Shadow", "Behemoth Blade of Light" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "DragonBlade of Nulgath",
+                "Combat Trophy",
+                "Basic War Sword",
+                "Behemoth Blade of Shadow",
+                "Behemoth Blade of Light",
+            }
+        );
         Core.SetOptions();
 
         GetDragonBlade();
@@ -38,11 +57,28 @@ public class DragonBladeofNulgath
     {
         if (Core.CheckInventory("DragonBlade of Nulgath") || (!Core.IsMember))
         {
-            Core.Logger($"{(Core.CheckInventory("DragonBlade of Nulgath") ? "\"DragonBlade of Nulgath\" owned" : "Not an Member cannot get \"DragonBlade of Nulgath\"")}");
+            Core.Logger(
+                $"{(Core.CheckInventory("DragonBlade of Nulgath") ? "\"DragonBlade of Nulgath\" owned" : "Not an Member cannot get \"DragonBlade of Nulgath\"")}"
+            );
             return;
         }
 
-        Core.AddDrop(Nation.bagDrops.Concat(TwistedItems).ToArray().Concat(new[] { "DragonBlade of Nulgath", "Combat Trophy", "Basic War Sword", "Behemoth Blade of Shadow", "Behemoth Blade of Light" }).ToArray());
+        Core.AddDrop(
+            Nation
+                .bagDrops.Concat(TwistedItems)
+                .ToArray()
+                .Concat(
+                    new[]
+                    {
+                        "DragonBlade of Nulgath",
+                        "Combat Trophy",
+                        "Basic War Sword",
+                        "Behemoth Blade of Shadow",
+                        "Behemoth Blade of Light",
+                    }
+                )
+                .ToArray()
+        );
 
         BehemothBladeof("Shadow");
         BehemothBladeof("Light");

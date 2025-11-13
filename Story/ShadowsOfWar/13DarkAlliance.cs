@@ -14,7 +14,12 @@ public class DarkAlliance
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }    private static CoreSoW _SoW;
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
+    private static CoreSoW _SoW;
 
     public void ScriptMain(IScriptInterface bot)
     {

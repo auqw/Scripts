@@ -19,36 +19,77 @@ public class DageChallengeMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
     private static CoreLegion _Legion;
-    private static SevenCircles Circles { get => _Circles ??= new SevenCircles(); set => _Circles = value; }
+    private static SevenCircles Circles
+    {
+        get => _Circles ??= new SevenCircles();
+        set => _Circles = value;
+    }
     private static SevenCircles _Circles;
-    private static HeadoftheLegionBeast HOTLB { get => _HOTLB ??= new HeadoftheLegionBeast(); set => _HOTLB = value; }
+    private static HeadoftheLegionBeast HOTLB
+    {
+        get => _HOTLB ??= new HeadoftheLegionBeast();
+        set => _HOTLB = value;
+    }
     private static HeadoftheLegionBeast _HOTLB;
-    private static DageChallengeStory DageChallenge { get => _DageChallenge ??= new DageChallengeStory(); set => _DageChallenge = value; }
+    private static DageChallengeStory DageChallenge
+    {
+        get => _DageChallenge ??= new DageChallengeStory();
+        set => _DageChallenge = value;
+    }
     private static DageChallengeStory _DageChallenge;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Underworld Laurel", "Underworld Medal", "Underworld Accolade", "Avarice of the Legion's Skull", "Avarice of the Legion's Hood", "Dage the Evil Insignia" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Underworld Laurel",
+                "Underworld Medal",
+                "Underworld Accolade",
+                "Avarice of the Legion's Skull",
+                "Avarice of the Legion's Hood",
+                "Dage the Evil Insignia",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -69,7 +110,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -80,9 +123,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Underworld Laurel":
                     while (!Bot.ShouldExit && !Core.CheckInventory("Underworld Laurel", quant))
@@ -114,7 +162,11 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(8546);
-                        Core.HuntMonster("legionarena", "legion fiend rider", "Fiend Rider's Approval");
+                        Core.HuntMonster(
+                            "legionarena",
+                            "legion fiend rider",
+                            "Fiend Rider's Approval"
+                        );
                         Core.HuntMonster("frozenlair", "lich lord", "Lich Lord's Approval");
                         Core.HuntMonster("dagefortress", "Grrrberus", "Grrrberus's Grr Grrr");
                         Core.EnsureComplete(8546);
@@ -131,26 +183,83 @@ private static CoreAdvanced _sAdv;
 
                 case "Dage the Evil Insignia":
                     if (!Core.CheckInventory(req.Name, quant))
-                        Core.Logger($"Player does not have required amount of insignias [x{quant}]", stopBot: true);
+                        Core.Logger(
+                            $"Player does not have required amount of insignias [x{quant}]",
+                            stopBot: true
+                        );
                     Core.Logger($"Insignias [x{quant}] found, continuing");
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("68433", "Avarice of the Legion", "Mode: [select] only\nShould the bot buy \"Avarice of the Legion\" ?", false),
-        new Option<bool>("68434", "Avarice of the Legion's Helm", "Mode: [select] only\nShould the bot buy \"Avarice of the Legion's Helm\" ?", false),
-        new Option<bool>("68437", "Avarice of the Legion's Scarf", "Mode: [select] only\nShould the bot buy \"Avarice of the Legion's Scarf\" ?", false),
-        new Option<bool>("68438", "Avarice of the Legion's Scythe", "Mode: [select] only\nShould the bot buy \"Avarice of the Legion's Scythe\" ?", false),
-        new Option<bool>("68440", "Luxuria of the Legion", "Mode: [select] only\nShould the bot buy \"Luxuria of the Legion\" ?", false),
-        new Option<bool>("68442", "Eye of Luxuria Runes", "Mode: [select] only\nShould the bot buy \"Eye of Luxuria Runes\" ?", false),
-        new Option<bool>("68443", "Virgil of the Legion", "Mode: [select] only\nShould the bot buy \"Virgil of the Legion\" ?", false),
-        new Option<bool>("68444", "Virgil of the Legion's Helm", "Mode: [select] only\nShould the bot buy \"Virgil of the Legion's Helm\" ?", false),
-        new Option<bool>("68445", "Virgil of the Legion's Cape", "Mode: [select] only\nShould the bot buy \"Virgil of the Legion's Cape\" ?", false),
-        new Option<bool>("68446", "Virgil of the Legion's Staff", "Mode: [select] only\nShould the bot buy \"Virgil of the Legion's Staff\" ?", false),
-        new Option<bool>("73357", "Vital Exanima", "Mode: [select] only\nShould the bot buy \"Vital Exanima\" ?", false),
+        new Option<bool>(
+            "68433",
+            "Avarice of the Legion",
+            "Mode: [select] only\nShould the bot buy \"Avarice of the Legion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68434",
+            "Avarice of the Legion's Helm",
+            "Mode: [select] only\nShould the bot buy \"Avarice of the Legion's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68437",
+            "Avarice of the Legion's Scarf",
+            "Mode: [select] only\nShould the bot buy \"Avarice of the Legion's Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68438",
+            "Avarice of the Legion's Scythe",
+            "Mode: [select] only\nShould the bot buy \"Avarice of the Legion's Scythe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68440",
+            "Luxuria of the Legion",
+            "Mode: [select] only\nShould the bot buy \"Luxuria of the Legion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68442",
+            "Eye of Luxuria Runes",
+            "Mode: [select] only\nShould the bot buy \"Eye of Luxuria Runes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68443",
+            "Virgil of the Legion",
+            "Mode: [select] only\nShould the bot buy \"Virgil of the Legion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68444",
+            "Virgil of the Legion's Helm",
+            "Mode: [select] only\nShould the bot buy \"Virgil of the Legion's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68445",
+            "Virgil of the Legion's Cape",
+            "Mode: [select] only\nShould the bot buy \"Virgil of the Legion's Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68446",
+            "Virgil of the Legion's Staff",
+            "Mode: [select] only\nShould the bot buy \"Virgil of the Legion's Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73357",
+            "Vital Exanima",
+            "Mode: [select] only\nShould the bot buy \"Vital Exanima\" ?",
+            false
+        ),
     };
 }

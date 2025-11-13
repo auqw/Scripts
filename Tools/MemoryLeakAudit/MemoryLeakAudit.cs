@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
 
 class MemoryLeakAudit
 {
@@ -12,7 +12,12 @@ class MemoryLeakAudit
         string scriptsFolder = Directory.GetCurrentDirectory();
         if (!scriptsFolder.EndsWith("Scripts"))
         {
-            scriptsFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Documents", "Skua", "Scripts");
+            scriptsFolder = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                "Documents",
+                "Skua",
+                "Scripts"
+            );
         }
 
         Console.WriteLine($"Analyzing scripts in: {scriptsFolder}");
@@ -20,18 +25,45 @@ class MemoryLeakAudit
         // Logs folder
         string logsFolder = Path.Combine(scriptsFolder, "Tools", "MemoryLeakAudit", "Logs");
         Directory.CreateDirectory(logsFolder);
-        string logFile = Path.Combine(logsFolder, $"MemoryLeakAudit_{DateTime.Now:yyyyMMdd_HHmmss}.txt");
+        string logFile = Path.Combine(
+            logsFolder,
+            $"MemoryLeakAudit_{DateTime.Now:yyyyMMdd_HHmmss}.txt"
+        );
 
-        var excludedFolders = new[] { "WIP", "SkuaScriptsGenerator", "obj", "bin", "Templates", "Tools", "Logs" };
+        var excludedFolders = new[]
+        {
+            "WIP",
+            "SkuaScriptsGenerator",
+            "obj",
+            "bin",
+            "Templates",
+            "Tools",
+            "Logs",
+        };
 
         // Improved regex patterns
-        var eventAssignRegex = new Regex(@"^\s*Bot\.Events\.\w+\s*\+=\s*.*[^;]*;?\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
-        var eventRemoveRegex = new Regex(@"^\s*Bot\.Events\.\w+\s*-=\s*.*[^;]*;?\s*$", RegexOptions.Compiled | RegexOptions.Multiline);
+        var eventAssignRegex = new Regex(
+            @"^\s*Bot\.Events\.\w+\s*\+=\s*.*[^;]*;?\s*$",
+            RegexOptions.Compiled | RegexOptions.Multiline
+        );
+        var eventRemoveRegex = new Regex(
+            @"^\s*Bot\.Events\.\w+\s*-=\s*.*[^;]*;?\s*$",
+            RegexOptions.Compiled | RegexOptions.Multiline
+        );
         var taskRunRegex = new Regex(@"\bTask\.Run\s*\(", RegexOptions.Compiled);
         var taskCreationRegex = new Regex(@"new\s+Task\s*\(", RegexOptions.Compiled);
-        var timerRegex = new Regex(@"new\s+(Timer|System\.Threading\.Timer)\s*\(", RegexOptions.Compiled);
-        var collectionRegex = new Regex(@"\b(List|Dictionary|HashSet|Queue|Stack)<.*?>\s+(\w+)\s*=", RegexOptions.Compiled);
-        var staticCollectionRegex = new Regex(@"\bstatic\s+(List|Dictionary|HashSet|Queue|Stack)<.*?>\s+(\w+)\s*=", RegexOptions.Compiled);
+        var timerRegex = new Regex(
+            @"new\s+(Timer|System\.Threading\.Timer)\s*\(",
+            RegexOptions.Compiled
+        );
+        var collectionRegex = new Regex(
+            @"\b(List|Dictionary|HashSet|Queue|Stack)<.*?>\s+(\w+)\s*=",
+            RegexOptions.Compiled
+        );
+        var staticCollectionRegex = new Regex(
+            @"\bstatic\s+(List|Dictionary|HashSet|Queue|Stack)<.*?>\s+(\w+)\s*=",
+            RegexOptions.Compiled
+        );
         var handlerRegex = new Regex(@"Bot\.Handlers\.RegisterHandler\s*\(", RegexOptions.Compiled);
         var disposeRegex = new Regex(@"\.Dispose\s*\(\s*\)", RegexOptions.Compiled);
         var usingRegex = new Regex(@"^\s*using\s*\(", RegexOptions.Compiled);
@@ -48,20 +80,37 @@ class MemoryLeakAudit
         writer.WriteLine();
 
         // Get all .cs files
-        var files = Directory.GetFiles(scriptsFolder, "*.cs", SearchOption.AllDirectories)
-                             .Where(f => !excludedFolders.Any(ex => f.Split(Path.DirectorySeparatorChar)
-                                                                   .Any(part => part.Equals(ex, StringComparison.OrdinalIgnoreCase))))
-                             .ToArray();
+        var files = Directory
+            .GetFiles(scriptsFolder, "*.cs", SearchOption.AllDirectories)
+            .Where(f =>
+                !excludedFolders.Any(ex =>
+                    f.Split(Path.DirectorySeparatorChar)
+                        .Any(part => part.Equals(ex, StringComparison.OrdinalIgnoreCase))
+                )
+            )
+            .ToArray();
 
         Console.WriteLine($"Found {files.Length} C# files to analyze...");
 
         foreach (var file in files)
         {
-            var fileRisk = AnalyzeFile(file, writer, userFolder, stats, 
-                eventAssignRegex, eventRemoveRegex, taskRunRegex, taskCreationRegex, 
-                timerRegex, collectionRegex, staticCollectionRegex, handlerRegex, 
-                disposeRegex, usingRegex);
-            
+            var fileRisk = AnalyzeFile(
+                file,
+                writer,
+                userFolder,
+                stats,
+                eventAssignRegex,
+                eventRemoveRegex,
+                taskRunRegex,
+                taskCreationRegex,
+                timerRegex,
+                collectionRegex,
+                staticCollectionRegex,
+                handlerRegex,
+                disposeRegex,
+                usingRegex
+            );
+
             if (fileRisk > 0)
                 riskFiles[file] = fileRisk;
         }
@@ -79,7 +128,9 @@ class MemoryLeakAudit
         Console.WriteLine($"Handler registrations: {stats.HandlerCount}");
         Console.WriteLine($"Static collections: {stats.StaticCollectionCount}");
         Console.WriteLine($"Files with high risk: {riskFiles.Count(kv => kv.Value >= 5)}");
-        Console.WriteLine($"Files with medium risk: {riskFiles.Count(kv => kv.Value >= 3 && kv.Value < 5)}");
+        Console.WriteLine(
+            $"Files with medium risk: {riskFiles.Count(kv => kv.Value >= 3 && kv.Value < 5)}"
+        );
         Console.WriteLine("=" + new string('=', 60));
         Console.WriteLine($"Full report saved to: {logFile}");
 
@@ -90,14 +141,37 @@ class MemoryLeakAudit
         }
     }
 
-    static int AnalyzeFile(string file, StreamWriter writer, string userFolder, MemoryLeakStats stats,
-        params Regex[] regexes)
+    static int AnalyzeFile(
+        string file,
+        StreamWriter writer,
+        string userFolder,
+        MemoryLeakStats stats,
+        params Regex[] regexes
+    )
     {
-        var (eventAssignRegex, eventRemoveRegex, taskRunRegex, taskCreationRegex, 
-             timerRegex, collectionRegex, staticCollectionRegex, handlerRegex, 
-             disposeRegex, usingRegex) = (regexes[0], regexes[1], regexes[2], regexes[3], 
-                                          regexes[4], regexes[5], regexes[6], regexes[7], 
-                                          regexes[8], regexes[9]);
+        var (
+            eventAssignRegex,
+            eventRemoveRegex,
+            taskRunRegex,
+            taskCreationRegex,
+            timerRegex,
+            collectionRegex,
+            staticCollectionRegex,
+            handlerRegex,
+            disposeRegex,
+            usingRegex
+        ) = (
+            regexes[0],
+            regexes[1],
+            regexes[2],
+            regexes[3],
+            regexes[4],
+            regexes[5],
+            regexes[6],
+            regexes[7],
+            regexes[8],
+            regexes[9]
+        );
 
         int fileRiskScore = 0;
         string content = File.ReadAllText(file);
@@ -115,7 +189,8 @@ class MemoryLeakAudit
         for (int i = 0; i < lines.Length; i++)
         {
             string line = lines[i].Trim();
-            if (line.StartsWith("//") || string.IsNullOrWhiteSpace(line)) continue;
+            if (line.StartsWith("//") || string.IsNullOrWhiteSpace(line))
+                continue;
 
             // Event assignments
             if (eventAssignRegex.IsMatch(line))
@@ -139,9 +214,10 @@ class MemoryLeakAudit
             {
                 stats.TaskRunCount++;
                 // Check if there's a CancellationToken in the vicinity
-                bool hasCancellation = content.Contains("CancellationToken") || 
-                                     line.Contains("cancellation") || 
-                                     line.Contains("CancellationToken");
+                bool hasCancellation =
+                    content.Contains("CancellationToken")
+                    || line.Contains("cancellation")
+                    || line.Contains("CancellationToken");
                 if (!hasCancellation)
                 {
                     if (!hasFileIssues)
@@ -196,7 +272,12 @@ class MemoryLeakAudit
         return fileRiskScore;
     }
 
-    static void WriteSummary(StreamWriter writer, MemoryLeakStats stats, Dictionary<string, int> riskFiles, string logFile)
+    static void WriteSummary(
+        StreamWriter writer,
+        MemoryLeakStats stats,
+        Dictionary<string, int> riskFiles,
+        string logFile
+    )
     {
         writer.WriteLine("\n" + "=" + new string('=', 60));
         writer.WriteLine("MEMORY LEAK AUDIT SUMMARY");
@@ -212,13 +293,19 @@ class MemoryLeakAudit
         if (riskFiles.Any())
         {
             writer.WriteLine("HIGH RISK FILES (Score >= 5):");
-            foreach (var file in riskFiles.Where(kv => kv.Value >= 5).OrderByDescending(kv => kv.Value))
+            foreach (
+                var file in riskFiles.Where(kv => kv.Value >= 5).OrderByDescending(kv => kv.Value)
+            )
             {
                 writer.WriteLine($"  {file.Key} (Risk Score: {file.Value})");
             }
 
             writer.WriteLine("\nMEDIUM RISK FILES (Score 3-4):");
-            foreach (var file in riskFiles.Where(kv => kv.Value >= 3 && kv.Value < 5).OrderByDescending(kv => kv.Value))
+            foreach (
+                var file in riskFiles
+                    .Where(kv => kv.Value >= 3 && kv.Value < 5)
+                    .OrderByDescending(kv => kv.Value)
+            )
             {
                 writer.WriteLine($"  {file.Key} (Risk Score: {file.Value})");
             }

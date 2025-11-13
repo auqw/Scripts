@@ -15,9 +15,17 @@ public class ArmyBankAllItems
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static BankAllItems BAI { get => _BAI ??= new BankAllItems(); set => _BAI = value; }
+    private static BankAllItems BAI
+    {
+        get => _BAI ??= new BankAllItems();
+        set => _BAI = value;
+    }
     private static BankAllItems _BAI;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -36,12 +44,11 @@ public class ArmyBankAllItems
             BAI.BankAll(true, true, false, string.Empty);
             Core.Logger("All \"Allowed\" items banked, onto the next Acc");
 
-            // if either are enabled set them to empty, so the next acc doesnt try to 
+            // if either are enabled set them to empty, so the next acc doesnt try to
             if (Core.FarmGearOn && Core.FarmGear.Length > 0)
                 Core.FarmGear = Array.Empty<string>();
             if (Core.SoloGearOn && Core.SoloGear.Length > 0)
                 Core.SoloGear = Array.Empty<string>();
         }
-
     }
 }

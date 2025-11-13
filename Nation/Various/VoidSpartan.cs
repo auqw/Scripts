@@ -14,8 +14,18 @@ public class VoidSpartan
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public readonly string[] Rewards =
     {
@@ -29,7 +39,7 @@ public class VoidSpartan
         "Void Spartan Shielded Cape",
         "Void Spartan Spear and Shield",
         "Void Spartan Helm",
-        "Void Spartan Helm and Scarf"
+        "Void Spartan Helm and Scarf",
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -45,7 +55,12 @@ public class VoidSpartan
 
     public void GetSpartan(string? item = null)
     {
-        Core.AddDrop(Nation.bagDrops.Concat(Rewards).Concat(new[] { "Zee's Red Jasper", "Fiend Cloak of Nulgath" }).ToArray());
+        Core.AddDrop(
+            Nation
+                .bagDrops.Concat(Rewards)
+                .Concat(new[] { "Zee's Red Jasper", "Fiend Cloak of Nulgath" })
+                .ToArray()
+        );
 
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(5982));
         if (QuestData is null)
@@ -57,10 +72,18 @@ public class VoidSpartan
 
         if (item == null)
             Core.Logger("Farming Void Spartan Set.");
-        else Core.Logger($"Farming {item}.");
+        else
+            Core.Logger($"Farming {item}.");
 
         int i = 1;
-        while (!Bot.ShouldExit && (Item != null ? !Core.CheckInventory(Item!.Name) : !Core.CheckInventory(Rewards, toInv: false)))
+        while (
+            !Bot.ShouldExit
+            && (
+                Item != null
+                    ? !Core.CheckInventory(Item!.Name)
+                    : !Core.CheckInventory(Rewards, toInv: false)
+            )
+        )
         {
             Core.EnsureAccept(5982);
 

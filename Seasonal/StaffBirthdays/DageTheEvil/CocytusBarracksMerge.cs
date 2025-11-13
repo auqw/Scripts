@@ -18,22 +18,43 @@ public class CocytusBarracksMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreDageBirthday CDB { get => _CDB ??= new CoreDageBirthday(); set => _CDB = value; }
+    private static CoreDageBirthday CDB
+    {
+        get => _CDB ??= new CoreDageBirthday();
+        set => _CDB = value;
+    }
     private static CoreDageBirthday _CDB;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
     private static CoreLegion _Legion;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -51,14 +72,22 @@ private static CoreAdvanced _sAdv;
     {
         CDB.CocytusBarracks();
         //Only edit the map and shopID here
-        Adv.StartBuyAllMerge("cocytusbarracks", 2421, findIngredients, buyOnlyThis, buyMode: buyMode);
+        Adv.StartBuyAllMerge(
+            "cocytusbarracks",
+            2421,
+            findIngredients,
+            buyOnlyThis,
+            buyMode: buyMode
+        );
 
         #region Dont edit this part
         void findIngredients()
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -69,9 +98,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Coin For the Dead":
                     Core.FarmingLogger(req.Name, quant);
@@ -79,10 +113,27 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("cocytusbarracks", "Maleagant", "Aestiua Shard", log: false);
+                        Core.HuntMonster(
+                            "cocytusbarracks",
+                            "Maleagant",
+                            "Aestiua Shard",
+                            log: false
+                        );
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("cocytusbarracks", "Cerberus Pup", "Phlegethon Tag", 8, log: false);
-                        Core.HuntMonster("cocytusbarracks", "Mourner", "Lethe Wreath", 8, log: false);
+                        Core.HuntMonster(
+                            "cocytusbarracks",
+                            "Cerberus Pup",
+                            "Phlegethon Tag",
+                            8,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "cocytusbarracks",
+                            "Mourner",
+                            "Lethe Wreath",
+                            8,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -91,50 +142,239 @@ private static CoreAdvanced _sAdv;
                 case "Legion Token":
                     Legion.FarmLegionToken(quant);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("84628", "Penitent Underworld Keeper", "Mode: [select] only\nShould the bot buy \"Penitent Underworld Keeper\" ?", false),
-        new Option<bool>("84629", "Penitent Keeper Helm", "Mode: [select] only\nShould the bot buy \"Penitent Keeper Helm\" ?", false),
-        new Option<bool>("84630", "Penitent Keeper Locks", "Mode: [select] only\nShould the bot buy \"Penitent Keeper Locks\" ?", false),
-        new Option<bool>("84633", "Penitent Keeper Tower Helm", "Mode: [select] only\nShould the bot buy \"Penitent Keeper Tower Helm\" ?", false),
-        new Option<bool>("84642", "Bramble Blame Blade", "Mode: [select] only\nShould the bot buy \"Bramble Blame Blade\" ?", false),
-        new Option<bool>("84643", "Bramble Blame Blades", "Mode: [select] only\nShould the bot buy \"Bramble Blame Blades\" ?", false),
-        new Option<bool>("84651", "Sullied Blame Blade and Bangle", "Mode: [select] only\nShould the bot buy \"Sullied Blame Blade and Bangle\" ?", false),
-        new Option<bool>("84652", "Sullied Blame Blade and Shield", "Mode: [select] only\nShould the bot buy \"Sullied Blame Blade and Shield\" ?", false),
-        new Option<bool>("84653", "Bramble Blame Blade and Shield", "Mode: [select] only\nShould the bot buy \"Bramble Blame Blade and Shield\" ?", false),
-        new Option<bool>("84654", "Acheron Usurper Lord", "Mode: [select] only\nShould the bot buy \"Acheron Usurper Lord\" ?", false),
-        new Option<bool>("84657", "Usurper Lord Horns", "Mode: [select] only\nShould the bot buy \"Usurper Lord Horns\" ?", false),
-        new Option<bool>("84660", "Acheron Usurper Lord Halo Cape", "Mode: [select] only\nShould the bot buy \"Acheron Usurper Lord Halo Cape\" ?", false),
-        new Option<bool>("84661", "Acheron Usurper Lord Regalia", "Mode: [select] only\nShould the bot buy \"Acheron Usurper Lord Regalia\" ?", false),
-        new Option<bool>("84663", "Phantima, Maiden of Woe", "Mode: [select] only\nShould the bot buy \"Phantima, Maiden of Woe\" ?", false),
-        new Option<bool>("84664", "Defiler of the Ancients", "Mode: [select] only\nShould the bot buy \"Defiler of the Ancients\" ?", false),
-        new Option<bool>("84665", "Defilers of the Ancients", "Mode: [select] only\nShould the bot buy \"Defilers of the Ancients\" ?", false),
-        new Option<bool>("84672", "Shielded Defiler of the Ancients", "Mode: [select] only\nShould the bot buy \"Shielded Defiler of the Ancients\" ?", false),
-        new Option<bool>("84673", "Ivory Acheron Usurper Lord", "Mode: [select] only\nShould the bot buy \"Ivory Acheron Usurper Lord\" ?", false),
-        new Option<bool>("84691", "Penitent Ivory Underworld Keeper", "Mode: [select] only\nShould the bot buy \"Penitent Ivory Underworld Keeper\" ?", false),
-        new Option<bool>("84729", "Overdriven Evocator", "Mode: [select] only\nShould the bot buy \"Overdriven Evocator\" ?", false),
-        new Option<bool>("84732", "Overdriven Evocator Hooded Morph", "Mode: [select] only\nShould the bot buy \"Overdriven Evocator Hooded Morph\" ?", false),
-        new Option<bool>("84733", "Overdriven Evocator Hooded Visage", "Mode: [select] only\nShould the bot buy \"Overdriven Evocator Hooded Visage\" ?", false),
-        new Option<bool>("84693", "Penitent Ivory Keeper Locks", "Mode: [select] only\nShould the bot buy \"Penitent Ivory Keeper Locks\" ?", false),
-        new Option<bool>("84696", "Penitent Ivory Keeper Tower Helm", "Mode: [select] only\nShould the bot buy \"Penitent Ivory Keeper Tower Helm\" ?", false),
-        new Option<bool>("84705", "Bramble Ivory Blame Blade", "Mode: [select] only\nShould the bot buy \"Bramble Ivory Blame Blade\" ?", false),
-        new Option<bool>("84706", "Bramble Ivory Blame Blades", "Mode: [select] only\nShould the bot buy \"Bramble Ivory Blame Blades\" ?", false),
-        new Option<bool>("84714", "Ivory Blame Blade and Bangle", "Mode: [select] only\nShould the bot buy \"Ivory Blame Blade and Bangle\" ?", false),
-        new Option<bool>("84715", "Ivory Blame Blade and Shield", "Mode: [select] only\nShould the bot buy \"Ivory Blame Blade and Shield\" ?", false),
-        new Option<bool>("84716", "Bramble Ivory Blame Blade and Shield", "Mode: [select] only\nShould the bot buy \"Bramble Ivory Blame Blade and Shield\" ?", false),
-        new Option<bool>("84679", "Ivory Usurper Lord Halo Cape", "Mode: [select] only\nShould the bot buy \"Ivory Usurper Lord Halo Cape\" ?", false),
-        new Option<bool>("84688", "Shielded Ivory Defiler of the Ancients", "Mode: [select] only\nShould the bot buy \"Shielded Ivory Defiler of the Ancients\" ?", false),
-        new Option<bool>("84680", "Ivory Defiler of the Ancients", "Mode: [select] only\nShould the bot buy \"Ivory Defiler of the Ancients\" ?", false),
-        new Option<bool>("84681", "Ivory Defilers of the Ancients", "Mode: [select] only\nShould the bot buy \"Ivory Defilers of the Ancients\" ?", false),
-        new Option<bool>("84676", "Ivory Usurper Lord Horns", "Mode: [select] only\nShould the bot buy \"Ivory Usurper Lord Horns\" ?", false),
-        new Option<bool>("84692", "Penitent Ivory Keeper Helm", "Mode: [select] only\nShould the bot buy \"Penitent Ivory Keeper Helm\" ?", false),
-        new Option<bool>("84690", "Ivory Usurper Lord Statue", "Mode: [select] only\nShould the bot buy \"Ivory Usurper Lord Statue\" ?", false),
-        new Option<bool>("84689", "Crusher of the Ancients Statue", "Mode: [select] only\nShould the bot buy \"Crusher of the Ancients Statue\" ?", false),
-        new Option<bool>("84677", "Thorny Ivory Usurper Lord Skull", "Mode: [select] only\nShould the bot buy \"Thorny Ivory Usurper Lord Skull\" ?", false),
+        new Option<bool>(
+            "84628",
+            "Penitent Underworld Keeper",
+            "Mode: [select] only\nShould the bot buy \"Penitent Underworld Keeper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84629",
+            "Penitent Keeper Helm",
+            "Mode: [select] only\nShould the bot buy \"Penitent Keeper Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84630",
+            "Penitent Keeper Locks",
+            "Mode: [select] only\nShould the bot buy \"Penitent Keeper Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84633",
+            "Penitent Keeper Tower Helm",
+            "Mode: [select] only\nShould the bot buy \"Penitent Keeper Tower Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84642",
+            "Bramble Blame Blade",
+            "Mode: [select] only\nShould the bot buy \"Bramble Blame Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84643",
+            "Bramble Blame Blades",
+            "Mode: [select] only\nShould the bot buy \"Bramble Blame Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84651",
+            "Sullied Blame Blade and Bangle",
+            "Mode: [select] only\nShould the bot buy \"Sullied Blame Blade and Bangle\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84652",
+            "Sullied Blame Blade and Shield",
+            "Mode: [select] only\nShould the bot buy \"Sullied Blame Blade and Shield\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84653",
+            "Bramble Blame Blade and Shield",
+            "Mode: [select] only\nShould the bot buy \"Bramble Blame Blade and Shield\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84654",
+            "Acheron Usurper Lord",
+            "Mode: [select] only\nShould the bot buy \"Acheron Usurper Lord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84657",
+            "Usurper Lord Horns",
+            "Mode: [select] only\nShould the bot buy \"Usurper Lord Horns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84660",
+            "Acheron Usurper Lord Halo Cape",
+            "Mode: [select] only\nShould the bot buy \"Acheron Usurper Lord Halo Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84661",
+            "Acheron Usurper Lord Regalia",
+            "Mode: [select] only\nShould the bot buy \"Acheron Usurper Lord Regalia\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84663",
+            "Phantima, Maiden of Woe",
+            "Mode: [select] only\nShould the bot buy \"Phantima, Maiden of Woe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84664",
+            "Defiler of the Ancients",
+            "Mode: [select] only\nShould the bot buy \"Defiler of the Ancients\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84665",
+            "Defilers of the Ancients",
+            "Mode: [select] only\nShould the bot buy \"Defilers of the Ancients\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84672",
+            "Shielded Defiler of the Ancients",
+            "Mode: [select] only\nShould the bot buy \"Shielded Defiler of the Ancients\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84673",
+            "Ivory Acheron Usurper Lord",
+            "Mode: [select] only\nShould the bot buy \"Ivory Acheron Usurper Lord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84691",
+            "Penitent Ivory Underworld Keeper",
+            "Mode: [select] only\nShould the bot buy \"Penitent Ivory Underworld Keeper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84729",
+            "Overdriven Evocator",
+            "Mode: [select] only\nShould the bot buy \"Overdriven Evocator\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84732",
+            "Overdriven Evocator Hooded Morph",
+            "Mode: [select] only\nShould the bot buy \"Overdriven Evocator Hooded Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84733",
+            "Overdriven Evocator Hooded Visage",
+            "Mode: [select] only\nShould the bot buy \"Overdriven Evocator Hooded Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84693",
+            "Penitent Ivory Keeper Locks",
+            "Mode: [select] only\nShould the bot buy \"Penitent Ivory Keeper Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84696",
+            "Penitent Ivory Keeper Tower Helm",
+            "Mode: [select] only\nShould the bot buy \"Penitent Ivory Keeper Tower Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84705",
+            "Bramble Ivory Blame Blade",
+            "Mode: [select] only\nShould the bot buy \"Bramble Ivory Blame Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84706",
+            "Bramble Ivory Blame Blades",
+            "Mode: [select] only\nShould the bot buy \"Bramble Ivory Blame Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84714",
+            "Ivory Blame Blade and Bangle",
+            "Mode: [select] only\nShould the bot buy \"Ivory Blame Blade and Bangle\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84715",
+            "Ivory Blame Blade and Shield",
+            "Mode: [select] only\nShould the bot buy \"Ivory Blame Blade and Shield\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84716",
+            "Bramble Ivory Blame Blade and Shield",
+            "Mode: [select] only\nShould the bot buy \"Bramble Ivory Blame Blade and Shield\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84679",
+            "Ivory Usurper Lord Halo Cape",
+            "Mode: [select] only\nShould the bot buy \"Ivory Usurper Lord Halo Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84688",
+            "Shielded Ivory Defiler of the Ancients",
+            "Mode: [select] only\nShould the bot buy \"Shielded Ivory Defiler of the Ancients\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84680",
+            "Ivory Defiler of the Ancients",
+            "Mode: [select] only\nShould the bot buy \"Ivory Defiler of the Ancients\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84681",
+            "Ivory Defilers of the Ancients",
+            "Mode: [select] only\nShould the bot buy \"Ivory Defilers of the Ancients\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84676",
+            "Ivory Usurper Lord Horns",
+            "Mode: [select] only\nShould the bot buy \"Ivory Usurper Lord Horns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84692",
+            "Penitent Ivory Keeper Helm",
+            "Mode: [select] only\nShould the bot buy \"Penitent Ivory Keeper Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84690",
+            "Ivory Usurper Lord Statue",
+            "Mode: [select] only\nShould the bot buy \"Ivory Usurper Lord Statue\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84689",
+            "Crusher of the Ancients Statue",
+            "Mode: [select] only\nShould the bot buy \"Crusher of the Ancients Statue\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84677",
+            "Thorny Ivory Usurper Lord Skull",
+            "Mode: [select] only\nShould the bot buy \"Thorny Ivory Usurper Lord Skull\" ?",
+            false
+        ),
     };
 }

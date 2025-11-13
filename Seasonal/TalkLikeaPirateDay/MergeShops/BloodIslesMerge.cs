@@ -16,27 +16,51 @@ public class BloodIslesMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static BloodIsles BI { get => _BI ??= new BloodIsles(); set => _BI = value; }
+    private static BloodIsles BI
+    {
+        get => _BI ??= new BloodIsles();
+        set => _BI = value;
+    }
     private static BloodIsles _BI;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Blood Isle Booty", "Amira 2.0 Gear", "Fancy Golden Scissors", "Dual Fancy Golden Scissors" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Blood Isle Booty",
+                "Amira 2.0 Gear",
+                "Fancy Golden Scissors",
+                "Dual Fancy Golden Scissors",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -69,7 +93,9 @@ private static CoreAdvanced _sAdv;
 
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -80,9 +106,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Blood Isle Booty":
                     Core.FarmingLogger(req.Name, quant);
@@ -114,32 +145,131 @@ private static CoreAdvanced _sAdv;
                 case "Dual Fancy Golden Scissors":
                     Core.HuntMonster("bloodisles", UseableMonsters[8], req.Name, quant, req.Temp);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("79908", "Copper Golem Commander", "Mode: [select] only\nShould the bot buy \"Copper Golem Commander\" ?", false),
-        new Option<bool>("79912", "Copper Golem Commander Visage", "Mode: [select] only\nShould the bot buy \"Copper Golem Commander Visage\" ?", false),
-        new Option<bool>("79913", "Copper Golem Commander Bandana", "Mode: [select] only\nShould the bot buy \"Copper Golem Commander Bandana\" ?", false),
-        new Option<bool>("79914", "Copper Golem Commander Cap", "Mode: [select] only\nShould the bot buy \"Copper Golem Commander Cap\" ?", false),
-        new Option<bool>("79915", "Copper Golem Commander's Navigator", "Mode: [select] only\nShould the bot buy \"Copper Golem Commander's Navigator\" ?", false),
-        new Option<bool>("79916", "Copper Golem Commander Gauntlets", "Mode: [select] only\nShould the bot buy \"Copper Golem Commander Gauntlets\" ?", false),
-        new Option<bool>("79917", "Silver Swashbuckler", "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler\" ?", false),
-        new Option<bool>("79918", "Silver Swashbuckler Morph", "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Morph\" ?", false),
-        new Option<bool>("79919", "Silver Swashbuckler Captain Morph", "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Captain Morph\" ?", false),
-        new Option<bool>("79920", "Silver Swashbuckler Bandana Visage", "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Bandana Visage\" ?", false),
-        new Option<bool>("79921", "Silver Swashbuckler Visage", "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Visage\" ?", false),
-        new Option<bool>("79922", "Silver Swashbuckler Bandana", "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Bandana\" ?", false),
-        new Option<bool>("79923", "Silver Swashbuckler Cap", "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Cap\" ?", false),
-        new Option<bool>("79924", "Silver Swashbuckler's Navigator", "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler's Navigator\" ?", false),
-        new Option<bool>("79925", "Silver Swashbuckler Gauntlets", "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Gauntlets\" ?", false),
-        new Option<bool>("88227", "Fancy Golden Armblade", "Mode: [select] only\nShould the bot buy \"Fancy Golden Armblade\" ?", false),
-        new Option<bool>("88228", "Fancy Golden Armblades", "Mode: [select] only\nShould the bot buy \"Fancy Golden Armblades\" ?", false),
-        new Option<bool>("88482", "Blood Testament Pirate", "Mode: [select] only\nShould the bot buy \"Blood Testament Pirate\" ?", false),
-        new Option<bool>("88483", "Blood Testament Pirate Visage", "Mode: [select] only\nShould the bot buy \"Blood Testament Pirate Visage\" ?", false),
-        new Option<bool>("88484", "Blood Testament Pirate Morph", "Mode: [select] only\nShould the bot buy \"Blood Testament Pirate Morph\" ?", false),
+        new Option<bool>(
+            "79908",
+            "Copper Golem Commander",
+            "Mode: [select] only\nShould the bot buy \"Copper Golem Commander\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79912",
+            "Copper Golem Commander Visage",
+            "Mode: [select] only\nShould the bot buy \"Copper Golem Commander Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79913",
+            "Copper Golem Commander Bandana",
+            "Mode: [select] only\nShould the bot buy \"Copper Golem Commander Bandana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79914",
+            "Copper Golem Commander Cap",
+            "Mode: [select] only\nShould the bot buy \"Copper Golem Commander Cap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79915",
+            "Copper Golem Commander's Navigator",
+            "Mode: [select] only\nShould the bot buy \"Copper Golem Commander's Navigator\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79916",
+            "Copper Golem Commander Gauntlets",
+            "Mode: [select] only\nShould the bot buy \"Copper Golem Commander Gauntlets\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79917",
+            "Silver Swashbuckler",
+            "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79918",
+            "Silver Swashbuckler Morph",
+            "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79919",
+            "Silver Swashbuckler Captain Morph",
+            "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Captain Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79920",
+            "Silver Swashbuckler Bandana Visage",
+            "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Bandana Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79921",
+            "Silver Swashbuckler Visage",
+            "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79922",
+            "Silver Swashbuckler Bandana",
+            "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Bandana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79923",
+            "Silver Swashbuckler Cap",
+            "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Cap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79924",
+            "Silver Swashbuckler's Navigator",
+            "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler's Navigator\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79925",
+            "Silver Swashbuckler Gauntlets",
+            "Mode: [select] only\nShould the bot buy \"Silver Swashbuckler Gauntlets\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88227",
+            "Fancy Golden Armblade",
+            "Mode: [select] only\nShould the bot buy \"Fancy Golden Armblade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88228",
+            "Fancy Golden Armblades",
+            "Mode: [select] only\nShould the bot buy \"Fancy Golden Armblades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88482",
+            "Blood Testament Pirate",
+            "Mode: [select] only\nShould the bot buy \"Blood Testament Pirate\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88483",
+            "Blood Testament Pirate Visage",
+            "Mode: [select] only\nShould the bot buy \"Blood Testament Pirate Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88484",
+            "Blood Testament Pirate Morph",
+            "Mode: [select] only\nShould the bot buy \"Blood Testament Pirate Morph\" ?",
+            false
+        ),
     };
 }

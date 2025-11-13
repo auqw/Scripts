@@ -14,18 +14,30 @@ public class TechnocasterMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -51,7 +63,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -62,9 +76,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Purified Energy Core":
                     Core.FarmingLogger(req.Name, quant);
@@ -72,7 +91,12 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(7236);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("technospace", "Technocaster Rogue", "Energy Core", log: false);
+                        Core.HuntMonster(
+                            "technospace",
+                            "Technocaster Rogue",
+                            "Energy Core",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -84,32 +108,112 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(7235);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("technospace", "Technowolf", "Seraphic Steel", 5, log: false);
+                        Core.HuntMonster(
+                            "technospace",
+                            "Technowolf",
+                            "Seraphic Steel",
+                            5,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("51392", "Seraphic Technocaster", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster\" ?", false),
-        new Option<bool>("51393", "Seraphic Technocaster Locks", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Locks\" ?", false),
-        new Option<bool>("51394", "Seraphic Technocaster Locks + Helm", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Locks + Helm\" ?", false),
-        new Option<bool>("51395", "Seraphic Technocaster Locks + Scarf", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Locks + Scarf\" ?", false),
-        new Option<bool>("51400", "Seraphic Technocaster Antenna", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Antenna\" ?", false),
-        new Option<bool>("51399", "Seraphic Technocaster Collar", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Collar\" ?", false),
-        new Option<bool>("51396", "Seraphic Technocaster Hair", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Hair\" ?", false),
-        new Option<bool>("51397", "Seraphic Technocaster Helm", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Helm\" ?", false),
-        new Option<bool>("51398", "Seraphic Technocaster Visor", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Visor\" ?", false),
-        new Option<bool>("51401", "Seraphic Technocaster Scarf", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Scarf\" ?", false),
-        new Option<bool>("51402", "Seraphic Technocaster Wing", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Wing\" ?", false),
-        new Option<bool>("51403", "Legacy Of Sai", "Mode: [select] only\nShould the bot buy \"Legacy Of Sai\" ?", false),
-        new Option<bool>("51458", "Technocaster House", "Mode: [select] only\nShould the bot buy \"Technocaster House\" ?", false),
-        new Option<bool>("51538", "Seraphic Technocaster Locks + Visor", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Locks + Visor\" ?", false),
-        new Option<bool>("51539", "Seraphic Technocaster Locks + Antenna", "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Locks + Antenna\" ?", false),
+        new Option<bool>(
+            "51392",
+            "Seraphic Technocaster",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51393",
+            "Seraphic Technocaster Locks",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51394",
+            "Seraphic Technocaster Locks + Helm",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Locks + Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51395",
+            "Seraphic Technocaster Locks + Scarf",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Locks + Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51400",
+            "Seraphic Technocaster Antenna",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Antenna\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51399",
+            "Seraphic Technocaster Collar",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Collar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51396",
+            "Seraphic Technocaster Hair",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51397",
+            "Seraphic Technocaster Helm",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51398",
+            "Seraphic Technocaster Visor",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Visor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51401",
+            "Seraphic Technocaster Scarf",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51402",
+            "Seraphic Technocaster Wing",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Wing\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51403",
+            "Legacy Of Sai",
+            "Mode: [select] only\nShould the bot buy \"Legacy Of Sai\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51458",
+            "Technocaster House",
+            "Mode: [select] only\nShould the bot buy \"Technocaster House\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51538",
+            "Seraphic Technocaster Locks + Visor",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Locks + Visor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51539",
+            "Seraphic Technocaster Locks + Antenna",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Technocaster Locks + Antenna\" ?",
+            false
+        ),
     };
 }

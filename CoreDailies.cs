@@ -13,8 +13,10 @@ public class CoreDailies
 {
     // [Can Change] Default metals to be acquired by MineCrafting quest
     public string[] MineCraftingMetalsArray = { "Barium", "Copper", "Silver" };
+
     // [Can Change] Default metals to be acquired by Hard Core Metals quest
     public string[] HardCoreMetalsMetalsArray = { "Arsenic", "Chromium", "Rhodium" };
+
     // [Can Change] Skip daily if you own max stack of reward
     public bool SkipOnMaxStack = true;
 
@@ -38,7 +40,17 @@ public class CoreDailies
     /// <param name="cell">Cell where the monster is (optional)</param>
     /// <param name="pad">Pad where the monster is</param>
     /// <param name="publicRoom"></param>
-    public void DailyRoutine(int quest, string map, string monster, string item, int quant = 1, bool isTemp = true, string? cell = null, string pad = "Left", bool publicRoom = false)
+    public void DailyRoutine(
+        int quest,
+        string map,
+        string monster,
+        string item,
+        int quant = 1,
+        bool isTemp = true,
+        string? cell = null,
+        string pad = "Left",
+        bool publicRoom = false
+    )
     {
         if (Bot.Quests.IsDailyComplete(quest))
             return;
@@ -52,7 +64,6 @@ public class CoreDailies
         Core.EnsureComplete(quest);
         Bot.Wait.ForPickup("*");
     }
-
 
     /// <summary>
     /// Manages the state of a specified quest by checking completion status, inventory, and bank items,
@@ -70,8 +81,12 @@ public class CoreDailies
     /// True (dont use !) if the quest is incomplete and relevant items are added to the drop list;<br/>
     /// false (use !) if the quest is already complete or all items are at max stack (when <paramref name="any"/> is true).
     /// </returns>
-
-    public bool CheckDailyv2(int quest, bool any = true, bool shouldUnBank = true, params string[] items)
+    public bool CheckDailyv2(
+        int quest,
+        bool any = true,
+        bool shouldUnBank = true,
+        params string[] items
+    )
     {
         Quest? Quest = Core.InitializeWithRetries(() => Core.EnsureLoad(quest));
         if (Quest == null)
@@ -82,7 +97,9 @@ public class CoreDailies
         // Check if the daily quest is complete
         if (Bot.Quests.IsDailyComplete(quest))
         {
-            Core.Logger($"Daily/Weekly/Monthly \"{Quest.Name} [{Quest.ID}]\" is not available right now");
+            Core.Logger(
+                $"Daily/Weekly/Monthly \"{Quest.Name} [{Quest.ID}]\" is not available right now"
+            );
             return false;
         }
 
@@ -92,8 +109,10 @@ public class CoreDailies
                 return true;
         }
 
-        var invBank = Bot.Inventory.Items.Concat(Bot.Bank.Items)
-            .Where(x => items.Contains(x.Name)).ToList();
+        var invBank = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .Where(x => items.Contains(x.Name))
+            .ToList();
         int maxCount = 0;
 
         foreach (string item in items)
@@ -123,7 +142,12 @@ public class CoreDailies
         Bot.Drops.Add(items);
 
         // Handle LOO dailies for quests within the specified range
-        if (quest >= 7156 && quest < 7166 && !Core.CheckInventory(50741, toInv: false) && !Core.isCompletedBefore(quest))
+        if (
+            quest >= 7156
+            && quest < 7166
+            && !Core.CheckInventory(50741, toInv: false)
+            && !Core.isCompletedBefore(quest)
+        )
         {
             foreach (int questId in Enumerable.Range(7156, 10).Distinct())
                 if (!Core.isCompletedBefore(questId) && !Bot.Quests.IsDailyComplete(questId))
@@ -134,11 +158,15 @@ public class CoreDailies
         if (quest >= 3075 && quest < 3078)
         {
             foreach (int questId in Enumerable.Range(3075, 3).Distinct())
-                Bot.Drops.Add(Core.EnsureLoad(questId).Rewards
-                    .Select(x => x.Name)
-                    .Where(x => !Bot.Inventory.Items.Any(i => i.Name == x) &&
-                                !Bot.Bank.Items.Any(i => i.Name == x))
-                    .ToArray());
+                Bot.Drops.Add(
+                    Core.EnsureLoad(questId)
+                        .Rewards.Select(x => x.Name)
+                        .Where(x =>
+                            !Bot.Inventory.Items.Any(i => i.Name == x)
+                            && !Bot.Bank.Items.Any(i => i.Name == x)
+                        )
+                        .ToArray()
+                );
         }
 
         // Add the required items for the quest
@@ -198,12 +226,12 @@ public class CoreDailies
         }
 
         if (Bot.Quests.IsInProgress(2091))
-            Core.Logger($"All desired metals were found with the needed quantity ({quant}), quest not completed");
+            Core.Logger(
+                $"All desired metals were found with the needed quantity ({quant}), quest not completed"
+            );
 
         Core.Sleep();
     }
-
-
 
     /// <summary>
     /// Does the Hard Core Metals quest for 1 Arsenic, Chromium and Rhodium by default
@@ -221,7 +249,9 @@ public class CoreDailies
         Core.Logger($"Daily: Hard Core Metals ({string.Join('/', metals)})");
         if (Core.CheckInventory(metals, quant, toInv: false))
         {
-            Core.Logger($"All \"base\" metals were found with the needed quantity ({quant}). Skipped");
+            Core.Logger(
+                $"All \"base\" metals were found with the needed quantity ({quant}). Skipped"
+            );
             if (ToBank)
                 Core.ToBank(metals);
         }
@@ -248,7 +278,9 @@ public class CoreDailies
                 Core.ToBank(metals);
         }
         if (Bot.Quests.IsInProgress(2098))
-            Core.Logger($"All desired metals were found with the needed quantity ({quant}), quest not completed");
+            Core.Logger(
+                $"All desired metals were found with the needed quantity ({quant}), quest not completed"
+            );
     }
 
     public void FungiforaFunGuy()
@@ -295,7 +327,10 @@ public class CoreDailies
             Core.Logger("Skipped");
             return;
         }
-        if (!Core.CheckInventory("Cysero's SUPER Hammer", toInv: false) && Core.CheckInventory("C-Hammer Token", 90))
+        if (
+            !Core.CheckInventory("Cysero's SUPER Hammer", toInv: false)
+            && Core.CheckInventory("C-Hammer Token", 90)
+        )
         {
             Core.BuyItem("deadmoor", 500, "Cysero's SUPER Hammer");
             return;
@@ -324,7 +359,10 @@ public class CoreDailies
             Core.Logger("Skipped");
             return;
         }
-        if (!Core.CheckInventory("Mad Weaponsmith", toInv: false) && Core.CheckInventory("C-Armor Token", 90, false))
+        if (
+            !Core.CheckInventory("Mad Weaponsmith", toInv: false)
+            && Core.CheckInventory("C-Armor Token", 90, false)
+        )
         {
             Core.Unbank("C-Armor Token");
             Core.BuyItem("deadmoor", 500, "Mad Weaponsmith");
@@ -381,15 +419,42 @@ public class CoreDailies
         {
             Core.EquipClass(ClassType.Farm);
             Core.FarmingLogger("Token of Collection", 90);
-            DailyRoutine(1316, "terrarium", "Carnivorous Cricket", "This Might Be A Token", 2, false, "r2", "Right");
+            DailyRoutine(
+                1316,
+                "terrarium",
+                "Carnivorous Cricket",
+                "This Might Be A Token",
+                2,
+                false,
+                "r2",
+                "Right"
+            );
         }
         if (Core.IsMember)
         {
             Core.FarmingLogger("Token of Collection", 90);
             if (CheckDailyv2(1331, true, true, "Token of Collection"))
-                DailyRoutine(1331, "terrarium", "Killer Cricket", "This Is Definitely A Token", 2, false, "r2", "Right");
+                DailyRoutine(
+                    1331,
+                    "terrarium",
+                    "Killer Cricket",
+                    "This Is Definitely A Token",
+                    2,
+                    false,
+                    "r2",
+                    "Right"
+                );
             if (CheckDailyv2(1332, true, true, "Token of Collection"))
-                DailyRoutine(1332, "terrarium", "Killer Cricket", "This Could Be A Token", 2, false, "r2", "Right");
+                DailyRoutine(
+                    1332,
+                    "terrarium",
+                    "Killer Cricket",
+                    "This Could Be A Token",
+                    2,
+                    false,
+                    "r2",
+                    "Right"
+                );
         }
         if (Core.CheckInventory("Token of Collection", 90))
             Core.BuyItem("Collection", 324, 30250, shopItemID: 3511);
@@ -432,8 +497,10 @@ public class CoreDailies
             Core.Logger("You already own Pryomancer, Skipped");
             return;
         }
-        int questID = Core.IsMember && CheckDailyv2(2210, true, false, "Shurpu Blaze Token") ? 2210
-                : CheckDailyv2(2209, true, false, "Shurpu Blaze Token") ? 2209 : 0;
+        int questID =
+            Core.IsMember && CheckDailyv2(2210, true, false, "Shurpu Blaze Token") ? 2210
+            : CheckDailyv2(2209, true, false, "Shurpu Blaze Token") ? 2209
+            : 0;
 
         if (questID != 0)
         {
@@ -456,12 +523,18 @@ public class CoreDailies
             Core.Logger("Skipped");
             return;
         }
-        if (!Core.CheckInventory("ShadowScythe General") && Core.CheckInventory("Shadow Shield", 100))
+        if (
+            !Core.CheckInventory("ShadowScythe General")
+            && Core.CheckInventory("Shadow Shield", 100)
+        )
         {
             Core.BuyItem("shadowfall", 1644, "ShadowScythe General");
             return;
         }
-        if (!CheckDailyv2(3828, true, true, "Shadow Shield") && (Core.IsMember && !CheckDailyv2(3827, true, true, "Shadow Shield")))
+        if (
+            !CheckDailyv2(3828, true, true, "Shadow Shield")
+            && (Core.IsMember && !CheckDailyv2(3827, true, true, "Shadow Shield"))
+        )
             return;
         DailyRoutine(3828, "lightguardwar", "Citadel Crusader", "Broken Blade");
         if (Core.IsMember)
@@ -479,7 +552,14 @@ public class CoreDailies
         if (!Core.CheckInventory(4845))
             return;
         Core.Logger("Daily: Grumble Grumble (Blood Gem of the Archfiend)");
-        if (!CheckDailyv2(592, false, false, new[] { "Diamond of Nulgath", "Blood Gem of the Archfiend" }))
+        if (
+            !CheckDailyv2(
+                592,
+                false,
+                false,
+                new[] { "Diamond of Nulgath", "Blood Gem of the Archfiend" }
+            )
+        )
             return;
         Core.ChainComplete(592);
         Core.ToBank("Diamond of Nulgath", "Blood Gem of the Archfiend");
@@ -489,7 +569,11 @@ public class CoreDailies
     {
         if (!Core.CheckInventory("Nulgath Challenge Pet") || !CheckDailyv2(3319))
         {
-            Core.Logger(!CheckDailyv2(3319) ? "Daily Not Avaiable" : "You Don't Have \"Nulgath Challenge Pet\". Pet is required for doing the quests.");
+            Core.Logger(
+                !CheckDailyv2(3319)
+                    ? "Daily Not Avaiable"
+                    : "You Don't Have \"Nulgath Challenge Pet\". Pet is required for doing the quests."
+            );
             return;
         }
         Core.Logger("Daily: Tenacity Challenge");
@@ -508,7 +592,6 @@ public class CoreDailies
             {
                 if (Core.CheckInventory(Item.ID, Item.MaxStack))
                     continue;
-
                 else
                 {
                     Core.EnsureComplete(3319, Item.ID);
@@ -528,7 +611,15 @@ public class CoreDailies
         Core.AddDrop("Elders' Blood");
         Core.Logger("Daily: Elders' Blood");
         Core.EquipClass(ClassType.Farm);
-        DailyRoutine(802, "arcangrove", "Gorillaphant", "Slain Gorillaphant", 50, cell: "LeftBack", pad: "Left");
+        DailyRoutine(
+            802,
+            "arcangrove",
+            "Gorillaphant",
+            "Slain Gorillaphant",
+            50,
+            cell: "LeftBack",
+            pad: "Left"
+        );
         Bot.Wait.ForPickup("Elders' Blood");
     }
 
@@ -539,7 +630,9 @@ public class CoreDailies
 
         if (Core.CheckInventory("Sparrow's Blood", quant))
         {
-            Core.Logger($"You already have enough Sparrow's Blood ({Bot.Inventory.GetQuantity("Sparrow's Blood")}/{quant}). Skipped");
+            Core.Logger(
+                $"You already have enough Sparrow's Blood ({Bot.Inventory.GetQuantity("Sparrow's Blood")}/{quant}). Skipped"
+            );
             return;
         }
 
@@ -559,12 +652,18 @@ public class CoreDailies
     public void PearlOfNulgath()
     {
         Core.Logger("Daily: Pearl of Nulgath");
-        if (!CheckDailyv2(10047, true, true, "Pearl of Nulgath") || Core.CheckInventory("Pearl of Nulgath", 20) || !Core.CheckInventory("Malakai's Katana Pet"))
+        if (
+            !CheckDailyv2(10047, true, true, "Pearl of Nulgath")
+            || Core.CheckInventory("Pearl of Nulgath", 20)
+            || !Core.CheckInventory("Malakai's Katana Pet")
+        )
             return;
         Core.Unbank("Unidentified 10");
         if (!Core.CheckInventory("Unidentified 10", 25))
         {
-            Core.Logger($"You don't have enough Unidentified 10 ({Bot.Inventory.GetQuantity("Unidentified 10")}/25). Skipped");
+            Core.Logger(
+                $"You don't have enough Unidentified 10 ({Bot.Inventory.GetQuantity("Unidentified 10")}/25). Skipped"
+            );
             return;
         }
         Core.ChainComplete(10047);
@@ -575,19 +674,41 @@ public class CoreDailies
     public void ShadowShroud()
     {
         Core.Logger("Daily: Shadow Shroud");
-        if (!CheckDailyv2(486, true, true, "Shadow Shroud") || Core.CheckInventory("Shadow Shroud", 15, false))
+        if (
+            !CheckDailyv2(486, true, true, "Shadow Shroud")
+            || Core.CheckInventory("Shadow Shroud", 15, false)
+        )
             return;
-        DailyRoutine(486, "bludrut2", "Shadow Creeper", "Shadow Canvas", 5, cell: "Enter", pad: "Down");
+        DailyRoutine(
+            486,
+            "bludrut2",
+            "Shadow Creeper",
+            "Shadow Canvas",
+            5,
+            cell: "Enter",
+            pad: "Down"
+        );
         Core.ToBank("Shadow Shroud");
     }
 
     public void DagesScrollFragment(bool ToBank = false)
     {
         Core.Logger("Daily: Dage's Scroll Fragment");
-        if (!CheckDailyv2(3596, true, true, "Dage's Scroll Fragment") || Core.CheckInventory("Dage's Scroll Fragment", 13, false))
+        if (
+            !CheckDailyv2(3596, true, true, "Dage's Scroll Fragment")
+            || Core.CheckInventory("Dage's Scroll Fragment", 13, false)
+        )
             return;
 
-        DailyRoutine(3596, "mountdoomskull", "*", "Chaos Power Increased", 6, cell: "b1", pad: "Left");
+        DailyRoutine(
+            3596,
+            "mountdoomskull",
+            "*",
+            "Chaos Power Increased",
+            6,
+            cell: "b1",
+            pad: "Left"
+        );
 
         Bot.Wait.ForPickup("Dage's Scroll Fragment");
         if (ToBank)
@@ -597,7 +718,10 @@ public class CoreDailies
     public void CryptoToken()
     {
         Core.Logger("Daily: Crypto Token (/curio)");
-        if (!CheckDailyv2(6187, true, true, "Crypto Token") || Core.CheckInventory("Crypto Token", 300, false))
+        if (
+            !CheckDailyv2(6187, true, true, "Crypto Token")
+            || Core.CheckInventory("Crypto Token", 300, false)
+        )
             return;
         Core.EquipClass(ClassType.Farm);
         DailyRoutine(6187, "boxes", "Sneevil", "Metal Ore", cell: "Closet", pad: "Center");
@@ -611,9 +735,11 @@ public class CoreDailies
 
         Core.Logger("Montly: Treasure Chest Keys");
         if (!CheckDailyv2(1239))
-            Core.Logger($"Next keys are available on {new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToLongDateString()}");
-        else Core.ChainComplete(1239);
-
+            Core.Logger(
+                $"Next keys are available on {new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToLongDateString()}"
+            );
+        else
+            Core.ChainComplete(1239);
 
         Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(1238));
         if (questData == null)
@@ -626,10 +752,17 @@ public class CoreDailies
 
         List<string> PreQuestInv = Bot.Inventory.Items.Select(x => x.Name).ToList();
 
-        if (Core.CheckInventory("Magic Treasure Chest Key") && Core.CheckInventory("Treasure Chest", 1))
+        if (
+            Core.CheckInventory("Magic Treasure Chest Key")
+            && Core.CheckInventory("Treasure Chest", 1)
+        )
             Bot.Drops.Add(questData.Rewards.Select(x => x.Name).ToArray());
 
-        while (!Bot.ShouldExit && Core.CheckInventory("Magic Treasure Chest Key") && Core.CheckInventory("Treasure Chest", 1))
+        while (
+            !Bot.ShouldExit
+            && Core.CheckInventory("Magic Treasure Chest Key")
+            && Core.CheckInventory("Treasure Chest", 1)
+        )
         {
             Core.ChainComplete(1238);
             Bot.Wait.ForPickup("*");
@@ -641,23 +774,26 @@ public class CoreDailies
     public void WheelofDoom()
     {
         // Fetch Gear of Doom from Inventory and Bank
-        ItemBase? GoD = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+        ItemBase? GoD = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
             .FirstOrDefault(x => x?.Name == "Gear of Doom");
 
-        ItemBase? TP = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+        ItemBase? TP = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
             .FirstOrDefault(x => x?.Name == "Treasure Potion");
 
         // Log Gear of Doom progress
-        Bot.Log($"Wheel of Doom\n" +
-            $"Gear of Doom: {GoD?.Quantity ?? 0}/3 | Treasure Potion: {TP?.Quantity ?? 0}\n" +
-            $"{(Core.IsMember
+        Bot.Log(
+            $"Wheel of Doom\n"
+                + $"Gear of Doom: {GoD?.Quantity ?? 0}/3 | Treasure Potion: {TP?.Quantity ?? 0}\n"
+                + $"{(Core.IsMember
                 ? $"Daily: {(CheckDailyv2(3075) ? "✅" : "❌")} | Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}"
-                : $"Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}")}");
-
+                : $"Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}")}"
+        );
 
         // Snapshot inventory before completing quests
-        List<int> PreQuestInv = Bot.Inventory.Items
-            .Where(x => x != null && x.ID > 0)
+        List<int> PreQuestInv = Bot
+            .Inventory.Items.Where(x => x != null && x.ID > 0)
             .Select(x => x.ID)
             .ToList();
 
@@ -672,8 +808,8 @@ public class CoreDailies
         Bot.Wait.ForPickup("*");
 
         // Check for new items added to the inventory
-        List<InventoryItem> NewItems = Bot.Inventory.Items
-            .Where(x => x != null && x.ID > 0 && !PreQuestInv.Contains(x.ID))
+        List<InventoryItem> NewItems = Bot
+            .Inventory.Items.Where(x => x != null && x.ID > 0 && !PreQuestInv.Contains(x.ID))
             .ToList();
 
         if (NewItems.Count <= 0)
@@ -684,10 +820,16 @@ public class CoreDailies
         Core.ToBank(NewItems.Select(x => x.ID).ToArray());
     }
 
-
     public void NSoDDaily(bool IgnoreSwords = true)
     {
-        if (!IgnoreSwords && Core.CheckInventory(new[] { "Necrotic Sword of Doom", "Dual Necrotic Swords of Doom" }, any: true) && Core.CheckInventory("Void Aura", 7500))
+        if (
+            !IgnoreSwords
+            && Core.CheckInventory(
+                new[] { "Necrotic Sword of Doom", "Dual Necrotic Swords of Doom" },
+                any: true
+            )
+            && Core.CheckInventory("Void Aura", 7500)
+        )
             return;
 
         Core.Logger("Daily: Void Auras");
@@ -710,9 +852,32 @@ public class CoreDailies
                     }
                     Core.CancelRegisteredQuests();
                 }
-                else Core.HuntMonster("chaoskraken", "Chaos Kraken", "Kraken Doubloon", 13, isTemp: false, publicRoom: true);
-                Core.KillMonster("ancienttrigoras", "r2a", "Left", "Ancient Trigoras", "Ancient Trigora's Horns", 3, isTemp: false);
-                Core.KillMonster("gravechallenge", "r19", "Left", "Graveclaw the Destroyer", "Graveclaw's Broken Axe", isTemp: false);
+                else
+                    Core.HuntMonster(
+                        "chaoskraken",
+                        "Chaos Kraken",
+                        "Kraken Doubloon",
+                        13,
+                        isTemp: false,
+                        publicRoom: true
+                    );
+                Core.KillMonster(
+                    "ancienttrigoras",
+                    "r2a",
+                    "Left",
+                    "Ancient Trigoras",
+                    "Ancient Trigora's Horns",
+                    3,
+                    isTemp: false
+                );
+                Core.KillMonster(
+                    "gravechallenge",
+                    "r19",
+                    "Left",
+                    "Graveclaw the Destroyer",
+                    "Graveclaw's Broken Axe",
+                    isTemp: false
+                );
                 Core.EnsureComplete(8652);
                 Bot.Wait.ForPickup("Void Aura");
             }
@@ -721,9 +886,21 @@ public class CoreDailies
         if (CheckDailyv2(8653))
         {
             Core.EnsureAccept(8653);
-            Core.HuntMonster("icewing", "Warlord Icewing", "Glacial Pinion", isTemp: false, publicRoom: true);
+            Core.HuntMonster(
+                "icewing",
+                "Warlord Icewing",
+                "Glacial Pinion",
+                isTemp: false,
+                publicRoom: true
+            );
             Core.HuntMonster("hydrachallenge", "Hydra Head 90", "Hydra Eyeball", 3, isTemp: false);
-            Core.HuntMonster("voidflibbi", "Flibbitiestgibbet", "Flibbitigiblets", isTemp: false, publicRoom: true);
+            Core.HuntMonster(
+                "voidflibbi",
+                "Flibbitiestgibbet",
+                "Flibbitigiblets",
+                isTemp: false,
+                publicRoom: true
+            );
             Core.EnsureComplete(8653);
             Bot.Wait.ForPickup("Void Aura");
         }
@@ -742,8 +919,8 @@ public class CoreDailies
         List<InventoryItem> allItems = Bot.Inventory.Items.Concat(Bot.Bank.Items).ToList();
 
         // Build a dictionary of valid reward items and their inventory quantities, skipping XP boost if level 100
-        Dictionary<ItemBase, int> rewardQuantities = boostQuest.Rewards
-            .Where(r => r.ID != 27552 || Bot.Player.Level < 100) // Skip XP boost if level 100
+        Dictionary<ItemBase, int> rewardQuantities = boostQuest
+            .Rewards.Where(r => r.ID != 27552 || Bot.Player.Level < 100) // Skip XP boost if level 100
             .ToDictionary(
                 r => r,
                 r => allItems.FirstOrDefault(item => item.ID == r.ID)?.Quantity ?? 0 // Get quantity or 0
@@ -755,9 +932,14 @@ public class CoreDailies
             // Get the selected reward's ItemBase from the rewardQuantities dictionary
             ItemBase? selectedItem = rewardQuantities.Keys.FirstOrDefault(r => r.ID == (int)reward);
 
-            if (selectedItem != null && rewardQuantities[selectedItem] == rewardQuantities.Values.Max()) // If max stack
+            if (
+                selectedItem != null
+                && rewardQuantities[selectedItem] == rewardQuantities.Values.Max()
+            ) // If max stack
             {
-                Core.Logger($"Selected reward {reward} (ID: {selectedItem.ID}) is max stacked with quantity {rewardQuantities[selectedItem]}. Switching to the lowest quantity reward.");
+                Core.Logger(
+                    $"Selected reward {reward} (ID: {selectedItem.ID}) is max stacked with quantity {rewardQuantities[selectedItem]}. Switching to the lowest quantity reward."
+                );
                 reward = DailyBoostRewards.LowestQuantOwned;
             }
         }
@@ -765,21 +947,26 @@ public class CoreDailies
         // Select reward based on the input or default to the lowest owned
         ItemBase selectedReward = reward switch
         {
-            DailyBoostRewards.LowestQuantOwned => rewardQuantities.OrderBy(p => p.Value).FirstOrDefault().Key, // Select the lowest owned
+            DailyBoostRewards.LowestQuantOwned => rewardQuantities
+                .OrderBy(p => p.Value)
+                .FirstOrDefault()
+                .Key, // Select the lowest owned
             _ => rewardQuantities.Keys.FirstOrDefault(r => r.ID == (int)reward)
-                    ?? rewardQuantities.OrderBy(p => p.Value).First().Key // Fallback to the lowest quantity reward if not found
+                ?? rewardQuantities.OrderBy(p => p.Value).First().Key, // Fallback to the lowest quantity reward if not found
         };
 
         if (selectedReward == null)
             return;
 
-        Core.Logger($"Selected reward: {selectedReward.Name} (ID: {selectedReward.ID}) with quantity {rewardQuantities[selectedReward]}");
+        Core.Logger(
+            $"Selected reward: {selectedReward.Name} (ID: {selectedReward.ID}) with quantity {rewardQuantities[selectedReward]}"
+        );
 
-        Core.AddDrop(selectedReward.ID);             // Ensure it's added to drop list
+        Core.AddDrop(selectedReward.ID); // Ensure it's added to drop list
         Core.ChainComplete(4069, selectedReward.ID); // Complete the quest with the chosen reward
-        Bot.Wait.ForDrop(selectedReward.ID);         // Wait for the item to be dropped
-        Bot.Wait.ForPickup(selectedReward.ID);       // Wait for the item to be picked up
-        Core.ToBank(selectedReward.ID);              // Bank the reward for inventory space
+        Bot.Wait.ForDrop(selectedReward.ID); // Wait for the item to be dropped
+        Bot.Wait.ForPickup(selectedReward.ID); // Wait for the item to be picked up
+        Core.ToBank(selectedReward.ID); // Bank the reward for inventory space
     }
 
     public void PowerGem()
@@ -908,7 +1095,6 @@ public class CoreDailies
     //     }
     // }
 
-
     public void BreakIntotheHoard(bool KeepReward = false, bool bank = false)
     {
         if (!CheckDailyv2(3898))
@@ -916,13 +1102,17 @@ public class CoreDailies
 
         if (!Core.HasAchievement(30, "ip6"))
         {
-            Core.Logger("\"Break Into the Hoard\" daily quest requires you to purchase BoneBreaker Adventure Pack to be able to complete it.");
+            Core.Logger(
+                "\"Break Into the Hoard\" daily quest requires you to purchase BoneBreaker Adventure Pack to be able to complete it."
+            );
             return;
         }
 
         if (!Core.isCompletedBefore(5981))
         {
-            Core.Logger("Requires storyline completetion, run the standalone daily (if you have the required items.)...)");
+            Core.Logger(
+                "Requires storyline completetion, run the standalone daily (if you have the required items.)...)"
+            );
             return;
         }
 
@@ -973,27 +1163,27 @@ public class CoreDailies
         if (!Core.CheckInventory("Compass Rose Skull"))
         {
             Core.Logger("Getting the Compass Rose Skull.");
-            Core.HuntMonsterQuest(9894,
-("dracocon", "Treasure Pile", ClassType.Farm),
+            Core.HuntMonsterQuest(
+                9894,
+                ("dracocon", "Treasure Pile", ClassType.Farm),
                 ("battleundere", "Treasure Pile", ClassType.Farm),
                 ("greed", "Treasure Pile", ClassType.Farm)
-);
+            );
         }
         if (!Core.CheckInventory("Obsessor Captain"))
         {
             Core.Logger("Getting the Obsessor Captain.");
-            Core.HuntMonsterQuest(9895,
-("shadowrealm", "Shadow Lord", ClassType.Solo)
-);
+            Core.HuntMonsterQuest(9895, ("shadowrealm", "Shadow Lord", ClassType.Solo));
         }
 
         Core.Unbank("Compass Rose Skull", "Obsessor Captain");
         Core.AddDrop("Elden Ruby");
 
-        Core.HuntMonsterQuest(9896,
-("trygve", "Vindicator Recruit", ClassType.Farm),
+        Core.HuntMonsterQuest(
+            9896,
+            ("trygve", "Vindicator Recruit", ClassType.Farm),
             ("greed", "Cursed Treasure", ClassType.Solo)
-);
+        );
 
         Core.ToBank("Compass Rose Skull", "Obsessor Captain");
     }
@@ -1008,7 +1198,6 @@ public class CoreDailies
         Core.EquipClass(ClassType.Farm);
         Core.HuntMonsterQuest(2677, "falguard", "Chaonslaught Caster", true);
     }
-
 
 #nullable enable
     #region Friendship
@@ -1064,7 +1253,8 @@ public class CoreDailies
                 Core.ChainComplete(9108);
                 Core.ToBank("Happy Penguin");
             }
-            else Core.Logger("🥺 we don't have the cute little penguin so no badge for you...");
+            else
+                Core.Logger("🥺 we don't have the cute little penguin so no badge for you...");
         }
 
         #region Local methods
@@ -1079,10 +1269,13 @@ public class CoreDailies
 
             if ((!friend.CanTalk || friend.NPC == "Linus") && !friend.CanGift)
             {
-                Core.Logger($"Friendship dail{(friend.NPC == "Linus" ? "y" : "ies")} unavailable: {friend.NPC}");
+                Core.Logger(
+                    $"Friendship dail{(friend.NPC == "Linus" ? "y" : "ies")} unavailable: {friend.NPC}"
+                );
                 return;
             }
-            else Core.Logger($"Daily: Friendship ({friend.NPC})");
+            else
+                Core.Logger($"Daily: Friendship ({friend.NPC})");
 
             Core.Join(friend.Map);
             SendWaitedPacket($"%xt%zm%friendshipInfo%{Bot.Map.RoomID}%{friend.NPC}%");
@@ -1091,7 +1284,10 @@ public class CoreDailies
             {
                 SendWaitedPacket($"%xt%zm%friendshipTalk%{Bot.Map.RoomID}%");
                 SendWaitedPacket($"%xt%zm%friendshipChoice%{Bot.Map.RoomID}%1%");
-                InformLogger($"Talked to {friend.NPC}. Through the bot this has a 50% chance of giving hearts.", ref friend);
+                InformLogger(
+                    $"Talked to {friend.NPC}. Through the bot this has a 50% chance of giving hearts.",
+                    ref friend
+                );
             }
             if (friend.CanGift)
             {
@@ -1100,7 +1296,14 @@ public class CoreDailies
                 {
                     if (gifts.Length == 1)
                         Core.FarmingLogger(gifts[0].ToString().Replace('_', ' '), 1);
-                    else Core.Logger("Farming for one of the following items: " + string.Join(" | ", gifts.Select(x => x.ToString().Replace('_', ' ')).ToArray()));
+                    else
+                        Core.Logger(
+                            "Farming for one of the following items: "
+                                + string.Join(
+                                    " | ",
+                                    gifts.Select(x => x.ToString().Replace('_', ' ')).ToArray()
+                                )
+                        );
 
                     switch (gifts[0])
                     {
@@ -1122,17 +1325,50 @@ public class CoreDailies
 
                         case frGift.Chaos_Diemond:
                             Core.EquipClass(ClassType.Farm);
-                            Core.KillMonster("battleodium", "r6", "Left", "Vileture", "Grapes", 1, false, false);
-                            Core.KillMonster("battleodium", "r6", "Left", "Diemond", "Diamonds", 1, false, false);
+                            Core.KillMonster(
+                                "battleodium",
+                                "r6",
+                                "Left",
+                                "Vileture",
+                                "Grapes",
+                                1,
+                                false,
+                                false
+                            );
+                            Core.KillMonster(
+                                "battleodium",
+                                "r6",
+                                "Left",
+                                "Diemond",
+                                "Diamonds",
+                                1,
+                                false,
+                                false
+                            );
                             Core.BuyItem("battleodium", 2236, "Chaos Diemond");
                             break;
 
                         case frGift.Cracked_Opal:
                             Core.EquipClass(ClassType.Farm);
-                            Core.KillMonster("battleodium", "r6", "Left", "Vileture", "Melons", 1, false, false);
+                            Core.KillMonster(
+                                "battleodium",
+                                "r6",
+                                "Left",
+                                "Vileture",
+                                "Melons",
+                                1,
+                                false,
+                                false
+                            );
                             while (!Bot.ShouldExit && !Core.CheckInventory(76288))
                             {
-                                Core.KillMonster("battleodium", "r6", "Left", "Diemond", log: false);
+                                Core.KillMonster(
+                                    "battleodium",
+                                    "r6",
+                                    "Left",
+                                    "Diemond",
+                                    log: false
+                                );
                                 Bot.Drops.Pickup(76288);
                                 Bot.Wait.ForPickup(76288);
                             }
@@ -1142,7 +1378,16 @@ public class CoreDailies
                         case frGift.Blood_Roseberry:
                             Core.EquipClass(ClassType.Farm);
                             Core.HuntMonster("battleodium", "Widowing", "Roses", 1, false, false);
-                            Core.KillMonster("battleodium", "r6", "Left", "Vileture", "Strawberries", 1, false, false);
+                            Core.KillMonster(
+                                "battleodium",
+                                "r6",
+                                "Left",
+                                "Vileture",
+                                "Strawberries",
+                                1,
+                                false,
+                                false
+                            );
                             Core.BuyItem("battleodium", 2236, "Blood Roseberry");
                             break;
 
@@ -1155,11 +1400,33 @@ public class CoreDailies
                             else
                             {
                                 Core.EquipClass(ClassType.Farm);
-                                Core.HuntMonster("battleodium", "Widowing", "Roses", 1, false, false);
-                                Core.KillMonster("battleodium", "r6", "Left", "Vileture", "Strawberries", 1, false, false);
+                                Core.HuntMonster(
+                                    "battleodium",
+                                    "Widowing",
+                                    "Roses",
+                                    1,
+                                    false,
+                                    false
+                                );
+                                Core.KillMonster(
+                                    "battleodium",
+                                    "r6",
+                                    "Left",
+                                    "Vileture",
+                                    "Strawberries",
+                                    1,
+                                    false,
+                                    false
+                                );
                                 //multiple items with name "Rubies"
                                 while (!Bot.ShouldExit && !Core.CheckInventory(76286))
-                                    Core.KillMonster("battleodium", "r6", "Left", "Diemond", log: false);
+                                    Core.KillMonster(
+                                        "battleodium",
+                                        "r6",
+                                        "Left",
+                                        "Diemond",
+                                        log: false
+                                    );
                                 Core.ChainComplete(9107);
                                 Bot.Wait.ForPickup((int)gifts[0]);
                             }
@@ -1173,33 +1440,56 @@ public class CoreDailies
                         case frGift.Strawberries:
                             Core.EquipClass(ClassType.Farm);
                             while (!Bot.ShouldExit && !Core.CheckInventory(_gifts, any: true))
-                                Core.KillMonster("battleodium", "r6", "Left", "Vileture", log: false);
+                                Core.KillMonster(
+                                    "battleodium",
+                                    "r6",
+                                    "Left",
+                                    "Vileture",
+                                    log: false
+                                );
                             break;
-
 
                         default:
                             Core.EquipClass(ClassType.Farm);
                             while (!Bot.ShouldExit && !Core.CheckInventory(_gifts, any: true))
-                                Core.KillMonster("battleodium", "r6", "Left", "Diemond", log: false);
+                                Core.KillMonster(
+                                    "battleodium",
+                                    "r6",
+                                    "Left",
+                                    "Diemond",
+                                    log: false
+                                );
                             break;
                     }
                 }
 
                 Core.JumpWait();
                 InventoryItem? selectedGift = null;
-                Bot.Wait.ForTrue(() =>
-                {
-                    selectedGift = Bot.Inventory.Items.Find(x => _gifts.Contains(x.ID));
-                    return selectedGift != null;
-                }, 30);
+                Bot.Wait.ForTrue(
+                    () =>
+                    {
+                        selectedGift = Bot.Inventory.Items.Find(x => _gifts.Contains(x.ID));
+                        return selectedGift != null;
+                    },
+                    30
+                );
                 if (selectedGift == null)
                 {
                     if (gifts.Length > 1)
-                        Core.Logger("Failed to parse any of the following items from your inventory: " + string.Join(" | ", gifts.Select(x => x.ToString())).Replace('_', ' '));
-                    else Core.Logger($"Failed to find \"{gifts[0].ToString().Replace('_', ' ')}\" in your inventory.");
+                        Core.Logger(
+                            "Failed to parse any of the following items from your inventory: "
+                                + string.Join(" | ", gifts.Select(x => x.ToString()))
+                                    .Replace('_', ' ')
+                        );
+                    else
+                        Core.Logger(
+                            $"Failed to find \"{gifts[0].ToString().Replace('_', ' ')}\" in your inventory."
+                        );
                     return;
                 }
-                SendWaitedPacket($"%xt%zm%friendshipGift%{Bot.Map.RoomID}%{selectedGift.ID}%{selectedGift.CharItemID}%");
+                SendWaitedPacket(
+                    $"%xt%zm%friendshipGift%{Bot.Map.RoomID}%{selectedGift.ID}%{selectedGift.CharItemID}%"
+                );
                 InformLogger($"Gifted {selectedGift.Name} to {friend.NPC}.", ref friend);
             }
         }
@@ -1250,10 +1540,13 @@ public class CoreDailies
                 info = friends.First(f => f.NPC == npc);
             float addNum = info.DisplayHearts - oldNum;
 
-            Core.Logger(text +
-                (refreshed ?
-                    $" You gained {addNum} heart{(addNum > 1 ? "s" : string.Empty)}" :
-                    string.Empty)
+            Core.Logger(
+                text
+                    + (
+                        refreshed
+                            ? $" You gained {addNum} heart{(addNum > 1 ? "s" : string.Empty)}"
+                            : string.Empty
+                    )
             );
         }
 
@@ -1266,14 +1559,17 @@ public class CoreDailies
         #endregion
     }
 
-    public int[] frGiftIDs = ((frGift[])Enum.GetValues(typeof(frGift))).Select(x => (int)x).ToArray();
-    public string[] frGiftNames = ((frGift[])Enum.GetValues(typeof(frGift))).Select(x => x.ToString()).ToArray();
+    public int[] frGiftIDs = ((frGift[])Enum.GetValues(typeof(frGift)))
+        .Select(x => (int)x)
+        .ToArray();
+    public string[] frGiftNames = ((frGift[])Enum.GetValues(typeof(frGift)))
+        .Select(x => x.ToString())
+        .ToArray();
     public string[] frRewards =
     {
         "Gold Voucher 25k",
         "Gold Voucher 100k",
         "Gold Voucher 500k",
-
         "Happy Penguin",
         "Combat Trophy",
         "Super-Fan Swag Token A",
@@ -1323,13 +1619,11 @@ public class CoreDailies
 
         [JsonProperty("iHearts")]
         public int Hearts { get; set; }
+
         [JsonIgnore]
         public float DisplayHearts
         {
-            get
-            {
-                return (float)Hearts / (float)4;
-            }
+            get { return (float)Hearts / (float)4; }
         }
 
         [JsonProperty("strLocation")]
@@ -1340,13 +1634,11 @@ public class CoreDailies
 
         [JsonProperty("iGifts")]
         public int GiftCount { get; set; }
+
         [JsonIgnore]
         public bool CanGift
         {
-            get
-            {
-                return GiftCount == 0;
-            }
+            get { return GiftCount == 0; }
         }
 
         public override string ToString()
@@ -1355,7 +1647,6 @@ public class CoreDailies
         }
     }
     #endregion
-
 }
 
 public enum MineCraftingMetalsEnum
@@ -1380,14 +1671,11 @@ public enum HardCoreMetalsEnum
     Mercury = 12122,
 }
 
-
 public enum DailyBoostRewards
 {
-    EXP = 27552,  // XP Boost
+    EXP = 27552, // XP Boost
     Gold = 27553, // Gold Boost
-    Rep = 27554,  // Rep Boost
+    Rep = 27554, // Rep Boost
     Class = 27555, // Class Boost
-    LowestQuantOwned = 0 // Special case for selecting the reward with the lowest quantity
+    LowestQuantOwned = 0, // Special case for selecting the reward with the lowest quantity
 }
-
-

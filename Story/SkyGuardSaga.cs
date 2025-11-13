@@ -12,9 +12,17 @@ public class SkyGuardSaga
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -70,7 +78,11 @@ public class SkyGuardSaga
         Story.KillQuest(886, "airship", "Sky Pirate Dragon");
 
         // Things Are Looking Up 887
-        Story.KillQuest(887, "airship", new[] { "Sky Pirate Draconian", "Rehydrated Gell Oh No", "Sky Pirate Dragon" });
+        Story.KillQuest(
+            887,
+            "airship",
+            new[] { "Sky Pirate Draconian", "Rehydrated Gell Oh No", "Sky Pirate Dragon" }
+        );
 
         // Don't Get Mad, Get Gladius 888
         Story.KillQuest(888, "airship", "Gladius");
@@ -114,7 +126,11 @@ public class SkyGuardSaga
 
         // We Didn't Start The Fire (Oh, Wait...) 1106
         Story.MapItemQuest(1106, "anders", 441);
-        Story.KillQuest(1106, "anders", new[] { "Copper Sky Pirate", "Copper Sky Pirate", "Dravir" });
+        Story.KillQuest(
+            1106,
+            "anders",
+            new[] { "Copper Sky Pirate", "Copper Sky Pirate", "Dravir" }
+        );
 
         // Granny's Final Request 1107
         Story.KillQuest(1107, "anders", "Iron Hoof");
@@ -152,7 +168,11 @@ public class SkyGuardSaga
         Story.KillQuest(1289, "strategy", "Dravir Pirate Captain");
 
         // SkyPirate Map Hunt 1290
-        Story.KillQuest(1290, "strategy", new[] { "Dravir Pirate", "Dravir Pirate", "Dravir Pirate", "Dravir Pirate" });
+        Story.KillQuest(
+            1290,
+            "strategy",
+            new[] { "Dravir Pirate", "Dravir Pirate", "Dravir Pirate", "Dravir Pirate" }
+        );
     }
 
     public void PirateBase()
@@ -208,11 +228,14 @@ public class SkyGuardSaga
         Story.MapItemQuest(2043, "highcommand", new[] { 998, 999 });
 
         // Back to Base-ics 2041
-        Story.KillQuest(2041, "piratebase", new[] { "Chaorrupted Sky Pirate", "Chaorrupted Sky Pirate" });
+        Story.KillQuest(
+            2041,
+            "piratebase",
+            new[] { "Chaorrupted Sky Pirate", "Chaorrupted Sky Pirate" }
+        );
 
         // Secret Weapon Mecha-Death! 2042
         Story.KillQuest(2042, "highcommand", "M3CH4-D34TH");
-
     }
 
     public void Bunker()

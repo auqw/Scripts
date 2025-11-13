@@ -15,7 +15,11 @@ public class SuppliesToSpinTheWheelofChance
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
 
     public string OptionsStorage = "SuppliesOptions";
@@ -23,10 +27,30 @@ public class SuppliesToSpinTheWheelofChance
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<SwindlesReturnItem>("SwindlesReturnItem", "SwindlesReturnItem", "pick the reward for the \"Swindles Return\" Quest", SwindlesReturnItem.All),
-        new Option<SuppliesReward>("SuppliesReward", "SuppliesReward", "pick the reward for the \"Supplies to spin the wheel\" Quest", SuppliesReward.All),
-        new Option<bool>("AssistantDuring", "Do: \"The Assistant\" during?", "Do the quest: [The Assistant], (requires alota gold, that you will get from the vouchers of nulgath (mem)) during this.", false),
-        new Option<bool>("UltraAlteon", "Kill \"UltraAlteon\"", "Instead of \"Escherion\" or bamboozle, do \"Ultra Alteon\"?", false),
+        new Option<SwindlesReturnItem>(
+            "SwindlesReturnItem",
+            "SwindlesReturnItem",
+            "pick the reward for the \"Swindles Return\" Quest",
+            SwindlesReturnItem.All
+        ),
+        new Option<SuppliesReward>(
+            "SuppliesReward",
+            "SuppliesReward",
+            "pick the reward for the \"Supplies to spin the wheel\" Quest",
+            SuppliesReward.All
+        ),
+        new Option<bool>(
+            "AssistantDuring",
+            "Do: \"The Assistant\" during?",
+            "Do the quest: [The Assistant], (requires alota gold, that you will get from the vouchers of nulgath (mem)) during this.",
+            false
+        ),
+        new Option<bool>(
+            "UltraAlteon",
+            "Kill \"UltraAlteon\"",
+            "Instead of \"Escherion\" or bamboozle, do \"Ultra Alteon\"?",
+            false
+        ),
         new Option<bool>("KeepVoucher", "Keep Voucher?", "Keep Voucher? (false = gold)", false),
     };
 
@@ -41,17 +65,19 @@ public class SuppliesToSpinTheWheelofChance
     }
 
     public void DoSupplies()
-    {// Set Config Options & Convert Enum into string for display
+    { // Set Config Options & Convert Enum into string for display
         string? SwindlesReturnItem = Bot.Config!.Get<SwindlesReturnItem>("SwindlesReturnItem")
-            .ToString()?.Replace('_', ' ');
+            .ToString()
+            ?.Replace('_', ' ');
         string? SuppliesItem = Bot.Config!.Get<SuppliesReward>("SuppliesReward")
-            .ToString()?.Replace('_', ' ');
+            .ToString()
+            ?.Replace('_', ' ');
 
         // Normalize "All" into null to mean "max everything"
         SuppliesItem = SuppliesItem == "All" ? null : SuppliesItem;
         SwindlesReturnItem = SwindlesReturnItem == "All" ? null : SwindlesReturnItem;
 
-    Retry2857:
+        Retry2857:
         // Load quest 2857 (Supplies)
         Quest? Supplies = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2857));
         if (Supplies == null)
@@ -61,7 +87,7 @@ public class SuppliesToSpinTheWheelofChance
             goto Retry2857;
         }
 
-    Retry7551:
+        Retry7551:
         // Load quest 7551 (Swindle’s Return)
         Quest? SwindlesReturn = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
         if (SwindlesReturn == null)
@@ -75,14 +101,18 @@ public class SuppliesToSpinTheWheelofChance
         List<ItemBase> combinedRewards = new();
 
         // Add unique Supplies rewards
-        combinedRewards.AddRange(Supplies.Rewards
-            .Where(r => r != null && Nation.SuppliesRewards.Contains(r.Name))
-            .DistinctBy(r => r.ID));
+        combinedRewards.AddRange(
+            Supplies
+                .Rewards.Where(r => r != null && Nation.SuppliesRewards.Contains(r.Name))
+                .DistinctBy(r => r.ID)
+        );
 
         // Add unique SwindlesReturn rewards
-        combinedRewards.AddRange(SwindlesReturn.Rewards
-            .Where(r => r != null && Nation.SwindlesReturnRewards.Contains(r.Name))
-            .DistinctBy(r => r.ID));
+        combinedRewards.AddRange(
+            SwindlesReturn
+                .Rewards.Where(r => r != null && Nation.SwindlesReturnRewards.Contains(r.Name))
+                .DistinctBy(r => r.ID)
+        );
 
         // If a specific Supplies reward was chosen, filter down to it
         if (SuppliesItem != null)
@@ -99,10 +129,11 @@ public class SuppliesToSpinTheWheelofChance
 
         // Log what we’re working on
         Core.Logger(
-            $"Rewards Selected: \"{string.Join("\", \"", combinedRewards.Select(r => r.Name))}\"\n\n" +
-            $"Maxing Supplies? {(SuppliesItem == null ? "Yes" : "No")}\n" +
-            $"Maxing Swindles? {(SwindlesReturnItem == null ? "Yes" : "No")}\n",
-            "STStW Config");
+            $"Rewards Selected: \"{string.Join("\", \"", combinedRewards.Select(r => r.Name))}\"\n\n"
+                + $"Maxing Supplies? {(SuppliesItem == null ? "Yes" : "No")}\n"
+                + $"Maxing Swindles? {(SwindlesReturnItem == null ? "Yes" : "No")}\n",
+            "STStW Config"
+        );
 
         // Process rewards
         foreach (ItemBase item in combinedRewards)
@@ -120,8 +151,13 @@ public class SuppliesToSpinTheWheelofChance
                 return;
             }
 
-            SwindlesReturnItem ??= SwindlesReturn.Rewards
-                .Where(r => r != null && !Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i.ID == r.ID) && r.Quantity < r.MaxStack && Nation.SwindlesReturnRewards.Contains(r.Name))
+            SwindlesReturnItem ??= SwindlesReturn
+                .Rewards.Where(r =>
+                    r != null
+                    && !Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i.ID == r.ID)
+                    && r.Quantity < r.MaxStack
+                    && Nation.SwindlesReturnRewards.Contains(r.Name)
+                )
                 .Select(r => r.Name)
                 .FirstOrDefault();
 
@@ -134,24 +170,33 @@ public class SuppliesToSpinTheWheelofChance
                 return;
             }
 
-            SuppliesItem ??= Supplies.Rewards
-                .Where(r => r != null && !Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i.ID == r.ID) && r.Quantity < r.MaxStack && Nation.SuppliesRewards.Contains(r.Name))
+            SuppliesItem ??= Supplies
+                .Rewards.Where(r =>
+                    r != null
+                    && !Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i.ID == r.ID)
+                    && r.Quantity < r.MaxStack
+                    && Nation.SuppliesRewards.Contains(r.Name)
+                )
                 .Select(r => r.Name)
                 .FirstOrDefault();
 
             Core.Logger($"SuppliesItem: {SuppliesItem}");
 
             // Determine the max stack values directly without null checks
-            ItemBase? suppliesReward = SuppliesItem == null
-                ? Supplies.Rewards.FirstOrDefault(x => x != null && x.Name == item.Name)
-                : Supplies.Rewards.FirstOrDefault(x => x != null && x.Name == SuppliesItem);
+            ItemBase? suppliesReward =
+                SuppliesItem == null
+                    ? Supplies.Rewards.FirstOrDefault(x => x != null && x.Name == item.Name)
+                    : Supplies.Rewards.FirstOrDefault(x => x != null && x.Name == SuppliesItem);
 
             int suppliesMaxStack = suppliesReward != null ? suppliesReward.MaxStack : 0;
             Core.Logger($"suppliesMaxStack: {suppliesMaxStack}");
 
-            ItemBase? swindlesReward = SwindlesReturnItem == null
-                ? SwindlesReturn.Rewards.FirstOrDefault(x => x != null && x.Name == item.Name)
-                : SwindlesReturn.Rewards.FirstOrDefault(x => x != null && x.Name == SwindlesReturnItem);
+            ItemBase? swindlesReward =
+                SwindlesReturnItem == null
+                    ? SwindlesReturn.Rewards.FirstOrDefault(x => x != null && x.Name == item.Name)
+                    : SwindlesReturn.Rewards.FirstOrDefault(x =>
+                        x != null && x.Name == SwindlesReturnItem
+                    );
 
             int swindlesMaxStack = swindlesReward != null ? swindlesReward.MaxStack : 0;
             Core.Logger($"swindlesMaxStack: {swindlesMaxStack}");
@@ -164,8 +209,9 @@ public class SuppliesToSpinTheWheelofChance
                 Bot.Config!.Get<bool>("KeepVoucher"),
                 Bot.Config!.Get<bool>("AssistantDuring"),
                 SwindlesReturnItem ?? item.Name, // Use SwindlesReturnItem if set, otherwise use item.Name
-                Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies) && _returnSupplies
-                );
+                Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies)
+                    && _returnSupplies
+            );
         }
     }
 
@@ -177,7 +223,7 @@ public class SuppliesToSpinTheWheelofChance
         Diamond_of_Nulgath,
         Gem_of_Nulgath,
         Blood_Gem_of_the_Archfiend,
-        Receipt_of_Swindle
+        Receipt_of_Swindle,
     }
 
     public enum SuppliesReward
@@ -192,6 +238,4 @@ public class SuppliesToSpinTheWheelofChance
         Unidentified_10,
         Essence_of_Nulgath,
     }
-
-
 }

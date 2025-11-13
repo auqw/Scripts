@@ -23,31 +23,72 @@ public class BadmoonMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static ShadowslayerSummoningRitual SSR { get => _SSR ??= new ShadowslayerSummoningRitual(); set => _SSR = value; }
+    private static ShadowslayerSummoningRitual SSR
+    {
+        get => _SSR ??= new ShadowslayerSummoningRitual();
+        set => _SSR = value;
+    }
     private static ShadowslayerSummoningRitual _SSR;
-    private static ShadowslayerSummoningRitual2 ssr2 { get => _ssr2 ??= new ShadowslayerSummoningRitual2(); set => _ssr2 = value; }
+    private static ShadowslayerSummoningRitual2 ssr2
+    {
+        get => _ssr2 ??= new ShadowslayerSummoningRitual2();
+        set => _ssr2 = value;
+    }
     private static ShadowslayerSummoningRitual2 _ssr2;
-    private static ShadowSlayerKMerge SSKM { get => _SSKM ??= new ShadowSlayerKMerge(); set => _SSKM = value; }
+    private static ShadowSlayerKMerge SSKM
+    {
+        get => _SSKM ??= new ShadowSlayerKMerge();
+        set => _SSKM = value;
+    }
     private static ShadowSlayerKMerge _SSKM;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Lunate Sigil", "Darkovian Hunter", "Darkovia Hunter's Cowl", "Iron Dussack", "ShadowSlayer's Apprentice", "Antiquated Shadow Hair", "Antiquated Shadow Locks", "Antiquated Shadow Hat", "Antiquated Shadow Hat + Locks", "Zealous Claymore", "Zealous Censer", "Shadowslayer Relic Sword" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Lunate Sigil",
+                "Darkovian Hunter",
+                "Darkovia Hunter's Cowl",
+                "Iron Dussack",
+                "ShadowSlayer's Apprentice",
+                "Antiquated Shadow Hair",
+                "Antiquated Shadow Locks",
+                "Antiquated Shadow Hat",
+                "Antiquated Shadow Hat + Locks",
+                "Zealous Claymore",
+                "Zealous Censer",
+                "Shadowslayer Relic Sword",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -64,7 +105,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -75,9 +118,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Lunate Sigil":
                     ssr2.LunateSigil(quant);
@@ -89,7 +137,6 @@ private static CoreAdvanced _sAdv;
                     Core.AddDrop(req.ID);
                     Core.KillMonster("badmoon", "r5", "left", "hunter", req.Name, quant, req.Temp);
                     break;
-
 
                 case "Darkovian Hunter":
                     Core.EquipClass(ClassType.Farm);
@@ -108,7 +155,14 @@ private static CoreAdvanced _sAdv;
                 case "Zealous Claymore":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("techdungeon", "Kalron the Cryptborg", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(
+                        "techdungeon",
+                        "Kalron the Cryptborg",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
                     break;
 
                 case "Zealous Censer":
@@ -121,34 +175,143 @@ private static CoreAdvanced _sAdv;
                     Core.FarmingLogger(req.Name, quant);
                     SSR.GetAll(itemFarm: req.Name);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("87583", "Twisted Hunter", "Mode: [select] only\nShould the bot buy \"Twisted Hunter\" ?", false),
-        new Option<bool>("87586", "Darkovian Hunter Captain's Hat", "Mode: [select] only\nShould the bot buy \"Darkovian Hunter Captain's Hat\" ?", false),
-        new Option<bool>("87585", "Darkovian Hunter Captain's Masked Hat", "Mode: [select] only\nShould the bot buy \"Darkovian Hunter Captain's Masked Hat\" ?", false),
-        new Option<bool>("87590", "Twisted Hunter's Arm", "Mode: [select] only\nShould the bot buy \"Twisted Hunter's Arm\" ?", false),
-        new Option<bool>("87591", "Twisted Hunter's Arms", "Mode: [select] only\nShould the bot buy \"Twisted Hunter's Arms\" ?", false),
-        new Option<bool>("87588", "Sanguine Dussack", "Mode: [select] only\nShould the bot buy \"Sanguine Dussack\" ?", false),
-        new Option<bool>("87589", "Sanguine Dussacks", "Mode: [select] only\nShould the bot buy \"Sanguine Dussacks\" ?", false),
-        new Option<bool>("87783", "ShadowSlayer Adept", "Mode: [select] only\nShould the bot buy \"ShadowSlayer Adept\" ?", false),
-        new Option<bool>("87784", "ShadowSlayer Adept Hair", "Mode: [select] only\nShould the bot buy \"ShadowSlayer Adept Hair\" ?", false),
-        new Option<bool>("87785", "ShadowSlayer Adept Ponytail", "Mode: [select] only\nShould the bot buy \"ShadowSlayer Adept Ponytail\" ?", false),
-        new Option<bool>("87786", "ShadowSlayer Adept Chapeau", "Mode: [select] only\nShould the bot buy \"ShadowSlayer Adept Chapeau\" ?", false),
-        new Option<bool>("87787", "ShadowSlayer Adept Ponytail Chapeau", "Mode: [select] only\nShould the bot buy \"ShadowSlayer Adept Ponytail Chapeau\" ?", false),
-        new Option<bool>("87788", "ShadowSlayer Mendicant", "Mode: [select] only\nShould the bot buy \"ShadowSlayer Mendicant\" ?", false),
-        new Option<bool>("87789", "ShadowSlayer Mendicant Buzzcut", "Mode: [select] only\nShould the bot buy \"ShadowSlayer Mendicant Buzzcut\" ?", false),
-        new Option<bool>("87790", "ShadowSlayer Mendicant Sash", "Mode: [select] only\nShould the bot buy \"ShadowSlayer Mendicant Sash\" ?", false),
-        new Option<bool>("87791", "ShadowSlayer Mendicant Veil", "Mode: [select] only\nShould the bot buy \"ShadowSlayer Mendicant Veil\" ?", false),
-        new Option<bool>("87794", "Golden Panacea Claymore", "Mode: [select] only\nShould the bot buy \"Golden Panacea Claymore\" ?", false),
-        new Option<bool>("87795", "Golden Panacea Claymores", "Mode: [select] only\nShould the bot buy \"Golden Panacea Claymores\" ?", false),
-        new Option<bool>("87796", "Mendicant's Last Resort", "Mode: [select] only\nShould the bot buy \"Mendicant's Last Resort\" ?", false),
-        new Option<bool>("87797", "Mendicant's Last Resorts", "Mode: [select] only\nShould the bot buy \"Mendicant's Last Resorts\" ?", false),
-        new Option<bool>("87602", "Sol Intenso", "Mode: [select] only\nShould the bot buy \"Sol Intenso\" ?", false),
-        new Option<bool>("87603", "Dual Sol Intenso", "Mode: [select] only\nShould the bot buy \"Dual Sol Intenso\" ?", false),
+        new Option<bool>(
+            "87583",
+            "Twisted Hunter",
+            "Mode: [select] only\nShould the bot buy \"Twisted Hunter\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87586",
+            "Darkovian Hunter Captain's Hat",
+            "Mode: [select] only\nShould the bot buy \"Darkovian Hunter Captain's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87585",
+            "Darkovian Hunter Captain's Masked Hat",
+            "Mode: [select] only\nShould the bot buy \"Darkovian Hunter Captain's Masked Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87590",
+            "Twisted Hunter's Arm",
+            "Mode: [select] only\nShould the bot buy \"Twisted Hunter's Arm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87591",
+            "Twisted Hunter's Arms",
+            "Mode: [select] only\nShould the bot buy \"Twisted Hunter's Arms\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87588",
+            "Sanguine Dussack",
+            "Mode: [select] only\nShould the bot buy \"Sanguine Dussack\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87589",
+            "Sanguine Dussacks",
+            "Mode: [select] only\nShould the bot buy \"Sanguine Dussacks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87783",
+            "ShadowSlayer Adept",
+            "Mode: [select] only\nShould the bot buy \"ShadowSlayer Adept\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87784",
+            "ShadowSlayer Adept Hair",
+            "Mode: [select] only\nShould the bot buy \"ShadowSlayer Adept Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87785",
+            "ShadowSlayer Adept Ponytail",
+            "Mode: [select] only\nShould the bot buy \"ShadowSlayer Adept Ponytail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87786",
+            "ShadowSlayer Adept Chapeau",
+            "Mode: [select] only\nShould the bot buy \"ShadowSlayer Adept Chapeau\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87787",
+            "ShadowSlayer Adept Ponytail Chapeau",
+            "Mode: [select] only\nShould the bot buy \"ShadowSlayer Adept Ponytail Chapeau\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87788",
+            "ShadowSlayer Mendicant",
+            "Mode: [select] only\nShould the bot buy \"ShadowSlayer Mendicant\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87789",
+            "ShadowSlayer Mendicant Buzzcut",
+            "Mode: [select] only\nShould the bot buy \"ShadowSlayer Mendicant Buzzcut\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87790",
+            "ShadowSlayer Mendicant Sash",
+            "Mode: [select] only\nShould the bot buy \"ShadowSlayer Mendicant Sash\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87791",
+            "ShadowSlayer Mendicant Veil",
+            "Mode: [select] only\nShould the bot buy \"ShadowSlayer Mendicant Veil\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87794",
+            "Golden Panacea Claymore",
+            "Mode: [select] only\nShould the bot buy \"Golden Panacea Claymore\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87795",
+            "Golden Panacea Claymores",
+            "Mode: [select] only\nShould the bot buy \"Golden Panacea Claymores\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87796",
+            "Mendicant's Last Resort",
+            "Mode: [select] only\nShould the bot buy \"Mendicant's Last Resort\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87797",
+            "Mendicant's Last Resorts",
+            "Mode: [select] only\nShould the bot buy \"Mendicant's Last Resorts\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87602",
+            "Sol Intenso",
+            "Mode: [select] only\nShould the bot buy \"Sol Intenso\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87603",
+            "Dual Sol Intenso",
+            "Mode: [select] only\nShould the bot buy \"Dual Sol Intenso\" ?",
+            false
+        ),
     };
 }

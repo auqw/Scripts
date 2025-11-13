@@ -54,75 +54,282 @@ public class ArcanaInvokerResourceMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
     private static CoreAdvanced _sAdv;
 
-    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }
+    private static Core13LoC LOC
+    {
+        get => _LOC ??= new Core13LoC();
+        set => _LOC = value;
+    }
     private static Core13LoC _LOC;
-    private static GooseMerge GooseMerge { get => _GooseMerge ??= new GooseMerge(); set => _GooseMerge = value; }
+    private static GooseMerge GooseMerge
+    {
+        get => _GooseMerge ??= new GooseMerge();
+        set => _GooseMerge = value;
+    }
     private static GooseMerge _GooseMerge;
-    private static BrightForestMerge BrightForestMerge { get => _BrightForestMerge ??= new BrightForestMerge(); set => _BrightForestMerge = value; }
+    private static BrightForestMerge BrightForestMerge
+    {
+        get => _BrightForestMerge ??= new BrightForestMerge();
+        set => _BrightForestMerge = value;
+    }
     private static BrightForestMerge _BrightForestMerge;
-    private static TerminaTempleMerge TerminaTempleMerge { get => _TerminaTempleMerge ??= new TerminaTempleMerge(); set => _TerminaTempleMerge = value; }
+    private static TerminaTempleMerge TerminaTempleMerge
+    {
+        get => _TerminaTempleMerge ??= new TerminaTempleMerge();
+        set => _TerminaTempleMerge = value;
+    }
     private static TerminaTempleMerge _TerminaTempleMerge;
-    private static InfernalArena InfernalArena { get => _InfernalArena ??= new InfernalArena(); set => _InfernalArena = value; }
+    private static InfernalArena InfernalArena
+    {
+        get => _InfernalArena ??= new InfernalArena();
+        set => _InfernalArena = value;
+    }
     private static InfernalArena _InfernalArena;
-    private static DoomLegacyMerge DLM { get => _DLM ??= new DoomLegacyMerge(); set => _DLM = value; }
+    private static DoomLegacyMerge DLM
+    {
+        get => _DLM ??= new DoomLegacyMerge();
+        set => _DLM = value;
+    }
     private static DoomLegacyMerge _DLM;
-    private static CelestialChallengerMerge CCM { get => _CCM ??= new CelestialChallengerMerge(); set => _CCM = value; }
+    private static CelestialChallengerMerge CCM
+    {
+        get => _CCM ??= new CelestialChallengerMerge();
+        set => _CCM = value;
+    }
     private static CelestialChallengerMerge _CCM;
-    private static SpoilsofLightMerge SOLM { get => _SOLM ??= new SpoilsofLightMerge(); set => _SOLM = value; }
+    private static SpoilsofLightMerge SOLM
+    {
+        get => _SOLM ??= new SpoilsofLightMerge();
+        set => _SOLM = value;
+    }
     private static SpoilsofLightMerge _SOLM;
-    private static ArchiveofTimeMerge AOTM { get => _AOTM ??= new ArchiveofTimeMerge(); set => _AOTM = value; }
+    private static ArchiveofTimeMerge AOTM
+    {
+        get => _AOTM ??= new ArchiveofTimeMerge();
+        set => _AOTM = value;
+    }
     private static ArchiveofTimeMerge _AOTM;
-    private static CrocriverMerge CM { get => _CM ??= new CrocriverMerge(); set => _CM = value; }
+    private static CrocriverMerge CM
+    {
+        get => _CM ??= new CrocriverMerge();
+        set => _CM = value;
+    }
     private static CrocriverMerge _CM;
-    private static SuperSlayinMerge SSM { get => _SSM ??= new SuperSlayinMerge(); set => _SSM = value; }
+    private static SuperSlayinMerge SSM
+    {
+        get => _SSM ??= new SuperSlayinMerge();
+        set => _SSM = value;
+    }
     private static SuperSlayinMerge _SSM;
-    private static DreampalaceMerge DPM { get => _DPM ??= new DreampalaceMerge(); set => _DPM = value; }
+    private static DreampalaceMerge DPM
+    {
+        get => _DPM ??= new DreampalaceMerge();
+        set => _DPM = value;
+    }
     private static DreampalaceMerge _DPM;
-    private static BonecastleMerge BCM { get => _BCM ??= new BonecastleMerge(); set => _BCM = value; }
+    private static BonecastleMerge BCM
+    {
+        get => _BCM ??= new BonecastleMerge();
+        set => _BCM = value;
+    }
     private static BonecastleMerge _BCM;
-    private static CelestialRealmMerge CRM { get => _CRM ??= new CelestialRealmMerge(); set => _CRM = value; }
+    private static CelestialRealmMerge CRM
+    {
+        get => _CRM ??= new CelestialRealmMerge();
+        set => _CRM = value;
+    }
     private static CelestialRealmMerge _CRM;
-    private static ThreeLittleWolvesHousesMerge TLWHM { get => _TLWHM ??= new ThreeLittleWolvesHousesMerge(); set => _TLWHM = value; }
+    private static ThreeLittleWolvesHousesMerge TLWHM
+    {
+        get => _TLWHM ??= new ThreeLittleWolvesHousesMerge();
+        set => _TLWHM = value;
+    }
     private static ThreeLittleWolvesHousesMerge _TLWHM;
-    private static PotionBuyer PotionBuyer { get => _PotionBuyer ??= new PotionBuyer(); set => _PotionBuyer = value; }
+    private static PotionBuyer PotionBuyer
+    {
+        get => _PotionBuyer ??= new PotionBuyer();
+        set => _PotionBuyer = value;
+    }
     private static PotionBuyer _PotionBuyer;
-    private static MoonlightKhopeshMerge MoonlightKhopeshMerge { get => _MoonlightKhopeshMerge ??= new MoonlightKhopeshMerge(); set => _MoonlightKhopeshMerge = value; }
+    private static MoonlightKhopeshMerge MoonlightKhopeshMerge
+    {
+        get => _MoonlightKhopeshMerge ??= new MoonlightKhopeshMerge();
+        set => _MoonlightKhopeshMerge = value;
+    }
     private static MoonlightKhopeshMerge _MoonlightKhopeshMerge;
-    private static ShadowMerge ShadowMerge { get => _ShadowMerge ??= new ShadowMerge(); set => _ShadowMerge = value; }
+    private static ShadowMerge ShadowMerge
+    {
+        get => _ShadowMerge ??= new ShadowMerge();
+        set => _ShadowMerge = value;
+    }
     private static ShadowMerge _ShadowMerge;
-    private static ThirdspellMerge ThirdspellMerge { get => _ThirdspellMerge ??= new ThirdspellMerge(); set => _ThirdspellMerge = value; }
+    private static ThirdspellMerge ThirdspellMerge
+    {
+        get => _ThirdspellMerge ??= new ThirdspellMerge();
+        set => _ThirdspellMerge = value;
+    }
     private static ThirdspellMerge _ThirdspellMerge;
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }
+    private static CoreDarkon Darkon
+    {
+        get => _Darkon ??= new CoreDarkon();
+        set => _Darkon = value;
+    }
     private static CoreDarkon _Darkon;
-    private static CoreShadowofDoom CoreShadowofDoom { get => _CoreShadowofDoom ??= new CoreShadowofDoom(); set => _CoreShadowofDoom = value; }
+    private static CoreShadowofDoom CoreShadowofDoom
+    {
+        get => _CoreShadowofDoom ??= new CoreShadowofDoom();
+        set => _CoreShadowofDoom = value;
+    }
     private static CoreShadowofDoom _CoreShadowofDoom;
-    private static FableForest FableForest { get => _FableForest ??= new FableForest(); set => _FableForest = value; }
+    private static FableForest FableForest
+    {
+        get => _FableForest ??= new FableForest();
+        set => _FableForest = value;
+    }
     private static FableForest _FableForest;
-    private static VoidRefuge VR { get => _VR ??= new VoidRefuge(); set => _VR = value; }
+    private static VoidRefuge VR
+    {
+        get => _VR ??= new VoidRefuge();
+        set => _VR = value;
+    }
     private static VoidRefuge _VR;
-    private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
     private static CoreAOR _AOR;
-    private static CoreSepulchure CoreSS { get => _CoreSS ??= new CoreSepulchure(); set => _CoreSS = value; }
+    private static CoreSepulchure CoreSS
+    {
+        get => _CoreSS ??= new CoreSepulchure();
+        set => _CoreSS = value;
+    }
     private static CoreSepulchure _CoreSS;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Staff of Inversion", "BattleMage Armor", "Nightlocke War Staff", "Calamitous Warlic's Tome", "Dishpan Cleric Costume", "Chaotic Healer", "Battle Cleric of the Dragon", "Amia's Cult Secret", "Queen's Sage Scythe", "ShadowFlame Empress", "Fragment of the Queen", "Empress' Finger's Ring", "King Klunk's Crown", "Crowned Skull of Na'al", "Zealous Crown", "Lich Emperor's Catalyst", "Blessed Abezeth", "Inquisitor of the Light", "Divine Guardian Of Aegis", "Chaos Weaver Cleric's Doctrine", "Love Token", "Time Heart", "Storm Heart", "Mercutio's Heart", "Racing Trophy", "Sphinx Sentinel", "Dread Deadmoor BattleAxe", "SMU Brutalcorn's Horn", "Ouroboros Scale", "Libran Scales", "Akriloth's Scale", "ArchFiend DragonKnight's Scale", "Fa's Gamer Fuel", "ARTX 3090 Controller", "Soulseeker's Grim Hood", "Nothing's Solus", "Lucky Pet", "Second Chance Coin", "Treasure Chest", "Ultra Lobthulu's Fortune", "Enchanted Martial Artist's Gi", "Strong Axe of Golmoth", "Fortitude Tonic", "Strong Drag's Intact Wing", "Chained Rune Bonebreaker", "Noble Sacrifice", "The Answer", "Astero's Insight", "Death's Oversight", "Death Pit Arena Medal", "Enchanted DeathKnight", "Super Death's Scythe Fragment", "Celestial Wings of Guiding", "Blessed Coffee Cup", "Northern Crown", "Azkorath's Wing", "Fiendish Outlaw", "Fiendish Remains", "Glass Horns", "Fiend Champion's Spike", "Earth Stone", "Dragon Runestone", "Arcangrove Tower House", "Nevanna's Revelation", "Star Scrap", "Rising Star Token", "Dark Stars", "Star Sapphire Fragment", "Moon Rock Fragments", "Blood Moon Warrior", "Celestial Khopesh", "The Moon's Reflection", "Golden Sun Seal", "Sun Zone Chit", "Armor of the Sun", "The Sun's Enlightenment", "Trumpet", "Judgment Tonic", "Enchanted Lance of Doom Reborn", "Minos' Sentence", "Darkon's Receipt", "Teeth", "La's Gratitude", "Astravian Medal", "A Melody", "Bandit's Correspondence", "Suki's Prestige", "Ancient Remnant", "Mourning Flower", "Unfinished Musical Score" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Staff of Inversion",
+                "BattleMage Armor",
+                "Nightlocke War Staff",
+                "Calamitous Warlic's Tome",
+                "Dishpan Cleric Costume",
+                "Chaotic Healer",
+                "Battle Cleric of the Dragon",
+                "Amia's Cult Secret",
+                "Queen's Sage Scythe",
+                "ShadowFlame Empress",
+                "Fragment of the Queen",
+                "Empress' Finger's Ring",
+                "King Klunk's Crown",
+                "Crowned Skull of Na'al",
+                "Zealous Crown",
+                "Lich Emperor's Catalyst",
+                "Blessed Abezeth",
+                "Inquisitor of the Light",
+                "Divine Guardian Of Aegis",
+                "Chaos Weaver Cleric's Doctrine",
+                "Love Token",
+                "Time Heart",
+                "Storm Heart",
+                "Mercutio's Heart",
+                "Racing Trophy",
+                "Sphinx Sentinel",
+                "Dread Deadmoor BattleAxe",
+                "SMU Brutalcorn's Horn",
+                "Ouroboros Scale",
+                "Libran Scales",
+                "Akriloth's Scale",
+                "ArchFiend DragonKnight's Scale",
+                "Fa's Gamer Fuel",
+                "ARTX 3090 Controller",
+                "Soulseeker's Grim Hood",
+                "Nothing's Solus",
+                "Lucky Pet",
+                "Second Chance Coin",
+                "Treasure Chest",
+                "Ultra Lobthulu's Fortune",
+                "Enchanted Martial Artist's Gi",
+                "Strong Axe of Golmoth",
+                "Fortitude Tonic",
+                "Strong Drag's Intact Wing",
+                "Chained Rune Bonebreaker",
+                "Noble Sacrifice",
+                "The Answer",
+                "Astero's Insight",
+                "Death's Oversight",
+                "Death Pit Arena Medal",
+                "Enchanted DeathKnight",
+                "Super Death's Scythe Fragment",
+                "Celestial Wings of Guiding",
+                "Blessed Coffee Cup",
+                "Northern Crown",
+                "Azkorath's Wing",
+                "Fiendish Outlaw",
+                "Fiendish Remains",
+                "Glass Horns",
+                "Fiend Champion's Spike",
+                "Earth Stone",
+                "Dragon Runestone",
+                "Arcangrove Tower House",
+                "Nevanna's Revelation",
+                "Star Scrap",
+                "Rising Star Token",
+                "Dark Stars",
+                "Star Sapphire Fragment",
+                "Moon Rock Fragments",
+                "Blood Moon Warrior",
+                "Celestial Khopesh",
+                "The Moon's Reflection",
+                "Golden Sun Seal",
+                "Sun Zone Chit",
+                "Armor of the Sun",
+                "The Sun's Enlightenment",
+                "Trumpet",
+                "Judgment Tonic",
+                "Enchanted Lance of Doom Reborn",
+                "Minos' Sentence",
+                "Darkon's Receipt",
+                "Teeth",
+                "La's Gratitude",
+                "Astravian Medal",
+                "A Melody",
+                "Bandit's Correspondence",
+                "Suki's Prestige",
+                "Ancient Remnant",
+                "Mourning Flower",
+                "Unfinished Musical Score",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -138,7 +345,6 @@ public class ArcanaInvokerResourceMerge
         CoreSS.CompleteSS();
         //prolly more storylines missing, add as found
 
-
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("arcana", 2434, findIngredients, buyOnlyThis, buyMode: buyMode);
 
@@ -147,7 +353,9 @@ public class ArcanaInvokerResourceMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -158,9 +366,14 @@ public class ArcanaInvokerResourceMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Staff of Inversion":
                     Core.KillEscherion(req.Name, isTemp: req.Temp);
@@ -172,15 +385,39 @@ public class ArcanaInvokerResourceMerge
 
                 case "Nightlocke War Staff":
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster("aqw3d", "r13", "Left", "Nightlocke Staff", req.Name, quant, req.Temp);
+                    Core.KillMonster(
+                        "aqw3d",
+                        "r13",
+                        "Left",
+                        "Nightlocke Staff",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     break;
 
                 case "Calamitous Warlic's Tome":
-                    Core.KillMonster("ruinedcrown", "r10", "Left", "Calamitous Warlic", req.Name, quant, req.Temp);
+                    Core.KillMonster(
+                        "ruinedcrown",
+                        "r10",
+                        "Left",
+                        "Calamitous Warlic",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     break;
 
                 case "Dishpan Cleric Costume":
-                    Core.KillMonster("cleric", "Frame3", "Left", "Chaos Dragon", req.Name, quant, req.Temp);
+                    Core.KillMonster(
+                        "cleric",
+                        "Frame3",
+                        "Left",
+                        "Chaos Dragon",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     break;
 
                 case "Chaotic Healer":
@@ -194,7 +431,15 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Amia's Cult Secret":
-                    Core.KillMonster("fotia", "r6", "Left", "Amia the Cult Leader", req.Name, quant, req.Temp);
+                    Core.KillMonster(
+                        "fotia",
+                        "r6",
+                        "Left",
+                        "Amia the Cult Leader",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     break;
 
                 case "Queen's Sage Scythe":
@@ -208,7 +453,13 @@ public class ArcanaInvokerResourceMerge
                 case "Fragment of the Queen":
                     Core.EquipClass(ClassType.Solo);
                     Bot.Quests.UpdateQuest(8094);
-                    Core.HuntMonster("transformation", "Queen of Monsters", req.Name, quant, req.Temp);
+                    Core.HuntMonster(
+                        "transformation",
+                        "Queen of Monsters",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     break;
 
                 case "Empress' Finger's Ring":
@@ -225,7 +476,9 @@ public class ArcanaInvokerResourceMerge
                     Core.Logger($"Doing story first: {!Core.isCompletedBefore(9373)}");
                     if (!Core.isCompletedBefore(9377))
                     {
-                        Core.Logger("Boss: [Na'al]\n this may take an hr or 2... or u may first try it so good luck (a kill has been gotten with VHL) so its confirmd able to be done...)");
+                        Core.Logger(
+                            "Boss: [Na'al]\n this may take an hr or 2... or u may first try it so good luck (a kill has been gotten with VHL) so its confirmd able to be done...)"
+                        );
                         InfernalArena.DoStory();
                     }
                     Adv.BuyItem(Bot.Map.Name, 2336, req.Name, quant);
@@ -236,8 +489,14 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Judgment Tonic":
-                    PotionBuyer.// Call the method with specific parameters to farm Judgment Tonics with a quantity of 50
-                    INeedYourStrongestPotions(new[] { "Judgment Tonic" }, new bool[] { true }, quant, true, true);
+                    PotionBuyer. // Call the method with specific parameters to farm Judgment Tonics with a quantity of 50
+                    INeedYourStrongestPotions(
+                        new[] { "Judgment Tonic" },
+                        new bool[] { true },
+                        quant,
+                        true,
+                        true
+                    );
                     break;
 
                 case "Lich Emperor's Catalyst":
@@ -266,7 +525,13 @@ public class ArcanaInvokerResourceMerge
 
                 case "Love Token":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("battlewedding", "Platinum Mech Dragon", req.Name, quant, req.Temp);
+                    Core.HuntMonster(
+                        "battlewedding",
+                        "Platinum Mech Dragon",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     break;
 
                 case "Time Heart":
@@ -305,7 +570,13 @@ public class ArcanaInvokerResourceMerge
 
                 case "SMU Brutalcorn's Horn":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("ultrabrutalcorn", "SMU BrutalCorn", req.Name, quant, req.Temp);
+                    Core.HuntMonster(
+                        "ultrabrutalcorn",
+                        "SMU BrutalCorn",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     break;
 
                 case "Ouroboros Scale":
@@ -316,8 +587,18 @@ public class ArcanaInvokerResourceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("camlan", "Bellona", "Bellona's Edict of War", log: false);
-                        Core.HuntMonster("camlan", "Sleih", "Sleih's Changeling Records", log: false);
-                        Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale", log: false);
+                        Core.HuntMonster(
+                            "camlan",
+                            "Sleih",
+                            "Sleih's Changeling Records",
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "camlan",
+                            "Metamorphosis Maw",
+                            "Alchemic Snake Scale",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -335,7 +616,13 @@ public class ArcanaInvokerResourceMerge
 
                 case "ArchFiend DragonKnight's Scale":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("underlair", "ArchFiend DragonKnight", req.Name, quant, req.Temp);
+                    Core.HuntMonster(
+                        "underlair",
+                        "ArchFiend DragonKnight",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     break;
 
                 case "Fa's Gamer Fuel":
@@ -370,7 +657,12 @@ public class ArcanaInvokerResourceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Adv.BuyItem("onsen", 1926, "Gachapon Coin", Log: false);
-                        Core.HuntMonster("yokaigrave", "Skello Kitty", "Skello Kitty Bone", log: false);
+                        Core.HuntMonster(
+                            "yokaigrave",
+                            "Skello Kitty",
+                            "Skello Kitty Bone",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -386,7 +678,6 @@ public class ArcanaInvokerResourceMerge
                     Core.HuntMonster("poisonforest", "Xavier Lionfang", req.Name, quant, req.Temp);
                     break;
 
-
                 case "Ultra Lobthulu's Fortune":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("ultralob", "Ultra Lobthulhu", req.Name, quant, req.Temp);
@@ -401,8 +692,14 @@ public class ArcanaInvokerResourceMerge
                     break;
 
                 case "Fortitude Tonic":
-                    PotionBuyer.// Call the method with specific parameters to farm Fortitude Tonics with a quantity of 50
-                    INeedYourStrongestPotions(new[] { "Fortitude Tonic" }, new bool[] { true }, quant, true, true);
+                    PotionBuyer. // Call the method with specific parameters to farm Fortitude Tonics with a quantity of 50
+                    INeedYourStrongestPotions(
+                        new[] { "Fortitude Tonic" },
+                        new bool[] { true },
+                        quant,
+                        true,
+                        true
+                    );
                     break;
 
                 case "Strong Drag's Intact Wing":
@@ -413,7 +710,13 @@ public class ArcanaInvokerResourceMerge
                 case "Chained Rune Bonebreaker":
                 case "Chained Rune Bonebreakers":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("archportal", "High Legion Inquisitor", req.Name, quant, req.Temp);
+                    Core.HuntMonster(
+                        "archportal",
+                        "High Legion Inquisitor",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     break;
 
                 case "Noble Sacrifice":
@@ -433,7 +736,15 @@ public class ArcanaInvokerResourceMerge
 
                 case "Death's Oversight":
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster("shadowattack", "Boss", "Left", "Death", req.Name, quant, req.Temp);
+                    Core.KillMonster(
+                        "shadowattack",
+                        "Boss",
+                        "Left",
+                        "Death",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     break;
 
                 case "Death Pit Arena Medal":
@@ -460,7 +771,12 @@ public class ArcanaInvokerResourceMerge
                     Core.RegisterQuests(5405);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("sandsea", "Oasis Monkey", "Pally Luwak Beans", log: false);
+                        Core.HuntMonster(
+                            "sandsea",
+                            "Oasis Monkey",
+                            "Pally Luwak Beans",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -491,8 +807,20 @@ public class ArcanaInvokerResourceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("voidrefuge", "Paladin Ascendant", "Sussurating Helm", 3, log: false);
-                        Core.HuntMonster("voidrefuge", "Nation Outrider", "Scarred Coin", 8, log: false);
+                        Core.HuntMonster(
+                            "voidrefuge",
+                            "Paladin Ascendant",
+                            "Sussurating Helm",
+                            3,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "voidrefuge",
+                            "Nation Outrider",
+                            "Scarred Coin",
+                            8,
+                            log: false
+                        );
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("voidrefuge", "Carnage", "Carnage's Ichor", log: false);
                         Bot.Wait.ForPickup(req.Name);
@@ -518,8 +846,20 @@ public class ArcanaInvokerResourceMerge
                     Core.RegisterQuests(3317);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("fableforest", "Earth Elemental", "Earth Aura", 5, log: false);
-                        Core.HuntMonster("fableforest", "Undead Satyr", "Satyr Hoof", 5, log: false);
+                        Core.HuntMonster(
+                            "fableforest",
+                            "Earth Elemental",
+                            "Earth Aura",
+                            5,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "fableforest",
+                            "Undead Satyr",
+                            "Satyr Hoof",
+                            5,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -610,8 +950,22 @@ public class ArcanaInvokerResourceMerge
 
                         // Equip farming class for the rest
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster("sunlightzone", "r9", "left", "*", "seraphic sample", seraphicQty);
-                        Core.KillMonster("sunlightzone", "r8", "left", "*", "infernal sample", infernalQty);
+                        Core.KillMonster(
+                            "sunlightzone",
+                            "r9",
+                            "left",
+                            "*",
+                            "seraphic sample",
+                            seraphicQty
+                        );
+                        Core.KillMonster(
+                            "sunlightzone",
+                            "r8",
+                            "left",
+                            "*",
+                            "infernal sample",
+                            infernalQty
+                        );
                         Core.EnsureCompleteMulti(9252);
                         Bot.Wait.ForPickup(req.Name);
 
@@ -683,33 +1037,137 @@ public class ArcanaInvokerResourceMerge
                 case "Unfinished Musical Score":
                     Darkon.UnfinishedMusicalScore(quant);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("85452", "1 - The Magician's Desire", "Mode: [select] only\nShould the bot buy \"1 - The Magician's Desire\" ?", false),
-        new Option<bool>("85453", "2 - The High Priestess' Intuition", "Mode: [select] only\nShould the bot buy \"2 - The High Priestess' Intuition\" ?", false),
-        new Option<bool>("85455", "3 - The Empress' Initiative", "Mode: [select] only\nShould the bot buy \"3 - The Empress' Initiative\" ?", false),
-        new Option<bool>("85457", "4 - The Emperor's Authority", "Mode: [select] only\nShould the bot buy \"4 - The Emperor's Authority\" ?", false),
-        new Option<bool>("85459", "5 - The Hierophant's Servitude", "Mode: [select] only\nShould the bot buy \"5 - The Hierophant's Servitude\" ?", false),
-        new Option<bool>("85461", "6 - The Lovers' Embrace", "Mode: [select] only\nShould the bot buy \"6 - The Lovers' Embrace\" ?", false),
-        new Option<bool>("85463", "7 - The Chariot's Triumph", "Mode: [select] only\nShould the bot buy \"7 - The Chariot's Triumph\" ?", false),
-        new Option<bool>("85465", "8 - Justice's Righteousness", "Mode: [select] only\nShould the bot buy \"8 - Justice's Righteousness\" ?", false),
-        new Option<bool>("85467", "9 - The Hermit's Solitude", "Mode: [select] only\nShould the bot buy \"9 - The Hermit's Solitude\" ?", false),
-        new Option<bool>("85469", "10 - Wheel of Fortune's Destiny", "Mode: [select] only\nShould the bot buy \"10 - Wheel of Fortune's Destiny\" ?", false),
-        new Option<bool>("85471", "11 - Strength's Fortitude", "Mode: [select] only\nShould the bot buy \"11 - Strength's Fortitude\" ?", false),
-        new Option<bool>("85473", "12 - The Hanged Man's Discernment", "Mode: [select] only\nShould the bot buy \"12 - The Hanged Man's Discernment\" ?", false),
-        new Option<bool>("85475", "13 - Death's Mortality", "Mode: [select] only\nShould the bot buy \"13 - Death's Mortality\" ?", false),
-        new Option<bool>("85477", "14 - Temperance's Frugality", "Mode: [select] only\nShould the bot buy \"14 - Temperance's Frugality\" ?", false),
-        new Option<bool>("85479", "15 - Devilish Temptation", "Mode: [select] only\nShould the bot buy \"15 - Devilish Temptation\" ?", false),
-        new Option<bool>("85481", "16 - The Tower's Upheaval", "Mode: [select] only\nShould the bot buy \"16 - The Tower's Upheaval\" ?", false),
-        new Option<bool>("85483", "17 - The Star's Hope", "Mode: [select] only\nShould the bot buy \"17 - The Star's Hope\" ?", false),
-        new Option<bool>("85485", "18 - The Moon's Illusion", "Mode: [select] only\nShould the bot buy \"18 - The Moon's Illusion\" ?", false),
-        new Option<bool>("85487", "19 - The Sun's Optimism", "Mode: [select] only\nShould the bot buy \"19 - The Sun's Optimism\" ?", false),
-        new Option<bool>("85489", "20 - Judgement's Absolution", "Mode: [select] only\nShould the bot buy \"20 - Judgement's Absolution\" ?", false),
-        new Option<bool>("85491", "21 - The World's Voyage", "Mode: [select] only\nShould the bot buy \"21 - The World's Voyage\" ?", false),
+        new Option<bool>(
+            "85452",
+            "1 - The Magician's Desire",
+            "Mode: [select] only\nShould the bot buy \"1 - The Magician's Desire\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85453",
+            "2 - The High Priestess' Intuition",
+            "Mode: [select] only\nShould the bot buy \"2 - The High Priestess' Intuition\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85455",
+            "3 - The Empress' Initiative",
+            "Mode: [select] only\nShould the bot buy \"3 - The Empress' Initiative\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85457",
+            "4 - The Emperor's Authority",
+            "Mode: [select] only\nShould the bot buy \"4 - The Emperor's Authority\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85459",
+            "5 - The Hierophant's Servitude",
+            "Mode: [select] only\nShould the bot buy \"5 - The Hierophant's Servitude\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85461",
+            "6 - The Lovers' Embrace",
+            "Mode: [select] only\nShould the bot buy \"6 - The Lovers' Embrace\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85463",
+            "7 - The Chariot's Triumph",
+            "Mode: [select] only\nShould the bot buy \"7 - The Chariot's Triumph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85465",
+            "8 - Justice's Righteousness",
+            "Mode: [select] only\nShould the bot buy \"8 - Justice's Righteousness\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85467",
+            "9 - The Hermit's Solitude",
+            "Mode: [select] only\nShould the bot buy \"9 - The Hermit's Solitude\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85469",
+            "10 - Wheel of Fortune's Destiny",
+            "Mode: [select] only\nShould the bot buy \"10 - Wheel of Fortune's Destiny\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85471",
+            "11 - Strength's Fortitude",
+            "Mode: [select] only\nShould the bot buy \"11 - Strength's Fortitude\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85473",
+            "12 - The Hanged Man's Discernment",
+            "Mode: [select] only\nShould the bot buy \"12 - The Hanged Man's Discernment\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85475",
+            "13 - Death's Mortality",
+            "Mode: [select] only\nShould the bot buy \"13 - Death's Mortality\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85477",
+            "14 - Temperance's Frugality",
+            "Mode: [select] only\nShould the bot buy \"14 - Temperance's Frugality\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85479",
+            "15 - Devilish Temptation",
+            "Mode: [select] only\nShould the bot buy \"15 - Devilish Temptation\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85481",
+            "16 - The Tower's Upheaval",
+            "Mode: [select] only\nShould the bot buy \"16 - The Tower's Upheaval\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85483",
+            "17 - The Star's Hope",
+            "Mode: [select] only\nShould the bot buy \"17 - The Star's Hope\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85485",
+            "18 - The Moon's Illusion",
+            "Mode: [select] only\nShould the bot buy \"18 - The Moon's Illusion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85487",
+            "19 - The Sun's Optimism",
+            "Mode: [select] only\nShould the bot buy \"19 - The Sun's Optimism\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85489",
+            "20 - Judgement's Absolution",
+            "Mode: [select] only\nShould the bot buy \"20 - Judgement's Absolution\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85491",
+            "21 - The World's Voyage",
+            "Mode: [select] only\nShould the bot buy \"21 - The World's Voyage\" ?",
+            false
+        ),
     };
 }

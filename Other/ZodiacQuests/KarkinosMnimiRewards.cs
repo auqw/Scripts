@@ -31,7 +31,6 @@ public class KarkinosMnimi
         if (Core.CheckInventory(Core.QuestRewards(questID)))
             return;
 
-
         List<ItemBase> RewardOptions = Core.EnsureLoad(questID).Rewards;
 
         Bot.Drops.Add(Core.QuestRewards(questID));

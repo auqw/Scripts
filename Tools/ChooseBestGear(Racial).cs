@@ -6,22 +6,36 @@ tags: best, gear, boost, damage, dmg, dps, race, racial, racist, chaos, dragonki
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
-using Skua.Core.Options;
 using Skua.Core.Interfaces;
+using Skua.Core.Options;
 
 public class ChooseRacialBestGear
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ChooseBestRacialGear";
     public List<IOption> Options = new()
     {
-        new Option<RacialGearBoost>("RacialGearBoost", "Racial Gear Boost", "Choose From dropmenu list what Racial Damage Boost you want to equip ", RacialGearBoost.None),
-        new Option<bool>("EnhanceEquipment", "Enhance Equipment", "Specifiy if your racial equipment to be enhanced or not", true),
+        new Option<RacialGearBoost>(
+            "RacialGearBoost",
+            "Racial Gear Boost",
+            "Choose From dropmenu list what Racial Damage Boost you want to equip ",
+            RacialGearBoost.None
+        ),
+        new Option<bool>(
+            "EnhanceEquipment",
+            "Enhance Equipment",
+            "Specifiy if your racial equipment to be enhanced or not",
+            true
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -29,17 +43,35 @@ public class ChooseRacialBestGear
     {
         Core.SetOptions();
 
-        ChooseItem(Bot.Config!.Get<RacialGearBoost>("RacialGearBoost"), Bot.Config!.Get<bool>("EnhanceEquipment"));
+        ChooseItem(
+            Bot.Config!.Get<RacialGearBoost>("RacialGearBoost"),
+            Bot.Config!.Get<bool>("EnhanceEquipment")
+        );
 
         Core.SetOptions(false);
     }
 
-    public void ChooseItem(RacialGearBoost gearBoost = RacialGearBoost.None, bool EnhanceEquipment = true)
+    public void ChooseItem(
+        RacialGearBoost gearBoost = RacialGearBoost.None,
+        bool EnhanceEquipment = true
+    )
     {
         if (Core.CBOBool("DisableBestGear", out bool _DisableBestGear) && _DisableBestGear)
-            Core.Logger("This bot requires you to have Best Gear enabled, please enable it in Options > CoreBots", messageBox: true, stopBot: true);
-        if (EnhanceEquipment && Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance)
-            Core.Logger("This bot requires you to have Auto-Enhance enabled, please enable it in Options > CoreBots", messageBox: true, stopBot: true);
+            Core.Logger(
+                "This bot requires you to have Best Gear enabled, please enable it in Options > CoreBots",
+                messageBox: true,
+                stopBot: true
+            );
+        if (
+            EnhanceEquipment
+            && Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance)
+            && _disableAutoEnhance
+        )
+            Core.Logger(
+                "This bot requires you to have Auto-Enhance enabled, please enable it in Options > CoreBots",
+                messageBox: true,
+                stopBot: true
+            );
 
         if (EnhanceEquipment && Bot.Player.CurrentClass != null)
             Adv.SmartEnhance(Bot.Player.CurrentClass.Name);

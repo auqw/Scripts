@@ -1,22 +1,28 @@
-
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 //cs_include Scripts/CoreFarms.cs
+using System.Collections.Generic;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
 using Skua.Core.Options;
-using System.Collections.Generic;
 
 public class ArmyHigureMats
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "ArmyHigureMats";
     public bool DontPreconfigure = true;
@@ -29,7 +35,7 @@ public class ArmyHigureMats
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -50,9 +56,15 @@ public class ArmyHigureMats
 
         var items = new List<string>
         {
-            "Darkon's Receipt", "La's Gratitude", "Astravian Medal", "A Melody",
-            "Suki's Prestige", "Ancient Remnant", "Mourning Flower",
-            "Unfinished Musical Score", "Bounty Hunter Dubloon"
+            "Darkon's Receipt",
+            "La's Gratitude",
+            "Astravian Medal",
+            "A Melody",
+            "Suki's Prestige",
+            "Ancient Remnant",
+            "Mourning Flower",
+            "Unfinished Musical Score",
+            "Bounty Hunter Dubloon",
         };
 
         var reqQuant = new Dictionary<string, int>();
@@ -83,30 +95,116 @@ public class ArmyHigureMats
 
         var huntData = new[]
         {
-            new {Map = "arcangrove", Cells = new[] { "LeftBack", "Left", "Back"}, Item = "Darkon's Receipt", PriorityCell = "LeftBack", QuestId = 7324, Quantity = 66},
-            new {Map = "astravia", Cells = new[] {"r6", "r7", "r8"}, Item = "La's Gratitude", PriorityCell = "r8", QuestId = 8001, Quantity = 66},
-            new {Map = "astraviacastle", Cells = new[] {"r3", "r6", "r11"}, Item = "Astravian Medal", PriorityCell = "r11", QuestId = 8257, Quantity = 66},
-            new {Map = "astraviajudge", Cells = new[] {"r2", "r3", "r11"}, Item = "A Melody", PriorityCell = "r11", QuestId = 8396, Quantity = 66},
-            new {Map = "astraviapast", Cells = new[] {"r6", "r7", "r8", "r4"}, Item = "Suki's Prestige", PriorityCell = "", QuestId = 8602, Quantity = 66},
-            new {Map = "firstobservatory", Cells = new[] {"r6", "r7", "r10a"}, Item = "Ancient Remnant", PriorityCell = "r10a", QuestId = 8641, Quantity = 66},
-            new {Map = "genesisgarden", Cells = new[] {"r6", "r9", "r11"}, Item = "Mourning Flower", PriorityCell = "r11", QuestId = 8688, Quantity = 66},
-            new {Map = "theworld", Cells = new[] {"r9"}, Item = "Unfinished Musical Score", PriorityCell = "", QuestId = 0, Quantity = 66},
-            new {Map = "hbchallenge", Cells = new[] {"r6"}, Item = "Bounty Hunter Dubloon", PriorityCell = "", QuestId = 9393, Quantity = 222}
+            new
+            {
+                Map = "arcangrove",
+                Cells = new[] { "LeftBack", "Left", "Back" },
+                Item = "Darkon's Receipt",
+                PriorityCell = "LeftBack",
+                QuestId = 7324,
+                Quantity = 66,
+            },
+            new
+            {
+                Map = "astravia",
+                Cells = new[] { "r6", "r7", "r8" },
+                Item = "La's Gratitude",
+                PriorityCell = "r8",
+                QuestId = 8001,
+                Quantity = 66,
+            },
+            new
+            {
+                Map = "astraviacastle",
+                Cells = new[] { "r3", "r6", "r11" },
+                Item = "Astravian Medal",
+                PriorityCell = "r11",
+                QuestId = 8257,
+                Quantity = 66,
+            },
+            new
+            {
+                Map = "astraviajudge",
+                Cells = new[] { "r2", "r3", "r11" },
+                Item = "A Melody",
+                PriorityCell = "r11",
+                QuestId = 8396,
+                Quantity = 66,
+            },
+            new
+            {
+                Map = "astraviapast",
+                Cells = new[] { "r6", "r7", "r8", "r4" },
+                Item = "Suki's Prestige",
+                PriorityCell = "",
+                QuestId = 8602,
+                Quantity = 66,
+            },
+            new
+            {
+                Map = "firstobservatory",
+                Cells = new[] { "r6", "r7", "r10a" },
+                Item = "Ancient Remnant",
+                PriorityCell = "r10a",
+                QuestId = 8641,
+                Quantity = 66,
+            },
+            new
+            {
+                Map = "genesisgarden",
+                Cells = new[] { "r6", "r9", "r11" },
+                Item = "Mourning Flower",
+                PriorityCell = "r11",
+                QuestId = 8688,
+                Quantity = 66,
+            },
+            new
+            {
+                Map = "theworld",
+                Cells = new[] { "r9" },
+                Item = "Unfinished Musical Score",
+                PriorityCell = "",
+                QuestId = 0,
+                Quantity = 66,
+            },
+            new
+            {
+                Map = "hbchallenge",
+                Cells = new[] { "r6" },
+                Item = "Bounty Hunter Dubloon",
+                PriorityCell = "",
+                QuestId = 9393,
+                Quantity = 222,
+            },
         };
 
         foreach (var hunt in huntData)
         {
-            ArmyHunt(hunt.Map, hunt.Cells, hunt.Item, hunt.PriorityCell, hunt.QuestId, hunt.Quantity);
+            ArmyHunt(
+                hunt.Map,
+                hunt.Cells,
+                hunt.Item,
+                hunt.PriorityCell,
+                hunt.QuestId,
+                hunt.Quantity
+            );
         }
 
         Core.SetOptions(false);
     }
 
-
-    void ArmyHunt(string map, string[] cells, string item, string priorityCell, int questId, int quant = 1)
+    void ArmyHunt(
+        string map,
+        string[] cells,
+        string item,
+        string priorityCell,
+        int questId,
+        int quant = 1
+    )
     {
         Army.registerMessage(item, false);
-        if (Army.isDone(20)) return;
+        if (Army.isDone(20))
+            return;
         // Core.Equip(Bot.Config.Get<string>("SafeClass"));
         // Army.registerMessage(item);
 
@@ -127,8 +225,13 @@ public class ArmyHigureMats
         if (questId != 0)
             Core.RegisterQuests(questId);
 
-
-        Army.DivideOnCellsPriority(cells, priorityCell: priorityCell, setAggro: true, log: true, equipClass: true);
+        Army.DivideOnCellsPriority(
+            cells,
+            priorityCell: priorityCell,
+            setAggro: true,
+            log: true,
+            equipClass: true
+        );
 
         Core.FarmingLogger(item, quant);
         Core.Logger($"army: starting {quant} {item}");

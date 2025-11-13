@@ -14,9 +14,12 @@ public class OneFinaltTask
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static HoratioQuests HQ { get => _HQ ??= new HoratioQuests(); set => _HQ = value; }
+    private static HoratioQuests HQ
+    {
+        get => _HQ ??= new HoratioQuests();
+        set => _HQ = value;
+    }
     private static HoratioQuests _HQ;
-
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -32,6 +35,7 @@ public class OneFinaltTask
         QuestsIfNeeded();
         AutoReward();
     }
+
     public void AutoReward(int questID = 6948)
     {
         List<ItemBase> RewardOptions = Core.EnsureLoad(questID).Rewards;

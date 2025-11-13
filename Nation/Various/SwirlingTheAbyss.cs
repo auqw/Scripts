@@ -17,9 +17,24 @@ public class SwirlingTheAbyss
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static Fiendshard_Story Fiendshard { get => _Fiendshard ??= new Fiendshard_Story(); set => _Fiendshard = value; }    private static Fiendshard_Story _Fiendshard;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static Fiendshard_Story Fiendshard
+    {
+        get => _Fiendshard ??= new Fiendshard_Story();
+        set => _Fiendshard = value;
+    }
+    private static Fiendshard_Story _Fiendshard;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,7 +48,7 @@ public class SwirlingTheAbyss
     }
 
     public readonly string[] Rewards =
- {
+    {
         "ArchFiend Deathlord Armet",
         "ArchFiend Deathlord Horned Armet",
         "ArchFiend Deathlord Helmet",
@@ -51,17 +66,24 @@ public class SwirlingTheAbyss
         if (item != null && Core.CheckInventory(item))
             return;
 
-
         if (item != null)
             Core.Logger($"Farming {item}.");
-        else Core.Logger("Farming Swirling the Abyss Quest Rewards.");
+        else
+            Core.Logger("Farming Swirling the Abyss Quest Rewards.");
         Fiendshard.Fiendshard_QuestlineP1();
         Core.AddDrop(Nation.bagDrops);
         Core.AddDrop(Rewards);
         ItemBase? Item = Core.EnsureLoad(7899).Rewards.Find(x => x.Name == item);
 
         int i = 1;
-        while (!Bot.ShouldExit && (Item != null ? !Core.CheckInventory(Item!.Name) : !Core.CheckInventory(Rewards, toInv: false)))
+        while (
+            !Bot.ShouldExit
+            && (
+                Item != null
+                    ? !Core.CheckInventory(Item!.Name)
+                    : !Core.CheckInventory(Rewards, toInv: false)
+            )
+        )
         {
             Nation.FarmBloodGem(10);
             Nation.FarmUni13(3);
@@ -86,10 +108,6 @@ public class SwirlingTheAbyss
                 Core.ToBank(Rewards);
                 Core.Logger($"Completed x{i++}.");
             }
-
         }
-
-
     }
-
 }

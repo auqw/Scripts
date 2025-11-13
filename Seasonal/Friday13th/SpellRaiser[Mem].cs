@@ -12,7 +12,12 @@ public class SpellRaiser
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFriday13th F13 { get => _F13 ??= new CoreFriday13th(); set => _F13 = value; }    private static CoreFriday13th _F13;
+    private static CoreFriday13th F13
+    {
+        get => _F13 ??= new CoreFriday13th();
+        set => _F13 = value;
+    }
+    private static CoreFriday13th _F13;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -25,7 +30,11 @@ public class SpellRaiser
 
     public void GetAll()
     {
-        string[] AllRewards = Core.EnsureLoad(7400).Rewards.Select(i => i.Name).Concat(Core.EnsureLoad(7402).Rewards.Select(i => i.Name)).Concat(Core.EnsureLoad(7404).Rewards.Select(i => i.Name)).ToArray();
+        string[] AllRewards = Core.EnsureLoad(7400)
+            .Rewards.Select(i => i.Name)
+            .Concat(Core.EnsureLoad(7402).Rewards.Select(i => i.Name))
+            .Concat(Core.EnsureLoad(7404).Rewards.Select(i => i.Name))
+            .ToArray();
 
         if (Core.CheckInventory(AllRewards, toInv: false))
             return;
@@ -43,7 +52,5 @@ public class SpellRaiser
         Core.JumpWait();
         Core.ToBank(AllRewards);
         Core.CancelRegisteredQuests();
-
-
     }
 }

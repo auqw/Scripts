@@ -17,23 +17,49 @@ public class SummerBreakMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -61,7 +87,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -72,9 +100,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Diamond of Nulgath":
                     Nation.FarmDiamondofNulgath(quant);
@@ -84,7 +117,10 @@ public static CoreAdvanced _sAdv;
                     if (Core.isCompletedBefore(793))
                         Legion.FarmLegionToken(quant);
                     else
-                        Core.Logger("Skipped the item because user is not part of the Legion", messageBox: true);
+                        Core.Logger(
+                            "Skipped the item because user is not part of the Legion",
+                            messageBox: true
+                        );
                     break;
 
                 case "Summer Sizzle Lotion":
@@ -117,28 +153,107 @@ public static CoreAdvanced _sAdv;
                     Core.HuntMonster("summerbreak", "MMMirage", "Gum Ball", 6);
                     Core.EnsureCompleteChoose(8794, new[] { req.Name });
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("44211", "Surfboard of Nulgath Nation", "Mode: [select] only\nShould the bot buy \"Surfboard of Nulgath Nation\" ?", false),
-        new Option<bool>("44210", "Surfboard of the Undead Legion", "Mode: [select] only\nShould the bot buy \"Surfboard of the Undead Legion\" ?", false),
-        new Option<bool>("71099", "Enchanted Volleyball Captain", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyball Captain\" ?", false),
-        new Option<bool>("71100", "Enchanted Volleyball Hero", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyball Hero\" ?", false),
-        new Option<bool>("71103", "Enchanted Volleyballer's Hat + Glasses", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Hat + Glasses\" ?", false),
-        new Option<bool>("71104", "Enchanted Volleyballer's Female Hat + Glasses", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Female Hat + Glasses\" ?", false),
-        new Option<bool>("71105", "Enchanted Team A Mascot", "Mode: [select] only\nShould the bot buy \"Enchanted Team A Mascot\" ?", false),
-        new Option<bool>("71106", "Enchanted Team B Mascot", "Mode: [select] only\nShould the bot buy \"Enchanted Team B Mascot\" ?", false),
-        new Option<bool>("71107", "Enchanted Team C Mascot", "Mode: [select] only\nShould the bot buy \"Enchanted Team C Mascot\" ?", false),
-        new Option<bool>("71108", "Enchanted Volleyballer's Board Cape", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Board Cape\" ?", false),
-        new Option<bool>("71109", "Enchanted Volleyballer's Rod", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Rod\" ?", false),
-        new Option<bool>("71110", "Enchanted Volleyballer's Surfboard", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Surfboard\" ?", false),
-        new Option<bool>("71111", "Enchanted Volleyballer's Foam Spear", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Foam Spear\" ?", false),
-        new Option<bool>("71112", "Enchanted Volleyballer's Foam Gauntlets", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Foam Gauntlets\" ?", false),
-        new Option<bool>("71113", "Enchanted Volleyballer's WaterGun", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's WaterGun\" ?", false),
-        new Option<bool>("71114", "Enchanted Volleyballer's WaterGuns", "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's WaterGuns\" ?", false),
+        new Option<bool>(
+            "44211",
+            "Surfboard of Nulgath Nation",
+            "Mode: [select] only\nShould the bot buy \"Surfboard of Nulgath Nation\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44210",
+            "Surfboard of the Undead Legion",
+            "Mode: [select] only\nShould the bot buy \"Surfboard of the Undead Legion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71099",
+            "Enchanted Volleyball Captain",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyball Captain\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71100",
+            "Enchanted Volleyball Hero",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyball Hero\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71103",
+            "Enchanted Volleyballer's Hat + Glasses",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Hat + Glasses\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71104",
+            "Enchanted Volleyballer's Female Hat + Glasses",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Female Hat + Glasses\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71105",
+            "Enchanted Team A Mascot",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Team A Mascot\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71106",
+            "Enchanted Team B Mascot",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Team B Mascot\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71107",
+            "Enchanted Team C Mascot",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Team C Mascot\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71108",
+            "Enchanted Volleyballer's Board Cape",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Board Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71109",
+            "Enchanted Volleyballer's Rod",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Rod\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71110",
+            "Enchanted Volleyballer's Surfboard",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Surfboard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71111",
+            "Enchanted Volleyballer's Foam Spear",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Foam Spear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71112",
+            "Enchanted Volleyballer's Foam Gauntlets",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's Foam Gauntlets\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71113",
+            "Enchanted Volleyballer's WaterGun",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's WaterGun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71114",
+            "Enchanted Volleyballer's WaterGuns",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Volleyballer's WaterGuns\" ?",
+            false
+        ),
     };
 }

@@ -13,9 +13,24 @@ public class StarFestival
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -103,7 +118,12 @@ public class StarFestival
         if (!Story.QuestProgression(8753))
         {
             Core.EnsureAccept(8753);
-            Core.HuntMonster("Tercessuinotlim", "Tainted Elemental", "Tainted Essence Collected", 10);
+            Core.HuntMonster(
+                "Tercessuinotlim",
+                "Tainted Elemental",
+                "Tainted Essence Collected",
+                10
+            );
             Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Makai Essence Collected", 20);
             Core.HuntMonster("necrodungeon", "5 Headed Dracolich", "Dracolich Soul Collected", 15);
             Core.HuntMonster("necrodungeon", "SlimeSkull", "Necropolis Soul Collected", 15);

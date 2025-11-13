@@ -25,14 +25,23 @@ public class BookOfMagus
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArchMage AM { get => _AM ??= new CoreArchMage(); set => _AM = value; }
+    private static CoreArchMage AM
+    {
+        get => _AM ??= new CoreArchMage();
+        set => _AM = value;
+    }
     private static CoreArchMage _AM;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArchMage";
     public List<IOption> Options = new()
     {
-        new Option<bool>("cosmetics", "Get Cosmetics", "Gets the cosmetic rewards (redoes quests if you don't have them, disable to just get ArchMage and the weapon) [On by default]", true),
+        new Option<bool>(
+            "cosmetics",
+            "Get Cosmetics",
+            "Gets the cosmetic rewards (redoes quests if you don't have them, disable to just get ArchMage and the weapon) [On by default]",
+            true
+        ),
         CoreBots.Instance.SkipOptions,
     };
 

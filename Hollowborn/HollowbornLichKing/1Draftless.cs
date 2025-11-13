@@ -15,7 +15,6 @@ tags: hollowborn lich king, hollowborn, draftless
 //cs_include Scripts/Legion/Revenant/CoreLR.cs
 //cs_include Scripts/Story/QueenofMonsters/CoreQOM.cs
 
-
 //cs_include Scripts/Legion/MergeShops/UndeadLegionMerge.cs
 //cs_include Scripts/Legion/LegionMaterials/SoulSand.cs
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
@@ -34,9 +33,12 @@ public class HBLK1
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private static CoreHollowbornLichKing sHBLK { get => _sHBLK ??= new CoreHollowbornLichKing(); set => _sHBLK = value; }
-private static CoreHollowbornLichKing _sHBLK;
-
+    private static CoreHollowbornLichKing sHBLK
+    {
+        get => _sHBLK ??= new CoreHollowbornLichKing();
+        set => _sHBLK = value;
+    }
+    private static CoreHollowbornLichKing _sHBLK;
 
     public string OptionsStorage = sHBLK.OptionsStorage;
     public bool DontPreconfigure = true;

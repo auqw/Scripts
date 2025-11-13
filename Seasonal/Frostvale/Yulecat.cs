@@ -28,14 +28,16 @@ public class Yulecat
             return;
         }
 
-        string[] DropsM = {
+        string[] DropsM =
+        {
             "Festive Flying Piggy Guard",
             "Northlands Hunter Blades",
             "Northlands Hunter Winged Helm",
-            "Ziri's Holiday Horror Kitty"
+            "Ziri's Holiday Horror Kitty",
         };
 
-        string[] Drops = {
+        string[] Drops =
+        {
             "Festive Wand",
             "Furred Hunter's Cape",
             "Holiday Party Piggy Guard",
@@ -43,12 +45,15 @@ public class Yulecat
             "Kitty's Last Lunch",
             "Northlands BeastHunter",
             "Northlands Hunter Blade",
-            "Northlands Hunter Helmet"
+            "Northlands Hunter Helmet",
         };
 
         string[] MemDrops = DropsM.Concat(Drops).ToArray();
 
-        if ((Core.CheckInventory(MemDrops) && Core.IsMember) || (Core.CheckInventory(Drops) && !Core.IsMember))
+        if (
+            (Core.CheckInventory(MemDrops) && Core.IsMember)
+            || (Core.CheckInventory(Drops) && !Core.IsMember)
+        )
         {
             Core.Logger("You already have all of the items.");
             return;

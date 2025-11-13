@@ -17,9 +17,17 @@ public class CoreDarkon
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }
+    private static CoreAstravia Astravia
+    {
+        get => _Astravia ??= new CoreAstravia();
+        set => _Astravia = value;
+    }
     private static CoreAstravia _Astravia;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -27,13 +35,16 @@ public class CoreDarkon
         Core.RunCore();
     }
 
-    public void FarmReceipt(int Quantity = 222, bool MaxStack = false) => FirstErrand(Quantity, MaxStack);
+    public void FarmReceipt(int Quantity = 222, bool MaxStack = false) =>
+        FirstErrand(Quantity, MaxStack);
 
     public void FirstErrand(int Quantity = 222, bool MaxStack = false)
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7324));
         if (MaxStack)
-            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack ?? Quantity;
+            Quantity =
+                quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack
+                ?? Quantity;
 
         if (Core.CheckInventory("Darkon's Receipt", Quantity))
             return;
@@ -44,7 +55,14 @@ public class CoreDarkon
 
         Core.RegisterQuests(7324);
         while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
-            Core.KillMonster("arcangrove", "LeftBack", "Left", "Gorillaphant", isTemp: false, log: false);
+            Core.KillMonster(
+                "arcangrove",
+                "LeftBack",
+                "Left",
+                "Gorillaphant",
+                isTemp: false,
+                log: false
+            );
         Core.CancelRegisteredQuests();
     }
 
@@ -52,7 +70,9 @@ public class CoreDarkon
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7325));
         if (MaxStack)
-            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack ?? Quantity;
+            Quantity =
+                quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack
+                ?? Quantity;
         if (Core.CheckInventory("Darkon's Receipt", Quantity))
             return;
 
@@ -75,7 +95,8 @@ public class CoreDarkon
                 }
                 if (Bot.Map.PlayerCount >= 3)
                     EnoughPeople = true;
-                else EnoughPeople = false;
+                else
+                    EnoughPeople = false;
             }
 
             if (!EnoughPeople && !Core.IsMember && escapeWhile)
@@ -85,8 +106,27 @@ public class CoreDarkon
             }
 
             if (!EnoughPeople && Core.IsMember)
-                Core.HuntMonster("ultravoid", "Ultra Kathool", "Ingredients?", 22, false, publicRoom: true, log: false);
-            else Core.KillMonster("doomvault", "r5", "Left", "Binky", "Ingredients?", 22, false, publicRoom: true, log: false);
+                Core.HuntMonster(
+                    "ultravoid",
+                    "Ultra Kathool",
+                    "Ingredients?",
+                    22,
+                    false,
+                    publicRoom: true,
+                    log: false
+                );
+            else
+                Core.KillMonster(
+                    "doomvault",
+                    "r5",
+                    "Left",
+                    "Binky",
+                    "Ingredients?",
+                    22,
+                    false,
+                    publicRoom: true,
+                    log: false
+                );
 
             Bot.Wait.ForPickup("Darkon's Receipt");
         }
@@ -97,7 +137,9 @@ public class CoreDarkon
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(7326));
         if (MaxStack)
-            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack ?? Quantity;
+            Quantity =
+                quest?.Rewards.FirstOrDefault(x => x.Name == "Darkon's Receipt")?.MaxStack
+                ?? Quantity;
         if (Core.CheckInventory("Darkon's Receipt", Quantity))
             return;
 
@@ -110,7 +152,14 @@ public class CoreDarkon
         {
             Adv.GearStore();
             Core.UseDodgeClass();
-            Core.HuntMonster("tercessuinotlim", "Nulgath", "Nulgath's mask", 1, false, publicRoom: true);
+            Core.HuntMonster(
+                "tercessuinotlim",
+                "Nulgath",
+                "Nulgath's mask",
+                1,
+                false,
+                publicRoom: true
+            );
             Bot.Wait.ForPickup("Darkon's Receipt");
         }
         Adv.GearStore(true);
@@ -136,7 +185,16 @@ public class CoreDarkon
         {
             Core.HuntMonster("eridani", "Wolf-Like Creature", "Tooth", 28, false, log: false);
             Bot.Options.AttackWithoutTarget = true;
-            Core.KillMonster("eridani", "r4", "Left", "Creature 15", "Wisdom Tooth", 4, false, log: false);
+            Core.KillMonster(
+                "eridani",
+                "r4",
+                "Left",
+                "Creature 15",
+                "Wisdom Tooth",
+                4,
+                false,
+                log: false
+            );
             Bot.Options.AttackWithoutTarget = false;
             Bot.Wait.ForPickup("Teeth");
         }
@@ -147,7 +205,9 @@ public class CoreDarkon
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8001));
         if (MaxStack)
-            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "La's Gratitude")?.MaxStack ?? Quantity;
+            Quantity =
+                quest?.Rewards.FirstOrDefault(x => x.Name == "La's Gratitude")?.MaxStack
+                ?? Quantity;
 
         if (Core.CheckInventory("La's Gratitude", Quantity))
             return;
@@ -171,7 +231,9 @@ public class CoreDarkon
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8257));
         if (MaxStack)
-            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Astravian Medal")?.MaxStack ?? Quantity;
+            Quantity =
+                quest?.Rewards.FirstOrDefault(x => x.Name == "Astravian Medal")?.MaxStack
+                ?? Quantity;
 
         if (Core.CheckInventory("Astravian Medal", Quantity))
             return;
@@ -199,7 +261,8 @@ public class CoreDarkon
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8396));
         if (MaxStack)
-            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "A Melody")?.MaxStack ?? Quantity;
+            Quantity =
+                quest?.Rewards.FirstOrDefault(x => x.Name == "A Melody")?.MaxStack ?? Quantity;
 
         if (Core.CheckInventory("A Melody", Quantity))
             return;
@@ -224,7 +287,9 @@ public class CoreDarkon
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8531));
         if (MaxStack)
-            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Bandit's Correspondence")?.MaxStack ?? Quantity;
+            Quantity =
+                quest?.Rewards.FirstOrDefault(x => x.Name == "Bandit's Correspondence")?.MaxStack
+                ?? Quantity;
 
         if (Core.CheckInventory("Bandit's Correspondence", Quantity))
             return;
@@ -237,8 +302,24 @@ public class CoreDarkon
         while (!Bot.ShouldExit && !Core.CheckInventory("Bandit's Correspondence", Quantity))
         {
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("eridanipast", "r3", "Left", "Dog", "Dogs Confiscated", 12, log: false);
-            Core.KillMonster("eridanipast", "r9", "Left", "Bandit", "Bandit Contraband", 12, log: false);
+            Core.KillMonster(
+                "eridanipast",
+                "r3",
+                "Left",
+                "Dog",
+                "Dogs Confiscated",
+                12,
+                log: false
+            );
+            Core.KillMonster(
+                "eridanipast",
+                "r9",
+                "Left",
+                "Bandit",
+                "Bandit Contraband",
+                12,
+                log: false
+            );
 
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonsterMapID("eridanipast", 19, "Seraphic Sparred", log: false);
@@ -251,7 +332,9 @@ public class CoreDarkon
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8602));
         if (MaxStack)
-            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Suki's Prestige")?.MaxStack ?? Quantity;
+            Quantity =
+                quest?.Rewards.FirstOrDefault(x => x.Name == "Suki's Prestige")?.MaxStack
+                ?? Quantity;
 
         if (Core.CheckInventory("Suki's Prestige", Quantity))
             return;
@@ -268,7 +351,13 @@ public class CoreDarkon
             Core.HuntMonster("astraviapast", "Titania", "Titania's Rematch Won", log: false);
             Core.HuntMonster("astraviapast", "Aurola", "Aurola's Rematch Won", log: false);
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster("astraviapast", "Astravian Soldier", "Soldiers Trained", 8, log: false);
+            Core.HuntMonster(
+                "astraviapast",
+                "Astravian Soldier",
+                "Soldiers Trained",
+                8,
+                log: false
+            );
             Bot.Wait.ForPickup("Suki's Prestige");
         }
         Core.CancelRegisteredQuests();
@@ -278,7 +367,9 @@ public class CoreDarkon
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8641));
         if (MaxStack)
-            Quantity = quest?.Rewards.FirstOrDefault(x => x.Name == "Ancient Remnant")?.MaxStack ?? Quantity;
+            Quantity =
+                quest?.Rewards.FirstOrDefault(x => x.Name == "Ancient Remnant")?.MaxStack
+                ?? Quantity;
 
         if (Core.CheckInventory("Ancient Remnant", Quantity))
             return;
@@ -292,37 +383,73 @@ public class CoreDarkon
         {
             Core.JumpWait();
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("firstobservatory", "r7", "Left", "Ancient Creature", "Creature Samples", 6, log: false);
-            Core.KillMonster("firstobservatory", "r6", "Left", "Ancient Turret", "Turret Pieces", 12, log: false);
+            Core.KillMonster(
+                "firstobservatory",
+                "r7",
+                "Left",
+                "Ancient Creature",
+                "Creature Samples",
+                6,
+                log: false
+            );
+            Core.KillMonster(
+                "firstobservatory",
+                "r6",
+                "Left",
+                "Ancient Turret",
+                "Turret Pieces",
+                12,
+                log: false
+            );
             Core.JumpWait();
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster($"firstobservatory", "Empress’ Finger", "Alprecha Observed", log: false);
+            Core.HuntMonster(
+                $"firstobservatory",
+                "Empress’ Finger",
+                "Alprecha Observed",
+                log: false
+            );
             Bot.Wait.ForPickup("Ancient Remnant");
         }
         Core.CancelRegisteredQuests();
     }
 
-    public void WheelofFortune(int FlowerQuantity = 1000, int ScaleQuantity = 1000, bool MaxStack = false)
+    public void WheelofFortune(
+        int FlowerQuantity = 1000,
+        int ScaleQuantity = 1000,
+        bool MaxStack = false
+    )
     {
         Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(8688));
         if (quest is null)
         {
-            Core.Logger("Quest 8688 not found, please ensure you have the Elegy of Madness story completed.");
+            Core.Logger(
+                "Quest 8688 not found, please ensure you have the Elegy of Madness story completed."
+            );
             return;
         }
         if (MaxStack)
         {
-            FlowerQuantity = quest.Rewards.FirstOrDefault(x => x.Name == "Mourning Flower")?.MaxStack ?? FlowerQuantity;
-            ScaleQuantity = quest.Rewards.FirstOrDefault(x => x.Name == "Jus Divinum Scale")?.MaxStack ?? ScaleQuantity;
+            FlowerQuantity =
+                quest.Rewards.FirstOrDefault(x => x.Name == "Mourning Flower")?.MaxStack
+                ?? FlowerQuantity;
+            ScaleQuantity =
+                quest.Rewards.FirstOrDefault(x => x.Name == "Jus Divinum Scale")?.MaxStack
+                ?? ScaleQuantity;
         }
 
-        if (Core.CheckInventory("Mourning Flower", FlowerQuantity) && Core.CheckInventory("Jus Divinum Scale", ScaleQuantity))
+        if (
+            Core.CheckInventory("Mourning Flower", FlowerQuantity)
+            && Core.CheckInventory("Jus Divinum Scale", ScaleQuantity)
+        )
             return;
 
         if (FlowerQuantity > 0 && ScaleQuantity > 0)
         {
-            Core.Logger($"Farming Mourning Flower ({Core.dynamicQuant("Mourning Flower", false)}/{FlowerQuantity}) " +
-                            $"and Jus Divinum Scale ({Core.dynamicQuant("Jus Divinum Scale", false)}/{ScaleQuantity})");
+            Core.Logger(
+                $"Farming Mourning Flower ({Core.dynamicQuant("Mourning Flower", false)}/{FlowerQuantity}) "
+                    + $"and Jus Divinum Scale ({Core.dynamicQuant("Jus Divinum Scale", false)}/{ScaleQuantity})"
+            );
         }
 
         Core.AddDrop("Mourning Flower", "Jus Divinum Scale");
@@ -330,8 +457,10 @@ public class CoreDarkon
         Astravia.GenesisGarden();
 
         Core.RegisterQuests(8688);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Mourning Flower", FlowerQuantity)
-        || !Core.CheckInventory("Jus Divinum Scale", ScaleQuantity))
+        while (
+            !Bot.ShouldExit && !Core.CheckInventory("Mourning Flower", FlowerQuantity)
+            || !Core.CheckInventory("Jus Divinum Scale", ScaleQuantity)
+        )
         {
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("genesisgarden", "Long-eared Beast", "Beast Subject", 7, log: false);

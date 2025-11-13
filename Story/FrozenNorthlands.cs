@@ -11,7 +11,12 @@ public class FrozenNorthlands
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -39,7 +44,11 @@ public class FrozenNorthlands
         Story.KillQuest(3634, "chaosnorth", new[] { "Chaotic Symbiote", "Chaorruption" });
 
         // Book of Chaos and Flames 3635
-        Story.KillQuest(3635, "chaosnorth", new[] { "Chaorrupted Mage", "Chaorrupted Mage", "Chaorrupted Mage" });
+        Story.KillQuest(
+            3635,
+            "chaosnorth",
+            new[] { "Chaorrupted Mage", "Chaorrupted Mage", "Chaorrupted Mage" }
+        );
 
         // Facets of Chaos 3636
         if (!Story.QuestProgression(3636))
@@ -50,10 +59,13 @@ public class FrozenNorthlands
         }
 
         // Chaos Eye Spy 3637
-        Story.KillQuest(3637, "chaosnorth", new[] { "Chaorrupted Imp", "Chaorrupted Mage", "Chaorruption", "Chaos Sp-Eye" });
+        Story.KillQuest(
+            3637,
+            "chaosnorth",
+            new[] { "Chaorrupted Imp", "Chaorrupted Mage", "Chaorruption", "Chaos Sp-Eye" }
+        );
 
         // Defeat Chaorrupted Xan Illusion 3638
         Story.KillQuest(3638, "chaosnorth", "Chaorrupted Xan");
-
     }
 }

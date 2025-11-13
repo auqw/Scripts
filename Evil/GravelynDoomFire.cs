@@ -11,7 +11,12 @@ public class GravelynDoomFire
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -69,7 +74,7 @@ public class GravelynDoomFire
                 // Check for "Painful Memory Bubble"
                 if (!Core.CheckInventory("Painful Memory Bubble"))
                 {
-                    Core.EnsureAcceptmultiple( new[] { 5458, 5459, 5460, 5461 });
+                    Core.EnsureAcceptmultiple(new[] { 5458, 5459, 5460, 5461 });
                     Core.KillMonster("swordhavenfalls", "r10", "Left", 1295, "Doomed Memories");
                     Core.EnsureComplete(5458);
                     Bot.Wait.ForPickup("Painful Memory Bubble");
@@ -78,7 +83,11 @@ public class GravelynDoomFire
                 // Check for "Burning Passion Flame"
                 if (!Core.CheckInventory("Burning Passion Flame"))
                 {
-                    Core.HuntMonster("shadowstrike", "Sepulchuroth", "Sepulchuroth's Undying Flame");
+                    Core.HuntMonster(
+                        "shadowstrike",
+                        "Sepulchuroth",
+                        "Sepulchuroth's Undying Flame"
+                    );
                     Core.EnsureComplete(5459);
                     Bot.Wait.ForPickup("Burning Passion Flame");
                 }
@@ -92,10 +101,21 @@ public class GravelynDoomFire
                 }
 
                 // Kill monsters for "Empowered Essence"
-                Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 13, isTemp: false);
+                Core.KillMonster(
+                    "shadowrealmpast",
+                    "Enter",
+                    "Spawn",
+                    "*",
+                    "Empowered Essence",
+                    13,
+                    isTemp: false
+                );
 
                 // Ensure completion of the main quest
-                if (GravelynsDoomFireTokenItems.Take(6).All(item => Core.CheckInventory(item)) && Core.CheckInventory("Empowered Essence", 13))
+                if (
+                    GravelynsDoomFireTokenItems.Take(6).All(item => Core.CheckInventory(item))
+                    && Core.CheckInventory("Empowered Essence", 13)
+                )
                     Core.EnsureComplete(5461);
                 Bot.Wait.ForPickup(37033);
             }
@@ -106,11 +126,11 @@ public class GravelynDoomFire
                 if (!Core.CheckInventory(item) && Core.CheckInventory(37033))
                     Core.BuyItem("darkthronehub", 1307, item);
                 //Loop it back if no Doomfire Tokens
-                else break;
+                else
+                    break;
             }
 
             Core.ToBank(shopItems);
         }
     }
 }
-

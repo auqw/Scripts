@@ -11,7 +11,12 @@ public class DageRecruitStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -40,7 +45,14 @@ public class DageRecruitStory
         if (!Story.QuestProgression(8557))
         {
             Core.EnsureAccept(8557);
-            Core.KillMonster("dagerecruit", "Enter", "Spawn", "Dreadfiend", "Fiend Energy Collected", 4);
+            Core.KillMonster(
+                "dagerecruit",
+                "Enter",
+                "Spawn",
+                "Dreadfiend",
+                "Fiend Energy Collected",
+                4
+            );
             Story.MapItemQuest(8557, "dagerecruit", 9883, 4);
         }
 
@@ -48,7 +60,14 @@ public class DageRecruitStory
         if (!Story.QuestProgression(8558))
         {
             Core.EnsureAccept(8558);
-            Core.KillMonster("dagerecruit", "Enter", "Spawn", "Dreadfiend", "Dreadfiend Defeated", 6);
+            Core.KillMonster(
+                "dagerecruit",
+                "Enter",
+                "Spawn",
+                "Dreadfiend",
+                "Dreadfiend Defeated",
+                6
+            );
             Core.EnsureComplete(8558);
         }
 
@@ -132,7 +151,14 @@ public class DageRecruitStory
         if (!Story.QuestProgression(8576))
         {
             Core.EnsureAccept(8576);
-            Core.KillMonster("dagerecruit", "Enter", "Spawn", "Dreadfiend", "Dreadfiend Defeated", 6);
+            Core.KillMonster(
+                "dagerecruit",
+                "Enter",
+                "Spawn",
+                "Dreadfiend",
+                "Dreadfiend Defeated",
+                6
+            );
             Core.HuntMonster("dagerecruit", "Dark Makai", "Dark Makai Defeated", 6);
             Core.HuntMonster("dagerecruit", "Bloodfiend ", "Bloodfiend Defeated", 6);
             Core.HuntMonster("dagerecruit", "Infernal Fiend", "Infernal Fiend Defeated", 6);
@@ -143,7 +169,14 @@ public class DageRecruitStory
         if (!Story.QuestProgression(8585))
         {
             Core.EnsureAccept(8585);
-            Core.KillMonster("darkwarlegion", "Enter", "Spawn", "Dreadfiend", "Dreadfiend Defeated", 6);
+            Core.KillMonster(
+                "darkwarlegion",
+                "Enter",
+                "Spawn",
+                "Dreadfiend",
+                "Dreadfiend Defeated",
+                6
+            );
             Core.EnsureComplete(8585);
         }
 
@@ -158,7 +191,7 @@ public class DageRecruitStory
         // ManSlayer? More Like ManSLAIN
         Story.KillQuest(8587, "darkwarlegion", "Manslayer Fiend");
 
-        // Defeat Dirtlicker            
+        // Defeat Dirtlicker
         Story.KillQuest(8588, "darkwarlegion", "Dirtlicker");
     }
 }

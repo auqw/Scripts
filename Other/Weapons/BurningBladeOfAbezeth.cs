@@ -10,12 +10,24 @@ tags: null
 //cs_include Scripts/Other/MergeShops/CelestialChampMerge.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/CelestialArena.cs
 using Skua.Core.Interfaces;
+
 public class BurningBladeOfAbezeth
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CelestialArenaQuests CAQ { get => _CAQ ??= new CelestialArenaQuests(); set => _CAQ = value; }    private static CelestialArenaQuests _CAQ;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CelestialArenaQuests CAQ
+    {
+        get => _CAQ ??= new CelestialArenaQuests();
+        set => _CAQ = value;
+    }
+    private static CelestialArenaQuests _CAQ;
+
     //public CelestialChampion CC = new();
     public void ScriptMain(IScriptInterface bot)
     {

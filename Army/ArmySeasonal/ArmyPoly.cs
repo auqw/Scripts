@@ -14,15 +14,30 @@ public class ArmyPoly
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "ArmyPoly";
     public bool DontPreconfigure = true;
@@ -35,14 +50,18 @@ public class ArmyPoly
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // GetPolly();
 
         Core.SetOptions(false);
@@ -53,10 +72,28 @@ public class ArmyPoly
         Core.EnsureAccept(7713);
 
         ArmyBits("frozenlair", new[] { "r3" }, 4, new[] { "Sapphire Orb" }, 5);
-        ArmyBits("lostruinswar", new[] { "r7" }, 13, new[] { "Rumors of the Celestial Commander" }, 5);
-        ArmyBits("iceplane", new[] { "r7", "r8", "r9" }, new[] { 8, 10, 12 }, new[] { "Starlit Journal Page 1 Scraps" }, 10);
+        ArmyBits(
+            "lostruinswar",
+            new[] { "r7" },
+            13,
+            new[] { "Rumors of the Celestial Commander" },
+            5
+        );
+        ArmyBits(
+            "iceplane",
+            new[] { "r7", "r8", "r9" },
+            new[] { 8, 10, 12 },
+            new[] { "Starlit Journal Page 1 Scraps" },
+            10
+        );
         ArmyBits("ivoliss", new[] { "r11" }, 20, new[] { "Starlit Journal Page 2 Scraps" }, 10);
-        ArmyBits("voidnightbane", new[] { "Enter" }, 1, new[] { "Starlit Journal Page 3 Scraps" }, 10);
+        ArmyBits(
+            "voidnightbane",
+            new[] { "Enter" },
+            1,
+            new[] { "Starlit Journal Page 3 Scraps" },
+            10
+        );
         ArmyBits("extinction", new[] { "r12" }, 39, new[] { "Starlit Journal Page 4 Scraps" }, 10);
         ArmyBits("starsinc", new[] { "r16" }, 25, new[] { "Map of the Celestial Seas" }, 1);
         ArmyBits("underlair", new[] { "r7" }, 17, new[] { "Coffer of the Stars" }, 1);
@@ -129,5 +166,4 @@ public class ArmyPoly
         Army.AggroMonStop(true);
         Core.CancelRegisteredQuests();
     }
-
 }

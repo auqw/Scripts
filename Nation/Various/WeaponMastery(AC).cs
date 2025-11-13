@@ -15,11 +15,23 @@ public class WeaponMasteryAC
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static Core13LoC LoC { get => _LoC ??= new Core13LoC(); set => _LoC = value; }
+    private static Core13LoC LoC
+    {
+        get => _LoC ??= new Core13LoC();
+        set => _LoC = value;
+    }
     private static Core13LoC _LoC;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -55,7 +67,10 @@ public class WeaponMasteryAC
 
         // 4786 - Members
         // 4784 - Ac
-        while (!Bot.ShouldExit && !Core.CheckInventory(new[] { "Evolved Warlord Hammer", "Evolved Warlord Axe" }))
+        while (
+            !Bot.ShouldExit
+            && !Core.CheckInventory(new[] { "Evolved Warlord Hammer", "Evolved Warlord Axe" })
+        )
         {
             Core.EnsureAccept(Core.CheckInventory(33366, toInv: false) ? 4786 : 4784);
             Nation.FarmUni13(1);

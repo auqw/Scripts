@@ -16,20 +16,37 @@ public class RakhamsPirateMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static Pirates Pir { get => _Pir ??= new Pirates(); set => _Pir = value; }
+    private static Pirates Pir
+    {
+        get => _Pir ??= new Pirates();
+        set => _Pir = value;
+    }
     private static Pirates _Pir;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -57,7 +74,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -68,9 +87,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Pack Of Spices":
                     Core.FarmingLogger(req.Name, quant);
@@ -113,16 +137,71 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("10535", "Blunderbuss of Boom", "Mode: [select] only\nShould the bot buy \"Blunderbuss of Boom\" ?", false),
-        new Option<bool>("10523", "Pirate Renegade", "Mode: [select] only\nShould the bot buy \"Pirate Renegade\" ?", false),
-        new Option<bool>("10524", "Looter", "Mode: [select] only\nShould the bot buy \"Looter\" ?", false),
-        new Option<bool>("10534", "HandCannon of the High Seas", "Mode: [select] only\nShould the bot buy \"HandCannon of the High Seas\" ?", false),
-        new Option<bool>("10537", "Captain's Cutlass of Boom", "Mode: [select] only\nShould the bot buy \"Captain's Cutlass of Boom\" ?", false),
-        new Option<bool>("10539", "Bandana of Looting", "Mode: [select] only\nShould the bot buy \"Bandana of Looting\" ?", false),
-        new Option<bool>("10540", "Pirate's Tricorn of Terror", "Mode: [select] only\nShould the bot buy \"Pirate's Tricorn of Terror\" ?", false),
-        new Option<bool>("10542", "Mermaid's Hairpoon", "Mode: [select] only\nShould the bot buy \"Mermaid's Hairpoon\" ?", false),
-        new Option<bool>("10543", "Cutlass Calais", "Mode: [select] only\nShould the bot buy \"Cutlass Calais\" ?", false),
-        new Option<bool>("10545", "Looter's Raiment", "Mode: [select] only\nShould the bot buy \"Looter's Raiment\" ?", false),
-        new Option<bool>("10536", "Bladed Blunderbuss of Boom", "Mode: [select] only\nShould the bot buy \"Bladed Blunderbuss of Boom\" ?", false),
+        new Option<bool>(
+            "10535",
+            "Blunderbuss of Boom",
+            "Mode: [select] only\nShould the bot buy \"Blunderbuss of Boom\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10523",
+            "Pirate Renegade",
+            "Mode: [select] only\nShould the bot buy \"Pirate Renegade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10524",
+            "Looter",
+            "Mode: [select] only\nShould the bot buy \"Looter\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10534",
+            "HandCannon of the High Seas",
+            "Mode: [select] only\nShould the bot buy \"HandCannon of the High Seas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10537",
+            "Captain's Cutlass of Boom",
+            "Mode: [select] only\nShould the bot buy \"Captain's Cutlass of Boom\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10539",
+            "Bandana of Looting",
+            "Mode: [select] only\nShould the bot buy \"Bandana of Looting\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10540",
+            "Pirate's Tricorn of Terror",
+            "Mode: [select] only\nShould the bot buy \"Pirate's Tricorn of Terror\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10542",
+            "Mermaid's Hairpoon",
+            "Mode: [select] only\nShould the bot buy \"Mermaid's Hairpoon\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10543",
+            "Cutlass Calais",
+            "Mode: [select] only\nShould the bot buy \"Cutlass Calais\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10545",
+            "Looter's Raiment",
+            "Mode: [select] only\nShould the bot buy \"Looter's Raiment\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10536",
+            "Bladed Blunderbuss of Boom",
+            "Mode: [select] only\nShould the bot buy \"Bladed Blunderbuss of Boom\" ?",
+            false
+        ),
     };
 }

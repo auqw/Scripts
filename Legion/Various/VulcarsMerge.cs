@@ -21,32 +21,64 @@ public class VulcarsMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static AnotherOneBitesTheDust SSand { get => _SSand ??= new AnotherOneBitesTheDust(); set => _SSand = value; }    private static AnotherOneBitesTheDust _SSand;
-    private static LetItBurn LetItBurn { get => _LetItBurn ??= new LetItBurn(); set => _LetItBurn = value; }    private static LetItBurn _LetItBurn;
-
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static AnotherOneBitesTheDust SSand
+    {
+        get => _SSand ??= new AnotherOneBitesTheDust();
+        set => _SSand = value;
+    }
+    private static AnotherOneBitesTheDust _SSand;
+    private static LetItBurn LetItBurn
+    {
+        get => _LetItBurn ??= new LetItBurn();
+        set => _LetItBurn = value;
+    }
+    private static LetItBurn _LetItBurn;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Soul Sand", "Legion Token", "Soul Essence", "Legion Undead Visor " });
+        Core.BankingBlackList.AddRange(
+            new[] { "Soul Sand", "Legion Token", "Soul Essence", "Legion Undead Visor " }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -64,7 +96,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -75,9 +109,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Soul Sand":
                     SSand.SoulSand(quant);
@@ -102,22 +141,71 @@ public static CoreAdvanced _sAdv;
                         Core.EnsureCompleteChoose(7992, new[] { req.Name });
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("59961", "Undead Spawn Minion", "Mode: [select] only\nShould the bot buy \"Undead Spawn Minion\" ?", false),
-        new Option<bool>("59962", "Undead Minion Visor", "Mode: [select] only\nShould the bot buy \"Undead Minion Visor\" ?", false),
-        new Option<bool>("59968", "Legion Soul Devourer", "Mode: [select] only\nShould the bot buy \"Legion Soul Devourer\" ?", false),
-        new Option<bool>("59982", "Legion Bonfire", "Mode: [select] only\nShould the bot buy \"Legion Bonfire\" ?", false),
-        new Option<bool>("59959", "Legion Forge Spawn", "Mode: [select] only\nShould the bot buy \"Legion Forge Spawn\" ?", false),
-        new Option<bool>("59964", "Legion Forge Visor", "Mode: [select] only\nShould the bot buy \"Legion Forge Visor\" ?", false),
-        new Option<bool>("59966", "Legion Infinite Flames", "Mode: [select] only\nShould the bot buy \"Legion Infinite Flames\" ?", false),
-        new Option<bool>("59965", "Legion Spawn Runes", "Mode: [select] only\nShould the bot buy \"Legion Spawn Runes\" ?", false),
-        new Option<bool>("59967", "Legion Bonfire Altar", "Mode: [select] only\nShould the bot buy \"Legion Bonfire Altar\" ?", false),
-        new Option<bool>("60059", "Dual Legion Soul Devourers", "Mode: [select] only\nShould the bot buy \"Dual Legion Soul Devourers\" ?", false),
+        new Option<bool>(
+            "59961",
+            "Undead Spawn Minion",
+            "Mode: [select] only\nShould the bot buy \"Undead Spawn Minion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59962",
+            "Undead Minion Visor",
+            "Mode: [select] only\nShould the bot buy \"Undead Minion Visor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59968",
+            "Legion Soul Devourer",
+            "Mode: [select] only\nShould the bot buy \"Legion Soul Devourer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59982",
+            "Legion Bonfire",
+            "Mode: [select] only\nShould the bot buy \"Legion Bonfire\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59959",
+            "Legion Forge Spawn",
+            "Mode: [select] only\nShould the bot buy \"Legion Forge Spawn\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59964",
+            "Legion Forge Visor",
+            "Mode: [select] only\nShould the bot buy \"Legion Forge Visor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59966",
+            "Legion Infinite Flames",
+            "Mode: [select] only\nShould the bot buy \"Legion Infinite Flames\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59965",
+            "Legion Spawn Runes",
+            "Mode: [select] only\nShould the bot buy \"Legion Spawn Runes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59967",
+            "Legion Bonfire Altar",
+            "Mode: [select] only\nShould the bot buy \"Legion Bonfire Altar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60059",
+            "Dual Legion Soul Devourers",
+            "Mode: [select] only\nShould the bot buy \"Dual Legion Soul Devourers\" ?",
+            false
+        ),
     };
 }

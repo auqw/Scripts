@@ -16,29 +16,67 @@ public class DreampalaceMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static DreamPalace dreamPalace { get => _dreamPalace ??= new DreamPalace(); set => _dreamPalace = value; }    private static DreamPalace _dreamPalace;
+    private static DreamPalace dreamPalace
+    {
+        get => _dreamPalace ??= new DreamPalace();
+        set => _dreamPalace = value;
+    }
+    private static DreamPalace _dreamPalace;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Axe of Golmoth", "Scales of Golmoth", "Token of Fire", "Zahad's Ancient Gem", "Scythe of Gazeroth", "Souls of Gazeroth", "Token of Earth", "Bow of Zelkur", "Claws of Zelkur", "Token of Water", "Scimitar of Zal", "Feathers of Zal", "Token of Air" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Axe of Golmoth",
+                "Scales of Golmoth",
+                "Token of Fire",
+                "Zahad's Ancient Gem",
+                "Scythe of Gazeroth",
+                "Souls of Gazeroth",
+                "Token of Earth",
+                "Bow of Zelkur",
+                "Claws of Zelkur",
+                "Token of Water",
+                "Scimitar of Zal",
+                "Feathers of Zal",
+                "Token of Air",
+            }
+        );
         Core.SetOptions();
 
         dreamPalace.StoryLine();
@@ -57,7 +95,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -68,9 +108,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Axe of Golmoth":
                 case "Scales of Golmoth":
@@ -86,7 +131,14 @@ public static CoreAdvanced _sAdv;
                 case "Token of Fire":
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster("DreamPalace", "Mote of Power", req.Name, quant, isTemp: false, log: false);
+                        Core.HuntMonster(
+                            "DreamPalace",
+                            "Mote of Power",
+                            req.Name,
+                            quant,
+                            isTemp: false,
+                            log: false
+                        );
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -120,32 +172,131 @@ public static CoreAdvanced _sAdv;
                         Core.HuntMonster("DreamPalace", "Zal", req.Name, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("58693", "Strong Axe of Golmoth", "Mode: [select] only\nShould the bot buy \"Strong Axe of Golmoth\" ?", false),
-        new Option<bool>("58694", "Vibrant Axe of Golmoth", "Mode: [select] only\nShould the bot buy \"Vibrant Axe of Golmoth\" ?", false),
-        new Option<bool>("58695", "Awakened Axe of Golmoth", "Mode: [select] only\nShould the bot buy \"Awakened Axe of Golmoth\" ?", false),
-        new Option<bool>("58701", "Strong Scythe of Gazeroth", "Mode: [select] only\nShould the bot buy \"Strong Scythe of Gazeroth\" ?", false),
-        new Option<bool>("58702", "Vibrant Scythe of Gazeroth", "Mode: [select] only\nShould the bot buy \"Vibrant Scythe of Gazeroth\" ?", false),
-        new Option<bool>("58703", "Awakened Scythe of Gazeroth", "Mode: [select] only\nShould the bot buy \"Awakened Scythe of Gazeroth\" ?", false),
-        new Option<bool>("58705", "Strong Bow of Zelkur", "Mode: [select] only\nShould the bot buy \"Strong Bow of Zelkur\" ?", false),
-        new Option<bool>("58706", "Vibrant Bow of Zelkur", "Mode: [select] only\nShould the bot buy \"Vibrant Bow of Zelkur\" ?", false),
-        new Option<bool>("58707", "Awakened Bow of Zelkur", "Mode: [select] only\nShould the bot buy \"Awakened Bow of Zelkur\" ?", false),
-        new Option<bool>("58697", "Strong Scimitar of Zal", "Mode: [select] only\nShould the bot buy \"Strong Scimitar of Zal\" ?", false),
-        new Option<bool>("58698", "Vibrant Scimitar of Zal", "Mode: [select] only\nShould the bot buy \"Vibrant Scimitar of Zal\" ?", false),
-        new Option<bool>("58699", "Awakened Scimitar of Zal", "Mode: [select] only\nShould the bot buy \"Awakened Scimitar of Zal\" ?", false),
-        new Option<bool>("91066", "Djinn Realm TechSuit", "Mode: [select] only\nShould the bot buy \"Djinn Realm TechSuit\" ?", false),
-        new Option<bool>("91067", "Polycrystalline Tactical Helm", "Mode: [select] only\nShould the bot buy \"Polycrystalline Tactical Helm\" ?", false),
-        new Option<bool>("91071", "Solarcore Battering Shield", "Mode: [select] only\nShould the bot buy \"Solarcore Battering Shield\" ?", false),
-        new Option<bool>("91068", "Polycrystalline Silicon Helm", "Mode: [select] only\nShould the bot buy \"Polycrystalline Silicon Helm\" ?", false),
-        new Option<bool>("91069", "Polycrystalline Silicon Visor", "Mode: [select] only\nShould the bot buy \"Polycrystalline Silicon Visor\" ?", false),
-        new Option<bool>("91070", "Back-Up Solarcore Shield", "Mode: [select] only\nShould the bot buy \"Back-Up Solarcore Shield\" ?", false),
-        new Option<bool>("91073", "Amplified Djinn Realm TechGuard", "Mode: [select] only\nShould the bot buy \"Amplified Djinn Realm TechGuard\" ?", false),
-        new Option<bool>("91072", "Djinn Realm TechGuard", "Mode: [select] only\nShould the bot buy \"Djinn Realm TechGuard\" ?", false),
+        new Option<bool>(
+            "58693",
+            "Strong Axe of Golmoth",
+            "Mode: [select] only\nShould the bot buy \"Strong Axe of Golmoth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58694",
+            "Vibrant Axe of Golmoth",
+            "Mode: [select] only\nShould the bot buy \"Vibrant Axe of Golmoth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58695",
+            "Awakened Axe of Golmoth",
+            "Mode: [select] only\nShould the bot buy \"Awakened Axe of Golmoth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58701",
+            "Strong Scythe of Gazeroth",
+            "Mode: [select] only\nShould the bot buy \"Strong Scythe of Gazeroth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58702",
+            "Vibrant Scythe of Gazeroth",
+            "Mode: [select] only\nShould the bot buy \"Vibrant Scythe of Gazeroth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58703",
+            "Awakened Scythe of Gazeroth",
+            "Mode: [select] only\nShould the bot buy \"Awakened Scythe of Gazeroth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58705",
+            "Strong Bow of Zelkur",
+            "Mode: [select] only\nShould the bot buy \"Strong Bow of Zelkur\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58706",
+            "Vibrant Bow of Zelkur",
+            "Mode: [select] only\nShould the bot buy \"Vibrant Bow of Zelkur\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58707",
+            "Awakened Bow of Zelkur",
+            "Mode: [select] only\nShould the bot buy \"Awakened Bow of Zelkur\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58697",
+            "Strong Scimitar of Zal",
+            "Mode: [select] only\nShould the bot buy \"Strong Scimitar of Zal\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58698",
+            "Vibrant Scimitar of Zal",
+            "Mode: [select] only\nShould the bot buy \"Vibrant Scimitar of Zal\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58699",
+            "Awakened Scimitar of Zal",
+            "Mode: [select] only\nShould the bot buy \"Awakened Scimitar of Zal\" ?",
+            false
+        ),
+        new Option<bool>(
+            "91066",
+            "Djinn Realm TechSuit",
+            "Mode: [select] only\nShould the bot buy \"Djinn Realm TechSuit\" ?",
+            false
+        ),
+        new Option<bool>(
+            "91067",
+            "Polycrystalline Tactical Helm",
+            "Mode: [select] only\nShould the bot buy \"Polycrystalline Tactical Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "91071",
+            "Solarcore Battering Shield",
+            "Mode: [select] only\nShould the bot buy \"Solarcore Battering Shield\" ?",
+            false
+        ),
+        new Option<bool>(
+            "91068",
+            "Polycrystalline Silicon Helm",
+            "Mode: [select] only\nShould the bot buy \"Polycrystalline Silicon Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "91069",
+            "Polycrystalline Silicon Visor",
+            "Mode: [select] only\nShould the bot buy \"Polycrystalline Silicon Visor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "91070",
+            "Back-Up Solarcore Shield",
+            "Mode: [select] only\nShould the bot buy \"Back-Up Solarcore Shield\" ?",
+            false
+        ),
+        new Option<bool>(
+            "91073",
+            "Amplified Djinn Realm TechGuard",
+            "Mode: [select] only\nShould the bot buy \"Amplified Djinn Realm TechGuard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "91072",
+            "Djinn Realm TechGuard",
+            "Mode: [select] only\nShould the bot buy \"Djinn Realm TechGuard\" ?",
+            false
+        ),
     };
 }

@@ -17,26 +17,55 @@ public class CastleGaherisMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
     private static CoreAOR _AOR;
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Gaheris Sigil", "Courtly Mana Scholar Hair", "Courtly Mana Scholar Locks", "Delicate Snowflake Rapier", "Delicate Snowflake Rapiers", "Militis Snowflake Rapier", "Militis Snowflake Rapiers", "Grimoire of Abra-Melin" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Gaheris Sigil",
+                "Courtly Mana Scholar Hair",
+                "Courtly Mana Scholar Locks",
+                "Delicate Snowflake Rapier",
+                "Delicate Snowflake Rapiers",
+                "Militis Snowflake Rapier",
+                "Militis Snowflake Rapiers",
+                "Grimoire of Abra-Melin",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -54,7 +83,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +96,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Gaheris Sigil":
                     Core.FarmingLogger(req.Name, quant);
@@ -75,10 +111,27 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("castlegaheris", "Glacial Crystal", "Glacial Memory", 30, log: false);
-                        Core.HuntMonster("castlegaheris", "Elemental Hybrid", "Hybrid Residue", 9, log: false);
+                        Core.HuntMonster(
+                            "castlegaheris",
+                            "Glacial Crystal",
+                            "Glacial Memory",
+                            30,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "castlegaheris",
+                            "Elemental Hybrid",
+                            "Hybrid Residue",
+                            9,
+                            log: false
+                        );
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("castlegaheris", "Thundersnow Storm", "Thundersnow Sigh", log: false);
+                        Core.HuntMonster(
+                            "castlegaheris",
+                            "Thundersnow Storm",
+                            "Thundersnow Sigh",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -91,14 +144,28 @@ private static CoreAdvanced _sAdv;
                 case "Grimoire of Abra-Melin":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("castlegaheris", "Thundersnow Storm", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(
+                        "castlegaheris",
+                        "Thundersnow Storm",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
                     break;
 
                 case "Delicate Snowflake Rapier":
                 case "Delicate Snowflake Rapiers":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("castlegaheris", "Glacial Crystal", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(
+                        "castlegaheris",
+                        "Glacial Crystal",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
                     break;
             }
         }
@@ -106,14 +173,59 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("82701", "Courtly Mana Scholar", "Mode: [select] only\nShould the bot buy \"Courtly Mana Scholar\" ?", false),
-        new Option<bool>("82704", "Mana Scholar's Warlock's Hat", "Mode: [select] only\nShould the bot buy \"Mana Scholar's Warlock's Hat\" ?", false),
-        new Option<bool>("82705", "Mana Scholar's Witch's Hat", "Mode: [select] only\nShould the bot buy \"Mana Scholar's Witch's Hat\" ?", false),
-        new Option<bool>("82709", "Golden Snowflake Rapier", "Mode: [select] only\nShould the bot buy \"Golden Snowflake Rapier\" ?", false),
-        new Option<bool>("82710", "Golden Snowflake Rapiers", "Mode: [select] only\nShould the bot buy \"Golden Snowflake Rapiers\" ?", false),
-        new Option<bool>("82713", "Hoarfrost Snowflake Rapier", "Mode: [select] only\nShould the bot buy \"Hoarfrost Snowflake Rapier\" ?", false),
-        new Option<bool>("82714", "Hoarfrost Snowflake Rapiers", "Mode: [select] only\nShould the bot buy \"Hoarfrost Snowflake Rapiers\" ?", false),
-        new Option<bool>("82716", "Winter Solstice Staff", "Mode: [select] only\nShould the bot buy \"Winter Solstice Staff\" ?", false),
-        new Option<bool>("82717", "Mana Scholar's Arcane Craft", "Mode: [select] only\nShould the bot buy \"Mana Scholar's Arcane Craft\" ?", false),
+        new Option<bool>(
+            "82701",
+            "Courtly Mana Scholar",
+            "Mode: [select] only\nShould the bot buy \"Courtly Mana Scholar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82704",
+            "Mana Scholar's Warlock's Hat",
+            "Mode: [select] only\nShould the bot buy \"Mana Scholar's Warlock's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82705",
+            "Mana Scholar's Witch's Hat",
+            "Mode: [select] only\nShould the bot buy \"Mana Scholar's Witch's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82709",
+            "Golden Snowflake Rapier",
+            "Mode: [select] only\nShould the bot buy \"Golden Snowflake Rapier\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82710",
+            "Golden Snowflake Rapiers",
+            "Mode: [select] only\nShould the bot buy \"Golden Snowflake Rapiers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82713",
+            "Hoarfrost Snowflake Rapier",
+            "Mode: [select] only\nShould the bot buy \"Hoarfrost Snowflake Rapier\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82714",
+            "Hoarfrost Snowflake Rapiers",
+            "Mode: [select] only\nShould the bot buy \"Hoarfrost Snowflake Rapiers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82716",
+            "Winter Solstice Staff",
+            "Mode: [select] only\nShould the bot buy \"Winter Solstice Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82717",
+            "Mana Scholar's Arcane Craft",
+            "Mode: [select] only\nShould the bot buy \"Mana Scholar's Arcane Craft\" ?",
+            false
+        ),
     };
 }

@@ -13,7 +13,13 @@ public class ChaorrupterUnlocked
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+
     //public ChaosWarMerge CWM = new();
 
     public void ScriptMain(IScriptInterface bot)
@@ -37,15 +43,51 @@ public class ChaorrupterUnlocked
         if (Core.IsMember)
         {
             Core.Logger("Farming Chaorrupter Unlocked (Legend)");
-            Core.KillMonster("chaoswar", "r2", "Spawn", "*", "Chaos Eye", 100, isTemp: false, log: false);
-            Core.KillMonster("chaoswar", "r2", "Spawn", "*", "Chaos Tentacle", 100, isTemp: false, log: false);
+            Core.KillMonster(
+                "chaoswar",
+                "r2",
+                "Spawn",
+                "*",
+                "Chaos Eye",
+                100,
+                isTemp: false,
+                log: false
+            );
+            Core.KillMonster(
+                "chaoswar",
+                "r2",
+                "Spawn",
+                "*",
+                "Chaos Tentacle",
+                100,
+                isTemp: false,
+                log: false
+            );
             Core.BuyItem("chaoswar", 642, 17873, 1, 10987);
         }
         else
         {
             Core.Logger("Farming Chaorrupter Unlocked (Free Player)");
-            Core.KillMonster("chaoswar", "r2", "Spawn", "*", "Chaos Eye", 250, isTemp: false, log: false);
-            Core.KillMonster("chaoswar", "r2", "Spawn", "*", "Chaos Tentacle", 250, isTemp: false, log: false);
+            Core.KillMonster(
+                "chaoswar",
+                "r2",
+                "Spawn",
+                "*",
+                "Chaos Eye",
+                250,
+                isTemp: false,
+                log: false
+            );
+            Core.KillMonster(
+                "chaoswar",
+                "r2",
+                "Spawn",
+                "*",
+                "Chaos Tentacle",
+                250,
+                isTemp: false,
+                log: false
+            );
             Core.BuyItem("chaoswar", 642, 17932, 1, 10986);
         }
         Adv.EnhanceItem("Chaorrupter Unlocked", EnhancementType.Lucky);

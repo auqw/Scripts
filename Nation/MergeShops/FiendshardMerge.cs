@@ -17,11 +17,23 @@ public class FiendshardMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
     public static CoreAdvanced sAdv
     {
@@ -30,20 +42,27 @@ public class FiendshardMerge
     }
     public static CoreAdvanced _sAdv;
 
-    private static Fiendshard_Story Fiendshard { get => _Fiendshard ??= new Fiendshard_Story(); set => _Fiendshard = value; }
+    private static Fiendshard_Story Fiendshard
+    {
+        get => _Fiendshard ??= new Fiendshard_Story();
+        set => _Fiendshard = value;
+    }
     private static Fiendshard_Story _Fiendshard;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Shard of the Shard", "Void General Surveillance " });
+        Core.BankingBlackList.AddRange(
+            new[] { "Shard of the Shard", "Void General Surveillance " }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -61,7 +80,9 @@ public class FiendshardMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -72,9 +93,14 @@ public class FiendshardMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Shard of the Shard":
                     Fiendshard.Fiendshard_QuestlineP1();
@@ -93,26 +119,95 @@ public class FiendshardMerge
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("Fiendshard", "Dirtlicker", req.Name, isTemp: false);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("58887", "Dirt Void of Nulgath", "Mode: [select] only\nShould the bot buy \"Dirt Void of Nulgath\" ?", false),
-        new Option<bool>("58888", "Dirt Guard of Nulgath", "Mode: [select] only\nShould the bot buy \"Dirt Guard of Nulgath\" ?", false),
-        new Option<bool>("58889", "Grand Dirt Guard of Nulgath", "Mode: [select] only\nShould the bot buy \"Grand Dirt Guard of Nulgath\" ?", false),
-        new Option<bool>("58890", "Terran Shard of Nulgath", "Mode: [select] only\nShould the bot buy \"Terran Shard of Nulgath\" ?", false),
-        new Option<bool>("58891", "Terran Annihilator of Nulgath", "Mode: [select] only\nShould the bot buy \"Terran Annihilator of Nulgath\" ?", false),
-        new Option<bool>("58892", "Earthsplitter of Nulgath", "Mode: [select] only\nShould the bot buy \"Earthsplitter of Nulgath\" ?", false),
-        new Option<bool>("58893", "Crystal Void of Nulgath", "Mode: [select] only\nShould the bot buy \"Crystal Void of Nulgath\" ?", false),
-        new Option<bool>("58894", "Crystal Guard of Nulgath", "Mode: [select] only\nShould the bot buy \"Crystal Guard of Nulgath\" ?", false),
-        new Option<bool>("58895", "Grand Crystal Guard of Nulgath", "Mode: [select] only\nShould the bot buy \"Grand Crystal Guard of Nulgath\" ?", false),
-        new Option<bool>("58896", "Crystal Shard of Nulgath", "Mode: [select] only\nShould the bot buy \"Crystal Shard of Nulgath\" ?", false),
-        new Option<bool>("58897", "Crystal Annihilator of Nulgath", "Mode: [select] only\nShould the bot buy \"Crystal Annihilator of Nulgath\" ?", false),
-        new Option<bool>("58898", "Crystalsplitter of Nulgath", "Mode: [select] only\nShould the bot buy \"Crystalsplitter of Nulgath\" ?", false),
-        new Option<bool>("59144", "Fiendish Gem Pet", "Mode: [select] only\nShould the bot buy \"Fiendish Gem Pet\" ?", false),
-        new Option<bool>("59140", "Void General Oversight", "Mode: [select] only\nShould the bot buy \"Void General Oversight\" ?", false),
+        new Option<bool>(
+            "58887",
+            "Dirt Void of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dirt Void of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58888",
+            "Dirt Guard of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dirt Guard of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58889",
+            "Grand Dirt Guard of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Grand Dirt Guard of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58890",
+            "Terran Shard of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Terran Shard of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58891",
+            "Terran Annihilator of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Terran Annihilator of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58892",
+            "Earthsplitter of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Earthsplitter of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58893",
+            "Crystal Void of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Crystal Void of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58894",
+            "Crystal Guard of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Crystal Guard of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58895",
+            "Grand Crystal Guard of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Grand Crystal Guard of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58896",
+            "Crystal Shard of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Crystal Shard of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58897",
+            "Crystal Annihilator of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Crystal Annihilator of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58898",
+            "Crystalsplitter of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Crystalsplitter of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59144",
+            "Fiendish Gem Pet",
+            "Mode: [select] only\nShould the bot buy \"Fiendish Gem Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59140",
+            "Void General Oversight",
+            "Mode: [select] only\nShould the bot buy \"Void General Oversight\" ?",
+            false
+        ),
     };
 }

@@ -20,7 +20,12 @@ public class HeadoftheLegionBeast
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<bool>("badge", "Farm Badge", "Set to true to farm the Head of the Legion Beast char page badge", false)
+        new Option<bool>(
+            "badge",
+            "Farm Badge",
+            "Set to true to farm the Head of the Legion Beast char page badge",
+            false
+        ),
     };
     public string[] HeadLegionBeast =
     {
@@ -37,20 +42,40 @@ public class HeadoftheLegionBeast
         "Stare of Greed",
         "Gluttony's Maw",
         "Aspect of Luxuria",
-        "Face of Treachery"
+        "Face of Treachery",
     };
 
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
     private static CoreLegion _Legion;
-    private static SevenCircles Circles { get => _Circles ??= new SevenCircles(); set => _Circles = value; }
+    private static SevenCircles Circles
+    {
+        get => _Circles ??= new SevenCircles();
+        set => _Circles = value;
+    }
     private static SevenCircles _Circles;
 
     public void ScriptMain(IScriptInterface bot)
@@ -79,7 +104,6 @@ public class HeadoftheLegionBeast
             return;
         }
 
-
         Circles.CirclesWar();
         Core.AddDrop(HeadLegionBeast);
 
@@ -89,7 +113,17 @@ public class HeadoftheLegionBeast
         Legion.FarmLegionToken(15000);
 
         Core.EquipClass(ClassType.Solo);
-        Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "Beast Soul", 15, isTemp: false, publicRoom: true, log: false);
+        Core.KillMonster(
+            "sevencircleswar",
+            "r17",
+            "Left",
+            "The Beast",
+            "Beast Soul",
+            15,
+            isTemp: false,
+            publicRoom: true,
+            log: false
+        );
 
         Adv.BuyItem("sevencircleswar", 1984, HeadName);
 
@@ -107,7 +141,6 @@ public class HeadoftheLegionBeast
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("sevencircleswar", "The Beast", "Beast Slain");
         Core.EnsureComplete(8082);
-
     }
 
     public void HelmSevenCircles()
@@ -125,8 +158,6 @@ public class HeadoftheLegionBeast
         CircleHelm("Faces of Violence", true);
 
         Adv.BuyItem("sevencircleswar", 1984, "Helms of the Seven Circles");
-
-
     }
 
     /// <summary>
@@ -254,7 +285,6 @@ public class HeadoftheLegionBeast
         Core.CancelRegisteredQuests();
     }
 
-
     public void Penance(int quant = 300)
     {
         if (Core.CheckInventory("Penance", quant))
@@ -275,15 +305,19 @@ public class HeadoftheLegionBeast
                 { "Essence of Wrath", EssenceWrath },
                 { "Essence of Violence", EssenceViolence },
                 { "Essence of Treachery", EssenceTreachery },
-                { "Souls of Heresy", amount => SoulsHeresy(Math.Min(300, amount * 15)) }
+                { "Souls of Heresy", amount => SoulsHeresy(Math.Min(300, amount * 15)) },
             };
 
             foreach (var (item, farmAction) in requiredItems)
                 farmAction(Math.Min(quant, 300));
 
-
             // Check if SohCount (quant * 15) is greater then 300 (max stack of souls of heresy), if so then do sohcount / 15 (300 [soh max stack] / 15 = 20), else do quant
-            Core.BuyItem("sevencircleswar", 1984, "Penance", quant * 15 > 300 ? Bot.Inventory.GetQuantity("Souls of Heresy") / 15 : quant);
+            Core.BuyItem(
+                "sevencircleswar",
+                1984,
+                "Penance",
+                quant * 15 > 300 ? Bot.Inventory.GetQuantity("Souls of Heresy") / 15 : quant
+            );
             Bot.Wait.ForPickup("Penance");
             if (Core.CheckInventory("Penance", quant))
                 break;
@@ -308,17 +342,52 @@ public class HeadoftheLegionBeast
         int currentQuantity = Bot.Inventory.GetQuantity("Indulgence");
         int deficit = quant - currentQuantity;
 
-        int soulsTarget = deficit >= 3 ? 75 : deficit == 2 ? 50 : 25;
+        int soulsTarget =
+            deficit >= 3 ? 75
+            : deficit == 2 ? 50
+            : 25;
         int essenceTarget = deficit >= 3 ? 3 : deficit;
         while (!Bot.ShouldExit && !Core.CheckInventory("Indulgence", quant))
         {
             Core.EnsureAccept(7978);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Souls of Limbo", soulsTarget, log: false);
+            Core.KillMonster(
+                "sevencircles",
+                "r2",
+                "Left",
+                "Limbo Guard",
+                "Souls of Limbo",
+                soulsTarget,
+                log: false
+            );
             Core.EquipClass(ClassType.Solo);
-            Core.KillMonster("sevencircles", "r4", "Left", "Luxuria", "Essence of Luxuria", essenceTarget, log: false);
-            Core.KillMonster("sevencircles", "r6", "Left", "Gluttony", "Essence of Gluttony", essenceTarget, log: false);
-            Core.KillMonster("sevencircles", "r8", "Left", "Avarice", "Essence of Avarice", essenceTarget, log: false);
+            Core.KillMonster(
+                "sevencircles",
+                "r4",
+                "Left",
+                "Luxuria",
+                "Essence of Luxuria",
+                essenceTarget,
+                log: false
+            );
+            Core.KillMonster(
+                "sevencircles",
+                "r6",
+                "Left",
+                "Gluttony",
+                "Essence of Gluttony",
+                essenceTarget,
+                log: false
+            );
+            Core.KillMonster(
+                "sevencircles",
+                "r8",
+                "Left",
+                "Avarice",
+                "Essence of Avarice",
+                essenceTarget,
+                log: false
+            );
             Core.EnsureCompleteMulti(7978);
             Bot.Wait.ForPickup("Indulgence");
         }

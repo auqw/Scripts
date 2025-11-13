@@ -16,20 +16,37 @@ public class IaraMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
     private static CoreAdvanced _sAdv;
 
-    private static Iara I { get => _I ??= new Iara(); set => _I = value; }
+    private static Iara I
+    {
+        get => _I ??= new Iara();
+        set => _I = value;
+    }
     private static Iara _I;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -54,7 +71,9 @@ public class IaraMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +84,14 @@ public class IaraMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Keeper of the Amazon":
                     Core.FarmingLogger(req.Name, quant);
@@ -82,30 +106,112 @@ public class IaraMerge
                     break;
 
                 case "Iara Insignia":
-                    Core.Logger($"{req.Name}" + " requires ultra boss, you need to farm it manually.", stopBot: true);
+                    Core.Logger(
+                        $"{req.Name}" + " requires ultra boss, you need to farm it manually.",
+                        stopBot: true
+                    );
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("62821", "Iara's Armor", "Mode: [select] only\nShould the bot buy \"Iara's Armor\" ?", false),
-        new Option<bool>("62822", "Iara's Morph", "Mode: [select] only\nShould the bot buy \"Iara's Morph\" ?", false),
-        new Option<bool>("62823", "Symbol of Iara", "Mode: [select] only\nShould the bot buy \"Symbol of Iara\" ?", false),
-        new Option<bool>("63162", "Iara's Bubbles", "Mode: [select] only\nShould the bot buy \"Iara's Bubbles\" ?", false),
-        new Option<bool>("63132", "Iara's Harp", "Mode: [select] only\nShould the bot buy \"Iara's Harp\" ?", false),
-        new Option<bool>("63156", "Iara's Acolyte", "Mode: [select] only\nShould the bot buy \"Iara's Acolyte\" ?", false),
-        new Option<bool>("63157", "Iara's Acolyte's Hair", "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Hair\" ?", false),
-        new Option<bool>("63158", "Iara's Acolyte's Morph Hair", "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Morph Hair\" ?", false),
-        new Option<bool>("63159", "Iara's Acolyte's Flowered Locks", "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Flowered Locks\" ?", false),
-        new Option<bool>("63160", "Iara's Acolyte's Flowered Morph Locks", "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Flowered Morph Locks\" ?", false),
-        new Option<bool>("63161", "Iara's Acolyte's Locks", "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Locks\" ?", false),
-        new Option<bool>("63163", "Iara's Coral", "Mode: [select] only\nShould the bot buy \"Iara's Coral\" ?", false),
-        new Option<bool>("63164", "Iara's Acolyte's Cape", "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Cape\" ?", false),
-        new Option<bool>("63166", "Iara's Brush", "Mode: [select] only\nShould the bot buy \"Iara's Brush\" ?", false),
-        new Option<bool>("63167", "Iara's Water Orb", "Mode: [select] only\nShould the bot buy \"Iara's Water Orb\" ?", false),
-        new Option<bool>("63165", "Iara's Acolyte's Staff", "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Staff\" ?", false),
+        new Option<bool>(
+            "62821",
+            "Iara's Armor",
+            "Mode: [select] only\nShould the bot buy \"Iara's Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "62822",
+            "Iara's Morph",
+            "Mode: [select] only\nShould the bot buy \"Iara's Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "62823",
+            "Symbol of Iara",
+            "Mode: [select] only\nShould the bot buy \"Symbol of Iara\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63162",
+            "Iara's Bubbles",
+            "Mode: [select] only\nShould the bot buy \"Iara's Bubbles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63132",
+            "Iara's Harp",
+            "Mode: [select] only\nShould the bot buy \"Iara's Harp\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63156",
+            "Iara's Acolyte",
+            "Mode: [select] only\nShould the bot buy \"Iara's Acolyte\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63157",
+            "Iara's Acolyte's Hair",
+            "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63158",
+            "Iara's Acolyte's Morph Hair",
+            "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Morph Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63159",
+            "Iara's Acolyte's Flowered Locks",
+            "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Flowered Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63160",
+            "Iara's Acolyte's Flowered Morph Locks",
+            "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Flowered Morph Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63161",
+            "Iara's Acolyte's Locks",
+            "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63163",
+            "Iara's Coral",
+            "Mode: [select] only\nShould the bot buy \"Iara's Coral\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63164",
+            "Iara's Acolyte's Cape",
+            "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63166",
+            "Iara's Brush",
+            "Mode: [select] only\nShould the bot buy \"Iara's Brush\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63167",
+            "Iara's Water Orb",
+            "Mode: [select] only\nShould the bot buy \"Iara's Water Orb\" ?",
+            false
+        ),
+        new Option<bool>(
+            "63165",
+            "Iara's Acolyte's Staff",
+            "Mode: [select] only\nShould the bot buy \"Iara's Acolyte's Staff\" ?",
+            false
+        ),
     };
 }

@@ -13,21 +13,40 @@ public class ShadowBlastArena
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] {  "Shadowscythe Round 1 Medal", "Shadowscythe Round 2 Medal",
-                                               "Shadowscythe Round 3 Medal", "Shadowscythe Round 4 Medal",
-                                                "Emblem of Gravelyn", "Diamond Token of Gravelyn" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Shadowscythe Round 1 Medal",
+                "Shadowscythe Round 2 Medal",
+                "Shadowscythe Round 3 Medal",
+                "Shadowscythe Round 4 Medal",
+                "Emblem of Gravelyn",
+                "Diamond Token of Gravelyn",
+            }
+        );
         Core.SetOptions();
         Doall();
-
 
         Core.SetOptions(false);
     }
@@ -35,7 +54,6 @@ public class ShadowBlastArena
     public void Doall()
     {
         StoryLineP1();
-
     }
 
     public void StoryLineP1()
@@ -46,7 +64,6 @@ public class ShadowBlastArena
         Story.LegacyQuestManager(QuestLogic, Core.FromTo(4733, 4736));
         void QuestLogic()
         {
-
             switch (Story.LegacyQuestID)
             {
                 case 4733: // The Shadowscythe Needs YOU! 4733
@@ -65,7 +82,11 @@ public class ShadowBlastArena
                     break;
 
                 case 4736: // Gravelyn Likes Your Style 4736
-                    Core.HuntMonster("shadowblast", "Shadow Destroyer", "Shadowscythe Destroyer Vanquished");
+                    Core.HuntMonster(
+                        "shadowblast",
+                        "Shadow Destroyer",
+                        "Shadowscythe Destroyer Vanquished"
+                    );
                     break;
             }
         }

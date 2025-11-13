@@ -15,7 +15,11 @@ public class TrobbolierPet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFriday13th F13 { get => _F13 ??= new CoreFriday13th(); set => _F13 = value; }
+    private static CoreFriday13th F13
+    {
+        get => _F13 ??= new CoreFriday13th();
+        set => _F13 = value;
+    }
     private static CoreFriday13th _F13;
 
     public void ScriptMain(IScriptInterface bot)
@@ -46,7 +50,6 @@ public class TrobbolierPet
 
         Bot.Log(logMessage);
 
-
         Bot.Drops.Add(rewardOptions.Select(item => item.Name).ToArray());
         Core.EquipClass(ClassType.Farm);
 
@@ -61,14 +64,14 @@ public class TrobbolierPet
                 Core.HuntMonsterMapID("wormhole", 11, "Red Trobbolier Fluff", 4, log: false);
                 Core.EnsureCompleteChoose(5067, Core.QuestRewards(5067));
                 Bot.Wait.ForPickup("*");
-                Core.ToBank(rewardOptions
-                            .Where(item => Bot.Inventory.Contains(item.Name))
-                            .Select(item => item.Name)
-                            .ToArray());
+                Core.ToBank(
+                    rewardOptions
+                        .Where(item => Bot.Inventory.Contains(item.Name))
+                        .Select(item => item.Name)
+                        .ToArray()
+                );
                 Bot.Drops.Remove(item.ID);
-
             }
         }
     }
-
 }

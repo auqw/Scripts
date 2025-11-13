@@ -15,21 +15,36 @@ public class CelestialChallengerMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -47,14 +62,22 @@ public static CoreAdvanced _sAdv;
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         //Only edit the map and shopID here
-        Adv.StartBuyAllMerge("celestialarena", 1473, findIngredients, buyOnlyThis, buyMode: buyMode);
+        Adv.StartBuyAllMerge(
+            "celestialarena",
+            1473,
+            findIngredients,
+            buyOnlyThis,
+            buyMode: buyMode
+        );
 
         #region Dont edit this part
         void findIngredients()
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,15 +88,26 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Lumin Badge":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("celestialarenad", "Queen of Hope", req.Name, quant, isTemp: false);
+                        Core.HuntMonster(
+                            "celestialarenad",
+                            "Queen of Hope",
+                            req.Name,
+                            quant,
+                            isTemp: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -82,21 +116,51 @@ public static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("CelestialArenaC", "War Construct", req.Name, quant, isTemp: false);
+                        Core.HuntMonster(
+                            "CelestialArenaC",
+                            "War Construct",
+                            req.Name,
+                            quant,
+                            isTemp: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("41443", "Blessed Abezeth", "Mode: [select] only\nShould the bot buy \"Blessed Abezeth\" ?", false),
-        new Option<bool>("41444", "Blessed Armored Wings Of Abezeth", "Mode: [select] only\nShould the bot buy \"Blessed Armored Wings Of Abezeth\" ?", false),
-        new Option<bool>("41445", "Blessed Wings Of Abezeth", "Mode: [select] only\nShould the bot buy \"Blessed Wings Of Abezeth\" ?", false),
-        new Option<bool>("41452", "Burning Wings Of Abezeth", "Mode: [select] only\nShould the bot buy \"Burning Wings Of Abezeth\" ?", false),
-        new Option<bool>("41446", "Blessed Helm of Abezeth", "Mode: [select] only\nShould the bot buy \"Blessed Helm of Abezeth\" ?", false),
+        new Option<bool>(
+            "41443",
+            "Blessed Abezeth",
+            "Mode: [select] only\nShould the bot buy \"Blessed Abezeth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41444",
+            "Blessed Armored Wings Of Abezeth",
+            "Mode: [select] only\nShould the bot buy \"Blessed Armored Wings Of Abezeth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41445",
+            "Blessed Wings Of Abezeth",
+            "Mode: [select] only\nShould the bot buy \"Blessed Wings Of Abezeth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41452",
+            "Burning Wings Of Abezeth",
+            "Mode: [select] only\nShould the bot buy \"Burning Wings Of Abezeth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41446",
+            "Blessed Helm of Abezeth",
+            "Mode: [select] only\nShould the bot buy \"Blessed Helm of Abezeth\" ?",
+            false
+        ),
     };
 }

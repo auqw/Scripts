@@ -12,9 +12,17 @@ public class Zoda
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -46,7 +54,11 @@ public class Zoda
             AssembledSword();
 
         // The Path Quests (8648, 8649, 8650)
-        if (!Core.isCompletedBefore(8648) && !Core.isCompletedBefore(8649) && !Core.isCompletedBefore(8650))
+        if (
+            !Core.isCompletedBefore(8648)
+            && !Core.isCompletedBefore(8649)
+            && !Core.isCompletedBefore(8650)
+        )
         {
             AssembledSword();
 
@@ -55,13 +67,11 @@ public class Zoda
                 Core.AddDrop("Goregold Resisted");
                 Story.KillQuest(8648, "greed", "Goregold");
             }
-
             else if (Farm.FactionRank("Evil") == 10)
             {
                 Core.AddDrop("Fifth Sepulchure Defeated");
                 Story.KillQuest(8649, "murdermoon", "Fifth Sepulchure");
             }
-
             else
             {
                 Farm.ChaosREP();

@@ -21,7 +21,11 @@ public class CommandingShadowEssences
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public static CoreBots sCore => CoreBots.Instance;
-    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }
+    private static CoreNSOD NSoD
+    {
+        get => _NSoD ??= new CoreNSOD();
+        set => _NSoD = value;
+    }
     private static CoreNSOD _NSoD;
     public static CoreNSOD sNSoD
     {
@@ -30,15 +34,9 @@ public class CommandingShadowEssences
     }
     public static CoreNSOD _sNSoD;
 
-
-
     public bool DontPreconfigure = true;
     public string OptionsStorage = sNSoD.OptionsStorage;
-    public List<IOption> Options = new()
-    {
-        sNSoD.GetSDKA,
-        CoreBots.Instance.SkipOptions,
-    };
+    public List<IOption> Options = new() { sNSoD.GetSDKA, CoreBots.Instance.SkipOptions };
 
     public void ScriptMain(IScriptInterface bot)
     {

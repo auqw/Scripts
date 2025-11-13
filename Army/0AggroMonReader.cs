@@ -6,25 +6,36 @@ tags: kaos, chaosripjaw, aggro monster, army, reader, custom
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 //cs_include Scripts/CoreFarms.cs
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
-using CommunityToolkit.Mvvm.DependencyInjection;
 
 public class AggroMonReader
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
-private static CoreBots _sCore;
+    private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
-private static CoreArmyLite _sArmy;
-
+    private static CoreArmyLite _sArmy;
 
     public string OptionsStorage = "AggroMonReader";
     public List<IOption> Options = new()
@@ -37,7 +48,7 @@ private static CoreArmyLite _sArmy;
         sArmy.player6,
         sArmy.player7,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -48,6 +59,7 @@ private static CoreArmyLite _sArmy;
 
         Core.SetOptions(false);
     }
+
 #nullable enable
 
     public void AggroMon()
@@ -55,7 +67,10 @@ private static CoreArmyLite _sArmy;
         #region Gathering Data
         // Finding file
         _fileDialog = Ioc.Default.GetRequiredService<IFileDialogService>();
-        string? path = _fileDialog.OpenFile(ClientFileSources.SkuaScriptsDIR, "Aggromon File (*.txt)|*.txt");
+        string? path = _fileDialog.OpenFile(
+            ClientFileSources.SkuaScriptsDIR,
+            "Aggromon File (*.txt)|*.txt"
+        );
         if (path == null)
             return;
         string[] file = File.ReadAllLines(path);
@@ -102,7 +117,10 @@ private static CoreArmyLite _sArmy;
         if (cells.Count == 1)
             Core.Logger("Cell parsed, will move to the following cell: " + cells.First(), caller);
         else if (cells.Count >= 2)
-            Core.Logger("Cells parsed, will devide amongst the following cell: " + string.Join(", ", cells), caller);
+            Core.Logger(
+                "Cells parsed, will devide amongst the following cell: " + string.Join(", ", cells),
+                caller
+            );
 
         List<int> MMIDs = new();
         foreach (string p in packets)
@@ -114,7 +132,10 @@ private static CoreArmyLite _sArmy;
                     MMIDs.Add(id);
             }
         }
-        Core.Logger("Packets parsed, will aggro the following IDs: " + string.Join(", ", MMIDs), caller);
+        Core.Logger(
+            "Packets parsed, will aggro the following IDs: " + string.Join(", ", MMIDs),
+            caller
+        );
 
         List<int> questIDs = new();
         if (quests != null)
@@ -125,9 +146,16 @@ private static CoreArmyLite _sArmy;
                     questIDs.Add(id);
             }
             if (questIDs.Count == 1)
-                Core.Logger("Quest ID parsed, will register the following quest: " + questIDs.First(), caller);
+                Core.Logger(
+                    "Quest ID parsed, will register the following quest: " + questIDs.First(),
+                    caller
+                );
             else if (questIDs.Count >= 2)
-                Core.Logger("Quest IDs parsed, will register the following quests: " + string.Join(", ", questIDs), caller);
+                Core.Logger(
+                    "Quest IDs parsed, will register the following quests: "
+                        + string.Join(", ", questIDs),
+                    caller
+                );
         }
 
         List<string> toAddDrop = new();
@@ -143,9 +171,15 @@ private static CoreArmyLite _sArmy;
             }
         }
         if (toAddDrop.Count == 1)
-            Core.Logger("Drop parsed, will pickup the following item: " + toAddDrop.First(), caller);
+            Core.Logger(
+                "Drop parsed, will pickup the following item: " + toAddDrop.First(),
+                caller
+            );
         else if (toAddDrop.Count >= 2)
-            Core.Logger("Drops parsed, will pickup the following items: " + string.Join(", ", toAddDrop), caller);
+            Core.Logger(
+                "Drops parsed, will pickup the following items: " + string.Join(", ", toAddDrop),
+                caller
+            );
 
         #endregion
 
@@ -159,17 +193,17 @@ private static CoreArmyLite _sArmy;
         Army.AggroMonStart(map);
         if (cells.Count == 1)
             Core.Jump(cells.First());
-        else Army.DivideOnCells(cells.ToArray());
+        else
+            Army.DivideOnCells(cells.ToArray());
 
         Core.RegisterQuests(questIDs.ToArray());
         Core.Logger($"AggroMonBot \"{file[0]}\" initiated", caller);
 
-        
-            
         while (!Bot.ShouldExit)
             Bot.Combat.Attack("*");
         Core.CancelRegisteredQuests();
         Army.AggroMonStop(true);
     }
+
     private IFileDialogService? _fileDialog;
 }

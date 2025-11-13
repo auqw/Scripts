@@ -8,12 +8,15 @@ tags: seasonal, akiba new year, gong ji zhanshi, red envelope hunt, akibacny
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 
-
 public class GongJiZhanshiSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -27,7 +30,6 @@ public class GongJiZhanshiSet
 
     public void DoQuest()
     {
-
         QuestsIfNeeded();
         GetTheSet(5668, 1);
     }

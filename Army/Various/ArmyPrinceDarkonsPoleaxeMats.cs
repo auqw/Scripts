@@ -1,4 +1,3 @@
-
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 //cs_include Scripts/CoreFarms.cs
@@ -11,11 +10,18 @@ public class ArmyPrinceDarkonsPoleaxeMats
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "ArmyPrinceDarkonsPoleaxeMats";
     public bool DontPreconfigure = true;
@@ -27,12 +33,7 @@ public class ArmyPrinceDarkonsPoleaxeMats
         sArmy.player4,
         sArmy.player5,
         sArmy.player6,
-        new Option<string>(
-            "ClassToUse",
-            "your class",
-            "class to use",
-            "classsss"
-        ),
+        new Option<string>("ClassToUse", "your class", "class to use", "classsss"),
         new Option<string>(
             "SafeClass",
             "your safe class",
@@ -40,12 +41,11 @@ public class ArmyPrinceDarkonsPoleaxeMats
             "classsss"
         ),
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-
         Core.SetOptions(disableClassSwap: false);
 
         //Army.initArmy();
@@ -58,7 +58,6 @@ public class ArmyPrinceDarkonsPoleaxeMats
 
         Core.SetOptions(false);
     }
-
 
     void ArmyHunt(string map, string[] cells, string item, int questId, int quant = 1)
     {

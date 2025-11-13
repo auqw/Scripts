@@ -12,7 +12,12 @@ public class BattleConVIP
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static UnderGroundLab UGL { get => _UGL ??= new UnderGroundLab(); set => _UGL = value; }    private static UnderGroundLab _UGL;
+    private static UnderGroundLab UGL
+    {
+        get => _UGL ??= new UnderGroundLab();
+        set => _UGL = value;
+    }
+    private static UnderGroundLab _UGL;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,7 +38,6 @@ public class BattleConVIP
 
         Core.Logger($"Doing UnderGroundLab story for {badge} badge");
         UGL.partofundergroundlabb();
-
     }
 
     private string badge = "BattleCon VIP";

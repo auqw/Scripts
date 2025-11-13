@@ -16,18 +16,31 @@ public class DescendantsDesignMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static YokaiHunt YH { get => _YH ??= new YokaiHunt(); set => _YH = value; }
+    private static YokaiHunt YH
+    {
+        get => _YH ??= new YokaiHunt();
+        set => _YH = value;
+    }
     private static YokaiHunt _YH;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -35,7 +48,16 @@ private static CoreAdvanced _sAdv;
     public void ScriptMain(IScriptInterface Bot)
     {
         YH.DoAll();
-        Core.BankingBlackList.AddRange(new[] { "Lunar Fragment", "Etokoun Residue", "Baoyu's Red Envelope", "Baoyu's Flaming Envelope", "Baoyu's Rainbow Envelope" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Lunar Fragment",
+                "Etokoun Residue",
+                "Baoyu's Red Envelope",
+                "Baoyu's Flaming Envelope",
+                "Baoyu's Rainbow Envelope",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -52,7 +74,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -63,9 +87,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Lunar Fragment":
                     Core.FarmingLogger(req.Name, quant);
@@ -73,8 +102,20 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(9094);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("guardiantree", "Blossoming Treeant", "Fresh Blossoms", 8, log: false);
-                        Core.HuntMonster("guardiantree", "Seed Spitter", "Fresh Seeds", 8, log: false);
+                        Core.HuntMonster(
+                            "guardiantree",
+                            "Blossoming Treeant",
+                            "Fresh Blossoms",
+                            8,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "guardiantree",
+                            "Seed Spitter",
+                            "Fresh Seeds",
+                            8,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -86,10 +127,16 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(9097);
-                        Core.KillMonster("yokaihunt", "r6a", "Left", "*", "Etokoun Wrangled", log: false);
+                        Core.KillMonster(
+                            "yokaihunt",
+                            "r6a",
+                            "Left",
+                            "*",
+                            "Etokoun Wrangled",
+                            log: false
+                        );
                         Core.EnsureComplete(9097);
                         Bot.Wait.ForPickup(req.Name);
-
                     }
                     break;
 
@@ -99,8 +146,19 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(9572);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("shipwreck", "Gilded Merdraconian", "Merdraconian Coins", 15, log: false);
-                        Core.HuntMonster("shipwreck", "Lobthulhu", "Lobthulu's Gold Bar", log: false);
+                        Core.HuntMonster(
+                            "shipwreck",
+                            "Gilded Merdraconian",
+                            "Merdraconian Coins",
+                            15,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "shipwreck",
+                            "Lobthulhu",
+                            "Lobthulu's Gold Bar",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -129,34 +187,143 @@ private static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("73045", "Oni Hatamoto", "Mode: [select] only\nShould the bot buy \"Oni Hatamoto\" ?", false),
-        new Option<bool>("73046", "Honored Oni Hatamoto", "Mode: [select] only\nShould the bot buy \"Honored Oni Hatamoto\" ?", false),
-        new Option<bool>("73047", "Oni Hatamoto Hair", "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Hair\" ?", false),
-        new Option<bool>("73048", "Oni Hatamoto Horned Hair", "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Horned Hair\" ?", false),
-        new Option<bool>("73049", "Oni Hatamoto Locks", "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Locks\" ?", false),
-        new Option<bool>("73050", "Oni Hatamoto Mask Accessory", "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Mask Accessory\" ?", false),
-        new Option<bool>("73051", "Oni Hatamoto Tassels", "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Tassels\" ?", false),
-        new Option<bool>("73052", "Sheathed Oni Hatamoto Katana", "Mode: [select] only\nShould the bot buy \"Sheathed Oni Hatamoto Katana\" ?", false),
-        new Option<bool>("73053", "Oni Hatamoto Katana", "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Katana\" ?", false),
-        new Option<bool>("73054", "Oni Hatamoto Katanas", "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Katanas\" ?", false),
-        new Option<bool>("73055", "Oni Hatamoto Katana and Sheath", "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Katana and Sheath\" ?", false),
-        new Option<bool>("73056", "Oni Hatamoto Naginata", "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Naginata\" ?", false),
-        new Option<bool>("76150", "Lunarian Astromancer", "Mode: [select] only\nShould the bot buy \"Lunarian Astromancer\" ?", false),
-        new Option<bool>("76153", "Lunarian Astromancer Helmet", "Mode: [select] only\nShould the bot buy \"Lunarian Astromancer Helmet\" ?", false),
-        new Option<bool>("76154", "Lunarian Astromancer Helmet and Locks", "Mode: [select] only\nShould the bot buy \"Lunarian Astromancer Helmet and Locks\" ?", false),
-        new Option<bool>("76155", "Lunarian Astromancer Visor", "Mode: [select] only\nShould the bot buy \"Lunarian Astromancer Visor\" ?", false),
-        new Option<bool>("83883", "Terran Dragonlord", "Mode: [select] only\nShould the bot buy \"Terran Dragonlord\" ?", false),
-        new Option<bool>("83884", "Terran Dragonlord Helm", "Mode: [select] only\nShould the bot buy \"Terran Dragonlord Helm\" ?", false),
-        new Option<bool>("83886", "Naturebound Qiang", "Mode: [select] only\nShould the bot buy \"Naturebound Qiang\" ?", false),
-        new Option<bool>("83887", "Terran Dragonlord of Prosperity", "Mode: [select] only\nShould the bot buy \"Terran Dragonlord of Prosperity\" ?", false),
-        new Option<bool>("83888", "Prosperous Terran Dragonlord Helm", "Mode: [select] only\nShould the bot buy \"Prosperous Terran Dragonlord Helm\" ?", false),
-        new Option<bool>("83890", "Qiang of Fortune", "Mode: [select] only\nShould the bot buy \"Qiang of Fortune\" ?", false),
+        new Option<bool>(
+            "73045",
+            "Oni Hatamoto",
+            "Mode: [select] only\nShould the bot buy \"Oni Hatamoto\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73046",
+            "Honored Oni Hatamoto",
+            "Mode: [select] only\nShould the bot buy \"Honored Oni Hatamoto\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73047",
+            "Oni Hatamoto Hair",
+            "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73048",
+            "Oni Hatamoto Horned Hair",
+            "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Horned Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73049",
+            "Oni Hatamoto Locks",
+            "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73050",
+            "Oni Hatamoto Mask Accessory",
+            "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Mask Accessory\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73051",
+            "Oni Hatamoto Tassels",
+            "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Tassels\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73052",
+            "Sheathed Oni Hatamoto Katana",
+            "Mode: [select] only\nShould the bot buy \"Sheathed Oni Hatamoto Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73053",
+            "Oni Hatamoto Katana",
+            "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73054",
+            "Oni Hatamoto Katanas",
+            "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Katanas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73055",
+            "Oni Hatamoto Katana and Sheath",
+            "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Katana and Sheath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73056",
+            "Oni Hatamoto Naginata",
+            "Mode: [select] only\nShould the bot buy \"Oni Hatamoto Naginata\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76150",
+            "Lunarian Astromancer",
+            "Mode: [select] only\nShould the bot buy \"Lunarian Astromancer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76153",
+            "Lunarian Astromancer Helmet",
+            "Mode: [select] only\nShould the bot buy \"Lunarian Astromancer Helmet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76154",
+            "Lunarian Astromancer Helmet and Locks",
+            "Mode: [select] only\nShould the bot buy \"Lunarian Astromancer Helmet and Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76155",
+            "Lunarian Astromancer Visor",
+            "Mode: [select] only\nShould the bot buy \"Lunarian Astromancer Visor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83883",
+            "Terran Dragonlord",
+            "Mode: [select] only\nShould the bot buy \"Terran Dragonlord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83884",
+            "Terran Dragonlord Helm",
+            "Mode: [select] only\nShould the bot buy \"Terran Dragonlord Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83886",
+            "Naturebound Qiang",
+            "Mode: [select] only\nShould the bot buy \"Naturebound Qiang\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83887",
+            "Terran Dragonlord of Prosperity",
+            "Mode: [select] only\nShould the bot buy \"Terran Dragonlord of Prosperity\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83888",
+            "Prosperous Terran Dragonlord Helm",
+            "Mode: [select] only\nShould the bot buy \"Prosperous Terran Dragonlord Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83890",
+            "Qiang of Fortune",
+            "Mode: [select] only\nShould the bot buy \"Qiang of Fortune\" ?",
+            false
+        ),
     };
 }

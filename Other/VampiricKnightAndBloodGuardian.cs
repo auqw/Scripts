@@ -13,8 +13,18 @@ public class VampiricKnightAndBloodGuardian
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static BloodMoon BloodMoon { get => _BloodMoon ??= new BloodMoon(); set => _BloodMoon = value; }    private static BloodMoon _BloodMoon;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static BloodMoon BloodMoon
+    {
+        get => _BloodMoon ??= new BloodMoon();
+        set => _BloodMoon = value;
+    }
+    private static BloodMoon _BloodMoon;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -27,7 +37,10 @@ public class VampiricKnightAndBloodGuardian
 
     public void GetAll()
     {
-        string[] AllRewards = (Core.EnsureLoad(6068).Rewards.Select(i => i.Name)).Concat(Core.EnsureLoad(6069).Rewards.Select(i => i.Name)).Concat(Core.EnsureLoad(6070).Rewards.Select(i => i.Name)).ToArray();
+        string[] AllRewards = (Core.EnsureLoad(6068).Rewards.Select(i => i.Name))
+            .Concat(Core.EnsureLoad(6069).Rewards.Select(i => i.Name))
+            .Concat(Core.EnsureLoad(6070).Rewards.Select(i => i.Name))
+            .ToArray();
 
         if (Core.CheckInventory(AllRewards, toInv: false))
             return;
@@ -57,7 +70,6 @@ public class VampiricKnightAndBloodGuardian
     // Core.CancelRegisteredQuests();
     // Core.JumpWait();
     // Core.ToBank(Quest3Rewards);
-
 
     // }
 }

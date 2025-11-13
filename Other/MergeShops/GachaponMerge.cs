@@ -17,22 +17,43 @@ public class GachaponMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static Eden Eden { get => _Eden ??= new Eden(); set => _Eden = value; }    private static Eden _Eden;
+    private static Eden Eden
+    {
+        get => _Eden ??= new Eden();
+        set => _Eden = value;
+    }
+    private static Eden _Eden;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -58,7 +79,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -69,9 +92,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Second Chance Coin":
                     Core.FarmingLogger(req.Name, quant);
@@ -86,20 +114,59 @@ public static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("57239", "Crystallis Jinbei", "Mode: [select] only\nShould the bot buy \"Crystallis Jinbei\" ?", false),
-        new Option<bool>("57240", "Crystallis Yukata", "Mode: [select] only\nShould the bot buy \"Crystallis Yukata\" ?", false),
-        new Option<bool>("57241", "Crystallis Yukata + Haori", "Mode: [select] only\nShould the bot buy \"Crystallis Yukata + Haori\" ?", false),
-        new Option<bool>("57242", "Cool Crystallis Yukata", "Mode: [select] only\nShould the bot buy \"Cool Crystallis Yukata\" ?", false),
-        new Option<bool>("57243", "Dark Crystallis Jinbei", "Mode: [select] only\nShould the bot buy \"Dark Crystallis Jinbei\" ?", false),
-        new Option<bool>("57244", "Onsen Yukata", "Mode: [select] only\nShould the bot buy \"Onsen Yukata\" ?", false),
-        new Option<bool>("57245", "Onsen Yukata + Haori", "Mode: [select] only\nShould the bot buy \"Onsen Yukata + Haori\" ?", false),
-        new Option<bool>("57246", "Cool Onsen Yukata", "Mode: [select] only\nShould the bot buy \"Cool Onsen Yukata\" ?", false),
+        new Option<bool>(
+            "57239",
+            "Crystallis Jinbei",
+            "Mode: [select] only\nShould the bot buy \"Crystallis Jinbei\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57240",
+            "Crystallis Yukata",
+            "Mode: [select] only\nShould the bot buy \"Crystallis Yukata\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57241",
+            "Crystallis Yukata + Haori",
+            "Mode: [select] only\nShould the bot buy \"Crystallis Yukata + Haori\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57242",
+            "Cool Crystallis Yukata",
+            "Mode: [select] only\nShould the bot buy \"Cool Crystallis Yukata\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57243",
+            "Dark Crystallis Jinbei",
+            "Mode: [select] only\nShould the bot buy \"Dark Crystallis Jinbei\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57244",
+            "Onsen Yukata",
+            "Mode: [select] only\nShould the bot buy \"Onsen Yukata\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57245",
+            "Onsen Yukata + Haori",
+            "Mode: [select] only\nShould the bot buy \"Onsen Yukata + Haori\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57246",
+            "Cool Onsen Yukata",
+            "Mode: [select] only\nShould the bot buy \"Cool Onsen Yukata\" ?",
+            false
+        ),
     };
 }

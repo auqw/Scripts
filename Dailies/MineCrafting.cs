@@ -15,9 +15,17 @@ public class MineCrafting
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
     private static CoreBLOD _BLOD;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -48,13 +56,21 @@ public class MineCrafting
             else
             {
                 Core.Logger("BLoD & NSoD owned, getting extra metals.");
-                Daily.MineCrafting(new[] { "Aluminum", "Barium", "Gold", "Iron", "Copper", "Silver", "Platinum" }, 10, ToBank: true);
+                Daily.MineCrafting(
+                    new[] { "Aluminum", "Barium", "Gold", "Iron", "Copper", "Silver", "Platinum" },
+                    10,
+                    ToBank: true
+                );
             }
         }
         Core.Logger("Finished MineCrafting, Checking HardCore Metals(mem)");
         if (!Core.IsMember || Daily.CheckDailyv2(2090))
         {
-            Core.Logger(!Core.IsMember ? "Membership required for SDK + HardCoreMetals stopping." : "Daily already complete, try tomarrow.");
+            Core.Logger(
+                !Core.IsMember
+                    ? "Membership required for SDK + HardCoreMetals stopping."
+                    : "Daily already complete, try tomarrow."
+            );
             return;
         }
 
@@ -64,17 +80,32 @@ public class MineCrafting
             {
                 { "Rhodium", 2 },
                 { "Beryllium", 1 },
-                { "Chromium", 2 }
+                { "Chromium", 2 },
             };
 
-            foreach (var metal in hardcoreMetals) 
+            foreach (var metal in hardcoreMetals)
             {
                 if (!Daily.CheckDailyv2(2098, false, false, metal.Key))
                     return;
 
-                Daily.HardCoreMetals(new[] { metal.Key }, metal.Value, true); 
+                Daily.HardCoreMetals(new[] { metal.Key }, metal.Value, true);
             }
         }
-        else Daily.HardCoreMetals(new[] { "Arsenic", "Beryllium", "Chromium", "Palladium", "Rhodium", "Rhodium", "Thorium", "Mercury" }, 10, ToBank: true);
+        else
+            Daily.HardCoreMetals(
+                new[]
+                {
+                    "Arsenic",
+                    "Beryllium",
+                    "Chromium",
+                    "Palladium",
+                    "Rhodium",
+                    "Rhodium",
+                    "Thorium",
+                    "Mercury",
+                },
+                10,
+                ToBank: true
+            );
     }
 }

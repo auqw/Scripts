@@ -21,15 +21,35 @@ public class CelestialOfMysteries
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static InfernalDianoia ID { get => _ID ??= new InfernalDianoia(); set => _ID = value; }
+    private static InfernalDianoia ID
+    {
+        get => _ID ??= new InfernalDianoia();
+        set => _ID = value;
+    }
     private static InfernalDianoia _ID;
-    private static InfernalParadiseMerge IPM { get => _IPM ??= new InfernalParadiseMerge(); set => _IPM = value; }
+    private static InfernalParadiseMerge IPM
+    {
+        get => _IPM ??= new InfernalParadiseMerge();
+        set => _IPM = value;
+    }
     private static InfernalParadiseMerge _IPM;
-    private static InfernalCelestialFinaleMerge ICFM { get => _ICFM ??= new InfernalCelestialFinaleMerge(); set => _ICFM = value; }
+    private static InfernalCelestialFinaleMerge ICFM
+    {
+        get => _ICFM ??= new InfernalCelestialFinaleMerge();
+        set => _ICFM = value;
+    }
     private static InfernalCelestialFinaleMerge _ICFM;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -63,7 +83,6 @@ public class CelestialOfMysteries
             Core.Unbank(req.ID);
         }
 
-
         // Gold Voucher 500k
         Farm.Voucher("Gold Voucher 500k", 35);
 
@@ -89,7 +108,11 @@ public class CelestialOfMysteries
 
         // Champion's Seal
         if (!Core.CheckInventory("Champion's Seal", 20))
-            Core.UseBossClass(Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
+            Core.UseBossClass(
+                Core.CheckInventory("Void HighLord (IoDA)")
+                    ? "Void HighLord (IoDA)"
+                    : "Void Highlord"
+            );
         Core.HuntMonster("infernalarena", "Na'al", "Champion's Seal", 20, false, false);
 
         // Infernal Down
@@ -97,7 +120,9 @@ public class CelestialOfMysteries
 
         if (!Core.CheckInventory("The Divine Will"))
         {
-            Core.Logger("Farming Azalith for The Divine Will. Azalith is tough, consider using an army to speed it up.");
+            Core.Logger(
+                "Farming Azalith for The Divine Will. Azalith is tough, consider using an army to speed it up."
+            );
             Core.UseBossClass();
             Core.HuntMonster("celestialpast", "Azalith", "The Divine Will", 1, false);
         }

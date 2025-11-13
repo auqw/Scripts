@@ -11,7 +11,11 @@ public class CruxShip
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -39,7 +43,7 @@ public class CruxShip
             Core.KillMonster("CruxShip", "r2", "Left", "Shadow Locust", "Locusts Defeated", 10);
             Core.EnsureComplete(4598);
         }
-        
+
         //Clear the Swarm 4599
         if (!Story.QuestProgression(4599))
         {
@@ -94,7 +98,7 @@ public class CruxShip
         }
 
         //Plague in the Pyramid 4606
-        if(!Story.QuestProgression(4606))
+        if (!Story.QuestProgression(4606))
         {
             Core.EnsureAccept(4606);
             Core.HuntMonster("CruxShip", "Shadow Locust", "Locusts Beaten", 12);
@@ -167,8 +171,8 @@ public class CruxShip
             Core.Sleep(2500);
             if (Core.HasWebBadge("Mummy Slayer"))
                 return;
-            else Core.EnsureComplete(4616);
+            else
+                Core.EnsureComplete(4616);
         }
-
     }
 }

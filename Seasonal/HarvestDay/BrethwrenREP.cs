@@ -8,14 +8,24 @@ tags: brethwren-rep, farm, seasonal, harvest-day
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Seasonal/HarvestDay/CoreHarvestDay.cs
 using Skua.Core.Interfaces;
+
 public class BrethwrenREP
 {
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     CoreHarvestDay HarvestDay = new();
-
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -31,6 +41,5 @@ public class BrethwrenREP
         HarvestDay.BirdsWithHarms();
 
         Farm.BrethwrenREP();
-
     }
 }

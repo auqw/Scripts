@@ -16,9 +16,24 @@ public class PinkBladeOfDestruciton
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreBLOD BLoD { get => _BLoD ??= new CoreBLOD(); set => _BLoD = value; }    private static CoreBLOD _BLoD;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreDoomwood P3 { get => _P3 ??= new CoreDoomwood(); set => _P3 = value; }    private static CoreDoomwood _P3;
+    private static CoreBLOD BLoD
+    {
+        get => _BLoD ??= new CoreBLOD();
+        set => _BLoD = value;
+    }
+    private static CoreBLOD _BLoD;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreDoomwood P3
+    {
+        get => _P3 ??= new CoreDoomwood();
+        set => _P3 = value;
+    }
+    private static CoreDoomwood _P3;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -55,12 +70,24 @@ public class PinkBladeOfDestruciton
         {
             Core.EnsureAccept(7616);
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("techdungeon", "Kalron the Cryptborg", "Immutable Dedication", 7, log: false);
+            Core.HuntMonster(
+                "techdungeon",
+                "Kalron the Cryptborg",
+                "Immutable Dedication",
+                7,
+                log: false
+            );
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster("techdungeon", "DoomBorg Guard", "Paladin Armor Scraps", 30, log: false);
+            Core.HuntMonster(
+                "techdungeon",
+                "DoomBorg Guard",
+                "Paladin Armor Scraps",
+                30,
+                log: false
+            );
             Core.EnsureComplete(7616);
         }
-        
+
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("undergroundlabb", "Ultra BrutalCorn", "Unicorn Essence", 5, false, false);
 
@@ -69,5 +96,4 @@ public class PinkBladeOfDestruciton
         Core.EnsureComplete(7650, 55884);
         Bot.Wait.ForPickup("Pink Blade of Destruction");
     }
-
 }

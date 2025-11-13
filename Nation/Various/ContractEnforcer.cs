@@ -25,15 +25,35 @@ public class ContractEnforcer
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static NulgathDiamondMerge NDM { get => _NDM ??= new NulgathDiamondMerge(); set => _NDM = value; }
+    private static NulgathDiamondMerge NDM
+    {
+        get => _NDM ??= new NulgathDiamondMerge();
+        set => _NDM = value;
+    }
     private static NulgathDiamondMerge _NDM;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static DirtlickersMerge DLM { get => _DLM ??= new DirtlickersMerge(); set => _DLM = value; }
+    private static DirtlickersMerge DLM
+    {
+        get => _DLM ??= new DirtlickersMerge();
+        set => _DLM = value;
+    }
     private static DirtlickersMerge _DLM;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -75,17 +95,21 @@ public class ContractEnforcer
             Daily.PearlOfNulgath();
             if (!Core.CheckInventory("Pearl of Nulgath", 4))
             {
-                Core.Logger($"You need 4 Pearls of Nulgath to complete the quest, you have {Bot.Inventory.GetQuantity("Pearl of Nulgath")}/4");
+                Core.Logger(
+                    $"You need 4 Pearls of Nulgath to complete the quest, you have {Bot.Inventory.GetQuantity("Pearl of Nulgath")}/4"
+                );
                 return;
             }
         }
 
         if (!Core.CheckInventory(Core.QuestRequirements<int>(10050)))
-        if (!Core.CheckInventory(Core.QuestRequirements<string>(10050)))
-        {
-            Core.Logger("You need to have both rewards from both quests in order to complete the quest. Run the script again tomorrow.");
-            return;
-        }
+            if (!Core.CheckInventory(Core.QuestRequirements<string>(10050)))
+            {
+                Core.Logger(
+                    "You need to have both rewards from both quests in order to complete the quest. Run the script again tomorrow."
+                );
+                return;
+            }
 
         Core.EnsureComplete(10050);
         Core.ToBank(Core.QuestRewards(10048, 10049));
@@ -108,7 +132,9 @@ public class ContractEnforcer
             Daily.PearlOfNulgath();
             if (!Core.CheckInventory("Pearl of Nulgath", 2))
             {
-                Core.Logger($"You need 2 Pearls of Nulgath to complete the quest, you have {Bot.Inventory.GetQuantity("Pearl of Nulgath")/2}");
+                Core.Logger(
+                    $"You need 2 Pearls of Nulgath to complete the quest, you have {Bot.Inventory.GetQuantity("Pearl of Nulgath") / 2}"
+                );
                 return;
             }
         }
@@ -134,7 +160,9 @@ public class ContractEnforcer
             Daily.PearlOfNulgath();
             if (!Core.CheckInventory("Pearl of Nulgath", 3))
             {
-                Core.Logger($"You need 3 Pearls of Nulgath to complete the quest, you have {Bot.Inventory.GetQuantity("Pearl of Nulgath")/3}");
+                Core.Logger(
+                    $"You need 3 Pearls of Nulgath to complete the quest, you have {Bot.Inventory.GetQuantity("Pearl of Nulgath") / 3}"
+                );
                 return;
             }
         }

@@ -14,25 +14,39 @@ public class ExtinctionGamesMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Burningjay Feather", "Coal", "Fabric Scraps", "Iron II.0", "A Kitten? " });
+        Core.BankingBlackList.AddRange(
+            new[] { "Burningjay Feather", "Coal", "Fabric Scraps", "Iron II.0", "A Kitten? " }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -50,7 +64,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -61,9 +77,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Burningjay Feather":
                     Core.FarmingLogger(req.Name, quant);
@@ -119,22 +140,71 @@ private static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("26741", "MockingSlay Pet", "Mode: [select] only\nShould the bot buy \"MockingSlay Pet\" ?", false),
-        new Option<bool>("26738", "MockingHawk Hair", "Mode: [select] only\nShould the bot buy \"MockingHawk Hair\" ?", false),
-        new Option<bool>("26803", "MockingSlayer Bow", "Mode: [select] only\nShould the bot buy \"MockingSlayer Bow\" ?", false),
-        new Option<bool>("26733", "MockingSlayer Quiver", "Mode: [select] only\nShould the bot buy \"MockingSlayer Quiver\" ?", false),
-        new Option<bool>("26731", "Kat Mess Braid", "Mode: [select] only\nShould the bot buy \"Kat Mess Braid\" ?", false),
-        new Option<bool>("26138", "Extinction Survivor Locks", "Mode: [select] only\nShould the bot buy \"Extinction Survivor Locks\" ?", false),
-        new Option<bool>("26137", "Kale's Pithy Helm", "Mode: [select] only\nShould the bot buy \"Kale's Pithy Helm\" ?", false),
-        new Option<bool>("26136", "Meeta's Machete", "Mode: [select] only\nShould the bot buy \"Meeta's Machete\" ?", false),
-        new Option<bool>("26135", "Double HAMM Pack", "Mode: [select] only\nShould the bot buy \"Double HAMM Pack\" ?", false),
-        new Option<bool>("26134", "Exctinction Survivor", "Mode: [select] only\nShould the bot buy \"Exctinction Survivor\" ?", false),
+        new Option<bool>(
+            "26741",
+            "MockingSlay Pet",
+            "Mode: [select] only\nShould the bot buy \"MockingSlay Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26738",
+            "MockingHawk Hair",
+            "Mode: [select] only\nShould the bot buy \"MockingHawk Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26803",
+            "MockingSlayer Bow",
+            "Mode: [select] only\nShould the bot buy \"MockingSlayer Bow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26733",
+            "MockingSlayer Quiver",
+            "Mode: [select] only\nShould the bot buy \"MockingSlayer Quiver\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26731",
+            "Kat Mess Braid",
+            "Mode: [select] only\nShould the bot buy \"Kat Mess Braid\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26138",
+            "Extinction Survivor Locks",
+            "Mode: [select] only\nShould the bot buy \"Extinction Survivor Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26137",
+            "Kale's Pithy Helm",
+            "Mode: [select] only\nShould the bot buy \"Kale's Pithy Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26136",
+            "Meeta's Machete",
+            "Mode: [select] only\nShould the bot buy \"Meeta's Machete\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26135",
+            "Double HAMM Pack",
+            "Mode: [select] only\nShould the bot buy \"Double HAMM Pack\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26134",
+            "Exctinction Survivor",
+            "Mode: [select] only\nShould the bot buy \"Exctinction Survivor\" ?",
+            false
+        ),
     };
 }

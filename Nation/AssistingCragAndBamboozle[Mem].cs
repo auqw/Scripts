@@ -7,41 +7,77 @@ tags: null
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/Nation/CoreNation.cs
+using System.Collections.Generic;
+using System.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
-using System.Collections.Generic;
-using Skua.Core.Options;
-using System.Linq;
 using Skua.Core.Models.Quests;
+using Skua.Core.Options;
 
 public class AssistingCragAndBamboozle
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
-    readonly string[] ACaBItems = {
-                    "Sword of Nulgath", "Gem of Nulgath", "Tainted Gem", "Dark Crystal Shard", "Diamond of Nulgath",
-                    "Totem of Nulgath", "Blood Gem of the Archfiend", "Unidentified 19", "Elders' Blood", "Voucher of Nulgath",
-                    "Voucher of Nulgath (non-mem)", "Archfiend's Favor", "Essence of Nulgath", "Nulgath Larvae",
-                    "Gem of Domniation", "Fiend Seal"};
-
-
+    readonly string[] ACaBItems =
+    {
+        "Sword of Nulgath",
+        "Gem of Nulgath",
+        "Tainted Gem",
+        "Dark Crystal Shard",
+        "Diamond of Nulgath",
+        "Totem of Nulgath",
+        "Blood Gem of the Archfiend",
+        "Unidentified 19",
+        "Elders' Blood",
+        "Voucher of Nulgath",
+        "Voucher of Nulgath (non-mem)",
+        "Archfiend's Favor",
+        "Essence of Nulgath",
+        "Nulgath Larvae",
+        "Gem of Domniation",
+        "Fiend Seal",
+    };
 
     public string OptionsStorage = "AssistingCragAndBamboozle";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<Rewards>("PickReward", "Pick your reward", "This quest is a daily.. unless you have multiple sparrows blood then itll keep running.", Rewards.Get_whats_not_maxed),
+        new Option<Rewards>(
+            "PickReward",
+            "Pick your reward",
+            "This quest is a daily.. unless you have multiple sparrows blood then itll keep running.",
+            Rewards.Get_whats_not_maxed
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
-
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] {Nation.CragName,"Gem of Nulgath", "Tainted Gem", "Dark Crystal Shard", "Diamond of Nulgath",
-                    "Totem of Nulgath", "Blood Gem of the Archfiend"});
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                Nation.CragName,
+                "Gem of Nulgath",
+                "Tainted Gem",
+                "Dark Crystal Shard",
+                "Diamond of Nulgath",
+                "Totem of Nulgath",
+                "Blood Gem of the Archfiend",
+            }
+        );
 
         Core.SetOptions();
 
@@ -52,19 +88,36 @@ public class AssistingCragAndBamboozle
 
     public void AssistingCandB(Rewards reward = new())
     {
-        if (!Core.IsMember || !Core.CheckInventory(Nation.CragName) || !Core.CheckInventory("Sparrow's Blood") && !Daily.CheckDailyv2(803, true, true, "Sparrow's Blood"))
+        if (
+            !Core.IsMember
+            || !Core.CheckInventory(Nation.CragName)
+            || !Core.CheckInventory("Sparrow's Blood")
+                && !Daily.CheckDailyv2(803, true, true, "Sparrow's Blood")
+        )
             return;
 
-        ItemBase? Item = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(5817))?.Rewards
-            .FirstOrDefault(r => (int)reward == -1
-            ? r.Quantity < r.MaxStack
-            : r.ID == (int)reward);
+        ItemBase? Item = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(5817))
+            ?.Rewards.FirstOrDefault(r =>
+                (int)reward == -1 ? r.Quantity < r.MaxStack : r.ID == (int)reward
+            );
 
         if (Item != null)
         {
-            Core.AddDrop("Nulgath Larvae", "Sparrow's Blood",
-                         "Sword of Nulgath", "Gem of Nulgath", "Tainted Gem", "Dark Crystal Shard", "Diamond of Nulgath",
-                         "Totem of Nulgath", "Blood Gem of the Archfiend", "Unidentified 19", "Elders' Blood", "Voucher of Nulgath", "Voucher of Nulgath (non-mem)");
+            Core.AddDrop(
+                "Nulgath Larvae",
+                "Sparrow's Blood",
+                "Sword of Nulgath",
+                "Gem of Nulgath",
+                "Tainted Gem",
+                "Dark Crystal Shard",
+                "Diamond of Nulgath",
+                "Totem of Nulgath",
+                "Blood Gem of the Archfiend",
+                "Unidentified 19",
+                "Elders' Blood",
+                "Voucher of Nulgath",
+                "Voucher of Nulgath (non-mem)"
+            );
 
             Core.FarmingLogger(Item.Name, Item.MaxStack);
         }
@@ -77,7 +130,14 @@ public class AssistingCragAndBamboozle
 
             //Required to "Accept"
             if (!Core.CheckInventory("Tendurrr The Assistant"))
-                Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Tendurrr The Assistant", isTemp: false);
+                Core.KillMonster(
+                    "tercessuinotlim",
+                    "m2",
+                    "Left",
+                    "*",
+                    "Tendurrr The Assistant",
+                    isTemp: false
+                );
 
             Daily.SparrowsBlood(1);
 
@@ -94,7 +154,9 @@ public class AssistingCragAndBamboozle
 
             //medal required to get seals
             Nation.NationRound4Medal();
-            Core.Logger("Accepting \"Nation Recruits: Seal Your Fate[4748]\", to allow \"Fiend Seal\" to drop.");
+            Core.Logger(
+                "Accepting \"Nation Recruits: Seal Your Fate[4748]\", to allow \"Fiend Seal\" to drop."
+            );
             Core.EnsureAccept(4748);
             Core.HuntMonster("shadowblast", "Legion Fenrir", "Fiend Seal", 10, isTemp: false);
 
@@ -107,23 +169,26 @@ public class AssistingCragAndBamboozle
                         continue;
 
                     string? rewardName = rewardEnum.ToString().Replace("_", " ");
-                Retry5817:
+                    Retry5817:
                     Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(5817));
 
                     if (quest != null)
                     {
-                        ItemBase? rewardItem = quest.Rewards.FirstOrDefault(x => x.Name == rewardName && x.Quantity < x.MaxStack);
+                        ItemBase? rewardItem = quest.Rewards.FirstOrDefault(x =>
+                            x.Name == rewardName && x.Quantity < x.MaxStack
+                        );
 
                         if (rewardItem != null)
                         {
-
                             if (!Core.CheckInventory(rewardItem.Name, rewardItem.MaxStack))
                                 Core.EnsureComplete(5817, rewardItem.ID);
 
                             if (!Core.CheckInventory("Sparrow's Blood"))
                             {
                                 continueFarming = false;
-                                Core.Logger($"{rewardItem.Name} owned in max quantity: {rewardItem.MaxStack}");
+                                Core.Logger(
+                                    $"{rewardItem.Name} owned in max quantity: {rewardItem.MaxStack}"
+                                );
                                 break;
                             }
                         }
@@ -151,7 +216,9 @@ public class AssistingCragAndBamboozle
                     }
 
                     if (!continueFarming)
-                        Core.Logger($"Not enough \"Sparrow's Blood\", please do the daily 1 more time (not today)");
+                        Core.Logger(
+                            $"Not enough \"Sparrow's Blood\", please do the daily 1 more time (not today)"
+                        );
                 }
                 else
                     Core.Logger("Failed to find the item in the quest rewards.");
@@ -172,6 +239,6 @@ public class AssistingCragAndBamboozle
         Tainted_Gem = 4769,
         Unidentified_19 = 4752,
         Sword_of_Nulgath = 4670,
-        Get_whats_not_maxed = -1
+        Get_whats_not_maxed = -1,
     }
 }

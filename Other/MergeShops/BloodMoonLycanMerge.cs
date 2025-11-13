@@ -16,20 +16,37 @@ public class BloodMoonLycanMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static BloodMoon BM { get => _BM ??= new BloodMoon(); set => _BM = value; }
+    private static BloodMoon BM
+    {
+        get => _BM ??= new BloodMoon();
+        set => _BM = value;
+    }
     private static BloodMoon _BM;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -54,7 +71,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +84,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Sapphires":
                     Core.RegisterQuests(6070, 6071, 6073);
@@ -76,7 +100,12 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("bloodwarlycan", "Blood Guardian", "Vampire Medal", 5);
-                        Core.HuntMonster("bloodwarlycan", "Blood Guardian", "Mega Vampire Medal", 3);
+                        Core.HuntMonster(
+                            "bloodwarlycan",
+                            "Blood Guardian",
+                            "Mega Vampire Medal",
+                            3
+                        );
                     }
                     Core.CancelRegisteredQuests();
                     break;
@@ -88,23 +117,62 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("bloodwarvamp", "Lunar Blazebinder", "Lycan Medal", 5);
-                        Core.HuntMonster("bloodwarvamp", "Lunar Blazebinder", "Mega Lycan Medal", 3);
+                        Core.HuntMonster(
+                            "bloodwarvamp",
+                            "Lunar Blazebinder",
+                            "Mega Lycan Medal",
+                            3
+                        );
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("41788", "Alpha Lycan Surfboard", "Mode: [select] only\nShould the bot buy \"Alpha Lycan Surfboard\" ?", false),
-        new Option<bool>("41789", "Lunar Blaze Surfboard", "Mode: [select] only\nShould the bot buy \"Lunar Blaze Surfboard\" ?", false),
-        new Option<bool>("41711", "Werepyre Warrior", "Mode: [select] only\nShould the bot buy \"Werepyre Warrior\" ?", false),
-        new Option<bool>("41712", "Werepyre Morph", "Mode: [select] only\nShould the bot buy \"Werepyre Morph\" ?", false),
-        new Option<bool>("41713", "Werepyre Wings", "Mode: [select] only\nShould the bot buy \"Werepyre Wings\" ?", false),
-        new Option<bool>("41714", "Werepyre Warrior Blade", "Mode: [select] only\nShould the bot buy \"Werepyre Warrior Blade\" ?", false),
-        new Option<bool>("41787", "Weretato Pet", "Mode: [select] only\nShould the bot buy \"Weretato Pet\" ?", false),
+        new Option<bool>(
+            "41788",
+            "Alpha Lycan Surfboard",
+            "Mode: [select] only\nShould the bot buy \"Alpha Lycan Surfboard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41789",
+            "Lunar Blaze Surfboard",
+            "Mode: [select] only\nShould the bot buy \"Lunar Blaze Surfboard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41711",
+            "Werepyre Warrior",
+            "Mode: [select] only\nShould the bot buy \"Werepyre Warrior\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41712",
+            "Werepyre Morph",
+            "Mode: [select] only\nShould the bot buy \"Werepyre Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41713",
+            "Werepyre Wings",
+            "Mode: [select] only\nShould the bot buy \"Werepyre Wings\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41714",
+            "Werepyre Warrior Blade",
+            "Mode: [select] only\nShould the bot buy \"Werepyre Warrior Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41787",
+            "Weretato Pet",
+            "Mode: [select] only\nShould the bot buy \"Weretato Pet\" ?",
+            false
+        ),
     };
 }

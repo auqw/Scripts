@@ -18,20 +18,37 @@ public class DoomPirateHouseMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static DoomPirate DP { get => _DP ??= new DoomPirate(); set => _DP = value; }
+    private static DoomPirate DP
+    {
+        get => _DP ??= new DoomPirate();
+        set => _DP = value;
+    }
     private static DoomPirate _DP;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +73,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +86,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Gallaeon's Piece of Eight":
                     Core.FarmingLogger(req.Name, req.Quantity);
@@ -79,7 +103,7 @@ private static CoreAdvanced _sAdv;
 
                     bool restartKills = false;
 
-                RestartKills:
+                    RestartKills:
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
                     {
                         if (restartKills)
@@ -102,7 +126,10 @@ private static CoreAdvanced _sAdv;
                                 if (!Bot.Player.Alive)
                                 {
                                     Core.Logger("Death - Resetting");
-                                    while (!Bot.ShouldExit && !Bot.Player.Alive) { Bot.Sleep(1000); }
+                                    while (!Bot.ShouldExit && !Bot.Player.Alive)
+                                    {
+                                        Bot.Sleep(1000);
+                                    }
                                     restartKills = true;
                                     goto RestartKills;
                                 }
@@ -113,7 +140,9 @@ private static CoreAdvanced _sAdv;
                                     Core.Sleep();
                                 }
 
-                                Monster? mon = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && x.MapID == mobId);
+                                Monster? mon = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(
+                                    x => x != null && x.MapID == mobId
+                                );
                                 if (mon == null)
                                 {
                                     Core.Logger($"Skipping mob {mobId}, not found.");
@@ -154,7 +183,8 @@ private static CoreAdvanced _sAdv;
         try
         {
             string? jsonData = Bot.Flash.Call("availableMonsters");
-            if (string.IsNullOrWhiteSpace(jsonData)) return 0;
+            if (string.IsNullOrWhiteSpace(jsonData))
+                return 0;
 
             foreach (var mon in JArray.Parse(jsonData))
                 if (mon?["MonMapID"]?.ToString() == monMapID)
@@ -167,8 +197,23 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("79508", "Shadowscythe Pirate Warship", "Mode: [select] only\nShould the bot buy \"Shadowscythe Pirate Warship\" ?", false),
-        new Option<bool>("79414", "Commander Gallaeon House Guest", "Mode: [select] only\nShould the bot buy \"Commander Gallaeon House Guest\" ?", false),
-        new Option<bool>("79623", "Commander Gallaeon Statue", "Mode: [select] only\nShould the bot buy \"Commander Gallaeon Statue\" ?", false),
+        new Option<bool>(
+            "79508",
+            "Shadowscythe Pirate Warship",
+            "Mode: [select] only\nShould the bot buy \"Shadowscythe Pirate Warship\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79414",
+            "Commander Gallaeon House Guest",
+            "Mode: [select] only\nShould the bot buy \"Commander Gallaeon House Guest\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79623",
+            "Commander Gallaeon Statue",
+            "Mode: [select] only\nShould the bot buy \"Commander Gallaeon Statue\" ?",
+            false
+        ),
     };
 }

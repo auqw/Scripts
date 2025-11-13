@@ -9,12 +9,15 @@ tags: burning sword of doom, blazing light of destiny, blaze of awe, pre reqs, l
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-
 public class LavarockForge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static BuyScrolls Scroll { get => _Scroll ??= new BuyScrolls(); set => _Scroll = value; }
+    private static BuyScrolls Scroll
+    {
+        get => _Scroll ??= new BuyScrolls();
+        set => _Scroll = value;
+    }
     private static BuyScrolls _Scroll;
 
     public string OptionsStorage = "LavarockForge";
@@ -22,8 +25,13 @@ public class LavarockForge
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<bool>("FarmAwe", "Farm Blaze of Awe Pre Reqs?","true/false" ,false),
-        new Option<bool>("FarmBLOD", "Farm Blazing Light of Destiny Pre Reqs?","true/false", false),
+        new Option<bool>("FarmAwe", "Farm Blaze of Awe Pre Reqs?", "true/false", false),
+        new Option<bool>(
+            "FarmBLOD",
+            "Farm Blazing Light of Destiny Pre Reqs?",
+            "true/false",
+            false
+        ),
         new Option<bool>("FarmBSOD", "Farm Burning Sword of Doom Pre Reqs?", "true/false", false),
     };
 
@@ -31,7 +39,11 @@ public class LavarockForge
     {
         Core.SetOptions();
 
-        PreReqs(Bot.Config!.Get<bool>("FarmAwe"), Bot.Config!.Get<bool>("FarmBLOD"), Bot.Config!.Get<bool>("FarmBSOD"));
+        PreReqs(
+            Bot.Config!.Get<bool>("FarmAwe"),
+            Bot.Config!.Get<bool>("FarmBLOD"),
+            Bot.Config!.Get<bool>("FarmBSOD")
+        );
         Core.SetOptions(false);
     }
 

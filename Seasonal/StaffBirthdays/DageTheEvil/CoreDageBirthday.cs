@@ -11,7 +11,11 @@ public class CoreDageBirthday
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -225,7 +229,6 @@ public class CoreDageBirthday
         Story.MapItemQuest(9616, "legionbarracks", 12775);
         Story.KillQuest(9616, "legionbarracks", "Overdriven paladin");
 
-
         // Wails of Unrest (9617)
         Story.KillQuest(9617, "legionbarracks", new[] { "Legion Evocator", "Legion Knight" });
 
@@ -238,7 +241,6 @@ public class CoreDageBirthday
             Core.EquipClass(ClassType.Solo);
             Story.KillQuest(9619, "legionbarracks", "Paladin Arondight");
         }
-
     }
 
     public void CocytusBarracks()
@@ -276,7 +278,11 @@ public class CoreDageBirthday
         Story.KillQuest(9628, "cocytusbarracks", new[] { "Legion Evocator", "Legion Knight" });
 
         // Styx and Stones (9629)
-        Story.KillQuest(9629, "cocytusbarracks", new[] { "Overdriven Knight", "Overdriven Evocator" });
+        Story.KillQuest(
+            9629,
+            "cocytusbarracks",
+            new[] { "Overdriven Knight", "Overdriven Evocator" }
+        );
 
         // Cry Me a River (9630)
         Story.KillQuest(9630, "cocytusbarracks", "Mourner");
@@ -290,8 +296,5 @@ public class CoreDageBirthday
             Core.EquipClass(ClassType.Solo);
             Story.KillQuest(9632, "cocytusbarracks", "Maleagant");
         }
-
     }
-
 }
-

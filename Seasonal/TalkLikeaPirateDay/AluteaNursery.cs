@@ -14,8 +14,18 @@ public class AluteaNursery
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static LowTideStory LowTideStory { get => _LowTideStory ??= new LowTideStory(); set => _LowTideStory = value; }    private static LowTideStory _LowTideStory;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static LowTideStory LowTideStory
+    {
+        get => _LowTideStory ??= new LowTideStory();
+        set => _LowTideStory = value;
+    }
+    private static LowTideStory _LowTideStory;
 
     public void ScriptMain(IScriptInterface bot)
     {

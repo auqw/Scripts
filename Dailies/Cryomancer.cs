@@ -15,10 +15,29 @@ public class Cryomancer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static GlaceraStory Glac { get => _Glac ??= new GlaceraStory(); set => _Glac = value; }    private static GlaceraStory _Glac;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
+    private static GlaceraStory Glac
+    {
+        get => _Glac ??= new GlaceraStory();
+        set => _Glac = value;
+    }
+    private static GlaceraStory _Glac;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -39,14 +58,13 @@ public class Cryomancer
             return;
         }
 
-        // Enable Cryomancer bool to return early 
+        // Enable Cryomancer bool to return early
         if (!Core.isCompletedBefore(3937))
             Glac.DoAll(true);
-            
+
         Daily.Cryomancer();
 
         if (rankUpClass)
             Adv.RankUpClass("Cryomancer");
     }
-
 }

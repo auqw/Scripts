@@ -23,41 +23,75 @@ tags: null
 
 using Skua.Core.Interfaces;
 
-
 public class MalgorsArmorSet
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }    private static CoreSoW _SoW;
-    private static CoreYnR YNR { get => _YNR ??= new CoreYnR(); set => _YNR = value; }    private static CoreYnR _YNR;
-    private static DeadLinesMerge DeadLinesMerge { get => _DeadLinesMerge ??= new DeadLinesMerge(); set => _DeadLinesMerge = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
+    private static CoreSoW _SoW;
+    private static CoreYnR YNR
+    {
+        get => _YNR ??= new CoreYnR();
+        set => _YNR = value;
+    }
+    private static CoreYnR _YNR;
+    private static DeadLinesMerge DeadLinesMerge
+    {
+        get => _DeadLinesMerge ??= new DeadLinesMerge();
+        set => _DeadLinesMerge = value;
+    }
     private static DeadLinesMerge _DeadLinesMerge;
-    private static ShadowflameFinaleMerge ShadowflameFinaleMerge { get => _ShadowflameFinaleMerge ??= new ShadowflameFinaleMerge(); set => _ShadowflameFinaleMerge = value; }
+    private static ShadowflameFinaleMerge ShadowflameFinaleMerge
+    {
+        get => _ShadowflameFinaleMerge ??= new ShadowflameFinaleMerge();
+        set => _ShadowflameFinaleMerge = value;
+    }
     private static ShadowflameFinaleMerge _ShadowflameFinaleMerge;
-    private static TimekeepMerge TimekeepMerge { get => _TimekeepMerge ??= new TimekeepMerge(); set => _TimekeepMerge = value; }
+    private static TimekeepMerge TimekeepMerge
+    {
+        get => _TimekeepMerge ??= new TimekeepMerge();
+        set => _TimekeepMerge = value;
+    }
     private static TimekeepMerge _TimekeepMerge;
-    private static StreamwarMerge StreamwarMerge { get => _StreamwarMerge ??= new StreamwarMerge(); set => _StreamwarMerge = value; }
+    private static StreamwarMerge StreamwarMerge
+    {
+        get => _StreamwarMerge ??= new StreamwarMerge();
+        set => _StreamwarMerge = value;
+    }
     private static StreamwarMerge _StreamwarMerge;
-    private static WorldsCoreMerge WorldsCoreMerge { get => _WorldsCoreMerge ??= new WorldsCoreMerge(); set => _WorldsCoreMerge = value; }
+    private static WorldsCoreMerge WorldsCoreMerge
+    {
+        get => _WorldsCoreMerge ??= new WorldsCoreMerge();
+        set => _WorldsCoreMerge = value;
+    }
     private static WorldsCoreMerge _WorldsCoreMerge;
-    private static ManaCradleMerge ManaCradleMerge { get => _ManaCradleMerge ??= new ManaCradleMerge(); set => _ManaCradleMerge = value; }
+    private static ManaCradleMerge ManaCradleMerge
+    {
+        get => _ManaCradleMerge ??= new ManaCradleMerge();
+        set => _ManaCradleMerge = value;
+    }
     private static ManaCradleMerge _ManaCradleMerge;
 
-    string[] ArmorSet =
-    {
-    "Malgor the ShadowLord",
-    "ShadowLord's Helm"
-    };
+    string[] ArmorSet = { "Malgor the ShadowLord", "ShadowLord's Helm" };
 
     string[] QuestItems =
     {
-    "Timestream Ravager",
-    "ShadowFlame Defender",
-    "Mana Guardian",
-    "Dark Dragon Slayer",
-    "Mystical Devotee of Mana",
-    "Dragon's Tear"
+        "Timestream Ravager",
+        "ShadowFlame Defender",
+        "Mana Guardian",
+        "Dark Dragon Slayer",
+        "Mystical Devotee of Mana",
+        "Dragon's Tear",
     };
 
     public void ScriptMain(IScriptInterface Bot)

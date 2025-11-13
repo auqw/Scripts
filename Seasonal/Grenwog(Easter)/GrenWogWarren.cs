@@ -11,7 +11,11 @@ public class GrenWogWarren
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -44,41 +48,31 @@ public class GrenWogWarren
         // 10148 | Classic Original
         if (!Story.QuestProgression(10148))
         {
-            Core.HuntMonsterQuest(10148,
-                ("grenwogwarren", UseableMonsters[0], ClassType.Solo));
+            Core.HuntMonsterQuest(10148, ("grenwogwarren", UseableMonsters[0], ClassType.Solo));
         }
-
 
         // 10149 | Sweet Buckteeth
         if (!Story.QuestProgression(10149))
         {
-            Core.HuntMonsterQuest(10149,
-                ("grenwogwarren", UseableMonsters[1], ClassType.Solo));
+            Core.HuntMonsterQuest(10149, ("grenwogwarren", UseableMonsters[1], ClassType.Solo));
         }
-
 
         // 10150 | Tastes Like Chicken
         if (!Story.QuestProgression(10150))
         {
-            Core.HuntMonsterQuest(10150,
-                ("grenwogwarren", UseableMonsters[2], ClassType.Solo));
+            Core.HuntMonsterQuest(10150, ("grenwogwarren", UseableMonsters[2], ClassType.Solo));
         }
-
 
         // 10151 | Jurassic Instinct
         if (!Story.QuestProgression(10151))
         {
-            Core.HuntMonsterQuest(10151,
-                ("grenwogwarren", UseableMonsters[3], ClassType.Solo));
+            Core.HuntMonsterQuest(10151, ("grenwogwarren", UseableMonsters[3], ClassType.Solo));
         }
-
 
         // 10152 | Rapid Cycling
         if (!Story.QuestProgression(10152))
         {
-            Core.HuntMonsterQuest(10152,
-                ("grenwogwarren", UseableMonsters[4], ClassType.Solo));
+            Core.HuntMonsterQuest(10152, ("grenwogwarren", UseableMonsters[4], ClassType.Solo));
         }
-
     }
 }

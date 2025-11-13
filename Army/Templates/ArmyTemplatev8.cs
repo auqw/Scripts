@@ -18,7 +18,11 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
     private static readonly CoreArmyLite sArmy = new();
 
@@ -36,9 +40,8 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
         sArmy.player6,
         sArmy.player7,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
-
 
     // Comment out one of these depending:
     readonly int[] QuestIDs = { 1, 2, 3, 4, 5 };
@@ -46,7 +49,6 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
 
     public void ScriptMain(IScriptInterface bot)
     {
-
         //automaticly add the quest rewards to the banking blacklist (it wotn bank then even if bankmisc in corebots is on)
 
         //Non-Pick Reward Quest:
@@ -65,11 +67,10 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
     //take the void name vvv and put it after the set options above.
     public void WTFisGoingOn()
     {
-
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
-        // Instructions for using the ArmyBits method 
+        // Instructions for using the ArmyBits method
         // 1. Fill in the map name.
         // 2. Fill in the cell(s) you want to jump to (can be multiple cells).
         // 3. Fill in the MonsterMapID(s) you want to target (can be multiple IDs for multi-targeting).
@@ -96,7 +97,14 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
             // ArmyBits("map", new[] { "cell" }, new[] { 1, 2 }, new[] { "item" }, 1, ClassType.Solo, QuestIDs);
 
             // 3. Multi-target + mMlti (item-quant)s: (highlight lines 95-103 and press control+/ to uncomment it) vv
-            ArmyBits("map", new[] { "cell", "cell" }, new[] { 1, 2, 3 }, new[] { ("item", 99999) }, ClassType.Farm, QuestIDs);
+            ArmyBits(
+                "map",
+                new[] { "cell", "cell" },
+                new[] { 1, 2, 3 },
+                new[] { ("item", 99999) },
+                ClassType.Farm,
+                QuestIDs
+            );
             // {
 
             //     //Edit item and quants here
@@ -105,30 +113,30 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
             //     // Add more items as needed
 
             // }, ClassType.Solo, QuestIDs);
-
         }
-
         //this is for the `Pick Reward`vv
         else
         {
-            // Edit these here replacing item# & "item" with the apropriate item name        
+            // Edit these here replacing item# & "item" with the apropriate item name
             // -- the [1][2] corresponds to  the Questid posion in the  "readonly int[] QuestIDs = new[] { 0000 };" above {1,2,3}  <- [2] is "2".
             // you can add more Questitem# item bases for each item you want
             // add more Quest#Item#
 
-            ItemBase? Quest1Item1 = Core.EnsureLoad(PickRewardQuest)?.Rewards.FirstOrDefault(x => x.Name == "Item");
-            ItemBase? Quest1Item2 = Core.EnsureLoad(PickRewardQuest)?.Rewards.FirstOrDefault(x => x.Name == "Item");
+            ItemBase? Quest1Item1 = Core.EnsureLoad(PickRewardQuest)
+                ?.Rewards.FirstOrDefault(x => x.Name == "Item");
+            ItemBase? Quest1Item2 = Core.EnsureLoad(PickRewardQuest)
+                ?.Rewards.FirstOrDefault(x => x.Name == "Item");
             //add more itembases if needed, and if the quest is different change the QuetID in teh `EnsureLoad()`.
 
-            while (!Bot.ShouldExit
-                    //Change the quant if u dont want max stack (replace the Item!.MaxStack with your desired quant)
-                    && !Core.CheckInventory(Quest1Item1!.Name, Quest1Item1!.MaxStack)
-                    && !Core.CheckInventory(Quest1Item2!.Name, Quest1Item2!.MaxStack))
+            while (
+                !Bot.ShouldExit
+                //Change the quant if u dont want max stack (replace the Item!.MaxStack with your desired quant)
+                && !Core.CheckInventory(Quest1Item1!.Name, Quest1Item1!.MaxStack)
+                && !Core.CheckInventory(Quest1Item2!.Name, Quest1Item2!.MaxStack)
+            )
             //add `&& !Core.CheckInventory(item!.Name, item!.MaxStack)` if more items are in the rewards.
             // 'QuestIDs' can be edited above and dont need to be inserted here vv
             {
-
-
                 // if u want to do a continous farm just do maxstack+1 in the quant
                 // vv        Select one of these [single/multi target] to use    vvvv
 
@@ -151,54 +159,73 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
 
                 // --Max stack all--
                 if (Bot.Config!.Get<Rewards>("QuestRewards") == Rewards.All)
-                    foreach (var rewardValue in Enum.GetValues(typeof(Rewards)).Cast<int>().Where(value => value != (int)Rewards.All || value != (int)Rewards.Off))
+                    foreach (
+                        var rewardValue in Enum.GetValues(typeof(Rewards))
+                            .Cast<int>()
+                            .Where(value => value != (int)Rewards.All || value != (int)Rewards.Off)
+                    )
                     {
-                        ItemBase? rewardItem = Core.EnsureLoad(PickRewardQuest)?.Rewards.FirstOrDefault(x => x.ID == rewardValue);
+                        ItemBase? rewardItem = Core.EnsureLoad(PickRewardQuest)
+                            ?.Rewards.FirstOrDefault(x => x.ID == rewardValue);
 
                         //!!!dont change the quant here ----------------------------------vvvvv!!!
-                        if (rewardItem != null && !Core.CheckInventory(rewardItem.Name, rewardItem.MaxStack))
+                        if (
+                            rewardItem != null
+                            && !Core.CheckInventory(rewardItem.Name, rewardItem.MaxStack)
+                        )
                         {
                             Core.EnsureComplete(PickRewardQuest, rewardValue);
                             continue;
                         }
                     }
-
                 // --Max stack specific--
-                else if (Bot.Config!.Get<Rewards>("QuestRewards") != Rewards.All && Bot.Config!.Get<Rewards>("QuestRewards") != Rewards.Off)
+                else if (
+                    Bot.Config!.Get<Rewards>("QuestRewards") != Rewards.All
+                    && Bot.Config!.Get<Rewards>("QuestRewards") != Rewards.Off
+                )
                 {
-                    foreach (var rewardValue in Enum.GetValues(typeof(Rewards)).Cast<int>().Where(value => value != (int)Rewards.All || value != (int)Rewards.Off))
+                    foreach (
+                        var rewardValue in Enum.GetValues(typeof(Rewards))
+                            .Cast<int>()
+                            .Where(value => value != (int)Rewards.All || value != (int)Rewards.Off)
+                    )
                     {
-                        ItemBase? RewardID = Core.EnsureLoad(PickRewardQuest)?.Rewards.FirstOrDefault(x => x.ID == rewardValue);
+                        ItemBase? RewardID = Core.EnsureLoad(PickRewardQuest)
+                            ?.Rewards.FirstOrDefault(x => x.ID == rewardValue);
                         switch (rewardValue)
                         {
                             // add more cases if the quest has more rewards, and add them and their itemids to the enum below
                             // you may edit here vvv
                             case (int)Rewards.item_one:
                             case (int)Rewards.item_two:
-                                {
-                                    //leave this quant be its just to set an int
-                                    int Quant = 0;
+                            {
+                                //leave this quant be its just to set an int
+                                int Quant = 0;
 
-                                    // you may change the quant here --------vvv
-                                    //these 2 quants will set the Checkinvs quants below
-                                    if (rewardValue == (int)Rewards.item_one)
-                                        Quant = 0;
-                                    else if (rewardValue == (int)Rewards.item_two)
-                                        Quant = 0;
-                                    // you may change the quant here --------^^
+                                // you may change the quant here --------vvv
+                                //these 2 quants will set the Checkinvs quants below
+                                if (rewardValue == (int)Rewards.item_one)
+                                    Quant = 0;
+                                else if (rewardValue == (int)Rewards.item_two)
+                                    Quant = 0;
+                                // you may change the quant here --------^^
 
-                                    //leave this vv as it goes of he quants above here
-                                    if (!Core.CheckInventory(rewardValue, Quant > 0 ? Quant : RewardID!.ID))
-                                        Core.EnsureComplete(PickRewardQuest, rewardValue);
-                                    continue;
-                                }
+                                //leave this vv as it goes of he quants above here
+                                if (
+                                    !Core.CheckInventory(
+                                        rewardValue,
+                                        Quant > 0 ? Quant : RewardID!.ID
+                                    )
+                                )
+                                    Core.EnsureComplete(PickRewardQuest, rewardValue);
+                                continue;
+                            }
                         }
-
                     }
 
                     //~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~~-~-~
                 }
-                #endregion Edit This ^^^                                          ^^^ Edit this
+        #endregion Edit This ^^^                                          ^^^ Edit this
             }
         }
     }
@@ -211,7 +238,7 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
         All = 0,
         item_one = 1,
         item_two = 2,
-        Off = 3
+        Off = 3,
 
         //you may edit here ^^^
     };
@@ -220,7 +247,14 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
     #region IgnoreME
 
     // Use for used for: MUltiple mobs, items, and quanities of those items.
-    public void ArmyBits(string map, string[] cell, int[] MonsterMapIDs, (string, int)[] ItemandQuants, ClassType classToUse, int[] QuestIDs)
+    public void ArmyBits(
+        string map,
+        string[] cell,
+        int[] MonsterMapIDs,
+        (string, int)[] ItemandQuants,
+        ClassType classToUse,
+        int[] QuestIDs
+    )
     {
         // Setting up private rooms and class
         Core.EquipClass(classToUse);
@@ -234,7 +268,9 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
         Core.AddDrop(Core.QuestRewards(QuestIDs));
         Core.EnsureAcceptmultiple(true, QuestIDs);
 
-        bool inventoryConditionMet = ItemandQuants.All(t => Core.CheckInventory(t.Item1, t.Item2, toInv: true));
+        bool inventoryConditionMet = ItemandQuants.All(t =>
+            Core.CheckInventory(t.Item1, t.Item2, toInv: true)
+        );
 
         if (inventoryConditionMet)
             return;
@@ -243,13 +279,16 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
         Army.AggroMonStart(map);
         Army.DivideOnCells(cell);
 
-
         Bot.Player.SetSpawnPoint();
         string dividedCell = Bot.Player.Cell;
 
         while (!Bot.ShouldExit && !inventoryConditionMet)
         {
-            foreach (Monster monster in Bot.Monsters.MapMonsters.Where(x => MonsterMapIDs.Contains(x.MapID) && x != null))
+            foreach (
+                Monster monster in Bot.Monsters.MapMonsters.Where(x =>
+                    MonsterMapIDs.Contains(x.MapID) && x != null
+                )
+            )
             {
                 while (!Bot.ShouldExit && Bot.Player.Cell != dividedCell)
                 {
@@ -261,7 +300,9 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
                 }
 
                 foreach (var pair in ItemandQuants)
-                    Core.Logger($"- \"{pair.Item1}\", {Bot.Inventory.GetQuantity(pair.Item1)} / {pair.Item2}");
+                    Core.Logger(
+                        $"- \"{pair.Item1}\", {Bot.Inventory.GetQuantity(pair.Item1)} / {pair.Item2}"
+                    );
 
                 Core.Sleep();
 
@@ -269,12 +310,14 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
                 // Farming
                 Bot.Combat.Attack(monster.ID);
 
-                // Single Target: 
+                // Single Target:
                 Bot.Kill.Monster(monster.MapID);
                 #endregion Pickone
 
                 // Check inventory conditions
-                inventoryConditionMet = ItemandQuants.All(t => Core.CheckInventory(t.Item1, t.Item2, toInv: true));
+                inventoryConditionMet = ItemandQuants.All(t =>
+                    Core.CheckInventory(t.Item1, t.Item2, toInv: true)
+                );
 
                 // Break loop if inventory condition is met
                 if (inventoryConditionMet)
@@ -302,12 +345,11 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
             }
         }
 
-    // Clean up section
-    CleanUp:
+        // Clean up section
+        CleanUp:
         Army.AggroMonStop(true);
         Core.JumpWait();
         Core.CancelRegisteredQuests();
-
     }
 
     #endregion IgnoreME
@@ -318,7 +360,7 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
         2. its easier this way to keep track of things.
     */
 
-    /* ToDos: 
+    /* ToDos:
         1. Seperate pick & non-pick into seperate templates. ETA: eventualy~
         2. Clean up template, rewrite comments as they are outdated.
     */
@@ -329,7 +371,7 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
         B. have the mob have already been killed (do a `PreFarm` kill)
     SO if something has `IsMosnterAlive` before the while or the farm itself do a single kill by making sure you're within the map, and cell and do a Bot.Kill.Monster(MonsterMapID);
 
-    #region Example:   
+    #region Example:
 
         // vprefarmkillv
         // --------------
@@ -340,10 +382,10 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
         while(!Bot.ShouldExit && M.HP > 0)
         {
             // -stuff-
-            // Single Target(bosses?):  
+            // Single Target(bosses?):
                 Bot.Combat.Attack(M.MapID);
 
-            // Multi-Target(farming shit)      
+            // Multi-Target(farming shit)
                 Bot.Combat.Attack(M.ID);
             Core.Sleep(0;
             // -stuff-
@@ -352,6 +394,6 @@ public class ArmyTemplatev8 //Rename This.. ye we skipped one (v7 was private)
                 break;
         }
         // --proceed to farm now that we've set the mobs HP--
-    #endregion Example:    
+    #endregion Example:
 */
 }

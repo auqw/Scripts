@@ -16,20 +16,36 @@ public class UnderworldTeamMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
     private static CoreLegion _Legion;
-    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
     private static CoreAdvanced _sAdv;
-
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -53,7 +69,9 @@ public class UnderworldTeamMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -64,9 +82,14 @@ public class UnderworldTeamMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Legion Combat Trophy":
                     Legion.DagePvP(quant, 0, 0);
@@ -92,16 +115,60 @@ public class UnderworldTeamMerge
         // new Option<bool>("47599", "Immortal Skull Morph", "Mode: [select] only\nShould the bot buy \"Immortal Skull Morph\" ?", false),
         // new Option<bool>("47600", "Dark Flame Morph", "Mode: [select] only\nShould the bot buy \"Dark Flame Morph\" ?", false),
 
-        //Itmes the bot can get without 1v1 trophie 
-        new Option<bool>("47339", "Scarred Caster's Hair", "Mode: [select] only\nShould the bot buy \"Scarred Caster's Hair\" ?", false),
-        new Option<bool>("47605", "Wings of the Underworld", "Mode: [select] only\nShould the bot buy \"Wings of the Underworld\" ?", false),
-        new Option<bool>("47606", "Dark Runes of the Underworld", "Mode: [select] only\nShould the bot buy \"Dark Runes of the Underworld\" ?", false),
-        new Option<bool>("47334", "Scarred Caster's Locks", "Mode: [select] only\nShould the bot buy \"Scarred Caster's Locks\" ?", false),
-        new Option<bool>("47611", "Burning Skull Mace", "Mode: [select] only\nShould the bot buy \"Burning Skull Mace\" ?", false),
-        new Option<bool>("47602", "Legion's Fiend Helm", "Mode: [select] only\nShould the bot buy \"Legion's Fiend Helm\" ?", false),
-        new Option<bool>("47607", "SpellCaster's Dark Staff", "Mode: [select] only\nShould the bot buy \"SpellCaster's Dark Staff\" ?", false),
-        new Option<bool>("47609", "SpellCaster's Dark Accoutrements", "Mode: [select] only\nShould the bot buy \"SpellCaster's Dark Accoutrements\" ?", false),
-        new Option<bool>("47344", "Wrath of the Legion Blade", "Mode: [select] only\nShould the bot buy \"Wrath of the Legion Blade\" ?", false),
-
+        //Itmes the bot can get without 1v1 trophie
+        new Option<bool>(
+            "47339",
+            "Scarred Caster's Hair",
+            "Mode: [select] only\nShould the bot buy \"Scarred Caster's Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47605",
+            "Wings of the Underworld",
+            "Mode: [select] only\nShould the bot buy \"Wings of the Underworld\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47606",
+            "Dark Runes of the Underworld",
+            "Mode: [select] only\nShould the bot buy \"Dark Runes of the Underworld\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47334",
+            "Scarred Caster's Locks",
+            "Mode: [select] only\nShould the bot buy \"Scarred Caster's Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47611",
+            "Burning Skull Mace",
+            "Mode: [select] only\nShould the bot buy \"Burning Skull Mace\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47602",
+            "Legion's Fiend Helm",
+            "Mode: [select] only\nShould the bot buy \"Legion's Fiend Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47607",
+            "SpellCaster's Dark Staff",
+            "Mode: [select] only\nShould the bot buy \"SpellCaster's Dark Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47609",
+            "SpellCaster's Dark Accoutrements",
+            "Mode: [select] only\nShould the bot buy \"SpellCaster's Dark Accoutrements\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47344",
+            "Wrath of the Legion Blade",
+            "Mode: [select] only\nShould the bot buy \"Wrath of the Legion Blade\" ?",
+            false
+        ),
     };
 }

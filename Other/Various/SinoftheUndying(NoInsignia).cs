@@ -31,29 +31,77 @@ public class SinoftheSinoftheUndyingNoInsignia
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreLegion LR { get => _LR ??= new CoreLegion(); set => _LR = value; }
+    private static CoreLegion LR
+    {
+        get => _LR ??= new CoreLegion();
+        set => _LR = value;
+    }
     private static CoreLegion _LR;
-    private static HeadoftheLegionBeast HotLB { get => _HotLB ??= new HeadoftheLegionBeast(); set => _HotLB = value; }
+    private static HeadoftheLegionBeast HotLB
+    {
+        get => _HotLB ??= new HeadoftheLegionBeast();
+        set => _HotLB = value;
+    }
     private static HeadoftheLegionBeast _HotLB;
-    private static AtlasFalls AtlasFalls { get => _AtlasFalls ??= new AtlasFalls(); set => _AtlasFalls = value; }
+    private static AtlasFalls AtlasFalls
+    {
+        get => _AtlasFalls ??= new AtlasFalls();
+        set => _AtlasFalls = value;
+    }
     private static AtlasFalls _AtlasFalls;
-    private static CoreYnR YnR { get => _YnR ??= new CoreYnR(); set => _YnR = value; }
+    private static CoreYnR YnR
+    {
+        get => _YnR ??= new CoreYnR();
+        set => _YnR = value;
+    }
     private static CoreYnR _YnR;
-    private static VulcarsMerge VulcarsMerge { get => _VulcarsMerge ??= new VulcarsMerge(); set => _VulcarsMerge = value; }
+    private static VulcarsMerge VulcarsMerge
+    {
+        get => _VulcarsMerge ??= new VulcarsMerge();
+        set => _VulcarsMerge = value;
+    }
     private static VulcarsMerge _VulcarsMerge;
-    private static UnderworldTeamMerge UnderworldTeamMerge { get => _UnderworldTeamMerge ??= new UnderworldTeamMerge(); set => _UnderworldTeamMerge = value; }
+    private static UnderworldTeamMerge UnderworldTeamMerge
+    {
+        get => _UnderworldTeamMerge ??= new UnderworldTeamMerge();
+        set => _UnderworldTeamMerge = value;
+    }
     private static UnderworldTeamMerge _UnderworldTeamMerge;
-    private static SoulForgeMerge SoulForgeMerge { get => _SoulForgeMerge ??= new SoulForgeMerge(); set => _SoulForgeMerge = value; }
+    private static SoulForgeMerge SoulForgeMerge
+    {
+        get => _SoulForgeMerge ??= new SoulForgeMerge();
+        set => _SoulForgeMerge = value;
+    }
     private static SoulForgeMerge _SoulForgeMerge;
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
-        Core.BankingBlackList.AddRange(new[] { "Sin of the Undying", "Atlas Lion Pelt", "Beast Soul", "Broken Chain", "Essence of Wrath", "Essence of Violence", "Essence of Treachery", "Atlas Regalia" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Sin of the Undying",
+                "Atlas Lion Pelt",
+                "Beast Soul",
+                "Broken Chain",
+                "Essence of Wrath",
+                "Essence of Violence",
+                "Essence of Treachery",
+                "Atlas Regalia",
+            }
+        );
         GetSword();
 
         Core.SetOptions(false);
@@ -61,7 +109,16 @@ public class SinoftheSinoftheUndyingNoInsignia
 
     public void GetSword()
     {
-        Core.AddDrop("Sin of the Undying", "Atlas Lion Pelt", "Beast Soul", "Broken Chain", "Essence of Wrath", "Essence of Violence", "Essence of Treachery", "Atlas Regalia");
+        Core.AddDrop(
+            "Sin of the Undying",
+            "Atlas Lion Pelt",
+            "Beast Soul",
+            "Broken Chain",
+            "Essence of Wrath",
+            "Essence of Violence",
+            "Essence of Treachery",
+            "Atlas Regalia"
+        );
         AtlasFalls.Storyline();
 
         Core.EnsureAccept(10146);
@@ -72,10 +129,12 @@ public class SinoftheSinoftheUndyingNoInsignia
             Core.FarmingLogger("Atlas Lion Pelt", 20);
             while (!Bot.ShouldExit && !Core.CheckInventory("Atlas Lion Pelt", 20))
             {
-                Core.HuntMonsterQuest(10126,
-                ("atlaskingdom", "Atlas Leo", ClassType.Solo),
-                ("atlaskingdom", "Atlas Elite", ClassType.Solo),
-                ("atlaskingdom", "Executioner Ladon", ClassType.Solo));
+                Core.HuntMonsterQuest(
+                    10126,
+                    ("atlaskingdom", "Atlas Leo", ClassType.Solo),
+                    ("atlaskingdom", "Atlas Elite", ClassType.Solo),
+                    ("atlaskingdom", "Executioner Ladon", ClassType.Solo)
+                );
                 Bot.Wait.ForPickup("Atlas Lion Pelt");
             }
         }
@@ -85,7 +144,14 @@ public class SinoftheSinoftheUndyingNoInsignia
         {
             Core.EquipClass(ClassType.Solo);
             Core.FarmingLogger("Beast Soul", 20);
-            Core.HuntMonster("sevencircleswar", "The Beast", "Beast Soul", 20, isTemp: false, publicRoom: true);
+            Core.HuntMonster(
+                "sevencircleswar",
+                "The Beast",
+                "Beast Soul",
+                20,
+                isTemp: false,
+                publicRoom: true
+            );
         }
 
         // Broke Chain x 20
@@ -94,10 +160,11 @@ public class SinoftheSinoftheUndyingNoInsignia
             Core.FarmingLogger("Broken Chain", 150);
             while (!Bot.ShouldExit && !Core.CheckInventory("Broken Chain", 150))
             {
-                Core.HuntMonsterQuest(10115,
-                ("atlaspromenade", "Atlas Light Magus", ClassType.Farm),
-                ("atlaspromenade", "Wrath Guard", ClassType.Farm),
-                ("atlaspromenade", "Usurper Lord Slaine", ClassType.Solo)
+                Core.HuntMonsterQuest(
+                    10115,
+                    ("atlaspromenade", "Atlas Light Magus", ClassType.Farm),
+                    ("atlaspromenade", "Wrath Guard", ClassType.Farm),
+                    ("atlaspromenade", "Usurper Lord Slaine", ClassType.Solo)
                 );
                 Bot.Wait.ForPickup("Broken Chain");
             }
@@ -108,11 +175,11 @@ public class SinoftheSinoftheUndyingNoInsignia
 
         // 20 of each Essence
         var requiredItems = new Dictionary<string, Action<int>>
-            {
-                { "Essence of Wrath", HotLB.EssenceWrath },
-                { "Essence of Violence", HotLB.EssenceViolence },
-                { "Essence of Treachery", HotLB.EssenceTreachery },
-            };
+        {
+            { "Essence of Wrath", HotLB.EssenceWrath },
+            { "Essence of Violence", HotLB.EssenceViolence },
+            { "Essence of Treachery", HotLB.EssenceTreachery },
+        };
 
         foreach (var (item, farmAction) in requiredItems)
         {
@@ -146,8 +213,5 @@ public class SinoftheSinoftheUndyingNoInsignia
                 Core.Logger("You have successfully obtained the Sin of the Undying.");
             }
         }
-
-
-
     }
 }

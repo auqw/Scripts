@@ -12,13 +12,23 @@ public class LowDRArmors
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
     public string OptionsStorage = "1%Armors";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<Armors>("Armors", "Choose Your Armors", "Extra Armors can be added as long as they are 1% or lower drop chance.", Armors.None),
+        new Option<Armors>(
+            "Armors",
+            "Choose Your Armors",
+            "Extra Armors can be added as long as they are 1% or lower drop chance.",
+            Armors.None
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -42,32 +52,65 @@ public class LowDRArmors
 
         Core.FarmingLogger($"{armorConfig.ToString()}", 1);
 
-        if (armorConfig == Armors.Dark_FrostSpawn_Mage || armorConfig == Armors.All && !Core.CheckInventory("Dark FrostSpawn Mage"))
+        if (
+            armorConfig == Armors.Dark_FrostSpawn_Mage
+            || armorConfig == Armors.All && !Core.CheckInventory("Dark FrostSpawn Mage")
+        )
         {
-            Core.HuntMonster("northstar", "Karok The Fallen", "Dark FrostSpawn Mage", isTemp: false);
+            Core.HuntMonster(
+                "northstar",
+                "Karok The Fallen",
+                "Dark FrostSpawn Mage",
+                isTemp: false
+            );
         }
 
-        if (armorConfig == Armors.Feral_DoomKnight || armorConfig == Armors.All && !Core.CheckInventory("Feral DoomKnight"))
+        if (
+            armorConfig == Armors.Feral_DoomKnight
+            || armorConfig == Armors.All && !Core.CheckInventory("Feral DoomKnight")
+        )
         {
             Core.HuntMonster("stonewooddeep", "Sir Kut", "Feral DoomKnight", isTemp: false);
         }
 
-        if (armorConfig == Armors.Alteons_Royal_Armor || armorConfig == Armors.All && !Core.CheckInventory("Alteon's Royal Armor"))
+        if (
+            armorConfig == Armors.Alteons_Royal_Armor
+            || armorConfig == Armors.All && !Core.CheckInventory("Alteon's Royal Armor")
+        )
         {
-            Core.HuntMonster("swordhavenfalls", "Chaos Lord Alteon", "Alteon's Royal Armor", isTemp: false);
+            Core.HuntMonster(
+                "swordhavenfalls",
+                "Chaos Lord Alteon",
+                "Alteon's Royal Armor",
+                isTemp: false
+            );
         }
 
-        if (armorConfig == Armors.Dracolich_Destroyer || armorConfig == Armors.All && !Core.CheckInventory("Dracolich Destroyer"))
+        if (
+            armorConfig == Armors.Dracolich_Destroyer
+            || armorConfig == Armors.All && !Core.CheckInventory("Dracolich Destroyer")
+        )
         {
-            Core.HuntMonster("dragonheart", "Avatar of Desolich", "Dracolich Destroyer", isTemp: false);
+            Core.HuntMonster(
+                "dragonheart",
+                "Avatar of Desolich",
+                "Dracolich Destroyer",
+                isTemp: false
+            );
         }
 
-        if (armorConfig == Armors.Asherion_Armor || armorConfig == Armors.All && !Core.CheckInventory("Asherion Armor"))
+        if (
+            armorConfig == Armors.Asherion_Armor
+            || armorConfig == Armors.All && !Core.CheckInventory("Asherion Armor")
+        )
         {
             Core.HuntMonster("stonewooddeep", "Sir Kut", "Asherion Armor", isTemp: false);
         }
 
-        if (armorConfig == Armors.Lore_Golem || armorConfig == Armors.All && !Core.CheckInventory("Lore Golem"))
+        if (
+            armorConfig == Armors.Lore_Golem
+            || armorConfig == Armors.All && !Core.CheckInventory("Lore Golem")
+        )
         {
             Core.HuntMonster("twistedcavern", "Lore Golem", "Lore Golem", isTemp: false);
         }
@@ -80,7 +123,6 @@ public class LowDRArmors
         // case "item":
         // Code goes here
         // break;
-
     }
 }
 
@@ -93,5 +135,5 @@ public enum Armors
     Asherion_Armor,
     Lore_Golem,
     All,
-    None
+    None,
 }

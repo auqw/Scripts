@@ -11,7 +11,11 @@ public class CelestialPast
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -31,7 +35,11 @@ public class CelestialPast
         Story.PreLoad(this);
 
         //Wayfarer Potion 7674
-        Story.KillQuest(7674, "CelestialPast", new[] { "Blessed Deer", "Blessed Bear", "Blessed Centaur", "Blessed Hydra" });
+        Story.KillQuest(
+            7674,
+            "CelestialPast",
+            new[] { "Blessed Deer", "Blessed Bear", "Blessed Centaur", "Blessed Hydra" }
+        );
 
         //The Path Revealed 7675
         Story.MapItemQuest(7675, "CelestialPast", 7592);
@@ -43,7 +51,11 @@ public class CelestialPast
 
         //Gather the Artifacts 7677
         Story.MapItemQuest(7677, "CelestialPast", 7594);
-        Story.KillQuest(7677, "CelestialPast", new[] { "Blessed Deer", "Blessed Centaur", "Blessed Hydra", "Blessed Bear" });
+        Story.KillQuest(
+            7677,
+            "CelestialPast",
+            new[] { "Blessed Deer", "Blessed Centaur", "Blessed Hydra", "Blessed Bear" }
+        );
 
         //Oh Well, Oh Well Guardian 7678
         Story.MapItemQuest(7678, "CelestialPast", 7595);
@@ -57,6 +69,5 @@ public class CelestialPast
 
         //Azalith Faced 7681    [Confront Quest]
         Story.KillQuest(7681, "CelestialPast", "Azalith");
-
     }
 }

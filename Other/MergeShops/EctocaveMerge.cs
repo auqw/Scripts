@@ -14,25 +14,51 @@ public class EctocaveMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Ichorus Scythe Piece", "Ichorus Egg", "Pure Ichor Gem", "Slime", "Dragon Rogue", "Dragon Rogue Klinge", "Dragon Rogue Hood", "Dragon Rogue Twin Klinge Cape", "Piece of Fabric", "Bone" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Ichorus Scythe Piece",
+                "Ichorus Egg",
+                "Pure Ichor Gem",
+                "Slime",
+                "Dragon Rogue",
+                "Dragon Rogue Klinge",
+                "Dragon Rogue Hood",
+                "Dragon Rogue Twin Klinge Cape",
+                "Piece of Fabric",
+                "Bone",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -49,7 +75,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,9 +88,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Ichorus Scythe Piece":
                     Core.FarmingLogger(req.Name, quant);
@@ -94,7 +127,13 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(3873);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("ectocave", "Ichor Draconian", "Uncut Ichor Gem", 50, req.Temp);
+                        Core.HuntMonster(
+                            "ectocave",
+                            "Ichor Draconian",
+                            "Uncut Ichor Gem",
+                            50,
+                            req.Temp
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -119,22 +158,71 @@ private static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("ectocave", "Ichor Draconian", req.Name, quant, req.Temp);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("26839", "Slimed DragonMaster Scythe", "Mode: [select] only\nShould the bot buy \"Slimed DragonMaster Scythe\" ?", false),
-        new Option<bool>("26838", "Ektorax Pet", "Mode: [select] only\nShould the bot buy \"Ektorax Pet\" ?", false),
-        new Option<bool>("26076", "Slime Dragon Rogue", "Mode: [select] only\nShould the bot buy \"Slime Dragon Rogue\" ?", false),
-        new Option<bool>("26077", "Slime Dragon Rogue Lann", "Mode: [select] only\nShould the bot buy \"Slime Dragon Rogue Lann\" ?", false),
-        new Option<bool>("26078", "Slime Dragon Rogue Helm", "Mode: [select] only\nShould the bot buy \"Slime Dragon Rogue Helm\" ?", false),
-        new Option<bool>("26079", "Slime Dragon Rogue Lann Cape", "Mode: [select] only\nShould the bot buy \"Slime Dragon Rogue Lann Cape\" ?", false),
-        new Option<bool>("26300", "Slime Cloak", "Mode: [select] only\nShould the bot buy \"Slime Cloak\" ?", false),
-        new Option<bool>("26299", "Slime Sword", "Mode: [select] only\nShould the bot buy \"Slime Sword\" ?", false),
-        new Option<bool>("26263", "Sassy Slime Helm", "Mode: [select] only\nShould the bot buy \"Sassy Slime Helm\" ?", false),
-        new Option<bool>("26262", "Slime Helm", "Mode: [select] only\nShould the bot buy \"Slime Helm\" ?", false),
+        new Option<bool>(
+            "26839",
+            "Slimed DragonMaster Scythe",
+            "Mode: [select] only\nShould the bot buy \"Slimed DragonMaster Scythe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26838",
+            "Ektorax Pet",
+            "Mode: [select] only\nShould the bot buy \"Ektorax Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26076",
+            "Slime Dragon Rogue",
+            "Mode: [select] only\nShould the bot buy \"Slime Dragon Rogue\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26077",
+            "Slime Dragon Rogue Lann",
+            "Mode: [select] only\nShould the bot buy \"Slime Dragon Rogue Lann\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26078",
+            "Slime Dragon Rogue Helm",
+            "Mode: [select] only\nShould the bot buy \"Slime Dragon Rogue Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26079",
+            "Slime Dragon Rogue Lann Cape",
+            "Mode: [select] only\nShould the bot buy \"Slime Dragon Rogue Lann Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26300",
+            "Slime Cloak",
+            "Mode: [select] only\nShould the bot buy \"Slime Cloak\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26299",
+            "Slime Sword",
+            "Mode: [select] only\nShould the bot buy \"Slime Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26263",
+            "Sassy Slime Helm",
+            "Mode: [select] only\nShould the bot buy \"Sassy Slime Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "26262",
+            "Slime Helm",
+            "Mode: [select] only\nShould the bot buy \"Slime Helm\" ?",
+            false
+        ),
     };
 }

@@ -33,7 +33,13 @@ public class PickFiveMergeShopsforme
         {
             // Get the "Documents" folder path dynamically
             string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string sourceDirectory = Path.Combine(documentsPath, "Skua", "Scripts", "Other", "MergeShops");
+            string sourceDirectory = Path.Combine(
+                documentsPath,
+                "Skua",
+                "Scripts",
+                "Other",
+                "MergeShops"
+            );
 
             // Get all files from the source directory
             string[] files = Directory.GetFiles(sourceDirectory);
@@ -73,11 +79,13 @@ public class PickFiveMergeShopsforme
             Console.WriteLine($"File written to: {tempFilePath}");
 
             // Open the temporary file in the default associated application
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo()
-            {
-                FileName = tempFilePath,
-                UseShellExecute = true
-            });
+            System.Diagnostics.Process.Start(
+                new System.Diagnostics.ProcessStartInfo()
+                {
+                    FileName = tempFilePath,
+                    UseShellExecute = true,
+                }
+            );
         }
         catch (Exception ex)
         {
@@ -85,8 +93,4 @@ public class PickFiveMergeShopsforme
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
     }
-
 }
-
-
-

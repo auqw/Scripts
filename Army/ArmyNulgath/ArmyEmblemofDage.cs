@@ -18,23 +18,46 @@ public class ArmyEmblemofDage
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
     private static CoreLegion _Legion;
 
-    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
     private static CoreBots _sCore;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "ArmyEmblemofDage";
     public bool DontPreconfigure = true;
@@ -47,7 +70,7 @@ public class ArmyEmblemofDage
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -56,7 +79,11 @@ public class ArmyEmblemofDage
 
         Core.SetOptions(disableClassSwap: true);
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // Setup();
 
         Core.SetOptions(false);
@@ -67,7 +94,10 @@ public class ArmyEmblemofDage
         if (Core.CheckInventory("Emblem of Dage", quant))
             return;
 
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         Legion.LegionRound4Medal();
 
@@ -77,7 +107,28 @@ public class ArmyEmblemofDage
 
         Core.RegisterQuests(4742);
 
-        Army.AggroMonMIDs(5, 6, 7, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 41, 43, 49, 50, 51, 52);
+        Army.AggroMonMIDs(
+            5,
+            6,
+            7,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
+            41,
+            43,
+            49,
+            50,
+            51,
+            52
+        );
         Army.AggroMonStart("shadowblast");
         Army.DivideOnCells("r6", "r10", "r11", "r12", "r16", "r18");
 

@@ -25,36 +25,79 @@ public class NightmareCarnaxMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-
-    private static DarkCarnaxStory DarkCarnax { get => _DarkCarnax ??= new DarkCarnaxStory(); set => _DarkCarnax = value; }
+    private static DarkCarnaxStory DarkCarnax
+    {
+        get => _DarkCarnax ??= new DarkCarnaxStory();
+        set => _DarkCarnax = value;
+    }
     private static DarkCarnaxStory _DarkCarnax;
-    private static CoreNSOD NSOD { get => _NSOD ??= new CoreNSOD(); set => _NSOD = value; }
+    private static CoreNSOD NSOD
+    {
+        get => _NSOD ??= new CoreNSOD();
+        set => _NSOD = value;
+    }
     private static CoreNSOD _NSOD;
-    private static ArchFiend AF { get => _AF ??= new ArchFiend(); set => _AF = value; }
+    private static ArchFiend AF
+    {
+        get => _AF ??= new ArchFiend();
+        set => _AF = value;
+    }
     private static ArchFiend _AF;
-    private static UltimateBLoD uBLOD { get => _uBLOD ??= new UltimateBLoD(); set => _uBLOD = value; }
+    private static UltimateBLoD uBLOD
+    {
+        get => _uBLOD ??= new UltimateBLoD();
+        set => _uBLOD = value;
+    }
     private static UltimateBLoD _uBLOD;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Synthetic Viscera", "Carnax Essence", "Perfect Orochi Scales", "Energized Aura", "Abyssal Contract", "Purified Undead Dragon Essence", "Overwhelmed Axe" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Synthetic Viscera",
+                "Carnax Essence",
+                "Perfect Orochi Scales",
+                "Energized Aura",
+                "Abyssal Contract",
+                "Purified Undead Dragon Essence",
+                "Overwhelmed Axe",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -73,7 +116,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -84,9 +129,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Synthetic Viscera":
                     DarkCarnax.SyntheticViscera(quant);
@@ -99,7 +149,15 @@ private static CoreAdvanced _sAdv;
 
                 case "Perfect Orochi Scales":
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster("shadowfortress", "r12", "Bottom", "*", req.Name, quant, false);
+                    Core.KillMonster(
+                        "shadowfortress",
+                        "r12",
+                        "Bottom",
+                        "*",
+                        req.Name,
+                        quant,
+                        false
+                    );
                     break;
 
                 case "Energized Aura":
@@ -117,42 +175,191 @@ private static CoreAdvanced _sAdv;
                 case "Overwhelmed Axe":
                     uBLOD.OverwhelmedAxe();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("70901", "Disciple of Carnax", "Mode: [select] only\nShould the bot buy \"Disciple of Carnax\" ?", false),
-        new Option<bool>("70902", "Devotee of Carnax", "Mode: [select] only\nShould the bot buy \"Devotee of Carnax\" ?", false),
-        new Option<bool>("70903", "Carnax Devotee's Morph", "Mode: [select] only\nShould the bot buy \"Carnax Devotee's Morph\" ?", false),
-        new Option<bool>("70904", "Carnax Devotee's Helm", "Mode: [select] only\nShould the bot buy \"Carnax Devotee's Helm\" ?", false),
-        new Option<bool>("70905", "Carnax Disciple's Hood", "Mode: [select] only\nShould the bot buy \"Carnax Disciple's Hood\" ?", false),
-        new Option<bool>("70906", "Carnax Disciple's Horned Hood", "Mode: [select] only\nShould the bot buy \"Carnax Disciple's Horned Hood\" ?", false),
-        new Option<bool>("70907", "Temple of Carnax", "Mode: [select] only\nShould the bot buy \"Temple of Carnax\" ?", false),
-        new Option<bool>("70908", "Dragon Guardians of Carnax", "Mode: [select] only\nShould the bot buy \"Dragon Guardians of Carnax\" ?", false),
-        new Option<bool>("70909", "Summoning Portal of Carnax", "Mode: [select] only\nShould the bot buy \"Summoning Portal of Carnax\" ?", false),
-        new Option<bool>("70910", "Carnax Devotee's BattleAxe", "Mode: [select] only\nShould the bot buy \"Carnax Devotee's BattleAxe\" ?", false),
-        new Option<bool>("70911", "Carnax Disciple's Dagger", "Mode: [select] only\nShould the bot buy \"Carnax Disciple's Dagger\" ?", false),
-        new Option<bool>("70912", "Carnax Disciple's Daggers", "Mode: [select] only\nShould the bot buy \"Carnax Disciple's Daggers\" ?", false),
-        new Option<bool>("70913", "Carnax Devotee's Claws", "Mode: [select] only\nShould the bot buy \"Carnax Devotee's Claws\" ?", false),
-        new Option<bool>("72688", "Nightmare Queen", "Mode: [select] only\nShould the bot buy \"Nightmare Queen\" ?", false),
-        new Option<bool>("72689", "Nightmare Queen's Face", "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Face\" ?", false),
-        new Option<bool>("72690", "Nightmare Queen's Morph", "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Morph\" ?", false),
-        new Option<bool>("72691", "Nightmare Queen's Tiara", "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Tiara\" ?", false),
-        new Option<bool>("72692", "Nightmare Queen's Spikes", "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Spikes\" ?", false),
-        new Option<bool>("72693", "Nightmare Queen's Sword", "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Sword\" ?", false),
-        new Option<bool>("72694", "Nightmare Queen's Gauntlet", "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Gauntlet\" ?", false),
-        new Option<bool>("72799", "Nightmare Carnax Disciple", "Mode: [select] only\nShould the bot buy \"Nightmare Carnax Disciple\" ?", false),
-        new Option<bool>("72800", "Nightmare Carnax Devotee", "Mode: [select] only\nShould the bot buy \"Nightmare Carnax Devotee\" ?", false),
-        new Option<bool>("72802", "Nightmare Carnax's Horned Hood", "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Horned Hood\" ?", false),
-        new Option<bool>("72803", "Nightmare Carnax's Morph", "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Morph\" ?", false),
-        new Option<bool>("72804", "Nightmare Carnax's Temple", "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Temple\" ?", false),
-        new Option<bool>("72805", "Nightmare Carnax's Guardians", "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Guardians\" ?", false),
-        new Option<bool>("72806", "Nightmare Carnax's BattleAxe", "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's BattleAxe\" ?", false),
-        new Option<bool>("72807", "Nightmare Carnax's Dagger", "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Dagger\" ?", false),
-        new Option<bool>("72808", "Nightmare Carnax's Daggers", "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Daggers\" ?", false),
-        new Option<bool>("72809", "Nightmare Carnax's Claws", "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Claws\" ?", false),
+        new Option<bool>(
+            "70901",
+            "Disciple of Carnax",
+            "Mode: [select] only\nShould the bot buy \"Disciple of Carnax\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70902",
+            "Devotee of Carnax",
+            "Mode: [select] only\nShould the bot buy \"Devotee of Carnax\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70903",
+            "Carnax Devotee's Morph",
+            "Mode: [select] only\nShould the bot buy \"Carnax Devotee's Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70904",
+            "Carnax Devotee's Helm",
+            "Mode: [select] only\nShould the bot buy \"Carnax Devotee's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70905",
+            "Carnax Disciple's Hood",
+            "Mode: [select] only\nShould the bot buy \"Carnax Disciple's Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70906",
+            "Carnax Disciple's Horned Hood",
+            "Mode: [select] only\nShould the bot buy \"Carnax Disciple's Horned Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70907",
+            "Temple of Carnax",
+            "Mode: [select] only\nShould the bot buy \"Temple of Carnax\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70908",
+            "Dragon Guardians of Carnax",
+            "Mode: [select] only\nShould the bot buy \"Dragon Guardians of Carnax\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70909",
+            "Summoning Portal of Carnax",
+            "Mode: [select] only\nShould the bot buy \"Summoning Portal of Carnax\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70910",
+            "Carnax Devotee's BattleAxe",
+            "Mode: [select] only\nShould the bot buy \"Carnax Devotee's BattleAxe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70911",
+            "Carnax Disciple's Dagger",
+            "Mode: [select] only\nShould the bot buy \"Carnax Disciple's Dagger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70912",
+            "Carnax Disciple's Daggers",
+            "Mode: [select] only\nShould the bot buy \"Carnax Disciple's Daggers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70913",
+            "Carnax Devotee's Claws",
+            "Mode: [select] only\nShould the bot buy \"Carnax Devotee's Claws\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72688",
+            "Nightmare Queen",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Queen\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72689",
+            "Nightmare Queen's Face",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Face\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72690",
+            "Nightmare Queen's Morph",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72691",
+            "Nightmare Queen's Tiara",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Tiara\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72692",
+            "Nightmare Queen's Spikes",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Spikes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72693",
+            "Nightmare Queen's Sword",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72694",
+            "Nightmare Queen's Gauntlet",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Queen's Gauntlet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72799",
+            "Nightmare Carnax Disciple",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Carnax Disciple\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72800",
+            "Nightmare Carnax Devotee",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Carnax Devotee\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72802",
+            "Nightmare Carnax's Horned Hood",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Horned Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72803",
+            "Nightmare Carnax's Morph",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72804",
+            "Nightmare Carnax's Temple",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Temple\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72805",
+            "Nightmare Carnax's Guardians",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Guardians\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72806",
+            "Nightmare Carnax's BattleAxe",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's BattleAxe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72807",
+            "Nightmare Carnax's Dagger",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Dagger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72808",
+            "Nightmare Carnax's Daggers",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Daggers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72809",
+            "Nightmare Carnax's Claws",
+            "Mode: [select] only\nShould the bot buy \"Nightmare Carnax's Claws\" ?",
+            false
+        ),
     };
 }

@@ -12,9 +12,17 @@ public class Fiendshard_Story
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static Originul_Story Originul { get => _Originul ??= new Originul_Story(); set => _Originul = value; }
+    private static Originul_Story Originul
+    {
+        get => _Originul ??= new Originul_Story();
+        set => _Originul = value;
+    }
     private static Originul_Story _Originul;
 
     public void ScriptMain(IScriptInterface bot)
@@ -32,9 +40,10 @@ public class Fiendshard_Story
 
         Originul.Originul_Questline();
 
-        Core.Logger("Making sure portal quest is done.. appearntly its required...? (though not stated?)");
+        Core.Logger(
+            "Making sure portal quest is done.. appearntly its required...? (though not stated?)"
+        );
         Core.Join("tercessuinotlim");
-
 
         // Sneak Attack
         if (!Story.QuestProgression(7892))
@@ -69,7 +78,14 @@ public class Fiendshard_Story
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(7895);
             Core.KillMonster("fiendshard", "r2", "Left", "Rogue Fiend", "Rogue Fiend Defeated", 5);
-            Core.KillMonster("fiendshard", "r5", "Left", "Paladin Fiend", "Paladin Fiend Defeated", 5);
+            Core.KillMonster(
+                "fiendshard",
+                "r5",
+                "Left",
+                "Paladin Fiend",
+                "Paladin Fiend Defeated",
+                5
+            );
             Core.HuntMonster("fiendshard", "Void Knight", "Void Knight Defeated", 3);
             Story.MapItemQuest(7895, "Fiendshard", 7984);
         }

@@ -16,26 +16,60 @@ public class PaladinTreasureHunterMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static SEP SEP { get => _SEP ??= new SEP(); set => _SEP = value; }    private static SEP _SEP;
+    private static SEP SEP
+    {
+        get => _SEP ??= new SEP();
+        set => _SEP = value;
+    }
+    private static SEP _SEP;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Silver Exalted Paladin", "Ancient Alloy", "Silver Exalted Winged Helm", "Silver Exalted Winged Visor", "Silver Exalted Helmet", "Silver Exalted Visor", "Silver Exalted Haloed Wings", "Silver Exalted Paladin Spear", "Silver Exalted Paladin Blade", "Silver Exalted Paladin Poleaxe", "Silver Exalted Paladin Axe", "Silver Exalted Spears of Light" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Silver Exalted Paladin",
+                "Ancient Alloy",
+                "Silver Exalted Winged Helm",
+                "Silver Exalted Winged Visor",
+                "Silver Exalted Helmet",
+                "Silver Exalted Visor",
+                "Silver Exalted Haloed Wings",
+                "Silver Exalted Paladin Spear",
+                "Silver Exalted Paladin Blade",
+                "Silver Exalted Paladin Poleaxe",
+                "Silver Exalted Paladin Axe",
+                "Silver Exalted Spears of Light",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -55,7 +89,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,9 +102,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Silver Exalted Paladin":
                     Core.FarmingLogger(req.Name, quant);
@@ -89,7 +130,13 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(7587);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("shadowvault", "Shadowstryke", "Alloy Materials", quant, false);
+                        Core.HuntMonster(
+                            "shadowvault",
+                            "Shadowstryke",
+                            "Alloy Materials",
+                            quant,
+                            false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -102,7 +149,11 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(7582);
-                        Core.HuntMonster("frozentower", "FrostDeep Dweller", "Paladin Helmet Wings");
+                        Core.HuntMonster(
+                            "frozentower",
+                            "FrostDeep Dweller",
+                            "Paladin Helmet Wings"
+                        );
                         Core.EnsureComplete(7582, req.ID);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -164,17 +215,77 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("55454", "Gold Exalted Paladin", "Mode: [select] only\nShould the bot buy \"Gold Exalted Paladin\" ?", false),
-        new Option<bool>("55455", "Gold Exalted Winged Helm", "Mode: [select] only\nShould the bot buy \"Gold Exalted Winged Helm\" ?", false),
-        new Option<bool>("55456", "Gold Exalted Winged Visor", "Mode: [select] only\nShould the bot buy \"Gold Exalted Winged Visor\" ?", false),
-        new Option<bool>("55457", "Gold Exalted Helmet", "Mode: [select] only\nShould the bot buy \"Gold Exalted Helmet\" ?", false),
-        new Option<bool>("55458", "Gold Exalted Visor", "Mode: [select] only\nShould the bot buy \"Gold Exalted Visor\" ?", false),
-        new Option<bool>("55459", "Gold Exalted Haloed Wings", "Mode: [select] only\nShould the bot buy \"Gold Exalted Haloed Wings\" ?", false),
-        new Option<bool>("55460", "Exalted Paladin's Shroud", "Mode: [select] only\nShould the bot buy \"Exalted Paladin's Shroud\" ?", false),
-        new Option<bool>("55461", "Gold Exalted Paladin Spear", "Mode: [select] only\nShould the bot buy \"Gold Exalted Paladin Spear\" ?", false),
-        new Option<bool>("55462", "Gold Exalted Paladin Blade", "Mode: [select] only\nShould the bot buy \"Gold Exalted Paladin Blade\" ?", false),
-        new Option<bool>("55463", "Gold Exalted Paladin Poleaxe", "Mode: [select] only\nShould the bot buy \"Gold Exalted Paladin Poleaxe\" ?", false),
-        new Option<bool>("55464", "Gold Exalted Paladin Axe", "Mode: [select] only\nShould the bot buy \"Gold Exalted Paladin Axe\" ?", false),
-        new Option<bool>("55528", "Gold Exalted Spears of Light", "Mode: [select] only\nShould the bot buy \"Gold Exalted Spears of Light\" ?", false),
+        new Option<bool>(
+            "55454",
+            "Gold Exalted Paladin",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55455",
+            "Gold Exalted Winged Helm",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Winged Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55456",
+            "Gold Exalted Winged Visor",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Winged Visor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55457",
+            "Gold Exalted Helmet",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Helmet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55458",
+            "Gold Exalted Visor",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Visor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55459",
+            "Gold Exalted Haloed Wings",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Haloed Wings\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55460",
+            "Exalted Paladin's Shroud",
+            "Mode: [select] only\nShould the bot buy \"Exalted Paladin's Shroud\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55461",
+            "Gold Exalted Paladin Spear",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Paladin Spear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55462",
+            "Gold Exalted Paladin Blade",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Paladin Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55463",
+            "Gold Exalted Paladin Poleaxe",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Paladin Poleaxe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55464",
+            "Gold Exalted Paladin Axe",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Paladin Axe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55528",
+            "Gold Exalted Spears of Light",
+            "Mode: [select] only\nShould the bot buy \"Gold Exalted Spears of Light\" ?",
+            false
+        ),
     };
 }

@@ -26,7 +26,11 @@ public class CoreAdvanced
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -46,7 +50,15 @@ public class CoreAdvanced
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will re-log you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
     /// <param name="index"></param>
     /// <param name="Log"></param>
-    public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, int index = 0, bool Log = true)
+    public void BuyItem(
+        string map,
+        int shopID,
+        string itemName,
+        int quant = 1,
+        int shopItemID = 0,
+        int index = 0,
+        bool Log = true
+    )
     {
         if (Core.CheckInventory(itemName, quant))
             return;
@@ -61,7 +73,17 @@ public class CoreAdvanced
             Bot.Wait.ForCombatExit();
         }
 
-        ShopItem? item = Core.parseShopItem(Core.GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.Name.ToLower() == itemName.ToLower() : x.ShopItemID == shopItemID).ToList(), shopID, itemName);
+        ShopItem? item = Core.parseShopItem(
+            Core.GetShopItems(map, shopID)
+                .Where(x =>
+                    shopItemID == 0
+                        ? x.Name.ToLower() == itemName.ToLower()
+                        : x.ShopItemID == shopItemID
+                )
+                .ToList(),
+            shopID,
+            itemName
+        );
         if (item == null)
             return;
 
@@ -79,7 +101,16 @@ public class CoreAdvanced
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will relog you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
     /// <param name="index"></param>
     /// <param name="Log"></param>
-    public void BuyItem(string map, int shopID, int itemID, int quant = 1, int shopQuant = 1, int shopItemID = 0, int index = 0, bool Log = true)
+    public void BuyItem(
+        string map,
+        int shopID,
+        int itemID,
+        int quant = 1,
+        int shopQuant = 1,
+        int shopItemID = 0,
+        int index = 0,
+        bool Log = true
+    )
     {
         if (Core.CheckInventory(itemID, quant))
             return;
@@ -94,17 +125,30 @@ public class CoreAdvanced
             Bot.Wait.ForCombatExit();
         }
 
-        ShopItem? item = Core.parseShopItem(Core.GetShopItems(map, shopID).Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID).ToList(), shopID, itemID.ToString());
+        ShopItem? item = Core.parseShopItem(
+            Core.GetShopItems(map, shopID)
+                .Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID)
+                .ToList(),
+            shopID,
+            itemID.ToString()
+        );
         if (item == null)
             return;
 
         _BuyItem(map, shopID, item, quant, shopQuant, shopItemID, index, Log);
     }
 
-
-    private void _BuyItem(string map, int shopID, ShopItem item, int quant = 1, int shopquant = 1, int shopItemID = 1, int index = 0, bool Log = true)
+    private void _BuyItem(
+        string map,
+        int shopID,
+        ShopItem item,
+        int quant = 1,
+        int shopquant = 1,
+        int shopItemID = 1,
+        int index = 0,
+        bool Log = true
+    )
     {
-
         int shopQuant = item.Quantity; // Quantity per purchase from the shop
         string shopName = Bot.Shops.Name; // Store the currently loaded shop name
         if (item.Requirements != null)
@@ -112,7 +156,8 @@ public class CoreAdvanced
             foreach (ItemBase req in item.Requirements)
             {
                 // Determine how many total items are needed
-                int totalBundlesNeeded = (int)Math.Ceiling((double)req.Quantity * quant / shopQuant);
+                int totalBundlesNeeded = (int)
+                    Math.Ceiling((double)req.Quantity * quant / shopQuant);
 
                 if (Core.CheckInventory(req.ID, totalBundlesNeeded))
                 {
@@ -172,10 +217,12 @@ public class CoreAdvanced
                     // Else return and hope it hits the `findingredients` area. when the req.name isnt in the shop.
                     else
                     {
-                        Core.Logger($"Failed to find shop item: \"{req.Name} [{req.ID}]\" in ({Bot.Shops.Name} [{Bot.Shops.ID}].)\n"
-                        + $"Its either a `mob drop` or a `daily`.\n"
-                        + $"Check the Wiki: http://aqwwiki.wikidot.com/search:main/fullname/{req.Name.Replace(" ", "-")}.\n"
-                        + $"Maybe the bot will just farm in a moment once it returns to the previous code..? if not then its probably from a daily or an mob we cannot kill with skua.");
+                        Core.Logger(
+                            $"Failed to find shop item: \"{req.Name} [{req.ID}]\" in ({Bot.Shops.Name} [{Bot.Shops.ID}].)\n"
+                                + $"Its either a `mob drop` or a `daily`.\n"
+                                + $"Check the Wiki: http://aqwwiki.wikidot.com/search:main/fullname/{req.Name.Replace(" ", "-")}.\n"
+                                + $"Maybe the bot will just farm in a moment once it returns to the previous code..? if not then its probably from a daily or an mob we cannot kill with skua."
+                        );
                         return;
                     }
                 }
@@ -184,7 +231,7 @@ public class CoreAdvanced
             // Ensure required items are available before purchasing the main item
             GetItemReq(item, quant);
 
-            // Rejoin the map here incase getitemreq takes you elsewhere, to ensure that the shopitem is found (hopefully) 
+            // Rejoin the map here incase getitemreq takes you elsewhere, to ensure that the shopitem is found (hopefully)
             if (Bot.Map.Name != map)
                 Core.Join(map);
 
@@ -200,30 +247,44 @@ public class CoreAdvanced
             }
 
             // Try to find the exact item match based on ID and ShopItemID
-            List<ShopItem> matchingItems = Bot.Shops.Items
-                .Where(x => x.ID == item.ID &&
-                            x.ShopItemID == (item.ShopItemID != 1 ? item.ShopItemID : shopItemID) &&
-                            !(x.Coins && x.Cost > 0) && // Exclude AC/paid items
-                            item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)))
+            List<ShopItem> matchingItems = Bot
+                .Shops.Items.Where(x =>
+                    x.ID == item.ID
+                    && x.ShopItemID == (item.ShopItemID != 1 ? item.ShopItemID : shopItemID)
+                    && !(x.Coins && x.Cost > 0)
+                    && // Exclude AC/paid items
+                    item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity))
+                )
                 .ToList(); // Convert to list to allow index selection
 
             // If no exact match is found, fall back to matching only by ID
             if (!matchingItems.Any())
             {
-                matchingItems = Bot.Shops.Items
-                    .Where(x => x.ID == item.ID &&
-                                !(x.Coins && x.Cost > 0) && // Exclude AC/paid items
-                                item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity)))
+                matchingItems = Bot
+                    .Shops.Items.Where(x =>
+                        x.ID == item.ID
+                        && !(x.Coins && x.Cost > 0)
+                        && // Exclude AC/paid items
+                        item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity))
+                    )
                     .ToList();
             }
 
             // Select the item by index if possible, otherwise default to the first available match
-            ShopItem? mainItem = matchingItems.Count > index ? matchingItems[index] : matchingItems.FirstOrDefault();
+            ShopItem? mainItem =
+                matchingItems.Count > index ? matchingItems[index] : matchingItems.FirstOrDefault();
 
             if (mainItem != null)
             {
                 // Attempt to buy the item using the correct ShopItemID if applicable
-                Core.BuyItem(map, shopID, mainItem.ID, quant, mainItem.ShopItemID != 1 ? mainItem.ShopItemID : shopItemID, Log: Log);
+                Core.BuyItem(
+                    map,
+                    shopID,
+                    mainItem.ID,
+                    quant,
+                    mainItem.ShopItemID != 1 ? mainItem.ShopItemID : shopItemID,
+                    Log: Log
+                );
                 Core.Sleep();
 
                 // Verify if the item was successfully purchased
@@ -232,7 +293,11 @@ public class CoreAdvanced
                     Core.Logger($"❌ Failed to buy {mainItem.Name} ({quant}x)");
 
                     // Log any missing requirements for debugging
-                    foreach (ItemBase req in mainItem.Requirements.Where(r => r != null && !Core.CheckInventory(r.ID, r.Quantity)))
+                    foreach (
+                        ItemBase req in mainItem.Requirements.Where(r =>
+                            r != null && !Core.CheckInventory(r.ID, r.Quantity)
+                        )
+                    )
                     {
                         Core.Logger($"⚠️ Missing: {req.Name} x{req.Quantity}");
                     }
@@ -240,19 +305,21 @@ public class CoreAdvanced
             }
             else
             {
-                Core.Logger($"❌ Failed to find the item: {item.Name} in shop {shopID} on map {map}");
+                Core.Logger(
+                    $"❌ Failed to find the item: {item.Name} in shop {shopID} on map {map}"
+                );
             }
-
         }
     }
+
     /// <summary>
     /// Ensures that all necessary requirements (Experience, Reputation, Gold, and specific items)
-    /// are met in order to purchase an item. This includes verifying player level, farming or purchasing 
+    /// are met in order to purchase an item. This includes verifying player level, farming or purchasing
     /// required reputation, acquiring specific items such as Gold Vouchers and Dragon Runestones,
     /// and ensuring enough gold is available for the transaction.
     /// </summary>
     /// <param name="item">
-    /// The <see cref="ShopItem"/> object that contains all the details about the item, 
+    /// The <see cref="ShopItem"/> object that contains all the details about the item,
     /// including its requirements like reputation, level, gold cost, and additional items needed.
     /// </param>
     /// <param name="quant">
@@ -268,9 +335,15 @@ public class CoreAdvanced
         }
 
         // Ensure required reputation for faction-based items
-        if (!string.IsNullOrEmpty(item.Faction) && item.Faction != "None" && item.RequiredReputation > 0)
+        if (
+            !string.IsNullOrEmpty(item.Faction)
+            && item.Faction != "None"
+            && item.RequiredReputation > 0
+        )
         {
-            Core.Logger($"Farming reputation for {item.Faction} (Required: {item.RequiredReputation})");
+            Core.Logger(
+                $"Farming reputation for {item.Faction} (Required: {item.RequiredReputation})"
+            );
             runRep(item.Faction, Core.PointsToLevel(item.RequiredReputation));
         }
 
@@ -291,24 +364,39 @@ public class CoreAdvanced
         // Handle Gold Vouchers (multiple types possible)
         if (item.Requirements.Any(x => x != null && x.Name.StartsWith("Gold Voucher")))
         {
-            foreach (ItemBase req in item.Requirements.Where(x => x != null && x.Name.StartsWith("Gold Voucher")))
+            foreach (
+                ItemBase req in item.Requirements.Where(x =>
+                    x != null && x.Name.StartsWith("Gold Voucher")
+                )
+            )
             {
                 Farm.Voucher(req.Name, req.Quantity);
             }
         }
 
         // Handle Dragon Runestone farming if required
-        if (item.Requirements != null && item.Requirements.Any(x => x != null && x.Name.StartsWith("Dragon Runestone")))
+        if (
+            item.Requirements != null
+            && item.Requirements.Any(x => x != null && x.Name.StartsWith("Dragon Runestone"))
+        )
         {
-            ItemBase? runestoneReq = item.Requirements.FirstOrDefault(x => x != null && x.Name == "Dragon Runestone");
+            ItemBase? runestoneReq = item.Requirements.FirstOrDefault(x =>
+                x != null && x.Name == "Dragon Runestone"
+            );
             if (runestoneReq != null)
                 Farm.DragonRunestone(runestoneReq.Quantity);
         }
 
         // Warn if a temp item is missing
         if (item.Requirements != null)
-            foreach (ItemBase req in item.Requirements.Where(x => x != null && x.Temp && x.Quantity > Bot.TempInv.GetQuantity(x.ID)))
-                Core.Logger($"Temp item: {req.Name}, quant needed: {req.Quantity}... did the bot not farm them?");
+            foreach (
+                ItemBase req in item.Requirements.Where(x =>
+                    x != null && x.Temp && x.Quantity > Bot.TempInv.GetQuantity(x.ID)
+                )
+            )
+                Core.Logger(
+                    $"Temp item: {req.Name}, quant needed: {req.Quantity}... did the bot not farm them?"
+                );
     }
 
     private void runRep(string faction, int rank)
@@ -318,7 +406,11 @@ public class CoreAdvanced
         MethodInfo? theMethod = farmClass.GetMethod(faction + "REP");
         if (theMethod == null)
         {
-            Core.Logger("Failed to find " + faction + "REP. Make sure you have the correct name and capitalization.");
+            Core.Logger(
+                "Failed to find "
+                    + faction
+                    + "REP. Make sure you have the correct name and capitalization."
+            );
             return;
         }
         try
@@ -339,7 +431,11 @@ public class CoreAdvanced
         }
         catch
         {
-            Core.Logger($"Faction {faction} has invalid paramaters, please report", messageBox: true, stopBot: true);
+            Core.Logger(
+                $"Faction {faction} has invalid paramaters, please report",
+                messageBox: true,
+                stopBot: true
+            );
         }
     }
 
@@ -357,10 +453,25 @@ public class CoreAdvanced
     /// <param name="ShopItemID">Optional. Specifies ShopItem ID.</param>
     /// <param name="Log">Optional. Enables logging.</param>
     // We'll use this later
-    public void StartBuyAllMerge(string map, int shopID, Action findIngredients, string? buyOnlyThis = null, string[]? itemBlackList = null, mergeOptionsEnum? buyMode = null, string Group = "First", int ShopItemID = 0, bool Log = true)
+    public void StartBuyAllMerge(
+        string map,
+        int shopID,
+        Action findIngredients,
+        string? buyOnlyThis = null,
+        string[]? itemBlackList = null,
+        mergeOptionsEnum? buyMode = null,
+        string Group = "First",
+        int ShopItemID = 0,
+        bool Log = true
+    )
     {
         #region Setup and Initialization
-        if (buyOnlyThis == null && buyMode == null && Bot.Config != null && !Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions))
+        if (
+            buyOnlyThis == null
+            && buyMode == null
+            && Bot.Config != null
+            && !Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions)
+        )
             Bot.Config!.Configure();
 
         int mode = 0;
@@ -368,35 +479,53 @@ public class CoreAdvanced
             mode = (int)mergeOptionsEnum.all;
         else if (buyMode != null)
             mode = (int)buyMode;
-        else if (Bot.Config != null && Bot.Config.MultipleOptions.Any(o => o.Value.Any(x => x.Category == "Generic" && x.Name == "mode")))
+        else if (
+            Bot.Config != null
+            && Bot.Config.MultipleOptions.Any(o =>
+                o.Value.Any(x => x.Category == "Generic" && x.Name == "mode")
+            )
+        )
             mode = (int)Bot.Config.Get<mergeOptionsEnum>("Generic", "mode");
-        else Core.Logger("Invalid setup detected for StartBuyAllMerge. Please report", messageBox: true, stopBot: true);
+        else
+            Core.Logger(
+                "Invalid setup detected for StartBuyAllMerge. Please report",
+                messageBox: true,
+                stopBot: true
+            );
 
         matsOnly = mode == 2;
 
         // HashSet for tracking unique item IDs to prevent redundant operations
         HashSet<int> uniqueItemIds = new(
-                     new[] {
-            Bot.Bank.Items.Select(item => item.ID),
-            Bot.TempInv.Items.Select(item => item.ID),
-            Bot.House.Items.Select(item => item.ID),
-            Bot.Inventory.Items.Select(item => item.ID)
-                    }.SelectMany(id => id)
-                );
+            new[]
+            {
+                Bot.Bank.Items.Select(item => item.ID),
+                Bot.TempInv.Items.Select(item => item.ID),
+                Bot.House.Items.Select(item => item.ID),
+                Bot.Inventory.Items.Select(item => item.ID),
+            }.SelectMany(id => id)
+        );
 
         // Filter shop items based on various conditions
         List<ShopItem> shopItems = Core.GetShopItems(map, shopID)
-                                      .GroupBy(item => new { item.Name, item.ID, item.ShopItemID })
-                                      .Select(group =>
-                                      {
-                                          IOrderedEnumerable<ShopItem> orderedGroup = group.OrderBy(item => item.ShopItemID != group.First().ShopItemID);
-                                          return Group == "First" ? orderedGroup.First() : orderedGroup.Last();
-                                      })
-                                      .Where(x => !x.Name.ToLower().EndsWith("insignia"))
-                                      .Where(x => !uniqueItemIds.Contains(x.ID))
-                                      .ToList();
+            .GroupBy(item => new
+            {
+                item.Name,
+                item.ID,
+                item.ShopItemID,
+            })
+            .Select(group =>
+            {
+                IOrderedEnumerable<ShopItem> orderedGroup = group.OrderBy(item =>
+                    item.ShopItemID != group.First().ShopItemID
+                );
+                return Group == "First" ? orderedGroup.First() : orderedGroup.Last();
+            })
+            .Where(x => !x.Name.ToLower().EndsWith("insignia"))
+            .Where(x => !uniqueItemIds.Contains(x.ID))
+            .ToList();
 
-        uniqueItemIds = new HashSet<int>();  // Reset for re-use
+        uniqueItemIds = new HashSet<int>(); // Reset for re-use
 
         List<ShopItem> items = new();
         bool memSkipped = false;
@@ -404,13 +533,23 @@ public class CoreAdvanced
         // Process shop items based on various conditions
         foreach (ShopItem item in shopItems)
         {
-            if (miscCatagories.Contains(item.Category) ||
-                    (!string.IsNullOrEmpty(buyOnlyThis) && buyOnlyThis != item.Name) ||
-                    (itemBlackList != null && itemBlackList.Any(x => x.ToLower() == item.Name.ToLower())))
+            if (
+                miscCatagories.Contains(item.Category)
+                || (!string.IsNullOrEmpty(buyOnlyThis) && buyOnlyThis != item.Name)
+                || (
+                    itemBlackList != null
+                    && itemBlackList.Any(x => x.ToLower() == item.Name.ToLower())
+                )
+            )
                 continue;
 
-            if (Core.IsMember || !item.Upgrade
-            || item.Requirements.Any(x => x != null && Bot.Shops.Items.Any(x => x != null && x.Upgrade && !Core.IsMember)))
+            if (
+                Core.IsMember
+                || !item.Upgrade
+                || item.Requirements.Any(x =>
+                    x != null && Bot.Shops.Items.Any(x => x != null && x.Upgrade && !Core.IsMember)
+                )
+            )
             {
                 if (mode == 3)
                 {
@@ -431,7 +570,9 @@ public class CoreAdvanced
 
         if (items.Count == 0)
         {
-            Core.Logger($"Found {items.Count} items to purchase from shop [{shopID}] on map [{map}].");
+            Core.Logger(
+                $"Found {items.Count} items to purchase from shop [{shopID}] on map [{map}]."
+            );
             HandleNoItemsFound(mode, memSkipped);
             return;
         }
@@ -476,17 +617,17 @@ public class CoreAdvanced
                 }
                 else
                 {
-                    IEnumerable<string> missing = item.Requirements
-                    .Where(x => !Core.CheckInventory(x.ID, x.Quantity))
-                    .Select(x => $"\"{x.Name} x{x.Quantity}\"");
+                    IEnumerable<string> missing = item
+                        .Requirements.Where(x => !Core.CheckInventory(x.ID, x.Quantity))
+                        .Select(x => $"\"{x.Name} x{x.Quantity}\"");
 
-                    Core.Logger($"Failed to meet requirements for {item.Name} [{item.ID}] due to missing: {string.Join(", ", missing)}.");
+                    Core.Logger(
+                        $"Failed to meet requirements for {item.Name} [{item.ID}] due to missing: {string.Join(", ", missing)}."
+                    );
                     continue;
                 }
-
             }
         }
-
 
         // Helper methods
         bool EnsureShopLoaded(string? map, int shopID)
@@ -529,10 +670,20 @@ public class CoreAdvanced
                 while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
                 {
                     // for requirements that are in the shop, but are just buyable with gold. (excludes ac buyable items)
-                    if (wasinshop.Requirements.Count == 0 && ((wasinshop.Coins && wasinshop.Cost <= 0) || !wasinshop.Coins)) //|| wasinshop.Name.Contains("Gold Voucher") || wasinshop.Name.Contains("Dragon Runestone"))
+                    if (
+                        wasinshop.Requirements.Count == 0
+                        && ((wasinshop.Coins && wasinshop.Cost <= 0) || !wasinshop.Coins)
+                    ) //|| wasinshop.Name.Contains("Gold Voucher") || wasinshop.Name.Contains("Dragon Runestone"))
                     {
                         // Otherwise buy the item directly
-                        BuyItem(map, shopID, Req.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
+                        BuyItem(
+                            map,
+                            shopID,
+                            Req.ID,
+                            ReqQuant,
+                            shopItemID: wasinshop.ShopItemID,
+                            Log: Log
+                        );
                         Bot.Wait.ForPickup(Req.ID);
                     }
                     else
@@ -543,10 +694,15 @@ public class CoreAdvanced
                     if (Core.CheckInventory(Req.ID, ReqQuant))
                         break;
                     else
-                        Core.Logger($"Failed to meet requirements for \"{Req.Name}\" [{Req.ID}] x{ReqQuant}, Retrying the farm (items may have been used).");
+                        Core.Logger(
+                            $"Failed to meet requirements for \"{Req.Name}\" [{Req.ID}] x{ReqQuant}, Retrying the farm (items may have been used)."
+                        );
                 }
             }
-            else if (Req?.Name?.Contains("Gold Voucher") == true || Req?.Name?.Contains("Dragon Runestone") == true)
+            else if (
+                Req?.Name?.Contains("Gold Voucher") == true
+                || Req?.Name?.Contains("Dragon Runestone") == true
+            )
             {
                 // Handle special cases for Gold Vouchers and Dragon Runestones
                 if (Req.Name?.Contains("Gold Voucher") == true)
@@ -569,7 +725,9 @@ public class CoreAdvanced
                     externalItem = Req;
                     externalQuant = Req.Quantity;
                     Core.AddDrop(externalItem.ID);
-                    Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item (not from this shop), attempting to farm it from The ingredient list.");
+                    Core.Logger(
+                        $"{externalItem.Name} [{externalItem.ID}] is an external item (not from this shop), attempting to farm it from The ingredient list."
+                    );
 
                     findIngredients();
                     Bot.Wait.ForPickup(externalItem.ID);
@@ -614,11 +772,18 @@ public class CoreAdvanced
                     // for requirements that are in the shop, but are just buyable with gold. (excludes ac buyable items)
                     if (wasinshop.Requirements.Count <= 0 && wasinshop.Cost <= 0)
                     {
-                        BuyItem(map, shopID, wasinshop.ID, ReqQuant, shopItemID: wasinshop.ShopItemID, Log: Log);
+                        BuyItem(
+                            map,
+                            shopID,
+                            wasinshop.ID,
+                            ReqQuant,
+                            shopItemID: wasinshop.ShopItemID,
+                            Log: Log
+                        );
                         Bot.Wait.ForPickup(wasinshop.ID);
                     }
-
-                    else IngredientWasintheShop(wasinshop, ReqQuant);
+                    else
+                        IngredientWasintheShop(wasinshop, ReqQuant);
                     continue;
                 }
                 else if (wasinshop == null)
@@ -637,10 +802,11 @@ public class CoreAdvanced
                     externalItem = req;
                     externalQuant = ReqQuant;
                     Core.AddDrop(externalItem.ID);
-                    Core.Logger($"{externalItem.Name} [{externalItem.ID}] is an external item (not a shop item), attempting to farm it from The ingredient list.");
+                    Core.Logger(
+                        $"{externalItem.Name} [{externalItem.ID}] is an external item (not a shop item), attempting to farm it from The ingredient list."
+                    );
                     findIngredients();
                 }
-
             }
 
             EnsureShopLoaded(map, shopID);
@@ -672,21 +838,35 @@ public class CoreAdvanced
                     break;
                 case 1:
                     if (shopItems.All(x => !x.Coins))
-                        Core.Logger("The bot fetched 0 items to farm. This is because none of the items in this shop are AC tagged.");
+                        Core.Logger(
+                            "The bot fetched 0 items to farm. This is because none of the items in this shop are AC tagged."
+                        );
                     else
-                        Core.Logger("The bot fetched 0 items to farm. Something must have gone wrong.");
+                        Core.Logger(
+                            "The bot fetched 0 items to farm. Something must have gone wrong."
+                        );
                     break;
                 case 3:
                     if (memSkipped)
-                        Core.Logger("The bot fetched 0 items to farm. This is because you aren't a member.");
+                        Core.Logger(
+                            "The bot fetched 0 items to farm. This is because you aren't a member."
+                        );
                     else
-                        Core.Logger("The bot fetched 0 items to farm. Something must have gone wrong.");
+                        Core.Logger(
+                            "The bot fetched 0 items to farm. Something must have gone wrong."
+                        );
                     break;
             }
         }
     }
 
-    public List<ItemCategory> miscCatagories = new() { ItemCategory.Note, ItemCategory.Item, ItemCategory.QuestItem, ItemCategory.ServerUse };
+    public List<ItemCategory> miscCatagories = new()
+    {
+        ItemCategory.Note,
+        ItemCategory.Item,
+        ItemCategory.QuestItem,
+        ItemCategory.ServerUse,
+    };
     public ItemBase externalItem = new();
     public int externalQuant = 0;
     public bool matsOnly = false;
@@ -699,12 +879,37 @@ public class CoreAdvanced
     public List<IOption> MergeOptions = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<mergeOptionsEnum>("mode", "Select the mode to use", "Regardless of the mode you pick, the bot wont (attempt to) buy Legend-only items if you're not a Legend.\n" +
-                                                                     "Select the Mode Explanation item to get more information", mergeOptionsEnum.all),
-        new Option<string>(" ", "Mode Explanation [all]", "Mode [all]: \t\tYou get all the items from shop, even if non-AC ones if any.", "click here"),
-        new Option<string>(" ", "Mode Explanation [acOnly]", "Mode [acOnly]: \tYou get all the AC tagged items from the shop.", "click here"),
-        new Option<string>(" ", "Mode Explanation [mergeMats]", "Mode [mergeMats]: \tYou dont buy any items but instead get the materials to buy them yourself, this way you can choose.", "click here"),
-        new Option<string>(" ", "Mode Explanation [select]", "Mode [select]: \tYou are able to select what items you get and which ones you dont in the Select Category below.", "click here"),
+        new Option<mergeOptionsEnum>(
+            "mode",
+            "Select the mode to use",
+            "Regardless of the mode you pick, the bot wont (attempt to) buy Legend-only items if you're not a Legend.\n"
+                + "Select the Mode Explanation item to get more information",
+            mergeOptionsEnum.all
+        ),
+        new Option<string>(
+            " ",
+            "Mode Explanation [all]",
+            "Mode [all]: \t\tYou get all the items from shop, even if non-AC ones if any.",
+            "click here"
+        ),
+        new Option<string>(
+            " ",
+            "Mode Explanation [acOnly]",
+            "Mode [acOnly]: \tYou get all the AC tagged items from the shop.",
+            "click here"
+        ),
+        new Option<string>(
+            " ",
+            "Mode Explanation [mergeMats]",
+            "Mode [mergeMats]: \tYou dont buy any items but instead get the materials to buy them yourself, this way you can choose.",
+            "click here"
+        ),
+        new Option<string>(
+            " ",
+            "Mode Explanation [select]",
+            "Mode [select]: \tYou are able to select what items you get and which ones you dont in the Select Category below.",
+            "click here"
+        ),
     };
 
     /// <summary>
@@ -728,7 +933,17 @@ public class CoreAdvanced
     /// <param name="isTemp">Whether the item is temporary.</param>
     /// <param name="log">Whether to log the killing of the monster.</param>
     /// <param name="publicRoom">Whether the action should take place in a public room.</param>
-    public void BoostKillMonster(string map, string cell, string pad, string monster, string item = "", int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
+    public void BoostKillMonster(
+        string map,
+        string cell,
+        string pad,
+        string monster,
+        string item = "",
+        int quant = 1,
+        bool isTemp = true,
+        bool log = true,
+        bool publicRoom = false
+    )
     {
         if (item != "" && Core.CheckInventory(item, quant))
             return;
@@ -753,7 +968,17 @@ public class CoreAdvanced
     /// <param name="isTemp">Whether the item is temporary</param>
     /// <param name="log">Whether it will log that it is killing the monster</param>
     /// <param name="publicRoom"></param>
-    public void BoostKillMonster(string map, string cell, string pad, int monsterID, string item = "", int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
+    public void BoostKillMonster(
+        string map,
+        string cell,
+        string pad,
+        int monsterID,
+        string item = "",
+        int quant = 1,
+        bool isTemp = true,
+        bool log = true,
+        bool publicRoom = false
+    )
     {
         if (item != "" && Core.CheckInventory(item, quant))
             return;
@@ -777,7 +1002,15 @@ public class CoreAdvanced
     /// <param name="isTemp">Whether the item is temporary.</param>
     /// <param name="log">Whether to log the hunting and killing of the monster.</param>
     /// <param name="publicRoom">Whether the action should take place in a public room.</param>
-    public void BoostHuntMonster(string map, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
+    public void BoostHuntMonster(
+        string map,
+        string monster,
+        string? item = null,
+        int quant = 1,
+        bool isTemp = true,
+        bool log = true,
+        bool publicRoom = false
+    )
     {
         if (item != null && Core.CheckInventory(item, quant))
             return;
@@ -804,7 +1037,18 @@ public class CoreAdvanced
     /// <param name="log">Whether to log the killing of the monster.</param>
     /// <param name="publicRoom">Whether the action should take place in a public room.</param>
     /// <param name="forAuto">Whether the method is used for an automated process.</param>
-    public void KillUltra(string map, string cell, string pad, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = true, bool forAuto = false)
+    public void KillUltra(
+        string map,
+        string cell,
+        string pad,
+        string monster,
+        string? item = null,
+        int quant = 1,
+        bool isTemp = true,
+        bool log = true,
+        bool publicRoom = true,
+        bool forAuto = false
+    )
     {
         if (item != null && Core.CheckInventory(item, quant))
             return;
@@ -849,14 +1093,25 @@ public class CoreAdvanced
     /// Kills a monster while monitoring for a specific aura.
     /// </summary>
     public void KillWithAura(
-        string map, string cell, string pad, string monster,
+        string map,
+        string cell,
+        string pad,
+        string monster,
         string[] auraNames,
         Dictionary<string, Action>? auraReactions = null,
-        string? item = null, int quant = 1, bool isTemp = false, bool log = true,
-        int ItemToUse = 0, int SafeItem = 0,
-        CancellationToken cancellationToken = default)
+        string? item = null,
+        int quant = 1,
+        bool isTemp = false,
+        bool log = true,
+        int ItemToUse = 0,
+        int SafeItem = 0,
+        CancellationToken cancellationToken = default
+    )
     {
-        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
+        if (
+            item != null
+            && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant))
+        )
             return;
 
         DateTime lastAuraTrigger = DateTime.MinValue;
@@ -892,9 +1147,17 @@ public class CoreAdvanced
             if (log)
                 Core.FarmingLogger(item, quant);
 
-            while (!Bot.ShouldExit && !Core.CheckInventory(item, quant) && !cancellationToken.IsCancellationRequested)
+            while (
+                !Bot.ShouldExit
+                && !Core.CheckInventory(item, quant)
+                && !cancellationToken.IsCancellationRequested
+            )
             {
-                while (!Bot.ShouldExit && !Bot.Player.Alive && !cancellationToken.IsCancellationRequested) { }
+                while (
+                    !Bot.ShouldExit
+                    && !Bot.Player.Alive
+                    && !cancellationToken.IsCancellationRequested
+                ) { }
 
                 if (Bot.Map.Name != map)
                     Core.Join(map, cell, pad);
@@ -904,7 +1167,11 @@ public class CoreAdvanced
                 Bot.Combat.Attack(monster);
                 Bot.Sleep(500);
 
-                if (isTemp ? Bot.TempInv.Contains(item, quant) : (Bot.Inventory.Contains(item, quant) || Bot.Bank.Contains(item, quant)))
+                if (
+                    isTemp
+                        ? Bot.TempInv.Contains(item, quant)
+                        : (Bot.Inventory.Contains(item, quant) || Bot.Bank.Contains(item, quant))
+                )
                     break;
             }
         }
@@ -938,7 +1205,10 @@ public class CoreAdvanced
 
                 lastAuraTrigger = DateTime.Now;
 
-                if (auraReactions != null && auraReactions.TryGetValue(auraName, out Action? reaction))
+                if (
+                    auraReactions != null
+                    && auraReactions.TryGetValue(auraName, out Action? reaction)
+                )
                 {
                     Bot.Log($"Invoking reaction for aura: {auraName}");
                     try
@@ -1014,21 +1284,36 @@ public class CoreAdvanced
     public void RankUpClass(string className, bool gearRestore = true, int itemid = 0)
     {
         // Determine search condition based on itemid
-        bool classMatch(InventoryItem i) => (itemid > 0 ? i.ID == itemid : i.Name.Equals(className, StringComparison.OrdinalIgnoreCase)) && i.Category == ItemCategory.Class;
+        bool classMatch(InventoryItem i) =>
+            (
+                itemid > 0
+                    ? i.ID == itemid
+                    : i.Name.Equals(className, StringComparison.OrdinalIgnoreCase)
+            )
+            && i.Category == ItemCategory.Class;
 
         // Find the class item in inventory and bank
-        InventoryItem? itemInv = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(classMatch);
+        InventoryItem? itemInv = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(classMatch);
 
         if (itemInv == null)
         {
-            Core.Logger($"Can't level up {(itemid > 0 ? $"item ID {itemid}" : $"\"{className}\"")} because you don't own it.");
+            Core.Logger(
+                $"Can't level up {(itemid > 0 ? $"item ID {itemid}" : $"\"{className}\"")} because you don't own it."
+            );
             return;
         }
 
         // Check if the class is already Rank 10 or unavailable due to membership requirement
-        if ((itemInv.Upgrade && !Bot.Player.IsMember) || (Bot.Inventory.Contains(itemInv.ID) && itemInv.Quantity >= 302500))
+        if (
+            (itemInv.Upgrade && !Bot.Player.IsMember)
+            || (Bot.Inventory.Contains(itemInv.ID) && itemInv.Quantity >= 302500)
+        )
         {
-            Core.Logger($"\"{itemInv.Name}\" is already Rank 10 or you are not a member and the item is members.");
+            Core.Logger(
+                $"\"{itemInv.Name}\" is already Rank 10 or you are not a member and the item is members."
+            );
             return;
         }
 
@@ -1042,7 +1327,9 @@ public class CoreAdvanced
             itemInv = Bot.Inventory.Items.FirstOrDefault(classMatch);
             if (itemInv == null)
             {
-                Core.Logger($"Failed to unbank {(itemid > 0 ? $"item ID {itemid}" : $"\"{className}\"")}.");
+                Core.Logger(
+                    $"Failed to unbank {(itemid > 0 ? $"item ID {itemid}" : $"\"{className}\"")}."
+                );
                 return;
             }
         }
@@ -1055,7 +1342,11 @@ public class CoreAdvanced
         }
 
         // Check if the class cannot be leveled past Rank 1
-        if (itemInv.Name.Equals("Hobo Highlord") || itemInv.Name.Equals("No Class") || itemInv.Name.Equals("Obsidian No Class"))
+        if (
+            itemInv.Name.Equals("Hobo Highlord")
+            || itemInv.Name.Equals("No Class")
+            || itemInv.Name.Equals("Obsidian No Class")
+        )
         {
             Core.Logger($"\"{itemInv.Name}\" cannot be leveled past Rank 1");
             return;
@@ -1074,14 +1365,18 @@ public class CoreAdvanced
         InventoryItem? classItem = Bot.Inventory.Items.FirstOrDefault(classMatch);
         if (classItem == null)
         {
-            Core.Logger($"Class item {(itemid > 0 ? $"ID {itemid}" : $"\"{className}\"")} not found in inventory.");
+            Core.Logger(
+                $"Class item {(itemid > 0 ? $"ID {itemid}" : $"\"{className}\"")} not found in inventory."
+            );
             return;
         }
 
         // Ensure the class item is enhanced before leveling up
         if (classItem.EnhancementLevel <= 0)
         {
-            Core.Logger($"Can't level up \"{classItem.Name}\" because it's not enhanced, and AutoEnhance is turned off");
+            Core.Logger(
+                $"Can't level up \"{classItem.Name}\" because it's not enhanced, and AutoEnhance is turned off"
+            );
             return;
         }
 
@@ -1102,7 +1397,9 @@ public class CoreAdvanced
         classItem = Bot.Inventory.Items.FirstOrDefault(classMatch);
         if (classItem == null)
         {
-            Core.Logger($"Class item {(itemid > 0 ? $"ID {itemid}" : $"\"{className}\"")} not found in inventory.");
+            Core.Logger(
+                $"Class item {(itemid > 0 ? $"ID {itemid}" : $"\"{className}\"")} not found in inventory."
+            );
             return;
         }
 
@@ -1147,6 +1444,7 @@ public class CoreAdvanced
                 EnhanceEquipped(ReEnhanceAfter, ReCEnhanceAfter, ReHEnhanceAfter, ReWEnhanceAfter);
         }
     }
+
     private readonly List<string> ReEquippedItems = new();
     private EnhancementType ReEnhanceAfter = EnhancementType.Lucky;
     private CapeSpecial ReCEnhanceAfter = CapeSpecial.None;
@@ -1175,12 +1473,16 @@ public class CoreAdvanced
         string Map = Bot.Map.LastMap;
         string MonsterRace = "";
         if (Monster != "*")
-            MonsterRace = Bot.Monsters.MapMonsters.First(x => x.Name.ToLower() == Monster.ToLower())?.Race ?? "";
+            MonsterRace =
+                Bot.Monsters.MapMonsters.First(x => x.Name.ToLower() == Monster.ToLower())?.Race
+                ?? "";
         else
         {
             if (Bot.Monsters.CurrentMonsters.Count == 0)
             {
-                Core.Logger($"No monsters are present in cell \"{Bot.Player.Cell}\" in /{Bot.Map.Name}");
+                Core.Logger(
+                    $"No monsters are present in cell \"{Bot.Player.Cell}\" in /{Bot.Map.Name}"
+                );
                 return;
             }
             MonsterRace = Bot.Monsters.CurrentMonsters.First().Race ?? "";
@@ -1224,10 +1526,19 @@ public class CoreAdvanced
         Core.Join(Map);
     }
 
-    public bool HasMinimalBoost(GenericGearBoost boostType, int percentage)
-        => Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(x => Core.GetBoostFloat(x, boostType.ToString()) >= ((percentage / (float)100) + 1));
-    public bool HasMinimalBoost(RacialGearBoost boostType, int percentage)
-        => Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(x => Core.GetBoostFloat(x, boostType.ToString()) >= ((percentage / (float)100) + 1));
+    public bool HasMinimalBoost(GenericGearBoost boostType, int percentage) =>
+        Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .Any(x =>
+                Core.GetBoostFloat(x, boostType.ToString()) >= ((percentage / (float)100) + 1)
+            );
+
+    public bool HasMinimalBoost(RacialGearBoost boostType, int percentage) =>
+        Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .Any(x =>
+                Core.GetBoostFloat(x, boostType.ToString()) >= ((percentage / (float)100) + 1)
+            );
 
     #endregion
 
@@ -1240,12 +1551,19 @@ public class CoreAdvanced
     /// <param name="cSpecial"></param>
     /// <param name="hSpecial"></param>
     /// <param name="wSpecial"></param>
-    public void EnhanceEquipped(EnhancementType type, CapeSpecial cSpecial = CapeSpecial.None, HelmSpecial hSpecial = HelmSpecial.None, WeaponSpecial wSpecial = WeaponSpecial.None)
+    public void EnhanceEquipped(
+        EnhancementType type,
+        CapeSpecial cSpecial = CapeSpecial.None,
+        HelmSpecial hSpecial = HelmSpecial.None,
+        WeaponSpecial wSpecial = WeaponSpecial.None
+    )
     {
         if (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance)
             return;
 
-        List<InventoryItem> EquippedItems = Bot.Inventory.Items.FindAll(i => i.Equipped == true && EnhanceableCatagories.Contains(i.Category));
+        List<InventoryItem> EquippedItems = Bot.Inventory.Items.FindAll(i =>
+            i.Equipped == true && EnhanceableCatagories.Contains(i.Category)
+        );
         try
         {
             AutoEnhance(EquippedItems, type, cSpecial, hSpecial, wSpecial);
@@ -1265,9 +1583,22 @@ public class CoreAdvanced
     /// <param name="hSpecial"></param>
     /// <param name="wSpecial"></param>
     /// <param name="logging"></param>
-    public void EnhanceItem(string item, EnhancementType type, CapeSpecial cSpecial = CapeSpecial.None, HelmSpecial hSpecial = HelmSpecial.None, WeaponSpecial wSpecial = WeaponSpecial.None, bool logging = false)
+    public void EnhanceItem(
+        string item,
+        EnhancementType type,
+        CapeSpecial cSpecial = CapeSpecial.None,
+        HelmSpecial hSpecial = HelmSpecial.None,
+        WeaponSpecial wSpecial = WeaponSpecial.None,
+        bool logging = false
+    )
     {
-        if (string.IsNullOrEmpty(item) || (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance))
+        if (
+            string.IsNullOrEmpty(item)
+            || (
+                Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance)
+                && _disableAutoEnhance
+            )
+        )
             return;
 
         if (!Core.CheckInventory(item))
@@ -1284,7 +1615,11 @@ public class CoreAdvanced
             Core.Sleep();
         }
 
-        InventoryItem? SelectedItem = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == item.ToLower().Trim() && EnhanceableCatagories.Contains(i.Category)); ;
+        InventoryItem? SelectedItem = Bot.Inventory.Items.Find(i =>
+            i.Name.ToLower().Trim() == item.ToLower().Trim()
+            && EnhanceableCatagories.Contains(i.Category)
+        );
+        ;
         if (SelectedItem == null)
         {
             if (Bot.Inventory.Items.Any(i => i.Name.ToLower().Trim() == item.ToLower().Trim()))
@@ -1310,9 +1645,21 @@ public class CoreAdvanced
     /// <param name="cSpecial"></param>
     /// <param name="hSpecial"></param>
     /// <param name="wSpecial"></param>
-    public void EnhanceItem(string[] items, EnhancementType type, CapeSpecial cSpecial = CapeSpecial.None, HelmSpecial hSpecial = HelmSpecial.None, WeaponSpecial wSpecial = WeaponSpecial.None)
+    public void EnhanceItem(
+        string[] items,
+        EnhancementType type,
+        CapeSpecial cSpecial = CapeSpecial.None,
+        HelmSpecial hSpecial = HelmSpecial.None,
+        WeaponSpecial wSpecial = WeaponSpecial.None
+    )
     {
-        if (items.Length == 0 || (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance))
+        if (
+            items.Length == 0
+            || (
+                Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance)
+                && _disableAutoEnhance
+            )
+        )
             return;
 
         // If any of the items in the items array cant be found, return
@@ -1325,13 +1672,18 @@ public class CoreAdvanced
         {
             if (notFound.Count == 1)
                 Core.Logger($"Enhancement Failed: Could not find {notFound.First()}");
-            else Core.Logger($"Enhancement Failed: Could not find the following items: {string.Join(", ", notFound)}");
+            else
+                Core.Logger(
+                    $"Enhancement Failed: Could not find the following items: {string.Join(", ", notFound)}"
+                );
             return;
         }
         notFound = null;
 
         // Find all the items in the items array
-        List<InventoryItem> SelectedItems = Bot.Inventory.Items.FindAll(i => items.Contains(i.Name) && EnhanceableCatagories.Contains(i.Category));
+        List<InventoryItem> SelectedItems = Bot.Inventory.Items.FindAll(i =>
+            items.Contains(i.Name) && EnhanceableCatagories.Contains(i.Category)
+        );
 
         // If any of the items in the items array cant be enhanced, return
         if (SelectedItems.Count != items.Length)
@@ -1339,12 +1691,21 @@ public class CoreAdvanced
             List<string> unEnhanceable = new();
 
             foreach (string item in items)
-                if (!Bot.Inventory.Items.Any(i => i.Name == item && EnhanceableCatagories.Contains(i.Category)))
+                if (
+                    !Bot.Inventory.Items.Any(i =>
+                        i.Name == item && EnhanceableCatagories.Contains(i.Category)
+                    )
+                )
                     unEnhanceable.Add(item);
 
             if (unEnhanceable.Count == 1)
-                Core.Logger($"Enhancement Failed: Unenhanceable item found, {unEnhanceable.First()}");
-            else Core.Logger($"Enhancement Failed: The following items are unenhanceable, {string.Join(", ", unEnhanceable)}");
+                Core.Logger(
+                    $"Enhancement Failed: Unenhanceable item found, {unEnhanceable.First()}"
+                );
+            else
+                Core.Logger(
+                    $"Enhancement Failed: The following items are unenhanceable, {string.Join(", ", unEnhanceable)}"
+                );
 
             return;
         }
@@ -1359,7 +1720,8 @@ public class CoreAdvanced
         }
     }
 
-    private static bool IsEnhancedWithBaseForge(InventoryItem item) => item.EnhancementPatternID == 0 && item.EnhancementLevel > 0;
+    private static bool IsEnhancedWithBaseForge(InventoryItem item) =>
+        item.EnhancementPatternID == 0 && item.EnhancementLevel > 0;
 
     // private void AdvCrash(Exception e, [CallerMemberName] string? caller = null)
     // {
@@ -1387,40 +1749,73 @@ public class CoreAdvanced
         // Determine severity
         string GetSeverity(Exception ex)
         {
-            return ex is NullReferenceException or InvalidOperationException ? "❗ Major" :
-                   ex is ArgumentException or FormatException ? "⚠️ Minor" : "🔥 Critical";
+            return ex is NullReferenceException or InvalidOperationException ? "❗ Major"
+                : ex is ArgumentException or FormatException ? "⚠️ Minor"
+                : "🔥 Critical";
         }
 
         string severity = GetSeverity(e);
 
         // Grab last 5 logs, truncate lines
-        List<string> logs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script)
-            .Skip(Math.Max(0, Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script).Count - 5))
-            .Select((l, i) => $"{i + 1}. {(l.Length > 80 ? string.Concat(l.AsSpan(0, 77), "…") : l)}")
+        List<string> logs = Ioc
+            .Default.GetRequiredService<ILogService>()
+            .GetLogs(LogType.Script)
+            .Skip(
+                Math.Max(
+                    0,
+                    Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script).Count - 5
+                )
+            )
+            .Select(
+                (l, i) => $"{i + 1}. {(l.Length > 80 ? string.Concat(l.AsSpan(0, 77), "…") : l)}"
+            )
             .ToList();
 
         // Helper: compact exception info
-        string GetExceptionDetails(Exception ex, int maxFrames = 5, int maxInnerLines = 5, int maxFrameLength = 80)
+        string GetExceptionDetails(
+            Exception ex,
+            int maxFrames = 5,
+            int maxInnerLines = 5,
+            int maxFrameLength = 80
+        )
         {
             StackTrace st = new(ex, true);
             StackFrame? frame = st.GetFrames()?.FirstOrDefault(f => f.GetFileLineNumber() > 0);
 
-            string location = frame != null
-                ? $"{frame.GetFileName()?.Split('\\').LastOrDefault()} @ line {frame.GetFileLineNumber()} in {frame.GetMethod()?.Name}"
-                : "No line info. Top stack frames:\n" +
-                  string.Join("\n", st.GetFrames()?.Take(maxFrames)
-                      .Select(f => f.ToString().Length > maxFrameLength ? string.Concat(f.ToString().AsSpan(0, maxFrameLength), "…") : f.ToString())
-                      ?? Array.Empty<string>()) +
-                  (st.FrameCount > maxFrames ? "\n…" : "");
+            string location =
+                frame != null
+                    ? $"{frame.GetFileName()?.Split('\\').LastOrDefault()} @ line {frame.GetFileLineNumber()} in {frame.GetMethod()?.Name}"
+                    : "No line info. Top stack frames:\n"
+                        + string.Join(
+                            "\n",
+                            st.GetFrames()
+                                ?.Take(maxFrames)
+                                .Select(f =>
+                                    f.ToString().Length > maxFrameLength
+                                        ? string.Concat(f.ToString().AsSpan(0, maxFrameLength), "…")
+                                        : f.ToString()
+                                ) ?? Array.Empty<string>()
+                        )
+                        + (st.FrameCount > maxFrames ? "\n…" : "");
 
             string inner = "";
             if (ex.InnerException != null)
             {
-                string[] innerLines = ex.InnerException.StackTrace?.Split('\n') ?? Array.Empty<string>();
-                inner = $"\n🔹 **Inner Exception** 🔹\nMessage: {ex.InnerException.Message}\n" +
-                        string.Join("\n", innerLines.Take(maxInnerLines)
-                            .Select(l => l.Length > maxFrameLength ? string.Concat(l.AsSpan(0, maxFrameLength), "…") : l)) +
-                        (innerLines.Length > maxInnerLines ? "\n…" : "");
+                string[] innerLines =
+                    ex.InnerException.StackTrace?.Split('\n') ?? Array.Empty<string>();
+                inner =
+                    $"\n🔹 **Inner Exception** 🔹\nMessage: {ex.InnerException.Message}\n"
+                    + string.Join(
+                        "\n",
+                        innerLines
+                            .Take(maxInnerLines)
+                            .Select(l =>
+                                l.Length > maxFrameLength
+                                    ? string.Concat(l.AsSpan(0, maxFrameLength), "…")
+                                    : l
+                            )
+                    )
+                    + (innerLines.Length > maxInnerLines ? "\n…" : "");
             }
 
             return $"🔥 **Outer Exception** 🔥\nSeverity: {severity}\nMessage: {ex.Message}\n📍 Location: {location}{inner}";
@@ -1429,26 +1824,27 @@ public class CoreAdvanced
         string crashDetails = GetExceptionDetails(e);
 
         // Build one-line summary
-        string oneLineSummary = $"📌 {caller} Crash | {severity} | Location: {crashDetails.Split('\n')[3]}";
+        string oneLineSummary =
+            $"📌 {caller} Crash | {severity} | Location: {crashDetails.Split('\n')[3]}";
 
         // Build ultimate MessageBox
         string message =
-            "══════════════════════════════════════════\n" +
-            $"🛑 **{caller} Crash Report** 🛑\n" +
-            "══════════════════════════════════════════\n\n" +
-            $"{oneLineSummary}\n\n" +
-            $"⚠️ Script will continue without `{caller}`.\n" +
-            $"📸 Take a screenshot and post it to Discord.\n\n" +
-            "────────────── 📜 Last 5 Logs ──────────────\n" +
-            string.Join("\n", logs) + "\n" +
-            "────────────── 💻 Crash Details ────────────\n" +
-            crashDetails + "\n" +
-            "══════════════════════════════════════════";
+            "══════════════════════════════════════════\n"
+            + $"🛑 **{caller} Crash Report** 🛑\n"
+            + "══════════════════════════════════════════\n\n"
+            + $"{oneLineSummary}\n\n"
+            + $"⚠️ Script will continue without `{caller}`.\n"
+            + $"📸 Take a screenshot and post it to Discord.\n\n"
+            + "────────────── 📜 Last 5 Logs ──────────────\n"
+            + string.Join("\n", logs)
+            + "\n"
+            + "────────────── 💻 Crash Details ────────────\n"
+            + crashDetails
+            + "\n"
+            + "══════════════════════════════════════════";
 
         Bot.Handlers.RegisterOnce(1, Bot => Bot.ShowMessageBox(message, $"{caller} crashed"));
     }
-
-
 
     /// <summary>
     /// Determines what Enhancement Type the player has on their currently equipped class
@@ -1468,7 +1864,9 @@ public class CoreAdvanced
     /// <returns>Returns the equipped Cape Special</returns>
     public CapeSpecial CurrentCapeSpecial()
     {
-        InventoryItem? EquippedCape = Bot.Inventory.Items.Find(i => i.Equipped && i.Category == ItemCategory.Cape);
+        InventoryItem? EquippedCape = Bot.Inventory.Items.Find(i =>
+            i.Equipped && i.Category == ItemCategory.Cape
+        );
         if (EquippedCape == null)
             return CapeSpecial.None;
         int pattern_id = EquippedCape.EnhancementPatternID;
@@ -1483,7 +1881,9 @@ public class CoreAdvanced
     /// <returns>Returns the equipped Helm Special</returns>
     public HelmSpecial CurrentHelmSpecial()
     {
-        InventoryItem? EquippedHelm = Bot.Inventory.Items.Find(i => i.Equipped && i.Category == ItemCategory.Helm);
+        InventoryItem? EquippedHelm = Bot.Inventory.Items.Find(i =>
+            i.Equipped && i.Category == ItemCategory.Helm
+        );
         if (EquippedHelm == null)
             return HelmSpecial.None;
         int pattern_id = EquippedHelm.EnhancementPatternID;
@@ -1498,7 +1898,9 @@ public class CoreAdvanced
     /// <returns>Returns the equipped Weapon Special</returns>
     public WeaponSpecial CurrentWeaponSpecial()
     {
-        InventoryItem? EquippedWeapon = Bot.Inventory.Items.Find(i => i.Equipped && WeaponCatagories.Contains(i.Category));
+        InventoryItem? EquippedWeapon = Bot.Inventory.Items.Find(i =>
+            i.Equipped && WeaponCatagories.Contains(i.Category)
+        );
         if (EquippedWeapon == null)
             return WeaponSpecial.None;
         int pattern_id = getProcID(EquippedWeapon);
@@ -1525,12 +1927,18 @@ public class CoreAdvanced
         ItemCategory.Class,
         ItemCategory.Helm,
         ItemCategory.Cape,
-
     };
 
     public readonly ItemCategory[] WeaponCatagories = EnhanceableCatagories[..12];
 
-    private void AutoEnhance(List<InventoryItem> ItemList, EnhancementType type, CapeSpecial cSpecial, HelmSpecial hSpecial, WeaponSpecial wSpecial, bool logging = false)
+    private void AutoEnhance(
+        List<InventoryItem> ItemList,
+        EnhancementType type,
+        CapeSpecial cSpecial,
+        HelmSpecial hSpecial,
+        WeaponSpecial wSpecial,
+        bool logging = false
+    )
     {
         // In case the 'CurrentEnhancement()' failed and returned 0
         if (type == 0)
@@ -1568,7 +1976,11 @@ public class CoreAdvanced
         // Defining weapon
         InventoryItem? weapon = null;
         // If Awe-Enhancements aren't unlocked, enhance them with normal enhancements
-        if (wSpecial != WeaponSpecial.None && ItemList.Any(i => i.ItemGroup == "Weapon") && (uAwe() || (int)wSpecial > 6))
+        if (
+            wSpecial != WeaponSpecial.None
+            && ItemList.Any(i => i.ItemGroup == "Weapon")
+            && (uAwe() || (int)wSpecial > 6)
+        )
         {
             weapon = ItemList.Find(i => i.ItemGroup == "Weapon");
 
@@ -1608,7 +2020,9 @@ public class CoreAdvanced
                     shopID = Bot.Player.Level >= 50 ? 763 : 147;
                     break;
                 default:
-                    Core.Logger($"Enhancement Failed:\tInvalid EnhancementType given, received {(int)type} | {type}");
+                    Core.Logger(
+                        $"Enhancement Failed:\tInvalid EnhancementType given, received {(int)type} | {type}"
+                    );
                     return;
             }
 
@@ -1630,7 +2044,9 @@ public class CoreAdvanced
                 case CapeSpecial.Forge:
                     if (!uForgeCape())
                     {
-                        Core.Logger("Enhancement Failed:\tYou did not unlock the Forge (Cape) Enhancement yet");
+                        Core.Logger(
+                            "Enhancement Failed:\tYou did not unlock the Forge (Cape) Enhancement yet"
+                        );
                         canEnhance = false;
                     }
                     break;
@@ -1655,19 +2071,24 @@ public class CoreAdvanced
                         Fail();
                     break;
                 default:
-                    Core.Logger($"Enhancement Failed:\tInvalid \"CapeSpecial\" given, received {(int)cSpecial} | {cSpecial}");
+                    Core.Logger(
+                        $"Enhancement Failed:\tInvalid \"CapeSpecial\" given, received {(int)cSpecial} | {cSpecial}"
+                    );
                     return;
 
                     void Fail()
                     {
-                        Core.Logger($"Enhancement Failed:\tYou did not unlock the {cSpecial} Enhancement yet");
+                        Core.Logger(
+                            $"Enhancement Failed:\tYou did not unlock the {cSpecial} Enhancement yet"
+                        );
                         canEnhance = false;
                     }
             }
 
             if (canEnhance)
                 _AutoEnhance(cape, 2143, ((int)cSpecial > 0) ? "forge" : null, logging);
-            else skipCounter++;
+            else
+                skipCounter++;
         }
 
         // Enhancing the helm with the helm special
@@ -1702,19 +2123,24 @@ public class CoreAdvanced
                         Fail();
                     break;
                 default:
-                    Core.Logger($"Enhancement Failed:\tInvalid \"HelmSpecial\" given, received {(int)hSpecial} | {hSpecial}");
+                    Core.Logger(
+                        $"Enhancement Failed:\tInvalid \"HelmSpecial\" given, received {(int)hSpecial} | {hSpecial}"
+                    );
                     return;
 
                     void Fail()
                     {
-                        Core.Logger($"Enhancement Failed:\tYou did not unlock the {hSpecial} Enhancement yet");
+                        Core.Logger(
+                            $"Enhancement Failed:\tYou did not unlock the {hSpecial} Enhancement yet"
+                        );
                         canEnhance = false;
                     }
             }
 
             if (canEnhance)
                 _AutoEnhance(helm, 2164, ((int)hSpecial > 0) ? "forge" : null);
-            else skipCounter++;
+            else
+                skipCounter++;
         }
 
         // Enhancing the weapon with the weapon special
@@ -1747,7 +2173,9 @@ public class CoreAdvanced
                         shopID = 639;
                         break;
                     default:
-                        Core.Logger($"Enhancement Failed:\tInvalid \"EnhancementType\" given, received {(int)wSpecial} | {wSpecial}");
+                        Core.Logger(
+                            $"Enhancement Failed:\tInvalid \"EnhancementType\" given, received {(int)wSpecial} | {wSpecial}"
+                        );
                         return;
                 }
             }
@@ -1758,7 +2186,9 @@ public class CoreAdvanced
                     case WeaponSpecial.Forge:
                         if (!uForgeWeapon())
                         {
-                            Core.Logger("Enhancement Failed:\tYou did not unlock the Forge (Weapon) Enhancement yet");
+                            Core.Logger(
+                                "Enhancement Failed:\tYou did not unlock the Forge (Weapon) Enhancement yet"
+                            );
                             canEnhance = false;
                         }
                         break;
@@ -1777,7 +2207,9 @@ public class CoreAdvanced
                     case WeaponSpecial.Arcanas_Concerto:
                         if (!uArcanasConcerto())
                         {
-                            Core.Logger("Enhancement Failed:\tYou did not unlock the Arcana's Concerto Enhancement yet");
+                            Core.Logger(
+                                "Enhancement Failed:\tYou did not unlock the Arcana's Concerto Enhancement yet"
+                            );
                             canEnhance = false;
                         }
                         break;
@@ -1803,12 +2235,16 @@ public class CoreAdvanced
                         break;
 
                     default:
-                        Core.Logger($"Enhancement Failed:\tInvalid \"WeaponSpecial\" given, received {(int)wSpecial} | {wSpecial}");
+                        Core.Logger(
+                            $"Enhancement Failed:\tInvalid \"WeaponSpecial\" given, received {(int)wSpecial} | {wSpecial}"
+                        );
                         return;
 
                         void Fail()
                         {
-                            Core.Logger($"Enhancement Failed:\tYou did not unlock the {wSpecial} Enhancement yet");
+                            Core.Logger(
+                                $"Enhancement Failed:\tYou did not unlock the {wSpecial} Enhancement yet"
+                            );
                             canEnhance = false;
                         }
                 }
@@ -1818,11 +2254,14 @@ public class CoreAdvanced
 
             if (canEnhance)
                 _AutoEnhance(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null, logging);
-            else skipCounter++;
+            else
+                skipCounter++;
         }
 
         if (skipCounter > 0)
-            Core.Logger($"Enhancement Skipped:\t{skipCounter} item{(skipCounter > 1 ? 's' : null)}");
+            Core.Logger(
+                $"Enhancement Skipped:\t{skipCounter} item{(skipCounter > 1 ? 's' : null)}"
+            );
 
         void _AutoEnhance(InventoryItem item, int shopID, string? map = null, bool logging = false)
         {
@@ -1835,7 +2274,10 @@ public class CoreAdvanced
             // Shopdata complete check
             if (!shopItems.Any(x => x.Category == ItemCategory.Enhancement) || shopItems.Count == 0)
             {
-                Core.Logger($"Enhancement Failed for {item.Name}[{item.ID}], (EnhancementLevel: {item.EnhancementLevel}, map: {mapName}, shopID: {shopID}):\n" + $"Couldn't find enhancements in shop {shopID}");
+                Core.Logger(
+                    $"Enhancement Failed for {item.Name}[{item.ID}], (EnhancementLevel: {item.EnhancementLevel}, map: {mapName}, shopID: {shopID}):\n"
+                        + $"Couldn't find enhancements in shop {shopID}"
+                );
                 return;
             }
 
@@ -1860,7 +2302,13 @@ public class CoreAdvanced
                 }
                 else if (specialOnWeapon)
                 {
-                    if (((int)wSpecial <= 6 ? (int)type : 10) == item.EnhancementPatternID && ((int)wSpecial == getProcID(item) || ((int)wSpecial == 99 && getProcID(item) == 0)))
+                    if (
+                        ((int)wSpecial <= 6 ? (int)type : 10) == item.EnhancementPatternID
+                        && (
+                            (int)wSpecial == getProcID(item)
+                            || ((int)wSpecial == 99 && getProcID(item) == 0)
+                        )
+                    )
                     {
                         skipCounter++;
                         return;
@@ -1877,9 +2325,13 @@ public class CoreAdvanced
             if (logging)
             {
                 if (specialOnCape)
-                    Core.Logger($"Searching Enhancement:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
+                    Core.Logger(
+                        $"Searching Enhancement:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\""
+                    );
                 else if (specialOnWeapon)
-                    Core.Logger($"Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\"");
+                    Core.Logger(
+                        $"Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\""
+                    );
                 else
                     Core.Logger($"Searching Enhancement:\t{type} - \"{item.Name}\"");
             }
@@ -1898,13 +2350,22 @@ public class CoreAdvanced
                 string enhName = enh.Name.Replace(" ", "").Replace("\'", "").ToLower();
 
                 // Cape if cSpecial
-                if (specialOnCape && enhName.Contains(cSpecial.ToString().Replace("_", "").ToLower()))
+                if (
+                    specialOnCape
+                    && enhName.Contains(cSpecial.ToString().Replace("_", "").ToLower())
+                )
                     availableEnh.Add(enh);
                 // Weapon if wSpecial
-                else if (specialOnWeapon && enhName.Contains(wSpecial.ToString().Replace("_", "").ToLower()))
+                else if (
+                    specialOnWeapon
+                    && enhName.Contains(wSpecial.ToString().Replace("_", "").ToLower())
+                )
                     availableEnh.Add(enh);
                 //Helm if hSpecial
-                else if (specialOnHelm && enhName.Contains(hSpecial.ToString().Replace("_", "").ToLower()))
+                else if (
+                    specialOnHelm
+                    && enhName.Contains(hSpecial.ToString().Replace("_", "").ToLower())
+                )
                     availableEnh.Add(enh);
                 // Class
                 else if (item.Category == ItemCategory.Class && enhName.Contains("armor"))
@@ -1933,8 +2394,10 @@ public class CoreAdvanced
             else
             {
                 // Sorting by level (descending)
-                List<ShopItem> sortedList = availableEnh.OrderByDescending(x => x.Level)
-                    .ThenByDescending(x => x.Upgrade ? 1 : 0).ToList();
+                List<ShopItem> sortedList = availableEnh
+                    .OrderByDescending(x => x.Level)
+                    .ThenByDescending(x => x.Upgrade ? 1 : 0)
+                    .ToList();
                 bestEnhancement = sortedList[0];
             }
 
@@ -1942,92 +2405,109 @@ public class CoreAdvanced
             if (bestEnhancement == null)
             {
                 if (logging)
-                    Core.Logger($"Enhancement Failed:\tCould not find the best enhancement for \"{item.Name}\"");
+                    Core.Logger(
+                        $"Enhancement Failed:\tCould not find the best enhancement for \"{item.Name}\""
+                    );
                 return;
             }
 
             // Compare with current enhancement
-            if (bestEnhancement.ID == getEnhID(item) && item.EnhancementLevel > 0 && bestEnhancement.Level == item.EnhancementLevel)
+            if (
+                bestEnhancement.ID == getEnhID(item)
+                && item.EnhancementLevel > 0
+                && bestEnhancement.Level == item.EnhancementLevel
+            )
             {
                 if (logging)
-                    Core.Logger($"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\"");
+                    Core.Logger(
+                        $"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\""
+                    );
                 return;
             }
 
             // Enhancing the item
             int roomId = Bot.Map?.RoomID ?? 1;
 
-            Bot.Send.Packet($"%xt%zm%enhanceItemShop%{roomId}%{item.ID}%{bestEnhancement.ID}%{shopID}%");
+            Bot.Send.Packet(
+                $"%xt%zm%enhanceItemShop%{roomId}%{item.ID}%{bestEnhancement.ID}%{shopID}%"
+            );
 
             // Final logging
             if (specialOnCape)
             {
                 if (logging)
-                    Core.Logger($"Enhancement Applied:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+                    Core.Logger(
+                        $"Enhancement Applied:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
+                    );
             }
             else if (specialOnWeapon)
             {
                 if (logging)
-                    Core.Logger($"Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+                    Core.Logger(
+                        $"Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
+                    );
             }
             else
             {
                 if (logging)
-                    Core.Logger($"Enhancement Applied:\t{type} - \"{item.Name}\" (Lvl {bestEnhancement.Level})");
+                    Core.Logger(
+                        $"Enhancement Applied:\t{type} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
+                    );
             }
             Core.Sleep();
         }
     }
 
-    private int getProcID(InventoryItem? item)
-        => item == null ? 0 : Core.GetItemProperty<int>(item, "ProcID");
-    private int getEnhID(InventoryItem? item)
-        => item == null ? 0 : Core.GetItemProperty<int>(item, "iEnh");
+    private int getProcID(InventoryItem? item) =>
+        item == null ? 0 : Core.GetItemProperty<int>(item, "ProcID");
 
-    public bool uAwe()
-        => Core.isCompletedBefore(2937);
-    public bool uForgeWeapon()
-        => Core.isCompletedBefore(8738);
-    public bool uLacerate()
-        => Core.isCompletedBefore(8739);
-    public bool uSmite()
-        => Core.isCompletedBefore(8740);
-    public bool uValiance()
-        => Core.isCompletedBefore(8741);
-    public bool uArcanasConcerto()
-        => Core.isCompletedBefore(8742);
-    public bool uAbsolution()
-        => Core.isCompletedBefore(8743);
-    public bool uVainglory()
-        => Core.isCompletedBefore(8744);
-    public bool uAvarice()
-        => Core.isCompletedBefore(8745);
-    public bool uForgeCape()
-        => Core.isCompletedBefore(8758);
-    public bool uElysium()
-        => Core.isCompletedBefore(8821);
-    public bool uAcheron()
-        => Core.isCompletedBefore(8820);
-    public bool uPenitence()
-        => Core.isCompletedBefore(8822);
-    public bool uLament()
-        => Core.isCompletedBefore(8823);
-    public bool uVim()
-        => Core.isCompletedBefore(8824);
-    public bool uExamen()
-        => Core.isCompletedBefore(8825);
-    public bool uForgeHelm()
-        => Core.isCompletedBefore(8828);
-    public bool uPneuma()
-        => Core.isCompletedBefore(8827);
-    public bool uAnima()
-        => Core.isCompletedBefore(8826);
-    public bool uDauntless()
-        => Core.isCompletedBefore(9172);
-    public bool uPraxis()
-        => Core.isCompletedBefore(9171);
-    public bool uRavenous()
-        => Core.isCompletedBefore(9560);
+    private int getEnhID(InventoryItem? item) =>
+        item == null ? 0 : Core.GetItemProperty<int>(item, "iEnh");
+
+    public bool uAwe() => Core.isCompletedBefore(2937);
+
+    public bool uForgeWeapon() => Core.isCompletedBefore(8738);
+
+    public bool uLacerate() => Core.isCompletedBefore(8739);
+
+    public bool uSmite() => Core.isCompletedBefore(8740);
+
+    public bool uValiance() => Core.isCompletedBefore(8741);
+
+    public bool uArcanasConcerto() => Core.isCompletedBefore(8742);
+
+    public bool uAbsolution() => Core.isCompletedBefore(8743);
+
+    public bool uVainglory() => Core.isCompletedBefore(8744);
+
+    public bool uAvarice() => Core.isCompletedBefore(8745);
+
+    public bool uForgeCape() => Core.isCompletedBefore(8758);
+
+    public bool uElysium() => Core.isCompletedBefore(8821);
+
+    public bool uAcheron() => Core.isCompletedBefore(8820);
+
+    public bool uPenitence() => Core.isCompletedBefore(8822);
+
+    public bool uLament() => Core.isCompletedBefore(8823);
+
+    public bool uVim() => Core.isCompletedBefore(8824);
+
+    public bool uExamen() => Core.isCompletedBefore(8825);
+
+    public bool uForgeHelm() => Core.isCompletedBefore(8828);
+
+    public bool uPneuma() => Core.isCompletedBefore(8827);
+
+    public bool uAnima() => Core.isCompletedBefore(8826);
+
+    public bool uDauntless() => Core.isCompletedBefore(9172);
+
+    public bool uPraxis() => Core.isCompletedBefore(9171);
+
+    public bool uRavenous() => Core.isCompletedBefore(9560);
+
     public bool uHearty()
     {
         return Core.isCompletedBefore(9466) && Farm.FactionRank("Grimskull Trolling") >= 7;
@@ -2072,7 +2552,10 @@ public class CoreAdvanced
 
         // Error correction
         className = className.ToLower().Trim();
-        InventoryItem? SelectedClass = Bot.Inventory.Items.Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
+        InventoryItem? SelectedClass = Bot.Inventory.Items.Find(i =>
+            i.Name.ToLower().Trim() == className.ToLower().Trim()
+            && i.Category == ItemCategory.Class
+        );
         if (SelectedClass == null)
         {
             Core.Logger($"SmartEnhance Failed: Class {className} was not found in inventory");
@@ -2104,7 +2587,6 @@ public class CoreAdvanced
             // Used only for unenhanced classes usualy gotten from quests (ex: blood/scarlet sorccerer)
             if (ForceEnh)
                 return;
-
         }
         Core.Equip(SelectedClass.Name ?? className);
         Bot.Wait.ForTrue(() => Bot.Player.CurrentClass?.Name == className, 40);
@@ -2114,7 +2596,6 @@ public class CoreAdvanced
         {
             switch (className)
             {
-
                 #region Lucky Region
 
                 #region Luck - Awe_Blast | Arcanas_Concerto - ForgeHelm - Penitence
@@ -2123,7 +2604,9 @@ public class CoreAdvanced
                         goto default;
 
                     type = EnhancementType.Lucky;
-                    wSpecial = uArcanasConcerto() ? WeaponSpecial.Arcanas_Concerto : WeaponSpecial.Awe_Blast;
+                    wSpecial = uArcanasConcerto()
+                        ? WeaponSpecial.Arcanas_Concerto
+                        : WeaponSpecial.Awe_Blast;
                     hSpecial = HelmSpecial.Forge;
                     cSpecial = CapeSpecial.Penitence;
                     break;
@@ -2247,15 +2730,21 @@ public class CoreAdvanced
                 case "continuum chronomancer":
                 case "quantum chronomancer":
                 case "chaos avenger":
-                    if (!uPenitence()
-                    || (!uDauntless() || !uValiance()) || !uRavenous() || !uValiance()
-                    || !uAnima())
+                    if (
+                        !uPenitence()
+                        || (!uDauntless() || !uValiance())
+                        || !uRavenous()
+                        || !uValiance()
+                        || !uAnima()
+                    )
                         goto default;
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
-                    wSpecial = uRavenous() ? WeaponSpecial.Ravenous :
-                                uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Valiance;
+                    wSpecial =
+                        uRavenous() ? WeaponSpecial.Ravenous
+                        : uDauntless() ? WeaponSpecial.Dauntless
+                        : WeaponSpecial.Valiance;
 
                     hSpecial = HelmSpecial.Anima;
                     break;
@@ -2282,12 +2771,12 @@ public class CoreAdvanced
                     if ((!uDauntless() && !uValiance() && !uSmite()) || !uVainglory() || !uVim())
                         goto default;
 
-
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
-                    wSpecial = uDauntless() ? WeaponSpecial.Dauntless :
-                                uValiance() ? WeaponSpecial.Valiance :
-                                WeaponSpecial.Smite; // else do smite, if no smite > do Awe
+                    wSpecial =
+                        uDauntless() ? WeaponSpecial.Dauntless
+                        : uValiance() ? WeaponSpecial.Valiance
+                        : WeaponSpecial.Smite; // else do smite, if no smite > do Awe
                     hSpecial = HelmSpecial.Vim;
                     break;
                 #endregion
@@ -2377,14 +2866,16 @@ public class CoreAdvanced
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
-                    wSpecial = !uDauntless() ?
-                    (uRavenous() ? WeaponSpecial.Ravenous
-                    : (uValiance() ? WeaponSpecial.Valiance : WeaponSpecial.Forge))
-                    : WeaponSpecial.Dauntless;
+                    wSpecial = !uDauntless()
+                        ? (
+                            uRavenous()
+                                ? WeaponSpecial.Ravenous
+                                : (uValiance() ? WeaponSpecial.Valiance : WeaponSpecial.Forge)
+                        )
+                        : WeaponSpecial.Dauntless;
                     hSpecial = HelmSpecial.Anima;
                     break;
                 #endregion
-
 
 
                 #region Lucky - Avarice - Dauntless - Anima
@@ -2415,13 +2906,15 @@ public class CoreAdvanced
                     break;
                 #endregion
 
-                #region Lucky - Penitence - Ravenous | Praxis | Lacerate - Forge | None 
+                #region Lucky - Penitence - Ravenous | Praxis | Lacerate - Forge | None
                 case "archpaladin":
                     if (!uLacerate() || !uForgeHelm() || !uPenitence())
                         goto default;
 
                     type = EnhancementType.Lucky;
-                    wSpecial = uRavenous() ? WeaponSpecial.Ravenous : (uPraxis() ? WeaponSpecial.Praxis : WeaponSpecial.Lacerate);
+                    wSpecial = uRavenous()
+                        ? WeaponSpecial.Ravenous
+                        : (uPraxis() ? WeaponSpecial.Praxis : WeaponSpecial.Lacerate);
                     hSpecial = uForgeHelm() ? HelmSpecial.Forge : HelmSpecial.None;
                     cSpecial = CapeSpecial.Penitence;
                     break;
@@ -2525,7 +3018,7 @@ public class CoreAdvanced
                     break;
                 #endregion
 
-                #region  Wizard - Vainglory - Elysium - Pneuma   
+                #region  Wizard - Vainglory - Elysium - Pneuma
                 case "shaman":
                     if (!uVainglory() || !uElysium() || !uPneuma())
                         goto default;
@@ -2574,14 +3067,16 @@ public class CoreAdvanced
                 #endregion
 
 
-                #region Wizard - Vainglory / Forge - Daunt / Ravenous / Forge - Pneuma / Forge       
+                #region Wizard - Vainglory / Forge - Daunt / Ravenous / Forge - Pneuma / Forge
                 case "sovereign of storms":
                     if (!uVainglory() || !uDauntless() || !uRavenous() || !uPneuma())
                         goto default;
 
                     type = EnhancementType.Wizard;
                     cSpecial = uVainglory() ? CapeSpecial.Vainglory : CapeSpecial.Forge;
-                    wSpecial = uDauntless() ? WeaponSpecial.Dauntless : (uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Forge);
+                    wSpecial = uDauntless()
+                        ? WeaponSpecial.Dauntless
+                        : (uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Forge);
                     hSpecial = uPneuma() ? HelmSpecial.Pneuma : HelmSpecial.Forge;
                     break;
                 #endregion
@@ -2597,7 +3092,7 @@ public class CoreAdvanced
                     wSpecial = WeaponSpecial.Ravenous;
                     hSpecial = HelmSpecial.Examen;
                     break;
-                #endregion                
+                #endregion
                 #endregion
 
                 #region Healer Region
@@ -2674,9 +3169,19 @@ public class CoreAdvanced
                 case "Chrono ShadowSlayer":
                 case "chrono shadowhunter":
                     type = EnhancementType.Lucky;
-                    cSpecial = uLament() ? CapeSpecial.Lament : (uForgeCape() ? CapeSpecial.Forge : CurrentCapeSpecial());
-                    wSpecial = uRavenous() ? WeaponSpecial.Ravenous : (uArcanasConcerto() ? WeaponSpecial.Arcanas_Concerto : (uForgeWeapon() ? WeaponSpecial.Forge : WeaponSpecial.Awe_Blast));
-                    hSpecial = uVim() ? HelmSpecial.Vim : (uForgeHelm() ? HelmSpecial.Forge : CurrentHelmSpecial());
+                    cSpecial = uLament()
+                        ? CapeSpecial.Lament
+                        : (uForgeCape() ? CapeSpecial.Forge : CurrentCapeSpecial());
+                    wSpecial = uRavenous()
+                        ? WeaponSpecial.Ravenous
+                        : (
+                            uArcanasConcerto()
+                                ? WeaponSpecial.Arcanas_Concerto
+                                : (uForgeWeapon() ? WeaponSpecial.Forge : WeaponSpecial.Awe_Blast)
+                        );
+                    hSpecial = uVim()
+                        ? HelmSpecial.Vim
+                        : (uForgeHelm() ? HelmSpecial.Forge : CurrentHelmSpecial());
                     break;
                 #endregion
 
@@ -2711,23 +3216,20 @@ public class CoreAdvanced
                 case "dragonslayer general":
                     type = EnhancementType.Lucky;
 
-                    cSpecial = uVainglory()
-                        ? CapeSpecial.Vainglory
-                        : uForgeCape()
-                            ? CapeSpecial.Forge
-                            : CurrentCapeSpecial();
+                    cSpecial =
+                        uVainglory() ? CapeSpecial.Vainglory
+                        : uForgeCape() ? CapeSpecial.Forge
+                        : CurrentCapeSpecial();
 
-                    wSpecial = uValiance()
-                        ? WeaponSpecial.Valiance
-                        : uSmite()
-                            ? WeaponSpecial.Smite
-                            : WeaponSpecial.Mana_Vamp;
+                    wSpecial =
+                        uValiance() ? WeaponSpecial.Valiance
+                        : uSmite() ? WeaponSpecial.Smite
+                        : WeaponSpecial.Mana_Vamp;
 
-                    hSpecial = uAnima()
-                        ? HelmSpecial.Anima
-                        : uForgeHelm()
-                            ? HelmSpecial.Forge
-                            : CurrentHelmSpecial();
+                    hSpecial =
+                        uAnima() ? HelmSpecial.Anima
+                        : uForgeHelm() ? HelmSpecial.Forge
+                        : CurrentHelmSpecial();
 
                     break;
                 #endregion
@@ -2942,12 +3444,12 @@ public class CoreAdvanced
                     type = EnhancementType.Lucky;
                     return false;
 
-                    #endregion
+                #endregion
             }
             return true;
 
             // // Always place this check as the last one in a 'if' + '||' stack.
-            // // See EXAMPLE_CLASS as an example. 
+            // // See EXAMPLE_CLASS as an example.
             // bool uDauntlessExtra()
             // {
             //     // Check if Dauntless is unlocked, and set it as wSpecial if true.
@@ -2962,7 +3464,7 @@ public class CoreAdvanced
             // }
 
             // // Always place this check as the last one in a 'if' + '||' stack.
-            // // See ArchPaladin as an example. 
+            // // See ArchPaladin as an example.
             // bool uValianceExtra()
             // {
             //     // Check if Valiance is unlocked, and set it as wSpecial if true.
@@ -3340,7 +3842,10 @@ public class CoreAdvanced
                 #endregion
 
                 default:
-                    Core.Logger($"SmartEnhance Failed: \"{className}\" is not found in the Smart Enhance Library, please report to @tato2", messageBox: true);
+                    Core.Logger(
+                        $"SmartEnhance Failed: \"{className}\" is not found in the Smart Enhance Library, please report to @tato2",
+                        messageBox: true
+                    );
                     return;
             }
         }
@@ -3349,11 +3854,10 @@ public class CoreAdvanced
     #endregion
 }
 
-
 public enum Auras
 {
     Shapeshifted,
-    stuff2
+    stuff2,
 }
 
 public enum GenericGearBoost
@@ -3364,6 +3868,7 @@ public enum GenericGearBoost
     exp,
     dmgAll,
 }
+
 public enum RacialGearBoost
 {
     None,
@@ -3386,6 +3891,7 @@ public enum EnhancementType // Enhancement Pattern ID
     SpellBreaker = 8,
     Lucky = 9,
 }
+
 public enum CapeSpecial // Enhancement Pattern ID
 {
     None = 0,
@@ -3395,8 +3901,8 @@ public enum CapeSpecial // Enhancement Pattern ID
     Vainglory = 24,
     Penitence = 29,
     Lament = 30,
-
 }
+
 public enum WeaponSpecial // Proc ID
 {
     None = 0,
@@ -3415,7 +3921,7 @@ public enum WeaponSpecial // Proc ID
     Elysium = 12,
     Acheron = 13,
     Praxis = 14,
-    Dauntless = 15
+    Dauntless = 15,
 }
 
 public enum HelmSpecial //Enhancement Pattern ID
@@ -3426,7 +3932,7 @@ public enum HelmSpecial //Enhancement Pattern ID
     Examen = 26,
     Anima = 28,
     Pneuma = 27,
-    Hearty = 32
+    Hearty = 32,
 }
 
 public enum mergeOptionsEnum
@@ -3434,5 +3940,5 @@ public enum mergeOptionsEnum
     all = 0,
     acOnly = 1,
     mergeMats = 2,
-    select = 3
+    select = 3,
 };

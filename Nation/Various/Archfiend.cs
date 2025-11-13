@@ -20,10 +20,30 @@ public class ArchFiend
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }    private static CoreNSOD _NSoD;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static CoreNSOD NSoD
+    {
+        get => _NSoD ??= new CoreNSOD();
+        set => _NSoD = value;
+    }
+    private static CoreNSOD _NSoD;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -83,7 +103,8 @@ public class ArchFiend
             Nation.FarmTotemofNulgath(8);
             if (!Core.CheckInventory("Sepulchure's DoomKnight Armor"))
                 NSoD.RetrieveVoidAuras(2);
-            else NSoD.VoidAuras(2);
+            else
+                NSoD.VoidAuras(2);
             Nation.ApprovalAndFavor(0, 999);
             Core.BuyItem("shadowblast", 1206, "Blood Star of the Archfiend");
         }
@@ -92,6 +113,5 @@ public class ArchFiend
 
         Core.EnsureComplete(8476);
         Bot.Wait.ForPickup("Abyssal Contract");
-
     }
 }

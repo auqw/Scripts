@@ -21,33 +21,84 @@ public class ShadowrealmMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static YulgarsUndineMerge YUM { get => _YUM ??= new YulgarsUndineMerge(); set => _YUM = value; }
+    private static YulgarsUndineMerge YUM
+    {
+        get => _YUM ??= new YulgarsUndineMerge();
+        set => _YUM = value;
+    }
     private static YulgarsUndineMerge _YUM;
-    private static DawnFortressMerge DFM { get => _DFM ??= new DawnFortressMerge(); set => _DFM = value; }
+    private static DawnFortressMerge DFM
+    {
+        get => _DFM ??= new DawnFortressMerge();
+        set => _DFM = value;
+    }
     private static DawnFortressMerge _DFM;
-    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
     private static CoreAdvanced _sAdv;
-
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Hollow Soul", "Bone Dust",
-         "Death's Oversight", "Death's Scythe", "Unmoulded Fiend Essence",
-          "Poisonous Rogue", "Nightshade Thorn Assasasin", "Elven Assassin's Locks",
-           "Elven Assassin's Locks + Scarf", "Elven Assassin's Hair", "Elven Assassin's Scarf",
-            "Poisonous Thorn Wreath", "Nightshade Assassin Guardian", "Reversed Blade of Thorns", "Reversed Daggers of Thorns", "Envenomed Whip of Agony", "Envenomed Gauntlet", "Gold Voucher 25k", "Dawn Vindicator Archer", "Vindicator Archer's Hat + Locks", "Gilded Scout's Quiver", "Bright Bow of the Dawn", "Vindicator Scout's Bow", "Dawn Vindicator General", "Vindicator General's Hood", "Vindicator General's Hood + Locks", "Blessed Rune of Vindication", "Blessed Shield of Vindication", "Blessed Hammer of the Dawn", "Blessed Hammers of the Dawn", "Battlegear of Vindication" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Hollow Soul",
+                "Bone Dust",
+                "Death's Oversight",
+                "Death's Scythe",
+                "Unmoulded Fiend Essence",
+                "Poisonous Rogue",
+                "Nightshade Thorn Assasasin",
+                "Elven Assassin's Locks",
+                "Elven Assassin's Locks + Scarf",
+                "Elven Assassin's Hair",
+                "Elven Assassin's Scarf",
+                "Poisonous Thorn Wreath",
+                "Nightshade Assassin Guardian",
+                "Reversed Blade of Thorns",
+                "Reversed Daggers of Thorns",
+                "Envenomed Whip of Agony",
+                "Envenomed Gauntlet",
+                "Gold Voucher 25k",
+                "Dawn Vindicator Archer",
+                "Vindicator Archer's Hat + Locks",
+                "Gilded Scout's Quiver",
+                "Bright Bow of the Dawn",
+                "Vindicator Scout's Bow",
+                "Dawn Vindicator General",
+                "Vindicator General's Hood",
+                "Vindicator General's Hood + Locks",
+                "Blessed Rune of Vindication",
+                "Blessed Shield of Vindication",
+                "Blessed Hammer of the Dawn",
+                "Blessed Hammers of the Dawn",
+                "Battlegear of Vindication",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -64,7 +115,9 @@ public class ShadowrealmMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -75,9 +128,14 @@ public class ShadowrealmMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Hollow Soul":
                     Core.FarmingLogger(req.Name, quant);
@@ -85,8 +143,24 @@ public class ShadowrealmMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAcceptmultiple(new[] { 7553, 7555 });
-                        Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
-                        Core.KillMonster("shadowrealm", "r2", "Left", "Shadow Guardian", "Shadow Medallion", 5, log: false);
+                        Core.KillMonster(
+                            "shadowrealm",
+                            "r2",
+                            "Left",
+                            "Gargrowl",
+                            "Darkseed",
+                            8,
+                            log: false
+                        );
+                        Core.KillMonster(
+                            "shadowrealm",
+                            "r2",
+                            "Left",
+                            "Shadow Guardian",
+                            "Shadow Medallion",
+                            5,
+                            log: false
+                        );
                         Core.EnsureComplete(7553);
                         Core.EnsureComplete(7555);
                     }
@@ -103,7 +177,15 @@ public class ShadowrealmMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.KillMonster("shadowattack", "Boss", "Left", "Death", req.Name, quant, false);
+                        Core.KillMonster(
+                            "shadowattack",
+                            "Boss",
+                            "Left",
+                            "Death",
+                            req.Name,
+                            quant,
+                            false
+                        );
                     break;
 
                 case "Death's Scythe":
@@ -162,76 +244,395 @@ public class ShadowrealmMerge
                     Core.HuntMonster("neofortress", "Vindicator General", req.Name, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("54867", "Hollowborn Thunderlord", "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord\" ?", false),
-        new Option<bool>("54868", "Hollowborn Thunderlord Visor", "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord Visor\" ?", false),
-        new Option<bool>("54869", "Hollowborn Thunderlord Visage", "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord Visage\" ?", false),
-        new Option<bool>("54870", "Hollowborn Thunderlord Lightning Cape", "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord Lightning Cape\" ?", false),
-        new Option<bool>("54871", "Hollowborn Thunderlord Lightning", "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord Lightning\" ?", false),
-        new Option<bool>("54872", "Hollowborn Thunderlord Lightnings", "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord Lightnings\" ?", false),
-        new Option<bool>("54874", "Hollowborn Vampire", "Mode: [select] only\nShould the bot buy \"Hollowborn Vampire\" ?", false),
-        new Option<bool>("54875", "Hollowborn Vampire Hair", "Mode: [select] only\nShould the bot buy \"Hollowborn Vampire Hair\" ?", false),
-        new Option<bool>("54876", "Hollowborn Vampire Mask", "Mode: [select] only\nShould the bot buy \"Hollowborn Vampire Mask\" ?", false),
-        new Option<bool>("54877", "Hollowborn Vampire Flying Skulls", "Mode: [select] only\nShould the bot buy \"Hollowborn Vampire Flying Skulls\" ?", false),
-        new Option<bool>("54878", "Hollowborn Vampire Scythe", "Mode: [select] only\nShould the bot buy \"Hollowborn Vampire Scythe\" ?", false),
-        new Option<bool>("61766", "Hollowborn Chained Reaper", "Mode: [select] only\nShould the bot buy \"Hollowborn Chained Reaper\" ?", false),
-        new Option<bool>("61767", "Hollowborn Chained Guard", "Mode: [select] only\nShould the bot buy \"Hollowborn Chained Guard\" ?", false),
-        new Option<bool>("61768", "Hollowborn Fiend Reaper", "Mode: [select] only\nShould the bot buy \"Hollowborn Fiend Reaper\" ?", false),
-        new Option<bool>("61769", "Hollowborn Fiend Guard", "Mode: [select] only\nShould the bot buy \"Hollowborn Fiend Guard\" ?", false),
-        new Option<bool>("61770", "Hollowborn Fiend Hair", "Mode: [select] only\nShould the bot buy \"Hollowborn Fiend Hair\" ?", false),
-        new Option<bool>("61771", "Blind Hollowborn Fiend Hair", "Mode: [select] only\nShould the bot buy \"Blind Hollowborn Fiend Hair\" ?", false),
-        new Option<bool>("61772", "Hollowborn Fiend Mask", "Mode: [select] only\nShould the bot buy \"Hollowborn Fiend Mask\" ?", false),
-        new Option<bool>("61773", "Hollowborn Reaper's Hood", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Hood\" ?", false),
-        new Option<bool>("61774", "Hollowborn Reaper's Hood + Locks", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Hood + Locks\" ?", false),
-        new Option<bool>("61775", "Hollowborn Reaper's Hooded Mask", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Hooded Mask\" ?", false),
-        new Option<bool>("61776", "Hollowborn Fiend Reaper's Horns", "Mode: [select] only\nShould the bot buy \"Hollowborn Fiend Reaper's Horns\" ?", false),
-        new Option<bool>("61777", "Hollowborn Reaper's Ponytail", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Ponytail\" ?", false),
-        new Option<bool>("61778", "Blind Hollowborn Reaper's Ponytail", "Mode: [select] only\nShould the bot buy \"Blind Hollowborn Reaper's Ponytail\" ?", false),
-        new Option<bool>("61779", "Hollowborn Reaper's Mask + Ponytail", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Mask + Ponytail\" ?", false),
-        new Option<bool>("61780", "Hollowborn Reaper's Katana", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Katana\" ?", false),
-        new Option<bool>("61781", "Hollowborn Reaper's Scythe", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Scythe\" ?", false),
-        new Option<bool>("61782", "Hollowborn Reaper's Daggers", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Daggers\" ?", false),
-        new Option<bool>("61783", "Hollowborn Reaper's Kamas", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Kamas\" ?", false),
-        new Option<bool>("61784", "Hollowborn Reaper's Kama", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Kama\" ?", false),
-        new Option<bool>("61785", "Hollowborn Reaper's Minion", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Minion\" ?", false),
-        new Option<bool>("61786", "Hollowborn Reaper's Sheathed Katana", "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Sheathed Katana\" ?", false),
-        new Option<bool>("55355", "Hollowborn DragonSlayer", "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer\" ?", false),
-        new Option<bool>("55356", "Hollowborn DragonSlayer's Helm", "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer's Helm\" ?", false),
-        new Option<bool>("55357", "Hollowborn DragonSlayer's Beard", "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer's Beard\" ?", false),
-        new Option<bool>("55358", "Hollowborn DragonSlayer's Scarf", "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer's Scarf\" ?", false),
-        new Option<bool>("55359", "Hollowborn DragonSlayer's Cape", "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer's Cape\" ?", false),
-        new Option<bool>("55360", "Hollowborn DragonSlayer's Blade", "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer's Blade\" ?", false),
-        new Option<bool>("78297", "Hollowborn Vine Rogue", "Mode: [select] only\nShould the bot buy \"Hollowborn Vine Rogue\" ?", false),
-        new Option<bool>("78298", "Hollowborn Thorn Assassin", "Mode: [select] only\nShould the bot buy \"Hollowborn Thorn Assassin\" ?", false),
-        new Option<bool>("78299", "Hollowborn Assassin's Locks", "Mode: [select] only\nShould the bot buy \"Hollowborn Assassin's Locks\" ?", false),
-        new Option<bool>("78300", "Hollowborn Assassin's Locks + Scarf", "Mode: [select] only\nShould the bot buy \"Hollowborn Assassin's Locks + Scarf\" ?", false),
-        new Option<bool>("78301", "Hollowborn Assassin's Hair", "Mode: [select] only\nShould the bot buy \"Hollowborn Assassin's Hair\" ?", false),
-        new Option<bool>("78302", "Hollowborn Assassin's Hair + Scarf", "Mode: [select] only\nShould the bot buy \"Hollowborn Assassin's Hair + Scarf\" ?", false),
-        new Option<bool>("78303", "Hollowborn Wreath of Thorns", "Mode: [select] only\nShould the bot buy \"Hollowborn Wreath of Thorns\" ?", false),
-        new Option<bool>("78304", "Hollowborn Thorn Guardian", "Mode: [select] only\nShould the bot buy \"Hollowborn Thorn Guardian\" ?", false),
-        new Option<bool>("78305", "Hollowborn Blade of Thorns", "Mode: [select] only\nShould the bot buy \"Hollowborn Blade of Thorns\" ?", false),
-        new Option<bool>("78306", "Hollowborn Daggers of Thorns", "Mode: [select] only\nShould the bot buy \"Hollowborn Daggers of Thorns\" ?", false),
-        new Option<bool>("78307", "Hollowborn Whip of Agony", "Mode: [select] only\nShould the bot buy \"Hollowborn Whip of Agony\" ?", false),
-        new Option<bool>("78308", "Hollowborn Poison Claws", "Mode: [select] only\nShould the bot buy \"Hollowborn Poison Claws\" ?", false),
-        new Option<bool>("67444", "Hollowborn Ranger", "Mode: [select] only\nShould the bot buy \"Hollowborn Ranger\" ?", false),
-        new Option<bool>("67445", "Hollowborn Ranger's Hat + Locks", "Mode: [select] only\nShould the bot buy \"Hollowborn Ranger's Hat + Locks\" ?", false),
-        new Option<bool>("67446", "Hollowborn Ranger's Hat", "Mode: [select] only\nShould the bot buy \"Hollowborn Ranger's Hat\" ?", false),
-        new Option<bool>("67447", "Hollowborn Ranger Quiver", "Mode: [select] only\nShould the bot buy \"Hollowborn Ranger Quiver\" ?", false),
-        new Option<bool>("67448", "Enchanted Hollowborn Bow", "Mode: [select] only\nShould the bot buy \"Enchanted Hollowborn Bow\" ?", false),
-        new Option<bool>("67449", "Hollowborn Ranger Bow", "Mode: [select] only\nShould the bot buy \"Hollowborn Ranger Bow\" ?", false),
-        new Option<bool>("67450", "Hollowborn Battlemage", "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage\" ?", false),
-        new Option<bool>("67451", "Hollowborn Battlemage Hood", "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Hood\" ?", false),
-        new Option<bool>("67452", "Hollowborn Battlemage Hood + Locks", "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Hood + Locks\" ?", false),
-        new Option<bool>("67453", "Hollowborn Battlemage Rune", "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Rune\" ?", false),
-        new Option<bool>("67454", "Hollowborn Battlemage Sigil", "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Sigil\" ?", false),
-        new Option<bool>("67455", "Hollowborn Battlemage Hammer", "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Hammer\" ?", false),
-        new Option<bool>("67456", "Hollowborn Battlemage Hammers", "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Hammers\" ?", false),
-        new Option<bool>("67457", "Hollowborn Battlemage Armaments", "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Armaments\" ?", false),
+        new Option<bool>(
+            "54867",
+            "Hollowborn Thunderlord",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54868",
+            "Hollowborn Thunderlord Visor",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord Visor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54869",
+            "Hollowborn Thunderlord Visage",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54870",
+            "Hollowborn Thunderlord Lightning Cape",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord Lightning Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54871",
+            "Hollowborn Thunderlord Lightning",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord Lightning\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54872",
+            "Hollowborn Thunderlord Lightnings",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Thunderlord Lightnings\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54874",
+            "Hollowborn Vampire",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Vampire\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54875",
+            "Hollowborn Vampire Hair",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Vampire Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54876",
+            "Hollowborn Vampire Mask",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Vampire Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54877",
+            "Hollowborn Vampire Flying Skulls",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Vampire Flying Skulls\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54878",
+            "Hollowborn Vampire Scythe",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Vampire Scythe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61766",
+            "Hollowborn Chained Reaper",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Chained Reaper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61767",
+            "Hollowborn Chained Guard",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Chained Guard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61768",
+            "Hollowborn Fiend Reaper",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Fiend Reaper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61769",
+            "Hollowborn Fiend Guard",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Fiend Guard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61770",
+            "Hollowborn Fiend Hair",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Fiend Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61771",
+            "Blind Hollowborn Fiend Hair",
+            "Mode: [select] only\nShould the bot buy \"Blind Hollowborn Fiend Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61772",
+            "Hollowborn Fiend Mask",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Fiend Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61773",
+            "Hollowborn Reaper's Hood",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61774",
+            "Hollowborn Reaper's Hood + Locks",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Hood + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61775",
+            "Hollowborn Reaper's Hooded Mask",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Hooded Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61776",
+            "Hollowborn Fiend Reaper's Horns",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Fiend Reaper's Horns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61777",
+            "Hollowborn Reaper's Ponytail",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Ponytail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61778",
+            "Blind Hollowborn Reaper's Ponytail",
+            "Mode: [select] only\nShould the bot buy \"Blind Hollowborn Reaper's Ponytail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61779",
+            "Hollowborn Reaper's Mask + Ponytail",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Mask + Ponytail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61780",
+            "Hollowborn Reaper's Katana",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61781",
+            "Hollowborn Reaper's Scythe",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Scythe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61782",
+            "Hollowborn Reaper's Daggers",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Daggers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61783",
+            "Hollowborn Reaper's Kamas",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Kamas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61784",
+            "Hollowborn Reaper's Kama",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Kama\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61785",
+            "Hollowborn Reaper's Minion",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Minion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61786",
+            "Hollowborn Reaper's Sheathed Katana",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Reaper's Sheathed Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55355",
+            "Hollowborn DragonSlayer",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55356",
+            "Hollowborn DragonSlayer's Helm",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55357",
+            "Hollowborn DragonSlayer's Beard",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer's Beard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55358",
+            "Hollowborn DragonSlayer's Scarf",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer's Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55359",
+            "Hollowborn DragonSlayer's Cape",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer's Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55360",
+            "Hollowborn DragonSlayer's Blade",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn DragonSlayer's Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78297",
+            "Hollowborn Vine Rogue",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Vine Rogue\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78298",
+            "Hollowborn Thorn Assassin",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Thorn Assassin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78299",
+            "Hollowborn Assassin's Locks",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Assassin's Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78300",
+            "Hollowborn Assassin's Locks + Scarf",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Assassin's Locks + Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78301",
+            "Hollowborn Assassin's Hair",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Assassin's Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78302",
+            "Hollowborn Assassin's Hair + Scarf",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Assassin's Hair + Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78303",
+            "Hollowborn Wreath of Thorns",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Wreath of Thorns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78304",
+            "Hollowborn Thorn Guardian",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Thorn Guardian\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78305",
+            "Hollowborn Blade of Thorns",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Blade of Thorns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78306",
+            "Hollowborn Daggers of Thorns",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Daggers of Thorns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78307",
+            "Hollowborn Whip of Agony",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Whip of Agony\" ?",
+            false
+        ),
+        new Option<bool>(
+            "78308",
+            "Hollowborn Poison Claws",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Poison Claws\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67444",
+            "Hollowborn Ranger",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Ranger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67445",
+            "Hollowborn Ranger's Hat + Locks",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Ranger's Hat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67446",
+            "Hollowborn Ranger's Hat",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Ranger's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67447",
+            "Hollowborn Ranger Quiver",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Ranger Quiver\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67448",
+            "Enchanted Hollowborn Bow",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Hollowborn Bow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67449",
+            "Hollowborn Ranger Bow",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Ranger Bow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67450",
+            "Hollowborn Battlemage",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67451",
+            "Hollowborn Battlemage Hood",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67452",
+            "Hollowborn Battlemage Hood + Locks",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Hood + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67453",
+            "Hollowborn Battlemage Rune",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Rune\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67454",
+            "Hollowborn Battlemage Sigil",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Sigil\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67455",
+            "Hollowborn Battlemage Hammer",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Hammer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67456",
+            "Hollowborn Battlemage Hammers",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Hammers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67457",
+            "Hollowborn Battlemage Armaments",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Battlemage Armaments\" ?",
+            false
+        ),
     };
 }

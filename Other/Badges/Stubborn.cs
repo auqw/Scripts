@@ -24,8 +24,9 @@ public class Stubborn
     {
         if (Core.HasAchievement(56) || !Core.IsMember)
         {
-            Core.Logger(!Core.IsMember ? "Player isnt member"
-                        : "Already have the \"Stubborn\" badge");
+            Core.Logger(
+                !Core.IsMember ? "Player isnt member" : "Already have the \"Stubborn\" badge"
+            );
             return;
         }
 
@@ -38,6 +39,5 @@ public class Stubborn
             Core.Sleep();
             Core.Logger($"Jumping {i} times");
         }
-
     }
 }

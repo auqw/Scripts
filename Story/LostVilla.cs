@@ -16,11 +16,23 @@ public class LostVilla
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static Banished Ban { get => _Ban ??= new Banished(); set => _Ban = value; }
+    private static Banished Ban
+    {
+        get => _Ban ??= new Banished();
+        set => _Ban = value;
+    }
     private static Banished _Ban;
-    private static CoreQOM CoreQOM { get => _CoreQOM ??= new CoreQOM(); set => _CoreQOM = value; }
+    private static CoreQOM CoreQOM
+    {
+        get => _CoreQOM ??= new CoreQOM();
+        set => _CoreQOM = value;
+    }
     private static CoreQOM _CoreQOM;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -36,7 +48,7 @@ public class LostVilla
     {
         if (Core.isCompletedBefore(9570))
             return;
-            
+
         CoreQOM.TheBook();
         Ban.HimisQuests();
 

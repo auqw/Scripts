@@ -16,20 +16,37 @@ public class LotusTombMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreShadowofDoom SoD { get => _SoD ??= new CoreShadowofDoom(); set => _SoD = value; }
+    private static CoreShadowofDoom SoD
+    {
+        get => _SoD ??= new CoreShadowofDoom();
+        set => _SoD = value;
+    }
     private static CoreShadowofDoom _SoD;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -54,7 +71,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,41 +84,111 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Corrupted Hieroglyph":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(9921,
-("lotustomb", SoD.UMLotusTomb[4], ClassType.Solo),
-        ("lotustomb", SoD.UMLotusTomb[2], ClassType.Farm),
-        ("lotustomb", SoD.UMLotusTomb[3], ClassType.Farm)
-);
+                        Core.HuntMonsterQuest(
+                            9921,
+                            ("lotustomb", SoD.UMLotusTomb[4], ClassType.Solo),
+                            ("lotustomb", SoD.UMLotusTomb[2], ClassType.Farm),
+                            ("lotustomb", SoD.UMLotusTomb[3], ClassType.Farm)
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("87844", "Chaotic Pathshaper", "Mode: [select] only\nShould the bot buy \"Chaotic Pathshaper\" ?", false),
-        new Option<bool>("87848", "Chaotic Pathshaper Visage", "Mode: [select] only\nShould the bot buy \"Chaotic Pathshaper Visage\" ?", false),
-        new Option<bool>("87851", "Chaotic Scar Ripper", "Mode: [select] only\nShould the bot buy \"Chaotic Scar Ripper\" ?", false),
-        new Option<bool>("87847", "Chaotic Pathshaper Morph", "Mode: [select] only\nShould the bot buy \"Chaotic Pathshaper Morph\" ?", false),
-        new Option<bool>("87852", "Chaotic Scar Rippers", "Mode: [select] only\nShould the bot buy \"Chaotic Scar Rippers\" ?", false),
-        new Option<bool>("87854", "Chaotic Scar Edges", "Mode: [select] only\nShould the bot buy \"Chaotic Scar Edges\" ?", false),
-        new Option<bool>("88822", "Unending Light Rune", "Mode: [select] only\nShould the bot buy \"Unending Light Rune\" ?", false),
-        new Option<bool>("88825", "Unending Light Bow", "Mode: [select] only\nShould the bot buy \"Unending Light Bow\" ?", false),
-        new Option<bool>("88826", "Unending Light Arrow", "Mode: [select] only\nShould the bot buy \"Unending Light Arrow\" ?", false),
-        new Option<bool>("88827", "Unending Light Arrows", "Mode: [select] only\nShould the bot buy \"Unending Light Arrows\" ?", false),
-        new Option<bool>("88828", "Unending Light Bow and Arrow", "Mode: [select] only\nShould the bot buy \"Unending Light Bow and Arrow\" ?", false),
-        new Option<bool>("88823", "Unending Light Aura", "Mode: [select] only\nShould the bot buy \"Unending Light Aura\" ?", false),
-        new Option<bool>("88824", "Unending Light Scepter", "Mode: [select] only\nShould the bot buy \"Unending Light Scepter\" ?", false),
+        new Option<bool>(
+            "87844",
+            "Chaotic Pathshaper",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Pathshaper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87848",
+            "Chaotic Pathshaper Visage",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Pathshaper Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87851",
+            "Chaotic Scar Ripper",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Scar Ripper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87847",
+            "Chaotic Pathshaper Morph",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Pathshaper Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87852",
+            "Chaotic Scar Rippers",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Scar Rippers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87854",
+            "Chaotic Scar Edges",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Scar Edges\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88822",
+            "Unending Light Rune",
+            "Mode: [select] only\nShould the bot buy \"Unending Light Rune\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88825",
+            "Unending Light Bow",
+            "Mode: [select] only\nShould the bot buy \"Unending Light Bow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88826",
+            "Unending Light Arrow",
+            "Mode: [select] only\nShould the bot buy \"Unending Light Arrow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88827",
+            "Unending Light Arrows",
+            "Mode: [select] only\nShould the bot buy \"Unending Light Arrows\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88828",
+            "Unending Light Bow and Arrow",
+            "Mode: [select] only\nShould the bot buy \"Unending Light Bow and Arrow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88823",
+            "Unending Light Aura",
+            "Mode: [select] only\nShould the bot buy \"Unending Light Aura\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88824",
+            "Unending Light Scepter",
+            "Mode: [select] only\nShould the bot buy \"Unending Light Scepter\" ?",
+            false
+        ),
     };
 }

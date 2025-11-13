@@ -26,7 +26,10 @@ public class TheGreenWeaponSnack
 
     public void GetRewards()
     {
-        if (!Core.isSeasonalMapActive("gardenquest") || Core.CheckInventory(Core.QuestRewards(QuestID), toInv: false))
+        if (
+            !Core.isSeasonalMapActive("gardenquest")
+            || Core.CheckInventory(Core.QuestRewards(QuestID), toInv: false)
+        )
             return;
 
         List<ItemBase> RewardOptions = Core.EnsureLoad(QuestID).Rewards;
@@ -41,15 +44,46 @@ public class TheGreenWeaponSnack
             if (Core.CheckInventory(Reward.Name, toInv: false))
                 continue;
 
-            Core.Logger(Core.CheckInventory(Reward.ID, toInv: false) ? $"{Reward.Name}: ✅" : $"{Reward.Name} ❌");
+            Core.Logger(
+                Core.CheckInventory(Reward.ID, toInv: false)
+                    ? $"{Reward.Name}: ✅"
+                    : $"{Reward.Name} ❌"
+            );
 
             Core.FarmingLogger(Reward.Name, 1);
             Core.RegisterQuests(QuestID);
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.ID))
             {
-                Core.KillMonster("gardenquest", "r2", "Right", "Overconfident Radish", "Spices", 10, false, false);
-                Core.KillMonster("gardenquest", "r3", "Right", "Silly Karrot", "Salt + Sugar", 10, false, false);
-                Core.KillMonster("gardenquest", "r7", "Right", "Vegetable Prince", "Cucumber", 10, false, false);
+                Core.KillMonster(
+                    "gardenquest",
+                    "r2",
+                    "Right",
+                    "Overconfident Radish",
+                    "Spices",
+                    10,
+                    false,
+                    false
+                );
+                Core.KillMonster(
+                    "gardenquest",
+                    "r3",
+                    "Right",
+                    "Silly Karrot",
+                    "Salt + Sugar",
+                    10,
+                    false,
+                    false
+                );
+                Core.KillMonster(
+                    "gardenquest",
+                    "r7",
+                    "Right",
+                    "Vegetable Prince",
+                    "Cucumber",
+                    10,
+                    false,
+                    false
+                );
             }
             Core.CancelRegisteredQuests();
             Core.JumpWait();

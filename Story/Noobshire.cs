@@ -11,7 +11,12 @@ public class Noobshire
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -57,7 +62,7 @@ public class Noobshire
 
         // [[[Tutor]]]
 
-        // Fighting Exercise 117 
+        // Fighting Exercise 117
         Story.KillQuest(117, "Tutor", "Horc Noob");
 
         // Tougher Monsters 118

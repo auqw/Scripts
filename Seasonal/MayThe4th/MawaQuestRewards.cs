@@ -11,7 +11,12 @@ public class MawaQuestRewards
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -43,19 +48,24 @@ public class MawaQuestRewards
         Core.ChainComplete(9745);
         Bot.Wait.ForDrop(Core.QuestRewards(9745)[0]);
     }
+
     public void GetMeParts()
     {
-        if (Core.CheckInventory(Core.QuestRewards(10241)) || !Core.isSeasonalMapActive("murdermoon"))
+        if (
+            Core.CheckInventory(Core.QuestRewards(10241)) || !Core.isSeasonalMapActive("murdermoon")
+        )
             return;
 
         Core.AddDrop(Core.QuestRewards(10241));
 
         //Get Me Parts (10241)
-        Core.HuntMonsterQuest(10241,
-        ("twigguhunt", "Infantry Droid", ClassType.Farm),
-        ("murdermoon", "Tempest Soldier", ClassType.Farm),
-        ("murdermoon", "Fifth Sepulchure", ClassType.Solo),
-        ("eventhub", "Moon Guard", ClassType.Solo));
+        Core.HuntMonsterQuest(
+            10241,
+            ("twigguhunt", "Infantry Droid", ClassType.Farm),
+            ("murdermoon", "Tempest Soldier", ClassType.Farm),
+            ("murdermoon", "Fifth Sepulchure", ClassType.Solo),
+            ("eventhub", "Moon Guard", ClassType.Solo)
+        );
         Bot.Wait.ForDrop(Core.QuestRewards(10241)[0]);
     }
 }

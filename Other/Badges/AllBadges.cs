@@ -63,39 +63,198 @@ public class AllBadges
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
-    private static CornelisRebornbadge CRB { get => _CRB ??= new CornelisRebornbadge(); set => _CRB = value; }    private static CornelisRebornbadge _CRB;
-    private static DerpMoosefishBadge DMF { get => _DMF ??= new DerpMoosefishBadge(); set => _DMF = value; }    private static DerpMoosefishBadge _DMF;
-    private static SkyPirateBadge SPB { get => _SPB ??= new SkyPirateBadge(); set => _SPB = value; }    private static SkyPirateBadge _SPB;
-    private static YouMadBroBadge YMBB { get => _YMBB ??= new YouMadBroBadge(); set => _YMBB = value; }    private static YouMadBroBadge _YMBB;
-    private static MoglinPunter MPB { get => _MPB ??= new MoglinPunter(); set => _MPB = value; }    private static MoglinPunter _MPB;
-    private static CtrlAltDelMemberBadge CAD { get => _CAD ??= new CtrlAltDelMemberBadge(); set => _CAD = value; }    private static CtrlAltDelMemberBadge _CAD;
-    private static BirthdaySavior BS { get => _BS ??= new BirthdaySavior(); set => _BS = value; }    private static BirthdaySavior _BS;
-    private static BattleBabysitter BB { get => _BB ??= new BattleBabysitter(); set => _BB = value; }    private static BattleBabysitter _BB;
-    private static BattleConVIP BCV { get => _BCV ??= new BattleConVIP(); set => _BCV = value; }    private static BattleConVIP _BCV;
-    private static CelestialArenaChampion CAC { get => _CAC ??= new CelestialArenaChampion(); set => _CAC = value; }    private static CelestialArenaChampion _CAC;
-    private static ChaosPuppetMaster CPM { get => _CPM ??= new ChaosPuppetMaster(); set => _CPM = value; }    private static ChaosPuppetMaster _CPM;
-    private static Committed C { get => _C ??= new Committed(); set => _C = value; }    private static Committed _C;
-    private static ConZombieSlayer CZS { get => _CZS ??= new ConZombieSlayer(); set => _CZS = value; }    private static ConZombieSlayer _CZS;
-    private static DesolichFreed DF { get => _DF ??= new DesolichFreed(); set => _DF = value; }    private static DesolichFreed _DF;
-    private static GoldenLaurel GL { get => _GL ??= new GoldenLaurel(); set => _GL = value; }    private static GoldenLaurel _GL;
-    private static GravelynsWarrior GW { get => _GW ??= new GravelynsWarrior(); set => _GW = value; }    private static GravelynsWarrior _GW;
-    private static HordeZombieSLAYER HZS { get => _HZS ??= new HordeZombieSLAYER(); set => _HZS = value; }    private static HordeZombieSLAYER _HZS;
-    private static LordOfTheWeddingRing LOTWR { get => _LOTWR ??= new LordOfTheWeddingRing(); set => _LOTWR = value; }    private static LordOfTheWeddingRing _LOTWR;
-    private static MummySlayerAndCruxShadowsDefender MSACSD { get => _MSACSD ??= new MummySlayerAndCruxShadowsDefender(); set => _MSACSD = value; }    private static MummySlayerAndCruxShadowsDefender _MSACSD;
-    private static RavenlossWarAndChampion RWAC { get => _RWAC ??= new RavenlossWarAndChampion(); set => _RWAC = value; }    private static RavenlossWarAndChampion _RWAC;
-    private static ShadowVaultChampion SVC { get => _SVC ??= new ShadowVaultChampion(); set => _SVC = value; }    private static ShadowVaultChampion _SVC;
-    private static StoneCold SC { get => _SC ??= new StoneCold(); set => _SC = value; }    private static StoneCold _SC;
-    private static TableFlipper TF { get => _TF ??= new TableFlipper(); set => _TF = value; }    private static TableFlipper _TF;
-    private static VoidHighlordBadge VHL { get => _VHL ??= new VoidHighlordBadge(); set => _VHL = value; }    private static VoidHighlordBadge _VHL;
-    private static StoryArcBadge SA { get => _SA ??= new StoryArcBadge(); set => _SA = value; }    private static StoryArcBadge _SA;
-    private static JusticeSquadBadge JS { get => _JS ??= new JusticeSquadBadge(); set => _JS = value; }    private static JusticeSquadBadge _JS;
-    private static ThiefofChaosBadge ToC { get => _ToC ??= new ThiefofChaosBadge(); set => _ToC = value; }    private static ThiefofChaosBadge _ToC;
-    private static UltraCarnaxBadge UC { get => _UC ??= new UltraCarnaxBadge(); set => _UC = value; }    private static UltraCarnaxBadge _UC;
-    private static GoalBadge G { get => _G ??= new GoalBadge(); set => _G = value; }    private static GoalBadge _G;
-    private static FrostvaleBadges FV { get => _FV ??= new FrostvaleBadges(); set => _FV = value; }    private static FrostvaleBadges _FV;
-    private static YokaiAscension YA { get => _YA ??= new YokaiAscension(); set => _YA = value; }
+    private static CornelisRebornbadge CRB
+    {
+        get => _CRB ??= new CornelisRebornbadge();
+        set => _CRB = value;
+    }
+    private static CornelisRebornbadge _CRB;
+    private static DerpMoosefishBadge DMF
+    {
+        get => _DMF ??= new DerpMoosefishBadge();
+        set => _DMF = value;
+    }
+    private static DerpMoosefishBadge _DMF;
+    private static SkyPirateBadge SPB
+    {
+        get => _SPB ??= new SkyPirateBadge();
+        set => _SPB = value;
+    }
+    private static SkyPirateBadge _SPB;
+    private static YouMadBroBadge YMBB
+    {
+        get => _YMBB ??= new YouMadBroBadge();
+        set => _YMBB = value;
+    }
+    private static YouMadBroBadge _YMBB;
+    private static MoglinPunter MPB
+    {
+        get => _MPB ??= new MoglinPunter();
+        set => _MPB = value;
+    }
+    private static MoglinPunter _MPB;
+    private static CtrlAltDelMemberBadge CAD
+    {
+        get => _CAD ??= new CtrlAltDelMemberBadge();
+        set => _CAD = value;
+    }
+    private static CtrlAltDelMemberBadge _CAD;
+    private static BirthdaySavior BS
+    {
+        get => _BS ??= new BirthdaySavior();
+        set => _BS = value;
+    }
+    private static BirthdaySavior _BS;
+    private static BattleBabysitter BB
+    {
+        get => _BB ??= new BattleBabysitter();
+        set => _BB = value;
+    }
+    private static BattleBabysitter _BB;
+    private static BattleConVIP BCV
+    {
+        get => _BCV ??= new BattleConVIP();
+        set => _BCV = value;
+    }
+    private static BattleConVIP _BCV;
+    private static CelestialArenaChampion CAC
+    {
+        get => _CAC ??= new CelestialArenaChampion();
+        set => _CAC = value;
+    }
+    private static CelestialArenaChampion _CAC;
+    private static ChaosPuppetMaster CPM
+    {
+        get => _CPM ??= new ChaosPuppetMaster();
+        set => _CPM = value;
+    }
+    private static ChaosPuppetMaster _CPM;
+    private static Committed C
+    {
+        get => _C ??= new Committed();
+        set => _C = value;
+    }
+    private static Committed _C;
+    private static ConZombieSlayer CZS
+    {
+        get => _CZS ??= new ConZombieSlayer();
+        set => _CZS = value;
+    }
+    private static ConZombieSlayer _CZS;
+    private static DesolichFreed DF
+    {
+        get => _DF ??= new DesolichFreed();
+        set => _DF = value;
+    }
+    private static DesolichFreed _DF;
+    private static GoldenLaurel GL
+    {
+        get => _GL ??= new GoldenLaurel();
+        set => _GL = value;
+    }
+    private static GoldenLaurel _GL;
+    private static GravelynsWarrior GW
+    {
+        get => _GW ??= new GravelynsWarrior();
+        set => _GW = value;
+    }
+    private static GravelynsWarrior _GW;
+    private static HordeZombieSLAYER HZS
+    {
+        get => _HZS ??= new HordeZombieSLAYER();
+        set => _HZS = value;
+    }
+    private static HordeZombieSLAYER _HZS;
+    private static LordOfTheWeddingRing LOTWR
+    {
+        get => _LOTWR ??= new LordOfTheWeddingRing();
+        set => _LOTWR = value;
+    }
+    private static LordOfTheWeddingRing _LOTWR;
+    private static MummySlayerAndCruxShadowsDefender MSACSD
+    {
+        get => _MSACSD ??= new MummySlayerAndCruxShadowsDefender();
+        set => _MSACSD = value;
+    }
+    private static MummySlayerAndCruxShadowsDefender _MSACSD;
+    private static RavenlossWarAndChampion RWAC
+    {
+        get => _RWAC ??= new RavenlossWarAndChampion();
+        set => _RWAC = value;
+    }
+    private static RavenlossWarAndChampion _RWAC;
+    private static ShadowVaultChampion SVC
+    {
+        get => _SVC ??= new ShadowVaultChampion();
+        set => _SVC = value;
+    }
+    private static ShadowVaultChampion _SVC;
+    private static StoneCold SC
+    {
+        get => _SC ??= new StoneCold();
+        set => _SC = value;
+    }
+    private static StoneCold _SC;
+    private static TableFlipper TF
+    {
+        get => _TF ??= new TableFlipper();
+        set => _TF = value;
+    }
+    private static TableFlipper _TF;
+    private static VoidHighlordBadge VHL
+    {
+        get => _VHL ??= new VoidHighlordBadge();
+        set => _VHL = value;
+    }
+    private static VoidHighlordBadge _VHL;
+    private static StoryArcBadge SA
+    {
+        get => _SA ??= new StoryArcBadge();
+        set => _SA = value;
+    }
+    private static StoryArcBadge _SA;
+    private static JusticeSquadBadge JS
+    {
+        get => _JS ??= new JusticeSquadBadge();
+        set => _JS = value;
+    }
+    private static JusticeSquadBadge _JS;
+    private static ThiefofChaosBadge ToC
+    {
+        get => _ToC ??= new ThiefofChaosBadge();
+        set => _ToC = value;
+    }
+    private static ThiefofChaosBadge _ToC;
+    private static UltraCarnaxBadge UC
+    {
+        get => _UC ??= new UltraCarnaxBadge();
+        set => _UC = value;
+    }
+    private static UltraCarnaxBadge _UC;
+    private static GoalBadge G
+    {
+        get => _G ??= new GoalBadge();
+        set => _G = value;
+    }
+    private static GoalBadge _G;
+    private static FrostvaleBadges FV
+    {
+        get => _FV ??= new FrostvaleBadges();
+        set => _FV = value;
+    }
+    private static FrostvaleBadges _FV;
+    private static YokaiAscension YA
+    {
+        get => _YA ??= new YokaiAscension();
+        set => _YA = value;
+    }
     private static YokaiAscension _YA;
 
     public void ScriptMain(IScriptInterface bot)

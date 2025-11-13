@@ -17,10 +17,30 @@ public class BringTheCheer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreFrostvale Frostvale { get => _Frostvale ??= new CoreFrostvale(); set => _Frostvale = value; }    private static CoreFrostvale _Frostvale;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreFrostvale Frostvale
+    {
+        get => _Frostvale ??= new CoreFrostvale();
+        set => _Frostvale = value;
+    }
+    private static CoreFrostvale _Frostvale;
 
     public bool DontPreconfigure = true;
 
@@ -29,7 +49,12 @@ public class BringTheCheer
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<RewardsSelection>("RewardSelect", "Choose Your Quest Reward", "Select Your Quest Reward for `Bring The Cheer`.", RewardsSelection.All)
+        new Option<RewardsSelection>(
+            "RewardSelect",
+            "Choose Your Quest Reward",
+            "Select Your Quest Reward for `Bring The Cheer`.",
+            RewardsSelection.All
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -46,7 +71,9 @@ public class BringTheCheer
     {
         if (!Core.isSeasonalMapActive("frostvalfuture"))
         {
-            Core.Logger($"it is Currently {DateTime.Now.ToString("MMMM")}, The Maps Will Be out In December, as per the Design Notes.");
+            Core.Logger(
+                $"it is Currently {DateTime.Now.ToString("MMMM")}, The Maps Will Be out In December, as per the Design Notes."
+            );
             return;
         }
 
@@ -59,7 +86,14 @@ public class BringTheCheer
         ItemBase? item = null;
         if (!getAll)
         {
-            item = Core.EnsureLoad(6651).Rewards.Find(x => x.ID == (int)(Bot.Config?.Get<RewardsSelection>("RewardSelect") ?? default(RewardsSelection)));
+            item = Core.EnsureLoad(6651)
+                .Rewards.Find(x =>
+                    x.ID
+                    == (int)(
+                        Bot.Config?.Get<RewardsSelection>("RewardSelect")
+                        ?? default(RewardsSelection)
+                    )
+                );
             if (item == null)
             {
                 Core.Logger($"{item?.Name ?? "Item"} not found in Quest Rewards");
@@ -72,7 +106,9 @@ public class BringTheCheer
 
         Core.EquipClass(ClassType.Solo);
 
-        while (getAll ? !Core.CheckInventory(RewardOptions) : !Core.CheckInventory(item?.Name ?? ""))
+        while (
+            getAll ? !Core.CheckInventory(RewardOptions) : !Core.CheckInventory(item?.Name ?? "")
+        )
         {
             Core.EnsureAccept(6651);
             Core.HuntMonster("frostvalfuture", "Wargoth the Frozen", "Wrapped Parcel", log: false);
@@ -82,17 +118,29 @@ public class BringTheCheer
 
             if (!getAll)
                 Core.EnsureComplete(6651, item?.ID ?? default);
-            else Core.EnsureCompleteChoose(6651);
+            else
+                Core.EnsureCompleteChoose(6651);
         }
     }
 
-    public readonly string[] Rewards ={
-    "CheerCaster Armor", "Cheery Hat", "Cheery Locks", "Cheery Hat + Scarf",
-    "Cheery Locks + Scarf", "Stars of Joy", "Stars of the North",
-    "Wand of Joy", "Dark CheerCaster", "Dark CheerCaster Hat",
-    "Dark CheerCaster Hat + Locks", "Dark CheerCaster Accessories",
-    "Dark CheerCaster Accessories + Locks", "Midnight CheerCaster Stars",
-    "Dark CheerCaster Wand"};
+    public readonly string[] Rewards =
+    {
+        "CheerCaster Armor",
+        "Cheery Hat",
+        "Cheery Locks",
+        "Cheery Hat + Scarf",
+        "Cheery Locks + Scarf",
+        "Stars of Joy",
+        "Stars of the North",
+        "Wand of Joy",
+        "Dark CheerCaster",
+        "Dark CheerCaster Hat",
+        "Dark CheerCaster Hat + Locks",
+        "Dark CheerCaster Accessories",
+        "Dark CheerCaster Accessories + Locks",
+        "Midnight CheerCaster Stars",
+        "Dark CheerCaster Wand",
+    };
 
     public enum RewardsSelection
     {

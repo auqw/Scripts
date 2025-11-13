@@ -14,8 +14,19 @@ public class EbonyDragonBladeofNulgath
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }    private static DragonBladeofNulgath _DBoN;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static DragonBladeofNulgath DBoN
+    {
+        get => _DBoN ??= new DragonBladeofNulgath();
+        set => _DBoN = value;
+    }
+    private static DragonBladeofNulgath _DBoN;
+
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
@@ -30,11 +41,15 @@ public class EbonyDragonBladeofNulgath
 
         if (!Core.IsMember && !Core.CheckInventory("DragonBlade of Nulgath"))
         {
-            Core.Logger("You must be a member to farm DragonBlade of Nulgath! (Required to merge Ebony DBoN)");
+            Core.Logger(
+                "You must be a member to farm DragonBlade of Nulgath! (Required to merge Ebony DBoN)"
+            );
             return;
         }
 
-        Core.BankingBlackList.AddRange(new[] { "DragonBlade of Nulgath", "Diamond of Nulgath", "Ebony DragonBlade of Nulgath" });
+        Core.BankingBlackList.AddRange(
+            new[] { "DragonBlade of Nulgath", "Diamond of Nulgath", "Ebony DragonBlade of Nulgath" }
+        );
         if (!Core.CheckInventory("Diamond of Nulgath", 100))
             Nation.FarmDiamondofNulgath(100);
         if (!Core.CheckInventory("DragonBlade of Nulgath"))

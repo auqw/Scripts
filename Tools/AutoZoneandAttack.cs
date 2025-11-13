@@ -15,14 +15,29 @@ public class AAWithMove
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public string OptionsStorage = "AutoZoneandAttack";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<PickYourBoss>("PickYourBoss", "Choose Your Boss", "Select the boss you want to farm", PickYourBoss.None),
-       new Option<bool>("AttemptSoloNMCarnax", "Attempt Solo Nightmare Carnax", "If you have the Dragon of Time, this will attempt to solo Nightmare Carnax.", false),
+        new Option<PickYourBoss>(
+            "PickYourBoss",
+            "Choose Your Boss",
+            "Select the boss you want to farm",
+            PickYourBoss.None
+        ),
+        new Option<bool>(
+            "AttemptSoloNMCarnax",
+            "Attempt Solo Nightmare Carnax",
+            "If you have the Dragon of Time, this will attempt to solo Nightmare Carnax.",
+            false
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -145,27 +160,32 @@ public class AAWithMove
         lastMove = DateTime.Now;
 
         CancellationToken token = darkCarnaxCts.Token;
-        moveTask = Task.Run(async () =>
-        {
-            try
+        moveTask = Task.Run(
+            async () =>
             {
-                await Task.Delay(300, token);
-
-                int y = Bot.Random.Next(380, 475);
-                int x = zoneLower switch
+                try
                 {
-                    "a" => Bot.Random.Next(600, 931),
-                    "b" => Bot.Random.Next(25, 326),
-                    _ => Bot.Random.Next(325, 601)
-                };
+                    await Task.Delay(300, token);
 
-                if (!token.IsCancellationRequested)
-                    Bot.Player.WalkTo(x, y);
+                    int y = Bot.Random.Next(380, 475);
+                    int x = zoneLower switch
+                    {
+                        "a" => Bot.Random.Next(600, 931),
+                        "b" => Bot.Random.Next(25, 326),
+                        _ => Bot.Random.Next(325, 601),
+                    };
 
-                await Task.Delay(2500, token);
-            }
-            catch (OperationCanceledException) { /* Graceful cancellation */ }
-        }, token);
+                    if (!token.IsCancellationRequested)
+                        Bot.Player.WalkTo(x, y);
+
+                    await Task.Delay(2500, token);
+                }
+                catch (OperationCanceledException)
+                { /* Graceful cancellation */
+                }
+            },
+            token
+        );
     }
 
     #endregion
@@ -229,33 +249,36 @@ public class AAWithMove
         lastMove = DateTime.Now;
 
         CancellationToken token = ultraDageCts.Token;
-        moveTask = Task.Run(async () =>
-        {
-            try
+        moveTask = Task.Run(
+            async () =>
             {
-                await Task.Delay(300, token);
-
-                int y = zoneLower switch
+                try
                 {
-                    "a" => Bot.Random.Next(400, 410),
-                    "b" => Bot.Random.Next(410, 415),
-                    _ => Bot.Random.Next(300, 420)
-                };
+                    await Task.Delay(300, token);
 
-                int x = zoneLower switch
-                {
-                    "a" => Bot.Random.Next(40, 175),
-                    "b" => Bot.Random.Next(760, 930),
-                    _ => Bot.Random.Next(480, 500)
-                };
+                    int y = zoneLower switch
+                    {
+                        "a" => Bot.Random.Next(400, 410),
+                        "b" => Bot.Random.Next(410, 415),
+                        _ => Bot.Random.Next(300, 420),
+                    };
 
-                if (!token.IsCancellationRequested)
-                    Bot.Player.WalkTo(x, y);
+                    int x = zoneLower switch
+                    {
+                        "a" => Bot.Random.Next(40, 175),
+                        "b" => Bot.Random.Next(760, 930),
+                        _ => Bot.Random.Next(480, 500),
+                    };
 
-                await Task.Delay(2500, token);
-            }
-            catch (OperationCanceledException) { }
-        }, token);
+                    if (!token.IsCancellationRequested)
+                        Bot.Player.WalkTo(x, y);
+
+                    await Task.Delay(2500, token);
+                }
+                catch (OperationCanceledException) { }
+            },
+            token
+        );
     }
 
     #endregion
@@ -338,42 +361,54 @@ public class AAWithMove
         lastMove = DateTime.Now;
 
         CancellationToken token = moreSkullsCts.Token;
-        moveTask = Task.Run(async () =>
-        {
-            try
+        moveTask = Task.Run(
+            async () =>
             {
-                await Task.Delay(300, token);
-
-                int x = 0, y = 0;
-                switch (zone.ToUpper())
+                try
                 {
-                    case "A":
-                        if (Bot.Player.Position.X >= 685 && Bot.Player.Position.X <= 869 &&
-                            Bot.Player.Position.Y >= 400 && Bot.Player.Position.Y <= 409)
+                    await Task.Delay(300, token);
+
+                    int x = 0,
+                        y = 0;
+                    switch (zone.ToUpper())
+                    {
+                        case "A":
+                            if (
+                                Bot.Player.Position.X >= 685
+                                && Bot.Player.Position.X <= 869
+                                && Bot.Player.Position.Y >= 400
+                                && Bot.Player.Position.Y <= 409
+                            )
+                                return;
+
+                            x = Bot.Random.Next(685, 870);
+                            y = Bot.Random.Next(400, 410);
+                            break;
+
+                        case "B":
+                            if (
+                                Bot.Player.Position.X >= 646
+                                && Bot.Player.Position.X <= 861
+                                && Bot.Player.Position.Y >= 333
+                                && Bot.Player.Position.Y <= 367
+                            )
+                                return;
+
+                            x = Bot.Random.Next(646, 862);
+                            y = Bot.Random.Next(333, 368);
+                            break;
+
+                        default:
                             return;
+                    }
 
-                        x = Bot.Random.Next(685, 870);
-                        y = Bot.Random.Next(400, 410);
-                        break;
-
-                    case "B":
-                        if (Bot.Player.Position.X >= 646 && Bot.Player.Position.X <= 861 &&
-                            Bot.Player.Position.Y >= 333 && Bot.Player.Position.Y <= 367)
-                            return;
-
-                        x = Bot.Random.Next(646, 862);
-                        y = Bot.Random.Next(333, 368);
-                        break;
-
-                    default:
-                        return;
+                    if (!token.IsCancellationRequested)
+                        Bot.Player.WalkTo(x, y, speed: 8);
                 }
-
-                if (!token.IsCancellationRequested)
-                    Bot.Player.WalkTo(x, y, speed: 8);
-            }
-            catch (OperationCanceledException) { }
-        }, token);
+                catch (OperationCanceledException) { }
+            },
+            token
+        );
     }
 
     #endregion
@@ -384,6 +419,6 @@ public class AAWithMove
         None,
         NightmareCarnax,
         UltraDage,
-        MoreSkulls
+        MoreSkulls,
     }
 }

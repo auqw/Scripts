@@ -14,19 +14,24 @@ public class CelestialPastMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -51,7 +56,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -62,32 +69,83 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Celestial Quintessence":
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("CelestialPast", "Blessed Bear", req.Name, quant, isTemp: false);
-                        Core.HuntMonster("CelestialPast", "Blessed Deer", req.Name, quant, isTemp: false);
+                        Core.HuntMonster(
+                            "CelestialPast",
+                            "Blessed Bear",
+                            req.Name,
+                            quant,
+                            isTemp: false
+                        );
+                        Core.HuntMonster(
+                            "CelestialPast",
+                            "Blessed Deer",
+                            req.Name,
+                            quant,
+                            isTemp: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("56082", "Celestial Summoner", "Mode: [select] only\nShould the bot buy \"Celestial Summoner\" ?", false),
-        new Option<bool>("56083", "Celestial Summoner Hair", "Mode: [select] only\nShould the bot buy \"Celestial Summoner Hair\" ?", false),
-        new Option<bool>("56084", "Celestial Summoner Helm", "Mode: [select] only\nShould the bot buy \"Celestial Summoner Helm\" ?", false),
-        new Option<bool>("56085", "Celestial Summoner Hood", "Mode: [select] only\nShould the bot buy \"Celestial Summoner Hood\" ?", false),
-        new Option<bool>("56086", "Celestial Summoner Rune Cape", "Mode: [select] only\nShould the bot buy \"Celestial Summoner Rune Cape\" ?", false),
-        new Option<bool>("56153", "Celestial Summoner Rune", "Mode: [select] only\nShould the bot buy \"Celestial Summoner Rune\" ?", false),
-        new Option<bool>("56154", "Celestial Summoner Cape", "Mode: [select] only\nShould the bot buy \"Celestial Summoner Cape\" ?", false),
+        new Option<bool>(
+            "56082",
+            "Celestial Summoner",
+            "Mode: [select] only\nShould the bot buy \"Celestial Summoner\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56083",
+            "Celestial Summoner Hair",
+            "Mode: [select] only\nShould the bot buy \"Celestial Summoner Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56084",
+            "Celestial Summoner Helm",
+            "Mode: [select] only\nShould the bot buy \"Celestial Summoner Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56085",
+            "Celestial Summoner Hood",
+            "Mode: [select] only\nShould the bot buy \"Celestial Summoner Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56086",
+            "Celestial Summoner Rune Cape",
+            "Mode: [select] only\nShould the bot buy \"Celestial Summoner Rune Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56153",
+            "Celestial Summoner Rune",
+            "Mode: [select] only\nShould the bot buy \"Celestial Summoner Rune\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56154",
+            "Celestial Summoner Cape",
+            "Mode: [select] only\nShould the bot buy \"Celestial Summoner Cape\" ?",
+            false
+        ),
     };
 }

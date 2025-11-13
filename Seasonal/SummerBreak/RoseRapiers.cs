@@ -6,6 +6,7 @@ tags: rose, rapier, summer, seasonal, summerhub
 //cs_include Scripts/CoreBots.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+
 // using Skua.Core.Options;
 
 public class RoseRapiers
@@ -37,7 +38,7 @@ public class RoseRapiers
             Bot.Drops.Add(item.ID);
             while (!Bot.ShouldExit && !Core.CheckInventory(item.ID))
             {
-                Core.EnsureAcceptmultiple( new[] { 9275, 9276, 9277, 9278 });
+                Core.EnsureAcceptmultiple(new[] { 9275, 9276, 9277, 9278 });
 
                 //Edit the Hunt Below\add more if needed
                 Core.HuntMonster("underglade", "Lunamoss", "Found the Rose Clue");

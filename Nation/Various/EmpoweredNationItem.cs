@@ -15,16 +15,36 @@ public class EmpoweredWeaponsofNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public string OptionsStorage = "EmpoweredWeaponofN";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<EmpoweredItems>("EmpoweredWep", "Choose Weapon", "Choose, and the bot will Farm the Appropriate item.", EmpoweredItems.Empowered_Overfiend_Blade),
+        new Option<EmpoweredItems>(
+            "EmpoweredWep",
+            "Choose Weapon",
+            "Choose, and the bot will Farm the Appropriate item.",
+            EmpoweredItems.Empowered_Overfiend_Blade
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -40,7 +60,11 @@ public class EmpoweredWeaponsofNulgath
     public void GetEmpoweredItem(EmpoweredItems Item)
     {
         if (!Core.CheckInventory("Nulgath Insignia", 25))
-            Core.Logger("Could not find 25x Nulgath Insignia, stopping.", messageBox: true, stopBot: true);
+            Core.Logger(
+                "Could not find 25x Nulgath Insignia, stopping.",
+                messageBox: true,
+                stopBot: true
+            );
 
         #region  nullcheck
         // Retry mechanism to get the selected item from config
@@ -94,7 +118,11 @@ public class EmpoweredWeaponsofNulgath
             //Empowered Bloodletter 8696
             case EmpoweredItems.Empowered_Bloodletter:
                 if (!Core.CheckInventory("Bloodletter of Nulgath"))
-                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+                    Core.Logger(
+                        $"Missing required items. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
 
                 Core.EnsureAccept(8696);
                 Nation.FarmTaintedGem(350);
@@ -108,15 +136,22 @@ public class EmpoweredWeaponsofNulgath
             //Empowered Evolved Void Armors 1 8700
             case EmpoweredItems.Empowered_Evolved_Fiend:
             case EmpoweredItems.Empowered_Evolved_Void:
-                if (!Core.CheckInventory(
+                if (
+                    !Core.CheckInventory(
                         Bot.Config?.Get<EmpoweredItems>("EmpoweredWep") switch
                         {
                             EmpoweredItems.Empowered_Evolved_Fiend => "Evolved Fiend Of Nulgath",
                             EmpoweredItems.Empowered_Evolved_Void => "Evolved Void Of Nulgath",
-                            _ => null
-                        }))
+                            _ => null,
+                        }
+                    )
+                )
                 {
-                    Core.Logger("Missing required item. Bot cannot continue", messageBox: true, stopBot: true);
+                    Core.Logger(
+                        "Missing required item. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
                     break;
                 }
                 Core.EnsureAccept(8700);
@@ -136,16 +171,23 @@ public class EmpoweredWeaponsofNulgath
             case EmpoweredItems.Empowered_Evolved_Blood:
             case EmpoweredItems.Empowered_Evolved_Shadow:
             case EmpoweredItems.Empowered_Evolved_Hex:
-                if (!Core.CheckInventory(
+                if (
+                    !Core.CheckInventory(
                         Bot.Config?.Get<EmpoweredItems>("EmpoweredWep") switch
                         {
                             EmpoweredItems.Empowered_Evolved_Blood => "Evolved Blood of Nulgath",
                             EmpoweredItems.Empowered_Evolved_Shadow => "Evolved Shadow of Nulgath",
                             EmpoweredItems.Empowered_Evolved_Hex => "Evolved Hex of Nulgath",
-                            _ => null
-                        }))
+                            _ => null,
+                        }
+                    )
+                )
                 {
-                    Core.Logger("Missing required item. Bot cannot continue", messageBox: true, stopBot: true);
+                    Core.Logger(
+                        "Missing required item. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
                     break;
                 }
                 Core.EnsureAccept(8701);
@@ -164,7 +206,11 @@ public class EmpoweredWeaponsofNulgath
             //Empowered Legacy of Nulgath 8698
             case EmpoweredItems.Empowered_Legacy_of_Nulgath:
                 if (!Core.CheckInventory("Legacy of Nulgath"))
-                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+                    Core.Logger(
+                        $"Missing required items. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
 
                 Core.EnsureAccept(8698);
                 Nation.FarmDiamondofNulgath();
@@ -174,7 +220,11 @@ public class EmpoweredWeaponsofNulgath
             //Empowered Overfiend Blade 8693
             case EmpoweredItems.Empowered_Overfiend_Blade:
                 if (!Core.CheckInventory("Overfiend Blade of Nulgath"))
-                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+                    Core.Logger(
+                        $"Missing required items. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
 
                 Core.EnsureAccept(8693);
                 Nation.FarmTaintedGem(200);
@@ -189,16 +239,22 @@ public class EmpoweredWeaponsofNulgath
             //Empowered Prismatic Manslayers 8697
             case EmpoweredItems.Empowered_Prismatic_Manslayer:
             case EmpoweredItems.Empowered_Prismatic_Manslayers:
-                if (!Core.CheckInventory(
-                        Bot.Config?.Get<EmpoweredItems>("EmpoweredWep") == EmpoweredItems.Empowered_Prismatic_Manslayer
+                if (
+                    !Core.CheckInventory(
+                        Bot.Config?.Get<EmpoweredItems>("EmpoweredWep")
+                        == EmpoweredItems.Empowered_Prismatic_Manslayer
                             ? "Taro's Prismatic Manslayer"
-                            : "Taro's Dual Prismatic Manslayers")
-                    || !Core.IsMember)
+                            : "Taro's Dual Prismatic Manslayers"
+                    ) || !Core.IsMember
+                )
                 {
-                    Core.Logger("Required item not found or you're not a member. Bot cannot continue", messageBox: true, stopBot: true);
+                    Core.Logger(
+                        "Required item not found or you're not a member. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
                     break;
                 }
-
 
                 Core.EnsureAccept(8697);
                 Nation.FarmTaintedGem(400);
@@ -212,7 +268,11 @@ public class EmpoweredWeaponsofNulgath
             //Empowered Shadow Spear 8695
             case EmpoweredItems.Empowered_Shadow_Spear:
                 if (!Core.CheckInventory("Shadow Spear of Nulgath"))
-                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+                    Core.Logger(
+                        $"Missing required items. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
 
                 Core.EnsureAccept(8695);
                 Nation.FarmTaintedGem(350);
@@ -224,7 +284,11 @@ public class EmpoweredWeaponsofNulgath
             //Empowered Ungodly Reavers 8694
             case EmpoweredItems.Empowered_Ungodly_Reavers:
                 if (!Core.CheckInventory("Ungodly Reavers of Nulgath"))
-                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+                    Core.Logger(
+                        $"Missing required items. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
 
                 Core.EnsureAccept(8694);
                 Nation.FarmTaintedGem(200);
@@ -239,7 +303,11 @@ public class EmpoweredWeaponsofNulgath
             //Empowered Worshipper of Nulgath 8699
             case EmpoweredItems.Empowered_Worshipper_of_Nulgath:
                 if (!Core.CheckInventory("Worshipper of Nulgath"))
-                    Core.Logger($"Missing required items. Bot cannot continue", messageBox: true, stopBot: true);
+                    Core.Logger(
+                        $"Missing required items. Bot cannot continue",
+                        messageBox: true,
+                        stopBot: true
+                    );
 
                 Core.EnsureAccept(8699);
                 Nation.FarmDiamondofNulgath();

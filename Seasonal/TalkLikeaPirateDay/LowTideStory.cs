@@ -11,7 +11,12 @@ public class LowTideStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -51,7 +56,8 @@ public class LowTideStory
             Core.EnsureComplete(8839);
             Core.Logger("Completed Quest: [8839] - \"Committed to the Sea\"", "TryComplete");
         }
-        else Core.Logger("Already Completed: [8839] - \"Committed to the Sea\"", "QuestProgression");
+        else
+            Core.Logger("Already Completed: [8839] - \"Committed to the Sea\"", "QuestProgression");
 
         //Briny Gelatin 8840
         Story.KillQuest(8840, "lowtide", "Spectral Jellyfish");

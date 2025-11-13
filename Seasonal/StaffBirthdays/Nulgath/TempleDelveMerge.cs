@@ -18,29 +18,59 @@ public class TempleDelveMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static TempleDelve TD { get => _TD ??= new TempleDelve(); set => _TD = value; }
+    private static TempleDelve TD
+    {
+        get => _TD ??= new TempleDelve();
+        set => _TD = value;
+    }
     private static TempleDelve _TD;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Doomed Extract", "Tainted Gem", "Dark Crystal Shard", "Diamond of Nulgath", "Nation Ritualist", "Void Nation Ritualist"});
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Doomed Extract",
+                "Tainted Gem",
+                "Dark Crystal Shard",
+                "Diamond of Nulgath",
+                "Nation Ritualist",
+                "Void Nation Ritualist",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -61,7 +91,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -72,9 +104,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Doomed Extract":
                     Core.FarmingLogger(req.Name, quant);
@@ -82,7 +119,12 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("templedelve", "Delirious Elemental", "Elemental Study", 6);
+                        Core.HuntMonster(
+                            "templedelve",
+                            "Delirious Elemental",
+                            "Elemental Study",
+                            6
+                        );
                         Core.HuntMonster("templedelve", "Infested Nation", "Infestation Study", 6);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("templedelve", "Doomed Fiend", "Fiend Worm");
@@ -108,29 +150,113 @@ private static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("templedelve", "Doomed Fiend", req.Name, isTemp: false);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("75493", "Nation Ritualist Visage", "Mode: [select] only\nShould the bot buy \"Nation Ritualist Visage\" ?", false),
-        new Option<bool>("75495", "Nation Ritualist Morph + Locks", "Mode: [select] only\nShould the bot buy \"Nation Ritualist Morph + Locks\" ?", false),
-        new Option<bool>("75491", "Horned Void Nation Ritualist Visage", "Mode: [select] only\nShould the bot buy \"Horned Void Nation Ritualist Visage\" ?", false),
-        new Option<bool>("75498", "Nation Ritualist Void Gate", "Mode: [select] only\nShould the bot buy \"Nation Ritualist Void Gate\" ?", false),
-        new Option<bool>("75497", "Nation Ritualist Gateway", "Mode: [select] only\nShould the bot buy \"Nation Ritualist Gateway\" ?", false),
-        new Option<bool>("75499", "Nation Ritualist Orb Pet", "Mode: [select] only\nShould the bot buy \"Nation Ritualist Orb Pet\" ?", false),
-        new Option<bool>("75500", "Nation Ritualist Rune", "Mode: [select] only\nShould the bot buy \"Nation Ritualist Rune\" ?", false),
-        new Option<bool>("75501", "Nation Ritualist's Sigil", "Mode: [select] only\nShould the bot buy \"Nation Ritualist's Sigil\" ?", false),
-        new Option<bool>("75503", "Nation Ritualist's Dual Swirling Sigils", "Mode: [select] only\nShould the bot buy \"Nation Ritualist's Dual Swirling Sigils\" ?", false),
-        new Option<bool>("75505", "Void Nation Ritualist Spear", "Mode: [select] only\nShould the bot buy \"Void Nation Ritualist Spear\" ?", false),
-        new Option<bool>("75487", "Void Nation Caster", "Mode: [select] only\nShould the bot buy \"Void Nation Caster\" ?", false),
-        new Option<bool>("75489", "Nation Caster", "Mode: [select] only\nShould the bot buy \"Nation Caster\" ?", false),
-        new Option<bool>("75681", "Scholar of Nulgath", "Mode: [select] only\nShould the bot buy \"Scholar of Nulgath\" ?", false),
-        new Option<bool>("75682", "Scholar of Nulgath Hair", "Mode: [select] only\nShould the bot buy \"Scholar of Nulgath Hair\" ?", false),
-        new Option<bool>("75683", "Scholar of Nulgath Ponytail", "Mode: [select] only\nShould the bot buy \"Scholar of Nulgath Ponytail\" ?", false),
-        new Option<bool>("75684", "Scholar of Nulgath Scarf", "Mode: [select] only\nShould the bot buy \"Scholar of Nulgath Scarf\" ?", false),
-        new Option<bool>("75685", "Prof Polish", "Mode: [select] only\nShould the bot buy \"Prof Polish\" ?", false),
+        new Option<bool>(
+            "75493",
+            "Nation Ritualist Visage",
+            "Mode: [select] only\nShould the bot buy \"Nation Ritualist Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75495",
+            "Nation Ritualist Morph + Locks",
+            "Mode: [select] only\nShould the bot buy \"Nation Ritualist Morph + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75491",
+            "Horned Void Nation Ritualist Visage",
+            "Mode: [select] only\nShould the bot buy \"Horned Void Nation Ritualist Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75498",
+            "Nation Ritualist Void Gate",
+            "Mode: [select] only\nShould the bot buy \"Nation Ritualist Void Gate\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75497",
+            "Nation Ritualist Gateway",
+            "Mode: [select] only\nShould the bot buy \"Nation Ritualist Gateway\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75499",
+            "Nation Ritualist Orb Pet",
+            "Mode: [select] only\nShould the bot buy \"Nation Ritualist Orb Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75500",
+            "Nation Ritualist Rune",
+            "Mode: [select] only\nShould the bot buy \"Nation Ritualist Rune\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75501",
+            "Nation Ritualist's Sigil",
+            "Mode: [select] only\nShould the bot buy \"Nation Ritualist's Sigil\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75503",
+            "Nation Ritualist's Dual Swirling Sigils",
+            "Mode: [select] only\nShould the bot buy \"Nation Ritualist's Dual Swirling Sigils\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75505",
+            "Void Nation Ritualist Spear",
+            "Mode: [select] only\nShould the bot buy \"Void Nation Ritualist Spear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75487",
+            "Void Nation Caster",
+            "Mode: [select] only\nShould the bot buy \"Void Nation Caster\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75489",
+            "Nation Caster",
+            "Mode: [select] only\nShould the bot buy \"Nation Caster\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75681",
+            "Scholar of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Scholar of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75682",
+            "Scholar of Nulgath Hair",
+            "Mode: [select] only\nShould the bot buy \"Scholar of Nulgath Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75683",
+            "Scholar of Nulgath Ponytail",
+            "Mode: [select] only\nShould the bot buy \"Scholar of Nulgath Ponytail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75684",
+            "Scholar of Nulgath Scarf",
+            "Mode: [select] only\nShould the bot buy \"Scholar of Nulgath Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "75685",
+            "Prof Polish",
+            "Mode: [select] only\nShould the bot buy \"Prof Polish\" ?",
+            false
+        ),
     };
 }

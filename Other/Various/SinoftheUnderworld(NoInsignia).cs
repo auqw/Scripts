@@ -31,29 +31,77 @@ public class SinoftheSinoftheUnderworldNoInsignia
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreLegion LR { get => _LR ??= new CoreLegion(); set => _LR = value; }
+    private static CoreLegion LR
+    {
+        get => _LR ??= new CoreLegion();
+        set => _LR = value;
+    }
     private static CoreLegion _LR;
-    private static HeadoftheLegionBeast HotLB { get => _HotLB ??= new HeadoftheLegionBeast(); set => _HotLB = value; }
+    private static HeadoftheLegionBeast HotLB
+    {
+        get => _HotLB ??= new HeadoftheLegionBeast();
+        set => _HotLB = value;
+    }
     private static HeadoftheLegionBeast _HotLB;
-    private static AtlasFalls AtlasFalls { get => _AtlasFalls ??= new AtlasFalls(); set => _AtlasFalls = value; }
+    private static AtlasFalls AtlasFalls
+    {
+        get => _AtlasFalls ??= new AtlasFalls();
+        set => _AtlasFalls = value;
+    }
     private static AtlasFalls _AtlasFalls;
-    private static CoreYnR YnR { get => _YnR ??= new CoreYnR(); set => _YnR = value; }
+    private static CoreYnR YnR
+    {
+        get => _YnR ??= new CoreYnR();
+        set => _YnR = value;
+    }
     private static CoreYnR _YnR;
-    private static VulcarsMerge VulcarsMerge { get => _VulcarsMerge ??= new VulcarsMerge(); set => _VulcarsMerge = value; }
+    private static VulcarsMerge VulcarsMerge
+    {
+        get => _VulcarsMerge ??= new VulcarsMerge();
+        set => _VulcarsMerge = value;
+    }
     private static VulcarsMerge _VulcarsMerge;
-    private static UnderworldTeamMerge UnderworldTeamMerge { get => _UnderworldTeamMerge ??= new UnderworldTeamMerge(); set => _UnderworldTeamMerge = value; }
+    private static UnderworldTeamMerge UnderworldTeamMerge
+    {
+        get => _UnderworldTeamMerge ??= new UnderworldTeamMerge();
+        set => _UnderworldTeamMerge = value;
+    }
     private static UnderworldTeamMerge _UnderworldTeamMerge;
-    private static SoulForgeMerge SoulForgeMerge { get => _SoulForgeMerge ??= new SoulForgeMerge(); set => _SoulForgeMerge = value; }
+    private static SoulForgeMerge SoulForgeMerge
+    {
+        get => _SoulForgeMerge ??= new SoulForgeMerge();
+        set => _SoulForgeMerge = value;
+    }
     private static SoulForgeMerge _SoulForgeMerge;
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
-        Core.BankingBlackList.AddRange(new[] { "Undead Champion Blade", "Corrupted Dragon Slayer", "Wrath of the Legion Blade", "Fatal Keraunos", "Yami no Ronin Katana", "Dual Legion Soul Devourers", "Dage the Evil Insignia", "Sin Of the Underworld" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Undead Champion Blade",
+                "Corrupted Dragon Slayer",
+                "Wrath of the Legion Blade",
+                "Fatal Keraunos",
+                "Yami no Ronin Katana",
+                "Dual Legion Soul Devourers",
+                "Dage the Evil Insignia",
+                "Sin Of the Underworld",
+            }
+        );
         GetSword();
 
         Core.SetOptions(false);
@@ -61,7 +109,16 @@ public class SinoftheSinoftheUnderworldNoInsignia
 
     public void GetSword()
     {
-        Core.AddDrop("Undead Champion Blade", "Corrupted Dragon Slayer", "Wrath of the Legion Blade", "Fatal Keraunos", "Yami no Ronin Katana", "Dual Legion Soul Devourers", "Dage the Evil Insignia", "Sin Of the Underworld");
+        Core.AddDrop(
+            "Undead Champion Blade",
+            "Corrupted Dragon Slayer",
+            "Wrath of the Legion Blade",
+            "Fatal Keraunos",
+            "Yami no Ronin Katana",
+            "Dual Legion Soul Devourers",
+            "Dage the Evil Insignia",
+            "Sin Of the Underworld"
+        );
         AtlasFalls.Storyline();
 
         Core.EnsureAccept(10147);
@@ -76,7 +133,13 @@ public class SinoftheSinoftheUnderworldNoInsignia
             while (!Bot.ShouldExit && !Core.CheckInventory("Undead Champion Blade"))
             {
                 Core.EnsureAccept(821);
-                Core.HuntMonster("lair", "Water Draconian", "Flawless DracoHorn", 40, isTemp: false);
+                Core.HuntMonster(
+                    "lair",
+                    "Water Draconian",
+                    "Flawless DracoHorn",
+                    40,
+                    isTemp: false
+                );
                 Core.HuntMonster("lair", "Golden Draconian", "Golden DracoHeart");
                 Core.HuntMonster("lair", "Dark Draconian", "Dark DracoHeart");
                 Core.HuntMonster("lair", "Bronze Draconian", "Mammoth DracoHeart");
@@ -94,7 +157,14 @@ public class SinoftheSinoftheUnderworldNoInsignia
             while (!Bot.ShouldExit && !Core.CheckInventory(new[] { "Corrupted Dragon Slayer" }))
             {
                 Core.EquipClass(ClassType.Farm);
-                Core.KillMonster("doomhaven", "r4", "Down", "Skeletal Ice Mage", "Frostbit Skull", 15);
+                Core.KillMonster(
+                    "doomhaven",
+                    "r4",
+                    "Down",
+                    "Skeletal Ice Mage",
+                    "Frostbit Skull",
+                    15
+                );
                 Core.HuntMonster("Marsh2", "Lesser Shadow Serpent", "Potent Viper's Blood");
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("Marsh2", "Soulseeker", "Soul Scythe", isTemp: false);
@@ -135,9 +205,5 @@ public class SinoftheSinoftheUnderworldNoInsignia
                 Core.Logger("You have successfully obtained the Sin Of the Underworld.");
             }
         }
-
-
-
-
     }
 }

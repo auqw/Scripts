@@ -14,25 +14,39 @@ public class LibrarysLostandFoundMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Argus' Iris", "Underworld Linen", "River Glowstone", "Teacup Mace" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Argus' Iris", "Underworld Linen", "River Glowstone", "Teacup Mace" }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -49,7 +63,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,9 +76,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Argus' Iris":
                     Iris(quant);
@@ -101,15 +122,16 @@ private static CoreAdvanced _sAdv;
         Core.FarmingLogger("Underworld Linen", quant);
         if (!Core.isCompletedBefore(10098))
         {
-            Core.HuntMonsterQuest(10098,
-                ("dagefortress", "Scorned Knight", ClassType.Farm));
+            Core.HuntMonsterQuest(10098, ("dagefortress", "Scorned Knight", ClassType.Farm));
         }
         while (!Bot.ShouldExit && !Core.CheckInventory("Underworld Linen", quant))
         {
-            Core.HuntMonsterQuest(10099,
-                            ("judgement", "Minos", ClassType.Solo),
-                            ("judgement", "Rhadamanthys", ClassType.Solo),
-                            ("judgement", "Aeacus", ClassType.Solo));
+            Core.HuntMonsterQuest(
+                10099,
+                ("judgement", "Minos", ClassType.Solo),
+                ("judgement", "Rhadamanthys", ClassType.Solo),
+                ("judgement", "Aeacus", ClassType.Solo)
+            );
             Bot.Wait.ForPickup("Underworld Linen");
         }
         Core.CancelRegisteredQuests();
@@ -122,13 +144,11 @@ private static CoreAdvanced _sAdv;
             Glowstone(2);
         if (!Core.isCompletedBefore(10100))
         {
-            Core.HuntMonsterQuest(10100,
-            ("legionlibrary", "Cerberus Pup", ClassType.Farm));
+            Core.HuntMonsterQuest(10100, ("legionlibrary", "Cerberus Pup", ClassType.Farm));
         }
         while (!Bot.ShouldExit && !Core.CheckInventory("River Glowstone", quant))
         {
-            Core.HuntMonsterQuest(10101,
-                            ("styx", "Styx Hydra", ClassType.Solo));
+            Core.HuntMonsterQuest(10101, ("styx", "Styx Hydra", ClassType.Solo));
             Bot.Wait.ForPickup("River Glowstone");
         }
         Core.CancelRegisteredQuests();
@@ -136,17 +156,77 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("92402", "Argus Panoptes Gauntlets", "Mode: [select] only\nShould the bot buy \"Argus Panoptes Gauntlets\" ?", false),
-        new Option<bool>("92401", "Argus Panoptes Gauntlet", "Mode: [select] only\nShould the bot buy \"Argus Panoptes Gauntlet\" ?", false),
-        new Option<bool>("92400", "Phlegethon Magma", "Mode: [select] only\nShould the bot buy \"Phlegethon Magma\" ?", false),
-        new Option<bool>("92399", "Phlegethon Lava", "Mode: [select] only\nShould the bot buy \"Phlegethon Lava\" ?", false),
-        new Option<bool>("92305", "Legion Loremaster Tome", "Mode: [select] only\nShould the bot buy \"Legion Loremaster Tome\" ?", false),
-        new Option<bool>("92304", "Legion Lorekeeper Veil", "Mode: [select] only\nShould the bot buy \"Legion Lorekeeper Veil\" ?", false),
-        new Option<bool>("92303", "Legion Loremaster Veil", "Mode: [select] only\nShould the bot buy \"Legion Loremaster Veil\" ?", false),
-        new Option<bool>("92302", "Legion Loremaster", "Mode: [select] only\nShould the bot buy \"Legion Loremaster\" ?", false),
-        new Option<bool>("92408", "Legion Strategy Table", "Mode: [select] only\nShould the bot buy \"Legion Strategy Table\" ?", false),
-        new Option<bool>("92407", "Legion Study Table", "Mode: [select] only\nShould the bot buy \"Legion Study Table\" ?", false),
-        new Option<bool>("92470", "Underworld Lorekeeper", "Mode: [select] only\nShould the bot buy \"Underworld Lorekeeper\" ?", false),
-        new Option<bool>("92471", "Underworld Lorekeeper Veil", "Mode: [select] only\nShould the bot buy \"Underworld Lorekeeper Veil\" ?", false),
+        new Option<bool>(
+            "92402",
+            "Argus Panoptes Gauntlets",
+            "Mode: [select] only\nShould the bot buy \"Argus Panoptes Gauntlets\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92401",
+            "Argus Panoptes Gauntlet",
+            "Mode: [select] only\nShould the bot buy \"Argus Panoptes Gauntlet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92400",
+            "Phlegethon Magma",
+            "Mode: [select] only\nShould the bot buy \"Phlegethon Magma\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92399",
+            "Phlegethon Lava",
+            "Mode: [select] only\nShould the bot buy \"Phlegethon Lava\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92305",
+            "Legion Loremaster Tome",
+            "Mode: [select] only\nShould the bot buy \"Legion Loremaster Tome\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92304",
+            "Legion Lorekeeper Veil",
+            "Mode: [select] only\nShould the bot buy \"Legion Lorekeeper Veil\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92303",
+            "Legion Loremaster Veil",
+            "Mode: [select] only\nShould the bot buy \"Legion Loremaster Veil\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92302",
+            "Legion Loremaster",
+            "Mode: [select] only\nShould the bot buy \"Legion Loremaster\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92408",
+            "Legion Strategy Table",
+            "Mode: [select] only\nShould the bot buy \"Legion Strategy Table\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92407",
+            "Legion Study Table",
+            "Mode: [select] only\nShould the bot buy \"Legion Study Table\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92470",
+            "Underworld Lorekeeper",
+            "Mode: [select] only\nShould the bot buy \"Underworld Lorekeeper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92471",
+            "Underworld Lorekeeper Veil",
+            "Mode: [select] only\nShould the bot buy \"Underworld Lorekeeper Veil\" ?",
+            false
+        ),
     };
 }

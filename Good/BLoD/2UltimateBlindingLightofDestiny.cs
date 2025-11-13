@@ -16,7 +16,12 @@ public class UltimateBLoD
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
+    private static CoreBLOD _BLOD;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -71,8 +76,16 @@ public class UltimateBLoD
         {
             //More then one item of the same name as drop btoh temp and non-temp.
             while (!Bot.ShouldExit && !Core.CheckInventory(55903, 10))
-                Core.KillMonster("dflesson","r12", "Right", "Fluffy the Dracolich", log: false);
-            Core.KillMonster("dflesson", "r3", "Right", "Fire Elemental", "Fire Elemental's Bracer", 5, isTemp: false);
+                Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", log: false);
+            Core.KillMonster(
+                "dflesson",
+                "r3",
+                "Right",
+                "Fire Elemental",
+                "Fire Elemental's Bracer",
+                5,
+                isTemp: false
+            );
             Core.KillMonster("dflesson", "r6", "Right", "Tog", "Tog Claw", 5, isTemp: false);
 
             Bot.Wait.ForPickup("Shard of An Orb");
@@ -96,7 +109,15 @@ public class UltimateBLoD
             Core.EnsureAccept(7655);
             Core.EquipClass(ClassType.Solo);
 
-            Core.KillMonster("doomwood", "r10", "Right", "Undead Paladin", "Purification Orb", 10, isTemp: false);
+            Core.KillMonster(
+                "doomwood",
+                "r10",
+                "Right",
+                "Undead Paladin",
+                "Purification Orb",
+                10,
+                isTemp: false
+            );
 
             Core.AddDrop("Rainbow Moonstone");
             Core.RegisterQuests(7291);
@@ -111,7 +132,15 @@ public class UltimateBLoD
             }
             Core.CancelRegisteredQuests();
 
-            Core.KillMonster("desolich", "r3", "Left", "Desolich", "Desolich's Dark Horn", 3, isTemp: false);
+            Core.KillMonster(
+                "desolich",
+                "r3",
+                "Left",
+                "Desolich",
+                "Desolich's Dark Horn",
+                3,
+                isTemp: false
+            );
 
             Core.EnsureComplete(7655);
             Bot.Wait.ForPickup("Purified Undead Dragon Essence");

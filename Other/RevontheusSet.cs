@@ -32,11 +32,7 @@ public class RevontheusSet
 
     public void GetSet()
     {
-        string[] Set = {
-            "Revontheus Visage",
-            "Wings of Revontheus",
-            "Revontheus"
-        };
+        string[] Set = { "Revontheus Visage", "Wings of Revontheus", "Revontheus" };
 
         if (Core.CheckInventory(Set))
         {
@@ -52,6 +48,5 @@ public class RevontheusSet
 
         if (Bot.Config!.Get<bool>("Equip"))
             Core.Equip(Set);
-
     }
 }

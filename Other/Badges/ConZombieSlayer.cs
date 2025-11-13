@@ -8,11 +8,15 @@ tags: null
 using Skua.Core.Interfaces;
 
 public class ConZombieSlayer
-
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -29,7 +33,7 @@ public class ConZombieSlayer
         {
             Core.Logger($"Already have the {badge} badge");
             return;
-        }       
+        }
 
         Core.Logger($"Doing Artix quest for {badge} badge");
 
@@ -46,8 +50,18 @@ public class ConZombieSlayer
             Core.HuntMonster("battlecon", "Cosplay Zombie", "Water Bottle", log: false);
             Core.HuntMonster("battlecon", "Cosplay Zombie", "Hoopy Frood brand Towel", log: false);
             Core.HuntMonster("battlecon", "Cosplay Zombie", "Event Schedule", log: false);
-            Core.HuntMonster("battlecon", "Cosplay Zombie", "Xtra-Strength Energy Potion", log: false);
-            Core.HuntMonster("battlecon", "Cosplay Zombie", "Anti-Con Rot Sanitation Device", log: false);
+            Core.HuntMonster(
+                "battlecon",
+                "Cosplay Zombie",
+                "Xtra-Strength Energy Potion",
+                log: false
+            );
+            Core.HuntMonster(
+                "battlecon",
+                "Cosplay Zombie",
+                "Anti-Con Rot Sanitation Device",
+                log: false
+            );
             Core.EnsureComplete(3136);
         }
 
@@ -89,7 +103,6 @@ public class ConZombieSlayer
             Core.Sleep();
         }
         Core.AbandonQuest(3144);
-
     }
 
     private string badge = "ConZombie Slayer";

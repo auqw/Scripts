@@ -29,22 +29,29 @@ public class UltraMoglinPets
 
     public void TwigPet()
     {
-        if (Core.CheckInventory(Core.QuestRewards(10200)) || !Core.CheckInventory("Ultra Twig's Gift Pet"))
+        if (
+            Core.CheckInventory(Core.QuestRewards(10200))
+            || !Core.CheckInventory("Ultra Twig's Gift Pet")
+        )
             return;
 
         Core.AddDrop(Core.QuestRewards(10200));
 
         // Ultra Twig's Gift Quest [10200]
         Core.FarmingLogger(Core.QuestRewards(10200)[0], 1);
-        Core.HuntMonsterQuest(10200,
-                ("river", "Zardman Fisher", ClassType.Farm),
-                ("river", "Kuro", ClassType.Farm));
-
+        Core.HuntMonsterQuest(
+            10200,
+            ("river", "Zardman Fisher", ClassType.Farm),
+            ("river", "Kuro", ClassType.Farm)
+        );
     }
 
     public void TwillyPet()
     {
-        if (Core.CheckInventory(Core.QuestRewards(10199)) || !Core.CheckInventory("Ultra Twilly's Gift Pet"))
+        if (
+            Core.CheckInventory(Core.QuestRewards(10199))
+            || !Core.CheckInventory("Ultra Twilly's Gift Pet")
+        )
             return;
 
         Core.AddDrop(Core.QuestRewards(10199));
@@ -55,7 +62,10 @@ public class UltraMoglinPets
 
     public void ZorbakPet()
     {
-        if (Core.CheckInventory(Core.QuestRewards(10201)) || !Core.CheckInventory("Ultra Zorbak's Gift Pet"))
+        if (
+            Core.CheckInventory(Core.QuestRewards(10201))
+            || !Core.CheckInventory("Ultra Zorbak's Gift Pet")
+        )
             return;
 
         Core.AddDrop(Core.QuestRewards(10201));
@@ -64,5 +74,3 @@ public class UltraMoglinPets
         Core.HuntMonsterQuest(10201, "graveyard", "Skeletal Warrior", true);
     }
 }
-
-

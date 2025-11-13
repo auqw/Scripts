@@ -14,25 +14,39 @@ public class DarkWarLegionMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Legion Defender Medal", "Legion War Banner", "Legion Trophy " });
+        Core.BankingBlackList.AddRange(
+            new[] { "Legion Defender Medal", "Legion War Banner", "Legion Trophy " }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -53,7 +67,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -64,15 +80,28 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Legion Defender Medal":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(8584, 8585);
-                    Core.KillMonster("darkwarlegion", "r2", "Left", "Dreadfiend", req.Name, quant, req.Temp);
+                    Core.KillMonster(
+                        "darkwarlegion",
+                        "r2",
+                        "Left",
+                        "Dreadfiend",
+                        req.Name,
+                        quant,
+                        req.Temp
+                    );
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
@@ -95,7 +124,14 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(8586);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("darkwarlegion", "Dreadfiend", "Nation's Dread", 5, isTemp: false, log: false);
+                        Core.HuntMonster(
+                            "darkwarlegion",
+                            "Dreadfiend",
+                            "Nation's Dread",
+                            5,
+                            isTemp: false,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -112,29 +148,113 @@ private static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("68984", "Soulfire Blademaster", "Mode: [select] only\nShould the bot buy \"Soulfire Blademaster\" ?", false),
-        new Option<bool>("68991", "Soulfire Mask", "Mode: [select] only\nShould the bot buy \"Soulfire Mask\" ?", false),
-        new Option<bool>("68992", "Soulfire Mask + Ponytail", "Mode: [select] only\nShould the bot buy \"Soulfire Mask + Ponytail\" ?", false),
-        new Option<bool>("68993", "Soulfire Armet", "Mode: [select] only\nShould the bot buy \"Soulfire Armet\" ?", false),
-        new Option<bool>("68995", "Soulfire Armet + Scarf", "Mode: [select] only\nShould the bot buy \"Soulfire Armet + Scarf\" ?", false),
-        new Option<bool>("69003", "Soulfire Odachi", "Mode: [select] only\nShould the bot buy \"Soulfire Odachi\" ?", false),
-        new Option<bool>("69008", "Soulfire Tonfa", "Mode: [select] only\nShould the bot buy \"Soulfire Tonfa\" ?", false),
-        new Option<bool>("69004", "Soulfire Odachis", "Mode: [select] only\nShould the bot buy \"Soulfire Odachis\" ?", false),
-        new Option<bool>("69009", "Soulfire Tonfas", "Mode: [select] only\nShould the bot buy \"Soulfire Tonfas\" ?", false),
-        new Option<bool>("68985", "Soulfire Warmonger", "Mode: [select] only\nShould the bot buy \"Soulfire Warmonger\" ?", false),
-        new Option<bool>("68986", "Flaming Soulfire Warmonger", "Mode: [select] only\nShould the bot buy \"Flaming Soulfire Warmonger\" ?", false),
-        new Option<bool>("68994", "Horned Soulfire Armet", "Mode: [select] only\nShould the bot buy \"Horned Soulfire Armet\" ?", false),
-        new Option<bool>("68996", "Horned Soulfire Armet + Scarf", "Mode: [select] only\nShould the bot buy \"Horned Soulfire Armet + Scarf\" ?", false),
-        new Option<bool>("69000", "Soulfire Cloak", "Mode: [select] only\nShould the bot buy \"Soulfire Cloak\" ?", false),
-        new Option<bool>("69001", "Flaming Soulfire Cloak", "Mode: [select] only\nShould the bot buy \"Flaming Soulfire Cloak\" ?", false),
-        new Option<bool>("68763", "Dirk of the Underworld", "Mode: [select] only\nShould the bot buy \"Dirk of the Underworld\" ?", false),
-        new Option<bool>("68764", "Daggers of the Underworld", "Mode: [select] only\nShould the bot buy \"Daggers of the Underworld\" ?", false),
+        new Option<bool>(
+            "68984",
+            "Soulfire Blademaster",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Blademaster\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68991",
+            "Soulfire Mask",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68992",
+            "Soulfire Mask + Ponytail",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Mask + Ponytail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68993",
+            "Soulfire Armet",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Armet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68995",
+            "Soulfire Armet + Scarf",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Armet + Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69003",
+            "Soulfire Odachi",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Odachi\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69008",
+            "Soulfire Tonfa",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Tonfa\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69004",
+            "Soulfire Odachis",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Odachis\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69009",
+            "Soulfire Tonfas",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Tonfas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68985",
+            "Soulfire Warmonger",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Warmonger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68986",
+            "Flaming Soulfire Warmonger",
+            "Mode: [select] only\nShould the bot buy \"Flaming Soulfire Warmonger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68994",
+            "Horned Soulfire Armet",
+            "Mode: [select] only\nShould the bot buy \"Horned Soulfire Armet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68996",
+            "Horned Soulfire Armet + Scarf",
+            "Mode: [select] only\nShould the bot buy \"Horned Soulfire Armet + Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69000",
+            "Soulfire Cloak",
+            "Mode: [select] only\nShould the bot buy \"Soulfire Cloak\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69001",
+            "Flaming Soulfire Cloak",
+            "Mode: [select] only\nShould the bot buy \"Flaming Soulfire Cloak\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68763",
+            "Dirk of the Underworld",
+            "Mode: [select] only\nShould the bot buy \"Dirk of the Underworld\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68764",
+            "Daggers of the Underworld",
+            "Mode: [select] only\nShould the bot buy \"Daggers of the Underworld\" ?",
+            false
+        ),
     };
 }

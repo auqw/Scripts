@@ -18,20 +18,37 @@ public class FimbulTombMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreFrostvale FV { get => _FV ??= new CoreFrostvale(); set => _FV = value; }
+    private static CoreFrostvale FV
+    {
+        get => _FV ??= new CoreFrostvale();
+        set => _FV = value;
+    }
     private static CoreFrostvale _FV;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +73,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +86,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Fimbul's Frost":
                     Core.FarmingLogger(req.Name, quant);
@@ -77,10 +101,21 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("glacetomb", "Kriomein", "Valedictorian Speech", log: false);
+                        Core.HuntMonster(
+                            "glacetomb",
+                            "Kriomein",
+                            "Valedictorian Speech",
+                            log: false
+                        );
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("glacetomb", "Draugr", "Frozen Marrow", 8, log: false);
-                        Core.HuntMonster("glacetomb", "Snow Fairy", "Crystalline Wings", 8, log: false);
+                        Core.HuntMonster(
+                            "glacetomb",
+                            "Snow Fairy",
+                            "Crystalline Wings",
+                            8,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -92,7 +127,12 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(9519);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("fimbultomb", "Fimbulventr Witch", "Ice Crown", log: false);
+                        Core.HuntMonster(
+                            "fimbultomb",
+                            "Fimbulventr Witch",
+                            "Ice Crown",
+                            log: false
+                        );
                         Core.HuntMonster("fimbultomb", "Daselm", "Daselm's Thesis", log: false);
                         Core.HuntMonster("fimbultomb", "Peter", "Peter's Recc Letter", log: false);
                         Bot.Wait.ForPickup(req.Name);
@@ -105,14 +145,59 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("82387", "Cursed Fimbulventr Witch", "Mode: [select] only\nShould the bot buy \"Cursed Fimbulventr Witch\" ?", false),
-        new Option<bool>("82388", "Fimbulventr Witch", "Mode: [select] only\nShould the bot buy \"Fimbulventr Witch\" ?", false),
-        new Option<bool>("82389", "Fimbulventr Witch Visage", "Mode: [select] only\nShould the bot buy \"Fimbulventr Witch Visage\" ?", false),
-        new Option<bool>("82390", "Fimbulventr Witch Locks", "Mode: [select] only\nShould the bot buy \"Fimbulventr Witch Locks\" ?", false),
-        new Option<bool>("82391", "Fimbulventr Witch Hair", "Mode: [select] only\nShould the bot buy \"Fimbulventr Witch Hair\" ?", false),
-        new Option<bool>("82392", "Vengeful Azure Blossom Staff", "Mode: [select] only\nShould the bot buy \"Vengeful Azure Blossom Staff\" ?", false),
-        new Option<bool>("82393", "Resonating Azure Blossom Staff", "Mode: [select] only\nShould the bot buy \"Resonating Azure Blossom Staff\" ?", false),
-        new Option<bool>("82394", "Melodic Ice Crystal", "Mode: [select] only\nShould the bot buy \"Melodic Ice Crystal\" ?", false),
-        new Option<bool>("82395", "Melodic Ice Crystals", "Mode: [select] only\nShould the bot buy \"Melodic Ice Crystals\" ?", false),
+        new Option<bool>(
+            "82387",
+            "Cursed Fimbulventr Witch",
+            "Mode: [select] only\nShould the bot buy \"Cursed Fimbulventr Witch\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82388",
+            "Fimbulventr Witch",
+            "Mode: [select] only\nShould the bot buy \"Fimbulventr Witch\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82389",
+            "Fimbulventr Witch Visage",
+            "Mode: [select] only\nShould the bot buy \"Fimbulventr Witch Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82390",
+            "Fimbulventr Witch Locks",
+            "Mode: [select] only\nShould the bot buy \"Fimbulventr Witch Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82391",
+            "Fimbulventr Witch Hair",
+            "Mode: [select] only\nShould the bot buy \"Fimbulventr Witch Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82392",
+            "Vengeful Azure Blossom Staff",
+            "Mode: [select] only\nShould the bot buy \"Vengeful Azure Blossom Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82393",
+            "Resonating Azure Blossom Staff",
+            "Mode: [select] only\nShould the bot buy \"Resonating Azure Blossom Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82394",
+            "Melodic Ice Crystal",
+            "Mode: [select] only\nShould the bot buy \"Melodic Ice Crystal\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82395",
+            "Melodic Ice Crystals",
+            "Mode: [select] only\nShould the bot buy \"Melodic Ice Crystals\" ?",
+            false
+        ),
     };
 }

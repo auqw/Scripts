@@ -17,20 +17,37 @@ public class WinterHorrorWarRewardsMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
     private static CoreAdvanced _sAdv;
 
-    private static CoreFrostvale FV { get => _FV ??= new CoreFrostvale(); set => _FV = value; }
+    private static CoreFrostvale FV
+    {
+        get => _FV ??= new CoreFrostvale();
+        set => _FV = value;
+    }
     private static CoreFrostvale _FV;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +73,9 @@ public class WinterHorrorWarRewardsMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +86,14 @@ public class WinterHorrorWarRewardsMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Grief Medal":
                     Core.FarmingLogger(req.Name, quant);
@@ -83,23 +107,77 @@ public class WinterHorrorWarRewardsMerge
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("57917", "Polar Bear Hoodie", "Mode: [select] only\nShould the bot buy \"Polar Bear Hoodie\" ?", false),
-        new Option<bool>("57918", "Polar Bear Hood", "Mode: [select] only\nShould the bot buy \"Polar Bear Hood\" ?", false),
-        new Option<bool>("57919", "Polar Bear Hood + Locks", "Mode: [select] only\nShould the bot buy \"Polar Bear Hood + Locks\" ?", false),
-        new Option<bool>("58116", "Enchanted Hoodie Outfit", "Mode: [select] only\nShould the bot buy \"Enchanted Hoodie Outfit\" ?", false),
-        new Option<bool>("58117", "Enchanted Hood + Locks", "Mode: [select] only\nShould the bot buy \"Enchanted Hood + Locks\" ?", false),
-        new Option<bool>("58118", "Enchanted Hood", "Mode: [select] only\nShould the bot buy \"Enchanted Hood\" ?", false),
-        new Option<bool>("58119", "Enchanted Winter Hat + Locks", "Mode: [select] only\nShould the bot buy \"Enchanted Winter Hat + Locks\" ?", false),
-        new Option<bool>("58120", "Enchanted Winter Hat", "Mode: [select] only\nShould the bot buy \"Enchanted Winter Hat\" ?", false),
-        new Option<bool>("58549", "Icy Frostlorn Scythe", "Mode: [select] only\nShould the bot buy \"Icy Frostlorn Scythe\" ?", false),
-        new Option<bool>("58545", "Icy Frostlorn Axe", "Mode: [select] only\nShould the bot buy \"Icy Frostlorn Axe\" ?", false),
-        new Option<bool>("58547", "Icy Frostlorn Sickle", "Mode: [select] only\nShould the bot buy \"Icy Frostlorn Sickle\" ?", false),
+        new Option<bool>(
+            "57917",
+            "Polar Bear Hoodie",
+            "Mode: [select] only\nShould the bot buy \"Polar Bear Hoodie\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57918",
+            "Polar Bear Hood",
+            "Mode: [select] only\nShould the bot buy \"Polar Bear Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57919",
+            "Polar Bear Hood + Locks",
+            "Mode: [select] only\nShould the bot buy \"Polar Bear Hood + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58116",
+            "Enchanted Hoodie Outfit",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Hoodie Outfit\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58117",
+            "Enchanted Hood + Locks",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Hood + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58118",
+            "Enchanted Hood",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58119",
+            "Enchanted Winter Hat + Locks",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Winter Hat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58120",
+            "Enchanted Winter Hat",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Winter Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58549",
+            "Icy Frostlorn Scythe",
+            "Mode: [select] only\nShould the bot buy \"Icy Frostlorn Scythe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58545",
+            "Icy Frostlorn Axe",
+            "Mode: [select] only\nShould the bot buy \"Icy Frostlorn Axe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58547",
+            "Icy Frostlorn Sickle",
+            "Mode: [select] only\nShould the bot buy \"Icy Frostlorn Sickle\" ?",
+            false
+        ),
     };
 }

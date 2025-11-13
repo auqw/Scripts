@@ -17,10 +17,30 @@ public class TradingandStuffDual
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }    private static CoreHollowborn _HB;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
+    private static CoreHollowborn _HB;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,7 +53,10 @@ public class TradingandStuffDual
 
     public void GetBlade()
     {
-        if (Core.CheckInventory("Hollowborn Oblivion Blade") || !Core.CheckInventory("Dual Oblivion Blade of Nulgath"))
+        if (
+            Core.CheckInventory("Hollowborn Oblivion Blade")
+            || !Core.CheckInventory("Dual Oblivion Blade of Nulgath")
+        )
             return;
 
         Core.AddDrop("Hollowborn Oblivion Blade");
@@ -53,7 +76,13 @@ public class TradingandStuffDual
         HB.FreshSouls(1, 100);
         Core.EnsureComplete(7295);
         Bot.Wait.ForPickup("Hollowborn Oblivion Blade");
-        Adv.EnhanceItem("Hollowborn Oblivion Blade", EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Spiral_Carve);
+        Adv.EnhanceItem(
+            "Hollowborn Oblivion Blade",
+            EnhancementType.Lucky,
+            CapeSpecial.None,
+            HelmSpecial.None,
+            WeaponSpecial.Spiral_Carve
+        );
     }
 
     public void ArchFiendEnchantedOrbs()

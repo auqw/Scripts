@@ -16,18 +16,27 @@ public class TheBlindingLightofDestiny
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
     private static CoreBLOD _BLOD;
 
     public string OptionsStorage = "BLOD_options";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<BLODMethod>("BLODMethod", "Method", "Which method do you want the bot to farm BLOD?" +
-            "\nFewest Dailies:\tBlinding Blade of Destiny" +
-            "\nOptimized:\tBlinding Daggers & Mace of Destiny" +
-            "\nFewest Hours:\tBlinding Mace, Bow & Blade of Destiny", BLODMethod.Optimized),
-        CoreBots.Instance.SkipOptions
+        new Option<BLODMethod>(
+            "BLODMethod",
+            "Method",
+            "Which method do you want the bot to farm BLOD?"
+                + "\nFewest Dailies:\tBlinding Blade of Destiny"
+                + "\nOptimized:\tBlinding Daggers & Mace of Destiny"
+                + "\nFewest Hours:\tBlinding Mace, Bow & Blade of Destiny",
+            BLODMethod.Optimized
+        ),
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface Bot)

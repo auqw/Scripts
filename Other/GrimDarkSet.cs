@@ -14,8 +14,18 @@ public class GrimDarkSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static MustyCave Cave { get => _Cave ??= new MustyCave(); set => _Cave = value; }    private static MustyCave _Cave;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static MustyCave Cave
+    {
+        get => _Cave ??= new MustyCave();
+        set => _Cave = value;
+    }
+    private static MustyCave _Cave;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -28,7 +38,8 @@ public class GrimDarkSet
 
     public void GetAll()
     {
-        if (!Bot.Quests.IsUnlocked(7049)) {
+        if (!Bot.Quests.IsUnlocked(7049))
+        {
             Cave.Storyline();
         }
 

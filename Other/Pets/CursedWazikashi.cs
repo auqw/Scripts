@@ -13,7 +13,12 @@ public class CursedWazikashi
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -53,7 +58,5 @@ public class CursedWazikashi
 
         // Combin
         Core.BuyItem("yokairiver", 2326, "Cursed Wakizashi Pet", shopItemID: 12048);
-
     }
-
 }

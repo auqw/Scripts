@@ -11,21 +11,35 @@ public class CrashSite
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "DwaToken I", "DwaToken II", "DwaToken III",
-                                               "DwaToken IV", "DwaToken V", "DwaToken VI",
-                                               "DwaToken VII", "DwaToken VIII", "DwaToken IX",
-                                               "DwaToken X" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "DwaToken I",
+                "DwaToken II",
+                "DwaToken III",
+                "DwaToken IV",
+                "DwaToken V",
+                "DwaToken VI",
+                "DwaToken VII",
+                "DwaToken VIII",
+                "DwaToken IX",
+                "DwaToken X",
+            }
+        );
         Core.SetOptions();
 
         StoryLine();
 
-
         Core.SetOptions(false);
-
     }
 
     public void StoryLine()
@@ -34,13 +48,24 @@ public class CrashSite
             return;
 
         //Add questIDs of the tokenQuests on their right ordre
-        Story.LegacyQuestManager(QuestLogic, 4787, 4788, 4789, 4790, 4791, 4792, 4793, 4794, 4795, 4796);
+        Story.LegacyQuestManager(
+            QuestLogic,
+            4787,
+            4788,
+            4789,
+            4790,
+            4791,
+            4792,
+            4793,
+            4794,
+            4795,
+            4796
+        );
 
         void QuestLogic()
         {
             switch (Story.LegacyQuestID)
             {
-
                 case 4787: //Mug Me Some Dwakels 4787
                     Core.HuntMonster("crashsite", "Dwakel Warrior", "Pneumatic Relay");
                     Core.HuntMonster("crashsite", "Flamethrower Dwakel", "Sonic Transducer");
@@ -86,7 +111,6 @@ public class CrashSite
                 case 4796: //Fried Chicken 4796
                     Core.HuntMonster("crashruins", "Cluckmoo Idol", "Cluckmoo Idol Defeated");
                     break;
-
             }
         }
     }

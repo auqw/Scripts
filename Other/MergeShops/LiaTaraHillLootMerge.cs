@@ -17,27 +17,52 @@ public class LiaTaraHillLootMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
     private static CoreAOR _AOR;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Salvaged Skye Armament", "Golden Catalyst", "Plasma Orb", "Drained Skye Obelisk" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Salvaged Skye Armament",
+                "Golden Catalyst",
+                "Plasma Orb",
+                "Drained Skye Obelisk",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -55,7 +80,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,13 +93,27 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Salvaged Skye Armament":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.KillMonster("castleeblana", "r2", "Left", "Skye Warrior", req.Name, quant, req.Temp, false);
+                    Core.KillMonster(
+                        "castleeblana",
+                        "r2",
+                        "Left",
+                        "Skye Warrior",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
                     break;
 
                 case "Golden Catalyst":
@@ -81,10 +122,27 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("liatarahill", "Undead Garde", "Garde's Brooch", 9, log: false);
-                        Core.HuntMonster("liatarahill", "Garde Wraith", "Ghost Blossoms", 9, log: false);
+                        Core.HuntMonster(
+                            "liatarahill",
+                            "Undead Garde",
+                            "Garde's Brooch",
+                            9,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "liatarahill",
+                            "Garde Wraith",
+                            "Ghost Blossoms",
+                            9,
+                            log: false
+                        );
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("liatarahill", "Warden Illaria", "Illaria's Amulet", log: false);
+                        Core.HuntMonster(
+                            "liatarahill",
+                            "Warden Illaria",
+                            "Illaria's Amulet",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -94,7 +152,14 @@ private static CoreAdvanced _sAdv;
                 case "Drained Skye Obelisk":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("liatarahill", "Warden Illaria", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(
+                        "liatarahill",
+                        "Warden Illaria",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
                     break;
             }
         }
@@ -102,12 +167,47 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("86350", "Skye Cailleach", "Mode: [select] only\nShould the bot buy \"Skye Cailleach\" ?", false),
-        new Option<bool>("86351", "Skye Cailleach Hood", "Mode: [select] only\nShould the bot buy \"Skye Cailleach Hood\" ?", false),
-        new Option<bool>("86558", "Plasma Orbs", "Mode: [select] only\nShould the bot buy \"Plasma Orbs\" ?", false),
-        new Option<bool>("86352", "Skye Warden of the South", "Mode: [select] only\nShould the bot buy \"Skye Warden of the South\" ?", false),
-        new Option<bool>("86353", "Skye Warden's Ornate Mask", "Mode: [select] only\nShould the bot buy \"Skye Warden's Ornate Mask\" ?", false),
-        new Option<bool>("87186", "Skye Obelisk", "Mode: [select] only\nShould the bot buy \"Skye Obelisk\" ?", false),
-        new Option<bool>("87185", "Shattered Skye Obelisk", "Mode: [select] only\nShould the bot buy \"Shattered Skye Obelisk\" ?", false),
+        new Option<bool>(
+            "86350",
+            "Skye Cailleach",
+            "Mode: [select] only\nShould the bot buy \"Skye Cailleach\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86351",
+            "Skye Cailleach Hood",
+            "Mode: [select] only\nShould the bot buy \"Skye Cailleach Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86558",
+            "Plasma Orbs",
+            "Mode: [select] only\nShould the bot buy \"Plasma Orbs\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86352",
+            "Skye Warden of the South",
+            "Mode: [select] only\nShould the bot buy \"Skye Warden of the South\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86353",
+            "Skye Warden's Ornate Mask",
+            "Mode: [select] only\nShould the bot buy \"Skye Warden's Ornate Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87186",
+            "Skye Obelisk",
+            "Mode: [select] only\nShould the bot buy \"Skye Obelisk\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87185",
+            "Shattered Skye Obelisk",
+            "Mode: [select] only\nShould the bot buy \"Shattered Skye Obelisk\" ?",
+            false
+        ),
     };
 }

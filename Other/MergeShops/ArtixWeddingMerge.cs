@@ -15,21 +15,36 @@ public class ArtixWeddingMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -54,7 +69,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +82,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Love Token":
                     Core.FarmingLogger(req.Name, quant);
@@ -78,31 +100,125 @@ public static CoreAdvanced _sAdv;
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("21402", "Artix's Wedding Party", "Mode: [select] only\nShould the bot buy \"Artix's Wedding Party\" ?", false),
-        new Option<bool>("21411", "Bellhop Minion", "Mode: [select] only\nShould the bot buy \"Bellhop Minion\" ?", false),
-        new Option<bool>("21499", "Ebil Ninja", "Mode: [select] only\nShould the bot buy \"Ebil Ninja\" ?", false),
-        new Option<bool>("21487", "Legendary Wedding Usher", "Mode: [select] only\nShould the bot buy \"Legendary Wedding Usher\" ?", false),
-        new Option<bool>("21474", "Red Wedding Guest", "Mode: [select] only\nShould the bot buy \"Red Wedding Guest\" ?", false),
-        new Option<bool>("21472", "Silver Wedding Guest", "Mode: [select] only\nShould the bot buy \"Silver Wedding Guest\" ?", false),
-        new Option<bool>("21512", "Ebil Ninja Hood", "Mode: [select] only\nShould the bot buy \"Ebil Ninja Hood\" ?", false),
-        new Option<bool>("21492", "Wedding Usher Helm", "Mode: [select] only\nShould the bot buy \"Wedding Usher Helm\" ?", false),
-        new Option<bool>("21484", "Red Bouquet-on-Your-Back", "Mode: [select] only\nShould the bot buy \"Red Bouquet-on-Your-Back\" ?", false),
-        new Option<bool>("21483", "Silver Bouquet-on-Your-Back", "Mode: [select] only\nShould the bot buy \"Silver Bouquet-on-Your-Back\" ?", false),
-        new Option<bool>("21624", "Crimson ZARDIS Key", "Mode: [select] only\nShould the bot buy \"Crimson ZARDIS Key\" ?", false),
-        new Option<bool>("21598", "ZARDIS Key", "Mode: [select] only\nShould the bot buy \"ZARDIS Key\" ?", false),
-        new Option<bool>("21488", "Bullhorn Of Love", "Mode: [select] only\nShould the bot buy \"Bullhorn Of Love\" ?", false),
-        new Option<bool>("21480", "Red Bouquet", "Mode: [select] only\nShould the bot buy \"Red Bouquet\" ?", false),
-        new Option<bool>("21479", "Silver Bouquet", "Mode: [select] only\nShould the bot buy \"Silver Bouquet\" ?", false),
-        new Option<bool>("21476", "Red Rose", "Mode: [select] only\nShould the bot buy \"Red Rose\" ?", false),
-        new Option<bool>("21475", "Silver Rose", "Mode: [select] only\nShould the bot buy \"Silver Rose\" ?", false),
-        new Option<bool>("21640", "Black Thorn Blade", "Mode: [select] only\nShould the bot buy \"Black Thorn Blade\" ?", false),
-        new Option<bool>("21643", "Pink Wedding Guest", "Mode: [select] only\nShould the bot buy \"Pink Wedding Guest\" ?", false),
+        new Option<bool>(
+            "21402",
+            "Artix's Wedding Party",
+            "Mode: [select] only\nShould the bot buy \"Artix's Wedding Party\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21411",
+            "Bellhop Minion",
+            "Mode: [select] only\nShould the bot buy \"Bellhop Minion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21499",
+            "Ebil Ninja",
+            "Mode: [select] only\nShould the bot buy \"Ebil Ninja\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21487",
+            "Legendary Wedding Usher",
+            "Mode: [select] only\nShould the bot buy \"Legendary Wedding Usher\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21474",
+            "Red Wedding Guest",
+            "Mode: [select] only\nShould the bot buy \"Red Wedding Guest\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21472",
+            "Silver Wedding Guest",
+            "Mode: [select] only\nShould the bot buy \"Silver Wedding Guest\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21512",
+            "Ebil Ninja Hood",
+            "Mode: [select] only\nShould the bot buy \"Ebil Ninja Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21492",
+            "Wedding Usher Helm",
+            "Mode: [select] only\nShould the bot buy \"Wedding Usher Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21484",
+            "Red Bouquet-on-Your-Back",
+            "Mode: [select] only\nShould the bot buy \"Red Bouquet-on-Your-Back\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21483",
+            "Silver Bouquet-on-Your-Back",
+            "Mode: [select] only\nShould the bot buy \"Silver Bouquet-on-Your-Back\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21624",
+            "Crimson ZARDIS Key",
+            "Mode: [select] only\nShould the bot buy \"Crimson ZARDIS Key\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21598",
+            "ZARDIS Key",
+            "Mode: [select] only\nShould the bot buy \"ZARDIS Key\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21488",
+            "Bullhorn Of Love",
+            "Mode: [select] only\nShould the bot buy \"Bullhorn Of Love\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21480",
+            "Red Bouquet",
+            "Mode: [select] only\nShould the bot buy \"Red Bouquet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21479",
+            "Silver Bouquet",
+            "Mode: [select] only\nShould the bot buy \"Silver Bouquet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21476",
+            "Red Rose",
+            "Mode: [select] only\nShould the bot buy \"Red Rose\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21475",
+            "Silver Rose",
+            "Mode: [select] only\nShould the bot buy \"Silver Rose\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21640",
+            "Black Thorn Blade",
+            "Mode: [select] only\nShould the bot buy \"Black Thorn Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "21643",
+            "Pink Wedding Guest",
+            "Mode: [select] only\nShould the bot buy \"Pink Wedding Guest\" ?",
+            false
+        ),
     };
 }

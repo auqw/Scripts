@@ -12,9 +12,17 @@ public class TempleDelve
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static TempleSiege TS { get => _TS ??= new TempleSiege(); set => _TS = value; }
+    private static TempleSiege TS
+    {
+        get => _TS ??= new TempleSiege();
+        set => _TS = value;
+    }
     private static TempleSiege _TS;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -27,7 +35,6 @@ public class TempleDelve
 
     public void Storyline()
     {
-
         // Core.isCompletedBefore(9143) aways returns true...? evne if none of these are complete
         if (!Core.isSeasonalMapActive("templedelve"))
             return;
@@ -88,7 +95,11 @@ public class TempleDelve
         Story.MapItemQuest(9136, "siegefortress", 11313);
 
         // Banal Barage 9137
-        Story.KillQuest(9137, "siegefortress", new[] { "Legion Dread Knight", "Legion Dreadmarch" });
+        Story.KillQuest(
+            9137,
+            "siegefortress",
+            new[] { "Legion Dread Knight", "Legion Dreadmarch" }
+        );
 
         // Bluebirds 9138
         Story.KillQuest(9138, "siegefortress", "Shadow Traitor");

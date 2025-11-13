@@ -120,22 +120,29 @@ tags: Grimskull trolling, Grimskull, Rep, Reputation, Grimgaol, Lich, Verata's N
 #endregion includes
 
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Auras;
+using Skua.Core.Models.Items;
+using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Players;
 using Skua.Core.Options;
-using Newtonsoft.Json.Linq;
-using Skua.Core.Models.Monsters;
-using Skua.Core.Models.Items;
-using Skua.Core.Models.Auras;
-
 
 public class GrimskullTrollingRep
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static Grimgaol GrimGaolRun { get => _GrimGaolRun ??= new Grimgaol(); set => _GrimGaolRun = value; }
+    private static Grimgaol GrimGaolRun
+    {
+        get => _GrimGaolRun ??= new Grimgaol();
+        set => _GrimGaolRun = value;
+    }
     private static Grimgaol _GrimGaolRun;
     public static Grimgaol GGrimGaolRun
     {
@@ -143,7 +150,6 @@ public class GrimskullTrollingRep
         set => _GGrimGaolRun = value;
     }
     public static Grimgaol _GGrimGaolRun;
-
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = GGrimGaolRun.OptionsStorage;

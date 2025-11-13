@@ -11,7 +11,11 @@ public class ThunderFang
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -51,6 +55,5 @@ public class ThunderFang
 
         // Claim the Tempestas Egg 4246
         Story.KillQuest(4246, "thunderfang", "Storm Draconian");
-
     }
 }

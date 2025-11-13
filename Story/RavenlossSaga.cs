@@ -11,7 +11,12 @@ public class RavenlossSaga
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -55,7 +60,14 @@ public class RavenlossSaga
         {
             Core.EnsureAccept(3429);
             Core.GetMapItem(2578, 1, "WeaverWar");
-            Core.KillMonster("WeaverWar", "s1", "Spawn", "Weaver Queen's Hound", "Weaver Hounds Slain", 6);
+            Core.KillMonster(
+                "WeaverWar",
+                "s1",
+                "Spawn",
+                "Weaver Queen's Hound",
+                "Weaver Hounds Slain",
+                6
+            );
             Core.EnsureComplete(3429);
         }
 
@@ -82,7 +94,14 @@ public class RavenlossSaga
         {
             Core.EnsureAccept(3432);
             Core.GetMapItem(2581, 1, "WeaverWar");
-            Core.KillMonster("WeaverWar", "do1", "Spawn", "Weaver Queen's Hound", "Weaver Hound Slain", 6);
+            Core.KillMonster(
+                "WeaverWar",
+                "do1",
+                "Spawn",
+                "Weaver Queen's Hound",
+                "Weaver Hound Slain",
+                6
+            );
             Core.EnsureComplete(3432);
         }
 
@@ -150,7 +169,7 @@ public class RavenlossSaga
             return;
 
         WeaverWar();
-        
+
         Story.PreLoad(this);
 
         //Chaos Weavers' Magic  3450
@@ -185,7 +204,5 @@ public class RavenlossSaga
 
         //Defeat the ChaosWeaver Cleric 3460
         Story.KillQuest(3460, "ChaosWeb", "ChaosWeaver Cleric");
-
     }
-
 }

@@ -14,25 +14,60 @@ public class GemsofLoveMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "White Oval", "White Box", "Oval Setting", "Sparkles", "Blush Brilliant", "Blush Box", "Brilliant Setting", "Pink Pear", "Pink Box", "Pear Setting", "Half Rose", "Rose Box", "Half Rose Setting", "Cerise Trillian", "Cerise Box", "Trillian Setting", "Ruby Heart", "Ruby Box", "Heart Setting" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "White Oval",
+                "White Box",
+                "Oval Setting",
+                "Sparkles",
+                "Blush Brilliant",
+                "Blush Box",
+                "Brilliant Setting",
+                "Pink Pear",
+                "Pink Box",
+                "Pear Setting",
+                "Half Rose",
+                "Rose Box",
+                "Half Rose Setting",
+                "Cerise Trillian",
+                "Cerise Box",
+                "Trillian Setting",
+                "Ruby Heart",
+                "Ruby Box",
+                "Heart Setting",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -49,7 +84,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,9 +97,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "White Oval":
                 case "Blush Brilliant":
@@ -141,7 +183,12 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(7373);
-                        Core.HuntMonster("castleofglass", "Chihuly", "Cerise Box Found", log: false);
+                        Core.HuntMonster(
+                            "castleofglass",
+                            "Chihuly",
+                            "Cerise Box Found",
+                            log: false
+                        );
                         Core.EnsureComplete(7373, req.ID);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -154,7 +201,12 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(7374);
-                        Core.HuntMonster("beleensdream", "Heart Elemental", "Ruby Box Found", log: false);
+                        Core.HuntMonster(
+                            "beleensdream",
+                            "Heart Elemental",
+                            "Ruby Box Found",
+                            log: false
+                        );
                         Core.EnsureComplete(7374, req.ID);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -165,19 +217,89 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("53363", "Ring of White Diamonds Cape", "Mode: [select] only\nShould the bot buy \"Ring of White Diamonds Cape\" ?", false),
-        new Option<bool>("53357", "White Diamond Gem Pet", "Mode: [select] only\nShould the bot buy \"White Diamond Gem Pet\" ?", false),
-        new Option<bool>("53364", "Ring of Blush Brilliants Cape", "Mode: [select] only\nShould the bot buy \"Ring of Blush Brilliants Cape\" ?", false),
-        new Option<bool>("53358", "Blush Brilliant Gem Pet", "Mode: [select] only\nShould the bot buy \"Blush Brilliant Gem Pet\" ?", false),
-        new Option<bool>("53365", "Ring of Pink Pears Cape", "Mode: [select] only\nShould the bot buy \"Ring of Pink Pears Cape\" ?", false),
-        new Option<bool>("53359", "Pink Pear Gem Pet", "Mode: [select] only\nShould the bot buy \"Pink Pear Gem Pet\" ?", false),
-        new Option<bool>("53366", "Ring of Rose Hexagons Cape", "Mode: [select] only\nShould the bot buy \"Ring of Rose Hexagons Cape\" ?", false),
-        new Option<bool>("53360", "Rose Hexagon Gem Pet", "Mode: [select] only\nShould the bot buy \"Rose Hexagon Gem Pet\" ?", false),
-        new Option<bool>("53367", "Ring of Cerise Trillians Cape", "Mode: [select] only\nShould the bot buy \"Ring of Cerise Trillians Cape\" ?", false),
-        new Option<bool>("53361", "Cerise Trillian Gem Pet", "Mode: [select] only\nShould the bot buy \"Cerise Trillian Gem Pet\" ?", false),
-        new Option<bool>("53368", "Ring of Ruby Hearts Cape", "Mode: [select] only\nShould the bot buy \"Ring of Ruby Hearts Cape\" ?", false),
-        new Option<bool>("53362", "Ruby Heart Gem Pet", "Mode: [select] only\nShould the bot buy \"Ruby Heart Gem Pet\" ?", false),
-        new Option<bool>("53369", "Ring of Gems Cape", "Mode: [select] only\nShould the bot buy \"Ring of Gems Cape\" ?", false),
-        new Option<bool>("53371", "Ring of Gems", "Mode: [select] only\nShould the bot buy \"Ring of Gems\" ?", false),
+        new Option<bool>(
+            "53363",
+            "Ring of White Diamonds Cape",
+            "Mode: [select] only\nShould the bot buy \"Ring of White Diamonds Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53357",
+            "White Diamond Gem Pet",
+            "Mode: [select] only\nShould the bot buy \"White Diamond Gem Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53364",
+            "Ring of Blush Brilliants Cape",
+            "Mode: [select] only\nShould the bot buy \"Ring of Blush Brilliants Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53358",
+            "Blush Brilliant Gem Pet",
+            "Mode: [select] only\nShould the bot buy \"Blush Brilliant Gem Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53365",
+            "Ring of Pink Pears Cape",
+            "Mode: [select] only\nShould the bot buy \"Ring of Pink Pears Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53359",
+            "Pink Pear Gem Pet",
+            "Mode: [select] only\nShould the bot buy \"Pink Pear Gem Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53366",
+            "Ring of Rose Hexagons Cape",
+            "Mode: [select] only\nShould the bot buy \"Ring of Rose Hexagons Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53360",
+            "Rose Hexagon Gem Pet",
+            "Mode: [select] only\nShould the bot buy \"Rose Hexagon Gem Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53367",
+            "Ring of Cerise Trillians Cape",
+            "Mode: [select] only\nShould the bot buy \"Ring of Cerise Trillians Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53361",
+            "Cerise Trillian Gem Pet",
+            "Mode: [select] only\nShould the bot buy \"Cerise Trillian Gem Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53368",
+            "Ring of Ruby Hearts Cape",
+            "Mode: [select] only\nShould the bot buy \"Ring of Ruby Hearts Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53362",
+            "Ruby Heart Gem Pet",
+            "Mode: [select] only\nShould the bot buy \"Ruby Heart Gem Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53369",
+            "Ring of Gems Cape",
+            "Mode: [select] only\nShould the bot buy \"Ring of Gems Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "53371",
+            "Ring of Gems",
+            "Mode: [select] only\nShould the bot buy \"Ring of Gems\" ?",
+            false
+        ),
     };
 }

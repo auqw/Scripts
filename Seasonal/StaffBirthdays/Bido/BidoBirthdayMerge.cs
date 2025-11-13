@@ -15,21 +15,36 @@ public class BidoBirthdayMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -53,7 +68,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -63,9 +80,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Concentrated Mana":
                 case "Bits of Cloth":
@@ -100,7 +122,11 @@ public static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(6980);
-                        Core.HuntMonster("well", "Gell Oh No", "Piece of Gell Oh No Perfectly Slushied");
+                        Core.HuntMonster(
+                            "well",
+                            "Gell Oh No",
+                            "Piece of Gell Oh No Perfectly Slushied"
+                        );
                         Core.HuntMonster("ashfallcamp", "Smoldur", "Smoldur's Shedded Scales", 4);
                         Core.EnsureComplete(6980);
                     }
@@ -126,48 +152,227 @@ public static CoreAdvanced _sAdv;
                     Core.HuntMonster("brightfortress", "Imbalanced Alteon", req.Name, quant, false);
                     Core.Join("akiba", "r1", "Right", false);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("49049", "Bido's Fireflies", "Mode: [select] only\nShould the bot buy \"Bido's Fireflies\" ?", false),
-        new Option<bool>("49046", "Toxic Alchemist Hair", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist Hair\" ?", false),
-        new Option<bool>("49047", "Toxic Alchemist Locks", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist Locks\" ?", false),
-        new Option<bool>("49070", "Toxic Runes", "Mode: [select] only\nShould the bot buy \"Toxic Runes\" ?", false),
-        new Option<bool>("49048", "Toxic Alchemist Wings", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist Wings\" ?", false),
-        new Option<bool>("49068", "Alchemical Onyx Daggers", "Mode: [select] only\nShould the bot buy \"Alchemical Onyx Daggers\" ?", false),
-        new Option<bool>("49067", "Alchemical Onyx Reversed Daggers", "Mode: [select] only\nShould the bot buy \"Alchemical Onyx Reversed Daggers\" ?", false),
-        new Option<bool>("49064", "Alchemical Onyx Blade", "Mode: [select] only\nShould the bot buy \"Alchemical Onyx Blade\" ?", false),
-        new Option<bool>("49065", "Alchemical Onyx Katana", "Mode: [select] only\nShould the bot buy \"Alchemical Onyx Katana\" ?", false),
-        new Option<bool>("49092", "Dual Alchemical Onyx Katanas", "Mode: [select] only\nShould the bot buy \"Dual Alchemical Onyx Katanas\" ?", false),
-        new Option<bool>("49069", "Alchemical Onyx Staff", "Mode: [select] only\nShould the bot buy \"Alchemical Onyx Staff\" ?", false),
-        new Option<bool>("49071", "Toxic Aura Backblades", "Mode: [select] only\nShould the bot buy \"Toxic Aura Backblades\" ?", false),
-        new Option<bool>("49081", "Seal of Balance", "Mode: [select] only\nShould the bot buy \"Seal of Balance\" ?", false),
-        new Option<bool>("49061", "Toxic Aura Blade", "Mode: [select] only\nShould the bot buy \"Toxic Aura Blade\" ?", false),
-        new Option<bool>("49062", "Alchemical Aura Blade", "Mode: [select] only\nShould the bot buy \"Alchemical Aura Blade\" ?", false),
-        new Option<bool>("49063", "Amber Aura Blade", "Mode: [select] only\nShould the bot buy \"Amber Aura Blade\" ?", false),
-        new Option<bool>("49060", "Toxic Bloodriver", "Mode: [select] only\nShould the bot buy \"Toxic Bloodriver\" ?", false),
-        new Option<bool>("49044", "Toxic Alchemists Adornments", "Mode: [select] only\nShould the bot buy \"Toxic Alchemists Adornments\" ?", false),
-        new Option<bool>("49045", "Toxic Rune Fists", "Mode: [select] only\nShould the bot buy \"Toxic Rune Fists\" ?", false),
-        new Option<bool>("55694", "Toxic Diviner Hair", "Mode: [select] only\nShould the bot buy \"Toxic Diviner Hair\" ?", false),
-        new Option<bool>("55695", "Toxic Diviner Rune", "Mode: [select] only\nShould the bot buy \"Toxic Diviner Rune\" ?", false),
-        new Option<bool>("55696", "Toxic Diviner Blade", "Mode: [select] only\nShould the bot buy \"Toxic Diviner Blade\" ?", false),
-        new Option<bool>("55697", "Toxic Diviner Spear", "Mode: [select] only\nShould the bot buy \"Toxic Diviner Spear\" ?", false),
-        new Option<bool>("71065", "Toxic Alchemist Rogue", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist Rogue\" ?", false),
-        new Option<bool>("71066", "Toxic Alchemist's Bandana", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Bandana\" ?", false),
-        new Option<bool>("71067", "Toxic Alchemist's Bandana + Locks", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Bandana + Locks\" ?", false),
-        new Option<bool>("71068", "Toxic Alchemist's Scarf", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Scarf\" ?", false),
-        new Option<bool>("71069", "Toxic Alchemist's Scarf + Locks", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Scarf + Locks\" ?", false),
-        new Option<bool>("71070", "Pixel On Your Back", "Mode: [select] only\nShould the bot buy \"Pixel On Your Back\" ?", false),
-        new Option<bool>("71071", "Toxic Alchemist's Venom Blade", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Venom Blade\" ?", false),
-        new Option<bool>("71072", "Toxic Alchemist's Venom Blades", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Venom Blades\" ?", false),
-        new Option<bool>("71073", "Toxic Alchemist's Noxious Blade", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Noxious Blade\" ?", false),
-        new Option<bool>("71074", "Toxic Alchemist's Noxious Blades", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Noxious Blades\" ?", false),
-        new Option<bool>("71075", "Toxic Alchemist's Royal Sword", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Royal Sword\" ?", false),
-        new Option<bool>("71076", "Toxic Alchemist's Venom Lance", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Venom Lance\" ?", false),
-        new Option<bool>("71077", "Toxic Alchemist's Noxious Lance", "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Noxious Lance\" ?", false),
+        new Option<bool>(
+            "49049",
+            "Bido's Fireflies",
+            "Mode: [select] only\nShould the bot buy \"Bido's Fireflies\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49046",
+            "Toxic Alchemist Hair",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49047",
+            "Toxic Alchemist Locks",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49070",
+            "Toxic Runes",
+            "Mode: [select] only\nShould the bot buy \"Toxic Runes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49048",
+            "Toxic Alchemist Wings",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist Wings\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49068",
+            "Alchemical Onyx Daggers",
+            "Mode: [select] only\nShould the bot buy \"Alchemical Onyx Daggers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49067",
+            "Alchemical Onyx Reversed Daggers",
+            "Mode: [select] only\nShould the bot buy \"Alchemical Onyx Reversed Daggers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49064",
+            "Alchemical Onyx Blade",
+            "Mode: [select] only\nShould the bot buy \"Alchemical Onyx Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49065",
+            "Alchemical Onyx Katana",
+            "Mode: [select] only\nShould the bot buy \"Alchemical Onyx Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49092",
+            "Dual Alchemical Onyx Katanas",
+            "Mode: [select] only\nShould the bot buy \"Dual Alchemical Onyx Katanas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49069",
+            "Alchemical Onyx Staff",
+            "Mode: [select] only\nShould the bot buy \"Alchemical Onyx Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49071",
+            "Toxic Aura Backblades",
+            "Mode: [select] only\nShould the bot buy \"Toxic Aura Backblades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49081",
+            "Seal of Balance",
+            "Mode: [select] only\nShould the bot buy \"Seal of Balance\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49061",
+            "Toxic Aura Blade",
+            "Mode: [select] only\nShould the bot buy \"Toxic Aura Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49062",
+            "Alchemical Aura Blade",
+            "Mode: [select] only\nShould the bot buy \"Alchemical Aura Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49063",
+            "Amber Aura Blade",
+            "Mode: [select] only\nShould the bot buy \"Amber Aura Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49060",
+            "Toxic Bloodriver",
+            "Mode: [select] only\nShould the bot buy \"Toxic Bloodriver\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49044",
+            "Toxic Alchemists Adornments",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemists Adornments\" ?",
+            false
+        ),
+        new Option<bool>(
+            "49045",
+            "Toxic Rune Fists",
+            "Mode: [select] only\nShould the bot buy \"Toxic Rune Fists\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55694",
+            "Toxic Diviner Hair",
+            "Mode: [select] only\nShould the bot buy \"Toxic Diviner Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55695",
+            "Toxic Diviner Rune",
+            "Mode: [select] only\nShould the bot buy \"Toxic Diviner Rune\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55696",
+            "Toxic Diviner Blade",
+            "Mode: [select] only\nShould the bot buy \"Toxic Diviner Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55697",
+            "Toxic Diviner Spear",
+            "Mode: [select] only\nShould the bot buy \"Toxic Diviner Spear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71065",
+            "Toxic Alchemist Rogue",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist Rogue\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71066",
+            "Toxic Alchemist's Bandana",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Bandana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71067",
+            "Toxic Alchemist's Bandana + Locks",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Bandana + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71068",
+            "Toxic Alchemist's Scarf",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71069",
+            "Toxic Alchemist's Scarf + Locks",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Scarf + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71070",
+            "Pixel On Your Back",
+            "Mode: [select] only\nShould the bot buy \"Pixel On Your Back\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71071",
+            "Toxic Alchemist's Venom Blade",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Venom Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71072",
+            "Toxic Alchemist's Venom Blades",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Venom Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71073",
+            "Toxic Alchemist's Noxious Blade",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Noxious Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71074",
+            "Toxic Alchemist's Noxious Blades",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Noxious Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71075",
+            "Toxic Alchemist's Royal Sword",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Royal Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71076",
+            "Toxic Alchemist's Venom Lance",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Venom Lance\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71077",
+            "Toxic Alchemist's Noxious Lance",
+            "Mode: [select] only\nShould the bot buy \"Toxic Alchemist's Noxious Lance\" ?",
+            false
+        ),
     };
 }

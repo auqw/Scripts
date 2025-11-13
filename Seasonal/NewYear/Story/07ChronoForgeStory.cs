@@ -12,7 +12,11 @@ public class ChronoForge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreNewYear NY { get => _NY ??= new CoreNewYear(); set => _NY = value; }
+    private static CoreNewYear NY
+    {
+        get => _NY ??= new CoreNewYear();
+        set => _NY = value;
+    }
     private static CoreNewYear _NY;
 
     public void ScriptMain(IScriptInterface Bot)

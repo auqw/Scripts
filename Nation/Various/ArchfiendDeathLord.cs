@@ -19,19 +19,41 @@ public class ArchfiendDeathLord
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static Fiendshard_Story Fiendshard { get => _Fiendshard ??= new Fiendshard_Story(); set => _Fiendshard = value; }
+    private static Fiendshard_Story Fiendshard
+    {
+        get => _Fiendshard ??= new Fiendshard_Story();
+        set => _Fiendshard = value;
+    }
     private static Fiendshard_Story _Fiendshard;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static WillpowerExtraction Willpower { get => _Willpower ??= new WillpowerExtraction(); set => _Willpower = value; }
+    private static WillpowerExtraction Willpower
+    {
+        get => _Willpower ??= new WillpowerExtraction();
+        set => _Willpower = value;
+    }
     private static WillpowerExtraction _Willpower;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public string OptionsStorage = "ArchfiendDeathLord";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("OnlyArmor", "Only get the Armor?", "Whether to only get the Armor or all quest rewards", false),
+        new Option<bool>(
+            "OnlyArmor",
+            "Only get the Armor?",
+            "Whether to only get the Armor or all quest rewards",
+            false
+        ),
         new Option<RewardChoice>("RewardChoice", "Choose Your Reward", "", RewardChoice.All),
         CoreBots.Instance.SkipOptions,
     };
@@ -49,9 +71,12 @@ public class ArchfiendDeathLord
     {
         if (Reward != RewardChoice.All && Core.CheckInventory((int)Reward, toInv: false))
             return;
-
         else if (OnlyArmor && Reward == RewardChoice.All)
-            Core.Logger("With \"OnlyArmor\" Please Select the \"Archfiend DeathLord\" Option from the list.", messageBox: true, stopBot: true);
+            Core.Logger(
+                "With \"OnlyArmor\" Please Select the \"Archfiend DeathLord\" Option from the list.",
+                messageBox: true,
+                stopBot: true
+            );
 
         Fiendshard.Fiendshard_QuestlineP1();
 
@@ -91,7 +116,6 @@ public class ArchfiendDeathLord
                 }
             }
         }
-
         else
         {
             Core.Logger($"Section: AFDL2 (Archfiend DeathLord)");

@@ -6,16 +6,14 @@ tags: merge, shop, generator, helper, developer
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
-using Skua.Core.Interfaces;
-using Skua.Core.Options;
-using Skua.Core.Models;
-using Skua.Core.Models.Shops;
-using Skua.Core.Models.Items;
-using Skua.Core.Utils;
-using System.IO;
 using System.Diagnostics;
-
-
+using System.IO;
+using Skua.Core.Interfaces;
+using Skua.Core.Models;
+using Skua.Core.Models.Items;
+using Skua.Core.Models.Shops;
+using Skua.Core.Options;
+using Skua.Core.Utils;
 
 public class CaseStorage
 {
@@ -29,18 +27,17 @@ public class CaseStorage
 
     public static readonly Dictionary<string, string> Cases = new()
     {
-
-    {
-    "Drakath Armor",
-    @"
+        {
+            "Drakath Armor",
+            @"
 case ""Drakath Armor"":
                     DAB.DrakathArmorQuest();
                     break;
     "
-},
-{
-    "Champion Drakath Insignia",
-    @"
+        },
+        {
+            "Champion Drakath Insignia",
+            @"
 case ""Champion Drakath Insignia"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -50,18 +47,18 @@ case ""Champion Drakath Insignia"":
                     }
                     break;
     "
-},
-{
-    "Original Drakath Armor",
-    @"
+        },
+        {
+            "Original Drakath Armor",
+            @"
 case ""Original Drakath Armor"":
                     DAB.DrakathOriginalArmor();
                     break;
     "
-},
-{
-    "Blade of Chaos",
-    @"
+        },
+        {
+            "Blade of Chaos",
+            @"
 case ""Blade of Chaos"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -69,19 +66,19 @@ case ""Blade of Chaos"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Chaos Avenger's Greatsword",
-    @"
+        },
+        {
+            "Chaos Avenger's Greatsword",
+            @"
 case ""Chaos Avenger's Greatsword"":
                     Core.EquipClass(ClassType.Solo);
                     Adv.BuyItem(""championdrakath"", 2056, req.Name);
                     break;
     "
-},
-{
-    "Legendary Sword of Dragon Control",
-    @"
+        },
+        {
+            "Legendary Sword of Dragon Control",
+            @"
 case ""Legendary Sword of Dragon Control"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -89,10 +86,10 @@ case ""Legendary Sword of Dragon Control"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "The Supreme Arcane Staff",
-    @"
+        },
+        {
+            "The Supreme Arcane Staff",
+            @"
 case ""The Supreme Arcane Staff"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -100,10 +97,10 @@ case ""The Supreme Arcane Staff"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Discordia Rose of Chaos",
-    @"
+        },
+        {
+            "Discordia Rose of Chaos",
+            @"
 case ""Discordia Rose of Chaos"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -111,10 +108,10 @@ case ""Discordia Rose of Chaos"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Chaos Rose",
-    @"
+        },
+        {
+            "Chaos Rose",
+            @"
 case ""Chaos Rose"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -123,227 +120,227 @@ case ""Chaos Rose"":
                     break;
 
     "
-},
-{
-    "A Melody",
-    @"
+        },
+        {
+            "A Melody",
+            @"
 case ""A Melody"":
                     Darkon.AMelody(quant);
                     break;
     "
-},
-{
-    "Re's Party Attire",
-    @"
+        },
+        {
+            "Re's Party Attire",
+            @"
 case ""Re's Party Attire"":
                     Core.HuntMonster(""astraviajudge"", ""La"", req.Name, quant);
                     break;
     "
-},
-{
-    "Astravian Medal",
-    @"
+        },
+        {
+            "Astravian Medal",
+            @"
 case ""Astravian Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Darkon.AstravianMedal(quant);
                     break;
     "
-},
-{
-    "Teeth",
-    @"
+        },
+        {
+            "Teeth",
+            @"
 case ""Teeth"":
                     Darkon.Teeth(quant);
                     break;
     "
-},
-{
-    "Bandit's Correspondence",
-    @"
+        },
+        {
+            "Bandit's Correspondence",
+            @"
 case ""Bandit's Correspondence"":
                     Darkon.BanditsCorrespondence(quant);
                     break;
     "
-},
-{
-    "Suki's Sword",
-    @"
+        },
+        {
+            "Suki's Sword",
+            @"
 case ""Suki's Sword"":
                     Core.HuntMonsterMapID(""eridanipast"", 19, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Ancient Remnant",
-    @"
+        },
+        {
+            "Ancient Remnant",
+            @"
 case ""Ancient Remnant"":
                     Darkon.AncientRemnant(quant);
                     break;
     "
-},
-{
-    "La's Gratitude",
-    @"
+        },
+        {
+            "La's Gratitude",
+            @"
 case ""La's Gratitude"":
                     Darkon.LasGratitude(quant);
                     break;
     "
-},
-{
-    "The Moon's Head",
-    @"
+        },
+        {
+            "The Moon's Head",
+            @"
 case ""The Moon's Head"":
                     Core.HuntMonster(""astravia"", ""The Moon"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "The Moon's Cloak",
-    @"
+        },
+        {
+            "The Moon's Cloak",
+            @"
 case ""The Moon's Cloak"":
                     Core.HuntMonster(""astravia"", ""The Moon"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Astravian Sickle",
-    @"
+        },
+        {
+            "Astravian Sickle",
+            @"
 case ""Astravian Sickle"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""astravia"", ""Creature 28"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Sheathed Urban Duelist Katana",
-    @"
+        },
+        {
+            "Sheathed Urban Duelist Katana",
+            @"
 case ""Sheathed Urban Duelist Katana"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""astravia"", ""Creature 28"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Urban Duelist Katana and Sheath",
-    @"
+        },
+        {
+            "Urban Duelist Katana and Sheath",
+            @"
 case ""Urban Duelist Katana and Sheath"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""astravia"", ""Creature 28"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Condensed Aversion",
-    @"
+        },
+        {
+            "Condensed Aversion",
+            @"
 case ""Condensed Aversion"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""astravia"", ""Creature 28"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Astravian Urban Duelist Locks",
-    @"
+        },
+        {
+            "Astravian Urban Duelist Locks",
+            @"
 case ""Astravian Urban Duelist Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""astravia"", ""Creature 27"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Astravian Urban Duelist Hair",
-    @"
+        },
+        {
+            "Astravian Urban Duelist Hair",
+            @"
 case ""Astravian Urban Duelist Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""astravia"", ""Creature 27"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Mourning Flower",
-    @"
+        },
+        {
+            "Mourning Flower",
+            @"
 case ""Mourning Flower"":
                     Darkon.WheelofFortune(quant, 0);
                     break;
     "
-},
-{
-    "Jus Divinum Scale",
-    @"
+        },
+        {
+            "Jus Divinum Scale",
+            @"
 case ""Jus Divinum Scale"":
                     Darkon.WheelofFortune(0, quant);
                     break;
     "
-},
-{
-    "Hours Minutes Seconds",
-    @"
+        },
+        {
+            "Hours Minutes Seconds",
+            @"
 case ""Hours Minutes Seconds"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""magician"", ""Human Clock"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Human Clock Face House Item",
-    @"
+        },
+        {
+            "Human Clock Face House Item",
+            @"
 case ""Human Clock Face House Item"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""magician"", ""Human Clock"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Creature 10 Tail",
-    @"
+        },
+        {
+            "Creature 10 Tail",
+            @"
 case ""Creature 10 Tail"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""magician"", ""Human Clock"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Creature 10 Half Wing",
-    @"
+        },
+        {
+            "Creature 10 Half Wing",
+            @"
 case ""Creature 10 Half Wing"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""magician"", ""Human Clock"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Creature 10 Horns",
-    @"
+        },
+        {
+            "Creature 10 Horns",
+            @"
 case ""Creature 10 Horns"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""magician"", ""Human Clock"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Creature 10 Horned Locks",
-    @"
+        },
+        {
+            "Creature 10 Horned Locks",
+            @"
 case ""Creature 10 Horned Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""magician"", ""Human Clock"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Chrono Bauble",
-    @"
+        },
+        {
+            "Chrono Bauble",
+            @"
 case ""Chrono Bauble"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -355,117 +352,117 @@ case ""Chrono Bauble"":
                     break;
 
     "
-},
-{
-    "Suki's Prestige",
-    @"
+        },
+        {
+            "Suki's Prestige",
+            @"
 case ""Suki's Prestige"":
                     Core.Logger($""Farming {req.Name} ({currentQuant}/{quant})"");
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         Darkon.SukisPrestiege(quant);
                     break;
     "
-},
-{
-    "Prince Drago's Attire",
-    @"
+        },
+        {
+            "Prince Drago's Attire",
+            @"
 case ""Prince Drago's Attire"":
                     Core.HuntMonster(""astraviapast"", ""Forsaken Husk"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Prince Drago's Hair",
-    @"
+        },
+        {
+            "Prince Drago's Hair",
+            @"
 case ""Prince Drago's Hair"":
                     Core.HuntMonster(""astraviapast"", ""Forsaken Husk"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Prince Drago's Dark Attire",
-    @"
+        },
+        {
+            "Prince Drago's Dark Attire",
+            @"
 case ""Prince Drago's Dark Attire"":
                     Core.HuntMonster(""astraviapast"", ""Forsaken Husk"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Suki's Casual Armor",
-    @"
+        },
+        {
+            "Suki's Casual Armor",
+            @"
 case ""Suki's Casual Armor"":
                     Core.HuntMonster(""astraviapast"", ""Aurola"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Suki's Ponytail",
-    @"
+        },
+        {
+            "Suki's Ponytail",
+            @"
 case ""Suki's Ponytail"":
                     Core.HuntMonster(""astraviapast"", ""Aurola"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Regulus' Hair",
-    @"
+        },
+        {
+            "Regulus' Hair",
+            @"
 case ""Regulus' Hair"":
                     Core.HuntMonster(""astraviapast"", ""Regulus"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Titania's Hair",
-    @"
+        },
+        {
+            "Titania's Hair",
+            @"
 case ""Titania's Hair"":
                     Core.HuntMonster(""astraviapast"", ""Titania"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Unfinished Musical Score",
-    @"
+        },
+        {
+            "Unfinished Musical Score",
+            @"
 case ""Unfinished Musical Score"":
                     Darkon.UnfinishedMusicalScore(quant);
                     break;
     "
-},
-{
-    "Darkon's Receipt",
-    @"
+        },
+        {
+            "Darkon's Receipt",
+            @"
 case ""Darkon's Receipt"":
                     Darkon.FarmReceipt(quant);
                     break;
     "
-},
-{
-    "Darkon's Instant Noodle",
-    @"
+        },
+        {
+            "Darkon's Instant Noodle",
+            @"
 case ""Darkon's Instant Noodle"":
                     Adv.BuyItem(""garden"", 1831, req.Name, quant);
                     break;
     "
-},
-{
-    "Astravia Castle House",
-    @"
+        },
+        {
+            "Astravia Castle House",
+            @"
 case ""Astravia Castle House"":
                     Core.HuntMonster(""astraviajudge"", ""La"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Debris Fragment",
-    @"
+        },
+        {
+            "Debris Fragment",
+            @"
 case ""Debris Fragment"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""garden"", ""r2"", ""Left"", ""*"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Darkon's Debris 1952",
-    @"
+        },
+        {
+            "Darkon's Debris 1952",
+            @"
 case ""Darkon's Debris 1952"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -498,46 +495,46 @@ case ""Darkon's Debris 1952"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Darkon's Debris 1935.1",
-    @"
+        },
+        {
+            "Darkon's Debris 1935.1",
+            @"
 case ""Darkon's Debris 1935.1"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""garden"", ""Creature 12"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Darkon's Debris 66 Angel Wing",
-    @"
+        },
+        {
+            "Darkon's Debris 66 Angel Wing",
+            @"
 case ""Darkon's Debris 66 Angel Wing"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""garden"", ""Creature 12"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Darkon's Debris 66 Fallen Wing",
-    @"
+        },
+        {
+            "Darkon's Debris 66 Fallen Wing",
+            @"
 case ""Darkon's Debris 66 Fallen Wing"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""garden"", ""Creature 12"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Fa's Gamer Fuel",
-    @"
+        },
+        {
+            "Fa's Gamer Fuel",
+            @"
 case ""Fa's Gamer Fuel"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""garden"", ""Fa"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Necrotic Darkness Gem",
-    @"
+        },
+        {
+            "Necrotic Darkness Gem",
+            @"
 case ""Necrotic Darkness Gem"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -551,10 +548,10 @@ case ""Necrotic Darkness Gem"":
                     Core.KillMonster(""shadowfallwar"", ""Garden2"", ""Left"", ""*"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Tortured Darkness Gem",
-    @"
+        },
+        {
+            "Tortured Darkness Gem",
+            @"
 case ""Tortured Darkness Gem"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -568,10 +565,10 @@ case ""Tortured Darkness Gem"":
                     Core.KillMonster(""shadowfallwar"", ""Garden2"", ""Left"", ""*"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Malignant Darkness Gem",
-    @"
+        },
+        {
+            "Malignant Darkness Gem",
+            @"
 case ""Malignant Darkness Gem"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -585,10 +582,10 @@ case ""Malignant Darkness Gem"":
                     Core.KillMonster(""shadowfallwar"", ""Garden2"", ""Left"", ""*"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Ultimate Darkness Gem",
-    @"
+        },
+        {
+            "Ultimate Darkness Gem",
+            @"
 case ""Ultimate Darkness Gem"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -602,10 +599,10 @@ case ""Ultimate Darkness Gem"":
                     Core.KillMonster(""shadowfallwar"", ""Garden2"", ""Left"", ""*"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Grace Orb",
-    @"
+        },
+        {
+            "Grace Orb",
+            @"
 case ""Grace Orb"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -618,10 +615,10 @@ case ""Grace Orb"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Vindicator Badge",
-    @"
+        },
+        {
+            "Vindicator Badge",
+            @"
 case ""Vindicator Badge"":
                     Core.FarmingLogger(req.Name, quant);
                     Bot.Quests.UpdateQuest(8297);
@@ -638,55 +635,55 @@ case ""Vindicator Badge"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Vindicator Soldier's Hair",
-    @"
+        },
+        {
+            "Vindicator Soldier's Hair",
+            @"
 case ""Vindicator Soldier's Hair"":
                     Core.HuntMonster(""neofortress"", ""Vindicator Soldier"", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Scout's Bow",
-    @"
+        },
+        {
+            "Vindicator Scout's Bow",
+            @"
 case ""Vindicator Scout's Bow"":
                     Core.HuntMonster(""neofortress"", ""Vindicator Recruit"", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Blessed Sigil of Vindication",
-    @"
+        },
+        {
+            "Blessed Sigil of Vindication",
+            @"
 case ""Blessed Sigil of Vindication"":
                     Core.HuntMonster(""neofortress"", ""Vindicator General"", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Hammer of Vindication",
-    @"
+        },
+        {
+            "Hammer of Vindication",
+            @"
 case ""Hammer of Vindication"":
                     Core.HuntMonster(""neofortress"", ""Vindicator General"", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Hammers of Vindication",
-    @"
+        },
+        {
+            "Hammers of Vindication",
+            @"
 case ""Hammers of Vindication"":
                     Core.HuntMonster(""neofortress"", ""Vindicator General"", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Hollow Soul",
-    @"
+        },
+        {
+            "Hollow Soul",
+            @"
 case ""Hollow Soul"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -701,48 +698,48 @@ case ""Hollow Soul"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Bone Dust",
-    @"
+        },
+        {
+            "Bone Dust",
+            @"
 case ""Bone Dust"":
                     Farm.BattleUnderB(req.Name, quant);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Gilded Scout's Quiver",
-    @"
+        },
+        {
+            "Gilded Scout's Quiver",
+            @"
 case ""Gilded Scout's Quiver"":
                     Core.HuntMonster(""neofortress"", ""Vindicator Recruit"", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Blessed Rune of Vindication",
-    @"
+        },
+        {
+            "Blessed Rune of Vindication",
+            @"
 case ""Blessed Rune of Vindication"":
                     Core.HuntMonster(""neofortress"", ""Vindicator General"", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
     "
-},
-{
-    "Battlegear of Vindication",
-    @"
+        },
+        {
+            "Battlegear of Vindication",
+            @"
 case ""Battlegear of Vindication"":
                     Core.HuntMonster(""neofortress"", ""Vindicator General"", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
     "
-},
-{
-    "Obsidian Hollowborn Dragon Statue",
-    @"
+        },
+        {
+            "Obsidian Hollowborn Dragon Statue",
+            @"
 case ""Obsidian Hollowborn Dragon Statue"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -750,10 +747,10 @@ case ""Obsidian Hollowborn Dragon Statue"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Hollowborn Dragon Heart",
-    @"
+        },
+        {
+            "Hollowborn Dragon Heart",
+            @"
 case ""Hollowborn Dragon Heart"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -765,10 +762,10 @@ case ""Hollowborn Dragon Heart"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hollowborn Wyvern Heart",
-    @"
+        },
+        {
+            "Hollowborn Wyvern Heart",
+            @"
 case ""Hollowborn Wyvern Heart"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -780,10 +777,10 @@ case ""Hollowborn Wyvern Heart"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hollowborn Dragonknight Armet",
-    @"
+        },
+        {
+            "Hollowborn Dragonknight Armet",
+            @"
 case ""Hollowborn Dragonknight Armet"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -791,10 +788,10 @@ case ""Hollowborn Dragonknight Armet"":
                     break;
 
     "
-},
-{
-    "Hollowborn DragonBerserker Helm",
-    @"
+        },
+        {
+            "Hollowborn DragonBerserker Helm",
+            @"
 case ""Hollowborn DragonBerserker Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -802,10 +799,10 @@ case ""Hollowborn DragonBerserker Helm"":
                     break;
 
     "
-},
-{
-    "Aura of Awe",
-    @"
+        },
+        {
+            "Aura of Awe",
+            @"
 case ""Aura of Awe"":
                     if (!Core.IsMember)
                     {
@@ -824,50 +821,50 @@ case ""Aura of Awe"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Blade of Awe",
-    @"
+        },
+        {
+            "Blade of Awe",
+            @"
 case ""Blade of Awe"":
                     Adv.BuyItem(""museum"", 631, req.Name);
                     break;
     "
-},
-{
-    "Spear of Awe",
-    @"
+        },
+        {
+            "Spear of Awe",
+            @"
 case ""Spear of Awe"":
                     Adv.BuyItem(""museum"", 631, req.Name);
                     break;
     "
-},
-{
-    "Dagger of Awe",
-    @"
+        },
+        {
+            "Dagger of Awe",
+            @"
 case ""Dagger of Awe"":
                     Adv.BuyItem(""museum"", 631, req.Name);
                     break;
     "
-},
-{
-    "Staff of Awe",
-    @"
+        },
+        {
+            "Staff of Awe",
+            @"
 case ""Staff of Awe"":
                     Adv.BuyItem(""museum"", 631, req.Name);
                     break;
     "
-},
-{
-    "Guardian Dragon Pet",
-    @"
+        },
+        {
+            "Guardian Dragon Pet",
+            @"
 case ""Guardian Dragon Pet"":
                     Adv.BuyItem(""museum"", 631, req.Name);
                     break;
     "
-},
-{
-    "Guardian Patent",
-    @"
+        },
+        {
+            "Guardian Patent",
+            @"
 case ""Guardian Patent"":
                     if (Bot.Flash.GetGameObject<int>(""world.myAvatar.objData.intAQ"") > 0)
                     {
@@ -877,36 +874,36 @@ case ""Guardian Patent"":
                     else Core.Logger(""Active Aq Guardian Acc Required for this Item."");
                     break;
     "
-},
-{
-    "Baby Red Dragon",
-    @"
+        },
+        {
+            "Baby Red Dragon",
+            @"
 case ""Baby Red Dragon"":
                     Adv.BuyItem(""AriaPet"", 12, req.Name);
                     break;
     "
-},
-{
-    "Armor of Awe",
-    @"
+        },
+        {
+            "Armor of Awe",
+            @"
 case ""Armor of Awe"":
                     AoA.GetArmor();
                     break;
     "
-},
-{
-    "Cape of Awe",
-    @"
+        },
+        {
+            "Cape of Awe",
+            @"
 case ""Cape of Awe"":
                     Awe.GetAweRelic(""Cape"", 4178, 1, 1, ""doomvault"", ""Binky"");
                     Adv.BuyItem(""museum"", 1129, ""Cape of Awe"");
                     break;
 
     "
-},
-{
-    "Trygve's Testament",
-    @"
+        },
+        {
+            "Trygve's Testament",
+            @"
 case ""Trygve's Testament"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -920,10 +917,10 @@ case ""Trygve's Testament"":
                     Core.HuntMonster(""trygve"", ""Gramiel"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Fortress' Faith",
-    @"
+        },
+        {
+            "Fortress' Faith",
+            @"
 case ""Fortress' Faith"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -937,10 +934,10 @@ case ""Fortress' Faith"":
                     Core.HuntMonster(""neofortress"", ""Vindicator General"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Tower's Trisagion",
-    @"
+        },
+        {
+            "Tower's Trisagion",
+            @"
 case ""Tower's Trisagion"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -954,10 +951,10 @@ case ""Tower's Trisagion"":
                     Core.HuntMonster(""neotower"", ""Vindicator Assassin"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Sanctum's Salvation",
-    @"
+        },
+        {
+            "Sanctum's Salvation",
+            @"
 case ""Sanctum's Salvation"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -971,10 +968,10 @@ case ""Sanctum's Salvation"":
                     Core.HuntMonster(""dawnsanctum"", ""Grandmaster Gramiel"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Grandmaster Gramiel",
-    @"
+        },
+        {
+            "Grandmaster Gramiel",
+            @"
 case ""Grandmaster Gramiel"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -988,10 +985,10 @@ case ""Grandmaster Gramiel"":
                     Core.HuntMonster(""dawnsanctum"", ""Grandmaster Gramiel"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Grandmaster Gramiel Hair",
-    @"
+        },
+        {
+            "Grandmaster Gramiel Hair",
+            @"
 case ""Grandmaster Gramiel Hair"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -1005,10 +1002,10 @@ case ""Grandmaster Gramiel Hair"":
                     Core.HuntMonster(""dawnsanctum"", ""Grandmaster Gramiel"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Celestial Gramiel Wings",
-    @"
+        },
+        {
+            "Celestial Gramiel Wings",
+            @"
 case ""Celestial Gramiel Wings"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -1022,53 +1019,53 @@ case ""Celestial Gramiel Wings"":
                     Core.HuntMonster(""dawnsanctum"", ""Grandmaster Gramiel"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Gramiel the Graceful's Insignia",
-    @"
+        },
+        {
+            "Gramiel the Graceful's Insignia",
+            @"
 case ""Gramiel the Graceful's Insignia"":
                     Core.Logger($""{req.Name} requires army, skipping..."");
                     break;
     "
-},
-{
-    "Gramiel's Glorified Enoch",
-    @"
+        },
+        {
+            "Gramiel's Glorified Enoch",
+            @"
 case ""Gramiel's Glorified Enoch"":
                     DM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dawn Vindicator Castle",
-    @"
+        },
+        {
+            "Dawn Vindicator Castle",
+            @"
 case ""Dawn Vindicator Castle"":
                     DM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Condensed Grace",
-    @"
+        },
+        {
+            "Condensed Grace",
+            @"
 case ""Condensed Grace"":
                     if (Bot.Quests.IsAvailable(10299))
                         HBV.GetClass(false, true, quant);
                     break;
     "
-},
-{
-    "Gramiel's Emblem",
-    @"
+        },
+        {
+            "Gramiel's Emblem",
+            @"
 case ""Gramiel's Emblem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dawnsanctum"", ""Celestial Gramiel"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Cursed Ring",
-    @"
+        },
+        {
+            "Cursed Ring",
+            @"
 case ""Cursed Ring"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1081,10 +1078,10 @@ case ""Cursed Ring"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Frozen Diamond",
-    @"
+        },
+        {
+            "Frozen Diamond",
+            @"
 case ""Frozen Diamond"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1097,10 +1094,10 @@ case ""Frozen Diamond"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Krenos Spirit Katana",
-    @"
+        },
+        {
+            "Krenos Spirit Katana",
+            @"
 case ""Krenos Spirit Katana"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9804);
@@ -1118,10 +1115,10 @@ case ""Krenos Spirit Katana"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Energy Dragon Scale",
-    @"
+        },
+        {
+            "Energy Dragon Scale",
+            @"
 case ""Energy Dragon Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -1129,10 +1126,10 @@ case ""Energy Dragon Scale"":
                     break;
 
     "
-},
-{
-    "Hollowborn Residue",
-    @"
+        },
+        {
+            "Hollowborn Residue",
+            @"
 case ""Hollowborn Residue"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1146,10 +1143,10 @@ case ""Hollowborn Residue"":
                     break;
 
     "
-},
-{
-    "Hollowborn Writ",
-    @"
+        },
+        {
+            "Hollowborn Writ",
+            @"
 case ""Hollowborn Writ"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1162,19 +1159,19 @@ case ""Hollowborn Writ"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "NCS Gem",
-    @"
+        },
+        {
+            "NCS Gem",
+            @"
 case ""NCS Gem"":
                     Daily.NCSGem(quant);
                     Core.Logger($""{req.Name} is a daily drop, you need {quant - Bot.Inventory.GetQuantity(req.Name)} more to buy this item. Run the script again tomorrow if you don't have enough."");
                     break;
     "
-},
-{
-    "Love Potion",
-    @"
+        },
+        {
+            "Love Potion",
+            @"
 case ""Love Potion"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1188,58 +1185,58 @@ case ""Love Potion"":
                     break;
 
     "
-},
-{
-    "Hollowborn Adept",
-    @"
+        },
+        {
+            "Hollowborn Adept",
+            @"
 case ""Hollowborn Adept"":
                     Core.HuntMonster(""hbchallenge"", ""Shadow Rider"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Hollowborn Locks",
-    @"
+        },
+        {
+            "Hollowborn Locks",
+            @"
 case ""Hollowborn Locks"":
                     Core.HuntMonster(""hbchallenge"", ""Shadow Rider"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Hollowborn Shag",
-    @"
+        },
+        {
+            "Hollowborn Shag",
+            @"
 case ""Hollowborn Shag"":
                     Core.HuntMonster(""hbchallenge"", ""Shadow Rider"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Hollowborn Blades",
-    @"
+        },
+        {
+            "Hollowborn Blades",
+            @"
 case ""Hollowborn Blades"":
                     Core.HuntMonster(""hbchallenge"", ""Shadow Rider"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Hollowborn Cleaver",
-    @"
+        },
+        {
+            "Hollowborn Cleaver",
+            @"
 case ""Hollowborn Cleaver"":
                     Core.HuntMonster(""hbchallenge"", ""Shadow Rider"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Hollowborn Executioner's Axe",
-    @"
+        },
+        {
+            "Hollowborn Executioner's Axe",
+            @"
 case ""Hollowborn Executioner's Axe"":
                     Core.HuntMonster(""hbchallenge"", ""Shadow Rider"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Hollowborn Spirit",
-    @"
+        },
+        {
+            "Hollowborn Spirit",
+            @"
 case ""Hollowborn Spirit"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1252,10 +1249,10 @@ case ""Hollowborn Spirit"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hollowborn Spite",
-    @"
+        },
+        {
+            "Hollowborn Spite",
+            @"
 case ""Hollowborn Spite"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1268,122 +1265,122 @@ case ""Hollowborn Spite"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Druidic Soothsayer",
-    @"
+        },
+        {
+            "Druidic Soothsayer",
+            @"
 case ""Druidic Soothsayer"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer's Antlered Skull",
-    @"
+        },
+        {
+            "Druidic Soothsayer's Antlered Skull",
+            @"
 case ""Druidic Soothsayer's Antlered Skull"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer Hood",
-    @"
+        },
+        {
+            "Druidic Soothsayer Hood",
+            @"
 case ""Druidic Soothsayer Hood"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer's Hooded Visage",
-    @"
+        },
+        {
+            "Druidic Soothsayer's Hooded Visage",
+            @"
 case ""Druidic Soothsayer's Hooded Visage"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer's Runed Cape",
-    @"
+        },
+        {
+            "Druidic Soothsayer's Runed Cape",
+            @"
 case ""Druidic Soothsayer's Runed Cape"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer's Cape",
-    @"
+        },
+        {
+            "Druidic Soothsayer's Cape",
+            @"
 case ""Druidic Soothsayer's Cape"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer's Runes",
-    @"
+        },
+        {
+            "Druidic Soothsayer's Runes",
+            @"
 case ""Druidic Soothsayer's Runes"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer's Burning Aura",
-    @"
+        },
+        {
+            "Druidic Soothsayer's Burning Aura",
+            @"
 case ""Druidic Soothsayer's Burning Aura"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer's Burning Cape",
-    @"
+        },
+        {
+            "Druidic Soothsayer's Burning Cape",
+            @"
 case ""Druidic Soothsayer's Burning Cape"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer Rune Gate",
-    @"
+        },
+        {
+            "Druidic Soothsayer Rune Gate",
+            @"
 case ""Druidic Soothsayer Rune Gate"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer Staff",
-    @"
+        },
+        {
+            "Druidic Soothsayer Staff",
+            @"
 case ""Druidic Soothsayer Staff"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer Spike",
-    @"
+        },
+        {
+            "Druidic Soothsayer Spike",
+            @"
 case ""Druidic Soothsayer Spike"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer Spikes",
-    @"
+        },
+        {
+            "Druidic Soothsayer Spikes",
+            @"
 case ""Druidic Soothsayer Spikes"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Druidic Soothsayer Gauntlet",
-    @"
+        },
+        {
+            "Druidic Soothsayer Gauntlet",
+            @"
 case ""Druidic Soothsayer Gauntlet"":
                     Adv.BuyItem($""dragonrune"", 689, req.Name, quant);
                     break;              
     "
-},
-{
-    "Vindicator Crest",
-    @"
+        },
+        {
+            "Vindicator Crest",
+            @"
 case ""Vindicator Crest"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9865);
@@ -1398,20 +1395,20 @@ case ""Vindicator Crest"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Vindicator Assassin Dirk",
-    @"
+        },
+        {
+            "Vindicator Assassin Dirk",
+            @"
 case ""Vindicator Assassin Dirk"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonsterMapID(""neotower"", 12, req.Name, 1, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Dawn Vindication Grimoires",
-    @"
+        },
+        {
+            "Dawn Vindication Grimoires",
+            @"
 case ""Dawn Vindication Grimoires"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1423,10 +1420,10 @@ case ""Dawn Vindication Grimoires"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dawn Vindication Spellbooks",
-    @"
+        },
+        {
+            "Dawn Vindication Spellbooks",
+            @"
 case ""Dawn Vindication Spellbooks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1438,10 +1435,10 @@ case ""Dawn Vindication Spellbooks"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dawn Vindication Tome",
-    @"
+        },
+        {
+            "Dawn Vindication Tome",
+            @"
 case ""Dawn Vindication Tome"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1453,67 +1450,67 @@ case ""Dawn Vindication Tome"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Gramiel's Shattered Enoch",
-    @"
+        },
+        {
+            "Gramiel's Shattered Enoch",
+            @"
 case ""Gramiel's Shattered Enoch"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dawnsanctum"", ""Celestial Gramiel"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Gramiel's Shattered Enochs",
-    @"
+        },
+        {
+            "Gramiel's Shattered Enochs",
+            @"
 case ""Gramiel's Shattered Enochs"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dawnsanctum"", ""Celestial Gramiel"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Vindicator Draconian",
-    @"
+        },
+        {
+            "Vindicator Draconian",
+            @"
 case ""Vindicator Draconian"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""dawnsanctum"", ""r7"", ""Left"", ""Vindicator Draconian"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Draconian Vindication Axe",
-    @"
+        },
+        {
+            "Draconian Vindication Axe",
+            @"
 case ""Draconian Vindication Axe"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""dawnsanctum"", ""r7"", ""Left"", ""Vindicator Draconian"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Draconian Vindication Axes",
-    @"
+        },
+        {
+            "Draconian Vindication Axes",
+            @"
 case ""Draconian Vindication Axes"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""dawnsanctum"", ""r7"", ""Left"", ""Vindicator Draconian"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Hollowborn Draconian Morph",
-    @"
+        },
+        {
+            "Hollowborn Draconian Morph",
+            @"
 case ""Hollowborn Draconian Morph"":
                     Core.KillMonster(""dawnsanctum"", ""r8"", ""Left"", ""Hollowborn Draconian"", req.Name, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Dawn Vindicator Helm",
-    @"
+        },
+        {
+            "Dawn Vindicator Helm",
+            @"
 case ""Dawn Vindicator Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1534,10 +1531,10 @@ case ""Dawn Vindicator Helm"":
                     }
                     break;
     "
-},
-{
-    "Dawn Vindicator Sword",
-    @"
+        },
+        {
+            "Dawn Vindicator Sword",
+            @"
 case ""Dawn Vindicator Sword"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1558,10 +1555,10 @@ case ""Dawn Vindicator Sword"":
                     }
                     break;
     "
-},
-{
-    "Dawn Vindicator Swords",
-    @"
+        },
+        {
+            "Dawn Vindicator Swords",
+            @"
 case ""Dawn Vindicator Swords"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1582,10 +1579,10 @@ case ""Dawn Vindicator Swords"":
                     }
                     break;
     "
-},
-{
-    "Dawn Vindicator Soldier",
-    @"
+        },
+        {
+            "Dawn Vindicator Soldier",
+            @"
 case ""Dawn Vindicator Soldier"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1606,117 +1603,117 @@ case ""Dawn Vindicator Soldier"":
                     }
                     break;
     "
-},
-{
-    "Vindicator Priest",
-    @"
+        },
+        {
+            "Vindicator Priest",
+            @"
 case ""Vindicator Priest"":
                     VindicatorCrest(20);
                     Adv.BuyItem(""neotower"", 2474, req.Name);
                     break;
     "
-},
-{
-    "Vindicator Beast Tamer",
-    @"
+        },
+        {
+            "Vindicator Beast Tamer",
+            @"
 case ""Vindicator Beast Tamer"":
                     VindicatorCrest(20);
                     Adv.BuyItem(""neotower"", 2474, req.Name);
                     break;
     "
-},
-{
-    "Vindicator Assassin",
-    @"
+        },
+        {
+            "Vindicator Assassin",
+            @"
 case ""Vindicator Assassin"":
                     VindicatorCrest(20);
                     Adv.BuyItem(""neotower"", 2474, req.Name);
                     break;
     "
-},
-{
-    "Vindicator Assassin Mask",
-    @"
+        },
+        {
+            "Vindicator Assassin Mask",
+            @"
 case ""Vindicator Assassin Mask"":
                     VindicatorCrest(10);
                     Adv.BuyItem(""neotower"", 2474, req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Beast Tamer Hood",
-    @"
+        },
+        {
+            "Vindicator Beast Tamer Hood",
+            @"
 case ""Vindicator Beast Tamer Hood"":
                     VindicatorCrest(10);
                     Adv.BuyItem(""neotower"", 2474, req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Beast Tamer Mask",
-    @"
+        },
+        {
+            "Vindicator Beast Tamer Mask",
+            @"
 case ""Vindicator Beast Tamer Mask"":
                     VindicatorCrest(10);
                     Adv.BuyItem(""neotower"", 2474, req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Priest Mask",
-    @"
+        },
+        {
+            "Vindicator Priest Mask",
+            @"
 case ""Vindicator Priest Mask"":
                     VindicatorCrest(10);
                     Adv.BuyItem(""neotower"", 2474, req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Assassin Hood",
-    @"
+        },
+        {
+            "Vindicator Assassin Hood",
+            @"
 case ""Vindicator Assassin Hood"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""neotower"", 12, req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Beast Tamer Claws",
-    @"
+        },
+        {
+            "Vindicator Beast Tamer Claws",
+            @"
 case ""Vindicator Beast Tamer Claws"":
                     VindicatorCrest(15);
                     Adv.BuyItem(""neotower"", 2474, req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Priest Staff",
-    @"
+        },
+        {
+            "Vindicator Priest Staff",
+            @"
 case ""Vindicator Priest Staff"":
                     VindicatorCrest(15);
                     Adv.BuyItem(""neotower"", 2474, req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Assassin Daggers",
-    @"
+        },
+        {
+            "Vindicator Assassin Daggers",
+            @"
 case ""Vindicator Assassin Daggers"":
                     VindicatorCrest(15);
                     Adv.BuyItem(""neotower"", 2474, req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Dawn Vindication Grace Texts",
-    @"
+        },
+        {
+            "Dawn Vindication Grace Texts",
+            @"
 case ""Dawn Vindication Grace Texts"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""neotower"", 28, ""Dawn Vindication Tome"", isTemp: false);
@@ -1726,10 +1723,10 @@ case ""Dawn Vindication Grace Texts"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Priest Hood",
-    @"
+        },
+        {
+            "Vindicator Priest Hood",
+            @"
 case ""Vindicator Priest Hood"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""neotower"", 28, req.Name, quant, isTemp: false);
@@ -1737,10 +1734,10 @@ case ""Vindicator Priest Hood"":
                     break;
 
     "
-},
-{
-    "Hollow Essence",
-    @"
+        },
+        {
+            "Hollow Essence",
+            @"
 case ""Hollow Essence"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -1751,10 +1748,10 @@ case ""Hollow Essence"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hollowborn Vampire Fang",
-    @"
+        },
+        {
+            "Hollowborn Vampire Fang",
+            @"
 case ""Hollowborn Vampire Fang"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -1765,10 +1762,10 @@ case ""Hollowborn Vampire Fang"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hollowborn Lycan Claw",
-    @"
+        },
+        {
+            "Hollowborn Lycan Claw",
+            @"
 case ""Hollowborn Lycan Claw"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -1779,30 +1776,30 @@ case ""Hollowborn Lycan Claw"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hollowborn Lycan Morph",
-    @"
+        },
+        {
+            "Hollowborn Lycan Morph",
+            @"
 case ""Hollowborn Lycan Morph"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""hbchallenge"", ""Hollowborn Lycan"", req.Name, quant, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Hollowborn Vampire Lord Mask",
-    @"
+        },
+        {
+            "Hollowborn Vampire Lord Mask",
+            @"
 case ""Hollowborn Vampire Lord Mask"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""hbchallenge"", ""Sentient Hollow"", req.Name, quant, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Noble Hollowborn Vampire Wings",
-    @"
+        },
+        {
+            "Noble Hollowborn Vampire Wings",
+            @"
 case ""Noble Hollowborn Vampire Wings"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""hbchallenge"", ""Hollowborn Vampire"", req.Name, quant, req.Temp);
@@ -1810,10 +1807,10 @@ case ""Noble Hollowborn Vampire Wings"":
                     break;
 
     "
-},
-{
-    "Atlas Lion Pelt",
-    @"
+        },
+        {
+            "Atlas Lion Pelt",
+            @"
 case ""Atlas Lion Pelt"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -1826,30 +1823,30 @@ case ""Atlas Lion Pelt"":
                     }
                     break;
     "
-},
-{
-    "Atlas Crest",
-    @"
+        },
+        {
+            "Atlas Crest",
+            @"
 case ""Atlas Crest"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""atlaskingdom"", ""Atlas Light Magus"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Coelho's Tome",
-    @"
+        },
+        {
+            "Coelho's Tome",
+            @"
 case ""Coelho's Tome"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaskingdom"", ""Coelho"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Blue Dye",
-    @"
+        },
+        {
+            "Blue Dye",
+            @"
 case ""Blue Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -1863,19 +1860,19 @@ case ""Blue Dye"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Legion Token",
-    @"
+        },
+        {
+            "Legion Token",
+            @"
 case ""Legion Token"":
                     Legion.FarmLegionToken(quant);
                     break;
 
     "
-},
-{
-    "Atlas Regalia",
-    @"
+        },
+        {
+            "Atlas Regalia",
+            @"
 case ""Atlas Regalia"":
                     Core.FarmingLogger(req.Name, quant);
                     if (Core.CheckInventory(""Chaos Avenger""))
@@ -1891,30 +1888,30 @@ case ""Atlas Regalia"":
                         Core.Logger($""{req.Name} requires army, please farm it manually."", stopBot: true);
                     break;
     "
-},
-{
-    "Arethusa's Black Steel",
-    @"
+        },
+        {
+            "Arethusa's Black Steel",
+            @"
 case ""Arethusa's Black Steel"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlasfalls"", ""Princess Arethusa"", req.Name, quant, false, false, true);
                     break;
     "
-},
-{
-    "Sundered Soul of Atlas",
-    @"
+        },
+        {
+            "Sundered Soul of Atlas",
+            @"
 case ""Sundered Soul of Atlas"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""atlasfalls"", ""Sundered Soul"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Death's Oversight",
-    @"
+        },
+        {
+            "Death's Oversight",
+            @"
 case ""Death's Oversight"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -1922,263 +1919,263 @@ case ""Death's Oversight"":
                         Core.KillMonster(""shadowattack"", ""Boss"", ""Left"", ""Death"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Death's Scythe",
-    @"
+        },
+        {
+            "Death's Scythe",
+            @"
 case ""Death's Scythe"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""shadowattack"", ""Death"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Unmoulded Fiend Essence",
-    @"
+        },
+        {
+            "Unmoulded Fiend Essence",
+            @"
 case ""Unmoulded Fiend Essence"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""tercessuinotlim"", 1951, ""Unmoulded Fiend Essence"", quant);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Elven Assassin's Locks + Scarf",
-    @"
+        },
+        {
+            "Elven Assassin's Locks + Scarf",
+            @"
 case ""Elven Assassin's Locks + Scarf"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Elven Assassin's Locks",
-    @"
+        },
+        {
+            "Elven Assassin's Locks",
+            @"
 case ""Elven Assassin's Locks"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Elven Assassin's Hair",
-    @"
+        },
+        {
+            "Elven Assassin's Hair",
+            @"
 case ""Elven Assassin's Hair"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Elven Assassin's Scarf",
-    @"
+        },
+        {
+            "Elven Assassin's Scarf",
+            @"
 case ""Elven Assassin's Scarf"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Poisonous Thorn Wreath",
-    @"
+        },
+        {
+            "Poisonous Thorn Wreath",
+            @"
 case ""Poisonous Thorn Wreath"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Nightshade Assassin Guardian",
-    @"
+        },
+        {
+            "Nightshade Assassin Guardian",
+            @"
 case ""Nightshade Assassin Guardian"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Reversed Blade of Thorns",
-    @"
+        },
+        {
+            "Reversed Blade of Thorns",
+            @"
 case ""Reversed Blade of Thorns"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Reversed Daggers of Thorns",
-    @"
+        },
+        {
+            "Reversed Daggers of Thorns",
+            @"
 case ""Reversed Daggers of Thorns"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Envenomed Whip of Agony",
-    @"
+        },
+        {
+            "Envenomed Whip of Agony",
+            @"
 case ""Envenomed Whip of Agony"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Envenomed Gauntlet",
-    @"
+        },
+        {
+            "Envenomed Gauntlet",
+            @"
 case ""Envenomed Gauntlet"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Poisonous Rogue",
-    @"
+        },
+        {
+            "Poisonous Rogue",
+            @"
 case ""Poisonous Rogue"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Nightshade Thorn Assasasin",
-    @"
+        },
+        {
+            "Nightshade Thorn Assasasin",
+            @"
 case ""Nightshade Thorn Assasasin"":
                     YUM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Gold Voucher 25k",
-    @"
+        },
+        {
+            "Gold Voucher 25k",
+            @"
 case ""Gold Voucher 25k"":
                     Farm.Voucher(req.Name, req.Quantity);
                     break;
     "
-},
-{
-    "Vindicator Archer's Hat + Locks",
-    @"
+        },
+        {
+            "Vindicator Archer's Hat + Locks",
+            @"
 case ""Vindicator Archer's Hat + Locks"":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Dawn Vindicator Archer",
-    @"
+        },
+        {
+            "Dawn Vindicator Archer",
+            @"
 case ""Dawn Vindicator Archer"":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Dawn Vindicator General",
-    @"
+        },
+        {
+            "Dawn Vindicator General",
+            @"
 case ""Dawn Vindicator General"":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Bright Bow of the Dawn",
-    @"
+        },
+        {
+            "Bright Bow of the Dawn",
+            @"
 case ""Bright Bow of the Dawn"":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator General's Hood",
-    @"
+        },
+        {
+            "Vindicator General's Hood",
+            @"
 case ""Vindicator General's Hood"":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator General's Hood + Locks",
-    @"
+        },
+        {
+            "Vindicator General's Hood + Locks",
+            @"
 case ""Vindicator General's Hood + Locks"":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Blessed Shield of Vindication",
-    @"
+        },
+        {
+            "Blessed Shield of Vindication",
+            @"
 case ""Blessed Shield of Vindication"":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Blessed Hammers of the Dawn",
-    @"
+        },
+        {
+            "Blessed Hammers of the Dawn",
+            @"
 case ""Blessed Hammers of the Dawn"":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Blessed Hammer of the Dawn",
-    @"
+        },
+        {
+            "Blessed Hammer of the Dawn",
+            @"
 case ""Blessed Hammer of the Dawn"":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Archer's Hat",
-    @"
+        },
+        {
+            "Vindicator Archer's Hat",
+            @"
 case ""Vindicator Archer's Hat"":
                     DFM.BuyAllMerge(req.Name);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Shadow Orb",
-    @"
+        },
+        {
+            "Shadow Orb",
+            @"
 case ""Shadow Orb"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""innershadows"", ""Shadowcrow"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Dark Spirit",
-    @"
+        },
+        {
+            "Dark Spirit",
+            @"
 case ""Dark Spirit"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""darkalliance"", ""Shadow Void"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Mana Gem",
-    @"
+        },
+        {
+            "Mana Gem",
+            @"
 case ""Mana Gem"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""darkalliance"", ""Underflame Guardian"", req.Name, quant, false);
                     break;
 
     "
-},
-{
-    "Dark Victory Seal",
-    @"
+        },
+        {
+            "Dark Victory Seal",
+            @"
 case ""Dark Victory Seal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -2195,10 +2192,10 @@ case ""Dark Victory Seal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Underworld Asgardian Helm",
-    @"
+        },
+        {
+            "Underworld Asgardian Helm",
+            @"
 case ""Underworld Asgardian Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2206,10 +2203,10 @@ case ""Underworld Asgardian Helm"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Underworld Asgardian Cape",
-    @"
+        },
+        {
+            "Underworld Asgardian Cape",
+            @"
 case ""Underworld Asgardian Cape"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2217,10 +2214,10 @@ case ""Underworld Asgardian Cape"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Underworld Asgardian Sword",
-    @"
+        },
+        {
+            "Underworld Asgardian Sword",
+            @"
 case ""Underworld Asgardian Sword"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2228,10 +2225,10 @@ case ""Underworld Asgardian Sword"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Underworld DeathSpine",
-    @"
+        },
+        {
+            "Underworld DeathSpine",
+            @"
 case ""Underworld DeathSpine"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2239,10 +2236,10 @@ case ""Underworld DeathSpine"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Underworld Asgardian Mace",
-    @"
+        },
+        {
+            "Underworld Asgardian Mace",
+            @"
 case ""Underworld Asgardian Mace"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2250,40 +2247,40 @@ case ""Underworld Asgardian Mace"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Underworld Oni's Naginata",
-    @"
+        },
+        {
+            "Underworld Oni's Naginata",
+            @"
 case ""Underworld Oni's Naginata"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dagerecruit"", ""Nuckelavee"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Underworld Oni's Blade",
-    @"
+        },
+        {
+            "Underworld Oni's Blade",
+            @"
 case ""Underworld Oni's Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dagerecruit"", ""Nuckelavee"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Underworld Oni's Blades",
-    @"
+        },
+        {
+            "Underworld Oni's Blades",
+            @"
 case ""Underworld Oni's Blades"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dagerecruit"", ""Nuckelavee"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Axe Of Cerberus",
-    @"
+        },
+        {
+            "Axe Of Cerberus",
+            @"
 case ""Axe Of Cerberus"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2293,10 +2290,10 @@ case ""Axe Of Cerberus"":
                     break;
 
     "
-},
-{
-    "Shadow of Cerberus",
-    @"
+        },
+        {
+            "Shadow of Cerberus",
+            @"
 case ""Shadow of Cerberus"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2306,10 +2303,10 @@ case ""Shadow of Cerberus"":
                     break;
 
     "
-},
-{
-    "Flail Of Cerberus",
-    @"
+        },
+        {
+            "Flail Of Cerberus",
+            @"
 case ""Flail Of Cerberus"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2319,10 +2316,10 @@ case ""Flail Of Cerberus"":
                     break;
 
     "
-},
-{
-    "Dark Palace Token",
-    @"
+        },
+        {
+            "Dark Palace Token",
+            @"
 case ""Dark Palace Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2332,10 +2329,10 @@ case ""Dark Palace Token"":
                     break;
 
     "
-},
-{
-    "Ancient Sigil",
-    @"
+        },
+        {
+            "Ancient Sigil",
+            @"
 case ""Ancient Sigil"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(4196, 4197);
@@ -2344,10 +2341,10 @@ case ""Ancient Sigil"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Broken Staff",
-    @"
+        },
+        {
+            "Broken Staff",
+            @"
 case ""Broken Staff"":
                     Dictionary<string, (string, ClassType)> staffPieces = new()
                         {
@@ -2376,129 +2373,129 @@ case ""Broken Staff"":
                     break;
 
     "
-},
-{
-    "Ultra Shifting Plane Gem",
-    @"
+        },
+        {
+            "Ultra Shifting Plane Gem",
+            @"
 case ""Ultra Shifting Plane Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""darkfortress"", ""r3"", ""Left"", ""*"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Cocar dos Dançarinos",
-    @"
+        },
+        {
+            "Cocar dos Dançarinos",
+            @"
 case ""Cocar dos Dançarinos"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""darkfortress"", ""Dage the Evil"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Dançarinos da Legião",
-    @"
+        },
+        {
+            "Dançarinos da Legião",
+            @"
 case ""Dançarinos da Legião"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""darkfortress"", ""Dage the Evil"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Dage's Favor",
-    @"
+        },
+        {
+            "Dage's Favor",
+            @"
 case ""Dage's Favor"":
                     Core.FarmingLogger(req.Name, quant);
                     Legion.ApprovalAndFavor(0, quant);
                     break;
     "
-},
-{
-    "Emblem of Dage",
-    @"
+        },
+        {
+            "Emblem of Dage",
+            @"
 case ""Emblem of Dage"":
                     Legion.EmblemofDage(quant);
                     break;
     "
-},
-{
-    "Diamond Token of Dage",
-    @"
+        },
+        {
+            "Diamond Token of Dage",
+            @"
 case ""Diamond Token of Dage"":
                     Legion.DiamondTokenofDage(quant);
                     break;
     "
-},
-{
-    "Argus' Iris",
-    @"
+        },
+        {
+            "Argus' Iris",
+            @"
 case ""Argus' Iris"":
                     Iris(quant);
                     break;
     "
-},
-{
-    "Underworld Linen",
-    @"
+        },
+        {
+            "Underworld Linen",
+            @"
 case ""Underworld Linen"":
                     Linen(quant);
                     break;
     "
-},
-{
-    "River Glowstone",
-    @"
+        },
+        {
+            "River Glowstone",
+            @"
 case ""River Glowstone"":
                     Glowstone(quant);
                     break;
     "
-},
-{
-    "Teacup Mace",
-    @"
+        },
+        {
+            "Teacup Mace",
+            @"
 case ""Teacup Mace"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""junkhoard"", ""Junk Golem"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Ice Spike",
-    @"
+        },
+        {
+            "Ice Spike",
+            @"
 case ""Ice Spike"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""frozenlair"", ""Frozen Legionnaire"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Ice Splinter",
-    @"
+        },
+        {
+            "Ice Splinter",
+            @"
 case ""Ice Splinter"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""frozenlair"", ""Frozen Legionnaire"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Sapphire Orb",
-    @"
+        },
+        {
+            "Sapphire Orb",
+            @"
 case ""Sapphire Orb"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""frozenlair"", ""Legion Lich Lord"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Necrotic Orb",
-    @"
+        },
+        {
+            "Necrotic Orb",
+            @"
 case ""Necrotic Orb"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2506,18 +2503,18 @@ case ""Necrotic Orb"":
                     break;
 
     "
-},
-{
-    "Indulgence",
-    @"
+        },
+        {
+            "Indulgence",
+            @"
 case ""Indulgence"":
                     HeadoftheLegionBeast.Indulgence(quant);
                     break;
     "
-},
-{
-    "Broken Chain",
-    @"
+        },
+        {
+            "Broken Chain",
+            @"
 case ""Broken Chain"":
                     //10115 | You and Your Chain
                     Core.FarmingLogger(req.Name, quant);
@@ -2532,204 +2529,204 @@ case ""Broken Chain"":
                     }
                     break;
     "
-},
-{
-    "Atlas Axis Blade",
-    @"
+        },
+        {
+            "Atlas Axis Blade",
+            @"
 case ""Atlas Axis Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""atlaspromenade"", ""Atlas Knight"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Barrensoul Psalm",
-    @"
+        },
+        {
+            "Barrensoul Psalm",
+            @"
 case ""Barrensoul Psalm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Aeterna Adornment",
-    @"
+        },
+        {
+            "Underworld Ritualist Aeterna Adornment",
+            @"
 case ""Underworld Ritualist Aeterna Adornment"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Aeterna Hood",
-    @"
+        },
+        {
+            "Underworld Ritualist Aeterna Hood",
+            @"
 case ""Underworld Ritualist Aeterna Hood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Aeterna Horns",
-    @"
+        },
+        {
+            "Underworld Ritualist Aeterna Horns",
+            @"
 case ""Underworld Ritualist Aeterna Horns"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Adornments",
-    @"
+        },
+        {
+            "Underworld Ritualist Adornments",
+            @"
 case ""Underworld Ritualist Adornments"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Horned Mask",
-    @"
+        },
+        {
+            "Underworld Ritualist Horned Mask",
+            @"
 case ""Underworld Ritualist Horned Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Mask",
-    @"
+        },
+        {
+            "Underworld Ritualist Mask",
+            @"
 case ""Underworld Ritualist Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Horned Hood",
-    @"
+        },
+        {
+            "Underworld Ritualist Horned Hood",
+            @"
 case ""Underworld Ritualist Horned Hood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Adorned Hood",
-    @"
+        },
+        {
+            "Underworld Ritualist Adorned Hood",
+            @"
 case ""Underworld Ritualist Adorned Hood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Horned Adornment",
-    @"
+        },
+        {
+            "Underworld Ritualist Horned Adornment",
+            @"
 case ""Underworld Ritualist Horned Adornment"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Adorned Mask",
-    @"
+        },
+        {
+            "Underworld Ritualist Adorned Mask",
+            @"
 case ""Underworld Ritualist Adorned Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist Hood",
-    @"
+        },
+        {
+            "Underworld Ritualist Hood",
+            @"
 case ""Underworld Ritualist Hood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Underworld Ritualist",
-    @"
+        },
+        {
+            "Underworld Ritualist",
+            @"
 case ""Underworld Ritualist"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""atlaspromenade"", ""Usurper Lord Slaine"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Pale Corpse Wax Candelabras",
-    @"
+        },
+        {
+            "Pale Corpse Wax Candelabras",
+            @"
 case ""Pale Corpse Wax Candelabras"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""atlaspromenade"", ""Twisted Warrior"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Pale Corpse Wax Candelabra",
-    @"
+        },
+        {
+            "Pale Corpse Wax Candelabra",
+            @"
 case ""Pale Corpse Wax Candelabra"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""atlaspromenade"", ""Twisted Warrior"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Yami",
-    @"
+        },
+        {
+            "Yami",
+            @"
 case ""Yami"":
                     YnR.Yami(quant);
                     break;
     "
-},
-{
-    "Folded Steel",
-    @"
+        },
+        {
+            "Folded Steel",
+            @"
 case ""Folded Steel"":
                     YnR.FoldedSteel();
                     break;
     "
-},
-{
-    "Platinum Paragon Medal",
-    @"
+        },
+        {
+            "Platinum Paragon Medal",
+            @"
 case ""Platinum Paragon Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""underworld"", 238, ""Platinum Paragon Medal"", quant);
                     break;
     "
-},
-{
-    "Dage's Approval",
-    @"
+        },
+        {
+            "Dage's Approval",
+            @"
 case ""Dage's Approval"":
                     Legion.ApprovalAndFavor(quant, 0);
                     break;
 
     "
-},
-{
-    "Crystallized Blood",
-    @"
+        },
+        {
+            "Crystallized Blood",
+            @"
 case ""Crystallized Blood"":
                     Core.FarmingLogger(req.Name, quant);
                     if (!Bot.Quests.IsAvailable(793))
@@ -2744,19 +2741,19 @@ case ""Crystallized Blood"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Flaming Skull",
-    @"
+        },
+        {
+            "Flaming Skull",
+            @"
 case ""Flaming Skull"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""underworld"", ""Frozen Pyromancer"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Darkness Shard",
-    @"
+        },
+        {
+            "Darkness Shard",
+            @"
 case ""Darkness Shard"":
                     Core.FarmingLogger(req.Name, quant);
                     DShard.GetShard(quant);
@@ -2764,10 +2761,10 @@ case ""Darkness Shard"":
                         Core.Logger(""Not enough Darkness Shards (Daily) try again tomarrow."", stopBot: true);
                     break;
     "
-},
-{
-    "Flame-Forged Metal",
-    @"
+        },
+        {
+            "Flame-Forged Metal",
+            @"
 case ""Flame-Forged Metal"":
                     if (!Bot.Quests.IsAvailable(793))
                         return;
@@ -2782,10 +2779,10 @@ case ""Flame-Forged Metal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Soul-Forged Metal",
-    @"
+        },
+        {
+            "Soul-Forged Metal",
+            @"
 case ""Soul-Forged Metal"":
                     if (!Bot.Quests.IsAvailable(793))
                         return;
@@ -2801,10 +2798,10 @@ case ""Soul-Forged Metal"":
                     break;
 
     "
-},
-{
-    "Beast Soul",
-    @"
+        },
+        {
+            "Beast Soul",
+            @"
 case ""Beast Soul"":
                     if (Core.CheckInventory(req.Name, quant))
                         break;
@@ -2815,85 +2812,85 @@ case ""Beast Soul"":
                     Core.HuntMonster(""sevencircleswar"", ""The Beast"", req.Name, quant, isTemp: false, publicRoom: true);
                     break;
     "
-},
-{
-    "Souls of Heresy",
-    @"
+        },
+        {
+            "Souls of Heresy",
+            @"
 case ""Souls of Heresy"":
                     HeadoftheLegionBeast.SoulsHeresy(quant);
                     break;
     "
-},
-{
-    "Penance",
-    @"
+        },
+        {
+            "Penance",
+            @"
 case ""Penance"":
                     HeadoftheLegionBeast.Penance(quant);
                     break;
     "
-},
-{
-    "Essence of Treachery",
-    @"
+        },
+        {
+            "Essence of Treachery",
+            @"
 case ""Essence of Treachery"":
                     HeadoftheLegionBeast.EssenceTreachery(quant);
                     break;
     "
-},
-{
-    "Essence of Wrath",
-    @"
+        },
+        {
+            "Essence of Wrath",
+            @"
 case ""Essence of Wrath"":
                     HeadoftheLegionBeast.EssenceWrath(quant);
                     break;
     "
-},
-{
-    "Essence of Violence",
-    @"
+        },
+        {
+            "Essence of Violence",
+            @"
 case ""Essence of Violence"":
                     HeadoftheLegionBeast.EssenceViolence(quant);
                     break;
 
                 //these come from circles not war:
     "
-},
-{
-    "Stare of Greed",
-    @"
+        },
+        {
+            "Stare of Greed",
+            @"
 case ""Stare of Greed"":
                     SevenCirclesMerge.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Gluttony's Maw",
-    @"
+        },
+        {
+            "Gluttony's Maw",
+            @"
 case ""Gluttony's Maw"":
                     SevenCirclesMerge.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Aspect of Luxuria",
-    @"
+        },
+        {
+            "Aspect of Luxuria",
+            @"
 case ""Aspect of Luxuria"":
                     SevenCirclesMerge.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Helms of the Seven Circles",
-    @"
+        },
+        {
+            "Helms of the Seven Circles",
+            @"
 case ""Helms of the Seven Circles"":
                     HeadoftheLegionBeast.HelmSevenCircles();
                     break;
 
     "
-},
-{
-    "Underworld Laurel",
-    @"
+        },
+        {
+            "Underworld Laurel",
+            @"
 case ""Underworld Laurel"":
                     while (!Bot.ShouldExit && !Core.CheckInventory(""Underworld Laurel"", quant))
                     {
@@ -2904,10 +2901,10 @@ case ""Underworld Laurel"":
                     }
                     break;
     "
-},
-{
-    "Underworld Medal",
-    @"
+        },
+        {
+            "Underworld Medal",
+            @"
 case ""Underworld Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -2922,10 +2919,10 @@ case ""Underworld Medal"":
                     }
                     break;
     "
-},
-{
-    "Underworld Accolade",
-    @"
+        },
+        {
+            "Underworld Accolade",
+            @"
 case ""Underworld Accolade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -2940,30 +2937,30 @@ case ""Underworld Accolade"":
                     }
                     break;
     "
-},
-{
-    "Avarice of the Legion's Hood",
-    @"
+        },
+        {
+            "Avarice of the Legion's Hood",
+            @"
 case ""Avarice of the Legion's Hood"":
                     Core.AddDrop(""Avarice of the Legion's Hood"", ""Avarice of the Legion's Skull"");
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dage"", ""Dage the Evil"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Avarice of the Legion's Skull",
-    @"
+        },
+        {
+            "Avarice of the Legion's Skull",
+            @"
 case ""Avarice of the Legion's Skull"":
                     Core.AddDrop(""Avarice of the Legion's Hood"", ""Avarice of the Legion's Skull"");
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dage"", ""Dage the Evil"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Dage the Evil Insignia",
-    @"
+        },
+        {
+            "Dage the Evil Insignia",
+            @"
 case ""Dage the Evil Insignia"":
                     if (!Core.CheckInventory(req.Name, quant))
                         Core.Logger($""Player does not have required amount of insignias [x{quant}]"", stopBot: true);
@@ -2971,10 +2968,10 @@ case ""Dage the Evil Insignia"":
                     break;
 
     "
-},
-{
-    "Death Badge",
-    @"
+        },
+        {
+            "Death Badge",
+            @"
 case ""Death Badge"":
                     Core.EquipClass(ClassType.Solo);
                     if (Core.isCompletedBefore(793))
@@ -2986,10 +2983,10 @@ case ""Death Badge"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bone Sigil",
-    @"
+        },
+        {
+            "Bone Sigil",
+            @"
 case ""Bone Sigil"":
                     Core.FarmingLogger(req.Name, quant);
                     if (Core.isCompletedBefore(793))
@@ -3017,19 +3014,19 @@ case ""Bone Sigil"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Essence of Blade Master",
-    @"
+        },
+        {
+            "Essence of Blade Master",
+            @"
 case ""Essence of Blade Master"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""underworld"", ""Blade Master"", ""Essence of Blade Master"", quant, false);
                     break;
     "
-},
-{
-    "Primarch's Trophy",
-    @"
+        },
+        {
+            "Primarch's Trophy",
+            @"
 case ""Primarch's Trophy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -3041,119 +3038,119 @@ case ""Primarch's Trophy"":
                     break;
 
     "
-},
-{
-    "Staff of Inversion",
-    @"
+        },
+        {
+            "Staff of Inversion",
+            @"
 case ""Staff of Inversion"":
                     Core.KillEscherion(req.Name, isTemp: req.Temp);
                     break;
     "
-},
-{
-    "BattleMage Armor",
-    @"
+        },
+        {
+            "BattleMage Armor",
+            @"
 case ""BattleMage Armor"":
                     Adv.BuyItem(""castleroof"", 749, req.Name, 1, shopItemID: 12773);
                     break;
     "
-},
-{
-    "Nightlocke War Staff",
-    @"
+        },
+        {
+            "Nightlocke War Staff",
+            @"
 case ""Nightlocke War Staff"":
                     Core.EquipClass(ClassType.Solo);
                     Core.KillMonster(""aqw3d"", ""r13"", ""Left"", ""Nightlocke Staff"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Calamitous Warlic's Tome",
-    @"
+        },
+        {
+            "Calamitous Warlic's Tome",
+            @"
 case ""Calamitous Warlic's Tome"":
                     Core.KillMonster(""ruinedcrown"", ""r10"", ""Left"", ""Calamitous Warlic"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Dishpan Cleric Costume",
-    @"
+        },
+        {
+            "Dishpan Cleric Costume",
+            @"
 case ""Dishpan Cleric Costume"":
                     Core.KillMonster(""cleric"", ""Frame3"", ""Left"", ""Chaos Dragon"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Chaotic Healer",
-    @"
+        },
+        {
+            "Chaotic Healer",
+            @"
 case ""Chaotic Healer"":
                     Core.FarmingLogger(req.Name, quant);
                     LOC.Hero();
                     Adv.BuyItem(""newfinale"", 891, req.Name);
                     break;
     "
-},
-{
-    "Battle Cleric of the Dragon",
-    @"
+        },
+        {
+            "Battle Cleric of the Dragon",
+            @"
 case ""Battle Cleric of the Dragon"":
                     TerminaTempleMerge.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Amia's Cult Secret",
-    @"
+        },
+        {
+            "Amia's Cult Secret",
+            @"
 case ""Amia's Cult Secret"":
                     Core.KillMonster(""fotia"", ""r6"", ""Left"", ""Amia the Cult Leader"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Queen's Sage Scythe",
-    @"
+        },
+        {
+            "Queen's Sage Scythe",
+            @"
 case ""Queen's Sage Scythe"":
                     GooseMerge.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ShadowFlame Empress",
-    @"
+        },
+        {
+            "ShadowFlame Empress",
+            @"
 case ""ShadowFlame Empress"":
                     BrightForestMerge.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Fragment of the Queen",
-    @"
+        },
+        {
+            "Fragment of the Queen",
+            @"
 case ""Fragment of the Queen"":
                     Core.EquipClass(ClassType.Solo);
                     Bot.Quests.UpdateQuest(8094);
                     Core.HuntMonster(""transformation"", ""Queen of Monsters"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Empress' Finger's Ring",
-    @"
+        },
+        {
+            "Empress' Finger's Ring",
+            @"
 case ""Empress' Finger's Ring"":
                     Core.HuntMonsterMapID(""firstobservatory"", 13, req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "King Klunk's Crown",
-    @"
+        },
+        {
+            "King Klunk's Crown",
+            @"
 case ""King Klunk's Crown"":
                     Core.HuntMonster(""evilwarnul"", ""Laken"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Crowned Skull of Na'al",
-    @"
+        },
+        {
+            "Crowned Skull of Na'al",
+            @"
 case ""Crowned Skull of Na'al"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.UseDodgeClass();
@@ -3166,107 +3163,107 @@ case ""Crowned Skull of Na'al"":
                     Adv.BuyItem(Bot.Map.Name, 2336, req.Name, quant);
                     break;
     "
-},
-{
-    "Zealous Crown",
-    @"
+        },
+        {
+            "Zealous Crown",
+            @"
 case ""Zealous Crown"":
                     DLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Judgment Tonic",
-    @"
+        },
+        {
+            "Judgment Tonic",
+            @"
 case ""Judgment Tonic"":
                     PotionBuyer.// Call the method with specific parameters to farm Judgment Tonics with a quantity of 50
                     INeedYourStrongestPotions(new[] { ""Judgment Tonic"" }, new bool[] { true }, quant, true, true);
                     break;
     "
-},
-{
-    "Lich Emperor's Catalyst",
-    @"
+        },
+        {
+            "Lich Emperor's Catalyst",
+            @"
 case ""Lich Emperor's Catalyst"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""warundead"", ""Lich Emperor"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Blessed Abezeth",
-    @"
+        },
+        {
+            "Blessed Abezeth",
+            @"
 case ""Blessed Abezeth"":
                     CCM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Inquisitor of the Light",
-    @"
+        },
+        {
+            "Inquisitor of the Light",
+            @"
 case ""Inquisitor of the Light"":
                     SOLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Divine Guardian Of Aegis",
-    @"
+        },
+        {
+            "Divine Guardian Of Aegis",
+            @"
 case ""Divine Guardian Of Aegis"":
                     AOTM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Chaos Weaver Cleric's Doctrine",
-    @"
+        },
+        {
+            "Chaos Weaver Cleric's Doctrine",
+            @"
 case ""Chaos Weaver Cleric's Doctrine"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""chaosweb"", ""ChaosWeaver Cleric"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Love Token",
-    @"
+        },
+        {
+            "Love Token",
+            @"
 case ""Love Token"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""battlewedding"", ""Platinum Mech Dragon"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Time Heart",
-    @"
+        },
+        {
+            "Time Heart",
+            @"
 case ""Time Heart"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""portalmazec"", ""Vorefax "", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Storm Heart",
-    @"
+        },
+        {
+            "Storm Heart",
+            @"
 case ""Storm Heart"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""pride"", ""Valsarian"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Mercutio's Heart",
-    @"
+        },
+        {
+            "Mercutio's Heart",
+            @"
 case ""Mercutio's Heart"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""mercutio"", ""Mercutio"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Racing Trophy",
-    @"
+        },
+        {
+            "Racing Trophy",
+            @"
 case ""Racing Trophy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(""Racing Trophy"");
@@ -3277,36 +3274,36 @@ case ""Racing Trophy"":
                     }
                     break;
     "
-},
-{
-    "Sphinx Sentinel",
-    @"
+        },
+        {
+            "Sphinx Sentinel",
+            @"
 case ""Sphinx Sentinel"":
                     CM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dread Deadmoor BattleAxe",
-    @"
+        },
+        {
+            "Dread Deadmoor BattleAxe",
+            @"
 case ""Dread Deadmoor BattleAxe"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""deadmoor"", ""Lucid Nightmare"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "SMU Brutalcorn's Horn",
-    @"
+        },
+        {
+            "SMU Brutalcorn's Horn",
+            @"
 case ""SMU Brutalcorn's Horn"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ultrabrutalcorn"", ""SMU BrutalCorn"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Ouroboros Scale",
-    @"
+        },
+        {
+            "Ouroboros Scale",
+            @"
 case ""Ouroboros Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -3322,73 +3319,73 @@ case ""Ouroboros Scale"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Libran Scales",
-    @"
+        },
+        {
+            "Libran Scales",
+            @"
 case ""Libran Scales"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""lightoviacave"", ""Imbalanced Mage"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Akriloth's Scale",
-    @"
+        },
+        {
+            "Akriloth's Scale",
+            @"
 case ""Akriloth's Scale"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""shadowstrike"", ""Sepulchuroth"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "ArchFiend DragonKnight's Scale",
-    @"
+        },
+        {
+            "ArchFiend DragonKnight's Scale",
+            @"
 case ""ArchFiend DragonKnight's Scale"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""underlair"", ""ArchFiend DragonKnight"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "ARTX 3090 Controller",
-    @"
+        },
+        {
+            "ARTX 3090 Controller",
+            @"
 case ""ARTX 3090 Controller"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""mverse"", ""Major Mushroom"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Soulseeker's Grim Hood",
-    @"
+        },
+        {
+            "Soulseeker's Grim Hood",
+            @"
 case ""Soulseeker's Grim Hood"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""marsh2"", ""Soulseeker"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Nothing's Solus",
-    @"
+        },
+        {
+            "Nothing's Solus",
+            @"
 case ""Nothing's Solus"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""pocketdimension"", ""Nothing"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Lucky Pet",
-    @"
+        },
+        {
+            "Lucky Pet",
+            @"
 case ""Lucky Pet"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""pilgrimage"", ""Lucky"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Second Chance Coin",
-    @"
+        },
+        {
+            "Second Chance Coin",
+            @"
 case ""Second Chance Coin"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -3402,150 +3399,150 @@ case ""Second Chance Coin"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Treasure Chest",
-    @"
+        },
+        {
+            "Treasure Chest",
+            @"
 case ""Treasure Chest"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""finalbattle"", ""r2"", ""Left"", ""*"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Divine Elixir",
-    @"
+        },
+        {
+            "Divine Elixir",
+            @"
 case ""Divine Elixir"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""poisonforest"", ""Xavier Lionfang"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Ultra Lobthulu's Fortune",
-    @"
+        },
+        {
+            "Ultra Lobthulu's Fortune",
+            @"
 case ""Ultra Lobthulu's Fortune"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ultralob"", ""Ultra Lobthulhu"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Enchanted Martial Artist's Gi",
-    @"
+        },
+        {
+            "Enchanted Martial Artist's Gi",
+            @"
 case ""Enchanted Martial Artist's Gi"":
                     SSM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Strong Axe of Golmoth",
-    @"
+        },
+        {
+            "Strong Axe of Golmoth",
+            @"
 case ""Strong Axe of Golmoth"":
                     DPM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Fortitude Tonic",
-    @"
+        },
+        {
+            "Fortitude Tonic",
+            @"
 case ""Fortitude Tonic"":
                     PotionBuyer.// Call the method with specific parameters to farm Fortitude Tonics with a quantity of 50
                     INeedYourStrongestPotions(new[] { ""Fortitude Tonic"" }, new bool[] { true }, quant, true, true);
                     break;
     "
-},
-{
-    "Strong Drag's Intact Wing",
-    @"
+        },
+        {
+            "Strong Drag's Intact Wing",
+            @"
 case ""Strong Drag's Intact Wing"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dracocon"", ""Strong Drag"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Chained Rune Bonebreaker",
-    @"
+        },
+        {
+            "Chained Rune Bonebreaker",
+            @"
 case ""Chained Rune Bonebreaker"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""archportal"", ""High Legion Inquisitor"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Chained Rune Bonebreakers",
-    @"
+        },
+        {
+            "Chained Rune Bonebreakers",
+            @"
 case ""Chained Rune Bonebreakers"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""archportal"", ""High Legion Inquisitor"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Noble Sacrifice",
-    @"
+        },
+        {
+            "Noble Sacrifice",
+            @"
 case ""Noble Sacrifice"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""necrodungeon"", 48, req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "The Answer",
-    @"
+        },
+        {
+            "The Answer",
+            @"
 case ""The Answer"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""battlefowl"", ""Zeuster Projection"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Astero's Insight",
-    @"
+        },
+        {
+            "Astero's Insight",
+            @"
 case ""Astero's Insight"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""fortressdelve"", ""Astero"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Death Pit Arena Medal",
-    @"
+        },
+        {
+            "Death Pit Arena Medal",
+            @"
 case ""Death Pit Arena Medal"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""deathpit"", ""Training Dummy"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Enchanted DeathKnight",
-    @"
+        },
+        {
+            "Enchanted DeathKnight",
+            @"
 case ""Enchanted DeathKnight"":
                     BCM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Super Death's Scythe Fragment",
-    @"
+        },
+        {
+            "Super Death's Scythe Fragment",
+            @"
 case ""Super Death's Scythe Fragment"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""superdeath"", ""Super Death"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Celestial Wings of Guiding",
-    @"
+        },
+        {
+            "Celestial Wings of Guiding",
+            @"
 case ""Celestial Wings of Guiding"":
                     CRM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Blessed Coffee Cup",
-    @"
+        },
+        {
+            "Blessed Coffee Cup",
+            @"
 case ""Blessed Coffee Cup"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -3558,40 +3555,40 @@ case ""Blessed Coffee Cup"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Northern Crown",
-    @"
+        },
+        {
+            "Northern Crown",
+            @"
 case ""Northern Crown"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""snowmore"", ""Jon S'NOOOOOOO"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Azkorath's Wing",
-    @"
+        },
+        {
+            "Azkorath's Wing",
+            @"
 case ""Azkorath's Wing"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""infernalspire"", ""Azkorath"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Fiendish Outlaw",
-    @"
+        },
+        {
+            "Fiendish Outlaw",
+            @"
 case ""Fiendish Outlaw"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""fiendpast"", ""Dage the Lich"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Fiendish Remains",
-    @"
+        },
+        {
+            "Fiendish Remains",
+            @"
 case ""Fiendish Remains"":
                     VR.Storyline();
                     Core.FarmingLogger(req.Name, quant);
@@ -3608,30 +3605,30 @@ case ""Fiendish Remains"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Glass Horns",
-    @"
+        },
+        {
+            "Glass Horns",
+            @"
 case ""Glass Horns"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ashfallcamp"", ""Blackrawk"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Fiend Champion's Spike",
-    @"
+        },
+        {
+            "Fiend Champion's Spike",
+            @"
 case ""Fiend Champion's Spike"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""originul"", ""Fiend Champion"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Earth Stone",
-    @"
+        },
+        {
+            "Earth Stone",
+            @"
 case ""Earth Stone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -3645,10 +3642,10 @@ case ""Earth Stone"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dragon Runestone",
-    @"
+        },
+        {
+            "Dragon Runestone",
+            @"
 case ""Dragon Runestone"":
                     // Core.FarmingLogger(req.Name, quant);
                     // Adv.BuyItem(""alchemyacademy"", 395, 62749, quant, 1, 8777);
@@ -3656,110 +3653,110 @@ case ""Dragon Runestone"":
                     Farm.DragonRunestone(quant);
                     break;
     "
-},
-{
-    "Arcangrove Tower House",
-    @"
+        },
+        {
+            "Arcangrove Tower House",
+            @"
 case ""Arcangrove Tower House"":
                     TLWHM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Nevanna's Revelation",
-    @"
+        },
+        {
+            "Nevanna's Revelation",
+            @"
 case ""Nevanna's Revelation"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""gaiazor"", ""Nevanna"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Star Scrap",
-    @"
+        },
+        {
+            "Star Scrap",
+            @"
 case ""Star Scrap"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""starsinc"", ""Star Sprites"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Rising Star Token",
-    @"
+        },
+        {
+            "Rising Star Token",
+            @"
 case ""Rising Star Token"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""herolobby"", ""Training Partner"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Dark Stars",
-    @"
+        },
+        {
+            "Dark Stars",
+            @"
 case ""Dark Stars"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""deadlines"", ""Eternal Dragon"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Star Sapphire Fragment",
-    @"
+        },
+        {
+            "Star Sapphire Fragment",
+            @"
 case ""Star Sapphire Fragment"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""skytower"", ""Star Sapphire"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Moon Rock Fragments",
-    @"
+        },
+        {
+            "Moon Rock Fragments",
+            @"
 case ""Moon Rock Fragments"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""lunacove"", ""r2"", ""Right"", ""*"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Blood Moon Warrior",
-    @"
+        },
+        {
+            "Blood Moon Warrior",
+            @"
 case ""Blood Moon Warrior"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""marchosiasfight"", ""Marchosias"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Celestial Khopesh",
-    @"
+        },
+        {
+            "Celestial Khopesh",
+            @"
 case ""Celestial Khopesh"":
                     MoonlightKhopeshMerge.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "The Moon's Reflection",
-    @"
+        },
+        {
+            "The Moon's Reflection",
+            @"
 case ""The Moon's Reflection"":
                     Bot.Quests.UpdateQuest(8000);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""Astravia"", ""The Moon"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Golden Sun Seal",
-    @"
+        },
+        {
+            "Golden Sun Seal",
+            @"
 case ""Golden Sun Seal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titanattack"", ""Titanic Paladin"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Sun Zone Chit",
-    @"
+        },
+        {
+            "Sun Zone Chit",
+            @"
 case ""Sun Zone Chit"":
                     int remainingQuant = quant - Bot.Inventory.GetQuantity(req.Name);
 
@@ -3792,54 +3789,54 @@ case ""Sun Zone Chit"":
                     }
                     break;
     "
-},
-{
-    "Armor of the Sun",
-    @"
+        },
+        {
+            "Armor of the Sun",
+            @"
 case ""Armor of the Sun"":
                     ThirdspellMerge.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "The Sun's Enlightenment",
-    @"
+        },
+        {
+            "The Sun's Enlightenment",
+            @"
 case ""The Sun's Enlightenment"":
                     Bot.Quests.UpdateQuest(8256);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""astraviacastle"", ""The Sun"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Trumpet",
-    @"
+        },
+        {
+            "Trumpet",
+            @"
 case ""Trumpet"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""astraviajudge"", ""Trumpeter"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Enchanted Lance of Doom Reborn",
-    @"
+        },
+        {
+            "Enchanted Lance of Doom Reborn",
+            @"
 case ""Enchanted Lance of Doom Reborn"":
                     ShadowMerge.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Minos' Sentence",
-    @"
+        },
+        {
+            "Minos' Sentence",
+            @"
 case ""Minos' Sentence"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""judgement"", ""Minos"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Geode of Oblivion",
-    @"
+        },
+        {
+            "Geode of Oblivion",
+            @"
 case ""Geode of Oblivion"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -3856,10 +3853,10 @@ case ""Geode of Oblivion"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Outrider's Broken Blade",
-    @"
+        },
+        {
+            "Outrider's Broken Blade",
+            @"
 case ""Outrider's Broken Blade"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""deleuzetundra"", ""r2"", ""Left"", ""Nation Outrider"", req.Name, req.Quantity, req.Temp);
@@ -3868,99 +3865,99 @@ case ""Outrider's Broken Blade"":
                     break;
 
     "
-},
-{
-    "Diamond of Nulgath",
-    @"
+        },
+        {
+            "Diamond of Nulgath",
+            @"
 case ""Diamond of Nulgath"":
                     Nation.FarmDiamondofNulgath(quant);
                     break;
     "
-},
-{
-    "Archfiend's Favor",
-    @"
+        },
+        {
+            "Archfiend's Favor",
+            @"
 case ""Archfiend's Favor"":
                     Nation.ApprovalAndFavor(0, quant);
                     break;
     "
-},
-{
-    "Tainted Gem",
-    @"
+        },
+        {
+            "Tainted Gem",
+            @"
 case ""Tainted Gem"":
                     Nation.FarmTaintedGem(quant);
                     break;
     "
-},
-{
-    "Dark Crystal Shard",
-    @"
+        },
+        {
+            "Dark Crystal Shard",
+            @"
 case ""Dark Crystal Shard"":
                     Nation.FarmDarkCrystalShard(quant);
                     break;
     "
-},
-{
-    "Totem of Nulgath",
-    @"
+        },
+        {
+            "Totem of Nulgath",
+            @"
 case ""Totem of Nulgath"":
                     Nation.FarmTotemofNulgath(quant);
                     break;
     "
-},
-{
-    "Gem of Nulgath",
-    @"
+        },
+        {
+            "Gem of Nulgath",
+            @"
 case ""Gem of Nulgath"":
                     Nation.FarmGemofNulgath(quant);
                     break;
     "
-},
-{
-    "Blood Gem of the Archfiend",
-    @"
+        },
+        {
+            "Blood Gem of the Archfiend",
+            @"
 case ""Blood Gem of the Archfiend"":
                     Nation.FarmBloodGem(quant);
                     break;
 
     "
-},
-{
-    "Frosted Falchion",
-    @"
+        },
+        {
+            "Frosted Falchion",
+            @"
 case ""Frosted Falchion"":
                     Adv.BuyItem(""BlindingSnow"", 236, req.Name);
                     break;
     "
-},
-{
-    "Judgement Scythe",
-    @"
+        },
+        {
+            "Judgement Scythe",
+            @"
 case ""Judgement Scythe"":
                     LegionExercise4.Exercise(new[] { ""Judgement Scythe"", ""Legion Token"" });
                     break;
     "
-},
-{
-    "Judgement Hammer",
-    @"
+        },
+        {
+            "Judgement Hammer",
+            @"
 case ""Judgement Hammer"":
                     LegionExercise3.Exercise(new[] { ""Judgement Hammer"", ""Legion Token"" });
                     break;
     "
-},
-{
-    "Cursed Scimitar",
-    @"
+        },
+        {
+            "Cursed Scimitar",
+            @"
 case ""Cursed Scimitar"":
                     Adv.BuyItem(""SandSea"", 242, req.Name);
                     break;
     "
-},
-{
-    "Essence of the Undead Legend",
-    @"
+        },
+        {
+            "Essence of the Undead Legend",
+            @"
 case ""Essence of the Undead Legend"":
                     if (!Core.isSeasonalMapActive(""DarkBirthday""))
                     {
@@ -3972,72 +3969,72 @@ case ""Essence of the Undead Legend"":
                     Adv.BuyItem(""DarkBirthday"", 376, req.Name);
                     break;
     "
-},
-{
-    "Shadow Shroud",
-    @"
+        },
+        {
+            "Shadow Shroud",
+            @"
 case ""Shadow Shroud"":
                     Daily.ShadowShroud();
                     if (!Core.CheckInventory(req.Name, quant))
                         Core.Logger($""Not enough \""Shadow Shroud\"", please do the daily {15 - Bot.Inventory.GetQuantity(""Shadow Shroud"")} more times (not today)"", messageBox: true);
                     break;
     "
-},
-{
-    "DragonBlade of Nulgath",
-    @"
+        },
+        {
+            "DragonBlade of Nulgath",
+            @"
 case ""DragonBlade of Nulgath"":
                     DBoN.GetDragonBlade();
                     break;
     "
-},
-{
-    "Fallen MonsterHunter",
-    @"
+        },
+        {
+            "Fallen MonsterHunter",
+            @"
 case ""Fallen MonsterHunter"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""DeepForest"", ""Aberrant Horror"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Fallen MonsterHunter Helm",
-    @"
+        },
+        {
+            "Fallen MonsterHunter Helm",
+            @"
 case ""Fallen MonsterHunter Helm"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""DeepForest"", ""Aberrant Horror"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Fallen MonsterHunter Cape",
-    @"
+        },
+        {
+            "Fallen MonsterHunter Cape",
+            @"
 case ""Fallen MonsterHunter Cape"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""DeepForest"", ""Aberrant Horror"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Fallen MonsterHunter Sword",
-    @"
+        },
+        {
+            "Fallen MonsterHunter Sword",
+            @"
 case ""Fallen MonsterHunter Sword"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""DeepForest"", ""Aberrant Horror"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Exalted Crown",
-    @"
+        },
+        {
+            "Exalted Crown",
+            @"
 case ""Exalted Crown"":
                     LR.ExaltedCrown();
                     break;
     "
-},
-{
-    "Death's Requiem Staff",
-    @"
+        },
+        {
+            "Death's Requiem Staff",
+            @"
 case ""Death's Requiem Staff"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -4045,26 +4042,26 @@ case ""Death's Requiem Staff"":
                     break;
 
     "
-},
-{
-    "Soul Sand",
-    @"
+        },
+        {
+            "Soul Sand",
+            @"
 case ""Soul Sand"":
                     SSand.SoulSand(quant);
                     break;
     "
-},
-{
-    "Soul Essence",
-    @"
+        },
+        {
+            "Soul Essence",
+            @"
 case ""Soul Essence"":
                     LetItBurn.SoulEssence(quant);
                     break;
     "
-},
-{
-    "Legion Undead Visor",
-    @"
+        },
+        {
+            "Legion Undead Visor",
+            @"
 case ""Legion Undead Visor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -4078,10 +4075,10 @@ case ""Legion Undead Visor"":
                     break;
 
     "
-},
-{
-    "Shard of the Shard",
-    @"
+        },
+        {
+            "Shard of the Shard",
+            @"
 case ""Shard of the Shard"":
                     Fiendshard.Fiendshard_QuestlineP1();
                     Core.FarmingLogger(req.Name, quant);
@@ -4095,20 +4092,20 @@ case ""Shard of the Shard"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Void General Surveillance",
-    @"
+        },
+        {
+            "Void General Surveillance",
+            @"
 case ""Void General Surveillance"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""Fiendshard"", ""Dirtlicker"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Empowered Voidstone",
-    @"
+        },
+        {
+            "Empowered Voidstone",
+            @"
 case ""Empowered Voidstone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -4121,10 +4118,10 @@ case ""Empowered Voidstone"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ice Diamond",
-    @"
+        },
+        {
+            "Ice Diamond",
+            @"
 case ""Ice Diamond"":
                 Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(7279);
@@ -4140,10 +4137,10 @@ case ""Ice Diamond"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dark Bloodstone",
-    @"
+        },
+        {
+            "Dark Bloodstone",
+            @"
 case ""Dark Bloodstone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -4156,10 +4153,10 @@ case ""Dark Bloodstone"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Butterfly Sapphire",
-    @"
+        },
+        {
+            "Butterfly Sapphire",
+            @"
 case ""Butterfly Sapphire"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -4172,10 +4169,10 @@ case ""Butterfly Sapphire"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Understone",
-    @"
+        },
+        {
+            "Understone",
+            @"
 case ""Understone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -4188,10 +4185,10 @@ case ""Understone"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Rainbow Moonstone",
-    @"
+        },
+        {
+            "Rainbow Moonstone",
+            @"
 case ""Rainbow Moonstone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -4208,34 +4205,34 @@ case ""Rainbow Moonstone"":
                     break;
 
     "
-},
-{
-    "Diamond Badge of Nulgath",
-    @"
+        },
+        {
+            "Diamond Badge of Nulgath",
+            @"
 case ""Diamond Badge of Nulgath"":
                     NLR.FarmQuest(new string[] { req.Name }, quant);
                     break;
     "
-},
-{
-    "Emblem of Nulgath",
-    @"
+        },
+        {
+            "Emblem of Nulgath",
+            @"
 case ""Emblem of Nulgath"":
                     Nation.EmblemofNulgath(quant);
                     break;
     "
-},
-{
-    "Void Aura",
-    @"
+        },
+        {
+            "Void Aura",
+            @"
 case ""Void Aura"":
                     NSOD.VoidAuras(quant);
                     break;
     "
-},
-{
-    "Abyssal Lore Scrap",
-    @"
+        },
+        {
+            "Abyssal Lore Scrap",
+            @"
 case ""Abyssal Lore Scrap"":
                     Core.FarmingLogger(req.Name, quant);
 
@@ -4255,121 +4252,121 @@ case ""Abyssal Lore Scrap"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "ArchFiend Mage's Wand",
-    @"
+        },
+        {
+            "ArchFiend Mage's Wand",
+            @"
 case ""ArchFiend Mage's Wand"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Tercessuinotlim"", ""Evil Elemental"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "ArchFiend Mage's Tome",
-    @"
+        },
+        {
+            "ArchFiend Mage's Tome",
+            @"
 case ""ArchFiend Mage's Tome"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Tercessuinotlim"", ""Evil Elemental"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Nulgath's Approval",
-    @"
+        },
+        {
+            "Nulgath's Approval",
+            @"
 case ""Nulgath's Approval"":
                     Nation.ApprovalAndFavor(quant, 0);
                     break;
     "
-},
-{
-    "Taro's Manslayer",
-    @"
+        },
+        {
+            "Taro's Manslayer",
+            @"
 case ""Taro's Manslayer"":
                     Taro.GuardianTaro(true);
                     break;
     "
-},
-{
-    "Blade of Holy Might",
-    @"
+        },
+        {
+            "Blade of Holy Might",
+            @"
 case ""Blade of Holy Might"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""northlands"", ""Aisha's Drake"", ""Blade of Holy Might"", isTemp: false);
                     break;
     "
-},
-{
-    "Unidentified 13",
-    @"
+        },
+        {
+            "Unidentified 13",
+            @"
 case ""Unidentified 13"":
                     Nation.FarmUni13(quant);
                     break;
     "
-},
-{
-    "Iron",
-    @"
+        },
+        {
+            "Iron",
+            @"
 case ""Iron"":
                     BLOD.UnlockMineCrafting();
                     Dailies.MineCrafting(new[] { ""Iron"" }, quant);
                     break;
     "
-},
-{
-    "Cloak of Nulgath",
-    @"
+        },
+        {
+            "Cloak of Nulgath",
+            @"
 case ""Cloak of Nulgath"":
                     Core.BuyItem(""tercessuinotlim"", 4667, ""Cloak of Nulgath"");
                     break;
     "
-},
-{
-    "Staff of Imp Fire",
-    @"
+        },
+        {
+            "Staff of Imp Fire",
+            @"
 case ""Staff of Imp Fire"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""bludrut2"", ""Fire Elemental"", ""Staff of Imp Fire"", isTemp: false);
                     break;
     "
-},
-{
-    "Cool Head",
-    @"
+        },
+        {
+            "Cool Head",
+            @"
 case ""Cool Head"":
                     Core.BuyItem(""tercessuinotlim"", 4826, ""Cool Head"");
                     break;
     "
-},
-{
-    "Primal Dread Fang",
-    @"
+        },
+        {
+            "Primal Dread Fang",
+            @"
 case ""Primal Dread Fang"":
                     Nation.Supplies(""Primal Dread Fang"", quant);
                     break;
     "
-},
-{
-    "Random Weapon of Nulgath",
-    @"
+        },
+        {
+            "Random Weapon of Nulgath",
+            @"
 case ""Random Weapon of Nulgath"":
                     Nation.Supplies(""Random Weapon of Nulgath"", quant);
                     break;
     "
-},
-{
-    "Voucher of Nulgath (non-mem)",
-    @"
+        },
+        {
+            "Voucher of Nulgath (non-mem)",
+            @"
 case ""Voucher of Nulgath (non-mem)"":
                     Nation.FarmVoucher(false);
                     break;
     "
-},
-{
-    "Unidentified 27",
-    @"
+        },
+        {
+            "Unidentified 27",
+            @"
 case ""Unidentified 27"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EnsureAccept(584);
@@ -4381,10 +4378,10 @@ case ""Unidentified 27"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Crystal Phoenix Blade of Nulgath",
-    @"
+        },
+        {
+            "Crystal Phoenix Blade of Nulgath",
+            @"
 case ""Crystal Phoenix Blade of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Nation.FarmDiamondofNulgath(13);
@@ -4400,19 +4397,19 @@ case ""Crystal Phoenix Blade of Nulgath"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Gold Star of Avarice",
-    @"
+        },
+        {
+            "Gold Star of Avarice",
+            @"
 case ""Gold Star of Avarice"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""tercessuinotlim"", 1951, req.Name);
                     break;
     "
-},
-{
-    "Void Remnant",
-    @"
+        },
+        {
+            "Void Remnant",
+            @"
 case ""Void Remnant"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -4429,19 +4426,19 @@ case ""Void Remnant"":
                     }
                     break;
     "
-},
-{
-    "Essence of Nulgath",
-    @"
+        },
+        {
+            "Essence of Nulgath",
+            @"
 case ""Essence of Nulgath"":
                     Nation.EssenceofNulgath(quant);
                     break;
 
     "
-},
-{
-    "Diamond Token of Gravelyn",
-    @"
+        },
+        {
+            "Diamond Token of Gravelyn",
+            @"
 case ""Diamond Token of Gravelyn"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(4737);
@@ -4472,10 +4469,10 @@ case ""Diamond Token of Gravelyn"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Emblem of Gravelyn",
-    @"
+        },
+        {
+            "Emblem of Gravelyn",
+            @"
 case ""Emblem of Gravelyn"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -4491,10 +4488,10 @@ case ""Emblem of Gravelyn"":
                     break;
 
     "
-},
-{
-    "Venomous Fang Blade",
-    @"
+        },
+        {
+            "Venomous Fang Blade",
+            @"
 case ""Venomous Fang Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.HuntMonster(""tercessuinotlim"", ""Ninja Spy"", ""Spy's Info"", isTemp: false, log: false);
@@ -4503,161 +4500,161 @@ case ""Venomous Fang Blade"":
                     Core.GetMapItem(12571, map: ""museum"");
                     break;
     "
-},
-{
-    "Unidentified 23",
-    @"
+        },
+        {
+            "Unidentified 23",
+            @"
 case ""Unidentified 23"":
                     Core.FarmingLogger(req.Name, quant);
                     Nation.TheAssistant(""Unidentified 23"", quant);
                     break;
     "
-},
-{
-    "Evolved Carnage of Nulgath",
-    @"
+        },
+        {
+            "Evolved Carnage of Nulgath",
+            @"
 case ""Evolved Carnage of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""voidrefuge"", ""Carnage"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Evolved Carnage Helm",
-    @"
+        },
+        {
+            "Evolved Carnage Helm",
+            @"
 case ""Evolved Carnage Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""voidrefuge"", ""Carnage"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Evolved Carnage Crest",
-    @"
+        },
+        {
+            "Evolved Carnage Crest",
+            @"
 case ""Evolved Carnage Crest"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""voidrefuge"", ""Carnage"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Blood Void Spines",
-    @"
+        },
+        {
+            "Blood Void Spines",
+            @"
 case ""Blood Void Spines"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""voidrefuge"", ""Carnage"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Blood Void Spikes",
-    @"
+        },
+        {
+            "Blood Void Spikes",
+            @"
 case ""Blood Void Spikes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""voidrefuge"", ""Carnage"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Bloodletter Katana",
-    @"
+        },
+        {
+            "Bloodletter Katana",
+            @"
 case ""Bloodletter Katana"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""voidrefuge"", ""Carnage"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Bloodletter Katanas",
-    @"
+        },
+        {
+            "Bloodletter Katanas",
+            @"
 case ""Bloodletter Katanas"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""voidrefuge"", ""Carnage"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "1st Betrayal Blade of Nulgath",
-    @"
+        },
+        {
+            "1st Betrayal Blade of Nulgath",
+            @"
 case ""1st Betrayal Blade of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Nation.KisstheVoid(0, req.Name);
                     break;
     "
-},
-{
-    "2nd Betrayal Blade of Nulgath",
-    @"
+        },
+        {
+            "2nd Betrayal Blade of Nulgath",
+            @"
 case ""2nd Betrayal Blade of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Nation.KisstheVoid(0, req.Name);
                     break;
     "
-},
-{
-    "3rd Betrayal Blade of Nulgath",
-    @"
+        },
+        {
+            "3rd Betrayal Blade of Nulgath",
+            @"
 case ""3rd Betrayal Blade of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Nation.KisstheVoid(0, req.Name);
                     break;
     "
-},
-{
-    "4th Betrayal Blade of Nulgath",
-    @"
+        },
+        {
+            "4th Betrayal Blade of Nulgath",
+            @"
 case ""4th Betrayal Blade of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Nation.KisstheVoid(0, req.Name);
                     break;
     "
-},
-{
-    "5th Betrayal Blade of Nulgath",
-    @"
+        },
+        {
+            "5th Betrayal Blade of Nulgath",
+            @"
 case ""5th Betrayal Blade of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Nation.KisstheVoid(0, req.Name);
                     break;
     "
-},
-{
-    "6th Betrayal Blade of Nulgath",
-    @"
+        },
+        {
+            "6th Betrayal Blade of Nulgath",
+            @"
 case ""6th Betrayal Blade of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Nation.KisstheVoid(0, req.Name);
                     break;
     "
-},
-{
-    "7th Betrayal Blade of Nulgath",
-    @"
+        },
+        {
+            "7th Betrayal Blade of Nulgath",
+            @"
 case ""7th Betrayal Blade of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Nation.KisstheVoid(0, req.Name);
                     break;
     "
-},
-{
-    "8th Betrayal Blade of Nulgath",
-    @"
+        },
+        {
+            "8th Betrayal Blade of Nulgath",
+            @"
 case ""8th Betrayal Blade of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Nation.KisstheVoid(0, req.Name);
                     break;
     "
-},
-{
-    "Nulgath Nation House",
-    @"
+        },
+        {
+            "Nulgath Nation House",
+            @"
 case ""Nulgath Nation House"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(req.Name, ""Cemaros' Amethyst"", ""Aluminium"", ""NUE Necronomicon"");
@@ -4691,105 +4688,105 @@ case ""Nulgath Nation House"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Pink Star Diamond of Nulgath",
-    @"
+        },
+        {
+            "Pink Star Diamond of Nulgath",
+            @"
 case ""Pink Star Diamond of Nulgath"":
                     Adv.BuyItem(""tercessuinotlim"", 1951, ""Pink Star Diamond of Nulgath"");
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Musgravite of Nulgath",
-    @"
+        },
+        {
+            "Musgravite of Nulgath",
+            @"
 case ""Musgravite of Nulgath"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""timelibrary"", ""Ancient Chest"", req.Name, quant, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Voucher of Nulgath",
-    @"
+        },
+        {
+            "Voucher of Nulgath",
+            @"
 case ""Voucher of Nulgath"":
                     Nation.FarmVoucher(true, true);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Corpse Maker of Nulgath",
-    @"
+        },
+        {
+            "Corpse Maker of Nulgath",
+            @"
 case ""Corpse Maker of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     TLC.QuestItems(TheLeeryContract.RewardsSelection.Corpse_Maker_of_Nulgath);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Overfiend Blade of Nulgath",
-    @"
+        },
+        {
+            "Overfiend Blade of Nulgath",
+            @"
 case ""Overfiend Blade of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Jugger.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Overfiend_Blade_of_Nulgath);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Hadean Onyx of Nulgath",
-    @"
+        },
+        {
+            "Hadean Onyx of Nulgath",
+            @"
 case ""Hadean Onyx of Nulgath"":
                     Core.HuntMonster(""tercessuinotlim"", ""Shadow of Nulgath"", req.Name, quant, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Letter from Asuka and Tendou",
-    @"
+        },
+        {
+            "Letter from Asuka and Tendou",
+            @"
 case ""Letter from Asuka and Tendou"":
                     Core.HuntMonster(""citadel"", ""Burning Witch"", req.Name, quant, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Chain of Nulgath",
-    @"
+        },
+        {
+            "Chain of Nulgath",
+            @"
 case ""Chain of Nulgath"":
                     Core.HuntMonster(""necrocavern"", ""Shadow Dragon"", req.Name, quant, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Yulgath's Hut",
-    @"
+        },
+        {
+            "Yulgath's Hut",
+            @"
 case ""Yulgath's Hut"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""originul"", ""Fiend Champion"", req.Name, quant, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Unidentified 10",
-    @"
+        },
+        {
+            "Unidentified 10",
+            @"
 case ""Unidentified 10"":
                     Nation.FarmUni10(quant);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
     "
-},
-{
-    "Anti-Matter Gem",
-    @"
+        },
+        {
+            "Anti-Matter Gem",
+            @"
 case ""Anti-Matter Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -4803,10 +4800,10 @@ case ""Anti-Matter Gem"":
                     break;
 
     "
-},
-{
-    "Null Contract",
-    @"
+        },
+        {
+            "Null Contract",
+            @"
 case ""Null Contract"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -4823,164 +4820,164 @@ case ""Null Contract"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Withered Archfiend's Essence",
-    @"
+        },
+        {
+            "Withered Archfiend's Essence",
+            @"
 case ""Withered Archfiend's Essence"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""obliviontundra"", UseableMonsters[2], req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "ArchFiend Healer Staff",
-    @"
+        },
+        {
+            "ArchFiend Healer Staff",
+            @"
 case ""ArchFiend Healer Staff"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Healer Hood",
-    @"
+        },
+        {
+            "ArchFiend Healer Hood",
+            @"
 case ""ArchFiend Healer Hood"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Rogue Knives",
-    @"
+        },
+        {
+            "ArchFiend Rogue Knives",
+            @"
 case ""ArchFiend Rogue Knives"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Rogue Knife",
-    @"
+        },
+        {
+            "ArchFiend Rogue Knife",
+            @"
 case ""ArchFiend Rogue Knife"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Rogue Backwards Knives",
-    @"
+        },
+        {
+            "ArchFiend Rogue Backwards Knives",
+            @"
 case ""ArchFiend Rogue Backwards Knives"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Rogue Backwards Knife",
-    @"
+        },
+        {
+            "ArchFiend Rogue Backwards Knife",
+            @"
 case ""ArchFiend Rogue Backwards Knife"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Mage Book + Wand",
-    @"
+        },
+        {
+            "ArchFiend Mage Book + Wand",
+            @"
 case ""ArchFiend Mage Book + Wand"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Mage Hood",
-    @"
+        },
+        {
+            "ArchFiend Mage Hood",
+            @"
 case ""ArchFiend Mage Hood"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Mage Hat",
-    @"
+        },
+        {
+            "ArchFiend Mage Hat",
+            @"
 case ""ArchFiend Mage Hat"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual ArchFiend Warrior Champion Swords",
-    @"
+        },
+        {
+            "Dual ArchFiend Warrior Champion Swords",
+            @"
 case ""Dual ArchFiend Warrior Champion Swords"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Warrior Champion Sword",
-    @"
+        },
+        {
+            "ArchFiend Warrior Champion Sword",
+            @"
 case ""ArchFiend Warrior Champion Sword"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual ArchFiend Warrior Swords",
-    @"
+        },
+        {
+            "Dual ArchFiend Warrior Swords",
+            @"
 case ""Dual ArchFiend Warrior Swords"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Warrior Helm",
-    @"
+        },
+        {
+            "ArchFiend Warrior Helm",
+            @"
 case ""ArchFiend Warrior Helm"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Warrior Armet",
-    @"
+        },
+        {
+            "ArchFiend Warrior Armet",
+            @"
 case ""ArchFiend Warrior Armet"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Healer",
-    @"
+        },
+        {
+            "ArchFiend Healer",
+            @"
 case ""ArchFiend Healer"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Rogue",
-    @"
+        },
+        {
+            "ArchFiend Rogue",
+            @"
 case ""ArchFiend Rogue"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Mage",
-    @"
+        },
+        {
+            "ArchFiend Mage",
+            @"
 case ""ArchFiend Mage"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "ArchFiend Warrior",
-    @"
+        },
+        {
+            "ArchFiend Warrior",
+            @"
 case ""ArchFiend Warrior"":
                     FLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Bone Pick",
-    @"
+        },
+        {
+            "Bone Pick",
+            @"
 case ""Bone Pick"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -4994,30 +4991,30 @@ case ""Bone Pick"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Cursed Fabric",
-    @"
+        },
+        {
+            "Cursed Fabric",
+            @"
 case ""Cursed Fabric"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""skullhall"", ""Necroupie"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Rotten Meat",
-    @"
+        },
+        {
+            "Rotten Meat",
+            @"
 case ""Rotten Meat"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""brainmeat"", ""Brain Matter"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Metanoia Shaggy Locks",
-    @"
+        },
+        {
+            "Metanoia Shaggy Locks",
+            @"
 case ""Metanoia Shaggy Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5025,10 +5022,10 @@ case ""Metanoia Shaggy Locks"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Metanoia Shag",
-    @"
+        },
+        {
+            "Metanoia Shag",
+            @"
 case ""Metanoia Shag"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5036,20 +5033,20 @@ case ""Metanoia Shag"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Undine Base Scrip",
-    @"
+        },
+        {
+            "Undine Base Scrip",
+            @"
 case ""Undine Base Scrip"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""abyssalzone"", ""Kitefin Shark Bait"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Water Elf Antler",
-    @"
+        },
+        {
+            "Water Elf Antler",
+            @"
 case ""Water Elf Antler"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9316);
@@ -5065,10 +5062,10 @@ case ""Water Elf Antler"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Waves of Tumult",
-    @"
+        },
+        {
+            "Waves of Tumult",
+            @"
 case ""Waves of Tumult"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5076,10 +5073,10 @@ case ""Waves of Tumult"":
                     break;
 
     "
-},
-{
-    "Punadin Badge",
-    @"
+        },
+        {
+            "Punadin Badge",
+            @"
 case ""Punadin Badge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5091,10 +5088,10 @@ case ""Punadin Badge"":
                     break;
 
     "
-},
-{
-    "Angry Zombie Skull",
-    @"
+        },
+        {
+            "Angry Zombie Skull",
+            @"
 case ""Angry Zombie Skull"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5106,10 +5103,10 @@ case ""Angry Zombie Skull"":
                     break;
 
     "
-},
-{
-    "Infernalis Penna",
-    @"
+        },
+        {
+            "Infernalis Penna",
+            @"
 case ""Infernalis Penna"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -5123,10 +5120,10 @@ case ""Infernalis Penna"":
                     }
                     break;
     "
-},
-{
-    "Infernalis Oculus",
-    @"
+        },
+        {
+            "Infernalis Oculus",
+            @"
 case ""Infernalis Oculus"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -5139,38 +5136,38 @@ case ""Infernalis Oculus"":
                     }
                     break;
     "
-},
-{
-    "Divina Voluntas",
-    @"
+        },
+        {
+            "Divina Voluntas",
+            @"
 case ""Divina Voluntas"":
                     Farm.Experience(80);
                     Core.Logger($""{req.Name} cannot be farmed solo, use army."");
                     break;
 
     "
-},
-{
-    "Gold Voucher 100K",
-    @"
+        },
+        {
+            "Gold Voucher 100K",
+            @"
 case ""Gold Voucher 100K"":
                     Farm.Voucher(req.Name, req.Quantity);
                     break;
     "
-},
-{
-    "Yew Ember",
-    @"
+        },
+        {
+            "Yew Ember",
+            @"
 case ""Yew Ember"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""thelimacity"", ""Maleno Match"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Aiwass Diamond",
-    @"
+        },
+        {
+            "Aiwass Diamond",
+            @"
 case ""Aiwass Diamond"":
                     int questID = Core.IsMember ? 10387 : 10385;
                     Core.FarmingLogger(req.Name, quant);
@@ -5185,20 +5182,20 @@ case ""Aiwass Diamond"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Drow Silver",
-    @"
+        },
+        {
+            "Drow Silver",
+            @"
 case ""Drow Silver"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""thelimacity"", ""Drow Soldier"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Adamas Tenebris Drow",
-    @"
+        },
+        {
+            "Adamas Tenebris Drow",
+            @"
 case ""Adamas Tenebris Drow"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5214,10 +5211,10 @@ case ""Adamas Tenebris Drow"":
                     }
                     break;
     "
-},
-{
-    "Adamas Tenebris Hair",
-    @"
+        },
+        {
+            "Adamas Tenebris Hair",
+            @"
 case ""Adamas Tenebris Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5233,10 +5230,10 @@ case ""Adamas Tenebris Hair"":
                     }
                     break;
     "
-},
-{
-    "Adamas Tenebris Locks",
-    @"
+        },
+        {
+            "Adamas Tenebris Locks",
+            @"
 case ""Adamas Tenebris Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5252,10 +5249,10 @@ case ""Adamas Tenebris Locks"":
                     }
                     break;
     "
-},
-{
-    "Enchanted Tenebris Drow",
-    @"
+        },
+        {
+            "Enchanted Tenebris Drow",
+            @"
 case ""Enchanted Tenebris Drow"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5271,10 +5268,10 @@ case ""Enchanted Tenebris Drow"":
                     }
                     break;
     "
-},
-{
-    "Enchanted Tenebris Hair",
-    @"
+        },
+        {
+            "Enchanted Tenebris Hair",
+            @"
 case ""Enchanted Tenebris Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5290,10 +5287,10 @@ case ""Enchanted Tenebris Hair"":
                     }
                     break;
     "
-},
-{
-    "Enchanted Tenebris Locks",
-    @"
+        },
+        {
+            "Enchanted Tenebris Locks",
+            @"
 case ""Enchanted Tenebris Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5309,10 +5306,10 @@ case ""Enchanted Tenebris Locks"":
                     }
                     break;
     "
-},
-{
-    "Farblight Fur",
-    @"
+        },
+        {
+            "Farblight Fur",
+            @"
 case ""Farblight Fur"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5328,10 +5325,10 @@ case ""Farblight Fur"":
                     }
                     break;
     "
-},
-{
-    "Sterling Silver",
-    @"
+        },
+        {
+            "Sterling Silver",
+            @"
 case ""Sterling Silver"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -5343,10 +5340,10 @@ case ""Sterling Silver"":
                     break;
 
     "
-},
-{
-    "Dread Thread",
-    @"
+        },
+        {
+            "Dread Thread",
+            @"
 case ""Dread Thread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10427); // Arach-kids
@@ -5359,10 +5356,10 @@ case ""Dread Thread"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Abaddon Vertebrae",
-    @"
+        },
+        {
+            "Abaddon Vertebrae",
+            @"
 case ""Abaddon Vertebrae"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10428); // Arachnosapien
@@ -5375,68 +5372,68 @@ case ""Abaddon Vertebrae"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Spineback Abaddon Guard",
-    @"
+        },
+        {
+            "Spineback Abaddon Guard",
+            @"
 case ""Spineback Abaddon Guard"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Spineback Abaddon Guest",
-    @"
+        },
+        {
+            "Spineback Abaddon Guest",
+            @"
 case ""Spineback Abaddon Guest"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Spineback Abaddon Carapace",
-    @"
+        },
+        {
+            "Spineback Abaddon Carapace",
+            @"
 case ""Spineback Abaddon Carapace"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Arachnosapien Locks",
-    @"
+        },
+        {
+            "Arachnosapien Locks",
+            @"
 case ""Arachnosapien Locks"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Arachnosapien Visage",
-    @"
+        },
+        {
+            "Arachnosapien Visage",
+            @"
 case ""Arachnosapien Visage"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Gold Voucher 100k",
-    @"
+        },
+        {
+            "Gold Voucher 100k",
+            @"
 case ""Gold Voucher 100k"":
                     Farm.Voucher(req.Name, req.Quantity);
                     break;
     "
-},
-{
-    "Building Material",
-    @"
+        },
+        {
+            "Building Material",
+            @"
 case ""Building Material"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5451,10 +5448,10 @@ case ""Building Material"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Foundation Material",
-    @"
+        },
+        {
+            "Foundation Material",
+            @"
 case ""Foundation Material"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5470,10 +5467,10 @@ case ""Foundation Material"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Decor Material",
-    @"
+        },
+        {
+            "Decor Material",
+            @"
 case ""Decor Material"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(6917);
@@ -5489,10 +5486,10 @@ case ""Decor Material"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dragonrune Blueprint",
-    @"
+        },
+        {
+            "Dragonrune Blueprint",
+            @"
 case ""Dragonrune Blueprint"":
                     Core.FarmingLogger(req.Name, quant);
                     Farm.ElementalMasterREP();
@@ -5500,10 +5497,10 @@ case ""Dragonrune Blueprint"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Mana Golem's Core",
-    @"
+        },
+        {
+            "Mana Golem's Core",
+            @"
 case ""Mana Golem's Core"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -5511,10 +5508,10 @@ case ""Mana Golem's Core"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Arcangrove Blueprint",
-    @"
+        },
+        {
+            "Arcangrove Blueprint",
+            @"
 case ""Arcangrove Blueprint"":
                     Core.FarmingLogger(req.Name, quant);
                     Farm.ArcangroveREP();
@@ -5522,10 +5519,10 @@ case ""Arcangrove Blueprint"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Falcontower Blueprint",
-    @"
+        },
+        {
+            "Falcontower Blueprint",
+            @"
 case ""Falcontower Blueprint"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -5534,10 +5531,10 @@ case ""Falcontower Blueprint"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Citadel Caverns Blueprint",
-    @"
+        },
+        {
+            "Citadel Caverns Blueprint",
+            @"
 case ""Citadel Caverns Blueprint"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -5546,40 +5543,40 @@ case ""Citadel Caverns Blueprint"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Citadel Blueprint",
-    @"
+        },
+        {
+            "Citadel Blueprint",
+            @"
 case ""Citadel Blueprint"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.BuyItem(""citadel"", 44, 48761, Log: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Seraphic Blueprint",
-    @"
+        },
+        {
+            "Seraphic Blueprint",
+            @"
 case ""Seraphic Blueprint"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.BuyItem(""seraph"", 1133, 48762, Log: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Hachiko Blueprint",
-    @"
+        },
+        {
+            "Hachiko Blueprint",
+            @"
 case ""Hachiko Blueprint"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.BuyItem(""dragonkoiz"", 95, 48763, Log: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Clubhouse Blueprint",
-    @"
+        },
+        {
+            "Clubhouse Blueprint",
+            @"
 case ""Clubhouse Blueprint"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -5588,10 +5585,10 @@ case ""Clubhouse Blueprint"":
                     break;
 
     "
-},
-{
-    "Lemon",
-    @"
+        },
+        {
+            "Lemon",
+            @"
 case ""Lemon"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -5606,118 +5603,118 @@ case ""Lemon"":
                     break;
 
     "
-},
-{
-    "Lunate Sigil",
-    @"
+        },
+        {
+            "Lunate Sigil",
+            @"
 case ""Lunate Sigil"":
                     ssr2.LunateSigil(quant);
                     break;
     "
-},
-{
-    "Darkovia Hunter's Cowl",
-    @"
+        },
+        {
+            "Darkovia Hunter's Cowl",
+            @"
 case ""Darkovia Hunter's Cowl"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
                     Core.KillMonster(""badmoon"", ""r5"", ""left"", ""hunter"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Iron Dussack",
-    @"
+        },
+        {
+            "Iron Dussack",
+            @"
 case ""Iron Dussack"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
                     Core.KillMonster(""badmoon"", ""r5"", ""left"", ""hunter"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Darkovian Hunter",
-    @"
+        },
+        {
+            "Darkovian Hunter",
+            @"
 case ""Darkovian Hunter"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
                     Core.HuntMonster(""badmoon"", ""Twisted Hunter"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "ShadowSlayer's Apprentice",
-    @"
+        },
+        {
+            "ShadowSlayer's Apprentice",
+            @"
 case ""ShadowSlayer's Apprentice"":
                     SSKM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Antiquated Shadow Hair",
-    @"
+        },
+        {
+            "Antiquated Shadow Hair",
+            @"
 case ""Antiquated Shadow Hair"":
                     SSKM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Antiquated Shadow Locks",
-    @"
+        },
+        {
+            "Antiquated Shadow Locks",
+            @"
 case ""Antiquated Shadow Locks"":
                     SSKM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Antiquated Shadow Hat",
-    @"
+        },
+        {
+            "Antiquated Shadow Hat",
+            @"
 case ""Antiquated Shadow Hat"":
                     SSKM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Antiquated Shadow Hat + Locks",
-    @"
+        },
+        {
+            "Antiquated Shadow Hat + Locks",
+            @"
 case ""Antiquated Shadow Hat + Locks"":
                     SSKM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Zealous Claymore",
-    @"
+        },
+        {
+            "Zealous Claymore",
+            @"
 case ""Zealous Claymore"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""techdungeon"", ""Kalron the Cryptborg"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Zealous Censer",
-    @"
+        },
+        {
+            "Zealous Censer",
+            @"
 case ""Zealous Censer"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""stonewood"", ""BioKnight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Shadowslayer Relic Sword",
-    @"
+        },
+        {
+            "Shadowslayer Relic Sword",
+            @"
 case ""Shadowslayer Relic Sword"":
                     Core.FarmingLogger(req.Name, quant);
                     SSR.GetAll(itemFarm: req.Name);
                     break;
 
     "
-},
-{
-    "Rift Defense Medal",
-    @"
+        },
+        {
+            "Rift Defense Medal",
+            @"
 case ""Rift Defense Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5731,10 +5728,10 @@ case ""Rift Defense Medal"":
                     break;
 
     "
-},
-{
-    "DeadMog LED",
-    @"
+        },
+        {
+            "DeadMog LED",
+            @"
 case ""DeadMog LED"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -5748,10 +5745,10 @@ case ""DeadMog LED"":
                     break;
 
     "
-},
-{
-    "Chaos Fuzzies",
-    @"
+        },
+        {
+            "Chaos Fuzzies",
+            @"
 case ""Chaos Fuzzies"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -5762,10 +5759,10 @@ case ""Chaos Fuzzies"":
                     break;
 
     "
-},
-{
-    "Fabric",
-    @"
+        },
+        {
+            "Fabric",
+            @"
 case ""Fabric"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5779,10 +5776,10 @@ case ""Fabric"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Red Dye",
-    @"
+        },
+        {
+            "Red Dye",
+            @"
 case ""Red Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5796,10 +5793,10 @@ case ""Red Dye"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Green Dye",
-    @"
+        },
+        {
+            "Green Dye",
+            @"
 case ""Green Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5813,10 +5810,10 @@ case ""Green Dye"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dragon Scales",
-    @"
+        },
+        {
+            "Dragon Scales",
+            @"
 case ""Dragon Scales"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -5830,37 +5827,37 @@ case ""Dragon Scales"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Defender Badge",
-    @"
+        },
+        {
+            "Defender Badge",
+            @"
 case ""Defender Badge"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ashfallcamp"", ""Blackrawk"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Flame Claws",
-    @"
+        },
+        {
+            "Flame Claws",
+            @"
 case ""Flame Claws"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ashfallcamp"", ""Smoldur"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Flame Heart",
-    @"
+        },
+        {
+            "Flame Heart",
+            @"
 case ""Flame Heart"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ashfallcamp"", ""Smoldur"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Sulphur Ore",
-    @"
+        },
+        {
+            "Sulphur Ore",
+            @"
 case ""Sulphur Ore"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5873,10 +5870,10 @@ case ""Sulphur Ore"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Iron Ore",
-    @"
+        },
+        {
+            "Iron Ore",
+            @"
 case ""Iron Ore"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5892,10 +5889,10 @@ case ""Iron Ore"":
                     }
                     break;
     "
-},
-{
-    "Bile Stone",
-    @"
+        },
+        {
+            "Bile Stone",
+            @"
 case ""Bile Stone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5911,10 +5908,10 @@ case ""Bile Stone"":
                     }
                     break;
     "
-},
-{
-    "Molten Lava",
-    @"
+        },
+        {
+            "Molten Lava",
+            @"
 case ""Molten Lava"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5927,57 +5924,57 @@ case ""Molten Lava"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Venom Sac",
-    @"
+        },
+        {
+            "Venom Sac",
+            @"
 case ""Venom Sac"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ashfallcamp"", ""Infernus"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Venom Fangs",
-    @"
+        },
+        {
+            "Venom Fangs",
+            @"
 case ""Venom Fangs"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ashfallcamp"", ""Infernus"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Crystal Eye",
-    @"
+        },
+        {
+            "Crystal Eye",
+            @"
 case ""Crystal Eye"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ashfallcamp"", ""Blackrawk"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Melted Glass",
-    @"
+        },
+        {
+            "Melted Glass",
+            @"
 case ""Melted Glass"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""pride"", ""Cellar Guard"", req.Name, quant, false);
                     break;
 
     "
-},
-{
-    "Copper Wire",
-    @"
+        },
+        {
+            "Copper Wire",
+            @"
 case ""Copper Wire"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""pride"", ""Cellar Guard"", req.Name, quant, false);
                     break;
 
     "
-},
-{
-    "4th Dimension Gem",
-    @"
+        },
+        {
+            "4th Dimension Gem",
+            @"
 case ""4th Dimension Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -5990,10 +5987,10 @@ case ""4th Dimension Gem"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ancient Vitae",
-    @"
+        },
+        {
+            "Ancient Vitae",
+            @"
 case ""Ancient Vitae"":
                     Safiria.StoryLine();
                     Core.FarmingLogger(req.Name, quant);
@@ -6010,10 +6007,10 @@ case ""Ancient Vitae"":
                     break;
 
     "
-},
-{
-    "Sapphires",
-    @"
+        },
+        {
+            "Sapphires",
+            @"
 case ""Sapphires"":
                     Core.RegisterQuests(6070, 6071, 6073);
                     Core.Logger($""Farming {req.Name} ({currentQuant}/{quant})"");
@@ -6026,10 +6023,10 @@ case ""Sapphires"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Rubies",
-    @"
+        },
+        {
+            "Rubies",
+            @"
 case ""Rubies"":
                     Core.RegisterQuests(6068, 6069, 6072);
                     Core.Logger($""Farming {req.Name} ({currentQuant}/{quant})"");
@@ -6043,10 +6040,10 @@ case ""Rubies"":
                     break;
 
     "
-},
-{
-    "Diabolical Ectomancer",
-    @"
+        },
+        {
+            "Diabolical Ectomancer",
+            @"
 case ""Diabolical Ectomancer"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -6059,10 +6056,10 @@ case ""Diabolical Ectomancer"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Fresh Ectoplasm",
-    @"
+        },
+        {
+            "Fresh Ectoplasm",
+            @"
 case ""Fresh Ectoplasm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -6077,10 +6074,10 @@ case ""Fresh Ectoplasm"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "IOU Slip",
-    @"
+        },
+        {
+            "IOU Slip",
+            @"
 case ""IOU Slip"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -6095,10 +6092,10 @@ case ""IOU Slip"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "EctoBlade",
-    @"
+        },
+        {
+            "EctoBlade",
+            @"
 case ""EctoBlade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -6110,10 +6107,10 @@ case ""EctoBlade"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ectoplasmic Chains",
-    @"
+        },
+        {
+            "Ectoplasmic Chains",
+            @"
 case ""Ectoplasmic Chains"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -6127,10 +6124,10 @@ case ""Ectoplasmic Chains"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bongo Cart Pet",
-    @"
+        },
+        {
+            "Bongo Cart Pet",
+            @"
 case ""Bongo Cart Pet"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -6185,10 +6182,10 @@ case ""Bongo Cart Pet"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Reho's Golden Sword Hilt",
-    @"
+        },
+        {
+            "Reho's Golden Sword Hilt",
+            @"
 case ""Reho's Golden Sword Hilt"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -6204,68 +6201,68 @@ case ""Reho's Golden Sword Hilt"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Awethur's Accoutrements",
-    @"
+        },
+        {
+            "Awethur's Accoutrements",
+            @"
 case ""Awethur's Accoutrements"":
                     Adv.BuyItem(""museum"", 631, ""Awethur's Accoutrements"");
                     break;
     "
-},
-{
-    "Unidentified 36",
-    @"
+        },
+        {
+            "Unidentified 36",
+            @"
 case ""Unidentified 36"":
                     Core.EquipClass(ClassType.Farm);
                     HB.FreshSouls(1, 0);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Fresh Soul",
-    @"
+        },
+        {
+            "Fresh Soul",
+            @"
 case ""Fresh Soul"":
                     Core.EquipClass(ClassType.Farm);
                     HB.FreshSouls(0, quant);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Unidentified 34",
-    @"
+        },
+        {
+            "Unidentified 34",
+            @"
 case ""Unidentified 34"":
                     Core.EquipClass(ClassType.Farm);
                     WPE.Unidentified34(quant);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Strand of Vath's Hair",
-    @"
+        },
+        {
+            "Strand of Vath's Hair",
+            @"
 case ""Strand of Vath's Hair"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillVath(req.Name, quant);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Unidentified 25",
-    @"
+        },
+        {
+            "Unidentified 25",
+            @"
 case ""Unidentified 25"":
                     Core.EquipClass(ClassType.Farm);
                     Adv.BuyItem(""tercessuinotlim"", 1951, ""Unidentified 25"");
                     break;
 
     "
-},
-{
-    "Blood Titan Token",
-    @"
+        },
+        {
+            "Blood Titan Token",
+            @"
 case ""Blood Titan Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(Core.EnsureLoad(9253).Requirements.Select(item => item.Name).Concat(Core.EnsureLoad(2908).Requirements.Select(item => item.Name)).ToArray());
@@ -6290,10 +6287,10 @@ case ""Blood Titan Token"":
                     break;
 
     "
-},
-{
-    "Bocklin Ornament",
-    @"
+        },
+        {
+            "Bocklin Ornament",
+            @"
 case ""Bocklin Ornament"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -6310,10 +6307,10 @@ case ""Bocklin Ornament"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Monster Blood",
-    @"
+        },
+        {
+            "Monster Blood",
+            @"
 case ""Monster Blood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6321,10 +6318,10 @@ case ""Monster Blood"":
                     Core.HuntMonster(""ebondungeon"", ""Dethrix"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Vaughn Crest",
-    @"
+        },
+        {
+            "Vaughn Crest",
+            @"
 case ""Vaughn Crest"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -6332,112 +6329,112 @@ case ""Vaughn Crest"":
                     Core.HuntMonster(""bocklincastle"", ""Garde Wraith"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Chiral Valley Knight",
-    @"
+        },
+        {
+            "Chiral Valley Knight",
+            @"
 case ""Chiral Valley Knight"":
                     BGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Chiral Valley Duke",
-    @"
+        },
+        {
+            "Chiral Valley Duke",
+            @"
 case ""Chiral Valley Duke"":
                     BGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Chiral Valley Noble",
-    @"
+        },
+        {
+            "Chiral Valley Noble",
+            @"
 case ""Chiral Valley Noble"":
                     BGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Antlered Golden Anjou Helm",
-    @"
+        },
+        {
+            "Antlered Golden Anjou Helm",
+            @"
 case ""Antlered Golden Anjou Helm"":
                     BGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Regal Golden Anjou Helm",
-    @"
+        },
+        {
+            "Regal Golden Anjou Helm",
+            @"
 case ""Regal Golden Anjou Helm"":
                     BGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Anjou Duke's Helm",
-    @"
+        },
+        {
+            "Anjou Duke's Helm",
+            @"
 case ""Anjou Duke's Helm"":
                     BGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Vaughn's Sash and Aquitaine",
-    @"
+        },
+        {
+            "Vaughn's Sash and Aquitaine",
+            @"
 case ""Vaughn's Sash and Aquitaine"":
                     BGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Aquitaine",
-    @"
+        },
+        {
+            "Aquitaine",
+            @"
 case ""Aquitaine"":
                     BGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Aquitaine",
-    @"
+        },
+        {
+            "Dual Aquitaine",
+            @"
 case ""Dual Aquitaine"":
                     BGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Golden Anjou Helm",
-    @"
+        },
+        {
+            "Golden Anjou Helm",
+            @"
 case ""Golden Anjou Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""bocklingrove"", ""Elder Necromancer"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Vaughn's Crimson Sash",
-    @"
+        },
+        {
+            "Vaughn's Crimson Sash",
+            @"
 case ""Vaughn's Crimson Sash"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""bocklingrove"", ""Elder Necromancer"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Gem of Anjou",
-    @"
+        },
+        {
+            "Gem of Anjou",
+            @"
 case ""Gem of Anjou"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""bocklingrove"", ""Elder Necromancer"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Forbidden EarthVessel Harpoon",
-    @"
+        },
+        {
+            "Forbidden EarthVessel Harpoon",
+            @"
 case ""Forbidden EarthVessel Harpoon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6445,10 +6442,10 @@ case ""Forbidden EarthVessel Harpoon"":
                     Core.HuntMonster(""bocklincastle"", ""Headless Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Forbidden EarthVessel Sword",
-    @"
+        },
+        {
+            "Forbidden EarthVessel Sword",
+            @"
 case ""Forbidden EarthVessel Sword"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6456,10 +6453,10 @@ case ""Forbidden EarthVessel Sword"":
                     Core.HuntMonster(""bocklincastle"", ""Headless Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Forbidden EarthVessel Swords",
-    @"
+        },
+        {
+            "Forbidden EarthVessel Swords",
+            @"
 case ""Forbidden EarthVessel Swords"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6467,10 +6464,10 @@ case ""Forbidden EarthVessel Swords"":
                     Core.HuntMonster(""bocklincastle"", ""Headless Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Forbidden EarthVessel Dagger",
-    @"
+        },
+        {
+            "Forbidden EarthVessel Dagger",
+            @"
 case ""Forbidden EarthVessel Dagger"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6478,10 +6475,10 @@ case ""Forbidden EarthVessel Dagger"":
                     Core.HuntMonster(""bocklincastle"", ""Headless Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Forbidden EarthVessel Daggers",
-    @"
+        },
+        {
+            "Forbidden EarthVessel Daggers",
+            @"
 case ""Forbidden EarthVessel Daggers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6489,10 +6486,10 @@ case ""Forbidden EarthVessel Daggers"":
                     Core.HuntMonster(""bocklincastle"", ""Headless Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Forbidden EarthVessel Rapier",
-    @"
+        },
+        {
+            "Forbidden EarthVessel Rapier",
+            @"
 case ""Forbidden EarthVessel Rapier"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6500,10 +6497,10 @@ case ""Forbidden EarthVessel Rapier"":
                     Core.HuntMonster(""bocklincastle"", ""Headless Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Forbidden EarthVessel Rapiers",
-    @"
+        },
+        {
+            "Forbidden EarthVessel Rapiers",
+            @"
 case ""Forbidden EarthVessel Rapiers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6511,10 +6508,10 @@ case ""Forbidden EarthVessel Rapiers"":
                     Core.HuntMonster(""bocklincastle"", ""Headless Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Forbidden EarthVessel Kris",
-    @"
+        },
+        {
+            "Forbidden EarthVessel Kris",
+            @"
 case ""Forbidden EarthVessel Kris"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6522,10 +6519,10 @@ case ""Forbidden EarthVessel Kris"":
                     Core.HuntMonster(""bocklincastle"", ""Headless Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Forbidden Dual EarthVessel Kris",
-    @"
+        },
+        {
+            "Forbidden Dual EarthVessel Kris",
+            @"
 case ""Forbidden Dual EarthVessel Kris"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6533,10 +6530,10 @@ case ""Forbidden Dual EarthVessel Kris"":
                     Core.HuntMonster(""bocklincastle"", ""Headless Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "BoneBreaker Medallion",
-    @"
+        },
+        {
+            "BoneBreaker Medallion",
+            @"
 case ""BoneBreaker Medallion"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant) && Daily.CheckDailyv2(3898))
@@ -6550,10 +6547,10 @@ case ""BoneBreaker Medallion"":
                     break;
 
     "
-},
-{
-    "Enthralling Gem Shard",
-    @"
+        },
+        {
+            "Enthralling Gem Shard",
+            @"
 case ""Enthralling Gem Shard"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -6567,48 +6564,48 @@ case ""Enthralling Gem Shard"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Victorious' Golden Scale",
-    @"
+        },
+        {
+            "Victorious' Golden Scale",
+            @"
 case ""Victorious' Golden Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""darkplane"", ""Victorious"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Sheathed Aquitaine",
-    @"
+        },
+        {
+            "Sheathed Aquitaine",
+            @"
 case ""Sheathed Aquitaine"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""bocklingrove"", ""Elder Necromancer"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Bonecastle Token",
-    @"
+        },
+        {
+            "Bonecastle Token",
+            @"
 case ""Bonecastle Token"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""bonecastlec"", ""Undead Golden Knight"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Vaden Helm Token",
-    @"
+        },
+        {
+            "Vaden Helm Token",
+            @"
 case ""Vaden Helm Token"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""bonecastlec"", ""Vaden"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Shadow Skull",
-    @"
+        },
+        {
+            "Shadow Skull",
+            @"
 case ""Shadow Skull"":
                     Core.RegisterQuests(4993);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
@@ -6633,10 +6630,10 @@ case ""Shadow Skull"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "DeathKnight Lord Armor",
-    @"
+        },
+        {
+            "DeathKnight Lord Armor",
+            @"
 case ""DeathKnight Lord Armor"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -6685,10 +6682,10 @@ case ""DeathKnight Lord Armor"":
                     Bot.Wait.ForItemBuy(req.ID);
                     break;
     "
-},
-{
-    "ShadowFlame Armor Scrap",
-    @"
+        },
+        {
+            "ShadowFlame Armor Scrap",
+            @"
 case ""ShadowFlame Armor Scrap"":
                     SoC.CompleteCoreSoC();
                     Core.FarmingLogger(req.Name, quant);
@@ -6707,10 +6704,10 @@ case ""ShadowFlame Armor Scrap"":
                     break;
 
     "
-},
-{
-    "Thronekeeper's Rune",
-    @"
+        },
+        {
+            "Thronekeeper's Rune",
+            @"
 case ""Thronekeeper's Rune"":
                     Core.FarmingLogger(""Thronekeeper's Rune"", quant);
                     Core.EquipClass(ClassType.Solo);
@@ -6725,28 +6722,28 @@ case ""Thronekeeper's Rune"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Champion Lynaria Armor",
-    @"
+        },
+        {
+            "Champion Lynaria Armor",
+            @"
 case ""Champion Lynaria Armor"":
                     BocklinGroveM.BuyAllMerge(""Champion Lynaria Armor"");
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Valen's Knightly Armor",
-    @"
+        },
+        {
+            "Valen's Knightly Armor",
+            @"
 case ""Valen's Knightly Armor"":
                     BocklinArmoryM.BuyAllMerge(""Valen's Knightly Armor"");
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "King Alteon's Armor Fragment",
-    @"
+        },
+        {
+            "King Alteon's Armor Fragment",
+            @"
 case ""King Alteon's Armor Fragment"":
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(93763);
@@ -6754,10 +6751,10 @@ case ""King Alteon's Armor Fragment"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Scion's Regalia",
-    @"
+        },
+        {
+            "Scion's Regalia",
+            @"
 case ""Scion's Regalia"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(93762);
@@ -6765,20 +6762,20 @@ case ""Scion's Regalia"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Space Jetsam",
-    @"
+        },
+        {
+            "Space Jetsam",
+            @"
 case ""Space Jetsam"":
                     Core.EquipClass(ClassType.Solo);
                     Core.KillMonster(""byrodax"", ""r9"", ""Right"", ""Byro-Dax Monstrosity"", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Space Flotsam",
-    @"
+        },
+        {
+            "Space Flotsam",
+            @"
 case ""Space Flotsam"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""byrodax"", ""Security Droid"", req.Name, req.Quantity, isTemp: req.Temp);
@@ -6786,10 +6783,10 @@ case ""Space Flotsam"":
                     break;
 
     "
-},
-{
-    "Bonecastle Amulet",
-    @"
+        },
+        {
+            "Bonecastle Amulet",
+            @"
 case ""Bonecastle Amulet"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(4993);
@@ -6808,10 +6805,10 @@ case ""Bonecastle Amulet"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "GoldSkull Amulet",
-    @"
+        },
+        {
+            "GoldSkull Amulet",
+            @"
 case ""GoldSkull Amulet"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -6826,10 +6823,10 @@ case ""GoldSkull Amulet"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "SilverSkull Amulet",
-    @"
+        },
+        {
+            "SilverSkull Amulet",
+            @"
 case ""SilverSkull Amulet"":
                     Core.RegisterQuests(5010);
                     Core.EquipClass(ClassType.Solo);
@@ -6837,10 +6834,10 @@ case ""SilverSkull Amulet"":
                     Core.HuntMonster(""towersilver"", ""Bloody Scary"", req.Name, req.Quantity, isTemp: req.Temp);
                     break;
     "
-},
-{
-    "DeathKnight Lord Gauntlets",
-    @"
+        },
+        {
+            "DeathKnight Lord Gauntlets",
+            @"
 case ""DeathKnight Lord Gauntlets"":
                     Core.AddDrop(
                         ""DeathKnight Lord Gauntlets"",
@@ -6852,10 +6849,10 @@ case ""DeathKnight Lord Gauntlets"":
                     Core.HuntMonster(""bonecastle"", ""Vaden"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "DeathKnight Lord Greaves",
-    @"
+        },
+        {
+            "DeathKnight Lord Greaves",
+            @"
 case ""DeathKnight Lord Greaves"":
                     Core.AddDrop(
                         ""DeathKnight Lord Gauntlets"",
@@ -6867,10 +6864,10 @@ case ""DeathKnight Lord Greaves"":
                     Core.HuntMonster(""bonecastle"", ""Vaden"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "DeathKnight Lord Chest Plate",
-    @"
+        },
+        {
+            "DeathKnight Lord Chest Plate",
+            @"
 case ""DeathKnight Lord Chest Plate"":
                     Core.AddDrop(
                         ""DeathKnight Lord Gauntlets"",
@@ -6882,10 +6879,10 @@ case ""DeathKnight Lord Chest Plate"":
                     Core.HuntMonster(""bonecastle"", ""Vaden"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "DeathKnight Lord Hauberk",
-    @"
+        },
+        {
+            "DeathKnight Lord Hauberk",
+            @"
 case ""DeathKnight Lord Hauberk"":
                     Core.AddDrop(
                         ""DeathKnight Lord Gauntlets"",
@@ -6897,10 +6894,10 @@ case ""DeathKnight Lord Hauberk"":
                     Core.HuntMonster(""bonecastle"", ""Vaden"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "DeathKnight Lord Boots",
-    @"
+        },
+        {
+            "DeathKnight Lord Boots",
+            @"
 case ""DeathKnight Lord Boots"":
                     Core.AddDrop(
                         ""DeathKnight Lord Gauntlets"",
@@ -6912,10 +6909,10 @@ case ""DeathKnight Lord Boots"":
                     Core.HuntMonster(""bonecastle"", ""Vaden"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Silver DeathKnight Lord Gauntlets",
-    @"
+        },
+        {
+            "Silver DeathKnight Lord Gauntlets",
+            @"
 case ""Silver DeathKnight Lord Gauntlets"":
                     Core.AddDrop(
                           ""Silver DeathKnight Lord Gauntlets"",
@@ -6928,10 +6925,10 @@ case ""Silver DeathKnight Lord Gauntlets"":
                     Core.HuntMonster(""towersilver"", ""Flester the Silver"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Silver DeathKnight Lord Greaves",
-    @"
+        },
+        {
+            "Silver DeathKnight Lord Greaves",
+            @"
 case ""Silver DeathKnight Lord Greaves"":
                     Core.AddDrop(
                           ""Silver DeathKnight Lord Gauntlets"",
@@ -6944,10 +6941,10 @@ case ""Silver DeathKnight Lord Greaves"":
                     Core.HuntMonster(""towersilver"", ""Flester the Silver"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Silver DeathKnight Lord Chest Plate",
-    @"
+        },
+        {
+            "Silver DeathKnight Lord Chest Plate",
+            @"
 case ""Silver DeathKnight Lord Chest Plate"":
                     Core.AddDrop(
                           ""Silver DeathKnight Lord Gauntlets"",
@@ -6960,10 +6957,10 @@ case ""Silver DeathKnight Lord Chest Plate"":
                     Core.HuntMonster(""towersilver"", ""Flester the Silver"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Silver DeathKnight Lord Hauberk",
-    @"
+        },
+        {
+            "Silver DeathKnight Lord Hauberk",
+            @"
 case ""Silver DeathKnight Lord Hauberk"":
                     Core.AddDrop(
                           ""Silver DeathKnight Lord Gauntlets"",
@@ -6976,10 +6973,10 @@ case ""Silver DeathKnight Lord Hauberk"":
                     Core.HuntMonster(""towersilver"", ""Flester the Silver"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Silver DeathKnight Lord Boots",
-    @"
+        },
+        {
+            "Silver DeathKnight Lord Boots",
+            @"
 case ""Silver DeathKnight Lord Boots"":
                     Core.AddDrop(
                           ""Silver DeathKnight Lord Gauntlets"",
@@ -6992,10 +6989,10 @@ case ""Silver DeathKnight Lord Boots"":
                     Core.HuntMonster(""towersilver"", ""Flester the Silver"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Golden DeathKnight Lord Gauntlets",
-    @"
+        },
+        {
+            "Golden DeathKnight Lord Gauntlets",
+            @"
 case ""Golden DeathKnight Lord Gauntlets"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -7013,10 +7010,10 @@ case ""Golden DeathKnight Lord Gauntlets"":
                     break;
 
     "
-},
-{
-    "Golden DeathKnight Lord Greaves",
-    @"
+        },
+        {
+            "Golden DeathKnight Lord Greaves",
+            @"
 case ""Golden DeathKnight Lord Greaves"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -7034,10 +7031,10 @@ case ""Golden DeathKnight Lord Greaves"":
                     break;
 
     "
-},
-{
-    "Golden DeathKnight Lord Chest Plate",
-    @"
+        },
+        {
+            "Golden DeathKnight Lord Chest Plate",
+            @"
 case ""Golden DeathKnight Lord Chest Plate"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -7055,10 +7052,10 @@ case ""Golden DeathKnight Lord Chest Plate"":
                     break;
 
     "
-},
-{
-    "Golden DeathKnight Lord Hauberk",
-    @"
+        },
+        {
+            "Golden DeathKnight Lord Hauberk",
+            @"
 case ""Golden DeathKnight Lord Hauberk"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -7076,10 +7073,10 @@ case ""Golden DeathKnight Lord Hauberk"":
                     break;
 
     "
-},
-{
-    "Golden DeathKnight Lord Boots",
-    @"
+        },
+        {
+            "Golden DeathKnight Lord Boots",
+            @"
 case ""Golden DeathKnight Lord Boots"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -7097,10 +7094,10 @@ case ""Golden DeathKnight Lord Boots"":
                     break;
 
     "
-},
-{
-    "Shadow BeastMaster",
-    @"
+        },
+        {
+            "Shadow BeastMaster",
+            @"
 case ""Shadow BeastMaster"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7111,10 +7108,10 @@ case ""Shadow BeastMaster"":
                     }
                     break;
     "
-},
-{
-    "Shadow BeastMaster Bow",
-    @"
+        },
+        {
+            "Shadow BeastMaster Bow",
+            @"
 case ""Shadow BeastMaster Bow"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7125,10 +7122,10 @@ case ""Shadow BeastMaster Bow"":
                     }
                     break;
     "
-},
-{
-    "Shadow BeastMaster Hood",
-    @"
+        },
+        {
+            "Shadow BeastMaster Hood",
+            @"
 case ""Shadow BeastMaster Hood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7139,10 +7136,10 @@ case ""Shadow BeastMaster Hood"":
                     }
                     break;
     "
-},
-{
-    "Shadow BeastMaster Hood + Mask",
-    @"
+        },
+        {
+            "Shadow BeastMaster Hood + Mask",
+            @"
 case ""Shadow BeastMaster Hood + Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7153,10 +7150,10 @@ case ""Shadow BeastMaster Hood + Mask"":
                     }
                     break;
     "
-},
-{
-    "Shadow BeastMaster Knuckle",
-    @"
+        },
+        {
+            "Shadow BeastMaster Knuckle",
+            @"
 case ""Shadow BeastMaster Knuckle"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7167,10 +7164,10 @@ case ""Shadow BeastMaster Knuckle"":
                     }
                     break;
     "
-},
-{
-    "Shadow BeastMaster Quiver",
-    @"
+        },
+        {
+            "Shadow BeastMaster Quiver",
+            @"
 case ""Shadow BeastMaster Quiver"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7181,10 +7178,10 @@ case ""Shadow BeastMaster Quiver"":
                     }
                     break;
     "
-},
-{
-    "Shadow BeastMaster's Beard",
-    @"
+        },
+        {
+            "Shadow BeastMaster's Beard",
+            @"
 case ""Shadow BeastMaster's Beard"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7195,10 +7192,10 @@ case ""Shadow BeastMaster's Beard"":
                     }
                     break;
     "
-},
-{
-    "Shadow BeastMaster's Locks",
-    @"
+        },
+        {
+            "Shadow BeastMaster's Locks",
+            @"
 case ""Shadow BeastMaster's Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7209,10 +7206,10 @@ case ""Shadow BeastMaster's Locks"":
                     }
                     break;
     "
-},
-{
-    "Shadow BeastMaster's Shag",
-    @"
+        },
+        {
+            "Shadow BeastMaster's Shag",
+            @"
 case ""Shadow BeastMaster's Shag"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7223,10 +7220,10 @@ case ""Shadow BeastMaster's Shag"":
                     }
                     break;
     "
-},
-{
-    "Venerated Essence",
-    @"
+        },
+        {
+            "Venerated Essence",
+            @"
 case ""Venerated Essence"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -7240,10 +7237,10 @@ case ""Venerated Essence"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "ShadowFlame Glaive",
-    @"
+        },
+        {
+            "ShadowFlame Glaive",
+            @"
 case ""ShadowFlame Glaive"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -7254,10 +7251,10 @@ case ""ShadowFlame Glaive"":
                     }
                     break;
     "
-},
-{
-    "ShadowFlame Spellsword",
-    @"
+        },
+        {
+            "ShadowFlame Spellsword",
+            @"
 case ""ShadowFlame Spellsword"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7268,10 +7265,10 @@ case ""ShadowFlame Spellsword"":
                     }
                     break;
     "
-},
-{
-    "ShadowFlame Spellsword's Sheathed Blade",
-    @"
+        },
+        {
+            "ShadowFlame Spellsword's Sheathed Blade",
+            @"
 case ""ShadowFlame Spellsword's Sheathed Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7282,10 +7279,10 @@ case ""ShadowFlame Spellsword's Sheathed Blade"":
                     }
                     break;
     "
-},
-{
-    "ShadowFlame Spellsword's Hip Blade",
-    @"
+        },
+        {
+            "ShadowFlame Spellsword's Hip Blade",
+            @"
 case ""ShadowFlame Spellsword's Hip Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7296,10 +7293,10 @@ case ""ShadowFlame Spellsword's Hip Blade"":
                     }
                     break;
     "
-},
-{
-    "ShadowFlame SpellSword's Blade",
-    @"
+        },
+        {
+            "ShadowFlame SpellSword's Blade",
+            @"
 case ""ShadowFlame SpellSword's Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7310,10 +7307,10 @@ case ""ShadowFlame SpellSword's Blade"":
                     }
                     break;
     "
-},
-{
-    "ShadowFlame SpellSword's Daggers",
-    @"
+        },
+        {
+            "ShadowFlame SpellSword's Daggers",
+            @"
 case ""ShadowFlame SpellSword's Daggers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7324,10 +7321,10 @@ case ""ShadowFlame SpellSword's Daggers"":
                     }
                     break;
     "
-},
-{
-    "ShadowFlame SpellSword's Tome",
-    @"
+        },
+        {
+            "ShadowFlame SpellSword's Tome",
+            @"
 case ""ShadowFlame SpellSword's Tome"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7338,10 +7335,10 @@ case ""ShadowFlame SpellSword's Tome"":
                     }
                     break;
     "
-},
-{
-    "SpellSword's Flame Blade",
-    @"
+        },
+        {
+            "SpellSword's Flame Blade",
+            @"
 case ""SpellSword's Flame Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7352,10 +7349,10 @@ case ""SpellSword's Flame Blade"":
                     }
                     break;
     "
-},
-{
-    "SpellSword's Reversed Daggers",
-    @"
+        },
+        {
+            "SpellSword's Reversed Daggers",
+            @"
 case ""SpellSword's Reversed Daggers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7366,10 +7363,10 @@ case ""SpellSword's Reversed Daggers"":
                     }
                     break;
     "
-},
-{
-    "Blight Essence",
-    @"
+        },
+        {
+            "Blight Essence",
+            @"
 case ""Blight Essence"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -7382,18 +7379,18 @@ case ""Blight Essence"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Platinum Wings",
-    @"
+        },
+        {
+            "Platinum Wings",
+            @"
 case ""Platinum Wings"":
                     Adv.BuyItem(""Castle"", 88, req.Name);
                     break;
     "
-},
-{
-    "Fuchsia Dye",
-    @"
+        },
+        {
+            "Fuchsia Dye",
+            @"
 case ""Fuchsia Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -7422,18 +7419,18 @@ case ""Fuchsia Dye"":
                     }
                     break;
     "
-},
-{
-    "Plague Strike Scythe",
-    @"
+        },
+        {
+            "Plague Strike Scythe",
+            @"
 case ""Plague Strike Scythe"":
                     Adv.BuyItem(""ShadowFall"", 89, req.Name);
                     break;
     "
-},
-{
-    "Zealith Reavers",
-    @"
+        },
+        {
+            "Zealith Reavers",
+            @"
 case ""Zealith Reavers"":
                     Core.FarmingLogger(req.Name, quant);
                     LegionExercise3.Exercise(new[] { ""Judgement Hammer"", ""Legion Token"" });
@@ -7442,78 +7439,78 @@ case ""Zealith Reavers"":
                     Adv.BuyItem(""Underworld"", 238, req.Name);
                     break;
     "
-},
-{
-    "Great Astral Wings",
-    @"
+        },
+        {
+            "Great Astral Wings",
+            @"
 case ""Great Astral Wings"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Elemental"", ""Mana Falcon"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Wave Cutter",
-    @"
+        },
+        {
+            "Wave Cutter",
+            @"
 case ""Wave Cutter"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Pirates"", ""Shark Bait"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Star Caster Staff",
-    @"
+        },
+        {
+            "Star Caster Staff",
+            @"
 case ""Star Caster Staff"":
                     Adv.BuyItem(""Castle"", 48, req.Name);
                     break;
     "
-},
-{
-    "Scarlet's Costume",
-    @"
+        },
+        {
+            "Scarlet's Costume",
+            @"
 case ""Scarlet's Costume"":
                     Adv.BuyItem(""Sleuthhound"", 65, req.Name);
                     break;
     "
-},
-{
-    "Infernal Dark Blade of Cruelty",
-    @"
+        },
+        {
+            "Infernal Dark Blade of Cruelty",
+            @"
 case ""Infernal Dark Blade of Cruelty"":
                     Adv.BuyItem(""Battleon"", 10, req.Name);
                     break;
     "
-},
-{
-    "Chaos Dragonlord Helm",
-    @"
+        },
+        {
+            "Chaos Dragonlord Helm",
+            @"
 case ""Chaos Dragonlord Helm"":
                     Core.EquipClass(ClassType.Solo);
                     Core.KillVath(req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Rose Aura of the Ascended",
-    @"
+        },
+        {
+            "Rose Aura of the Ascended",
+            @"
 case ""Rose Aura of the Ascended"":
                     Core.Logger($""{req.Name} is seasonal AC item and only available Beleen's Birthday event."");
                     Adv.BuyItem(Bot.Map.Name, 1966, req.Name);
                     break;
     "
-},
-{
-    "Prismatic Dye",
-    @"
+        },
+        {
+            "Prismatic Dye",
+            @"
 case ""Prismatic Dye"":
                     Adv.BuyItem(""Tower"", 1966, req.Name);
                     break;
     "
-},
-{
-    "Iron Dreadsaw",
-    @"
+        },
+        {
+            "Iron Dreadsaw",
+            @"
 case ""Iron Dreadsaw"":
                     Core.FarmingLogger(req.Name, quant);
                     if (!Core.CheckInventory(""Raw Dreadsaw""))
@@ -7528,10 +7525,10 @@ case ""Iron Dreadsaw"":
                     Adv.BuyItem(""ArchPortal"", 1211, req.Name);
                     break;
     "
-},
-{
-    "Dual Manslayer of Taro",
-    @"
+        },
+        {
+            "Dual Manslayer of Taro",
+            @"
 case ""Dual Manslayer of Taro"":
                     if (Core.IsMember)
                     {
@@ -7555,10 +7552,10 @@ case ""Dual Manslayer of Taro"":
                         Core.Logger($""\""{req.Name}\"" requires Membership to obtain"");
                     break;
     "
-},
-{
-    "Demonhuntress Horns",
-    @"
+        },
+        {
+            "Demonhuntress Horns",
+            @"
 case ""Demonhuntress Horns"":
                     if (!Core.CheckInventory(""Blindfolded Pink Demonhuntress Horns"") || !Core.CheckInventory(""Pink Demonhuntress Horns""))
                     {
@@ -7568,10 +7565,10 @@ case ""Demonhuntress Horns"":
                     Adv.BuyItem(""Curio"", 1070, req.Name);
                     break;
     "
-},
-{
-    "Demonhunter Horns",
-    @"
+        },
+        {
+            "Demonhunter Horns",
+            @"
 case ""Demonhunter Horns"":
                     if (!Core.CheckInventory(""Blindfolded Pink Demonhunter Horns"") || !Core.CheckInventory(""Pink Demonhunter Horns""))
                     {
@@ -7584,10 +7581,10 @@ case ""Demonhunter Horns"":
                         Adv.BuyItem(""Curio"", 52, req.Name);
                     break;
     "
-},
-{
-    "DOOMFire Warrior",
-    @"
+        },
+        {
+            "DOOMFire Warrior",
+            @"
 case ""DOOMFire Warrior"":
                     if (!Core.HasAchievement(19, ""ip6""))
                         Core.Logger($""\""{req.Name}\"" is Special Offer item, You need to have 200k Acs achievment badge"");
@@ -7595,36 +7592,36 @@ case ""DOOMFire Warrior"":
                         Adv.BuyItem(""Battleon"", 1306, req.Name);
                     break;
     "
-},
-{
-    "Fire Imp Tail",
-    @"
+        },
+        {
+            "Fire Imp Tail",
+            @"
 case ""Fire Imp Tail"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Mobius"", ""Fire Imp"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Unarmed",
-    @"
+        },
+        {
+            "Unarmed",
+            @"
 case ""Unarmed"":
                     Adv.BuyItem(Bot.Map.Name, 1536, req.Name);
                     break;
     "
-},
-{
-    "Scarbucks Latte",
-    @"
+        },
+        {
+            "Scarbucks Latte",
+            @"
 case ""Scarbucks Latte"":
                     Core.Logger($""\""{req.Name}\"" is Member & Seasonal item"");
                     Adv.BuyItem(""FearFeast"", 1190, req.Name);
                     break;
     "
-},
-{
-    "Valor High Halo",
-    @"
+        },
+        {
+            "Valor High Halo",
+            @"
 case ""Valor High Halo"":
                     if (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
@@ -7633,10 +7630,10 @@ case ""Valor High Halo"":
                     }
                     break;
     "
-},
-{
-    "Doge the Evil",
-    @"
+        },
+        {
+            "Doge the Evil",
+            @"
 case ""Doge the Evil"":
                     if (Core.IsMember)
                     {
@@ -7657,18 +7654,18 @@ case ""Doge the Evil"":
                         Core.Logger($""\""{req.Name}\"" requires Membership to obtain"");
                     break;
     "
-},
-{
-    "Shimmering Flakes",
-    @"
+        },
+        {
+            "Shimmering Flakes",
+            @"
 case ""Shimmering Flakes"":
                     Adv.BuyItem(""BlindingSnow"", 236, req.Name);
                     break;
     "
-},
-{
-    "Red Rose",
-    @"
+        },
+        {
+            "Red Rose",
+            @"
 case ""Red Rose"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -7676,43 +7673,43 @@ case ""Red Rose"":
                     Adv.BuyItem(""ArtixWedding"", 788, req.Name);
                     break;
     "
-},
-{
-    "Scarbucks Espresso Cup",
-    @"
+        },
+        {
+            "Scarbucks Espresso Cup",
+            @"
 case ""Scarbucks Espresso Cup"":
                     Core.Logger($""\""{req.Name}\"" is Member & Seasonal item"");
                     Adv.BuyItem(""FearFeast"", 1190, req.Name);
                     break;
     "
-},
-{
-    "Shadowslayer Armor",
-    @"
+        },
+        {
+            "Shadowslayer Armor",
+            @"
 case ""Shadowslayer Armor"":
                     Adv.BuyItem(""DarkoviaForest "", 138, req.Name);
                     break;
     "
-},
-{
-    "ShadowSlayer Hat",
-    @"
+        },
+        {
+            "ShadowSlayer Hat",
+            @"
 case ""ShadowSlayer Hat"":
                     Adv.BuyItem(""DarkoviaForest "", 138, req.Name);
                     break;
     "
-},
-{
-    "Shadow Z Hat",
-    @"
+        },
+        {
+            "Shadow Z Hat",
+            @"
 case ""Shadow Z Hat"":
                     Adv.BuyItem(""DarkoviaForest "", 138, req.Name);
                     break;
     "
-},
-{
-    "Reavers Of Good",
-    @"
+        },
+        {
+            "Reavers Of Good",
+            @"
 case ""Reavers Of Good"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -7720,55 +7717,55 @@ case ""Reavers Of Good"":
                     Adv.BuyItem(""BrightFortress"", 795, req.Name);
                     break;
     "
-},
-{
-    "Slayer's Neophyte Broadsword",
-    @"
+        },
+        {
+            "Slayer's Neophyte Broadsword",
+            @"
 case ""Slayer's Neophyte Broadsword"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""DarkoviaForest"", ""Lich of the Stone"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Slithering ShadowSlayer",
-    @"
+        },
+        {
+            "Slithering ShadowSlayer",
+            @"
 case ""Slithering ShadowSlayer"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""DarkoviaForest"", ""Lich of the Stone"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Slithering Hunter's Hat",
-    @"
+        },
+        {
+            "Slithering Hunter's Hat",
+            @"
 case ""Slithering Hunter's Hat"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""DarkoviaForest"", ""Lich of the Stone"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Slithering Hunter's Hat + Locks",
-    @"
+        },
+        {
+            "Slithering Hunter's Hat + Locks",
+            @"
 case ""Slithering Hunter's Hat + Locks"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""DarkoviaForest"", ""Lich of the Stone"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Slayer's Wooden Pistol",
-    @"
+        },
+        {
+            "Slayer's Wooden Pistol",
+            @"
 case ""Slayer's Wooden Pistol"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""DarkoviaForest"", ""Lich of the Stone"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Slithering Hunter's Knife",
-    @"
+        },
+        {
+            "Slithering Hunter's Knife",
+            @"
 case ""Slithering Hunter's Knife"":
                     if (Core.IsMember)
                     {
@@ -7779,10 +7776,10 @@ case ""Slithering Hunter's Knife"":
                         Core.Logger($""\""{req.Name}\"" requires Membership to obtain"");
                     break;
     "
-},
-{
-    "Slayer's Wooden Rifle",
-    @"
+        },
+        {
+            "Slayer's Wooden Rifle",
+            @"
 case ""Slayer's Wooden Rifle"":
                     if (Core.IsMember)
                     {
@@ -7793,10 +7790,10 @@ case ""Slayer's Wooden Rifle"":
                         Core.Logger($""\""{req.Name}\"" requires Membership to obtain"");
                     break;
     "
-},
-{
-    "Lumin Badge",
-    @"
+        },
+        {
+            "Lumin Badge",
+            @"
 case ""Lumin Badge"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -7806,10 +7803,10 @@ case ""Lumin Badge"":
                     }
                     break;
     "
-},
-{
-    "Celes Badge",
-    @"
+        },
+        {
+            "Celes Badge",
+            @"
 case ""Celes Badge"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -7820,19 +7817,19 @@ case ""Celes Badge"":
                     break;
 
     "
-},
-{
-    "Champion Sash",
-    @"
+        },
+        {
+            "Champion Sash",
+            @"
 case ""Champion Sash"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""celestialarenad"", ""Aranx"", ""Champion Sash"", quant, isTemp: false);
                     break;
     "
-},
-{
-    "Celestial Quintessence",
-    @"
+        },
+        {
+            "Celestial Quintessence",
+            @"
 case ""Celestial Quintessence"":
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -7844,10 +7841,10 @@ case ""Celestial Quintessence"":
                     break;
 
     "
-},
-{
-    "Gaheris Sigil",
-    @"
+        },
+        {
+            "Gaheris Sigil",
+            @"
 case ""Gaheris Sigil"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9829);
@@ -7863,80 +7860,80 @@ case ""Gaheris Sigil"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Courtly Mana Scholar Hair",
-    @"
+        },
+        {
+            "Courtly Mana Scholar Hair",
+            @"
 case ""Courtly Mana Scholar Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""castlegaheris"", ""Thundersnow Storm"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Courtly Mana Scholar Locks",
-    @"
+        },
+        {
+            "Courtly Mana Scholar Locks",
+            @"
 case ""Courtly Mana Scholar Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""castlegaheris"", ""Thundersnow Storm"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Militis Snowflake Rapier",
-    @"
+        },
+        {
+            "Militis Snowflake Rapier",
+            @"
 case ""Militis Snowflake Rapier"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""castlegaheris"", ""Thundersnow Storm"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Militis Snowflake Rapiers",
-    @"
+        },
+        {
+            "Militis Snowflake Rapiers",
+            @"
 case ""Militis Snowflake Rapiers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""castlegaheris"", ""Thundersnow Storm"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Grimoire of Abra-Melin",
-    @"
+        },
+        {
+            "Grimoire of Abra-Melin",
+            @"
 case ""Grimoire of Abra-Melin"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""castlegaheris"", ""Thundersnow Storm"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Delicate Snowflake Rapier",
-    @"
+        },
+        {
+            "Delicate Snowflake Rapier",
+            @"
 case ""Delicate Snowflake Rapier"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""castlegaheris"", ""Glacial Crystal"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Delicate Snowflake Rapiers",
-    @"
+        },
+        {
+            "Delicate Snowflake Rapiers",
+            @"
 case ""Delicate Snowflake Rapiers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""castlegaheris"", ""Glacial Crystal"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Pigment Powder",
-    @"
+        },
+        {
+            "Pigment Powder",
+            @"
 case ""Pigment Powder"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -7968,10 +7965,10 @@ case ""Pigment Powder"":
 
                 // Shared case for other castlewhistler drops
     "
-},
-{
-    "Winter's Dirge",
-    @"
+        },
+        {
+            "Winter's Dirge",
+            @"
 case ""Winter's Dirge"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -7993,10 +7990,10 @@ case ""Winter's Dirge"":
                     break;
 
     "
-},
-{
-    "Midsummer Rhapsody",
-    @"
+        },
+        {
+            "Midsummer Rhapsody",
+            @"
 case ""Midsummer Rhapsody"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -8018,10 +8015,10 @@ case ""Midsummer Rhapsody"":
                     break;
 
     "
-},
-{
-    "Armorial Crown",
-    @"
+        },
+        {
+            "Armorial Crown",
+            @"
 case ""Armorial Crown"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -8043,37 +8040,37 @@ case ""Armorial Crown"":
                     break;
 
     "
-},
-{
-    "Chaorrupted Hamster",
-    @"
+        },
+        {
+            "Chaorrupted Hamster",
+            @"
 case ""Chaorrupted Hamster"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""chaoslab"", ""Chaotic Server Hamster"", req.Name, isTemp: false, log: false);
                     break;
     "
-},
-{
-    "Crystallized Chaos",
-    @"
+        },
+        {
+            "Crystallized Chaos",
+            @"
 case ""Crystallized Chaos"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""chaoslab"", ""Chaorrupted Moglin"", req.Name, quant, isTemp: false, log: false);
                     break;
     "
-},
-{
-    "Daimyo",
-    @"
+        },
+        {
+            "Daimyo",
+            @"
 case ""Daimyo"":
                     Core.BuyItem(""necropolis"", 422, ""Daimyo"");
                     break;
 
     "
-},
-{
-    "White Flame of Albedo",
-    @"
+        },
+        {
+            "White Flame of Albedo",
+            @"
 case ""White Flame of Albedo"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -8093,10 +8090,10 @@ case ""White Flame of Albedo"":
                     }
                     break;
     "
-},
-{
-    "Noelle Warden Morph",
-    @"
+        },
+        {
+            "Noelle Warden Morph",
+            @"
 case ""Noelle Warden Morph"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -8110,10 +8107,10 @@ case ""Noelle Warden Morph"":
                     Core.HuntMonster(""thelimacity"", ""Noelle Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Noelle Warden Visage",
-    @"
+        },
+        {
+            "Noelle Warden Visage",
+            @"
 case ""Noelle Warden Visage"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -8127,10 +8124,10 @@ case ""Noelle Warden Visage"":
                     Core.HuntMonster(""thelimacity"", ""Noelle Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Cape of the Noelle Knight",
-    @"
+        },
+        {
+            "Cape of the Noelle Knight",
+            @"
 case ""Cape of the Noelle Knight"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -8144,10 +8141,10 @@ case ""Cape of the Noelle Knight"":
                     Core.HuntMonster(""thelimacity"", ""Noelle Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Noelle Warden Bob",
-    @"
+        },
+        {
+            "Noelle Warden Bob",
+            @"
 case ""Noelle Warden Bob"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -8161,10 +8158,10 @@ case ""Noelle Warden Bob"":
                     Core.HuntMonster(""thelimacity"", ""Noelle Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Noelle Warden Ponytail",
-    @"
+        },
+        {
+            "Noelle Warden Ponytail",
+            @"
 case ""Noelle Warden Ponytail"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -8178,10 +8175,10 @@ case ""Noelle Warden Ponytail"":
                     Core.HuntMonster(""thelimacity"", ""Noelle Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Stars of Capella",
-    @"
+        },
+        {
+            "Stars of Capella",
+            @"
 case ""Stars of Capella"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -8195,10 +8192,10 @@ case ""Stars of Capella"":
                     Core.HuntMonster(""forgealbedo"", ""Flame of Albedo"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Mystic Topaz",
-    @"
+        },
+        {
+            "Mystic Topaz",
+            @"
 case ""Mystic Topaz"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -8212,10 +8209,10 @@ case ""Mystic Topaz"":
                     Core.HuntMonster(""thelimacity"", ""Noelle Knight"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Chaos Eye",
-    @"
+        },
+        {
+            "Chaos Eye",
+            @"
 case ""Chaos Eye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -8223,10 +8220,10 @@ case ""Chaos Eye"":
                         Core.KillMonster(""chaoswar"", ""r2"", ""Spawn"", ""*"", req.Name, quant, isTemp: false, log: false);
                     break;
     "
-},
-{
-    "Chaos Tentacle",
-    @"
+        },
+        {
+            "Chaos Tentacle",
+            @"
 case ""Chaos Tentacle"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -8235,10 +8232,10 @@ case ""Chaos Tentacle"":
                     break;
 
     "
-},
-{
-    "Infernal Token",
-    @"
+        },
+        {
+            "Infernal Token",
+            @"
 case ""Infernal Token"":
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -8248,10 +8245,10 @@ case ""Infernal Token"":
                     }
                     break;
     "
-},
-{
-    "Uncorrupt Spear Feather",
-    @"
+        },
+        {
+            "Uncorrupt Spear Feather",
+            @"
 case ""Uncorrupt Spear Feather"":
                     QOM.CompleteEverything();
                     Core.EquipClass(ClassType.Solo);
@@ -8265,10 +8262,10 @@ case ""Uncorrupt Spear Feather"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Diabolical Minion's Seed",
-    @"
+        },
+        {
+            "Diabolical Minion's Seed",
+            @"
 case ""Diabolical Minion's Seed"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -8279,10 +8276,10 @@ case ""Diabolical Minion's Seed"":
                     break;
 
     "
-},
-{
-    "Time Piece",
-    @"
+        },
+        {
+            "Time Piece",
+            @"
 case ""Time Piece"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -8294,10 +8291,10 @@ case ""Time Piece"":
                     break;
 
     "
-},
-{
-    "Skye's Lightning",
-    @"
+        },
+        {
+            "Skye's Lightning",
+            @"
 case ""Skye's Lightning"":
                     Core.FarmingLogger(req.Name, quant);
                     // 9834 | Eilean a' Cheò
@@ -8306,58 +8303,58 @@ case ""Skye's Lightning"":
                     Bot.Wait.ForPickup(""Skye's Lightning"");
                     break;
     "
-},
-{
-    "Electrifying Zilla Tail",
-    @"
+        },
+        {
+            "Electrifying Zilla Tail",
+            @"
 case ""Electrifying Zilla Tail"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""castlegaheris"", ""Energy Elemental"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Electrifying Zilla Bag",
-    @"
+        },
+        {
+            "Electrifying Zilla Bag",
+            @"
 case ""Electrifying Zilla Bag"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""castlegaheris"", ""Energy Elemental"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Crawler Leg",
-    @"
+        },
+        {
+            "Crawler Leg",
+            @"
 case ""Crawler Leg"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""mirrormaze"", ""Doom Crawler"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Zombie Dragon Scale",
-    @"
+        },
+        {
+            "Zombie Dragon Scale",
+            @"
 case ""Zombie Dragon Scale"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""mirrormaze"", ""Zombie Dragon"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "De'Sawed's Stinger",
-    @"
+        },
+        {
+            "De'Sawed's Stinger",
+            @"
 case ""De'Sawed's Stinger"":
                     Core.EquipClass(ClassType.Solo);
                     Core.KillMonster(""catacombs"", ""Boss2"", ""Left"", ""Dr. De'Sawed"", req.Name, quant, false);
                     break;
 
     "
-},
-{
-    "Celestial Coin",
-    @"
+        },
+        {
+            "Celestial Coin",
+            @"
 case ""Celestial Coin"":
                     DjinnGuard.CompleteDjinnGuard();
                     Core.FarmingLogger(req.Name, quant);
@@ -8375,10 +8372,10 @@ case ""Celestial Coin"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Blade of the Fallen Djinn",
-    @"
+        },
+        {
+            "Blade of the Fallen Djinn",
+            @"
 case ""Blade of the Fallen Djinn"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -8388,10 +8385,10 @@ case ""Blade of the Fallen Djinn"":
                     }
                     break;
     "
-},
-{
-    "Blade of the Djinn King",
-    @"
+        },
+        {
+            "Blade of the Djinn King",
+            @"
 case ""Blade of the Djinn King"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -8401,10 +8398,10 @@ case ""Blade of the Djinn King"":
                     }
                     break;
     "
-},
-{
-    "Lucky Button",
-    @"
+        },
+        {
+            "Lucky Button",
+            @"
 case ""Lucky Button"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -8419,10 +8416,10 @@ case ""Lucky Button"":
                     break;
 
     "
-},
-{
-    "Sobekemsaph's Hieroglyph",
-    @"
+        },
+        {
+            "Sobekemsaph's Hieroglyph",
+            @"
 case ""Sobekemsaph's Hieroglyph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -8436,10 +8433,10 @@ case ""Sobekemsaph's Hieroglyph"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Sobekemsaph's Scale",
-    @"
+        },
+        {
+            "Sobekemsaph's Scale",
+            @"
 case ""Sobekemsaph's Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -8452,69 +8449,69 @@ case ""Sobekemsaph's Scale"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Sphinx Sentinel Helm",
-    @"
+        },
+        {
+            "Sphinx Sentinel Helm",
+            @"
 case ""Sphinx Sentinel Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crocriver"", ""Sobekemsaph"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Sheathed Black Moon Blades",
-    @"
+        },
+        {
+            "Sheathed Black Moon Blades",
+            @"
 case ""Sheathed Black Moon Blades"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crocriver"", ""Sobekemsaph"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Sphinx Sentinel Cape",
-    @"
+        },
+        {
+            "Sphinx Sentinel Cape",
+            @"
 case ""Sphinx Sentinel Cape"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crocriver"", ""Sobekemsaph"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "ShadowFlame Battle Spear",
-    @"
+        },
+        {
+            "ShadowFlame Battle Spear",
+            @"
 case ""ShadowFlame Battle Spear"":
                     Core.FarmingLogger(req.Name, quant);
                     SWM.Medals(100);
                     Adv.BuyItem(""chaosamulet"", 1914, req.Name);
                     break;
     "
-},
-{
-    "ShadowFlame Battle Staff",
-    @"
+        },
+        {
+            "ShadowFlame Battle Staff",
+            @"
 case ""ShadowFlame Battle Staff"":
                     Core.FarmingLogger(req.Name, quant);
                     SWM.Medals(100);
                     Adv.BuyItem(""chaosamulet"", 1914, req.Name);
                     break;
     "
-},
-{
-    "ShadowFlame War Medal",
-    @"
+        },
+        {
+            "ShadowFlame War Medal",
+            @"
 case ""ShadowFlame War Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     SWM.Medals(quant);
                     break;
     "
-},
-{
-    "ShadowFlame Broadsword",
-    @"
+        },
+        {
+            "ShadowFlame Broadsword",
+            @"
 case ""ShadowFlame Broadsword"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -8526,90 +8523,90 @@ case ""ShadowFlame Broadsword"":
                     break;
 
     "
-},
-{
-    "Heroic Berserker",
-    @"
+        },
+        {
+            "Heroic Berserker",
+            @"
 case ""Heroic Berserker"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""chaosmilitia"", ""Xiang"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Heroic Berserker Shag",
-    @"
+        },
+        {
+            "Heroic Berserker Shag",
+            @"
 case ""Heroic Berserker Shag"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""chaosmilitia"", ""Xiang"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Heroic Berserker Locks",
-    @"
+        },
+        {
+            "Heroic Berserker Locks",
+            @"
 case ""Heroic Berserker Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""chaosmilitia"", ""Xiang"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Heroic Berserker Skullcap",
-    @"
+        },
+        {
+            "Heroic Berserker Skullcap",
+            @"
 case ""Heroic Berserker Skullcap"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""chaosmilitia"", ""Xiang"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Heroic Berserker Blade",
-    @"
+        },
+        {
+            "Heroic Berserker Blade",
+            @"
 case ""Heroic Berserker Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""chaosmilitia"", ""Xiang"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Heroic Berserker Hammer",
-    @"
+        },
+        {
+            "Heroic Berserker Hammer",
+            @"
 case ""Heroic Berserker Hammer"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""chaosmilitia"", ""Xiang"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Heroic Berserker Axe",
-    @"
+        },
+        {
+            "Heroic Berserker Axe",
+            @"
 case ""Heroic Berserker Axe"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""chaosmilitia"", ""Xiang"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Heroic Berserker Accoutrements",
-    @"
+        },
+        {
+            "Heroic Berserker Accoutrements",
+            @"
 case ""Heroic Berserker Accoutrements"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""chaosmilitia"", ""Xiang"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Militia Merit",
-    @"
+        },
+        {
+            "Militia Merit",
+            @"
 case ""Militia Merit"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -8619,19 +8616,19 @@ case ""Militia Merit"":
                     }
                     break;
     "
-},
-{
-    "Darkblood Guards",
-    @"
+        },
+        {
+            "Darkblood Guards",
+            @"
 case ""Darkblood Guards"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""falguard"", 544, req.Name, quant);
                     break;
     "
-},
-{
-    "Enchanted Dark Blood",
-    @"
+        },
+        {
+            "Enchanted Dark Blood",
+            @"
 case ""Enchanted Dark Blood"":
                     Core.FarmingLogger(req.Name, quant);
                     Daily.EnchantedDarkBlood();
@@ -8642,61 +8639,61 @@ case ""Enchanted Dark Blood"":
                     break;
 
     "
-},
-{
-    "Molten Sword",
-    @"
+        },
+        {
+            "Molten Sword",
+            @"
 case ""Molten Sword"":
                     Adv.BuyItem(""Fotia"", 649, req.Name);
                     break;
     "
-},
-{
-    "Ash Priest Hood",
-    @"
+        },
+        {
+            "Ash Priest Hood",
+            @"
 case ""Ash Priest Hood"":
                     Adv.BuyItem(""Fotia"", 649, req.Name);
                     break;
     "
-},
-{
-    "Priest of the Ashes",
-    @"
+        },
+        {
+            "Priest of the Ashes",
+            @"
 case ""Priest of the Ashes"":
                     Adv.BuyItem(""Fotia"", 649, req.Name);
                     break;
     "
-},
-{
-    "Magitech Plating",
-    @"
+        },
+        {
+            "Magitech Plating",
+            @"
 case ""Magitech Plating"":
                     Adv.BuyItem(""UnderRealm"", 660, req.Name);
                     break;
     "
-},
-{
-    "Ancient Undead Helm",
-    @"
+        },
+        {
+            "Ancient Undead Helm",
+            @"
 case ""Ancient Undead Helm"":
                     Legion.JoinLegion();
                     Adv.BuyItem(""RavenScar"", 615, req.Name);
                     break;
     "
-},
-{
-    "The Scythe of Lost Hope",
-    @"
+        },
+        {
+            "The Scythe of Lost Hope",
+            @"
 case ""The Scythe of Lost Hope"":
                     Core.FarmingLogger(req.Name, quant);
                     Legion.ApprovalAndFavor(0, 50);
                     Adv.BuyItem(""UnderWorld"", 454, req.Name);
                     break;
     "
-},
-{
-    "Legion Beast Within",
-    @"
+        },
+        {
+            "Legion Beast Within",
+            @"
 case ""Legion Beast Within"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -8717,10 +8714,10 @@ case ""Legion Beast Within"":
                     Adv.BuyItem(""underworld"", 577, req.Name);
                     break;
     "
-},
-{
-    "Golden Bough",
-    @"
+        },
+        {
+            "Golden Bough",
+            @"
 case ""Golden Bough"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -8731,18 +8728,18 @@ case ""Golden Bough"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Molten Staff",
-    @"
+        },
+        {
+            "Molten Staff",
+            @"
 case ""Molten Staff"":
                     Core.HuntMonster(""Fotia"", ""Fotia Elemental"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Psyche",
-    @"
+        },
+        {
+            "Psyche",
+            @"
 case ""Psyche"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -8757,10 +8754,10 @@ case ""Psyche"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Carnival Ticket",
-    @"
+        },
+        {
+            "Carnival Ticket",
+            @"
 case ""Carnival Ticket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -8772,10 +8769,10 @@ case ""Carnival Ticket"":
                     break;
 
     "
-},
-{
-    "Glowing Sock",
-    @"
+        },
+        {
+            "Glowing Sock",
+            @"
 case ""Glowing Sock"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(2777);
@@ -8789,10 +8786,10 @@ case ""Glowing Sock"":
                     break;
 
     "
-},
-{
-    "Darkblood War Medal",
-    @"
+        },
+        {
+            "Darkblood War Medal",
+            @"
 case ""Darkblood War Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -8807,10 +8804,10 @@ case ""Darkblood War Medal"":
                     break;
 
     "
-},
-{
-    "Flame Incantation",
-    @"
+        },
+        {
+            "Flame Incantation",
+            @"
 case ""Flame Incantation"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -8824,10 +8821,10 @@ case ""Flame Incantation"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Silver Ward",
-    @"
+        },
+        {
+            "Silver Ward",
+            @"
 case ""Silver Ward"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -8840,10 +8837,10 @@ case ""Silver Ward"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Almoravid's Bracer",
-    @"
+        },
+        {
+            "Almoravid's Bracer",
+            @"
 case ""Almoravid's Bracer"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -8856,70 +8853,70 @@ case ""Almoravid's Bracer"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Luminous Soul Bow",
-    @"
+        },
+        {
+            "Luminous Soul Bow",
+            @"
 case ""Luminous Soul Bow"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crulonwed"", UseableMonsters[0], req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Luminous Soul Spear",
-    @"
+        },
+        {
+            "Luminous Soul Spear",
+            @"
 case ""Luminous Soul Spear"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crulonwed"", UseableMonsters[0], req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Luminous Emblem",
-    @"
+        },
+        {
+            "Luminous Emblem",
+            @"
 case ""Luminous Emblem"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crulonwed"", UseableMonsters[0], req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Luminous Soul Blade",
-    @"
+        },
+        {
+            "Luminous Soul Blade",
+            @"
 case ""Luminous Soul Blade"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crulonwed"", UseableMonsters[0], req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Desert Bandana",
-    @"
+        },
+        {
+            "Desert Bandana",
+            @"
 case ""Desert Bandana"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crulonwed"", UseableMonsters[0], req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Honored Sandsea Guest",
-    @"
+        },
+        {
+            "Honored Sandsea Guest",
+            @"
 case ""Honored Sandsea Guest"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crulonwed"", UseableMonsters[0], req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Pure Monstrite",
-    @"
+        },
+        {
+            "Pure Monstrite",
+            @"
 case ""Pure Monstrite"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -8933,10 +8930,10 @@ case ""Pure Monstrite"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Glowing Pumpkinseed",
-    @"
+        },
+        {
+            "Glowing Pumpkinseed",
+            @"
 case ""Glowing Pumpkinseed"":
                     if (Core.IsMember)
                     {
@@ -8966,46 +8963,46 @@ case ""Glowing Pumpkinseed"":
                     break;
 
     "
-},
-{
-    "Deimos' Chain",
-    @"
+        },
+        {
+            "Deimos' Chain",
+            @"
 case ""Deimos' Chain"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.Logger($""{req.Name} requires you to kill Devastator Deimos which skua can't do, use army."");
                     break;
     "
-},
-{
-    "Cursed Grudge Nagamaki",
-    @"
+        },
+        {
+            "Cursed Grudge Nagamaki",
+            @"
 case ""Cursed Grudge Nagamaki"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.Logger($""{req.Name} requires you to kill Devastator Deimos which skua can't do, use army."");
                     break;
     "
-},
-{
-    "Deimos' Fang",
-    @"
+        },
+        {
+            "Deimos' Fang",
+            @"
 case ""Deimos' Fang"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.Logger($""{req.Name} requires you to kill Devastator Deimos which skua can't do, use army."");
                     break;
     "
-},
-{
-    "Toxic Gem",
-    @"
+        },
+        {
+            "Toxic Gem",
+            @"
 case ""Toxic Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     FarmToxicGem(quant);
                     break;
     "
-},
-{
-    "Gamma Toxic Gem",
-    @"
+        },
+        {
+            "Gamma Toxic Gem",
+            @"
 case ""Gamma Toxic Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9021,10 +9018,10 @@ case ""Gamma Toxic Gem"":
                     break;
 
     "
-},
-{
-    "Elodie's Trinket",
-    @"
+        },
+        {
+            "Elodie's Trinket",
+            @"
 case ""Elodie's Trinket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9039,10 +9036,10 @@ case ""Elodie's Trinket"":
                     break;
 
     "
-},
-{
-    "Unseen Essence",
-    @"
+        },
+        {
+            "Unseen Essence",
+            @"
 case ""Unseen Essence"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9058,42 +9055,42 @@ case ""Unseen Essence"":
                     break;
 
     "
-},
-{
-    "Shadowscythe Trooper",
-    @"
+        },
+        {
+            "Shadowscythe Trooper",
+            @"
 case ""Shadowscythe Trooper"":
                     Core.HuntMonsterMapID(""thorngarde"", 2, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Trooper's Helm",
-    @"
+        },
+        {
+            "ShadowScythe Trooper's Helm",
+            @"
 case ""ShadowScythe Trooper's Helm"":
                     Core.HuntMonsterMapID(""thorngarde"", 2, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Trooper's Cape",
-    @"
+        },
+        {
+            "ShadowScythe Trooper's Cape",
+            @"
 case ""ShadowScythe Trooper's Cape"":
                     Core.HuntMonsterMapID(""thorngarde"", 2, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Blade",
-    @"
+        },
+        {
+            "ShadowScythe Blade",
+            @"
 case ""ShadowScythe Blade"":
                     Core.HuntMonsterMapID(""thorngarde"", 2, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Salvaged Deadtech Node",
-    @"
+        },
+        {
+            "Salvaged Deadtech Node",
+            @"
 case ""Salvaged Deadtech Node"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(7601);
@@ -9112,154 +9109,154 @@ case ""Salvaged Deadtech Node"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "ShadowScythe Rogue",
-    @"
+        },
+        {
+            "ShadowScythe Rogue",
+            @"
 case ""ShadowScythe Rogue"":
                     Core.HuntMonsterMapID(""thorngarde"", 3, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Rogue's Helm",
-    @"
+        },
+        {
+            "ShadowScythe Rogue's Helm",
+            @"
 case ""ShadowScythe Rogue's Helm"":
                     Core.HuntMonsterMapID(""thorngarde"", 3, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Rogue's Cape",
-    @"
+        },
+        {
+            "ShadowScythe Rogue's Cape",
+            @"
 case ""ShadowScythe Rogue's Cape"":
                     Core.HuntMonsterMapID(""thorngarde"", 3, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Reversed Daggers",
-    @"
+        },
+        {
+            "ShadowScythe Reversed Daggers",
+            @"
 case ""ShadowScythe Reversed Daggers"":
                     Core.HuntMonsterMapID(""thorngarde"", 3, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Daggers",
-    @"
+        },
+        {
+            "ShadowScythe Daggers",
+            @"
 case ""ShadowScythe Daggers"":
                     Core.HuntMonsterMapID(""thorngarde"", 3, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Mage",
-    @"
+        },
+        {
+            "ShadowScythe Mage",
+            @"
 case ""ShadowScythe Mage"":
                     Core.HuntMonsterMapID(""thorngarde"", 5, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Mage's Hat",
-    @"
+        },
+        {
+            "ShadowScythe Mage's Hat",
+            @"
 case ""ShadowScythe Mage's Hat"":
                     Core.HuntMonsterMapID(""thorngarde"", 5, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Mage's Hat + Locks",
-    @"
+        },
+        {
+            "ShadowScythe Mage's Hat + Locks",
+            @"
 case ""ShadowScythe Mage's Hat + Locks"":
                     Core.HuntMonsterMapID(""thorngarde"", 5, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Mage's Rune",
-    @"
+        },
+        {
+            "ShadowScythe Mage's Rune",
+            @"
 case ""ShadowScythe Mage's Rune"":
                     Core.HuntMonsterMapID(""thorngarde"", 5, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowScythe Staff",
-    @"
+        },
+        {
+            "ShadowScythe Staff",
+            @"
 case ""ShadowScythe Staff"":
                     Core.HuntMonsterMapID(""thorngarde"", 5, req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Zealous Paladin",
-    @"
+        },
+        {
+            "Zealous Paladin",
+            @"
 case ""Zealous Paladin"":
                     Core.HuntMonster(""techdungeon"", ""Kalron the Cryptborg"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Zealous Veil",
-    @"
+        },
+        {
+            "Zealous Veil",
+            @"
 case ""Zealous Veil"":
                     Core.HuntMonster(""techdungeon"", ""Kalron the Cryptborg"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Zealous Cherubs",
-    @"
+        },
+        {
+            "Zealous Cherubs",
+            @"
 case ""Zealous Cherubs"":
                     Core.HuntMonster(""techdungeon"", ""Kalron the Cryptborg"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Cryptborg",
-    @"
+        },
+        {
+            "Cryptborg",
+            @"
 case ""Cryptborg"":
                     Core.HuntMonster(""techdungeon"", ""Kalron the Cryptborg"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Cryptborg Wrap",
-    @"
+        },
+        {
+            "Cryptborg Wrap",
+            @"
 case ""Cryptborg Wrap"":
                     Core.HuntMonster(""techdungeon"", ""Kalron the Cryptborg"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Cryptborg Torpedo",
-    @"
+        },
+        {
+            "Cryptborg Torpedo",
+            @"
 case ""Cryptborg Torpedo"":
                     Core.HuntMonster(""techdungeon"", ""Kalron the Cryptborg"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Cryptborg Blade",
-    @"
+        },
+        {
+            "Cryptborg Blade",
+            @"
 case ""Cryptborg Blade"":
                     Core.HuntMonster(""techdungeon"", ""Kalron the Cryptborg"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Cryptborg Helm",
-    @"
+        },
+        {
+            "Cryptborg Helm",
+            @"
 case ""Cryptborg Helm"":
                     Core.HuntMonster(""techdungeon"", ""Kalron the Cryptborg"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Zealous Badge",
-    @"
+        },
+        {
+            "Zealous Badge",
+            @"
 case ""Zealous Badge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(7616);
@@ -9274,62 +9271,62 @@ case ""Zealous Badge"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Zealous Rays Of Light",
-    @"
+        },
+        {
+            "Zealous Rays Of Light",
+            @"
 case ""Zealous Rays Of Light"":
                     Core.HuntMonster(""stonewood"", ""BioKnight"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Deadtech Booster",
-    @"
+        },
+        {
+            "Deadtech Booster",
+            @"
 case ""Deadtech Booster"":
                     Core.HuntMonster(""stonewood"", ""Doomwood Treeant"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "DoomMaster",
-    @"
+        },
+        {
+            "DoomMaster",
+            @"
 case ""DoomMaster"":
                     Bot.Quests.UpdateQuest(7635);
                     Core.HuntMonster(""stonewood"", ""Sir Kut"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "DoomMaster Horns",
-    @"
+        },
+        {
+            "DoomMaster Horns",
+            @"
 case ""DoomMaster Horns"":
                     Bot.Quests.UpdateQuest(7635);
                     Core.HuntMonster(""stonewood"", ""Sir Kut"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "DoomMaster's Wrap",
-    @"
+        },
+        {
+            "DoomMaster's Wrap",
+            @"
 case ""DoomMaster's Wrap"":
                     Bot.Quests.UpdateQuest(7635);
                     Core.HuntMonster(""stonewood"", ""Sir Kut"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "DoomMaster's Whip",
-    @"
+        },
+        {
+            "DoomMaster's Whip",
+            @"
 case ""DoomMaster's Whip"":
                     Bot.Quests.UpdateQuest(7635);
                     Core.HuntMonster(""stonewood"", ""Sir Kut"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "General Gall Medal",
-    @"
+        },
+        {
+            "General Gall Medal",
+            @"
 case ""General Gall Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -9343,10 +9340,10 @@ case ""General Gall Medal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "General Velm Medal",
-    @"
+        },
+        {
+            "General Velm Medal",
+            @"
 case ""General Velm Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -9360,10 +9357,10 @@ case ""General Velm Medal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "General Hun'Gar Medal",
-    @"
+        },
+        {
+            "General Hun'Gar Medal",
+            @"
 case ""General Hun'Gar Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -9377,10 +9374,10 @@ case ""General Hun'Gar Medal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "General Chud Medal",
-    @"
+        },
+        {
+            "General Chud Medal",
+            @"
 case ""General Chud Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -9395,10 +9392,10 @@ case ""General Chud Medal"":
                     break;
 
     "
-},
-{
-    "Phoenix Gate Token",
-    @"
+        },
+        {
+            "Phoenix Gate Token",
+            @"
 case ""Phoenix Gate Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9431,10 +9428,10 @@ case ""Phoenix Gate Token"":
                     break;
 
     "
-},
-{
-    "Dragon Shinobi Token",
-    @"
+        },
+        {
+            "Dragon Shinobi Token",
+            @"
 case ""Dragon Shinobi Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9449,10 +9446,10 @@ case ""Dragon Shinobi Token"":
                     break;
 
     "
-},
-{
-    "Bounty Hunter Dubloon",
-    @"
+        },
+        {
+            "Bounty Hunter Dubloon",
+            @"
 case ""Bounty Hunter Dubloon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -9464,10 +9461,10 @@ case ""Bounty Hunter Dubloon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Deep Trobble Plunger",
-    @"
+        },
+        {
+            "Deep Trobble Plunger",
+            @"
 case ""Deep Trobble Plunger"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9483,10 +9480,10 @@ case ""Deep Trobble Plunger"":
                     }
                     break;
     "
-},
-{
-    "Axe of Golmoth",
-    @"
+        },
+        {
+            "Axe of Golmoth",
+            @"
 case ""Axe of Golmoth"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9494,10 +9491,10 @@ case ""Axe of Golmoth"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Scales of Golmoth",
-    @"
+        },
+        {
+            "Scales of Golmoth",
+            @"
 case ""Scales of Golmoth"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9505,10 +9502,10 @@ case ""Scales of Golmoth"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Token of Air",
-    @"
+        },
+        {
+            "Token of Air",
+            @"
 case ""Token of Air"":
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9516,10 +9513,10 @@ case ""Token of Air"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Token of Water",
-    @"
+        },
+        {
+            "Token of Water",
+            @"
 case ""Token of Water"":
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9527,10 +9524,10 @@ case ""Token of Water"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Token of Earth",
-    @"
+        },
+        {
+            "Token of Earth",
+            @"
 case ""Token of Earth"":
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9538,10 +9535,10 @@ case ""Token of Earth"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Token of Fire",
-    @"
+        },
+        {
+            "Token of Fire",
+            @"
 case ""Token of Fire"":
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9549,10 +9546,10 @@ case ""Token of Fire"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Zahad's Ancient Gem",
-    @"
+        },
+        {
+            "Zahad's Ancient Gem",
+            @"
 case ""Zahad's Ancient Gem"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9560,10 +9557,10 @@ case ""Zahad's Ancient Gem"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Scythe of Gazeroth",
-    @"
+        },
+        {
+            "Scythe of Gazeroth",
+            @"
 case ""Scythe of Gazeroth"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9571,10 +9568,10 @@ case ""Scythe of Gazeroth"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Souls of Gazeroth",
-    @"
+        },
+        {
+            "Souls of Gazeroth",
+            @"
 case ""Souls of Gazeroth"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9582,10 +9579,10 @@ case ""Souls of Gazeroth"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Claws of Zelkur",
-    @"
+        },
+        {
+            "Claws of Zelkur",
+            @"
 case ""Claws of Zelkur"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9593,10 +9590,10 @@ case ""Claws of Zelkur"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Bow of Zelkur",
-    @"
+        },
+        {
+            "Bow of Zelkur",
+            @"
 case ""Bow of Zelkur"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9604,10 +9601,10 @@ case ""Bow of Zelkur"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Feathers of Zal",
-    @"
+        },
+        {
+            "Feathers of Zal",
+            @"
 case ""Feathers of Zal"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9616,10 +9613,10 @@ case ""Feathers of Zal"":
                     break;
 
     "
-},
-{
-    "Scimitar of Zal",
-    @"
+        },
+        {
+            "Scimitar of Zal",
+            @"
 case ""Scimitar of Zal"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -9628,10 +9625,10 @@ case ""Scimitar of Zal"":
                     break;
 
     "
-},
-{
-    "Druid Fabric",
-    @"
+        },
+        {
+            "Druid Fabric",
+            @"
 case ""Druid Fabric"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9646,10 +9643,10 @@ case ""Druid Fabric"":
                     break;
 
     "
-},
-{
-    "Dwarven Metal",
-    @"
+        },
+        {
+            "Dwarven Metal",
+            @"
 case ""Dwarven Metal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9663,10 +9660,10 @@ case ""Dwarven Metal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dwarven Alloy",
-    @"
+        },
+        {
+            "Dwarven Alloy",
+            @"
 case ""Dwarven Alloy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9680,10 +9677,10 @@ case ""Dwarven Alloy"":
                     break;
 
     "
-},
-{
-    "Icy Pelt",
-    @"
+        },
+        {
+            "Icy Pelt",
+            @"
 case ""Icy Pelt"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9698,10 +9695,10 @@ case ""Icy Pelt"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "WinterWild Axe",
-    @"
+        },
+        {
+            "WinterWild Axe",
+            @"
 case ""WinterWild Axe"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -9712,10 +9709,10 @@ case ""WinterWild Axe"":
                     }
                     break;
     "
-},
-{
-    "Old Moglin Teddy Mace",
-    @"
+        },
+        {
+            "Old Moglin Teddy Mace",
+            @"
 case ""Old Moglin Teddy Mace"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -9726,19 +9723,19 @@ case ""Old Moglin Teddy Mace"":
                     }
                     break;
     "
-},
-{
-    "Dwobo Coin",
-    @"
+        },
+        {
+            "Dwobo Coin",
+            @"
 case ""Dwobo Coin"":
                     Nation.DwoboCoin(quant);
                     break;
 
     "
-},
-{
-    "Ichorus Scythe Piece",
-    @"
+        },
+        {
+            "Ichorus Scythe Piece",
+            @"
 case ""Ichorus Scythe Piece"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9752,10 +9749,10 @@ case ""Ichorus Scythe Piece"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ichorus Egg",
-    @"
+        },
+        {
+            "Ichorus Egg",
+            @"
 case ""Ichorus Egg"":
                     if (!Bot.Player.IsMember)
                         break;
@@ -9764,10 +9761,10 @@ case ""Ichorus Egg"":
                     Core.HuntMonster(""ectocave"", ""Ektorax"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Pure Ichor Gem",
-    @"
+        },
+        {
+            "Pure Ichor Gem",
+            @"
 case ""Pure Ichor Gem"":
                     if (!Bot.Player.IsMember)
                         break;
@@ -9783,79 +9780,79 @@ case ""Pure Ichor Gem"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Slime",
-    @"
+        },
+        {
+            "Slime",
+            @"
 case ""Slime"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""ectocave"", ""Swamp Lurker"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Dragon Rogue Klinge",
-    @"
+        },
+        {
+            "Dragon Rogue Klinge",
+            @"
 case ""Dragon Rogue Klinge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ectocave"", ""Ektorax"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dragon Rogue",
-    @"
+        },
+        {
+            "Dragon Rogue",
+            @"
 case ""Dragon Rogue"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ectocave"", ""Ektorax"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dragon Rogue Hood",
-    @"
+        },
+        {
+            "Dragon Rogue Hood",
+            @"
 case ""Dragon Rogue Hood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ectocave"", ""Ektorax"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dragon Rogue Twin Klinge Cape",
-    @"
+        },
+        {
+            "Dragon Rogue Twin Klinge Cape",
+            @"
 case ""Dragon Rogue Twin Klinge Cape"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ectocave"", ""Ektorax"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Piece of Fabric",
-    @"
+        },
+        {
+            "Piece of Fabric",
+            @"
 case ""Piece of Fabric"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""ectocave"", ""Ichor Draconian"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Bone",
-    @"
+        },
+        {
+            "Bone",
+            @"
 case ""Bone"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""ectocave"", ""Ichor Draconian"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Algid Token",
-    @"
+        },
+        {
+            "Algid Token",
+            @"
 case ""Algid Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9867,10 +9864,10 @@ case ""Algid Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Frost Token",
-    @"
+        },
+        {
+            "Frost Token",
+            @"
 case ""Frost Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9882,10 +9879,10 @@ case ""Frost Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Icy Token",
-    @"
+        },
+        {
+            "Icy Token",
+            @"
 case ""Icy Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9897,10 +9894,10 @@ case ""Icy Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Rime Token",
-    @"
+        },
+        {
+            "Rime Token",
+            @"
 case ""Rime Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9912,10 +9909,10 @@ case ""Rime Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Gelid Token",
-    @"
+        },
+        {
+            "Gelid Token",
+            @"
 case ""Gelid Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9927,10 +9924,10 @@ case ""Gelid Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Glacial Token",
-    @"
+        },
+        {
+            "Glacial Token",
+            @"
 case ""Glacial Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9943,10 +9940,10 @@ case ""Glacial Token"":
                     break;
 
     "
-},
-{
-    "Flower of Renewal",
-    @"
+        },
+        {
+            "Flower of Renewal",
+            @"
 case ""Flower of Renewal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9963,10 +9960,10 @@ case ""Flower of Renewal"":
                     break;
 
     "
-},
-{
-    "Reality Shard",
-    @"
+        },
+        {
+            "Reality Shard",
+            @"
 case ""Reality Shard"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -9980,87 +9977,87 @@ case ""Reality Shard"":
                     break;
 
     "
-},
-{
-    "Accursed Arsenic of Doom",
-    @"
+        },
+        {
+            "Accursed Arsenic of Doom",
+            @"
 case ""Accursed Arsenic of Doom"":
                     SDKA.UpgradeMetal((HardCoreMetalsEnum)Enum.Parse(typeof(HardCoreMetalsEnum), req.Name.Split(' ')[1]));
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Baneful Beryllium of Doom",
-    @"
+        },
+        {
+            "Baneful Beryllium of Doom",
+            @"
 case ""Baneful Beryllium of Doom"":
                     SDKA.UpgradeMetal((HardCoreMetalsEnum)Enum.Parse(typeof(HardCoreMetalsEnum), req.Name.Split(' ')[1]));
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Calamitous Chromium of Doom",
-    @"
+        },
+        {
+            "Calamitous Chromium of Doom",
+            @"
 case ""Calamitous Chromium of Doom"":
                     SDKA.UpgradeMetal((HardCoreMetalsEnum)Enum.Parse(typeof(HardCoreMetalsEnum), req.Name.Split(' ')[1]));
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Pernicious Palladium of Doom",
-    @"
+        },
+        {
+            "Pernicious Palladium of Doom",
+            @"
 case ""Pernicious Palladium of Doom"":
                     SDKA.UpgradeMetal((HardCoreMetalsEnum)Enum.Parse(typeof(HardCoreMetalsEnum), req.Name.Split(' ')[1]));
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Reprehensible Rhodium of Doom",
-    @"
+        },
+        {
+            "Reprehensible Rhodium of Doom",
+            @"
 case ""Reprehensible Rhodium of Doom"":
                     SDKA.UpgradeMetal((HardCoreMetalsEnum)Enum.Parse(typeof(HardCoreMetalsEnum), req.Name.Split(' ')[1]));
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Diabolical Aura",
-    @"
+        },
+        {
+            "Diabolical Aura",
+            @"
 case ""Diabolical Aura"":
                     SDKA.PinpointBroadsword(quant);
                     break;
     "
-},
-{
-    "Corrupt Spirit Orb",
-    @"
+        },
+        {
+            "Corrupt Spirit Orb",
+            @"
 case ""Corrupt Spirit Orb"":
                     SDKA.DoomKnightWK(req.Name, quant);
                     break;
     "
-},
-{
-    "Ominous Aura",
-    @"
+        },
+        {
+            "Ominous Aura",
+            @"
 case ""Ominous Aura"":
                     SDKA.DoomKnightWK(req.Name, quant);
                     break;
     "
-},
-{
-    "Dark Spirit Orb",
-    @"
+        },
+        {
+            "Dark Spirit Orb",
+            @"
 case ""Dark Spirit Orb"":
                     SDKA.DSO(quant);
                     break;
     "
-},
-{
-    "Dark Energy",
-    @"
+        },
+        {
+            "Dark Energy",
+            @"
 case ""Dark Energy"":
                     Core.FarmingLogger(req.Name, quant);  // Log the farming request
 
@@ -10079,42 +10076,42 @@ case ""Dark Energy"":
                     Core.KillMonster(""dwarfhold"", ""r2"", ""Left"", ""Chaos Drow"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Undead Energy",
-    @"
+        },
+        {
+            "Undead Energy",
+            @"
 case ""Undead Energy"":
                     Farm.BattleUnderB(""Undead Energy"", quant);
                     break;
     "
-},
-{
-    "DoomKnight Weapon Kit",
-    @"
+        },
+        {
+            "DoomKnight Weapon Kit",
+            @"
 case ""DoomKnight Weapon Kit"":
                     SDKA.DoomKnightWK(quant: quant);
                     break;
     "
-},
-{
-    "DoomSoldier Weapon Kit",
-    @"
+        },
+        {
+            "DoomSoldier Weapon Kit",
+            @"
 case ""DoomSoldier Weapon Kit"":
                     SDKA.DoomSoldierWK(quant);
                     break;
     "
-},
-{
-    "DoomSquire Weapon Kit",
-    @"
+        },
+        {
+            "DoomSquire Weapon Kit",
+            @"
 case ""DoomSquire Weapon Kit"":
                     SDKA.DoomSquireWK(quant);
                     break;
     "
-},
-{
-    "Legion Daimyo Armor",
-    @"
+        },
+        {
+            "Legion Daimyo Armor",
+            @"
 case ""Legion Daimyo Armor"":
                     Core.AddDrop(req.Name);
                     Core.FarmingLogger(req.Name, quant);
@@ -10130,10 +10127,10 @@ case ""Legion Daimyo Armor"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dark Daimyo Armor",
-    @"
+        },
+        {
+            "Dark Daimyo Armor",
+            @"
 case ""Dark Daimyo Armor"":
                     Core.AddDrop(req.Name);
                     Core.FarmingLogger(req.Name, quant);
@@ -10149,80 +10146,80 @@ case ""Dark Daimyo Armor"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ezrajal Insignia",
-    @"
+        },
+        {
+            "Ezrajal Insignia",
+            @"
 case ""Ezrajal Insignia"":
                     Core.Logger($""{req.Name} needs to be farmed manually."");
                     break;
     "
-},
-{
-    "Warden Insignia",
-    @"
+        },
+        {
+            "Warden Insignia",
+            @"
 case ""Warden Insignia"":
                     Core.Logger($""{req.Name} needs to be farmed manually."");
                     break;
     "
-},
-{
-    "Engineer Insignia",
-    @"
+        },
+        {
+            "Engineer Insignia",
+            @"
 case ""Engineer Insignia"":
                     Core.Logger($""{req.Name} needs to be farmed manually."");
                     break;
     "
-},
-{
-    "Exalted Drone Pet",
-    @"
+        },
+        {
+            "Exalted Drone Pet",
+            @"
 case ""Exalted Drone Pet"":
                     Core.Logger($""{req.Name} needs to be farmed manually."");
                     break;
     "
-},
-{
-    "Exalted Artillery Shard",
-    @"
+        },
+        {
+            "Exalted Artillery Shard",
+            @"
 case ""Exalted Artillery Shard"":
                     Core.HuntMonster(""timeinn"", ""The Engineer"", req.Name, req.Quantity, req.Temp);
                     break;
     "
-},
-{
-    "Exalted Node",
-    @"
+        },
+        {
+            "Exalted Node",
+            @"
 case ""Exalted Node"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""timeinn"", ""r3"", ""Bottom"", ""*"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Exalted Relic Piece",
-    @"
+        },
+        {
+            "Exalted Relic Piece",
+            @"
 case ""Exalted Relic Piece"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""timeinn"", ""The Warden"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Exalted Forgemetal",
-    @"
+        },
+        {
+            "Exalted Forgemetal",
+            @"
 case ""Exalted Forgemetal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""timeinn"", ""Ezrajal"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Red Space Fabric",
-    @"
+        },
+        {
+            "Red Space Fabric",
+            @"
 case ""Red Space Fabric"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10233,10 +10230,10 @@ case ""Red Space Fabric"":
                     }
                     break;
     "
-},
-{
-    "Blue Space Fabric",
-    @"
+        },
+        {
+            "Blue Space Fabric",
+            @"
 case ""Blue Space Fabric"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10247,10 +10244,10 @@ case ""Blue Space Fabric"":
                     }
                     break;
     "
-},
-{
-    "Yellow Space Fabric",
-    @"
+        },
+        {
+            "Yellow Space Fabric",
+            @"
 case ""Yellow Space Fabric"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -10261,10 +10258,10 @@ case ""Yellow Space Fabric"":
                     }
                     break;
     "
-},
-{
-    "Scrap Metal",
-    @"
+        },
+        {
+            "Scrap Metal",
+            @"
 case ""Scrap Metal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10276,10 +10273,10 @@ case ""Scrap Metal"":
                     }
                     break;
     "
-},
-{
-    "Antimatter dye",
-    @"
+        },
+        {
+            "Antimatter dye",
+            @"
 case ""Antimatter dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10293,10 +10290,10 @@ case ""Antimatter dye"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Star Scrap Metal",
-    @"
+        },
+        {
+            "Star Scrap Metal",
+            @"
 case ""Star Scrap Metal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10310,10 +10307,10 @@ case ""Star Scrap Metal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Cyber Brain Core",
-    @"
+        },
+        {
+            "Cyber Brain Core",
+            @"
 case ""Cyber Brain Core"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10324,10 +10321,10 @@ case ""Cyber Brain Core"":
                     }
                     break;
     "
-},
-{
-    "Unstable Isotope",
-    @"
+        },
+        {
+            "Unstable Isotope",
+            @"
 case ""Unstable Isotope"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10339,10 +10336,10 @@ case ""Unstable Isotope"":
                     }
                     break;
     "
-},
-{
-    "Blinding Light of Dread Space",
-    @"
+        },
+        {
+            "Blinding Light of Dread Space",
+            @"
 case ""Blinding Light of Dread Space"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10354,10 +10351,10 @@ case ""Blinding Light of Dread Space"":
                     }
                     break;
     "
-},
-{
-    "Water Defender Token",
-    @"
+        },
+        {
+            "Water Defender Token",
+            @"
 case ""Water Defender Token"":
                     if (Core.IsMember)
                     {
@@ -10390,10 +10387,10 @@ case ""Water Defender Token"":
                     break;
 
     "
-},
-{
-    "Fire Defender Token",
-    @"
+        },
+        {
+            "Fire Defender Token",
+            @"
 case ""Fire Defender Token"":
                     if (Core.IsMember)
                     {
@@ -10426,10 +10423,10 @@ case ""Fire Defender Token"":
                     break;
 
     "
-},
-{
-    "Earth Defender Token",
-    @"
+        },
+        {
+            "Earth Defender Token",
+            @"
 case ""Earth Defender Token"":
                     if (Core.IsMember)
                     {
@@ -10462,10 +10459,10 @@ case ""Earth Defender Token"":
                     break;
 
     "
-},
-{
-    "Air Defender Token",
-    @"
+        },
+        {
+            "Air Defender Token",
+            @"
 case ""Air Defender Token"":
                     if (Core.IsMember)
                     {
@@ -10498,10 +10495,10 @@ case ""Air Defender Token"":
                     break;
 
     "
-},
-{
-    "Dark Earth Token",
-    @"
+        },
+        {
+            "Dark Earth Token",
+            @"
 case ""Dark Earth Token"":
                     if (Core.IsMember)
                     {
@@ -10534,10 +10531,10 @@ case ""Dark Earth Token"":
                     break;
 
     "
-},
-{
-    "Dark Water Token",
-    @"
+        },
+        {
+            "Dark Water Token",
+            @"
 case ""Dark Water Token"":
                     if (Core.IsMember)
                     {
@@ -10570,10 +10567,10 @@ case ""Dark Water Token"":
                     break;
 
     "
-},
-{
-    "Dark Fire Token",
-    @"
+        },
+        {
+            "Dark Fire Token",
+            @"
 case ""Dark Fire Token"":
                     if (Core.IsMember)
                     {
@@ -10606,10 +10603,10 @@ case ""Dark Fire Token"":
                     break;
 
     "
-},
-{
-    "Dark Air Token",
-    @"
+        },
+        {
+            "Dark Air Token",
+            @"
 case ""Dark Air Token"":
                     if (Core.IsMember)
                     {
@@ -10642,50 +10639,50 @@ case ""Dark Air Token"":
                     break;
 
     "
-},
-{
-    "Blighted Deer's Hide",
-    @"
+        },
+        {
+            "Blighted Deer's Hide",
+            @"
 case ""Blighted Deer's Hide"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.HuntMonster(""snowmore"", ""Blighted Deer"", req.Name, quant, false, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Blighted Lion's Fang",
-    @"
+        },
+        {
+            "Blighted Lion's Fang",
+            @"
 case ""Blighted Lion's Fang"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.HuntMonster(""snowmore"", ""Blighted Lion"", req.Name, quant, false, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Blighted Wolf's Blood",
-    @"
+        },
+        {
+            "Blighted Wolf's Blood",
+            @"
 case ""Blighted Wolf's Blood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.HuntMonster(""snowmore"", ""Blighted Wolf"", req.Name, quant, false, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Blighted Dragon's Bone",
-    @"
+        },
+        {
+            "Blighted Dragon's Bone",
+            @"
 case ""Blighted Dragon's Bone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.HuntMonster(""snowmore"", ""Blighted Dragon"", req.Name, quant, false, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Winter Throne",
-    @"
+        },
+        {
+            "Winter Throne",
+            @"
 case ""Winter Throne"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.HuntMonster(""snowmore"", ""Jon S'NOOOOOOO"", req.Name, quant, false, false); ;
@@ -10693,20 +10690,20 @@ case ""Winter Throne"":
                     break;
 
     "
-},
-{
-    "Salvaged Skye Armament",
-    @"
+        },
+        {
+            "Salvaged Skye Armament",
+            @"
 case ""Salvaged Skye Armament"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.KillMonster(""castleeblana"", ""r2"", ""Left"", ""Skye Warrior"", req.Name, quant, req.Temp, false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Liquid Gold Solution",
-    @"
+        },
+        {
+            "Liquid Gold Solution",
+            @"
 case ""Liquid Gold Solution"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10725,10 +10722,10 @@ case ""Liquid Gold Solution"":
                     break;
 
     "
-},
-{
-    "Burningjay Feather",
-    @"
+        },
+        {
+            "Burningjay Feather",
+            @"
 case ""Burningjay Feather"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10740,10 +10737,10 @@ case ""Burningjay Feather"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Coal",
-    @"
+        },
+        {
+            "Coal",
+            @"
 case ""Coal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10755,10 +10752,10 @@ case ""Coal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Fabric Scraps",
-    @"
+        },
+        {
+            "Fabric Scraps",
+            @"
 case ""Fabric Scraps"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10770,10 +10767,10 @@ case ""Fabric Scraps"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Iron II.0",
-    @"
+        },
+        {
+            "Iron II.0",
+            @"
 case ""Iron II.0"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10785,10 +10782,10 @@ case ""Iron II.0"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "A Kitten?",
-    @"
+        },
+        {
+            "A Kitten?",
+            @"
 case ""A Kitten?"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -10801,10 +10798,10 @@ case ""A Kitten?"":
                     break;
 
     "
-},
-{
-    "Dungeon Token",
-    @"
+        },
+        {
+            "Dungeon Token",
+            @"
 case ""Dungeon Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -10812,10 +10809,10 @@ case ""Dungeon Token"":
                     break;
 
     "
-},
-{
-    "Nation Medallion",
-    @"
+        },
+        {
+            "Nation Medallion",
+            @"
 case ""Nation Medallion"":
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(8495);
@@ -10826,40 +10823,40 @@ case ""Nation Medallion"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Fiendish Outlaw Revolver",
-    @"
+        },
+        {
+            "Fiendish Outlaw Revolver",
+            @"
 case ""Fiendish Outlaw Revolver"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""fiendpast"", ""Dage the Lich"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Fiendish Outlaw Bowie Knife",
-    @"
+        },
+        {
+            "Fiendish Outlaw Bowie Knife",
+            @"
 case ""Fiendish Outlaw Bowie Knife"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""fiendpast"", ""Dage the Lich"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Fiendish Outlaw Sheathed Shotgun",
-    @"
+        },
+        {
+            "Fiendish Outlaw Sheathed Shotgun",
+            @"
 case ""Fiendish Outlaw Sheathed Shotgun"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""fiendpast"", ""Dage the Lich"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Fire and Ice Token",
-    @"
+        },
+        {
+            "Fire and Ice Token",
+            @"
 case ""Fire and Ice Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10874,10 +10871,10 @@ case ""Fire and Ice Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ice Katana",
-    @"
+        },
+        {
+            "Ice Katana",
+            @"
 case ""Ice Katana"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(6319);
@@ -10886,10 +10883,10 @@ case ""Ice Katana"":
                     break;
 
     "
-},
-{
-    "Wind Stone",
-    @"
+        },
+        {
+            "Wind Stone",
+            @"
 case ""Wind Stone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -10903,10 +10900,10 @@ case ""Wind Stone"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Fire Stone",
-    @"
+        },
+        {
+            "Fire Stone",
+            @"
 case ""Fire Stone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(3314);
@@ -10919,10 +10916,10 @@ case ""Fire Stone"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Water Stone",
-    @"
+        },
+        {
+            "Water Stone",
+            @"
 case ""Water Stone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(3315);
@@ -10935,10 +10932,10 @@ case ""Water Stone"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Chaos Stone",
-    @"
+        },
+        {
+            "Chaos Stone",
+            @"
 case ""Chaos Stone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -10951,100 +10948,100 @@ case ""Chaos Stone"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Plain Dragon Tail",
-    @"
+        },
+        {
+            "Plain Dragon Tail",
+            @"
 case ""Plain Dragon Tail"":
                     Adv.BuyItem(""fableforest"", 814, req.Name);
                     break;
 
     "
-},
-{
-    "OakHeart Helm",
-    @"
+        },
+        {
+            "OakHeart Helm",
+            @"
 case ""OakHeart Helm"":
                     Adv.BuyItem(""fableforest"", 814, req.Name);
                     break;
 
     "
-},
-{
-    "OakHeart ArmBlades",
-    @"
+        },
+        {
+            "OakHeart ArmBlades",
+            @"
 case ""OakHeart ArmBlades"":
                     Adv.BuyItem(""fableforest"", 814, req.Name);
                     break;
 
     "
-},
-{
-    "Not Quite Dread Mask",
-    @"
+        },
+        {
+            "Not Quite Dread Mask",
+            @"
 case ""Not Quite Dread Mask"":
                     Adv.BuyItem(""fableforest"", 814, req.Name);
                     break;
 
     "
-},
-{
-    "Not Quite Dread Shape",
-    @"
+        },
+        {
+            "Not Quite Dread Shape",
+            @"
 case ""Not Quite Dread Shape"":
                     Adv.BuyItem(""fableforest"", 814, req.Name);
                     break;
 
     "
-},
-{
-    "Hydra Cape",
-    @"
+        },
+        {
+            "Hydra Cape",
+            @"
 case ""Hydra Cape"":
                     Adv.BuyItem(""fableforest"", 814, req.Name);
                     break;
 
     "
-},
-{
-    "Dreadspider Cape",
-    @"
+        },
+        {
+            "Dreadspider Cape",
+            @"
 case ""Dreadspider Cape"":
                     Adv.BuyItem(""fableforest"", 814, req.Name);
                     break;
 
     "
-},
-{
-    "Dreadspider Abdomen",
-    @"
+        },
+        {
+            "Dreadspider Abdomen",
+            @"
 case ""Dreadspider Abdomen"":
                     Adv.BuyItem(""fableforest"", 814, req.Name);
                     break;
 
     "
-},
-{
-    "Red Dragon Morph",
-    @"
+        },
+        {
+            "Red Dragon Morph",
+            @"
 case ""Red Dragon Morph"":
                     Adv.BuyItem(""fableforest"", 814, req.Name);
                     break;
 
     "
-},
-{
-    "Faerie Botanis Sword",
-    @"
+        },
+        {
+            "Faerie Botanis Sword",
+            @"
 case ""Faerie Botanis Sword"":
                     Adv.BuyItem(""fableforest"", 814, req.Name);
                     break;
 
     "
-},
-{
-    "Jade Silk",
-    @"
+        },
+        {
+            "Jade Silk",
+            @"
 case ""Jade Silk"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11062,10 +11059,10 @@ case ""Jade Silk"":
                     }
                     break;
     "
-},
-{
-    "Crimson Silk",
-    @"
+        },
+        {
+            "Crimson Silk",
+            @"
 case ""Crimson Silk"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11083,10 +11080,10 @@ case ""Crimson Silk"":
                     }
                     break;
     "
-},
-{
-    "Midnight Silk",
-    @"
+        },
+        {
+            "Midnight Silk",
+            @"
 case ""Midnight Silk"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11104,10 +11101,10 @@ case ""Midnight Silk"":
                     }
                     break;
     "
-},
-{
-    "Golden Egg",
-    @"
+        },
+        {
+            "Golden Egg",
+            @"
 case ""Golden Egg"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11119,10 +11116,10 @@ case ""Golden Egg"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Chickenwing ArmBlade",
-    @"
+        },
+        {
+            "Chickenwing ArmBlade",
+            @"
 case ""Chickenwing ArmBlade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11134,10 +11131,10 @@ case ""Chickenwing ArmBlade"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Golden Feather",
-    @"
+        },
+        {
+            "Golden Feather",
+            @"
 case ""Golden Feather"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11149,10 +11146,10 @@ case ""Golden Feather"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Chicken Claw",
-    @"
+        },
+        {
+            "Chicken Claw",
+            @"
 case ""Chicken Claw"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11164,10 +11161,10 @@ case ""Chicken Claw"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Elemental Embers",
-    @"
+        },
+        {
+            "Elemental Embers",
+            @"
 case ""Elemental Embers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11181,10 +11178,10 @@ case ""Elemental Embers"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Burnt Cinders",
-    @"
+        },
+        {
+            "Burnt Cinders",
+            @"
 case ""Burnt Cinders"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -11197,10 +11194,10 @@ case ""Burnt Cinders"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Seared Ashes",
-    @"
+        },
+        {
+            "Seared Ashes",
+            @"
 case ""Seared Ashes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -11211,10 +11208,10 @@ case ""Seared Ashes"":
                     }
                     break;
     "
-},
-{
-    "ShadowFlame Flamberge",
-    @"
+        },
+        {
+            "ShadowFlame Flamberge",
+            @"
 case ""ShadowFlame Flamberge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11225,10 +11222,10 @@ case ""ShadowFlame Flamberge"":
                     }
                     break;
     "
-},
-{
-    "Refulgent Flamberge",
-    @"
+        },
+        {
+            "Refulgent Flamberge",
+            @"
 case ""Refulgent Flamberge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11239,10 +11236,10 @@ case ""Refulgent Flamberge"":
                     }
                     break;
     "
-},
-{
-    "ShadowFlame Great Harp",
-    @"
+        },
+        {
+            "ShadowFlame Great Harp",
+            @"
 case ""ShadowFlame Great Harp"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11253,10 +11250,10 @@ case ""ShadowFlame Great Harp"":
                     }
                     break;
     "
-},
-{
-    "Vulcan Great Harp",
-    @"
+        },
+        {
+            "Vulcan Great Harp",
+            @"
 case ""Vulcan Great Harp"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11267,64 +11264,64 @@ case ""Vulcan Great Harp"":
                     }
                     break;
     "
-},
-{
-    "Flame Guardian",
-    @"
+        },
+        {
+            "Flame Guardian",
+            @"
 case ""Flame Guardian"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""firewar"", 1586, req.Name);
                     break;
     "
-},
-{
-    "Flame Guardian Helm",
-    @"
+        },
+        {
+            "Flame Guardian Helm",
+            @"
 case ""Flame Guardian Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""firewar"", 1586, req.Name);
                     break;
     "
-},
-{
-    "Flame Guardian's Wrap",
-    @"
+        },
+        {
+            "Flame Guardian's Wrap",
+            @"
 case ""Flame Guardian's Wrap"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""firewar"", 1586, req.Name);
                     break;
     "
-},
-{
-    "Flame Guardian's Blade",
-    @"
+        },
+        {
+            "Flame Guardian's Blade",
+            @"
 case ""Flame Guardian's Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""firewar"", 1586, req.Name);
                     break;
     "
-},
-{
-    "Flame Guardian's Lance",
-    @"
+        },
+        {
+            "Flame Guardian's Lance",
+            @"
 case ""Flame Guardian's Lance"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""firewar"", 1586, req.Name);
                     break;
     "
-},
-{
-    "Flame Guardian's Blade + Shield",
-    @"
+        },
+        {
+            "Flame Guardian's Blade + Shield",
+            @"
 case ""Flame Guardian's Blade + Shield"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""firewar"", 1586, req.Name);
                     break;
     "
-},
-{
-    "Dragon Flame",
-    @"
+        },
+        {
+            "Dragon Flame",
+            @"
 case ""Dragon Flame"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(6300);
@@ -11337,10 +11334,10 @@ case ""Dragon Flame"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dragon Eye",
-    @"
+        },
+        {
+            "Dragon Eye",
+            @"
 case ""Dragon Eye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -11348,10 +11345,10 @@ case ""Dragon Eye"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Flame Guardian's Accoutrements",
-    @"
+        },
+        {
+            "Flame Guardian's Accoutrements",
+            @"
 case ""Flame Guardian's Accoutrements"":
                     Core.FarmingLogger(req.Name, quant);
                     if (Core.IsMember)
@@ -11362,10 +11359,10 @@ case ""Flame Guardian's Accoutrements"":
                     break;
 
     "
-},
-{
-    "Stories of the Forest",
-    @"
+        },
+        {
+            "Stories of the Forest",
+            @"
 case ""Stories of the Forest"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(4645);
@@ -11378,10 +11375,10 @@ case ""Stories of the Forest"":
                     break;
 
     "
-},
-{
-    "Faded Pigment",
-    @"
+        },
+        {
+            "Faded Pigment",
+            @"
 case ""Faded Pigment"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(""Roses"", ""Strawberries"", ""Rubies"");
@@ -11398,10 +11395,10 @@ case ""Faded Pigment"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Grapes",
-    @"
+        },
+        {
+            "Grapes",
+            @"
 case ""Grapes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11412,10 +11409,10 @@ case ""Grapes"":
                     }
                     break;
     "
-},
-{
-    "Diamonds",
-    @"
+        },
+        {
+            "Diamonds",
+            @"
 case ""Diamonds"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11426,10 +11423,10 @@ case ""Diamonds"":
                     }
                     break;
     "
-},
-{
-    "Frozen SpiderSilk",
-    @"
+        },
+        {
+            "Frozen SpiderSilk",
+            @"
 case ""Frozen SpiderSilk"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -11440,20 +11437,20 @@ case ""Frozen SpiderSilk"":
                     }
                     break;
     "
-},
-{
-    "Ice Vapor",
-    @"
+        },
+        {
+            "Ice Vapor",
+            @"
 case ""Ice Vapor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.KillMonster(""lair"", ""Enter"", ""Spawn"", ""*"", req.Name, quant, req.Temp, false);
                     break;
 
     "
-},
-{
-    "Cysero's Cookie",
-    @"
+        },
+        {
+            "Cysero's Cookie",
+            @"
 case ""Cysero's Cookie"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11462,10 +11459,10 @@ case ""Cysero's Cookie"":
                     break;
 
     "
-},
-{
-    "Grimskull's Favor",
-    @"
+        },
+        {
+            "Grimskull's Favor",
+            @"
 case ""Grimskull's Favor"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11485,10 +11482,10 @@ case ""Grimskull's Favor"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Tengu Feather",
-    @"
+        },
+        {
+            "Tengu Feather",
+            @"
 case ""Tengu Feather"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9600);
@@ -11504,10 +11501,10 @@ case ""Tengu Feather"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Mikoto's Puppet String",
-    @"
+        },
+        {
+            "Mikoto's Puppet String",
+            @"
 case ""Mikoto's Puppet String"":
                     DOY.YokaiRealm();
                     Core.FarmingLogger(req.Name, quant);
@@ -11521,20 +11518,20 @@ case ""Mikoto's Puppet String"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Yokai Realm Moss",
-    @"
+        },
+        {
+            "Yokai Realm Moss",
+            @"
 case ""Yokai Realm Moss"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokairealm"", ""Snake Shikigami"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Village's Grace",
-    @"
+        },
+        {
+            "Village's Grace",
+            @"
 case ""Village's Grace"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11548,10 +11545,10 @@ case ""Village's Grace"":
                     break;
 
     "
-},
-{
-    "Sword and Scroll Badge",
-    @"
+        },
+        {
+            "Sword and Scroll Badge",
+            @"
 case ""Sword and Scroll Badge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11569,10 +11566,10 @@ case ""Sword and Scroll Badge"":
                     break;
 
     "
-},
-{
-    "Harley's Reinforced Steel",
-    @"
+        },
+        {
+            "Harley's Reinforced Steel",
+            @"
 case ""Harley's Reinforced Steel"":
 
 
@@ -11603,29 +11600,29 @@ case ""Harley's Reinforced Steel"":
                     break;
 
     "
-},
-{
-    "Hydra Scale Piece",
-    @"
+        },
+        {
+            "Hydra Scale Piece",
+            @"
 case ""Hydra Scale Piece"":
                     Core.HuntMonster(""hydrachallenge"", ""Hydra Head 25"", req.Name, quant, isTemp: false, true);
 
                     break;
     "
-},
-{
-    "Enchanted Pearl",
-    @"
+        },
+        {
+            "Enchanted Pearl",
+            @"
 case ""Enchanted Pearl"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""hydrachallenge"", ""Hydra Head 90"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Black Flame of Maleno",
-    @"
+        },
+        {
+            "Black Flame of Maleno",
+            @"
 case ""Black Flame of Maleno"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11646,10 +11643,10 @@ case ""Black Flame of Maleno"":
                     }
                     break;
     "
-},
-{
-    "Shadowbrand's Edge",
-    @"
+        },
+        {
+            "Shadowbrand's Edge",
+            @"
 case ""Shadowbrand's Edge"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11662,10 +11659,10 @@ case ""Shadowbrand's Edge"":
                     Core.HuntMonster(""mountmaleno"", ""Idalion"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Shadowbrand's Edges",
-    @"
+        },
+        {
+            "Shadowbrand's Edges",
+            @"
 case ""Shadowbrand's Edges"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11678,10 +11675,10 @@ case ""Shadowbrand's Edges"":
                     Core.HuntMonster(""mountmaleno"", ""Idalion"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Blackfire Halberd",
-    @"
+        },
+        {
+            "Blackfire Halberd",
+            @"
 case ""Blackfire Halberd"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11694,10 +11691,10 @@ case ""Blackfire Halberd"":
                     Core.HuntMonster(""mountmaleno"", ""Idalion"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Nightcleaver",
-    @"
+        },
+        {
+            "Nightcleaver",
+            @"
 case ""Nightcleaver"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11710,10 +11707,10 @@ case ""Nightcleaver"":
                     Core.HuntMonster(""mountmaleno"", ""Idalion"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Nightcleavers",
-    @"
+        },
+        {
+            "Nightcleavers",
+            @"
 case ""Nightcleavers"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11726,10 +11723,10 @@ case ""Nightcleavers"":
                     Core.HuntMonster(""mountmaleno"", ""Idalion"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Maleno's Fang",
-    @"
+        },
+        {
+            "Maleno's Fang",
+            @"
 case ""Maleno's Fang"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11742,10 +11739,10 @@ case ""Maleno's Fang"":
                     Core.HuntMonster(""mountmaleno"", ""Idalion"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Maleno's Fangs",
-    @"
+        },
+        {
+            "Maleno's Fangs",
+            @"
 case ""Maleno's Fangs"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11758,10 +11755,10 @@ case ""Maleno's Fangs"":
                     Core.HuntMonster(""mountmaleno"", ""Idalion"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Maleno Obsidian",
-    @"
+        },
+        {
+            "Maleno Obsidian",
+            @"
 case ""Maleno Obsidian"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -11775,10 +11772,10 @@ case ""Maleno Obsidian"":
                     Core.HuntMonster(""thelimacity"", ""Maleno Elemental"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Eternal Scale",
-    @"
+        },
+        {
+            "Eternal Scale",
+            @"
 case ""Eternal Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Bot.Quests.UpdateQuest(2804);
@@ -11795,10 +11792,10 @@ case ""Eternal Scale"":
                     break;
 
     "
-},
-{
-    "Hero's Hilt Fragment",
-    @"
+        },
+        {
+            "Hero's Hilt Fragment",
+            @"
 case ""Hero's Hilt Fragment"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11811,10 +11808,10 @@ case ""Hero's Hilt Fragment"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hero's Blade Fragment",
-    @"
+        },
+        {
+            "Hero's Blade Fragment",
+            @"
 case ""Hero's Blade Fragment"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -11827,36 +11824,36 @@ case ""Hero's Blade Fragment"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Grime Token",
-    @"
+        },
+        {
+            "Grime Token",
+            @"
 case ""Grime Token"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""doomvault"", ""Grim Shelleton"", req.Name, quant);
                     break;
     "
-},
-{
-    "Binky's Uni-horn",
-    @"
+        },
+        {
+            "Binky's Uni-horn",
+            @"
 case ""Binky's Uni-horn"":
                     Core.EquipClass(ClassType.Solo);
                     Core.KillMonster(""doomvault"", ""r5"", ""Left"", ""Binky"", req.Name, quant, req.Temp, publicRoom: true);
                     break;
     "
-},
-{
-    "Grimskull's Face",
-    @"
+        },
+        {
+            "Grimskull's Face",
+            @"
 case ""Grimskull's Face"":
                     Core.HuntMonsterMapID(""doomvaultb"", 48, req.Name, isTemp: req.Temp);
                     break;
     "
-},
-{
-    "GrimBlade",
-    @"
+        },
+        {
+            "GrimBlade",
+            @"
 case ""GrimBlade"":
                     if (!Core.isCompletedBefore(3004))
                         DVB.StoryLine();
@@ -11871,28 +11868,28 @@ case ""GrimBlade"":
                     break;
 
     "
-},
-{
-    "Infernal Down",
-    @"
+        },
+        {
+            "Infernal Down",
+            @"
 case ""Infernal Down"":
                     InfernalDown(quant);
                     break;
     "
-},
-{
-    "Arthelyn's Oculus",
-    @"
+        },
+        {
+            "Arthelyn's Oculus",
+            @"
 case ""Arthelyn's Oculus"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""infernaldianoia"", ""Fallen Arthelyn"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Life Spirit",
-    @"
+        },
+        {
+            "Life Spirit",
+            @"
 case ""Life Spirit"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -11900,10 +11897,10 @@ case ""Life Spirit"":
                     break;
 
     "
-},
-{
-    "Icy Token I",
-    @"
+        },
+        {
+            "Icy Token I",
+            @"
 case ""Icy Token I"":
 
                     Core.FarmingLogger(req.Name, quant);
@@ -11920,10 +11917,10 @@ case ""Icy Token I"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Icy Token II",
-    @"
+        },
+        {
+            "Icy Token II",
+            @"
 case ""Icy Token II"":
 
                     Core.FarmingLogger(req.Name, quant);
@@ -11940,10 +11937,10 @@ case ""Icy Token II"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Icy Token III",
-    @"
+        },
+        {
+            "Icy Token III",
+            @"
 case ""Icy Token III"":
 
                     Core.FarmingLogger(req.Name, quant);
@@ -11960,10 +11957,10 @@ case ""Icy Token III"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Icy Token IV",
-    @"
+        },
+        {
+            "Icy Token IV",
+            @"
 case ""Icy Token IV"":
 
                     Core.FarmingLogger(req.Name, quant);
@@ -11980,86 +11977,86 @@ case ""Icy Token IV"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Warrior of Kyanos",
-    @"
+        },
+        {
+            "Warrior of Kyanos",
+            @"
 case ""Warrior of Kyanos"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""icedungeon"", ""Shade of Kyanos"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Glacial Envoy's Helm",
-    @"
+        },
+        {
+            "Glacial Envoy's Helm",
+            @"
 case ""Glacial Envoy's Helm"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""icedungeon"", ""Abel"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Glacial Envoy's Wrap",
-    @"
+        },
+        {
+            "Glacial Envoy's Wrap",
+            @"
 case ""Glacial Envoy's Wrap"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""icedungeon"", ""Abel"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Warrior of Kyanos Daggers",
-    @"
+        },
+        {
+            "Warrior of Kyanos Daggers",
+            @"
 case ""Warrior of Kyanos Daggers"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""icedungeon"", ""Abel"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Glacial Portal",
-    @"
+        },
+        {
+            "Glacial Portal",
+            @"
 case ""Glacial Portal"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""icedungeon"", ""Image of Glace"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Floating Glacial Shards Mace",
-    @"
+        },
+        {
+            "Floating Glacial Shards Mace",
+            @"
 case ""Floating Glacial Shards Mace"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""icedungeon"", ""Image of Glace"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Glacial Envoy's Buzzcut",
-    @"
+        },
+        {
+            "Glacial Envoy's Buzzcut",
+            @"
 case ""Glacial Envoy's Buzzcut"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""icedungeon"", ""Image of Glace"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Glacial Envoy's Locks",
-    @"
+        },
+        {
+            "Glacial Envoy's Locks",
+            @"
 case ""Glacial Envoy's Locks"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""icedungeon"", ""Image of Glace"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Jade Box Trinket",
-    @"
+        },
+        {
+            "Jade Box Trinket",
+            @"
 case ""Jade Box Trinket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -12072,10 +12069,10 @@ case ""Jade Box Trinket"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Jade Box Jewel",
-    @"
+        },
+        {
+            "Jade Box Jewel",
+            @"
 case ""Jade Box Jewel"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -12088,10 +12085,10 @@ case ""Jade Box Jewel"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Jade Box Heirloom",
-    @"
+        },
+        {
+            "Jade Box Heirloom",
+            @"
 case ""Jade Box Heirloom"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -12104,10 +12101,10 @@ case ""Jade Box Heirloom"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Fishin' Chips",
-    @"
+        },
+        {
+            "Fishin' Chips",
+            @"
 case ""Fishin' Chips"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12164,10 +12161,10 @@ case ""Fishin' Chips"":
                     break;
 
     "
-},
-{
-    "castWait",
-    @"
+        },
+        {
+            "castWait",
+            @"
 case ""castWait"":
                         if (data.wait is not null)
                         {
@@ -12179,10 +12176,10 @@ case ""castWait"":
 
                     //idt this one works
     "
-},
-{
-    "CatchResult",
-    @"
+        },
+        {
+            "CatchResult",
+            @"
 case ""CatchResult"":
                         foreach (var c in data.catchResult)
                         {
@@ -12204,10 +12201,10 @@ case ""CatchResult"":
                         }
                         break;
     "
-},
-{
-    "Spectral Memento",
-    @"
+        },
+        {
+            "Spectral Memento",
+            @"
 case ""Spectral Memento"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -12221,10 +12218,10 @@ case ""Spectral Memento"":
                     break;
 
     "
-},
-{
-    "Golden Catalyst",
-    @"
+        },
+        {
+            "Golden Catalyst",
+            @"
 case ""Golden Catalyst"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9815);
@@ -12240,60 +12237,60 @@ case ""Golden Catalyst"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Plasma Orb",
-    @"
+        },
+        {
+            "Plasma Orb",
+            @"
 case ""Plasma Orb"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""liatarahill"", ""Warden Illaria"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Drained Skye Obelisk",
-    @"
+        },
+        {
+            "Drained Skye Obelisk",
+            @"
 case ""Drained Skye Obelisk"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""liatarahill"", ""Warden Illaria"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Tainted Blade of Na'al",
-    @"
+        },
+        {
+            "Tainted Blade of Na'al",
+            @"
 case ""Tainted Blade of Na'al"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.UseBossClass(Core.CheckInventory(""Chaos Avenger"") ? ""Chaos Avenger"" : Core.CheckInventory(""Void HighLord (IoDA)"") ? ""Void HighLord (IoDA)"" : ""Void Highlord"");
                     Core.HuntMonster(""infernalarena"", ""Na'al"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Champion's Seal",
-    @"
+        },
+        {
+            "Champion's Seal",
+            @"
 case ""Champion's Seal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.UseBossClass(Core.CheckInventory(""Chaos Avenger"") ? ""Chaos Avenger"" : Core.CheckInventory(""Void HighLord (IoDA)"") ? ""Void HighLord (IoDA)"" : ""Void Highlord"");
                     Core.HuntMonster(""infernalarena"", ""Na'al"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Tainted Dagger of Na'al",
-    @"
+        },
+        {
+            "Tainted Dagger of Na'al",
+            @"
 case ""Tainted Dagger of Na'al"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.UseBossClass(Core.CheckInventory(""Chaos Avenger"") ? ""Chaos Avenger"" : Core.CheckInventory(""Void HighLord (IoDA)"") ? ""Void HighLord (IoDA)"" : ""Void Highlord"");
                     Core.HuntMonster(""infernalarena"", ""Na'al"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Cervus Dente",
-    @"
+        },
+        {
+            "Cervus Dente",
+            @"
 case ""Cervus Dente"":
                     Core.FarmingLogger(req.Name, quant);
                     if (Core.CheckInventory(new[] { ""Legion DoomKnight"", ""Classic Legion DoomKnight"" }, any: true))
@@ -12301,69 +12298,69 @@ case ""Cervus Dente"":
                     Core.HuntMonster(""infernalarena"", ""Cervus Malus"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Infernal Krampus' Claw",
-    @"
+        },
+        {
+            "Infernal Krampus' Claw",
+            @"
 case ""Infernal Krampus' Claw"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""infernalarena"", ""Infernal Krampus"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Infernal Emblem",
-    @"
+        },
+        {
+            "Infernal Emblem",
+            @"
 case ""Infernal Emblem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""infernalarena"", ""Infernal Krampus"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Axe of the Infernal Defiler",
-    @"
+        },
+        {
+            "Axe of the Infernal Defiler",
+            @"
 case ""Axe of the Infernal Defiler"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""infernalarena"", ""Destructive Defiler"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Infernal Incantation",
-    @"
+        },
+        {
+            "Infernal Incantation",
+            @"
 case ""Infernal Incantation"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.UseBossClass(""Dragon of Time"");
                     Core.HuntMonster(""infernalarena"", ""Key of Sholemoh"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Scythe Shard",
-    @"
+        },
+        {
+            "Scythe Shard",
+            @"
 case ""Scythe Shard"":
                     Core.UseDodgeClass(""Lord Of Order"");
                     Core.HuntMonster(""infernalarena"", ""Azalith's Scythe"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Duo's Dinner",
-    @"
+        },
+        {
+            "Duo's Dinner",
+            @"
 case ""Duo's Dinner"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.UseBossClass();
                     Core.HuntMonster(""infernalarena"", ""Deadly Duo"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Infernal Badge",
-    @"
+        },
+        {
+            "Infernal Badge",
+            @"
 case ""Infernal Badge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12371,10 +12368,10 @@ case ""Infernal Badge"":
                     break;
 
     "
-},
-{
-    "Platinum Album Shard",
-    @"
+        },
+        {
+            "Platinum Album Shard",
+            @"
 case ""Platinum Album Shard"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -12394,10 +12391,10 @@ case ""Platinum Album Shard"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Balemorale Crest",
-    @"
+        },
+        {
+            "Balemorale Crest",
+            @"
 case ""Balemorale Crest"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12405,156 +12402,156 @@ case ""Balemorale Crest"":
                     break;
 
     "
-},
-{
-    "Remnant of the Deep",
-    @"
+        },
+        {
+            "Remnant of the Deep",
+            @"
 case ""Remnant of the Deep"":
                     Core.Logger($""{req.Name}"" + "" requires ultra boss, you need to prefarm it yourself."");
                     break;
     "
-},
-{
-    "Adeptus Relic",
-    @"
+        },
+        {
+            "Adeptus Relic",
+            @"
 case ""Adeptus Relic"":
                     Core.Logger($""{req.Name}"" + "" requires ultra boss, you need to prefarm it yourself."");
                     break;
     "
-},
-{
-    "Adeptus Kathooli Hair",
-    @"
+        },
+        {
+            "Adeptus Kathooli Hair",
+            @"
 case ""Adeptus Kathooli Hair"":
                     Core.Logger($""{req.Name}"" + "" requires ultra boss, you need to prefarm it yourself."");
                     break;
     "
-},
-{
-    "Adeptus Kathooli Locks",
-    @"
+        },
+        {
+            "Adeptus Kathooli Locks",
+            @"
 case ""Adeptus Kathooli Locks"":
                     Core.Logger($""{req.Name}"" + "" requires ultra boss, you need to prefarm it yourself."");
                     break;
     "
-},
-{
-    "MindSmasher Blade",
-    @"
+        },
+        {
+            "MindSmasher Blade",
+            @"
 case ""MindSmasher Blade"":
                     Core.Logger($""{req.Name}"" + "" requires ultra boss, you need to prefarm it yourself."");
                     break;
     "
-},
-{
-    "MindSmasher Blades",
-    @"
+        },
+        {
+            "MindSmasher Blades",
+            @"
 case ""MindSmasher Blades"":
                     Core.Logger($""{req.Name}"" + "" requires ultra boss, you need to prefarm it yourself."");
                     break;
     "
-},
-{
-    "Psychic Domination Spear",
-    @"
+        },
+        {
+            "Psychic Domination Spear",
+            @"
 case ""Psychic Domination Spear"":
                     Core.Logger($""{req.Name}"" + "" requires ultra boss, you need to prefarm it yourself."");
                     break;
     "
-},
-{
-    "Psychic Domination Spears",
-    @"
+        },
+        {
+            "Psychic Domination Spears",
+            @"
 case ""Psychic Domination Spears"":
                     Core.Logger($""{req.Name}"" + "" requires ultra boss, you need to prefarm it yourself."");
                     break;
     "
-},
-{
-    "Ashray Villager",
-    @"
+        },
+        {
+            "Ashray Villager",
+            @"
 case ""Ashray Villager"":
                     SSM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Undine Defence Director",
-    @"
+        },
+        {
+            "Undine Defence Director",
+            @"
 case ""Undine Defence Director"":
                     UCM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Evacuation Protocol Suit",
-    @"
+        },
+        {
+            "Evacuation Protocol Suit",
+            @"
 case ""Evacuation Protocol Suit"":
                     TZM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Ashray Elf Warden",
-    @"
+        },
+        {
+            "Ashray Elf Warden",
+            @"
 case ""Ashray Elf Warden"":
                     AZM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "DeepWater Drow",
-    @"
+        },
+        {
+            "DeepWater Drow",
+            @"
 case ""DeepWater Drow"":
                     TOM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Midnight Glaucus Sage",
-    @"
+        },
+        {
+            "Midnight Glaucus Sage",
+            @"
 case ""Midnight Glaucus Sage"":
                     SVM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Kathool Acolyte",
-    @"
+        },
+        {
+            "Kathool Acolyte",
+            @"
 case ""Kathool Acolyte"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""deepchaos"", ""Kathool"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Advanced Weapon Kit",
-    @"
+        },
+        {
+            "Advanced Weapon Kit",
+            @"
 case ""Advanced Weapon Kit"":
                     CoreBLOD.AdvancedWK(quant);
                     break;
     "
-},
-{
-    "Ultimate Weapon Kit",
-    @"
+        },
+        {
+            "Ultimate Weapon Kit",
+            @"
 case ""Ultimate Weapon Kit"":
                     CoreBLOD.UltimateWK(quant: quant);
                     break;
     "
-},
-{
-    "Basic Weapon Kit",
-    @"
+        },
+        {
+            "Basic Weapon Kit",
+            @"
 case ""Basic Weapon Kit"":
                     CoreBLOD.BasicWK(quant);
                     break;
     "
-},
-{
-    "Golden Daimyo Armor",
-    @"
+        },
+        {
+            "Golden Daimyo Armor",
+            @"
 case ""Golden Daimyo Armor"":
                     if (!Core.IsMember)
                     {
@@ -12574,58 +12571,58 @@ case ""Golden Daimyo Armor"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Sanctified Silver of Destiny",
-    @"
+        },
+        {
+            "Sanctified Silver of Destiny",
+            @"
 case ""Sanctified Silver of Destiny"":
                     CoreBLOD.UpgradeMetal(MineCraftingMetalsEnum.Silver);
                     break;
     "
-},
-{
-    "Immortal Iron of Destiny",
-    @"
+        },
+        {
+            "Immortal Iron of Destiny",
+            @"
 case ""Immortal Iron of Destiny"":
                     CoreBLOD.UpgradeMetal(MineCraftingMetalsEnum.Iron);
                     break;
     "
-},
-{
-    "Glorious Gold of Destiny",
-    @"
+        },
+        {
+            "Glorious Gold of Destiny",
+            @"
 case ""Glorious Gold of Destiny"":
                     CoreBLOD.UpgradeMetal(MineCraftingMetalsEnum.Gold);
                     break;
     "
-},
-{
-    "Celestial Copper of Destiny",
-    @"
+        },
+        {
+            "Celestial Copper of Destiny",
+            @"
 case ""Celestial Copper of Destiny"":
                     CoreBLOD.UpgradeMetal(MineCraftingMetalsEnum.Copper);
                     break;
     "
-},
-{
-    "Blessed Barium of Destiny",
-    @"
+        },
+        {
+            "Blessed Barium of Destiny",
+            @"
 case ""Blessed Barium of Destiny"":
                     CoreBLOD.UpgradeMetal(MineCraftingMetalsEnum.Barium);
                     break;
     "
-},
-{
-    "Almighty Aluminum of Destiny",
-    @"
+        },
+        {
+            "Almighty Aluminum of Destiny",
+            @"
 case ""Almighty Aluminum of Destiny"":
                     CoreBLOD.UpgradeMetal(MineCraftingMetalsEnum.Aluminum);
                     break;
     "
-},
-{
-    "Twilly Puppy Saddle",
-    @"
+        },
+        {
+            "Twilly Puppy Saddle",
+            @"
 case ""Twilly Puppy Saddle"":
                     if (!Core.IsMember) // Daimyo
                     {
@@ -12645,10 +12642,10 @@ case ""Twilly Puppy Saddle"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Twig Puppy Saddle",
-    @"
+        },
+        {
+            "Twig Puppy Saddle",
+            @"
 case ""Twig Puppy Saddle"":
                     if (!Core.IsMember) // Daimyo
                     {
@@ -12668,10 +12665,10 @@ case ""Twig Puppy Saddle"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Zorbak Puppy Saddle",
-    @"
+        },
+        {
+            "Zorbak Puppy Saddle",
+            @"
 case ""Zorbak Puppy Saddle"":
                     if (!Core.IsMember) // Daimyo
                     {
@@ -12691,102 +12688,102 @@ case ""Zorbak Puppy Saddle"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Lothian's Lightning",
-    @"
+        },
+        {
+            "Lothian's Lightning",
+            @"
 case ""Lothian's Lightning"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.Logger($""{req.Name} requires an ultra boss, you need to farm it manually."", stopBot: true);
                     break;
     "
-},
-{
-    "Dark Thunder Master Locks",
-    @"
+        },
+        {
+            "Dark Thunder Master Locks",
+            @"
 case ""Dark Thunder Master Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.Logger($""{req.Name} requires an ultra boss, you need to farm it manually."", stopBot: true);
                     break;
     "
-},
-{
-    "Dark Lightning Gloria",
-    @"
+        },
+        {
+            "Dark Lightning Gloria",
+            @"
 case ""Dark Lightning Gloria"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.Logger($""{req.Name} requires an ultra boss, you need to farm it manually."", stopBot: true);
                     break;
     "
-},
-{
-    "Skye Nobility Sash",
-    @"
+        },
+        {
+            "Skye Nobility Sash",
+            @"
 case ""Skye Nobility Sash"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.Logger($""{req.Name} requires an ultra boss, you need to farm it manually."", stopBot: true);
                     break;
     "
-},
-{
-    "Priestess Eire's Cletiné",
-    @"
+        },
+        {
+            "Priestess Eire's Cletiné",
+            @"
 case ""Priestess Eire's Cletiné"":
                     Core.FarmingLogger(req.Name, quant);
                     AOR.ColdThunderBoss(req.Name, quant, false);
                     break;
     "
-},
-{
-    "Skye Warden of the East",
-    @"
+        },
+        {
+            "Skye Warden of the East",
+            @"
 case ""Skye Warden of the East"":
                     Core.FarmingLogger(req.Name, quant);
                     FGGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Skye Warden of the West",
-    @"
+        },
+        {
+            "Skye Warden of the West",
+            @"
 case ""Skye Warden of the West"":
                     Core.FarmingLogger(req.Name, quant);
                     LLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Skye Warden of the South",
-    @"
+        },
+        {
+            "Skye Warden of the South",
+            @"
 case ""Skye Warden of the South"":
                     Core.FarmingLogger(req.Name, quant);
                     LTHLM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Queen Iona's Royal Attire",
-    @"
+        },
+        {
+            "Queen Iona's Royal Attire",
+            @"
 case ""Queen Iona's Royal Attire"":
                     Core.FarmingLogger(req.Name, quant);
                     CTM.BuyAllMerge(req.Name);
                     break;
 
     "
-},
-{
-    "Mehensi Fang",
-    @"
+        },
+        {
+            "Mehensi Fang",
+            @"
 case ""Mehensi Fang"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""whitehole"", ""Mehensi Serpent"", req.Name, quant, isTemp: false);
                     break;
 
     "
-},
-{
-    "Water Elf Pearl",
-    @"
+        },
+        {
+            "Water Elf Pearl",
+            @"
 case ""Water Elf Pearl"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9302);
@@ -12803,10 +12800,10 @@ case ""Water Elf Pearl"":
                     break;
 
     "
-},
-{
-    "Mirror Realm Token",
-    @"
+        },
+        {
+            "Mirror Realm Token",
+            @"
 case ""Mirror Realm Token"":
                     LoC.Xiang();
                     Core.FarmingLogger(req.Name, quant);
@@ -12815,38 +12812,38 @@ case ""Mirror Realm Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Undead Paladin Token",
-    @"
+        },
+        {
+            "Undead Paladin Token",
+            @"
 case ""Undead Paladin Token"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""OverWorld"", ""Undead Artix"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Chaos Shifter",
-    @"
+        },
+        {
+            "Chaos Shifter",
+            @"
 case ""Chaos Shifter"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""mountdoomskull"", 776, req.Name);
                     break;
     "
-},
-{
-    "Purification Orb",
-    @"
+        },
+        {
+            "Purification Orb",
+            @"
 case ""Purification Orb"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""Doomwood"", ""Undead Paladin"", req.Name, quant, isTemp: false);
                     break;
 
     "
-},
-{
-    "Molten Core",
-    @"
+        },
+        {
+            "Molten Core",
+            @"
 case ""Molten Core"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12858,10 +12855,10 @@ case ""Molten Core"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Crystamorphosis",
-    @"
+        },
+        {
+            "Crystamorphosis",
+            @"
 case ""Crystamorphosis"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12874,10 +12871,10 @@ case ""Crystamorphosis"":
                     break;
 
     "
-},
-{
-    "Crystamorph Helm",
-    @"
+        },
+        {
+            "Crystamorph Helm",
+            @"
 case ""Crystamorph Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12890,10 +12887,10 @@ case ""Crystamorph Helm"":
                     break;
 
     "
-},
-{
-    "Crystamorph Eyes",
-    @"
+        },
+        {
+            "Crystamorph Eyes",
+            @"
 case ""Crystamorph Eyes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12906,10 +12903,10 @@ case ""Crystamorph Eyes"":
                     break;
 
     "
-},
-{
-    "Crystamorph Visor",
-    @"
+        },
+        {
+            "Crystamorph Visor",
+            @"
 case ""Crystamorph Visor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12922,10 +12919,10 @@ case ""Crystamorph Visor"":
                     break;
 
     "
-},
-{
-    "Crystamorph Wings",
-    @"
+        },
+        {
+            "Crystamorph Wings",
+            @"
 case ""Crystamorph Wings"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12938,10 +12935,10 @@ case ""Crystamorph Wings"":
                     break;
 
     "
-},
-{
-    "Crystamorph Stinger",
-    @"
+        },
+        {
+            "Crystamorph Stinger",
+            @"
 case ""Crystamorph Stinger"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12954,10 +12951,10 @@ case ""Crystamorph Stinger"":
                     break;
 
     "
-},
-{
-    "Crystamorph Venom",
-    @"
+        },
+        {
+            "Crystamorph Venom",
+            @"
 case ""Crystamorph Venom"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12970,10 +12967,10 @@ case ""Crystamorph Venom"":
                     break;
 
     "
-},
-{
-    "Crystamorph Dual Banes",
-    @"
+        },
+        {
+            "Crystamorph Dual Banes",
+            @"
 case ""Crystamorph Dual Banes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -12986,10 +12983,10 @@ case ""Crystamorph Dual Banes"":
                     break;
 
     "
-},
-{
-    "Apocalyptic Nihil Coin",
-    @"
+        },
+        {
+            "Apocalyptic Nihil Coin",
+            @"
 case ""Apocalyptic Nihil Coin"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -13000,190 +12997,190 @@ case ""Apocalyptic Nihil Coin"":
                     }
                     break;
     "
-},
-{
-    "Trickster's Apprentice",
-    @"
+        },
+        {
+            "Trickster's Apprentice",
+            @"
 case ""Trickster's Apprentice"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dark Omen Trickster Morph",
-    @"
+        },
+        {
+            "Dark Omen Trickster Morph",
+            @"
 case ""Dark Omen Trickster Morph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dark Omen Trickster Hair",
-    @"
+        },
+        {
+            "Dark Omen Trickster Hair",
+            @"
 case ""Dark Omen Trickster Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dark Omen Trickster Visage",
-    @"
+        },
+        {
+            "Dark Omen Trickster Visage",
+            @"
 case ""Dark Omen Trickster Visage"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dark Omen Trickster Locks",
-    @"
+        },
+        {
+            "Dark Omen Trickster Locks",
+            @"
 case ""Dark Omen Trickster Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dark Omen Cards",
-    @"
+        },
+        {
+            "Dark Omen Cards",
+            @"
 case ""Dark Omen Cards"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dark Omen Card Familiar",
-    @"
+        },
+        {
+            "Dark Omen Card Familiar",
+            @"
 case ""Dark Omen Card Familiar"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Trickster's Dark Omen",
-    @"
+        },
+        {
+            "Trickster's Dark Omen",
+            @"
 case ""Trickster's Dark Omen"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dark Omen Barb",
-    @"
+        },
+        {
+            "Dark Omen Barb",
+            @"
 case ""Dark Omen Barb"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dark Omen Barbs",
-    @"
+        },
+        {
+            "Dark Omen Barbs",
+            @"
 case ""Dark Omen Barbs"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Dark Omen Trick Card",
-    @"
+        },
+        {
+            "Dark Omen Trick Card",
+            @"
 case ""Dark Omen Trick Card"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Trickster's Hidden Grin",
-    @"
+        },
+        {
+            "Trickster's Hidden Grin",
+            @"
 case ""Trickster's Hidden Grin"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""monaghangorge"", ""Trickster Duartaine"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Celestial Seal",
-    @"
+        },
+        {
+            "Celestial Seal",
+            @"
 case ""Celestial Seal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""goldenarena"", ""Blessed Dragon"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Golden Scale",
-    @"
+        },
+        {
+            "Golden Scale",
+            @"
 case ""Golden Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""goldenarena"", ""Blessed Dragon"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Golden Badge",
-    @"
+        },
+        {
+            "Golden Badge",
+            @"
 case ""Golden Badge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""goldenarena"", ""Blessed Inquisitor"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Golden Wing",
-    @"
+        },
+        {
+            "Golden Wing",
+            @"
 case ""Golden Wing"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""goldenarena"", ""Blessed Gladius"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Golden Rune",
-    @"
+        },
+        {
+            "Golden Rune",
+            @"
 case ""Golden Rune"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""goldenarena"", ""Blessed Karok"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Laurel Crown",
-    @"
+        },
+        {
+            "Laurel Crown",
+            @"
 case ""Laurel Crown"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""goldenarena"", ""Queen of Hope"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Divine Down",
-    @"
+        },
+        {
+            "Divine Down",
+            @"
 case ""Divine Down"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -13197,40 +13194,40 @@ case ""Divine Down"":
                     }
                     break;
     "
-},
-{
-    "Infernal Mage's Incantation",
-    @"
+        },
+        {
+            "Infernal Mage's Incantation",
+            @"
 case ""Infernal Mage's Incantation"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""infernalparadise"", ""Infernal Mage"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Malxas' Shed Feather",
-    @"
+        },
+        {
+            "Malxas' Shed Feather",
+            @"
 case ""Malxas' Shed Feather"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""infernalparadise"", ""Infernal Malxas"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Dragonling Bone",
-    @"
+        },
+        {
+            "Dragonling Bone",
+            @"
 case ""Dragonling Bone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""naoisegrave"", ""Dragonling"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Volgritian's Dragon Bone",
-    @"
+        },
+        {
+            "Volgritian's Dragon Bone",
+            @"
 case ""Volgritian's Dragon Bone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9778);
@@ -13247,109 +13244,109 @@ case ""Volgritian's Dragon Bone"":
                     break;
 
     "
-},
-{
-    "Synthetic Viscera",
-    @"
+        },
+        {
+            "Synthetic Viscera",
+            @"
 case ""Synthetic Viscera"":
                     DarkCarnax.SyntheticViscera(quant);
                     break;
     "
-},
-{
-    "Carnax Essence",
-    @"
+        },
+        {
+            "Carnax Essence",
+            @"
 case ""Carnax Essence"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""aqlesson"", ""Carnax"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Perfect Orochi Scales",
-    @"
+        },
+        {
+            "Perfect Orochi Scales",
+            @"
 case ""Perfect Orochi Scales"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""shadowfortress"", ""r12"", ""Bottom"", ""*"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Energized Aura",
-    @"
+        },
+        {
+            "Energized Aura",
+            @"
 case ""Energized Aura"":
                     NSOD.EnergizedAura();
                     break;
     "
-},
-{
-    "Abyssal Contract",
-    @"
+        },
+        {
+            "Abyssal Contract",
+            @"
 case ""Abyssal Contract"":
                     AF.AbyssalContract();
                     break;
     "
-},
-{
-    "Purified Undead Dragon Essence",
-    @"
+        },
+        {
+            "Purified Undead Dragon Essence",
+            @"
 case ""Purified Undead Dragon Essence"":
                     uBLOD.PurifiedUndeadDragonEssence();
                     break;
     "
-},
-{
-    "Overwhelmed Axe",
-    @"
+        },
+        {
+            "Overwhelmed Axe",
+            @"
 case ""Overwhelmed Axe"":
                     uBLOD.OverwhelmedAxe();
                     break;
 
     "
-},
-{
-    "Speirling Dagger",
-    @"
+        },
+        {
+            "Speirling Dagger",
+            @"
 case ""Speirling Dagger"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""loughshine"", ""Skye Executor"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Speirling Daggers",
-    @"
+        },
+        {
+            "Speirling Daggers",
+            @"
 case ""Speirling Daggers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""loughshine"", ""Skye Executor"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Skye Executor Hooded Locks",
-    @"
+        },
+        {
+            "Skye Executor Hooded Locks",
+            @"
 case ""Skye Executor Hooded Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""loughshine"", ""Skye Executor"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Skye Executor's Cloak",
-    @"
+        },
+        {
+            "Skye Executor's Cloak",
+            @"
 case ""Skye Executor's Cloak"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""loughshine"", ""Skye Executor"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Solid Gold Alloy",
-    @"
+        },
+        {
+            "Solid Gold Alloy",
+            @"
 case ""Solid Gold Alloy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9765);
@@ -13366,10 +13363,10 @@ case ""Solid Gold Alloy"":
                     break;
 
     "
-},
-{
-    "Noxus' Favor",
-    @"
+        },
+        {
+            "Noxus' Favor",
+            @"
 case ""Noxus' Favor"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -13389,19 +13386,19 @@ case ""Noxus' Favor"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Elden Ruby",
-    @"
+        },
+        {
+            "Elden Ruby",
+            @"
 case ""Elden Ruby"":
                     Core.FarmingLogger(req.Name, quant);
                     Daily.EldenRuby(quant);
                     break;
     "
-},
-{
-    "Compass Rose Skull",
-    @"
+        },
+        {
+            "Compass Rose Skull",
+            @"
 case ""Compass Rose Skull"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -13416,10 +13413,10 @@ case ""Compass Rose Skull"":
                     break;
 
     "
-},
-{
-    "Ancient Astrolabe",
-    @"
+        },
+        {
+            "Ancient Astrolabe",
+            @"
 case ""Ancient Astrolabe"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13437,10 +13434,10 @@ case ""Ancient Astrolabe"":
                     break;
 
     "
-},
-{
-    "Refined Orpheum",
-    @"
+        },
+        {
+            "Refined Orpheum",
+            @"
 case ""Refined Orpheum"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -13460,10 +13457,10 @@ case ""Refined Orpheum"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Somnic Extract",
-    @"
+        },
+        {
+            "Somnic Extract",
+            @"
 case ""Somnic Extract"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -13483,10 +13480,10 @@ case ""Somnic Extract"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dwarven Ether",
-    @"
+        },
+        {
+            "Dwarven Ether",
+            @"
 case ""Dwarven Ether"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -13507,10 +13504,10 @@ case ""Dwarven Ether"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Theliman Ore",
-    @"
+        },
+        {
+            "Theliman Ore",
+            @"
 case ""Theliman Ore"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -13530,10 +13527,10 @@ case ""Theliman Ore"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Steel Ingot",
-    @"
+        },
+        {
+            "Steel Ingot",
+            @"
 case ""Steel Ingot"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -13554,10 +13551,10 @@ case ""Steel Ingot"":
                     }
                     break;
     "
-},
-{
-    "Panopticon Gear Wreckage",
-    @"
+        },
+        {
+            "Panopticon Gear Wreckage",
+            @"
 case ""Panopticon Gear Wreckage"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13571,10 +13568,10 @@ case ""Panopticon Gear Wreckage"":
                     break;
 
     "
-},
-{
-    "Panopticon Gear Linker",
-    @"
+        },
+        {
+            "Panopticon Gear Linker",
+            @"
 case ""Panopticon Gear Linker"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13588,128 +13585,128 @@ case ""Panopticon Gear Linker"":
                     break;
 
     "
-},
-{
-    "Paradox Core",
-    @"
+        },
+        {
+            "Paradox Core",
+            @"
 case ""Paradox Core"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""portalmazec"", ""Vorefax "", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Paradox Gem",
-    @"
+        },
+        {
+            "Paradox Gem",
+            @"
 case ""Paradox Gem"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragontown"", ""The Neverborn"", req.Name, quant, isTemp: false);
                     break;
 
     "
-},
-{
-    "Dragon's Plague Scythe",
-    @"
+        },
+        {
+            "Dragon's Plague Scythe",
+            @"
 case ""Dragon's Plague Scythe"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""sloth"", ""Phlegnn"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Sloth Gem",
-    @"
+        },
+        {
+            "Sloth Gem",
+            @"
 case ""Sloth Gem"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""sloth"", ""Phlegnn"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Slime Claw",
-    @"
+        },
+        {
+            "Slime Claw",
+            @"
 case ""Slime Claw"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""sloth"", ""Phlegnn"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Slime Fang",
-    @"
+        },
+        {
+            "Slime Fang",
+            @"
 case ""Slime Fang"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""sloth"", ""Phlegnn"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Sloth Heart",
-    @"
+        },
+        {
+            "Sloth Heart",
+            @"
 case ""Sloth Heart"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""sloth"", ""Phlegnn"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Plague Badge",
-    @"
+        },
+        {
+            "Plague Badge",
+            @"
 case ""Plague Badge"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""sloth"", ""Phlegnn"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Bloody Claw",
-    @"
+        },
+        {
+            "Bloody Claw",
+            @"
 case ""Bloody Claw"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""sloth"", ""Cured Phlegnn"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Bloodless Heart",
-    @"
+        },
+        {
+            "Bloodless Heart",
+            @"
 case ""Bloodless Heart"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""sloth"", ""Cured Phlegnn"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Bloody Fang",
-    @"
+        },
+        {
+            "Bloody Fang",
+            @"
 case ""Bloody Fang"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""sloth"", ""Cured Phlegnn"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Bloody Scale",
-    @"
+        },
+        {
+            "Bloody Scale",
+            @"
 case ""Bloody Scale"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""sloth"", ""Cured Phlegnn"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Slime Scale",
-    @"
+        },
+        {
+            "Slime Scale",
+            @"
 case ""Slime Scale"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""sloth"", ""r2"", ""Bottom"", ""*"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Fiend Emblem",
-    @"
+        },
+        {
+            "Fiend Emblem",
+            @"
 case ""Fiend Emblem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(7890);
@@ -13726,10 +13723,10 @@ case ""Fiend Emblem"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Moeda Real",
-    @"
+        },
+        {
+            "Moeda Real",
+            @"
 case ""Moeda Real"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13738,10 +13735,10 @@ case ""Moeda Real"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Brabo Retumbante",
-    @"
+        },
+        {
+            "Brabo Retumbante",
+            @"
 case ""Brabo Retumbante"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13750,10 +13747,10 @@ case ""Brabo Retumbante"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Brabos Retumbantes",
-    @"
+        },
+        {
+            "Brabos Retumbantes",
+            @"
 case ""Brabos Retumbantes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13762,10 +13759,10 @@ case ""Brabos Retumbantes"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Brado Retumbante",
-    @"
+        },
+        {
+            "Brado Retumbante",
+            @"
 case ""Brado Retumbante"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13774,10 +13771,10 @@ case ""Brado Retumbante"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Capuz Retumbante",
-    @"
+        },
+        {
+            "Capuz Retumbante",
+            @"
 case ""Capuz Retumbante"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13786,10 +13783,10 @@ case ""Capuz Retumbante"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Face Retumbante",
-    @"
+        },
+        {
+            "Face Retumbante",
+            @"
 case ""Face Retumbante"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13798,10 +13795,10 @@ case ""Face Retumbante"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Símbolo da Ordem",
-    @"
+        },
+        {
+            "Símbolo da Ordem",
+            @"
 case ""Símbolo da Ordem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13810,10 +13807,10 @@ case ""Símbolo da Ordem"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Símbolo do Progresso",
-    @"
+        },
+        {
+            "Símbolo do Progresso",
+            @"
 case ""Símbolo do Progresso"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -13822,10 +13819,10 @@ case ""Símbolo do Progresso"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Severed Tentacle",
-    @"
+        },
+        {
+            "Severed Tentacle",
+            @"
 case ""Severed Tentacle"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -13839,200 +13836,200 @@ case ""Severed Tentacle"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "1st Hero of Balance",
-    @"
+        },
+        {
+            "1st Hero of Balance",
+            @"
 case ""1st Hero of Balance"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "1st Hero of Balance Hood",
-    @"
+        },
+        {
+            "1st Hero of Balance Hood",
+            @"
 case ""1st Hero of Balance Hood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "1st Hero of Balance Cloak",
-    @"
+        },
+        {
+            "1st Hero of Balance Cloak",
+            @"
 case ""1st Hero of Balance Cloak"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Good Hero of Balance",
-    @"
+        },
+        {
+            "Good Hero of Balance",
+            @"
 case ""Good Hero of Balance"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Good Hero of Balance Morph",
-    @"
+        },
+        {
+            "Good Hero of Balance Morph",
+            @"
 case ""Good Hero of Balance Morph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Evil Hero of Balance",
-    @"
+        },
+        {
+            "Evil Hero of Balance",
+            @"
 case ""Evil Hero of Balance"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Evil Hero of Balance Morph",
-    @"
+        },
+        {
+            "Evil Hero of Balance Morph",
+            @"
 case ""Evil Hero of Balance Morph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "3rd Hero of Balance",
-    @"
+        },
+        {
+            "3rd Hero of Balance",
+            @"
 case ""3rd Hero of Balance"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "3rd Hero of Balance Locks",
-    @"
+        },
+        {
+            "3rd Hero of Balance Locks",
+            @"
 case ""3rd Hero of Balance Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "3rd Hero of Balance Scarf",
-    @"
+        },
+        {
+            "3rd Hero of Balance Scarf",
+            @"
 case ""3rd Hero of Balance Scarf"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "3rd Hero of Balance Daggers",
-    @"
+        },
+        {
+            "3rd Hero of Balance Daggers",
+            @"
 case ""3rd Hero of Balance Daggers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "3rd Hero of Balance Dirk",
-    @"
+        },
+        {
+            "3rd Hero of Balance Dirk",
+            @"
 case ""3rd Hero of Balance Dirk"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "4th Hero of Balance",
-    @"
+        },
+        {
+            "4th Hero of Balance",
+            @"
 case ""4th Hero of Balance"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "4th Hero of Balance Cloak",
-    @"
+        },
+        {
+            "4th Hero of Balance Cloak",
+            @"
 case ""4th Hero of Balance Cloak"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "5th Hero of Balance",
-    @"
+        },
+        {
+            "5th Hero of Balance",
+            @"
 case ""5th Hero of Balance"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "5th Hero of Balance Morph",
-    @"
+        },
+        {
+            "5th Hero of Balance Morph",
+            @"
 case ""5th Hero of Balance Morph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "5th Hero of Balance Wings",
-    @"
+        },
+        {
+            "5th Hero of Balance Wings",
+            @"
 case ""5th Hero of Balance Wings"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "7th Hero of Balance",
-    @"
+        },
+        {
+            "7th Hero of Balance",
+            @"
 case ""7th Hero of Balance"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "7th Hero of Balance Morph",
-    @"
+        },
+        {
+            "7th Hero of Balance Morph",
+            @"
 case ""7th Hero of Balance Morph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""queenbattle"", ""Queen of Monsters"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Silver Exalted Paladin",
-    @"
+        },
+        {
+            "Silver Exalted Paladin",
+            @"
 case ""Silver Exalted Paladin"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14045,10 +14042,10 @@ case ""Silver Exalted Paladin"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ancient Alloy",
-    @"
+        },
+        {
+            "Ancient Alloy",
+            @"
 case ""Ancient Alloy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14062,10 +14059,10 @@ case ""Ancient Alloy"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Silver Exalted Winged Visor",
-    @"
+        },
+        {
+            "Silver Exalted Winged Visor",
+            @"
 case ""Silver Exalted Winged Visor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14078,10 +14075,10 @@ case ""Silver Exalted Winged Visor"":
                     }
                     break;
     "
-},
-{
-    "Silver Exalted Winged Helm",
-    @"
+        },
+        {
+            "Silver Exalted Winged Helm",
+            @"
 case ""Silver Exalted Winged Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14094,10 +14091,10 @@ case ""Silver Exalted Winged Helm"":
                     }
                     break;
     "
-},
-{
-    "Silver Exalted Visor",
-    @"
+        },
+        {
+            "Silver Exalted Visor",
+            @"
 case ""Silver Exalted Visor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14110,10 +14107,10 @@ case ""Silver Exalted Visor"":
                     }
                     break;
     "
-},
-{
-    "Silver Exalted Helmet",
-    @"
+        },
+        {
+            "Silver Exalted Helmet",
+            @"
 case ""Silver Exalted Helmet"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14126,10 +14123,10 @@ case ""Silver Exalted Helmet"":
                     }
                     break;
     "
-},
-{
-    "Silver Exalted Haloed Wings",
-    @"
+        },
+        {
+            "Silver Exalted Haloed Wings",
+            @"
 case ""Silver Exalted Haloed Wings"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14142,10 +14139,10 @@ case ""Silver Exalted Haloed Wings"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Silver Exalted Spears of Light",
-    @"
+        },
+        {
+            "Silver Exalted Spears of Light",
+            @"
 case ""Silver Exalted Spears of Light"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14158,10 +14155,10 @@ case ""Silver Exalted Spears of Light"":
                     }
                     break;
     "
-},
-{
-    "Silver Exalted Paladin Poleaxe",
-    @"
+        },
+        {
+            "Silver Exalted Paladin Poleaxe",
+            @"
 case ""Silver Exalted Paladin Poleaxe"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14174,10 +14171,10 @@ case ""Silver Exalted Paladin Poleaxe"":
                     }
                     break;
     "
-},
-{
-    "Silver Exalted Paladin Spear",
-    @"
+        },
+        {
+            "Silver Exalted Paladin Spear",
+            @"
 case ""Silver Exalted Paladin Spear"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14190,10 +14187,10 @@ case ""Silver Exalted Paladin Spear"":
                     }
                     break;
     "
-},
-{
-    "Silver Exalted Paladin Axe",
-    @"
+        },
+        {
+            "Silver Exalted Paladin Axe",
+            @"
 case ""Silver Exalted Paladin Axe"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14206,10 +14203,10 @@ case ""Silver Exalted Paladin Axe"":
                     }
                     break;
     "
-},
-{
-    "Silver Exalted Paladin Blade",
-    @"
+        },
+        {
+            "Silver Exalted Paladin Blade",
+            @"
 case ""Silver Exalted Paladin Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14222,10 +14219,10 @@ case ""Silver Exalted Paladin Blade"":
                     }
                     break;
     "
-},
-{
-    "Green Dancin' Feathers Merge",
-    @"
+        },
+        {
+            "Green Dancin' Feathers Merge",
+            @"
 case ""Green Dancin' Feathers Merge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(1180);
@@ -14239,10 +14236,10 @@ case ""Green Dancin' Feathers Merge"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Samba Hair",
-    @"
+        },
+        {
+            "Samba Hair",
+            @"
 case ""Samba Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(1180);
@@ -14256,10 +14253,10 @@ case ""Samba Hair"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Purple Dancin' Feathers Merge",
-    @"
+        },
+        {
+            "Purple Dancin' Feathers Merge",
+            @"
 case ""Purple Dancin' Feathers Merge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(1181);
@@ -14274,10 +14271,10 @@ case ""Purple Dancin' Feathers Merge"":
                     break;
 
     "
-},
-{
-    "Samba Outfit!",
-    @"
+        },
+        {
+            "Samba Outfit!",
+            @"
 case ""Samba Outfit!"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(1181);
@@ -14292,85 +14289,85 @@ case ""Samba Outfit!"":
                     break;
 
     "
-},
-{
-    "Star Piece",
-    @"
+        },
+        {
+            "Star Piece",
+            @"
 case ""Star Piece"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""starfield"", ""r3"", ""bottom"", ""*"", req.Name, quant, req.Temp, log: false);
                     break;
     "
-},
-{
-    "Ascended Light of Destiny",
-    @"
+        },
+        {
+            "Ascended Light of Destiny",
+            @"
 case ""Ascended Light of Destiny"":
                     ADG.AscendedGear(""Ascended Light of Destiny"");
 
                     break;
     "
-},
-{
-    "Blackhole Light of Dread Space",
-    @"
+        },
+        {
+            "Blackhole Light of Dread Space",
+            @"
 case ""Blackhole Light of Dread Space"":
                     DRM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Void Light of Destiny",
-    @"
+        },
+        {
+            "Void Light of Destiny",
+            @"
 case ""Void Light of Destiny"":
                     VP.Sacrifice();
                     break;
     "
-},
-{
-    "Polished Blinding Light of Destiny",
-    @"
+        },
+        {
+            "Polished Blinding Light of Destiny",
+            @"
 case ""Polished Blinding Light of Destiny"":
                     CIU.GetPolishedBLoD();
                     break;
     "
-},
-{
-    "Hollowborn Shadow of Fate",
-    @"
+        },
+        {
+            "Hollowborn Shadow of Fate",
+            @"
 case ""Hollowborn Shadow of Fate"":
                     CHP.HBShadowOfFate();
                     break;
     "
-},
-{
-    "Obsidian Light of Destiny",
-    @"
+        },
+        {
+            "Obsidian Light of Destiny",
+            @"
 case ""Obsidian Light of Destiny"":
                     ObsidianLightofDestiny.Axe();
                     break;
     "
-},
-{
-    "Ultimate Blinding Light of Destiny",
-    @"
+        },
+        {
+            "Ultimate Blinding Light of Destiny",
+            @"
 case ""Ultimate Blinding Light of Destiny"":
                     UltimateBLoD.UltimateBlindingLightofDestiny();
                     break;
     "
-},
-{
-    "Sanctified Light of Destiny",
-    @"
+        },
+        {
+            "Sanctified Light of Destiny",
+            @"
 case ""Sanctified Light of Destiny"":
                     SanctifiedLightofDestiny.GetSanctifiedLightofDestiny();
                     break;
     "
-},
-{
-    "Dark Dragon Slayer's Halberd",
-    @"
+        },
+        {
+            "Dark Dragon Slayer's Halberd",
+            @"
 case ""Dark Dragon Slayer's Halberd"":
                     if (!Bot.Player.IsMember)
                         StreamwarMerge.BuyAllMerge(""Dark Dragon Slayer's Halberd"");
@@ -14380,36 +14377,36 @@ case ""Dark Dragon Slayer's Halberd"":
                     Core.BuyItem(""novashrine"", 2458, ""Star Light of Destiny"", 1, !Bot.Player.IsMember ? 13334 : 13333);
                     break;
     "
-},
-{
-    "Star of the Empyrean",
-    @"
+        },
+        {
+            "Star of the Empyrean",
+            @"
 case ""Star of the Empyrean"":
                     Core.Logger($""Cannot Obtain {req.Name} as its from an \""Ultra\"", and Skua cannot do ultras. Please Wait until InsertCreates/adds this ultra to his Bot Collecetion (and update grim li to 1.5.2 for the newest handler)"");
 
                     break;
     "
-},
-{
-    "ArchPaladin Armor",
-    @"
+        },
+        {
+            "ArchPaladin Armor",
+            @"
 case ""ArchPaladin Armor"":
                     Adv.BuyItem(""darkthronehub"", 1303, req.Name);
                     break;
     "
-},
-{
-    "Blinding Aura",
-    @"
+        },
+        {
+            "Blinding Aura",
+            @"
 case ""Blinding Aura"":
                     BLOD.BlindingAura(quant);
 
                     break;
     "
-},
-{
-    "Cosmic Stardust",
-    @"
+        },
+        {
+            "Cosmic Stardust",
+            @"
 case ""Cosmic Stardust"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14422,10 +14419,10 @@ case ""Cosmic Stardust"":
                     break;
 
     "
-},
-{
-    "Nova Empyrean Tail",
-    @"
+        },
+        {
+            "Nova Empyrean Tail",
+            @"
 case ""Nova Empyrean Tail"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14438,10 +14435,10 @@ case ""Nova Empyrean Tail"":
                     break;
 
     "
-},
-{
-    "Sur-gion Token",
-    @"
+        },
+        {
+            "Sur-gion Token",
+            @"
 case ""Sur-gion Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14457,10 +14454,10 @@ case ""Sur-gion Token"":
                     break;
 
     "
-},
-{
-    "Ancient Hourglass",
-    @"
+        },
+        {
+            "Ancient Hourglass",
+            @"
 case ""Ancient Hourglass"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14476,10 +14473,10 @@ case ""Ancient Hourglass"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "LightningLord",
-    @"
+        },
+        {
+            "LightningLord",
+            @"
 case ""LightningLord"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14491,10 +14488,10 @@ case ""LightningLord"":
                     break;
 
     "
-},
-{
-    "LightningLord Helm",
-    @"
+        },
+        {
+            "LightningLord Helm",
+            @"
 case ""LightningLord Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14506,10 +14503,10 @@ case ""LightningLord Helm"":
                     break;
 
     "
-},
-{
-    "LightningLord Locks",
-    @"
+        },
+        {
+            "LightningLord Locks",
+            @"
 case ""LightningLord Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14521,10 +14518,10 @@ case ""LightningLord Locks"":
                     break;
 
     "
-},
-{
-    "LightningLord Rune",
-    @"
+        },
+        {
+            "LightningLord Rune",
+            @"
 case ""LightningLord Rune"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14536,46 +14533,46 @@ case ""LightningLord Rune"":
                     break;
 
     "
-},
-{
-    "Bioluminessence",
-    @"
+        },
+        {
+            "Bioluminessence",
+            @"
 case ""Bioluminessence"":
                     Core.FarmingLogger(req.Name, req.Quantity);
                     AttackVoiceInTheSea(req.Name, req.Quantity);
                     break;
     "
-},
-{
-    "Calamity Atlanticus Trident",
-    @"
+        },
+        {
+            "Calamity Atlanticus Trident",
+            @"
 case ""Calamity Atlanticus Trident"":
                     Core.FarmingLogger(req.Name, req.Quantity);
                     AttackVoiceInTheSea(req.Name, req.Quantity);
                     break;
     "
-},
-{
-    "Glaucus Mystic",
-    @"
+        },
+        {
+            "Glaucus Mystic",
+            @"
 case ""Glaucus Mystic"":
                     Core.FarmingLogger(req.Name, req.Quantity);
                     AttackVoiceInTheSea(req.Name, req.Quantity);
                     break;
     "
-},
-{
-    "Glaucus Companion",
-    @"
+        },
+        {
+            "Glaucus Companion",
+            @"
 case ""Glaucus Companion"":
                     Core.FarmingLogger(req.Name, req.Quantity);
                     AttackVoiceInTheSea(req.Name, req.Quantity);
                     break;
     "
-},
-{
-    "Dark Elf Pearl",
-    @"
+        },
+        {
+            "Dark Elf Pearl",
+            @"
 case ""Dark Elf Pearl"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9339);
@@ -14591,10 +14588,10 @@ case ""Dark Elf Pearl"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Sundered Tentacle",
-    @"
+        },
+        {
+            "Sundered Tentacle",
+            @"
 case ""Sundered Tentacle"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14609,10 +14606,10 @@ case ""Sundered Tentacle"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Golden Shadow Breaker",
-    @"
+        },
+        {
+            "Golden Shadow Breaker",
+            @"
 case ""Golden Shadow Breaker"":
                     Core.FarmingLogger(""Golden Shadow Breaker"", quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14620,10 +14617,10 @@ case ""Golden Shadow Breaker"":
                     Core.HuntMonster(""citadel"", ""Grand Inquisitor"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Banana",
-    @"
+        },
+        {
+            "Banana",
+            @"
 case ""Banana"":
                     Core.FarmingLogger(""Banana"", quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14631,10 +14628,10 @@ case ""Banana"":
                     Core.HuntMonster(""arcangrove"", ""Gorillaphant"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Ingredients?",
-    @"
+        },
+        {
+            "Ingredients?",
+            @"
 case ""Ingredients?"":
                     Core.FarmingLogger(""Ingredients?"", quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14642,10 +14639,10 @@ case ""Ingredients?"":
                     Core.HuntMonster(""doomvault"", ""Binky"", req.Name, quant, req.Temp, false, true);
                     break;
     "
-},
-{
-    "Binky Companion",
-    @"
+        },
+        {
+            "Binky Companion",
+            @"
 case ""Binky Companion"":
                     Core.FarmingLogger(""Ingredients?"", quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14653,10 +14650,10 @@ case ""Binky Companion"":
                     Core.HuntMonster(""doomvault"", ""Binky"", req.Name, quant, req.Temp, false, true);
                     break;
     "
-},
-{
-    "Iron Draconian Sword",
-    @"
+        },
+        {
+            "Iron Draconian Sword",
+            @"
 case ""Iron Draconian Sword"":
                     Core.FarmingLogger(""Iron Draconian Sword"", quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14664,10 +14661,10 @@ case ""Iron Draconian Sword"":
                     Core.HuntMonster(""lair"", ""Purple Draconian"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Water Draconian Sword",
-    @"
+        },
+        {
+            "Water Draconian Sword",
+            @"
 case ""Water Draconian Sword"":
                     Core.FarmingLogger(""Water Draconian Sword"", quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14675,10 +14672,10 @@ case ""Water Draconian Sword"":
                     Core.HuntMonster(""lair"", ""Water Draconian"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Venom Draconian Sword",
-    @"
+        },
+        {
+            "Venom Draconian Sword",
+            @"
 case ""Venom Draconian Sword"":
                     Core.FarmingLogger(""Venom Draconian Sword"", quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14686,10 +14683,10 @@ case ""Venom Draconian Sword"":
                     Core.HuntMonster(""lair"", ""Venom Draconian"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Spear of the Deep One",
-    @"
+        },
+        {
+            "Spear of the Deep One",
+            @"
 case ""Spear of the Deep One"":
                     Core.FarmingLogger(""Spear of the Deep One"", quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14697,10 +14694,10 @@ case ""Spear of the Deep One"":
                     Core.HuntMonster(""deepchaos"", ""Kathool"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "1st Lord Of Chaos Helm",
-    @"
+        },
+        {
+            "1st Lord Of Chaos Helm",
+            @"
 case ""1st Lord Of Chaos Helm"":
                     Core.FarmingLogger(""1st Lord Of Chaos Helm"", quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14708,10 +14705,10 @@ case ""1st Lord Of Chaos Helm"":
                     Core.KillEscherion(req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Chaos King Crown",
-    @"
+        },
+        {
+            "Chaos King Crown",
+            @"
 case ""Chaos King Crown"":
                     Core.FarmingLogger(""Chaos King Crown"", quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14719,10 +14716,10 @@ case ""Chaos King Crown"":
                     Core.HuntMonster(""swordhavenfalls"", ""Chaos Lord Alteon"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Chaos Lord Alteon",
-    @"
+        },
+        {
+            "Chaos Lord Alteon",
+            @"
 case ""Chaos Lord Alteon"":
                     Core.FarmingLogger(""Chaos King Crown"", quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14730,10 +14727,10 @@ case ""Chaos Lord Alteon"":
                     Core.HuntMonster(""swordhavenfalls"", ""Chaos Lord Alteon"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Tainted Soul",
-    @"
+        },
+        {
+            "Tainted Soul",
+            @"
 case ""Tainted Soul"":
                     Core.FarmingLogger(""Tainted Soul"", quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14741,28 +14738,28 @@ case ""Tainted Soul"":
                     Core.HuntMonster(""evilmarsh"", ""Tainted Soul"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Silver",
-    @"
+        },
+        {
+            "Silver",
+            @"
 case ""Silver"":
                     Dailies.MineCrafting(new[] { ""Silver"" }, quant);
                     break;
     "
-},
-{
-    "Mammoth Crusher Blade",
-    @"
+        },
+        {
+            "Mammoth Crusher Blade",
+            @"
 case ""Mammoth Crusher Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""lair"", ""Bronze Draconian"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Eternity Blade",
-    @"
+        },
+        {
+            "Eternity Blade",
+            @"
 case ""Eternity Blade"":
                     Core.EquipClass(ClassType.Solo);
                     Core.EnsureAccept(3485);
@@ -14770,10 +14767,10 @@ case ""Eternity Blade"":
                     Core.EnsureComplete(3485);
                     break;
     "
-},
-{
-    "Dark Heart Medal",
-    @"
+        },
+        {
+            "Dark Heart Medal",
+            @"
 case ""Dark Heart Medal"":
                     ShadowGates.StoryLine();
                     Core.FarmingLogger(req.Name, quant);
@@ -14789,10 +14786,10 @@ case ""Dark Heart Medal"":
                     break;
 
     "
-},
-{
-    "Shade Spark",
-    @"
+        },
+        {
+            "Shade Spark",
+            @"
 case ""Shade Spark"":
                     SoW.Tyndarius();
                     Core.FarmingLogger(req.Name, quant);
@@ -14808,10 +14805,10 @@ case ""Shade Spark"":
                     break;
 
     "
-},
-{
-    "Shadow Shield",
-    @"
+        },
+        {
+            "Shadow Shield",
+            @"
 case ""Shadow Shield"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14826,10 +14823,10 @@ case ""Shadow Shield"":
                     }
                     break;
     "
-},
-{
-    "Taotie Emblem",
-    @"
+        },
+        {
+            "Taotie Emblem",
+            @"
 case ""Taotie Emblem"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -14847,10 +14844,10 @@ case ""Taotie Emblem"":
                     }
                     break;
     "
-},
-{
-    "Blood Token",
-    @"
+        },
+        {
+            "Blood Token",
+            @"
 case ""Blood Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14863,10 +14860,10 @@ case ""Blood Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dark Token",
-    @"
+        },
+        {
+            "Dark Token",
+            @"
 case ""Dark Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14879,30 +14876,30 @@ case ""Dark Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Seraphic Paladin Shield",
-    @"
+        },
+        {
+            "Seraphic Paladin Shield",
+            @"
 case ""Seraphic Paladin Shield"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""seraphicwardage"", ""Supercharged Laken"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Seraphic Paladin Wings",
-    @"
+        },
+        {
+            "Seraphic Paladin Wings",
+            @"
 case ""Seraphic Paladin Wings"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""seraphicwardage"", ""Supercharged Laken"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Ninjo",
-    @"
+        },
+        {
+            "Ninjo",
+            @"
 case ""Ninjo"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -14917,10 +14914,10 @@ case ""Ninjo"":
                     break;
 
     "
-},
-{
-    "Sidhe's Silk",
-    @"
+        },
+        {
+            "Sidhe's Silk",
+            @"
 case ""Sidhe's Silk"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14933,10 +14930,10 @@ case ""Sidhe's Silk"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Leanan Sidhe's Butterflies",
-    @"
+        },
+        {
+            "Leanan Sidhe's Butterflies",
+            @"
 case ""Leanan Sidhe's Butterflies"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14944,10 +14941,10 @@ case ""Leanan Sidhe's Butterflies"":
                     break;
 
     "
-},
-{
-    "Especially Unbroken Skull",
-    @"
+        },
+        {
+            "Especially Unbroken Skull",
+            @"
 case ""Especially Unbroken Skull"":
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(!Core.IsMember ? 8411 : 8412);
@@ -14961,19 +14958,19 @@ case ""Especially Unbroken Skull"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Undine Visitor Badge",
-    @"
+        },
+        {
+            "Undine Visitor Badge",
+            @"
 case ""Undine Visitor Badge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.HuntMonster(""sunlightzone"", ""Astravian Illusion"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Leviathan Scale",
-    @"
+        },
+        {
+            "Leviathan Scale",
+            @"
 case ""Leviathan Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -14981,70 +14978,70 @@ case ""Leviathan Scale"":
                     Core.HuntMonster(""twilightzone"", ""Leviathan"", ""Leviathan Scale"", quant, false, false);
                     break;
     "
-},
-{
-    "Undine Coffee Table",
-    @"
+        },
+        {
+            "Undine Coffee Table",
+            @"
 case ""Undine Coffee Table"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""midnightzone"", ""Sparagmos"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Sleeping Monitor",
-    @"
+        },
+        {
+            "Sleeping Monitor",
+            @"
 case ""Sleeping Monitor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""midnightzone"", ""Sparagmos"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Water Temple Pedestal",
-    @"
+        },
+        {
+            "Water Temple Pedestal",
+            @"
 case ""Water Temple Pedestal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""midnightzone"", ""Sparagmos"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Scattered Bones",
-    @"
+        },
+        {
+            "Scattered Bones",
+            @"
 case ""Scattered Bones"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""midnightzone"", ""Undead Prisoner"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Experimentation Chair",
-    @"
+        },
+        {
+            "Experimentation Chair",
+            @"
 case ""Experimentation Chair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""midnightzone"", ""Undead Prisoner"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Ascending Kathool Tentacle",
-    @"
+        },
+        {
+            "Ascending Kathool Tentacle",
+            @"
 case ""Ascending Kathool Tentacle"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""abyssalzone"", ""The Ashray"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Ashray Trench Pedestal",
-    @"
+        },
+        {
+            "Ashray Trench Pedestal",
+            @"
 case ""Ashray Trench Pedestal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15053,10 +15050,10 @@ case ""Ashray Trench Pedestal"":
 
 
     "
-},
-{
-    "Enchanted Gauntlet Leather",
-    @"
+        },
+        {
+            "Enchanted Gauntlet Leather",
+            @"
 case ""Enchanted Gauntlet Leather"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15069,10 +15066,10 @@ case ""Enchanted Gauntlet Leather"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Anti-Au Crystals",
-    @"
+        },
+        {
+            "Anti-Au Crystals",
+            @"
 case ""Anti-Au Crystals"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15087,10 +15084,10 @@ case ""Anti-Au Crystals"":
                     break;
 
     "
-},
-{
-    "Pristine Deepsea Pearl",
-    @"
+        },
+        {
+            "Pristine Deepsea Pearl",
+            @"
 case ""Pristine Deepsea Pearl"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15103,10 +15100,10 @@ case ""Pristine Deepsea Pearl"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Deepdark Pearl",
-    @"
+        },
+        {
+            "Deepdark Pearl",
+            @"
 case ""Deepdark Pearl"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15119,46 +15116,46 @@ case ""Deepdark Pearl"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Electrojolt Scholar",
-    @"
+        },
+        {
+            "Electrojolt Scholar",
+            @"
 case ""Electrojolt Scholar"":
                     Adv.BuyItem(""balemorale"", 2443, req.Name, quant);
                     break;
     "
-},
-{
-    "Royal Electrojolt Scholar",
-    @"
+        },
+        {
+            "Royal Electrojolt Scholar",
+            @"
 case ""Royal Electrojolt Scholar"":
                     Adv.BuyItem(""balemorale"", 2443, req.Name, quant);
                     break;
     "
-},
-{
-    "Tattered Court Mage Robe",
-    @"
+        },
+        {
+            "Tattered Court Mage Robe",
+            @"
 case ""Tattered Court Mage Robe"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""balemorale"", ""Chaos Crystal"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Victoria's Fletching",
-    @"
+        },
+        {
+            "Victoria's Fletching",
+            @"
 case ""Victoria's Fletching"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""balemorale"", ""Queen Victoria"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Delta Fragment",
-    @"
+        },
+        {
+            "Delta Fragment",
+            @"
 case ""Delta Fragment"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -15177,10 +15174,10 @@ case ""Delta Fragment"":
                     }
                     break;
     "
-},
-{
-    "Spirit Ward Sigil",
-    @"
+        },
+        {
+            "Spirit Ward Sigil",
+            @"
 case ""Spirit Ward Sigil"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15193,10 +15190,10 @@ case ""Spirit Ward Sigil"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Screamwave",
-    @"
+        },
+        {
+            "Screamwave",
+            @"
 case ""Screamwave"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15209,10 +15206,10 @@ case ""Screamwave"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ectoamber",
-    @"
+        },
+        {
+            "Ectoamber",
+            @"
 case ""Ectoamber"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15226,10 +15223,10 @@ case ""Ectoamber"":
                     break;
 
     "
-},
-{
-    "Dragon Crystal",
-    @"
+        },
+        {
+            "Dragon Crystal",
+            @"
 case ""Dragon Crystal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15245,10 +15242,10 @@ case ""Dragon Crystal"":
                     break;
 
     "
-},
-{
-    "Tonitrus Gem",
-    @"
+        },
+        {
+            "Tonitrus Gem",
+            @"
 case ""Tonitrus Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15271,10 +15268,10 @@ case ""Tonitrus Gem"":
                     break;
 
     "
-},
-{
-    "Anqa's Feather",
-    @"
+        },
+        {
+            "Anqa's Feather",
+            @"
 case ""Anqa's Feather"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15286,10 +15283,10 @@ case ""Anqa's Feather"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Glowing Ember",
-    @"
+        },
+        {
+            "Glowing Ember",
+            @"
 case ""Glowing Ember"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15301,10 +15298,10 @@ case ""Glowing Ember"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Golden Firebird's Spear",
-    @"
+        },
+        {
+            "Golden Firebird's Spear",
+            @"
 case ""Golden Firebird's Spear"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15316,10 +15313,10 @@ case ""Golden Firebird's Spear"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Golden Firebird's Blade",
-    @"
+        },
+        {
+            "Golden Firebird's Blade",
+            @"
 case ""Golden Firebird's Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15331,10 +15328,10 @@ case ""Golden Firebird's Blade"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Golden Firebird's Blades",
-    @"
+        },
+        {
+            "Golden Firebird's Blades",
+            @"
 case ""Golden Firebird's Blades"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15346,10 +15343,10 @@ case ""Golden Firebird's Blades"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Miniature Phoenix Guest",
-    @"
+        },
+        {
+            "Miniature Phoenix Guest",
+            @"
 case ""Miniature Phoenix Guest"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15361,10 +15358,10 @@ case ""Miniature Phoenix Guest"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Fame Token",
-    @"
+        },
+        {
+            "Fame Token",
+            @"
 case ""Fame Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15378,10 +15375,10 @@ case ""Fame Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Yergen's HeroSmash Trophy",
-    @"
+        },
+        {
+            "Yergen's HeroSmash Trophy",
+            @"
 case ""Yergen's HeroSmash Trophy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15392,90 +15389,90 @@ case ""Yergen's HeroSmash Trophy"":
                     }
                     break;
     "
-},
-{
-    "Martial Artist's Gi",
-    @"
+        },
+        {
+            "Martial Artist's Gi",
+            @"
 case ""Martial Artist's Gi"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""dragonkoi"", ""Ryoku"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Ryoku's Spikes",
-    @"
+        },
+        {
+            "Ryoku's Spikes",
+            @"
 case ""Ryoku's Spikes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""dragonkoi"", ""Ryoku"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Fatal Lily",
-    @"
+        },
+        {
+            "Fatal Lily",
+            @"
 case ""Fatal Lily"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""superslayin"", ""Newb Cybot"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Pockey Ball",
-    @"
+        },
+        {
+            "Pockey Ball",
+            @"
 case ""Pockey Ball"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""superslayin"", ""Charidon"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Dragon Orb",
-    @"
+        },
+        {
+            "Dragon Orb",
+            @"
 case ""Dragon Orb"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""superslayin"", ""Super Ryoku"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Master's Gi",
-    @"
+        },
+        {
+            "Master's Gi",
+            @"
 case ""Master's Gi"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""superslayin"", ""Super Ryoku"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Super Ryoku Morph",
-    @"
+        },
+        {
+            "Super Ryoku Morph",
+            @"
 case ""Super Ryoku Morph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""superslayin"", ""Super Ryoku"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Super Ryoku Spikes",
-    @"
+        },
+        {
+            "Super Ryoku Spikes",
+            @"
 case ""Super Ryoku Spikes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""superslayin"", ""Super Ryoku"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Synderes' Souvenir",
-    @"
+        },
+        {
+            "Synderes' Souvenir",
+            @"
 case ""Synderes' Souvenir"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15490,10 +15487,10 @@ case ""Synderes' Souvenir"":
                     break;
 
     "
-},
-{
-    "Blue Overdrive",
-    @"
+        },
+        {
+            "Blue Overdrive",
+            @"
 case ""Blue Overdrive"":
                     if (!Core.CheckInventory(""Orange Tachyon Blade""))
                         BuyAllMerge(""Orange Tachyon Blade"");
@@ -15508,10 +15505,10 @@ case ""Blue Overdrive"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Blue Powercell",
-    @"
+        },
+        {
+            "Blue Powercell",
+            @"
 case ""Blue Powercell"":
                     if (!Core.CheckInventory(""Orange Tachyon Blade""))
                         BuyAllMerge(""Orange Tachyon Blade"");
@@ -15526,10 +15523,10 @@ case ""Blue Powercell"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Blue Tachyon Trigger",
-    @"
+        },
+        {
+            "Blue Tachyon Trigger",
+            @"
 case ""Blue Tachyon Trigger"":
                     if (!Core.CheckInventory(""Orange Tachyon Blade""))
                         BuyAllMerge(""Orange Tachyon Blade"");
@@ -15544,10 +15541,10 @@ case ""Blue Tachyon Trigger"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Blue Tachyon Grip",
-    @"
+        },
+        {
+            "Blue Tachyon Grip",
+            @"
 case ""Blue Tachyon Grip"":
                     if (!Core.CheckInventory(""Orange Tachyon Blade""))
                         BuyAllMerge(""Orange Tachyon Blade"");
@@ -15562,10 +15559,10 @@ case ""Blue Tachyon Grip"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Tachyon Core Piece",
-    @"
+        },
+        {
+            "Tachyon Core Piece",
+            @"
 case ""Tachyon Core Piece"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15578,10 +15575,10 @@ case ""Tachyon Core Piece"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Orange Overdrive",
-    @"
+        },
+        {
+            "Orange Overdrive",
+            @"
 case ""Orange Overdrive"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15594,10 +15591,10 @@ case ""Orange Overdrive"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Orange Tachyon Grip",
-    @"
+        },
+        {
+            "Orange Tachyon Grip",
+            @"
 case ""Orange Tachyon Grip"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15610,10 +15607,10 @@ case ""Orange Tachyon Grip"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Orange Tachyon Trigger",
-    @"
+        },
+        {
+            "Orange Tachyon Trigger",
+            @"
 case ""Orange Tachyon Trigger"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15626,10 +15623,10 @@ case ""Orange Tachyon Trigger"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Orange Powercell",
-    @"
+        },
+        {
+            "Orange Powercell",
+            @"
 case ""Orange Powercell"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15642,10 +15639,10 @@ case ""Orange Powercell"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Saeculum Gem",
-    @"
+        },
+        {
+            "Saeculum Gem",
+            @"
 case ""Saeculum Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15661,10 +15658,10 @@ case ""Saeculum Gem"":
                     break;
 
     "
-},
-{
-    "Meat Ration",
-    @"
+        },
+        {
+            "Meat Ration",
+            @"
 case ""Meat Ration"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15677,10 +15674,10 @@ case ""Meat Ration"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Grain Ration",
-    @"
+        },
+        {
+            "Grain Ration",
+            @"
 case ""Grain Ration"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15693,10 +15690,10 @@ case ""Grain Ration"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dairy Ration",
-    @"
+        },
+        {
+            "Dairy Ration",
+            @"
 case ""Dairy Ration"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15709,10 +15706,10 @@ case ""Dairy Ration"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Shadowslayer Apprentice Badge",
-    @"
+        },
+        {
+            "Shadowslayer Apprentice Badge",
+            @"
 case ""Shadowslayer Apprentice Badge"":
                     Core.FarmingLogger(req.Name, quant);
                     if (!Core.CheckInventory(""Chibi Eldritch Yume""))
@@ -15750,10 +15747,10 @@ case ""Shadowslayer Apprentice Badge"":
                     break;
 
     "
-},
-{
-    "Apprentice of the Light",
-    @"
+        },
+        {
+            "Apprentice of the Light",
+            @"
 case ""Apprentice of the Light"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
@@ -15767,10 +15764,10 @@ case ""Apprentice of the Light"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Furred Ruff of the Light",
-    @"
+        },
+        {
+            "Furred Ruff of the Light",
+            @"
 case ""Furred Ruff of the Light"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
@@ -15784,10 +15781,10 @@ case ""Furred Ruff of the Light"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Apprentice of the Light Hair",
-    @"
+        },
+        {
+            "Apprentice of the Light Hair",
+            @"
 case ""Apprentice of the Light Hair"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
@@ -15801,10 +15798,10 @@ case ""Apprentice of the Light Hair"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Apprentice of the Light Locks",
-    @"
+        },
+        {
+            "Apprentice of the Light Locks",
+            @"
 case ""Apprentice of the Light Locks"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
@@ -15818,10 +15815,10 @@ case ""Apprentice of the Light Locks"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Citadel's Light Blade",
-    @"
+        },
+        {
+            "Citadel's Light Blade",
+            @"
 case ""Citadel's Light Blade"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
@@ -15835,10 +15832,10 @@ case ""Citadel's Light Blade"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Medal of Light",
-    @"
+        },
+        {
+            "Medal of Light",
+            @"
 case ""Medal of Light"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
@@ -15852,10 +15849,10 @@ case ""Medal of Light"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Medal of Honor",
-    @"
+        },
+        {
+            "Medal of Honor",
+            @"
 case ""Medal of Honor"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
@@ -15869,10 +15866,10 @@ case ""Medal of Honor"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Medal of Justice",
-    @"
+        },
+        {
+            "Medal of Justice",
+            @"
 case ""Medal of Justice"":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
@@ -15886,20 +15883,20 @@ case ""Medal of Justice"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Brimstone Scrap",
-    @"
+        },
+        {
+            "Brimstone Scrap",
+            @"
 case ""Brimstone Scrap"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""starsinc"", ""Infernal Imp"", req.Name, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Star Fragment",
-    @"
+        },
+        {
+            "Star Fragment",
+            @"
 case ""Star Fragment"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15912,10 +15909,10 @@ case ""Star Fragment"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Taker and Giver Stone",
-    @"
+        },
+        {
+            "Taker and Giver Stone",
+            @"
 case ""Taker and Giver Stone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15931,10 +15928,10 @@ case ""Taker and Giver Stone"":
                     }
                     break;
     "
-},
-{
-    "Prime's Respect",
-    @"
+        },
+        {
+            "Prime's Respect",
+            @"
 case ""Prime's Respect"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -15948,10 +15945,10 @@ case ""Prime's Respect"":
                     break;
 
     "
-},
-{
-    "Deadtech War Medal",
-    @"
+        },
+        {
+            "Deadtech War Medal",
+            @"
 case ""Deadtech War Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -15963,51 +15960,51 @@ case ""Deadtech War Medal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Pink Blade of Destruction",
-    @"
+        },
+        {
+            "Pink Blade of Destruction",
+            @"
 case ""Pink Blade of Destruction"":
                     PBOD.GetPBoD();
                     break;
     "
-},
-{
-    "Unicorn Essence",
-    @"
+        },
+        {
+            "Unicorn Essence",
+            @"
 case ""Unicorn Essence"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""undergroundlabb"", ""Ultra Brutalcorn"", ""Unicorn Essence"", quant, false);
                     break;
     "
-},
-{
-    "Spirit Orb",
-    @"
+        },
+        {
+            "Spirit Orb",
+            @"
 case ""Spirit Orb"":
                     BLOD.SpiritOrb(quant);
                     break;
     "
-},
-{
-    "Loyal Spirit Orb",
-    @"
+        },
+        {
+            "Loyal Spirit Orb",
+            @"
 case ""Loyal Spirit Orb"":
                     BLOD.LoyalSpiritOrb(quant);
                     break;
     "
-},
-{
-    "Brilliant Aura",
-    @"
+        },
+        {
+            "Brilliant Aura",
+            @"
 case ""Brilliant Aura"":
                     BLOD.BrilliantAura(quant);
                     break;
     "
-},
-{
-    "Shard of An Orb",
-    @"
+        },
+        {
+            "Shard of An Orb",
+            @"
 case ""Shard of An Orb"":
                     Core.FarmingLogger(req.Name, quant);
                     BLOD.BlindingLightOfDestiny();
@@ -16025,88 +16022,88 @@ case ""Shard of An Orb"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Thirdspell Token",
-    @"
+        },
+        {
+            "Thirdspell Token",
+            @"
 case ""Thirdspell Token"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""thirdspell"", ""Pure Fire Elemental"", req.Name, quant, false);
                     break;
 
     "
-},
-{
-    "AntiTitan Supplies",
-    @"
+        },
+        {
+            "AntiTitan Supplies",
+            @"
 case ""AntiTitan Supplies"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""titanattack"", ""r9"", ""Left"", ""*"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Titan Paladin's Blade",
-    @"
+        },
+        {
+            "Titan Paladin's Blade",
+            @"
 case ""Titan Paladin's Blade"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titanattack"", ""Titanic Paladin"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Titan",
-    @"
+        },
+        {
+            "Vindicator Titan",
+            @"
 case ""Vindicator Titan"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titanattack"", ""Titanic Vindicator"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vindicator Titan's Axe",
-    @"
+        },
+        {
+            "Vindicator Titan's Axe",
+            @"
 case ""Vindicator Titan's Axe"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titanattack"", ""Titanic Vindicator"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Titanic Fluid",
-    @"
+        },
+        {
+            "Titanic Fluid",
+            @"
 case ""Titanic Fluid"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titanattack"", ""Titanic Vindicator"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Holy Wasabi Jar",
-    @"
+        },
+        {
+            "Holy Wasabi Jar",
+            @"
 case ""Holy Wasabi Jar"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titanattack"", ""Supply Caravan"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Holy Hand Grenade",
-    @"
+        },
+        {
+            "Holy Hand Grenade",
+            @"
 case ""Holy Hand Grenade"":
                     Adv.BuyItem(""castle"", 88, 1843, quant, shopItemID: 1847);
                     break;
 
     "
-},
-{
-    "Bright Dragon Shield",
-    @"
+        },
+        {
+            "Bright Dragon Shield",
+            @"
 case ""Bright Dragon Shield"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16119,10 +16116,10 @@ case ""Bright Dragon Shield"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Battle Cleric's Draconic Spear",
-    @"
+        },
+        {
+            "Battle Cleric's Draconic Spear",
+            @"
 case ""Battle Cleric's Draconic Spear"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16135,10 +16132,10 @@ case ""Battle Cleric's Draconic Spear"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "DragonGuard Badge",
-    @"
+        },
+        {
+            "DragonGuard Badge",
+            @"
 case ""DragonGuard Badge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16151,10 +16148,10 @@ case ""DragonGuard Badge"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Termina Sigil",
-    @"
+        },
+        {
+            "Termina Sigil",
+            @"
 case ""Termina Sigil"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16167,18 +16164,18 @@ case ""Termina Sigil"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bright Aura",
-    @"
+        },
+        {
+            "Bright Aura",
+            @"
 case ""Bright Aura"":
                     BLOD.BrightAura(quant);
                     break;
     "
-},
-{
-    "Trace of Chaos",
-    @"
+        },
+        {
+            "Trace of Chaos",
+            @"
 case ""Trace of Chaos"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -16189,10 +16186,10 @@ case ""Trace of Chaos"":
                     break;
 
     "
-},
-{
-    "Feather of Purity",
-    @"
+        },
+        {
+            "Feather of Purity",
+            @"
 case ""Feather of Purity"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16207,10 +16204,10 @@ case ""Feather of Purity"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bow of Semiramis",
-    @"
+        },
+        {
+            "Bow of Semiramis",
+            @"
 case ""Bow of Semiramis"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -16221,10 +16218,10 @@ case ""Bow of Semiramis"":
                     }
                     break;
     "
-},
-{
-    "Blade of Semiramis",
-    @"
+        },
+        {
+            "Blade of Semiramis",
+            @"
 case ""Blade of Semiramis"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -16235,10 +16232,10 @@ case ""Blade of Semiramis"":
                     }
                     break;
     "
-},
-{
-    "Daggers of Semiramis",
-    @"
+        },
+        {
+            "Daggers of Semiramis",
+            @"
 case ""Daggers of Semiramis"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -16249,10 +16246,10 @@ case ""Daggers of Semiramis"":
                     }
                     break;
     "
-},
-{
-    "Staff of Semiramis",
-    @"
+        },
+        {
+            "Staff of Semiramis",
+            @"
 case ""Staff of Semiramis"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -16263,66 +16260,66 @@ case ""Staff of Semiramis"":
                     }
                     break;
     "
-},
-{
-    "Ashray Elf Top Knot",
-    @"
+        },
+        {
+            "Ashray Elf Top Knot",
+            @"
 case ""Ashray Elf Top Knot"":
                     AZM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Ashray Elf Locks",
-    @"
+        },
+        {
+            "Ashray Elf Locks",
+            @"
 case ""Ashray Elf Locks"":
                     AZM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Ashray Top Knot and Horns",
-    @"
+        },
+        {
+            "Ashray Top Knot and Horns",
+            @"
 case ""Ashray Top Knot and Horns"":
                     AZM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Ashray Locks and Horns",
-    @"
+        },
+        {
+            "Ashray Locks and Horns",
+            @"
 case ""Ashray Locks and Horns"":
                     AZM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Coastal Corona",
-    @"
+        },
+        {
+            "Coastal Corona",
+            @"
 case ""Coastal Corona"":
                     AZM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Golden Ashray Trident",
-    @"
+        },
+        {
+            "Golden Ashray Trident",
+            @"
 case ""Golden Ashray Trident"":
                     AZM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dancer's Sea Streams",
-    @"
+        },
+        {
+            "Dancer's Sea Streams",
+            @"
 case ""Dancer's Sea Streams"":
                     AZM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Frozen Tower Merge Token",
-    @"
+        },
+        {
+            "Frozen Tower Merge Token",
+            @"
 case ""Frozen Tower Merge Token"":
                     Glacera.FrozenTower();
                     Core.FarmingLogger(req.Name, quant);
@@ -16337,80 +16334,80 @@ case ""Frozen Tower Merge Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bits of Cloth",
-    @"
+        },
+        {
+            "Bits of Cloth",
+            @"
 case ""Bits of Cloth"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(3955);
                     Core.HuntMonster(""frozentower"", ""Frostwyrm"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Pieces of Glass",
-    @"
+        },
+        {
+            "Pieces of Glass",
+            @"
 case ""Pieces of Glass"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(3955);
                     Core.HuntMonster(""frozentower"", ""Frostwyrm"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Metal bits",
-    @"
+        },
+        {
+            "Metal bits",
+            @"
 case ""Metal bits"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(3955);
                     Core.HuntMonster(""frozentower"", ""Frostwyrm"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Bits of Hair",
-    @"
+        },
+        {
+            "Bits of Hair",
+            @"
 case ""Bits of Hair"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(3955);
                     Core.HuntMonster(""frozentower"", ""Frostwyrm"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Pieces of Cloth",
-    @"
+        },
+        {
+            "Pieces of Cloth",
+            @"
 case ""Pieces of Cloth"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(3955);
                     Core.HuntMonster(""frozentower"", ""Polar Elemental"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Ice Crystals",
-    @"
+        },
+        {
+            "Ice Crystals",
+            @"
 case ""Ice Crystals"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(3955);
                     Core.HuntMonster(""frozentower"", ""Polar Elemental"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Metal Pieces",
-    @"
+        },
+        {
+            "Metal Pieces",
+            @"
 case ""Metal Pieces"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(3955);
                     Core.HuntMonster(""frozentower"", ""Polar Elemental"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Flame of Courage",
-    @"
+        },
+        {
+            "Flame of Courage",
+            @"
 case ""Flame of Courage"":
                     Glacera.FrozenTower();
                     Core.FarmingLogger(req.Name, quant);
@@ -16425,20 +16422,20 @@ case ""Flame of Courage"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Karok's Glaceran Gem",
-    @"
+        },
+        {
+            "Karok's Glaceran Gem",
+            @"
 case ""Karok's Glaceran Gem"":
                     Core.EnsureAccept(3955);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""northstar"", ""Karok The Fallen"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Mercury",
-    @"
+        },
+        {
+            "Mercury",
+            @"
 case ""Mercury"":
                     Glacera.FrozenTower();
                     Core.FarmingLogger(req.Name, quant);
@@ -16454,10 +16451,10 @@ case ""Mercury"":
                     break;
 
     "
-},
-{
-    "Silver Vindicator Sword",
-    @"
+        },
+        {
+            "Silver Vindicator Sword",
+            @"
 case ""Silver Vindicator Sword"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16468,10 +16465,10 @@ case ""Silver Vindicator Sword"":
                     }
                     break;
     "
-},
-{
-    "Silver Vindicator Swords",
-    @"
+        },
+        {
+            "Silver Vindicator Swords",
+            @"
 case ""Silver Vindicator Swords"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16482,10 +16479,10 @@ case ""Silver Vindicator Swords"":
                     }
                     break;
     "
-},
-{
-    "Silver Vindicator Hood",
-    @"
+        },
+        {
+            "Silver Vindicator Hood",
+            @"
 case ""Silver Vindicator Hood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16496,10 +16493,10 @@ case ""Silver Vindicator Hood"":
                     }
                     break;
     "
-},
-{
-    "Silver Vindicator Recruit",
-    @"
+        },
+        {
+            "Silver Vindicator Recruit",
+            @"
 case ""Silver Vindicator Recruit"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16510,10 +16507,10 @@ case ""Silver Vindicator Recruit"":
                     }
                     break;
     "
-},
-{
-    "Silver Vindicator Blade",
-    @"
+        },
+        {
+            "Silver Vindicator Blade",
+            @"
 case ""Silver Vindicator Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16524,10 +16521,10 @@ case ""Silver Vindicator Blade"":
                     }
                     break;
     "
-},
-{
-    "Silver Vindicator Helm",
-    @"
+        },
+        {
+            "Silver Vindicator Helm",
+            @"
 case ""Silver Vindicator Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16538,10 +16535,10 @@ case ""Silver Vindicator Helm"":
                     }
                     break;
     "
-},
-{
-    "Silver Vindicator Soldier",
-    @"
+        },
+        {
+            "Silver Vindicator Soldier",
+            @"
 case ""Silver Vindicator Soldier"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16552,10 +16549,10 @@ case ""Silver Vindicator Soldier"":
                     }
                     break;
     "
-},
-{
-    "Dawn Vindicator Lieutenant Helm",
-    @"
+        },
+        {
+            "Dawn Vindicator Lieutenant Helm",
+            @"
 case ""Dawn Vindicator Lieutenant Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16566,10 +16563,10 @@ case ""Dawn Vindicator Lieutenant Helm"":
                     }
                     break;
     "
-},
-{
-    "Dawn Vindicator Lieutenant",
-    @"
+        },
+        {
+            "Dawn Vindicator Lieutenant",
+            @"
 case ""Dawn Vindicator Lieutenant"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16580,10 +16577,10 @@ case ""Dawn Vindicator Lieutenant"":
                     }
                     break;
     "
-},
-{
-    "Silver Vindicator Bow",
-    @"
+        },
+        {
+            "Silver Vindicator Bow",
+            @"
 case ""Silver Vindicator Bow"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16594,55 +16591,55 @@ case ""Silver Vindicator Bow"":
                     }
                     break;
     "
-},
-{
-    "Ubear X Pass",
-    @"
+        },
+        {
+            "Ubear X Pass",
+            @"
 case ""Ubear X Pass"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""limft"", ""Ubear"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Destroyer Essence",
-    @"
+        },
+        {
+            "Destroyer Essence",
+            @"
 case ""Destroyer Essence"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titanstrike"", ""Titanic Destroyer"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Titanic Destroyer Blade",
-    @"
+        },
+        {
+            "Titanic Destroyer Blade",
+            @"
 case ""Titanic Destroyer Blade"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titanstrike"", ""Titanic Destroyer"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Titanic Destroyer Morph",
-    @"
+        },
+        {
+            "Titanic Destroyer Morph",
+            @"
 case ""Titanic Destroyer Morph"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titanstrike"", ""Titanic Destroyer"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Titanic Tincture",
-    @"
+        },
+        {
+            "Titanic Tincture",
+            @"
 case ""Titanic Tincture"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titandrakath"", ""Titan Drakath"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Heroic Titan's Greatsword",
-    @"
+        },
+        {
+            "Heroic Titan's Greatsword",
+            @"
 case ""Heroic Titan's Greatsword"":
                     if (Core.isCompletedBefore(8776))
                         Core.Logger($""{req.Name} is obtained from a One-Time only quest that you have already completed. Please check your BuyBack"", messageBox: true, stopBot: true);
@@ -16658,10 +16655,10 @@ case ""Heroic Titan's Greatsword"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Titan Paladin",
-    @"
+        },
+        {
+            "Titan Paladin",
+            @"
 case ""Titan Paladin"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16671,10 +16668,10 @@ case ""Titan Paladin"":
                     Adv.BuyItem(""titanattack"", 2149, req.Name);
                     break;
     "
-},
-{
-    "Vindicator Titan XL",
-    @"
+        },
+        {
+            "Vindicator Titan XL",
+            @"
 case ""Vindicator Titan XL"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16685,10 +16682,10 @@ case ""Vindicator Titan XL"":
                     Adv.BuyItem(""titanattack"", 2149, req.Name);
                     break;
     "
-},
-{
-    "Vindicator Titan's Axes",
-    @"
+        },
+        {
+            "Vindicator Titan's Axes",
+            @"
 case ""Vindicator Titan's Axes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16699,10 +16696,10 @@ case ""Vindicator Titan's Axes"":
                     Adv.BuyItem(""titanattack"", 2149, req.Name);
                     break;
     "
-},
-{
-    "Titan Paladin's Blades",
-    @"
+        },
+        {
+            "Titan Paladin's Blades",
+            @"
 case ""Titan Paladin's Blades"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16713,19 +16710,19 @@ case ""Titan Paladin's Blades"":
                     Adv.BuyItem(""titanattack"", 2149, req.Name);
                     break;
     "
-},
-{
-    "Titan Drakath's Blade",
-    @"
+        },
+        {
+            "Titan Drakath's Blade",
+            @"
 case ""Titan Drakath's Blade"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titandrakath"", ""Titan Drakath"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Titan Paladin's Helm",
-    @"
+        },
+        {
+            "Titan Paladin's Helm",
+            @"
 case ""Titan Paladin's Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16735,10 +16732,10 @@ case ""Titan Paladin's Helm"":
                     Adv.BuyItem(""titanattack"", 2149, req.Name);
                     break;
     "
-},
-{
-    "Vindicator Titan's Helm",
-    @"
+        },
+        {
+            "Vindicator Titan's Helm",
+            @"
 case ""Vindicator Titan's Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16748,19 +16745,19 @@ case ""Vindicator Titan's Helm"":
                     Adv.BuyItem(""titanattack"", 2149, req.Name);
                     break;
     "
-},
-{
-    "Titan Drakath's Morph",
-    @"
+        },
+        {
+            "Titan Drakath's Morph",
+            @"
 case ""Titan Drakath's Morph"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""titandrakath"", ""Titan Drakath"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Titan Paladin's Cloak",
-    @"
+        },
+        {
+            "Titan Paladin's Cloak",
+            @"
 case ""Titan Paladin's Cloak"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16770,10 +16767,10 @@ case ""Titan Paladin's Cloak"":
                     Adv.BuyItem(""titanattack"", 2149, req.Name);
                     break;
     "
-},
-{
-    "Vindicator Titan's Cloak",
-    @"
+        },
+        {
+            "Vindicator Titan's Cloak",
+            @"
 case ""Vindicator Titan's Cloak"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16783,61 +16780,61 @@ case ""Vindicator Titan's Cloak"":
                     Adv.BuyItem(""titanattack"", 2149, req.Name);
                     break;
     "
-},
-{
-    "Chaorrupted AntiTitan Corps",
-    @"
+        },
+        {
+            "Chaorrupted AntiTitan Corps",
+            @"
 case ""Chaorrupted AntiTitan Corps"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""titanattack"", ""AntiTitan Corps"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Titan Hunter",
-    @"
+        },
+        {
+            "Titan Hunter",
+            @"
 case ""Titan Hunter"":
                     Adv.BuyItem(""artistalley"", 729, req.Name);
                     break;
 
     "
-},
-{
-    "Crypto Token",
-    @"
+        },
+        {
+            "Crypto Token",
+            @"
 case ""Crypto Token"":
                     Core.Logger($""{req.Name} is daily, make sure you have enough."");
                     Daily.CryptoToken();
                     break;
     "
-},
-{
-    "Shadowed Infernal Companion",
-    @"
+        },
+        {
+            "Shadowed Infernal Companion",
+            @"
 case ""Shadowed Infernal Companion"":
                     Core.Logger($""{req.Name} is rare, it cannot be farmed."");
                     break;
     "
-},
-{
-    "GrandPapa the Golden Sneevil Morph",
-    @"
+        },
+        {
+            "GrandPapa the Golden Sneevil Morph",
+            @"
 case ""GrandPapa the Golden Sneevil Morph"":
                     Core.Logger($""{req.Name} is rare, it cannot be farmed."");
                     break;
     "
-},
-{
-    "Papa the Sneevil",
-    @"
+        },
+        {
+            "Papa the Sneevil",
+            @"
 case ""Papa the Sneevil"":
                     Core.Logger($""{req.Name} is rare, it cannot be farmed."");
                     break;
     "
-},
-{
-    "Unitas Fragment",
-    @"
+        },
+        {
+            "Unitas Fragment",
+            @"
 case ""Unitas Fragment"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -16868,10 +16865,10 @@ case ""Unitas Fragment"":
                     break;
 
     "
-},
-{
-    "Byakko's Stardust",
-    @"
+        },
+        {
+            "Byakko's Stardust",
+            @"
 case ""Byakko's Stardust"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -16889,10 +16886,10 @@ case ""Byakko's Stardust"":
                     }
                     break;
     "
-},
-{
-    "White Tiger Hair",
-    @"
+        },
+        {
+            "White Tiger Hair",
+            @"
 case ""White Tiger Hair"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -16910,10 +16907,10 @@ case ""White Tiger Hair"":
                     }
                     break;
     "
-},
-{
-    "White Tiger Locks",
-    @"
+        },
+        {
+            "White Tiger Locks",
+            @"
 case ""White Tiger Locks"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -16931,10 +16928,10 @@ case ""White Tiger Locks"":
                     }
                     break;
     "
-},
-{
-    "White Tiger Cape",
-    @"
+        },
+        {
+            "White Tiger Cape",
+            @"
 case ""White Tiger Cape"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -16952,10 +16949,10 @@ case ""White Tiger Cape"":
                     }
                     break;
     "
-},
-{
-    "Byakko's Aura",
-    @"
+        },
+        {
+            "Byakko's Aura",
+            @"
 case ""Byakko's Aura"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -16973,10 +16970,10 @@ case ""Byakko's Aura"":
                     }
                     break;
     "
-},
-{
-    "Komokuten's Star Wand",
-    @"
+        },
+        {
+            "Komokuten's Star Wand",
+            @"
 case ""Komokuten's Star Wand"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -16994,20 +16991,20 @@ case ""Komokuten's Star Wand"":
                     }
                     break;
     "
-},
-{
-    "Guardian Shard",
-    @"
+        },
+        {
+            "Guardian Shard",
+            @"
 case ""Guardian Shard"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""worldsoul"", ""r4"", ""Left"", ""*"", req.Name, quant, false);
                     break;
 
     "
-},
-{
-    "Shikigami String",
-    @"
+        },
+        {
+            "Shikigami String",
+            @"
 case ""Shikigami String"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9677);
@@ -17023,691 +17020,691 @@ case ""Shikigami String"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Zakhvatchik's Sapphire",
-    @"
+        },
+        {
+            "Zakhvatchik's Sapphire",
+            @"
 case ""Zakhvatchik's Sapphire"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""hakuwar"", ""Zakhvatchik"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Noble Amethyst Katana",
-    @"
+        },
+        {
+            "Noble Amethyst Katana",
+            @"
 case ""Noble Amethyst Katana"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""yokaiportal"", ""Kitsune Kukol'nyy"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Kitsune's Ruby",
-    @"
+        },
+        {
+            "Kitsune's Ruby",
+            @"
 case ""Kitsune's Ruby"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""yokaiportal"", ""Kitsune Kukol'nyy"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Admiral Zheng's Jade",
-    @"
+        },
+        {
+            "Admiral Zheng's Jade",
+            @"
 case ""Admiral Zheng's Jade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""yokaitreasure"", ""Admiral Zheng"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Doomatter",
-    @"
+        },
+        {
+            "Doomatter",
+            @"
 case ""Doomatter"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""tercessuinotlim"", 1951, req.Name, quant);
                     break;
     "
-},
-{
-    "Dual Boom Went The Dynamite",
-    @"
+        },
+        {
+            "Dual Boom Went The Dynamite",
+            @"
 case ""Dual Boom Went The Dynamite"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual TheWicked",
-    @"
+        },
+        {
+            "Dual TheWicked",
+            @"
 case ""Dual TheWicked"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Overlord's DoomBlade",
-    @"
+        },
+        {
+            "Dual Overlord's DoomBlade",
+            @"
 case ""Dual Overlord's DoomBlade"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Blessed Coffee Cup",
-    @"
+        },
+        {
+            "Dual Blessed Coffee Cup",
+            @"
 case ""Dual Blessed Coffee Cup"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Party Slasher Birthday Sword",
-    @"
+        },
+        {
+            "Dual Party Slasher Birthday Sword",
+            @"
 case ""Dual Party Slasher Birthday Sword"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Rapier of Skulls",
-    @"
+        },
+        {
+            "Dual Rapier of Skulls",
+            @"
 case ""Dual Rapier of Skulls"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Frostbite",
-    @"
+        },
+        {
+            "Dual Frostbite",
+            @"
 case ""Dual Frostbite"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Rocks",
-    @"
+        },
+        {
+            "Dual Rocks",
+            @"
 case ""Dual Rocks"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Phoenix Blade of Nulgath",
-    @"
+        },
+        {
+            "Dual Phoenix Blade of Nulgath",
+            @"
 case ""Dual Phoenix Blade of Nulgath"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Shadow Spear of Nulgath",
-    @"
+        },
+        {
+            "Dual Shadow Spear of Nulgath",
+            @"
 case ""Dual Shadow Spear of Nulgath"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Guardian of Virtue",
-    @"
+        },
+        {
+            "Dual Guardian of Virtue",
+            @"
 case ""Dual Guardian of Virtue"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Leviasea Sword",
-    @"
+        },
+        {
+            "Dual Leviasea Sword",
+            @"
 case ""Dual Leviasea Sword"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Iron Dreadsaw",
-    @"
+        },
+        {
+            "Dual Iron Dreadsaw",
+            @"
 case ""Dual Iron Dreadsaw"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Blood Axe Of Destruction",
-    @"
+        },
+        {
+            "Dual Blood Axe Of Destruction",
+            @"
 case ""Dual Blood Axe Of Destruction"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual PainSaw of Eidolon",
-    @"
+        },
+        {
+            "Dual PainSaw of Eidolon",
+            @"
 case ""Dual PainSaw of Eidolon"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Hanzamune Dragon Koi Blade",
-    @"
+        },
+        {
+            "Dual Hanzamune Dragon Koi Blade",
+            @"
 case ""Dual Hanzamune Dragon Koi Blade"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Ugly Stick",
-    @"
+        },
+        {
+            "Dual Ugly Stick",
+            @"
 case ""Dual Ugly Stick"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Balrog Blade",
-    @"
+        },
+        {
+            "Dual Balrog Blade",
+            @"
 case ""Dual Balrog Blade"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Legendary Magma Sword",
-    @"
+        },
+        {
+            "Dual Legendary Magma Sword",
+            @"
 case ""Dual Legendary Magma Sword"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Dragon Saw",
-    @"
+        },
+        {
+            "Dual Dragon Saw",
+            @"
 case ""Dual Dragon Saw"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Overfiend Blade of Nulgath",
-    @"
+        },
+        {
+            "Dual Overfiend Blade of Nulgath",
+            @"
 case ""Dual Overfiend Blade of Nulgath"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Bone Sword",
-    @"
+        },
+        {
+            "Dual Bone Sword",
+            @"
 case ""Dual Bone Sword"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Honor Guard's Blade",
-    @"
+        },
+        {
+            "Dual Honor Guard's Blade",
+            @"
 case ""Dual Honor Guard's Blade"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Ceremonial Legion Blade",
-    @"
+        },
+        {
+            "Dual Ceremonial Legion Blade",
+            @"
 case ""Dual Ceremonial Legion Blade"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Alteon's Pride",
-    @"
+        },
+        {
+            "Dual Alteon's Pride",
+            @"
 case ""Dual Alteon's Pride"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Ddog Sea Serpent Sword",
-    @"
+        },
+        {
+            "Dual Ddog Sea Serpent Sword",
+            @"
 case ""Dual Ddog Sea Serpent Sword"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Eternity Blade",
-    @"
+        },
+        {
+            "Dual Eternity Blade",
+            @"
 case ""Dual Eternity Blade"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Blinding Light of Destiny",
-    @"
+        },
+        {
+            "Dual Blinding Light of Destiny",
+            @"
 case ""Dual Blinding Light of Destiny"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Crystal Claymore",
-    @"
+        },
+        {
+            "Dual Crystal Claymore",
+            @"
 case ""Dual Crystal Claymore"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Dark Crystal Claymore",
-    @"
+        },
+        {
+            "Dual Dark Crystal Claymore",
+            @"
 case ""Dual Dark Crystal Claymore"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Soulreaper of Nulgath",
-    @"
+        },
+        {
+            "Dual Soulreaper of Nulgath",
+            @"
 case ""Dual Soulreaper of Nulgath"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Grumpy Warhammer",
-    @"
+        },
+        {
+            "Dual Grumpy Warhammer",
+            @"
 case ""Dual Grumpy Warhammer"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Crystal Phoenix Blade of Nulgath",
-    @"
+        },
+        {
+            "Dual Crystal Phoenix Blade of Nulgath",
+            @"
 case ""Dual Crystal Phoenix Blade of Nulgath"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Maximillian's Whip",
-    @"
+        },
+        {
+            "Dual Maximillian's Whip",
+            @"
 case ""Dual Maximillian's Whip"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual WarpForce War Shovel 20K",
-    @"
+        },
+        {
+            "Dual WarpForce War Shovel 20K",
+            @"
 case ""Dual WarpForce War Shovel 20K"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Godly Mace of the Ancients",
-    @"
+        },
+        {
+            "Dual Godly Mace of the Ancients",
+            @"
 case ""Dual Godly Mace of the Ancients"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Mace of the Grand Inquisitor",
-    @"
+        },
+        {
+            "Dual Mace of the Grand Inquisitor",
+            @"
 case ""Dual Mace of the Grand Inquisitor"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual KneeCappers",
-    @"
+        },
+        {
+            "Dual KneeCappers",
+            @"
 case ""Dual KneeCappers"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Morning Stars",
-    @"
+        },
+        {
+            "Dual Morning Stars",
+            @"
 case ""Dual Morning Stars"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Axe of the Black Knight",
-    @"
+        },
+        {
+            "Dual Axe of the Black Knight",
+            @"
 case ""Dual Axe of the Black Knight"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Cruel Axe of Midnight",
-    @"
+        },
+        {
+            "Dual Cruel Axe of Midnight",
+            @"
 case ""Dual Cruel Axe of Midnight"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Platinum Axe of Destiny",
-    @"
+        },
+        {
+            "Dual Platinum Axe of Destiny",
+            @"
 case ""Dual Platinum Axe of Destiny"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Star Sword",
-    @"
+        },
+        {
+            "Dual Star Sword",
+            @"
 case ""Dual Star Sword"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Big 100K",
-    @"
+        },
+        {
+            "Dual Big 100K",
+            @"
 case ""Dual Big 100K"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Golden Phoenix Sword",
-    @"
+        },
+        {
+            "Dual Golden Phoenix Sword",
+            @"
 case ""Dual Golden Phoenix Sword"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Hydra Blades",
-    @"
+        },
+        {
+            "Dual Hydra Blades",
+            @"
 case ""Dual Hydra Blades"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Crusader Sword",
-    @"
+        },
+        {
+            "Dual Crusader Sword",
+            @"
 case ""Dual Crusader Sword"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Bloodrivers",
-    @"
+        },
+        {
+            "Dual Bloodrivers",
+            @"
 case ""Dual Bloodrivers"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Star Sword Breaker",
-    @"
+        },
+        {
+            "Dual Star Sword Breaker",
+            @"
 case ""Dual Star Sword Breaker"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual ReignBringers",
-    @"
+        },
+        {
+            "Dual ReignBringers",
+            @"
 case ""Dual ReignBringers"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Balor's Cruelty",
-    @"
+        },
+        {
+            "Dual Balor's Cruelty",
+            @"
 case ""Dual Balor's Cruelty"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Default Sword",
-    @"
+        },
+        {
+            "Dual Default Sword",
+            @"
 case ""Dual Default Sword"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Iron Spears",
-    @"
+        },
+        {
+            "Dual Iron Spears",
+            @"
 case ""Dual Iron Spears"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Mighty Sword Of The Dragons",
-    @"
+        },
+        {
+            "Dual Mighty Sword Of The Dragons",
+            @"
 case ""Dual Mighty Sword Of The Dragons"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Butcher Knife",
-    @"
+        },
+        {
+            "Butcher Knife",
+            @"
 case ""Butcher Knife"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Pencil of Endless Scribbles",
-    @"
+        },
+        {
+            "Dual Pencil of Endless Scribbles",
+            @"
 case ""Dual Pencil of Endless Scribbles"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Krom's Brutalities",
-    @"
+        },
+        {
+            "Dual Krom's Brutalities",
+            @"
 case ""Dual Krom's Brutalities"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Abaddon's Terrors",
-    @"
+        },
+        {
+            "Dual Abaddon's Terrors",
+            @"
 case ""Dual Abaddon's Terrors"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Blades of Awe",
-    @"
+        },
+        {
+            "Dual Blades of Awe",
+            @"
 case ""Dual Blades of Awe"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Burning Blades Of Abezeth",
-    @"
+        },
+        {
+            "Dual Burning Blades Of Abezeth",
+            @"
 case ""Dual Burning Blades Of Abezeth"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Necrotic Swords of Doom",
-    @"
+        },
+        {
+            "Dual Necrotic Swords of Doom",
+            @"
 case ""Dual Necrotic Swords of Doom"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Burn it Down Staves",
-    @"
+        },
+        {
+            "Dual Burn it Down Staves",
+            @"
 case ""Dual Burn it Down Staves"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Phoenix Blades",
-    @"
+        },
+        {
+            "Phoenix Blades",
+            @"
 case ""Phoenix Blades"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Shadow Terror Axes",
-    @"
+        },
+        {
+            "Dual Shadow Terror Axes",
+            @"
 case ""Dual Shadow Terror Axes"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual DragonBlades of Nulgath",
-    @"
+        },
+        {
+            "Dual DragonBlades of Nulgath",
+            @"
 case ""Dual DragonBlades of Nulgath"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual ShadowReapers Of Doom",
-    @"
+        },
+        {
+            "Dual ShadowReapers Of Doom",
+            @"
 case ""Dual ShadowReapers Of Doom"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Cysero's Potatoes",
-    @"
+        },
+        {
+            "Cysero's Potatoes",
+            @"
 case ""Cysero's Potatoes"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Kuro's Wrath",
-    @"
+        },
+        {
+            "Dual Kuro's Wrath",
+            @"
 case ""Dual Kuro's Wrath"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Mammoth Crusher Blade",
-    @"
+        },
+        {
+            "Dual Mammoth Crusher Blade",
+            @"
 case ""Dual Mammoth Crusher Blade"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Lilith Katana",
-    @"
+        },
+        {
+            "Dual Lilith Katana",
+            @"
 case ""Dual Lilith Katana"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Light Prismatic Katana",
-    @"
+        },
+        {
+            "Dual Light Prismatic Katana",
+            @"
 case ""Dual Light Prismatic Katana"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Corpse Maker of Nulgath",
-    @"
+        },
+        {
+            "Dual Corpse Maker of Nulgath",
+            @"
 case ""Dual Corpse Maker of Nulgath"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Excavated Glaive: Sword",
-    @"
+        },
+        {
+            "Dual Excavated Glaive: Sword",
+            @"
 case ""Dual Excavated Glaive: Sword"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Golden Blade of Fate",
-    @"
+        },
+        {
+            "Dual Golden Blade of Fate",
+            @"
 case ""Dual Golden Blade of Fate"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Hex Blade of Nulgath",
-    @"
+        },
+        {
+            "Dual Hex Blade of Nulgath",
+            @"
 case ""Dual Hex Blade of Nulgath"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Shadowworn",
-    @"
+        },
+        {
+            "Dual Shadowworn",
+            @"
 case ""Dual Shadowworn"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Bane of Nulgath",
-    @"
+        },
+        {
+            "Dual Bane of Nulgath",
+            @"
 case ""Dual Bane of Nulgath"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Hollowborn Oblivion Blade",
-    @"
+        },
+        {
+            "Dual Hollowborn Oblivion Blade",
+            @"
 case ""Dual Hollowborn Oblivion Blade"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Katana of Revontheus",
-    @"
+        },
+        {
+            "Dual Katana of Revontheus",
+            @"
 case ""Dual Katana of Revontheus"":
                     YDWM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dwarven Gold",
-    @"
+        },
+        {
+            "Dwarven Gold",
+            @"
 case ""Dwarven Gold"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -17721,10 +17718,10 @@ case ""Dwarven Gold"":
                     Core.HuntMonster(""thelimacity"", ""Dwarven Aegis"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Dwarven Emerald",
-    @"
+        },
+        {
+            "Dwarven Emerald",
+            @"
 case ""Dwarven Emerald"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -17738,10 +17735,10 @@ case ""Dwarven Emerald"":
                     Core.HuntMonster(""thelimacity"", ""Dwarven Aegis"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Drow Amethyst",
-    @"
+        },
+        {
+            "Drow Amethyst",
+            @"
 case ""Drow Amethyst"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -17755,10 +17752,10 @@ case ""Drow Amethyst"":
                     Core.HuntMonster(""thelimacity"", ""Drow Soldier"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Silver Claymore",
-    @"
+        },
+        {
+            "Silver Claymore",
+            @"
 case ""Silver Claymore"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -17781,10 +17778,10 @@ case ""Silver Claymore"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Necrotized Claymore",
-    @"
+        },
+        {
+            "Necrotized Claymore",
+            @"
 case ""Necrotized Claymore"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -17795,10 +17792,10 @@ case ""Necrotized Claymore"":
                     Core.Logger(""Cannot Get Item, requires manual pvp."");
                     break;
     "
-},
-{
-    "Stark's Ice",
-    @"
+        },
+        {
+            "Stark's Ice",
+            @"
 case ""Stark's Ice"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -17810,10 +17807,10 @@ case ""Stark's Ice"":
                     Adv.BuyItem(""blindingsnow"", 236, req.Name, quant);
                     break;
     "
-},
-{
-    "Grave Terror",
-    @"
+        },
+        {
+            "Grave Terror",
+            @"
 case ""Grave Terror"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -17824,10 +17821,10 @@ case ""Grave Terror"":
                     SFM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "The Unholy",
-    @"
+        },
+        {
+            "The Unholy",
+            @"
 case ""The Unholy"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -17838,10 +17835,10 @@ case ""The Unholy"":
                     SFM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Heavy Holy Blade",
-    @"
+        },
+        {
+            "Heavy Holy Blade",
+            @"
 case ""Heavy Holy Blade"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -17853,10 +17850,10 @@ case ""Heavy Holy Blade"":
                     Adv.BuyItem(""necropolis"", 408, req.Name, quant);
                     break;
     "
-},
-{
-    "Blade of the Desert Dunes",
-    @"
+        },
+        {
+            "Blade of the Desert Dunes",
+            @"
 case ""Blade of the Desert Dunes"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -17868,10 +17865,10 @@ case ""Blade of the Desert Dunes"":
                     Adv.BuyItem(""sandsea"", 242, req.Name, quant);
                     break;
     "
-},
-{
-    "Venomous Rose",
-    @"
+        },
+        {
+            "Venomous Rose",
+            @"
 case ""Venomous Rose"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -17884,79 +17881,79 @@ case ""Venomous Rose"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Warfury Emblem",
-    @"
+        },
+        {
+            "Warfury Emblem",
+            @"
 case ""Warfury Emblem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Emblem.WarfuryEmblemFarm(quant);
                     break;
     "
-},
-{
-    "WarFury Soldier's Morph",
-    @"
+        },
+        {
+            "WarFury Soldier's Morph",
+            @"
 case ""WarFury Soldier's Morph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""wartraining"", ""Varga"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "WarFury Soldier's Armor",
-    @"
+        },
+        {
+            "WarFury Soldier's Armor",
+            @"
 case ""WarFury Soldier's Armor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""wartraining"", ""Varga"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "WarFury Soldier's Blade",
-    @"
+        },
+        {
+            "WarFury Soldier's Blade",
+            @"
 case ""WarFury Soldier's Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""wartraining"", ""Varga"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Enchanted Scale",
-    @"
+        },
+        {
+            "Enchanted Scale",
+            @"
 case ""Enchanted Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     DSG.EnchantedScaleandClaw(quant, 0);
                     break;
     "
-},
-{
-    "Void Scale",
-    @"
+        },
+        {
+            "Void Scale",
+            @"
 case ""Void Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     FCA.VoidScale(quant);
                     break;
     "
-},
-{
-    "Dragon Scale",
-    @"
+        },
+        {
+            "Dragon Scale",
+            @"
 case ""Dragon Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""lair"", ""Bronze Draconian"", req.Name, quant);
                     break;
     "
-},
-{
-    "Ox Medallion",
-    @"
+        },
+        {
+            "Ox Medallion",
+            @"
 case ""Ox Medallion"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -17971,10 +17968,10 @@ case ""Ox Medallion"":
                     break;
 
     "
-},
-{
-    "Silver Victory Laurel",
-    @"
+        },
+        {
+            "Silver Victory Laurel",
+            @"
 case ""Silver Victory Laurel"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -18003,10 +18000,10 @@ case ""Silver Victory Laurel"":
                     Core.HuntMonster(""coliseum"", ""Nethersea Shark"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Gold Victory Laurel",
-    @"
+        },
+        {
+            "Gold Victory Laurel",
+            @"
 case ""Gold Victory Laurel"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -18035,10 +18032,10 @@ case ""Gold Victory Laurel"":
                     Core.HuntMonster(""coliseum"", ""Void Dragon"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Platinum Victory Laurel",
-    @"
+        },
+        {
+            "Platinum Victory Laurel",
+            @"
 case ""Platinum Victory Laurel"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -18067,10 +18064,10 @@ case ""Platinum Victory Laurel"":
                     Core.HuntMonster(""coliseum"", ""Chimera"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Lunar Fragment",
-    @"
+        },
+        {
+            "Lunar Fragment",
+            @"
 case ""Lunar Fragment"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -18084,10 +18081,10 @@ case ""Lunar Fragment"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Etokoun Residue",
-    @"
+        },
+        {
+            "Etokoun Residue",
+            @"
 case ""Etokoun Residue"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18101,10 +18098,10 @@ case ""Etokoun Residue"":
                     }
                     break;
     "
-},
-{
-    "Baoyu's Red Envelope",
-    @"
+        },
+        {
+            "Baoyu's Red Envelope",
+            @"
 case ""Baoyu's Red Envelope"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -18118,10 +18115,10 @@ case ""Baoyu's Red Envelope"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Baoyu's Flaming Envelope",
-    @"
+        },
+        {
+            "Baoyu's Flaming Envelope",
+            @"
 case ""Baoyu's Flaming Envelope"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18134,10 +18131,10 @@ case ""Baoyu's Flaming Envelope"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Baoyu's Rainbow Envelope",
-    @"
+        },
+        {
+            "Baoyu's Rainbow Envelope",
+            @"
 case ""Baoyu's Rainbow Envelope"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18151,10 +18148,10 @@ case ""Baoyu's Rainbow Envelope"":
                     break;
 
     "
-},
-{
-    "Tidal Byakko Warrior",
-    @"
+        },
+        {
+            "Tidal Byakko Warrior",
+            @"
 case ""Tidal Byakko Warrior"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18162,10 +18159,10 @@ case ""Tidal Byakko Warrior"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Tidal Byakko Warrior Hair",
-    @"
+        },
+        {
+            "Tidal Byakko Warrior Hair",
+            @"
 case ""Tidal Byakko Warrior Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18173,10 +18170,10 @@ case ""Tidal Byakko Warrior Hair"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Tidal Byakko Warrior Locks",
-    @"
+        },
+        {
+            "Tidal Byakko Warrior Locks",
+            @"
 case ""Tidal Byakko Warrior Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18184,10 +18181,10 @@ case ""Tidal Byakko Warrior Locks"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Tidal Tiger Blissus' Fighting Stance",
-    @"
+        },
+        {
+            "Tidal Tiger Blissus' Fighting Stance",
+            @"
 case ""Tidal Tiger Blissus' Fighting Stance"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18195,10 +18192,10 @@ case ""Tidal Tiger Blissus' Fighting Stance"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Tidal Byakko Wakizashi",
-    @"
+        },
+        {
+            "Tidal Byakko Wakizashi",
+            @"
 case ""Tidal Byakko Wakizashi"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18206,10 +18203,10 @@ case ""Tidal Byakko Wakizashi"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Tidal Byakko Wakizashis",
-    @"
+        },
+        {
+            "Tidal Byakko Wakizashis",
+            @"
 case ""Tidal Byakko Wakizashis"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18217,10 +18214,10 @@ case ""Tidal Byakko Wakizashis"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Tidal Byakko Fan",
-    @"
+        },
+        {
+            "Tidal Byakko Fan",
+            @"
 case ""Tidal Byakko Fan"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18228,10 +18225,10 @@ case ""Tidal Byakko Fan"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Tidal Byakko Fans",
-    @"
+        },
+        {
+            "Tidal Byakko Fans",
+            @"
 case ""Tidal Byakko Fans"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18239,10 +18236,10 @@ case ""Tidal Byakko Fans"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Tidal Byakko's Grasps",
-    @"
+        },
+        {
+            "Tidal Byakko's Grasps",
+            @"
 case ""Tidal Byakko's Grasps"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18250,10 +18247,10 @@ case ""Tidal Byakko's Grasps"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Tidal Byakko's Claws",
-    @"
+        },
+        {
+            "Tidal Byakko's Claws",
+            @"
 case ""Tidal Byakko's Claws"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18261,10 +18258,10 @@ case ""Tidal Byakko's Claws"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Lady Lua's Fan",
-    @"
+        },
+        {
+            "Lady Lua's Fan",
+            @"
 case ""Lady Lua's Fan"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18272,10 +18269,10 @@ case ""Lady Lua's Fan"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Lua's Lucky Envelope",
-    @"
+        },
+        {
+            "Lua's Lucky Envelope",
+            @"
 case ""Lua's Lucky Envelope"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18292,10 +18289,10 @@ case ""Lua's Lucky Envelope"":
 
 
     "
-},
-{
-    "Duplication Error",
-    @"
+        },
+        {
+            "Duplication Error",
+            @"
 case ""Duplication Error"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18303,10 +18300,10 @@ case ""Duplication Error"":
                     break;
 
     "
-},
-{
-    "Miko's Blessing",
-    @"
+        },
+        {
+            "Miko's Blessing",
+            @"
 case ""Miko's Blessing"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -18317,10 +18314,10 @@ case ""Miko's Blessing"":
                     }
                     break;
     "
-},
-{
-    "Pearlescent Scale",
-    @"
+        },
+        {
+            "Pearlescent Scale",
+            @"
 case ""Pearlescent Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -18331,70 +18328,70 @@ case ""Pearlescent Scale"":
                     }
                     break;
     "
-},
-{
-    "Urban Serpent Cap + Glasses",
-    @"
+        },
+        {
+            "Urban Serpent Cap + Glasses",
+            @"
 case ""Urban Serpent Cap + Glasses"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""yokaihunt"", ""Zhenzhu Shé"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Urban Serpent Hat + Glasses",
-    @"
+        },
+        {
+            "Urban Serpent Hat + Glasses",
+            @"
 case ""Urban Serpent Hat + Glasses"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""yokaihunt"", ""Zhenzhu Shé"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Urban Serpent Locks + Glasses",
-    @"
+        },
+        {
+            "Urban Serpent Locks + Glasses",
+            @"
 case ""Urban Serpent Locks + Glasses"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""yokaihunt"", ""Zhenzhu Shé"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Urban Serpent Hair + Glasses",
-    @"
+        },
+        {
+            "Urban Serpent Hair + Glasses",
+            @"
 case ""Urban Serpent Hair + Glasses"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""yokaihunt"", ""Zhenzhu Shé"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Meateor Shard",
-    @"
+        },
+        {
+            "Meateor Shard",
+            @"
 case ""Meateor Shard"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""meateortown"", ""Giant ChickenCow"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Cutie Cow Pet",
-    @"
+        },
+        {
+            "Cutie Cow Pet",
+            @"
 case ""Cutie Cow Pet"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""meateortown"", ""Giant ChickenCow"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "ChickenCow Teeth",
-    @"
+        },
+        {
+            "ChickenCow Teeth",
+            @"
 case ""ChickenCow Teeth"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18413,10 +18410,10 @@ case ""ChickenCow Teeth"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Silver Savior of Battleon",
-    @"
+        },
+        {
+            "Silver Savior of Battleon",
+            @"
 case ""Silver Savior of Battleon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18435,10 +18432,10 @@ case ""Silver Savior of Battleon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Illustrious Savior of Battleon",
-    @"
+        },
+        {
+            "Illustrious Savior of Battleon",
+            @"
 case ""Illustrious Savior of Battleon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18457,10 +18454,10 @@ case ""Illustrious Savior of Battleon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Armored Defender of Battleon",
-    @"
+        },
+        {
+            "Armored Defender of Battleon",
+            @"
 case ""Armored Defender of Battleon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18479,10 +18476,10 @@ case ""Armored Defender of Battleon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Armored Victor of Battleon",
-    @"
+        },
+        {
+            "Armored Victor of Battleon",
+            @"
 case ""Armored Victor of Battleon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18501,10 +18498,10 @@ case ""Armored Victor of Battleon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Silver Defender's Helm",
-    @"
+        },
+        {
+            "Silver Defender's Helm",
+            @"
 case ""Silver Defender's Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18523,10 +18520,10 @@ case ""Silver Defender's Helm"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Silver Savior's Visor",
-    @"
+        },
+        {
+            "Silver Savior's Visor",
+            @"
 case ""Silver Savior's Visor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18545,10 +18542,10 @@ case ""Silver Savior's Visor"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Silver Savior's Magical Wrap",
-    @"
+        },
+        {
+            "Silver Savior's Magical Wrap",
+            @"
 case ""Silver Savior's Magical Wrap"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18567,10 +18564,10 @@ case ""Silver Savior's Magical Wrap"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Illustrious Defender Pet",
-    @"
+        },
+        {
+            "Illustrious Defender Pet",
+            @"
 case ""Illustrious Defender Pet"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18589,10 +18586,10 @@ case ""Illustrious Defender Pet"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Illustrious Savior's Blade",
-    @"
+        },
+        {
+            "Illustrious Savior's Blade",
+            @"
 case ""Illustrious Savior's Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18611,10 +18608,10 @@ case ""Illustrious Savior's Blade"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Illustrious Savior's Blades",
-    @"
+        },
+        {
+            "Illustrious Savior's Blades",
+            @"
 case ""Illustrious Savior's Blades"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18633,10 +18630,10 @@ case ""Illustrious Savior's Blades"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Silver Victor's Hammer",
-    @"
+        },
+        {
+            "Silver Victor's Hammer",
+            @"
 case ""Silver Victor's Hammer"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18655,10 +18652,10 @@ case ""Silver Victor's Hammer"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Silver Victor's Hammers",
-    @"
+        },
+        {
+            "Silver Victor's Hammers",
+            @"
 case ""Silver Victor's Hammers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18677,10 +18674,10 @@ case ""Silver Victor's Hammers"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Epic Item Name",
-    @"
+        },
+        {
+            "Epic Item Name",
+            @"
 case ""Epic Item Name"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9660); // Gathering Evidence (9660)
@@ -18696,10 +18693,10 @@ case ""Epic Item Name"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ebil Company Sign",
-    @"
+        },
+        {
+            "Ebil Company Sign",
+            @"
 case ""Ebil Company Sign"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -18707,10 +18704,10 @@ case ""Ebil Company Sign"":
                     break;
 
     "
-},
-{
-    "Furry Ticket",
-    @"
+        },
+        {
+            "Furry Ticket",
+            @"
 case ""Furry Ticket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9185);
@@ -18724,10 +18721,10 @@ case ""Furry Ticket"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Slobber Ticket",
-    @"
+        },
+        {
+            "Slobber Ticket",
+            @"
 case ""Slobber Ticket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9185);
@@ -18741,10 +18738,10 @@ case ""Slobber Ticket"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Floofy Ticket",
-    @"
+        },
+        {
+            "Floofy Ticket",
+            @"
 case ""Floofy Ticket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9185);
@@ -18758,10 +18755,10 @@ case ""Floofy Ticket"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Fancy Ticket",
-    @"
+        },
+        {
+            "Fancy Ticket",
+            @"
 case ""Fancy Ticket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9186);
@@ -18775,10 +18772,10 @@ case ""Fancy Ticket"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hoppy Ticket",
-    @"
+        },
+        {
+            "Hoppy Ticket",
+            @"
 case ""Hoppy Ticket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9186);
@@ -18792,10 +18789,10 @@ case ""Hoppy Ticket"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Mushy Ticket",
-    @"
+        },
+        {
+            "Mushy Ticket",
+            @"
 case ""Mushy Ticket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9186);
@@ -18809,10 +18806,10 @@ case ""Mushy Ticket"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Pwny Ticket",
-    @"
+        },
+        {
+            "Pwny Ticket",
+            @"
 case ""Pwny Ticket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9187);
@@ -18826,10 +18823,10 @@ case ""Pwny Ticket"":
                     break;
 
     "
-},
-{
-    "Bony Ticket",
-    @"
+        },
+        {
+            "Bony Ticket",
+            @"
 case ""Bony Ticket"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9187);
@@ -18843,10 +18840,10 @@ case ""Bony Ticket"":
                     break;
 
     "
-},
-{
-    "Emblem of Righteousness",
-    @"
+        },
+        {
+            "Emblem of Righteousness",
+            @"
 case ""Emblem of Righteousness"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -18871,10 +18868,10 @@ case ""Emblem of Righteousness"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Emblem of Good Luck",
-    @"
+        },
+        {
+            "Emblem of Good Luck",
+            @"
 case ""Emblem of Good Luck"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -18899,10 +18896,10 @@ case ""Emblem of Good Luck"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Emblem of Knowledge",
-    @"
+        },
+        {
+            "Emblem of Knowledge",
+            @"
 case ""Emblem of Knowledge"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -18927,10 +18924,10 @@ case ""Emblem of Knowledge"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Emblem of Longevity",
-    @"
+        },
+        {
+            "Emblem of Longevity",
+            @"
 case ""Emblem of Longevity"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -18955,10 +18952,10 @@ case ""Emblem of Longevity"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Lucky Red Envelope",
-    @"
+        },
+        {
+            "Lucky Red Envelope",
+            @"
 case ""Lucky Red Envelope"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -18991,10 +18988,10 @@ case ""Lucky Red Envelope"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Super Lucky Red Envelope",
-    @"
+        },
+        {
+            "Super Lucky Red Envelope",
+            @"
 case ""Super Lucky Red Envelope"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19027,10 +19024,10 @@ case ""Super Lucky Red Envelope"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Luckier Red Envelope",
-    @"
+        },
+        {
+            "Luckier Red Envelope",
+            @"
 case ""Luckier Red Envelope"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19063,18 +19060,18 @@ case ""Luckier Red Envelope"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bunny",
-    @"
+        },
+        {
+            "Bunny",
+            @"
 case ""Bunny"":
                     Adv.BuyItem(""ariapet"", 12, ""Bunny"");
                     break;
     "
-},
-{
-    "Gold Medallion",
-    @"
+        },
+        {
+            "Gold Medallion",
+            @"
 case ""Gold Medallion"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -19085,10 +19082,10 @@ case ""Gold Medallion"":
                     }
                     break;
     "
-},
-{
-    "Lunar Firecracker",
-    @"
+        },
+        {
+            "Lunar Firecracker",
+            @"
 case ""Lunar Firecracker"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -19101,10 +19098,10 @@ case ""Lunar Firecracker"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Magenta Dye",
-    @"
+        },
+        {
+            "Magenta Dye",
+            @"
 case ""Magenta Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19132,10 +19129,10 @@ case ""Magenta Dye"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Mana Orb",
-    @"
+        },
+        {
+            "Mana Orb",
+            @"
 case ""Mana Orb"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19149,10 +19146,10 @@ case ""Mana Orb"":
                     Core.HuntMonster(""castleparty"", ""Legion Partycrasher"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Mana Creation Orb",
-    @"
+        },
+        {
+            "Mana Creation Orb",
+            @"
 case ""Mana Creation Orb"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19166,10 +19163,10 @@ case ""Mana Creation Orb"":
                     Core.HuntMonster(""castleparty"", ""Legion Partycrasher"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Gilded Gem",
-    @"
+        },
+        {
+            "Gilded Gem",
+            @"
 case ""Gilded Gem"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19183,10 +19180,10 @@ case ""Gilded Gem"":
                     Core.HuntMonster(""castleparty"", ""Noxus' Gift"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Noble Ether Staff",
-    @"
+        },
+        {
+            "Noble Ether Staff",
+            @"
 case ""Noble Ether Staff"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19200,10 +19197,10 @@ case ""Noble Ether Staff"":
                     Core.HuntMonster(""castleparty"", ""Treasure Chest"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Gleaming Ore",
-    @"
+        },
+        {
+            "Gleaming Ore",
+            @"
 case ""Gleaming Ore"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19217,10 +19214,10 @@ case ""Gleaming Ore"":
                     Core.HuntMonster(""castleparty"", ""Treasure Chest"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Royal Fortune Sword",
-    @"
+        },
+        {
+            "Royal Fortune Sword",
+            @"
 case ""Royal Fortune Sword"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19234,10 +19231,10 @@ case ""Royal Fortune Sword"":
                     Core.HuntMonster(""castleparty"", ""Treasure Chest"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Royal Fortune Swords",
-    @"
+        },
+        {
+            "Royal Fortune Swords",
+            @"
 case ""Royal Fortune Swords"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19251,10 +19248,10 @@ case ""Royal Fortune Swords"":
                     Core.HuntMonster(""castleparty"", ""Treasure Chest"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Iota of Eternity",
-    @"
+        },
+        {
+            "Iota of Eternity",
+            @"
 case ""Iota of Eternity"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19268,10 +19265,10 @@ case ""Iota of Eternity"":
                     Core.HuntMonster(""castleparty"", ""Kathool's Gift"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Flux Sigil",
-    @"
+        },
+        {
+            "Flux Sigil",
+            @"
 case ""Flux Sigil"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19285,10 +19282,10 @@ case ""Flux Sigil"":
                     Core.HuntMonster(""castleparty"", ""Drakath's Gift"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Darkness Rune",
-    @"
+        },
+        {
+            "Darkness Rune",
+            @"
 case ""Darkness Rune"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19302,10 +19299,10 @@ case ""Darkness Rune"":
                     Core.HuntMonster(""castleparty"", ""Nulgath's Gift"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Shadowbound Magus Cloak",
-    @"
+        },
+        {
+            "Shadowbound Magus Cloak",
+            @"
 case ""Shadowbound Magus Cloak"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19319,10 +19316,10 @@ case ""Shadowbound Magus Cloak"":
                     Core.HuntMonster(""castleparty"", ""Nulgath's Gift"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Dark Descent Rune",
-    @"
+        },
+        {
+            "Dark Descent Rune",
+            @"
 case ""Dark Descent Rune"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19336,10 +19333,10 @@ case ""Dark Descent Rune"":
                     Core.HuntMonster(""castleparty"", ""Nulgath's Gift"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Dominating Shadowbinder",
-    @"
+        },
+        {
+            "Dominating Shadowbinder",
+            @"
 case ""Dominating Shadowbinder"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19353,10 +19350,10 @@ case ""Dominating Shadowbinder"":
                     Core.HuntMonster(""castleparty"", ""Nulgath's Gift"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Dark Descent Sigil",
-    @"
+        },
+        {
+            "Dark Descent Sigil",
+            @"
 case ""Dark Descent Sigil"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19370,10 +19367,10 @@ case ""Dark Descent Sigil"":
                     Core.HuntMonster(""castleparty"", ""Nulgath's Gift"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Undying Essence",
-    @"
+        },
+        {
+            "Undying Essence",
+            @"
 case ""Undying Essence"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19387,10 +19384,10 @@ case ""Undying Essence"":
                     Core.HuntMonster(""castleparty"", ""Sally's Gift"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Giftbox Ribbon",
-    @"
+        },
+        {
+            "Giftbox Ribbon",
+            @"
 case ""Giftbox Ribbon"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19404,10 +19401,10 @@ case ""Giftbox Ribbon"":
                     Core.HuntMonster(""castleparty"", ""Lost Giftbox"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Golden Euphoria Blade",
-    @"
+        },
+        {
+            "Golden Euphoria Blade",
+            @"
 case ""Golden Euphoria Blade"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -19421,20 +19418,20 @@ case ""Golden Euphoria Blade"":
                     Core.HuntMonster(""castleparty"", ""Lost Giftbox"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Scarbucks Gift Card",
-    @"
+        },
+        {
+            "Scarbucks Gift Card",
+            @"
 case ""Scarbucks Gift Card"":
                     Core.EquipClass(ClassType.Solo);
                     Core.KillMonster(""mermaidsushi"", ""r7a"", ""Left"", ""*"", req.Name, quant, false);
                     break;
 
     "
-},
-{
-    "Necromancer's Pride",
-    @"
+        },
+        {
+            "Necromancer's Pride",
+            @"
 case ""Necromancer's Pride"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19448,10 +19445,10 @@ case ""Necromancer's Pride"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Necromancer's Joy",
-    @"
+        },
+        {
+            "Necromancer's Joy",
+            @"
 case ""Necromancer's Joy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19465,10 +19462,10 @@ case ""Necromancer's Joy"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Necromancer's Insanity",
-    @"
+        },
+        {
+            "Necromancer's Insanity",
+            @"
 case ""Necromancer's Insanity"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19488,28 +19485,28 @@ case ""Necromancer's Insanity"":
                     break;
 
     "
-},
-{
-    "Starry Bow",
-    @"
+        },
+        {
+            "Starry Bow",
+            @"
 case ""Starry Bow"":
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster(""spacepwny"", ""r3"", ""Right"", ""*"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "DOOM Gift",
-    @"
+        },
+        {
+            "DOOM Gift",
+            @"
 case ""DOOM Gift"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""spacepwny"", ""Mr DED"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Golden Anniversary Gift",
-    @"
+        },
+        {
+            "Golden Anniversary Gift",
+            @"
 case ""Golden Anniversary Gift"":
                     Core.EquipClass(ClassType.Solo);
                     if (req.Name == ""Platinum Leaf"")
@@ -19520,10 +19517,10 @@ case ""Golden Anniversary Gift"":
                     break;
 
     "
-},
-{
-    "Platinum Leaf",
-    @"
+        },
+        {
+            "Platinum Leaf",
+            @"
 case ""Platinum Leaf"":
                     Core.EquipClass(ClassType.Solo);
                     if (req.Name == ""Platinum Leaf"")
@@ -19534,10 +19531,10 @@ case ""Platinum Leaf"":
                     break;
 
     "
-},
-{
-    "Ultimate Dragonlord Cape",
-    @"
+        },
+        {
+            "Ultimate Dragonlord Cape",
+            @"
 case ""Ultimate Dragonlord Cape"":
                     Core.EquipClass(ClassType.Solo);
                     if (req.Name == ""Platinum Leaf"")
@@ -19548,10 +19545,10 @@ case ""Ultimate Dragonlord Cape"":
                     break;
 
     "
-},
-{
-    "Ultimate Dragonlord Wings",
-    @"
+        },
+        {
+            "Ultimate Dragonlord Wings",
+            @"
 case ""Ultimate Dragonlord Wings"":
                     Core.EquipClass(ClassType.Solo);
                     if (req.Name == ""Platinum Leaf"")
@@ -19562,10 +19559,10 @@ case ""Ultimate Dragonlord Wings"":
                     break;
 
     "
-},
-{
-    "Advent Darkness Axe",
-    @"
+        },
+        {
+            "Advent Darkness Axe",
+            @"
 case ""Advent Darkness Axe"":
                     Core.EquipClass(ClassType.Solo);
                     Core.FarmingLogger(req.Name, quant);
@@ -19573,10 +19570,10 @@ case ""Advent Darkness Axe"":
                     break;
 
     "
-},
-{
-    "Advent Darkness Blade",
-    @"
+        },
+        {
+            "Advent Darkness Blade",
+            @"
 case ""Advent Darkness Blade"":
                     Core.EquipClass(ClassType.Solo);
                     Core.FarmingLogger(req.Name, quant);
@@ -19584,10 +19581,10 @@ case ""Advent Darkness Blade"":
                     break;
 
     "
-},
-{
-    "Shrouded Carnage Maw Cleaver",
-    @"
+        },
+        {
+            "Shrouded Carnage Maw Cleaver",
+            @"
 case ""Shrouded Carnage Maw Cleaver"":
                     Core.EquipClass(ClassType.Solo);
                     Core.FarmingLogger(req.Name, quant);
@@ -19595,10 +19592,10 @@ case ""Shrouded Carnage Maw Cleaver"":
                     break;
 
     "
-},
-{
-    "Dark Eons Sword",
-    @"
+        },
+        {
+            "Dark Eons Sword",
+            @"
 case ""Dark Eons Sword"":
                     Core.EquipClass(ClassType.Solo);
                     Core.FarmingLogger(req.Name, quant);
@@ -19606,10 +19603,10 @@ case ""Dark Eons Sword"":
                     break;
 
     "
-},
-{
-    "Dark Eons Broadsword",
-    @"
+        },
+        {
+            "Dark Eons Broadsword",
+            @"
 case ""Dark Eons Broadsword"":
                     Core.EquipClass(ClassType.Solo);
                     Core.FarmingLogger(req.Name, quant);
@@ -19617,10 +19614,10 @@ case ""Dark Eons Broadsword"":
                     break;
 
     "
-},
-{
-    "Crown of Chaos",
-    @"
+        },
+        {
+            "Crown of Chaos",
+            @"
 case ""Crown of Chaos"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19636,10 +19633,10 @@ case ""Crown of Chaos"":
                     break;
 
     "
-},
-{
-    "Corrupted Hieroglyph",
-    @"
+        },
+        {
+            "Corrupted Hieroglyph",
+            @"
 case ""Corrupted Hieroglyph"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -19654,10 +19651,10 @@ case ""Corrupted Hieroglyph"":
                     break;
 
     "
-},
-{
-    "Copper Scale",
-    @"
+        },
+        {
+            "Copper Scale",
+            @"
 case ""Copper Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -19677,10 +19674,10 @@ case ""Copper Scale"":
                     }
                     break;
     "
-},
-{
-    "Gold Scale",
-    @"
+        },
+        {
+            "Gold Scale",
+            @"
 case ""Gold Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -19700,10 +19697,10 @@ case ""Gold Scale"":
                     }
                     break;
     "
-},
-{
-    "Platinum Scale",
-    @"
+        },
+        {
+            "Platinum Scale",
+            @"
 case ""Platinum Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -19723,10 +19720,10 @@ case ""Platinum Scale"":
                     }
                     break;
     "
-},
-{
-    "Onyx Scale",
-    @"
+        },
+        {
+            "Onyx Scale",
+            @"
 case ""Onyx Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -19746,28 +19743,28 @@ case ""Onyx Scale"":
                     }
                     break;
     "
-},
-{
-    "Hero Plushie",
-    @"
+        },
+        {
+            "Hero Plushie",
+            @"
 case ""Hero Plushie"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Birthday Cake"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Chaorrupted Button",
-    @"
+        },
+        {
+            "Chaorrupted Button",
+            @"
 case ""Chaorrupted Button"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Birthday Cake"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Cursed Pinata Candy",
-    @"
+        },
+        {
+            "Cursed Pinata Candy",
+            @"
 case ""Cursed Pinata Candy"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Twilly Pinata"", req.Name, quant, isTemp: false);
@@ -19775,10 +19772,10 @@ case ""Cursed Pinata Candy"":
 
 
     "
-},
-{
-    "Tinfoil Wrapper",
-    @"
+        },
+        {
+            "Tinfoil Wrapper",
+            @"
 case ""Tinfoil Wrapper"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Twilly Pinata"", req.Name, quant, isTemp: false);
@@ -19786,10 +19783,10 @@ case ""Tinfoil Wrapper"":
 
 
     "
-},
-{
-    "Knight Armet",
-    @"
+        },
+        {
+            "Knight Armet",
+            @"
 case ""Knight Armet"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Twilly Pinata"", req.Name, quant, isTemp: false);
@@ -19797,10 +19794,10 @@ case ""Knight Armet"":
 
 
     "
-},
-{
-    "Knight Armor",
-    @"
+        },
+        {
+            "Knight Armor",
+            @"
 case ""Knight Armor"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Twilly Pinata"", req.Name, quant, isTemp: false);
@@ -19808,10 +19805,10 @@ case ""Knight Armor"":
 
 
     "
-},
-{
-    "Knight Sallet",
-    @"
+        },
+        {
+            "Knight Sallet",
+            @"
 case ""Knight Sallet"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Twilly Pinata"", req.Name, quant, isTemp: false);
@@ -19819,10 +19816,10 @@ case ""Knight Sallet"":
 
 
     "
-},
-{
-    "Knight Cloak",
-    @"
+        },
+        {
+            "Knight Cloak",
+            @"
 case ""Knight Cloak"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Twilly Pinata"", req.Name, quant, isTemp: false);
@@ -19830,10 +19827,10 @@ case ""Knight Cloak"":
 
 
     "
-},
-{
-    "Knight Mace",
-    @"
+        },
+        {
+            "Knight Mace",
+            @"
 case ""Knight Mace"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Twilly Pinata"", req.Name, quant, isTemp: false);
@@ -19841,10 +19838,10 @@ case ""Knight Mace"":
 
 
     "
-},
-{
-    "Knight Spear",
-    @"
+        },
+        {
+            "Knight Spear",
+            @"
 case ""Knight Spear"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Twilly Pinata"", req.Name, quant, isTemp: false);
@@ -19852,10 +19849,10 @@ case ""Knight Spear"":
 
 
     "
-},
-{
-    "Knight Zweihander",
-    @"
+        },
+        {
+            "Knight Zweihander",
+            @"
 case ""Knight Zweihander"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Twilly Pinata"", req.Name, quant, isTemp: false);
@@ -19863,10 +19860,10 @@ case ""Knight Zweihander"":
 
 
     "
-},
-{
-    "Knight Great Helm",
-    @"
+        },
+        {
+            "Knight Great Helm",
+            @"
 case ""Knight Great Helm"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""birthday"", ""Twilly Pinata"", req.Name, quant, isTemp: false);
@@ -19874,10 +19871,10 @@ case ""Knight Great Helm"":
 
 
     "
-},
-{
-    "A Memory",
-    @"
+        },
+        {
+            "A Memory",
+            @"
 case ""A Memory"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19890,50 +19887,50 @@ case ""A Memory"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Metamorphosis Maw's Knight",
-    @"
+        },
+        {
+            "Metamorphosis Maw's Knight",
+            @"
 case ""Metamorphosis Maw's Knight"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""shadowduat"", ""DoomKnight Dryden"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Metamorphosis Maw's Loyal Knight",
-    @"
+        },
+        {
+            "Metamorphosis Maw's Loyal Knight",
+            @"
 case ""Metamorphosis Maw's Loyal Knight"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""shadowduat"", ""DoomKnight Dryden"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Metamophosis Maw's Knight Hair",
-    @"
+        },
+        {
+            "Metamophosis Maw's Knight Hair",
+            @"
 case ""Metamophosis Maw's Knight Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""shadowduat"", ""DoomKnight Dryden"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Metamophosis Maw's Knight Morph",
-    @"
+        },
+        {
+            "Metamophosis Maw's Knight Morph",
+            @"
 case ""Metamophosis Maw's Knight Morph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""shadowduat"", ""DoomKnight Dryden"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Purified Energy Core",
-    @"
+        },
+        {
+            "Purified Energy Core",
+            @"
 case ""Purified Energy Core"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19946,10 +19943,10 @@ case ""Purified Energy Core"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Seraphic Steel Plate",
-    @"
+        },
+        {
+            "Seraphic Steel Plate",
+            @"
 case ""Seraphic Steel Plate"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19963,10 +19960,10 @@ case ""Seraphic Steel Plate"":
                     break;
 
     "
-},
-{
-    "Spirit Beads",
-    @"
+        },
+        {
+            "Spirit Beads",
+            @"
 case ""Spirit Beads"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19979,10 +19976,10 @@ case ""Spirit Beads"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Pássaro Rosa Cape",
-    @"
+        },
+        {
+            "Pássaro Rosa Cape",
+            @"
 case ""Pássaro Rosa Cape"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -19993,10 +19990,10 @@ case ""Pássaro Rosa Cape"":
                     }
                     break;
     "
-},
-{
-    "Pano Azul",
-    @"
+        },
+        {
+            "Pano Azul",
+            @"
 case ""Pano Azul"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20007,10 +20004,10 @@ case ""Pano Azul"":
                     }
                     break;
     "
-},
-{
-    "Pena mágica",
-    @"
+        },
+        {
+            "Pena mágica",
+            @"
 case ""Pena mágica"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20021,10 +20018,10 @@ case ""Pena mágica"":
                     }
                     break;
     "
-},
-{
-    "Rainha da Bateria",
-    @"
+        },
+        {
+            "Rainha da Bateria",
+            @"
 case ""Rainha da Bateria"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20035,10 +20032,10 @@ case ""Rainha da Bateria"":
                     }
                     break;
     "
-},
-{
-    "Rainha da Bateria Headdress",
-    @"
+        },
+        {
+            "Rainha da Bateria Headdress",
+            @"
 case ""Rainha da Bateria Headdress"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20049,10 +20046,10 @@ case ""Rainha da Bateria Headdress"":
                     }
                     break;
     "
-},
-{
-    "Rainha da Bateria Headdress + Locks",
-    @"
+        },
+        {
+            "Rainha da Bateria Headdress + Locks",
+            @"
 case ""Rainha da Bateria Headdress + Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20063,10 +20060,10 @@ case ""Rainha da Bateria Headdress + Locks"":
                     }
                     break;
     "
-},
-{
-    "Rainha da Bateria Staff",
-    @"
+        },
+        {
+            "Rainha da Bateria Staff",
+            @"
 case ""Rainha da Bateria Staff"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20077,10 +20074,10 @@ case ""Rainha da Bateria Staff"":
                     }
                     break;
     "
-},
-{
-    "Rainha da Bateria Feathered Tail",
-    @"
+        },
+        {
+            "Rainha da Bateria Feathered Tail",
+            @"
 case ""Rainha da Bateria Feathered Tail"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20091,10 +20088,10 @@ case ""Rainha da Bateria Feathered Tail"":
                     }
                     break;
     "
-},
-{
-    "Rainha da Bateria Feathers",
-    @"
+        },
+        {
+            "Rainha da Bateria Feathers",
+            @"
 case ""Rainha da Bateria Feathers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20105,10 +20102,10 @@ case ""Rainha da Bateria Feathers"":
                     }
                     break;
     "
-},
-{
-    "Golden Apple",
-    @"
+        },
+        {
+            "Golden Apple",
+            @"
 case ""Golden Apple"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20121,10 +20118,10 @@ case ""Golden Apple"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Silver Ruler",
-    @"
+        },
+        {
+            "Silver Ruler",
+            @"
 case ""Silver Ruler"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20140,10 +20137,10 @@ case ""Silver Ruler"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Plastic Toy",
-    @"
+        },
+        {
+            "Plastic Toy",
+            @"
 case ""Plastic Toy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20157,10 +20154,10 @@ case ""Plastic Toy"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bronze Plaque",
-    @"
+        },
+        {
+            "Bronze Plaque",
+            @"
 case ""Bronze Plaque"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20173,59 +20170,59 @@ case ""Bronze Plaque"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Guava Sip",
-    @"
+        },
+        {
+            "Guava Sip",
+            @"
 case ""Guava Sip"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""extracredit"", ""Meanest Girl"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Purple Paddlepop",
-    @"
+        },
+        {
+            "Purple Paddlepop",
+            @"
 case ""Purple Paddlepop"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""extracredit"", ""Meanest Girl"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Crystallis Trainer Locks",
-    @"
+        },
+        {
+            "Crystallis Trainer Locks",
+            @"
 case ""Crystallis Trainer Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""extracredit"", ""Meanest Girl"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "DogEar's Snack Serum",
-    @"
+        },
+        {
+            "DogEar's Snack Serum",
+            @"
 case ""DogEar's Snack Serum"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""extracredit"", ""Dogear"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Raw Cookie Dough Blade",
-    @"
+        },
+        {
+            "Raw Cookie Dough Blade",
+            @"
 case ""Raw Cookie Dough Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.GetMapItem(11646, quant, ""oaklore"");
                     break;
     "
-},
-{
-    "Crystallis Trainer Hair",
-    @"
+        },
+        {
+            "Crystallis Trainer Hair",
+            @"
 case ""Crystallis Trainer Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20233,10 +20230,10 @@ case ""Crystallis Trainer Hair"":
                     break;
 
     "
-},
-{
-    "Ceremonial Standard",
-    @"
+        },
+        {
+            "Ceremonial Standard",
+            @"
 case ""Ceremonial Standard"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9115);
@@ -20251,10 +20248,10 @@ case ""Ceremonial Standard"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Costume Piece",
-    @"
+        },
+        {
+            "Costume Piece",
+            @"
 case ""Costume Piece"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9110);
@@ -20269,10 +20266,10 @@ case ""Costume Piece"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Pandeiro",
-    @"
+        },
+        {
+            "Pandeiro",
+            @"
 case ""Pandeiro"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20281,10 +20278,10 @@ case ""Pandeiro"":
                     break;
 
     "
-},
-{
-    "Tantan",
-    @"
+        },
+        {
+            "Tantan",
+            @"
 case ""Tantan"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20293,10 +20290,10 @@ case ""Tantan"":
                     break;
 
     "
-},
-{
-    "Cavaquinho",
-    @"
+        },
+        {
+            "Cavaquinho",
+            @"
 case ""Cavaquinho"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20305,10 +20302,10 @@ case ""Cavaquinho"":
                     break;
 
     "
-},
-{
-    "Doom Essence",
-    @"
+        },
+        {
+            "Doom Essence",
+            @"
 case ""Doom Essence"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20322,10 +20319,10 @@ case ""Doom Essence"":
                     break;
 
     "
-},
-{
-    "Bones",
-    @"
+        },
+        {
+            "Bones",
+            @"
 case ""Bones"":
                     Core.FarmingLogger(req.Name, quant);
 
@@ -20333,20 +20330,20 @@ case ""Bones"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Glue",
-    @"
+        },
+        {
+            "Glue",
+            @"
 case ""Glue"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.HuntMonster(""nursery"", ""Flesh Golem"", req.Name, quant, false, true);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Darkness",
-    @"
+        },
+        {
+            "Darkness",
+            @"
 case ""Darkness"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.HuntMonster(""nursery"", ""Spilled Ink"", req.Name, quant, false, true);
@@ -20354,54 +20351,54 @@ case ""Darkness"":
                     break;
 
     "
-},
-{
-    "Pristine Skull",
-    @"
+        },
+        {
+            "Pristine Skull",
+            @"
 case ""Pristine Skull"":
                     MSWB.Setup(quant);
                     break;
     "
-},
-{
-    "Vordred's Armor",
-    @"
+        },
+        {
+            "Vordred's Armor",
+            @"
 case ""Vordred's Armor"":
                     VA.GetVordredsArmor(true);
                     Adv.BuyItem(""stonewood"", 2063, req.Name);
                     break;
     "
-},
-{
-    "Vordred's Helm",
-    @"
+        },
+        {
+            "Vordred's Helm",
+            @"
 case ""Vordred's Helm"":
                     VA.GetVordredsArmor(true);
                     Adv.BuyItem(""stonewood"", 2063, req.Name);
                     break;
     "
-},
-{
-    "Vordred's Chestpiece",
-    @"
+        },
+        {
+            "Vordred's Chestpiece",
+            @"
 case ""Vordred's Chestpiece"":
                     VA.GetVordredsArmor(true);
                     Adv.BuyItem(""stonewood"", 2063, req.Name);
                     break;
     "
-},
-{
-    "Vordred's Cape",
-    @"
+        },
+        {
+            "Vordred's Cape",
+            @"
 case ""Vordred's Cape"":
                     VA.GetVordredsArmor(true);
                     Adv.BuyItem(""stonewood"", 2063, req.Name);
                     break;
     "
-},
-{
-    "Ragged Cloth Scrap",
-    @"
+        },
+        {
+            "Ragged Cloth Scrap",
+            @"
 case ""Ragged Cloth Scrap"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20415,68 +20412,68 @@ case ""Ragged Cloth Scrap"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Deadfly's Armor",
-    @"
+        },
+        {
+            "Deadfly's Armor",
+            @"
 case ""Deadfly's Armor"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""DeadFly"", ""Deadfly"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Deadfly Morph",
-    @"
+        },
+        {
+            "Deadfly Morph",
+            @"
 case ""Deadfly Morph"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""DeadFly"", ""Deadfly"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Rotfinger's Bow",
-    @"
+        },
+        {
+            "Rotfinger's Bow",
+            @"
 case ""Rotfinger's Bow"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""RotFinger"", ""Rotfinger"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Rotfinger's ArmBlades",
-    @"
+        },
+        {
+            "Rotfinger's ArmBlades",
+            @"
 case ""Rotfinger's ArmBlades"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""RotFinger"", ""Rotfinger"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Rotfinger's Scythe",
-    @"
+        },
+        {
+            "Rotfinger's Scythe",
+            @"
 case ""Rotfinger's Scythe"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""RotFinger"", ""Rotfinger"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Rotfinger's Staff",
-    @"
+        },
+        {
+            "Rotfinger's Staff",
+            @"
 case ""Rotfinger's Staff"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""RotFinger"", ""Rotfinger"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Spooky Fabric Scrap",
-    @"
+        },
+        {
+            "Spooky Fabric Scrap",
+            @"
 case ""Spooky Fabric Scrap"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20489,10 +20486,10 @@ case ""Spooky Fabric Scrap"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Eerie Embellishment",
-    @"
+        },
+        {
+            "Eerie Embellishment",
+            @"
 case ""Eerie Embellishment"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20506,10 +20503,10 @@ case ""Eerie Embellishment"":
                     break;
 
     "
-},
-{
-    "GetchaDolla",
-    @"
+        },
+        {
+            "GetchaDolla",
+            @"
 case ""GetchaDolla"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20524,10 +20521,10 @@ case ""GetchaDolla"":
                     break;
 
     "
-},
-{
-    "LoreTrek Token",
-    @"
+        },
+        {
+            "LoreTrek Token",
+            @"
 case ""LoreTrek Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20538,10 +20535,10 @@ case ""LoreTrek Token"":
                     }
                     break;
     "
-},
-{
-    "Matted Dust Bunny",
-    @"
+        },
+        {
+            "Matted Dust Bunny",
+            @"
 case ""Matted Dust Bunny"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20557,10 +20554,10 @@ case ""Matted Dust Bunny"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Cosmic Dust",
-    @"
+        },
+        {
+            "Cosmic Dust",
+            @"
 case ""Cosmic Dust"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20571,10 +20568,10 @@ case ""Cosmic Dust"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Cosmic Aura",
-    @"
+        },
+        {
+            "Cosmic Aura",
+            @"
 case ""Cosmic Aura"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9679);
@@ -20597,30 +20594,30 @@ case ""Cosmic Aura"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Astral Alignment Sword",
-    @"
+        },
+        {
+            "Astral Alignment Sword",
+            @"
 case ""Astral Alignment Sword"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""starfield"", ""Astral Spirit"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Astral Alignment Swords",
-    @"
+        },
+        {
+            "Astral Alignment Swords",
+            @"
 case ""Astral Alignment Swords"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""starfield"", ""Astral Spirit"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "A Whisper",
-    @"
+        },
+        {
+            "A Whisper",
+            @"
 case ""A Whisper"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20634,10 +20631,10 @@ case ""A Whisper"":
                     break;
 
     "
-},
-{
-    "Zenobia's Moglinberry Juice",
-    @"
+        },
+        {
+            "Zenobia's Moglinberry Juice",
+            @"
 case ""Zenobia's Moglinberry Juice"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20656,10 +20653,10 @@ case ""Zenobia's Moglinberry Juice"":
                     break;
 
     "
-},
-{
-    "Gift Ribbons",
-    @"
+        },
+        {
+            "Gift Ribbons",
+            @"
 case ""Gift Ribbons"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20674,10 +20671,10 @@ case ""Gift Ribbons"":
                     break;
 
     "
-},
-{
-    "Cursed Doll Tassel",
-    @"
+        },
+        {
+            "Cursed Doll Tassel",
+            @"
 case ""Cursed Doll Tassel"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8667);
@@ -20693,10 +20690,10 @@ case ""Cursed Doll Tassel"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Odd Coin",
-    @"
+        },
+        {
+            "Odd Coin",
+            @"
 case ""Odd Coin"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20709,10 +20706,10 @@ case ""Odd Coin"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ectoplasmic Token",
-    @"
+        },
+        {
+            "Ectoplasmic Token",
+            @"
 case ""Ectoplasmic Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -20726,109 +20723,109 @@ case ""Ectoplasmic Token"":
                     break;
 
     "
-},
-{
-    "Aurum Wings Blade",
-    @"
+        },
+        {
+            "Aurum Wings Blade",
+            @"
 case ""Aurum Wings Blade"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "Brunswick Leo Scion",
-    @"
+        },
+        {
+            "Brunswick Leo Scion",
+            @"
 case ""Brunswick Leo Scion"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "Brunswick Leo's Requiem",
-    @"
+        },
+        {
+            "Brunswick Leo's Requiem",
+            @"
 case ""Brunswick Leo's Requiem"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "Brunswick Leo Scion Cane",
-    @"
+        },
+        {
+            "Brunswick Leo Scion Cane",
+            @"
 case ""Brunswick Leo Scion Cane"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "Spearmint Candy Cane",
-    @"
+        },
+        {
+            "Spearmint Candy Cane",
+            @"
 case ""Spearmint Candy Cane"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "100 Pound Gift",
-    @"
+        },
+        {
+            "100 Pound Gift",
+            @"
 case ""100 Pound Gift"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "Chill Hoodie Outfit",
-    @"
+        },
+        {
+            "Chill Hoodie Outfit",
+            @"
 case ""Chill Hoodie Outfit"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "Chill Hat + Hair",
-    @"
+        },
+        {
+            "Chill Hat + Hair",
+            @"
 case ""Chill Hat + Hair"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "Chill Hat + Locks",
-    @"
+        },
+        {
+            "Chill Hat + Locks",
+            @"
 case ""Chill Hat + Locks"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "Chill Hat Visage",
-    @"
+        },
+        {
+            "Chill Hat Visage",
+            @"
 case ""Chill Hat Visage"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "Chill Hat Morph",
-    @"
+        },
+        {
+            "Chill Hat Morph",
+            @"
 case ""Chill Hat Morph"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
                     break;
     "
-},
-{
-    "Red Ribbon",
-    @"
+        },
+        {
+            "Red Ribbon",
+            @"
 case ""Red Ribbon"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -20850,10 +20847,10 @@ case ""Red Ribbon"":
 
                     break;
     "
-},
-{
-    "Silver Tinsel",
-    @"
+        },
+        {
+            "Silver Tinsel",
+            @"
 case ""Silver Tinsel"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -20875,10 +20872,10 @@ case ""Silver Tinsel"":
 
                     break;
     "
-},
-{
-    "Jingle Bells",
-    @"
+        },
+        {
+            "Jingle Bells",
+            @"
 case ""Jingle Bells"":
                     Core.EquipClass(ClassType.Farm);
                     // Jingle Spells - 9520
@@ -20888,28 +20885,28 @@ case ""Jingle Bells"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Icy Fur",
-    @"
+        },
+        {
+            "Icy Fur",
+            @"
 case ""Icy Fur"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""caroltown"", ""Krumpet"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Wrapping Paper",
-    @"
+        },
+        {
+            "Wrapping Paper",
+            @"
 case ""Wrapping Paper"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""caroltown"", ""Krumpet"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Enchanted Crystal",
-    @"
+        },
+        {
+            "Enchanted Crystal",
+            @"
 case ""Enchanted Crystal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8722);
@@ -20925,10 +20922,10 @@ case ""Enchanted Crystal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Blade of Dread",
-    @"
+        },
+        {
+            "Blade of Dread",
+            @"
 case ""Blade of Dread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20940,10 +20937,10 @@ case ""Blade of Dread"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Greatsword of Dread",
-    @"
+        },
+        {
+            "Greatsword of Dread",
+            @"
 case ""Greatsword of Dread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20955,10 +20952,10 @@ case ""Greatsword of Dread"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dagger of Dread",
-    @"
+        },
+        {
+            "Dagger of Dread",
+            @"
 case ""Dagger of Dread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20970,10 +20967,10 @@ case ""Dagger of Dread"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Daggers of Dread",
-    @"
+        },
+        {
+            "Daggers of Dread",
+            @"
 case ""Daggers of Dread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -20985,10 +20982,10 @@ case ""Daggers of Dread"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "High Axe of Dread",
-    @"
+        },
+        {
+            "High Axe of Dread",
+            @"
 case ""High Axe of Dread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21000,10 +20997,10 @@ case ""High Axe of Dread"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Greataxe of Dread",
-    @"
+        },
+        {
+            "Greataxe of Dread",
+            @"
 case ""Greataxe of Dread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21016,10 +21013,10 @@ case ""Greataxe of Dread"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Poleaxe of Dread",
-    @"
+        },
+        {
+            "Poleaxe of Dread",
+            @"
 case ""Poleaxe of Dread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21032,10 +21029,10 @@ case ""Poleaxe of Dread"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Axes of Dread",
-    @"
+        },
+        {
+            "Axes of Dread",
+            @"
 case ""Axes of Dread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21048,10 +21045,10 @@ case ""Axes of Dread"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Handaxe of Dread",
-    @"
+        },
+        {
+            "Handaxe of Dread",
+            @"
 case ""Handaxe of Dread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21063,10 +21060,10 @@ case ""Handaxe of Dread"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Handaxes of Dread",
-    @"
+        },
+        {
+            "Handaxes of Dread",
+            @"
 case ""Handaxes of Dread"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21079,10 +21076,10 @@ case ""Handaxes of Dread"":
                     break;
 
     "
-},
-{
-    "Fimbul's Frost",
-    @"
+        },
+        {
+            "Fimbul's Frost",
+            @"
 case ""Fimbul's Frost"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9507);
@@ -21097,60 +21094,60 @@ case ""Fimbul's Frost"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Frostguarde Blade",
-    @"
+        },
+        {
+            "Frostguarde Blade",
+            @"
 case ""Frostguarde Blade"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""glacetomb"", 7, req.Name, 1, req.Temp);
                     break;
 
     "
-},
-{
-    "Frostguarde Blades",
-    @"
+        },
+        {
+            "Frostguarde Blades",
+            @"
 case ""Frostguarde Blades"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""glacetomb"", 7, req.Name, 1, req.Temp);
                     break;
 
     "
-},
-{
-    "Polaris Duelist Rapiers",
-    @"
+        },
+        {
+            "Polaris Duelist Rapiers",
+            @"
 case ""Polaris Duelist Rapiers"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""glacetomb"", 7, req.Name, 1, req.Temp);
                     break;
 
     "
-},
-{
-    "Polaris Duelist Rapier",
-    @"
+        },
+        {
+            "Polaris Duelist Rapier",
+            @"
 case ""Polaris Duelist Rapier"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""glacetomb"", 7, req.Name, 1, req.Temp);
                     break;
 
     "
-},
-{
-    "Frost Shatter Spear",
-    @"
+        },
+        {
+            "Frost Shatter Spear",
+            @"
 case ""Frost Shatter Spear"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""glacetomb"", 7, req.Name, 1, req.Temp);
                     break;
 
     "
-},
-{
-    "Fimbul's Crystal",
-    @"
+        },
+        {
+            "Fimbul's Crystal",
+            @"
 case ""Fimbul's Crystal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21165,10 +21162,10 @@ case ""Fimbul's Crystal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Elegant Frostval Wrap",
-    @"
+        },
+        {
+            "Elegant Frostval Wrap",
+            @"
 case ""Elegant Frostval Wrap"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21181,10 +21178,10 @@ case ""Elegant Frostval Wrap"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hammered Ice",
-    @"
+        },
+        {
+            "Hammered Ice",
+            @"
 case ""Hammered Ice"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21197,10 +21194,10 @@ case ""Hammered Ice"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Frosted Heart",
-    @"
+        },
+        {
+            "Frosted Heart",
+            @"
 case ""Frosted Heart"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21213,10 +21210,10 @@ case ""Frosted Heart"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Cheery Frostvale Hat + Locks",
-    @"
+        },
+        {
+            "Cheery Frostvale Hat + Locks",
+            @"
 case ""Cheery Frostvale Hat + Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21229,10 +21226,10 @@ case ""Cheery Frostvale Hat + Locks"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Cheery Frostvale Hat",
-    @"
+        },
+        {
+            "Cheery Frostvale Hat",
+            @"
 case ""Cheery Frostvale Hat"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21245,10 +21242,10 @@ case ""Cheery Frostvale Hat"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Elegant Frostvale Suit",
-    @"
+        },
+        {
+            "Elegant Frostvale Suit",
+            @"
 case ""Elegant Frostvale Suit"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21261,10 +21258,10 @@ case ""Elegant Frostvale Suit"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ruby Frostval Cane",
-    @"
+        },
+        {
+            "Ruby Frostval Cane",
+            @"
 case ""Ruby Frostval Cane"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21277,10 +21274,10 @@ case ""Ruby Frostval Cane"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Frozen Soul",
-    @"
+        },
+        {
+            "Frozen Soul",
+            @"
 case ""Frozen Soul"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21293,10 +21290,10 @@ case ""Frozen Soul"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Poleaxe of Kheimon",
-    @"
+        },
+        {
+            "Poleaxe of Kheimon",
+            @"
 case ""Poleaxe of Kheimon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21308,10 +21305,10 @@ case ""Poleaxe of Kheimon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Frozen Rune of Kheimon",
-    @"
+        },
+        {
+            "Frozen Rune of Kheimon",
+            @"
 case ""Frozen Rune of Kheimon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21323,10 +21320,10 @@ case ""Frozen Rune of Kheimon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Sluagh Bell",
-    @"
+        },
+        {
+            "Sluagh Bell",
+            @"
 case ""Sluagh Bell"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21339,37 +21336,37 @@ case ""Sluagh Bell"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Punk Coal Elf Stabber",
-    @"
+        },
+        {
+            "Punk Coal Elf Stabber",
+            @"
 case ""Punk Coal Elf Stabber"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""otziwar"", 14, ""req.Name"", isTemp: false);
                     break;
     "
-},
-{
-    "Festive Punk Elf Stabber",
-    @"
+        },
+        {
+            "Festive Punk Elf Stabber",
+            @"
 case ""Festive Punk Elf Stabber"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""otziwar"", 14, ""req.Name"", isTemp: false);
                     break;
     "
-},
-{
-    "Wild Huntress' Sword",
-    @"
+        },
+        {
+            "Wild Huntress' Sword",
+            @"
 case ""Wild Huntress' Sword"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonsterMapID(""otziwar"", 14, ""req.Name"", isTemp: false);
                     break;
     "
-},
-{
-    "Fire Starting Kit",
-    @"
+        },
+        {
+            "Fire Starting Kit",
+            @"
 case ""Fire Starting Kit"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21385,10 +21382,10 @@ case ""Fire Starting Kit"":
                     break;
 
     "
-},
-{
-    "Turkey Leg?",
-    @"
+        },
+        {
+            "Turkey Leg?",
+            @"
 case ""Turkey Leg?"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9027);
@@ -21405,10 +21402,10 @@ case ""Turkey Leg?"":
                     break;
 
     "
-},
-{
-    "Grief Medal",
-    @"
+        },
+        {
+            "Grief Medal",
+            @"
 case ""Grief Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21423,68 +21420,68 @@ case ""Grief Medal"":
                     break;
 
     "
-},
-{
-    "Burnt Bow",
-    @"
+        },
+        {
+            "Burnt Bow",
+            @"
 case ""Burnt Bow"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""icestorm"", ""Dragon Hunter"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Longevity Egg",
-    @"
+        },
+        {
+            "Longevity Egg",
+            @"
 case ""Longevity Egg"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""elixirgrenwog"", ""Elixir Grenwog"", req.Name, quant, false);
                     break;
 
     "
-},
-{
-    "Magical Marshmallow Cheep",
-    @"
+        },
+        {
+            "Magical Marshmallow Cheep",
+            @"
 case ""Magical Marshmallow Cheep"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""deathgazer"", ""Deathgazer"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Gold-foil Chocolate Bunny",
-    @"
+        },
+        {
+            "Gold-foil Chocolate Bunny",
+            @"
 case ""Gold-foil Chocolate Bunny"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""greendragon"", ""Greenguard Dragon"", req.Name, quant, isTemp: false);
 
                     break;
     "
-},
-{
-    "Basketful of Dyed Eggs",
-    @"
+        },
+        {
+            "Basketful of Dyed Eggs",
+            @"
 case ""Basketful of Dyed Eggs"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""trunk"", ""Greenguard Basilisk"", req.Name, quant, isTemp: false);
 
                     break;
     "
-},
-{
-    "Berserker Bunny",
-    @"
+        },
+        {
+            "Berserker Bunny",
+            @"
 case ""Berserker Bunny"":
                     Farm.BerserkerBunny(0, sell: false);
                     break;
 
     "
-},
-{
-    "Grenstory Token",
-    @"
+        },
+        {
+            "Grenstory Token",
+            @"
 case ""Grenstory Token"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""grenstory"", ""Chinchilizard"", req.Name, quant, isTemp: false);
@@ -21493,10 +21490,10 @@ case ""Grenstory Token"":
                     
 
     "
-},
-{
-    "Golden Branch",
-    @"
+        },
+        {
+            "Golden Branch",
+            @"
 case ""Golden Branch"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21509,10 +21506,10 @@ case ""Golden Branch"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hazel Switch",
-    @"
+        },
+        {
+            "Hazel Switch",
+            @"
 case ""Hazel Switch"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21525,10 +21522,10 @@ case ""Hazel Switch"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Frostval Treat",
-    @"
+        },
+        {
+            "Frostval Treat",
+            @"
 case ""Frostval Treat"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -21541,10 +21538,10 @@ case ""Frostval Treat"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Chibi GroveRider's Locks + Bridle",
-    @"
+        },
+        {
+            "Chibi GroveRider's Locks + Bridle",
+            @"
 case ""Chibi GroveRider's Locks + Bridle"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21555,10 +21552,10 @@ case ""Chibi GroveRider's Locks + Bridle"":
                     }
                     break;
     "
-},
-{
-    "Chibi GroveRider's Locks",
-    @"
+        },
+        {
+            "Chibi GroveRider's Locks",
+            @"
 case ""Chibi GroveRider's Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21569,10 +21566,10 @@ case ""Chibi GroveRider's Locks"":
                     }
                     break;
     "
-},
-{
-    "Helsgrove Guardian Scarf",
-    @"
+        },
+        {
+            "Helsgrove Guardian Scarf",
+            @"
 case ""Helsgrove Guardian Scarf"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21583,30 +21580,30 @@ case ""Helsgrove Guardian Scarf"":
                     }
                     break;
     "
-},
-{
-    "Fallen Leaf",
-    @"
+        },
+        {
+            "Fallen Leaf",
+            @"
 case ""Fallen Leaf"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""eventhub"", ""Leaf Painter"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Gold Flake",
-    @"
+        },
+        {
+            "Gold Flake",
+            @"
 case ""Gold Flake"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""blightharvest"", ""Tantalocust"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Gnarled Wood",
-    @"
+        },
+        {
+            "Gnarled Wood",
+            @"
 case ""Gnarled Wood"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21614,10 +21611,10 @@ case ""Gnarled Wood"":
                     break;
 
     "
-},
-{
-    "Tin Can of ???",
-    @"
+        },
+        {
+            "Tin Can of ???",
+            @"
 case ""Tin Can of ???"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21630,82 +21627,82 @@ case ""Tin Can of ???"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "PACVEC Mach 1.0",
-    @"
+        },
+        {
+            "PACVEC Mach 1.0",
+            @"
 case ""PACVEC Mach 1.0"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ebilmech"", ""Ebil Mech Dragon"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "PACVEC Helm",
-    @"
+        },
+        {
+            "PACVEC Helm",
+            @"
 case ""PACVEC Helm"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ebilmech"", ""Ebil Mech Dragon"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "PACVEC Visor",
-    @"
+        },
+        {
+            "PACVEC Visor",
+            @"
 case ""PACVEC Visor"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ebilmech"", ""Ebil Mech Dragon"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "PACVEC Guard",
-    @"
+        },
+        {
+            "PACVEC Guard",
+            @"
 case ""PACVEC Guard"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ebilmech"", ""Ebil Mech Dragon"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "PACVEC Battle Wings",
-    @"
+        },
+        {
+            "PACVEC Battle Wings",
+            @"
 case ""PACVEC Battle Wings"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ebilmech"", ""Ebil Mech Dragon"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "PACVEC Battle Hammer",
-    @"
+        },
+        {
+            "PACVEC Battle Hammer",
+            @"
 case ""PACVEC Battle Hammer"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ebilmech"", ""Ebil Mech Dragon"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "PACVEC Railgun",
-    @"
+        },
+        {
+            "PACVEC Railgun",
+            @"
 case ""PACVEC Railgun"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ebilmech"", ""Ebil Mech Dragon"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "PACVEC Alien",
-    @"
+        },
+        {
+            "PACVEC Alien",
+            @"
 case ""PACVEC Alien"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ebilmech"", ""Ebil Mech Dragon"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "EbilCoin",
-    @"
+        },
+        {
+            "EbilCoin",
+            @"
 case ""EbilCoin"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21719,10 +21716,10 @@ case ""EbilCoin"":
                     //Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ebil Operative",
-    @"
+        },
+        {
+            "Ebil Operative",
+            @"
 case ""Ebil Operative"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21734,10 +21731,10 @@ case ""Ebil Operative"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Hair + Mask",
-    @"
+        },
+        {
+            "Ebil Operative Hair + Mask",
+            @"
 case ""Ebil Operative Hair + Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21749,10 +21746,10 @@ case ""Ebil Operative Hair + Mask"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Protective Gear",
-    @"
+        },
+        {
+            "Ebil Operative Protective Gear",
+            @"
 case ""Ebil Operative Protective Gear"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21764,10 +21761,10 @@ case ""Ebil Operative Protective Gear"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Hair + Muffler",
-    @"
+        },
+        {
+            "Ebil Operative Hair + Muffler",
+            @"
 case ""Ebil Operative Hair + Muffler"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21779,10 +21776,10 @@ case ""Ebil Operative Hair + Muffler"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Hair + Scarf",
-    @"
+        },
+        {
+            "Ebil Operative Hair + Scarf",
+            @"
 case ""Ebil Operative Hair + Scarf"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21794,10 +21791,10 @@ case ""Ebil Operative Hair + Scarf"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Edgy Hair + Mask",
-    @"
+        },
+        {
+            "Ebil Operative Edgy Hair + Mask",
+            @"
 case ""Ebil Operative Edgy Hair + Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21809,10 +21806,10 @@ case ""Ebil Operative Edgy Hair + Mask"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Edgy Protective Gear",
-    @"
+        },
+        {
+            "Ebil Operative Edgy Protective Gear",
+            @"
 case ""Ebil Operative Edgy Protective Gear"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21824,10 +21821,10 @@ case ""Ebil Operative Edgy Protective Gear"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Edgy Hair + Scarf",
-    @"
+        },
+        {
+            "Ebil Operative Edgy Hair + Scarf",
+            @"
 case ""Ebil Operative Edgy Hair + Scarf"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21839,10 +21836,10 @@ case ""Ebil Operative Edgy Hair + Scarf"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Edgy Hair + Muffler",
-    @"
+        },
+        {
+            "Ebil Operative Edgy Hair + Muffler",
+            @"
 case ""Ebil Operative Edgy Hair + Muffler"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21854,10 +21851,10 @@ case ""Ebil Operative Edgy Hair + Muffler"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Mask Helm",
-    @"
+        },
+        {
+            "Ebil Operative Mask Helm",
+            @"
 case ""Ebil Operative Mask Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21869,10 +21866,10 @@ case ""Ebil Operative Mask Helm"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Helm + Scarf",
-    @"
+        },
+        {
+            "Ebil Operative Helm + Scarf",
+            @"
 case ""Ebil Operative Helm + Scarf"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21884,10 +21881,10 @@ case ""Ebil Operative Helm + Scarf"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Hood + Mask",
-    @"
+        },
+        {
+            "Ebil Operative Hood + Mask",
+            @"
 case ""Ebil Operative Hood + Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21899,10 +21896,10 @@ case ""Ebil Operative Hood + Mask"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Crossed Baton Blades",
-    @"
+        },
+        {
+            "Ebil Operative Crossed Baton Blades",
+            @"
 case ""Ebil Operative Crossed Baton Blades"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21914,10 +21911,10 @@ case ""Ebil Operative Crossed Baton Blades"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Cape",
-    @"
+        },
+        {
+            "Ebil Operative Cape",
+            @"
 case ""Ebil Operative Cape"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21929,10 +21926,10 @@ case ""Ebil Operative Cape"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Baton Blade",
-    @"
+        },
+        {
+            "Ebil Operative Baton Blade",
+            @"
 case ""Ebil Operative Baton Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21944,10 +21941,10 @@ case ""Ebil Operative Baton Blade"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Death Blade",
-    @"
+        },
+        {
+            "Ebil Operative Death Blade",
+            @"
 case ""Ebil Operative Death Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21959,10 +21956,10 @@ case ""Ebil Operative Death Blade"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Long Baton",
-    @"
+        },
+        {
+            "Ebil Operative Long Baton",
+            @"
 case ""Ebil Operative Long Baton"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21974,10 +21971,10 @@ case ""Ebil Operative Long Baton"":
                     break;
 
     "
-},
-{
-    "Ebil Operative Tactical Rifle",
-    @"
+        },
+        {
+            "Ebil Operative Tactical Rifle",
+            @"
 case ""Ebil Operative Tactical Rifle"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -21989,10 +21986,10 @@ case ""Ebil Operative Tactical Rifle"":
                     break;
 
     "
-},
-{
-    "Stymphalian's Bronze Feather",
-    @"
+        },
+        {
+            "Stymphalian's Bronze Feather",
+            @"
 case ""Stymphalian's Bronze Feather"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22007,86 +22004,86 @@ case ""Stymphalian's Bronze Feather"":
                     break;
 
     "
-},
-{
-    "Pink Balloon Scrap",
-    @"
+        },
+        {
+            "Pink Balloon Scrap",
+            @"
 case ""Pink Balloon Scrap"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""float"", ""Beleen Balloon"", req.Name, quant);
                     break;
 
     "
-},
-{
-    "Green Balloon Scrap",
-    @"
+        },
+        {
+            "Green Balloon Scrap",
+            @"
 case ""Green Balloon Scrap"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""float"", ""Beleen Balloon"", req.Name, quant);
                     break;
 
     "
-},
-{
-    "Red Balloon Scrap",
-    @"
+        },
+        {
+            "Red Balloon Scrap",
+            @"
 case ""Red Balloon Scrap"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""float"", ""Beleen Balloon"", req.Name, quant);
                     break;
 
     "
-},
-{
-    "Goredon's Zard Sauce",
-    @"
+        },
+        {
+            "Goredon's Zard Sauce",
+            @"
 case ""Goredon's Zard Sauce"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""feastboss"", ""Goredon Rampage"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Harvest Golem Parfait",
-    @"
+        },
+        {
+            "Harvest Golem Parfait",
+            @"
 case ""Harvest Golem Parfait"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""feastwarevil"", ""Harvest Golem"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Ultra Turdrakogiblet",
-    @"
+        },
+        {
+            "Ultra Turdrakogiblet",
+            @"
 case ""Ultra Turdrakogiblet"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""killerkitchen"", ""Ultra Turdrakolich"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Wretched Rider Meat",
-    @"
+        },
+        {
+            "Wretched Rider Meat",
+            @"
 case ""Wretched Rider Meat"":
                     HarvestDay.FoulFarm();
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dullahan"", ""Wretched Rider"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Overgourd Seed",
-    @"
+        },
+        {
+            "Overgourd Seed",
+            @"
 case ""Overgourd Seed"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""fearfeast"", ""OverGourd"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Autumnal Civilian Hair",
-    @"
+        },
+        {
+            "Autumnal Civilian Hair",
+            @"
 case ""Autumnal Civilian Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22095,10 +22092,10 @@ case ""Autumnal Civilian Hair"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Autumnal Locks",
-    @"
+        },
+        {
+            "Autumnal Locks",
+            @"
 case ""Autumnal Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22107,10 +22104,10 @@ case ""Autumnal Locks"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Scarbucks Pumpkin Spice Latte",
-    @"
+        },
+        {
+            "Scarbucks Pumpkin Spice Latte",
+            @"
 case ""Scarbucks Pumpkin Spice Latte"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22119,10 +22116,10 @@ case ""Scarbucks Pumpkin Spice Latte"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Maple Leaf",
-    @"
+        },
+        {
+            "Maple Leaf",
+            @"
 case ""Maple Leaf"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22131,10 +22128,10 @@ case ""Maple Leaf"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Burnt Feather",
-    @"
+        },
+        {
+            "Burnt Feather",
+            @"
 case ""Burnt Feather"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22143,10 +22140,10 @@ case ""Burnt Feather"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Scarbucks Pumpkin Pie",
-    @"
+        },
+        {
+            "Scarbucks Pumpkin Pie",
+            @"
 case ""Scarbucks Pumpkin Pie"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22155,10 +22152,10 @@ case ""Scarbucks Pumpkin Pie"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Autumnal Civilian",
-    @"
+        },
+        {
+            "Autumnal Civilian",
+            @"
 case ""Autumnal Civilian"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22167,10 +22164,10 @@ case ""Autumnal Civilian"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "TurKing Claw",
-    @"
+        },
+        {
+            "TurKing Claw",
+            @"
 case ""TurKing Claw"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22180,10 +22177,10 @@ case ""TurKing Claw"":
                     Bot.Wait.ForPickup(req.ID);
                     break;
     "
-},
-{
-    "Guncraft Shadowslayer Big Irons",
-    @"
+        },
+        {
+            "Guncraft Shadowslayer Big Irons",
+            @"
 case ""Guncraft Shadowslayer Big Irons"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22192,10 +22189,10 @@ case ""Guncraft Shadowslayer Big Irons"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Guncraft Shadowslayer Big Iron",
-    @"
+        },
+        {
+            "Guncraft Shadowslayer Big Iron",
+            @"
 case ""Guncraft Shadowslayer Big Iron"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -22204,10 +22201,10 @@ case ""Guncraft Shadowslayer Big Iron"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Emergency Rations",
-    @"
+        },
+        {
+            "Emergency Rations",
+            @"
 case ""Emergency Rations"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -22221,30 +22218,30 @@ case ""Emergency Rations"":
                     }
                     break;
     "
-},
-{
-    "Glossly Chestnut Waves",
-    @"
+        },
+        {
+            "Glossly Chestnut Waves",
+            @"
 case ""Glossly Chestnut Waves"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""manaharvest"", CHD.UMManaHarvest[7], req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Glossy Chestnut Locks",
-    @"
+        },
+        {
+            "Glossy Chestnut Locks",
+            @"
 case ""Glossy Chestnut Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""manaharvest"", CHD.UMManaHarvest[7], req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Earplug",
-    @"
+        },
+        {
+            "Earplug",
+            @"
 case ""Earplug"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -22261,10 +22258,10 @@ case ""Earplug"":
                     break;
 
     "
-},
-{
-    "Nightmare Medal",
-    @"
+        },
+        {
+            "Nightmare Medal",
+            @"
 case ""Nightmare Medal"":
                     HarvestDay.NightmareWar();
                     Core.FarmingLogger(req.Name, quant);
@@ -22282,142 +22279,142 @@ case ""Nightmare Medal"":
                     break;
 
     "
-},
-{
-    "Chocolate Eggshells",
-    @"
+        },
+        {
+            "Chocolate Eggshells",
+            @"
 case ""Chocolate Eggshells"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""GreenguardEast"", ""Gurushroom"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Creme Eggshells",
-    @"
+        },
+        {
+            "Creme Eggshells",
+            @"
 case ""Creme Eggshells"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""GreenShell"", ""Tsukumogami"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Caramel Eggshells",
-    @"
+        },
+        {
+            "Caramel Eggshells",
+            @"
 case ""Caramel Eggshells"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""GreenguardWest"", ""Kittarian"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Rainbow Eggshells",
-    @"
+        },
+        {
+            "Rainbow Eggshells",
+            @"
 case ""Rainbow Eggshells"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Greendragon"", ""Greenguard Dragon"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Shadow Eggshells",
-    @"
+        },
+        {
+            "Shadow Eggshells",
+            @"
 case ""Shadow Eggshells"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Grenwog"", ""Grenwog"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "DraGrenwog Scale",
-    @"
+        },
+        {
+            "DraGrenwog Scale",
+            @"
 case ""DraGrenwog Scale"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Grenwog"", ""Grenwog"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Chaotic Eggshells",
-    @"
+        },
+        {
+            "Chaotic Eggshells",
+            @"
 case ""Chaotic Eggshells"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Grenstory"", ""Imposter Egg"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Golden Eggshells",
-    @"
+        },
+        {
+            "Golden Eggshells",
+            @"
 case ""Golden Eggshells"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Greed"", ""Treasure Pile"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Anti-Neggshells",
-    @"
+        },
+        {
+            "Anti-Neggshells",
+            @"
 case ""Anti-Neggshells"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Greymoor"", ""Spooky Treeant"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Rubber Egg",
-    @"
+        },
+        {
+            "Rubber Egg",
+            @"
 case ""Rubber Egg"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""grenwogwarren"", UseableMonsters[0], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Sugary Egg",
-    @"
+        },
+        {
+            "Sugary Egg",
+            @"
 case ""Sugary Egg"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""grenwogwarren"", UseableMonsters[1], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Scaly Egg",
-    @"
+        },
+        {
+            "Scaly Egg",
+            @"
 case ""Scaly Egg"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""grenwogwarren"", UseableMonsters[2], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Aged Egg",
-    @"
+        },
+        {
+            "Aged Egg",
+            @"
 case ""Aged Egg"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""grenwogwarren"", UseableMonsters[3], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Liquid Egg",
-    @"
+        },
+        {
+            "Liquid Egg",
+            @"
 case ""Liquid Egg"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""grenwogwarren"", UseableMonsters[4], req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Cabdury Egg",
-    @"
+        },
+        {
+            "Cabdury Egg",
+            @"
 case ""Cabdury Egg"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""grenwogwarren"", UseableMonsters[5], req.Name, quant, isTemp: false);
@@ -22426,10 +22423,10 @@ case ""Cabdury Egg"":
 
 
     "
-},
-{
-    "Weapon Reflection",
-    @"
+        },
+        {
+            "Weapon Reflection",
+            @"
 case ""Weapon Reflection"":
                     Core.AddDrop(req.Name);
                     if (!Core.CheckInventory(req.Name))
@@ -22442,10 +22439,10 @@ case ""Weapon Reflection"":
                     }
                     break;
     "
-},
-{
-    "Boom Went The Dynamite",
-    @"
+        },
+        {
+            "Boom Went The Dynamite",
+            @"
 case ""Boom Went The Dynamite"":
                     if (!Core.IsMember)
                         return;
@@ -22453,26 +22450,26 @@ case ""Boom Went The Dynamite"":
                     Core.HuntMonster(""banished"", ""Desterrat Moya"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "TheWicked",
-    @"
+        },
+        {
+            "TheWicked",
+            @"
 case ""TheWicked"":
                     Core.Logger($""You don't own {req.Name} (Rare)"");
                     break;
     "
-},
-{
-    "Oblivion of Nulgath",
-    @"
+        },
+        {
+            "Oblivion of Nulgath",
+            @"
 case ""Oblivion of Nulgath"":
                     juggernaut.JuggItems(reward: JuggernautItemsofNulgath.RewardsSelection.Oblivion_of_Nulgath);
                     break;
     "
-},
-{
-    "Overlord's DoomBlade",
-    @"
+        },
+        {
+            "Overlord's DoomBlade",
+            @"
 case ""Overlord's DoomBlade"":
                     if (Core.HasAchievement(27, ""ip0""))
                         Core.BuyItem(Bot.Map.Name, 340, req.Name);
@@ -22480,26 +22477,26 @@ case ""Overlord's DoomBlade"":
                         Core.Logger($""You don't have access to this shop for {req.Name}"");
                     break;
     "
-},
-{
-    "Party Slasher Birthday Sword",
-    @"
+        },
+        {
+            "Party Slasher Birthday Sword",
+            @"
 case ""Party Slasher Birthday Sword"":
                     Core.Logger($""You don't own {req.Name} (Rare)"");
                     break;
     "
-},
-{
-    "Rapier of Skulls",
-    @"
+        },
+        {
+            "Rapier of Skulls",
+            @"
 case ""Rapier of Skulls"":
                     Core.Logger($""You don't own {req.Name} (Rare)"");
                     break;
     "
-},
-{
-    "Frostbite",
-    @"
+        },
+        {
+            "Frostbite",
+            @"
 case ""Frostbite"":
                     if (!Core.IsMember || (!Core.isCompletedBefore(793)))
                     {
@@ -22512,10 +22509,10 @@ case ""Frostbite"":
                     Adv.BuyItem(""underworld"", 238, req.Name);
                     break;
     "
-},
-{
-    "A Rock",
-    @"
+        },
+        {
+            "A Rock",
+            @"
 case ""A Rock"":
                     if (!Bot.Inventory.Contains(req.Name))
                     {
@@ -22524,10 +22521,10 @@ case ""A Rock"":
                     }
                     break;
     "
-},
-{
-    "Phoenix Blade of Nulgath",
-    @"
+        },
+        {
+            "Phoenix Blade of Nulgath",
+            @"
 case ""Phoenix Blade of Nulgath"":
                     //  5373 = Oblivion Blade of Nulgath (Pet) ---- 4809 = Oblivion Blade of Nulgath Pet (Rare)
                     if (!Core.IsMember || (!Core.CheckInventory(5373)) && (!Core.CheckInventory(4809)))
@@ -22557,10 +22554,10 @@ case ""Phoenix Blade of Nulgath"":
                     Core.ToBank(Nation.bagDrops);
                     break;
     "
-},
-{
-    "Shadow Spear of Nulgath",
-    @"
+        },
+        {
+            "Shadow Spear of Nulgath",
+            @"
 case ""Shadow Spear of Nulgath"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22569,10 +22566,10 @@ case ""Shadow Spear of Nulgath"":
                     }
                     break;
     "
-},
-{
-    "Guardian of Virtue",
-    @"
+        },
+        {
+            "Guardian of Virtue",
+            @"
 case ""Guardian of Virtue"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22581,10 +22578,10 @@ case ""Guardian of Virtue"":
                     }
                     break;
     "
-},
-{
-    "Leviasea Sword",
-    @"
+        },
+        {
+            "Leviasea Sword",
+            @"
 case ""Leviasea Sword"":
                     if (!Core.CheckInventory(req.Name) && !Core.IsMember)
                     {
@@ -22595,20 +22592,20 @@ case ""Leviasea Sword"":
                         Adv.BuyItem(""yulgar"", 69, req.Name);
                     break;
     "
-},
-{
-    "Blood Axe Of Destruction",
-    @"
+        },
+        {
+            "Blood Axe Of Destruction",
+            @"
 case ""Blood Axe Of Destruction"":
                     Core.EquipClass(ClassType.Farm);
                     if (!Core.CheckInventory(req.Name))
                         Core.KillMonster(""infernalspire"", ""r2"", ""Left"", ""*"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "PainSaw of Eidolon",
-    @"
+        },
+        {
+            "PainSaw of Eidolon",
+            @"
 case ""PainSaw of Eidolon"":
                     if (!Core.CheckInventory(""Undead Champion""))
                     {
@@ -22631,28 +22628,28 @@ case ""PainSaw of Eidolon"":
                     Core.ToBank(""Legion Token"");
                     break;
     "
-},
-{
-    "Hanzamune Dragon Koi Blade",
-    @"
+        },
+        {
+            "Hanzamune Dragon Koi Blade",
+            @"
 case ""Hanzamune Dragon Koi Blade"":
                     Core.EquipClass(ClassType.Solo);
                     Core.KillKitsune(req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Ugly Stick",
-    @"
+        },
+        {
+            "Ugly Stick",
+            @"
 case ""Ugly Stick"":
                     if (!Core.CheckInventory(req.Name))
                         Adv.BuyItem(""newbie"", 39, req.Name);
                     break;
     "
-},
-{
-    "Balrog Blade",
-    @"
+        },
+        {
+            "Balrog Blade",
+            @"
 case ""Balrog Blade"":
                     if (Core.HasAchievement(5))
                         Adv.BuyItem(Bot.Map.Name, 5, req.Name);
@@ -22661,10 +22658,10 @@ case ""Balrog Blade"":
 
                     break;
     "
-},
-{
-    "Legendary Magma Sword",
-    @"
+        },
+        {
+            "Legendary Magma Sword",
+            @"
 case ""Legendary Magma Sword"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22673,19 +22670,19 @@ case ""Legendary Magma Sword"":
                     }
                     break;
     "
-},
-{
-    "Dragon Saw",
-    @"
+        },
+        {
+            "Dragon Saw",
+            @"
 case ""Dragon Saw"":
                     if (!Core.CheckInventory(req.Name))
                         Adv.BuyItem(""yulgar"", 16, req.Name);
                     break;
     "
-},
-{
-    "Bone Sword",
-    @"
+        },
+        {
+            "Bone Sword",
+            @"
 case ""Bone Sword"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22698,10 +22695,10 @@ case ""Bone Sword"":
                     }
                     break;
     "
-},
-{
-    "Honor Guard's Blade",
-    @"
+        },
+        {
+            "Honor Guard's Blade",
+            @"
 case ""Honor Guard's Blade"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22710,10 +22707,10 @@ case ""Honor Guard's Blade"":
                     }
                     break;
     "
-},
-{
-    "Ceremonial Legion Blade",
-    @"
+        },
+        {
+            "Ceremonial Legion Blade",
+            @"
 case ""Ceremonial Legion Blade"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22722,10 +22719,10 @@ case ""Ceremonial Legion Blade"":
                     }
                     break;
     "
-},
-{
-    "Alteon's Pride",
-    @"
+        },
+        {
+            "Alteon's Pride",
+            @"
 case ""Alteon's Pride"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22735,10 +22732,10 @@ case ""Alteon's Pride"":
                     }
                     break;
     "
-},
-{
-    "Ddog Sea Serpent Sword",
-    @"
+        },
+        {
+            "Ddog Sea Serpent Sword",
+            @"
 case ""Ddog Sea Serpent Sword"":
                     if (!Core.IsMember)
                     {
@@ -22751,10 +22748,10 @@ case ""Ddog Sea Serpent Sword"":
                     Core.EnsureCompleteChoose(554, new[] { ""Ddog Sea Serpent Sword"" });
                     break;
     "
-},
-{
-    "Blinding Light of Destiny",
-    @"
+        },
+        {
+            "Blinding Light of Destiny",
+            @"
 case ""Blinding Light of Destiny"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22763,26 +22760,26 @@ case ""Blinding Light of Destiny"":
                     }
                     break;
     "
-},
-{
-    "Crystal Claymore",
-    @"
+        },
+        {
+            "Crystal Claymore",
+            @"
 case ""Crystal Claymore"":
                     Adv.BuyItem(""castle"", 48, req.Name);
                     break;
     "
-},
-{
-    "Dark Crystal Claymore",
-    @"
+        },
+        {
+            "Dark Crystal Claymore",
+            @"
 case ""Dark Crystal Claymore"":
                     Adv.BuyItem(""shadowfall"", 47, req.Name);
                     break;
     "
-},
-{
-    "Soulreaper of Nulgath",
-    @"
+        },
+        {
+            "Soulreaper of Nulgath",
+            @"
 case ""Soulreaper of Nulgath"":
                     if (!Core.IsMember)
                     {
@@ -22809,20 +22806,20 @@ case ""Soulreaper of Nulgath"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Grumpy Warhammer",
-    @"
+        },
+        {
+            "Grumpy Warhammer",
+            @"
 case ""Grumpy Warhammer"":
                     Core.EquipClass(ClassType.Solo);
                     if (!Core.CheckInventory(req.Name))
                         Core.HuntMonster(""boxes"", ""Sneeviltron"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Maximillian's Whip",
-    @"
+        },
+        {
+            "Maximillian's Whip",
+            @"
 case ""Maximillian's Whip"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22831,10 +22828,10 @@ case ""Maximillian's Whip"":
                     }
                     break;
     "
-},
-{
-    "Mystic Pencil of Endless Scribbles",
-    @"
+        },
+        {
+            "Mystic Pencil of Endless Scribbles",
+            @"
 case ""Mystic Pencil of Endless Scribbles"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22843,10 +22840,10 @@ case ""Mystic Pencil of Endless Scribbles"":
                     }
                     break;
     "
-},
-{
-    "WarpForce War Shovel 20K",
-    @"
+        },
+        {
+            "WarpForce War Shovel 20K",
+            @"
 case ""WarpForce War Shovel 20K"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22855,10 +22852,10 @@ case ""WarpForce War Shovel 20K"":
                     }
                     break;
     "
-},
-{
-    "Godly Mace of the Ancients",
-    @"
+        },
+        {
+            "Godly Mace of the Ancients",
+            @"
 case ""Godly Mace of the Ancients"":
                     if (!Core.IsMember)
                     {
@@ -22869,20 +22866,20 @@ case ""Godly Mace of the Ancients"":
                         Adv.BuyItem(""citadel"", 44, req.Name);
                     break;
     "
-},
-{
-    "Mace of the Grand Inquisitor",
-    @"
+        },
+        {
+            "Mace of the Grand Inquisitor",
+            @"
 case ""Mace of the Grand Inquisitor"":
                     Core.EquipClass(ClassType.Solo);
                     if (!Core.CheckInventory(req.Name))
                         Core.HuntMonster(""citadel"", ""Grand Inquisitor"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "KneeCapper",
-    @"
+        },
+        {
+            "KneeCapper",
+            @"
 case ""KneeCapper"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22891,40 +22888,40 @@ case ""KneeCapper"":
                     }
                     break;
     "
-},
-{
-    "Morning Star",
-    @"
+        },
+        {
+            "Morning Star",
+            @"
 case ""Morning Star"":
                     Core.EquipClass(ClassType.Solo);
                     if (!Core.CheckInventory(req.Name))
                         Core.HuntMonster(""forest"", ""Boss Zardman"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Axe of the Black Knight",
-    @"
+        },
+        {
+            "Axe of the Black Knight",
+            @"
 case ""Axe of the Black Knight"":
                     Core.EquipClass(ClassType.Solo);
                     if (!Core.CheckInventory(req.Name))
                         Core.KillMonster(""greenguardwest"", ""BKWest15"", ""Down"", ""Black Knight"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Cruel Axe of Midnight",
-    @"
+        },
+        {
+            "Cruel Axe of Midnight",
+            @"
 case ""Cruel Axe of Midnight"":
                     Core.EquipClass(ClassType.Solo);
                     if (!Core.CheckInventory(req.Name))
                         Core.KillMonster(""greenguardwest"", ""BKWest15"", ""Down"", ""Black Knight"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Platinum Axe of Destiny",
-    @"
+        },
+        {
+            "Platinum Axe of Destiny",
+            @"
 case ""Platinum Axe of Destiny"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22933,10 +22930,10 @@ case ""Platinum Axe of Destiny"":
                     }
                     break;
     "
-},
-{
-    "Star Sword",
-    @"
+        },
+        {
+            "Star Sword",
+            @"
 case ""Star Sword"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22945,19 +22942,19 @@ case ""Star Sword"":
                     }
                     break;
     "
-},
-{
-    "Big 100K",
-    @"
+        },
+        {
+            "Big 100K",
+            @"
 case ""Big 100K"":
                     if (!Core.CheckInventory(req.Name))
                         Adv.BuyItem(""swordhaven"", 3, req.Name);
                     break;
     "
-},
-{
-    "Blister's Chainsaw 08",
-    @"
+        },
+        {
+            "Blister's Chainsaw 08",
+            @"
 case ""Blister's Chainsaw 08"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22966,10 +22963,10 @@ case ""Blister's Chainsaw 08"":
                     }
                     break;
     "
-},
-{
-    "Golden Phoenix Sword",
-    @"
+        },
+        {
+            "Golden Phoenix Sword",
+            @"
 case ""Golden Phoenix Sword"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -22978,29 +22975,29 @@ case ""Golden Phoenix Sword"":
                     }
                     break;
     "
-},
-{
-    "Hydra Blade",
-    @"
+        },
+        {
+            "Hydra Blade",
+            @"
 case ""Hydra Blade"":
                     if (!Core.CheckInventory(req.Name))
                         Adv.BuyItem(""swordhaven"", 4, req.Name);
                     break;
     "
-},
-{
-    "Crusader Sword",
-    @"
+        },
+        {
+            "Crusader Sword",
+            @"
 case ""Crusader Sword"":
                     Core.EquipClass(ClassType.Solo);
                     if (!Core.CheckInventory(req.Name))
                         Core.HuntMonster(""citadel"", ""Crusader"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Bloodriver",
-    @"
+        },
+        {
+            "Bloodriver",
+            @"
 case ""Bloodriver"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -23009,10 +23006,10 @@ case ""Bloodriver"":
                     }
                     break;
     "
-},
-{
-    "Star Sword Breaker",
-    @"
+        },
+        {
+            "Star Sword Breaker",
+            @"
 case ""Star Sword Breaker"":
                     if (!Core.CheckInventory(req.Name))
                     {
@@ -23021,19 +23018,19 @@ case ""Star Sword Breaker"":
                     }
                     break;
     "
-},
-{
-    "ReignBringer",
-    @"
+        },
+        {
+            "ReignBringer",
+            @"
 case ""ReignBringer"":
                     if (!Core.CheckInventory(req.Name))
                         Adv.BuyItem(""swordhaven"", 4, req.Name);
                     break;
     "
-},
-{
-    "Balor's Cruelty",
-    @"
+        },
+        {
+            "Balor's Cruelty",
+            @"
 case ""Balor's Cruelty"":
                     if (!Core.IsMember)
                     {
@@ -23045,26 +23042,26 @@ case ""Balor's Cruelty"":
                         Core.HuntMonster(""twilight"", ""Abaddon"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Default Sword",
-    @"
+        },
+        {
+            "Default Sword",
+            @"
 case ""Default Sword"":
                     Adv.BuyItem(""yulgar"", 16, req.Name);
                     break;
     "
-},
-{
-    "Iron Spear",
-    @"
+        },
+        {
+            "Iron Spear",
+            @"
 case ""Iron Spear"":
                     Adv.BuyItem(""yulgar"", 16, req.Name);
                     break;
     "
-},
-{
-    "Undead Plague Spear",
-    @"
+        },
+        {
+            "Undead Plague Spear",
+            @"
 case ""Undead Plague Spear"":
                     if (Core.HasAchievement(5))
                         Adv.BuyItem(Bot.Map.Name, 5, req.Name);
@@ -23072,10 +23069,10 @@ case ""Undead Plague Spear"":
                         Core.HuntMonster(""graveyard"", ""Big Jack Sprat"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Mighty Sword Of The Dragons",
-    @"
+        },
+        {
+            "Mighty Sword Of The Dragons",
+            @"
 case ""Mighty Sword Of The Dragons"":
                     if (!Core.IsMember)
                     {
@@ -23095,27 +23092,27 @@ case ""Mighty Sword Of The Dragons"":
                     }
                     break;
     "
-},
-{
-    "Necrotic Sword of Doom",
-    @"
+        },
+        {
+            "Necrotic Sword of Doom",
+            @"
 case ""Necrotic Sword of Doom"":
                     Core.Logger($""Go and get {req.Name} yourself."");
                     break;
     "
-},
-{
-    "Burning Blade Of Abezeth",
-    @"
+        },
+        {
+            "Burning Blade Of Abezeth",
+            @"
 case ""Burning Blade Of Abezeth"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""celestialarenad"", ""Aranx"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Abaddon's Terror",
-    @"
+        },
+        {
+            "Abaddon's Terror",
+            @"
 case ""Abaddon's Terror"":
                     if (!Core.IsMember)
                     {
@@ -23126,28 +23123,28 @@ case ""Abaddon's Terror"":
                     Core.HuntMonster(""twilight"", ""Abaddon"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Krom's Brutality",
-    @"
+        },
+        {
+            "Krom's Brutality",
+            @"
 case ""Krom's Brutality"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""forest"", ""Boss Zardman"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Phoenix Blade",
-    @"
+        },
+        {
+            "Phoenix Blade",
+            @"
 case ""Phoenix Blade"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""lair"", ""Red Dragon"", ""Phoenix Blade"", isTemp: false);
                     break;
     "
-},
-{
-    "Burn it Down",
-    @"
+        },
+        {
+            "Burn it Down",
+            @"
 case ""Burn it Down"":
                     if (!Daily.CheckDailyv2(187, true, true, req.Name))
                     {
@@ -23162,36 +23159,36 @@ case ""Burn it Down"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Shadow Terror Axe",
-    @"
+        },
+        {
+            "Shadow Terror Axe",
+            @"
 case ""Shadow Terror Axe"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""battleundera"", ""Bone Terror"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Soul Terror Sword",
-    @"
+        },
+        {
+            "Soul Terror Sword",
+            @"
 case ""Soul Terror Sword"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""battleundera"", ""Bone Terror"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowReaper Of Doom",
-    @"
+        },
+        {
+            "ShadowReaper Of Doom",
+            @"
 case ""ShadowReaper Of Doom"":
                     SRoD.ShadowReaperOfDoom();
                     break;
     "
-},
-{
-    "Cysero's Potato",
-    @"
+        },
+        {
+            "Cysero's Potato",
+            @"
 case ""Cysero's Potato"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23204,146 +23201,146 @@ case ""Cysero's Potato"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Kuro's Wrath",
-    @"
+        },
+        {
+            "Kuro's Wrath",
+            @"
 case ""Kuro's Wrath"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""river"", ""Kuro"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Lilith Katana",
-    @"
+        },
+        {
+            "Lilith Katana",
+            @"
 case ""Lilith Katana"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""elemental"", ""Mana Golem"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Light Prismatic Katana",
-    @"
+        },
+        {
+            "Light Prismatic Katana",
+            @"
 case ""Light Prismatic Katana"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""akiba"", 131, req.Name, quant);
                     break;
     "
-},
-{
-    "Excavated Glaive: Sword",
-    @"
+        },
+        {
+            "Excavated Glaive: Sword",
+            @"
 case ""Excavated Glaive: Sword"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""artistalley"", 753, req.Name, quant);
                     break;
     "
-},
-{
-    "Golden Blade of Fate",
-    @"
+        },
+        {
+            "Golden Blade of Fate",
+            @"
 case ""Golden Blade of Fate"":
                     Core.FarmingLogger(req.Name, quant);
                     GBOF.GetGBoF();
                     break;
     "
-},
-{
-    "Blade of Affliction",
-    @"
+        },
+        {
+            "Blade of Affliction",
+            @"
 case ""Blade of Affliction"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.BuyItem(""Tercessuinotlim"", 68, req.Name, quant);
                     break;
     "
-},
-{
-    "Hex Blade of Nulgath",
-    @"
+        },
+        {
+            "Hex Blade of Nulgath",
+            @"
 case ""Hex Blade of Nulgath"":
                     Nation.NulgathLarvae(req.Name, quant);
                     break;
     "
-},
-{
-    "Bane of Nulgath",
-    @"
+        },
+        {
+            "Bane of Nulgath",
+            @"
 case ""Bane of Nulgath"":
                     Nation.NulgathLarvae(req.Name, quant);
                     break;
     "
-},
-{
-    "Shadowworn",
-    @"
+        },
+        {
+            "Shadowworn",
+            @"
 case ""Shadowworn"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""shadowrealmpast"", ""Shadow Lord"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Hollowborn Oblivion Blade",
-    @"
+        },
+        {
+            "Hollowborn Oblivion Blade",
+            @"
 case ""Hollowborn Oblivion Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     HOB.GetBlade();
                     break;
     "
-},
-{
-    "Loyalty Blade of the Nation",
-    @"
+        },
+        {
+            "Loyalty Blade of the Nation",
+            @"
 case ""Loyalty Blade of the Nation"":
                     NDM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Katana of Revontheus",
-    @"
+        },
+        {
+            "Katana of Revontheus",
+            @"
 case ""Katana of Revontheus"":
                     Core.Logger($""{req.Name} is rare, it can't be farmed."");
                     break;
     "
-},
-{
-    "Risoluto",
-    @"
+        },
+        {
+            "Risoluto",
+            @"
 case ""Risoluto"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""necrocavern"", ""Chaos Vordred"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Fiendish Blood Blade",
-    @"
+        },
+        {
+            "Fiendish Blood Blade",
+            @"
 case ""Fiendish Blood Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""bludrut4"", ""Groglurk"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "SpiritHunter Katana",
-    @"
+        },
+        {
+            "SpiritHunter Katana",
+            @"
 case ""SpiritHunter Katana"":
                     SHM.BuyAllMerge(req.Name);
                     break;
 
     "
-},
-{
-    "Blight Bone",
-    @"
+        },
+        {
+            "Blight Bone",
+            @"
 case ""Blight Bone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(req.Name);
@@ -23361,10 +23358,10 @@ case ""Blight Bone"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Turdraken Carver",
-    @"
+        },
+        {
+            "Turdraken Carver",
+            @"
 case ""Turdraken Carver"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23372,10 +23369,10 @@ case ""Turdraken Carver"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Harvest Rifle",
-    @"
+        },
+        {
+            "Harvest Rifle",
+            @"
 case ""Harvest Rifle"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23383,10 +23380,10 @@ case ""Harvest Rifle"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Turdraken Carvers",
-    @"
+        },
+        {
+            "Turdraken Carvers",
+            @"
 case ""Turdraken Carvers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23394,10 +23391,10 @@ case ""Turdraken Carvers"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Vintage Shotgun",
-    @"
+        },
+        {
+            "Vintage Shotgun",
+            @"
 case ""Vintage Shotgun"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23405,10 +23402,10 @@ case ""Vintage Shotgun"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Cranberry Shoulder Imp",
-    @"
+        },
+        {
+            "Cranberry Shoulder Imp",
+            @"
 case ""Cranberry Shoulder Imp"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23416,10 +23413,10 @@ case ""Cranberry Shoulder Imp"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Beleen's Gratitude",
-    @"
+        },
+        {
+            "Beleen's Gratitude",
+            @"
 case ""Beleen's Gratitude"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23445,10 +23442,10 @@ case ""Beleen's Gratitude"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Townspeople's Affection",
-    @"
+        },
+        {
+            "Townspeople's Affection",
+            @"
 case ""Townspeople's Affection"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23475,10 +23472,10 @@ case ""Townspeople's Affection"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Astice's Claw",
-    @"
+        },
+        {
+            "Astice's Claw",
+            @"
 case ""Astice's Claw"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23504,20 +23501,20 @@ case ""Astice's Claw"":
                     break;
 
     "
-},
-{
-    "Heart-Shaped Gem",
-    @"
+        },
+        {
+            "Heart-Shaped Gem",
+            @"
 case ""Heart-Shaped Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""tunneloflove"", ""Love Knight"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Lovely Laurel",
-    @"
+        },
+        {
+            "Lovely Laurel",
+            @"
 case ""Lovely Laurel"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -23531,50 +23528,50 @@ case ""Lovely Laurel"":
                     }
                     break;
     "
-},
-{
-    "Burning Flame",
-    @"
+        },
+        {
+            "Burning Flame",
+            @"
 case ""Burning Flame"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""tunneloflove"", ""Galanoth"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Moth-Spun Silk",
-    @"
+        },
+        {
+            "Moth-Spun Silk",
+            @"
 case ""Moth-Spun Silk"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""tunneloflove"", ""Rosey Moth"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Pink Diamond",
-    @"
+        },
+        {
+            "Pink Diamond",
+            @"
 case ""Pink Diamond"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""tunneloflove"", ""Oubliette"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Silphium Love Potions",
-    @"
+        },
+        {
+            "Silphium Love Potions",
+            @"
 case ""Silphium Love Potions"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""tunneloflove"", ""Oubliette"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Wub Charm",
-    @"
+        },
+        {
+            "Wub Charm",
+            @"
 case ""Wub Charm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23585,10 +23582,10 @@ case ""Wub Charm"":
                     }
                     break;
     "
-},
-{
-    "Chocolate Tail",
-    @"
+        },
+        {
+            "Chocolate Tail",
+            @"
 case ""Chocolate Tail"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23599,10 +23596,10 @@ case ""Chocolate Tail"":
                     }
                     break;
     "
-},
-{
-    "Furry Heart",
-    @"
+        },
+        {
+            "Furry Heart",
+            @"
 case ""Furry Heart"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23613,10 +23610,10 @@ case ""Furry Heart"":
                     }
                     break;
     "
-},
-{
-    "White Oval",
-    @"
+        },
+        {
+            "White Oval",
+            @"
 case ""White Oval"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23629,10 +23626,10 @@ case ""White Oval"":
                     }
                     break;
     "
-},
-{
-    "Blush Brilliant",
-    @"
+        },
+        {
+            "Blush Brilliant",
+            @"
 case ""Blush Brilliant"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23645,10 +23642,10 @@ case ""Blush Brilliant"":
                     }
                     break;
     "
-},
-{
-    "Pink Pear",
-    @"
+        },
+        {
+            "Pink Pear",
+            @"
 case ""Pink Pear"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23661,10 +23658,10 @@ case ""Pink Pear"":
                     }
                     break;
     "
-},
-{
-    "Half Rose",
-    @"
+        },
+        {
+            "Half Rose",
+            @"
 case ""Half Rose"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23677,10 +23674,10 @@ case ""Half Rose"":
                     }
                     break;
     "
-},
-{
-    "Cerise Trillian",
-    @"
+        },
+        {
+            "Cerise Trillian",
+            @"
 case ""Cerise Trillian"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23693,10 +23690,10 @@ case ""Cerise Trillian"":
                     }
                     break;
     "
-},
-{
-    "Ruby Heart",
-    @"
+        },
+        {
+            "Ruby Heart",
+            @"
 case ""Ruby Heart"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23709,10 +23706,10 @@ case ""Ruby Heart"":
                     }
                     break;
     "
-},
-{
-    "White Box",
-    @"
+        },
+        {
+            "White Box",
+            @"
 case ""White Box"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23725,10 +23722,10 @@ case ""White Box"":
                     }
                     break;
     "
-},
-{
-    "Oval Setting",
-    @"
+        },
+        {
+            "Oval Setting",
+            @"
 case ""Oval Setting"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23741,10 +23738,10 @@ case ""Oval Setting"":
                     }
                     break;
     "
-},
-{
-    "Sparkles",
-    @"
+        },
+        {
+            "Sparkles",
+            @"
 case ""Sparkles"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23757,10 +23754,10 @@ case ""Sparkles"":
                     }
                     break;
     "
-},
-{
-    "Blush Box",
-    @"
+        },
+        {
+            "Blush Box",
+            @"
 case ""Blush Box"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23773,10 +23770,10 @@ case ""Blush Box"":
                     }
                     break;
     "
-},
-{
-    "Brilliant Setting",
-    @"
+        },
+        {
+            "Brilliant Setting",
+            @"
 case ""Brilliant Setting"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23789,10 +23786,10 @@ case ""Brilliant Setting"":
                     }
                     break;
     "
-},
-{
-    "Pink Box",
-    @"
+        },
+        {
+            "Pink Box",
+            @"
 case ""Pink Box"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23805,10 +23802,10 @@ case ""Pink Box"":
                     }
                     break;
     "
-},
-{
-    "Pear Setting",
-    @"
+        },
+        {
+            "Pear Setting",
+            @"
 case ""Pear Setting"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23821,10 +23818,10 @@ case ""Pear Setting"":
                     }
                     break;
     "
-},
-{
-    "Rose Box",
-    @"
+        },
+        {
+            "Rose Box",
+            @"
 case ""Rose Box"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23837,10 +23834,10 @@ case ""Rose Box"":
                     }
                     break;
     "
-},
-{
-    "Half Rose Setting",
-    @"
+        },
+        {
+            "Half Rose Setting",
+            @"
 case ""Half Rose Setting"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23853,10 +23850,10 @@ case ""Half Rose Setting"":
                     }
                     break;
     "
-},
-{
-    "Cerise Box",
-    @"
+        },
+        {
+            "Cerise Box",
+            @"
 case ""Cerise Box"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23869,10 +23866,10 @@ case ""Cerise Box"":
                     }
                     break;
     "
-},
-{
-    "Trillian Setting",
-    @"
+        },
+        {
+            "Trillian Setting",
+            @"
 case ""Trillian Setting"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -23885,10 +23882,10 @@ case ""Trillian Setting"":
                     }
                     break;
     "
-},
-{
-    "Ruby Box",
-    @"
+        },
+        {
+            "Ruby Box",
+            @"
 case ""Ruby Box"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23901,10 +23898,10 @@ case ""Ruby Box"":
                     }
                     break;
     "
-},
-{
-    "Heart Setting",
-    @"
+        },
+        {
+            "Heart Setting",
+            @"
 case ""Heart Setting"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23917,10 +23914,10 @@ case ""Heart Setting"":
                     }
                     break;
     "
-},
-{
-    "Golden Ticket",
-    @"
+        },
+        {
+            "Golden Ticket",
+            @"
 case ""Golden Ticket"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -23932,10 +23929,10 @@ case ""Golden Ticket"":
                     break;
 
     "
-},
-{
-    "Makai Token",
-    @"
+        },
+        {
+            "Makai Token",
+            @"
 case ""Makai Token"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -23946,10 +23943,10 @@ case ""Makai Token"":
                     }
                     break;
     "
-},
-{
-    "Golden Coupon",
-    @"
+        },
+        {
+            "Golden Coupon",
+            @"
 case ""Golden Coupon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -23957,10 +23954,10 @@ case ""Golden Coupon"":
                     break;
 
     "
-},
-{
-    "Lovely Silk",
-    @"
+        },
+        {
+            "Lovely Silk",
+            @"
 case ""Lovely Silk"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9588);
@@ -23977,10 +23974,10 @@ case ""Lovely Silk"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bolsa da Mãe D'água",
-    @"
+        },
+        {
+            "Bolsa da Mãe D'água",
+            @"
 case ""Bolsa da Mãe D'água"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
@@ -23988,10 +23985,10 @@ case ""Bolsa da Mãe D'água"":
                     Bot.Wait.ForPickup(req.ID);
                     break;
     "
-},
-{
-    "Espelho da Mãe D'água",
-    @"
+        },
+        {
+            "Espelho da Mãe D'água",
+            @"
 case ""Espelho da Mãe D'água"":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -24004,10 +24001,10 @@ case ""Espelho da Mãe D'água"":
                     }
                     break;
     "
-},
-{
-    "Obliterator Droid's Generator",
-    @"
+        },
+        {
+            "Obliterator Droid's Generator",
+            @"
 case ""Obliterator Droid's Generator"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -24020,10 +24017,10 @@ case ""Obliterator Droid's Generator"":
                     }
                     break;
     "
-},
-{
-    "Droid Scrap",
-    @"
+        },
+        {
+            "Droid Scrap",
+            @"
 case ""Droid Scrap"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24031,10 +24028,10 @@ case ""Droid Scrap"":
                     break;
 
     "
-},
-{
-    "Wentiran Seal",
-    @"
+        },
+        {
+            "Wentiran Seal",
+            @"
 case ""Wentiran Seal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9342);
@@ -24049,100 +24046,100 @@ case ""Wentiran Seal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Gold Nugget",
-    @"
+        },
+        {
+            "Gold Nugget",
+            @"
 case ""Gold Nugget"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""wentira"", ""Pesugihan Boar"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Broken Tusk",
-    @"
+        },
+        {
+            "Broken Tusk",
+            @"
 case ""Broken Tusk"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""wentira"", ""Pesugihan Boar"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Beloved Blessing Hair",
-    @"
+        },
+        {
+            "Beloved Blessing Hair",
+            @"
 case ""Beloved Blessing Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""wentira"", ""Pesugihan Boar"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Uncut Ruby",
-    @"
+        },
+        {
+            "Uncut Ruby",
+            @"
 case ""Uncut Ruby"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""wentira"", ""Pesugihan Boar"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Beloved Blessing Locks",
-    @"
+        },
+        {
+            "Beloved Blessing Locks",
+            @"
 case ""Beloved Blessing Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""wentira"", ""Pesugihan Boar"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Blessed Beloved's Kris Knife",
-    @"
+        },
+        {
+            "Blessed Beloved's Kris Knife",
+            @"
 case ""Blessed Beloved's Kris Knife"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""wentira"", ""Pesugihan Boar"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Wiracana Fan",
-    @"
+        },
+        {
+            "Wiracana Fan",
+            @"
 case ""Wiracana Fan"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""wentira"", ""Pesugihan Boar"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Ancient Bone",
-    @"
+        },
+        {
+            "Ancient Bone",
+            @"
 case ""Ancient Bone"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""wentira"", ""Kabasaran Waranei"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Furry Egg",
-    @"
+        },
+        {
+            "Furry Egg",
+            @"
 case ""Furry Egg"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""zorbaspalace"", ""Lem-or"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Woopee",
-    @"
+        },
+        {
+            "Woopee",
+            @"
 case ""Woopee"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24150,10 +24147,10 @@ case ""Woopee"":
                     break;
 
     "
-},
-{
-    "Cyber Crystal",
-    @"
+        },
+        {
+            "Cyber Crystal",
+            @"
 case ""Cyber Crystal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24164,50 +24161,50 @@ case ""Cyber Crystal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Fifth Lord's Filtrinator",
-    @"
+        },
+        {
+            "Fifth Lord's Filtrinator",
+            @"
 case ""Fifth Lord's Filtrinator"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""murdermoon"", ""Fifth Sepulchure"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "S Ring",
-    @"
+        },
+        {
+            "S Ring",
+            @"
 case ""S Ring"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""murdermoon"", ""Fifth Sepulchure"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Dotty",
-    @"
+        },
+        {
+            "Dotty",
+            @"
 case ""Dotty"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""zorbaspalace"", ""Zorba the Bakk"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Dark Helmet",
-    @"
+        },
+        {
+            "Dark Helmet",
+            @"
 case ""Dark Helmet"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""zorbaspalace"", ""Zorba the Bakk"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Dark Tempest Soldier",
-    @"
+        },
+        {
+            "Dark Tempest Soldier",
+            @"
 case ""Dark Tempest Soldier"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24215,10 +24212,10 @@ case ""Dark Tempest Soldier"":
                     break;
 
     "
-},
-{
-    "Dark Tempest Soldier Helm",
-    @"
+        },
+        {
+            "Dark Tempest Soldier Helm",
+            @"
 case ""Dark Tempest Soldier Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24226,10 +24223,10 @@ case ""Dark Tempest Soldier Helm"":
                     break;
 
     "
-},
-{
-    "Dark Tempest Soldier Jetpack",
-    @"
+        },
+        {
+            "Dark Tempest Soldier Jetpack",
+            @"
 case ""Dark Tempest Soldier Jetpack"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24237,10 +24234,10 @@ case ""Dark Tempest Soldier Jetpack"":
                     break;
 
     "
-},
-{
-    "Dark Tempest Soldier Blaster",
-    @"
+        },
+        {
+            "Dark Tempest Soldier Blaster",
+            @"
 case ""Dark Tempest Soldier Blaster"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24248,10 +24245,10 @@ case ""Dark Tempest Soldier Blaster"":
                     break;
 
     "
-},
-{
-    "Dark Tempest Soldier Laserblade",
-    @"
+        },
+        {
+            "Dark Tempest Soldier Laserblade",
+            @"
 case ""Dark Tempest Soldier Laserblade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24259,10 +24256,10 @@ case ""Dark Tempest Soldier Laserblade"":
                     break;
 
     "
-},
-{
-    "Dark Tempest Soldier Pet",
-    @"
+        },
+        {
+            "Dark Tempest Soldier Pet",
+            @"
 case ""Dark Tempest Soldier Pet"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24270,10 +24267,10 @@ case ""Dark Tempest Soldier Pet"":
                     break;
 
     "
-},
-{
-    "Dark Tempest Soldier Mask",
-    @"
+        },
+        {
+            "Dark Tempest Soldier Mask",
+            @"
 case ""Dark Tempest Soldier Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24281,10 +24278,10 @@ case ""Dark Tempest Soldier Mask"":
                     break;
 
     "
-},
-{
-    "Lucky Clover",
-    @"
+        },
+        {
+            "Lucky Clover",
+            @"
 case ""Lucky Clover"":
 
                     Core.FarmingLogger(req.Name, quant);
@@ -24305,10 +24302,10 @@ case ""Lucky Clover"":
                     }
                     break;
     "
-},
-{
-    "Rainbow Shard",
-    @"
+        },
+        {
+            "Rainbow Shard",
+            @"
 case ""Rainbow Shard"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24319,10 +24316,10 @@ case ""Rainbow Shard"":
                     break;
 
     "
-},
-{
-    "Salvaged Droid Part",
-    @"
+        },
+        {
+            "Salvaged Droid Part",
+            @"
 case ""Salvaged Droid Part"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24335,140 +24332,140 @@ case ""Salvaged Droid Part"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "GL-1ST",
-    @"
+        },
+        {
+            "GL-1ST",
+            @"
 case ""GL-1ST"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""twigguhunt"", ""Twiggu"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "GL-1ST Helm",
-    @"
+        },
+        {
+            "GL-1ST Helm",
+            @"
 case ""GL-1ST Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""twigguhunt"", ""Twiggu"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "GL-1ST Mask",
-    @"
+        },
+        {
+            "GL-1ST Mask",
+            @"
 case ""GL-1ST Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""twigguhunt"", ""Twiggu"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "GL-1ST Visor",
-    @"
+        },
+        {
+            "GL-1ST Visor",
+            @"
 case ""GL-1ST Visor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""twigguhunt"", ""Twiggu"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Seraphic Fourth Morph",
-    @"
+        },
+        {
+            "Seraphic Fourth Morph",
+            @"
 case ""Seraphic Fourth Morph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""twigguhunt"", ""Twiggu"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Seraphic Fourth Beard Morph",
-    @"
+        },
+        {
+            "Seraphic Fourth Beard Morph",
+            @"
 case ""Seraphic Fourth Beard Morph"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""twigguhunt"", ""Twiggu"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Seraphic Fourth Visage",
-    @"
+        },
+        {
+            "Seraphic Fourth Visage",
+            @"
 case ""Seraphic Fourth Visage"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""twigguhunt"", ""Twiggu"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "GL-1ST Pronged Spear",
-    @"
+        },
+        {
+            "GL-1ST Pronged Spear",
+            @"
 case ""GL-1ST Pronged Spear"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""twigguhunt"", ""Bodyguard Droid"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "GL-1ST Pronged Spears",
-    @"
+        },
+        {
+            "GL-1ST Pronged Spears",
+            @"
 case ""GL-1ST Pronged Spears"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""twigguhunt"", ""Bodyguard Droid"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "GL-1ST Salvage Axe",
-    @"
+        },
+        {
+            "GL-1ST Salvage Axe",
+            @"
 case ""GL-1ST Salvage Axe"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""twigguhunt"", ""Scout Droid"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "GL-1ST Salvage Axes",
-    @"
+        },
+        {
+            "GL-1ST Salvage Axes",
+            @"
 case ""GL-1ST Salvage Axes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""twigguhunt"", ""Scout Droid"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "GL-1ST Salvage Gun",
-    @"
+        },
+        {
+            "GL-1ST Salvage Gun",
+            @"
 case ""GL-1ST Salvage Gun"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""twigguhunt"", ""Infantry Droid"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "GL-1ST Salvage Guns",
-    @"
+        },
+        {
+            "GL-1ST Salvage Guns",
+            @"
 case ""GL-1ST Salvage Guns"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""twigguhunt"", ""Infantry Droid"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Rangda's Mask",
-    @"
+        },
+        {
+            "Rangda's Mask",
+            @"
 case ""Rangda's Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -24476,20 +24473,20 @@ case ""Rangda's Mask"":
                     Core.HuntMonster(""rangda"", ""Rangda"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Abhorrent Remnant",
-    @"
+        },
+        {
+            "Abhorrent Remnant",
+            @"
 case ""Abhorrent Remnant"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""rangda"", ""Tuyul"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Batik Fabric",
-    @"
+        },
+        {
+            "Batik Fabric",
+            @"
 case ""Batik Fabric"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -24509,10 +24506,10 @@ case ""Batik Fabric"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Benang",
-    @"
+        },
+        {
+            "Benang",
+            @"
 case ""Benang"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -24533,10 +24530,10 @@ case ""Benang"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Warok's Wicked Snapper",
-    @"
+        },
+        {
+            "Warok's Wicked Snapper",
+            @"
 case ""Warok's Wicked Snapper"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -24550,10 +24547,10 @@ case ""Warok's Wicked Snapper"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Duskwind Warok Visage",
-    @"
+        },
+        {
+            "Duskwind Warok Visage",
+            @"
 case ""Duskwind Warok Visage"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -24567,10 +24564,10 @@ case ""Duskwind Warok Visage"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Elder Warok Morph",
-    @"
+        },
+        {
+            "Elder Warok Morph",
+            @"
 case ""Elder Warok Morph"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -24584,10 +24581,10 @@ case ""Elder Warok Morph"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Southern King Hair",
-    @"
+        },
+        {
+            "Southern King Hair",
+            @"
 case ""Southern King Hair"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -24602,10 +24599,10 @@ case ""Southern King Hair"":
                     break;
 
     "
-},
-{
-    "Ocean Maiden’s Locks",
-    @"
+        },
+        {
+            "Ocean Maiden’s Locks",
+            @"
 case ""Ocean Maiden’s Locks"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -24620,10 +24617,10 @@ case ""Ocean Maiden’s Locks"":
                     break;
 
     "
-},
-{
-    "Candy Dragon Egg",
-    @"
+        },
+        {
+            "Candy Dragon Egg",
+            @"
 case ""Candy Dragon Egg"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24642,92 +24639,92 @@ case ""Candy Dragon Egg"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Jiangshi",
-    @"
+        },
+        {
+            "Jiangshi",
+            @"
 case ""Jiangshi"":
                     Core.HuntMonster(""cursedcastle"", ""Noble Ghost"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Jiangshi Hair",
-    @"
+        },
+        {
+            "Jiangshi Hair",
+            @"
 case ""Jiangshi Hair"":
                     Core.HuntMonster(""cursedcastle"", ""Noble Ghost"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Jiangshi Cap",
-    @"
+        },
+        {
+            "Jiangshi Cap",
+            @"
 case ""Jiangshi Cap"":
                     Core.HuntMonster(""cursedcastle"", ""Noble Ghost"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Jiangshi Locks",
-    @"
+        },
+        {
+            "Jiangshi Locks",
+            @"
 case ""Jiangshi Locks"":
                     Core.HuntMonster(""cursedcastle"", ""Noble Ghost"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Jiangshi Bandages",
-    @"
+        },
+        {
+            "Jiangshi Bandages",
+            @"
 case ""Jiangshi Bandages"":
                     Core.HuntMonster(""cursedcastle"", ""Noble Ghost"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Jiangshi Talisman Locks",
-    @"
+        },
+        {
+            "Jiangshi Talisman Locks",
+            @"
 case ""Jiangshi Talisman Locks"":
                     Core.HuntMonster(""cursedcastle"", ""Noble Ghost"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Jiangshi Talisman Hair",
-    @"
+        },
+        {
+            "Jiangshi Talisman Hair",
+            @"
 case ""Jiangshi Talisman Hair"":
                     Core.HuntMonster(""cursedcastle"", ""Noble Ghost"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Jiangshi Hat",
-    @"
+        },
+        {
+            "Jiangshi Hat",
+            @"
 case ""Jiangshi Hat"":
                     Core.HuntMonster(""cursedcastle"", ""Noble Ghost"", req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Khonsu Seal",
-    @"
+        },
+        {
+            "Khonsu Seal",
+            @"
 case ""Khonsu Seal"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""cruxship"", ""Apephryx"", req.Name, quant, false);
                     break;
 
     "
-},
-{
-    "Orange Dye",
-    @"
+        },
+        {
+            "Orange Dye",
+            @"
 case ""Orange Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -24740,10 +24737,10 @@ case ""Orange Dye"":
                     break;
 
     "
-},
-{
-    "Yellow Dye",
-    @"
+        },
+        {
+            "Yellow Dye",
+            @"
 case ""Yellow Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -24756,10 +24753,10 @@ case ""Yellow Dye"":
                     break;
 
     "
-},
-{
-    "Black Dye",
-    @"
+        },
+        {
+            "Black Dye",
+            @"
 case ""Black Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -24772,10 +24769,10 @@ case ""Black Dye"":
                     break;
 
     "
-},
-{
-    "Purple Dye",
-    @"
+        },
+        {
+            "Purple Dye",
+            @"
 case ""Purple Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -24788,10 +24785,10 @@ case ""Purple Dye"":
                     break;
 
     "
-},
-{
-    "Pink Dye",
-    @"
+        },
+        {
+            "Pink Dye",
+            @"
 case ""Pink Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -24804,10 +24801,10 @@ case ""Pink Dye"":
                     break;
 
     "
-},
-{
-    "Fwog Egg",
-    @"
+        },
+        {
+            "Fwog Egg",
+            @"
 case ""Fwog Egg"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -24820,121 +24817,121 @@ case ""Fwog Egg"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Astravian Enforcer Crescent Halo",
-    @"
+        },
+        {
+            "Astravian Enforcer Crescent Halo",
+            @"
 case ""Astravian Enforcer Crescent Halo"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""murdermoon"", ""Fifth Sepulchure"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Large Hoverpram Shard",
-    @"
+        },
+        {
+            "Large Hoverpram Shard",
+            @"
 case ""Large Hoverpram Shard"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""zorbaspit"", ""Zorblatt"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Hoverpram Fragments",
-    @"
+        },
+        {
+            "Hoverpram Fragments",
+            @"
 case ""Hoverpram Fragments"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""zorbaspit"", ""Zorblatt"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Royce's Direclaw",
-    @"
+        },
+        {
+            "Royce's Direclaw",
+            @"
 case ""Royce's Direclaw"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crescentmoon"", ""Royce"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Spectral Lycan",
-    @"
+        },
+        {
+            "Spectral Lycan",
+            @"
 case ""Spectral Lycan"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crescentmoon"", ""Royce"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Spectral Lycan's Hood",
-    @"
+        },
+        {
+            "Spectral Lycan's Hood",
+            @"
 case ""Spectral Lycan's Hood"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crescentmoon"", ""Royce"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Spectral Lycan's Morph",
-    @"
+        },
+        {
+            "Spectral Lycan's Morph",
+            @"
 case ""Spectral Lycan's Morph"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crescentmoon"", ""Royce"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Spectral Lycan's Backfur",
-    @"
+        },
+        {
+            "Spectral Lycan's Backfur",
+            @"
 case ""Spectral Lycan's Backfur"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crescentmoon"", ""Royce"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Howling Spectral Lycan",
-    @"
+        },
+        {
+            "Howling Spectral Lycan",
+            @"
 case ""Howling Spectral Lycan"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crescentmoon"", ""Royce"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Spectral Ground Flames",
-    @"
+        },
+        {
+            "Spectral Ground Flames",
+            @"
 case ""Spectral Ground Flames"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crescentmoon"", ""Royce"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Spectral Lycan's Spear",
-    @"
+        },
+        {
+            "Spectral Lycan's Spear",
+            @"
 case ""Spectral Lycan's Spear"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crescentmoon"", ""Royce"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Spectral Lycan's Claws",
-    @"
+        },
+        {
+            "Spectral Lycan's Claws",
+            @"
 case ""Spectral Lycan's Claws"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""crescentmoon"", ""Royce"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Depths Scale",
-    @"
+        },
+        {
+            "Depths Scale",
+            @"
 case ""Depths Scale"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -24952,10 +24949,10 @@ case ""Depths Scale"":
                     }
                     break;
     "
-},
-{
-    "Glowball",
-    @"
+        },
+        {
+            "Glowball",
+            @"
 case ""Glowball"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -24970,10 +24967,10 @@ case ""Glowball"":
                     break;
 
     "
-},
-{
-    "Light Blade of the Rebellion",
-    @"
+        },
+        {
+            "Light Blade of the Rebellion",
+            @"
 case ""Light Blade of the Rebellion"":
                     Core.FarmingLogger(req.Name, quant);
                     Farm.GoodREP();
@@ -24988,10 +24985,10 @@ case ""Light Blade of the Rebellion"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Zorblatt's Pizza Slice",
-    @"
+        },
+        {
+            "Zorblatt's Pizza Slice",
+            @"
 case ""Zorblatt's Pizza Slice"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25004,10 +25001,10 @@ case ""Zorblatt's Pizza Slice"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dark Blade of the Fifth",
-    @"
+        },
+        {
+            "Dark Blade of the Fifth",
+            @"
 case ""Dark Blade of the Fifth"":
                     Core.FarmingLogger(req.Name, quant);
                     Farm.EvilREP();
@@ -25022,10 +25019,10 @@ case ""Dark Blade of the Fifth"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Chaos Blade of the Imperium",
-    @"
+        },
+        {
+            "Chaos Blade of the Imperium",
+            @"
 case ""Chaos Blade of the Imperium"":
                     Core.FarmingLogger(req.Name, quant);
                     Farm.ChaosREP();
@@ -25040,10 +25037,10 @@ case ""Chaos Blade of the Imperium"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "MarshMeowllows",
-    @"
+        },
+        {
+            "MarshMeowllows",
+            @"
 case ""MarshMeowllows"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25058,10 +25055,10 @@ case ""MarshMeowllows"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Horehound Bits",
-    @"
+        },
+        {
+            "Horehound Bits",
+            @"
 case ""Horehound Bits"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25076,10 +25073,10 @@ case ""Horehound Bits"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Kitty Cordials",
-    @"
+        },
+        {
+            "Kitty Cordials",
+            @"
 case ""Kitty Cordials"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25095,92 +25092,92 @@ case ""Kitty Cordials"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Candied Jalapeno",
-    @"
+        },
+        {
+            "Candied Jalapeno",
+            @"
 case ""Candied Jalapeno"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""candyshop"", ""Sugarrush Ghoul"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Spicy Sample",
-    @"
+        },
+        {
+            "Spicy Sample",
+            @"
 case ""Spicy Sample"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""candyshop"", ""Sugarrush Ghoul"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Tactical Agent Alpha",
-    @"
+        },
+        {
+            "Tactical Agent Alpha",
+            @"
 case ""Tactical Agent Alpha"":
                     Core.HuntMonster(""mogloweengrave"", ""Zombie Terror"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Tactical Agent Bravo",
-    @"
+        },
+        {
+            "Tactical Agent Bravo",
+            @"
 case ""Tactical Agent Bravo"":
                     Core.HuntMonster(""mogloweengrave"", ""Zombie Terror"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Tactical Agent Bravo Beard",
-    @"
+        },
+        {
+            "Tactical Agent Bravo Beard",
+            @"
 case ""Tactical Agent Bravo Beard"":
                     Core.HuntMonster(""mogloweengrave"", ""Zombie Terror"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Tactical Agent Bravo Locks",
-    @"
+        },
+        {
+            "Tactical Agent Bravo Locks",
+            @"
 case ""Tactical Agent Bravo Locks"":
                     Core.HuntMonster(""mogloweengrave"", ""Zombie Terror"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Tactical Alpha Rifle",
-    @"
+        },
+        {
+            "Tactical Alpha Rifle",
+            @"
 case ""Tactical Alpha Rifle"":
                     Core.HuntMonster(""mogloweengrave"", ""Zombie Terror"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Tactical Alpha Rifles",
-    @"
+        },
+        {
+            "Tactical Alpha Rifles",
+            @"
 case ""Tactical Alpha Rifles"":
                     Core.HuntMonster(""mogloweengrave"", ""Zombie Terror"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Backup Ol Reliable Zombie Buster",
-    @"
+        },
+        {
+            "Backup Ol Reliable Zombie Buster",
+            @"
 case ""Backup Ol Reliable Zombie Buster"":
                     Core.HuntMonster(""mogloweengrave"", ""Zombie Terror"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Gummy Brains",
-    @"
+        },
+        {
+            "Gummy Brains",
+            @"
 case ""Gummy Brains"":
                     Core.HuntMonster(""mogloweengrave"", ""Zombie Terror"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Acromegalia Seed",
-    @"
+        },
+        {
+            "Acromegalia Seed",
+            @"
 case ""Acromegalia Seed"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -25202,10 +25199,10 @@ case ""Acromegalia Seed"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Lol-E-Pop",
-    @"
+        },
+        {
+            "Lol-E-Pop",
+            @"
 case ""Lol-E-Pop"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25213,10 +25210,10 @@ case ""Lol-E-Pop"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Box-o-Chocolates",
-    @"
+        },
+        {
+            "Box-o-Chocolates",
+            @"
 case ""Box-o-Chocolates"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25224,10 +25221,10 @@ case ""Box-o-Chocolates"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Candy Corn",
-    @"
+        },
+        {
+            "Candy Corn",
+            @"
 case ""Candy Corn"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25235,10 +25232,10 @@ case ""Candy Corn"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Ghostly Cape",
-    @"
+        },
+        {
+            "Ghostly Cape",
+            @"
 case ""Ghostly Cape"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25246,10 +25243,10 @@ case ""Ghostly Cape"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Cursed Bone Club",
-    @"
+        },
+        {
+            "Cursed Bone Club",
+            @"
 case ""Cursed Bone Club"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25257,10 +25254,10 @@ case ""Cursed Bone Club"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Ivy Blade",
-    @"
+        },
+        {
+            "Ivy Blade",
+            @"
 case ""Ivy Blade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25268,10 +25265,10 @@ case ""Ivy Blade"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Blister's Chainsaw",
-    @"
+        },
+        {
+            "Blister's Chainsaw",
+            @"
 case ""Blister's Chainsaw"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25280,10 +25277,10 @@ case ""Blister's Chainsaw"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Medusa Curse",
-    @"
+        },
+        {
+            "Medusa Curse",
+            @"
 case ""Medusa Curse"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25291,10 +25288,10 @@ case ""Medusa Curse"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Sinister Pumpkin Sickles",
-    @"
+        },
+        {
+            "Sinister Pumpkin Sickles",
+            @"
 case ""Sinister Pumpkin Sickles"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25302,10 +25299,10 @@ case ""Sinister Pumpkin Sickles"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Great Pumpkin King Sword",
-    @"
+        },
+        {
+            "Great Pumpkin King Sword",
+            @"
 case ""Great Pumpkin King Sword"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25313,10 +25310,10 @@ case ""Great Pumpkin King Sword"":
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Blood Moon Token",
-    @"
+        },
+        {
+            "Blood Moon Token",
+            @"
 case ""Blood Moon Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25332,10 +25329,10 @@ case ""Blood Moon Token"":
                     break;
 
     "
-},
-{
-    "Chrono Gem",
-    @"
+        },
+        {
+            "Chrono Gem",
+            @"
 case ""Chrono Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25349,10 +25346,10 @@ case ""Chrono Gem"":
                     break;
 
     "
-},
-{
-    "ChronoSand",
-    @"
+        },
+        {
+            "ChronoSand",
+            @"
 case ""ChronoSand"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25365,10 +25362,10 @@ case ""ChronoSand"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "StasisGlass",
-    @"
+        },
+        {
+            "StasisGlass",
+            @"
 case ""StasisGlass"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25381,10 +25378,10 @@ case ""StasisGlass"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Keeper of the Amazon",
-    @"
+        },
+        {
+            "Keeper of the Amazon",
+            @"
 case ""Keeper of the Amazon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25397,19 +25394,19 @@ case ""Keeper of the Amazon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Iara Insignia",
-    @"
+        },
+        {
+            "Iara Insignia",
+            @"
 case ""Iara Insignia"":
                     Core.Logger($""{req.Name}"" + "" requires ultra boss, you need to farm it manually."", stopBot: true);
                     break;
 
     "
-},
-{
-    "Treats",
-    @"
+        },
+        {
+            "Treats",
+            @"
 case ""Treats"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25422,10 +25419,10 @@ case ""Treats"":
                     }
                     break;
     "
-},
-{
-    "Ghastly Gummy",
-    @"
+        },
+        {
+            "Ghastly Gummy",
+            @"
 case ""Ghastly Gummy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8936); // Ghoul Gang 8936
@@ -25442,10 +25439,10 @@ case ""Ghastly Gummy"":
                     break;
 
     "
-},
-{
-    "Water Drop",
-    @"
+        },
+        {
+            "Water Drop",
+            @"
 case ""Water Drop"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25455,10 +25452,10 @@ case ""Water Drop"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Solar Badge",
-    @"
+        },
+        {
+            "Solar Badge",
+            @"
 case ""Solar Badge"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""WaterWar"", ""Aloe"", req.Name, quant, false);
@@ -25466,70 +25463,70 @@ case ""Solar Badge"":
                     break;
 
     "
-},
-{
-    "Aegis Armor",
-    @"
+        },
+        {
+            "Aegis Armor",
+            @"
 case ""Aegis Armor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""cathedral"", ""Skeletal Warrior"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Aegis Robe",
-    @"
+        },
+        {
+            "Aegis Robe",
+            @"
 case ""Aegis Robe"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""cathedral"", ""Infernal Knight"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Aegis Ward",
-    @"
+        },
+        {
+            "Aegis Ward",
+            @"
 case ""Aegis Ward"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""cathedral"", ""Pactagonal Knight"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Blessed Metal",
-    @"
+        },
+        {
+            "Blessed Metal",
+            @"
 case ""Blessed Metal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""cathedral"", ""Corrupted Sentry"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Golden Faceplate",
-    @"
+        },
+        {
+            "Golden Faceplate",
+            @"
 case ""Golden Faceplate"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""cathedral"", ""Flying Pieball"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Data Scroll",
-    @"
+        },
+        {
+            "Data Scroll",
+            @"
 case ""Data Scroll"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""cathedral"", ""Data Glitch"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Time Key",
-    @"
+        },
+        {
+            "Time Key",
+            @"
 case ""Time Key"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25537,10 +25534,10 @@ case ""Time Key"":
                     break;
 
     "
-},
-{
-    "Poeira do Saci",
-    @"
+        },
+        {
+            "Poeira do Saci",
+            @"
 case ""Poeira do Saci"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25550,10 +25547,10 @@ case ""Poeira do Saci"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Ossos do Corpo-Seco",
-    @"
+        },
+        {
+            "Ossos do Corpo-Seco",
+            @"
 case ""Ossos do Corpo-Seco"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25564,10 +25561,10 @@ case ""Ossos do Corpo-Seco"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Escamas da Cuca",
-    @"
+        },
+        {
+            "Escamas da Cuca",
+            @"
 case ""Escamas da Cuca"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25578,20 +25575,20 @@ case ""Escamas da Cuca"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Pink Gem of the Sea",
-    @"
+        },
+        {
+            "Pink Gem of the Sea",
+            @"
 case ""Pink Gem of the Sea"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""mythperception"", ""Boto"", req.Name, quant);
                     break;
     "
-},
-{
-    "Cuca's Dye",
-    @"
+        },
+        {
+            "Cuca's Dye",
+            @"
 case ""Cuca's Dye"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25599,111 +25596,111 @@ case ""Cuca's Dye"":
                     break;
 
     "
-},
-{
-    "Astral Entity",
-    @"
+        },
+        {
+            "Astral Entity",
+            @"
 case ""Astral Entity"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""Ledgermayne"", ""Ledgermayne"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Pink Potion",
-    @"
+        },
+        {
+            "Pink Potion",
+            @"
 case ""Pink Potion"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""chateau"", ""Pinky"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Mr. Cuddles Pet",
-    @"
+        },
+        {
+            "Mr. Cuddles Pet",
+            @"
 case ""Mr. Cuddles Pet"":
                     Core.HuntMonster(""lovelockdown"", ""Ultra Cuddles"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Mr. Cuddles on your Head",
-    @"
+        },
+        {
+            "Mr. Cuddles on your Head",
+            @"
 case ""Mr. Cuddles on your Head"":
                     Core.HuntMonster(""lovelockdown"", ""Ultra Cuddles"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Fists of Fire",
-    @"
+        },
+        {
+            "Fists of Fire",
+            @"
 case ""Fists of Fire"":
                     Core.HuntMonster(""xancave"", ""Shurpu Ring Guardian"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Like a Battlemoglin",
-    @"
+        },
+        {
+            "Like a Battlemoglin",
+            @"
 case ""Like a Battlemoglin"":
                     Adv.BuyItem(""ariapet"", 12, req.Name);
                     break;
     "
-},
-{
-    "Green Sockatana",
-    @"
+        },
+        {
+            "Green Sockatana",
+            @"
 case ""Green Sockatana"":
                     CyseroMerge.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Chainsaw Katana",
-    @"
+        },
+        {
+            "Chainsaw Katana",
+            @"
 case ""Chainsaw Katana"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""darkoviahorde"", ""Zombie Dragon"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "BaconCat Force Face",
-    @"
+        },
+        {
+            "BaconCat Force Face",
+            @"
 case ""BaconCat Force Face"":
                     Adv.BuyItem(""baconcatlair"", 1260, req.Name);
                     break;
     "
-},
-{
-    "Kitty SkyFighter",
-    @"
+        },
+        {
+            "Kitty SkyFighter",
+            @"
 case ""Kitty SkyFighter"":
                     Adv.BuyItem(""baconcatlair"", 1260, req.Name);
                     break;
     "
-},
-{
-    "Ebil Ninja",
-    @"
+        },
+        {
+            "Ebil Ninja",
+            @"
 case ""Ebil Ninja"":
                     ArtixWeddingMerge.BuyAllMerge(req.Name);
                     break;
 
     "
-},
-{
-    "Ebil Ninja Hood",
-    @"
+        },
+        {
+            "Ebil Ninja Hood",
+            @"
 case ""Ebil Ninja Hood"":
                     ArtixWeddingMerge.BuyAllMerge(req.Name);
                     break;
 
     "
-},
-{
-    "Coin For the Dead",
-    @"
+        },
+        {
+            "Coin For the Dead",
+            @"
 case ""Coin For the Dead"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9633);
@@ -25719,10 +25716,10 @@ case ""Coin For the Dead"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Concentrated Mana",
-    @"
+        },
+        {
+            "Concentrated Mana",
+            @"
 case ""Concentrated Mana"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25735,10 +25732,10 @@ case ""Concentrated Mana"":
                     Core.Join(""akiba"", ""r1"", ""Right"", false);
                     break;
     "
-},
-{
-    "Green Scrap",
-    @"
+        },
+        {
+            "Green Scrap",
+            @"
 case ""Green Scrap"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25752,10 +25749,10 @@ case ""Green Scrap"":
                     Core.Join(""akiba"", ""r1"", ""Right"", false);
                     break;
     "
-},
-{
-    "Bido's Appreciation",
-    @"
+        },
+        {
+            "Bido's Appreciation",
+            @"
 case ""Bido's Appreciation"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25769,10 +25766,10 @@ case ""Bido's Appreciation"":
                     Core.Join(""akiba"", ""r1"", ""Right"", false);
                     break;
     "
-},
-{
-    "Unknown Alloy",
-    @"
+        },
+        {
+            "Unknown Alloy",
+            @"
 case ""Unknown Alloy"":
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
@@ -25782,19 +25779,19 @@ case ""Unknown Alloy"":
                     Core.Join(""akiba"", ""r1"", ""Right"", false);
                     break;
     "
-},
-{
-    "Monster Trophy",
-    @"
+        },
+        {
+            "Monster Trophy",
+            @"
 case ""Monster Trophy"":
                     Core.HuntMonster(""towerofdoom"", ""Dread Klunk"", req.Name, quant, false);
                     Core.Join(""akiba"", ""r1"", ""Right"", false);
                     break;
     "
-},
-{
-    "Alteon the Imbalanced",
-    @"
+        },
+        {
+            "Alteon the Imbalanced",
+            @"
 case ""Alteon the Imbalanced"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""brightfortress"", ""Imbalanced Alteon"", req.Name, quant, false);
@@ -25802,10 +25799,10 @@ case ""Alteon the Imbalanced"":
                     break;
 
     "
-},
-{
-    "Cyber Skull",
-    @"
+        },
+        {
+            "Cyber Skull",
+            @"
 case ""Cyber Skull"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25813,10 +25810,10 @@ case ""Cyber Skull"":
                     break;
 
     "
-},
-{
-    "UnDeath Core",
-    @"
+        },
+        {
+            "UnDeath Core",
+            @"
 case ""UnDeath Core"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25824,10 +25821,10 @@ case ""UnDeath Core"":
                     break;
 
     "
-},
-{
-    "Abyssal Medallion",
-    @"
+        },
+        {
+            "Abyssal Medallion",
+            @"
 case ""Abyssal Medallion"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -25836,10 +25833,10 @@ case ""Abyssal Medallion"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Abyssal Scale",
-    @"
+        },
+        {
+            "Abyssal Scale",
+            @"
 case ""Abyssal Scale"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25848,10 +25845,10 @@ case ""Abyssal Scale"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Coldfire Gem",
-    @"
+        },
+        {
+            "Coldfire Gem",
+            @"
 case ""Coldfire Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25860,10 +25857,10 @@ case ""Coldfire Gem"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Shard of Armor",
-    @"
+        },
+        {
+            "Shard of Armor",
+            @"
 case ""Shard of Armor"":
                     //3408 requires you to join the legion (1200acs) added a method for non-legions
                     if (Core.isCompletedBefore(793))
@@ -25885,10 +25882,10 @@ case ""Shard of Armor"":
                     }
                     break;
     "
-},
-{
-    "Helm Piece",
-    @"
+        },
+        {
+            "Helm Piece",
+            @"
 case ""Helm Piece"":
                     //3408 requires you to join the legion (1200acs) added a method for non-legions
                     if (Core.isCompletedBefore(793))
@@ -25910,10 +25907,10 @@ case ""Helm Piece"":
                     }
                     break;
     "
-},
-{
-    "Leg Pieces",
-    @"
+        },
+        {
+            "Leg Pieces",
+            @"
 case ""Leg Pieces"":
                     //3408 requires you to join the legion (1200acs) added a method for non-legions
                     if (Core.isCompletedBefore(793))
@@ -25935,10 +25932,10 @@ case ""Leg Pieces"":
                     }
                     break;
     "
-},
-{
-    "Arm Pieces",
-    @"
+        },
+        {
+            "Arm Pieces",
+            @"
 case ""Arm Pieces"":
                     //3408 requires you to join the legion (1200acs) added a method for non-legions
                     if (Core.isCompletedBefore(793))
@@ -25960,28 +25957,28 @@ case ""Arm Pieces"":
                     }
                     break;
     "
-},
-{
-    "Weapon Shard",
-    @"
+        },
+        {
+            "Weapon Shard",
+            @"
 case ""Weapon Shard"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""undervoid"", ""Conquest"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Cape Piece",
-    @"
+        },
+        {
+            "Cape Piece",
+            @"
 case ""Cape Piece"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""undervoid"", ""Conquest"", req.Name, quant, false);
                     break;
     "
-},
-{
-    "Wretched Blade of the Void",
-    @"
+        },
+        {
+            "Wretched Blade of the Void",
+            @"
 case ""Wretched Blade of the Void"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -25992,10 +25989,10 @@ case ""Wretched Blade of the Void"":
                     }
                     break;
     "
-},
-{
-    "Nudibranch Roe",
-    @"
+        },
+        {
+            "Nudibranch Roe",
+            @"
 case ""Nudibranch Roe"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26014,10 +26011,10 @@ case ""Nudibranch Roe"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Barnacle Rash",
-    @"
+        },
+        {
+            "Barnacle Rash",
+            @"
 case ""Barnacle Rash"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26036,10 +26033,10 @@ case ""Barnacle Rash"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Shrimp Noodle Pack",
-    @"
+        },
+        {
+            "Shrimp Noodle Pack",
+            @"
 case ""Shrimp Noodle Pack"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26058,10 +26055,10 @@ case ""Shrimp Noodle Pack"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dzeza Welcome Pack",
-    @"
+        },
+        {
+            "Dzeza Welcome Pack",
+            @"
 case ""Dzeza Welcome Pack"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26080,10 +26077,10 @@ case ""Dzeza Welcome Pack"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dzeza Coconuts",
-    @"
+        },
+        {
+            "Dzeza Coconuts",
+            @"
 case ""Dzeza Coconuts"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26102,10 +26099,10 @@ case ""Dzeza Coconuts"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Desiccated Bulbs",
-    @"
+        },
+        {
+            "Desiccated Bulbs",
+            @"
 case ""Desiccated Bulbs"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26124,10 +26121,10 @@ case ""Desiccated Bulbs"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Head of Hair",
-    @"
+        },
+        {
+            "Head of Hair",
+            @"
 case ""Head of Hair"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26146,10 +26143,10 @@ case ""Head of Hair"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bucket of Molars",
-    @"
+        },
+        {
+            "Bucket of Molars",
+            @"
 case ""Bucket of Molars"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26168,10 +26165,10 @@ case ""Bucket of Molars"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Thok's War Armor",
-    @"
+        },
+        {
+            "Thok's War Armor",
+            @"
 case ""Thok's War Armor"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26181,10 +26178,10 @@ case ""Thok's War Armor"":
                     Core.BuyItem(""classhalla"", 170, req.Name, quant);
                     break;
     "
-},
-{
-    "Thok's Hair",
-    @"
+        },
+        {
+            "Thok's Hair",
+            @"
 case ""Thok's Hair"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26194,10 +26191,10 @@ case ""Thok's Hair"":
                     Core.BuyItem(""classhalla"", 170, req.Name, quant);
                     break;
     "
-},
-{
-    "Arcana's Vesture",
-    @"
+        },
+        {
+            "Arcana's Vesture",
+            @"
 case ""Arcana's Vesture"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26208,10 +26205,10 @@ case ""Arcana's Vesture"":
                     Adv.BuyItem(""classhalla"", 174, req.Name, quant);
                     break;
     "
-},
-{
-    "Arcana's Locks",
-    @"
+        },
+        {
+            "Arcana's Locks",
+            @"
 case ""Arcana's Locks"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26222,10 +26219,10 @@ case ""Arcana's Locks"":
                     Adv.BuyItem(""classhalla"", 174, req.Name, quant);
                     break;
     "
-},
-{
-    "Metrea's Garb",
-    @"
+        },
+        {
+            "Metrea's Garb",
+            @"
 case ""Metrea's Garb"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26236,10 +26233,10 @@ case ""Metrea's Garb"":
                     Adv.BuyItem(""classhalla"", 172, req.Name, quant);
                     break;
     "
-},
-{
-    "Metrea's Locks",
-    @"
+        },
+        {
+            "Metrea's Locks",
+            @"
 case ""Metrea's Locks"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26250,10 +26247,10 @@ case ""Metrea's Locks"":
                     Adv.BuyItem(""classhalla"", 172, req.Name, quant);
                     break;
     "
-},
-{
-    "Juvania's Robes",
-    @"
+        },
+        {
+            "Juvania's Robes",
+            @"
 case ""Juvania's Robes"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26264,10 +26261,10 @@ case ""Juvania's Robes"":
                     Adv.BuyItem(""classhalla"", 176, req.Name, quant);
                     break;
     "
-},
-{
-    "Juvania's Locks",
-    @"
+        },
+        {
+            "Juvania's Locks",
+            @"
 case ""Juvania's Locks"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26278,10 +26275,10 @@ case ""Juvania's Locks"":
                     Adv.BuyItem(""classhalla"", 176, req.Name, quant);
                     break;
     "
-},
-{
-    "Great Calabaza Blade",
-    @"
+        },
+        {
+            "Great Calabaza Blade",
+            @"
 case ""Great Calabaza Blade"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26292,10 +26289,10 @@ case ""Great Calabaza Blade"":
                     UGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Great Calabaza Blades",
-    @"
+        },
+        {
+            "Great Calabaza Blades",
+            @"
 case ""Great Calabaza Blades"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26306,10 +26303,10 @@ case ""Great Calabaza Blades"":
                     UGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Pumpkin King's Revenge",
-    @"
+        },
+        {
+            "Pumpkin King's Revenge",
+            @"
 case ""Pumpkin King's Revenge"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26320,10 +26317,10 @@ case ""Pumpkin King's Revenge"":
                     UGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Pumpkin King's Revenge",
-    @"
+        },
+        {
+            "Dual Pumpkin King's Revenge",
+            @"
 case ""Dual Pumpkin King's Revenge"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26334,10 +26331,10 @@ case ""Dual Pumpkin King's Revenge"":
                     UGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Pumpkin Fever Staff",
-    @"
+        },
+        {
+            "Pumpkin Fever Staff",
+            @"
 case ""Pumpkin Fever Staff"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26348,10 +26345,10 @@ case ""Pumpkin Fever Staff"":
                     UGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Kabocha King Naginata",
-    @"
+        },
+        {
+            "Kabocha King Naginata",
+            @"
 case ""Kabocha King Naginata"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26362,10 +26359,10 @@ case ""Kabocha King Naginata"":
                     UGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Pumpkin King's Wrath",
-    @"
+        },
+        {
+            "Pumpkin King's Wrath",
+            @"
 case ""Pumpkin King's Wrath"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26376,10 +26373,10 @@ case ""Pumpkin King's Wrath"":
                     UGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Pumpkin King's Wrath",
-    @"
+        },
+        {
+            "Dual Pumpkin King's Wrath",
+            @"
 case ""Dual Pumpkin King's Wrath"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26390,10 +26387,10 @@ case ""Dual Pumpkin King's Wrath"":
                     UGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Pumpkin Fever Axe",
-    @"
+        },
+        {
+            "Pumpkin Fever Axe",
+            @"
 case ""Pumpkin Fever Axe"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26404,10 +26401,10 @@ case ""Pumpkin Fever Axe"":
                     UGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Pumpkin Fever Axes",
-    @"
+        },
+        {
+            "Pumpkin Fever Axes",
+            @"
 case ""Pumpkin Fever Axes"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -26418,10 +26415,10 @@ case ""Pumpkin Fever Axes"":
                     UGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Rune of Radiance",
-    @"
+        },
+        {
+            "Rune of Radiance",
+            @"
 case ""Rune of Radiance"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9170);
@@ -26438,20 +26435,20 @@ case ""Rune of Radiance"":
                     break;
 
     "
-},
-{
-    "ProtoSoul Gem",
-    @"
+        },
+        {
+            "ProtoSoul Gem",
+            @"
 case ""ProtoSoul Gem"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""futurewar"", ""SF3017 Paragonator"", req.Name, quant, log: false);
                     break;
     "
-},
-{
-    "Underworld Drachma",
-    @"
+        },
+        {
+            "Underworld Drachma",
+            @"
 case ""Underworld Drachma"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9620);
@@ -26467,19 +26464,19 @@ case ""Underworld Drachma"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Grand Antaeus Spear",
-    @"
+        },
+        {
+            "Grand Antaeus Spear",
+            @"
 case ""Grand Antaeus Spear"":
                     Core.Logger($""Item {req.Name} is not obtainable anymore."");
                     break;
 
     "
-},
-{
-    "Legion Defender Medal",
-    @"
+        },
+        {
+            "Legion Defender Medal",
+            @"
 case ""Legion Defender Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26489,10 +26486,10 @@ case ""Legion Defender Medal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Legion War Banner",
-    @"
+        },
+        {
+            "Legion War Banner",
+            @"
 case ""Legion War Banner"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26505,10 +26502,10 @@ case ""Legion War Banner"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Legion Trophy",
-    @"
+        },
+        {
+            "Legion Trophy",
+            @"
 case ""Legion Trophy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26521,10 +26518,10 @@ case ""Legion Trophy"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Soiled Fiend Crystal",
-    @"
+        },
+        {
+            "Soiled Fiend Crystal",
+            @"
 case ""Soiled Fiend Crystal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -26538,162 +26535,162 @@ case ""Soiled Fiend Crystal"":
                     break;
 
     "
-},
-{
-    "Obsidian Rock",
-    @"
+        },
+        {
+            "Obsidian Rock",
+            @"
 case ""Obsidian Rock"":
                     Legion.ObsidianRock(quant);
                     break;
     "
-},
-{
-    "Sworn Legion Sovereign",
-    @"
+        },
+        {
+            "Sworn Legion Sovereign",
+            @"
 case ""Sworn Legion Sovereign"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Legion Sovereign",
-    @"
+        },
+        {
+            "Legion Sovereign",
+            @"
 case ""Legion Sovereign"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Legion Sovereign Helm",
-    @"
+        },
+        {
+            "Legion Sovereign Helm",
+            @"
 case ""Legion Sovereign Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Legion Sovereign Horns",
-    @"
+        },
+        {
+            "Legion Sovereign Horns",
+            @"
 case ""Legion Sovereign Horns"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Legion Sovereign Locks",
-    @"
+        },
+        {
+            "Legion Sovereign Locks",
+            @"
 case ""Legion Sovereign Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Empowered Legion Sovereign Locks",
-    @"
+        },
+        {
+            "Empowered Legion Sovereign Locks",
+            @"
 case ""Empowered Legion Sovereign Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Legion Sovereign Banner",
-    @"
+        },
+        {
+            "Legion Sovereign Banner",
+            @"
 case ""Legion Sovereign Banner"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Legion Sovereign Cloak",
-    @"
+        },
+        {
+            "Legion Sovereign Cloak",
+            @"
 case ""Legion Sovereign Cloak"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Legion Sovereign Crown",
-    @"
+        },
+        {
+            "Legion Sovereign Crown",
+            @"
 case ""Legion Sovereign Crown"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Evanescence",
-    @"
+        },
+        {
+            "Evanescence",
+            @"
 case ""Evanescence"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Dual Evanescence",
-    @"
+        },
+        {
+            "Dual Evanescence",
+            @"
 case ""Dual Evanescence"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Terror of Enyo",
-    @"
+        },
+        {
+            "Terror of Enyo",
+            @"
 case ""Terror of Enyo"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Eclipse of Enyo",
-    @"
+        },
+        {
+            "Eclipse of Enyo",
+            @"
 case ""Eclipse of Enyo"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Eclipses of Enyo",
-    @"
+        },
+        {
+            "Eclipses of Enyo",
+            @"
 case ""Eclipses of Enyo"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Hand of the Legion Sovereign",
-    @"
+        },
+        {
+            "Hand of the Legion Sovereign",
+            @"
 case ""Hand of the Legion Sovereign"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Hands of the Legion Sovereign",
-    @"
+        },
+        {
+            "Hands of the Legion Sovereign",
+            @"
 case ""Hands of the Legion Sovereign"":
                     Core.FarmingLogger(req.Name, quant);
                     AFGM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Rand's Approval",
-    @"
+        },
+        {
+            "Rand's Approval",
+            @"
 case ""Rand's Approval"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26702,20 +26699,20 @@ case ""Rand's Approval"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Electric Underworld Katana",
-    @"
+        },
+        {
+            "Electric Underworld Katana",
+            @"
 case ""Electric Underworld Katana"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""abysslair"", ""Abyssal Underbeast"", req.Name, quant, false);
                     break;
 
     "
-},
-{
-    "Rune of Doom",
-    @"
+        },
+        {
+            "Rune of Doom",
+            @"
 case ""Rune of Doom"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26730,10 +26727,10 @@ case ""Rune of Doom"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Abyssal Seer Hair",
-    @"
+        },
+        {
+            "Abyssal Seer Hair",
+            @"
 case ""Abyssal Seer Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26741,10 +26738,10 @@ case ""Abyssal Seer Hair"":
                     break;
 
     "
-},
-{
-    "Abyssal Frost Sedge Hat",
-    @"
+        },
+        {
+            "Abyssal Frost Sedge Hat",
+            @"
 case ""Abyssal Frost Sedge Hat"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26752,10 +26749,10 @@ case ""Abyssal Frost Sedge Hat"":
                     break;
 
     "
-},
-{
-    "Abyssal Frost Samurai Spirit",
-    @"
+        },
+        {
+            "Abyssal Frost Samurai Spirit",
+            @"
 case ""Abyssal Frost Samurai Spirit"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26763,26 +26760,26 @@ case ""Abyssal Frost Samurai Spirit"":
                     break;
 
     "
-},
-{
-    "Legion Combat Trophy",
-    @"
+        },
+        {
+            "Legion Combat Trophy",
+            @"
 case ""Legion Combat Trophy"":
                     Legion.DagePvP(quant, 0, 0);
                     break;
     "
-},
-{
-    "1v1 Legion PvP Trophy",
-    @"
+        },
+        {
+            "1v1 Legion PvP Trophy",
+            @"
 case ""1v1 Legion PvP Trophy"":
                     Core.Logger(""Cannot Get Item, Requires Manual pvp."");
                     break;
     "
-},
-{
-    "Nation Defender Medal",
-    @"
+        },
+        {
+            "Nation Defender Medal",
+            @"
 case ""Nation Defender Medal"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26792,10 +26789,10 @@ case ""Nation Defender Medal"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Nation Trophy",
-    @"
+        },
+        {
+            "Nation Trophy",
+            @"
 case ""Nation Trophy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26808,10 +26805,10 @@ case ""Nation Trophy"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Nation War Banner",
-    @"
+        },
+        {
+            "Nation War Banner",
+            @"
 case ""Nation War Banner"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26824,10 +26821,10 @@ case ""Nation War Banner"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Spoils of War",
-    @"
+        },
+        {
+            "Spoils of War",
+            @"
 case ""Spoils of War"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -26839,10 +26836,10 @@ case ""Spoils of War"":
                     }
                     break;
     "
-},
-{
-    "Yang's Favor",
-    @"
+        },
+        {
+            "Yang's Favor",
+            @"
 case ""Yang's Favor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26857,10 +26854,10 @@ case ""Yang's Favor"":
                     break;
 
     "
-},
-{
-    "Shadow Extract",
-    @"
+        },
+        {
+            "Shadow Extract",
+            @"
 case ""Shadow Extract"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9068);
@@ -26876,30 +26873,30 @@ case ""Shadow Extract"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Warden of Light",
-    @"
+        },
+        {
+            "Warden of Light",
+            @"
 case ""Warden of Light"":
                     Core.FarmingLogger(req.Name, quant);
                     Farm.BludrutBrawlBoss(quant: 500);
                     Core.BuyItem(""battleon"", 222, req.Name);
                     break;
     "
-},
-{
-    "Conqueror of Shadow",
-    @"
+        },
+        {
+            "Conqueror of Shadow",
+            @"
 case ""Conqueror of Shadow"":
                     Core.FarmingLogger(req.Name, quant);
                     Farm.BludrutBrawlBoss(quant: 350);
                     Core.BuyItem(""battleon"", 222, req.Name);
                     break;
     "
-},
-{
-    "Crimson Plate of Nulgath",
-    @"
+        },
+        {
+            "Crimson Plate of Nulgath",
+            @"
 case ""Crimson Plate of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26909,26 +26906,26 @@ case ""Crimson Plate of Nulgath"":
                     Core.EnsureComplete(765, 4695);
                     break;
     "
-},
-{
-    "Behemoth Blade of Light",
-    @"
+        },
+        {
+            "Behemoth Blade of Light",
+            @"
 case ""Behemoth Blade of Light"":
                     DB.BehemothBladeof(""Light"");
                     break;
     "
-},
-{
-    "Behemoth Blade of Shadow",
-    @"
+        },
+        {
+            "Behemoth Blade of Shadow",
+            @"
 case ""Behemoth Blade of Shadow"":
                     DB.BehemothBladeof(""Shadow"");
                     break;
     "
-},
-{
-    "DragonFire of Nulgath",
-    @"
+        },
+        {
+            "DragonFire of Nulgath",
+            @"
 case ""DragonFire of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26938,30 +26935,30 @@ case ""DragonFire of Nulgath"":
                     Core.EnsureComplete(765, 1316);
                     break;
     "
-},
-{
-    "Light Warden Helm",
-    @"
+        },
+        {
+            "Light Warden Helm",
+            @"
 case ""Light Warden Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Farm.BludrutBrawlBoss(quant: 150);
                     Core.BuyItem(""battleon"", 222, req.Name);
                     break;
     "
-},
-{
-    "Shadow Conqueror Helm",
-    @"
+        },
+        {
+            "Shadow Conqueror Helm",
+            @"
 case ""Shadow Conqueror Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Farm.BludrutBrawlBoss(quant: 100);
                     Core.BuyItem(""battleon"", 222, req.Name);
                     break;
     "
-},
-{
-    "Crimson Face Plate of Nulgath",
-    @"
+        },
+        {
+            "Crimson Face Plate of Nulgath",
+            @"
 case ""Crimson Face Plate of Nulgath"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -26972,10 +26969,10 @@ case ""Crimson Face Plate of Nulgath"":
                     break;
 
     "
-},
-{
-    "Doomed Extract",
-    @"
+        },
+        {
+            "Doomed Extract",
+            @"
 case ""Doomed Extract"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9090);
@@ -26991,39 +26988,39 @@ case ""Doomed Extract"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Nation Ritualist",
-    @"
+        },
+        {
+            "Nation Ritualist",
+            @"
 case ""Nation Ritualist"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""templedelve"", ""Doomed Fiend"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Void Nation Ritualist",
-    @"
+        },
+        {
+            "Void Nation Ritualist",
+            @"
 case ""Void Nation Ritualist"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""templedelve"", ""Doomed Fiend"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Inscribed Skull",
-    @"
+        },
+        {
+            "Inscribed Skull",
+            @"
 case ""Inscribed Skull"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.GetMapItem(11839, map: ""deathpits"");
                     break;
     "
-},
-{
-    "Cursed Pirate Note",
-    @"
+        },
+        {
+            "Cursed Pirate Note",
+            @"
 case ""Cursed Pirate Note"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -27031,10 +27028,10 @@ case ""Cursed Pirate Note"":
                     break;
 
     "
-},
-{
-    "Volcanic Fragment",
-    @"
+        },
+        {
+            "Volcanic Fragment",
+            @"
 case ""Volcanic Fragment"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -27042,10 +27039,10 @@ case ""Volcanic Fragment"":
                     break;
 
     "
-},
-{
-    "Sea Salt",
-    @"
+        },
+        {
+            "Sea Salt",
+            @"
 case ""Sea Salt"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8858);
@@ -27060,10 +27057,10 @@ case ""Sea Salt"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Naval Guard",
-    @"
+        },
+        {
+            "Naval Guard",
+            @"
 case ""Naval Guard"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8858);
@@ -27078,10 +27075,10 @@ case ""Naval Guard"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Naval Guard's Tricorn + Hair",
-    @"
+        },
+        {
+            "Naval Guard's Tricorn + Hair",
+            @"
 case ""Naval Guard's Tricorn + Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8858);
@@ -27096,10 +27093,10 @@ case ""Naval Guard's Tricorn + Hair"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Naval Guard's Tricorn + Locks",
-    @"
+        },
+        {
+            "Naval Guard's Tricorn + Locks",
+            @"
 case ""Naval Guard's Tricorn + Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8858);
@@ -27114,10 +27111,10 @@ case ""Naval Guard's Tricorn + Locks"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Naval Guard's Cutlass",
-    @"
+        },
+        {
+            "Naval Guard's Cutlass",
+            @"
 case ""Naval Guard's Cutlass"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8858);
@@ -27132,10 +27129,10 @@ case ""Naval Guard's Cutlass"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Naval Guard's Cutlasses",
-    @"
+        },
+        {
+            "Naval Guard's Cutlasses",
+            @"
 case ""Naval Guard's Cutlasses"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8858);
@@ -27150,10 +27147,10 @@ case ""Naval Guard's Cutlasses"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Naval Guard's Rapier",
-    @"
+        },
+        {
+            "Naval Guard's Rapier",
+            @"
 case ""Naval Guard's Rapier"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8858);
@@ -27168,10 +27165,10 @@ case ""Naval Guard's Rapier"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Naval Guard's Rapiers",
-    @"
+        },
+        {
+            "Naval Guard's Rapiers",
+            @"
 case ""Naval Guard's Rapiers"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8858);
@@ -27186,10 +27183,10 @@ case ""Naval Guard's Rapiers"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Naval Guard's ArmBlade",
-    @"
+        },
+        {
+            "Naval Guard's ArmBlade",
+            @"
 case ""Naval Guard's ArmBlade"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8858);
@@ -27204,90 +27201,90 @@ case ""Naval Guard's ArmBlade"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "DeepSea Star Pirate",
-    @"
+        },
+        {
+            "DeepSea Star Pirate",
+            @"
 case ""DeepSea Star Pirate"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""aluteanursery"", ""Last Alutian"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "DeepSea Star Pirate's Hair",
-    @"
+        },
+        {
+            "DeepSea Star Pirate's Hair",
+            @"
 case ""DeepSea Star Pirate's Hair"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""aluteanursery"", ""Last Alutian"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "DeepSea Star Pirate's Locks",
-    @"
+        },
+        {
+            "DeepSea Star Pirate's Locks",
+            @"
 case ""DeepSea Star Pirate's Locks"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""aluteanursery"", ""Last Alutian"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "DeepSea Star Pirate's Morph",
-    @"
+        },
+        {
+            "DeepSea Star Pirate's Morph",
+            @"
 case ""DeepSea Star Pirate's Morph"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""aluteanursery"", ""Last Alutian"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "DeepSea Star Pirate's Morph + Locks",
-    @"
+        },
+        {
+            "DeepSea Star Pirate's Morph + Locks",
+            @"
 case ""DeepSea Star Pirate's Morph + Locks"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""aluteanursery"", ""Last Alutian"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "DeepSea Star Pirate's Light Gun",
-    @"
+        },
+        {
+            "DeepSea Star Pirate's Light Gun",
+            @"
 case ""DeepSea Star Pirate's Light Gun"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""aluteanursery"", ""Last Alutian"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "DeepSea Star Pirate's Light Guns",
-    @"
+        },
+        {
+            "DeepSea Star Pirate's Light Guns",
+            @"
 case ""DeepSea Star Pirate's Light Guns"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""aluteanursery"", ""Last Alutian"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "DeepSea Smol Wave",
-    @"
+        },
+        {
+            "DeepSea Smol Wave",
+            @"
 case ""DeepSea Smol Wave"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""aluteanursery"", ""Last Alutian"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Scrap of Cloth",
-    @"
+        },
+        {
+            "Scrap of Cloth",
+            @"
 case ""Scrap of Cloth"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -27313,10 +27310,10 @@ case ""Scrap of Cloth"":
                     }
                     break;
     "
-},
-{
-    "Pirate Mage Token",
-    @"
+        },
+        {
+            "Pirate Mage Token",
+            @"
 case ""Pirate Mage Token"":
                     BlazeBeard.TokenQuests();
                     Core.EquipClass(ClassType.Farm);
@@ -27340,28 +27337,28 @@ case ""Pirate Mage Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Explorer Pistol",
-    @"
+        },
+        {
+            "Explorer Pistol",
+            @"
 case ""Explorer Pistol"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ManaCannon"", ""Blazebeard"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Blaze Gem",
-    @"
+        },
+        {
+            "Blaze Gem",
+            @"
 case ""Blaze Gem"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""ManaCannon"", ""Blazebeard"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Pirate Class Token",
-    @"
+        },
+        {
+            "Pirate Class Token",
+            @"
 case ""Pirate Class Token"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -27381,10 +27378,10 @@ case ""Pirate Class Token"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Alpha Pirate Class Token",
-    @"
+        },
+        {
+            "Alpha Pirate Class Token",
+            @"
 case ""Alpha Pirate Class Token"":
                     if (!Core.CheckInventory(""Classic Alpha Pirate""))
                     {
@@ -27404,10 +27401,10 @@ case ""Alpha Pirate Class Token"":
                     break;
 
     "
-},
-{
-    "Deepest Desire",
-    @"
+        },
+        {
+            "Deepest Desire",
+            @"
 case ""Deepest Desire"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -27425,10 +27422,10 @@ case ""Deepest Desire"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Hidden Hope",
-    @"
+        },
+        {
+            "Hidden Hope",
+            @"
 case ""Hidden Hope"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -27444,10 +27441,10 @@ case ""Hidden Hope"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Simple Wish",
-    @"
+        },
+        {
+            "Simple Wish",
+            @"
 case ""Simple Wish"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -27471,20 +27468,20 @@ case ""Simple Wish"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Fallen Star Shard",
-    @"
+        },
+        {
+            "Fallen Star Shard",
+            @"
 case ""Fallen Star Shard"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""starfest"", ""Fallen Star"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
-},
-{
-    "Hashihime's Heart",
-    @"
+        },
+        {
+            "Hashihime's Heart",
+            @"
 case ""Hashihime's Heart"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""yokaistarriver"", ""Uji No Hashihime"", req.Name, quant, isTemp: false);
@@ -27492,26 +27489,26 @@ case ""Hashihime's Heart"":
                     break;
 
     "
-},
-{
-    "Nerites Scale",
-    @"
+        },
+        {
+            "Nerites Scale",
+            @"
 case ""Nerites Scale"":
                     Core.Logger($""{req.Name} requires ultra boss, you need to farm it manually."", stopBot: true);
                     break;
     "
-},
-{
-    "Glint Edge Cutlass",
-    @"
+        },
+        {
+            "Glint Edge Cutlass",
+            @"
 case ""Glint Edge Cutlass"":
                     Core.Logger($""{req.Name} requires ultra boss, you need to farm it manually."", stopBot: true);
                     break;
     "
-},
-{
-    "Pirate Remains",
-    @"
+        },
+        {
+            "Pirate Remains",
+            @"
 case ""Pirate Remains"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -27524,10 +27521,10 @@ case ""Pirate Remains"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Sea Creature Membrane",
-    @"
+        },
+        {
+            "Sea Creature Membrane",
+            @"
 case ""Sea Creature Membrane"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -27539,10 +27536,10 @@ case ""Sea Creature Membrane"":
                     }
                     break;
     "
-},
-{
-    "Oxidized Steel",
-    @"
+        },
+        {
+            "Oxidized Steel",
+            @"
 case ""Oxidized Steel"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -27554,10 +27551,10 @@ case ""Oxidized Steel"":
                     }
                     break;
     "
-},
-{
-    "Riptide Helicoprion",
-    @"
+        },
+        {
+            "Riptide Helicoprion",
+            @"
 case ""Riptide Helicoprion"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -27565,10 +27562,10 @@ case ""Riptide Helicoprion"":
                     Core.HuntMonster(""sunkencity"", ""Nereid Princess"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Riptide Helicoprion Helm",
-    @"
+        },
+        {
+            "Riptide Helicoprion Helm",
+            @"
 case ""Riptide Helicoprion Helm"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -27576,10 +27573,10 @@ case ""Riptide Helicoprion Helm"":
                     Core.HuntMonster(""sunkencity"", ""Nereid Princess"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Summer Sizzle Lotion",
-    @"
+        },
+        {
+            "Summer Sizzle Lotion",
+            @"
 case ""Summer Sizzle Lotion"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -27591,10 +27588,10 @@ case ""Summer Sizzle Lotion"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Volleyball Captain",
-    @"
+        },
+        {
+            "Volleyball Captain",
+            @"
 case ""Volleyball Captain"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27603,10 +27600,10 @@ case ""Volleyball Captain"":
                     break;
 
     "
-},
-{
-    "Volleyball Hero",
-    @"
+        },
+        {
+            "Volleyball Hero",
+            @"
 case ""Volleyball Hero"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27615,10 +27612,10 @@ case ""Volleyball Hero"":
                     break;
 
     "
-},
-{
-    "Volleyball Hero's Hat + Glasses",
-    @"
+        },
+        {
+            "Volleyball Hero's Hat + Glasses",
+            @"
 case ""Volleyball Hero's Hat + Glasses"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27627,10 +27624,10 @@ case ""Volleyball Hero's Hat + Glasses"":
                     break;
 
     "
-},
-{
-    "Volleyball Heroine's Hat + Glasses",
-    @"
+        },
+        {
+            "Volleyball Heroine's Hat + Glasses",
+            @"
 case ""Volleyball Heroine's Hat + Glasses"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27639,10 +27636,10 @@ case ""Volleyball Heroine's Hat + Glasses"":
                     break;
 
     "
-},
-{
-    "Volleyball Team A Mascot",
-    @"
+        },
+        {
+            "Volleyball Team A Mascot",
+            @"
 case ""Volleyball Team A Mascot"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27651,10 +27648,10 @@ case ""Volleyball Team A Mascot"":
                     break;
 
     "
-},
-{
-    "Volleyball Team B Mascot",
-    @"
+        },
+        {
+            "Volleyball Team B Mascot",
+            @"
 case ""Volleyball Team B Mascot"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27663,10 +27660,10 @@ case ""Volleyball Team B Mascot"":
                     break;
 
     "
-},
-{
-    "Volleyball Team C Mascot",
-    @"
+        },
+        {
+            "Volleyball Team C Mascot",
+            @"
 case ""Volleyball Team C Mascot"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27675,10 +27672,10 @@ case ""Volleyball Team C Mascot"":
                     break;
 
     "
-},
-{
-    "Volleyball Hero's Board Cape",
-    @"
+        },
+        {
+            "Volleyball Hero's Board Cape",
+            @"
 case ""Volleyball Hero's Board Cape"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27687,10 +27684,10 @@ case ""Volleyball Hero's Board Cape"":
                     break;
 
     "
-},
-{
-    "Volleyball Hero's Rod",
-    @"
+        },
+        {
+            "Volleyball Hero's Rod",
+            @"
 case ""Volleyball Hero's Rod"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27699,10 +27696,10 @@ case ""Volleyball Hero's Rod"":
                     break;
 
     "
-},
-{
-    "Volleyball Hero's Surfboard",
-    @"
+        },
+        {
+            "Volleyball Hero's Surfboard",
+            @"
 case ""Volleyball Hero's Surfboard"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27711,10 +27708,10 @@ case ""Volleyball Hero's Surfboard"":
                     break;
 
     "
-},
-{
-    "Volleyball Hero's Foam Spear",
-    @"
+        },
+        {
+            "Volleyball Hero's Foam Spear",
+            @"
 case ""Volleyball Hero's Foam Spear"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27723,10 +27720,10 @@ case ""Volleyball Hero's Foam Spear"":
                     break;
 
     "
-},
-{
-    "Volleyball Hero's Foam Gauntlets",
-    @"
+        },
+        {
+            "Volleyball Hero's Foam Gauntlets",
+            @"
 case ""Volleyball Hero's Foam Gauntlets"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27735,10 +27732,10 @@ case ""Volleyball Hero's Foam Gauntlets"":
                     break;
 
     "
-},
-{
-    "Volleyball Hero's WaterGun",
-    @"
+        },
+        {
+            "Volleyball Hero's WaterGun",
+            @"
 case ""Volleyball Hero's WaterGun"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27747,10 +27744,10 @@ case ""Volleyball Hero's WaterGun"":
                     break;
 
     "
-},
-{
-    "Volleyball Hero's WaterGuns",
-    @"
+        },
+        {
+            "Volleyball Hero's WaterGuns",
+            @"
 case ""Volleyball Hero's WaterGuns"":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(8794);
@@ -27759,10 +27756,10 @@ case ""Volleyball Hero's WaterGuns"":
                     break;
 
     "
-},
-{
-    "Blood Isle Booty",
-    @"
+        },
+        {
+            "Blood Isle Booty",
+            @"
 case ""Blood Isle Booty"":
                     Core.FarmingLogger(req.Name, quant);
                     // 9886 | Petty Proposition
@@ -27777,10 +27774,10 @@ case ""Blood Isle Booty"":
                     }
                     break;
     "
-},
-{
-    "Amira 2.0 Gear",
-    @"
+        },
+        {
+            "Amira 2.0 Gear",
+            @"
 case ""Amira 2.0 Gear"":
                     if (!Core.IsMember)
                     {
@@ -27790,27 +27787,27 @@ case ""Amira 2.0 Gear"":
                     Core.HuntMonster(""amira"", ""Amira 2.0"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Fancy Golden Scissors",
-    @"
+        },
+        {
+            "Fancy Golden Scissors",
+            @"
 case ""Fancy Golden Scissors"":
                     Core.HuntMonster(""bloodisles"", UseableMonsters[8], req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Dual Fancy Golden Scissors",
-    @"
+        },
+        {
+            "Dual Fancy Golden Scissors",
+            @"
 case ""Dual Fancy Golden Scissors"":
                     Core.HuntMonster(""bloodisles"", UseableMonsters[8], req.Name, quant, req.Temp);
                     break;
 
     "
-},
-{
-    "Dragon King's Favor",
-    @"
+        },
+        {
+            "Dragon King's Favor",
+            @"
 case ""Dragon King's Favor"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -27822,118 +27819,118 @@ case ""Dragon King's Favor"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Regal Pirate Fleet",
-    @"
+        },
+        {
+            "Regal Pirate Fleet",
+            @"
 case ""Regal Pirate Fleet"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Leviathanius"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Regal Pirate Leggings",
-    @"
+        },
+        {
+            "Regal Pirate Leggings",
+            @"
 case ""Regal Pirate Leggings"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Leviathanius"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Regal Pirate's Hat",
-    @"
+        },
+        {
+            "Regal Pirate's Hat",
+            @"
 case ""Regal Pirate's Hat"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Leviathanius"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Regal Pirate's Accessories",
-    @"
+        },
+        {
+            "Regal Pirate's Accessories",
+            @"
 case ""Regal Pirate's Accessories"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Leviathanius"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Regal Pirate's Hat + Locks",
-    @"
+        },
+        {
+            "Regal Pirate's Hat + Locks",
+            @"
 case ""Regal Pirate's Hat + Locks"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Leviathanius"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Regal Pirate's Accessories + Locks",
-    @"
+        },
+        {
+            "Regal Pirate's Accessories + Locks",
+            @"
 case ""Regal Pirate's Accessories + Locks"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Leviathanius"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Regal Pirate's Rapier",
-    @"
+        },
+        {
+            "Regal Pirate's Rapier",
+            @"
 case ""Regal Pirate's Rapier"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Leviathanius"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Regal Pirate's Accoutrements",
-    @"
+        },
+        {
+            "Regal Pirate's Accoutrements",
+            @"
 case ""Regal Pirate's Accoutrements"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Leviathanius"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Formal Pirate Fleet",
-    @"
+        },
+        {
+            "Formal Pirate Fleet",
+            @"
 case ""Formal Pirate Fleet"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Leviathanius"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Formal Pirate Leggings",
-    @"
+        },
+        {
+            "Formal Pirate Leggings",
+            @"
 case ""Formal Pirate Leggings"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Leviathanius"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Regal Pirate's Wheel",
-    @"
+        },
+        {
+            "Regal Pirate's Wheel",
+            @"
 case ""Regal Pirate's Wheel"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Empowered Scalebeard"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Regal Pirate's Cape + Wheel",
-    @"
+        },
+        {
+            "Regal Pirate's Cape + Wheel",
+            @"
 case ""Regal Pirate's Cape + Wheel"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragoncapital"", ""Empowered Scalebeard"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "Gallaeon's Piece of Eight",
-    @"
+        },
+        {
+            "Gallaeon's Piece of Eight",
+            @"
 case ""Gallaeon's Piece of Eight"":
                     Core.FarmingLogger(req.Name, req.Quantity);
                     Core.RegisterQuests(9355);
@@ -28000,10 +27997,10 @@ case ""Gallaeon's Piece of Eight"":
                     }
                     break;
     "
-},
-{
-    "Doom Doubloon",
-    @"
+        },
+        {
+            "Doom Doubloon",
+            @"
 case ""Doom Doubloon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -28013,10 +28010,10 @@ case ""Doom Doubloon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Draconic Doubloon",
-    @"
+        },
+        {
+            "Draconic Doubloon",
+            @"
 case ""Draconic Doubloon"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -28028,64 +28025,64 @@ case ""Draconic Doubloon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Lightning Pirate's Machine Pistol",
-    @"
+        },
+        {
+            "Lightning Pirate's Machine Pistol",
+            @"
 case ""Lightning Pirate's Machine Pistol"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""dragonpirate"", ""Dragon Pirate"", req.Name);
                     break;
     "
-},
-{
-    "Lightning Pirate's Tricorn",
-    @"
+        },
+        {
+            "Lightning Pirate's Tricorn",
+            @"
 case ""Lightning Pirate's Tricorn"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""dragonpirate"", ""Dragon Gunner"", req.Name);
                     break;
     "
-},
-{
-    "Lightning Pirate's Tricorn + Locks",
-    @"
+        },
+        {
+            "Lightning Pirate's Tricorn + Locks",
+            @"
 case ""Lightning Pirate's Tricorn + Locks"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""dragonpirate"", ""Dragon Gunner"", req.Name);
                     break;
     "
-},
-{
-    "Lightning Pirate's Tricorn + Eyepatch",
-    @"
+        },
+        {
+            "Lightning Pirate's Tricorn + Eyepatch",
+            @"
 case ""Lightning Pirate's Tricorn + Eyepatch"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""dragonpirate"", ""Dragon Pirate"", req.Name);
                     break;
     "
-},
-{
-    "Lightning Pirate's Tricorn Locks + Eyepatch",
-    @"
+        },
+        {
+            "Lightning Pirate's Tricorn Locks + Eyepatch",
+            @"
 case ""Lightning Pirate's Tricorn Locks + Eyepatch"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""dragonpirate"", ""Dragon Pirate"", req.Name);
                     break;
     "
-},
-{
-    "Lightning Pirate",
-    @"
+        },
+        {
+            "Lightning Pirate",
+            @"
 case ""Lightning Pirate"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""dragonpirate"", ""Scalebeard"", req.Name);
                     break;
     "
-},
-{
-    "Bloodstained Doubloon",
-    @"
+        },
+        {
+            "Bloodstained Doubloon",
+            @"
 case ""Bloodstained Doubloon"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -28105,10 +28102,10 @@ case ""Bloodstained Doubloon"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Mer-Unit Operator Hair",
-    @"
+        },
+        {
+            "Mer-Unit Operator Hair",
+            @"
 case ""Mer-Unit Operator Hair"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -28122,10 +28119,10 @@ case ""Mer-Unit Operator Hair"":
                     Core.HuntMonster(""piratealliance"", ""Phantom Jaws"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Mer-Unit Operator Locks",
-    @"
+        },
+        {
+            "Mer-Unit Operator Locks",
+            @"
 case ""Mer-Unit Operator Locks"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -28139,10 +28136,10 @@ case ""Mer-Unit Operator Locks"":
                     Core.HuntMonster(""piratealliance"", ""Phantom Jaws"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Spear of Lost Jewels",
-    @"
+        },
+        {
+            "Spear of Lost Jewels",
+            @"
 case ""Spear of Lost Jewels"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -28156,10 +28153,10 @@ case ""Spear of Lost Jewels"":
                     Core.HuntMonster(""piratealliance"", ""Phantom Jaws"", req.Name, quant, req.Temp, false);
                     break;
     "
-},
-{
-    "Blood Testament Trophy",
-    @"
+        },
+        {
+            "Blood Testament Trophy",
+            @"
 case ""Blood Testament Trophy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -28169,10 +28166,10 @@ case ""Blood Testament Trophy"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Gilded Sheet Music",
-    @"
+        },
+        {
+            "Gilded Sheet Music",
+            @"
 case ""Gilded Sheet Music"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -28183,136 +28180,136 @@ case ""Gilded Sheet Music"":
                     break;
 
     "
-},
-{
-    "Stardust",
-    @"
+        },
+        {
+            "Stardust",
+            @"
 case ""Stardust"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Facial Hair",
-    @"
+        },
+        {
+            "Facial Hair",
+            @"
 case ""Facial Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Gears",
-    @"
+        },
+        {
+            "Gears",
+            @"
 case ""Gears"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Breath of Flame",
-    @"
+        },
+        {
+            "Breath of Flame",
+            @"
 case ""Breath of Flame"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Shard of Ice",
-    @"
+        },
+        {
+            "Shard of Ice",
+            @"
 case ""Shard of Ice"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Nugget of Platinum",
-    @"
+        },
+        {
+            "Nugget of Platinum",
+            @"
 case ""Nugget of Platinum"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Blue Skull",
-    @"
+        },
+        {
+            "Blue Skull",
+            @"
 case ""Blue Skull"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Red Cloth",
-    @"
+        },
+        {
+            "Red Cloth",
+            @"
 case ""Red Cloth"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Zombie Flesh",
-    @"
+        },
+        {
+            "Zombie Flesh",
+            @"
 case ""Zombie Flesh"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Pink Cloth",
-    @"
+        },
+        {
+            "Pink Cloth",
+            @"
 case ""Pink Cloth"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Toxic Flame",
-    @"
+        },
+        {
+            "Toxic Flame",
+            @"
 case ""Toxic Flame"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Toxic Gas Mask",
-    @"
+        },
+        {
+            "Toxic Gas Mask",
+            @"
 case ""Toxic Gas Mask"":
                     Core.FarmingLogger(req.Name, quant);
                     Adv.BuyItem(""pirates"", 724, req.Name, quant);
                     break;
     "
-},
-{
-    "Legend Top Hat",
-    @"
+        },
+        {
+            "Legend Top Hat",
+            @"
 case ""Legend Top Hat"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""pirates"", ""Fishman Soldier"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Icy Naval Top Hat",
-    @"
+        },
+        {
+            "Icy Naval Top Hat",
+            @"
 case ""Icy Naval Top Hat"":
                     NTHM.BuyAllMerge(req.Name);
                     break;
     "
-},
-{
-    "Evidence Tag",
-    @"
+        },
+        {
+            "Evidence Tag",
+            @"
 case ""Evidence Tag"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(8846);
@@ -28328,93 +28325,93 @@ case ""Evidence Tag"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Dark Sea Corsair",
-    @"
+        },
+        {
+            "Dark Sea Corsair",
+            @"
 case ""Dark Sea Corsair"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""lowtide"", ""Exiled General Miel"", req.Name, 1, false);
                     break;
     "
-},
-{
-    "Dark Sea Corsair's Mask",
-    @"
+        },
+        {
+            "Dark Sea Corsair's Mask",
+            @"
 case ""Dark Sea Corsair's Mask"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""lowtide"", ""Exiled General Miel"", req.Name, 1, false);
                     break;
     "
-},
-{
-    "Dark Sea Corsair's Mask + Locks",
-    @"
+        },
+        {
+            "Dark Sea Corsair's Mask + Locks",
+            @"
 case ""Dark Sea Corsair's Mask + Locks"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""lowtide"", ""Exiled General Miel"", req.Name, 1, false);
                     break;
     "
-},
-{
-    "Dark Sea Corsair's Hat",
-    @"
+        },
+        {
+            "Dark Sea Corsair's Hat",
+            @"
 case ""Dark Sea Corsair's Hat"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""lowtide"", ""Exiled General Miel"", req.Name, 1, false);
                     break;
     "
-},
-{
-    "Dark Sea Corsair's Hat + Locks",
-    @"
+        },
+        {
+            "Dark Sea Corsair's Hat + Locks",
+            @"
 case ""Dark Sea Corsair's Hat + Locks"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""lowtide"", ""Exiled General Miel"", req.Name, 1, false);
                     break;
     "
-},
-{
-    "Dark Sea Corsair's Battle Mask",
-    @"
+        },
+        {
+            "Dark Sea Corsair's Battle Mask",
+            @"
 case ""Dark Sea Corsair's Battle Mask"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""lowtide"", ""Exiled General Miel"", req.Name, 1, false);
                     break;
     "
-},
-{
-    "Dark Sea Corsair's Battle Mask + Locks",
-    @"
+        },
+        {
+            "Dark Sea Corsair's Battle Mask + Locks",
+            @"
 case ""Dark Sea Corsair's Battle Mask + Locks"":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""lowtide"", ""Exiled General Miel"", req.Name, 1, false);
                     break;
     "
-},
-{
-    "Enchanted Corsair's Rapier",
-    @"
+        },
+        {
+            "Enchanted Corsair's Rapier",
+            @"
 case ""Enchanted Corsair's Rapier"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""lowtide"", ""Spectral Jellyfish"", req.Name, 1, false);
                     break;
 
     "
-},
-{
-    "Enchanted Corsair's Pistol",
-    @"
+        },
+        {
+            "Enchanted Corsair's Pistol",
+            @"
 case ""Enchanted Corsair's Pistol"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""lowtide"", ""Spectral Jellyfish"", req.Name, 1, false);
                     break;
 
     "
-},
-{
-    "ShadowChaos Mote",
-    @"
+        },
+        {
+            "ShadowChaos Mote",
+            @"
 case ""ShadowChaos Mote"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -28428,20 +28425,20 @@ case ""ShadowChaos Mote"":
                     break;
 
     "
-},
-{
-    "Top Hat",
-    @"
+        },
+        {
+            "Top Hat",
+            @"
 case ""Top Hat"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""Pirates"", ""Fishman Soldier"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Wuji Steel",
-    @"
+        },
+        {
+            "Wuji Steel",
+            @"
 case ""Wuji Steel"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9406);
@@ -28457,90 +28454,90 @@ case ""Wuji Steel"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Mercury Phial",
-    @"
+        },
+        {
+            "Mercury Phial",
+            @"
 case ""Mercury Phial"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaitreasure"", ""Needle Mouth"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Tengu Typhoon Cutlass",
-    @"
+        },
+        {
+            "Tengu Typhoon Cutlass",
+            @"
 case ""Tengu Typhoon Cutlass"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""yokaitreasure"", ""Admiral Zheng"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Moonlit Steel Rapier",
-    @"
+        },
+        {
+            "Moonlit Steel Rapier",
+            @"
 case ""Moonlit Steel Rapier"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(""yokaitreasure"", ""Admiral Zheng"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Stealthy Sea Hair",
-    @"
+        },
+        {
+            "Stealthy Sea Hair",
+            @"
 case ""Stealthy Sea Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaitreasure"", ""Imperial Warrior"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Stealthy Sea Locks",
-    @"
+        },
+        {
+            "Stealthy Sea Locks",
+            @"
 case ""Stealthy Sea Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaitreasure"", ""Imperial Warrior"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Stealthy Sea Patch Hair",
-    @"
+        },
+        {
+            "Stealthy Sea Patch Hair",
+            @"
 case ""Stealthy Sea Patch Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaitreasure"", ""Imperial Warrior"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Stealthy Sea Patch Locks",
-    @"
+        },
+        {
+            "Stealthy Sea Patch Locks",
+            @"
 case ""Stealthy Sea Patch Locks"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaitreasure"", ""Imperial Warrior"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Iron Flight Cutlass",
-    @"
+        },
+        {
+            "Iron Flight Cutlass",
+            @"
 case ""Iron Flight Cutlass"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaitreasure"", ""Imperial Warrior"", req.Name, quant, false, false);
                     break;
     "
-},
-{
-    "Pirate's Rag",
-    @"
+        },
+        {
+            "Pirate's Rag",
+            @"
 case ""Pirate's Rag"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9388);
@@ -28556,100 +28553,100 @@ case ""Pirate's Rag"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Yokai Gunpowder",
-    @"
+        },
+        {
+            "Yokai Gunpowder",
+            @"
 case ""Yokai Gunpowder"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaipirate"", ""Serpent Warrior Monster"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Maurader's Mane",
-    @"
+        },
+        {
+            "Maurader's Mane",
+            @"
 case ""Maurader's Mane"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaipirate"", ""Disguised Pirate"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Maurader's Mane + Beard",
-    @"
+        },
+        {
+            "Maurader's Mane + Beard",
+            @"
 case ""Maurader's Mane + Beard"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaipirate"", ""Disguised Pirate"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Disguised Pirate's Hair",
-    @"
+        },
+        {
+            "Disguised Pirate's Hair",
+            @"
 case ""Disguised Pirate's Hair"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaipirate"", ""Disguised Pirate"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Coastal Raider's Beard",
-    @"
+        },
+        {
+            "Coastal Raider's Beard",
+            @"
 case ""Coastal Raider's Beard"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaipirate"", ""Disguised Pirate"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Disguised Pirate's Tricorn",
-    @"
+        },
+        {
+            "Disguised Pirate's Tricorn",
+            @"
 case ""Disguised Pirate's Tricorn"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaipirate"", ""Disguised Pirate"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Disguised Pirate's BattleGear",
-    @"
+        },
+        {
+            "Disguised Pirate's BattleGear",
+            @"
 case ""Disguised Pirate's BattleGear"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaipirate"", ""Disguised Pirate"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Disguised Pirate's Cutlass",
-    @"
+        },
+        {
+            "Disguised Pirate's Cutlass",
+            @"
 case ""Disguised Pirate's Cutlass"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaipirate"", ""Disguised Pirate"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Disguised Pirate's EyePatch",
-    @"
+        },
+        {
+            "Disguised Pirate's EyePatch",
+            @"
 case ""Disguised Pirate's EyePatch"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""yokaipirate"", ""Disguised Pirate"", req.Name, quant, req.Temp);
                     break;
     "
-},
-{
-    "Swashbuckler's Rapier",
-    @"
+        },
+        {
+            "Swashbuckler's Rapier",
+            @"
 case ""Swashbuckler's Rapier"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -28657,18 +28654,18 @@ case ""Swashbuckler's Rapier"":
                     break;
 
     "
-},
-{
-    "Unbound Thread",
-    @"
+        },
+        {
+            "Unbound Thread",
+            @"
 case ""Unbound Thread"":
                     SOWM.UnboundThread(quant);
                     break;
     "
-},
-{
-    "ShadowFire Trophy",
-    @"
+        },
+        {
+            "ShadowFire Trophy",
+            @"
 case ""ShadowFire Trophy"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -28683,10 +28680,10 @@ case ""ShadowFire Trophy"":
                     break;
 
     "
-},
-{
-    "Pack Of Spices",
-    @"
+        },
+        {
+            "Pack Of Spices",
+            @"
 case ""Pack Of Spices"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -28699,10 +28696,10 @@ case ""Pack Of Spices"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Gold Ingot",
-    @"
+        },
+        {
+            "Gold Ingot",
+            @"
 case ""Gold Ingot"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -28715,10 +28712,10 @@ case ""Gold Ingot"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bolt Of Silk",
-    @"
+        },
+        {
+            "Bolt Of Silk",
+            @"
 case ""Bolt Of Silk"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -28731,117 +28728,117 @@ case ""Bolt Of Silk"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Willpower",
-    @"
+        },
+        {
+            "Willpower",
+            @"
 case ""Willpower"":
                     SOWM.Willpower(quant);
                     break;
     "
-},
-{
-    "ShadowFlame Healer",
-    @"
+        },
+        {
+            "ShadowFlame Healer",
+            @"
 case ""ShadowFlame Healer"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""ruinedcrown"", ""Mana-Burdened Mage"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowFlame Warrior",
-    @"
+        },
+        {
+            "ShadowFlame Warrior",
+            @"
 case ""ShadowFlame Warrior"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""ruinedcrown"", ""Mana-Burdened Mage"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowFlame Mage",
-    @"
+        },
+        {
+            "ShadowFlame Mage",
+            @"
 case ""ShadowFlame Mage"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""ruinedcrown"", ""Mana-Burdened Mage"", req.Name, isTemp: false);
                     break;
     "
-},
-{
-    "ShadowFlame Rogue",
-    @"
+        },
+        {
+            "ShadowFlame Rogue",
+            @"
 case ""ShadowFlame Rogue"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""ruinedcrown"", ""Mana-Burdened Minion"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "ShadowFlame Rogue's Mask",
-    @"
+        },
+        {
+            "ShadowFlame Rogue's Mask",
+            @"
 case ""ShadowFlame Rogue's Mask"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""ruinedcrown"", ""Mana-Burdened Minion"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "ShadowFlame Rogue's Locks",
-    @"
+        },
+        {
+            "ShadowFlame Rogue's Locks",
+            @"
 case ""ShadowFlame Rogue's Locks"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""ruinedcrown"", ""Mana-Burdened Minion"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "ShadowFlame Rogue's Mortal Locks",
-    @"
+        },
+        {
+            "ShadowFlame Rogue's Mortal Locks",
+            @"
 case ""ShadowFlame Rogue's Mortal Locks"":
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster(""ruinedcrown"", ""Mana-Burdened Minion"", req.Name, isTemp: false);
                     break;
 
     "
-},
-{
-    "Garish Remnant",
-    @"
+        },
+        {
+            "Garish Remnant",
+            @"
 case ""Garish Remnant"":
                     SOWM.GarishRemnant(quant);
                     break;
     "
-},
-{
-    "Prismatic Seams",
-    @"
+        },
+        {
+            "Prismatic Seams",
+            @"
 case ""Prismatic Seams"":
                     SOWM.PrismaticSeams(quant);
                     break;
     "
-},
-{
-    "Acquiescence",
-    @"
+        },
+        {
+            "Acquiescence",
+            @"
 case ""Acquiescence"":
                     SOWM.Acquiescence(quant);
                     break;
     "
-},
-{
-    "Elemental Core",
-    @"
+        },
+        {
+            "Elemental Core",
+            @"
 case ""Elemental Core"":
                     SOWM.ElementalCore(quant);
                     break;
     "
-},
-{
-    "Mainyu Rune",
-    @"
+        },
+        {
+            "Mainyu Rune",
+            @"
 case ""Mainyu Rune"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
@@ -28852,10 +28849,10 @@ case ""Mainyu Rune"":
                     break;
 
     "
-},
-{
-    "Mainyu Wings",
-    @"
+        },
+        {
+            "Mainyu Wings",
+            @"
 case ""Mainyu Wings"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
@@ -28866,10 +28863,10 @@ case ""Mainyu Wings"":
                     break;
 
     "
-},
-{
-    "Mainyu Tail",
-    @"
+        },
+        {
+            "Mainyu Tail",
+            @"
 case ""Mainyu Tail"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
@@ -28880,10 +28877,10 @@ case ""Mainyu Tail"":
                     break;
 
     "
-},
-{
-    "YourItemHere1",
-    @"
+        },
+        {
+            "YourItemHere1",
+            @"
 case ""YourItemHere1"":
                     Core.RegisterQuests(0000);
                     Core.Logger($""Farming {req.Name} ({currentQuant}/{quant})"");
@@ -28897,20 +28894,20 @@ case ""YourItemHere1"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "YourItemHere2",
-    @"
+        },
+        {
+            "YourItemHere2",
+            @"
 case ""YourItemHere2"":
                     Core.HuntMonster(""map"", ""monster"", req.Name, isTemp: false);
                     break;
 
                     // Add more cases here if needed
     "
-},
-{
-    "Belladonna's Flag",
-    @"
+        },
+        {
+            "Belladonna's Flag",
+            @"
 case ""Belladonna's Flag"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10390); // Bumbling Bellamy
@@ -28920,10 +28917,10 @@ case ""Belladonna's Flag"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Bourgeois' Flag",
-    @"
+        },
+        {
+            "Bourgeois' Flag",
+            @"
 case ""Bourgeois' Flag"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10392); // From the Top
@@ -28933,10 +28930,10 @@ case ""Bourgeois' Flag"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Pirated Tech's Flag",
-    @"
+        },
+        {
+            "Pirated Tech's Flag",
+            @"
 case ""Pirated Tech's Flag"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10394); // Subversive Sailor
@@ -28946,10 +28943,10 @@ case ""Pirated Tech's Flag"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Merry Celeste's Flag",
-    @"
+        },
+        {
+            "Merry Celeste's Flag",
+            @"
 case ""Merry Celeste's Flag"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10396); // Salty Spirit
@@ -28959,10 +28956,10 @@ case ""Merry Celeste's Flag"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Mercurius' Flag",
-    @"
+        },
+        {
+            "Mercurius' Flag",
+            @"
 case ""Mercurius' Flag"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(10398); // Mercurious
@@ -28975,10 +28972,10 @@ case ""Mercurius' Flag"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Cutlass of Awe",
-    @"
+        },
+        {
+            "Cutlass of Awe",
+            @"
 case ""Cutlass of Awe"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29012,10 +29009,10 @@ case ""Cutlass of Awe"":
                     }
                     break;
     "
-},
-{
-    "Dual Cutlass of Awe",
-    @"
+        },
+        {
+            "Dual Cutlass of Awe",
+            @"
 case ""Dual Cutlass of Awe"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29049,10 +29046,10 @@ case ""Dual Cutlass of Awe"":
                     }
                     break;
     "
-},
-{
-    "J6's Secret Hideout Map",
-    @"
+        },
+        {
+            "J6's Secret Hideout Map",
+            @"
 case ""J6's Secret Hideout Map"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -29061,10 +29058,10 @@ case ""J6's Secret Hideout Map"":
                         Core.HuntMonster(""j6"", ""Sketchy Dragon"", req.Name, quant, isTemp: false);
                     break;
     "
-},
-{
-    "Novac Sal Privateer",
-    @"
+        },
+        {
+            "Novac Sal Privateer",
+            @"
 case ""Novac Sal Privateer"":
                     if (!Core.IsMember)
                     {
@@ -29073,10 +29070,10 @@ case ""Novac Sal Privateer"":
                     }
                     goto default;
     "
-},
-{
-    "Novac Sal Pirate Morph",
-    @"
+        },
+        {
+            "Novac Sal Pirate Morph",
+            @"
 case ""Novac Sal Pirate Morph"":
                     if (!Core.IsMember)
                     {
@@ -29085,10 +29082,10 @@ case ""Novac Sal Pirate Morph"":
                     }
                     goto default;
     "
-},
-{
-    "Novac Sal Pirate Visage",
-    @"
+        },
+        {
+            "Novac Sal Pirate Visage",
+            @"
 case ""Novac Sal Pirate Visage"":
                     if (!Core.IsMember)
                     {
@@ -29097,10 +29094,10 @@ case ""Novac Sal Pirate Visage"":
                     }
                     goto default;
     "
-},
-{
-    "Avatar's Flame Bow",
-    @"
+        },
+        {
+            "Avatar's Flame Bow",
+            @"
 case ""Avatar's Flame Bow"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29112,10 +29109,10 @@ case ""Avatar's Flame Bow"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Avatar's Flame Spikes",
-    @"
+        },
+        {
+            "Avatar's Flame Spikes",
+            @"
 case ""Avatar's Flame Spikes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29127,10 +29124,10 @@ case ""Avatar's Flame Spikes"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Avatar's Flame Banners",
-    @"
+        },
+        {
+            "Avatar's Flame Banners",
+            @"
 case ""Avatar's Flame Banners"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29142,10 +29139,10 @@ case ""Avatar's Flame Banners"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Avatar's Flame Sabre",
-    @"
+        },
+        {
+            "Avatar's Flame Sabre",
+            @"
 case ""Avatar's Flame Sabre"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29157,10 +29154,10 @@ case ""Avatar's Flame Sabre"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Avatar's Flame",
-    @"
+        },
+        {
+            "Avatar's Flame",
+            @"
 case ""Avatar's Flame"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29172,10 +29169,10 @@ case ""Avatar's Flame"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Avatar's Flame Guard",
-    @"
+        },
+        {
+            "Avatar's Flame Guard",
+            @"
 case ""Avatar's Flame Guard"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29187,10 +29184,10 @@ case ""Avatar's Flame Guard"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "War Blade of Courage",
-    @"
+        },
+        {
+            "War Blade of Courage",
+            @"
 case ""War Blade of Courage"":
                             BLOD.BrilliantAura(50);
                             BLOD.BlindingAura(1);
@@ -29200,10 +29197,10 @@ case ""War Blade of Courage"":
                             AcquiescenceCount += 10;
                             break;
     "
-},
-{
-    "War Blade of Power",
-    @"
+        },
+        {
+            "War Blade of Power",
+            @"
 case ""War Blade of Power"":
                             //Dragon Scale(1)
                             Core.AddDrop(11475);
@@ -29217,10 +29214,10 @@ case ""War Blade of Power"":
                             AcquiescenceCount += 10;
                             break;
     "
-},
-{
-    "War Blade of Speed",
-    @"
+        },
+        {
+            "War Blade of Speed",
+            @"
 case ""War Blade of Speed"":
                             Core.EquipClass(ClassType.Farm);
                             Core.HuntMonster(""shadowfallwar"", ""Skeletal Fire Mage"", ""Ultimate Darkness Gem"", 75, isTemp: false);
@@ -29233,10 +29230,10 @@ case ""War Blade of Speed"":
                             AcquiescenceCount += 10;
                             break;
     "
-},
-{
-    "War Blade of Strength",
-    @"
+        },
+        {
+            "War Blade of Strength",
+            @"
 case ""War Blade of Strength"":
                             SoW.Tyndarius();
 
@@ -29261,10 +29258,10 @@ case ""War Blade of Strength"":
                             ElementalCoreCount += 25;
                             break;
     "
-},
-{
-    "War Blade of Wisdom",
-    @"
+        },
+        {
+            "War Blade of Wisdom",
+            @"
 case ""War Blade of Wisdom"":
                             Core.AddDrop(""Fragment of the Queen"", ""ShadowChaos Mote"");
                             Core.EquipClass(ClassType.Solo);
@@ -29283,10 +29280,10 @@ case ""War Blade of Wisdom"":
                             AcquiescenceCount += 10;
                             break;
     "
-},
-{
-    "Example Item",
-    @"
+        },
+        {
+            "Example Item",
+            @"
 case ""Example Item"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -29300,10 +29297,10 @@ case ""Example Item"":
                     break;
 
     "
-},
-{
-    "Burger Buns",
-    @"
+        },
+        {
+            "Burger Buns",
+            @"
 case ""Burger Buns"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29317,10 +29314,10 @@ case ""Burger Buns"":
                     }
                     break;
     "
-},
-{
-    "Sugar Cubes",
-    @"
+        },
+        {
+            "Sugar Cubes",
+            @"
 case ""Sugar Cubes"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -29334,10 +29331,10 @@ case ""Sugar Cubes"":
                     }
                     break;
     "
-},
-{
-    "Cowbell",
-    @"
+        },
+        {
+            "Cowbell",
+            @"
 case ""Cowbell"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29351,10 +29348,10 @@ case ""Cowbell"":
                     }
                     break;
     "
-},
-{
-    "Fish Oil",
-    @"
+        },
+        {
+            "Fish Oil",
+            @"
 case ""Fish Oil"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -29368,16 +29365,23 @@ case ""Fish Oil"":
                     }
                     break;
     "
-},
-};
+        },
+    };
 
-    public static bool TryGetCase(string itemName, out string? logic)
-        => Cases.TryGetValue(itemName, out logic);
+    public static bool TryGetCase(string itemName, out string? logic) =>
+        Cases.TryGetValue(itemName, out logic);
 
     /// <summary>
     /// Returns the case logic with placeholders replaced by provided values.
     /// </summary>
-    public static string GetCaseWithValues(string itemName, string reqName, int quant, string map, string monster, string drop)
+    public static string GetCaseWithValues(
+        string itemName,
+        string reqName,
+        int quant,
+        string map,
+        string monster,
+        string drop
+    )
     {
         if (!TryGetCase(itemName, out string? logic) || string.IsNullOrWhiteSpace(logic))
             return string.Empty;

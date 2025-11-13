@@ -18,11 +18,36 @@ public class ObsidianLightofDestiny
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
-    private static CoreDoomwood DW { get => _DW ??= new CoreDoomwood(); set => _DW = value; }    private static CoreDoomwood _DW;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
+    private static CoreBLOD _BLOD;
+    private static CoreDoomwood DW
+    {
+        get => _DW ??= new CoreDoomwood();
+        set => _DW = value;
+    }
+    private static CoreDoomwood _DW;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -59,9 +84,9 @@ public class ObsidianLightofDestiny
 
             BLOD.BrilliantAura(40); //Brilliant Aura x40
             BLOD.BrightAura(120); //Bright Aura x120
-            BLOD.BlindingAura(1); //Blinding Aura 
-            BLOD.LoyalSpiritOrb(750); //Spirit Orb (Misc) x5,000 
-            BLOD.SpiritOrb(5000); //Loyal Spirit Orb x750 
+            BLOD.BlindingAura(1); //Blinding Aura
+            BLOD.LoyalSpiritOrb(750); //Spirit Orb (Misc) x5,000
+            BLOD.SpiritOrb(5000); //Loyal Spirit Orb x750
 
             Core.EnsureComplete(7648);
             Bot.Wait.ForPickup("Obsidian Light of Destiny");

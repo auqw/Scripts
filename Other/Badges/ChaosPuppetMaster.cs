@@ -13,7 +13,12 @@ public class ChaosPuppetMaster
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }    private static CoreQOM _QOM;
+    private static CoreQOM QOM
+    {
+        get => _QOM ??= new CoreQOM();
+        set => _QOM = value;
+    }
+    private static CoreQOM _QOM;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +39,6 @@ public class ChaosPuppetMaster
 
         Core.Logger($"Doing QOM story for {badge} badge");
         QOM.CompleteEverything();
-
     }
 
     private string badge = "Chaos PuppetMaster";

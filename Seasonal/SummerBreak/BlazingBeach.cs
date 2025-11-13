@@ -12,8 +12,18 @@ public class BlazingBeachStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -38,7 +48,11 @@ public class BlazingBeachStory
         Story.KillQuest(8702, "blazingbeach", "Burning Bombadier");
 
         // Piracy for Pyromancers
-        Story.KillQuest(8703, "blazingbeach", new[] { "Magma Pirate", "Magma Pirate", "Scalding Shooter" });
+        Story.KillQuest(
+            8703,
+            "blazingbeach",
+            new[] { "Magma Pirate", "Magma Pirate", "Scalding Shooter" }
+        );
 
         // Canned Heat
         Story.MapItemQuest(8704, "blazingbeach", 10252);
@@ -49,7 +63,15 @@ public class BlazingBeachStory
         {
             Core.EnsureAccept(8705);
             Core.HuntMonster("blazingbeach", "Dao Treeant", "Cavern Wood", 12, log: false);
-            Core.KillMonster("blazingbeach", "r2", "Right", "Burning Bombadier", "Redistributed Loot", 12, log: false);
+            Core.KillMonster(
+                "blazingbeach",
+                "r2",
+                "Right",
+                "Burning Bombadier",
+                "Redistributed Loot",
+                12,
+                log: false
+            );
             Core.HuntMonster("burningbeach", "Water Goblin", "Goblin Canteen", 5, log: false);
             Core.EnsureComplete(8705);
         }
@@ -68,7 +90,7 @@ public class BlazingBeachStory
         Story.MapItemQuest(8707, "blazingbeach", 10253);
         Story.KillQuest(8707, "burningbeach", new[] { "Maladrite", "Shark" });
 
-        // Ha Long   
+        // Ha Long
         Story.KillQuest(8708, "blazingbeach", "Magma Blazebeard");
     }
 }

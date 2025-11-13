@@ -28,10 +28,17 @@ public class TinselGifts
         TinselCape();
     }
 
-    public void TinselWeapon() => ProcessSeasonalMap("frostdeep", 914, "Ancient Maggot", "Tinsel's Sword Bow");
-    public void TinselHelm() => ProcessSeasonalMap("icevolcano", 915, "Ice Symbiote", "Tinsel's Helm Bow");
-    public void TinselArmor() => ProcessSeasonalMap("goldenruins", 1517, "Golden Warrior", "Tinsel's Armor Bow");
-    public void TinselCape() => ProcessSeasonalMap("icerise", 2554, "Arctic Direwolf", "Tinsel's Cape Bow");
+    public void TinselWeapon() =>
+        ProcessSeasonalMap("frostdeep", 914, "Ancient Maggot", "Tinsel's Sword Bow");
+
+    public void TinselHelm() =>
+        ProcessSeasonalMap("icevolcano", 915, "Ice Symbiote", "Tinsel's Helm Bow");
+
+    public void TinselArmor() =>
+        ProcessSeasonalMap("goldenruins", 1517, "Golden Warrior", "Tinsel's Armor Bow");
+
+    public void TinselCape() =>
+        ProcessSeasonalMap("icerise", 2554, "Arctic Direwolf", "Tinsel's Cape Bow");
 
     private void ProcessSeasonalMap(string mapName, int questId, string monsterName, string itemBow)
     {
@@ -53,5 +60,4 @@ public class TinselGifts
         }
         Core.ToBank(rewards);
     }
-
 }

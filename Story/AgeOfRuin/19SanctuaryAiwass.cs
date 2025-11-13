@@ -16,7 +16,11 @@ public class SanctuaryAiwass
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
     private static CoreAOR _AOR;
 
     public void ScriptMain(IScriptInterface bot)
@@ -25,5 +29,4 @@ public class SanctuaryAiwass
         AOR.SanctuaryAiwass();
         Core.SetOptions(false);
     }
-
 }

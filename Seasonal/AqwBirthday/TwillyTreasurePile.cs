@@ -11,7 +11,12 @@ public class TwillyTreasurePile
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -24,7 +29,12 @@ public class TwillyTreasurePile
 
     public void GetAll()
     {
-        string[] HouseItems = { "Zard Rider Statue", "Twilly's Treasure Pile", "20th Anniversary Balloon" };
+        string[] HouseItems =
+        {
+            "Zard Rider Statue",
+            "Twilly's Treasure Pile",
+            "20th Anniversary Balloon",
+        };
         List<string> RewardsList = Core.EnsureLoad(8925).Rewards.Select(x => x.Name).ToList();
         //house Items
         RewardsList.Remove("Zard Rider Statue");
@@ -32,7 +42,11 @@ public class TwillyTreasurePile
         RewardsList.Remove("20th Anniversary Balloon");
         string[] Rewards = RewardsList.ToArray();
 
-        if (Core.CheckInventory(Rewards, toInv: false) && CheckHouseInventory(HouseItems) && Core.isSeasonalMapActive("yulgarparty"))
+        if (
+            Core.CheckInventory(Rewards, toInv: false)
+            && CheckHouseInventory(HouseItems)
+            && Core.isSeasonalMapActive("yulgarparty")
+        )
             return;
 
         Bot.Drops.Add(Rewards);

@@ -13,46 +13,86 @@ tags: army, icestormarena, icestormunder, icewing, aggro
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/Story/DragonsOfYokai/CoreDOY.cs
-using Skua.Core.Interfaces;
-using Skua.Core.Options;
-using Skua.Core.Models.Monsters;
 using System.Collections.Generic;
+using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Quests;
+using Skua.Core.Options;
 
 public class ArmyLeveling
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static SevenCircles SC { get => _SC ??= new SevenCircles(); set => _SC = value; }
+    private static SevenCircles SC
+    {
+        get => _SC ??= new SevenCircles();
+        set => _SC = value;
+    }
     private static SevenCircles _SC;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
     private static CoreSoW _SoW;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreDOY CoreDOY { get => _CoreDOY ??= new CoreDOY(); set => _CoreDOY = value; }
+    private static CoreDOY CoreDOY
+    {
+        get => _CoreDOY ??= new CoreDOY();
+        set => _CoreDOY = value;
+    }
     private static CoreDOY _CoreDOY;
 
-    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
     private static CoreBots _sCore;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
-
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "Army Leveling";
     public List<IOption> Options = new()
     {
-        new Option<MethodV2>("LevelMethod", "Map selection", "Which map to farm Experience?", MethodV2.IceStormArena),
+        new Option<MethodV2>(
+            "LevelMethod",
+            "Map selection",
+            "Which map to farm Experience?",
+            MethodV2.IceStormArena
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -61,7 +101,7 @@ public class ArmyLeveling
         sArmy.player6,
         sArmy.player7,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public int level = 75;
@@ -105,8 +145,10 @@ public class ArmyLeveling
 
             case MethodV2.IceStormUnder:
                 if (Bot.Player.Level < 75)
-                    Core.Logger("Player is below lvl 75, which is\n" +
-                    "required for the map. --stopping", stopBot: true);
+                    Core.Logger(
+                        "Player is below lvl 75, which is\n" + "required for the map. --stopping",
+                        stopBot: true
+                    );
                 Core.EquipClass(ClassType.Farm);
                 //Army.WaitForParty("whitemap");
                 Army.AggroMonCells("r2");
@@ -124,8 +166,10 @@ public class ArmyLeveling
 
             case MethodV2.IceWing:
                 if (Bot.Player.Level < 75)
-                    Core.Logger("Player is below lvl 75, required for\n" +
-                    "the map --stopping", stopBot: true);
+                    Core.Logger(
+                        "Player is below lvl 75, required for\n" + "the map --stopping",
+                        stopBot: true
+                    );
                 Core.EquipClass(ClassType.Solo);
                 //Army.WaitForParty("whitemap");
                 Army.AggroMonCells("Enter");
@@ -143,7 +187,7 @@ public class ArmyLeveling
                 break;
 
             case MethodV2.SevenCirclesWar:
-            ForWhenWarsGetNerfed:
+                ForWhenWarsGetNerfed:
                 SC.CirclesWar(true);
                 Core.EquipClass(ClassType.Farm);
                 //Army.WaitForParty("whitemap");
@@ -180,7 +224,6 @@ public class ArmyLeveling
                 //Army.WaitForParty("whitemap");
                 break;
 
-
             case MethodV2.ShadowBattleon_High_Levels:
             case MethodV2.ShadowBattleon_Lower_Levels:
             case MethodV2.ShadowBattleon_Baby_Mode:
@@ -195,7 +238,10 @@ public class ArmyLeveling
 
                 Core.Logger($"Mode Selected: {selectedMethod}");
 
-                if (selectedMethod == MethodV2.ShadowBattleon_High_Levels || selectedMethod == MethodV2.ShadowBattleon_Lower_Levels)
+                if (
+                    selectedMethod == MethodV2.ShadowBattleon_High_Levels
+                    || selectedMethod == MethodV2.ShadowBattleon_Lower_Levels
+                )
                 {
                     Army.AggroMonCells("r11");
                     Army.AggroMonStart("shadowbattleon");
@@ -214,7 +260,6 @@ public class ArmyLeveling
                     Bot.Sleep(200);
                     if (Bot.Player.Target?.HP <= 0)
                         continue;
-
                 }
 
                 Army.AggroMonStop(true);
@@ -238,8 +283,6 @@ public class ArmyLeveling
                 Army.AggroMonCells("r2", "r4", "r5", "r6", "r7", "r9");
                 Army.AggroMonStart("hakuwar");
                 Army.DivideOnCells("r2", "r4", "r5", "r6", "r7", "r9");
-
-
 
                 while (!Bot.ShouldExit && Bot.Player.Level < level)
                     Bot.Combat.Attack("*");
@@ -277,22 +320,22 @@ public class ArmyLeveling
                 Farm.ToggleBoost(BoostType.Gold, false);
                 Core.CancelRegisteredQuests();
                 break;
-                /*
-                case Method.Method:
-                Core.EquipClass(ClassType.ClassType);
-                //Army.WaitForParty("map");
-                Army.AggroMonCells(cells);
-                Army.AggroMonStart("map");
-                Army.DivideOnCells("cell");
-                Core.RegisterQuests(questIDs);
-                while (!Bot.ShouldExit && Bot.Player.Level < level)
-                    Bot.Combat.Attack("*");
-                Army.AggroMonStop(true);
-                Core.JumpWait();
-                //Army.WaitForParty("whitemap");
-                break;
+            /*
+            case Method.Method:
+            Core.EquipClass(ClassType.ClassType);
+            //Army.WaitForParty("map");
+            Army.AggroMonCells(cells);
+            Army.AggroMonStart("map");
+            Army.DivideOnCells("cell");
+            Core.RegisterQuests(questIDs);
+            while (!Bot.ShouldExit && Bot.Player.Level < level)
+                Bot.Combat.Attack("*");
+            Army.AggroMonStop(true);
+            Core.JumpWait();
+            //Army.WaitForParty("whitemap");
+            break;
 
-                */
+            */
         }
         Core.CancelRegisteredQuests();
         Core.JumpWait();
@@ -309,9 +352,8 @@ public class ArmyLeveling
         ShadowBattleon_Lower_Levels = 7,
         ShadowBattleon_High_Levels = 8,
         HakuWar = 9,
-        PirateBloodWar = 10
+        PirateBloodWar = 10,
     }
-
 
     void RequiredQuest(string map, int Quest)
     {
@@ -354,5 +396,4 @@ public class ArmyLeveling
         Core.JumpWait();
         //Army.WaitForParty("Whitemap");
     }
-
 }

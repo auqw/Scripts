@@ -1,7 +1,7 @@
 /*
 name: Non SpellCrafta Scroll Buyer
 description: This script will buy the selected scrolls from the Terminus Temple.
-tags: scroll, nsc, life steal, dark flare, nightmares, terminus temple 
+tags: scroll, nsc, life steal, dark flare, nightmares, terminus temple
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -13,8 +13,17 @@ public class BuyNSCScrolls
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public bool DontPreconfigure = true;
@@ -41,7 +50,9 @@ public class BuyNSCScrolls
         int currentQuantity = Bot.Inventory.GetQuantity(scrollName);
         int maxStack = 99;
         int buyAmount = quant == -1 ? maxStack - currentQuantity : quant;
-        Bot.Log($"Buying {scrollName} - Current: {currentQuantity}, Buy Amount: {buyAmount}, Max Stack: {maxStack}");
+        Bot.Log(
+            $"Buying {scrollName} - Current: {currentQuantity}, Buy Amount: {buyAmount}, Max Stack: {maxStack}"
+        );
         if (buyAmount < 0)
         {
             Core.Logger("You cannot buy a negative amount of scrolls.");
@@ -63,7 +74,7 @@ public class BuyNSCScrolls
     {
         LifeSteal,
         DarkFlare,
-        Nightmares
+        Nightmares,
     }
 
     private string GetScrollName(Scrolls scroll)
@@ -73,7 +84,7 @@ public class BuyNSCScrolls
             Scrolls.LifeSteal => "Scroll of Life Steal",
             Scrolls.DarkFlare => "Scroll of Dark Flare",
             Scrolls.Nightmares => "Scroll of Nightmares",
-            _ => ""
+            _ => "",
         };
     }
 }

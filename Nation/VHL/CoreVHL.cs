@@ -10,13 +10,13 @@ tags: null
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/AssistingCragAndBamboozle[Mem].cs
 using Skua.Core.Interfaces;
-using Skua.Core.Options;
 using Skua.Core.Models.Items;
+using Skua.Core.Options;
 
 public class CoreVHL
 {
     // [Can Change]
-    // True = 
+    // True =
     // False = It will automatically check if you got the things, but if you want to turn this off either way, heres the option.
     // Recommended: true
     public bool UseSparrowMethod = true;
@@ -24,22 +24,51 @@ public class CoreVHL
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public static CoreBots sCore => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static AssistingCragAndBamboozle ACAB { get => _ACAB ??= new AssistingCragAndBamboozle(); set => _ACAB = value; }    private static AssistingCragAndBamboozle _ACAB;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static AssistingCragAndBamboozle ACAB
+    {
+        get => _ACAB ??= new AssistingCragAndBamboozle();
+        set => _ACAB = value;
+    }
+    private static AssistingCragAndBamboozle _ACAB;
 
     public string OptionsStorage = "VoidHighLordOptions";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("SparrowMethod", "Use Sparrow's Blood Method",
-            "When possible, it will use \"Assisting Crag and Bamboozle\" to get an additional Elders' Blood per day.\n" +
-            "Needs Crag and Bamboozle and is Legend-Only.\n" +
-            "Will not be done if you don't meed the conditions\n" +
-            "Recommended setting: True", true),
-        CoreBots.Instance.SkipOptions
+        new Option<bool>(
+            "SparrowMethod",
+            "Use Sparrow's Blood Method",
+            "When possible, it will use \"Assisting Crag and Bamboozle\" to get an additional Elders' Blood per day.\n"
+                + "Needs Crag and Bamboozle and is Legend-Only.\n"
+                + "Will not be done if you don't meed the conditions\n"
+                + "Recommended setting: True",
+            true
+        ),
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -59,7 +88,10 @@ public class CoreVHL
         VHLChallenge(15);
         VHLCrystals();
 
-        if (Core.CheckInventory("Roentgenium of Nulgath", 15) && Core.CheckInventory(new[] { "Void Crystal A", "Void Crystal B" }))
+        if (
+            Core.CheckInventory("Roentgenium of Nulgath", 15)
+            && Core.CheckInventory(new[] { "Void Crystal A", "Void Crystal B" })
+        )
         {
             Adv.BuyItem("tercessuinotlim", 1355, "Void Highlord");
             if (rankUpClass)
@@ -79,18 +111,36 @@ public class CoreVHL
             Core.AddDrop(ChallengeRewards);
         Core.AddDrop("Roentgenium of Nulgath");
 
-    Continue:
+        Continue:
 
         Core.FarmingLogger("Roentgenium of Nulgath", quant);
         while (!Bot.ShouldExit && !Core.CheckInventory("Roentgenium of Nulgath", quant))
         {
             Core.EnsureAccept(5660);
 
-            Core.KillMonster("tercessuinotlim", "m4", "Right", "Shadow of Nulgath", "Hadean Onyx of Nulgath", isTemp: false);
-            if (!Core.CheckInventory("Elders' Blood", quant - Core.dynamicQuant("Elders' Blood", false) > 5 ? 5 : (quant - Core.dynamicQuant("Elders' Blood", false))))
+            Core.KillMonster(
+                "tercessuinotlim",
+                "m4",
+                "Right",
+                "Shadow of Nulgath",
+                "Hadean Onyx of Nulgath",
+                isTemp: false
+            );
+            if (
+                !Core.CheckInventory(
+                    "Elders' Blood",
+                    quant - Core.dynamicQuant("Elders' Blood", false) > 5
+                        ? 5
+                        : (quant - Core.dynamicQuant("Elders' Blood", false))
+                )
+            )
             {
                 Daily.EldersBlood();
-                _SparrowMethod((quant - Core.dynamicQuant("Elders' Blood", false)) > 5 ? 5 : (quant - Core.dynamicQuant("Elders' Blood", false)));
+                _SparrowMethod(
+                    (quant - Core.dynamicQuant("Elders' Blood", false)) > 5
+                        ? 5
+                        : (quant - Core.dynamicQuant("Elders' Blood", false))
+                );
             }
 
             Nation.FarmVoucher(false);
@@ -104,22 +154,35 @@ public class CoreVHL
             Nation.FarmTaintedGem(100);
             Nation.ApprovalAndFavor(300, 300);
 
-
             Core.EnsureComplete(5660);
             Bot.Wait.ForPickup("Roentgenium of Nulgath");
             Core.ToBank(ChallengeRewards);
 
-            if (Core.CheckInventory("Elders' Blood") && !Core.CheckInventory("Roentgenium of Nulgath", quant))
+            if (
+                Core.CheckInventory("Elders' Blood")
+                && !Core.CheckInventory("Roentgenium of Nulgath", quant)
+            )
                 goto Continue;
-            else if (!Core.CheckInventory("Elders' Blood") && !Core.CheckInventory("Roentgenium of Nulgath", quant))
+            else if (
+                !Core.CheckInventory("Elders' Blood")
+                && !Core.CheckInventory("Roentgenium of Nulgath", quant)
+            )
             {
-                Core.Logger($"Not enough \"Elders' Blood\", please do the daily {2 - Core.dynamicQuant("Elders' Blood", false)}");
+                Core.Logger(
+                    $"Not enough \"Elders' Blood\", please do the daily {2 - Core.dynamicQuant("Elders' Blood", false)}"
+                );
                 FarmExtra();
                 return;
             }
         }
     }
-    private readonly string[] ChallengeRewards = { "Void Highlord Armor", "Helm of the Highlord", "Highlord's Void Wrap" };
+
+    private readonly string[] ChallengeRewards =
+    {
+        "Void Highlord Armor",
+        "Helm of the Highlord",
+        "Highlord's Void Wrap",
+    };
 
     public void VHLCrystals()
     {
@@ -144,10 +207,11 @@ public class CoreVHL
                 Daily.EldersBlood();
             _SparrowMethod(2);
 
-
             if (!Core.CheckInventory("Elders' Blood", 2))
             {
-                Core.Logger($"Not enough \"Elders' Blood\", please do the daily {2 - Bot.Inventory.GetQuantity("Elders' Blood")} more times (not today)");
+                Core.Logger(
+                    $"Not enough \"Elders' Blood\", please do the daily {2 - Bot.Inventory.GetQuantity("Elders' Blood")} more times (not today)"
+                );
                 Core.Logger("Gathering Materials for Void Crystal B");
                 Nation.FarmTotemofNulgath(15);
                 Nation.FarmDiamondofNulgath(200);
@@ -169,14 +233,19 @@ public class CoreVHL
         // 17 for VHL
         // 8 for Void Crystals
         // 10 for The Fiend Shard's Final quest
-        
+
         if (Core.CheckInventory("Roentgenium of Nulgath", quant))
             return;
 
         int quantity = Core.dynamicQuant("Roentgenium of Nulgath", false);
 
-        Core.Logger($"Roentgenium of Nulgath: {Core.dynamicQuant("Roentgenium of Nulgath", false)}/{quant}", "Not Enough Roent");
-        Core.Logger("Not enough \"Roentgenium of Nulgath\", maxing mats so it's easier tomorrow. You can just leave this running!");
+        Core.Logger(
+            $"Roentgenium of Nulgath: {Core.dynamicQuant("Roentgenium of Nulgath", false)}/{quant}",
+            "Not Enough Roent"
+        );
+        Core.Logger(
+            "Not enough \"Roentgenium of Nulgath\", maxing mats so it's easier tomorrow. You can just leave this running!"
+        );
 
         // Farm Mats for Tomarrow.
         Farm.BlackKnightOrb();
@@ -187,7 +256,7 @@ public class CoreVHL
         Nation.EmblemofNulgath(500);
         Nation.EssenceofNulgath(60);
         Nation.FarmTaintedGem(1000);
-        Nation.ApprovalAndFavor(5000, 5000);// Core.AddDrop("Totem of Nulgath", "Blood Gem of Nulgath", "Voucher of Nulgath", "Voucher of Nulgath (non-mem)");
+        Nation.ApprovalAndFavor(5000, 5000); // Core.AddDrop("Totem of Nulgath", "Blood Gem of Nulgath", "Voucher of Nulgath", "Voucher of Nulgath (non-mem)");
         Nation.FarmBloodGem();
         if (!Core.CheckInventory("Unidentified 19"))
         {
@@ -203,7 +272,12 @@ public class CoreVHL
 
     private void _SparrowMethod(int EldersBloodQuant)
     {
-        if (!Bot.Config!.Get<bool>("SparrowMethod") || !Core.IsMember || !Core.CheckInventory(Nation.CragName) || Core.CheckInventory("Elders' Blood", EldersBloodQuant))
+        if (
+            !Bot.Config!.Get<bool>("SparrowMethod")
+            || !Core.IsMember
+            || !Core.CheckInventory(Nation.CragName)
+            || Core.CheckInventory("Elders' Blood", EldersBloodQuant)
+        )
             return;
         ACAB.AssistingCandB(AssistingCragAndBamboozle.Rewards.Elders_Blood);
     }

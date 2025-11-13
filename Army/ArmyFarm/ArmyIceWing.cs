@@ -7,26 +7,41 @@ tags: army, warlord icewing, experience, gold, icestorm arena
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 using Skua.Core.Interfaces;
-using Skua.Core.Options;
 using Skua.Core.Models;
+using Skua.Core.Options;
 
 public class IceWingLevelingArmy
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
-    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
     private static CoreBots _sCore;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
-
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArmyIceWing";
@@ -48,7 +63,11 @@ public class IceWingLevelingArmy
     {
         Core.SetOptions();
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // ArmyIceWing();
 
         Core.SetOptions(false);
@@ -59,9 +78,12 @@ public class IceWingLevelingArmy
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
         Bot.Events.PlayerAFK += PlayerAFK;
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
-    Restart:
+        Restart:
         Army.AggroMonIDs(1);
         Army.AggroMonStart("icewing", "Enter", "Spawn");
         Army.DivideOnCells("Enter");
@@ -94,7 +116,11 @@ public class IceWingLevelingArmy
             Bot.Combat.Attack("*");
             Core.Sleep();
         }
-        if (!Bot.ShouldExit && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count < Army.Players().Length)
+        if (
+            !Bot.ShouldExit
+            && Bot.Map.PlayerNames != null
+            && Bot.Map.PlayerNames.Count < Army.Players().Length
+        )
         {
             while (!Bot.ShouldExit && PlayerTakingDmg())
             {
@@ -123,6 +149,7 @@ public class IceWingLevelingArmy
             return true;
         return false;
     }
+
     public void PlayerAFK()
     {
         Core.Logger("Anti-AFK engaged");

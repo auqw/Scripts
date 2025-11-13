@@ -8,33 +8,41 @@ tags: null
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 using Skua.Core.Interfaces;
-using Skua.Core.Models.Skills;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Skills;
 
 public class CoreSoW
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public string[] MainyuDrops = { "Mainyu Rune", "Mainyu Tail", "Mainyu Wings" };
 
-
-    public string[] MalgorDrops = {
-            "Shadow DragonMaster",
-            "Shadow DragonMaster's Helm",
-            "Shadow DragonMaster's Tail + Blades",
-            "Shadow Dragonscale Blade",
-            "Shadowflame Devastation",
-            "ShadowFlame Dragon Blade",
-            "Shadowflame Shroud",
-            "Shadowflame Vanguard Armet",
-            "Shadowflame Vanguard Armet Locks",
-            "Shadowflame Vanguard Spear"
-        };
+    public string[] MalgorDrops =
+    {
+        "Shadow DragonMaster",
+        "Shadow DragonMaster's Helm",
+        "Shadow DragonMaster's Tail + Blades",
+        "Shadow Dragonscale Blade",
+        "Shadowflame Devastation",
+        "ShadowFlame Dragon Blade",
+        "Shadowflame Shroud",
+        "Shadowflame Vanguard Armet",
+        "Shadowflame Vanguard Armet Locks",
+        "Shadowflame Vanguard Spear",
+    };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -146,7 +154,9 @@ public class CoreSoW
         if (!Story.QuestProgression(6858))
         {
             Core.EnsureAccept(6858);
-            while (!Bot.ShouldExit && (!Core.CheckInventory(48347) || !Core.CheckInventory(48348, 8))) //Torch && Scrap of Cloth
+            while (
+                !Bot.ShouldExit && (!Core.CheckInventory(48347) || !Core.CheckInventory(48348, 8))
+            ) //Torch && Scrap of Cloth
                 Core.HuntMonster("shadowlordkeep", "Shadow Mage", log: false);
             Core.EnsureComplete(6858);
         }
@@ -258,7 +268,11 @@ public class CoreSoW
         Story.KillQuest(6891, "blackseakeep", "Blacksea Privateer");
 
         //We Need a Spell (6892)
-        Story.KillQuest(6892, "blackseakeep", new[] { "Blacksea Pirate Mage", "Blacksea Pirate Mage" });
+        Story.KillQuest(
+            6892,
+            "blackseakeep",
+            new[] { "Blacksea Pirate Mage", "Blacksea Pirate Mage" }
+        );
 
         //Light up the Shadows (6893)
         Story.MapItemQuest(6893, "blackseakeep", 6449, 7);
@@ -397,7 +411,14 @@ public class CoreSoW
         if (!Story.QuestProgression(6998))
         {
             Core.EnsureAccept(6998);
-            Core.KillMonster("shadowgrove", "r9", "Left", "Mutant Shadow Dragon", "Mutant Dragon Oil", 3);
+            Core.KillMonster(
+                "shadowgrove",
+                "r9",
+                "Left",
+                "Mutant Shadow Dragon",
+                "Mutant Dragon Oil",
+                3
+            );
             Core.EnsureComplete(6998);
         }
 
@@ -455,7 +476,6 @@ public class CoreSoW
 
         //Defeat Grandmother Hasu (7062)
         Story.KillQuest(7062, "aozorahills", "Ghostly Hasu");
-
     }
 
     public void GhostNexus()
@@ -701,8 +721,6 @@ public class CoreSoW
 
         InnerShadows();
 
-
-
         //War Medals
         Story.KillQuest(8125, "fireplanewar", "Shadowflame Soldier");
 
@@ -757,13 +775,31 @@ public class CoreSoW
             Core.Join("shadowfireplane", "r6", "Left"); // for incase u start here
             Core.EnsureAccept(8140);
             Core.GetMapItem(8543);
-            Core.KillMonster("shadowfireplane", "r6", "Left", "Shadow Wing", "Shadow Flamewing Defeated", 2);
-            Core.KillMonster("shadowfireplane", "r6", "Left", "Shadowfire Summoner", "Shadowfire Summoner Defeated", 1);
+            Core.KillMonster(
+                "shadowfireplane",
+                "r6",
+                "Left",
+                "Shadow Wing",
+                "Shadow Flamewing Defeated",
+                2
+            );
+            Core.KillMonster(
+                "shadowfireplane",
+                "r6",
+                "Left",
+                "Shadowfire Summoner",
+                "Shadowfire Summoner Defeated",
+                1
+            );
             Core.EnsureComplete(8140);
         }
 
         // Blaze a Path
-        Story.KillQuest(8141, "shadowfireplane", new[] { "Shadowfire Corporal", "Onslaught Knight" });
+        Story.KillQuest(
+            8141,
+            "shadowfireplane",
+            new[] { "Shadowfire Corporal", "Onslaught Knight" }
+        );
 
         // Into the Tiger's Den
         Story.KillQuest(8142, "shadowfireplane", "Shadowfire Tiger");
@@ -798,7 +834,14 @@ public class CoreSoW
         if (!Story.QuestProgression(8185))
         {
             Core.EnsureAccept(8185);
-            Core.KillMonster("fireinvasion", "r8", "Top", "Shadefire Elemental", "Elemental Slain", 7);
+            Core.KillMonster(
+                "fireinvasion",
+                "r8",
+                "Top",
+                "Shadefire Elemental",
+                "Elemental Slain",
+                7
+            );
             Core.KillMonster("fireinvasion", "r7", "Top", "Shadowfire Tiger", "Tiger Slain", 7);
             Core.EnsureComplete(8185);
         }
@@ -892,16 +935,21 @@ public class CoreSoW
             Core.EnsureAccept(8241);
             Core.KillMonster("fireavatar", "r8", "Left", "Shadow Lava", "Shadow Lava Defeated", 8);
             Core.EnsureComplete(8241);
-
         }
 
         //Thermal Energy 8242
         if (!Story.QuestProgression(8242))
         {
             Core.EnsureAccept(8242);
-            Core.KillMonster("fireavatar", "r7", "Left", "Living Shadowflame", "Power Restored", 10);
+            Core.KillMonster(
+                "fireavatar",
+                "r7",
+                "Left",
+                "Living Shadowflame",
+                "Power Restored",
+                10
+            );
             Core.EnsureComplete(8242);
-
         }
 
         //Avatar of Fire 8243
@@ -917,7 +965,11 @@ public class CoreSoW
         Story.MapItemQuest(8778, "ruinedcrown", new[] { 10380, 10382, 10383 });
 
         // 8779 Scraping the Barrel
-        Story.KillQuest(8779, "ruinedcrown", new[] { "Mana-Burdened Minion", "Mana-Burdened Knight" });
+        Story.KillQuest(
+            8779,
+            "ruinedcrown",
+            new[] { "Mana-Burdened Minion", "Mana-Burdened Knight" }
+        );
 
         // 8780 Fractals
         Story.MapItemQuest(8780, "ruinedcrown", 10384, 6);
@@ -926,7 +978,11 @@ public class CoreSoW
         Story.KillQuest(8781, "ruinedcrown", "Mana-Burdened Mage");
 
         // 8782 Deafening Silence
-        Story.KillQuest(8782, "ruinedcrown", new[] { "Mana-Burdened Knight", "Mana-Burdened Minion" });
+        Story.KillQuest(
+            8782,
+            "ruinedcrown",
+            new[] { "Mana-Burdened Knight", "Mana-Burdened Minion" }
+        );
 
         // 8784 Stilled Mind (Yes 8784 before 8783)
         Story.MapItemQuest(8784, "ruinedcrown", 10385, 6);
@@ -1015,7 +1071,7 @@ public class CoreSoW
         // 8816|Teary Components
         Story.KillQuest(8816, "Streamwar", "Mumbler");
 
-        // 8817|Proportional Retaliation         
+        // 8817|Proportional Retaliation
         Story.KillQuest(8817, "Streamwar", "Decaying Locust");
 
         //Growing Pains (8818)
@@ -1159,7 +1215,13 @@ public class CoreSoW
         Story.MapItemQuest(9123, "manacradle", 11271);
         Story.KillQuest(9123, "manacradle", new[] { "Darkness Elemental", "Dark Tainted Mana" });
 
-        string[] DodgeClasses = new[] { "Yami no Ronin", "TimeKeeper", "Void Highlord", "Void HighLord (IoDA)" };
+        string[] DodgeClasses = new[]
+        {
+            "Yami no Ronin",
+            "TimeKeeper",
+            "Void Highlord",
+            "Void HighLord (IoDA)",
+        };
         if (Core.CheckInventory(DodgeClasses, any: true))
         {
             Adv.GearStore();
@@ -1170,14 +1232,15 @@ public class CoreSoW
 
                 Core.Equip(CLASS);
                 break;
-
             }
         }
         // If Dodge Class was found, kill Malgor & The Mainyu with it, else use what you have on.
         else
         {
             Core.EquipClass(ClassType.Solo);
-            Core.Logger($"No Dodge Class found! Good luck killing Malgor & The Mainyu with {Bot.Inventory?.Items?.Where(x => x?.Category == ItemCategory.Class && x.Equipped)?.FirstOrDefault()?.Name}");
+            Core.Logger(
+                $"No Dodge Class found! Good luck killing Malgor & The Mainyu with {Bot.Inventory?.Items?.Where(x => x?.Category == ItemCategory.Class && x.Equipped)?.FirstOrDefault()?.Name}"
+            );
         }
         // Cognitive Dissonance 9124
         Story.KillQuest(9124, "manacradle", "Malgor");

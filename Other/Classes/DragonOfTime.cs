@@ -28,27 +28,71 @@ public class DragonOfTime
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }
+    private static CoreDarkon Darkon
+    {
+        get => _Darkon ??= new CoreDarkon();
+        set => _Darkon = value;
+    }
     private static CoreDarkon _Darkon;
-    private static GoldenBladeOfFate GBoF { get => _GBoF ??= new GoldenBladeOfFate(); set => _GBoF = value; }
+    private static GoldenBladeOfFate GBoF
+    {
+        get => _GBoF ??= new GoldenBladeOfFate();
+        set => _GBoF = value;
+    }
     private static GoldenBladeOfFate _GBoF;
-    private static PinkBladeOfDestruciton PBoD { get => _PBoD ??= new PinkBladeOfDestruciton(); set => _PBoD = value; }
+    private static PinkBladeOfDestruciton PBoD
+    {
+        get => _PBoD ??= new PinkBladeOfDestruciton();
+        set => _PBoD = value;
+    }
     private static PinkBladeOfDestruciton _PBoD;
-    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }
+    private static CoreQOM QOM
+    {
+        get => _QOM ??= new CoreQOM();
+        set => _QOM = value;
+    }
     private static CoreQOM _QOM;
-    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }
+    private static CoreToD TOD
+    {
+        get => _TOD ??= new CoreToD();
+        set => _TOD = value;
+    }
     private static CoreToD _TOD;
-    private static MysteriousEgg Egg { get => _Egg ??= new MysteriousEgg(); set => _Egg = value; }
+    private static MysteriousEgg Egg
+    {
+        get => _Egg ??= new MysteriousEgg();
+        set => _Egg = value;
+    }
     private static MysteriousEgg _Egg;
-    private static CoreSummer Coll { get => _Coll ??= new CoreSummer(); set => _Coll = value; }
+    private static CoreSummer Coll
+    {
+        get => _Coll ??= new CoreSummer();
+        set => _Coll = value;
+    }
     private static CoreSummer _Coll;
-    private static Borgars Borgars { get => _Borgars ??= new Borgars(); set => _Borgars = value; }
+    private static Borgars Borgars
+    {
+        get => _Borgars ??= new Borgars();
+        set => _Borgars = value;
+    }
     private static Borgars _Borgars;
 
     public void ScriptMain(IScriptInterface bot)
@@ -60,7 +104,12 @@ public class DragonOfTime
         Core.SetOptions(false);
     }
 
-    private string[] Extras = { "Dragon of Time Horns", "Dragon of Time Horns + Ponytail", "Dragon of Time Wings + Tail" };
+    private string[] Extras =
+    {
+        "Dragon of Time Horns",
+        "Dragon of Time Horns + Ponytail",
+        "Dragon of Time Wings + Tail",
+    };
 
     public void GetDoT(bool rankUpClass = true, bool doExtra = true, bool DotArmorOnly = false)
     {
@@ -87,7 +136,15 @@ public class DragonOfTime
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("kingcoal", "Frost King", "Frost King's Story", isTemp: false);
 
-            Core.KillMonster("baconcatyou", "Enter", "Spawn", "*", "Your Own Memories", isTemp: false, publicRoom: true);
+            Core.KillMonster(
+                "baconcatyou",
+                "Enter",
+                "Spawn",
+                "*",
+                "Your Own Memories",
+                isTemp: false,
+                publicRoom: true
+            );
 
             Story.ChainQuest(7716);
             Bot.Wait.ForPickup("*");
@@ -100,13 +157,25 @@ public class DragonOfTime
             Core.EnsureAccept(7717);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("dragonchallenge", "Desoloth the Final", "Desoloth's Destructive Aura", isTemp: false, publicRoom: true);
+            Core.HuntMonster(
+                "dragonchallenge",
+                "Desoloth the Final",
+                "Desoloth's Destructive Aura",
+                isTemp: false,
+                publicRoom: true
+            );
 
             Bot.Quests.UpdateQuest(899);
             Core.HuntMonster("blindingsnow", "Nythera", "Nythera's Patience", isTemp: false);
 
             Core.AddDrop("Key of Greed");
-            Core.HuntMonster("greed", "Goregold", "Goregold's Luck", isTemp: false, publicRoom: true);
+            Core.HuntMonster(
+                "greed",
+                "Goregold",
+                "Goregold's Luck",
+                isTemp: false,
+                publicRoom: true
+            );
 
             Core.HuntMonster("darkplane", "Victorious", "Victorious's Dignity", isTemp: false);
 
@@ -133,7 +202,12 @@ public class DragonOfTime
             if (!Core.CheckInventory("Chronomancer's Codex"))
             {
                 Core.HuntMonster("mqlesson", "Dragonoid", "Dragonoid of Hours", isTemp: false);
-                Core.HuntMonster("timespace", "Chaos Lord Iadoa", "Chronomancer's Codex", isTemp: false);
+                Core.HuntMonster(
+                    "timespace",
+                    "Chaos Lord Iadoa",
+                    "Chronomancer's Codex",
+                    isTemp: false
+                );
             }
 
             Core.EquipClass(ClassType.Farm);
@@ -151,7 +225,13 @@ public class DragonOfTime
             Core.EnsureAccept(7719);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("cathedral", "Incarnation of Time", "Time Loop Broken", isTemp: false, publicRoom: true);
+            Core.HuntMonster(
+                "cathedral",
+                "Incarnation of Time",
+                "Time Loop Broken",
+                isTemp: false,
+                publicRoom: true
+            );
 
             Core.EquipClass(ClassType.Farm);
             Core.KillMonster("portalwar", "r4", "Right", "*", "Anomaly Silenced", 100, false);
@@ -162,7 +242,6 @@ public class DragonOfTime
             Core.HuntMonster("ubear", "Cornholio", "Is This a Wormhole?", isTemp: false);
 
             Core.EnsureComplete(7719);
-
         }
 
         // If we are only getting the armor, we can return here.
@@ -176,11 +255,32 @@ public class DragonOfTime
             Core.EnsureAccept(7720);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("lairdefend", "Dragon Summoner", "Dimensional Dragon Portal", 2, false);
+            Core.HuntMonster(
+                "lairdefend",
+                "Dragon Summoner",
+                "Dimensional Dragon Portal",
+                2,
+                false
+            );
 
-            Core.HuntMonster("bosschallenge", "Grievous Inbunche", "Brutal Slash Studied", 10, isTemp: false, publicRoom: true);
+            Core.HuntMonster(
+                "bosschallenge",
+                "Grievous Inbunche",
+                "Brutal Slash Studied",
+                10,
+                isTemp: false,
+                publicRoom: true
+            );
 
-            Adv.BoostKillMonster("hydrachallenge", "h90", "Left", 3778, "Epic Hydra Fang", 125, false);
+            Adv.BoostKillMonster(
+                "hydrachallenge",
+                "h90",
+                "Left",
+                3778,
+                "Epic Hydra Fang",
+                125,
+                false
+            );
 
             Story.ChainQuest(7720);
             Bot.Wait.ForPickup("*");
@@ -212,7 +312,16 @@ public class DragonOfTime
             }
 
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("aqw3d", "r13", "Bottom", "*", "Cross-Dimensional Weapons", 300, isTemp: false, publicRoom: true);
+            Core.KillMonster(
+                "aqw3d",
+                "r13",
+                "Bottom",
+                "*",
+                "Cross-Dimensional Weapons",
+                300,
+                isTemp: false,
+                publicRoom: true
+            );
 
             TOD.ShiftingPyramid();
             if (!Core.CheckInventory("Starlight Singularity"))
@@ -244,16 +353,51 @@ public class DragonOfTime
             Core.HuntMonster("moonlab", "Slime Mold", "Unyielding Slime", 300, false);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("bosschallenge", "Mutated Void Dragon", "Omnipotent Cells", 20, false, publicRoom: true);
+            Core.HuntMonster(
+                "bosschallenge",
+                "Mutated Void Dragon",
+                "Omnipotent Cells",
+                20,
+                false,
+                publicRoom: true
+            );
 
-            Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false, publicRoom: true);
+            Core.HuntMonster(
+                "underlair",
+                "ArchFiend Dragonlord",
+                "Dragon's Plasma",
+                20,
+                false,
+                publicRoom: true
+            );
 
-            Core.HuntMonster("chaoskraken", "Chaos Kraken", "Chaotic Invertebrae", 20, false, publicRoom: true);
+            Core.HuntMonster(
+                "chaoskraken",
+                "Chaos Kraken",
+                "Chaotic Invertebrae",
+                20,
+                false,
+                publicRoom: true
+            );
 
             Bot.Quests.UpdateQuest(9, 159);
-            Core.HuntMonster("towerofdoom9", "Dread Fang", "Cryostatic Essence", 20, false, publicRoom: true);
+            Core.HuntMonster(
+                "towerofdoom9",
+                "Dread Fang",
+                "Cryostatic Essence",
+                20,
+                false,
+                publicRoom: true
+            );
 
-            Core.HuntMonster("castleroof", "Ultra Chaos Dragon", "Salvaged Chaos Dragon Biomass", 20, false, publicRoom: true);
+            Core.HuntMonster(
+                "castleroof",
+                "Ultra Chaos Dragon",
+                "Salvaged Chaos Dragon Biomass",
+                20,
+                false,
+                publicRoom: true
+            );
 
             Story.ChainQuest(7722);
             Bot.Wait.ForPickup("*");
@@ -270,11 +414,32 @@ public class DragonOfTime
             Core.KillMonster("volcano", "r10", "Left", "Fire Imp", "Fire Essence", 3000, false);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("charredplains", "Akriloth", "Akriloth's Flametongue", 100, false, publicRoom: true);
+            Core.HuntMonster(
+                "charredplains",
+                "Akriloth",
+                "Akriloth's Flametongue",
+                100,
+                false,
+                publicRoom: true
+            );
 
-            Core.HuntMonster("ultraphedra", "Ultra Phedra", "Immortal Embers", 50, false, publicRoom: true);
+            Core.HuntMonster(
+                "ultraphedra",
+                "Ultra Phedra",
+                "Immortal Embers",
+                50,
+                false,
+                publicRoom: true
+            );
 
-            Core.HuntMonster("thevoid", "Reaper", "Ashes from the Void Realm", 50, false, publicRoom: true);
+            Core.HuntMonster(
+                "thevoid",
+                "Reaper",
+                "Ashes from the Void Realm",
+                50,
+                false,
+                publicRoom: true
+            );
 
             Story.ChainQuest(7723);
             Bot.Wait.ForPickup("*");
@@ -293,12 +458,34 @@ public class DragonOfTime
 
             Core.EquipClass(ClassType.Solo);
             Bot.Quests.UpdateQuest(3880);
-            Core.KillMonster("chaoslord", "r2", "Left", "*", "Conquered Past", isTemp: false, publicRoom: true);
+            Core.KillMonster(
+                "chaoslord",
+                "r2",
+                "Left",
+                "*",
+                "Conquered Past",
+                isTemp: false,
+                publicRoom: true
+            );
 
             Bot.Quests.UpdateQuest(10, 159);
-            Core.HuntMonster("towerofdoom10", "Slugbutter", "Slugbutter Trophy", 100, false, publicRoom: true);
+            Core.HuntMonster(
+                "towerofdoom10",
+                "Slugbutter",
+                "Slugbutter Trophy",
+                100,
+                false,
+                publicRoom: true
+            );
 
-            Core.HuntMonster("icewing", "Warlord Icewing", "Icewing's Laurel", 30, false, publicRoom: true);
+            Core.HuntMonster(
+                "icewing",
+                "Warlord Icewing",
+                "Icewing's Laurel",
+                30,
+                false,
+                publicRoom: true
+            );
 
             Story.ChainQuest(7724);
             Bot.Wait.ForPickup("Dragon of Time");
@@ -316,8 +503,15 @@ public class DragonOfTime
             Farm.Experience(75);
             Core.AddDrop("Burger Buns");
             Core.EquipClass(ClassType.Solo);
-            Bot.Drops.Add(Extras.Where(x => Core.CheckInventory(x, toInv: false)).Select(x => x).ToArray());
-            foreach (string Item in Core.QuestRewards(7725).Where(x => !Core.CheckInventory(x, toInv: false)).Select(x => x).ToArray())
+            Bot.Drops.Add(
+                Extras.Where(x => Core.CheckInventory(x, toInv: false)).Select(x => x).ToArray()
+            );
+            foreach (
+                string Item in Core.QuestRewards(7725)
+                    .Where(x => !Core.CheckInventory(x, toInv: false))
+                    .Select(x => x)
+                    .ToArray()
+            )
             {
                 Core.EnsureAccept(7725);
                 if (!Core.CheckInventory("Borgar"))
@@ -336,7 +530,11 @@ public class DragonOfTime
                 Core.EnsureCompleteChoose(7725, Extras);
                 Bot.Wait.ForPickup("*");
             }
-            Core.ToBank("Dragon of Time Horns", "Dragon of Time Horns + Ponytail", "Dragon of Time Wings + Tail");
+            Core.ToBank(
+                "Dragon of Time Horns",
+                "Dragon of Time Horns + Ponytail",
+                "Dragon of Time Wings + Tail"
+            );
         }
     }
 
@@ -352,7 +550,13 @@ public class DragonOfTime
         Core.EnsureAccept(7719);
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("cathedral", "Incarnation of Time", "Time Loop Broken", isTemp: false, publicRoom: true);
+        Core.HuntMonster(
+            "cathedral",
+            "Incarnation of Time",
+            "Time Loop Broken",
+            isTemp: false,
+            publicRoom: true
+        );
 
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster("portalwar", "r4", "Right", "*", "Anomaly Silenced", 100, false);
@@ -366,5 +570,4 @@ public class DragonOfTime
         Bot.Wait.ForDrop("Dragon of Time Armor");
         Bot.Wait.ForPickup("Dragon of Time Armor");
     }
-
 }

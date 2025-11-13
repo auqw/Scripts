@@ -15,9 +15,24 @@ public class LegionDoomKnight
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }    private static CoreSDKA _SDKA;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreSDKA SDKA
+    {
+        get => _SDKA ??= new CoreSDKA();
+        set => _SDKA = value;
+    }
+    private static CoreSDKA _SDKA;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -37,7 +52,13 @@ public class LegionDoomKnight
             SDKA.DoAll();
 
         Core.RegisterQuests(4099);
-        Core.HuntMonster("sepulchure", "Dark Sepulchure", "Dark Sepulchure's Badge", 100, isTemp: false);
+        Core.HuntMonster(
+            "sepulchure",
+            "Dark Sepulchure",
+            "Dark Sepulchure's Badge",
+            100,
+            isTemp: false
+        );
         Core.CancelRegisteredQuests();
 
         Core.BuyItem("battleon", 1106, "Legion DoomKnight");

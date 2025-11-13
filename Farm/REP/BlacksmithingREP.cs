@@ -13,26 +13,47 @@ public class BlacksmithingREP
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "BlackSmithRepGold";
     public List<IOption> Options = new()
     {
-        new Option<bool>("UseGold", "Use Gold To Get Rep?", "Will Farm the Quest \"Intrepid Investing\" which costs 500k/ turnin, if you dont have the gold the bot will farm it.", false),
-        new Option<bool>("BulkFarmGold", "Pre-Farm Gold(100m)", "Bulk Turnin after farming 100m Gold.", false),
+        new Option<bool>(
+            "UseGold",
+            "Use Gold To Get Rep?",
+            "Will Farm the Quest \"Intrepid Investing\" which costs 500k/ turnin, if you dont have the gold the bot will farm it.",
+            false
+        ),
+        new Option<bool>(
+            "BulkFarmGold",
+            "Pre-Farm Gold(100m)",
+            "Bulk Turnin after farming 100m Gold.",
+            false
+        ),
         CoreBots.Instance.SkipOptions,
     };
-
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
 
-        Farm.BlacksmithingREP(10, Bot.Config!.Get<bool>("UseGold"), Bot.Config!.Get<bool>("UseGold"));
+        Farm.BlacksmithingREP(
+            10,
+            Bot.Config!.Get<bool>("UseGold"),
+            Bot.Config!.Get<bool>("UseGold")
+        );
 
         Core.SetOptions(false);
     }

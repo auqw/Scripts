@@ -26,14 +26,54 @@ public class CoreHollowbornPaladin
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }    private static CoreHollowborn _HB;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static AscendedDrakathGear ADG { get => _ADG ??= new AscendedDrakathGear(); set => _ADG = value; }    private static AscendedDrakathGear _ADG;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static Artixpointe APointe { get => _APointe ??= new Artixpointe(); set => _APointe = value; }    private static Artixpointe _APointe;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
+    private static CoreHollowborn _HB;
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
+    private static CoreBLOD _BLOD;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static AscendedDrakathGear ADG
+    {
+        get => _ADG ??= new AscendedDrakathGear();
+        set => _ADG = value;
+    }
+    private static AscendedDrakathGear _ADG;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static Artixpointe APointe
+    {
+        get => _APointe ??= new Artixpointe();
+        set => _APointe = value;
+    }
+    private static Artixpointe _APointe;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -50,7 +90,7 @@ public class CoreHollowbornPaladin
         "Hollowborn Paladin Cloak",
         "Dual Hollowborn Shadows of Fate",
         "Hollowborn Daimyo Battlepet",
-        "Hollowborn Daimyo"
+        "Hollowborn Daimyo",
     };
 
     public void GetAll()
@@ -73,7 +113,6 @@ public class CoreHollowbornPaladin
         }
         Core.ToBank(PostSummoningItems);
     }
-
 
     public void GetSpecific(string item)
     {
@@ -106,7 +145,13 @@ public class CoreHollowbornPaladin
         HB.HardcoreContract();
         Farm.Experience(75);
 
-        Core.AddDrop("Sparrow's Blood", "Brilliant Aura", "Gem of Superiority", "Condensed Mana", "Hollowborn Paladin");
+        Core.AddDrop(
+            "Sparrow's Blood",
+            "Brilliant Aura",
+            "Gem of Superiority",
+            "Condensed Mana",
+            "Hollowborn Paladin"
+        );
         Core.EnsureAccept(7557);
         if (!Core.CheckInventory("Sparrow's Blood"))
         {
@@ -129,7 +174,14 @@ public class CoreHollowbornPaladin
             Core.BuyItem("darkthronehub", 1308, "Exalted Paladin Seal");
         }
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("timevoid", "Unending Avatar", "Condensed Mana", 1, false, publicRoom: true);
+        Core.HuntMonster(
+            "timevoid",
+            "Unending Avatar",
+            "Condensed Mana",
+            1,
+            false,
+            publicRoom: true
+        );
         HB.HumanSoul(200);
         Core.EnsureComplete(7557);
     }
@@ -143,7 +195,12 @@ public class CoreHollowbornPaladin
         HBPaladin();
         Farm.Experience(85);
 
-        Core.AddDrop("Dark Aura Gem", "Enchantment Rune", "Shadow Dragon Soul", "Hollowborn Paladin Helmet");
+        Core.AddDrop(
+            "Dark Aura Gem",
+            "Enchantment Rune",
+            "Shadow Dragon Soul",
+            "Hollowborn Paladin Helmet"
+        );
         Core.EnsureAccept(7558);
         Core.BuyItem("necropolis", 410, "Templar's Helm of Light");
         Farm.DoomWoodREP(6);

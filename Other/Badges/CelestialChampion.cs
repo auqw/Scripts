@@ -14,7 +14,12 @@ public class CelestialArenaChampion
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CelestialArenaQuests CA { get => _CA ??= new CelestialArenaQuests(); set => _CA = value; }    private static CelestialArenaQuests _CA;
+    private static CelestialArenaQuests CA
+    {
+        get => _CA ??= new CelestialArenaQuests();
+        set => _CA = value;
+    }
+    private static CelestialArenaQuests _CA;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -37,7 +42,6 @@ public class CelestialArenaChampion
         CA.Arena1to10();
         CA.Arena11to20();
         CA.Arena21to29();
-
     }
 
     private string badge = "Celestial Champion";

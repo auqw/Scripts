@@ -16,18 +16,31 @@ public class YokaiRealmMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreDOY DOY { get => _DOY ??= new CoreDOY(); set => _DOY = value; }
+    private static CoreDOY DOY
+    {
+        get => _DOY ??= new CoreDOY();
+        set => _DOY = value;
+    }
     private static CoreDOY _DOY;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -52,7 +65,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -63,9 +78,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Doomatter":
                     Core.FarmingLogger(req.Name, quant);
@@ -78,29 +98,94 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(9690);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("yokairealm", "Mikoto Kukol'nyy", "Mikoto's Red String", 3, log: false);
+                        Core.HuntMonster(
+                            "yokairealm",
+                            "Mikoto Kukol'nyy",
+                            "Mikoto's Red String",
+                            3,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("83655", "Bujin DoomKnight", "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight\" ?", false),
-        new Option<bool>("83656", "Bujin DoomKnight Hairbun", "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Hairbun\" ?", false),
-        new Option<bool>("83657", "Bujin DoomKnight Locks", "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Locks\" ?", false),
-        new Option<bool>("83658", "Bujin DoomKnight Hairbun Visage", "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Hairbun Visage\" ?", false),
-        new Option<bool>("83659", "Bujin DoomKnight Visage", "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Visage\" ?", false),
-        new Option<bool>("83661", "Bujin DoomKnight Helm", "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Helm\" ?", false),
-        new Option<bool>("83662", "Bujin DoomKnight Oni Mask", "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Oni Mask\" ?", false),
-        new Option<bool>("83663", "Doomed Artillery Array", "Mode: [select] only\nShould the bot buy \"Doomed Artillery Array\" ?", false),
-        new Option<bool>("83667", "Necrotic Dao of Doom", "Mode: [select] only\nShould the bot buy \"Necrotic Dao of Doom\" ?", false),
-        new Option<bool>("83668", "Dual Necrotic Dao of Doom", "Mode: [select] only\nShould the bot buy \"Dual Necrotic Dao of Doom\" ?", false),
-        new Option<bool>("85369", "Usagi Oni Battle Fan", "Mode: [select] only\nShould the bot buy \"Usagi Oni Battle Fan\" ?", false),
-        new Option<bool>("85370", "Usagi Oni Battle Fans", "Mode: [select] only\nShould the bot buy \"Usagi Oni Battle Fans\" ?", false),
+        new Option<bool>(
+            "83655",
+            "Bujin DoomKnight",
+            "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83656",
+            "Bujin DoomKnight Hairbun",
+            "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Hairbun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83657",
+            "Bujin DoomKnight Locks",
+            "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83658",
+            "Bujin DoomKnight Hairbun Visage",
+            "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Hairbun Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83659",
+            "Bujin DoomKnight Visage",
+            "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83661",
+            "Bujin DoomKnight Helm",
+            "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83662",
+            "Bujin DoomKnight Oni Mask",
+            "Mode: [select] only\nShould the bot buy \"Bujin DoomKnight Oni Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83663",
+            "Doomed Artillery Array",
+            "Mode: [select] only\nShould the bot buy \"Doomed Artillery Array\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83667",
+            "Necrotic Dao of Doom",
+            "Mode: [select] only\nShould the bot buy \"Necrotic Dao of Doom\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83668",
+            "Dual Necrotic Dao of Doom",
+            "Mode: [select] only\nShould the bot buy \"Dual Necrotic Dao of Doom\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85369",
+            "Usagi Oni Battle Fan",
+            "Mode: [select] only\nShould the bot buy \"Usagi Oni Battle Fan\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85370",
+            "Usagi Oni Battle Fans",
+            "Mode: [select] only\nShould the bot buy \"Usagi Oni Battle Fans\" ?",
+            false
+        ),
     };
 }

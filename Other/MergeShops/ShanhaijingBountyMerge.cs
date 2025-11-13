@@ -14,18 +14,30 @@ public class ShanhaijingBountyMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
     private static CoreAdvanced _sAdv;
-
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -49,7 +61,9 @@ public class ShanhaijingBountyMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,9 +74,14 @@ public class ShanhaijingBountyMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 #region Items not setup
 
@@ -82,17 +101,36 @@ public class ShanhaijingBountyMerge
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
-                    #endregion
-
+                #endregion
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("96649", "Refined Blossom Fan", "Mode: [select] only\nShould the bot buy \"Refined Blossom Fan\" ?", false),
-        new Option<bool>("96650", "Refined Blossom Fans", "Mode: [select] only\nShould the bot buy \"Refined Blossom Fans\" ?", false),
-        new Option<bool>("94508", "Purified Luntai Axe", "Mode: [select] only\nShould the bot buy \"Purified Luntai Axe\" ?", false),
-        new Option<bool>("96648", "Taotie Nopperabo Samurai", "Mode: [select] only\nShould the bot buy \"Taotie Nopperabo Samurai\" ?", false),
-   };
+        new Option<bool>(
+            "96649",
+            "Refined Blossom Fan",
+            "Mode: [select] only\nShould the bot buy \"Refined Blossom Fan\" ?",
+            false
+        ),
+        new Option<bool>(
+            "96650",
+            "Refined Blossom Fans",
+            "Mode: [select] only\nShould the bot buy \"Refined Blossom Fans\" ?",
+            false
+        ),
+        new Option<bool>(
+            "94508",
+            "Purified Luntai Axe",
+            "Mode: [select] only\nShould the bot buy \"Purified Luntai Axe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "96648",
+            "Taotie Nopperabo Samurai",
+            "Mode: [select] only\nShould the bot buy \"Taotie Nopperabo Samurai\" ?",
+            false
+        ),
+    };
 }

@@ -16,20 +16,36 @@ public class FabyosSpookyMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreFriday13th F13 { get => _F13 ??= new CoreFriday13th(); set => _F13 = value; }
+    private static CoreFriday13th F13
+    {
+        get => _F13 ??= new CoreFriday13th();
+        set => _F13 = value;
+    }
     private static CoreFriday13th _F13;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +72,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +85,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Spooky Fabric Scrap":
                     Core.FarmingLogger(req.Name, quant);
@@ -77,7 +100,15 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(8676);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("oddities", "r3", "Left", "*", "Cursed Cloth Roll", 13, log: false);
+                        Core.KillMonster(
+                            "oddities",
+                            "r3",
+                            "Left",
+                            "*",
+                            "Cursed Cloth Roll",
+                            13,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -89,29 +120,96 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(8677);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("oddities", "r9", "Left", "*", "Freaky Fripperies", 13, log: false);
+                        Core.KillMonster(
+                            "oddities",
+                            "r9",
+                            "Left",
+                            "*",
+                            "Freaky Fripperies",
+                            13,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("70191", "Goth Pirate Musician", "Mode: [select] only\nShould the bot buy \"Goth Pirate Musician\" ?", false),
-        new Option<bool>("70192", "Goth Pirate TopHat + Beard", "Mode: [select] only\nShould the bot buy \"Goth Pirate TopHat + Beard\" ?", false),
-        new Option<bool>("70193", "Goth Pirate TopHat + Locks", "Mode: [select] only\nShould the bot buy \"Goth Pirate TopHat + Locks\" ?", false),
-        new Option<bool>("70194", "Unicorn Commander Musician", "Mode: [select] only\nShould the bot buy \"Unicorn Commander Musician\" ?", false),
-        new Option<bool>("70195", "Unicorn Commander's TopHat", "Mode: [select] only\nShould the bot buy \"Unicorn Commander's TopHat\" ?", false),
-        new Option<bool>("70196", "Unicorn Commander's TopHat + Locks", "Mode: [select] only\nShould the bot buy \"Unicorn Commander's TopHat + Locks\" ?", false),
-        new Option<bool>("70197", "Gothic Decorator", "Mode: [select] only\nShould the bot buy \"Gothic Decorator\" ?", false),
-        new Option<bool>("70198", "Gothic Decorator's Beard", "Mode: [select] only\nShould the bot buy \"Gothic Decorator's Beard\" ?", false),
-        new Option<bool>("70199", "Gothic Decorator's Hair", "Mode: [select] only\nShould the bot buy \"Gothic Decorator's Hair\" ?", false),
-        new Option<bool>("70200", "Bloodmoon Musician", "Mode: [select] only\nShould the bot buy \"Bloodmoon Musician\" ?", false),
-        new Option<bool>("70201", "Gothic Musician's Beard", "Mode: [select] only\nShould the bot buy \"Gothic Musician's Beard\" ?", false),
-        new Option<bool>("13047", "Peculiar... Nail?", "Mode: [select] only\nShould the bot buy \"Peculiar... Nail?\" ?", false),
-   };
+        new Option<bool>(
+            "70191",
+            "Goth Pirate Musician",
+            "Mode: [select] only\nShould the bot buy \"Goth Pirate Musician\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70192",
+            "Goth Pirate TopHat + Beard",
+            "Mode: [select] only\nShould the bot buy \"Goth Pirate TopHat + Beard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70193",
+            "Goth Pirate TopHat + Locks",
+            "Mode: [select] only\nShould the bot buy \"Goth Pirate TopHat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70194",
+            "Unicorn Commander Musician",
+            "Mode: [select] only\nShould the bot buy \"Unicorn Commander Musician\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70195",
+            "Unicorn Commander's TopHat",
+            "Mode: [select] only\nShould the bot buy \"Unicorn Commander's TopHat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70196",
+            "Unicorn Commander's TopHat + Locks",
+            "Mode: [select] only\nShould the bot buy \"Unicorn Commander's TopHat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70197",
+            "Gothic Decorator",
+            "Mode: [select] only\nShould the bot buy \"Gothic Decorator\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70198",
+            "Gothic Decorator's Beard",
+            "Mode: [select] only\nShould the bot buy \"Gothic Decorator's Beard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70199",
+            "Gothic Decorator's Hair",
+            "Mode: [select] only\nShould the bot buy \"Gothic Decorator's Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70200",
+            "Bloodmoon Musician",
+            "Mode: [select] only\nShould the bot buy \"Bloodmoon Musician\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70201",
+            "Gothic Musician's Beard",
+            "Mode: [select] only\nShould the bot buy \"Gothic Musician's Beard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "13047",
+            "Peculiar... Nail?",
+            "Mode: [select] only\nShould the bot buy \"Peculiar... Nail?\" ?",
+            false
+        ),
+    };
 }

@@ -16,27 +16,66 @@ public class BonecastleTowerMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
     private static CoreAdvanced _sAdv;
-    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }
+    private static CoreToD TOD
+    {
+        get => _TOD ??= new CoreToD();
+        set => _TOD = value;
+    }
     private static CoreToD _TOD;
-
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "DeathKnight Lord Gauntlets", "DeathKnight Lord Greaves", "DeathKnight Lord Chest Plate", "DeathKnight Lord Hauberk", "DeathKnight Lord Boots", "Bonecastle Amulet", "Silver DeathKnight Lord Gauntlets", "Silver DeathKnight Lord Greaves", "Silver DeathKnight Lord Chest Plate", "Silver DeathKnight Lord Hauberk", "Silver DeathKnight Lord Boots", "SilverSkull Amulet", "Golden DeathKnight Lord Gauntlets", "Golden DeathKnight Lord Greaves", "Golden DeathKnight Lord Chest Plate", "Golden DeathKnight Lord Hauberk", "Golden DeathKnight Lord Boots", "GoldSkull Amulet", "Shadow Skull" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "DeathKnight Lord Gauntlets",
+                "DeathKnight Lord Greaves",
+                "DeathKnight Lord Chest Plate",
+                "DeathKnight Lord Hauberk",
+                "DeathKnight Lord Boots",
+                "Bonecastle Amulet",
+                "Silver DeathKnight Lord Gauntlets",
+                "Silver DeathKnight Lord Greaves",
+                "Silver DeathKnight Lord Chest Plate",
+                "Silver DeathKnight Lord Hauberk",
+                "Silver DeathKnight Lord Boots",
+                "SilverSkull Amulet",
+                "Golden DeathKnight Lord Gauntlets",
+                "Golden DeathKnight Lord Greaves",
+                "Golden DeathKnight Lord Chest Plate",
+                "Golden DeathKnight Lord Hauberk",
+                "Golden DeathKnight Lord Boots",
+                "GoldSkull Amulet",
+                "Shadow Skull",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -54,7 +93,9 @@ public class BonecastleTowerMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +106,14 @@ public class BonecastleTowerMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Bonecastle Amulet":
                 case "Shadow Skull":
@@ -104,7 +150,13 @@ public class BonecastleTowerMerge
                     Core.RegisterQuests(5010);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster("towersilver", "Bloody Scary", req.Name, req.Quantity, isTemp: req.Temp);
+                    Core.HuntMonster(
+                        "towersilver",
+                        "Bloody Scary",
+                        req.Name,
+                        req.Quantity,
+                        isTemp: req.Temp
+                    );
                     break;
 
                 case "DeathKnight Lord Gauntlets":
@@ -128,13 +180,13 @@ public class BonecastleTowerMerge
                 case "Silver DeathKnight Lord Hauberk":
                 case "Silver DeathKnight Lord Boots":
                     Core.AddDrop(
-                          "Silver DeathKnight Lord Gauntlets",
-                          "Silver DeathKnight Lord Greaves",
-                          "Silver DeathKnight Lord Chest Plate",
-                          "Silver DeathKnight Lord Hauberk",
-                          "Silver DeathKnight Lord Boots",
-                          "SilverSkull Amulet"
-                      );
+                        "Silver DeathKnight Lord Gauntlets",
+                        "Silver DeathKnight Lord Greaves",
+                        "Silver DeathKnight Lord Chest Plate",
+                        "Silver DeathKnight Lord Hauberk",
+                        "Silver DeathKnight Lord Boots",
+                        "SilverSkull Amulet"
+                    );
                     Core.HuntMonster("towersilver", "Flester the Silver", req.Name, isTemp: false);
                     break;
 
@@ -157,23 +209,77 @@ public class BonecastleTowerMerge
                     );
                     Core.HuntMonster("towergold", "Yurrod the Gold", req.Name, isTemp: false);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("34717", "DeathKnight Lord Armor", "Mode: [select] only\nShould the bot buy \"DeathKnight Lord Armor\" ?", false),
-        new Option<bool>("34726", "DeathKnight's Blade", "Mode: [select] only\nShould the bot buy \"DeathKnight's Blade\" ?", false),
-        new Option<bool>("34729", "DeathKnight Helm", "Mode: [select] only\nShould the bot buy \"DeathKnight Helm\" ?", false),
-        new Option<bool>("34724", "Silver DeathKnight Lord", "Mode: [select] only\nShould the bot buy \"Silver DeathKnight Lord\" ?", false),
-        new Option<bool>("34727", "Silver DeathKnight's Blade", "Mode: [select] only\nShould the bot buy \"Silver DeathKnight's Blade\" ?", false),
-        new Option<bool>("34730", "Silver DeathKnight Helm", "Mode: [select] only\nShould the bot buy \"Silver DeathKnight Helm\" ?", false),
-        new Option<bool>("34725", "Golden DeathKnight Lord", "Mode: [select] only\nShould the bot buy \"Golden DeathKnight Lord\" ?", false),
-        new Option<bool>("34728", "Golden DeathKnight's Blade", "Mode: [select] only\nShould the bot buy \"Golden DeathKnight's Blade\" ?", false),
-        new Option<bool>("34731", "Golden DeathKnight Helm", "Mode: [select] only\nShould the bot buy \"Golden DeathKnight Helm\" ?", false),
-        new Option<bool>("34744", "DeathKnight Lord Cape", "Mode: [select] only\nShould the bot buy \"DeathKnight Lord Cape\" ?", false),
-        new Option<bool>("34780", "DeathKnight Lord", "Mode: [select] only\nShould the bot buy \"DeathKnight Lord\" ?", false),
-   };
+        new Option<bool>(
+            "34717",
+            "DeathKnight Lord Armor",
+            "Mode: [select] only\nShould the bot buy \"DeathKnight Lord Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34726",
+            "DeathKnight's Blade",
+            "Mode: [select] only\nShould the bot buy \"DeathKnight's Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34729",
+            "DeathKnight Helm",
+            "Mode: [select] only\nShould the bot buy \"DeathKnight Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34724",
+            "Silver DeathKnight Lord",
+            "Mode: [select] only\nShould the bot buy \"Silver DeathKnight Lord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34727",
+            "Silver DeathKnight's Blade",
+            "Mode: [select] only\nShould the bot buy \"Silver DeathKnight's Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34730",
+            "Silver DeathKnight Helm",
+            "Mode: [select] only\nShould the bot buy \"Silver DeathKnight Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34725",
+            "Golden DeathKnight Lord",
+            "Mode: [select] only\nShould the bot buy \"Golden DeathKnight Lord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34728",
+            "Golden DeathKnight's Blade",
+            "Mode: [select] only\nShould the bot buy \"Golden DeathKnight's Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34731",
+            "Golden DeathKnight Helm",
+            "Mode: [select] only\nShould the bot buy \"Golden DeathKnight Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34744",
+            "DeathKnight Lord Cape",
+            "Mode: [select] only\nShould the bot buy \"DeathKnight Lord Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34780",
+            "DeathKnight Lord",
+            "Mode: [select] only\nShould the bot buy \"DeathKnight Lord\" ?",
+            false
+        ),
+    };
 }

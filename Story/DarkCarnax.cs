@@ -14,8 +14,18 @@ public class DarkCarnaxStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -56,7 +66,8 @@ public class DarkCarnaxStory
             SyntheticViscera(1);
             Core.Logger($"Completed Quest: [8872] - \"The Last Stand\"");
         }
-        else Core.Logger($"Already Completed: [8872] - \"The Last Stand\"");
+        else
+            Core.Logger($"Already Completed: [8872] - \"The Last Stand\"");
     }
 
     private Task? carnaxMovementTask;
@@ -76,7 +87,7 @@ public class DarkCarnaxStory
         Bot.Options.AttackWithoutTarget = true;
 
         Bot.Events.RunToArea += DarkCarnaxMove;
-        
+
         // Initialize cancellation token for movement tasks
         carnaxMovementCts = new CancellationTokenSource();
 
@@ -104,7 +115,7 @@ public class DarkCarnaxStory
         Adv.GearStore(true);
 
         Bot.Events.RunToArea -= DarkCarnaxMove;
-        
+
         // Cancel any pending movement tasks and dispose resources
         carnaxMovementCts?.Cancel();
         carnaxMovementCts?.Dispose();
@@ -127,29 +138,37 @@ public class DarkCarnaxStory
         if (carnaxMovementTask is { IsCompleted: false })
             return;
 
-        carnaxMovementTask = Task.Run(async () =>
-        {
-            try
+        carnaxMovementTask = Task.Run(
+            async () =>
             {
-                await Task.Delay(Bot.Random.Next(1000, 1500), carnaxMovementCts?.Token ?? default);
-
-                int y = Bot.Random.Next(380, 475);
-                int x = zoneLower switch
+                try
                 {
-                    "a" => Bot.Random.Next(600, 931),
-                    "b" => Bot.Random.Next(25, 326),
-                    _ => Bot.Random.Next(325, 601)
-                };
+                    await Task.Delay(
+                        Bot.Random.Next(1000, 1500),
+                        carnaxMovementCts?.Token ?? default
+                    );
 
-                Bot.Player.WalkTo(x, y);
+                    int y = Bot.Random.Next(380, 475);
+                    int x = zoneLower switch
+                    {
+                        "a" => Bot.Random.Next(600, 931),
+                        "b" => Bot.Random.Next(25, 326),
+                        _ => Bot.Random.Next(325, 601),
+                    };
 
-                await Task.Delay(Bot.Random.Next(1500, 2500), carnaxMovementCts?.Token ?? default);
-            }
-            catch (OperationCanceledException)
-            {
-                // Expected when cancellation is requested - no action needed
-            }
-        }, carnaxMovementCts?.Token ?? default);
+                    Bot.Player.WalkTo(x, y);
+
+                    await Task.Delay(
+                        Bot.Random.Next(1500, 2500),
+                        carnaxMovementCts?.Token ?? default
+                    );
+                }
+                catch (OperationCanceledException)
+                {
+                    // Expected when cancellation is requested - no action needed
+                }
+            },
+            carnaxMovementCts?.Token ?? default
+        );
     }
-
 }

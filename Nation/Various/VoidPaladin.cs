@@ -20,10 +20,30 @@ public class VoidPaladin
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }    private static CoreNSOD _NSoD;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static CoreNSOD NSoD
+    {
+        get => _NSoD ??= new CoreNSOD();
+        set => _NSoD = value;
+    }
+    private static CoreNSOD _NSoD;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -44,7 +64,6 @@ public class VoidPaladin
         DeeperandDeeperintoDarkness();
         Sacrifice();
         CyberSet();
-
     }
 
     public readonly string[] ADKRewards =
@@ -54,7 +73,7 @@ public class VoidPaladin
         "Void Paladin Katana Cape",
         "Void Paladin Cape",
         "Void Paladin Katana",
-        "Void Paladin Katanas"
+        "Void Paladin Katanas",
     };
 
     public void ADarkTemptation()
@@ -148,7 +167,7 @@ public class VoidPaladin
         "Cyber Void Paladin",
         "Cyber Void Paladin Helm",
         "Cyber Void Cape",
-        "Cyber Void Light of Destiny"
+        "Cyber Void Light of Destiny",
     };
 
     public void CyberSet()
@@ -157,7 +176,16 @@ public class VoidPaladin
             return;
 
         Core.AddDrop(CyberVoidSet);
-        Core.CheckInventory(new[] { "Void Light of Destiny", "Void Paladin", "Void Paladin Helm", "Void Paladin Katana", "Void Paladin Katana Cape" });
+        Core.CheckInventory(
+            new[]
+            {
+                "Void Light of Destiny",
+                "Void Paladin",
+                "Void Paladin Helm",
+                "Void Paladin Katana",
+                "Void Paladin Katana Cape",
+            }
+        );
         Core.EnsureAccept(6625);
         Core.HuntMonster("dreadspace", "Undead Space Warrior", "Powerpack", 5);
         Core.EnsureComplete(6625);

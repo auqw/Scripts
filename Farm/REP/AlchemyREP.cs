@@ -6,9 +6,9 @@ tags: alchemy, rep, reputation, farm
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+using System.Collections.Generic;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
-using System.Collections.Generic;
 
 public class AlchemyREP
 {
@@ -16,7 +16,12 @@ public class AlchemyREP
     public string OptionsStorage = "AlchemyREP";
     public List<IOption> Options = new()
     {
-        new Option<bool>("goldMethod", "use Gold?", "Using gold (cost 7.000.000 without boosts rank 1 to 10)", false),
+        new Option<bool>(
+            "goldMethod",
+            "use Gold?",
+            "Using gold (cost 7.000.000 without boosts rank 1 to 10)",
+            false
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -28,14 +33,22 @@ public class AlchemyREP
     //Rank 1 to 10 => 1.300.000 Gold Server REP Boost + REP Boost + 25% boost (Cape of Awe)  (2KK WITH THE BOT)
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
-
 
         Farm.AlchemyREP(10, Bot.Config!.Get<bool>("goldMethod"));
 

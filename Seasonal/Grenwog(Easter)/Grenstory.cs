@@ -11,7 +11,11 @@ public class Grenstory
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -39,16 +43,28 @@ public class Grenstory
         Story.KillQuest(4927, "grenstory", "Lemurphant");
 
         // Ceremony at Risk (4928)
-        Story.KillQuest(4928, "grenstory", new[] { "Jurassic Orc", "Jurassic Orc", "Jurassic Orc" });
+        Story.KillQuest(
+            4928,
+            "grenstory",
+            new[] { "Jurassic Orc", "Jurassic Orc", "Jurassic Orc" }
+        );
 
         // Bloodtusk Vision Quest (4929)
-        Story.KillQuest(4929, "grenstory", new[] { "Ravine Tigriff", "Chinchilizard", "Rhison", "Lemurphant" });
+        Story.KillQuest(
+            4929,
+            "grenstory",
+            new[] { "Ravine Tigriff", "Chinchilizard", "Rhison", "Lemurphant" }
+        );
 
         // Armed with Spirit (4930)
         Story.KillQuest(4930, "grenstory", new[] { "Lemurphant", "Rhison", "Dinoid" });
 
         // Cheers to You! (4931)
-        Story.KillQuest(4931, "grenstory", new[] { "Rhison", "Imposter Egg", "Chinchilizard", "Chinchilizard" });
+        Story.KillQuest(
+            4931,
+            "grenstory",
+            new[] { "Rhison", "Imposter Egg", "Chinchilizard", "Chinchilizard" }
+        );
 
         // Staff of Heroes (4932)
         Story.KillQuest(4932, "grenstory", "Ravine Tigriff");

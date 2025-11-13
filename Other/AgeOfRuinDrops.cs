@@ -16,7 +16,11 @@ public class AgeOfRuinDrops
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
     private static CoreAOR _AOR;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -33,33 +37,31 @@ public class AgeOfRuinDrops
         AOR.DoAll();
 
         #region Ashray
-        string[] KitefinSharkBait = {
-            "Midnight Eroder Blade"
-        };
+        string[] KitefinSharkBait = { "Midnight Eroder Blade" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(KitefinSharkBait, "ashray", "Enter", "Left");
 
-        string[] SeafoamElemental = {
+        string[] SeafoamElemental =
+        {
             "Crossed Midnight Cutlasses",
             "Dual Nightmare Hunter Pistol",
             "Holstered Midnight Eroder Pistols",
-            "Midnight Back Cutlasses"
+            "Midnight Back Cutlasses",
         };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(SeafoamElemental, "ashray", "r9", "Left");
 
-        string[] StagnantWater = {
-            "Nightmare Hunter Pistol"
-        };
+        string[] StagnantWater = { "Nightmare Hunter Pistol" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(StagnantWater, "ashray", "r7", "Left");
         #endregion
 
         #region Midnight Zone
-        string[] Sparagmos = {
+        string[] Sparagmos =
+        {
             "ERAD Arrows",
             "Princess Brittany Portrait",
             "Royal Dress Display",
@@ -68,16 +70,17 @@ public class AgeOfRuinDrops
             "Sparagmos Wires",
             "Undine Coffee Table",
             "Undine Visitor Badge",
-            "Water Temple Pedestal"
+            "Water Temple Pedestal",
         };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(Sparagmos, "midnightzone", "r9", "Left");
 
-        string[] UndeadPrisoner = {
+        string[] UndeadPrisoner =
+        {
             "Experimentation Chair",
             "Scattered Bones",
-            "Undine Observation Lights"
+            "Undine Observation Lights",
         };
 
         Core.EquipClass(ClassType.Farm);
@@ -85,35 +88,31 @@ public class AgeOfRuinDrops
         #endregion
 
         #region Abyssal Zone
-        string[] BlightedWater = {
+        string[] BlightedWater =
+        {
             "Avatar of Water Mural",
             "Drowning Machine Mural",
-            "Waves of Tumult"
+            "Waves of Tumult",
         };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(BlightedWater, "abyssalzone", "r4", "Left");
 
-        string[] FoamScavenger = {
-            "Ancient Fissure",
-            "Devouring Sea Mural"
-        };
+        string[] FoamScavenger = { "Ancient Fissure", "Devouring Sea Mural" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(FoamScavenger, "abyssalzone", "r7", "Left");
 
-        string[] ShadowViscera = {
-            "Champion Undine Mural",
-            "Colossus Mural"
-        };
+        string[] ShadowViscera = { "Champion Undine Mural", "Colossus Mural" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(ShadowViscera, "abyssalzone", "r5", "Left");
 
-        string[] TheAshray = {
+        string[] TheAshray =
+        {
             "Ascending Kathool Tentacle",
             "Ashray Plaque",
-            "Descending Kathool Tentacle"
+            "Descending Kathool Tentacle",
         };
 
         Core.EquipClass(ClassType.Solo);
@@ -121,56 +120,48 @@ public class AgeOfRuinDrops
         #endregion
 
         #region Trench Observatory
-        string[] LadyNoelle = {
+        string[] LadyNoelle =
+        {
             "Ashray Trench Pedestal",
             "Kathoolian Arms",
             "Kathoolian Pinnacle",
             "Kathoolian Tentacles",
             "Monstrous Fa",
-            "Monstrous Fa Morph"
+            "Monstrous Fa Morph",
         };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(LadyNoelle, "trenchobserve", "r9", "Left");
 
-        string[] NecroAdipocere = {
-            "Brackish Coral"
-        };
+        string[] NecroAdipocere = { "Brackish Coral" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(NecroAdipocere, "trenchobserve", "r8", "Left");
 
-        string[] SeaSpirit = {
-            "Ashray Leyline",
-            "Corruptive Tentacle"
-        };
+        string[] SeaSpirit = { "Ashray Leyline", "Corruptive Tentacle" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(SeaSpirit, "trenchobserve", "r6", "Left");
 
-        string[] SeabaseTurret = {
-            "Portable Sparagmos Table"
-        };
+        string[] SeabaseTurret = { "Portable Sparagmos Table" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(SeabaseTurret, "trenchobserve", "r4", "Left");
 
-        string[] VeneratedWraith = {
-            "Broken Undine Window",
-            "Colossal Ocean View"
-        };
+        string[] VeneratedWraith = { "Broken Undine Window", "Colossal Ocean View" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(VeneratedWraith, "trenchobserve", "r2", "Left");
         #endregion
 
         #region Sea Voice
-        string[] VoiceintheSea = {
+        string[] VoiceintheSea =
+        {
             "Calamity Atlanticus Trident",
             "Glaucus Companion",
             "Glaucus Hair",
             "Glaucus Locks",
-            "Glaucus Mystic"
+            "Glaucus Mystic",
         };
 
         Core.EquipClass(ClassType.Solo);

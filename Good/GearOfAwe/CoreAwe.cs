@@ -12,9 +12,17 @@ public class CoreAwe
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -22,7 +30,14 @@ public class CoreAwe
         Core.RunCore();
     }
 
-    public void GetAweRelic(string Item, int LegendQuest, int FragmentAmount, int ShardAmount, string Map, string Monster)
+    public void GetAweRelic(
+        string Item,
+        int LegendQuest,
+        int FragmentAmount,
+        int ShardAmount,
+        string Map,
+        string Monster
+    )
     {
         string relicName = $"{Item} Relic";
         if (Core.CheckInventory(relicName))
@@ -41,7 +56,12 @@ public class CoreAwe
             Farm.BladeofAweREP(10, false);
             Farm.Experience(55);
 
-            Core.BuyItem("museum", 1130, Core.IsMember ? 29402 : 29404, shopItemID: Core.IsMember ? 18580 : 18579);
+            Core.BuyItem(
+                "museum",
+                1130,
+                Core.IsMember ? 29402 : 29404,
+                shopItemID: Core.IsMember ? 18580 : 18579
+            );
             questID = Core.IsMember ? LegendQuest : LegendQuest + 2;
         }
 
@@ -53,7 +73,15 @@ public class CoreAwe
         {
             Core.EnsureAccept(questID);
             if (Map.ToLower() == "doomvault" || Map.ToLower() == "doomvaultb")
-                Core.KillMonster(Map, Map.ToLower().EndsWith('b') ? "r26" : "r5", "Left", Monster, $"{Item} Shard", ShardAmount, false);
+                Core.KillMonster(
+                    Map,
+                    Map.ToLower().EndsWith('b') ? "r26" : "r5",
+                    "Left",
+                    Monster,
+                    $"{Item} Shard",
+                    ShardAmount,
+                    false
+                );
             else
                 Core.HuntMonster(Map, Monster, $"{Item} Shard", ShardAmount, false);
             Core.EnsureComplete(questID);

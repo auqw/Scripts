@@ -37,13 +37,28 @@ public class LeonineRegalia
         {
             if (Core.CheckInventory(Reward.Name, toInv: false))
                 Core.Logger($"{Reward.Name} obtained.");
-            else Core.FarmingLogger(Reward.Name, 1);
+            else
+                Core.FarmingLogger(Reward.Name, 1);
 
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name))
             {
                 Core.EnsureAccept(9196);
-                Core.HuntMonster("onslaughttower", "Golden Caster", "Burning Star Shard", 25, false, false);
-                Core.HuntMonster("onslaughttower", "Maximillian Lionfang", "Regal Star Shard", 1, false, false);
+                Core.HuntMonster(
+                    "onslaughttower",
+                    "Golden Caster",
+                    "Burning Star Shard",
+                    25,
+                    false,
+                    false
+                );
+                Core.HuntMonster(
+                    "onslaughttower",
+                    "Maximillian Lionfang",
+                    "Regal Star Shard",
+                    1,
+                    false,
+                    false
+                );
                 Core.EnsureComplete(9196, Reward.ID);
                 Core.ToBank(Reward.ID);
             }

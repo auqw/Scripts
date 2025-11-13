@@ -11,7 +11,12 @@ public class BlazeBeard
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -25,7 +30,6 @@ public class BlazeBeard
 
     // string[] RequiredItems = { "Pirate Booty I", "Pirate Booty II", "Pirate Booty III", "Pirate Booty IV", "Pirate Booty V", "Pirate Booty VI", "Pirate Booty VII", "Pirate Booty VIII", "Pirate Booty IX", "Pirate Booty X", "Pirate Booty XI", "Pirate Booty XII", "Pirate Booty XIII", "Pirate Booty XIV", "Pirate Booty XV" };
 
-
     public void TokenQuests()
     {
         if (Core.CheckInventory("Pirate Booty XV") || !Core.isSeasonalMapActive("BlazeBeard"))
@@ -33,7 +37,24 @@ public class BlazeBeard
 
         Story.PreLoad(this);
 
-        Story.LegacyQuestManager(QuestLogic, 4513, 4514, 4515, 4516, 4517, 4518, 4519, 4520, 4521, 4522, 4523, 4524, 4525, 4526, 4527);
+        Story.LegacyQuestManager(
+            QuestLogic,
+            4513,
+            4514,
+            4515,
+            4516,
+            4517,
+            4518,
+            4519,
+            4520,
+            4521,
+            4522,
+            4523,
+            4524,
+            4525,
+            4526,
+            4527
+        );
 
         void QuestLogic()
         {

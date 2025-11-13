@@ -13,11 +13,33 @@ public class CitadelRuins
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
-    public string[] rewards = { "Purified Claymore of Destiny", "Good Iron Wing 1", "Spinal Tap of Retribution", "Purified Claw of Nulgath", "Mage's Gratitude" };
+    public string[] rewards =
+    {
+        "Purified Claymore of Destiny",
+        "Good Iron Wing 1",
+        "Spinal Tap of Retribution",
+        "Purified Claw of Nulgath",
+        "Mage's Gratitude",
+    };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -38,10 +60,8 @@ public class CitadelRuins
         CasparillasQuests();
     }
 
-
     public void CasparillasQuests()
     {
-
         if (Core.isCompletedBefore(6682))
             return;
 
@@ -92,7 +112,6 @@ public class CitadelRuins
         // Staying Humble
         Core.AddDrop("Elite Void Sword Pet");
         Story.KillQuest(6682, "underlair", "ArchFiend DragonLord");
-
     }
 
     public void CutieMakaisQuest()
@@ -144,12 +163,11 @@ public class CitadelRuins
         // Kill Sparkletooth
         Story.KillQuest(4323, "pinewoodpink", "Sparkletooth");
 
-        // The Citadorable Plot   
+        // The Citadorable Plot
         Story.MapItemQuest(4324, "Citadel", 3472);
 
-        // Fuzzy Run Minigame        
+        // Fuzzy Run Minigame
         Story.KillQuest(4325, "pinewoodpink", "Pink Grizzly");
-
     }
 
     public void MurrysQuests()
@@ -173,7 +191,6 @@ public class CitadelRuins
             Core.HuntMonster("Citadel", "Grand Inquisitor", "Ring of Evil Intent");
             Core.EnsureComplete(182);
         }
-
     }
 
     public void PolishsQuestsTercessuinotlim()
@@ -183,7 +200,13 @@ public class CitadelRuins
 
         Story.PreLoad(this);
 
-        Core.AddDrop("Unidentified 9", "Unidentified 28", "Dark Crystal Shard", "Claw of Nulgath", "Relic of Chaos");
+        Core.AddDrop(
+            "Unidentified 9",
+            "Unidentified 28",
+            "Dark Crystal Shard",
+            "Claw of Nulgath",
+            "Relic of Chaos"
+        );
 
         // "Tercessuinotlim"
 

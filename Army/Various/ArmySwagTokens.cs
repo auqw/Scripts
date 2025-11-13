@@ -15,19 +15,36 @@ public class ArmySwagTokens
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
-
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
+    private static CoreArmyLite _sArmy;
 
     public string OptionsStorage = "ArmyTokens";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option <bool> ("MemOrNonMem", "use Member Method?", "True if member, false if not", false),
+        new Option<bool>(
+            "MemOrNonMem",
+            "use Member Method?",
+            "True if member, false if not",
+            false
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -40,7 +57,15 @@ private static CoreArmyLite _sArmy;
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
-        Core.BankingBlackList.AddRange(new[] { "Super-Fan Swag Token D", "Super-Fan Swag Token C", "Super-Fan Swag Token B", "Super-Fan Swag Token A" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Super-Fan Swag Token D",
+                "Super-Fan Swag Token C",
+                "Super-Fan Swag Token B",
+                "Super-Fan Swag Token A",
+            }
+        );
         Setup();
 
         Core.SetOptions(false);
@@ -51,12 +76,24 @@ private static CoreArmyLite _sArmy;
         if (Core.CheckInventory("Super-Fan Swag Token A", quant))
             return;
 
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
-        Core.AddDrop("Super-Fan Swag Token A", "Super-Fan Swag Token B", "Super-Fan Swag Token C", "Super-Fan Swag Token D");
+        Core.AddDrop(
+            "Super-Fan Swag Token A",
+            "Super-Fan Swag Token B",
+            "Super-Fan Swag Token C",
+            "Super-Fan Swag Token D"
+        );
         Core.FarmingLogger($"Super-Fan Swag Token A", quant);
         Core.EquipClass(ClassType.Farm);
-        Core.RegisterQuests(Bot.Config!.Get<bool>("MemOrNonMem") ? new[] { 1310, 1312, 1313, 1314 } : new[] { 1304, 1307 });
+        Core.RegisterQuests(
+            Bot.Config!.Get<bool>("MemOrNonMem")
+                ? new[] { 1310, 1312, 1313, 1314 }
+                : new[] { 1304, 1307 }
+        );
         while (!Bot.ShouldExit && !Core.CheckInventory("Super-Fan Swag Token A", quant))
         {
             int dQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token D");
@@ -67,9 +104,19 @@ private static CoreArmyLite _sArmy;
             while (!Bot.ShouldExit && !Core.CheckInventory("Super-Fan Swag Token C", 500))
             {
                 // Army.RunGeneratedAggroMon(map, monNames, questIDs, classtype, drops);
-                Army.AggroMonStart(Bot.Config.Get<bool>("MemOrNonMem") ? "collectorlab" : "terrarium");
-                Army.DivideOnCells(Bot.Config.Get<bool>("MemOrNonMem") ? new[] { "r3", "Enter", "r2" } : new[] { "r3", "Enter" });
-                Army.AggroMonIDs(Bot.Config.Get<bool>("MemOrNonMem") ? new[] { 710, 711, 712, 713 } : new[] { 701, 703 });
+                Army.AggroMonStart(
+                    Bot.Config.Get<bool>("MemOrNonMem") ? "collectorlab" : "terrarium"
+                );
+                Army.DivideOnCells(
+                    Bot.Config.Get<bool>("MemOrNonMem")
+                        ? new[] { "r3", "Enter", "r2" }
+                        : new[] { "r3", "Enter" }
+                );
+                Army.AggroMonIDs(
+                    Bot.Config.Get<bool>("MemOrNonMem")
+                        ? new[] { 710, 711, 712, 713 }
+                        : new[] { 701, 703 }
+                );
 
                 while (!Bot.ShouldExit && !Core.CheckInventory("Super-Fan Swag Token C", 500))
                     Bot.Combat.Attack("*");
@@ -77,7 +124,10 @@ private static CoreArmyLite _sArmy;
                 Core.JumpWait();
             }
 
-            bool ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
+            bool ShopCheck = ShopCheck =
+                Bot.Map.Name == "collection"
+                && Bot.Shops.IsLoaded
+                && Bot.Shops.Name == "Super Fan Token Shop";
 
             while (!Bot.ShouldExit && !ShopCheck)
             {
@@ -97,20 +147,31 @@ private static CoreArmyLite _sArmy;
                     Core.Sleep(1000);
                     if (Bot.Shops.ID == 325 || retry == 20)
                         break;
-                    else retry++;
+                    else
+                        retry++;
                 }
                 retry = 0;
 
-
-                ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
+                ShopCheck = ShopCheck =
+                    Bot.Map.Name == "collection"
+                    && Bot.Shops.IsLoaded
+                    && Bot.Shops.Name == "Super Fan Token Shop";
                 if (ShopCheck)
                     break;
             }
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
 
             Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-            if (ShopCheck && dQuantity / 10 > 1 && cQuantity < 500 && dQuantity / 10 + cQuantity < 500)
+            ShopCheck = ShopCheck =
+                Bot.Map.Name == "collection"
+                && Bot.Shops.IsLoaded
+                && Bot.Shops.Name == "Super Fan Token Shop";
+            if (
+                ShopCheck
+                && dQuantity / 10 > 1
+                && cQuantity < 500
+                && dQuantity / 10 + cQuantity < 500
+            )
             {
                 int buyC = dQuantity / 10;
                 Core.Logger($"Buying {buyC} Super-Fan Swag Token C.");
@@ -119,8 +180,16 @@ private static CoreArmyLite _sArmy;
                 Bot.Wait.ForItemBuy();
             }
             Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-            if (ShopCheck && cQuantity / 10 > 1 && bQuantity < 200 && cQuantity / 10 + bQuantity < 200)
+            ShopCheck = ShopCheck =
+                Bot.Map.Name == "collection"
+                && Bot.Shops.IsLoaded
+                && Bot.Shops.Name == "Super Fan Token Shop";
+            if (
+                ShopCheck
+                && cQuantity / 10 > 1
+                && bQuantity < 200
+                && cQuantity / 10 + bQuantity < 200
+            )
             {
                 int buyB = cQuantity / 10;
                 Core.Logger($"Buying {buyB} Super-Fan Swag Token B.");
@@ -129,8 +198,16 @@ private static CoreArmyLite _sArmy;
                 Bot.Wait.ForItemBuy();
             }
             Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-            if (ShopCheck && bQuantity / 20 > 1 && aQuantity < 100 && bQuantity / 20 + aQuantity < 100)
+            ShopCheck = ShopCheck =
+                Bot.Map.Name == "collection"
+                && Bot.Shops.IsLoaded
+                && Bot.Shops.Name == "Super Fan Token Shop";
+            if (
+                ShopCheck
+                && bQuantity / 20 > 1
+                && aQuantity < 100
+                && bQuantity / 20 + aQuantity < 100
+            )
             {
                 int buyA = bQuantity / 20;
                 Core.Logger($"Buying {buyA} Super-Fan Swag Token A.");
@@ -139,8 +216,10 @@ private static CoreArmyLite _sArmy;
                 Bot.Wait.ForItemBuy();
             }
             Core.Sleep();
-            ShopCheck = ShopCheck = Bot.Map.Name == "collection" && Bot.Shops.IsLoaded && Bot.Shops.Name == "Super Fan Token Shop";
-
+            ShopCheck = ShopCheck =
+                Bot.Map.Name == "collection"
+                && Bot.Shops.IsLoaded
+                && Bot.Shops.Name == "Super Fan Token Shop";
         }
         Core.CancelRegisteredQuests();
     }

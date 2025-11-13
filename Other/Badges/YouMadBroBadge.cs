@@ -13,16 +13,26 @@ public class YouMadBroBadge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public string OptionsStorage = "YouMadBro";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
-{
-    new Option<bool>("Use Gold", "Use Gold?", "Buy farming mats?", false),
-    CoreBots.Instance.SkipOptions,
-};
+    {
+        new Option<bool>("Use Gold", "Use Gold?", "Buy farming mats?", false),
+        CoreBots.Instance.SkipOptions,
+    };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -67,7 +77,12 @@ public class YouMadBroBadge
             }
 
             //to make sure it always has 1 DRS
-            Farm.AlchemyPacket("Dragon Scale", "Ice Vapor", trait: CoreFarms.AlchemyTraits.hOu, YMB: true);
+            Farm.AlchemyPacket(
+                "Dragon Scale",
+                "Ice Vapor",
+                trait: CoreFarms.AlchemyTraits.hOu,
+                YMB: true
+            );
         }
         Core.TrashCan("Dragon Scale", "Ice Vapor");
         Core.ToBank("Dragon Runestone", "Gold Voucher 100k");

@@ -4,17 +4,17 @@ description: This bot will check all bots so that you may add the missing Name, 
 tags: tags, description, name, developer, data
 */
 //cs_include Scripts/CoreBots.cs
-using System.Dynamic;
-using System.Net.NetworkInformation;
-using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
-using System;
-using Skua.Core.Interfaces;
-using Skua.Core.ViewModels;
-using Skua.Core.Models;
+using System.Net.NetworkInformation;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Newtonsoft.Json;
+using Skua.Core.Interfaces;
+using Skua.Core.Models;
+using Skua.Core.ViewModels;
 
 public class UpdateTags
 {
@@ -33,19 +33,27 @@ public class UpdateTags
         bool userExit = false;
 
         // Allowing the user to select a folder they wish to focus on
-        switch (Bot.ShowMessageBox(
-            "Do you wish to select a folder to work in, or just start adding Tags and Descriptions where needed? (Auto Mode)",
-            "Select mode",
-             "Auto Mode", "Select Folder", "Cancel"
-            ).Text)
+        switch (
+            Bot.ShowMessageBox(
+                "Do you wish to select a folder to work in, or just start adding Tags and Descriptions where needed? (Auto Mode)",
+                "Select mode",
+                "Auto Mode",
+                "Select Folder",
+                "Cancel"
+            ).Text
+        )
         {
             case "Select Folder":
                 // Folder selecting
-                string? customFolder = Ioc.Default.GetRequiredService<IFileDialogService>().OpenFolder(ClientFileSources.SkuaScriptsDIR);
+                string? customFolder = Ioc
+                    .Default.GetRequiredService<IFileDialogService>()
+                    .OpenFolder(ClientFileSources.SkuaScriptsDIR);
 
                 if (customFolder == null)
                 {
-                    Bot.Log($"[{DateTime.Now:HH:mm:ss}] (UpdateTags)  No folder was selected, stopping the script.");
+                    Bot.Log(
+                        $"[{DateTime.Now:HH:mm:ss}] (UpdateTags)  No folder was selected, stopping the script."
+                    );
                     return;
                 }
 
@@ -59,7 +67,9 @@ public class UpdateTags
                 break;
 
             default:
-                Bot.Log($"[{DateTime.Now:HH:mm:ss}] (UpdateTags)  No mode was selected, stopping the script.");
+                Bot.Log(
+                    $"[{DateTime.Now:HH:mm:ss}] (UpdateTags)  No mode was selected, stopping the script."
+                );
                 return;
         }
 
@@ -70,13 +80,18 @@ public class UpdateTags
             string[] dirs = Directory.GetDirectories(path);
             string _path = removeDir(path) ?? "Scripts";
 
-            Bot.Log($"[{DateTime.Now:HH:mm:ss}] ({_path})  {(dirs.Length > 0 ? $"{dirs.Length} Director{(dirs.Length == 1 ? "y" : "ies")} & " : "")}{files.Length} File{(files.Length == 1 ? "" : "s")}");
+            Bot.Log(
+                $"[{DateTime.Now:HH:mm:ss}] ({_path})  {(dirs.Length > 0 ? $"{dirs.Length} Director{(dirs.Length == 1 ? "y" : "ies")} & " : "")}{files.Length} File{(files.Length == 1 ? "" : "s")}"
+            );
 
             // Go over every file in the directory
             foreach (var file in files)
             {
                 // Skip blacklisted file-extensions and core-files
-                if (Extensions.Any(e => file.EndsWith(e)) || file.Replace('\\', '/').Split('/').Last().StartsWith("Core"))
+                if (
+                    Extensions.Any(e => file.EndsWith(e))
+                    || file.Replace('\\', '/').Split('/').Last().StartsWith("Core")
+                )
                     continue;
 
                 string _file = removeDir(file)!.Replace('\\', '/');
@@ -100,7 +115,9 @@ public class UpdateTags
                 // Adding the comment closing tag
                 newData.Add("*/");
                 // Making the dataset that is to be writen
-                List<string> toWrite = fileData.SkipWhile(l => !l.StartsWith("//cs_include") && !l.StartsWith("using")).ToList();
+                List<string> toWrite = fileData
+                    .SkipWhile(l => !l.StartsWith("//cs_include") && !l.StartsWith("using"))
+                    .ToList();
                 toWrite.InsertRange(0, newData);
                 // Overwriting the new file
                 Core.WriteFile(file, toWrite);
@@ -113,21 +130,17 @@ public class UpdateTags
                     Bot.Log($"[{DateTime.Now:HH:mm:ss}] ({_path})  {_file.Split('/').Last()}");
                     hasLogged = true;
 
-                    fileData.Where(l =>
-                        (l.Trim().StartsWith("public") ||
-                         l.Trim().StartsWith("private")) &&
-                        (l.Trim().EndsWith(")") ||
-                         l.Contains("class")) &&
-                        !l.Contains("ScriptMain") &&
-                        !l.Contains("new"))
+                    fileData
+                        .Where(l =>
+                            (l.Trim().StartsWith("public") || l.Trim().StartsWith("private"))
+                            && (l.Trim().EndsWith(")") || l.Contains("class"))
+                            && !l.Contains("ScriptMain")
+                            && !l.Contains("new")
+                        )
                         .ToList()
                         .ForEach(l =>
-                            scriptData.Add(
-                                new string(
-                                    l.Trim()
-                                    .TakeWhile(c => c != '(')
-                                    .ToArray()
-                    )));
+                            scriptData.Add(new string(l.Trim().TakeWhile(c => c != '(').ToArray()))
+                        );
                 }
                 void handleProp(string prop)
                 {
@@ -138,15 +151,19 @@ public class UpdateTags
                         {
                             string[] _tags = _prop.Split(',', StringSplitOptions.TrimEntries);
                             for (int i = 0; i < _tags.Length; i++)
-                                _tags[i] = _tags[i] == _tags[i].ToUpper() ? _tags[i] : _tags[i].ToLower();
+                                _tags[i] =
+                                    _tags[i] == _tags[i].ToUpper() ? _tags[i] : _tags[i].ToLower();
                             newData.Add("tags: " + string.Join(", ", _tags));
                         }
-                        else newData.Add($"{prop}: {_prop.Replace("  ", " ").Trim()}");
+                        else
+                            newData.Add($"{prop}: {_prop.Replace("  ", " ").Trim()}");
                     }
                     // If the user has exited, write null
                     else if (userExit || isCore)
                     {
-                        newData.Add($"{prop}: {(prop == "name" ? file.Replace('\\', '/').Split('/').Last().Replace(".cs", "") : "null")}");
+                        newData.Add(
+                            $"{prop}: {(prop == "name" ? file.Replace('\\', '/').Split('/').Last().Replace(".cs", "") : "null")}"
+                        );
                     }
                     // Otherwise, ask for the prop
                     else
@@ -161,7 +178,12 @@ public class UpdateTags
             foreach (var dir in dirs)
             {
                 // Skip blacklisted directories
-                if (Directories.Any(d => Path.Combine(ClientFileSources.SkuaScriptsDIR, d).Replace('\\', '/') == dir.Replace('\\', '/')))
+                if (
+                    Directories.Any(d =>
+                        Path.Combine(ClientFileSources.SkuaScriptsDIR, d).Replace('\\', '/')
+                        == dir.Replace('\\', '/')
+                    )
+                )
                     continue;
 
                 // Incurisve file check
@@ -173,16 +195,21 @@ public class UpdateTags
                 bool tags = prop == "tags";
                 InputDialogViewModel diag = new(
                     "Script " + char.ToUpper(prop[0]) + prop.Substring(1),
-                    $"[ {file} ]\n" +
-                    $"Please provide an acurate {prop} of this script\n\n" +
-                    "Methods and Classes inside file:\n·  " + string.Join("\n·  ", data),
-                    tags ? "Don't forget to use , [comma] as a divider when adding multiple tags." : string.Empty,
+                    $"[ {file} ]\n"
+                        + $"Please provide an acurate {prop} of this script\n\n"
+                        + "Methods and Classes inside file:\n·  "
+                        + string.Join("\n·  ", data),
+                    tags
+                        ? "Don't forget to use , [comma] as a divider when adding multiple tags."
+                        : string.Empty,
                     false
                 );
                 if (Ioc.Default.GetRequiredService<IDialogService>().ShowDialog(diag) != true)
                 {
                     userExit = true;
-                    Bot.Log($"[{DateTime.Now:HH:mm:ss}] (UpdateTags)  You have exited the tool, please wait a moment whilst it wraps things up.");
+                    Bot.Log(
+                        $"[{DateTime.Now:HH:mm:ss}] (UpdateTags)  You have exited the tool, please wait a moment whilst it wraps things up."
+                    );
                     list.Add(prop + ": null");
                     return false;
                 }
@@ -207,15 +234,21 @@ public class UpdateTags
         bool hasProperty(string file, List<string> fileData, string prop, out string propData)
         {
             var _fileData = fileData.TakeWhile(l => l != "*/");
-            if (_fileData.Any(l => l.StartsWith(prop.ToLower()) &&
-                l.Contains(':') &&
-                !l.TrimEnd().EndsWith("null") &&
-                l != "name: " + file.Replace('\\', '/').Split('/').Last().Replace(".cs", "") &&
-                !string.IsNullOrWhiteSpace(l.Split(':').Last()) &&
-                !string.IsNullOrEmpty(l.Split(':').Last())
-                ))
+            if (
+                _fileData.Any(l =>
+                    l.StartsWith(prop.ToLower())
+                    && l.Contains(':')
+                    && !l.TrimEnd().EndsWith("null")
+                    && l != "name: " + file.Replace('\\', '/').Split('/').Last().Replace(".cs", "")
+                    && !string.IsNullOrWhiteSpace(l.Split(':').Last())
+                    && !string.IsNullOrEmpty(l.Split(':').Last())
+                )
+            )
             {
-                propData = _fileData.First(l => l.StartsWith(prop.ToLower()) && l.Contains(':')).Split(prop.ToLower() + ':').Last();
+                propData = _fileData
+                    .First(l => l.StartsWith(prop.ToLower()) && l.Contains(':'))
+                    .Split(prop.ToLower() + ':')
+                    .Last();
                 return true;
             }
             propData = string.Empty;
@@ -234,14 +267,9 @@ public class UpdateTags
         ".json",
         ".sln",
         ".gitignore",
-        "gitattributes"
+        "gitattributes",
     };
-    private string[] Files =
-    {
-        "Class1.cs",
-        "z_CompiledScript.cs",
-        "Army/CoreArmy.cs"
-    };
+    private string[] Files = { "Class1.cs", "z_CompiledScript.cs", "Army/CoreArmy.cs" };
     private string[] Directories =
     {
         ".git",
@@ -264,9 +292,8 @@ public class UpdateTags
         "Plugins",
         "WIP",
         "Tools/ForDevelopers",
-        "Tools/NooneAskeforThese"
+        "Tools/NooneAskeforThese",
     };
-
 
     #endregion
 }

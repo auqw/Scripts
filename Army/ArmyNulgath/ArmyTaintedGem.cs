@@ -15,11 +15,18 @@ public class ArmyTaintedGem
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "ArmyTaintedGem";
     public int q = 0;
@@ -36,12 +43,7 @@ public class ArmyTaintedGem
         CoreBots.Instance.SkipOptions,
     };
 
-    public string[] Loot =
-    {
-        "Cubes",
-        "Tainted Gem",
-        "Receipt of Swindle"
-    };
+    public string[] Loot = { "Cubes", "Tainted Gem", "Receipt of Swindle" };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -49,7 +51,11 @@ public class ArmyTaintedGem
 
         Core.SetOptions();
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // TaintedGem();
 
         Core.SetOptions(false);
@@ -76,7 +82,6 @@ public class ArmyTaintedGem
         }
         Core.CancelRegisteredQuests();
         //Army.WaitForParty("whitemap", "Tainted Gem");
-
     }
 
     public void Cubes()
@@ -85,8 +90,6 @@ public class ArmyTaintedGem
         Army.AggroMonCells("Fort2", "Closet", "Fort1", "Boss");
         Army.AggroMonStart("boxes");
         Army.DivideOnCells("Fort2", "Closet", "Fort1", "Boss", "Boss", "Boss");
-
-
 
         while (!Bot.ShouldExit && (!Core.CheckInventory("Cubes", 500)))
             Bot.Combat.Attack("*");
@@ -103,8 +106,6 @@ public class ArmyTaintedGem
         Army.AggroMonCells("War");
         Army.AggroMonStart("mountfrost");
         Core.Jump("War", "Left");
-
-
 
         while (!Bot.ShouldExit && (!Core.CheckInventory("Ice Cubes", 6)))
             Bot.Combat.Attack("*");

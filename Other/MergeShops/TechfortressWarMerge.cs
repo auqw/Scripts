@@ -20,11 +20,23 @@ public class TechfortressWarMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
     public static CoreAdvanced sAdv
     {
@@ -33,18 +45,30 @@ public class TechfortressWarMerge
     }
     public static CoreAdvanced _sAdv;
 
-
-    private static PinkBladeOfDestruciton PBOD { get => _PBOD ??= new PinkBladeOfDestruciton(); set => _PBOD = value; }
+    private static PinkBladeOfDestruciton PBOD
+    {
+        get => _PBOD ??= new PinkBladeOfDestruciton();
+        set => _PBOD = value;
+    }
     private static PinkBladeOfDestruciton _PBOD;
-    private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }
+    private static CoreDailies Dailies
+    {
+        get => _Dailies ??= new CoreDailies();
+        set => _Dailies = value;
+    }
     private static CoreDailies _Dailies;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
     private static CoreBLOD _BLOD;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -68,7 +92,9 @@ public class TechfortressWarMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -79,9 +105,14 @@ public class TechfortressWarMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Deadtech War Medal":
                     Core.FarmingLogger(req.Name, quant);
@@ -100,7 +131,13 @@ public class TechfortressWarMerge
 
                 case "Unicorn Essence":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("undergroundlabb", "Ultra Brutalcorn", "Unicorn Essence", quant, false);
+                    Core.HuntMonster(
+                        "undergroundlabb",
+                        "Ultra Brutalcorn",
+                        "Unicorn Essence",
+                        quant,
+                        false
+                    );
                     break;
 
                 case "Silver":
@@ -134,9 +171,33 @@ public class TechfortressWarMerge
                     Core.RegisterQuests(7654);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("dflesson", "r12", "Right", 29, 33257, isTemp: true, publicRoom: true);
-                        Core.KillMonster("dflesson", "r3", "Right", "Fire Elemental", "Fire Elemental's Bracer", 5, isTemp: false);
-                        Core.KillMonster("dflesson", "r6", "Right", "Tog", "Tog Claw", 5, isTemp: false);
+                        Core.KillMonster(
+                            "dflesson",
+                            "r12",
+                            "Right",
+                            29,
+                            33257,
+                            isTemp: true,
+                            publicRoom: true
+                        );
+                        Core.KillMonster(
+                            "dflesson",
+                            "r3",
+                            "Right",
+                            "Fire Elemental",
+                            "Fire Elemental's Bracer",
+                            5,
+                            isTemp: false
+                        );
+                        Core.KillMonster(
+                            "dflesson",
+                            "r6",
+                            "Right",
+                            "Tog",
+                            "Tog Claw",
+                            5,
+                            isTemp: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -156,14 +217,34 @@ public class TechfortressWarMerge
                                 Core.HuntMonster("earthstorm", "Diamond Golem", "Chip of Diamond");
                                 Core.HuntMonster("earthstorm", "Emerald Golem", "Chip of Emerald");
                                 Core.HuntMonster("earthstorm", "Ruby Golem", "Chip of Ruby");
-                                Core.HuntMonster("earthstorm", "Sapphire Golem", "Chip of Sapphire");
+                                Core.HuntMonster(
+                                    "earthstorm",
+                                    "Sapphire Golem",
+                                    "Chip of Sapphire"
+                                );
 
                                 Bot.Wait.ForPickup("Rainbow Moonstone");
                             }
                         }
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster("doomwood", "r10", "Right", "Undead Paladin", "Purification Orb", 10, isTemp: false);
-                        Core.KillMonster("desolich", "r3", "Left", "Desolich", "Desolich's Dark Horn", 3, isTemp: false);
+                        Core.KillMonster(
+                            "doomwood",
+                            "r10",
+                            "Right",
+                            "Undead Paladin",
+                            "Purification Orb",
+                            10,
+                            isTemp: false
+                        );
+                        Core.KillMonster(
+                            "desolich",
+                            "r3",
+                            "Left",
+                            "Desolich",
+                            "Desolich's Dark Horn",
+                            3,
+                            isTemp: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -174,26 +255,131 @@ public class TechfortressWarMerge
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("55484", "Deadtech Necromancer", "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer\" ?", false),
-        new Option<bool>("55485", "Deadtech Necromancer Hood", "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Hood\" ?", false),
-        new Option<bool>("55486", "Deadtech Necromancer Masked Hood", "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Masked Hood\" ?", false),
-        new Option<bool>("55487", "Deadtech Necromancer Skull Hood", "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Skull Hood\" ?", false),
-        new Option<bool>("55488", "Deadtech Necromancer Tech Hood", "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Tech Hood\" ?", false),
-        new Option<bool>("55490", "Deadtech Necromancer Skeleton Arms", "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Skeleton Arms\" ?", false),
-        new Option<bool>("55491", "Deadtech Necromancer Hatchet", "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Hatchet\" ?", false),
-        new Option<bool>("55492", "Deadtech Necromancer Staff", "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Staff\" ?", false),
-        new Option<bool>("55493", "Deadtech Lich", "Mode: [select] only\nShould the bot buy \"Deadtech Lich\" ?", false),
-        new Option<bool>("55494", "Deadtech Lich Hood", "Mode: [select] only\nShould the bot buy \"Deadtech Lich Hood\" ?", false),
-        new Option<bool>("55495", "Deadtech Lich Masked Hood", "Mode: [select] only\nShould the bot buy \"Deadtech Lich Masked Hood\" ?", false),
-        new Option<bool>("55496", "Deadtech Lich Skull Hood", "Mode: [select] only\nShould the bot buy \"Deadtech Lich Skull Hood\" ?", false),
-        new Option<bool>("55497", "Deadtech Lich Borg Hood", "Mode: [select] only\nShould the bot buy \"Deadtech Lich Borg Hood\" ?", false),
-        new Option<bool>("55498", "Deadtech Lich Hatchet", "Mode: [select] only\nShould the bot buy \"Deadtech Lich Hatchet\" ?", false),
-        new Option<bool>("55499", "Deadtech Lich Staff", "Mode: [select] only\nShould the bot buy \"Deadtech Lich Staff\" ?", false),
-        new Option<bool>("55897", "Mechanized Armblades", "Mode: [select] only\nShould the bot buy \"Mechanized Armblades\" ?", false),
-        new Option<bool>("55885", "Uni-Blade of Destruction", "Mode: [select] only\nShould the bot buy \"Uni-Blade of Destruction\" ?", false),
-        new Option<bool>("55886", "Rainbow Uni-Blade of Destruction", "Mode: [select] only\nShould the bot buy \"Rainbow Uni-Blade of Destruction\" ?", false),
-        new Option<bool>("55889", "Ultimate Blinding Light of Destiny", "Mode: [select] only\nShould the bot buy \"Ultimate Blinding Light of Destiny\" ?", false),
-        new Option<bool>("55893", "Ultimate Twin Blades of Destiny", "Mode: [select] only\nShould the bot buy \"Ultimate Twin Blades of Destiny\" ?", false),
-        new Option<bool>("55892", "Ultimate DragonStaff of Destiny", "Mode: [select] only\nShould the bot buy \"Ultimate DragonStaff of Destiny\" ?", false),
+        new Option<bool>(
+            "55484",
+            "Deadtech Necromancer",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55485",
+            "Deadtech Necromancer Hood",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55486",
+            "Deadtech Necromancer Masked Hood",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Masked Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55487",
+            "Deadtech Necromancer Skull Hood",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Skull Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55488",
+            "Deadtech Necromancer Tech Hood",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Tech Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55490",
+            "Deadtech Necromancer Skeleton Arms",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Skeleton Arms\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55491",
+            "Deadtech Necromancer Hatchet",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Hatchet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55492",
+            "Deadtech Necromancer Staff",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Necromancer Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55493",
+            "Deadtech Lich",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Lich\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55494",
+            "Deadtech Lich Hood",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Lich Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55495",
+            "Deadtech Lich Masked Hood",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Lich Masked Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55496",
+            "Deadtech Lich Skull Hood",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Lich Skull Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55497",
+            "Deadtech Lich Borg Hood",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Lich Borg Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55498",
+            "Deadtech Lich Hatchet",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Lich Hatchet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55499",
+            "Deadtech Lich Staff",
+            "Mode: [select] only\nShould the bot buy \"Deadtech Lich Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55897",
+            "Mechanized Armblades",
+            "Mode: [select] only\nShould the bot buy \"Mechanized Armblades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55885",
+            "Uni-Blade of Destruction",
+            "Mode: [select] only\nShould the bot buy \"Uni-Blade of Destruction\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55886",
+            "Rainbow Uni-Blade of Destruction",
+            "Mode: [select] only\nShould the bot buy \"Rainbow Uni-Blade of Destruction\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55889",
+            "Ultimate Blinding Light of Destiny",
+            "Mode: [select] only\nShould the bot buy \"Ultimate Blinding Light of Destiny\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55893",
+            "Ultimate Twin Blades of Destiny",
+            "Mode: [select] only\nShould the bot buy \"Ultimate Twin Blades of Destiny\" ?",
+            false
+        ),
+        new Option<bool>(
+            "55892",
+            "Ultimate DragonStaff of Destiny",
+            "Mode: [select] only\nShould the bot buy \"Ultimate DragonStaff of Destiny\" ?",
+            false
+        ),
     };
 }

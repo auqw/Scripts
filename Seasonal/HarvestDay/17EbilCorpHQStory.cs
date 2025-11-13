@@ -12,8 +12,18 @@ public class EbilCorpHQStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreHarvestDay HarvestDay { get => _HarvestDay ??= new CoreHarvestDay(); set => _HarvestDay = value; }    private static CoreHarvestDay _HarvestDay;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreHarvestDay HarvestDay
+    {
+        get => _HarvestDay ??= new CoreHarvestDay();
+        set => _HarvestDay = value;
+    }
+    private static CoreHarvestDay _HarvestDay;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -11,7 +11,12 @@ public class HeartOfTheSeaStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -51,7 +56,11 @@ public class HeartOfTheSeaStory
         Story.KillQuest(6516, "HeartOfTheSea", "Grislytooth Pirate");
 
         // Interrogate the Pirates 6517
-        Story.KillQuest(6517, "HeartOfTheSea", new[] { "Boatswain Rotbelly", "Quartermaster Greenfin", "First Mate Blackfang" });
+        Story.KillQuest(
+            6517,
+            "HeartOfTheSea",
+            new[] { "Boatswain Rotbelly", "Quartermaster Greenfin", "First Mate Blackfang" }
+        );
 
         // Find the Hold 6518
         Story.MapItemQuest(6518, "HeartOfTheSea", 6002, 5);

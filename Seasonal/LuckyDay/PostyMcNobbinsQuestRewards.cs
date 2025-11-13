@@ -14,24 +14,27 @@ public class PostyMcNobbinsQuestRewards
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     string[] PotDrops =
     {
-    "Leprechaun Ranger",
-    "Leprechaun Ranger's TopHat",
-    "Leprechaun Ranger's TopHat + Locks",
-    "Lucky Day TopHat",
-    "Lucky Day TopHat + Glasses",
-    "Lucky Day TopHat + Locks",
-    "Lucky Emerald TopHat",
-    "Lucky Emerald TopHat + Glasses",
-    "Lucky Emerald TopHat + Locks",
-    "Platinum Coin",
-    "Rainbow Coin",
+        "Leprechaun Ranger",
+        "Leprechaun Ranger's TopHat",
+        "Leprechaun Ranger's TopHat + Locks",
+        "Lucky Day TopHat",
+        "Lucky Day TopHat + Glasses",
+        "Lucky Day TopHat + Locks",
+        "Lucky Emerald TopHat",
+        "Lucky Emerald TopHat + Glasses",
+        "Lucky Emerald TopHat + Locks",
+        "Platinum Coin",
+        "Rainbow Coin",
     };
-
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -48,7 +51,12 @@ public class PostyMcNobbinsQuestRewards
         if (!Core.isSeasonalMapActive("luck"))
             return;
 
-        string[] AllRewards = (Core.EnsureLoad(5758).Rewards.Select(i => i.Name)).Concat(Core.EnsureLoad(5759).Rewards.Select(i => i.Name)).Concat(Core.EnsureLoad(5760).Rewards.Select(i => i.Name)).Concat(Core.EnsureLoad(5761).Rewards.Select(i => i.Name)).Concat(PotDrops).ToArray();
+        string[] AllRewards = (Core.EnsureLoad(5758).Rewards.Select(i => i.Name))
+            .Concat(Core.EnsureLoad(5759).Rewards.Select(i => i.Name))
+            .Concat(Core.EnsureLoad(5760).Rewards.Select(i => i.Name))
+            .Concat(Core.EnsureLoad(5761).Rewards.Select(i => i.Name))
+            .Concat(PotDrops)
+            .ToArray();
 
         Core.EquipClass(ClassType.Solo);
         Adv.SmartEnhance(Core.SoloClass);
@@ -62,17 +70,26 @@ public class PostyMcNobbinsQuestRewards
         Core.ToBank(AllRewards);
     }
 
-
     void test1()
     {
-        Core.OneTimeMessage("ReadMe", "plese ignore the \"item cannot be added inventory\" message ingame just means you already have the item in the bank, should only be doing this for the drops from the pot.", true, true);
+        Core.OneTimeMessage(
+            "ReadMe",
+            "plese ignore the \"item cannot be added inventory\" message ingame just means you already have the item in the bank, should only be doing this for the drops from the pot.",
+            true,
+            true
+        );
 
         var rewards1 = Core.QuestRewards(5758);
         var rewards2 = Core.QuestRewards(5759);
         var rewards3 = Core.QuestRewards(5760);
         var rewards4 = Core.QuestRewards(5761);
 
-        string[] AllDrops = rewards1.Concat(rewards2).Concat(rewards3).Concat(rewards4).Concat(PotDrops).ToArray();
+        string[] AllDrops = rewards1
+            .Concat(rewards2)
+            .Concat(rewards3)
+            .Concat(rewards4)
+            .Concat(PotDrops)
+            .ToArray();
 
         foreach (string item in AllDrops)
         {

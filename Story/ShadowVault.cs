@@ -11,7 +11,12 @@ public class ShadowVault
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -53,10 +58,14 @@ public class ShadowVault
 
         //Hole in the Wall 6788
         Story.MapItemQuest(6788, "ShadowVault", 6313);
-        Story.KillQuest(6788, "ShadowVault", new[] { "Spiderscythe","Shadowscythe Minion" });
+        Story.KillQuest(6788, "ShadowVault", new[] { "Spiderscythe", "Shadowscythe Minion" });
 
         //An Actual Skeleton... key? 6789
-        Story.KillQuest(6789, "ShadowVault", new[] { "Fallen Adventurer", "Spiderscythe", "Shadowscythe Minion" });
+        Story.KillQuest(
+            6789,
+            "ShadowVault",
+            new[] { "Fallen Adventurer", "Spiderscythe", "Shadowscythe Minion" }
+        );
 
         //Open Sesame 6790
         Story.MapItemQuest(6790, "ShadowVault", 6314);
@@ -81,6 +90,5 @@ public class ShadowVault
             Core.EnsureComplete(6794);
             Core.JumpWait();
         }
-
     }
 }

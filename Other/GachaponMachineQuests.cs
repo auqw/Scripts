@@ -15,10 +15,25 @@ public class GachaponMachine
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static Eden Eden { get => _Eden ??= new Eden(); set => _Eden = value; }    private static Eden _Eden;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static Eden Eden
+    {
+        get => _Eden ??= new Eden();
+        set => _Eden = value;
+    }
+    private static Eden _Eden;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -32,7 +47,7 @@ public class GachaponMachine
     }
 
     public readonly string[] Rewards =
- {
+    {
         "Onsen Locks",
         "Onsen Long Locks",
         "Onsen Ponytail",
@@ -57,7 +72,7 @@ public class GachaponMachine
     };
 
     public readonly string[] Rewards2 =
-{
+    {
         "Smug Face 001",
         "Totally Normal Face 001",
         "Smug Face 002",
@@ -123,5 +138,4 @@ public class GachaponMachine
         }
         Core.Logger("All drops acquired from [Kotapon II: Get'cha Gear] Quest");
     }
-
 }

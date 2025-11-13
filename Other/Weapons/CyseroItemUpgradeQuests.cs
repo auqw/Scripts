@@ -26,27 +26,96 @@ public class CyseroItemUpgrade
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static DarknessShard DS { get => _DS ??= new DarknessShard(); set => _DS = value; }    private static DarknessShard _DS;
-    private static SepulchuresOriginalHelm Seppy { get => _Seppy ??= new SepulchuresOriginalHelm(); set => _Seppy = value; }    private static SepulchuresOriginalHelm _Seppy;
-    private static TarosManslayer TarosManslayer { get => _TarosManslayer ??= new TarosManslayer(); set => _TarosManslayer = value; }    private static TarosManslayer _TarosManslayer;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
+    private static CoreBLOD _BLOD;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static DarknessShard DS
+    {
+        get => _DS ??= new DarknessShard();
+        set => _DS = value;
+    }
+    private static DarknessShard _DS;
+    private static SepulchuresOriginalHelm Seppy
+    {
+        get => _Seppy ??= new SepulchuresOriginalHelm();
+        set => _Seppy = value;
+    }
+    private static SepulchuresOriginalHelm _Seppy;
+    private static TarosManslayer TarosManslayer
+    {
+        get => _TarosManslayer ??= new TarosManslayer();
+        set => _TarosManslayer = value;
+    }
+    private static TarosManslayer _TarosManslayer;
 
     public string OptionsStorage = "CyseroItemUpgrade";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<bool>("PolishedBlod", "Polished Blinding Light of Destiny", "Finishes Cysero Quest \"Upgrade the Blinding Light of Destiny (7063)\" to get you \"Polished Blinding Light of Destiny\"", false),
-        new Option<bool>("ToxicPlagueSpear", "Toxic Plague Spear", "Finishes Cysero Quest \"Upgrade the Plague Spear (7064)\" to get you \"Toxic Plague Spear\"", false),
-        new Option<bool>("BurningPhoenixBlade", "Burning Phoenix Blade", "Finishes Cysero Quest \"Upgrade the Phoenix Blade (7065)\" to get you \"Burning Phoenix Blade\"", false),
-        new Option<bool>("OdokuroBlight", "O-dokuro's Blight", "Finishes Cysero Quest \"Upgrade O-Dokuro Blade (7066)\" to get you \"O-dokuro's Blight\"", false),
-        new Option<bool>("PolishedManslayer", "Polished Manslayer", "Finishes Cysero Quest \"Upgrade Taro’s Manslayer (7067)\" to get you \"Polished Manslayer\"", false),
-        new Option<bool>("CursedDoomBlade", "Cursed DoomBlade", "Finishes Cysero Quest \"Upgrade Sepulchure’s Undead Blade (7068)\" to get you \"Cursed DoomBlade\"", false),
-        new Option<bool>("RebornSepulchureHelm", "Reborn Sepulchure's Helm", "Finishes Cysero Quest \"Upgrade Sepulchure’s Original Helm (7069)\" to get you \"Reborn Sepulchure's Helm\"", false),
-        new Option<bool>("GetAll", "GetAllUpgrades", "Finishes All Cysero Item Upgrade Quests to Get you all of the  rewards", false),
-
+        new Option<bool>(
+            "PolishedBlod",
+            "Polished Blinding Light of Destiny",
+            "Finishes Cysero Quest \"Upgrade the Blinding Light of Destiny (7063)\" to get you \"Polished Blinding Light of Destiny\"",
+            false
+        ),
+        new Option<bool>(
+            "ToxicPlagueSpear",
+            "Toxic Plague Spear",
+            "Finishes Cysero Quest \"Upgrade the Plague Spear (7064)\" to get you \"Toxic Plague Spear\"",
+            false
+        ),
+        new Option<bool>(
+            "BurningPhoenixBlade",
+            "Burning Phoenix Blade",
+            "Finishes Cysero Quest \"Upgrade the Phoenix Blade (7065)\" to get you \"Burning Phoenix Blade\"",
+            false
+        ),
+        new Option<bool>(
+            "OdokuroBlight",
+            "O-dokuro's Blight",
+            "Finishes Cysero Quest \"Upgrade O-Dokuro Blade (7066)\" to get you \"O-dokuro's Blight\"",
+            false
+        ),
+        new Option<bool>(
+            "PolishedManslayer",
+            "Polished Manslayer",
+            "Finishes Cysero Quest \"Upgrade Taro’s Manslayer (7067)\" to get you \"Polished Manslayer\"",
+            false
+        ),
+        new Option<bool>(
+            "CursedDoomBlade",
+            "Cursed DoomBlade",
+            "Finishes Cysero Quest \"Upgrade Sepulchure’s Undead Blade (7068)\" to get you \"Cursed DoomBlade\"",
+            false
+        ),
+        new Option<bool>(
+            "RebornSepulchureHelm",
+            "Reborn Sepulchure's Helm",
+            "Finishes Cysero Quest \"Upgrade Sepulchure’s Original Helm (7069)\" to get you \"Reborn Sepulchure's Helm\"",
+            false
+        ),
+        new Option<bool>(
+            "GetAll",
+            "GetAllUpgrades",
+            "Finishes All Cysero Item Upgrade Quests to Get you all of the  rewards",
+            false
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -60,7 +129,6 @@ public class CyseroItemUpgrade
 
     public void ScriptOtions()
     {
-
         if (Bot.Config!.Get<bool>("PolishedBlod"))
             GetPolishedBLoD();
 
@@ -115,7 +183,7 @@ public class CyseroItemUpgrade
         Adv.BuyItem("alchemyacademy", 2114, "Bright Tonic", 10);
         Core.HuntMonster("doomwood", "Undead Paladin", "Purification Orb", 10, false);
         Core.KillMonster("doomwood", "r7", "Up", "*", "Shoelace of a Fallen Paladin", 3, false);
-        Core.KillMonster("charredpath", "r5", "Left", "Plague Spreader", "Slimed Sigil", 75,false);
+        Core.KillMonster("charredpath", "r5", "Left", "Plague Spreader", "Slimed Sigil", 75, false);
         Core.HuntMonster("lightguardwar", "Sigrid Sunshield", "Medal of Justice", 150, false);
 
         Core.EnsureComplete(7063);
@@ -158,7 +226,6 @@ public class CyseroItemUpgrade
 
         Core.AddDrop("Burning Phoenix Blade");
 
-
         while (!Bot.ShouldExit && !Core.CheckInventory("Burning Phoenix Blade"))
         {
             //Upgrade the Phoenix Blade 7065
@@ -186,7 +253,6 @@ public class CyseroItemUpgrade
 
         Core.AddDrop("O-dokuro's Blight");
 
-
         while (!Bot.ShouldExit && !Core.CheckInventory("O-dokuro's Blight"))
         {
             //Upgrade O-Dokuro Blade 7066
@@ -213,7 +279,6 @@ public class CyseroItemUpgrade
 
         Core.AddDrop("Polished Manslayer");
 
-
         while (!Bot.ShouldExit && !Core.CheckInventory("Polished Manslayer"))
         {
             //Upgrade Taro’s Manslayer 7067
@@ -224,7 +289,13 @@ public class CyseroItemUpgrade
             Farm.BattleUnderB("Bone Dust", 25);
             Core.HuntMonster("Bloodtusk ", "Crystal-Rock", "Polished Rocks", 3);
             Core.HuntMonster("Bloodtusk ", "Crystal-Rock", "Precious Gemstone", 3);
-            Core.HuntMonster("DarkFortress", "Wilhelm", "Ultra Shifting Plane Gem", 15, isTemp: false);
+            Core.HuntMonster(
+                "DarkFortress",
+                "Wilhelm",
+                "Ultra Shifting Plane Gem",
+                15,
+                isTemp: false
+            );
 
             Core.EnsureComplete(7067);
             Bot.Wait.ForPickup("Polished Manslayer");
@@ -239,7 +310,6 @@ public class CyseroItemUpgrade
         Adv.BuyItem("museum", 580, "Sepulchure's Undead Blade");
         Core.AddDrop("Cursed DoomBlade");
 
-
         while (!Bot.ShouldExit && !Core.CheckInventory("Cursed DoomBlade"))
         {
             //Upgrade Sepulchure’s Undead Blade 7068
@@ -248,7 +318,15 @@ public class CyseroItemUpgrade
 
             DS.GetShard(1);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("shadowfallwar", "Garden1", "Bottom", "Bonemuncher", "Ultimate Darkness Gem", 50, isTemp: false);
+            Core.KillMonster(
+                "shadowfallwar",
+                "Garden1",
+                "Bottom",
+                "Bonemuncher",
+                "Ultimate Darkness Gem",
+                50,
+                isTemp: false
+            );
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("frozenlair", "Lich Lord", "Necrotic Orb", 100, isTemp: false);
             Core.HuntMonster("underworld", "Frozen Pyromancer", "Flaming Skull", 50, isTemp: false);
@@ -272,7 +350,15 @@ public class CyseroItemUpgrade
 
         DS.GetShard(1);
         Core.EquipClass(ClassType.Farm);
-        Core.KillMonster("shadowfallwar", "Garden1", "Bottom", "Bonemuncher", "Ultimate Darkness Gem", 75, isTemp: false);
+        Core.KillMonster(
+            "shadowfallwar",
+            "Garden1",
+            "Bottom",
+            "Bonemuncher",
+            "Ultimate Darkness Gem",
+            75,
+            isTemp: false
+        );
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("frozenlair", "Lich Lord", "Necrotic Orb", 150, isTemp: false);
         Core.HuntMonster("underworld", "Frozen Pyromancer", "Flaming Skull", 100, isTemp: false);
@@ -280,6 +366,4 @@ public class CyseroItemUpgrade
         Core.EnsureComplete(7069);
         Bot.Wait.ForPickup("Reborn Sepulchure's Helm");
     }
-
 }
-

@@ -16,22 +16,43 @@ public class ShadowScytheGeneralMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +77,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,16 +90,26 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Shadow Shield":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Daily.DailyRoutine(3828, "lightguardwar", "Citadel Crusader", "Broken Blade");
                     if (Core.IsMember)
-                        Daily.DailyRoutine(3827, "lightguardwar", "Citadel Crusader", "Broken Blade");
+                        Daily.DailyRoutine(
+                            3827,
+                            "lightguardwar",
+                            "Citadel Crusader",
+                            "Broken Blade"
+                        );
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
@@ -90,11 +123,41 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("45363", "ShadowScythe General", "Mode: [select] only\nShould the bot buy \"ShadowScythe General\" ?", false),
-        new Option<bool>("45255", "ShadowScythe General Armor", "Mode: [select] only\nShould the bot buy \"ShadowScythe General Armor\" ?", false),
-        new Option<bool>("45256", "ShadowScythe General Sinister Helm", "Mode: [select] only\nShould the bot buy \"ShadowScythe General Sinister Helm\" ?", false),
-        new Option<bool>("45257", "ShadowScythe General Helm", "Mode: [select] only\nShould the bot buy \"ShadowScythe General Helm\" ?", false),
-        new Option<bool>("45258", "ShadowScythe General Cape", "Mode: [select] only\nShould the bot buy \"ShadowScythe General Cape\" ?", false),
-        new Option<bool>("45259", "ShadowScythe General Axe", "Mode: [select] only\nShould the bot buy \"ShadowScythe General Axe\" ?", false),
+        new Option<bool>(
+            "45363",
+            "ShadowScythe General",
+            "Mode: [select] only\nShould the bot buy \"ShadowScythe General\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45255",
+            "ShadowScythe General Armor",
+            "Mode: [select] only\nShould the bot buy \"ShadowScythe General Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45256",
+            "ShadowScythe General Sinister Helm",
+            "Mode: [select] only\nShould the bot buy \"ShadowScythe General Sinister Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45257",
+            "ShadowScythe General Helm",
+            "Mode: [select] only\nShould the bot buy \"ShadowScythe General Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45258",
+            "ShadowScythe General Cape",
+            "Mode: [select] only\nShould the bot buy \"ShadowScythe General Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45259",
+            "ShadowScythe General Axe",
+            "Mode: [select] only\nShould the bot buy \"ShadowScythe General Axe\" ?",
+            false
+        ),
     };
 }

@@ -8,13 +8,18 @@ tags: mourning cygnus, extinguished eridanus, quest, reward, astravian oracle se
 //cs_include Scripts/CoreAdvanced.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+
 // using Skua.Core.Options;
 
 public class AstravianOracleSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -45,7 +50,15 @@ public class AstravianOracleSet
             while (!Bot.ShouldExit && !Core.CheckInventory(item.ID, quant))
             {
                 Core.EnsureAccept(questID);
-                Core.KillMonster("eridani", "r6", "Left", "*", "Extinguished Shard", 15, log: false);
+                Core.KillMonster(
+                    "eridani",
+                    "r6",
+                    "Left",
+                    "*",
+                    "Extinguished Shard",
+                    15,
+                    log: false
+                );
                 Core.EnsureComplete(questID, item.ID);
             }
             Core.ToBank(item.ID);
@@ -61,13 +74,20 @@ public class AstravianOracleSet
 
         Core.EquipClass(ClassType.Farm);
 
-
         foreach (ItemBase item in RewardOptions)
         {
             while (!Bot.ShouldExit && !Core.CheckInventory(item.ID, quant))
             {
                 Core.EnsureAccept(questID);
-                Core.KillMonster("astravia", "r6", "Top", "*", "Broken Astravia Shards", 15, log: false);
+                Core.KillMonster(
+                    "astravia",
+                    "r6",
+                    "Top",
+                    "*",
+                    "Broken Astravia Shards",
+                    15,
+                    log: false
+                );
                 Core.EnsureComplete(questID, item.ID);
             }
             Core.ToBank(item.ID);

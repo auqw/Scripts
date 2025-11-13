@@ -12,8 +12,19 @@ public class CoreFrostvale
 {
     public CoreBots Core => CoreBots.Instance;
     public IScriptInterface Bot => IScriptInterface.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static GlaceraStory GlaceraStory { get => _GlaceraStory ??= new GlaceraStory(); set => _GlaceraStory = value; }    private static GlaceraStory _GlaceraStory;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static GlaceraStory GlaceraStory
+    {
+        get => _GlaceraStory ??= new GlaceraStory();
+        set => _GlaceraStory = value;
+    }
+    private static GlaceraStory _GlaceraStory;
+
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.RunCore();
@@ -23,7 +34,9 @@ public class CoreFrostvale
     {
         if (!Core.isSeasonalMapActive("frostvale"))
         {
-            Core.Logger($"it is Currently {DateTime.Now:MMMM}, The Maps Will Be out In December, as per the Design Notes.");
+            Core.Logger(
+                $"it is Currently {DateTime.Now:MMMM}, The Maps Will Be out In December, as per the Design Notes."
+            );
             return;
         }
 
@@ -115,7 +128,7 @@ public class CoreFrostvale
         Story.MapItemQuest(461, "battleontown", 87);
         Story.KillQuest(461, "icecave", "Frozen Moglin");
 
-        // Spirit Abducted 
+        // Spirit Abducted
         Story.ChainQuest(905);
     }
 
@@ -235,7 +248,11 @@ public class CoreFrostvale
         Story.KillQuest(2527, "frostdeep", new[] { "Polar Golem", "Polar Elemental" });
 
         // Absolute Zero Success
-        Story.KillQuest(2528, "frostdeep", new[] { "Temple Prowler", "Polar Elemental", "Polar Golem" });
+        Story.KillQuest(
+            2528,
+            "frostdeep",
+            new[] { "Temple Prowler", "Polar Elemental", "Polar Golem" }
+        );
 
         // Dirty Secret
         Story.KillQuest(2529, "frostdeep", new[] { "Temple Prowler", "Polar Mole" });
@@ -247,10 +264,18 @@ public class CoreFrostvale
         Story.KillQuest(2531, "frostdeep", "Ancient Golem");
 
         // Deadly Beauty
-        Story.KillQuest(2532, "frostdeep", new[] { "Polar Elemental", "Polar Golem", "Polar Golem" });
+        Story.KillQuest(
+            2532,
+            "frostdeep",
+            new[] { "Polar Elemental", "Polar Golem", "Polar Golem" }
+        );
 
         // Cold-Hearted Trophies
-        Story.KillQuest(2533, "frostdeep", new[] { "Polar Mole", "Temple Prowler", "Temple Prowler" });
+        Story.KillQuest(
+            2533,
+            "frostdeep",
+            new[] { "Polar Mole", "Temple Prowler", "Temple Prowler" }
+        );
 
         // Warmth in the Cold
         Story.KillQuest(2534, "frostdeep", new[] { "Temple Spider", "Temple Maggot" });
@@ -258,7 +283,7 @@ public class CoreFrostvale
         // Icy Prizes
         Story.KillQuest(2535, "frostdeep", new[] { "Temple Prowler", "Temple Maggot" });
 
-        // Fading Magic - may bug out as its 2 items from 1 mob if the delay doesnt work idfk, doesnt work as a string[] as it gets the sand drop 
+        // Fading Magic - may bug out as its 2 items from 1 mob if the delay doesnt work idfk, doesnt work as a string[] as it gets the sand drop
         if (!Story.QuestProgression(2536))
         {
             Core.EnsureAccept(2536);
@@ -283,7 +308,11 @@ public class CoreFrostvale
         Story.KillQuest(2541, "frostdeep", new[] { "Ancient Golem", "Ancient Golem" });
 
         // Can You Feel the Chill Tonight?
-        Story.KillQuest(2542, "frostdeep", new[] { "Temple Prowler", "Polar Elemental", "Polar Elemental" });
+        Story.KillQuest(
+            2542,
+            "frostdeep",
+            new[] { "Temple Prowler", "Polar Elemental", "Polar Elemental" }
+        );
 
         // Shrouded in Ice
         Story.KillQuest(2543, "frostdeep", new[] { "Ancient Maggot", "Ancient Maggot" });
@@ -295,7 +324,11 @@ public class CoreFrostvale
         Story.KillQuest(2545, "frostdeep", new[] { "Ancient Mole", "Ancient Mole" });
 
         // Older and Colder
-        Story.KillQuest(2546, "frostdeep", new[] { "Ancient Mole", "Ancient Prowler", "Ancient Maggot" });
+        Story.KillQuest(
+            2546,
+            "frostdeep",
+            new[] { "Ancient Mole", "Ancient Prowler", "Ancient Maggot" }
+        );
 
         // The Sword Of Hope
         Story.KillQuest(2547, "frostdeep", new[] { "Ancient Terror", "Ancient Terror" });
@@ -320,10 +353,18 @@ public class CoreFrostvale
         Story.KillQuest(2578, "icerise", "Polar Golem");
 
         // Uncovering Pages Of The Past
-        Story.KillQuest(2579, "icerise", new[] { "Polar Golem", "Polar Elemental", "Arctic DireWolf" });
+        Story.KillQuest(
+            2579,
+            "icerise",
+            new[] { "Polar Golem", "Polar Elemental", "Arctic DireWolf" }
+        );
 
         // We Know Where To Look
-        Story.KillQuest(2580, "icerise", new[] { "Polar Golem", "Polar Elemental", "Arctic DireWolf" });
+        Story.KillQuest(
+            2580,
+            "icerise",
+            new[] { "Polar Golem", "Polar Elemental", "Arctic DireWolf" }
+        );
 
         // A Terrible Hiding Place
         Story.KillQuest(2581, "icerise", "Arctic DireWolf");
@@ -395,7 +436,8 @@ public class CoreFrostvale
 
         // Mana for the Magi 2570
         Story.KillQuest(2570, "newbie", "Slime", GetReward: false);
-        if(ReturnEarly) return;
+        if (ReturnEarly)
+            return;
 
         // Gathering Spell Components 2571
         Story.KillQuest(2571, "hydra", "Fire Imp", GetReward: false);
@@ -426,7 +468,11 @@ public class CoreFrostvale
         Story.PreLoad(this);
 
         // Feed the Greed 3217
-        Story.KillQuest(3217, "darkwinter", new[] { "Blighted Moglin", "White Stalker", "Blighted Moglin" });
+        Story.KillQuest(
+            3217,
+            "darkwinter",
+            new[] { "Blighted Moglin", "White Stalker", "Blighted Moglin" }
+        );
         // if (!Story.QuestProgression(3217))
         // {
         //     Core.EnsureAccept(3217);
@@ -539,7 +585,11 @@ public class CoreFrostvale
 
     public void Icerisepast()
     {
-        if (!Core.IsMember || Core.isCompletedBefore(3904) || !Core.isSeasonalMapActive("Icerisepast"))
+        if (
+            !Core.IsMember
+            || Core.isCompletedBefore(3904)
+            || !Core.isSeasonalMapActive("Icerisepast")
+        )
             return;
         if (!Core.isCompletedBefore(7854))
             Howardshill();
@@ -626,7 +676,11 @@ public class CoreFrostvale
         Story.MapItemQuest(4706, "cryostorm", 4067, 8);
 
         // More Gifts
-        Story.KillQuest(4707, "cryostorm", new[] { "Glacial Wolf", "Cryo Mammoth", "Glacial Elemental" });
+        Story.KillQuest(
+            4707,
+            "cryostorm",
+            new[] { "Glacial Wolf", "Cryo Mammoth", "Glacial Elemental" }
+        );
 
         // Warmth for the Small
         Story.KillQuest(4708, "cryostorm", "Glacial Wolf");
@@ -699,7 +753,7 @@ public class CoreFrostvale
         // Keep the Frostspawn Away!
         Story.KillQuest(5595, "icewindpass", new[] { "Frostspawn Troll", "Frost Invader" });
 
-        // Take a Break from Fighting 
+        // Take a Break from Fighting
         Story.KillQuest(5596, "icewindpass", new[] { "Polar Golem", "Glacial Elemental" });
     }
 
@@ -771,7 +825,7 @@ public class CoreFrostvale
         // Memory #1 - Yeti or Not - 6636
         Story.KillQuest(6636, "frostvalpast", "Ice Master Yeti");
 
-        // Activate the Spacetimebobulator - 6637   
+        // Activate the Spacetimebobulator - 6637
         Story.MapItemQuest(6637, "frostvalpast", 6165);
 
         // Memory #2 - Who Started the Fire - 6638
@@ -793,7 +847,11 @@ public class CoreFrostvale
         Story.KillQuest(6643, "frostvalpresent", "Time Wraith");
 
         // Memory #3 - Echoes - 6644
-        Story.KillQuest(6644, "frostvalpresent", new[] { "Echo of Cysero", "Echo of Lim", "Echo of Sora", "Echo of Warlic" });
+        Story.KillQuest(
+            6644,
+            "frostvalpresent",
+            new[] { "Echo of Cysero", "Echo of Lim", "Echo of Sora", "Echo of Warlic" }
+        );
 
         // Activate the Spacetimebobulator - 6645
         Story.MapItemQuest(6645, "frostvalpresent", 6165);
@@ -940,9 +998,8 @@ public class CoreFrostvale
         // 8431 The Zweinichthirsch
         Story.KillQuest(8431, "deerhunt", "Zweinichthirsch");
 
-        // 8432 Cries Investigated 
+        // 8432 Cries Investigated
         Story.MapItemQuest(8432, "deerhunt", 9377);
-
     }
 
     public void BowJangles()
@@ -1047,7 +1104,6 @@ public class CoreFrostvale
             return;
         if (!Core.isCompletedBefore(9506))
             GlaceTomb();
-
 
         // Hold the Door 9509
         Story.MapItemQuest(9509, "fimbultomb", new[] { 12490, 12491 });
@@ -1186,8 +1242,7 @@ public class CoreFrostvale
         // Circling Crows 8450
         Story.KillQuest(8450, "otziwar", "Sluagh Mellori");
 
-
-        // Powder Snow 8451         
+        // Powder Snow 8451
         Story.KillQuest(8451, "otziwar", "Huntress Valais");
     }
 
@@ -1203,72 +1258,61 @@ public class CoreFrostvale
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Hydrochloric Acid", // UseableMonsters[0],
-	"Lost Giftbox", // UseableMonsters[1],
-	"Cold Apparition", // UseableMonsters[2],
-	"Hotel Guest", // UseableMonsters[3],
-	"Memory Leech", // UseableMonsters[4]
-};
+            "Hydrochloric Acid", // UseableMonsters[0],
+            "Lost Giftbox", // UseableMonsters[1],
+            "Cold Apparition", // UseableMonsters[2],
+            "Hotel Guest", // UseableMonsters[3],
+            "Memory Leech", // UseableMonsters[4]
+        };
         #endregion Useable Monsters
 
         // 9993 | Mouth of a Home
         if (!Story.QuestProgression(9993))
         {
-            Core.HuntMonsterQuest(9993,
-                ("holidayhotel", UseableMonsters[0], ClassType.Farm));
+            Core.HuntMonsterQuest(9993, ("holidayhotel", UseableMonsters[0], ClassType.Farm));
         }
-
 
         // 9994 | Windpipe Hallway
         Story.MapItemQuest(
-            9994, new[]
-        {
+            9994,
+            new[]
+            {
                 (13977, 5, "holidayhotel"),
                 (13967, 1, "holidayhotel"),
-                (13968, 1, "holidayhotel")
+                (13968, 1, "holidayhotel"),
             }
         );
 
         // 9995 | Foreign Body Aspiration
         if (!Story.QuestProgression(9995))
         {
-            Core.HuntMonsterQuest(9995,
-                ("holidayhotel", UseableMonsters[1], ClassType.Farm));
+            Core.HuntMonsterQuest(9995, ("holidayhotel", UseableMonsters[1], ClassType.Farm));
         }
-
 
         // 9996 | Left Arm Vein
         Story.MapItemQuest(9996, "holidayhotel", new[] { 13969, 13970 });
         Story.KillQuest(9996, "holidayhotel", UseableMonsters[2]);
 
-
         // 9997 | Left Arm Artery
         Story.MapItemQuest(9997, "holidayhotel", new[] { 13971, 13972 });
         Story.KillQuest(9997, "holidayhotel", UseableMonsters[2]);
 
-
         // 9998 | Right Arm Vein
         Story.MapItemQuest(9998, "holidayhotel", new[] { 13973, 13974, 13975 });
-
 
         // 10001 | Right Arm Artery
         if (!Story.QuestProgression(10001))
         {
-            Core.HuntMonsterQuest(10001,
-                ("holidayhotel", UseableMonsters[3], ClassType.Farm));
+            Core.HuntMonsterQuest(10001, ("holidayhotel", UseableMonsters[3], ClassType.Farm));
         }
-
 
         // 10002 | Cryophobia
         Story.MapItemQuest(10002, "holidayhotel", 13976);
 
-
-
         // 10003 | Maceration
         if (!Story.QuestProgression(10003))
         {
-            Core.HuntMonsterQuest(10003,
-                ("holidayhotel", UseableMonsters[4], ClassType.Solo));
+            Core.HuntMonsterQuest(10003, ("holidayhotel", UseableMonsters[4], ClassType.Solo));
         }
     }
 
@@ -1284,58 +1328,55 @@ public class CoreFrostvale
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Trey Simulacrum", // UseableMonsters[0],
-	"Hydrochloric Acid", // UseableMonsters[1],
-	"Alteon Simulacrum", // UseableMonsters[2],
-	"Lynaria Simulacrum", // UseableMonsters[3],
-	"Brittany Simulacrum", // UseableMonsters[4],
-	"Brentan Simulacrum", // UseableMonsters[5],
-	"La Simulacrum", // UseableMonsters[6],
-	"Re Simulacrum", // UseableMonsters[7],
-	"Cold Apparition", // UseableMonsters[8],
-	"Hotel Guest", // UseableMonsters[9],
-	"Yaga", // UseableMonsters[10],
-	"Mockingbird", // UseableMonsters[11],
-	"Cold Grudge", // UseableMonsters[12]
-};
+            "Trey Simulacrum", // UseableMonsters[0],
+            "Hydrochloric Acid", // UseableMonsters[1],
+            "Alteon Simulacrum", // UseableMonsters[2],
+            "Lynaria Simulacrum", // UseableMonsters[3],
+            "Brittany Simulacrum", // UseableMonsters[4],
+            "Brentan Simulacrum", // UseableMonsters[5],
+            "La Simulacrum", // UseableMonsters[6],
+            "Re Simulacrum", // UseableMonsters[7],
+            "Cold Apparition", // UseableMonsters[8],
+            "Hotel Guest", // UseableMonsters[9],
+            "Yaga", // UseableMonsters[10],
+            "Mockingbird", // UseableMonsters[11],
+            "Cold Grudge", // UseableMonsters[12]
+        };
         #endregion Useable Monsters
 
         // 10005 | Chilblain
         if (!Story.QuestProgression(10005))
         {
-            Core.HuntMonsterQuest(10005,
-                ("holidayhorror", UseableMonsters[8], ClassType.Farm));
+            Core.HuntMonsterQuest(10005, ("holidayhorror", UseableMonsters[8], ClassType.Farm));
         }
-
 
         // 10006 | Fool's Gold
         Story.MapItemQuest(10006, "holidayhorror", 13994);
         Story.KillQuest(10006, "holidayhorror", UseableMonsters[0]);
 
-
-
         // 10007 | Acid Reflux
         Story.MapItemQuest(10007, "holidayhorror", 13995, 4);
         Story.KillQuest(10007, "holidayhorror", UseableMonsters[1]);
 
-
         // 10008 | Sour Notes
         if (!Story.QuestProgression(10008))
         {
-            Core.HuntMonsterQuest(10008,
+            Core.HuntMonsterQuest(
+                10008,
                 ("holidayhorror", UseableMonsters[2], ClassType.Solo),
-                ("holidayhorror", UseableMonsters[3], ClassType.Solo));
+                ("holidayhorror", UseableMonsters[3], ClassType.Solo)
+            );
         }
-
 
         // 10009 | Phantom Pain
         if (!Story.QuestProgression(10009))
         {
-            Core.HuntMonsterQuest(10009,
+            Core.HuntMonsterQuest(
+                10009,
                 ("holidayhorror", UseableMonsters[4], ClassType.Solo),
-                ("holidayhorror", UseableMonsters[5], ClassType.Solo));
+                ("holidayhorror", UseableMonsters[5], ClassType.Solo)
+            );
         }
-
 
         // 10010 | Kleptothermy
         if (!Story.QuestProgression(10010))
@@ -1347,36 +1388,29 @@ public class CoreFrostvale
         }
 
         // 10011 | Fie Fie
-        Story.MapItemQuest(10011, new[] {
-            (13997, 1, "holidayhorror"),
-            (13998, 5, "holidayhorror") });
-
-
+        Story.MapItemQuest(
+            10011,
+            new[] { (13997, 1, "holidayhorror"), (13998, 5, "holidayhorror") }
+        );
 
         // 10012 | Here of Free Will?
         Story.MapItemQuest(10012, "holidayhorror", 14000);
         Story.KillQuest(10012, "holidayhorror", UseableMonsters[9]);
 
-
         // 10013 | Arrived by Compulsion?
         Story.MapItemQuest(10013, "holidayhorror", 13999);
         Story.KillQuest(10013, "holidayhorror", UseableMonsters[10]);
-
 
         // 10014 | Empty Nest
         if (!Story.QuestProgression(10014))
         {
             Core.CutSceneFixer("holidayhorror", "r12", "Cut3");
-            Core.HuntMonsterQuest(10014,
-                ("holidayhorror", UseableMonsters[11], ClassType.Solo));
+            Core.HuntMonsterQuest(10014, ("holidayhorror", UseableMonsters[11], ClassType.Solo));
         }
-
     }
 
-
-
-        // if (!Core.isCompletedBefore(10003))
-        //     HolidayHorror();
+    // if (!Core.isCompletedBefore(10003))
+    //     HolidayHorror();
     // --------------------------------------------------------------------------------------------------------------------------
 
     // The rest of the Frostval quests are not necessary for Frostval Barbarian. Can skip and farm Frozen Orb directly using jump.

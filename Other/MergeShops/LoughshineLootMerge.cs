@@ -17,27 +17,54 @@ public class LoughshineLootMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
     private static CoreAOR _AOR;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Salvaged Skye Armament", "Speirling Dagger", "Speirling Daggers", "Solid Gold Alloy", "Skye Executor Hooded Locks", "Skye Executor's Cloak" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Salvaged Skye Armament",
+                "Speirling Dagger",
+                "Speirling Daggers",
+                "Solid Gold Alloy",
+                "Skye Executor Hooded Locks",
+                "Skye Executor's Cloak",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -55,7 +82,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,14 +95,26 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Salvaged Skye Armament":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("castleeblana", "Skye Warrior", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(
+                        "castleeblana",
+                        "Skye Warrior",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
                     break;
 
                 case "Speirling Dagger":
@@ -82,7 +123,14 @@ private static CoreAdvanced _sAdv;
                 case "Skye Executor's Cloak":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("loughshine", "Skye Executor", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(
+                        "loughshine",
+                        "Skye Executor",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
                     break;
 
                 case "Solid Gold Alloy":
@@ -91,34 +139,115 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("loughshine", "Scorched Elder Yew", "Yew Root", 100, log: false);
-                        Core.HuntMonster("loughshine", "Energy Elemental", "Ion Particles", 60, log: false);
+                        Core.HuntMonster(
+                            "loughshine",
+                            "Scorched Elder Yew",
+                            "Yew Root",
+                            100,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "loughshine",
+                            "Energy Elemental",
+                            "Ion Particles",
+                            60,
+                            log: false
+                        );
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("loughshine", "Warden Iseul", "Gold Pendant", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("86037", "Skye Executor", "Mode: [select] only\nShould the bot buy \"Skye Executor\" ?", false),
-        new Option<bool>("86038", "Skye Executor Hooded Visage", "Mode: [select] only\nShould the bot buy \"Skye Executor Hooded Visage\" ?", false),
-        new Option<bool>("86039", "Skye Executor Hood", "Mode: [select] only\nShould the bot buy \"Skye Executor Hood\" ?", false),
-        new Option<bool>("86044", "Backhanded Speirling Dagger", "Mode: [select] only\nShould the bot buy \"Backhanded Speirling Dagger\" ?", false),
-        new Option<bool>("86045", "Backhanded Speirling Daggers", "Mode: [select] only\nShould the bot buy \"Backhanded Speirling Daggers\" ?", false),
-        new Option<bool>("86046", "Skye Warden of the West", "Mode: [select] only\nShould the bot buy \"Skye Warden of the West\" ?", false),
-        new Option<bool>("86047", "Skye Warden's Cowled Visage", "Mode: [select] only\nShould the bot buy \"Skye Warden's Cowled Visage\" ?", false),
-        new Option<bool>("86048", "Skye Warden's Cowled Mask", "Mode: [select] only\nShould the bot buy \"Skye Warden's Cowled Mask\" ?", false),
-        new Option<bool>("86049", "Skye Warden's Cowled Locks", "Mode: [select] only\nShould the bot buy \"Skye Warden's Cowled Locks\" ?", false),
-        new Option<bool>("86050", "Skye Warden of the West Cape", "Mode: [select] only\nShould the bot buy \"Skye Warden of the West Cape\" ?", false),
-        new Option<bool>("86051", "Speirling Guardian Dagger", "Mode: [select] only\nShould the bot buy \"Speirling Guardian Dagger\" ?", false),
-        new Option<bool>("86052", "Speirling Guardian Daggers", "Mode: [select] only\nShould the bot buy \"Speirling Guardian Daggers\" ?", false),
-        new Option<bool>("86053", "Backhanded Speirling Guardian Dagger", "Mode: [select] only\nShould the bot buy \"Backhanded Speirling Guardian Dagger\" ?", false),
-        new Option<bool>("86054", "Backhanded Speirling Guardian Daggers", "Mode: [select] only\nShould the bot buy \"Backhanded Speirling Guardian Daggers\" ?", false),
+        new Option<bool>(
+            "86037",
+            "Skye Executor",
+            "Mode: [select] only\nShould the bot buy \"Skye Executor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86038",
+            "Skye Executor Hooded Visage",
+            "Mode: [select] only\nShould the bot buy \"Skye Executor Hooded Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86039",
+            "Skye Executor Hood",
+            "Mode: [select] only\nShould the bot buy \"Skye Executor Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86044",
+            "Backhanded Speirling Dagger",
+            "Mode: [select] only\nShould the bot buy \"Backhanded Speirling Dagger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86045",
+            "Backhanded Speirling Daggers",
+            "Mode: [select] only\nShould the bot buy \"Backhanded Speirling Daggers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86046",
+            "Skye Warden of the West",
+            "Mode: [select] only\nShould the bot buy \"Skye Warden of the West\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86047",
+            "Skye Warden's Cowled Visage",
+            "Mode: [select] only\nShould the bot buy \"Skye Warden's Cowled Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86048",
+            "Skye Warden's Cowled Mask",
+            "Mode: [select] only\nShould the bot buy \"Skye Warden's Cowled Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86049",
+            "Skye Warden's Cowled Locks",
+            "Mode: [select] only\nShould the bot buy \"Skye Warden's Cowled Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86050",
+            "Skye Warden of the West Cape",
+            "Mode: [select] only\nShould the bot buy \"Skye Warden of the West Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86051",
+            "Speirling Guardian Dagger",
+            "Mode: [select] only\nShould the bot buy \"Speirling Guardian Dagger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86052",
+            "Speirling Guardian Daggers",
+            "Mode: [select] only\nShould the bot buy \"Speirling Guardian Daggers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86053",
+            "Backhanded Speirling Guardian Dagger",
+            "Mode: [select] only\nShould the bot buy \"Backhanded Speirling Guardian Dagger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86054",
+            "Backhanded Speirling Guardian Daggers",
+            "Mode: [select] only\nShould the bot buy \"Backhanded Speirling Guardian Daggers\" ?",
+            false
+        ),
     };
 }

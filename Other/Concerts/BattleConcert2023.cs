@@ -21,9 +21,17 @@ public class BattleConcertClassQuests
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static VordredArmor VA { get => _VA ??= new VordredArmor(); set => _VA = value; }
+    private static VordredArmor VA
+    {
+        get => _VA ??= new VordredArmor();
+        set => _VA = value;
+    }
     private static VordredArmor _VA;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -105,10 +113,7 @@ public class BattleConcertClassQuests
         Core.AddDrop("Bone Pick");
         Story.KillQuest(9327, "brainmeat", "Brain Matter");
 
-
         //Class Quest
         // Doom Metal Necro Class 9328
-
-
     }
 }

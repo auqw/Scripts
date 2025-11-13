@@ -6,8 +6,8 @@ tags: vindicator, badge, hollowborn, farm
 //cs_include Scripts/CoreBots.cs
 
 using Skua.Core.Interfaces;
-using Skua.Core.Models.Quests;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Quests;
 
 public class VindicatorBadge
 {

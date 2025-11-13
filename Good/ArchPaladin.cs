@@ -19,12 +19,42 @@ public class ArchPaladin
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
-    private static Paladin Pal { get => _Pal ??= new Paladin(); set => _Pal = value; }    private static Paladin _Pal;
-    private static XansLair Xan { get => _Xan ??= new XansLair(); set => _Xan = value; }    private static XansLair _Xan;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
+    private static CoreBLOD _BLOD;
+    private static Paladin Pal
+    {
+        get => _Pal ??= new Paladin();
+        set => _Pal = value;
+    }
+    private static Paladin _Pal;
+    private static XansLair Xan
+    {
+        get => _Xan ??= new XansLair();
+        set => _Xan = value;
+    }
+    private static XansLair _Xan;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -63,14 +93,33 @@ public class ArchPaladin
                 BLOD.UnlockMineCrafting();
                 Farm.BattleUnderB("Undead Energy", 1000);
                 Core.EquipClass(ClassType.Solo);
-                Core.KillMonster("doomvault", "r5", "Left", "Binky", "Binky's Uni-horn", isTemp: false, publicRoom: true);
-                Core.HuntMonster("banished", "Desterrat Moya", "Desterrat Moya Tentacle", publicRoom: true);
+                Core.KillMonster(
+                    "doomvault",
+                    "r5",
+                    "Left",
+                    "Binky",
+                    "Binky's Uni-horn",
+                    isTemp: false,
+                    publicRoom: true
+                );
+                Core.HuntMonster(
+                    "banished",
+                    "Desterrat Moya",
+                    "Desterrat Moya Tentacle",
+                    publicRoom: true
+                );
                 Core.HuntMonster("dreadhaven", "Dreadhaven General", "Dreadhaven Helm");
                 Adv.GearStore();
                 Core.KillDoomKitten("DoomKitten Claw", isTemp: true);
                 Adv.GearStore(true);
                 Core.EquipClass(ClassType.Solo);
-                Core.HuntMonster("vordredboss", "Vordred", "Vordred's Skull", isTemp: false, publicRoom: true);
+                Core.HuntMonster(
+                    "vordredboss",
+                    "Vordred",
+                    "Vordred's Skull",
+                    isTemp: false,
+                    publicRoom: true
+                );
                 Core.EnsureComplete(5464);
             }
 
@@ -80,16 +129,46 @@ public class ArchPaladin
                 Core.EnsureAccept(5465);
                 Core.EquipClass(ClassType.Solo);
 
-                Core.KillMonster("xantown", "r8", "Left", "Xan", "Pyromancer Artifact", isTemp: false);
+                Core.KillMonster(
+                    "xantown",
+                    "r8",
+                    "Left",
+                    "Xan",
+                    "Pyromancer Artifact",
+                    isTemp: false
+                );
                 if (Bot.Map.Name == "xantown")
                     Core.Jump("r12", "Left"); // map is aggro af this is a safe cell.
 
-                Core.HuntMonster("dragonheart", "Proto-Air Dracolich", "Zephyrus Manifesto", isTemp: false);
-                Core.HuntMonster("northstar", "Karok The Fallen", "Karok's Glaceran Gem", isTemp: false, publicRoom: true);
+                Core.HuntMonster(
+                    "dragonheart",
+                    "Proto-Air Dracolich",
+                    "Zephyrus Manifesto",
+                    isTemp: false
+                );
+                Core.HuntMonster(
+                    "northstar",
+                    "Karok The Fallen",
+                    "Karok's Glaceran Gem",
+                    isTemp: false,
+                    publicRoom: true
+                );
                 Core.EquipClass(ClassType.Farm);
                 Core.HuntMonster("thirdspell", "Mana Phoenix", "Nightmare Kibble", 200, false);
-                Core.HuntMonster("thunderfang", "Lightning Ball", "Condensed Energy", isTemp: false);
-                Core.KillMonster("downward", "r11", "Right", "Crystal Mana Construct", "Crystallized Mana Catalyst", isTemp: false);
+                Core.HuntMonster(
+                    "thunderfang",
+                    "Lightning Ball",
+                    "Condensed Energy",
+                    isTemp: false
+                );
+                Core.KillMonster(
+                    "downward",
+                    "r11",
+                    "Right",
+                    "Crystal Mana Construct",
+                    "Crystallized Mana Catalyst",
+                    isTemp: false
+                );
                 Core.HuntMonster("farm", "Treeant", "Just the Perfect Stick", isTemp: false);
                 Core.EnsureComplete(5465);
             }
@@ -101,7 +180,15 @@ public class ArchPaladin
                 Core.BuyItem("castle", 88, "Holy Hand Grenade");
                 Core.EquipClass(ClassType.Farm);
                 Core.HuntMonster("manor", "Bird of Paradise", "Feather of Paradise", 20, false);
-                Core.KillMonster("doomwood", "r6", "Right", "*", "Shoelace of a Fallen Paladin", 77, false);
+                Core.KillMonster(
+                    "doomwood",
+                    "r6",
+                    "Right",
+                    "*",
+                    "Shoelace of a Fallen Paladin",
+                    77,
+                    false
+                );
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("fotia", "Amia the Cult Leader", "Eternity Flame", isTemp: false);
                 Core.EnsureComplete(5466);
@@ -122,10 +209,22 @@ public class ArchPaladin
             {
                 Core.EnsureAccept(Core.CheckInventory("Silver Paladin") ? 5478 : 5474);
                 Core.EquipClass(ClassType.Solo);
-                Core.HuntMonster("bosschallenge", "Colossal Primarch", "Primarch's Hilt", isTemp: false, publicRoom: true);
+                Core.HuntMonster(
+                    "bosschallenge",
+                    "Colossal Primarch",
+                    "Primarch's Hilt",
+                    isTemp: false,
+                    publicRoom: true
+                );
                 Farm.Gold(500000);
                 Core.BuyItem("darkthronehub", 1308, "Exalted Paladin Seal");
-                Core.HuntMonster("timevoid", "Unending Avatar", "Condensed Mana", isTemp: false, publicRoom: true);
+                Core.HuntMonster(
+                    "timevoid",
+                    "Unending Avatar",
+                    "Condensed Mana",
+                    isTemp: false,
+                    publicRoom: true
+                );
                 Core.EnsureComplete(Core.CheckInventory("Silver Paladin") ? 5478 : 5474);
             }
         }
@@ -135,9 +234,20 @@ public class ArchPaladin
         {
             Core.EnsureAccept(5467);
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("brightfall", "Painadin Overlord", "Skill Observed", isTemp: false, publicRoom: true);
+            Core.HuntMonster(
+                "brightfall",
+                "Painadin Overlord",
+                "Skill Observed",
+                isTemp: false,
+                publicRoom: true
+            );
             Core.HuntMonster("citadel", "Grand Inquisitor", "Spirit of Vindication", isTemp: false);
-            Core.HuntMonster("alliance", "Good Lieutenant", "Radiant Blade Enhancement", isTemp: false);
+            Core.HuntMonster(
+                "alliance",
+                "Good Lieutenant",
+                "Radiant Blade Enhancement",
+                isTemp: false
+            );
             Core.EnsureComplete(5467);
         }
 
@@ -147,7 +257,13 @@ public class ArchPaladin
             Core.EnsureAccept(5468);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("poisonforest", "Xavier Lionfang", "Divine Elixir", isTemp: false);
-            Core.HuntMonster("ultraalteon", "Ultra Chaos Alteon", "Prayer of Salvation", isTemp: false, publicRoom: true);
+            Core.HuntMonster(
+                "ultraalteon",
+                "Ultra Chaos Alteon",
+                "Prayer of Salvation",
+                isTemp: false,
+                publicRoom: true
+            );
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("newfinale", "Alliance Healer", "Acolyte's Braille", isTemp: false);
             Core.HuntMonster("skytower", "Dove", "Innocence", 25, false);
@@ -157,11 +273,22 @@ public class ArchPaladin
         // Righteous Seal
         if (!Story.QuestProgression(5469))
         {
-            Core.AddDrop("Scroll of Ethereal Slumber", "Fists of Fire", "Holy Magic Attunement", "Ring of Mana Transposition");
+            Core.AddDrop(
+                "Scroll of Ethereal Slumber",
+                "Fists of Fire",
+                "Holy Magic Attunement",
+                "Ring of Mana Transposition"
+            );
             Core.EnsureAccept(5469);
             Xan.DoAll();
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("xancave", "Shurpu Ring Guardian", "Fists of Fire", isTemp: false, publicRoom: true);
+            Core.HuntMonster(
+                "xancave",
+                "Shurpu Ring Guardian",
+                "Fists of Fire",
+                isTemp: false,
+                publicRoom: true
+            );
             if (!Core.CheckInventory("Scroll of Ethereal Slumber"))
             {
                 if (!Core.CheckInventory("Archmage Ink"))
@@ -191,7 +318,12 @@ public class ArchPaladin
                 Core.SellItem("Mystic Shards", all: true);
             }
             Core.EquipClass(ClassType.Farm);
-            Core.HuntMonster("onslaughttower", "Golden Caster", "Holy Magic Attunement", isTemp: false);
+            Core.HuntMonster(
+                "onslaughttower",
+                "Golden Caster",
+                "Holy Magic Attunement",
+                isTemp: false
+            );
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("palace", "Pettivox", "Ring of Mana Transposition", isTemp: false);
             Core.EnsureComplete(5469);
@@ -214,9 +346,8 @@ public class ArchPaladin
             Core.HuntMonster("infernalspire", "Malxas", "Forbidden Demon Seal", isTemp: false);
             Core.EnsureComplete(5470);
         }
-        
+
         if (ArmorOnly)
-        
             return;
 
         Core.BuyItem("darkthronehub", 1303, 36920, shopItemID: 21833);

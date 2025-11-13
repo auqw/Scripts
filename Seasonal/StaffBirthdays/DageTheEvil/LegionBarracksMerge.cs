@@ -17,29 +17,52 @@ public class LegionBarracksMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreDageBirthday CDB { get => _CDB ??= new CoreDageBirthday(); set => _CDB = value; }
+    private static CoreDageBirthday CDB
+    {
+        get => _CDB ??= new CoreDageBirthday();
+        set => _CDB = value;
+    }
     private static CoreDageBirthday _CDB;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
     private static CoreLegion _Legion;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Legion Token", "Underworld Drachma", "Grand Antaeus Spear" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Legion Token", "Underworld Drachma", "Grand Antaeus Spear" }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -50,14 +73,22 @@ private static CoreAdvanced _sAdv;
     {
         CDB.LegionBarracks();
         //Only edit the map and shopID here
-        Adv.StartBuyAllMerge("legionbarracks", 2420, findIngredients, buyOnlyThis, buyMode: buyMode);
+        Adv.StartBuyAllMerge(
+            "legionbarracks",
+            2420,
+            findIngredients,
+            buyOnlyThis,
+            buyMode: buyMode
+        );
 
         #region Dont edit this part
         void findIngredients()
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -68,9 +99,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Legion Token":
                     Legion.FarmLegionToken(quant);
@@ -82,10 +118,29 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster("legionbarracks", "r4", "Left", "*", "Legion Cocytus Engraving", 6, log: false);
-                        Core.HuntMonster("legionbarracks", "Overdriven paladin", "Paladin's Death Tag", 6, log: false);
+                        Core.KillMonster(
+                            "legionbarracks",
+                            "r4",
+                            "Left",
+                            "*",
+                            "Legion Cocytus Engraving",
+                            6,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "legionbarracks",
+                            "Overdriven paladin",
+                            "Paladin's Death Tag",
+                            6,
+                            log: false
+                        );
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("legionbarracks", "Paladin Arondight", "Arondight's Starlight", log: false);
+                        Core.HuntMonster(
+                            "legionbarracks",
+                            "Paladin Arondight",
+                            "Arondight's Starlight",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -94,29 +149,113 @@ private static CoreAdvanced _sAdv;
                 case "Grand Antaeus Spear":
                     Core.Logger($"Item {req.Name} is not obtainable anymore.");
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("84429", "Skeletal Sacrificer", "Mode: [select] only\nShould the bot buy \"Skeletal Sacrificer\" ?", false),
-        new Option<bool>("84432", "Scowling Black Sun Penacho Skull", "Mode: [select] only\nShould the bot buy \"Scowling Black Sun Penacho Skull\" ?", false),
-        new Option<bool>("84449", "Immortal Sacrificer Tepoztopilli", "Mode: [select] only\nShould the bot buy \"Immortal Sacrificer Tepoztopilli\" ?", false),
-        new Option<bool>("84311", "Underworld Sentinel", "Mode: [select] only\nShould the bot buy \"Underworld Sentinel\" ?", false),
-        new Option<bool>("84312", "Underworld Sentinel Helm", "Mode: [select] only\nShould the bot buy \"Underworld Sentinel Helm\" ?", false),
-        new Option<bool>("84313", "Underworld Sentinel Hair", "Mode: [select] only\nShould the bot buy \"Underworld Sentinel Hair\" ?", false),
-        new Option<bool>("84314", "Underworld Sentinel Ponytail", "Mode: [select] only\nShould the bot buy \"Underworld Sentinel Ponytail\" ?", false),
-        new Option<bool>("84318", "Underworld Sentinel Shroud and Blade", "Mode: [select] only\nShould the bot buy \"Underworld Sentinel Shroud and Blade\" ?", false),
-        new Option<bool>("84320", "Decima Render", "Mode: [select] only\nShould the bot buy \"Decima Render\" ?", false),
-        new Option<bool>("84321", "Decima Renders", "Mode: [select] only\nShould the bot buy \"Decima Renders\" ?", false),
-        new Option<bool>("84422", "Ptolomea Necromancer", "Mode: [select] only\nShould the bot buy \"Ptolomea Necromancer\" ?", false),
-        new Option<bool>("84423", "Ptolomea Necromancer Blindfold Morph", "Mode: [select] only\nShould the bot buy \"Ptolomea Necromancer Blindfold Morph\" ?", false),
-        new Option<bool>("84424", "Ptolomea Necromancer Blindfold Visage", "Mode: [select] only\nShould the bot buy \"Ptolomea Necromancer Blindfold Visage\" ?", false),
-        new Option<bool>("84425", "Ptolomea Necromancer Morph", "Mode: [select] only\nShould the bot buy \"Ptolomea Necromancer Morph\" ?", false),
-        new Option<bool>("84426", "Ptolomea Necromancer Visage", "Mode: [select] only\nShould the bot buy \"Ptolomea Necromancer Visage\" ?", false),
-        new Option<bool>("84427", "Possessed Kokytos Staff", "Mode: [select] only\nShould the bot buy \"Possessed Kokytos Staff\" ?", false),
-        new Option<bool>("84603", "Grand Antaeus Spear", "Mode: [select] only\nShould the bot buy \"Grand Antaeus Spear\" ?", false),
+        new Option<bool>(
+            "84429",
+            "Skeletal Sacrificer",
+            "Mode: [select] only\nShould the bot buy \"Skeletal Sacrificer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84432",
+            "Scowling Black Sun Penacho Skull",
+            "Mode: [select] only\nShould the bot buy \"Scowling Black Sun Penacho Skull\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84449",
+            "Immortal Sacrificer Tepoztopilli",
+            "Mode: [select] only\nShould the bot buy \"Immortal Sacrificer Tepoztopilli\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84311",
+            "Underworld Sentinel",
+            "Mode: [select] only\nShould the bot buy \"Underworld Sentinel\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84312",
+            "Underworld Sentinel Helm",
+            "Mode: [select] only\nShould the bot buy \"Underworld Sentinel Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84313",
+            "Underworld Sentinel Hair",
+            "Mode: [select] only\nShould the bot buy \"Underworld Sentinel Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84314",
+            "Underworld Sentinel Ponytail",
+            "Mode: [select] only\nShould the bot buy \"Underworld Sentinel Ponytail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84318",
+            "Underworld Sentinel Shroud and Blade",
+            "Mode: [select] only\nShould the bot buy \"Underworld Sentinel Shroud and Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84320",
+            "Decima Render",
+            "Mode: [select] only\nShould the bot buy \"Decima Render\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84321",
+            "Decima Renders",
+            "Mode: [select] only\nShould the bot buy \"Decima Renders\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84422",
+            "Ptolomea Necromancer",
+            "Mode: [select] only\nShould the bot buy \"Ptolomea Necromancer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84423",
+            "Ptolomea Necromancer Blindfold Morph",
+            "Mode: [select] only\nShould the bot buy \"Ptolomea Necromancer Blindfold Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84424",
+            "Ptolomea Necromancer Blindfold Visage",
+            "Mode: [select] only\nShould the bot buy \"Ptolomea Necromancer Blindfold Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84425",
+            "Ptolomea Necromancer Morph",
+            "Mode: [select] only\nShould the bot buy \"Ptolomea Necromancer Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84426",
+            "Ptolomea Necromancer Visage",
+            "Mode: [select] only\nShould the bot buy \"Ptolomea Necromancer Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84427",
+            "Possessed Kokytos Staff",
+            "Mode: [select] only\nShould the bot buy \"Possessed Kokytos Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84603",
+            "Grand Antaeus Spear",
+            "Mode: [select] only\nShould the bot buy \"Grand Antaeus Spear\" ?",
+            false
+        ),
     };
 }

@@ -12,7 +12,12 @@ public class NeoFortress
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreHollowbornStory HB { get => _HB ??= new CoreHollowbornStory(); set => _HB = value; }    private static CoreHollowbornStory _HB;
+    private static CoreHollowbornStory HB
+    {
+        get => _HB ??= new CoreHollowbornStory();
+        set => _HB = value;
+    }
+    private static CoreHollowbornStory _HB;
 
     public void ScriptMain(IScriptInterface bot)
     {

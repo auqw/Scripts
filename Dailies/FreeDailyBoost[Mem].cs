@@ -16,13 +16,23 @@ public class FreeDailyBoost
 
     public List<IOption> Options = new()
     {
-        new Option<DailyBoostRewards>("BoostReward", "Choose Your Daily Boost Reward", "Select the reward to apply (XP, Gold, Rep, Class Boost)", DailyBoostRewards.LowestQuantOwned), // Single option for reward
+        new Option<DailyBoostRewards>(
+            "BoostReward",
+            "Choose Your Daily Boost Reward",
+            "Select the reward to apply (XP, Gold, Rep, Class Boost)",
+            DailyBoostRewards.LowestQuantOwned
+        ), // Single option for reward
         CoreBots.Instance.SkipOptions, // Skip options when set
     };
 
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
 
     public void ScriptMain(IScriptInterface bot)
     {

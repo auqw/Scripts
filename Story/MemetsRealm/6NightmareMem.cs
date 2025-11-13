@@ -12,7 +12,12 @@ public class NightmareMem
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static MemetsRealm Memet { get => _Memet ??= new MemetsRealm(); set => _Memet = value; }    private static MemetsRealm _Memet;
+    private static MemetsRealm Memet
+    {
+        get => _Memet ??= new MemetsRealm();
+        set => _Memet = value;
+    }
+    private static MemetsRealm _Memet;
 
     public void ScriptMain(IScriptInterface bot)
     {

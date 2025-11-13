@@ -27,14 +27,21 @@ public class TreasureChestSpam
             return;
 
         Core.Logger("Pay attention to the popup's, they are crucial to this bot");
-        var accept = Bot.ShowMessageBox("This bot will use up a lot of your ACs (which costs real money).\n" +
-        "We are not liable for any loss of ACs whilst using this bot.\n\n" +
-        "Do you wish to proceed?",
-        "Your AC is about to be spend", "Yes", "No", "Just crunch the numbers");
+        var accept = Bot.ShowMessageBox(
+            "This bot will use up a lot of your ACs (which costs real money).\n"
+                + "We are not liable for any loss of ACs whilst using this bot.\n\n"
+                + "Do you wish to proceed?",
+            "Your AC is about to be spend",
+            "Yes",
+            "No",
+            "Just crunch the numbers"
+        );
         if (accept == null || accept.Text == "No")
             return;
 
-        int obtainedCount = Bot.Inventory.Items.Concat(Bot.Bank.Items).Count(item => rewards.Contains(item.ID));
+        int obtainedCount = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .Count(item => rewards.Contains(item.ID));
         int maxKeys = rewards.Count() - obtainedCount;
 
         if (Core.CheckInventory(new[] { "Dark Key", "Dark Box" }, toInv: false))
@@ -45,11 +52,13 @@ public class TreasureChestSpam
             float twoEst = 100 / ((obtainedCount + oneEst) / (float)rewards.Count());
 
             var result = Bot.ShowMessageBox(
-                "Do you wish for the bot to stop after the Dark Key and Dark Box have been obtained?\n\n" +
-                $"Estimation:\t{Math.Ceiling(oneEst)} times for one\t\t({Math.Ceiling(oneEst) * 200} ACs)\n" +
-                $"Estimation:\t{Math.Ceiling(twoEst)} times for both\t({Math.Ceiling(twoEst) * 200} ACs)\n" +
-                $"Guaranteed:\t{maxKeys} times for both\t({maxKeys * 200} ACs)",
-                "Dark Items?", accept.Text != "Just crunch the numbers" ? new[] { "Yes", "No" } : new[] { "OK" });
+                "Do you wish for the bot to stop after the Dark Key and Dark Box have been obtained?\n\n"
+                    + $"Estimation:\t{Math.Ceiling(oneEst)} times for one\t\t({Math.Ceiling(oneEst) * 200} ACs)\n"
+                    + $"Estimation:\t{Math.Ceiling(twoEst)} times for both\t({Math.Ceiling(twoEst) * 200} ACs)\n"
+                    + $"Guaranteed:\t{maxKeys} times for both\t({maxKeys * 200} ACs)",
+                "Dark Items?",
+                accept.Text != "Just crunch the numbers" ? new[] { "Yes", "No" } : new[] { "OK" }
+            );
 
             if (result == null)
                 return;
@@ -57,62 +66,82 @@ public class TreasureChestSpam
             stopForDarkBoxAndKey = result.Text == "Yes";
         }
 
-        var goForbroke = Bot.ShowMessageBox("Do you wish to use select how many keys to use?\n" +
-        "Or maybe you wanna go for broke",
-        "Mode Selector", "Select Amount", "GO FOR BROKE!");
+        var goForbroke = Bot.ShowMessageBox(
+            "Do you wish to use select how many keys to use?\n" + "Or maybe you wanna go for broke",
+            "Mode Selector",
+            "Select Amount",
+            "GO FOR BROKE!"
+        );
 
         int amount = 0;
         int currentAC = Bot.Flash.GetGameObject<int>("world.myAvatar.objData.intCoins");
         if (goForbroke.Text == "Select Amount")
         {
-            InputDialogViewModel diag = new("Input Amount", "How many keys would you like to buy and use?", true);
+            InputDialogViewModel diag = new(
+                "Input Amount",
+                "How many keys would you like to buy and use?",
+                true
+            );
             while (!Bot.ShouldExit)
             {
                 if (Ioc.Default.GetRequiredService<IDialogService>().ShowDialog(diag) == true)
                 {
                     amount = int.Parse(diag.DialogTextInput);
                     if (amount <= 0)
-                        Bot.ShowMessageBox("Please provide a number greater than zero (0) in order to continue.", "Invalid input");
+                        Bot.ShowMessageBox(
+                            "Please provide a number greater than zero (0) in order to continue.",
+                            "Invalid input"
+                        );
                     else
                     {
                         int afterAC = currentAC - (amount * 200);
                         if (afterAC < 0)
                         {
                             Bot.ShowMessageBox(
-                                $"Your input: {amount} keys\n" +
-                                $"This will cost you {amount * 200} ACs. (200 ACs per key)\n" +
-                                $"This would leave you with {afterAC} ACs afterwards, which is impossible.\n\n" +
-                                "Please choose a different amount of keys",
+                                $"Your input: {amount} keys\n"
+                                    + $"This will cost you {amount * 200} ACs. (200 ACs per key)\n"
+                                    + $"This would leave you with {afterAC} ACs afterwards, which is impossible.\n\n"
+                                    + "Please choose a different amount of keys",
                                 $"Calculating based on {amount} keys"
                             );
                         }
                         else
                         {
                             bool? acceptResult = Bot.ShowMessageBox(
-                                $"Your input: {amount} keys\n" +
-                                $"This will cost you {amount * 200} ACs. (200 ACs per key)\n" +
-                                $"This would leave you with {afterAC} ACs afterwards.\n\n" +
-                                "Do you wish to proceed?",
-                                $"Calculating based on {amount} keys", true
+                                $"Your input: {amount} keys\n"
+                                    + $"This will cost you {amount * 200} ACs. (200 ACs per key)\n"
+                                    + $"This would leave you with {afterAC} ACs afterwards.\n\n"
+                                    + "Do you wish to proceed?",
+                                $"Calculating based on {amount} keys",
+                                true
                             );
                             if (acceptResult == true)
                                 break;
                         }
                     }
                 }
-                else Bot.Stop(false);
+                else
+                    Bot.Stop(false);
             }
         }
         else if (goForbroke.Text == "GO FOR BROKE!")
             amount = currentAC / 200;
 
         amount = amount > maxKeys ? maxKeys : amount;
-        Core.KillMonster("swordhavenundead", "Left", "Right", "*", "Treasure Chest", amount > 250 ? 250 : amount, false);
+        Core.KillMonster(
+            "swordhavenundead",
+            "Left",
+            "Right",
+            "*",
+            "Treasure Chest",
+            amount > 250 ? 250 : amount,
+            false
+        );
 
         Core.Join("battleon");
 
         void LoadShop()
-        {   // Load shop data
+        { // Load shop data
             int retry = 0;
             while (!Bot.ShouldExit && Bot.Shops.ID != 314)
             {
@@ -122,7 +151,8 @@ public class TreasureChestSpam
                 Core.Sleep(1000);
                 if (Bot.Shops.ID == 314 || retry == 20)
                     break;
-                else retry++;
+                else
+                    retry++;
             }
             retry = 0;
         }
@@ -130,7 +160,15 @@ public class TreasureChestSpam
         for (int i = 0; i < amount; i++)
         {
             if (!Core.CheckInventory("Treasure Chest", 1))
-                Core.KillMonster("swordhavenundead", "Left", "Right", "*", "Treasure Chest", (amount - i) > 250 ? 250 : (amount - i), false);
+                Core.KillMonster(
+                    "swordhavenundead",
+                    "Left",
+                    "Right",
+                    "*",
+                    "Treasure Chest",
+                    (amount - i) > 250 ? 250 : (amount - i),
+                    false
+                );
 
             if (Bot.Map.Name != "battleon")
                 Core.Join("battleon");
@@ -140,7 +178,8 @@ public class TreasureChestSpam
                 Core.Logger("Shop not loaded, retrying...");
                 LoadShop();
             }
-            else Bot.Shops.BuyItem(8939, 6483);
+            else
+                Bot.Shops.BuyItem(8939, 6483);
             Bot.Wait.ForItemBuy();
             Core.Sleep();
             var preKeyItems = Bot.Inventory.Items;
@@ -152,7 +191,10 @@ public class TreasureChestSpam
             foreach (var item in newItems)
                 Core.Logger("New Item: " + item.Name);
 
-            if (stopForDarkBoxAndKey == true && Core.CheckInventory(new[] { "Dark Key", "Dark Box" }))
+            if (
+                stopForDarkBoxAndKey == true
+                && Core.CheckInventory(new[] { "Dark Key", "Dark Box" })
+            )
             {
                 Bot.ShowMessageBox("Dark Box and Dark Key obtained!", "Dark Items!");
                 break;
@@ -160,7 +202,10 @@ public class TreasureChestSpam
 
             if (Core.CheckInventory(rewards.ToArray(), toInv: false))
             {
-                Bot.ShowMessageBox("All Treasure Chest items obtained!", "You maxed out the Treasure Chests");
+                Bot.ShowMessageBox(
+                    "All Treasure Chest items obtained!",
+                    "You maxed out the Treasure Chests"
+                );
                 break;
             }
         }

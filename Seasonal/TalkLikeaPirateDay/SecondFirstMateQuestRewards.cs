@@ -7,7 +7,6 @@ tags: a second first mate, set, pirate, tlapd, seasonal, talk-like-a-pirate-day
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 
-
 public class SecondFirstMate
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
@@ -21,7 +20,6 @@ public class SecondFirstMate
 
         Core.SetOptions(false);
     }
-
 
     private void GetDrops()
     {
@@ -57,7 +55,7 @@ public class SecondFirstMate
                 }
             }
         }
-        
+
         Core.CancelRegisteredQuests();
         Core.ToBank(QuestRewards);
     }

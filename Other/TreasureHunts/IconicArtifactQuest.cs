@@ -48,6 +48,3 @@ public class IconicArtifact
         Core.EnsureComplete(9804);
     }
 }
-
-
-

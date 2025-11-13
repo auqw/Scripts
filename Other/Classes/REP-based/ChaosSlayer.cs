@@ -14,10 +14,25 @@ public class ChaosSlayer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
-    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }    private static Core13LoC _LOC;
+    private static Core13LoC LOC
+    {
+        get => _LOC ??= new Core13LoC();
+        set => _LOC = value;
+    }
+    private static Core13LoC _LOC;
 
     public string[] Variants =
     {
@@ -25,7 +40,7 @@ public class ChaosSlayer
         "Chaos Slayer Cleric",
         "Chaos Slayer Berserker",
         "Chaos Slayer Mystic",
-        "Chaos Slayer Thief"
+        "Chaos Slayer Thief",
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -59,5 +74,5 @@ public enum CSvariant
     Berserker = 15402,
     Cleric = 15459,
     Mystic = 15401,
-    Thief = 15403
+    Thief = 15403,
 }

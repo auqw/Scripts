@@ -12,11 +12,18 @@ public class Generated_ArmyObsidianRock
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "CustomAggroMon";
     public bool DontPreconfigure = true;
@@ -31,22 +38,32 @@ public class Generated_ArmyObsidianRock
         sArmy.player6,
         sArmy.player7,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // ArmyObsidianRock();
         Core.SetOptions(false);
     }
 
-    public void ArmyObsidianRock()
-        => Army.RunGeneratedAggroMon(map, monNames, questIDs, classtype, drops);
+    public void ArmyObsidianRock() =>
+        Army.RunGeneratedAggroMon(map, monNames, questIDs, classtype, drops);
+
     private static readonly List<int> questIDs = new() { 2742 };
-    private static readonly List<string> monNames = new() { "Living Fire", "Sulfur Imp", "Firestorm Hatchling" };
+    private static readonly List<string> monNames = new()
+    {
+        "Living Fire",
+        "Sulfur Imp",
+        "Firestorm Hatchling",
+    };
     private static readonly List<string> drops = new() { "Obsidian Rock" };
     private string map = "firestorm";
     private ClassType classtype = ClassType.Farm;

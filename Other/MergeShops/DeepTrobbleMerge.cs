@@ -17,31 +17,65 @@ public class DeepTrobbleMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }
+    private static CoreAstravia Astravia
+    {
+        get => _Astravia ??= new CoreAstravia();
+        set => _Astravia = value;
+    }
     private static CoreAstravia _Astravia;
-private static CoreDarkon CDarkon { get => _CDarkon ??= new CoreDarkon(); set => _CDarkon = value; }
-private static CoreDarkon _CDarkon;
+    private static CoreDarkon CDarkon
+    {
+        get => _CDarkon ??= new CoreDarkon();
+        set => _CDarkon = value;
+    }
+    private static CoreDarkon _CDarkon;
 
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
 
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Bounty Hunter Dubloon", "Deep Trobble Plunger", "Darkon's Receipt", "La's Gratitude", "Astravian Medal", "A Melody", "Suki's Prestige", "Ancient Remnant", "Mourning Flower", "Unfinished Musical Score" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Bounty Hunter Dubloon",
+                "Deep Trobble Plunger",
+                "Darkon's Receipt",
+                "La's Gratitude",
+                "Astravian Medal",
+                "A Melody",
+                "Suki's Prestige",
+                "Ancient Remnant",
+                "Mourning Flower",
+                "Unfinished Musical Score",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -58,7 +92,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -69,9 +105,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Bounty Hunter Dubloon":
                     Core.FarmingLogger(req.Name, quant);
@@ -130,19 +171,53 @@ private static CoreAdvanced _sAdv;
                 case "Unfinished Musical Score":
                     CDarkon.UnfinishedMusicalScore(quant);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("25531", "Silver Sun Bandana", "Mode: [select] only\nShould the bot buy \"Silver Sun Bandana\" ?", false),
-        new Option<bool>("25588", "Silver Sun Pistol", "Mode: [select] only\nShould the bot buy \"Silver Sun Pistol\" ?", false),
-        new Option<bool>("25088", "Silver Sun Cutlass", "Mode: [select] only\nShould the bot buy \"Silver Sun Cutlass\" ?", false),
-        new Option<bool>("61875", "Enchanted Trobble Plunger", "Mode: [select] only\nShould the bot buy \"Enchanted Trobble Plunger\" ?", false),
-        new Option<bool>("71897", "Omocha", "Mode: [select] only\nShould the bot buy \"Omocha\" ?", false),
-        new Option<bool>("71898", "Tsuika no Omocha", "Mode: [select] only\nShould the bot buy \"Tsuika no Omocha\" ?", false),
-        new Option<bool>("79817", "Higure", "Mode: [select] only\nShould the bot buy \"Higure\" ?", false),
+        new Option<bool>(
+            "25531",
+            "Silver Sun Bandana",
+            "Mode: [select] only\nShould the bot buy \"Silver Sun Bandana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25588",
+            "Silver Sun Pistol",
+            "Mode: [select] only\nShould the bot buy \"Silver Sun Pistol\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25088",
+            "Silver Sun Cutlass",
+            "Mode: [select] only\nShould the bot buy \"Silver Sun Cutlass\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61875",
+            "Enchanted Trobble Plunger",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Trobble Plunger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71897",
+            "Omocha",
+            "Mode: [select] only\nShould the bot buy \"Omocha\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71898",
+            "Tsuika no Omocha",
+            "Mode: [select] only\nShould the bot buy \"Tsuika no Omocha\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79817",
+            "Higure",
+            "Mode: [select] only\nShould the bot buy \"Higure\" ?",
+            false
+        ),
     };
 }

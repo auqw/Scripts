@@ -11,7 +11,11 @@ public class PirateHuntStory
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -19,7 +23,7 @@ public class PirateHuntStory
         Core.SetOptions();
 
         PirateHuntSaga();
-        
+
         Core.SetOptions(false);
     }
 
@@ -31,7 +35,13 @@ public class PirateHuntStory
         Story.PreLoad(this);
 
         // Ensure bot keeps required flags for final quest
-        Core.AddDrop("Belladonna's Flag", "Bourgeois' Flag", "Pirated Tech's Flag", "Merry Celeste's Flag", "Mercurius' Flag");
+        Core.AddDrop(
+            "Belladonna's Flag",
+            "Bourgeois' Flag",
+            "Pirated Tech's Flag",
+            "Merry Celeste's Flag",
+            "Mercurius' Flag"
+        );
 
         // 10389 - My Unfair Lady
         Core.EquipClass(ClassType.Farm);

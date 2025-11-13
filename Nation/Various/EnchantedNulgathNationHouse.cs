@@ -17,13 +17,43 @@ public class EnhancedNulgathNationHouse
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
+    private static CoreBLOD _BLOD;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.BankingBlackList.AddRange(Nation.bagDrops);
@@ -42,7 +72,20 @@ public class EnhancedNulgathNationHouse
             return;
         }
 
-        Core.AddDrop(Nation.bagDrops.Concat(new[] { "Cemaros' Amethyst", "Aluminum", "NUE Necronomicon", "Nulgath Nation House", "Enchanted Nulgath Nation House" }).ToArray());
+        Core.AddDrop(
+            Nation
+                .bagDrops.Concat(
+                    new[]
+                    {
+                        "Cemaros' Amethyst",
+                        "Aluminum",
+                        "NUE Necronomicon",
+                        "Nulgath Nation House",
+                        "Enchanted Nulgath Nation House",
+                    }
+                )
+                .ToArray()
+        );
 
         if (!Core.CheckInventory("Nulgath Nation House"))
         {
@@ -73,7 +116,7 @@ public class EnhancedNulgathNationHouse
             Bot.Wait.ForQuestComplete(4779);
             Bot.Wait.ForPickup("Nulgath Nation House");
         }
-        
+
         Adv.BuyItem("tercessuinotlim", 1951, "Pink Star Diamond of Nulgath");
         Core.HuntMonster("timelibrary", "Ancient Chest", "Musgravite of Nulgath", 2, false);
         Adv.BuyItem("archportal", 1211, "Enchanted Nulgath Nation House");

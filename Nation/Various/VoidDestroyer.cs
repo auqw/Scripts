@@ -12,8 +12,18 @@ public class VoidDestroyer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public readonly string[] Rewards =
     {
@@ -25,8 +35,9 @@ public class VoidDestroyer
         "Wrap of the Void",
         "Tainted Destruction Blade",
         "Toxic Void Katana",
-        "Dual Toxic Void Katanas"
+        "Dual Toxic Void Katanas",
     };
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -45,10 +56,12 @@ public class VoidDestroyer
         }
 
         // Track only relevant rewards from quest 5661
-        Bot.Drops.Add(Core.EnsureLoad(5661).Rewards
-            .Where(x => x != null && Rewards.Contains(x.Name))
-            .Select(x => x.Name)
-            .ToArray());
+        Bot.Drops.Add(
+            Core.EnsureLoad(5661)
+                .Rewards.Where(x => x != null && Rewards.Contains(x.Name))
+                .Select(x => x.Name)
+                .ToArray()
+        );
 
         // Loop until all desired rewards are in inventory
         while (!Bot.ShouldExit && !Core.CheckInventory(Rewards, toInv: false))
@@ -69,9 +82,10 @@ public class VoidDestroyer
                     Bot.Wait.ForPickup(reward);
             }
         }
-        Core.Logger($"All rewards collected, banking them;\n"
-        + $" {string.Join(", ", Bot.Drops.CurrentDrops)}");
+        Core.Logger(
+            $"All rewards collected, banking them;\n"
+                + $" {string.Join(", ", Bot.Drops.CurrentDrops)}"
+        );
         Core.ToBank(Rewards);
     }
-
 }

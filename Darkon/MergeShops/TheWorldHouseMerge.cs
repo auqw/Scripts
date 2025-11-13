@@ -17,20 +17,31 @@ public class TheWorldHouseMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
+    private static CoreDarkon Darkon
+    {
+        get => _Darkon ??= new CoreDarkon();
+        set => _Darkon = value;
+    }
+    private static CoreDarkon _Darkon;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -54,7 +65,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +78,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Darkon's Receipt":
                     Darkon.FarmReceipt(quant);
@@ -122,10 +140,35 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("70995", "Astravia Castle Present I", "Mode: [select] only\nShould the bot buy \"Astravia Castle Present I\" ?", false),
-        new Option<bool>("70994", "Astravia Castle Past I", "Mode: [select] only\nShould the bot buy \"Astravia Castle Past I\" ?", false),
-        new Option<bool>("70996", "Astravia Castle Past II", "Mode: [select] only\nShould the bot buy \"Astravia Castle Past II\" ?", false),
-        new Option<bool>("70997", "Astravia Castle Present II", "Mode: [select] only\nShould the bot buy \"Astravia Castle Present II\" ?", false),
-        new Option<bool>("70883", "Ring Of Creation (Activated)", "Mode: [select] only\nShould the bot buy \"Ring Of Creation (Activated)\" ?", false),
+        new Option<bool>(
+            "70995",
+            "Astravia Castle Present I",
+            "Mode: [select] only\nShould the bot buy \"Astravia Castle Present I\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70994",
+            "Astravia Castle Past I",
+            "Mode: [select] only\nShould the bot buy \"Astravia Castle Past I\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70996",
+            "Astravia Castle Past II",
+            "Mode: [select] only\nShould the bot buy \"Astravia Castle Past II\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70997",
+            "Astravia Castle Present II",
+            "Mode: [select] only\nShould the bot buy \"Astravia Castle Present II\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70883",
+            "Ring Of Creation (Activated)",
+            "Mode: [select] only\nShould the bot buy \"Ring Of Creation (Activated)\" ?",
+            false
+        ),
     };
 }

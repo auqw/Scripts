@@ -12,8 +12,18 @@ public class ShadowLegacyofNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,8 +43,16 @@ public class ShadowLegacyofNulgath
 
         Nation.ApprovalAndFavor(100, 0);
         Nation.Supplies("Voucher of Nulgath (non-mem)");
-       Nation.EssenceofNulgath(100);
-        Core.KillMonster("tercessuinotlim", "m4", "Right", "Shadow of Nulgath", "Hadean Onyx of Nulgath", 1, false);
+        Nation.EssenceofNulgath(100);
+        Core.KillMonster(
+            "tercessuinotlim",
+            "m4",
+            "Right",
+            "Shadow of Nulgath",
+            "Hadean Onyx of Nulgath",
+            1,
+            false
+        );
         Core.HuntMonster("Citadel", "Burning Witch", "Letter from Asuka and Tendou", isTemp: false);
         Farm.Gold(3000000);
         Core.BuyItem("archportal", 1211, "Shadow Legacy of Nulgath");

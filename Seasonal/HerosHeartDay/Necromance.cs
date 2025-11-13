@@ -11,7 +11,11 @@ public class Necromance
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -26,7 +30,7 @@ public class Necromance
     {
         if (Core.isCompletedBefore(4068))
             return;
-            
+
         if (!Core.isSeasonalMapActive("necromance"))
             return;
 
@@ -37,7 +41,7 @@ public class Necromance
 
         // Last Minute Gift Ideas (4040)
         Story.MapItemQuest(4040, "love", 3152, 12);
-        Story.KillQuest(4040, "love", new[] {"Love Shrub", "Huggy-Bear"});
+        Story.KillQuest(4040, "love", new[] { "Love Shrub", "Huggy-Bear" });
 
         // Cravin' a Raven (4041)
         Story.KillQuest(4041, "judgement", "Raven");
@@ -88,7 +92,7 @@ public class Necromance
         if (!Story.QuestProgression(4065))
         {
             Core.EnsureAccept(4065);
-            while(!Core.CheckInventory("Presents for Nastasia", 13))
+            while (!Core.CheckInventory("Presents for Nastasia", 13))
             {
                 Core.EnsureAccept(4053);
                 Core.HuntMonster("darkoviagrave", "Albino Bat", "Perfect Pet Bat");

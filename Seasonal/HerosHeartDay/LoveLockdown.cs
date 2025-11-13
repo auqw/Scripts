@@ -11,16 +11,33 @@ public class LoveLockdown
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Heart Token I", "Heart Token II", "Heart Token III",
-                                               "Heart Token IV", "Heart Token V", "Heart Token VI",
-                                               "Heart Token VII", "Heart Token VIII", "Heart Token IX",
-                                               "Heart Token X", "Heart Token XI", "Heart Token XII",
-                                               "Final Heart Token" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Heart Token I",
+                "Heart Token II",
+                "Heart Token III",
+                "Heart Token IV",
+                "Heart Token V",
+                "Heart Token VI",
+                "Heart Token VII",
+                "Heart Token VIII",
+                "Heart Token IX",
+                "Heart Token X",
+                "Heart Token XI",
+                "Heart Token XII",
+                "Final Heart Token",
+            }
+        );
         Core.SetOptions();
 
         StoryLine();
@@ -31,11 +48,26 @@ public class LoveLockdown
     {
         if (Core.CheckInventory("Final Heart Token"))
             return;
-            
+
         if (!Core.isSeasonalMapActive("lovelockdown"))
             return;
 
-        Story.LegacyQuestManager(QuestLogic, 4814, 4815, 4816, 4817, 4818, 4819, 4820, 4821, 4822, 4823, 4824, 4825, 4826); // Or use Core.FromTo(0001, 0009)
+        Story.LegacyQuestManager(
+            QuestLogic,
+            4814,
+            4815,
+            4816,
+            4817,
+            4818,
+            4819,
+            4820,
+            4821,
+            4822,
+            4823,
+            4824,
+            4825,
+            4826
+        ); // Or use Core.FromTo(0001, 0009)
 
         void QuestLogic()
         {
@@ -93,7 +125,6 @@ public class LoveLockdown
                 case 4826: // Unrequited Love 4826
                     Core.HuntMonster("lovelockdown", "The Unrequited", "Unrequited Love Defeated");
                     break;
-
             }
         }
     }

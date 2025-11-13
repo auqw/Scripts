@@ -5,6 +5,7 @@ tags: null
 */
 //cs_include Scripts/CoreBots.cs
 using Skua.Core.Interfaces;
+
 public class AvatarOfDeathsScythe
 {
     public IScriptInterface Bot => IScriptInterface.Instance;

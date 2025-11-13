@@ -16,27 +16,53 @@ public class NeotowerMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreHollowbornStory HB { get => _HB ??= new CoreHollowbornStory(); set => _HB = value; }
+    private static CoreHollowbornStory HB
+    {
+        get => _HB ??= new CoreHollowbornStory();
+        set => _HB = value;
+    }
     private static CoreHollowbornStory _HB;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Vindicator Crest", "Vindicator Assassin Dirk", "Dawn Vindication Tome", "Dawn Vindication Spellbooks", "Dawn Vindication Grimoires" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Vindicator Crest",
+                "Vindicator Assassin Dirk",
+                "Dawn Vindication Tome",
+                "Dawn Vindication Spellbooks",
+                "Dawn Vindication Grimoires",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -54,7 +80,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +93,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 /* MID's & there names:
                 12 - Vindicator Assassin
@@ -113,16 +146,71 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("87953", "Vindicator Assassin", "Mode: [select] only\nShould the bot buy \"Vindicator Assassin\" ?", false),
-        new Option<bool>("87954", "Vindicator Assassin Mask", "Mode: [select] only\nShould the bot buy \"Vindicator Assassin Mask\" ?", false),
-        new Option<bool>("87957", "Vindicator Assassin Daggers", "Mode: [select] only\nShould the bot buy \"Vindicator Assassin Daggers\" ?", false),
-        new Option<bool>("87958", "Vindicator Priest", "Mode: [select] only\nShould the bot buy \"Vindicator Priest\" ?", false),
-        new Option<bool>("87959", "Vindicator Priest Mask", "Mode: [select] only\nShould the bot buy \"Vindicator Priest Mask\" ?", false),
-        new Option<bool>("87961", "Dawn Vindication Grace Texts", "Mode: [select] only\nShould the bot buy \"Dawn Vindication Grace Texts\" ?", false),
-        new Option<bool>("87962", "Vindicator Priest Staff", "Mode: [select] only\nShould the bot buy \"Vindicator Priest Staff\" ?", false),
-        new Option<bool>("87964", "Vindicator Beast Tamer", "Mode: [select] only\nShould the bot buy \"Vindicator Beast Tamer\" ?", false),
-        new Option<bool>("87965", "Vindicator Beast Tamer Mask", "Mode: [select] only\nShould the bot buy \"Vindicator Beast Tamer Mask\" ?", false),
-        new Option<bool>("87966", "Vindicator Beast Tamer Hood", "Mode: [select] only\nShould the bot buy \"Vindicator Beast Tamer Hood\" ?", false),
-        new Option<bool>("87967", "Vindicator Beast Tamer Claws", "Mode: [select] only\nShould the bot buy \"Vindicator Beast Tamer Claws\" ?", false),
+        new Option<bool>(
+            "87953",
+            "Vindicator Assassin",
+            "Mode: [select] only\nShould the bot buy \"Vindicator Assassin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87954",
+            "Vindicator Assassin Mask",
+            "Mode: [select] only\nShould the bot buy \"Vindicator Assassin Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87957",
+            "Vindicator Assassin Daggers",
+            "Mode: [select] only\nShould the bot buy \"Vindicator Assassin Daggers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87958",
+            "Vindicator Priest",
+            "Mode: [select] only\nShould the bot buy \"Vindicator Priest\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87959",
+            "Vindicator Priest Mask",
+            "Mode: [select] only\nShould the bot buy \"Vindicator Priest Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87961",
+            "Dawn Vindication Grace Texts",
+            "Mode: [select] only\nShould the bot buy \"Dawn Vindication Grace Texts\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87962",
+            "Vindicator Priest Staff",
+            "Mode: [select] only\nShould the bot buy \"Vindicator Priest Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87964",
+            "Vindicator Beast Tamer",
+            "Mode: [select] only\nShould the bot buy \"Vindicator Beast Tamer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87965",
+            "Vindicator Beast Tamer Mask",
+            "Mode: [select] only\nShould the bot buy \"Vindicator Beast Tamer Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87966",
+            "Vindicator Beast Tamer Hood",
+            "Mode: [select] only\nShould the bot buy \"Vindicator Beast Tamer Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87967",
+            "Vindicator Beast Tamer Claws",
+            "Mode: [select] only\nShould the bot buy \"Vindicator Beast Tamer Claws\" ?",
+            false
+        ),
     };
 }

@@ -14,8 +14,18 @@ public class LycanShamanSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static BloodMoon BloodMoon { get => _BloodMoon ??= new BloodMoon(); set => _BloodMoon = value; }    private static BloodMoon _BloodMoon;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static BloodMoon BloodMoon
+    {
+        get => _BloodMoon ??= new BloodMoon();
+        set => _BloodMoon = value;
+    }
+    private static BloodMoon _BloodMoon;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -28,11 +38,12 @@ public class LycanShamanSet
 
     public void GetAll()
     {
-        string[] rewards = {
+        string[] rewards =
+        {
             "Lycan Shaman",
             "Lycan Shaman Helm",
             "Lycan Shaman's Familiar",
-            "Lycan Shaman Staff"
+            "Lycan Shaman Staff",
         };
         if (Core.CheckInventory(rewards))
             return;
@@ -46,7 +57,10 @@ public class LycanShamanSet
 
         Core.RegisterQuests(6073);
         Bot.Events.ItemDropped += ItemDropped;
-        Core.Logger($"Farm for the Lycan Shaman set started. Farming to get {rewards.Length - count} more item" + ((rewards.Length - count) > 1 ? "s" : ""));
+        Core.Logger(
+            $"Farm for the Lycan Shaman set started. Farming to get {rewards.Length - count} more item"
+                + ((rewards.Length - count) > 1 ? "s" : "")
+        );
 
         while (!Bot.ShouldExit && !Core.CheckInventory(rewards))
         {

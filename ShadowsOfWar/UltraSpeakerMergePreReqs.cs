@@ -74,78 +74,163 @@ public class UltraSpeakerMergePreReqs
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static AscendedDrakathGear ADG { get => _ADG ??= new AscendedDrakathGear(); set => _ADG = value; }
+    private static AscendedDrakathGear ADG
+    {
+        get => _ADG ??= new AscendedDrakathGear();
+        set => _ADG = value;
+    }
     private static AscendedDrakathGear _ADG;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
     private static CoreBLOD _BLOD;
-    private static CoreHollowbornDoomKnight HDK { get => _HDK ??= new CoreHollowbornDoomKnight(); set => _HDK = value; }
+    private static CoreHollowbornDoomKnight HDK
+    {
+        get => _HDK ??= new CoreHollowbornDoomKnight();
+        set => _HDK = value;
+    }
     private static CoreHollowbornDoomKnight _HDK;
-    private static CoreSoC SoC { get => _SoC ??= new CoreSoC(); set => _SoC = value; }
+    private static CoreSoC SoC
+    {
+        get => _SoC ??= new CoreSoC();
+        set => _SoC = value;
+    }
     private static CoreSoC _SoC;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
     private static CoreSoW _SoW;
-    private static CoreSoWMats SOWM { get => _SOWM ??= new CoreSoWMats(); set => _SOWM = value; }
+    private static CoreSoWMats SOWM
+    {
+        get => _SOWM ??= new CoreSoWMats();
+        set => _SOWM = value;
+    }
     private static CoreSoWMats _SOWM;
-    private static DragonFableOrigins DFO { get => _DFO ??= new DragonFableOrigins(); set => _DFO = value; }
+    private static DragonFableOrigins DFO
+    {
+        get => _DFO ??= new DragonFableOrigins();
+        set => _DFO = value;
+    }
     private static DragonFableOrigins _DFO;
-    private static DragonslayerGeneral DSG { get => _DSG ??= new DragonslayerGeneral(); set => _DSG = value; }
+    private static DragonslayerGeneral DSG
+    {
+        get => _DSG ??= new DragonslayerGeneral();
+        set => _DSG = value;
+    }
     private static DragonslayerGeneral _DSG;
-    private static FireAvatarFavorFarm FAFF { get => _FAFF ??= new FireAvatarFavorFarm(); set => _FAFF = value; }
+    private static FireAvatarFavorFarm FAFF
+    {
+        get => _FAFF ??= new FireAvatarFavorFarm();
+        set => _FAFF = value;
+    }
     private static FireAvatarFavorFarm _FAFF;
-    private static UltimateBLoD UBLOD { get => _UBLOD ??= new UltimateBLoD(); set => _UBLOD = value; }
+    private static UltimateBLoD UBLOD
+    {
+        get => _UBLOD ??= new UltimateBLoD();
+        set => _UBLOD = value;
+    }
     private static UltimateBLoD _UBLOD;
-    private static WarfuryEmblem WFE { get => _WFE ??= new WarfuryEmblem(); set => _WFE = value; }
+    private static WarfuryEmblem WFE
+    {
+        get => _WFE ??= new WarfuryEmblem();
+        set => _WFE = value;
+    }
     private static WarfuryEmblem _WFE;
-    private static FireChampionsArmor FCA { get => _FCA ??= new FireChampionsArmor(); set => _FCA = value; }    private static FireChampionsArmor _FCA;
-    private static BeetleQuests BeetleQuests { get => _BeetleQuests ??= new BeetleQuests(); set => _BeetleQuests = value; }    private static BeetleQuests _BeetleQuests;
-    private static Awescended Awescended { get => _Awescended ??= new Awescended(); set => _Awescended = value; }    private static Awescended _Awescended;
-    private static CoreHollowbornPaladin CHBP { get => _CHBP ??= new CoreHollowbornPaladin(); set => _CHBP = value; }    private static CoreHollowbornPaladin _CHBP;
-    private static MalgorsArmorSet MalgorsArmorSet { get => _MalgorsArmorSet ??= new MalgorsArmorSet(); set => _MalgorsArmorSet = value; }    private static MalgorsArmorSet _MalgorsArmorSet;
-    private static ChampionDrakathMerge ChampionDrakathMerge { get => _ChampionDrakathMerge ??= new ChampionDrakathMerge(); set => _ChampionDrakathMerge = value; }    private static ChampionDrakathMerge _ChampionDrakathMerge;
-    private static DrakathArmorBot DAB { get => _DAB ??= new DrakathArmorBot(); set => _DAB = value; }    private static DrakathArmorBot _DAB;
+    private static FireChampionsArmor FCA
+    {
+        get => _FCA ??= new FireChampionsArmor();
+        set => _FCA = value;
+    }
+    private static FireChampionsArmor _FCA;
+    private static BeetleQuests BeetleQuests
+    {
+        get => _BeetleQuests ??= new BeetleQuests();
+        set => _BeetleQuests = value;
+    }
+    private static BeetleQuests _BeetleQuests;
+    private static Awescended Awescended
+    {
+        get => _Awescended ??= new Awescended();
+        set => _Awescended = value;
+    }
+    private static Awescended _Awescended;
+    private static CoreHollowbornPaladin CHBP
+    {
+        get => _CHBP ??= new CoreHollowbornPaladin();
+        set => _CHBP = value;
+    }
+    private static CoreHollowbornPaladin _CHBP;
+    private static MalgorsArmorSet MalgorsArmorSet
+    {
+        get => _MalgorsArmorSet ??= new MalgorsArmorSet();
+        set => _MalgorsArmorSet = value;
+    }
+    private static MalgorsArmorSet _MalgorsArmorSet;
+    private static ChampionDrakathMerge ChampionDrakathMerge
+    {
+        get => _ChampionDrakathMerge ??= new ChampionDrakathMerge();
+        set => _ChampionDrakathMerge = value;
+    }
+    private static ChampionDrakathMerge _ChampionDrakathMerge;
+    private static DrakathArmorBot DAB
+    {
+        get => _DAB ??= new DrakathArmorBot();
+        set => _DAB = value;
+    }
+    private static DrakathArmorBot _DAB;
 
     public string OptionsStorage = "Rgrow";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("UseInsigsonEmpDrkArm", "Use Insig on Emp Drak", "Wether to use your Champion Drakath Insignia to buy the \"Empowered Drakath Armor\"", false),
+        new Option<bool>(
+            "UseInsigsonEmpDrkArm",
+            "Use Insig on Emp Drak",
+            "Wether to use your Champion Drakath Insignia to buy the \"Empowered Drakath Armor\"",
+            false
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[]
-        {
-            //End Goal:
-            "Radiant Goddess of War",
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                //End Goal:
+                "Radiant Goddess of War",
+                // Non-Bottable
+                "Malgor Insignia",
+                "Elemental Core",
+                "Fire Avatar's Favor ",
+                "Acquiescence",
+                //last step items:
+                "Goddess Of War",
+                //2nd to last step items
+                "Goddess Of War Prestige Cloak",
+                // 2nd step items:
+                "Goddess Of War Blades",
+                "Goddess of War Cloak",
+                //begining steps:
+                "War Blade of Strength",
+                "War Blade of Courage",
+                "War Blade of Power",
+                "War Blade of Speed",
+                "War Blade of Wisdom",
 
-            // Non-Bottable
-            "Malgor Insignia",
-            "Elemental Core",
-            "Fire Avatar's Favor ",
-            "Acquiescence",
-            
-            //last step items:
-            "Goddess Of War",
-
-            //2nd to last step items
-            "Goddess Of War Prestige Cloak",
-
-            // 2nd step items:
-            "Goddess Of War Blades",
-            "Goddess of War Cloak",
-
-            //begining steps:
-            "War Blade of Strength",
-            "War Blade of Courage",
-            "War Blade of Power",
-            "War Blade of Speed",
-            "War Blade of Wisdom",
-
-            //add more here
-        });
+                //add more here
+            }
+        );
 
         Core.SetOptions();
         GetPrereqs();
@@ -155,7 +240,6 @@ public class UltraSpeakerMergePreReqs
 
     public void GetPrereqs()
     {
-
         // Initialize counters
         int AcquiescenceCount = 0;
         int ElementalCoreCount = 0;
@@ -171,7 +255,14 @@ public class UltraSpeakerMergePreReqs
             Core.Logger("Getting prerequisites for 'Goddess Of War' armor...");
             // Prerequisites for acquiring "Goddess Of War" armor
 
-            if (Bot.Config!.Get<bool>("UseInsigsonEmpDrkArm") && !Core.CheckInventory("Empowered Drakath Armor") && Core.CheckInventory("Champion Drakath Insignia", 5) && Core.CheckInventory(25779 /* Drakath Armor */))
+            if (
+                Bot.Config!.Get<bool>("UseInsigsonEmpDrkArm")
+                && !Core.CheckInventory("Empowered Drakath Armor")
+                && Core.CheckInventory("Champion Drakath Insignia", 5)
+                && Core.CheckInventory(
+                    25779 /* Drakath Armor */
+                )
+            )
             {
                 DAB.DrakathArmorQuest();
                 Core.Join("championdrakath");
@@ -213,10 +304,16 @@ public class UltraSpeakerMergePreReqs
                 GoddessofWarCloak();
                 if (Core.CheckInventory(new[] { "Goddess Of War Blades", "Goddess of War Cloak" }))
                     Core.BuyItem("ultraspeaker", 2248, 72921, shopItemID: 11443);
-                else Core.Logger("farmed all PreFarmable (non-insignia) items for \"GoddessOfWarPrestigeCloak\"");
+                else
+                    Core.Logger(
+                        "farmed all PreFarmable (non-insignia) items for \"GoddessOfWarPrestigeCloak\""
+                    );
             }
 
-            if (!Core.CheckInventory("Radiant Goddess of War") && Core.CheckInventory("Goddess Of War"))
+            if (
+                !Core.CheckInventory("Radiant Goddess of War")
+                && Core.CheckInventory("Goddess Of War")
+            )
             {
                 Core.AddDrop("Radiant Goddess of War");
 
@@ -229,18 +326,32 @@ public class UltraSpeakerMergePreReqs
                 CHBP.GetSpecific("Classic Hollowborn Paladin Armor");
                 MalgorsArmorSet.GetSet(false, new[] { "Malgor the ShadowLord" });
 
-                if (Core.CheckInventory(new[]
-                 {
-                    "Empowered Drakath Armor",
-                    "Fire Champion's Armor",
-                    "Void Beetle Warlord",
-                    "Malgor the ShadowLord",
-                    "Classic Hollowborn Paladin Armor",
-                    "Awescended",
-                    }))
+                if (
+                    Core.CheckInventory(
+                        new[]
+                        {
+                            "Empowered Drakath Armor",
+                            "Fire Champion's Armor",
+                            "Void Beetle Warlord",
+                            "Malgor the ShadowLord",
+                            "Classic Hollowborn Paladin Armor",
+                            "Awescended",
+                        }
+                    )
+                )
                     Core.EnsureComplete(9184);
                 else
-                    foreach (string item in new[] { "Empowered Drakath Armor", "Fire Champion's Armor", "Void Beetle Warlord", "Malgor the ShadowLord", "Classic Hollowborn Paladin Armor", "Awescended" })
+                    foreach (
+                        string item in new[]
+                        {
+                            "Empowered Drakath Armor",
+                            "Fire Champion's Armor",
+                            "Void Beetle Warlord",
+                            "Malgor the ShadowLord",
+                            "Classic Hollowborn Paladin Armor",
+                            "Awescended",
+                        }
+                    )
                         Core.Logger($"Missing {item} to complete the quest.");
                 Bot.Wait.ForPickup("Radiant Goddess of War");
                 if (Core.CheckInventory("Radiant Goddess of War"))
@@ -256,12 +367,12 @@ public class UltraSpeakerMergePreReqs
 
                 string[] WarBlades =
                 {
-                        "War Blade of Courage",
-                        "War Blade of Power",
-                        "War Blade of Speed",
-                        "War Blade of Strength",
-                        "War Blade of Wisdom"
-                    };
+                    "War Blade of Courage",
+                    "War Blade of Power",
+                    "War Blade of Speed",
+                    "War Blade of Strength",
+                    "War Blade of Wisdom",
+                };
 
                 //Story Requirements:
                 Core.Logger("Doing Story Req. for some items.");
@@ -292,7 +403,14 @@ public class UltraSpeakerMergePreReqs
                             //Dragon Scale(1)
                             Core.AddDrop(11475);
                             while (!Core.CheckInventory(11475, 30))
-                                Core.KillMonster("lair", "Hole", "Center", "*", isTemp: false, log: false);
+                                Core.KillMonster(
+                                    "lair",
+                                    "Hole",
+                                    "Center",
+                                    "*",
+                                    isTemp: false,
+                                    log: false
+                                );
                             DSG.EnchantedScaleandClaw(250, 0);
 
                             Core.Logger("Adding 7 to the Insignias Count");
@@ -303,9 +421,23 @@ public class UltraSpeakerMergePreReqs
 
                         case "War Blade of Speed":
                             Core.EquipClass(ClassType.Farm);
-                            Core.HuntMonster("shadowfallwar", "Skeletal Fire Mage", "Ultimate Darkness Gem", 75, isTemp: false);
+                            Core.HuntMonster(
+                                "shadowfallwar",
+                                "Skeletal Fire Mage",
+                                "Ultimate Darkness Gem",
+                                75,
+                                isTemp: false
+                            );
                             Core.EquipClass(ClassType.Solo);
-                            Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Death's Oversight", 5, false);
+                            Core.KillMonster(
+                                "shadowattack",
+                                "Boss",
+                                "Left",
+                                "Death",
+                                "Death's Oversight",
+                                5,
+                                false
+                            );
 
                             Core.Logger("Adding 7 to the Insignias Count");
                             InsigniasCount += 7;
@@ -320,10 +452,26 @@ public class UltraSpeakerMergePreReqs
                             Core.EquipClass(ClassType.Farm);
 
                             Core.RegisterQuests(8244);
-                            while (!Bot.ShouldExit && !Core.CheckInventory("Fire Avatar's Favor", 25))
+                            while (
+                                !Bot.ShouldExit && !Core.CheckInventory("Fire Avatar's Favor", 25)
+                            )
                             {
-                                Core.KillMonster("fireavatar", "r4", "Right", "*", "Onslaught Defeated", 6);
-                                Core.KillMonster("fireavatar", "r6", "Left", "*", "Elemental Defeated", 6);
+                                Core.KillMonster(
+                                    "fireavatar",
+                                    "r4",
+                                    "Right",
+                                    "*",
+                                    "Onslaught Defeated",
+                                    6
+                                );
+                                Core.KillMonster(
+                                    "fireavatar",
+                                    "r6",
+                                    "Left",
+                                    "*",
+                                    "Elemental Defeated",
+                                    6
+                                );
 
                                 Bot.Wait.ForPickup("Fire Avatar's Favor");
                             }
@@ -341,11 +489,23 @@ public class UltraSpeakerMergePreReqs
                             Core.AddDrop("Fragment of the Queen", "ShadowChaos Mote");
                             Core.EquipClass(ClassType.Solo);
                             Bot.Quests.UpdateQuest(8094);
-                            Core.HuntMonster("transformation", "Queen of Monsters", "Fragment of the Queen", 13, false);
+                            Core.HuntMonster(
+                                "transformation",
+                                "Queen of Monsters",
+                                "Fragment of the Queen",
+                                13,
+                                false
+                            );
 
                             Core.EquipClass(ClassType.Farm);
                             Core.RegisterQuests(7700);
-                            Core.HuntMonster("lagunabeach", "Flying Fisheye", "ShadowChaos Mote", 250, false);
+                            Core.HuntMonster(
+                                "lagunabeach",
+                                "Flying Fisheye",
+                                "ShadowChaos Mote",
+                                250,
+                                false
+                            );
                             Bot.Wait.ForPickup("ShadowChaos Mote");
                             Core.CancelRegisteredQuests();
 
@@ -371,7 +531,7 @@ public class UltraSpeakerMergePreReqs
                 InsigniasCount += 10;
             }
             #endregion GoddessOfWarPrestigeCloak
-            #endregion GoddessofWar rewrote
+        #endregion GoddessofWar rewrote
 
             #region RGRoW item Check
 
@@ -381,13 +541,10 @@ public class UltraSpeakerMergePreReqs
             // If all required items are owned, proceed to buy the specified item
             // Goddess Of War Prestige Cloak
             Core.BuyItem("ultraspeaker", 2248, 72921, shopItemID: 11443); //remove the else here <<
-
         }
-        #endregion RGRoW item Check
+            #endregion RGRoW item Check
 
         // #region Radiant Goddess of War quest
         // #endregion Radiant Goddess of War quest
-
-
     }
 }

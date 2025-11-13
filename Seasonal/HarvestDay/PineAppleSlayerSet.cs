@@ -14,8 +14,12 @@ public class PineappleSlayerSet
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public string OptionsStorage = "PineappleSlayerSet";
     public bool DontPreconfigure = true;
@@ -24,7 +28,6 @@ public class PineappleSlayerSet
         new Option<bool>("BankAfter", "Bank After", "Bank all rewards after?", false),
         CoreBots.Instance.SkipOptions,
     };
-
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -37,9 +40,16 @@ public class PineappleSlayerSet
 
     public void Example()
     {
-        if (!Core.isSeasonalMapActive("foulfarm") || Core.CheckInventory(Core.QuestRewards(9486), toInv: false))
+        if (
+            !Core.isSeasonalMapActive("foulfarm")
+            || Core.CheckInventory(Core.QuestRewards(9486), toInv: false)
+        )
         {
-            Core.Logger(Core.CheckInventory(Core.QuestRewards(9486)) ? "All rewards owned." : "seasonal map not available.");
+            Core.Logger(
+                Core.CheckInventory(Core.QuestRewards(9486))
+                    ? "All rewards owned."
+                    : "seasonal map not available."
+            );
             return;
         }
 

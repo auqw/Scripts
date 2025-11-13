@@ -12,15 +12,24 @@ public class LowDRPets
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public string OptionsStorage = "1%Pets";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<Pets>("Pets", "Choose Your Pets", "Extra Pets can be added as long as they are 1% or lower drop chance.", Pets.None),
+        new Option<Pets>(
+            "Pets",
+            "Choose Your Pets",
+            "Extra Pets can be added as long as they are 1% or lower drop chance.",
+            Pets.None
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -44,7 +53,10 @@ public class LowDRPets
 
         Core.FarmingLogger($"{petConfig}", 1);
 
-        if ((petConfig == Pets.Akriloth_Pet || petConfig == Pets.All) && !Core.CheckInventory("Akriloth Pet"))
+        if (
+            (petConfig == Pets.Akriloth_Pet || petConfig == Pets.All)
+            && !Core.CheckInventory("Akriloth Pet")
+        )
         {
             Core.HuntMonster("gravestrike", "Ultra Akriloth", "Akriloth Pet", isTemp: false);
         }
@@ -57,7 +69,6 @@ public class LowDRPets
         // case "item":
         // Code goes here
         // break;
-
     }
 }
 
@@ -65,5 +76,5 @@ public enum Pets
 {
     Akriloth_Pet,
     All,
-    None
+    None,
 }

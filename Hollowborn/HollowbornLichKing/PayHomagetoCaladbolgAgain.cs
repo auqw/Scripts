@@ -15,7 +15,6 @@ tags: pay homage to caladbolg (again), caladbolg, hollowborn, hollowborn, lich, 
 //cs_include Scripts/Legion/Revenant/CoreLR.cs
 //cs_include Scripts/Story/QueenofMonsters/CoreQOM.cs
 
-
 //cs_include Scripts/Legion/MergeShops/UndeadLegionMerge.cs
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
 //cs_include Scripts/Legion/Various/Caladbolg.cs
@@ -36,12 +35,29 @@ public class PayHomagetoCaladbolgAgain
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static CoreHollowbornLichKing CoreHollowbornLichKing { get => _CoreHollowbornLichKing ??= new CoreHollowbornLichKing(); set => _CoreHollowbornLichKing = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static CoreHollowbornLichKing CoreHollowbornLichKing
+    {
+        get => _CoreHollowbornLichKing ??= new CoreHollowbornLichKing();
+        set => _CoreHollowbornLichKing = value;
+    }
     private static CoreHollowbornLichKing _CoreHollowbornLichKing;
-    private static HollowSoul HS { get => _HS ??= new HollowSoul(); set => _HS = value; }
+    private static HollowSoul HS
+    {
+        get => _HS ??= new HollowSoul();
+        set => _HS = value;
+    }
     private static HollowSoul _HS;
-    private static Caladbolg Caladbolg { get => _Caladbolg ??= new Caladbolg(); set => _Caladbolg = value; }
+    private static Caladbolg Caladbolg
+    {
+        get => _Caladbolg ??= new Caladbolg();
+        set => _Caladbolg = value;
+    }
     private static Caladbolg _Caladbolg;
 
     public void ScriptMain(IScriptInterface bot)
@@ -55,10 +71,17 @@ public class PayHomagetoCaladbolgAgain
 
     public void GetRewards()
     {
-        if (Core.EnsureLoad(9641).Rewards.All(reward => Core.CheckInventory(reward.Name, toInv: false))
-        || !Core.CheckInventory("Altar Of Caladbolg"))
+        if (
+            Core.EnsureLoad(9641)
+                .Rewards.All(reward => Core.CheckInventory(reward.Name, toInv: false))
+            || !Core.CheckInventory("Altar Of Caladbolg")
+        )
         {
-            Core.Logger(!Core.CheckInventory("Altar Of Caladbolg") ? "This bot requires you to have a \"Altar Of Caladbolg\". Stopping the bot." : "All rewards owned, stopping the bot");
+            Core.Logger(
+                !Core.CheckInventory("Altar Of Caladbolg")
+                    ? "This bot requires you to have a \"Altar Of Caladbolg\". Stopping the bot."
+                    : "All rewards owned, stopping the bot"
+            );
             return;
         }
 
@@ -68,14 +91,20 @@ public class PayHomagetoCaladbolgAgain
             Core.AddDrop(item.ID);
 
         Caladbolg.GetCaladbolg(false);
-        CoreHollowbornLichKing.Counterblow(CoreHollowbornLichKing.CounterblowRewards.Altar_Of_the_Hollowborn_Caladbolg);
+        CoreHollowbornLichKing.Counterblow(
+            CoreHollowbornLichKing.CounterblowRewards.Altar_Of_the_Hollowborn_Caladbolg
+        );
 
         foreach (ItemBase Reward in RewardOptions)
         {
             if (Core.CheckInventory(Reward.Name, toInv: false))
                 return;
 
-            Core.Logger(Core.CheckInventory(Reward.ID, toInv: false) ? $"{Reward.Name}: ✅" : $"{Reward.Name} ❌");
+            Core.Logger(
+                Core.CheckInventory(Reward.ID, toInv: false)
+                    ? $"{Reward.Name}: ✅"
+                    : $"{Reward.Name} ❌"
+            );
             // Core.ResetQuest(9641);
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.ID))
             {

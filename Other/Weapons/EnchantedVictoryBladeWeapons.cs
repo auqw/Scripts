@@ -13,13 +13,29 @@ public class EnchantedVictoryBladeWeapons
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
-        Core.BankingBlackList.AddRange(new[] { "Enchanted Mana Blade", "Bright Aura Gem", "Amulet of Glory", "Arcane Blade of Glory", "Enchanted Shadow Blade", "Dark Aura Gem", "Amulet of Despair", "Shadow Blade of Despair" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Enchanted Mana Blade",
+                "Bright Aura Gem",
+                "Amulet of Glory",
+                "Arcane Blade of Glory",
+                "Enchanted Shadow Blade",
+                "Dark Aura Gem",
+                "Amulet of Despair",
+                "Shadow Blade of Despair",
+            }
+        );
 
         GetBoth();
 
@@ -30,26 +46,51 @@ public class EnchantedVictoryBladeWeapons
     {
         GetWeapon(VictoryBladeStyles.ArcaneBladeOfGlory);
         GetWeapon(VictoryBladeStyles.ShadowBladeOfDespair);
-
     }
 
     public void GetWeapon(VictoryBladeStyles Method = VictoryBladeStyles.Smart)
     {
-
         if ((int)Method == 2)
         {
-            if (Core.CheckInventory(new[] { "Enchanted Mana Blade", "Bright Aura Gem", "Amulet of Glory", "Arcane Blade of Glory" }, any: true))
+            if (
+                Core.CheckInventory(
+                    new[]
+                    {
+                        "Enchanted Mana Blade",
+                        "Bright Aura Gem",
+                        "Amulet of Glory",
+                        "Arcane Blade of Glory",
+                    },
+                    any: true
+                )
+            )
                 Method = VictoryBladeStyles.ArcaneBladeOfGlory;
-            else if (Core.CheckInventory(new[] { "Enchanted Shadow Blade", "Dark Aura Gem", "Amulet of Despair", "Shadow Blade of Despair" }, any: true))
+            else if (
+                Core.CheckInventory(
+                    new[]
+                    {
+                        "Enchanted Shadow Blade",
+                        "Dark Aura Gem",
+                        "Amulet of Despair",
+                        "Shadow Blade of Despair",
+                    },
+                    any: true
+                )
+            )
                 Method = VictoryBladeStyles.ShadowBladeOfDespair;
             else
             {
-                Alignment alignment = (Alignment)Bot.Flash.CallGameFunction<int>("world.getQuestValue", 41);
+                Alignment alignment = (Alignment)
+                    Bot.Flash.CallGameFunction<int>("world.getQuestValue", 41);
                 if (alignment == Alignment.Good)
                     Method = VictoryBladeStyles.ArcaneBladeOfGlory;
                 else if (alignment == Alignment.Evil)
                     Method = VictoryBladeStyles.ShadowBladeOfDespair;
-                else Method = Bot.Random.Next(0, 100) > 50 ? VictoryBladeStyles.ArcaneBladeOfGlory : VictoryBladeStyles.ShadowBladeOfDespair;
+                else
+                    Method =
+                        Bot.Random.Next(0, 100) > 50
+                            ? VictoryBladeStyles.ArcaneBladeOfGlory
+                            : VictoryBladeStyles.ShadowBladeOfDespair;
             }
         }
         bool doGlory = (int)Method == 0;
@@ -134,7 +175,7 @@ public class EnchantedVictoryBladeWeapons
         Core.HuntMonster("graveyard", "Skeletal Viking", "Nornir Triad Shard", 12, false);
 
         Core.EnsureComplete(4813, type == "Amulet of Glory" ? 33502 : 33501);
-        // Core.EnsureComplete(4813, Amulet.ID); 
+        // Core.EnsureComplete(4813, Amulet.ID);
         Bot.Wait.ForPickup(type);
     }
 

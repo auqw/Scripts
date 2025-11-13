@@ -19,25 +19,50 @@ public class SeaVoiceMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
     private static CoreAdvanced _sAdv;
-
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Algal Bloom", "Bioluminessence", "Dark Elf Pearl", "Glaucus Mystic", "Water Elf Pearl", "Water Elf Antler", "Glaucus Companion", "Sundered Tentacle", "Calamity Atlanticus Trident" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Algal Bloom",
+                "Bioluminessence",
+                "Dark Elf Pearl",
+                "Glaucus Mystic",
+                "Water Elf Pearl",
+                "Water Elf Antler",
+                "Glaucus Companion",
+                "Sundered Tentacle",
+                "Calamity Atlanticus Trident",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -54,7 +79,9 @@ public class SeaVoiceMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +92,14 @@ public class SeaVoiceMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Bioluminessence":
                 case "Calamity Atlanticus Trident":
@@ -83,9 +115,20 @@ public class SeaVoiceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("trenchobserve", "Lady Noelle", "Noelle's Brooch", log: false);
+                        Core.HuntMonster(
+                            "trenchobserve",
+                            "Lady Noelle",
+                            "Noelle's Brooch",
+                            log: false
+                        );
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("trenchobserve", "Sea Spirit", "Green Sea Jelly", 2, log: false);
+                        Core.HuntMonster(
+                            "trenchobserve",
+                            "Sea Spirit",
+                            "Green Sea Jelly",
+                            2,
+                            log: false
+                        );
                         Core.HuntMonster("trenchobserve", "Necro Adipocere", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -98,8 +141,20 @@ public class SeaVoiceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("midnightzone", "Shadow Viscera", "Fleshy Shadows", 8, log: false);
-                        Core.HuntMonster("midnightzone", "Venerated Wraith", "Wraith Memento", 8, log: false);
+                        Core.HuntMonster(
+                            "midnightzone",
+                            "Shadow Viscera",
+                            "Fleshy Shadows",
+                            8,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "midnightzone",
+                            "Venerated Wraith",
+                            "Wraith Memento",
+                            8,
+                            log: false
+                        );
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("midnightzone", "Sparagmos", "Memory Card", log: false);
                         Bot.Wait.ForPickup(req.Name);
@@ -113,9 +168,20 @@ public class SeaVoiceMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("abyssalzone", "The Ashray", "Ashray Artifacts", log: false);
+                        Core.HuntMonster(
+                            "abyssalzone",
+                            "The Ashray",
+                            "Ashray Artifacts",
+                            log: false
+                        );
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("abyssalzone", "Necro Adipocere", "Adipocere Antler", 3, log: false);
+                        Core.HuntMonster(
+                            "abyssalzone",
+                            "Necro Adipocere",
+                            "Adipocere Antler",
+                            3,
+                            log: false
+                        );
                         Core.HuntMonster("abyssalzone", "Foam Scavenger");
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -128,9 +194,30 @@ public class SeaVoiceMerge
                     Core.RegisterQuests(9269);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("twilightzone", "Leviathan", "Leviathan Tentacle", 1, true, false);
-                        Core.HuntMonster("twilightzone", "Decay Spirit", "Decay Essence", 8, true, false);
-                        Core.HuntMonster("twilightzone", "Ice Guardian", "Tarnished Icicle", 8, true, false);
+                        Core.HuntMonster(
+                            "twilightzone",
+                            "Leviathan",
+                            "Leviathan Tentacle",
+                            1,
+                            true,
+                            false
+                        );
+                        Core.HuntMonster(
+                            "twilightzone",
+                            "Decay Spirit",
+                            "Decay Essence",
+                            8,
+                            true,
+                            false
+                        );
+                        Core.HuntMonster(
+                            "twilightzone",
+                            "Ice Guardian",
+                            "Tarnished Icicle",
+                            8,
+                            true,
+                            false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -142,10 +229,19 @@ public class SeaVoiceMerge
     public void AttackVoiceInTheSea(string itemName, int quant)
     {
         // Define the possible solo classes
-        string[] PossibleSoloClasses = new[] { "Chaos Avenger", "Verus Doomknight", "Void Highlord", "ArchPaladin" };
+        string[] PossibleSoloClasses = new[]
+        {
+            "Chaos Avenger",
+            "Verus Doomknight",
+            "Void Highlord",
+            "ArchPaladin",
+        };
 
         if (!Core.CheckInventory(PossibleSoloClasses, any: true))
-            Core.Logger("no Soloing classes found stopping (go get AP atleast and rerun)", stopBot: true);
+            Core.Logger(
+                "no Soloing classes found stopping (go get AP atleast and rerun)",
+                stopBot: true
+            );
 
         // Register the quest
         Core.RegisterQuests(9349);
@@ -157,13 +253,15 @@ public class SeaVoiceMerge
         {
             // Find the first available class in inventory or bank
             string? selectedClass = PossibleSoloClasses.FirstOrDefault(className =>
-    Bot.Inventory.Items.Any(item => item.Name == className) ||
-    Bot.Bank.Items.Any(item => item.Name == className)
-);
+                Bot.Inventory.Items.Any(item => item.Name == className)
+                || Bot.Bank.Items.Any(item => item.Name == className)
+            );
 
             if (string.IsNullOrWhiteSpace(selectedClass))
             {
-                Core.Logger("No soloing class found; aborting SeaVoice. Go get a solo class and re-run.");
+                Core.Logger(
+                    "No soloing class found; aborting SeaVoice. Go get a solo class and re-run."
+                );
                 return;
             }
 
@@ -184,11 +282,18 @@ public class SeaVoiceMerge
             );
         }
         Adv.GearStore(true);
-        Core.CancelRegisteredQuests();  // Unregister the quest
-
+        Core.CancelRegisteredQuests(); // Unregister the quest
     }
 
-    public void KillThing(string map, int mobMapID, int itemUsed, string Class, string item, int quant = 1, bool isTemp = false)
+    public void KillThing(
+        string map,
+        int mobMapID,
+        int itemUsed,
+        string Class,
+        string item,
+        int quant = 1,
+        bool isTemp = false
+    )
     {
         Adv.BuyItem("seavoice", 2320, "Vigil", 1000, 12023);
         Core.Join(map);
@@ -206,7 +311,9 @@ public class SeaVoiceMerge
             string? classNameToUse = Class ?? classFromPlayer;
             if (string.IsNullOrWhiteSpace(classNameToUse))
             {
-                Core.Logger("KillThing aborted: no class specified and player has no current class.");
+                Core.Logger(
+                    "KillThing aborted: no class specified and player has no current class."
+                );
                 return;
             }
             Bot.Skills.StartAdvanced(classNameToUse, true, ClassUseMode.Base);
@@ -228,7 +335,10 @@ public class SeaVoiceMerge
             Core.Jump(mob.Cell);
         Bot.Player.SetSpawnPoint();
 
-        while (!Bot.ShouldExit && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant)))
+        while (
+            !Bot.ShouldExit
+            && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant))
+        )
         {
             if (!Bot.Player.Alive)
             {
@@ -245,8 +355,14 @@ public class SeaVoiceMerge
                 while (!Bot.ShouldExit && Bot.Player.Alive && Bot.Skills.CanUseSkill(5))
                 {
                     var skill = Bot.Flash.GetArrayObject<dynamic>("world.actions.active", 5);
-                    if (skill == null) return;
-                    Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill))!);
+                    if (skill == null)
+                        return;
+                    Bot.Flash.CallGameFunction(
+                        "world.testAction",
+                        JsonConvert.DeserializeObject<ExpandoObject>(
+                            JsonConvert.SerializeObject(skill)
+                        )!
+                    );
 
                     Core.Sleep(Core.ActionDelay);
                     if (!Bot.Skills.CanUseSkill(5))
@@ -266,19 +382,73 @@ public class SeaVoiceMerge
         Core.Logger($"KillThing completed for {item} ({quant}).");
     }
 
-
     public List<IOption> Select = new()
     {
-        new Option<bool>("79161", "Midnight Glaucus Sage", "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Sage\" ?", false),
-        new Option<bool>("79160", "Midnight Glaucus Mystic", "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Mystic\" ?", false),
-        new Option<bool>("79154", "Glaucus Sage", "Mode: [select] only\nShould the bot buy \"Glaucus Sage\" ?", false),
-        new Option<bool>("79165", "Midnight Glaucus Locks", "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Locks\" ?", false),
-        new Option<bool>("79164", "Midnight Glaucus Hair", "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Hair\" ?", false),
-        new Option<bool>("79163", "Midnight Glaucus Visage", "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Visage\" ?", false),
-        new Option<bool>("79162", "Midnight Glaucus Morph", "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Morph\" ?", false),
-        new Option<bool>("79156", "Glaucus Visage", "Mode: [select] only\nShould the bot buy \"Glaucus Visage\" ?", false),
-        new Option<bool>("79155", "Glaucus Morph", "Mode: [select] only\nShould the bot buy \"Glaucus Morph\" ?", false),
-        new Option<bool>("79166", "Midnight Glaucus Companion", "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Companion\" ?", false),
-        new Option<bool>("79167", "Abyssal Atlanticus Trident", "Mode: [select] only\nShould the bot buy \"Abyssal Atlanticus Trident\" ?", false),
+        new Option<bool>(
+            "79161",
+            "Midnight Glaucus Sage",
+            "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Sage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79160",
+            "Midnight Glaucus Mystic",
+            "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Mystic\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79154",
+            "Glaucus Sage",
+            "Mode: [select] only\nShould the bot buy \"Glaucus Sage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79165",
+            "Midnight Glaucus Locks",
+            "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79164",
+            "Midnight Glaucus Hair",
+            "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79163",
+            "Midnight Glaucus Visage",
+            "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79162",
+            "Midnight Glaucus Morph",
+            "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79156",
+            "Glaucus Visage",
+            "Mode: [select] only\nShould the bot buy \"Glaucus Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79155",
+            "Glaucus Morph",
+            "Mode: [select] only\nShould the bot buy \"Glaucus Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79166",
+            "Midnight Glaucus Companion",
+            "Mode: [select] only\nShould the bot buy \"Midnight Glaucus Companion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "79167",
+            "Abyssal Atlanticus Trident",
+            "Mode: [select] only\nShould the bot buy \"Abyssal Atlanticus Trident\" ?",
+            false
+        ),
     };
 }

@@ -13,9 +13,17 @@ public class SkyChargedGrenadier
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -34,7 +42,10 @@ public class SkyChargedGrenadier
 
         if (!Core.HasAchievement(28, "ip14"))
         {
-            Core.Logger("This bot requires you to have 9 Years Membership or more.", messageBox: true);
+            Core.Logger(
+                "This bot requires you to have 9 Years Membership or more.",
+                messageBox: true
+            );
             return;
         }
 
@@ -60,7 +71,12 @@ public class SkyChargedGrenadier
         Core.RegisterQuests(6934);
         while (!Bot.ShouldExit && !Core.CheckInventory("Charged Grenade", 50))
         {
-            Core.HuntMonster("skycharged", "Sky Pirate Draconian", "Sky Pirate Draconian Chased Off", 10);
+            Core.HuntMonster(
+                "skycharged",
+                "Sky Pirate Draconian",
+                "Sky Pirate Draconian Chased Off",
+                10
+            );
             Bot.Wait.ForPickup("Charged Grenade");
         }
 

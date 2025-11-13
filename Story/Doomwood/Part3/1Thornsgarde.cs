@@ -12,7 +12,11 @@ public class Thornsgarde
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreDoomwood DW { get => _DW ??= new CoreDoomwood(); set => _DW = value; }
+    private static CoreDoomwood DW
+    {
+        get => _DW ??= new CoreDoomwood();
+        set => _DW = value;
+    }
     private static CoreDoomwood _DW;
 
     public void ScriptMain(IScriptInterface Bot)

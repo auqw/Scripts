@@ -12,16 +12,19 @@ using Skua.Core.Options;
 public class BloodGem
 {
     public CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-
 
     public string OptionsStorage = "BloodGems";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         new Option<HydraLevel>("Hydra Lvl to kill", "HydraLevel", "", HydraLevel.Head_85),
-         CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -36,7 +39,6 @@ public class BloodGem
     private enum HydraLevel
     {
         Head_85 = 85,
-        Head_90 = 90
+        Head_90 = 90,
     }
-
 }

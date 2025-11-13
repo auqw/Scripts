@@ -17,10 +17,30 @@ public class HollowbornOblivionBlade
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }    private static CoreHollowborn _HB;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
+    private static CoreHollowborn _HB;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -52,7 +72,12 @@ public class HollowbornOblivionBlade
         }
         Nation.ApprovalAndFavor(0, 1000);
         Nation.FarmBloodGem(50);
-        Core.HuntMonster("lostruinswar", "Diabolical Warlord", "Diabolical Minion's Seed", isTemp: false);
+        Core.HuntMonster(
+            "lostruinswar",
+            "Diabolical Warlord",
+            "Diabolical Minion's Seed",
+            isTemp: false
+        );
         if (!Core.CheckInventory("4th Dimension Gem"))
         {
             Core.EnsureAccept(5163);
@@ -65,7 +90,13 @@ public class HollowbornOblivionBlade
         HB.FreshSouls(1, 350);
         Core.EnsureComplete(7294);
         Bot.Wait.ForPickup("Hollowborn Oblivion Blade");
-        Adv.EnhanceItem("Hollowborn Oblivion Blade", EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Spiral_Carve);
+        Adv.EnhanceItem(
+            "Hollowborn Oblivion Blade",
+            EnhancementType.Lucky,
+            CapeSpecial.None,
+            HelmSpecial.None,
+            WeaponSpecial.Spiral_Carve
+        );
     }
 
     public void ArchFiendEnchantedOrbs()

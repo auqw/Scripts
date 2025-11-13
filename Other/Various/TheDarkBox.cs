@@ -12,7 +12,12 @@ public class TheDarkBox
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,7 +38,10 @@ public class TheDarkBox
         string[] Rewards = RewardsList.ToArray();
         Bot.Drops.Add(Rewards);
 
-        if (Core.CheckInventory(Rewards, toInv: false) || !Core.CheckInventory(new[] { "Dark Box", "Dark Key" }))
+        if (
+            Core.CheckInventory(Rewards, toInv: false)
+            || !Core.CheckInventory(new[] { "Dark Box", "Dark Key" })
+        )
             return;
 
         //The Dark Box 5710
@@ -42,11 +50,11 @@ public class TheDarkBox
         {
             if (Core.IsMember)
                 Core.HuntMonster("ruins", "Dark Elemental", "Dark Gem", isTemp: false);
-            else Core.HuntMonster("darkfortress", "Dark Elemental", "Dark Gem", isTemp: false);
+            else
+                Core.HuntMonster("darkfortress", "Dark Elemental", "Dark Gem", isTemp: false);
             Core.JumpWait();
             Core.ToBank(Rewards);
         }
         Core.CancelRegisteredQuests();
-
     }
 }

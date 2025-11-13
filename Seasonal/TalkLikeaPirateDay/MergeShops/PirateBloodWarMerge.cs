@@ -14,18 +14,30 @@ public class PirateBloodWarMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -42,14 +54,22 @@ private static CoreAdvanced _sAdv;
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         //Only edit the map and shopID here
-        Adv.StartBuyAllMerge("piratebloodhub", 2482, findIngredients, buyOnlyThis, buyMode: buyMode);
+        Adv.StartBuyAllMerge(
+            "piratebloodhub",
+            2482,
+            findIngredients,
+            buyOnlyThis,
+            buyMode: buyMode
+        );
 
         #region Dont edit this part
         void findIngredients()
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,9 +80,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Blood Testament Trophy":
                     Core.FarmingLogger(req.Name, quant);
@@ -78,21 +103,101 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("88172", "Enchanted Blood Isles Corsair", "Mode: [select] only\nShould the bot buy \"Enchanted Blood Isles Corsair\" ?", false),
-        new Option<bool>("88173", "Enchanted Corsair's Accoutrements", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Accoutrements\" ?", false),
-        new Option<bool>("88174", "Enchanted Corsair's Battle Morph", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Battle Morph\" ?", false),
-        new Option<bool>("88175", "Enchanted Corsair's Patch", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Patch\" ?", false),
-        new Option<bool>("88176", "Enchanted Corsair's Hat", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Hat\" ?", false),
-        new Option<bool>("88180", "Blood Isles Skull Pet", "Mode: [select] only\nShould the bot buy \"Blood Isles Skull Pet\" ?", false),
-        new Option<bool>("88181", "Enchanted Blood Isles Cutlass", "Mode: [select] only\nShould the bot buy \"Enchanted Blood Isles Cutlass\" ?", false),
-        new Option<bool>("88182", "Enchanted Blood Isles Cutlasses", "Mode: [select] only\nShould the bot buy \"Enchanted Blood Isles Cutlasses\" ?", false),
-        new Option<bool>("88269", "Siren Poacher Beard", "Mode: [select] only\nShould the bot buy \"Siren Poacher Beard\" ?", false),
-        new Option<bool>("80988", "Siren Poacher Patch", "Mode: [select] only\nShould the bot buy \"Siren Poacher Patch\" ?", false),
-        new Option<bool>("80989", "Siren Poacher Eyepatch and Locks", "Mode: [select] only\nShould the bot buy \"Siren Poacher Eyepatch and Locks\" ?", false),
-        new Option<bool>("88039", "Vampiric Bloodthirst Whip", "Mode: [select] only\nShould the bot buy \"Vampiric Bloodthirst Whip\" ?", false),
-        new Option<bool>("88194", "Blood Isles Backup Guns", "Mode: [select] only\nShould the bot buy \"Blood Isles Backup Guns\" ?", false),
-        new Option<bool>("88195", "Golden Anchor", "Mode: [select] only\nShould the bot buy \"Golden Anchor\" ?", false),
-        new Option<bool>("88214", "Gold Chain and Hook", "Mode: [select] only\nShould the bot buy \"Gold Chain and Hook\" ?", false),
-        new Option<bool>("88215", "Gold Chain and Hooks", "Mode: [select] only\nShould the bot buy \"Gold Chain and Hooks\" ?", false),
+        new Option<bool>(
+            "88172",
+            "Enchanted Blood Isles Corsair",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Blood Isles Corsair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88173",
+            "Enchanted Corsair's Accoutrements",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Accoutrements\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88174",
+            "Enchanted Corsair's Battle Morph",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Battle Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88175",
+            "Enchanted Corsair's Patch",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Patch\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88176",
+            "Enchanted Corsair's Hat",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88180",
+            "Blood Isles Skull Pet",
+            "Mode: [select] only\nShould the bot buy \"Blood Isles Skull Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88181",
+            "Enchanted Blood Isles Cutlass",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Blood Isles Cutlass\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88182",
+            "Enchanted Blood Isles Cutlasses",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Blood Isles Cutlasses\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88269",
+            "Siren Poacher Beard",
+            "Mode: [select] only\nShould the bot buy \"Siren Poacher Beard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80988",
+            "Siren Poacher Patch",
+            "Mode: [select] only\nShould the bot buy \"Siren Poacher Patch\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80989",
+            "Siren Poacher Eyepatch and Locks",
+            "Mode: [select] only\nShould the bot buy \"Siren Poacher Eyepatch and Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88039",
+            "Vampiric Bloodthirst Whip",
+            "Mode: [select] only\nShould the bot buy \"Vampiric Bloodthirst Whip\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88194",
+            "Blood Isles Backup Guns",
+            "Mode: [select] only\nShould the bot buy \"Blood Isles Backup Guns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88195",
+            "Golden Anchor",
+            "Mode: [select] only\nShould the bot buy \"Golden Anchor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88214",
+            "Gold Chain and Hook",
+            "Mode: [select] only\nShould the bot buy \"Gold Chain and Hook\" ?",
+            false
+        ),
+        new Option<bool>(
+            "88215",
+            "Gold Chain and Hooks",
+            "Mode: [select] only\nShould the bot buy \"Gold Chain and Hooks\" ?",
+            false
+        ),
     };
 }

@@ -15,12 +15,25 @@ public class UnderVoidBadgesAll
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreDageBirthday Dage { get => _Dage ??= new CoreDageBirthday(); set => _Dage = value; }
+    private static CoreDageBirthday Dage
+    {
+        get => _Dage ??= new CoreDageBirthday();
+        set => _Dage = value;
+    }
     private static CoreDageBirthday _Dage;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -67,14 +80,17 @@ public class UnderVoidBadgesAll
     {
         if (!Core.isSeasonalMapActive("undervoid") || !Core.isCompletedBefore(3415))
         {
-            Core.Logger(!Core.isSeasonalMapActive("undervoid") ? $"Map not Avaiable" : $"Quest Not Unlocked Yet. each Daily takes 7x the previou (wtf i know right)");
+            Core.Logger(
+                !Core.isSeasonalMapActive("undervoid")
+                    ? $"Map not Avaiable"
+                    : $"Quest Not Unlocked Yet. each Daily takes 7x the previou (wtf i know right)"
+            );
             return;
         }
 
         Dage.Undervoid();
         Core.EquipClass(ClassType.Solo);
         Core.AddDrop("War's Pride");
-
 
         if (Core.HasWebBadge(badge2))
         {
@@ -97,7 +113,11 @@ public class UnderVoidBadgesAll
     {
         if (!Core.isSeasonalMapActive("undervoid") || !Core.isCompletedBefore(3416))
         {
-            Core.Logger(!Core.isSeasonalMapActive("undervoid") ? $"Map not Avaiable" : $"Quest Not Unlocked Yet. each Daily takes 7x the previou (wtf i know right)");
+            Core.Logger(
+                !Core.isSeasonalMapActive("undervoid")
+                    ? $"Map not Avaiable"
+                    : $"Quest Not Unlocked Yet. each Daily takes 7x the previou (wtf i know right)"
+            );
             return;
         }
 
@@ -110,7 +130,6 @@ public class UnderVoidBadgesAll
             Core.Logger($"Already have the {badge3} badge");
             return;
         }
-
         else if (Daily.CheckDailyv2(3413))
         {
             Core.Logger($"Doing UnderVoid Quest for {badge3} badge");
@@ -127,7 +146,11 @@ public class UnderVoidBadgesAll
     {
         if (!Core.isSeasonalMapActive("undervoid") || !Core.isCompletedBefore(3417))
         {
-            Core.Logger(!Core.isSeasonalMapActive("undervoid") ? $"Map not Avaiable" : $"Quest Not Unlocked Yet. each Daily takes 7x the previou (wtf i know right)");
+            Core.Logger(
+                !Core.isSeasonalMapActive("undervoid")
+                    ? $"Map not Avaiable"
+                    : $"Quest Not Unlocked Yet. each Daily takes 7x the previou (wtf i know right)"
+            );
             return;
         }
 
@@ -151,6 +174,7 @@ public class UnderVoidBadgesAll
                 Core.ChainComplete(3418);
         }
     }
+
     private string badge1 = "Conquest Victor";
     private string badge2 = "War Victor";
     private string badge3 = "Famine Victor";

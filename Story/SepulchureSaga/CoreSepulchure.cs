@@ -13,7 +13,11 @@ public class CoreSepulchure
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -67,7 +71,13 @@ public class CoreSepulchure
             {
                 Core.EnsureAccept(dothis.ID);
                 foreach (ItemBase Item in dothis.Requirements)
-                    Core.HuntMonster("scarsgarde", "Garde Watch", Item.Name, Item.Quantity, Item.Temp);
+                    Core.HuntMonster(
+                        "scarsgarde",
+                        "Garde Watch",
+                        Item.Name,
+                        Item.Quantity,
+                        Item.Temp
+                    );
                 Core.EnsureComplete(dothis.ID);
             }
             else
@@ -101,7 +111,11 @@ public class CoreSepulchure
         Story.KillQuest(6341, "scarsgarde", "Garde Captain");
 
         // Arm the Army 6342
-        Story.KillQuest(6342, "scarsgarde", new[] { "Garde Knight", "Garde Watch", "Garde Pikeman" });
+        Story.KillQuest(
+            6342,
+            "scarsgarde",
+            new[] { "Garde Knight", "Garde Watch", "Garde Pikeman" }
+        );
     }
     #endregion
 
@@ -132,7 +146,20 @@ public class CoreSepulchure
         Story.KillQuest(6347, "scarsgarde", new[] { "Garde Watch", "Garde Pikeman" });
 
         // False Hoods 6348
-        Story.KillQuest(6348, "scarsgarde", new[] { "Garde Watch", "Garde Watch", "Garde Watch", "Garde Watch", "Garde Watch", "Garde Watch", "Garde Watch" });
+        Story.KillQuest(
+            6348,
+            "scarsgarde",
+            new[]
+            {
+                "Garde Watch",
+                "Garde Watch",
+                "Garde Watch",
+                "Garde Watch",
+                "Garde Watch",
+                "Garde Watch",
+                "Garde Watch",
+            }
+        );
 
         // Pass for Real 6349
         if (!Story.QuestProgression(6349))
@@ -158,7 +185,11 @@ public class CoreSepulchure
         Story.KillQuest(6352, "scarsgarde", "Garde Captain");
 
         // Arm the Army 6353
-        Story.KillQuest(6353, "scarsgarde", new[] { "Garde Knight", "Garde Watch", "Garde Pikeman" });
+        Story.KillQuest(
+            6353,
+            "scarsgarde",
+            new[] { "Garde Knight", "Garde Watch", "Garde Pikeman" }
+        );
     }
     #endregion
 
@@ -200,7 +231,13 @@ public class CoreSepulchure
             Core.KillMonster("valleyofdoom", "r7", "Left", "Doom Scythe", "Doomscythe Destroyed");
             Core.KillMonster("valleyofdoom", "r7", "Left", "Doom Axe", "Doomaxe Destroyed");
             Core.KillMonster("valleyofdoom", "r8", "Left", "Doom Blade", "Doom Blade Destroyed");
-            Core.KillMonster("valleyofdoom", "r8", "Left", "Doom Knight Armor", "Doom Knight Armor Destroyed");
+            Core.KillMonster(
+                "valleyofdoom",
+                "r8",
+                "Left",
+                "Doom Knight Armor",
+                "Doom Knight Armor Destroyed"
+            );
             Core.EnsureComplete(6363);
         }
 
@@ -390,7 +427,11 @@ public class CoreSepulchure
         Story.KillQuest(6546, "noxustower", "Lightguard Paladin");
 
         // Illusory Disguise 6547
-        Story.KillQuest(6547, "noxustower", new[] { "Slimeskull", "Lightguard Caster", "Doomwood Treeant" });
+        Story.KillQuest(
+            6547,
+            "noxustower",
+            new[] { "Slimeskull", "Lightguard Caster", "Doomwood Treeant" }
+        );
 
         // Test the Disguise 6548
         Story.MapItemQuest(6548, "noxustower", 6019);

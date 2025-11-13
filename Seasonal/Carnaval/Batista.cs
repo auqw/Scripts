@@ -11,7 +11,11 @@ public class Batista
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -34,7 +38,11 @@ public class Batista
         Story.KillQuest(2692, "carnaval", "Mapinguari");
 
         //Battle and the Beasts (2693)
-        Story.KillQuest(2693, "carnaval", new[] { "Mula Sem Cabeça", "Mapinguari", "Cuco", "Boiuna", "Mulher de Branco" });
+        Story.KillQuest(
+            2693,
+            "carnaval",
+            new[] { "Mula Sem Cabeça", "Mapinguari", "Cuco", "Boiuna", "Mulher de Branco" }
+        );
 
         //Festooned in Feathers (2694)
         Story.KillQuest(2694, "carnaval", "Boiuna");
@@ -44,7 +52,11 @@ public class Batista
 
         //Crafting the Carranca (2696)
         Story.MapItemQuest(2696, "carnaval", 1677, 5);
-        Story.KillQuest(2696, "carnaval", new[] { "Boiuna", "Cuco", "Mulher de Branco", "Mula Sem Cabeça" });
+        Story.KillQuest(
+            2696,
+            "carnaval",
+            new[] { "Boiuna", "Cuco", "Mulher de Branco", "Mula Sem Cabeça" }
+        );
 
         //Party Like a BOSS!
         Story.KillQuest(2697, "carnaval", "Lobisomem");

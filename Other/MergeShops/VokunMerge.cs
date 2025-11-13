@@ -14,13 +14,24 @@ public class VokunMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -48,7 +59,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -59,9 +72,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Unitas Fragment":
                     Core.FarmingLogger(req.Name, quant);
@@ -71,8 +89,20 @@ private static CoreAdvanced _sAdv;
                         Core.RegisterQuests(3760);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster("battleundera", "Undead Berserker", "Warrior Claymore Blade", isTemp: false, log: false);
-                            Core.HuntMonster("maul", "SlimeSkull", "Dark Crown Axe", isTemp: false, log: false);
+                            Core.HuntMonster(
+                                "battleundera",
+                                "Undead Berserker",
+                                "Warrior Claymore Blade",
+                                isTemp: false,
+                                log: false
+                            );
+                            Core.HuntMonster(
+                                "maul",
+                                "SlimeSkull",
+                                "Dark Crown Axe",
+                                isTemp: false,
+                                log: false
+                            );
                             Farm.BattleUnderB("Undead Energy", 50);
                             Bot.Wait.ForPickup(req.Name);
                         }
@@ -82,7 +112,13 @@ private static CoreAdvanced _sAdv;
                         Core.RegisterQuests(3763);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster("graveyard", "Big Jack Sprat", "Bone Axe", isTemp: false, log: false);
+                            Core.HuntMonster(
+                                "graveyard",
+                                "Big Jack Sprat",
+                                "Bone Axe",
+                                isTemp: false,
+                                log: false
+                            );
                             if (Core.HeroAlignment != 2)
                                 Core.ChangeAlignment(Alignment.Evil);
                             Core.BuyItem("shadowfall", 47, "Helm of the Dark Lord");
@@ -91,25 +127,89 @@ private static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("25408", "Skuller of Vokun", "Mode: [select] only\nShould the bot buy \"Skuller of Vokun\" ?", false),
-        new Option<bool>("25409", "Skuller of Vokun Head", "Mode: [select] only\nShould the bot buy \"Skuller of Vokun Head\" ?", false),
-        new Option<bool>("25410", "GateKeeper of Vokun", "Mode: [select] only\nShould the bot buy \"GateKeeper of Vokun\" ?", false),
-        new Option<bool>("25411", "GateKeeper Skull of Vokun", "Mode: [select] only\nShould the bot buy \"GateKeeper Skull of Vokun\" ?", false),
-        new Option<bool>("25412", "GateKeeper of Vokun Cape", "Mode: [select] only\nShould the bot buy \"GateKeeper of Vokun Cape\" ?", false),
-        new Option<bool>("25413", "Beast Of Vokun", "Mode: [select] only\nShould the bot buy \"Beast Of Vokun\" ?", false),
-        new Option<bool>("25414", "BeastWings of Vokun", "Mode: [select] only\nShould the bot buy \"BeastWings of Vokun\" ?", false),
-        new Option<bool>("25415", "BeastHorns of Vokun", "Mode: [select] only\nShould the bot buy \"BeastHorns of Vokun\" ?", false),
-        new Option<bool>("25416", "Beast of Vokun Polearm", "Mode: [select] only\nShould the bot buy \"Beast of Vokun Polearm\" ?", false),
-        new Option<bool>("25423", "Assassin of Vokun", "Mode: [select] only\nShould the bot buy \"Assassin of Vokun\" ?", false),
-        new Option<bool>("25424", "Assassin Helm of Vokun", "Mode: [select] only\nShould the bot buy \"Assassin Helm of Vokun\" ?", false),
-        new Option<bool>("25425", "Katana of Vokun", "Mode: [select] only\nShould the bot buy \"Katana of Vokun\" ?", false),
-        new Option<bool>("25430", "BloodBlade of Vokun", "Mode: [select] only\nShould the bot buy \"BloodBlade of Vokun\" ?", false),
+        new Option<bool>(
+            "25408",
+            "Skuller of Vokun",
+            "Mode: [select] only\nShould the bot buy \"Skuller of Vokun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25409",
+            "Skuller of Vokun Head",
+            "Mode: [select] only\nShould the bot buy \"Skuller of Vokun Head\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25410",
+            "GateKeeper of Vokun",
+            "Mode: [select] only\nShould the bot buy \"GateKeeper of Vokun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25411",
+            "GateKeeper Skull of Vokun",
+            "Mode: [select] only\nShould the bot buy \"GateKeeper Skull of Vokun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25412",
+            "GateKeeper of Vokun Cape",
+            "Mode: [select] only\nShould the bot buy \"GateKeeper of Vokun Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25413",
+            "Beast Of Vokun",
+            "Mode: [select] only\nShould the bot buy \"Beast Of Vokun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25414",
+            "BeastWings of Vokun",
+            "Mode: [select] only\nShould the bot buy \"BeastWings of Vokun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25415",
+            "BeastHorns of Vokun",
+            "Mode: [select] only\nShould the bot buy \"BeastHorns of Vokun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25416",
+            "Beast of Vokun Polearm",
+            "Mode: [select] only\nShould the bot buy \"Beast of Vokun Polearm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25423",
+            "Assassin of Vokun",
+            "Mode: [select] only\nShould the bot buy \"Assassin of Vokun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25424",
+            "Assassin Helm of Vokun",
+            "Mode: [select] only\nShould the bot buy \"Assassin Helm of Vokun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25425",
+            "Katana of Vokun",
+            "Mode: [select] only\nShould the bot buy \"Katana of Vokun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25430",
+            "BloodBlade of Vokun",
+            "Mode: [select] only\nShould the bot buy \"BloodBlade of Vokun\" ?",
+            false
+        ),
     };
 }

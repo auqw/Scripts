@@ -15,15 +15,30 @@ public class OblivionNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreOblivionBladeofNulgath COBoN { get => _COBoN ??= new CoreOblivionBladeofNulgath(); set => _COBoN = value; }    private static CoreOblivionBladeofNulgath _COBoN;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreOblivionBladeofNulgath COBoN
+    {
+        get => _COBoN ??= new CoreOblivionBladeofNulgath();
+        set => _COBoN = value;
+    }
+    private static CoreOblivionBladeofNulgath _COBoN;
 
     public string OptionsStorage = "TheDarkDeal";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<OblivionNulgathRewards>("Reward", "Item Selec", "Select the Item then Quantity", OblivionNulgathRewards.Unidentified_13),
+        new Option<OblivionNulgathRewards>(
+            "Reward",
+            "Item Selec",
+            "Select the Item then Quantity",
+            OblivionNulgathRewards.Unidentified_13
+        ),
         new Option<int>("Quanity", "Item Quanity", "How many of the Selected reward", 00),
     };
 
@@ -31,7 +46,10 @@ public class OblivionNulgath
     {
         Core.SetOptions();
 
-        COBoN.OblivionNulgath(Bot.Config?.Get<string>("Reward") ?? string.Empty, Bot.Config?.Get<int>("Quanity") ?? default(int));
+        COBoN.OblivionNulgath(
+            Bot.Config?.Get<string>("Reward") ?? string.Empty,
+            Bot.Config?.Get<int>("Quanity") ?? default(int)
+        );
 
         Core.SetOptions(false);
     }
@@ -44,7 +62,6 @@ public class OblivionNulgath
         Diamond_of_Nulgath,
         Totem_of_Nulgath,
         Gem_of_Nulgath,
-        Blood_Gem_of_the_Archfiend
+        Blood_Gem_of_the_Archfiend,
     };
 }
-

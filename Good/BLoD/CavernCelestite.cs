@@ -16,8 +16,18 @@ public class CavernCelestite
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
+    private static CoreBLOD _BLOD;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public string OptionsStorage = "CavernCelestite";
     public bool DontPreconfigure = true;
@@ -28,14 +38,22 @@ public class CavernCelestite
         Options = new List<IOption>()
         {
             CoreBots.Instance.SkipOptions,
-            new Option<int>("Quantity", "Cavern Celestite Quantity", "Choose the quantity of Cavern Celestite to farm. (Farms max stack by default)", GetMaxStack())
+            new Option<int>(
+                "Quantity",
+                "Cavern Celestite Quantity",
+                "Choose the quantity of Cavern Celestite to farm. (Farms max stack by default)",
+                GetMaxStack()
+            ),
         };
     }
 
     private int GetMaxStack()
     {
         // Uses ternary operator for Tato to understand
-        return Bot.Quests.EnsureLoad(939)?.Rewards.FirstOrDefault(reward => reward.Name.Equals("Cavern Celestite"))?.MaxStack ?? 1;
+        return Bot.Quests.EnsureLoad(939)
+                ?.Rewards.FirstOrDefault(reward => reward.Name.Equals("Cavern Celestite"))
+                ?.MaxStack
+            ?? 1;
     }
 
     public void ScriptMain(IScriptInterface bot)

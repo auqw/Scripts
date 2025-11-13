@@ -22,13 +22,48 @@ public class VoidAvengerScythe
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }    private static CoreNSOD _NSoD;
-    private static JuggernautItemsofNulgath juggernaut { get => _juggernaut ??= new JuggernautItemsofNulgath(); set => _juggernaut = value; }    private static JuggernautItemsofNulgath _juggernaut;
-    private static EmpoweringItems Empower { get => _Empower ??= new EmpoweringItems(); set => _Empower = value; }    private static EmpoweringItems _Empower;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static CoreNSOD NSoD
+    {
+        get => _NSoD ??= new CoreNSOD();
+        set => _NSoD = value;
+    }
+    private static CoreNSOD _NSoD;
+    private static JuggernautItemsofNulgath juggernaut
+    {
+        get => _juggernaut ??= new JuggernautItemsofNulgath();
+        set => _juggernaut = value;
+    }
+    private static JuggernautItemsofNulgath _juggernaut;
+    private static EmpoweringItems Empower
+    {
+        get => _Empower ??= new EmpoweringItems();
+        set => _Empower = value;
+    }
+    private static EmpoweringItems _Empower;
     public bool DontPreconfigure = true;
 
     public void ScriptMain(IScriptInterface bot)
@@ -39,6 +74,7 @@ public class VoidAvengerScythe
 
         Core.SetOptions(false);
     }
+
     public void SkewsQuests()
     {
         SnowbeardsQuests();
@@ -56,13 +92,12 @@ public class VoidAvengerScythe
         //Eternal Rest
 
         Farm.EvilREP();
-        // Batwing Scythe - 
+        // Batwing Scythe -
         // if (!Bot.Quests.IsUnlocked(498))
         //     BatwingScythe();
 
         Bot.Quests.UpdateQuest(498);
         Core.HuntMonster("darkoviagrave", "Blightfang", "Batwing Scythe", isTemp: false);
-
 
         Core.EquipClass(ClassType.Solo);
         while (!Bot.ShouldExit && !Core.CheckInventory("Batwing Scythe"))
@@ -72,30 +107,42 @@ public class VoidAvengerScythe
             Core.EnsureComplete(498);
             Bot.Wait.ForPickup("Batwing Scythe");
         }
-        // Dark Crystal Shard - 
+        // Dark Crystal Shard -
         Nation.FarmDarkCrystalShard(200);
-        // Death Scythe of Nulgath - 
+        // Death Scythe of Nulgath -
         Empower.EmpoweringStuff();
-        // Ungodly Reavers of Nulgath - 
-        juggernaut.JuggItems(reward: JuggernautItemsofNulgath.RewardsSelection.Ungodly_Reavers_of_Nulgath);
-        // Scythe of Sisyphean - 
+        // Ungodly Reavers of Nulgath -
+        juggernaut.JuggItems(
+            reward: JuggernautItemsofNulgath.RewardsSelection.Ungodly_Reavers_of_Nulgath
+        );
+        // Scythe of Sisyphean -
         Core.EquipClass(ClassType.Farm);
         Core.HuntMonster("dragonplane", "Wind Elemental", "Scythe of Sisyphean", isTemp: false);
-        // Heart of the Void - 
+        // Heart of the Void -
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("void", "Void Dragon", "Heart of the Void", isTemp: false);
-        // The Scythe of Eternal Rest - 
+        // The Scythe of Eternal Rest -
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("sepulchure", "Dark Sepulchure", "The Scythe of Eternal Rest", isTemp: false);
+        Core.HuntMonster(
+            "sepulchure",
+            "Dark Sepulchure",
+            "The Scythe of Eternal Rest",
+            isTemp: false
+        );
         // Nulgath's Approval -
         Core.EquipClass(ClassType.Farm);
         Nation.ApprovalAndFavor(1000, 0);
-        // Dracolich Destroyer Scythe - 
+        // Dracolich Destroyer Scythe -
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("dragonheart", "Avatar of Desolich", "Dracolich Destroyer Scythe", isTemp: false);
-        // Void Aura - 
+        Core.HuntMonster(
+            "dragonheart",
+            "Avatar of Desolich",
+            "Dracolich Destroyer Scythe",
+            isTemp: false
+        );
+        // Void Aura -
         NSoD.VoidAuras(150);
-        // Letter from Asuka and Tendou -    
+        // Letter from Asuka and Tendou -
         Core.EquipClass(ClassType.Farm);
         Core.HuntMonster("Citadel", "Burning Witch", "Letter from Asuka and Tendou", isTemp: false);
         Core.EnsureComplete(5025);
@@ -139,14 +186,13 @@ public class VoidAvengerScythe
 
         // Requirements: Must have completed the 'Bear Facts' quest.
 
-
         // The Spittoon Saloon
         Story.KillQuest(324, "pines", "Red Shell Turtle");
         // Bear it all!
         Story.KillQuest(325, "pines", "Pine Grizzly");
         // Leather Feathers
         Story.KillQuest(326, "pines", "LeatherWing");
-        // Follow your Nose!      
+        // Follow your Nose!
         Story.KillQuest(327, "pines", "LeatherWing");
     }
 
@@ -161,7 +207,7 @@ public class VoidAvengerScythe
         Story.KillQuest(320, "pines", "Pine Grizzly");
         // Shell Shock
         Story.KillQuest(321, "pines", "Red Shell Turtle");
-        // Bear Facts     
+        // Bear Facts
         Story.KillQuest(322, "pines", "Twistedtooth");
     }
 }

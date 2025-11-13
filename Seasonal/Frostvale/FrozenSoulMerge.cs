@@ -14,13 +14,24 @@ public class FrozenSoulMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -30,7 +41,21 @@ private static CoreAdvanced _sAdv;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Hammered Ice", "Frosted Heart", "Frozen Soul", "Frozen Rune of Kheimon", "Poleaxe of Kheimon", "Elegant Frostvale Suit", "Cheery Frostvale Hat + Locks", "Elegant Frostval Wrap", "Cheery Frostvale Hat", "Ruby Frostval Cane" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Hammered Ice",
+                "Frosted Heart",
+                "Frozen Soul",
+                "Frozen Rune of Kheimon",
+                "Poleaxe of Kheimon",
+                "Elegant Frostvale Suit",
+                "Cheery Frostvale Hat + Locks",
+                "Elegant Frostval Wrap",
+                "Cheery Frostvale Hat",
+                "Ruby Frostval Cane",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -48,7 +73,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -59,9 +86,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Elegant Frostval Wrap":
                 case "Hammered Ice":
@@ -70,7 +102,13 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(7262);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("frozensoul", "Frozen Minion", "Shard of Ice", 10, log: false);
+                        Core.HuntMonster(
+                            "frozensoul",
+                            "Frozen Minion",
+                            "Shard of Ice",
+                            10,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -84,7 +122,12 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(7263);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("frozensoul", "Jack Frost", "Jack's Frosted Heart", log: false);
+                        Core.HuntMonster(
+                            "frozensoul",
+                            "Jack Frost",
+                            "Jack's Frosted Heart",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -98,7 +141,14 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(7264);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("frozensoul", "r4", "Left", "*", "Queen's Frozen Soul", log: false);
+                        Core.KillMonster(
+                            "frozensoul",
+                            "r4",
+                            "Left",
+                            "*",
+                            "Queen's Frozen Soul",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -110,7 +160,15 @@ private static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("frozensoul", "r4", "Left", "*", req.Name, isTemp: false, log: false);
+                        Core.KillMonster(
+                            "frozensoul",
+                            "r4",
+                            "Left",
+                            "*",
+                            req.Name,
+                            isTemp: false,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -121,15 +179,65 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("52419", "Kheimon's Floating Tome", "Mode: [select] only\nShould the bot buy \"Kheimon's Floating Tome\" ?", false),
-        new Option<bool>("52420", "Bladed Rune of Kheimon", "Mode: [select] only\nShould the bot buy \"Bladed Rune of Kheimon\" ?", false),
-        new Option<bool>("52421", "Runic Poleaxe of Kheimon", "Mode: [select] only\nShould the bot buy \"Runic Poleaxe of Kheimon\" ?", false),
-        new Option<bool>("52422", "Hood of the Northlands Monk", "Mode: [select] only\nShould the bot buy \"Hood of the Northlands Monk\" ?", false),
-        new Option<bool>("52423", "Northlands Monk", "Mode: [select] only\nShould the bot buy \"Northlands Monk\" ?", false),
-        new Option<bool>("51680", "Elegant Frost Suit", "Mode: [select] only\nShould the bot buy \"Elegant Frost Suit\" ?", false),
-        new Option<bool>("51681", "Elegant Frost Locks", "Mode: [select] only\nShould the bot buy \"Elegant Frost Locks\" ?", false),
-        new Option<bool>("51682", "Elegant Frost Topper", "Mode: [select] only\nShould the bot buy \"Elegant Frost Topper\" ?", false),
-        new Option<bool>("51683", "Snowmist Wrap", "Mode: [select] only\nShould the bot buy \"Snowmist Wrap\" ?", false),
-        new Option<bool>("51684", "Diamond Frost Cane", "Mode: [select] only\nShould the bot buy \"Diamond Frost Cane\" ?", false),
+        new Option<bool>(
+            "52419",
+            "Kheimon's Floating Tome",
+            "Mode: [select] only\nShould the bot buy \"Kheimon's Floating Tome\" ?",
+            false
+        ),
+        new Option<bool>(
+            "52420",
+            "Bladed Rune of Kheimon",
+            "Mode: [select] only\nShould the bot buy \"Bladed Rune of Kheimon\" ?",
+            false
+        ),
+        new Option<bool>(
+            "52421",
+            "Runic Poleaxe of Kheimon",
+            "Mode: [select] only\nShould the bot buy \"Runic Poleaxe of Kheimon\" ?",
+            false
+        ),
+        new Option<bool>(
+            "52422",
+            "Hood of the Northlands Monk",
+            "Mode: [select] only\nShould the bot buy \"Hood of the Northlands Monk\" ?",
+            false
+        ),
+        new Option<bool>(
+            "52423",
+            "Northlands Monk",
+            "Mode: [select] only\nShould the bot buy \"Northlands Monk\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51680",
+            "Elegant Frost Suit",
+            "Mode: [select] only\nShould the bot buy \"Elegant Frost Suit\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51681",
+            "Elegant Frost Locks",
+            "Mode: [select] only\nShould the bot buy \"Elegant Frost Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51682",
+            "Elegant Frost Topper",
+            "Mode: [select] only\nShould the bot buy \"Elegant Frost Topper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51683",
+            "Snowmist Wrap",
+            "Mode: [select] only\nShould the bot buy \"Snowmist Wrap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "51684",
+            "Diamond Frost Cane",
+            "Mode: [select] only\nShould the bot buy \"Diamond Frost Cane\" ?",
+            false
+        ),
     };
 }

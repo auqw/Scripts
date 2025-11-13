@@ -37,13 +37,28 @@ public class VerdantVirgo
         {
             if (Core.CheckInventory(Reward.Name, toInv: false))
                 Core.Logger($"{Reward.Name} obtained.");
-            else Core.FarmingLogger(Reward.Name, 1);
+            else
+                Core.FarmingLogger(Reward.Name, 1);
 
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name))
             {
                 Core.EnsureAccept(9197);
-                Core.HuntMonster("underglade", "Forest Spirit", "Forest Star Shard", 50, false, false);
-                Core.HuntMonster("underglade", "Tree Nymph", "Maiden's Star Shard", 50, false, false);
+                Core.HuntMonster(
+                    "underglade",
+                    "Forest Spirit",
+                    "Forest Star Shard",
+                    50,
+                    false,
+                    false
+                );
+                Core.HuntMonster(
+                    "underglade",
+                    "Tree Nymph",
+                    "Maiden's Star Shard",
+                    50,
+                    false,
+                    false
+                );
                 Core.EnsureComplete(9197, Reward.ID);
                 Core.ToBank(Reward.ID);
             }

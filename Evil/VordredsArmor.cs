@@ -18,15 +18,35 @@ public class VordredArmor
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreDoomwood DW { get => _DW ??= new CoreDoomwood(); set => _DW = value; }
+    private static CoreDoomwood DW
+    {
+        get => _DW ??= new CoreDoomwood();
+        set => _DW = value;
+    }
     private static CoreDoomwood _DW;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }
+    private static CoreSDKA SDKA
+    {
+        get => _SDKA ??= new CoreSDKA();
+        set => _SDKA = value;
+    }
     private static CoreSDKA _SDKA;
 
     public void ScriptMain(IScriptInterface bot)
@@ -55,7 +75,13 @@ public class VordredArmor
         {
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(8376);
-            Core.HuntMonster("warundead", "Skeletal Fire Mage", "Undead Army Skull", 1000, isTemp: false);
+            Core.HuntMonster(
+                "warundead",
+                "Skeletal Fire Mage",
+                "Undead Army Skull",
+                1000,
+                isTemp: false
+            );
             Core.EnsureComplete(8376);
         }
 
@@ -65,17 +91,35 @@ public class VordredArmor
             Core.EnsureAccept(8377);
             if (!Core.CheckInventory("Screaming Might"))
             {
-                Core.HuntMonster("dagefortress", "Scorned Knight", "Dark Palace Token", 10, isTemp: false);
+                Core.HuntMonster(
+                    "dagefortress",
+                    "Scorned Knight",
+                    "Dark Palace Token",
+                    10,
+                    isTemp: false
+                );
                 Adv.BuyItem("dagefortress", 1144, "Screaming Might");
             }
             Core.HuntMonster("graveyard", "Big Jack Sprat", "Bone Axe", isTemp: false);
             Core.HuntMonster("battleundera", "Angry Undead Giant", "Spine Gripper", isTemp: false);
             Core.HuntMonster("marsh", "Dreadspider", "Dread Staff", isTemp: false);
-            Core.KillMonster("Odokuro", "Boss", "Left", "O-Dokuro", "O-dokuro Blade", isTemp: false);
+            Core.KillMonster(
+                "Odokuro",
+                "Boss",
+                "Left",
+                "O-Dokuro",
+                "O-dokuro Blade",
+                isTemp: false
+            );
             Farm.ArcangroveREP();
             Adv.BuyItem("arcangrove", 214, "Ancient Skull Blade");
             Farm.DoomWoodREP();
-            Core.HuntMonster("dragonheart", "Avatar of Desolich", "Dracolich Destroyer Scythe", isTemp: false);
+            Core.HuntMonster(
+                "dragonheart",
+                "Avatar of Desolich",
+                "Dracolich Destroyer Scythe",
+                isTemp: false
+            );
             Core.HuntMonster("dragonbone", "Gorgorath", "Boneblade of Gorgorath", isTemp: false);
             Core.EnsureComplete(8377);
         }
@@ -88,15 +132,37 @@ public class VordredArmor
             Adv.BuyItem("Shadowfall", 89, "Shadow Lich");
             Core.KillEscherion("Escherion's Robe");
             Core.HuntMonster("battleundera", "Bone Terror", "Undead Terror Armor", isTemp: false);
-            Core.HuntMonster("necrocavern", "Shadow Dragon", "Skulls of the Necromancer", isTemp: false);
+            Core.HuntMonster(
+                "necrocavern",
+                "Shadow Dragon",
+                "Skulls of the Necromancer",
+                isTemp: false
+            );
             if (!Core.CheckInventory("Undead Warrior Executioner"))
             {
                 if (!Core.CheckInventory("Dage's Approval", 100))
-                    Core.HuntMonster("evilwardage", "Bloodfiend", "Dage's Approval", 100, isTemp: false);
+                    Core.HuntMonster(
+                        "evilwardage",
+                        "Bloodfiend",
+                        "Dage's Approval",
+                        100,
+                        isTemp: false
+                    );
                 if (!Core.CheckInventory("Dage's Favor", 75))
-                    Core.HuntMonster("evilwardage", "Bloodfiend", "Dage's Favor", 75, isTemp: false);
+                    Core.HuntMonster(
+                        "evilwardage",
+                        "Bloodfiend",
+                        "Dage's Favor",
+                        75,
+                        isTemp: false
+                    );
                 if (!Core.CheckInventory("Undead Warrior Bruiser"))
-                    Core.HuntMonster("underworld", "Revontheus ", "Undead Warrior Bruiser", isTemp: false);
+                    Core.HuntMonster(
+                        "underworld",
+                        "Revontheus ",
+                        "Undead Warrior Bruiser",
+                        isTemp: false
+                    );
                 Adv.BuyItem("evilwardage", 454, "Undead Warrior Executioner");
             }
             Core.EnsureComplete(8378);
@@ -107,8 +173,22 @@ public class VordredArmor
         {
             Core.EnsureAccept(8379);
             Core.HuntMonster("desolich", "Desolich", "Desolich's Skull", 5, isTemp: false);
-            Core.KillMonster("doomvaultb", "r26", "Left", "Undead Raxgore", "Undead Raxgore's Skull", 10, isTemp: false);
-            Core.HuntMonster("frozenlair", "Legion Lich Lord", "Legion Lich Lord's Skull", 15, isTemp: false);
+            Core.KillMonster(
+                "doomvaultb",
+                "r26",
+                "Left",
+                "Undead Raxgore",
+                "Undead Raxgore's Skull",
+                10,
+                isTemp: false
+            );
+            Core.HuntMonster(
+                "frozenlair",
+                "Legion Lich Lord",
+                "Legion Lich Lord's Skull",
+                15,
+                isTemp: false
+            );
             Core.HuntMonster("thevoid", "Reaper", "Reaper's Skull", 20, isTemp: false);
             Core.EnsureComplete(8379);
         }
@@ -117,17 +197,29 @@ public class VordredArmor
         if (!Story.QuestProgression(8380))
         {
             Core.EnsureAccept(8380);
-            Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", 1, isTemp: false);
+            Core.HuntMonster(
+                "epicvordred",
+                "Ultra Vordred",
+                "(Necro) Scroll of Dark Arts",
+                1,
+                isTemp: false
+            );
             Core.HuntMonster("lightguardwar", "Extreme Noxus", "Noxus Runes", isTemp: false);
             Adv.BuyItem("necrotower", 282, "Sally's Necronomicon");
             Core.EquipClass(ClassType.Farm);
             Bot.Quests.UpdateQuest(2059);
-            Core.KillMonster("necrodungeon", "r22", "Down", "*", "Ancient Evil of the Necropolis", isTemp: false);
+            Core.KillMonster(
+                "necrodungeon",
+                "r22",
+                "Down",
+                "*",
+                "Ancient Evil of the Necropolis",
+                isTemp: false
+            );
             Core.EnsureComplete(8380);
             if (DMN)
                 return;
         }
-
 
         // Empower Vordred's Armor - 8381
         if (!Story.QuestProgression(8381))

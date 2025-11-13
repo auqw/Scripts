@@ -11,7 +11,12 @@ public class DeathsRealm
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -50,7 +55,9 @@ public class DeathsRealm
         // Death-dealing Blows (2423)
         if (!Story.QuestProgression(2423))
         {
-            Core.Logger("You need to get 5 kills in /doomarena or /bludrutbrawl for [2423] \"Death-dealing Blows\" quest, run the script again when you've completed the quest.");
+            Core.Logger(
+                "You need to get 5 kills in /doomarena or /bludrutbrawl for [2423] \"Death-dealing Blows\" quest, run the script again when you've completed the quest."
+            );
             return;
         }
 

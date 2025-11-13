@@ -21,9 +21,24 @@ public class AscendedDrakathGear
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static DrakathArmorBot DA { get => _DA ??= new DrakathArmorBot(); set => _DA = value; }    private static DrakathArmorBot _DA;
-    private static TowerOfDoom TOD { get => _TOD ??= new TowerOfDoom(); set => _TOD = value; }    private static TowerOfDoom _TOD;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static DrakathArmorBot DA
+    {
+        get => _DA ??= new DrakathArmorBot();
+        set => _DA = value;
+    }
+    private static DrakathArmorBot _DA;
+    private static TowerOfDoom TOD
+    {
+        get => _TOD ??= new TowerOfDoom();
+        set => _TOD = value;
+    }
+    private static TowerOfDoom _TOD;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -36,10 +51,23 @@ public class AscendedDrakathGear
 
     public void GetAll()
     {
-        if (Core.CheckInventory(new[] { "Ascended Blade of Awe", "Ascended Light of Destiny", "Ascended Face of Chaos" }))
+        if (
+            Core.CheckInventory(
+                new[]
+                {
+                    "Ascended Blade of Awe",
+                    "Ascended Light of Destiny",
+                    "Ascended Face of Chaos",
+                }
+            )
+        )
             return;
 
-        Core.AddDrop("Ascended Blade of Awe", "Ascended Light of Destiny", "Ascended Face of Chaos");
+        Core.AddDrop(
+            "Ascended Blade of Awe",
+            "Ascended Light of Destiny",
+            "Ascended Face of Chaos"
+        );
 
         AscendedGear("Ascended Blade of Awe");
         AscendedGear("Ascended Light of Destiny");

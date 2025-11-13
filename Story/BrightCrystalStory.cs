@@ -11,7 +11,11 @@ public class BrightCrystalStory
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -63,7 +67,11 @@ public class BrightCrystalStory
         Story.KillQuest(4961, "dreamforest", new[] { "Acrobat", "Acrobat" });
 
         //Head to the Midway 4962
-        Story.KillQuest(4962, "dreamforest", new[] { "Acrobat", "Fire Dancer", "Elephant Trainer" });
+        Story.KillQuest(
+            4962,
+            "dreamforest",
+            new[] { "Acrobat", "Fire Dancer", "Elephant Trainer" }
+        );
 
         //Balloons 4963
         if (!Story.QuestProgression(4963))

@@ -12,7 +12,12 @@ public class DoAllLynaria
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreLynaria Lyn { get => _Lyn ??= new CoreLynaria(); set => _Lyn = value; }    private static CoreLynaria _Lyn;
+    private static CoreLynaria Lyn
+    {
+        get => _Lyn ??= new CoreLynaria();
+        set => _Lyn = value;
+    }
+    private static CoreLynaria _Lyn;
 
     public void ScriptMain(IScriptInterface bot)
     {

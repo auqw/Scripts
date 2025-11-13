@@ -16,20 +16,36 @@ public class StormCacheMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static ThunderFang TF { get => _TF ??= new ThunderFang(); set => _TF = value; }
+    private static ThunderFang TF
+    {
+        get => _TF ??= new ThunderFang();
+        set => _TF = value;
+    }
     private static ThunderFang _TF;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -55,7 +71,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,9 +84,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Tonitrus Gem":
                     Core.FarmingLogger(req.Name, quant);
@@ -84,24 +107,58 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(4246);
-                        Core.HuntMonster("thunderfang", "Storm Draconian", "Storm Draconian Defeated", 8);
+                        Core.HuntMonster(
+                            "thunderfang",
+                            "Storm Draconian",
+                            "Storm Draconian Defeated",
+                            8
+                        );
                         Core.EnsureComplete(4246);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     // Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("29781", "Tempestas Egg", "Mode: [select] only\nShould the bot buy \"Tempestas Egg\" ?", false),
-        new Option<bool>("29732", "Thunderfang Battlemage", "Mode: [select] only\nShould the bot buy \"Thunderfang Battlemage\" ?", false),
-        new Option<bool>("29733", "Electrostatic Hair", "Mode: [select] only\nShould the bot buy \"Electrostatic Hair\" ?", false),
-        new Option<bool>("29734", "Electrostatic Locks", "Mode: [select] only\nShould the bot buy \"Electrostatic Locks\" ?", false),
-        new Option<bool>("29735", "Cape of Lightning", "Mode: [select] only\nShould the bot buy \"Cape of Lightning\" ?", false),
-        new Option<bool>("29782", "Lightning Dragon Pet", "Mode: [select] only\nShould the bot buy \"Lightning Dragon Pet\" ?", false),
+        new Option<bool>(
+            "29781",
+            "Tempestas Egg",
+            "Mode: [select] only\nShould the bot buy \"Tempestas Egg\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29732",
+            "Thunderfang Battlemage",
+            "Mode: [select] only\nShould the bot buy \"Thunderfang Battlemage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29733",
+            "Electrostatic Hair",
+            "Mode: [select] only\nShould the bot buy \"Electrostatic Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29734",
+            "Electrostatic Locks",
+            "Mode: [select] only\nShould the bot buy \"Electrostatic Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29735",
+            "Cape of Lightning",
+            "Mode: [select] only\nShould the bot buy \"Cape of Lightning\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29782",
+            "Lightning Dragon Pet",
+            "Mode: [select] only\nShould the bot buy \"Lightning Dragon Pet\" ?",
+            false
+        ),
     };
 }

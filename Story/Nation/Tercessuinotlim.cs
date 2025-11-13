@@ -11,7 +11,11 @@ public class Tercessuinotlim
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -82,7 +86,14 @@ public class Tercessuinotlim
         if (!Story.QuestProgression(8473))
         {
             Core.EnsureAccept(8473);
-            Core.KillMonster("fiendshard", "r8", "Left", "Fiend Shard", "Dirtlicker's Shard Shaving", 3);
+            Core.KillMonster(
+                "fiendshard",
+                "r8",
+                "Left",
+                "Fiend Shard",
+                "Dirtlicker's Shard Shaving",
+                3
+            );
             Core.KillMonster("fiendshard", "r9", "Left", 15, "Nulgath's Shard Shaving", 3);
             Core.HuntMonster("QuibbleHunt", "RogueFiend", "Roguefiend Crystal Shaving", 5);
             Core.EnsureComplete(8473);
@@ -98,6 +109,5 @@ public class Tercessuinotlim
             Core.HuntMonster("Tercessuinotlim", "Taro Blademaster", "The Tale of Taro");
             Core.EnsureComplete(8474);
         }
-
     }
 }

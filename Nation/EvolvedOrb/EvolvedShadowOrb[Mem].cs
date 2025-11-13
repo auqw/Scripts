@@ -11,7 +11,12 @@ using Skua.Core.Interfaces;
 public class EvolvedShadowOrb
 {
     public CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,5 +38,4 @@ public class EvolvedShadowOrb
         Core.BuyItem("archportal", 1211, "Evolved Shadow Orb");
         Core.Logger($"Done, you have Shadow ball");
     }
-
 }

@@ -14,7 +14,13 @@ public class DeadlyDragonsDrops
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static Core7DD DD { get => _DD ??= new Core7DD(); set => _DD = value; }    private static Core7DD _DD;
+    private static Core7DD DD
+    {
+        get => _DD ??= new Core7DD();
+        set => _DD = value;
+    }
+    private static Core7DD _DD;
+
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
@@ -29,30 +35,25 @@ public class DeadlyDragonsDrops
         DD.Complete7DD();
 
         #region Ashfallcamp
-        string[] Smoldur = {
-            "Smoldur's Wings"
-        };
+        string[] Smoldur = { "Smoldur's Wings" };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(Smoldur, "ashfallcamp", "r8", "Left");
 
-        string[] Infernus = {
-            "Infernus' Wings"
-        };
+        string[] Infernus = { "Infernus' Wings" };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(Infernus, "ashfallcamp", "r14", "Left");
 
-        string[] Blackrawk = {
-            "Blackrawk's Wings"
-        };
+        string[] Blackrawk = { "Blackrawk's Wings" };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(Blackrawk, "ashfallcamp", "r11", "Left");
         #endregion
 
         #region Gluttony
-        string[] DeflatedGlutus = {
+        string[] DeflatedGlutus =
+        {
             "Burning Brand Banners Cape",
             "Burning Ember and Mace",
             "Dragonfang Piercer",
@@ -60,41 +61,37 @@ public class DeadlyDragonsDrops
             "FlameScourge Hood",
             "FlameScourge Horns",
             "FlameScourge Mage",
-            "FlameScourge Warrior"
+            "FlameScourge Warrior",
         };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(DeflatedGlutus, "gluttony", "Enter2", "Left");
 
-        string[] Colonicus = {
-            "Colonicus Club",
-            "Colonicus' Wing Dagger",
-            "Feceus Morph"
-        };
+        string[] Colonicus = { "Colonicus Club", "Colonicus' Wing Dagger", "Feceus Morph" };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(Colonicus, "gluttony", "r12", "Left");
         #endregion
 
         #region Pride
-        string[] CellarGuard = {
+        string[] CellarGuard =
+        {
             "Cellar Guard's Storm Mace",
             "Drakel Guard's Prod",
             "Drakel Guard Morph",
-            "Storm Drakel Tail"
+            "Storm Drakel Tail",
         };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(CellarGuard, "pride", "r5", "Right");
 
-        string[] EliteGuard = {
-            "Elite Guard's Scythe"
-        };
+        string[] EliteGuard = { "Elite Guard's Scythe" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(EliteGuard, "pride", "r9", "Left");
 
-        string[] Valsarian = {
+        string[] Valsarian =
+        {
             "BoltStriker Armor",
             "BoltStriker Blade",
             "BoltStriker Cape",
@@ -102,7 +99,7 @@ public class DeadlyDragonsDrops
             "BoltStriker Hood",
             "BoltStriker Horn",
             "BoltStriker Wings",
-            "LightningStorm Dragonoid"
+            "LightningStorm Dragonoid",
         };
 
         Core.EquipClass(ClassType.Solo);
@@ -110,20 +107,22 @@ public class DeadlyDragonsDrops
         #endregion
 
         #region Greed
-        string[] Goregold = {
+        string[] Goregold =
+        {
             "Baby Ice Dragon",
             "Dragon's Treasure Pile",
             "Miniature Goregold Pet",
             "Sneezy the Ice Dragonoid",
             "WardKeeper's Armor",
             "Ward of the Ancients",
-            "WardKeeper's War Axe"
+            "WardKeeper's War Axe",
         };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(Goregold, "greed", "r16", "Left");
 
-        string[] TreasurePile = {
+        string[] TreasurePile =
+        {
             "Bright Keeper's Hood",
             "Bright Keeper's Locks",
             "Golden Ore Elemental",
@@ -136,7 +135,7 @@ public class DeadlyDragonsDrops
             "Treasure Chest (Misc)",
             "Warden's Aegis Helm",
             "WardKeeper's Blade",
-            "WardKeeper's Double-edged Blade"
+            "WardKeeper's Double-edged Blade",
         };
 
         Core.EquipClass(ClassType.Solo);
@@ -144,52 +143,42 @@ public class DeadlyDragonsDrops
         #endregion
 
         #region Sloth
-        string[] ActualSlothDragon = {
-            "Actual Slothagon Pet",
-            "Baby Slothagon Pet"
-        };
+        string[] ActualSlothDragon = { "Actual Slothagon Pet", "Baby Slothagon Pet" };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(ActualSlothDragon, "sloth", "r13c", "Left");
 
-        string[] CuredPhlegnn = {
-            "Bloodborne Death's Shadow Cape"
-        };
+        string[] CuredPhlegnn = { "Bloodborne Death's Shadow Cape" };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(CuredPhlegnn, "sloth", "r13b", "Left");
 
-        string[] MutatedPlague = {
-            "Mutated Plague Cape",
-            "Plague's Death Shadow Cape"
-        };
+        string[] MutatedPlague = { "Mutated Plague Cape", "Plague's Death Shadow Cape" };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(MutatedPlague, "sloth", "r11c", "Left");
 
-        string[] Phlegnn = {
-            "Dragon's Plague Scythe",
-            "Re-Shroom Mace",
-            "Slimed Dragonoid"
-        };
+        string[] Phlegnn = { "Dragon's Plague Scythe", "Re-Shroom Mace", "Slimed Dragonoid" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(Phlegnn, "sloth", "r13a", "Left");
         #endregion
 
         #region Lust
-        string[] KillekDeadChewer = {
+        string[] KillekDeadChewer =
+        {
             "Cursed Dungeon Spirit",
             "Dungeon Defender",
             "Dungeon Guard's Blade",
             "Dungeon Guard Hood",
-            "Guard's Shag"
+            "Guard's Shag",
         };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(KillekDeadChewer, "lust", "r16", "Left");
 
-        string[] Lascivia = {
+        string[] Lascivia =
+        {
             "Blood Paladin",
             "Blood Paladin Hair",
             "Blood Paladin Wings",
@@ -200,24 +189,21 @@ public class DeadlyDragonsDrops
             "Royal Attendant",
             "Royal Attendant Beard",
             "Royal Attendant Cape",
-            "Royal Attendant Locks"
+            "Royal Attendant Locks",
         };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(Lascivia, "lust", "r14", "Bottom");
 
-        string[] Viscyra = {
-            "Royal Dancer",
-            "Royal Dancer Morph",
-            "Viscyra's Axe"
-        };
+        string[] Viscyra = { "Royal Dancer", "Royal Dancer Morph", "Viscyra's Axe" };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(Viscyra, "lust", "r13", "Left");
         #endregion
 
         #region Envy
-        string[] Argo = {
+        string[] Argo =
+        {
             "Dark Draco Tail",
             "Draco Tenebris",
             "Draco Tenebris Helm",
@@ -227,7 +213,7 @@ public class DeadlyDragonsDrops
             "Draco Tenebris Scythe",
             "Dual Tenebris Flails",
             "Tenebris Hood And Horns",
-            "Wings of Darkness"
+            "Wings of Darkness",
         };
 
         Core.EquipClass(ClassType.Solo);
@@ -235,7 +221,8 @@ public class DeadlyDragonsDrops
         #endregion
 
         #region Wrath
-        string[] Gorgorath = {
+        string[] Gorgorath =
+        {
             "Boneaxe of Gorgorath",
             "Boneblade of Gorgorath",
             "Bone Wings of Gorgorath",
@@ -258,14 +245,14 @@ public class DeadlyDragonsDrops
             "Reversed Dragonslayer's Demise",
             "Shadow Eater of Wrath",
             "Skull Scarf of Gorgorath",
-            "Tail of Gorgorath"
+            "Tail of Gorgorath",
         };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(Gorgorath, "wrath", "r12", "Left");
         #endregion
     }
-    
+
     private void runEngine(string[] rewards, string map, string cell, string pad)
     {
         foreach (string drop in rewards)

@@ -13,16 +13,25 @@ public class TheAssistant
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public string OptionsStorage = "TheAssistant";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<SwindlesReturnReward>("ChooseReward", "Choose Your Quest Reward", "if `returnPolicyDuringSupplies` is enabled in CoreBot Options, Choose the Reward here", (int)SwindlesReturnReward.None),
+        new Option<SwindlesReturnReward>(
+            "ChooseReward",
+            "Choose Your Quest Reward",
+            "if `returnPolicyDuringSupplies` is enabled in CoreBot Options, Choose the Reward here",
+            (int)SwindlesReturnReward.None
+        ),
         CoreBots.Instance.SkipOptions,
     };
-
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -47,6 +56,5 @@ public class TheAssistant
         SwindlesReturnReward Reward = Bot.Config.Get<SwindlesReturnReward>("ChooseReward");
 
         Nation.TheAssistant(null, 1000, true, Reward);
-
     }
 }

@@ -12,9 +12,17 @@ public class CoreQOM
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
@@ -48,12 +56,20 @@ public class CoreQOM
 
         //Summon Help
         Story.MapItemQuest(4495, "celestialrealm", 3698);
-        Story.KillQuest(4495, "celestialrealm", new[] { "Fallen Knight", "Celestial Bird of Paradise" });
+        Story.KillQuest(
+            4495,
+            "celestialrealm",
+            new[] { "Fallen Knight", "Celestial Bird of Paradise" }
+        );
 
         //Power Up!
         if (!Story.QuestProgression(4496))
             Core.BuyItem("embersea", 1100, "Basic Guard Potion", 10);
-        Story.KillQuest(4496, "celestialrealm", new[] { "Celestial Bird of Paradise", "Fallen Knight" });
+        Story.KillQuest(
+            4496,
+            "celestialrealm",
+            new[] { "Celestial Bird of Paradise", "Fallen Knight" }
+        );
 
         //The Final Spell Fragment
         Story.MapItemQuest(4497, "celestialrealm", 3696);
@@ -156,7 +172,11 @@ public class CoreQOM
         Story.KillQuest(5376, "infernalspire", "Helzekiel");
 
         //Get the Keys
-        Story.KillQuest(5377, "infernalspire", new[] { "Infernal Hound", "Dungeon Fiend", "Dungeon Fiend" });
+        Story.KillQuest(
+            5377,
+            "infernalspire",
+            new[] { "Infernal Hound", "Dungeon Fiend", "Dungeon Fiend" }
+        );
 
         //Free the Captives
         Story.MapItemQuest(5378, "infernalspire", 4731, 6);
@@ -173,10 +193,16 @@ public class CoreQOM
         {
             Core.EnsureAccept(5381);
             Core.KillMonster("infernalspire", "r13", "Left", "Fallen Knight", "Override Code");
-            Core.KillMonster("infernalspire", "r13", "Left", "Fallen Knight", "Fallen Knight Slain", 6);
+            Core.KillMonster(
+                "infernalspire",
+                "r13",
+                "Left",
+                "Fallen Knight",
+                "Fallen Knight Slain",
+                6
+            );
             Core.HuntMonster("infernalspire", "Infernal Imp", "Infernal Imp Slain", 6);
             Core.EnsureComplete(5381);
-
         }
 
         //Enter the Code
@@ -378,7 +404,12 @@ public class CoreQOM
         {
             Core.EnsureAccept(5552);
             Core.HuntMonster("shadowfallinvasion", "Nethermage", "Nethermage Slain", 4);
-            Core.HuntMonster("shadowfallinvasion", "Diabolical Scryer", "Diabolical Scryer Slain", 4);
+            Core.HuntMonster(
+                "shadowfallinvasion",
+                "Diabolical Scryer",
+                "Diabolical Scryer Slain",
+                4
+            );
             Core.HuntMonster("shadowfallinvasion", "Fallen Knight", "Fallen Knight Slain", 4);
             Core.EnsureComplete(5552);
         }
@@ -413,8 +444,20 @@ public class CoreQOM
         if (!Story.QuestProgression(5575))
         {
             Core.EnsureAccept(5575);
-            Core.KillMonster("safiriainvasion", "r4", "Left", "Fallen Knight", "Fallen Knight's Armor");
-            Core.KillMonster("safiriainvasion", "r4", "Left", "Infernal Knight", "Infernal Knight's Armor");
+            Core.KillMonster(
+                "safiriainvasion",
+                "r4",
+                "Left",
+                "Fallen Knight",
+                "Fallen Knight's Armor"
+            );
+            Core.KillMonster(
+                "safiriainvasion",
+                "r4",
+                "Left",
+                "Infernal Knight",
+                "Infernal Knight's Armor"
+            );
             Core.EnsureComplete(5575);
         }
 
@@ -429,8 +472,22 @@ public class CoreQOM
         {
             Core.EnsureAccept(5578);
             Core.KillMonster("DoomPally", "r3", "Right", "*", "Doomwood Invaders Fought", 4);
-            Core.KillMonster("DarkoviaInvasion", "Enter", "Spawn", "*", "Darkovia Invaders Fought", 4);
-            Core.KillMonster("shadowfallinvasion", "r4", "Left", "*", "Shadowfall Invaders Fought", 4);
+            Core.KillMonster(
+                "DarkoviaInvasion",
+                "Enter",
+                "Spawn",
+                "*",
+                "Darkovia Invaders Fought",
+                4
+            );
+            Core.KillMonster(
+                "shadowfallinvasion",
+                "r4",
+                "Left",
+                "*",
+                "Shadowfall Invaders Fought",
+                4
+            );
             Core.EnsureComplete(5578);
         }
 
@@ -442,7 +499,11 @@ public class CoreQOM
         Story.MapItemQuest(5580, "castleinvasion", 5058, 5);
 
         //Destroy the Infernals
-        Story.KillQuest(5581, "castleinvasion", new[] { "Infernal Knight", "Fallen Knight", "Nethermage" });
+        Story.KillQuest(
+            5581,
+            "castleinvasion",
+            new[] { "Infernal Knight", "Fallen Knight", "Nethermage" }
+        );
 
         //What is THAT??
         if (!Story.QuestProgression(5582))
@@ -790,7 +851,7 @@ public class CoreQOM
         //Still Not Working
         Story.KillQuest(5871, "charredpath", new[] { "Ravenous Parasite", "Plague Spreader" });
 
-        //Get the Final Ingredients       
+        //Get the Final Ingredients
         if (!Story.QuestProgression(5872))
         {
             Core.EnsureAccept(5872);
@@ -1008,7 +1069,15 @@ public class CoreQOM
         {
             Core.EnsureAccept(8107);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("downbelow", "Enter", "Spawn", "Earthwyrm", "Anka's Followers Slain", 1000, false);
+            Core.KillMonster(
+                "downbelow",
+                "Enter",
+                "Spawn",
+                "Earthwyrm",
+                "Anka's Followers Slain",
+                1000,
+                false
+            );
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("downbelow", "Anka", "Soul of Vengeance", 25, false);
             Core.EnsureComplete(8107);

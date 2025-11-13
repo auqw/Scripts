@@ -15,10 +15,24 @@ public class CoreOblivionBladeofNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -36,7 +50,7 @@ public class CoreOblivionBladeofNulgath
         if (!Core.CheckInventory("Oblivion Wrath Blade Of Nulgath"))
             Nation.FarmGemofNulgath(10);
         Core.ResetQuest(870);
-                Core.EquipClass(ClassType.Solo);
+        Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Blade Master Rune");
         Core.CancelRegisteredQuests();
     }
@@ -46,18 +60,15 @@ public class CoreOblivionBladeofNulgath
         if (Core.CheckInventory(item, quant))
             return;
 
-        string[] rewards = Core.EnsureLoad(
-         Core.CheckInventory("Oblivion Blade of Nulgath Pet") ? 2557 : 868)
-         .Rewards?
-         .Where(x => x != null)
-         .Select(x => x.Name)
-         .ToArray() ?? Array.Empty<string>();
+        string[] rewards =
+            Core.EnsureLoad(Core.CheckInventory("Oblivion Blade of Nulgath Pet") ? 2557 : 868)
+                .Rewards?.Where(x => x != null)
+                .Select(x => x.Name)
+                .ToArray()
+            ?? Array.Empty<string>();
 
         Core.AddDrop(
-            rewards
-                .Concat(new[] { item })
-                .Concat(new[] { "Mana Energy for Nulgath" })
-                .ToArray()
+            rewards.Concat(new[] { item }).Concat(new[] { "Mana Energy for Nulgath" }).ToArray()
         );
 
         PetCheck(2557, 868);
@@ -65,17 +76,31 @@ public class CoreOblivionBladeofNulgath
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonsterMapID("elemental", 7, "Mana Energy for Nulgath", isTemp: false, log: false);
+            Core.HuntMonsterMapID(
+                "elemental",
+                7,
+                "Mana Energy for Nulgath",
+                isTemp: false,
+                log: false
+            );
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("elemental", "r3", "Down", "*", "Charged Mana Energy for Nulgath", 5, log: false);
+            Core.KillMonster(
+                "elemental",
+                "r3",
+                "Down",
+                "*",
+                "Charged Mana Energy for Nulgath",
+                5,
+                log: false
+            );
             Bot.Wait.ForPickup(item);
             if (Bot.Inventory.IsMaxStack(item))
                 Core.Logger("Max Stack Hit.");
-            else Core.Logger($"{item}: {Bot.Inventory.GetQuantity(item)}/{quant}");
+            else
+                Core.Logger($"{item}: {Bot.Inventory.GetQuantity(item)}/{quant}");
         }
         Core.CancelRegisteredQuests();
     }
-
 
     public void PhoenixBladeofNulgath()
     {
@@ -94,7 +119,6 @@ public class CoreOblivionBladeofNulgath
         Core.CancelRegisteredQuests();
     }
 
-
     public void TheWeaponParasite()
     {
         if (Core.CheckInventory("Sinister Leech Blade of Nulgath"))
@@ -110,7 +134,6 @@ public class CoreOblivionBladeofNulgath
         Core.CancelRegisteredQuests();
     }
 
-
     public void DoomWormCreepers()
     {
         if (Core.CheckInventory("Dread Heads of Nulgath"))
@@ -125,7 +148,6 @@ public class CoreOblivionBladeofNulgath
         Core.CancelRegisteredQuests();
     }
 
-
     public void TheDarkDeal(int quant)
     {
         if (Core.CheckInventory("Relic of Chaos", quant))
@@ -138,7 +160,6 @@ public class CoreOblivionBladeofNulgath
         Core.CancelRegisteredQuests();
     }
 
-
     public void VoucheritemChampionofNulgath()
     {
         if (!Core.CheckInventory("Warlord"))
@@ -146,7 +167,6 @@ public class CoreOblivionBladeofNulgath
 
         if (Core.CheckInventory("Champion Blade of Nulgath"))
             return;
-
 
         PetCheck(601, 2562);
 
@@ -248,5 +268,4 @@ public class CoreOblivionBladeofNulgath
         }
         return;
     }
-
 }

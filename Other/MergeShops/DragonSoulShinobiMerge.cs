@@ -17,22 +17,42 @@ public class DragonSoulShinobiMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static YokaiQuests Yokai { get => _Yokai ??= new YokaiQuests(); set => _Yokai = value; }    private static YokaiQuests _Yokai;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static YokaiQuests Yokai
+    {
+        get => _Yokai ??= new YokaiQuests();
+        set => _Yokai = value;
+    }
+    private static YokaiQuests _Yokai;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -49,14 +69,22 @@ public static CoreAdvanced _sAdv;
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         //Only edit the map and shopID here
-        Adv.StartBuyAllMerge("shadowfortress", 1968, findIngredients, buyOnlyThis, buyMode: buyMode);
+        Adv.StartBuyAllMerge(
+            "shadowfortress",
+            1968,
+            findIngredients,
+            buyOnlyThis,
+            buyMode: buyMode
+        );
 
         #region Dont edit this part
         void findIngredients()
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +95,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Dragon Shinobi Token":
                     Core.FarmingLogger(req.Name, quant);
@@ -78,35 +111,130 @@ public static CoreAdvanced _sAdv;
                     Core.RegisterQuests(7924);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("shadowfortress", "1st Head of Orochi", "Perfect Orochi Scales", 10, isTemp: false);
+                        Core.HuntMonster(
+                            "shadowfortress",
+                            "1st Head of Orochi",
+                            "Perfect Orochi Scales",
+                            10,
+                            isTemp: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("59476", "DragonSoul Shinobi", "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi\" ?", false),
-        new Option<bool>("59465", "DragonSoul Shinobi", "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi\" ?", false),
-        new Option<bool>("59466", "DragonSoul Kabuto + DragonTail", "Mode: [select] only\nShould the bot buy \"DragonSoul Kabuto + DragonTail\" ?", false),
-        new Option<bool>("59467", "DragonSoul Kabuto", "Mode: [select] only\nShould the bot buy \"DragonSoul Kabuto\" ?", false),
-        new Option<bool>("59468", "DragonSoul Kunoichi Kabuto + DragonTail", "Mode: [select] only\nShould the bot buy \"DragonSoul Kunoichi Kabuto + DragonTail\" ?", false),
-        new Option<bool>("59469", "DragonSoul Kunoichi Kabuto", "Mode: [select] only\nShould the bot buy \"DragonSoul Kunoichi Kabuto\" ?", false),
-        new Option<bool>("59470", "Shinobi's Dragon Soul", "Mode: [select] only\nShould the bot buy \"Shinobi's Dragon Soul\" ?", false),
-        new Option<bool>("59475", "DragonSoul Shinobi Back Katana", "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi Back Katana\" ?", false),
-        new Option<bool>("59471", "DragonSealed Katana", "Mode: [select] only\nShould the bot buy \"DragonSealed Katana\" ?", false),
-        new Option<bool>("59472", "DragonSoul Shinobi Katana", "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi Katana\" ?", false),
-        new Option<bool>("59473", "DragonSoul Shinobi Katana + Sheath", "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi Katana + Sheath\" ?", false),
-        new Option<bool>("59474", "DragonSoul Shinobi Sheathed Katana", "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi Sheathed Katana\" ?", false),
-        new Option<bool>("59477", "Dual DragonSoul Shinobi Kunai", "Mode: [select] only\nShould the bot buy \"Dual DragonSoul Shinobi Kunai\" ?", false),
-        new Option<bool>("59478", "DragonSoul Shinobi Kunai", "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi Kunai\" ?", false),
-        new Option<bool>("59479", "Dual DragonSoul Reversed Kunai", "Mode: [select] only\nShould the bot buy \"Dual DragonSoul Reversed Kunai\" ?", false),
-        new Option<bool>("59480", "DragonSoul Reversed Kunai", "Mode: [select] only\nShould the bot buy \"DragonSoul Reversed Kunai\" ?", false),
-        new Option<bool>("59481", "DragonSoul Kama", "Mode: [select] only\nShould the bot buy \"DragonSoul Kama\" ?", false),
-        new Option<bool>("59482", "DragonSoul Grand Kama", "Mode: [select] only\nShould the bot buy \"DragonSoul Grand Kama\" ?", false),
+        new Option<bool>(
+            "59476",
+            "DragonSoul Shinobi",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59465",
+            "DragonSoul Shinobi",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59466",
+            "DragonSoul Kabuto + DragonTail",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Kabuto + DragonTail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59467",
+            "DragonSoul Kabuto",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Kabuto\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59468",
+            "DragonSoul Kunoichi Kabuto + DragonTail",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Kunoichi Kabuto + DragonTail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59469",
+            "DragonSoul Kunoichi Kabuto",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Kunoichi Kabuto\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59470",
+            "Shinobi's Dragon Soul",
+            "Mode: [select] only\nShould the bot buy \"Shinobi's Dragon Soul\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59475",
+            "DragonSoul Shinobi Back Katana",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi Back Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59471",
+            "DragonSealed Katana",
+            "Mode: [select] only\nShould the bot buy \"DragonSealed Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59472",
+            "DragonSoul Shinobi Katana",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59473",
+            "DragonSoul Shinobi Katana + Sheath",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi Katana + Sheath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59474",
+            "DragonSoul Shinobi Sheathed Katana",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi Sheathed Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59477",
+            "Dual DragonSoul Shinobi Kunai",
+            "Mode: [select] only\nShould the bot buy \"Dual DragonSoul Shinobi Kunai\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59478",
+            "DragonSoul Shinobi Kunai",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Shinobi Kunai\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59479",
+            "Dual DragonSoul Reversed Kunai",
+            "Mode: [select] only\nShould the bot buy \"Dual DragonSoul Reversed Kunai\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59480",
+            "DragonSoul Reversed Kunai",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Reversed Kunai\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59481",
+            "DragonSoul Kama",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Kama\" ?",
+            false
+        ),
+        new Option<bool>(
+            "59482",
+            "DragonSoul Grand Kama",
+            "Mode: [select] only\nShould the bot buy \"DragonSoul Grand Kama\" ?",
+            false
+        ),
     };
 }

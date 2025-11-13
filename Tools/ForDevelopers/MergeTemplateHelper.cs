@@ -8,20 +8,24 @@ tags: merge, shop, generator, helper, developer
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Tools/ForDevelopers/CaseStorage.cs
 
-using Skua.Core.Interfaces;
-using Skua.Core.Options;
-using Skua.Core.Models;
-using Skua.Core.Models.Shops;
-using Skua.Core.Models.Items;
-using Skua.Core.Utils;
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using Skua.Core.Interfaces;
+using Skua.Core.Models;
+using Skua.Core.Models.Items;
+using Skua.Core.Models.Shops;
+using Skua.Core.Options;
+using Skua.Core.Utils;
 
 public class MergeTemplateHelper
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
     public static CoreAdvanced sAdv
     {
@@ -34,27 +38,77 @@ public class MergeTemplateHelper
 
     public List<IOption> Options = new()
     {
-        new Option<string>("", "Dev-Only", "This bot is to help us make merge bots, the average user won't find any use in this bot", ""),
+        new Option<string>(
+            "",
+            "Dev-Only",
+            "This bot is to help us make merge bots, the average user won't find any use in this bot",
+            ""
+        ),
         new Option<string>("", " ", "", ""),
-        new Option<string>("mapName", "Map", "Map of the Merge Shop, please capitalize it properly", ""),
+        new Option<string>(
+            "mapName",
+            "Map",
+            "Map of the Merge Shop, please capitalize it properly",
+            ""
+        ),
         new Option<int>("shopID", "Shop ID", "ID of the Merge Shop", 0),
-        new Option<bool>("genFile", "Generate File", "Generate a MergeTemplate based bot, output will be in \\Scripts\\WIP\\", true)
+        new Option<bool>(
+            "genFile",
+            "Generate File",
+            "Generate a MergeTemplate based bot, output will be in \\Scripts\\WIP\\",
+            true
+        ),
     };
 
     // Blacklist tags to filter out common irrelevant words from item names
     private readonly string[] tagsBlacklist =
     {
-        "the", "and", "of", "or", "dual", "&amp;", "&",
-        "hair", "helm", "hat", "locks", "visage", "helmet", "spike", "spikes", "hood", "hooded", "mask",
-        "armor", "cape", "rune", "aura",
-        "staff", "staves", "dagger", "sword", "gauntlet", "gun", "revolver", "blade", "wand", "polearm", "axe",
-        "gate"
+        "the",
+        "and",
+        "of",
+        "or",
+        "dual",
+        "&amp;",
+        "&",
+        "hair",
+        "helm",
+        "hat",
+        "locks",
+        "visage",
+        "helmet",
+        "spike",
+        "spikes",
+        "hood",
+        "hooded",
+        "mask",
+        "armor",
+        "cape",
+        "rune",
+        "aura",
+        "staff",
+        "staves",
+        "dagger",
+        "sword",
+        "gauntlet",
+        "gun",
+        "revolver",
+        "blade",
+        "wand",
+        "polearm",
+        "axe",
+        "gate",
     };
 
-    private readonly string caseStoragePath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Tools", "ForDevelopers", "CaseStorage.cs");
+    private readonly string caseStoragePath = Path.Combine(
+        ClientFileSources.SkuaScriptsDIR,
+        "Tools",
+        "ForDevelopers",
+        "CaseStorage.cs"
+    );
 
     // Static stored cases dictionary loaded once
-    public static Dictionary<string, string> StoredCases { get; private set; } = CaseStorage.Cases.ToDictionary(x => x.Key, x => string.Join("\n", x.Value));
+    public static Dictionary<string, string> StoredCases { get; private set; } =
+        CaseStorage.Cases.ToDictionary(x => x.Key, x => string.Join("\n", x.Value));
 
     // Mutable local copy if needed
     private Dictionary<string, string> storedCases = StoredCases;
@@ -84,19 +138,28 @@ public class MergeTemplateHelper
             .Select(g => g.First())
             .ToList();
 
-
         string output = string.Empty;
         HashSet<string> processedRequirements = new();
         HashSet<string> itemsToLearn = new();
-        string scriptName = Bot.Shops.Name.Replace("Merge", "").Replace("merge", "").Replace(",", "").Replace("’", "").Replace("shop", "").Replace("-", "").Replace("_", "").Replace("Shop", "").Replace("'", "").Trim() + " Merge";
+        string scriptName =
+            Bot.Shops.Name.Replace("Merge", "")
+                .Replace("merge", "")
+                .Replace(",", "")
+                .Replace("’", "")
+                .Replace("shop", "")
+                .Replace("-", "")
+                .Replace("_", "")
+                .Replace("Shop", "")
+                .Replace("'", "")
+                .Trim() + " Merge";
         string className = scriptName.Replace(" ", "");
         string[] multipliedTagsBlacklist = tagsBlacklist.Select(x => x + 's').ToArray();
 
         string scriptInfo =
-           "/*\n" +
-           $"name: {scriptName}\n" +
-           $"description: This bot will farm the items belonging to the selected mode for the {scriptName} [{shopID}] in /{map}\n" +
-           $"tags: ";
+            "/*\n"
+            + $"name: {scriptName}\n"
+            + $"description: This bot will farm the items belonging to the selected mode for the {scriptName} [{shopID}] in /{map}\n"
+            + $"tags: ";
         List<string> tags = scriptName.ToLower().Split(' ').ToList();
         tags.Add(map);
 
@@ -116,18 +179,25 @@ public class MergeTemplateHelper
             if (item.Requirements == null || item.Name.StartsWith("Gold Voucher"))
                 continue;
 
-            shopItemNames.Add($"        new Option<bool>(\"{item.ID}\", \"{item.Name}\", \"Mode: [select] only\\nShould the bot buy \\\"{item.Name}\\\" ?\", false),");
+            shopItemNames.Add(
+                $"        new Option<bool>(\"{item.ID}\", \"{item.Name}\", \"Mode: [select] only\\nShould the bot buy \\\"{item.Name}\\\" ?\", false),"
+            );
 
-            tags.AddRange(item.Name.ToLower()
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => new string(x.Where(char.IsLetter).ToArray()))
-                .Except(tags)
-                .Except(tagsBlacklist)
-                .Except(multipliedTagsBlacklist));
+            tags.AddRange(
+                item.Name.ToLower()
+                    .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => new string(x.Where(char.IsLetter).ToArray()))
+                    .Except(tags)
+                    .Except(tagsBlacklist)
+                    .Except(multipliedTagsBlacklist)
+            );
 
             foreach (ItemBase req in item.Requirements)
             {
-                if (processedRequirements.Contains(req.Name) || shopItems.Exists(_item => _item.ID == req.ID))
+                if (
+                    processedRequirements.Contains(req.Name)
+                    || shopItems.Exists(_item => _item.ID == req.ID)
+                )
                     continue;
 
                 processedRequirements.Add(req.Name);
@@ -137,7 +207,8 @@ public class MergeTemplateHelper
                     globalKnownCases.Add(caseCode.TrimEnd());
                 else
                 {
-                    globalFallbackCases.Add($@"
+                    globalFallbackCases.Add(
+                        $@"
                 case ""{req.Name}"":
                     if (req.Upgrade && !Core.IsMember)
                     {{
@@ -156,10 +227,9 @@ public class MergeTemplateHelper
                     }}
             Core.CancelRegisteredQuests();
             break;
-            ");
-
+            "
+                    );
                 }
-
             }
         }
 
@@ -182,13 +252,19 @@ public class MergeTemplateHelper
 
         if (!genFile)
         {
-            Bot.ShowMessageBox("Please add the following cases to the merge bots:\n" + output, "Merge Template Helper");
+            Bot.ShowMessageBox(
+                "Please add the following cases to the merge bots:\n" + output,
+                "Merge Template Helper"
+            );
             return;
         }
 
-        string[] MergeTemplate = File.ReadAllLines(Path.Combine(ClientFileSources.SkuaScriptsDIR, "Templates", "MergeTemplate.cs"));
+        string[] MergeTemplate = File.ReadAllLines(
+            Path.Combine(ClientFileSources.SkuaScriptsDIR, "Templates", "MergeTemplate.cs")
+        );
 
-        int itemsIndex = Array.IndexOf(MergeTemplate, "                // Add how to get items here") - 1;
+        int itemsIndex =
+            Array.IndexOf(MergeTemplate, "                // Add how to get items here") - 1;
         if (itemsIndex < 0)
         {
             Core.Logger("Failed to find index");
@@ -202,39 +278,52 @@ public class MergeTemplateHelper
         }
         MergeTemplate[classIndex] = $"public class {className}";
 
-        int blackListIndex = Array.IndexOf(MergeTemplate, "        Core.BankingBlackList.AddRange(new[] { \"\" });");
+        int blackListIndex = Array.IndexOf(
+            MergeTemplate,
+            "        Core.BankingBlackList.AddRange(new[] { \"\" });"
+        );
         if (blackListIndex < 0)
         {
             Core.Logger("Failed to find blackListIndex");
             return;
         }
-        MergeTemplate[blackListIndex] = "        Core.BankingBlackList.AddRange(new[] { \"" + string.Join("\", \"", itemsToLearn) + "\"});";
+        MergeTemplate[blackListIndex] =
+            "        Core.BankingBlackList.AddRange(new[] { \""
+            + string.Join("\", \"", itemsToLearn)
+            + "\"});";
 
-        int startIndex = Array.IndexOf(MergeTemplate, "        Adv.StartBuyAllMerge(\"map\", 1234, findIngredients, buyOnlyThis, buyMode: buyMode);");
+        int startIndex = Array.IndexOf(
+            MergeTemplate,
+            "        Adv.StartBuyAllMerge(\"map\", 1234, findIngredients, buyOnlyThis, buyMode: buyMode);"
+        );
         if (startIndex < 0)
         {
             Core.Logger("Failed to find startIndex");
             return;
         }
-        MergeTemplate[startIndex] = $"        Adv.StartBuyAllMerge(\"{map.ToLower()}\", {shopID}, findIngredients, buyOnlyThis, buyMode: buyMode);";
-
+        MergeTemplate[startIndex] =
+            $"        Adv.StartBuyAllMerge(\"{map.ToLower()}\", {shopID}, findIngredients, buyOnlyThis, buyMode: buyMode);";
 
         scriptInfo += tags.Join(", ") + "\n*/";
 
         string[] content = new[] { scriptInfo }
-                            .Concat(MergeTemplate[5..itemsIndex])
-                            .Concat(new[] { output })
-                            .Concat(MergeTemplate[(MergeTemplate.Length - 4)..(MergeTemplate.Length - 1)])
-                            .Concat(shopItemNames.ToArray())
-                            .Concat(new[] { "}" })
-                            .ToArray();
-
+            .Concat(MergeTemplate[5..itemsIndex])
+            .Concat(new[] { output })
+            .Concat(MergeTemplate[(MergeTemplate.Length - 4)..(MergeTemplate.Length - 1)])
+            .Concat(shopItemNames.ToArray())
+            .Concat(new[] { "}" })
+            .ToArray();
 
         string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP", className + ".cs");
         Directory.CreateDirectory(Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP"));
         Core.WriteFile(path, content);
-        if (Bot.ShowMessageBox($"File has been generated. Path is {path}\n\nPress OK to open the file",
-                                                "File Generated", "OK").Text == "OK")
+        if (
+            Bot.ShowMessageBox(
+                $"File has been generated. Path is {path}\n\nPress OK to open the file",
+                "File Generated",
+                "OK"
+            ).Text == "OK"
+        )
             Process.Start("explorer", path);
     }
 
@@ -352,5 +441,4 @@ public class MergeTemplateHelper
             StoredCases = new Dictionary<string, string>();
         }
     }
-
 }

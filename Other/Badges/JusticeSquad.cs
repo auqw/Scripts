@@ -34,8 +34,6 @@ public class JusticeSquadBadge
         Core.HuntMonster("battleontown", "Frogzard", "Quill Pen", log: false);
         Core.EnsureComplete(5722);
         Core.TrashCan("Enchanted Justice Blade");
-
-
     }
 
     private string badge = "Justice Squad";

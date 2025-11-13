@@ -32,28 +32,65 @@ public class CoreHollowbornDoomKnight
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
     private static CoreHollowborn _HB;
-    private static CoreHollowbornPaladin HBP { get => _HBP ??= new CoreHollowbornPaladin(); set => _HBP = value; }
+    private static CoreHollowbornPaladin HBP
+    {
+        get => _HBP ??= new CoreHollowbornPaladin();
+        set => _HBP = value;
+    }
     private static CoreHollowbornPaladin _HBP;
-    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }
+    private static CoreSDKA SDKA
+    {
+        get => _SDKA ??= new CoreSDKA();
+        set => _SDKA = value;
+    }
     private static CoreSDKA _SDKA;
-    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }
+    private static CoreNSOD NSoD
+    {
+        get => _NSoD ??= new CoreNSOD();
+        set => _NSoD = value;
+    }
     private static CoreNSOD _NSoD;
-    private static SepulchuresOriginalHelm SOH { get => _SOH ??= new SepulchuresOriginalHelm(); set => _SOH = value; }
+    private static SepulchuresOriginalHelm SOH
+    {
+        get => _SOH ??= new SepulchuresOriginalHelm();
+        set => _SOH = value;
+    }
     private static SepulchuresOriginalHelm _SOH;
 
     public string OptionsStorage = "HollowbornDoomKnightOptions";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("PreFarm", "Pre Farm Dark-/Doom Fragments", "Recommended setting: False", false),
+        new Option<bool>(
+            "PreFarm",
+            "Pre Farm Dark-/Doom Fragments",
+            "Recommended setting: False",
+            false
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -62,34 +99,34 @@ public class CoreHollowbornDoomKnight
         Core.RunCore();
     }
 
-    public string[] ADKItems = {
+    public string[] ADKItems =
+    {
         "Hollowborn Doom Visage",
         "Hollowborn DoomKnight Helm",
         "Hollowborn DoomKnight Hood",
         "Hollowborn Doom Cloak",
-        "Hollowborn Doom Cape"
+        "Hollowborn Doom Cape",
     };
 
-    public string[] ADKRisesItems = {
-        "Doom Fragment",
-        "Classic Hollowborn DoomKnight"
-    };
-    public string[] ADKFallsItems = {
-        "Hollowborn Empress' Blade",
-        "Hollowborn DoomBlade"
-    };
+    public string[] ADKRisesItems = { "Doom Fragment", "Classic Hollowborn DoomKnight" };
+    public string[] ADKFallsItems = { "Hollowborn Empress' Blade", "Hollowborn DoomBlade" };
 
-    public string[] ADKReturnsItems = {
+    public string[] ADKReturnsItems =
+    {
         "Hollowborn DoomKnight",
         "Hollowborn Sepulchure's Helm",
         "Hollowborn Doom Shade",
-        "Hollowborn Sword of Doom"
+        "Hollowborn Sword of Doom",
     };
 
     public void GetAll()
     {
-        if (Core.CheckInventory(ADKItems, toInv: false) && Core.CheckInventory("Classic Hollowborn DoomKnight", toInv: false) &&
-            Core.CheckInventory(ADKFallsItems, toInv: false) && Core.CheckInventory(ADKReturnsItems, toInv: false))
+        if (
+            Core.CheckInventory(ADKItems, toInv: false)
+            && Core.CheckInventory("Classic Hollowborn DoomKnight", toInv: false)
+            && Core.CheckInventory(ADKFallsItems, toInv: false)
+            && Core.CheckInventory(ADKReturnsItems, toInv: false)
+        )
             return;
 
         if (Bot.Config!.Get<bool>("PreFarm"))
@@ -119,7 +156,15 @@ public class CoreHollowbornDoomKnight
             Core.EnsureAccept(8413);
 
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 10, false);
+            Core.KillMonster(
+                "shadowrealmpast",
+                "Enter",
+                "Spawn",
+                "*",
+                "Empowered Essence",
+                10,
+                false
+            );
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("shadowrealmpast", "Shadow Lord", "Shadowworn", 1, false);
             Farm.Gold(100000);
@@ -156,8 +201,25 @@ public class CoreHollowbornDoomKnight
             Core.HuntMonster("lumafortress", "Corrupted Luma", "Worshipper of Doom", 1, false);
             Bot.Quests.UpdateQuest(3008);
             if (Core.IsMember)
-                Core.HuntMonster("ultravoid", "Ultra Kathool", "Ingredients?", 10, false, log: false);
-            else Core.KillMonster("doomvault", "r5", "Left", "Binky", "Ingredients?", 10, false, log: false);
+                Core.HuntMonster(
+                    "ultravoid",
+                    "Ultra Kathool",
+                    "Ingredients?",
+                    10,
+                    false,
+                    log: false
+                );
+            else
+                Core.KillMonster(
+                    "doomvault",
+                    "r5",
+                    "Left",
+                    "Binky",
+                    "Ingredients?",
+                    10,
+                    false,
+                    log: false
+                );
 
             Core.EnsureComplete(8414);
         }
@@ -193,7 +255,14 @@ public class CoreHollowbornDoomKnight
         }
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", 1, false, publicRoom: true);
+        Core.HuntMonster(
+            "epicvordred",
+            "Ultra Vordred",
+            "(Necro) Scroll of Dark Arts",
+            1,
+            false,
+            publicRoom: true
+        );
         Bot.Quests.UpdateQuest(3008);
         Core.SetAchievement(18);
         Bot.Quests.UpdateQuest(3004);
@@ -214,11 +283,13 @@ public class CoreHollowbornDoomKnight
         bool cantcomplete = !Core.isCompletedBefore(2090) && !Bot.Player.IsMember;
         if (cantcomplete)
         {
-            Core.Logger("Completion of the quest \"Dark Spirit Donation\" is required for the \"Dark Energy\" to drop, which is members only, we cannot complete this.");
+            Core.Logger(
+                "Completion of the quest \"Dark Spirit Donation\" is required for the \"Dark Energy\" to drop, which is members only, we cannot complete this."
+            );
             return;
         }
 
-        // Requirements 
+        // Requirements
         SDKA.DoAll();
         SOH.DoAll();
         NSoD.GetNSOD();
@@ -233,14 +304,36 @@ public class CoreHollowbornDoomKnight
 
         Core.KillMonster("dwarfhold", "r2", "Left", "Chaos Drow", "Dark Energy", 10000, false);
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", 3, false, publicRoom: true);
+        Core.HuntMonster(
+            "epicvordred",
+            "Ultra Vordred",
+            "(Necro) Scroll of Dark Arts",
+            3,
+            false,
+            publicRoom: true
+        );
         NSoD.BonesVoidRealm(1);
         Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", 1, false);
         Bot.Quests.UpdateQuest(3008);
         Core.SetAchievement(18);
         Bot.Quests.UpdateQuest(3004);
-        Core.KillMonster("doomvaultb", "r26", "Left", "Undead Raxgore", "Weapon Imprint", 12, false);
-        Core.HuntMonster("Desolich", "Desolich", "Desolich's Dark Horn", 3, false, publicRoom: true);
+        Core.KillMonster(
+            "doomvaultb",
+            "r26",
+            "Left",
+            "Undead Raxgore",
+            "Weapon Imprint",
+            12,
+            false
+        );
+        Core.HuntMonster(
+            "Desolich",
+            "Desolich",
+            "Desolich's Dark Horn",
+            3,
+            false,
+            publicRoom: true
+        );
 
         Core.EnsureComplete(8416);
     }

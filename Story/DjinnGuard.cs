@@ -12,9 +12,18 @@ public class DjinnGuard
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static DjinnGateStory DjinnGateStory { get => _DjinnGateStory ??= new DjinnGateStory(); set => _DjinnGateStory = value; }    private static DjinnGateStory _DjinnGateStory;
-
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static DjinnGateStory DjinnGateStory
+    {
+        get => _DjinnGateStory ??= new DjinnGateStory();
+        set => _DjinnGateStory = value;
+    }
+    private static DjinnGateStory _DjinnGateStory;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -47,6 +56,5 @@ public class DjinnGuard
 
         //Blessing of the Guardian 6274
         Story.KillQuest(6274, "DjinnGuard", "Image of Crulon");
-
     }
 }

@@ -16,20 +16,37 @@ public class FireInvasionMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreSoW SOW { get => _SOW ??= new CoreSoW(); set => _SOW = value; }
+    private static CoreSoW SOW
+    {
+        get => _SOW ??= new CoreSoW();
+        set => _SOW = value;
+    }
     private static CoreSoW _SOW;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -54,7 +71,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +84,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "ShadowFire Trophy":
                     Core.FarmingLogger(req.Name, quant);
@@ -75,34 +99,125 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(8192);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("fireinvasion", "Living Shadowflame", "ShadowFlame Tag", 15, log: false);
-                        Core.HuntMonster("fireinvasion", "Shadefire Cavalry", "Corrupted Badge", 3, log: false);
+                        Core.HuntMonster(
+                            "fireinvasion",
+                            "Living Shadowflame",
+                            "ShadowFlame Tag",
+                            15,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "fireinvasion",
+                            "Shadefire Cavalry",
+                            "Corrupted Badge",
+                            3,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("61694", "Ruby SpellBlade", "Mode: [select] only\nShould the bot buy \"Ruby SpellBlade\" ?", false),
-        new Option<bool>("61695", "Ruby Hat + Bangs", "Mode: [select] only\nShould the bot buy \"Ruby Hat + Bangs\" ?", false),
-        new Option<bool>("61696", "Ruby Hat + Hair", "Mode: [select] only\nShould the bot buy \"Ruby Hat + Hair\" ?", false),
-        new Option<bool>("61697", "Ruby Spell Shroud", "Mode: [select] only\nShould the bot buy \"Ruby Spell Shroud\" ?", false),
-        new Option<bool>("61698", "Burning Ruby Blade", "Mode: [select] only\nShould the bot buy \"Burning Ruby Blade\" ?", false),
-        new Option<bool>("61699", "Dual Burning Ruby Blades", "Mode: [select] only\nShould the bot buy \"Dual Burning Ruby Blades\" ?", false),
-        new Option<bool>("61700", "Burning Ruby BattleGear", "Mode: [select] only\nShould the bot buy \"Burning Ruby BattleGear\" ?", false),
-        new Option<bool>("61701", "Burning Blade Pixie", "Mode: [select] only\nShould the bot buy \"Burning Blade Pixie\" ?", false),
-        new Option<bool>("61686", "Sapphire SpellBlade", "Mode: [select] only\nShould the bot buy \"Sapphire SpellBlade\" ?", false),
-        new Option<bool>("61687", "Sapphire Hat + Bangs", "Mode: [select] only\nShould the bot buy \"Sapphire Hat + Bangs\" ?", false),
-        new Option<bool>("61688", "Sapphire Hat + Hair", "Mode: [select] only\nShould the bot buy \"Sapphire Hat + Hair\" ?", false),
-        new Option<bool>("61689", "Burning Sapphire Blade", "Mode: [select] only\nShould the bot buy \"Burning Sapphire Blade\" ?", false),
-        new Option<bool>("61690", "Dual Burning Sapphire Blades", "Mode: [select] only\nShould the bot buy \"Dual Burning Sapphire Blades\" ?", false),
-        new Option<bool>("61691", "Burning Sapphire BattleGear", "Mode: [select] only\nShould the bot buy \"Burning Sapphire BattleGear\" ?", false),
-        new Option<bool>("61692", "Sapphire Flame Pixie", "Mode: [select] only\nShould the bot buy \"Sapphire Flame Pixie\" ?", false),
-        new Option<bool>("61693", "Sapphire Spell Shroud", "Mode: [select] only\nShould the bot buy \"Sapphire Spell Shroud\" ?", false),
+        new Option<bool>(
+            "61694",
+            "Ruby SpellBlade",
+            "Mode: [select] only\nShould the bot buy \"Ruby SpellBlade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61695",
+            "Ruby Hat + Bangs",
+            "Mode: [select] only\nShould the bot buy \"Ruby Hat + Bangs\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61696",
+            "Ruby Hat + Hair",
+            "Mode: [select] only\nShould the bot buy \"Ruby Hat + Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61697",
+            "Ruby Spell Shroud",
+            "Mode: [select] only\nShould the bot buy \"Ruby Spell Shroud\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61698",
+            "Burning Ruby Blade",
+            "Mode: [select] only\nShould the bot buy \"Burning Ruby Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61699",
+            "Dual Burning Ruby Blades",
+            "Mode: [select] only\nShould the bot buy \"Dual Burning Ruby Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61700",
+            "Burning Ruby BattleGear",
+            "Mode: [select] only\nShould the bot buy \"Burning Ruby BattleGear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61701",
+            "Burning Blade Pixie",
+            "Mode: [select] only\nShould the bot buy \"Burning Blade Pixie\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61686",
+            "Sapphire SpellBlade",
+            "Mode: [select] only\nShould the bot buy \"Sapphire SpellBlade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61687",
+            "Sapphire Hat + Bangs",
+            "Mode: [select] only\nShould the bot buy \"Sapphire Hat + Bangs\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61688",
+            "Sapphire Hat + Hair",
+            "Mode: [select] only\nShould the bot buy \"Sapphire Hat + Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61689",
+            "Burning Sapphire Blade",
+            "Mode: [select] only\nShould the bot buy \"Burning Sapphire Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61690",
+            "Dual Burning Sapphire Blades",
+            "Mode: [select] only\nShould the bot buy \"Dual Burning Sapphire Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61691",
+            "Burning Sapphire BattleGear",
+            "Mode: [select] only\nShould the bot buy \"Burning Sapphire BattleGear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61692",
+            "Sapphire Flame Pixie",
+            "Mode: [select] only\nShould the bot buy \"Sapphire Flame Pixie\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61693",
+            "Sapphire Spell Shroud",
+            "Mode: [select] only\nShould the bot buy \"Sapphire Spell Shroud\" ?",
+            false
+        ),
     };
 }

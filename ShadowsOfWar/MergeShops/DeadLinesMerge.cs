@@ -17,25 +17,49 @@ public class DeadLinesMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreSoWMats SOWM { get => _SOWM ??= new CoreSoWMats(); set => _SOWM = value; }
+    private static CoreSoWMats SOWM
+    {
+        get => _SOWM ??= new CoreSoWMats();
+        set => _SOWM = value;
+    }
     private static CoreSoWMats _SOWM;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }    private static CoreSoW _SoW;
-
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
+    private static CoreSoW _SoW;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -60,7 +84,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -71,9 +97,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Unbound Thread":
                     SOWM.UnboundThread(quant);
@@ -84,18 +115,83 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("70580", "Timestream Ravager", "Mode: [select] only\nShould the bot buy \"Timestream Ravager\" ?", false),
-        new Option<bool>("70581", "Timestream Ravager's Visor", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Visor\" ?", false),
-        new Option<bool>("70582", "Timestream Ravager's Hat", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Hat\" ?", false),
-        new Option<bool>("70583", "Timestream Ravager's Morph", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Morph\" ?", false),
-        new Option<bool>("70584", "Timestream Ravager's Morph + Hat", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Morph + Hat\" ?", false),
-        new Option<bool>("70586", "Timestream Ravager's Symbol", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Symbol\" ?", false),
-        new Option<bool>("70588", "Timestream Ravager's Cutlass", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Cutlass\" ?", false),
-        new Option<bool>("70589", "Timestream Ravager's Cutlasses", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Cutlasses\" ?", false),
-        new Option<bool>("70590", "Timestream Ravager's Dark Hook", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Dark Hook\" ?", false),
-        new Option<bool>("70591", "Timestream Ravager's Dark Hooks", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Dark Hooks\" ?", false),
-        new Option<bool>("70592", "Timestream Ravager's Pistol", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Pistol\" ?", false),
-        new Option<bool>("70593", "Timestream Ravager's Pistols", "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Pistols\" ?", false),
-        new Option<bool>("72292", "Enchanted ShadowFlame Portal", "Mode: [select] only\nShould the bot buy \"Enchanted ShadowFlame Portal\" ?", false),
+        new Option<bool>(
+            "70580",
+            "Timestream Ravager",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70581",
+            "Timestream Ravager's Visor",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Visor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70582",
+            "Timestream Ravager's Hat",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70583",
+            "Timestream Ravager's Morph",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70584",
+            "Timestream Ravager's Morph + Hat",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Morph + Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70586",
+            "Timestream Ravager's Symbol",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Symbol\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70588",
+            "Timestream Ravager's Cutlass",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Cutlass\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70589",
+            "Timestream Ravager's Cutlasses",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Cutlasses\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70590",
+            "Timestream Ravager's Dark Hook",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Dark Hook\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70591",
+            "Timestream Ravager's Dark Hooks",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Dark Hooks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70592",
+            "Timestream Ravager's Pistol",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Pistol\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70593",
+            "Timestream Ravager's Pistols",
+            "Mode: [select] only\nShould the bot buy \"Timestream Ravager's Pistols\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72292",
+            "Enchanted ShadowFlame Portal",
+            "Mode: [select] only\nShould the bot buy \"Enchanted ShadowFlame Portal\" ?",
+            false
+        ),
     };
 }

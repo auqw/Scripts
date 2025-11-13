@@ -14,25 +14,48 @@ public class DagesBirthdayMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Shard of Armor", "Helm Piece", "Leg Pieces", "Arm Pieces", "Weapon Shard", "Cape Piece", "Death's Scythe" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Shard of Armor",
+                "Helm Piece",
+                "Leg Pieces",
+                "Arm Pieces",
+                "Weapon Shard",
+                "Cape Piece",
+                "Death's Scythe",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -52,7 +75,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -63,9 +88,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
 
                 case "Shard of Armor":
@@ -80,7 +110,15 @@ private static CoreAdvanced _sAdv;
                         Core.RegisterQuests(3408);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.KillMonster("underworld", "r8", "Left", "*", "Dread Head", 20, log: false);
+                            Core.KillMonster(
+                                "underworld",
+                                "r8",
+                                "Left",
+                                "*",
+                                "Dread Head",
+                                20,
+                                log: false
+                            );
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();
@@ -98,31 +136,107 @@ private static CoreAdvanced _sAdv;
                     Core.HuntMonster("undervoid", "Conquest", req.Name, quant, false);
                     break;
 
-                    case "Death's Scythe":
-                        Core.Logger("This Merge Items Reuires the 300ac version of `Death's Scythe`, buy it yourself, then rerun.");
-                        break;
-
+                case "Death's Scythe":
+                    Core.Logger(
+                        "This Merge Items Reuires the 300ac version of `Death's Scythe`, buy it yourself, then rerun."
+                    );
+                    break;
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("23071", "Spirit of War", "Mode: [select] only\nShould the bot buy \"Spirit of War\" ?", false),
-        new Option<bool>("23072", "Spirit of Famine", "Mode: [select] only\nShould the bot buy \"Spirit of Famine\" ?", false),
-        new Option<bool>("23073", "Spirit of Conquest", "Mode: [select] only\nShould the bot buy \"Spirit of Conquest\" ?", false),
-        new Option<bool>("23074", "Spirit of Death", "Mode: [select] only\nShould the bot buy \"Spirit of Death\" ?", false),
-        new Option<bool>("23102", "Death's Kamas", "Mode: [select] only\nShould the bot buy \"Death's Kamas\" ?", false),
-        new Option<bool>("23098", "Conquest Bow", "Mode: [select] only\nShould the bot buy \"Conquest Bow\" ?", false),
-        new Option<bool>("23094", "Famine's Gilded Horns", "Mode: [select] only\nShould the bot buy \"Famine's Gilded Horns\" ?", false),
-        new Option<bool>("23085", "Conquest's Embellished Cloak", "Mode: [select] only\nShould the bot buy \"Conquest's Embellished Cloak\" ?", false),
-        new Option<bool>("23076", "Conquest's Hood and Crown", "Mode: [select] only\nShould the bot buy \"Conquest's Hood and Crown\" ?", false),
-        new Option<bool>("23089", "Conquest's Cloak", "Mode: [select] only\nShould the bot buy \"Conquest's Cloak\" ?", false),
-        new Option<bool>("23099", "Hidden Face of Conquest", "Mode: [select] only\nShould the bot buy \"Hidden Face of Conquest\" ?", false),
-        new Option<bool>("23101", "Conquest Polearm", "Mode: [select] only\nShould the bot buy \"Conquest Polearm\" ?", false),
-        new Option<bool>("23110", "War's Cape", "Mode: [select] only\nShould the bot buy \"War's Cape\" ?", false),
-        new Option<bool>("23066", "Obsidian Underguard", "Mode: [select] only\nShould the bot buy \"Obsidian Underguard\" ?", false),
-        new Option<bool>("23117", "War's Helm", "Mode: [select] only\nShould the bot buy \"War's Helm\" ?", false),
+        new Option<bool>(
+            "23071",
+            "Spirit of War",
+            "Mode: [select] only\nShould the bot buy \"Spirit of War\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23072",
+            "Spirit of Famine",
+            "Mode: [select] only\nShould the bot buy \"Spirit of Famine\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23073",
+            "Spirit of Conquest",
+            "Mode: [select] only\nShould the bot buy \"Spirit of Conquest\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23074",
+            "Spirit of Death",
+            "Mode: [select] only\nShould the bot buy \"Spirit of Death\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23102",
+            "Death's Kamas",
+            "Mode: [select] only\nShould the bot buy \"Death's Kamas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23098",
+            "Conquest Bow",
+            "Mode: [select] only\nShould the bot buy \"Conquest Bow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23094",
+            "Famine's Gilded Horns",
+            "Mode: [select] only\nShould the bot buy \"Famine's Gilded Horns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23085",
+            "Conquest's Embellished Cloak",
+            "Mode: [select] only\nShould the bot buy \"Conquest's Embellished Cloak\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23076",
+            "Conquest's Hood and Crown",
+            "Mode: [select] only\nShould the bot buy \"Conquest's Hood and Crown\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23089",
+            "Conquest's Cloak",
+            "Mode: [select] only\nShould the bot buy \"Conquest's Cloak\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23099",
+            "Hidden Face of Conquest",
+            "Mode: [select] only\nShould the bot buy \"Hidden Face of Conquest\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23101",
+            "Conquest Polearm",
+            "Mode: [select] only\nShould the bot buy \"Conquest Polearm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23110",
+            "War's Cape",
+            "Mode: [select] only\nShould the bot buy \"War's Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23066",
+            "Obsidian Underguard",
+            "Mode: [select] only\nShould the bot buy \"Obsidian Underguard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "23117",
+            "War's Helm",
+            "Mode: [select] only\nShould the bot buy \"War's Helm\" ?",
+            false
+        ),
         //Requires 300acs
         // new Option<bool>("23122", "Death's Grimmer Scythe", "Mode: [select] only\nShould the bot buy \"Death's Grimmer Scythe\" ?", false),
     };

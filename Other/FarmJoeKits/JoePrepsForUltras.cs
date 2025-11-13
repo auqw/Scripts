@@ -4,7 +4,6 @@ description: This script will farm all the required items for Ultra Bosses
 tags: joe, ultra, boss, preparation, farm
 */
 
-
 #region includes
 //cs_include Scripts/Chaos/DrakathsArmor.cs
 //cs_include Scripts/Chaos/EternalDrakathSet.cs
@@ -271,45 +270,95 @@ tags: joe, ultra, boss, preparation, farm
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs
 //cs_include Scripts/Other/Classes/VerusDoomKnight.cs
 
-
-
 #endregion includes
 
+using System;
+using System.Collections.Generic;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
-using System;
-using System.Collections.Generic;
 
 public class JoePrepsForUltras
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static UnlockForgeEnhancements UnlockForgeEnhancements { get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements(); set => _UnlockForgeEnhancements = value; }
+    private static UnlockForgeEnhancements UnlockForgeEnhancements
+    {
+        get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements();
+        set => _UnlockForgeEnhancements = value;
+    }
     private static UnlockForgeEnhancements _UnlockForgeEnhancements;
-    private static ArchPaladin AP { get => _AP ??= new ArchPaladin(); set => _AP = value; }
+    private static ArchPaladin AP
+    {
+        get => _AP ??= new ArchPaladin();
+        set => _AP = value;
+    }
     private static ArchPaladin _AP;
-    private static StoneCrusher SC { get => _SC ??= new StoneCrusher(); set => _SC = value; }
+    private static StoneCrusher SC
+    {
+        get => _SC ??= new StoneCrusher();
+        set => _SC = value;
+    }
     private static StoneCrusher _SC;
-    private static LordOfOrder LOO { get => _LOO ??= new LordOfOrder(); set => _LOO = value; }
+    private static LordOfOrder LOO
+    {
+        get => _LOO ??= new LordOfOrder();
+        set => _LOO = value;
+    }
     private static LordOfOrder _LOO;
-    private static PotionBuyer PotionBuyer { get => _PotionBuyer ??= new PotionBuyer(); set => _PotionBuyer = value; }
+    private static PotionBuyer PotionBuyer
+    {
+        get => _PotionBuyer ??= new PotionBuyer();
+        set => _PotionBuyer = value;
+    }
     private static PotionBuyer _PotionBuyer;
-    private static BuyScrolls Scroll { get => _Scroll ??= new BuyScrolls(); set => _Scroll = value; }
+    private static BuyScrolls Scroll
+    {
+        get => _Scroll ??= new BuyScrolls();
+        set => _Scroll = value;
+    }
     private static BuyScrolls _Scroll;
-    private static AllStories AllStories { get => _AllStories ??= new AllStories(); set => _AllStories = value; }
+    private static AllStories AllStories
+    {
+        get => _AllStories ??= new AllStories();
+        set => _AllStories = value;
+    }
     private static AllStories _AllStories;
-    private static CoreNSOD NSOD { get => _NSOD ??= new CoreNSOD(); set => _NSOD = value; }
+    private static CoreNSOD NSOD
+    {
+        get => _NSOD ??= new CoreNSOD();
+        set => _NSOD = value;
+    }
     private static CoreNSOD _NSOD;
-    private static CoreLR LR { get => _LR ??= new CoreLR(); set => _LR = value; }
+    private static CoreLR LR
+    {
+        get => _LR ??= new CoreLR();
+        set => _LR = value;
+    }
     private static CoreLR _LR;
-    private static CoreYnR YnR { get => _YnR ??= new CoreYnR(); set => _YnR = value; }
+    private static CoreYnR YnR
+    {
+        get => _YnR ??= new CoreYnR();
+        set => _YnR = value;
+    }
     private static CoreYnR _YnR;
-    private static VerusDoomKnightClass VDK { get => _VDK ??= new VerusDoomKnightClass(); set => _VDK = value; }
+    private static VerusDoomKnightClass VDK
+    {
+        get => _VDK ??= new VerusDoomKnightClass();
+        set => _VDK = value;
+    }
     private static VerusDoomKnightClass _VDK;
 
     public enum PlayerNumber
@@ -317,20 +366,23 @@ public class JoePrepsForUltras
         Player1,
         Player2,
         Player3,
-        Player4
+        Player4,
     }
 
     public string OptionsStorage = "JoePrepsForUltras";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<PlayerNumber>("Player", "Player Number",
-            "Which Player number are you in Insert's \"ALL ULTRAS\" bot (for grim) setup?\n" +
-            "Player1: Tank/Support (Legion Revenant, ArchPaladin, StoneCrusher, Chaos Avenger)\n" +
-            "Player2: DPS/Chrono (Quantum Chronomancer, Legion Revenant, Chaos Avenger, StoneCrusher)\n" +
-            "Player3: Support (Lord of Order, Legion Revenant)\n" +
-            "Player4: DPS/Support (ArchPaladin, LightCaster, Verus DoomKnight)",
-            PlayerNumber.Player1),
+        new Option<PlayerNumber>(
+            "Player",
+            "Player Number",
+            "Which Player number are you in Insert's \"ALL ULTRAS\" bot (for grim) setup?\n"
+                + "Player1: Tank/Support (Legion Revenant, ArchPaladin, StoneCrusher, Chaos Avenger)\n"
+                + "Player2: DPS/Chrono (Quantum Chronomancer, Legion Revenant, Chaos Avenger, StoneCrusher)\n"
+                + "Player3: Support (Lord of Order, Legion Revenant)\n"
+                + "Player4: DPS/Support (ArchPaladin, LightCaster, Verus DoomKnight)",
+            PlayerNumber.Player1
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -363,7 +415,9 @@ public class JoePrepsForUltras
                 SetupPlayerFour();
                 break;
             default:
-                Core.Logger("Invalid player number selected. Please choose Player1, Player2, Player3, or Player4.");
+                Core.Logger(
+                    "Invalid player number selected. Please choose Player1, Player2, Player3, or Player4."
+                );
                 break;
         }
 
@@ -389,7 +443,9 @@ public class JoePrepsForUltras
 
         // ChaosAvenger (Ultra requirement)
         if (!Core.CheckInventory("Chaos Avenger"))
-            Core.Logger("Note: Chaos Avenger must be obtained manually as it requires ultras, and Skua does not support this");
+            Core.Logger(
+                "Note: Chaos Avenger must be obtained manually as it requires ultras, and Skua does not support this"
+            );
         else
             Core.Logger("Chaos Avenger found!");
     }
@@ -400,7 +456,9 @@ public class JoePrepsForUltras
 
         // Quantum Chronomancer
         if (!Core.CheckInventory("Quantum Chronomancer"))
-            Core.Logger("Note: Quantum Chronomancer must be bought for 6k ACs in /heromart or use Arachnomancer instead");
+            Core.Logger(
+                "Note: Quantum Chronomancer must be bought for 6k ACs in /heromart or use Arachnomancer instead"
+            );
         else
             Core.Logger("Quantum Chronomancer found!");
 
@@ -410,7 +468,9 @@ public class JoePrepsForUltras
 
         // ChaosAvenger
         if (!Core.CheckInventory("Chaos Avenger"))
-            Core.Logger("Note: Chaos Avenger must be obtained manually as it requires ultras, and Skua does not support this");
+            Core.Logger(
+                "Note: Chaos Avenger must be obtained manually as it requires ultras, and Skua does not support this"
+            );
         else
             Core.Logger("Chaos Avenger found!");
 
@@ -442,7 +502,9 @@ public class JoePrepsForUltras
 
         // LightCaster
         if (!Core.CheckInventory("LightCaster"))
-            Core.Logger("Note: LightCaster requires 1000 ACs to purchase. Pre-farming materials...");
+            Core.Logger(
+                "Note: LightCaster requires 1000 ACs to purchase. Pre-farming materials..."
+            );
         else
             Core.Logger("LightCaster found!");
 
@@ -470,11 +532,22 @@ public class JoePrepsForUltras
 
         // Buy potions and scrolls
         Core.Logger("Getting potions and scrolls...");
-        PotionBuyer.INeedYourStrongestPotions(new[] { "Potent Malevolence Elixir" }, new[] { true }, 10, true, true);
+        PotionBuyer.INeedYourStrongestPotions(
+            new[] { "Potent Malevolence Elixir" },
+            new[] { true },
+            10,
+            true,
+            true
+        );
         Scroll.BuyScroll(Scrolls.Enrage, 1000);
 
         if (!Core.CheckInventory("Scroll of Life Steal", 99))
-            Adv.BuyItem("terminatemple", 2328, "Scroll of Life Steal", 99 - Bot.Inventory.GetQuantity("Scroll of Life Steal"));
+            Adv.BuyItem(
+                "terminatemple",
+                2328,
+                "Scroll of Life Steal",
+                99 - Bot.Inventory.GetQuantity("Scroll of Life Steal")
+            );
 
         // Story completion
         Core.Logger("Completing *ALL* storylines...");
@@ -489,7 +562,9 @@ public class JoePrepsForUltras
             if (Core.CheckInventory("Necrotic Sword of Doom"))
                 Core.Logger("Successfully obtained Necrotic Sword of Doom!");
             else
-                Core.Logger("NSOD farm incomplete - consider continuing manually or using a dedicated script");
+                Core.Logger(
+                    "NSOD farm incomplete - consider continuing manually or using a dedicated script"
+                );
         }
         else
             Core.Logger("Necrotic Sword of Doom already obtained!");
@@ -503,10 +578,60 @@ public class JoePrepsForUltras
         // Player-specific enhancements
         Dictionary<string, string[]> enhancementsByPlayer = new()
         {
-            { "Player1", new[] { "ArcanasConcerto", "Ravenous", "Lacerate", "Dauntless", "Vainglory", "Avarice", "Absolution", "Lament", "ForgeHelm" } },
-            { "Player2", new[] { "Valiance", "ArcanasConcerto", "Dauntless", "Lament", "Vainglory", "Penitence", "Absolution" } },
-            { "Player3", new[] { "Health Vamp/AweBlast", "Dauntless", "Penitence", "Avarice", "Absolution", "ForgeHelm" } },
-            { "Player4", new[] { "Ravenous", "Elysium", "ArcanasConcerto", "Dauntless", "Valiance", "Penitence", "Lament", "ForgeHelm" } }
+            {
+                "Player1",
+                new[]
+                {
+                    "ArcanasConcerto",
+                    "Ravenous",
+                    "Lacerate",
+                    "Dauntless",
+                    "Vainglory",
+                    "Avarice",
+                    "Absolution",
+                    "Lament",
+                    "ForgeHelm",
+                }
+            },
+            {
+                "Player2",
+                new[]
+                {
+                    "Valiance",
+                    "ArcanasConcerto",
+                    "Dauntless",
+                    "Lament",
+                    "Vainglory",
+                    "Penitence",
+                    "Absolution",
+                }
+            },
+            {
+                "Player3",
+                new[]
+                {
+                    "Health Vamp/AweBlast",
+                    "Dauntless",
+                    "Penitence",
+                    "Avarice",
+                    "Absolution",
+                    "ForgeHelm",
+                }
+            },
+            {
+                "Player4",
+                new[]
+                {
+                    "Ravenous",
+                    "Elysium",
+                    "ArcanasConcerto",
+                    "Dauntless",
+                    "Valiance",
+                    "Penitence",
+                    "Lament",
+                    "ForgeHelm",
+                }
+            },
         };
 
         // Enhancement to Quest ID mapping
@@ -525,7 +650,7 @@ public class JoePrepsForUltras
             { "Lament", 8823 },
             { "ForgeHelm", 8828 },
             { "Dauntless", 9172 },
-            { "Ravenous", 9560 }
+            { "Ravenous", 9560 },
         };
 
         // Enhancement to unlock method mapping
@@ -543,7 +668,7 @@ public class JoePrepsForUltras
             { "Lament", () => UnlockForgeEnhancements.Lament() },
             { "ForgeHelm", () => UnlockForgeEnhancements.ForgeHelmEnhancement() },
             { "Dauntless", () => UnlockForgeEnhancements.DauntLess() },
-            { "Ravenous", () => UnlockForgeEnhancements.Ravenous() }
+            { "Ravenous", () => UnlockForgeEnhancements.Ravenous() },
         };
 
         // Get current player
@@ -591,4 +716,3 @@ public class JoePrepsForUltras
             Core.Logger("No missing enhancements for your player role!");
     }
 }
-

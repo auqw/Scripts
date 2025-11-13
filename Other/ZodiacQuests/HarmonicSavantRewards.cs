@@ -35,7 +35,8 @@ public class HarmonicSavant
         {
             if (Core.CheckInventory(Reward.Name, toInv: false))
                 Core.Logger($"{Reward.Name} obtained.");
-            else Core.FarmingLogger(Reward.Name, 1);
+            else
+                Core.FarmingLogger(Reward.Name, 1);
 
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name))
             {
@@ -44,7 +45,14 @@ public class HarmonicSavant
                 Core.HuntMonster("skytower", "Aspect of Good", "Good Star Shard", 1, false, false);
                 Core.HuntMonster("skytower", "Aspect of Evil", "Evil Star Shard", 1, false, false);
                 Core.EquipClass(ClassType.Farm);
-                Core.HuntMonster("astraviajudge", "Juror", "Judgement Star Shard", 25, false, false);
+                Core.HuntMonster(
+                    "astraviajudge",
+                    "Juror",
+                    "Judgement Star Shard",
+                    25,
+                    false,
+                    false
+                );
                 Core.EnsureComplete(9198, Reward.ID);
                 Core.ToBank(Reward.ID);
             }

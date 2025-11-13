@@ -13,7 +13,12 @@ public class DragonLordGrandMasterSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static LairWar War { get => _War ??= new LairWar(); set => _War = value; }    private static LairWar _War;
+    private static LairWar War
+    {
+        get => _War ??= new LairWar();
+        set => _War = value;
+    }
+    private static LairWar _War;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -37,7 +42,10 @@ public class DragonLordGrandMasterSet
 
         Core.RegisterQuests(6689);
         Bot.Events.ItemDropped += ItemDropped;
-        Core.Logger($"Farm for the DragonLord GrandMaster set started. Farming to get {rewards.Length - count} more item" + ((rewards.Length - count) > 1 ? "s" : ""));
+        Core.Logger(
+            $"Farm for the DragonLord GrandMaster set started. Farming to get {rewards.Length - count} more item"
+                + ((rewards.Length - count) > 1 ? "s" : "")
+        );
 
         while (!Core.CheckInventory(rewards))
         {

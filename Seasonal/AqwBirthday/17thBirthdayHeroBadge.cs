@@ -11,7 +11,11 @@ public class BirthdayHeroBadge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -33,7 +37,11 @@ public class BirthdayHeroBadge
         Core.EquipClass(ClassType.Solo);
 
         //17th Anniversary Gifts
-        Story.KillQuest(6554, "birthday", new[] { "Birthday Cake", "Birthday Cake", "Birthday Cake", "Birthday Cake" });
+        Story.KillQuest(
+            6554,
+            "birthday",
+            new[] { "Birthday Cake", "Birthday Cake", "Birthday Cake", "Birthday Cake" }
+        );
     }
 
     private string badge = "17th Birthday Hero";

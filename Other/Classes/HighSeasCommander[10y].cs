@@ -13,8 +13,18 @@ public class HighSeasCommander
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -32,7 +42,10 @@ public class HighSeasCommander
 
         if (!Core.HasAchievement(27, "ip14"))
         {
-            Core.Logger("This bot requires you to have an account of 10 years or older.", messageBox: true);
+            Core.Logger(
+                "This bot requires you to have an account of 10 years or older.",
+                messageBox: true
+            );
             return;
         }
 
@@ -45,7 +58,9 @@ public class HighSeasCommander
         if (!Core.CheckInventory("Enchanted Token", 50))
         {
             Core.RegisterQuests(6922);
-            Core.Logger($"Farming Enchanted Tokens ({Bot.Inventory.GetQuantity("Enchanted Token")}/50)");
+            Core.Logger(
+                $"Farming Enchanted Tokens ({Bot.Inventory.GetQuantity("Enchanted Token")}/50)"
+            );
 
             while (!Core.CheckInventory("Enchanted Token", 50))
             {
@@ -78,6 +93,5 @@ public class HighSeasCommander
 
         //6920 | The Captain Wants a Word
         Story.KillQuest(6920, "highseas", "Capt. Beard");
-
     }
 }

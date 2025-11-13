@@ -11,7 +11,11 @@ public class DarkFesta
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -51,7 +55,7 @@ public class DarkFesta
         if (!Story.QuestProgression(6768))
         {
             //Just a Little Snack (6769)
-            Core.EnsureAcceptmultiple( new[ ]{6768, 6769});
+            Core.EnsureAcceptmultiple(new[] { 6768, 6769 });
             Core.HuntMonster("darkfesta", "Bamboo Treeant", "Bamboo Leaves", 8);
             Core.EnsureComplete(6769);
             Core.EnsureComplete(6768);

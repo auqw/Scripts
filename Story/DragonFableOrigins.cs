@@ -1,7 +1,7 @@
 /*
 name: Dragon Fable Origins Story
 description: This will finish the Dragon Fable Origins Story.
-tags: story, quest, dragon fable origins, firewar, northmountain, charredplains, drakonnan, 
+tags: story, quest, dragon fable origins, firewar, northmountain, charredplains, drakonnan,
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -11,7 +11,12 @@ public class DragonFableOrigins
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -66,7 +71,7 @@ public class DragonFableOrigins
         // Confront Akriloth
         Core.EquipClass(ClassType.Farm);
         Story.KillQuest(6299, "firewar", "Akriloth");
-        
+
         //Quest not required!
         // // Clear out the Dragons
         // if (!Story.QuestProgression(6300))

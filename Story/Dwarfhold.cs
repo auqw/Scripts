@@ -14,8 +14,18 @@ public class Dwarfhold
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static Core13LoC LoC { get => _LoC ??= new Core13LoC(); set => _LoC = value; }    private static Core13LoC _LoC;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static Core13LoC LoC
+    {
+        get => _LoC ??= new Core13LoC();
+        set => _LoC = value;
+    }
+    private static Core13LoC _LoC;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +44,6 @@ public class Dwarfhold
 
     public void StoryLine()
     {
-
         if (Core.isCompletedBefore(1757))
             return;
 
@@ -89,8 +98,8 @@ public class Dwarfhold
             //Get Us Some Business! 1757
             Story.KillQuest(1757, "dwarfhold", "Albino Bat");
         }
-
     }
+
     public void GravelynandVictoria()
     {
         if (Core.isCompletedBefore(3380))

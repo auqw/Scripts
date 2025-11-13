@@ -14,10 +14,30 @@ public class BrightOak
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -57,7 +77,7 @@ public class BrightOak
         Core.Sleep();
         Core.SendPackets($"%xt%zm%equipItem%{Bot.Map.RoomID}%32057%");
 
-        // Take to the Skies 
+        // Take to the Skies
         Story.MapItemQuest(4637, "Rivensylth", 3944);
 
         // Ready to Pounce
@@ -199,7 +219,7 @@ public class BrightOak
         Story.MapItemQuest(4467, "Brightoak", 3666, 10);
         Story.KillQuest(4467, "Brightoak", "Grove Spore");
 
-        // Guts for a Greater Mind     
+        // Guts for a Greater Mind
         Story.KillQuest(4468, "Brightoak", "Twisted Goblin");
     }
 
@@ -221,7 +241,7 @@ public class BrightOak
         // Survey the Landscape
         Story.MapItemQuest(4692, "Darkheart", 4052);
 
-        // Corruption in the Grove 
+        // Corruption in the Grove
         Story.KillQuest(4693, "Darkheart", "Mutated Leech");
 
         // Perilous Supply Run
@@ -243,9 +263,30 @@ public class BrightOak
         if (!Story.QuestProgression(4698))
         {
             Core.EnsureAccept(4698);
-            Core.KillMonster("Darkheart", "Enter", "Spawn", "Tainted Earth", "Tainted Earth Removed", 8);
-            Core.KillMonster("Darkheart", "r2", "Left", "Toxic Grove Spider", "Toxic Grove Spider Dispatched", 5);
-            Core.KillMonster("Darkheart", "Enter", "Spawn", "Mutated Leech", "Mutated Leech Slain", 6);
+            Core.KillMonster(
+                "Darkheart",
+                "Enter",
+                "Spawn",
+                "Tainted Earth",
+                "Tainted Earth Removed",
+                8
+            );
+            Core.KillMonster(
+                "Darkheart",
+                "r2",
+                "Left",
+                "Toxic Grove Spider",
+                "Toxic Grove Spider Dispatched",
+                5
+            );
+            Core.KillMonster(
+                "Darkheart",
+                "Enter",
+                "Spawn",
+                "Mutated Leech",
+                "Mutated Leech Slain",
+                6
+            );
             Core.EnsureComplete(4698);
         }
 
@@ -262,7 +303,13 @@ public class BrightOak
         if (Core.isCompletedBefore(4804))
             return;
 
-        Core.AddDrop("Ravinos Token I", "Ravinos Token II", "Ravinos Token III", "Ravinos Token IV", "Ravinos Token V");
+        Core.AddDrop(
+            "Ravinos Token I",
+            "Ravinos Token II",
+            "Ravinos Token III",
+            "Ravinos Token IV",
+            "Ravinos Token V"
+        );
         Core.EquipClass(ClassType.Farm);
 
         // It's Too Bad I'm Poisonous Now
@@ -386,7 +433,7 @@ public class BrightOak
             Core.EnsureComplete(4471);
         }
 
-        // Some Disassembly Required   
+        // Some Disassembly Required
         if (Daily.CheckDailyv2(4472))
         {
             Core.EnsureAccept(4472);

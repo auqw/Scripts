@@ -17,7 +17,10 @@ public class SkuaScriptsJsonWriter : ISkuaScriptWriter
             if (firstLine.StartsWith("/*"))
             {
                 var scriptInfo = new ScriptInfo();
-                var lines = File.ReadLines(script).Skip(1).TakeWhile(x => !x.StartsWith("*/")).ToArray();
+                var lines = File.ReadLines(script)
+                    .Skip(1)
+                    .TakeWhile(x => !x.StartsWith("*/"))
+                    .ToArray();
                 foreach (var line in lines)
                 {
                     var parts = line.Split(':');
@@ -34,7 +37,11 @@ public class SkuaScriptsJsonWriter : ISkuaScriptWriter
                             break;
 
                         case "tags":
-                            scriptInfo.Tags = value.Split(',').Select(x => x.Trim()).Select(x => x.All(c => char.IsUpper(c)) ? x : x.ToLower()).ToArray();
+                            scriptInfo.Tags = value
+                                .Split(',')
+                                .Select(x => x.Trim())
+                                .Select(x => x.All(c => char.IsUpper(c)) ? x : x.ToLower())
+                                .ToArray();
                             break;
                     }
                 }

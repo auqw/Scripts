@@ -12,8 +12,18 @@ public class Bamboozle
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static BattleUnder Under { get => _Under ??= new BattleUnder(); set => _Under = value; }    private static BattleUnder _Under;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static BattleUnder Under
+    {
+        get => _Under ??= new BattleUnder();
+        set => _Under = value;
+    }
+    private static BattleUnder _Under;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -31,7 +41,16 @@ public class Bamboozle
 
         Story.PreLoad(this);
 
-        Core.AddDrop("Floozer", "Ice Diamond", "Dark Bloodstone", "Songstone", "Butterfly Sapphire", "Understone", "Rainbow Moonstone", "Time Quartz");
+        Core.AddDrop(
+            "Floozer",
+            "Ice Diamond",
+            "Dark Bloodstone",
+            "Songstone",
+            "Butterfly Sapphire",
+            "Understone",
+            "Rainbow Moonstone",
+            "Time Quartz"
+        );
 
         //Star of the Sandsea
         if (!Story.QuestProgression(7277))
@@ -62,7 +81,7 @@ public class Bamboozle
         {
             if (!Core.CheckInventory("Dark Bloodstone"))
             {
-                Core.EnsureAcceptmultiple( new[] { 7280, 7281 });
+                Core.EnsureAcceptmultiple(new[] { 7280, 7281 });
                 Core.HuntMonster("safiria", "Blood Maggot", "Blood Gem", 10);
                 Core.EnsureComplete(7281);
                 Bot.Wait.ForPickup("Dark Bloodstone");
@@ -84,7 +103,7 @@ public class Bamboozle
         {
             if (!Core.CheckInventory("Songstone"))
             {
-                Core.EnsureAcceptmultiple( new[] { 7285, 7297 });
+                Core.EnsureAcceptmultiple(new[] { 7285, 7297 });
                 Core.GetMapItem(6909, 15, "mythsong");
                 Core.EnsureComplete(7297);
                 Bot.Wait.ForPickup("Songstone");
@@ -98,14 +117,12 @@ public class Bamboozle
             Core.EnsureAccept(7286);
             if (!Core.CheckInventory("Butterfly Sapphire"))
             {
-
                 Core.EnsureAccept(7287);
                 Core.HuntMonster("bloodtusk", "Trollola Plant", "Butterfly Bloom", 15);
                 Core.EnsureComplete(7287);
                 Bot.Wait.ForPickup("Butterfly Sapphire");
             }
             Core.EnsureComplete(7286);
-
         }
 
         //Understone

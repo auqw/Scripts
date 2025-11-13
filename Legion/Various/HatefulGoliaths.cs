@@ -31,13 +31,29 @@ public class HatefulGoliaths
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static UndeadLegionMerge ULM { get => _ULM ??= new UndeadLegionMerge(); set => _ULM = value; }
+    private static UndeadLegionMerge ULM
+    {
+        get => _ULM ??= new UndeadLegionMerge();
+        set => _ULM = value;
+    }
     private static UndeadLegionMerge _ULM;
-    private static CoreIsleOfFotia IOF { get => _IOF ??= new CoreIsleOfFotia(); set => _IOF = value; }
+    private static CoreIsleOfFotia IOF
+    {
+        get => _IOF ??= new CoreIsleOfFotia();
+        set => _IOF = value;
+    }
     private static CoreIsleOfFotia _IOF;
-    private static HeadoftheLegionBeast HOTLB { get => _HOTLB ??= new HeadoftheLegionBeast(); set => _HOTLB = value; }
+    private static HeadoftheLegionBeast HOTLB
+    {
+        get => _HOTLB ??= new HeadoftheLegionBeast();
+        set => _HOTLB = value;
+    }
     private static HeadoftheLegionBeast _HOTLB;
-    private static FortressDelve FD { get => _FD ??= new FortressDelve(); set => _FD = value; }
+    private static FortressDelve FD
+    {
+        get => _FD ??= new FortressDelve();
+        set => _FD = value;
+    }
     private static FortressDelve _FD;
 
     public void ScriptMain(IScriptInterface bot)
@@ -72,17 +88,31 @@ public class HatefulGoliaths
         FD.DoStory();
         Core.EnsureAccept(9170);
         Core.EquipClass(ClassType.Farm);
-        Core.HuntMonster("fortressdelve", "Enlightened Shadow", "Shadowscythe Bone Shard", 10, log: false);
-        Core.HuntMonster("fortressdelve", "Delirious Elemental", "Elemental Residue", 10, log: false);
+        Core.HuntMonster(
+            "fortressdelve",
+            "Enlightened Shadow",
+            "Shadowscythe Bone Shard",
+            10,
+            log: false
+        );
+        Core.HuntMonster(
+            "fortressdelve",
+            "Delirious Elemental",
+            "Elemental Residue",
+            10,
+            log: false
+        );
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("fortressdelve", "Astero", "Glass Wing", log: false);
         Core.EnsureComplete(9170);
 
-        Core.HuntMonsterQuest(10103,
-    ("shadowblast", "Thanatos", ClassType.Solo),
-    ("evilwarnul", "Laken", ClassType.Solo),
-    ("envy", "Envy", ClassType.Solo),
-    ("darkfortress", "Wilhelm", ClassType.Solo),
-    ("darkally", "Underfiend", ClassType.Solo));
+        Core.HuntMonsterQuest(
+            10103,
+            ("shadowblast", "Thanatos", ClassType.Solo),
+            ("evilwarnul", "Laken", ClassType.Solo),
+            ("envy", "Envy", ClassType.Solo),
+            ("darkfortress", "Wilhelm", ClassType.Solo),
+            ("darkally", "Underfiend", ClassType.Solo)
+        );
     }
 }

@@ -10,11 +10,17 @@ tags: doomknight, doomknightwk, weapon kit, sdka, evil, corrupt spirit orb, omin
 //cs_include Scripts/Evil/SDKA/CoreSDKA.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+
 public class DoomKnightWeaponKit
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreSDKA SDKA { get => _SDKA ??= new CoreSDKA(); set => _SDKA = value; }    private static CoreSDKA _SDKA;
+    private static CoreSDKA SDKA
+    {
+        get => _SDKA ??= new CoreSDKA();
+        set => _SDKA = value;
+    }
+    private static CoreSDKA _SDKA;
 
     public void ScriptMain(IScriptInterface bot)
     {

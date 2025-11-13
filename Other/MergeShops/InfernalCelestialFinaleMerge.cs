@@ -18,27 +18,46 @@ public class InfernalCelestialFinaleMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static InfernalDianoia ID { get => _ID ??= new InfernalDianoia(); set => _ID = value; }
+    private static InfernalDianoia ID
+    {
+        get => _ID ??= new InfernalDianoia();
+        set => _ID = value;
+    }
     private static InfernalDianoia _ID;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Infernal Down", "Arthelyn's Oculus", "Life Spirit" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Infernal Down", "Arthelyn's Oculus", "Life Spirit" }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -49,14 +68,22 @@ private static CoreAdvanced _sAdv;
     {
         ID.Storyline();
         //Only edit the map and shopID here
-        Adv.StartBuyAllMerge("infernaldianoia", 2562, findIngredients, buyOnlyThis, buyMode: buyMode);
+        Adv.StartBuyAllMerge(
+            "infernaldianoia",
+            2562,
+            findIngredients,
+            buyOnlyThis,
+            buyMode: buyMode
+        );
 
         #region Dont edit this part
         void findIngredients()
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +94,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Infernal Down":
                     InfernalDown(quant);
@@ -78,15 +110,28 @@ private static CoreAdvanced _sAdv;
                 case "Arthelyn's Oculus":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("infernaldianoia", "Fallen Arthelyn", req.Name, quant, false, false);
+                    Core.HuntMonster(
+                        "infernaldianoia",
+                        "Fallen Arthelyn",
+                        req.Name,
+                        quant,
+                        false,
+                        false
+                    );
                     break;
 
                 case "Life Spirit":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("infernaldianoia", "Avatar of Life", req.Name, quant, false, false);
+                    Core.HuntMonster(
+                        "infernaldianoia",
+                        "Avatar of Life",
+                        req.Name,
+                        quant,
+                        false,
+                        false
+                    );
                     break;
-
             }
         }
     }
@@ -99,22 +144,65 @@ private static CoreAdvanced _sAdv;
         Core.AddDrop("Infernal Down");
         while (!Bot.ShouldExit && !Core.CheckInventory("Infernal Down", quant))
         {
-            Core.HuntMonsterQuest(10095,
+            Core.HuntMonsterQuest(
+                10095,
                 ("infernaldianoia", "Eudae", ClassType.Solo),
                 ("infernaldianoia", "Avatar of Time", ClassType.Solo),
-                ("infernaldianoia", "Aranx, Nightstar", ClassType.Solo));
+                ("infernaldianoia", "Aranx, Nightstar", ClassType.Solo)
+            );
             Bot.Wait.ForPickup("Infernal Down");
         }
     }
+
     public List<IOption> Select = new()
     {
-        new Option<bool>("92057", "Nightstar Crown", "Mode: [select] only\nShould the bot buy \"Nightstar Crown\" ?", false),
-        new Option<bool>("92056", "Fallen Arthelyn Wings", "Mode: [select] only\nShould the bot buy \"Fallen Arthelyn Wings\" ?", false),
-        new Option<bool>("92055", "Fallen Arthelyn Helm", "Mode: [select] only\nShould the bot buy \"Fallen Arthelyn Helm\" ?", false),
-        new Option<bool>("92054", "Fallen Arthelyn", "Mode: [select] only\nShould the bot buy \"Fallen Arthelyn\" ?", false),
-        new Option<bool>("92188", "Celestial Dominion Gauntlet", "Mode: [select] only\nShould the bot buy \"Celestial Dominion Gauntlet\" ?", false),
-        new Option<bool>("92187", "Celestial Dominion Wings", "Mode: [select] only\nShould the bot buy \"Celestial Dominion Wings\" ?", false),
-        new Option<bool>("92186", "Celestial Dominion Helm", "Mode: [select] only\nShould the bot buy \"Celestial Dominion Helm\" ?", false),
-        new Option<bool>("92185", "Celestial Dominion", "Mode: [select] only\nShould the bot buy \"Celestial Dominion\" ?", false),
+        new Option<bool>(
+            "92057",
+            "Nightstar Crown",
+            "Mode: [select] only\nShould the bot buy \"Nightstar Crown\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92056",
+            "Fallen Arthelyn Wings",
+            "Mode: [select] only\nShould the bot buy \"Fallen Arthelyn Wings\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92055",
+            "Fallen Arthelyn Helm",
+            "Mode: [select] only\nShould the bot buy \"Fallen Arthelyn Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92054",
+            "Fallen Arthelyn",
+            "Mode: [select] only\nShould the bot buy \"Fallen Arthelyn\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92188",
+            "Celestial Dominion Gauntlet",
+            "Mode: [select] only\nShould the bot buy \"Celestial Dominion Gauntlet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92187",
+            "Celestial Dominion Wings",
+            "Mode: [select] only\nShould the bot buy \"Celestial Dominion Wings\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92186",
+            "Celestial Dominion Helm",
+            "Mode: [select] only\nShould the bot buy \"Celestial Dominion Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "92185",
+            "Celestial Dominion",
+            "Mode: [select] only\nShould the bot buy \"Celestial Dominion\" ?",
+            false
+        ),
     };
 }

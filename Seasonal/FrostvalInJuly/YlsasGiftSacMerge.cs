@@ -16,20 +16,37 @@ public class YlsasGiftSacMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static IceStorm IS { get => _IS ??= new IceStorm(); set => _IS = value; }
+    private static IceStorm IS
+    {
+        get => _IS ??= new IceStorm();
+        set => _IS = value;
+    }
     private static IceStorm _IS;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -54,7 +71,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +84,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Burnt Bow":
                     Core.FarmingLogger(req.Name, quant);
@@ -80,26 +104,95 @@ private static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("icestorm", "Fire Dragonling", req.Name, quant, false, false);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("44387", "Winter Assassin", "Mode: [select] only\nShould the bot buy \"Winter Assassin\" ?", false),
-        new Option<bool>("44388", "Winter Assassin Hood", "Mode: [select] only\nShould the bot buy \"Winter Assassin Hood\" ?", false),
-        new Option<bool>("44389", "Winter Assassin Hooded Mask", "Mode: [select] only\nShould the bot buy \"Winter Assassin Hooded Mask\" ?", false),
-        new Option<bool>("44391", "Winter Assassin Mask", "Mode: [select] only\nShould the bot buy \"Winter Assassin Mask\" ?", false),
-        new Option<bool>("44390", "Winter Assassin Mask + Bangs", "Mode: [select] only\nShould the bot buy \"Winter Assassin Mask + Bangs\" ?", false),
-        new Option<bool>("44393", "Winter Assassin Hair", "Mode: [select] only\nShould the bot buy \"Winter Assassin Hair\" ?", false),
-        new Option<bool>("44392", "Winter Assassin Hair + Bangs", "Mode: [select] only\nShould the bot buy \"Winter Assassin Hair + Bangs\" ?", false),
-        new Option<bool>("44395", "Winter Assassin Bandana", "Mode: [select] only\nShould the bot buy \"Winter Assassin Bandana\" ?", false),
-        new Option<bool>("44394", "Winter Assassin Bandana + Bangs", "Mode: [select] only\nShould the bot buy \"Winter Assassin Bandana + Bangs\" ?", false),
-        new Option<bool>("44399", "Winter Assassin Shuriken", "Mode: [select] only\nShould the bot buy \"Winter Assassin Shuriken\" ?", false),
-        new Option<bool>("44397", "Winter Assassin Ninjato", "Mode: [select] only\nShould the bot buy \"Winter Assassin Ninjato\" ?", false),
-        new Option<bool>("44400", "Winter Assassin Kunai", "Mode: [select] only\nShould the bot buy \"Winter Assassin Kunai\" ?", false),
-        new Option<bool>("44396", "Winter Assassin Katana", "Mode: [select] only\nShould the bot buy \"Winter Assassin Katana\" ?", false),
-        new Option<bool>("44398", "Winter Assassin Katana + Ninjato", "Mode: [select] only\nShould the bot buy \"Winter Assassin Katana + Ninjato\" ?", false),
+        new Option<bool>(
+            "44387",
+            "Winter Assassin",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44388",
+            "Winter Assassin Hood",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44389",
+            "Winter Assassin Hooded Mask",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Hooded Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44391",
+            "Winter Assassin Mask",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44390",
+            "Winter Assassin Mask + Bangs",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Mask + Bangs\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44393",
+            "Winter Assassin Hair",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44392",
+            "Winter Assassin Hair + Bangs",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Hair + Bangs\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44395",
+            "Winter Assassin Bandana",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Bandana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44394",
+            "Winter Assassin Bandana + Bangs",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Bandana + Bangs\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44399",
+            "Winter Assassin Shuriken",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Shuriken\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44397",
+            "Winter Assassin Ninjato",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Ninjato\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44400",
+            "Winter Assassin Kunai",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Kunai\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44396",
+            "Winter Assassin Katana",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "44398",
+            "Winter Assassin Katana + Ninjato",
+            "Mode: [select] only\nShould the bot buy \"Winter Assassin Katana + Ninjato\" ?",
+            false
+        ),
     };
 }

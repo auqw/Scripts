@@ -12,7 +12,12 @@ public class CompleteTheWorld
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }    private static CoreAstravia _Astravia;
+    private static CoreAstravia Astravia
+    {
+        get => _Astravia ??= new CoreAstravia();
+        set => _Astravia = value;
+    }
+    private static CoreAstravia _Astravia;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -16,27 +16,46 @@ public class EddensTreasuresMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreHollowbornStory HBStory { get => _HBStory ??= new CoreHollowbornStory(); set => _HBStory = value; }
+    private static CoreHollowbornStory HBStory
+    {
+        get => _HBStory ??= new CoreHollowbornStory();
+        set => _HBStory = value;
+    }
     private static CoreHollowbornStory _HBStory;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Cursed Ring", "Frozen Diamond", "Krenos Spirit Katana", "Energy Dragon Scale" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Cursed Ring", "Frozen Diamond", "Krenos Spirit Katana", "Energy Dragon Scale" }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -54,7 +73,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +86,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Cursed Ring":
                     Core.FarmingLogger(req.Name, quant);
@@ -87,7 +113,13 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(9795);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("greed", "Ice Crystal", "Frozen Diamond Found", 5, log: false);
+                        Core.HuntMonster(
+                            "greed",
+                            "Ice Crystal",
+                            "Frozen Diamond Found",
+                            5,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -115,24 +147,83 @@ private static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("thunderfang", "Tonitru", req.Name, quant, req.Temp, false);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("86701", "Hollowborn Bodyguard", "Mode: [select] only\nShould the bot buy \"Hollowborn Bodyguard\" ?", false),
-        new Option<bool>("86702", "Hollowborn Bodyguard Helm", "Mode: [select] only\nShould the bot buy \"Hollowborn Bodyguard Helm\" ?", false),
-        new Option<bool>("86705", "Hollowborn Bodyguard Fists", "Mode: [select] only\nShould the bot buy \"Hollowborn Bodyguard Fists\" ?", false),
-        new Option<bool>("86706", "Hollowborn Bodyguard Claws", "Mode: [select] only\nShould the bot buy \"Hollowborn Bodyguard Claws\" ?", false),
-        new Option<bool>("86704", "Hollowborn Battle Bodyguard", "Mode: [select] only\nShould the bot buy \"Hollowborn Battle Bodyguard\" ?", false),
-        new Option<bool>("86703", "Hollowborn Bodyguard Companion", "Mode: [select] only\nShould the bot buy \"Hollowborn Bodyguard Companion\" ?", false),
-        new Option<bool>("86735", "Hollowborn Treasure Hunter", "Mode: [select] only\nShould the bot buy \"Hollowborn Treasure Hunter\" ?", false),
-        new Option<bool>("86736", "Hollowborn Treasure Hunter Hat", "Mode: [select] only\nShould the bot buy \"Hollowborn Treasure Hunter Hat\" ?", false),
-        new Option<bool>("86737", "Hollowborn Treasure Hunter Bag", "Mode: [select] only\nShould the bot buy \"Hollowborn Treasure Hunter Bag\" ?", false),
-        new Option<bool>("86738", "Hollowborn Treasure Hunter Necklace", "Mode: [select] only\nShould the bot buy \"Hollowborn Treasure Hunter Necklace\" ?", false),
-        new Option<bool>("86739", "Hollowborn Treasure Hunter Necklaces", "Mode: [select] only\nShould the bot buy \"Hollowborn Treasure Hunter Necklaces\" ?", false),
-        new Option<bool>("67461", "Krenos Spirit Katanas", "Mode: [select] only\nShould the bot buy \"Krenos Spirit Katanas\" ?", false),
+        new Option<bool>(
+            "86701",
+            "Hollowborn Bodyguard",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Bodyguard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86702",
+            "Hollowborn Bodyguard Helm",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Bodyguard Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86705",
+            "Hollowborn Bodyguard Fists",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Bodyguard Fists\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86706",
+            "Hollowborn Bodyguard Claws",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Bodyguard Claws\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86704",
+            "Hollowborn Battle Bodyguard",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Battle Bodyguard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86703",
+            "Hollowborn Bodyguard Companion",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Bodyguard Companion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86735",
+            "Hollowborn Treasure Hunter",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Treasure Hunter\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86736",
+            "Hollowborn Treasure Hunter Hat",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Treasure Hunter Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86737",
+            "Hollowborn Treasure Hunter Bag",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Treasure Hunter Bag\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86738",
+            "Hollowborn Treasure Hunter Necklace",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Treasure Hunter Necklace\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86739",
+            "Hollowborn Treasure Hunter Necklaces",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn Treasure Hunter Necklaces\" ?",
+            false
+        ),
+        new Option<bool>(
+            "67461",
+            "Krenos Spirit Katanas",
+            "Mode: [select] only\nShould the bot buy \"Krenos Spirit Katanas\" ?",
+            false
+        ),
     };
 }

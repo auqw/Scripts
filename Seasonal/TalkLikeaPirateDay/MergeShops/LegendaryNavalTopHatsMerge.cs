@@ -16,27 +16,64 @@ public class LegendaryNavalTopHatsMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static NavalTopHatMerge NTHM { get => _NTHM ??= new NavalTopHatMerge(); set => _NTHM = value; }
+    private static NavalTopHatMerge NTHM
+    {
+        get => _NTHM ??= new NavalTopHatMerge();
+        set => _NTHM = value;
+    }
     private static NavalTopHatMerge _NTHM;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Stardust", "Legend Top Hat", "Facial Hair", "Gears", "Chaos Eye", "Breath of Flame", "Shard of Ice", "Icy Naval Top Hat", "Nugget of Platinum", "Blue Skull", "Red Cloth", "Zombie Flesh", "Pink Cloth", "Scrap of Cloth", "Toxic Flame", "Toxic Gas Mask" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Stardust",
+                "Legend Top Hat",
+                "Facial Hair",
+                "Gears",
+                "Chaos Eye",
+                "Breath of Flame",
+                "Shard of Ice",
+                "Icy Naval Top Hat",
+                "Nugget of Platinum",
+                "Blue Skull",
+                "Red Cloth",
+                "Zombie Flesh",
+                "Pink Cloth",
+                "Scrap of Cloth",
+                "Toxic Flame",
+                "Toxic Gas Mask",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -53,7 +90,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -64,9 +103,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Stardust":
                 case "Facial Hair":
@@ -102,7 +146,9 @@ private static CoreAdvanced _sAdv;
                     {
                         foreach (int mon in new[] { 3, 7, 15, 10 })
                         {
-                            Monster? M = Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && x.MapID == mon);
+                            Monster? M = Bot.Monsters.MapMonsters.FirstOrDefault(x =>
+                                x != null && x.MapID == mon
+                            );
                             if (M == null)
                                 continue;
 
@@ -125,48 +171,263 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("25698", "Male Galactic Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Male Galactic Naval Top Hat\" ?", false),
-        new Option<bool>("25699", "Bearded ChronoLord Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Bearded ChronoLord Naval Top Hat\" ?", false),
-        new Option<bool>("25700", "Bearded Chaos Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Bearded Chaos Naval Top Hat\" ?", false),
-        new Option<bool>("25701", "Bearded Blazing Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Bearded Blazing Naval Top Hat\" ?", false),
-        new Option<bool>("25702", "Bearded Icy Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Bearded Icy Naval Top Hat\" ?", false),
-        new Option<bool>("25703", "Bearded Galactic Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Bearded Galactic Naval Top Hat\" ?", false),
-        new Option<bool>("25705", "Bearded Platinum Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Bearded Platinum Naval Top Hat\" ?", false),
-        new Option<bool>("25706", "Bearded Legion Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Bearded Legion Naval Top Hat\" ?", false),
-        new Option<bool>("25707", "Bearded Red Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Bearded Red Naval Top Hat\" ?", false),
-        new Option<bool>("25708", "Bearded Rotting Top Naval Hat", "Mode: [select] only\nShould the bot buy \"Bearded Rotting Top Naval Hat\" ?", false),
-        new Option<bool>("25709", "Bearded Rotting Skull Top Hat", "Mode: [select] only\nShould the bot buy \"Bearded Rotting Skull Top Hat\" ?", false),
-        new Option<bool>("25710", "Bearded Scallywag Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Bearded Scallywag Naval Top Hat\" ?", false),
-        new Option<bool>("25711", "ChronoLord Naval Top Hat", "Mode: [select] only\nShould the bot buy \"ChronoLord Naval Top Hat\" ?", false),
-        new Option<bool>("25712", "Sir Legion Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Sir Legion Naval Top Hat\" ?", false),
-        new Option<bool>("25713", "Miss Legion Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Miss Legion Naval Top Hat\" ?", false),
-        new Option<bool>("25714", "Mr. Chaos Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Mr. Chaos Naval Top Hat\" ?", false),
-        new Option<bool>("25715", "ChronoLady Naval Top Hat", "Mode: [select] only\nShould the bot buy \"ChronoLady Naval Top Hat\" ?", false),
-        new Option<bool>("25716", "Blazing Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Blazing Naval Top Hat\" ?", false),
-        new Option<bool>("25717", "Missy Scallywag Top Hat", "Mode: [select] only\nShould the bot buy \"Missy Scallywag Top Hat\" ?", false),
-        new Option<bool>("25718", "Lady Rotting Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Lady Rotting Naval Top Hat\" ?", false),
-        new Option<bool>("25719", "Miss Red Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Miss Red Naval Top Hat\" ?", false),
-        new Option<bool>("25720", "Mrs. Platinum Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Mrs. Platinum Naval Top Hat\" ?", false),
-        new Option<bool>("25793", "Lassy Icy Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Lassy Icy Naval Top Hat\" ?", false),
-        new Option<bool>("25721", "Cutie Chaos Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Cutie Chaos Naval Top Hat\" ?", false),
-        new Option<bool>("25722", "Femme Blazing Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Femme Blazing Naval Top Hat\" ?", false),
-        new Option<bool>("25723", "Male Rotting Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Male Rotting Naval Top Hat\" ?", false),
-        new Option<bool>("25724", "Mr. Red Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Mr. Red Naval Top Hat\" ?", false),
-        new Option<bool>("25725", "Sir Platinum Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Sir Platinum Naval Top Hat\" ?", false),
-        new Option<bool>("25726", "Miss Galactic Naval Top Hat", "Mode: [select] only\nShould the bot buy \"Miss Galactic Naval Top Hat\" ?", false),
-        new Option<bool>("25730", "Goggle-less Bearded ChronoLord Top Hat", "Mode: [select] only\nShould the bot buy \"Goggle-less Bearded ChronoLord Top Hat\" ?", false),
-        new Option<bool>("25731", "Goggle-less ChronoLady Top Hat", "Mode: [select] only\nShould the bot buy \"Goggle-less ChronoLady Top Hat\" ?", false),
-        new Option<bool>("25732", "Goggle-less ChronoLord Top Hat", "Mode: [select] only\nShould the bot buy \"Goggle-less ChronoLord Top Hat\" ?", false),
-        new Option<bool>("25579", "Brilliant Naval Tophat +3", "Mode: [select] only\nShould the bot buy \"Brilliant Naval Tophat +3\" ?", false),
-        new Option<bool>("25580", "Brilliant Naval Tophat Locks +3", "Mode: [select] only\nShould the bot buy \"Brilliant Naval Tophat Locks +3\" ?", false),
-        new Option<bool>("25581", "Doom Top Hat +3", "Mode: [select] only\nShould the bot buy \"Doom Top Hat +3\" ?", false),
-        new Option<bool>("25582", "Doom Lass Tophat +3", "Mode: [select] only\nShould the bot buy \"Doom Lass Tophat +3\" ?", false),
-        new Option<bool>("56022", "Chaotic Naval Top Hat + Locks Morph", "Mode: [select] only\nShould the bot buy \"Chaotic Naval Top Hat + Locks Morph\" ?", false),
-        new Option<bool>("56023", "Chaotic Naval Top Hat Morph", "Mode: [select] only\nShould the bot buy \"Chaotic Naval Top Hat Morph\" ?", false),
-        new Option<bool>("56537", "Flaming Toxic Top Hat", "Mode: [select] only\nShould the bot buy \"Flaming Toxic Top Hat\" ?", false),
-        new Option<bool>("56392", "Flaming Toxic Top Hat + Beard", "Mode: [select] only\nShould the bot buy \"Flaming Toxic Top Hat + Beard\" ?", false),
-        new Option<bool>("56390", "Flaming Toxic Top Hat + Mask", "Mode: [select] only\nShould the bot buy \"Flaming Toxic Top Hat + Mask\" ?", false),
-        new Option<bool>("56539", "Flaming Toxic Naval Top Hat + Locks", "Mode: [select] only\nShould the bot buy \"Flaming Toxic Naval Top Hat + Locks\" ?", false),
-        new Option<bool>("56541", "Flaming Toxic Top Hat + Locks + Mask", "Mode: [select] only\nShould the bot buy \"Flaming Toxic Top Hat + Locks + Mask\" ?", false),
+        new Option<bool>(
+            "25698",
+            "Male Galactic Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Male Galactic Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25699",
+            "Bearded ChronoLord Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded ChronoLord Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25700",
+            "Bearded Chaos Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded Chaos Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25701",
+            "Bearded Blazing Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded Blazing Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25702",
+            "Bearded Icy Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded Icy Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25703",
+            "Bearded Galactic Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded Galactic Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25705",
+            "Bearded Platinum Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded Platinum Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25706",
+            "Bearded Legion Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded Legion Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25707",
+            "Bearded Red Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded Red Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25708",
+            "Bearded Rotting Top Naval Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded Rotting Top Naval Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25709",
+            "Bearded Rotting Skull Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded Rotting Skull Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25710",
+            "Bearded Scallywag Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Bearded Scallywag Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25711",
+            "ChronoLord Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"ChronoLord Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25712",
+            "Sir Legion Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Sir Legion Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25713",
+            "Miss Legion Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Miss Legion Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25714",
+            "Mr. Chaos Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Mr. Chaos Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25715",
+            "ChronoLady Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"ChronoLady Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25716",
+            "Blazing Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Blazing Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25717",
+            "Missy Scallywag Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Missy Scallywag Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25718",
+            "Lady Rotting Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Lady Rotting Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25719",
+            "Miss Red Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Miss Red Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25720",
+            "Mrs. Platinum Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Mrs. Platinum Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25793",
+            "Lassy Icy Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Lassy Icy Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25721",
+            "Cutie Chaos Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Cutie Chaos Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25722",
+            "Femme Blazing Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Femme Blazing Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25723",
+            "Male Rotting Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Male Rotting Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25724",
+            "Mr. Red Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Mr. Red Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25725",
+            "Sir Platinum Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Sir Platinum Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25726",
+            "Miss Galactic Naval Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Miss Galactic Naval Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25730",
+            "Goggle-less Bearded ChronoLord Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Goggle-less Bearded ChronoLord Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25731",
+            "Goggle-less ChronoLady Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Goggle-less ChronoLady Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25732",
+            "Goggle-less ChronoLord Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Goggle-less ChronoLord Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25579",
+            "Brilliant Naval Tophat +3",
+            "Mode: [select] only\nShould the bot buy \"Brilliant Naval Tophat +3\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25580",
+            "Brilliant Naval Tophat Locks +3",
+            "Mode: [select] only\nShould the bot buy \"Brilliant Naval Tophat Locks +3\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25581",
+            "Doom Top Hat +3",
+            "Mode: [select] only\nShould the bot buy \"Doom Top Hat +3\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25582",
+            "Doom Lass Tophat +3",
+            "Mode: [select] only\nShould the bot buy \"Doom Lass Tophat +3\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56022",
+            "Chaotic Naval Top Hat + Locks Morph",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Naval Top Hat + Locks Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56023",
+            "Chaotic Naval Top Hat Morph",
+            "Mode: [select] only\nShould the bot buy \"Chaotic Naval Top Hat Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56537",
+            "Flaming Toxic Top Hat",
+            "Mode: [select] only\nShould the bot buy \"Flaming Toxic Top Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56392",
+            "Flaming Toxic Top Hat + Beard",
+            "Mode: [select] only\nShould the bot buy \"Flaming Toxic Top Hat + Beard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56390",
+            "Flaming Toxic Top Hat + Mask",
+            "Mode: [select] only\nShould the bot buy \"Flaming Toxic Top Hat + Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56539",
+            "Flaming Toxic Naval Top Hat + Locks",
+            "Mode: [select] only\nShould the bot buy \"Flaming Toxic Naval Top Hat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56541",
+            "Flaming Toxic Top Hat + Locks + Mask",
+            "Mode: [select] only\nShould the bot buy \"Flaming Toxic Top Hat + Locks + Mask\" ?",
+            false
+        ),
     };
 }

@@ -15,7 +15,6 @@ tags: hollowborn lich king, hollowborn, Lich King Fragment
 //cs_include Scripts/Legion/Revenant/CoreLR.cs
 //cs_include Scripts/Story/QueenofMonsters/CoreQOM.cs
 
-
 //cs_include Scripts/Legion/MergeShops/UndeadLegionMerge.cs
 //cs_include Scripts/Legion/LegionMaterials/SoulSand.cs
 //cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
@@ -28,16 +27,18 @@ tags: hollowborn lich king, hollowborn, Lich King Fragment
 //cs_include Scripts/Nation/Various/DragonBlade[mem].cs
 //cs_include Scripts/Legion/Various/LegionBonfire.cs
 
-
 using Skua.Core.Interfaces;
 
 public class LichKingFragment
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private static CoreHollowbornLichKing sHBLK { get => _sHBLK ??= new CoreHollowbornLichKing(); set => _sHBLK = value; }
-private static CoreHollowbornLichKing _sHBLK;
-
+    private static CoreHollowbornLichKing sHBLK
+    {
+        get => _sHBLK ??= new CoreHollowbornLichKing();
+        set => _sHBLK = value;
+    }
+    private static CoreHollowbornLichKing _sHBLK;
 
     public void ScriptMain(IScriptInterface bot)
     {

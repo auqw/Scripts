@@ -12,8 +12,18 @@ public class VampireLord
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -41,15 +51,30 @@ public class VampireLord
             Core.EnsureAccept(Core.IsMember ? 6060 : 6059);
 
             //farm 33x turn-in quants
-            Core.KillMonster("bloodmoon", "r12a", "Left", "Black Unicorn", "Black Blood Vial", 99, isTemp: false);
-            Core.KillMonster("bloodmoon", "r4a", "Left", "Lycan Guard", "Moon Stone", 33, isTemp: false);
+            Core.KillMonster(
+                "bloodmoon",
+                "r12a",
+                "Left",
+                "Black Unicorn",
+                "Black Blood Vial",
+                99,
+                isTemp: false
+            );
+            Core.KillMonster(
+                "bloodmoon",
+                "r4a",
+                "Left",
+                "Lycan Guard",
+                "Moon Stone",
+                33,
+                isTemp: false
+            );
 
             //turning x33
             Core.EnsureCompleteMulti(Core.IsMember ? 6060 : 6059);
             Bot.Wait.ForPickup("Blood Moon Token");
             if (Bot.Inventory.Contains("Blood Moon Token", 300))
                 break;
-
         }
         Core.BuyItem("mogloween", 1477, "Vampire Lord", shopItemID: 5459);
 

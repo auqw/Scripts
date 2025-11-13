@@ -15,7 +15,12 @@ public class YeeaaahhBabbyyThaaatsWhatImTalkingAbout
     public string OptionsStorage = "WOOO";
     public List<IOption> Options = new()
     {
-        new Option<bool>("AConly", "AC Only", "True = Only get AC items.\nFalse = Get both AC and non-AC items.", true),
+        new Option<bool>(
+            "AConly",
+            "AC Only",
+            "True = Only get AC items.\nFalse = Get both AC and non-AC items.",
+            true
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -42,7 +47,7 @@ public class YeeaaahhBabbyyThaaatsWhatImTalkingAbout
             "GIANT Mushroom Guard (L)",
             "Major Mushroom Guard (L)",
             "Major Mushroom Guard (R)",
-            "Treasure Chest"
+            "Treasure Chest",
         };
         string[] WOOOOODropsNonAC =
         {
@@ -56,15 +61,35 @@ public class YeeaaahhBabbyyThaaatsWhatImTalkingAbout
             "Moist Water Bottle",
         };
 
-        string[] FocussedArray = Bot.Config!.Get<bool>("AConly") ? WOOOOODropsAC : WOOOOODropsAC.Concat(WOOOOODropsNonAC).ToArray();
+        string[] FocussedArray = Bot.Config!.Get<bool>("AConly")
+            ? WOOOOODropsAC
+            : WOOOOODropsAC.Concat(WOOOOODropsNonAC).ToArray();
 
         Core.RegisterQuests(8497);
         while (!Bot.ShouldExit && !Core.CheckInventory(FocussedArray))
         {
             Core.HuntMonster("Mverse", "Major Mushroom", "Dark Caster Card", 1, isTemp: true);
-            Core.HuntMonster("Mverse", "Major Mushroom", "Green-Eyes Red Dragon Card", 1, isTemp: true);
-            Core.HuntMonster("Mverse", "Major Mushroom", "Mirror Realm's Force Card", 1, isTemp: true);
-            Core.HuntMonster("Mverse", "Major Mushroom", "Drakath The Outlawed One Card", 1, isTemp: true);
+            Core.HuntMonster(
+                "Mverse",
+                "Major Mushroom",
+                "Green-Eyes Red Dragon Card",
+                1,
+                isTemp: true
+            );
+            Core.HuntMonster(
+                "Mverse",
+                "Major Mushroom",
+                "Mirror Realm's Force Card",
+                1,
+                isTemp: true
+            );
+            Core.HuntMonster(
+                "Mverse",
+                "Major Mushroom",
+                "Drakath The Outlawed One Card",
+                1,
+                isTemp: true
+            );
         }
         Core.CancelRegisteredQuests();
     }

@@ -9,13 +9,22 @@ tags: null
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Skills;
 
-
 public class ArchfiendDragonEgg
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }    private static CoreHollowborn _HB;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
+    private static CoreHollowborn _HB;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -38,11 +47,21 @@ public class ArchfiendDragonEgg
 
         Core.EnsureAccept(7296);
         Core.BuyItem("Airstorm", 357, "Breath of Life");
-        Core.HuntMonster("queenspire", "Fire Guardian Dragon", "Fire Guardian Dragon Soul", isTemp: false);
+        Core.HuntMonster(
+            "queenspire",
+            "Fire Guardian Dragon",
+            "Fire Guardian Dragon Soul",
+            isTemp: false
+        );
         HB.FreshSouls(1, 10);
         if (Core.CheckInventory("Yami no Ronin") || Core.CheckInventory("Dragon of Time"))
-            Bot.Skills.StartAdvanced(Core.CheckInventory("Yami no Ronin") ? "Yami no Ronin" : "Dragon of Time", true, ClassUseMode.Solo);
-        else Core.EquipClass(ClassType.Solo);
+            Bot.Skills.StartAdvanced(
+                Core.CheckInventory("Yami no Ronin") ? "Yami no Ronin" : "Dragon of Time",
+                true,
+                ClassUseMode.Solo
+            );
+        else
+            Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("Underlair", "ArchFiend DragonLord", "Fiendish Brimstone", isTemp: false);
         Core.BuyItem("Ariapet", 12, "ArchFiend Dragon Egg");
         Core.EnsureComplete(7296);

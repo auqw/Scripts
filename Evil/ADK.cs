@@ -14,23 +14,41 @@ public class ArchDoomKnight
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }    private static Core13LoC _LOC;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static Core13LoC LOC
+    {
+        get => _LOC ??= new Core13LoC();
+        set => _LOC = value;
+    }
+    private static Core13LoC _LOC;
 
-    public static string[] Q1items = {
+    public static string[] Q1items =
+    {
         "Arch DoomKnight Cape",
         "Undead Energy",
         "Human Souls",
-        "Dragon Energy"
+        "Dragon Energy",
     };
-    public static string[] Q2items = {
+    public static string[] Q2items =
+    {
         "Arch DoomKnight Cape Sword",
         "Arch DoomKnight Polearm",
         "Death's Power",
-        "Souls of the Dead"
+        "Souls of the Dead",
     };
-    public static string[] Q3items = {
+    public static string[] Q3items =
+    {
         "Arch DoomKnight Sword",
         "Arch DoomKnight's Edge",
         "Escherion's Helm",
@@ -48,7 +66,8 @@ public class ArchDoomKnight
         "Chaorrupted Hourglass",
         "Chaotic Power",
     };
-    public static string[] Q4items = {
+    public static string[] Q4items =
+    {
         "Arch DoomKnight",
         "Arch DoomKnight Open Helm",
         "Arch DoomKnight Helm",
@@ -58,7 +77,7 @@ public class ArchDoomKnight
         "Doom Heart",
         "Dread Knight Cleaver",
         "Reaper's Soul",
-        "Desolich's Undead Eye"
+        "Desolich's Undead Eye",
     };
     public string[] Combined = Q1items.Concat(Q2items).Concat(Q3items).Concat(Q4items).ToArray();
 
@@ -77,7 +96,6 @@ public class ArchDoomKnight
         if (BankRewards)
             Core.ToBank(Combined);
     }
-
 
     public void GatheringPower()
     {
@@ -103,7 +121,12 @@ public class ArchDoomKnight
         if (!Core.isCompletedBefore(6796))
             GatheringPower();
 
-        if (Core.CheckInventory(new[] { "Arch DoomKnight Cape Sword", "Arch DoomKnight Polearm" }, toInv: false))
+        if (
+            Core.CheckInventory(
+                new[] { "Arch DoomKnight Cape Sword", "Arch DoomKnight Polearm" },
+                toInv: false
+            )
+        )
             return;
 
         Core.AddDrop(Q2items);
@@ -121,7 +144,12 @@ public class ArchDoomKnight
         if (!Core.isCompletedBefore(6797))
             DeathsDoor();
 
-        if (Core.CheckInventory(new[] { "Arch DoomKnight Sword", "Arch DoomKnight's Edge" }, toInv: false))
+        if (
+            Core.CheckInventory(
+                new[] { "Arch DoomKnight Sword", "Arch DoomKnight's Edge" },
+                toInv: false
+            )
+        )
             return;
 
         Core.AddDrop(Q3items);
@@ -141,8 +169,18 @@ public class ArchDoomKnight
         Core.HuntMonster("djinn", "Tibicenas", "Tibicenas", isTemp: false);
         Core.HuntMonster("dreamnexus", "Khasaanda", "Soul of Chaos Armor", isTemp: false);
         Bot.Quests.UpdateQuest(2814);
-        Core.HuntMonster("stormtemple", "Chaos Lord Lionfang", "Chaos Lionfang Armor", isTemp: false);
-        Core.HuntMonster("swordhavenfalls", "Chaos Lord Alteon", "Shorn Chaos King Crown", isTemp: false);
+        Core.HuntMonster(
+            "stormtemple",
+            "Chaos Lord Lionfang",
+            "Chaos Lionfang Armor",
+            isTemp: false
+        );
+        Core.HuntMonster(
+            "swordhavenfalls",
+            "Chaos Lord Alteon",
+            "Shorn Chaos King Crown",
+            isTemp: false
+        );
         Core.KillXiang("Xiang Chaos");
 
         //Drakath's Sword (Free Player)
@@ -160,21 +198,40 @@ public class ArchDoomKnight
         if (!Core.isCompletedBefore(6798))
             ChaoticLords();
 
-        if (HelmOnly && Core.CheckInventory("Arch DoomKnight Helm") || (ArmorOnly && Core.CheckInventory("Arch DoomKnight")))
+        if (
+            HelmOnly && Core.CheckInventory("Arch DoomKnight Helm")
+            || (ArmorOnly && Core.CheckInventory("Arch DoomKnight"))
+        )
             return;
-
-        else if (Core.CheckInventory(new[] { "Arch DoomKnight", "Arch DoomKnight Open Helm", "Arch DoomKnight Helm" }, toInv: false))
+        else if (
+            Core.CheckInventory(
+                new[] { "Arch DoomKnight", "Arch DoomKnight Open Helm", "Arch DoomKnight Helm" },
+                toInv: false
+            )
+        )
             return;
 
         Core.AddDrop(Q4items);
         Core.EnsureAccept(6798);
 
         Core.EquipClass(ClassType.Farm);
-        Core.HuntMonster("shadowfallwar", "Skeletal Fire Mage", "Ultimate Darkness Gem", 50, isTemp: false);
+        Core.HuntMonster(
+            "shadowfallwar",
+            "Skeletal Fire Mage",
+            "Ultimate Darkness Gem",
+            50,
+            isTemp: false
+        );
         Farm.BattleUnderB("Undead Energy", 2000);
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", 2, isTemp: false);
+        Core.HuntMonster(
+            "epicvordred",
+            "Ultra Vordred",
+            "(Necro) Scroll of Dark Arts",
+            2,
+            isTemp: false
+        );
         Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false);
         Core.HuntMonster("sepulchure", "Dark Sepulchure", "Dread Knight Cleaver", isTemp: false);
         Core.HuntMonster("thevoid", "Reaper", "Reaper's Soul", 1, isTemp: false);
@@ -182,5 +239,4 @@ public class ArchDoomKnight
         Core.EnsureComplete(6798);
         Core.ToBank(Q4items);
     }
-
 }

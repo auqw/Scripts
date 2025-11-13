@@ -12,7 +12,12 @@ public class BeachPartyTokenItems
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static MemetsRealm Memet { get => _Memet ??= new MemetsRealm(); set => _Memet = value; }    private static MemetsRealm _Memet;
+    private static MemetsRealm Memet
+    {
+        get => _Memet ??= new MemetsRealm();
+        set => _Memet = value;
+    }
+    private static MemetsRealm _Memet;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -28,7 +33,10 @@ public class BeachPartyTokenItems
         if (!Core.isSeasonalMapActive("beachparty"))
             return;
 
-        string[] rewards = Core.EnsureLoad(7010).Rewards.Where(x => Core.IsMember ? true : !x.Upgrade).Select(x => x.Name).ToArray();
+        string[] rewards = Core.EnsureLoad(7010)
+            .Rewards.Where(x => Core.IsMember ? true : !x.Upgrade)
+            .Select(x => x.Name)
+            .ToArray();
         if (Core.CheckInventory(rewards, toInv: false))
             return;
 

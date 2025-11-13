@@ -15,17 +15,32 @@ public class TheRefreshingDeal
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static PurifiedClaymoreOfDestiny PCoD { get => _PCoD ??= new PurifiedClaymoreOfDestiny(); set => _PCoD = value; }    private static PurifiedClaymoreOfDestiny _PCoD;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static PurifiedClaymoreOfDestiny PCoD
+    {
+        get => _PCoD ??= new PurifiedClaymoreOfDestiny();
+        set => _PCoD = value;
+    }
+    private static PurifiedClaymoreOfDestiny _PCoD;
 
     public string OptionsStorage = "RefreshingDeal";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<int>("GemQuantity", "How many Gems of Nulgath?","Max Stack is 1000", 1000),
-        new Option<int>("TotemQuantity", "How many Totems of Nulgath?","Max Stack is 100", 100),
+        new Option<int>("GemQuantity", "How many Gems of Nulgath?", "Max Stack is 1000", 1000),
+        new Option<int>("TotemQuantity", "How many Totems of Nulgath?", "Max Stack is 100", 100),
         new Option<bool>("BankItems", "Bank nation items at the end", "true/false", false),
     };
 
@@ -39,4 +54,3 @@ public class TheRefreshingDeal
         Core.SetOptions(false);
     }
 }
-

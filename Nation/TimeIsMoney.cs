@@ -11,7 +11,12 @@ public class TimeIsMoney
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -29,24 +34,40 @@ public class TimeIsMoney
 
         if (!Core.CheckInventory(42581))
         {
-            Core.Logger("You Don't Have \"Bounty Hunter Blade Pet\". Pet is required for doing the quests.");
+            Core.Logger(
+                "You Don't Have \"Bounty Hunter Blade Pet\". Pet is required for doing the quests."
+            );
             return;
         }
         for (int i = 0; i < Rewards.Length; i++)
         {
             if (Bot.Inventory.IsMaxStack(Rewards[i]))
-                Core.Logger($"{Rewards[i]} is max stack Checking next item in the \"Time is Money\" Quest's Rewards");
+                Core.Logger(
+                    $"{Rewards[i]} is max stack Checking next item in the \"Time is Money\" Quest's Rewards"
+                );
             else
                 while (!Bot.Inventory.IsMaxStack(Rewards[i]))
                 {
                     //Time is Money 6185
                     Core.EnsureAccept(6185);
 
-                    Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
+                    Core.JoinSWF(
+                        "mobius",
+                        "ChiralValley/town-Mobius-21Feb14.swf",
+                        "Slugfit",
+                        "Bottom"
+                    );
                     Core.HuntMonster("Mobius", "Slugfit", "Slugfit Horn", 5);
                     Core.HuntMonster("Mobius", "Fire Imp", "Imp Flame", 3);
                     Core.HuntMonster("bamboo", "Tanuki", "Tanuki Ears", 3);
-                    Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Wereboar Tusk", 2);
+                    Core.KillMonster(
+                        "greenguardwest",
+                        "West12",
+                        "Up",
+                        "Big Bad Boar",
+                        "Wereboar Tusk",
+                        2
+                    );
                     Core.HuntMonster("junkyard", "Onibaba", "Onibaba Nails", 5);
 
                     Core.EnsureComplete(6185);

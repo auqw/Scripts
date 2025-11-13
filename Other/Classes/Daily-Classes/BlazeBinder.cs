@@ -15,9 +15,24 @@ public class BlazeBinder
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreDailies Dailies { get => _Dailies ??= new CoreDailies(); set => _Dailies = value; }    private static CoreDailies _Dailies;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreDailies Dailies
+    {
+        get => _Dailies ??= new CoreDailies();
+        set => _Dailies = value;
+    }
+    private static CoreDailies _Dailies;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -42,11 +57,14 @@ public class BlazeBinder
             Core.Logger($"{Bot.Inventory.GetQuantity("Shurpu Blaze Token")} / 84");
             if (!Core.CheckInventory("Shurpu Blaze Token", 84))
                 Dailies.Pyromancer();
-            else Adv.BuyItem("xancave", 447, "Pyromancer", shopItemID: 12812);
+            else
+                Adv.BuyItem("xancave", 447, "Pyromancer", shopItemID: 12812);
         }
         else
         {
-            InventoryItem itemInv = Bot.Inventory.Items.First(i => i.Name.ToLower() == ("Pyromancer").ToLower() && i.Category == ItemCategory.Class);
+            InventoryItem itemInv = Bot.Inventory.Items.First(i =>
+                i.Name.ToLower() == ("Pyromancer").ToLower() && i.Category == ItemCategory.Class
+            );
             if (itemInv.Quantity < 1)
             {
                 Adv.GearStore();

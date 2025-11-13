@@ -15,7 +15,12 @@ public class MourningFlower
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
+    private static CoreDarkon Darkon
+    {
+        get => _Darkon ??= new CoreDarkon();
+        set => _Darkon = value;
+    }
+    private static CoreDarkon _Darkon;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -18,31 +18,69 @@ public class CharonsPurgeMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-
-    private static CoreIsleOfFotia CoreIsleOfFotia { get => _CoreIsleOfFotia ??= new CoreIsleOfFotia(); set => _CoreIsleOfFotia = value; }    private static CoreIsleOfFotia _CoreIsleOfFotia;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static CoreIsleOfFotia CoreIsleOfFotia
+    {
+        get => _CoreIsleOfFotia ??= new CoreIsleOfFotia();
+        set => _CoreIsleOfFotia = value;
+    }
+    private static CoreIsleOfFotia _CoreIsleOfFotia;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Molten Sword", "Magitech Plating", "Ancient Undead Helm", "Ash Priest Hood", "The Scythe of Lost Hope", "Priest of the Ashes", "Legion Beast Within", "Psyche", "Molten Staff " });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Molten Sword",
+                "Magitech Plating",
+                "Ancient Undead Helm",
+                "Ash Priest Hood",
+                "The Scythe of Lost Hope",
+                "Priest of the Ashes",
+                "Legion Beast Within",
+                "Psyche",
+                "Molten Staff ",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -63,7 +101,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -74,9 +114,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Molten Sword":
                 case "Ash Priest Hood":
@@ -110,7 +155,12 @@ public static CoreAdvanced _sAdv;
                     Core.RegisterQuests(2743);
                     while (!Core.CheckInventory("Solidified Soul", 50))
                     {
-                        Core.HuntMonster("ShadowFallInvasion", "Bone Creeper", "Shards of a Soul", 10);
+                        Core.HuntMonster(
+                            "ShadowFallInvasion",
+                            "Bone Creeper",
+                            "Shards of a Soul",
+                            10
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -152,19 +202,89 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("17976", "Burning Freeze", "Mode: [select] only\nShould the bot buy \"Burning Freeze\" ?", false),
-        new Option<bool>("17977", "Glacier Cudgel", "Mode: [select] only\nShould the bot buy \"Glacier Cudgel\" ?", false),
-        new Option<bool>("18413", "Cerberus", "Mode: [select] only\nShould the bot buy \"Cerberus\" ?", false),
-        new Option<bool>("18445", "Dark Ferryman's Hood", "Mode: [select] only\nShould the bot buy \"Dark Ferryman's Hood\" ?", false),
-        new Option<bool>("18446", "Charon's Skull Mask", "Mode: [select] only\nShould the bot buy \"Charon's Skull Mask\" ?", false),
-        new Option<bool>("18414", "Cerberus Helm", "Mode: [select] only\nShould the bot buy \"Cerberus Helm\" ?", false),
-        new Option<bool>("18415", "Cerberus Morph Helm", "Mode: [select] only\nShould the bot buy \"Cerberus Morph Helm\" ?", false),
-        new Option<bool>("18447", "Dual Cerberus Axes", "Mode: [select] only\nShould the bot buy \"Dual Cerberus Axes\" ?", false),
-        new Option<bool>("18461", "Charon's Oar", "Mode: [select] only\nShould the bot buy \"Charon's Oar\" ?", false),
-        new Option<bool>("18444", "Dage's Ferryman", "Mode: [select] only\nShould the bot buy \"Dage's Ferryman\" ?", false),
-        new Option<bool>("17978", "Inferno Bow", "Mode: [select] only\nShould the bot buy \"Inferno Bow\" ?", false),
-        new Option<bool>("18417", "Cerberus Axe", "Mode: [select] only\nShould the bot buy \"Cerberus Axe\" ?", false),
-        new Option<bool>("18504", "Charon", "Mode: [select] only\nShould the bot buy \"Charon\" ?", false),
-        new Option<bool>("18505", "Boatman's Hood", "Mode: [select] only\nShould the bot buy \"Boatman's Hood\" ?", false),
+        new Option<bool>(
+            "17976",
+            "Burning Freeze",
+            "Mode: [select] only\nShould the bot buy \"Burning Freeze\" ?",
+            false
+        ),
+        new Option<bool>(
+            "17977",
+            "Glacier Cudgel",
+            "Mode: [select] only\nShould the bot buy \"Glacier Cudgel\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18413",
+            "Cerberus",
+            "Mode: [select] only\nShould the bot buy \"Cerberus\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18445",
+            "Dark Ferryman's Hood",
+            "Mode: [select] only\nShould the bot buy \"Dark Ferryman's Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18446",
+            "Charon's Skull Mask",
+            "Mode: [select] only\nShould the bot buy \"Charon's Skull Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18414",
+            "Cerberus Helm",
+            "Mode: [select] only\nShould the bot buy \"Cerberus Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18415",
+            "Cerberus Morph Helm",
+            "Mode: [select] only\nShould the bot buy \"Cerberus Morph Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18447",
+            "Dual Cerberus Axes",
+            "Mode: [select] only\nShould the bot buy \"Dual Cerberus Axes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18461",
+            "Charon's Oar",
+            "Mode: [select] only\nShould the bot buy \"Charon's Oar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18444",
+            "Dage's Ferryman",
+            "Mode: [select] only\nShould the bot buy \"Dage's Ferryman\" ?",
+            false
+        ),
+        new Option<bool>(
+            "17978",
+            "Inferno Bow",
+            "Mode: [select] only\nShould the bot buy \"Inferno Bow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18417",
+            "Cerberus Axe",
+            "Mode: [select] only\nShould the bot buy \"Cerberus Axe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18504",
+            "Charon",
+            "Mode: [select] only\nShould the bot buy \"Charon\" ?",
+            false
+        ),
+        new Option<bool>(
+            "18505",
+            "Boatman's Hood",
+            "Mode: [select] only\nShould the bot buy \"Boatman's Hood\" ?",
+            false
+        ),
     };
 }

@@ -16,24 +16,33 @@ public static class TaskExtensions
     /// <param name="cancellationToken">Cancellation token (optional)</param>
     /// <param name="timeoutMs">Timeout in milliseconds (default: 30 seconds)</param>
     /// <returns>The running task</returns>
-    public static Task RunSafely(Action action, CancellationToken cancellationToken = default, int timeoutMs = 30000)
+    public static Task RunSafely(
+        Action action,
+        CancellationToken cancellationToken = default,
+        int timeoutMs = 30000
+    )
     {
-        return Task.Run(() =>
-        {
-            try
+        return Task.Run(
+            () =>
             {
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                if (timeoutMs > 0)
-                    cts.CancelAfter(timeoutMs);
-                
-                cts.Token.ThrowIfCancellationRequested();
-                action();
-            }
-            catch (OperationCanceledException)
-            {
-                // Expected cancellation - no action needed
-            }
-        }, cancellationToken);
+                try
+                {
+                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(
+                        cancellationToken
+                    );
+                    if (timeoutMs > 0)
+                        cts.CancelAfter(timeoutMs);
+
+                    cts.Token.ThrowIfCancellationRequested();
+                    action();
+                }
+                catch (OperationCanceledException)
+                {
+                    // Expected cancellation - no action needed
+                }
+            },
+            cancellationToken
+        );
     }
 
     /// <summary>
@@ -43,22 +52,31 @@ public static class TaskExtensions
     /// <param name="cancellationToken">Cancellation token (optional)</param>
     /// <param name="timeoutMs">Timeout in milliseconds (default: 30 seconds)</param>
     /// <returns>The running task</returns>
-    public static Task RunSafelyAsync(Func<CancellationToken, Task> asyncAction, CancellationToken cancellationToken = default, int timeoutMs = 30000)
+    public static Task RunSafelyAsync(
+        Func<CancellationToken, Task> asyncAction,
+        CancellationToken cancellationToken = default,
+        int timeoutMs = 30000
+    )
     {
-        return Task.Run(async () =>
-        {
-            try
+        return Task.Run(
+            async () =>
             {
-                using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-                if (timeoutMs > 0)
-                    cts.CancelAfter(timeoutMs);
-                
-                await asyncAction(cts.Token);
-            }
-            catch (OperationCanceledException)
-            {
-                // Expected cancellation - no action needed
-            }
-        }, cancellationToken);
+                try
+                {
+                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(
+                        cancellationToken
+                    );
+                    if (timeoutMs > 0)
+                        cts.CancelAfter(timeoutMs);
+
+                    await asyncAction(cts.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                    // Expected cancellation - no action needed
+                }
+            },
+            cancellationToken
+        );
     }
 }

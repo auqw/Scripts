@@ -20,11 +20,24 @@ public class MoreSkullsWorldBoss
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     private int GetMaxPristineSkull()
     {
@@ -42,11 +55,17 @@ public class MoreSkullsWorldBoss
         Core.BankingBlackList.Add("Pristine Skull");
         Core.SetOptions(disableClassSwap: true);
 
-        Core.OneTimeMessage("WARNING", "During the script, when it Does the zone bit, there will be a momentary Freeze (blame flash), dw about it itll continue", true, true);
+        Core.OneTimeMessage(
+            "WARNING",
+            "During the script, when it Does the zone bit, there will be a momentary Freeze (blame flash), dw about it itll continue",
+            true,
+            true
+        );
         Setup(GetMaxPristineSkull());
 
         Core.SetOptions(false);
     }
+
     CancellationTokenSource? moveTokenSource;
 
     public void Setup(int? quant = null)
@@ -68,7 +87,11 @@ public class MoreSkullsWorldBoss
         Core.FarmingLogger("Pristine Skull", target);
         while (!Bot.ShouldExit && !Core.CheckInventory("Pristine Skull", target))
         {
-            Core.EnsureAccept(!Core.isCompletedBefore(10288) ? 10287 : Core.IsMember ? 10289 : 10288);
+            Core.EnsureAccept(
+                !Core.isCompletedBefore(10288) ? 10287
+                : Core.IsMember ? 10289
+                : 10288
+            );
             while (!Bot.ShouldExit && !Bot.Player.Alive) { }
 
             if (Bot.Map.Name != "MoreSkulls")
@@ -85,8 +108,18 @@ public class MoreSkullsWorldBoss
                 Bot.Combat.CancelTarget();
             }
 
-            if (Bot.Quests.CanCompleteFullCheck(!Core.isCompletedBefore(10288) ? 10287 : Core.IsMember ? 10289 : 10288))
-                Core.EnsureComplete(!Core.isCompletedBefore(10288) ? 10287 : Core.IsMember ? 10289 : 10288);
+            if (
+                Bot.Quests.CanCompleteFullCheck(
+                    !Core.isCompletedBefore(10288) ? 10287
+                    : Core.IsMember ? 10289
+                    : 10288
+                )
+            )
+                Core.EnsureComplete(
+                    !Core.isCompletedBefore(10288) ? 10287
+                    : Core.IsMember ? 10289
+                    : 10288
+                );
 
             Bot.Sleep(500);
         }
@@ -134,20 +167,26 @@ public class MoreSkullsWorldBoss
             return;
 
         CancellationToken token = moveTokenSource!.Token;
-        zoneMovementTask = Task.Run(async () =>
+        zoneMovementTask = Task.Run(
+            async () =>
             {
                 // Randomize the delay to avoid being too predictable
                 await Task.Delay(Bot.Random.Next(500, 1500), token);
 
-                int x, y;
+                int x,
+                    y;
 
                 // Determine the coordinates based on the zone
                 // Zones are defined by their names, e.g., "A", "B", etc. ( gotten from the packet data via Packets > Intercepter)
                 switch (zone)
                 {
                     case "A":
-                        if (Bot.Player.Position.X >= 741 && Bot.Player.Position.X <= 832 &&
-                            Bot.Player.Position.Y >= 402 && Bot.Player.Position.Y <= 446)
+                        if (
+                            Bot.Player.Position.X >= 741
+                            && Bot.Player.Position.X <= 832
+                            && Bot.Player.Position.Y >= 402
+                            && Bot.Player.Position.Y <= 446
+                        )
                             return;
 
                         x = Bot.Random.Next(741, 833);
@@ -155,8 +194,12 @@ public class MoreSkullsWorldBoss
                         break;
 
                     case "B":
-                        if (Bot.Player.Position.X >= 721 && Bot.Player.Position.X <= 819 &&
-                            Bot.Player.Position.Y >= 330 && Bot.Player.Position.Y <= 371)
+                        if (
+                            Bot.Player.Position.X >= 721
+                            && Bot.Player.Position.X <= 819
+                            && Bot.Player.Position.Y >= 330
+                            && Bot.Player.Position.Y <= 371
+                        )
                             return;
 
                         x = Bot.Random.Next(721, 820);
@@ -167,17 +210,24 @@ public class MoreSkullsWorldBoss
                         return; // Do nothing on unknown zone
                 }
 
-                if (token.IsCancellationRequested ||
-                    (Bot.Player.Position.X == x && Bot.Player.Position.Y == y))
+                if (
+                    token.IsCancellationRequested
+                    || (Bot.Player.Position.X == x && Bot.Player.Position.Y == y)
+                )
                     return;
 
                 Bot.Player.WalkTo(x, y);
                 await Task.Delay(500, token);
-            }, token);
-
+            },
+            token
+        );
     }
 
-    public async Task WaitForTrueAsync(Func<bool> condition, int checkIntervalMs = 100, CancellationToken? token = null)
+    public async Task WaitForTrueAsync(
+        Func<bool> condition,
+        int checkIntervalMs = 100,
+        CancellationToken? token = null
+    )
     {
         while (!condition())
         {
@@ -200,7 +250,11 @@ public class MoreSkullsWorldBoss
 
         // Grimskull War Medal
         // Mega Grimskull War Medal
-        if (!Story.QuestProgression(10284 /* Undead Giants */))
+        if (
+            !Story.QuestProgression(
+                10284 /* Undead Giants */
+            )
+        )
         {
             Core.EnsureAcceptmultiple(10282, 10283);
 
@@ -213,7 +267,7 @@ public class MoreSkullsWorldBoss
         Core.HuntMonster("lichwar", "Noxus Giant", "Noxus Giant Slain", 5);
         Core.EnsureComplete(10284);
 
-        // It Takes Two to Tango        
+        // It Takes Two to Tango
         Core.EnsureAccept(10281);
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("lichwar", "Rax-goreless", "Rax-goreless Defeated");
@@ -222,13 +276,13 @@ public class MoreSkullsWorldBoss
         Adv.GearStore(true);
     }
 
-
     private int GetMonsterHP(string monMapID)
     {
         try
         {
             var jsonData = Bot.Flash.Call("availableMonsters");
-            if (string.IsNullOrEmpty(jsonData)) return 0;
+            if (string.IsNullOrEmpty(jsonData))
+                return 0;
 
             foreach (var mon in JArray.Parse(jsonData))
             {
@@ -244,6 +298,4 @@ public class MoreSkullsWorldBoss
 
         return 0;
     }
-
-
 }

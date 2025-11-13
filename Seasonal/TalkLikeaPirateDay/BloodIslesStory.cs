@@ -13,8 +13,18 @@ public class BloodIsles
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -67,7 +77,7 @@ public class BloodIsles
 
         #region BloodIsles
         Core.EquipClass(ClassType.Farm);
-        // 9876 | Faceless Moon 
+        // 9876 | Faceless Moon
         Story.KillQuest(9876, "bloodisles", UseableMonsters[0]);
 
         // 9877 | Apex Prey
@@ -103,10 +113,4 @@ public class BloodIsles
 
         #endregion
     }
-
-
-
-
-
-
 }

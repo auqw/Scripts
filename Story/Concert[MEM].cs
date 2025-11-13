@@ -11,7 +11,12 @@ public class Concert
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -92,7 +97,11 @@ public class Concert
         Story.KillQuest(1032, "feardeath", "Fear Muncher");
 
         //Terrify the Terrorkind 1033
-        Story.KillQuest(1033, "feardeath", new[] { "Fear Muncher", "Abandoned Dolly", "Banished Banshee", "Cloaked Fiend" });
+        Story.KillQuest(
+            1033,
+            "feardeath",
+            new[] { "Fear Muncher", "Abandoned Dolly", "Banished Banshee", "Cloaked Fiend" }
+        );
 
         //Conquer Thanatops 1034
         Story.KillQuest(1034, "feardeath", "Thanotops");

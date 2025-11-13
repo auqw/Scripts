@@ -37,13 +37,32 @@ public class PiscesVenarisMater
         {
             if (Core.CheckInventory(Reward.Name, toInv: false))
                 Core.Logger($"{Reward.Name} obtained.");
-            else Core.FarmingLogger(Reward.Name, 1);
+            else
+                Core.FarmingLogger(Reward.Name, 1);
 
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name))
             {
                 Core.EnsureAccept(9145);
-                Core.KillMonster("natatorium", "r2", "Left", "Anglerfish", "Anglerfish Star Shard", 10, isTemp: false, log: false);
-                Core.KillMonster("natatorium", "r3", "Left", "Merdraconian", "Merdraconian Star Shard", 10, isTemp: false, log: false);
+                Core.KillMonster(
+                    "natatorium",
+                    "r2",
+                    "Left",
+                    "Anglerfish",
+                    "Anglerfish Star Shard",
+                    10,
+                    isTemp: false,
+                    log: false
+                );
+                Core.KillMonster(
+                    "natatorium",
+                    "r3",
+                    "Left",
+                    "Merdraconian",
+                    "Merdraconian Star Shard",
+                    10,
+                    isTemp: false,
+                    log: false
+                );
                 Core.EnsureComplete(9145, Reward.ID);
                 Core.ToBank(Reward.ID);
             }

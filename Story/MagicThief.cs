@@ -11,7 +11,12 @@ public class MagicThief
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -49,7 +54,7 @@ public class MagicThief
         Story.MapItemQuest(1914, "twilightslums", 958);
 
         // 1915|Demented Deorysa
-        if(!Story.QuestProgression(1915))
+        if (!Story.QuestProgression(1915))
         {
             Core.EnsureAccept(1915);
             Core.HuntMonster("palace", "Deorysa", "Deorysa Slain", 15);

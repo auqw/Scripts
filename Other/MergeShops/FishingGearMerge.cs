@@ -14,19 +14,31 @@ public class FishingGearMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
-private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -55,7 +67,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,9 +80,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
 
                 case "Fishin' Chips":
@@ -90,8 +109,16 @@ private static CoreAdvanced _sAdv;
                         Farm.GetBaitandDynamite(0, 20);
                         Core.Join("fishing");
                         while (!Bot.ShouldExit && !Bot.Player.Loaded)
-                        { int i = 0; Core.Logger($"Waiting for play to load {i++}"); Core.Sleep(); }
-                        while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant) && Core.CheckInventory("Fishing Dynamite"))
+                        {
+                            int i = 0;
+                            Core.Logger($"Waiting for play to load {i++}");
+                            Core.Sleep();
+                        }
+                        while (
+                            !Bot.ShouldExit
+                            && !Core.CheckInventory(req.Name, quant)
+                            && Core.CheckInventory("Fishing Dynamite")
+                        )
                         {
                             Core.Sleep();
                             Bot.Send.Packet("%xt%zm%FishCast%1%Dynamite%30%");
@@ -125,7 +152,6 @@ private static CoreAdvanced _sAdv;
 
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
 
@@ -144,10 +170,11 @@ private static CoreAdvanced _sAdv;
                         if (data.wait is not null)
                         {
                             waitTimer = data.wait;
-                            Core.Logger($"Derp Moosefish: {data.derp}, Set CatchTimer™: {waitTimer}ms");
+                            Core.Logger(
+                                $"Derp Moosefish: {data.derp}, Set CatchTimer™: {waitTimer}ms"
+                            );
                         }
                         break;
-
 
                     //idt this one works
                     case "CatchResult":
@@ -177,28 +204,143 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("9916", "The Super Pole", "Mode: [select] only\nShould the bot buy \"The Super Pole\" ?", false),
-        new Option<bool>("10903", "Crabcake Hat", "Mode: [select] only\nShould the bot buy \"Crabcake Hat\" ?", false),
-        new Option<bool>("10904", "Fishing Hat", "Mode: [select] only\nShould the bot buy \"Fishing Hat\" ?", false),
-        new Option<bool>("10905", "Yaga Hatfish Hat", "Mode: [select] only\nShould the bot buy \"Yaga Hatfish Hat\" ?", false),
-        new Option<bool>("10906", "Fishing Rod Backstrap", "Mode: [select] only\nShould the bot buy \"Fishing Rod Backstrap\" ?", false),
-        new Option<bool>("10907", "Shrimp Axe", "Mode: [select] only\nShould the bot buy \"Shrimp Axe\" ?", false),
-        new Option<bool>("10908", "Fishin' Hooks", "Mode: [select] only\nShould the bot buy \"Fishin' Hooks\" ?", false),
-        new Option<bool>("10909", "Fishy Sword &amp; Shield", "Mode: [select] only\nShould the bot buy \"Fishy Sword &amp; Shield\" ?", false),
-        new Option<bool>("10910", "Old Boot", "Mode: [select] only\nShould the bot buy \"Old Boot\" ?", false),
-        new Option<bool>("10911", "Tackle Box", "Mode: [select] only\nShould the bot buy \"Tackle Box\" ?", false),
-        new Option<bool>("10912", "Fishin' Rod", "Mode: [select] only\nShould the bot buy \"Fishin' Rod\" ?", false),
-        new Option<bool>("11087", "Fish Suit", "Mode: [select] only\nShould the bot buy \"Fish Suit\" ?", false),
-        new Option<bool>("11089", "Fish Tail", "Mode: [select] only\nShould the bot buy \"Fish Tail\" ?", false),
-        new Option<bool>("11090", "Floppy Fish", "Mode: [select] only\nShould the bot buy \"Floppy Fish\" ?", false),
-        new Option<bool>("11091", "Mystery Floppy Fish", "Mode: [select] only\nShould the bot buy \"Mystery Floppy Fish\" ?", false),
-        new Option<bool>("11092", "Gaping Fish Head", "Mode: [select] only\nShould the bot buy \"Gaping Fish Head\" ?", false),
-        new Option<bool>("11093", "Hillbilly Overalls", "Mode: [select] only\nShould the bot buy \"Hillbilly Overalls\" ?", false),
-        new Option<bool>("11097", "Fisherman's Hat", "Mode: [select] only\nShould the bot buy \"Fisherman's Hat\" ?", false),
-        new Option<bool>("11098", "Fisherwoman's Hat", "Mode: [select] only\nShould the bot buy \"Fisherwoman's Hat\" ?", false),
-        new Option<bool>("11102", "Xtreme Fishing Jersey", "Mode: [select] only\nShould the bot buy \"Xtreme Fishing Jersey\" ?", false),
-        new Option<bool>("11133", "Fisher Cape", "Mode: [select] only\nShould the bot buy \"Fisher Cape\" ?", false),
-        new Option<bool>("11135", "Fishin' for Food", "Mode: [select] only\nShould the bot buy \"Fishin' for Food\" ?", false),
-        new Option<bool>("50724", "Lure of Order", "Mode: [select] only\nShould the bot buy \"Lure of Order\" ?", false),
+        new Option<bool>(
+            "9916",
+            "The Super Pole",
+            "Mode: [select] only\nShould the bot buy \"The Super Pole\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10903",
+            "Crabcake Hat",
+            "Mode: [select] only\nShould the bot buy \"Crabcake Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10904",
+            "Fishing Hat",
+            "Mode: [select] only\nShould the bot buy \"Fishing Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10905",
+            "Yaga Hatfish Hat",
+            "Mode: [select] only\nShould the bot buy \"Yaga Hatfish Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10906",
+            "Fishing Rod Backstrap",
+            "Mode: [select] only\nShould the bot buy \"Fishing Rod Backstrap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10907",
+            "Shrimp Axe",
+            "Mode: [select] only\nShould the bot buy \"Shrimp Axe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10908",
+            "Fishin' Hooks",
+            "Mode: [select] only\nShould the bot buy \"Fishin' Hooks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10909",
+            "Fishy Sword &amp; Shield",
+            "Mode: [select] only\nShould the bot buy \"Fishy Sword &amp; Shield\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10910",
+            "Old Boot",
+            "Mode: [select] only\nShould the bot buy \"Old Boot\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10911",
+            "Tackle Box",
+            "Mode: [select] only\nShould the bot buy \"Tackle Box\" ?",
+            false
+        ),
+        new Option<bool>(
+            "10912",
+            "Fishin' Rod",
+            "Mode: [select] only\nShould the bot buy \"Fishin' Rod\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11087",
+            "Fish Suit",
+            "Mode: [select] only\nShould the bot buy \"Fish Suit\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11089",
+            "Fish Tail",
+            "Mode: [select] only\nShould the bot buy \"Fish Tail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11090",
+            "Floppy Fish",
+            "Mode: [select] only\nShould the bot buy \"Floppy Fish\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11091",
+            "Mystery Floppy Fish",
+            "Mode: [select] only\nShould the bot buy \"Mystery Floppy Fish\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11092",
+            "Gaping Fish Head",
+            "Mode: [select] only\nShould the bot buy \"Gaping Fish Head\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11093",
+            "Hillbilly Overalls",
+            "Mode: [select] only\nShould the bot buy \"Hillbilly Overalls\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11097",
+            "Fisherman's Hat",
+            "Mode: [select] only\nShould the bot buy \"Fisherman's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11098",
+            "Fisherwoman's Hat",
+            "Mode: [select] only\nShould the bot buy \"Fisherwoman's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11102",
+            "Xtreme Fishing Jersey",
+            "Mode: [select] only\nShould the bot buy \"Xtreme Fishing Jersey\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11133",
+            "Fisher Cape",
+            "Mode: [select] only\nShould the bot buy \"Fisher Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11135",
+            "Fishin' for Food",
+            "Mode: [select] only\nShould the bot buy \"Fishin' for Food\" ?",
+            false
+        ),
+        new Option<bool>(
+            "50724",
+            "Lure of Order",
+            "Mode: [select] only\nShould the bot buy \"Lure of Order\" ?",
+            false
+        ),
     };
 }

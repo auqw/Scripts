@@ -17,28 +17,44 @@ public class ElfhameMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-
-    private static BrightOak BO { get => _BO ??= new BrightOak(); set => _BO = value; }
+    private static BrightOak BO
+    {
+        get => _BO ??= new BrightOak();
+        set => _BO = value;
+    }
     private static BrightOak _BO;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     // If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Flower of Renewal"});
+        Core.BankingBlackList.AddRange(new[] { "Flower of Renewal" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -56,7 +72,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +85,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Flower of Renewal":
                     Core.FarmingLogger(req.Name, quant);
@@ -78,28 +101,93 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("elfhame", "Blighted Deer", "Deer Horn", 2, true, false);
-                        Core.HuntMonster("elfhame", "Wolfrider", "Elfhame Wolf Pelt", 2, true, false);
-                        Core.HuntMonster("elfhame", "Ruin Dweller", "Ruin Dweller Remains", 3, true, false);
-                        Core.HuntMonster("elfhame", "Ratawampus", "Ratawampus Tail", 2, true, false);
+                        Core.HuntMonster(
+                            "elfhame",
+                            "Wolfrider",
+                            "Elfhame Wolf Pelt",
+                            2,
+                            true,
+                            false
+                        );
+                        Core.HuntMonster(
+                            "elfhame",
+                            "Ruin Dweller",
+                            "Ruin Dweller Remains",
+                            3,
+                            true,
+                            false
+                        );
+                        Core.HuntMonster(
+                            "elfhame",
+                            "Ratawampus",
+                            "Ratawampus Tail",
+                            2,
+                            true,
+                            false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("32216", "Ruin Stalker Pet", "Mode: [select] only\nShould the bot buy \"Ruin Stalker Pet\" ?", false),
-        new Option<bool>("32213", "Guardian Spirit", "Mode: [select] only\nShould the bot buy \"Guardian Spirit\" ?", false),
-        new Option<bool>("32214", "Guardian Spirit Morph", "Mode: [select] only\nShould the bot buy \"Guardian Spirit Morph\" ?", false),
-        new Option<bool>("32219", "Guardian Spirit Sword", "Mode: [select] only\nShould the bot buy \"Guardian Spirit Sword\" ?", false),
-        new Option<bool>("32218", "Twisted Deer Pet", "Mode: [select] only\nShould the bot buy \"Twisted Deer Pet\" ?", false),
-        new Option<bool>("32215", "Ratawampus Pet", "Mode: [select] only\nShould the bot buy \"Ratawampus Pet\" ?", false),
-        new Option<bool>("32250", "Toxic Spirit", "Mode: [select] only\nShould the bot buy \"Toxic Spirit\" ?", false),
-        new Option<bool>("32251", "Toxic Spirit Morph", "Mode: [select] only\nShould the bot buy \"Toxic Spirit Morph\" ?", false),
-        new Option<bool>("32252", "Toxic Spirit Sword", "Mode: [select] only\nShould the bot buy \"Toxic Spirit Sword\" ?", false),
+        new Option<bool>(
+            "32216",
+            "Ruin Stalker Pet",
+            "Mode: [select] only\nShould the bot buy \"Ruin Stalker Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32213",
+            "Guardian Spirit",
+            "Mode: [select] only\nShould the bot buy \"Guardian Spirit\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32214",
+            "Guardian Spirit Morph",
+            "Mode: [select] only\nShould the bot buy \"Guardian Spirit Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32219",
+            "Guardian Spirit Sword",
+            "Mode: [select] only\nShould the bot buy \"Guardian Spirit Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32218",
+            "Twisted Deer Pet",
+            "Mode: [select] only\nShould the bot buy \"Twisted Deer Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32215",
+            "Ratawampus Pet",
+            "Mode: [select] only\nShould the bot buy \"Ratawampus Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32250",
+            "Toxic Spirit",
+            "Mode: [select] only\nShould the bot buy \"Toxic Spirit\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32251",
+            "Toxic Spirit Morph",
+            "Mode: [select] only\nShould the bot buy \"Toxic Spirit Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32252",
+            "Toxic Spirit Sword",
+            "Mode: [select] only\nShould the bot buy \"Toxic Spirit Sword\" ?",
+            false
+        ),
     };
 }

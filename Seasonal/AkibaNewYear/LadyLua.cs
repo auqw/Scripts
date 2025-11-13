@@ -11,7 +11,11 @@ public class LadyLua
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -30,7 +34,11 @@ public class LadyLua
         Story.PreLoad(this);
 
         //Earning Your Stripes (8498)
-        Story.KillQuest(8498, "ravenloss", new[] { "Evolved Dreadspider", "ChaosWeaver Magi", "Underbeast" });
+        Story.KillQuest(
+            8498,
+            "ravenloss",
+            new[] { "Evolved Dreadspider", "ChaosWeaver Magi", "Underbeast" }
+        );
 
         //A New Year in Bloom (8499)
         Story.KillQuest(8499, "akibacny", new[] { "Bamboo Treeant", "Lingzhi", "Xingzhi" });
@@ -42,7 +50,12 @@ public class LadyLua
             Core.HuntMonster("mobius", "Chaos Sp-Eye", "Chaos Eyeball", 5, log: false);
             Core.HuntMonster("ebonslate", "Sp-Eye", "Evil Eyeball", 5, log: false);
             Core.HuntMonster("deathgazer", "Deathgazer", "Deadly Eyeball", 2, log: false);
-            Core.HuntMonster("battlewedding", "Jimmy the Eye Heart", "Heartbreaking Eyeball", log: false);
+            Core.HuntMonster(
+                "battlewedding",
+                "Jimmy the Eye Heart",
+                "Heartbreaking Eyeball",
+                log: false
+            );
             Core.EnsureComplete(8500);
         }
 
@@ -58,12 +71,30 @@ public class LadyLua
             Core.HuntMonster("creatures", "White Tiger", "Bright as a White Tiger", 4, log: false);
             Core.HuntMonster("phoenixrise", "Cinderclaw", "Superior to Cinderclaw", 2, log: false);
             Core.HuntMonster("fireplanewar", "ShadowClaw", "Overshadowed Shadowclaw", log: false);
-            Core.HuntMonster("phoenixrise", "Firestorm Tiger", "Blazed Through Underlings", 12, log: false);
+            Core.HuntMonster(
+                "phoenixrise",
+                "Firestorm Tiger",
+                "Blazed Through Underlings",
+                12,
+                log: false
+            );
             Core.EnsureComplete(8502);
         }
 
         //Yin and Yang (8503)
-        Story.KillQuest(8503, "shadowfortress", new[] { "1st Head of Orochi", "2nd Head of Orochi", "3rd Head of Orochi", "4th Head of Orochi", "5th Head of Orochi", "6th Head of Orochi" });
+        Story.KillQuest(
+            8503,
+            "shadowfortress",
+            new[]
+            {
+                "1st Head of Orochi",
+                "2nd Head of Orochi",
+                "3rd Head of Orochi",
+                "4th Head of Orochi",
+                "5th Head of Orochi",
+                "6th Head of Orochi",
+            }
+        );
 
         //Tyger, Tyger, Burning Bright (8504)
         Story.KillQuest(8504, "akibacny", new[] { "Fiery Lantern", "Lin Kuei" });

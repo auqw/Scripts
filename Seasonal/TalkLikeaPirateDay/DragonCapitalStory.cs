@@ -12,8 +12,18 @@ public class DragonCapitalStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static DragonPirateStory DPS { get => _DPS ??= new DragonPirateStory(); set => _DPS = value; }    private static DragonPirateStory _DPS;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static DragonPirateStory DPS
+    {
+        get => _DPS ??= new DragonPirateStory();
+        set => _DPS = value;
+    }
+    private static DragonPirateStory _DPS;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -14,8 +14,18 @@ public class Mobius
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static Core13LoC LoC { get => _LoC ??= new Core13LoC(); set => _LoC = value; }    private static Core13LoC _LoC;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static Core13LoC LoC
+    {
+        get => _LoC ??= new Core13LoC();
+        set => _LoC = value;
+    }
+    private static Core13LoC _LoC;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -32,6 +42,7 @@ public class Mobius
         Saathel();
         GravelynandVictoria();
     }
+
     public void StoryLine()
     {
         if (Core.isCompletedBefore(2375))
@@ -71,7 +82,6 @@ public class Mobius
 
         //Star of the Flames 2375
         Story.KillQuest(2375, "greendragon", "Greenguard Dragon");
-
     }
 
     public void Saathel()
@@ -113,7 +123,6 @@ public class Mobius
 
         //The Star of Flames 2364
         Story.KillQuest(2364, "greendragon", "Greenguard Dragon");
-
     }
 
     public void GravelynandVictoria()
@@ -141,6 +150,5 @@ public class Mobius
 
         //Mobilize Mobius 3370
         Story.MapItemQuest(3370, "mobius", 2504, 6);
-
     }
 }

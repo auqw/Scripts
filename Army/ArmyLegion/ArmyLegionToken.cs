@@ -19,23 +19,43 @@ public class ArmyLegionToken
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
     private static CoreLegion _Legion;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "ArmyLegionToken";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<Method>("Method", "Which method to get LTs?", "Choose your method", Method.Dreadrock),
+        new Option<Method>(
+            "Method",
+            "Which method to get LTs?",
+            "Choose your method",
+            Method.Dreadrock
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -43,7 +63,7 @@ public class ArmyLegionToken
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -51,7 +71,11 @@ public class ArmyLegionToken
         Core.BankingBlackList.Add("Legion Token");
         Core.SetOptions(disableClassSwap: false);
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // Method? method = Bot.Config?.Get<Method>("Method");
         // if (method != null)
         // {
@@ -63,7 +87,10 @@ public class ArmyLegionToken
 
     public void Setup(Method Method, int quant = 50001)
     {
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         // Legion.JoinLegion();
 
@@ -82,8 +109,6 @@ public class ArmyLegionToken
                 Army.AggroMonCells("r3", "r4", "r5", "r6", "r8", "r8a");
                 Army.AggroMonStart("dreadrock");
                 Army.DivideOnCells("r3", "r4", "r5", "r6", "r8", "r8a");
-
-
 
                 while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
                 {
@@ -108,7 +133,11 @@ public class ArmyLegionToken
 
                 // Clear existing drops and add Legion Token or Legion Token and Hollow Soul based on quest completion
                 drops.Clear();
-                drops.AddRange(Core.CheckInventory("Hollowborn Paragon Quest Pet") ? new[] { "Legion Token" } : new[] { "Legion Token", "Hollow Soul" });
+                drops.AddRange(
+                    Core.CheckInventory("Hollowborn Paragon Quest Pet")
+                        ? new[] { "Legion Token" }
+                        : new[] { "Legion Token", "Hollow Soul" }
+                );
 
                 // Set map to "fotia" and classType to Farm
                 map = "fotia";
@@ -139,12 +168,17 @@ public class ArmyLegionToken
                         if (HasQuestPet)
                         {
                             // Log pet ownership and add quest ID and rewards
-                            Core.Logger($"Pet Owned: {firstAcceptReq?.Name}\n" +
-                                        $"Using QID: {firstQID.ID} for {firstQID.Name}");
+                            Core.Logger(
+                                $"Pet Owned: {firstAcceptReq?.Name}\n"
+                                    + $"Using QID: {firstQID.ID} for {firstQID.Name}"
+                            );
                             Quests.Add(firstQID.ID);
-                            Core.AddDrop(firstQID.Rewards.Select(item => item.Name).Distinct().ToArray());
+                            Core.AddDrop(
+                                firstQID.Rewards.Select(item => item.Name).Distinct().ToArray()
+                            );
                         }
-                        else Core.Logger($"Dont own: {firstAcceptReq.Name} [{firstAcceptReq.ID}]");
+                        else
+                            Core.Logger($"Dont own: {firstAcceptReq.Name} [{firstAcceptReq.ID}]");
                     }
                     else
                     {
@@ -168,7 +202,6 @@ public class ArmyLegionToken
             case "Thanatos_Paragon_Pet":
                 if (!Core.CheckInventory("Thanatos Paragon Pet"))
                     Core.Logger("Pet not owned, stopping", stopBot: true);
-
 
                 questIDs.Clear();
                 questIDs.AddRange(new[] { 4100 });
@@ -206,17 +239,40 @@ public class ArmyLegionToken
                 if (!Core.CheckInventory("Arcane Paragon Pet"))
                     Core.Logger("Pet not owned, stopping", stopBot: true);
 
-
                 Core.EquipClass(ClassType.Farm);
                 Adv.SmartEnhance(Core.FarmClass);
 
                 Core.RegisterQuests(4896);
                 while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
                 {
-                    GetItem("dragonheart", "Granite Dracolich", "Granite Dracolich Soul", 4, isTemp: false);
-                    GetItem("dragonheart", "Tempest Dracolich", "Tempest Dracolich Soul", 4, isTemp: false);
-                    GetItem("dragonheart", "Inferno Dracolich", "Inferno Dracolich Soul", 4, isTemp: false);
-                    GetItem("dragonheart", "Deluge Dracolich", "Deluge Dracolich Soul", 4, isTemp: false);
+                    GetItem(
+                        "dragonheart",
+                        "Granite Dracolich",
+                        "Granite Dracolich Soul",
+                        4,
+                        isTemp: false
+                    );
+                    GetItem(
+                        "dragonheart",
+                        "Tempest Dracolich",
+                        "Tempest Dracolich Soul",
+                        4,
+                        isTemp: false
+                    );
+                    GetItem(
+                        "dragonheart",
+                        "Inferno Dracolich",
+                        "Inferno Dracolich Soul",
+                        4,
+                        isTemp: false
+                    );
+                    GetItem(
+                        "dragonheart",
+                        "Deluge Dracolich",
+                        "Deluge Dracolich Soul",
+                        4,
+                        isTemp: false
+                    );
                 }
                 break;
 
@@ -273,7 +329,10 @@ public class ArmyLegionToken
                 break;
 
             case "Festive_Paragon_Dracolich_Rider":
-                if (!Core.CheckInventory("Festive Paragon Dracolich Rider") || !Core.isSeasonalMapActive("frozenruins"))
+                if (
+                    !Core.CheckInventory("Festive Paragon Dracolich Rider")
+                    || !Core.isSeasonalMapActive("frozenruins")
+                )
                     Core.Logger("Pet not owned / Seasonal Map not active, stopping", stopBot: true);
 
                 questIDs.Clear();
@@ -332,8 +391,8 @@ public class ArmyLegionToken
 
                 if (Core.CheckInventory("Shogun Paragon Pet"))
                     questIDs.AddRange(new[] { 3722, 5755 });
-                else questIDs.AddRange(new[] { 3722 });
-
+                else
+                    questIDs.AddRange(new[] { 3722 });
 
                 while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
                 {
@@ -356,7 +415,9 @@ public class ArmyLegionToken
                 questIDs.Clear();
                 questIDs.AddRange(new[] { !Bot.Quests.IsUnlocked(793) ? 3393 : 3394 });
                 monNames.Clear();
-                monNames.AddRange(new[] { !Bot.Quests.IsUnlocked(793) ? "Binky" : "Ultra Chaos Warlord" });
+                monNames.AddRange(
+                    new[] { !Bot.Quests.IsUnlocked(793) ? "Binky" : "Ultra Chaos Warlord" }
+                );
                 drops.Clear();
                 drops.AddRange(new[] { "Legion Token" });
                 map = !Bot.Quests.IsUnlocked(793) ? "doomvault" : "chaosboss";
@@ -367,7 +428,8 @@ public class ArmyLegionToken
                 {
                     if (!Bot.Quests.IsUnlocked(793))
                         RunAggro(true);
-                    else RunAggro();
+                    else
+                        RunAggro();
                 }
                 break;
 
@@ -390,7 +452,14 @@ public class ArmyLegionToken
         }
     }
 
-    public void GetItem(string map = "", string? monster = null, string? item = null, int quant = 1, bool isTemp = true, bool Binky = false)
+    public void GetItem(
+        string map = "",
+        string? monster = null,
+        string? item = null,
+        int quant = 1,
+        bool isTemp = true,
+        bool Binky = false
+    )
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
@@ -418,7 +487,6 @@ public class ArmyLegionToken
             Bot.Send.Packet("%xt%zm%afk%1%false%");
         }
     }
-
 
     private void RunAggro(bool Binky = false) => GetItem();
 

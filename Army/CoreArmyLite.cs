@@ -6,26 +6,30 @@ tags: null
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Players;
-using Skua.Core.Options;
 using Skua.Core.Models.Servers;
-using Newtonsoft.Json.Linq;
-using System.Security.Cryptography;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
+using Skua.Core.Options;
 
 public class CoreArmyLite
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
     List<string> cellToAggro = new();
 
@@ -35,7 +39,11 @@ public class CoreArmyLite
     }
 
     #region Army Logging
-    private static ArmyLogging armyLogging { get => _armyLogging ??= new ArmyLogging(); set => _armyLogging = value; }
+    private static ArmyLogging armyLogging
+    {
+        get => _armyLogging ??= new ArmyLogging();
+        set => _armyLogging = value;
+    }
     private static ArmyLogging _armyLogging;
 
     public void setLogName(string name)
@@ -86,9 +94,7 @@ public class CoreArmyLite
             {
                 if (!armyLogging.isAlreadyInLog(Players()))
                 {
-                    armyLogging.WriteLog(
-                        $"{Core.Username().ToLower()}:done:{armyLogging.message}"
-                    );
+                    armyLogging.WriteLog($"{Core.Username().ToLower()}:done:{armyLogging.message}");
                     return true;
                 }
                 attempts++;
@@ -149,24 +155,23 @@ public class CoreArmyLite
             }
         }
 
-
         aggroCTS?.Cancel();
         aggroCTS?.Dispose();
         aggroCTS = new();
         Task.Run(async () =>
-               {
-                   while (!Bot.ShouldExit && !aggroCTS.IsCancellationRequested)
-                   {
-                       try
-                       {
-                           if (AggroMonMapIDs.Count > 0)
-                               Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
-                           await Task.Delay(AggroMonPacketDelay);
-                       }
-                       catch { }
-                   }
-                   aggroCTS = null;
-               });
+        {
+            while (!Bot.ShouldExit && !aggroCTS.IsCancellationRequested)
+            {
+                try
+                {
+                    if (AggroMonMapIDs.Count > 0)
+                        Bot.Send.Packet(AggroMonPacket(AggroMonMapIDs.ToArray()));
+                    await Task.Delay(AggroMonPacketDelay);
+                }
+                catch { }
+            }
+            aggroCTS = null;
+        });
         List<int> GetMapIDs(List<Monster> monsterData) => monsterData.Select(m => m.MapID).ToList();
         void AddMapIDs(List<int> MMIDs)
         {
@@ -206,16 +211,22 @@ public class CoreArmyLite
         void PopulateAggroMonMapIDs()
         {
             foreach (string cell in _AggroMonCells)
-                foreach (int id in Bot.Monsters.GetMonstersByCell(cell).Select(m => m.MapID))
-                    AggroMonMapIDs.Add(id);
+            foreach (int id in Bot.Monsters.GetMonstersByCell(cell).Select(m => m.MapID))
+                AggroMonMapIDs.Add(id);
 
             foreach (string name in _AggroMonNames)
-                foreach (int id in Bot.Monsters.MapMonsters.Where(m => m.Name == name).Select(m => m.MapID))
-                    AggroMonMapIDs.Add(id);
+            foreach (
+                int id in Bot.Monsters.MapMonsters.Where(m => m.Name == name).Select(m => m.MapID)
+            )
+                AggroMonMapIDs.Add(id);
 
             foreach (int id in _AggroMonIDs)
-                foreach (int mapId in Bot.Monsters.MapMonsters.Where(m => m.ID == id || m.MapID == id).Select(m => m.MapID))
-                    AggroMonMapIDs.Add(mapId);
+            foreach (
+                int mapId in Bot
+                    .Monsters.MapMonsters.Where(m => m.ID == id || m.MapID == id)
+                    .Select(m => m.MapID)
+            )
+                AggroMonMapIDs.Add(mapId);
 
             foreach (int mapID in _AggroMonMIDs)
                 AggroMonMapIDs.Add(mapID);
@@ -245,6 +256,7 @@ public class CoreArmyLite
             aggroCTS = null;
         });
     }
+
     private CancellationTokenSource? aggroCTS = null;
 
     /// <summary>
@@ -252,7 +264,7 @@ public class CoreArmyLite
     /// </summary>
     public void AggroMonStop(bool clear = false)
     {
-    Retry:
+        Retry:
         Bot.Options.AttackWithoutTarget = false;
         aggroCTS?.Cancel();
         aggroCTS?.Dispose();
@@ -268,23 +280,23 @@ public class CoreArmyLite
     /// <summary>
     /// Set the AggroMon using Cells. Aggros everything in the Cell.
     /// </summary>
-    public void AggroMonCells(params string[] cells)
-        => _AggroMonCells = cells.ToList();
+    public void AggroMonCells(params string[] cells) => _AggroMonCells = cells.ToList();
+
     /// <summary>
     /// Set the AggroMon using Monster Names. Aggros everything with the specified name.
     /// </summary>
-    public void AggroMonNames(params string[] names)
-        => _AggroMonNames = names.ToList();
+    public void AggroMonNames(params string[] names) => _AggroMonNames = names.ToList();
+
     /// <summary>
     /// Set the AggroMon using Monster IDs. Aggros everything using the specified ID.
-    /// </summary>    
-    public void AggroMonIDs(params int[] monsterIDs)
-        => _AggroMonIDs = monsterIDs.ToList();
+    /// </summary>
+    public void AggroMonIDs(params int[] monsterIDs) => _AggroMonIDs = monsterIDs.ToList();
+
     /// <summary>
     /// Set the AggroMon using Monster Map IDs. Aggros everything using the specified Map ID.
     /// </summary>
-    public void AggroMonMIDs(params int[] monsterMapIDs)
-        => _AggroMonMIDs = monsterMapIDs.ToList();
+    public void AggroMonMIDs(params int[] monsterMapIDs) => _AggroMonMIDs = monsterMapIDs.ToList();
+
     private List<string> _AggroMonCells
     {
         get => __AggroMonCells ??= new List<string>();
@@ -313,7 +325,6 @@ public class CoreArmyLite
     }
     private List<int> __AggroMonMIDs;
 
-
     /// <summary>
     /// Clears the stored Monster Cells/Names/IDs so you can set another AggroMon.
     /// </summary>
@@ -327,10 +338,10 @@ public class CoreArmyLite
     }
 
     /// <summary>
-    /// 
+    ///
     /// </summary>
-    public string AggroMonPacket(params int[] MonsterMapIDs)
-        => $"%xt%zm%aggroMon%{Bot.Map.RoomID}%{string.Join('%', MonsterMapIDs)}%";
+    public string AggroMonPacket(params int[] MonsterMapIDs) =>
+        $"%xt%zm%aggroMon%{Bot.Map.RoomID}%{string.Join('%', MonsterMapIDs)}%";
 
     public void SmartAggroMonStart(string map, params string?[] monsters)
     {
@@ -340,15 +351,21 @@ public class CoreArmyLite
         Bot.Wait.ForMapLoad(map);
 
         //Devining variables
-        var _monsters = Bot.Monsters.MapMonsters
-            .Where(m => !string.IsNullOrEmpty(m.Name) && monsters.Any(name => name == m.Name))
-            .ToList(); var cellComparison = new Dictionary<string, int>();
+        var _monsters = Bot
+            .Monsters.MapMonsters.Where(m =>
+                !string.IsNullOrEmpty(m.Name) && monsters.Any(name => name == m.Name)
+            )
+            .ToList();
+        var cellComparison = new Dictionary<string, int>();
 
         //Prioritizing monsters of which fewer excist
         foreach (Monster m in _monsters)
             if (!cellComparison.ContainsKey(m.Cell))
                 cellComparison.Add(m.Cell, _monsters.Count(t => t.Name == m.Name));
-        var SortedDict = cellComparison.OrderBy(kvp => kvp.Value).ToDictionary(pair => pair.Key, pair => pair.Value).Keys.ToArray();
+        var SortedDict = cellComparison
+            .OrderBy(kvp => kvp.Value)
+            .ToDictionary(pair => pair.Key, pair => pair.Value)
+            .Keys.ToArray();
         cellComparison = null;
 
         //Special option on DivideOnCells, which will have it store all cells that it divides people to
@@ -361,6 +378,7 @@ public class CoreArmyLite
         // AggroMonCells(Core.ButlerOnMe() ? new[] { Bot.Player.Cell } : _SmartAggroMonCells.ToArray());
         AggroMonStart(map);
     }
+
     private bool _getCellsForSmartAggroMon = false;
     private List<string> _SmartAggroMonCells
     {
@@ -369,8 +387,13 @@ public class CoreArmyLite
     }
     private List<string> __SmartAggroMonCells;
 
-
-    public void RunGeneratedAggroMon(string map, List<string> monNames, List<int> questIDs, ClassType classtype, List<string>? drops = null)
+    public void RunGeneratedAggroMon(
+        string map,
+        List<string> monNames,
+        List<int> questIDs,
+        ClassType classtype,
+        List<string>? drops = null
+    )
     {
         if (classtype != ClassType.None)
             Core.EquipClass(classtype);
@@ -380,7 +403,8 @@ public class CoreArmyLite
 
         if (drops == null || drops.Count == 0 || drops.All(x => string.IsNullOrEmpty(x)))
             Bot.Drops.Stop();
-        else Core.AddDrop(drops.ToArray());
+        else
+            Core.AddDrop(drops.ToArray());
 
         SmartAggroMonStart(map, monNames.ToArray());
 
@@ -400,32 +424,134 @@ public class CoreArmyLite
 
     #region Script Options
 
-    public Option<string> player1 = new("player1", "Account #1", "Name of one of your accounts.", "");
-    public Option<string> player2 = new("player2", "Account #2", "Name of one of your accounts.", "");
-    public Option<string> player3 = new("player3", "Account #3", "Name of one of your accounts.", "");
-    public Option<string> player4 = new("player4", "Account #4", "Name of one of your accounts.", "");
-    public Option<string> player5 = new("player5", "Account #5", "Name of one of your accounts.", "");
-    public Option<string> player6 = new("player6", "Account #6", "Name of one of your accounts.", "");
-    public Option<string> player7 = new("player7", "Account #7", "Name of one of your accounts.", "");
-    public Option<string> player8 = new("player8", "Account #8", "Name of one of your accounts.", "");
-    public Option<string> player9 = new("player9", "Account #9", "Name of one of your accounts.", "");
-    public Option<string> player10 = new("player10", "Account #10", "Name of one of your accounts.", "");
-    public Option<string> player11 = new("player11", "Account #11", "Name of one of your accounts.", "");
-    public Option<string> player12 = new("player12", "Account #12", "Name of one of your accounts.", "");
-    public Option<string> player13 = new("player13", "Account #13", "Name of one of your accounts.", "");
-    public Option<string> player14 = new("player14", "Account #14", "Name of one of your accounts.", "");
-    public Option<string> player15 = new("player15", "Account #15", "Name of one of your accounts.", "");
-    public Option<string> player16 = new("player16", "Account #16", "Name of one of your accounts.", "");
-    public Option<string> player17 = new("player17", "Account #17", "Name of one of your accounts.", "");
-    public Option<string> player18 = new("player18", "Account #18", "Name of one of your accounts.", "");
-    public Option<string> player19 = new("player19", "Account #19", "Name of one of your accounts.", "");
-    public Option<string> player20 = new("player20", "Account #20", "Name of one of your accounts.", "");
-
+    public Option<string> player1 = new(
+        "player1",
+        "Account #1",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player2 = new(
+        "player2",
+        "Account #2",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player3 = new(
+        "player3",
+        "Account #3",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player4 = new(
+        "player4",
+        "Account #4",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player5 = new(
+        "player5",
+        "Account #5",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player6 = new(
+        "player6",
+        "Account #6",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player7 = new(
+        "player7",
+        "Account #7",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player8 = new(
+        "player8",
+        "Account #8",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player9 = new(
+        "player9",
+        "Account #9",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player10 = new(
+        "player10",
+        "Account #10",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player11 = new(
+        "player11",
+        "Account #11",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player12 = new(
+        "player12",
+        "Account #12",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player13 = new(
+        "player13",
+        "Account #13",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player14 = new(
+        "player14",
+        "Account #14",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player15 = new(
+        "player15",
+        "Account #15",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player16 = new(
+        "player16",
+        "Account #16",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player17 = new(
+        "player17",
+        "Account #17",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player18 = new(
+        "player18",
+        "Account #18",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player19 = new(
+        "player19",
+        "Account #19",
+        "Name of one of your accounts.",
+        ""
+    );
+    public Option<string> player20 = new(
+        "player20",
+        "Account #20",
+        "Name of one of your accounts.",
+        ""
+    );
 
     public Option<int> packetDelay = new(
-        "PacketDelay", "Delay for Packet Spam", "Sets the delay for the Packet Spam\n" +
-        "Increase if spamming too much - Decrease if missing kills\n" +
-        "Recommended setting: 500 or 1000)", 500
+        "PacketDelay",
+        "Delay for Packet Spam",
+        "Sets the delay for the Packet Spam\n"
+            + "Increase if spamming too much - Decrease if missing kills\n"
+            + "Recommended setting: 500 or 1000)",
+        500
     );
 
     #endregion
@@ -433,29 +559,21 @@ public class CoreArmyLite
     #endregion
     #region Party Management
 
-    public void PartyInvite(string Name)
-        => Bot.Send.Packet($"%xt%zm%gp%1%pi%{Name}%");
+    public void PartyInvite(string Name) => Bot.Send.Packet($"%xt%zm%gp%1%pi%{Name}%");
 
-    private void PartyAccept(int partyID)
-        => Bot.Send.Packet($"%xt%zm%gp%1%pa%{partyID}%");
+    private void PartyAccept(int partyID) => Bot.Send.Packet($"%xt%zm%gp%1%pa%{partyID}%");
 
-    public void PartyKick(string Name)
-        => Bot.Send.Packet($"%xt%zm%gp%1%pk%{Name}%");
+    public void PartyKick(string Name) => Bot.Send.Packet($"%xt%zm%gp%1%pk%{Name}%");
 
-    public void PartyLeave()
-        => Bot.Send.Packet($"%xt%zm%gp%1%pl%");
+    public void PartyLeave() => Bot.Send.Packet($"%xt%zm%gp%1%pl%");
 
-    public void PartySummon(string Name)
-        => Bot.Send.Packet($"%xt%zm%gp%1%ps%{Name}%");
+    public void PartySummon(string Name) => Bot.Send.Packet($"%xt%zm%gp%1%ps%{Name}%");
 
-    public void PartySummonAccept()
-        => Bot.Send.Packet("%xt%zm%gp%1%psa%");
+    public void PartySummonAccept() => Bot.Send.Packet("%xt%zm%gp%1%psa%");
 
-    public void PartyPromote(string Name)
-        => Bot.Send.Packet($"%xt%zm%gp%1%pp%{Name}%");
+    public void PartyPromote(string Name) => Bot.Send.Packet($"%xt%zm%gp%1%pp%{Name}%");
 
-    public void PartyOn()
-        => Bot.Send.Packet("%xt%zm%cmd%1%partyon%");
+    public void PartyOn() => Bot.Send.Packet("%xt%zm%cmd%1%partyon%");
 
     public string[]? PartyMemberArray()
     {
@@ -463,15 +581,12 @@ public class CoreArmyLite
         return members?.Concat(new[] { Core.Username().ToLower() }).ToArray();
     }
 
-    public string? getPartyLeader()
-        => Bot.Flash.GetGameObject<string>("world.partyOwner");
+    public string? getPartyLeader() => Bot.Flash.GetGameObject<string>("world.partyOwner");
 
+    public bool isPartyLeader() =>
+        Core.Username().ToLower() == (getPartyLeader() ?? string.Empty).ToLower();
 
-    public bool isPartyLeader()
-        => Core.Username().ToLower() == (getPartyLeader() ?? string.Empty).ToLower();
-
-    private int getPartyID()
-        => Bot.Flash.GetGameObject<int>("world.partyID");
+    private int getPartyID() => Bot.Flash.GetGameObject<int>("world.partyID");
 
     public void PartyManagement(dynamic packet)
     {
@@ -512,6 +627,7 @@ public class CoreArmyLite
             }
         }
     }
+
     private bool stopping = false;
 
     #endregion
@@ -599,8 +715,10 @@ public class CoreArmyLite
 
             return true;
         }
-        catch { return true; }
-
+        catch
+        {
+            return true;
+        }
     }
 
     public void StartFarm(string item, int quant)
@@ -690,16 +808,17 @@ public class CoreArmyLite
 
     /// <summary>
     /// Generates a unique 5-digit room number based on the machine name,
-    /// username, and the current date and time (with a 5-hour offset). The 
-    /// output is deterministic for a given machine and user, ensuring no 
+    /// username, and the current date and time (with a 5-hour offset). The
+    /// output is deterministic for a given machine and user, ensuring no
     /// leading zeros in the returned integer.
     /// </summary>
-    /// <returns>A unique 5-digit integer room number that does not start 
+    /// <returns>A unique 5-digit integer room number that does not start
     /// with a zero.</returns>
     public int getRoomNr()
     {
         // Combine machine name, username, and fixed date for uniqueness
-        string uniqueIdentifier = $"{Environment.MachineName}_{Environment.UserName}_{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}";
+        string uniqueIdentifier =
+            $"{Environment.MachineName}_{Environment.UserName}_{DateTime.Now.Year}{DateTime.Now.Month}{DateTime.Now.Day}{DateTime.Now.Hour}";
 
         // Hash the unique identifier
         using SHA256 sha256 = SHA256.Create();
@@ -734,7 +853,7 @@ public class CoreArmyLite
     }
 
     /// <summary>
-    /// Spreads players around the input cells, if no cells are set - will spread to any cell that has a monster in it. 
+    /// Spreads players around the input cells, if no cells are set - will spread to any cell that has a monster in it.
     /// If player count is more than cell count, will add players to the cells listed in order. Example: c1: P1 + P4, c2: P2, c3: P3
     /// </summary>
     public void DivideOnCells(params string[] cells)
@@ -775,11 +894,20 @@ public class CoreArmyLite
         }
     }
 
-    public void DivideOnCellsPriority(string[] cells, string priorityCell, bool setAggro = false, bool log = false, bool equipClass = false)
+    public void DivideOnCellsPriority(
+        string[] cells,
+        string priorityCell,
+        bool setAggro = false,
+        bool log = false,
+        bool equipClass = false
+    )
     {
         // Parsing all the player names from an unspecified amount of player name options
         string[] _players = Players();
-        if (log) Core.Logger($"divide on cells: {string.Join(",", cells)}. priority cell: {priorityCell}");
+        if (log)
+            Core.Logger(
+                $"divide on cells: {string.Join(",", cells)}. priority cell: {priorityCell}"
+            );
 
         if (setAggro)
         {
@@ -850,22 +978,28 @@ public class CoreArmyLite
         }
         while (!Bot.ShouldExit)
         {
-            if (players == null ? isDone(10) : isDone(10, players)) break;
+            if (players == null ? isDone(10) : isDone(10, players))
+                break;
             Bot.Sleep(500);
         }
     }
 
     /// <summary>
     /// Waits for the party members to join the specified cell in the game.
-    /// If no cell is specified, it checks the current cell for the required 
-    /// player count. Logs the final list of players and monitors until all 
+    /// If no cell is specified, it checks the current cell for the required
+    /// player count. Logs the final list of players and monitors until all
     /// expected players are present, a timeout occurs, or the bot exits.
     /// </summary>
     /// <param name="cell">The cell to jump to. If null, the current cell is used.</param>
     /// <param name="pad">The direction to pad when jumping; defaults to "Left".</param>
     /// <param name="playerCount">The expected number of players; defaults to the party size.</param>
     /// <param name="timeoutSeconds">Optional timeout in seconds; defaults to 60s.</param>
-    public void WaitForPartyCell(string? cell = null, string? pad = null, int? playerCount = null, int timeoutSeconds = 60)
+    public void WaitForPartyCell(
+        string? cell = null,
+        string? pad = null,
+        int? playerCount = null,
+        int timeoutSeconds = 60
+    )
     {
         // Jump to the specified cell if provided
         if (!string.IsNullOrEmpty(cell))
@@ -896,15 +1030,13 @@ public class CoreArmyLite
             }
 
             // Normalize current map player names
-            var currentPlayers = Bot.Map.PlayerNames
-                .Where(x => !string.IsNullOrWhiteSpace(x))
+            var currentPlayers = Bot
+                .Map.PlayerNames.Where(x => !string.IsNullOrWhiteSpace(x))
                 .Select(x => x.Trim().ToLower())
                 .ToHashSet();
 
             // Determine missing players
-            var missing = expectedPlayers
-                .Where(p => !currentPlayers.Contains(p))
-                .ToList();
+            var missing = expectedPlayers.Where(p => !currentPlayers.Contains(p)).ToList();
 
             if (!missing.Any() && currentPlayers.Count >= requiredCount)
             {
@@ -918,7 +1050,6 @@ public class CoreArmyLite
             Core.Sleep(1000);
         }
     }
-
 
     public string[] Players()
     {
@@ -951,7 +1082,9 @@ public class CoreArmyLite
 
         return players.ToArray();
     }
-    public int PartySize() => Players() == null ? 0 : Players().Where(x => !string.IsNullOrEmpty(x)).Count();
+
+    public int PartySize() =>
+        Players() == null ? 0 : Players().Where(x => !string.IsNullOrEmpty(x)).Count();
 
     // public void waitForParty(string map, string? item = null, int playerMax = -1)
     // {
@@ -1019,7 +1152,7 @@ public class CoreArmyLite
     /// <param name="map">The map name to join and wait in.</param>
     /// <param name="item">Optional: Item name for contextual logging (e.g., farming target).</param>
     /// <param name="playerMax">
-    /// The expected number of players in the party. 
+    /// The expected number of players in the party.
     /// If -1 (default), uses <see cref="PartySize"/>.
     /// </param>
     public void WaitForParty(string map, string? item = null, int playerMax = -1)
@@ -1029,10 +1162,7 @@ public class CoreArmyLite
         string[] allPlayers = Players();
         int targetPartySize = playerMax > 0 ? playerMax : PartySize();
 
-        HashSet<string> playersHere = new(StringComparer.OrdinalIgnoreCase)
-    {
-        Core.Username()
-    };
+        HashSet<string> playersHere = new(StringComparer.OrdinalIgnoreCase) { Core.Username() };
 
         Core.Join(map, "Enter", "Spawn");
         Bot.Wait.ForMapLoad(map);
@@ -1047,7 +1177,9 @@ public class CoreArmyLite
 
             if (++logCount >= 15)
             {
-                Core.Logger($"Waiting for the party{(item == null ? string.Empty : $" to farm {item}")} [{playersHere.Count}/{targetPartySize}]");
+                Core.Logger(
+                    $"Waiting for the party{(item == null ? string.Empty : $" to farm {item}")} [{playersHere.Count}/{targetPartySize}]"
+                );
                 hasWaited = true;
                 logCount = 0;
             }
@@ -1105,7 +1237,6 @@ public class CoreArmyLite
         }
     }
 
-
     public bool SellToSync(string? item, int quant)
     {
         if (Core.CheckInventory(item, quant) || item == null)
@@ -1114,6 +1245,7 @@ public class CoreArmyLite
             Core.SellItem(item, all: true);
         return false;
     }
+
     public bool SellToSyncOn = false;
     #endregion
     #region OneClient
@@ -1128,8 +1260,12 @@ public class CoreArmyLite
         string name = doForAllAccountDetails[_doForAllIndex].Item1;
         string pass = doForAllAccountDetails[_doForAllIndex++].Item2;
 
-        Server[] ServerList = Bot.Servers.CachedServers
-            .Where(x => !BlacklistedServers.Contains(x.Name.ToLower()) && (Core.IsMember || !x.Upgrade) && x.Online)
+        Server[] ServerList = Bot
+            .Servers.CachedServers.Where(x =>
+                !BlacklistedServers.Contains(x.Name.ToLower())
+                && (Core.IsMember || !x.Upgrade)
+                && x.Online
+            )
             .ToArray();
 
         if (Core.Username() != name)
@@ -1145,8 +1281,12 @@ public class CoreArmyLite
             Core.Sleep(3000);
 
             Server[] availableServers = ServerList
-              .Where(x => !BlacklistedServers.Contains(x.Name.ToLower()) && (Core.IsMember || !x.Upgrade) && x.Online)
-              .ToArray();
+                .Where(x =>
+                    !BlacklistedServers.Contains(x.Name.ToLower())
+                    && (Core.IsMember || !x.Upgrade)
+                    && x.Online
+                )
+                .ToArray();
 
             if (availableServers.Length > 0)
             {
@@ -1173,7 +1313,6 @@ public class CoreArmyLite
         Core.ReadCBO();
         Core.IsMember = Bot.Player.IsMember;
 
-
         return true;
 
         (string, string)[] readManager()
@@ -1185,11 +1324,16 @@ public class CoreArmyLite
                 string settingsPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                     "Skua",
-                    "skua.settings.json");
+                    "skua.settings.json"
+                );
 
                 if (!File.Exists(settingsPath))
                 {
-                    Core.Logger("No skua.settings.json file found. Add accounts using The `Skua Manager` app.", "AccountManager", true);
+                    Core.Logger(
+                        "No skua.settings.json file found. Add accounts using The `Skua Manager` app.",
+                        "AccountManager",
+                        true
+                    );
                     Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
                     Bot.Stop(true);
                     return Array.Empty<(string, string)>();
@@ -1198,10 +1342,16 @@ public class CoreArmyLite
                 string json = File.ReadAllText(settingsPath);
                 var settings = JsonConvert.DeserializeObject<dynamic>(json);
 
-                IEnumerable<dynamic> managedAccounts = (settings?.manager?.ManagedAccounts as IEnumerable<dynamic>) ?? Enumerable.Empty<dynamic>();
+                IEnumerable<dynamic> managedAccounts =
+                    (settings?.manager?.ManagedAccounts as IEnumerable<dynamic>)
+                    ?? Enumerable.Empty<dynamic>();
                 if (!managedAccounts.Any())
                 {
-                    Core.Logger("No managed accounts found in skua.settings.json. Add accounts using The `Skua Manager` app.", "AccountManager", true);
+                    Core.Logger(
+                        "No managed accounts found in skua.settings.json. Add accounts using The `Skua Manager` app.",
+                        "AccountManager",
+                        true
+                    );
                     Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
                     Bot.Stop(true);
                     return Array.Empty<(string, string)>();
@@ -1231,12 +1381,21 @@ public class CoreArmyLite
             }
             catch (Exception ex)
             {
-                Core.Logger($"Failed to read accounts from skua.settings.json: {ex.Message}", "AccountManager", true, true);
+                Core.Logger(
+                    $"Failed to read accounts from skua.settings.json: {ex.Message}",
+                    "AccountManager",
+                    true,
+                    true
+                );
             }
 
             if (toReturn.Count <= 0)
             {
-                Core.Logger("No valid accounts found. Add accounts using The `Skua Manager` app.", "AccountManager", true);
+                Core.Logger(
+                    "No valid accounts found. Add accounts using The `Skua Manager` app.",
+                    "AccountManager",
+                    true
+                );
                 Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
                 Bot.Stop(true);
             }
@@ -1255,12 +1414,22 @@ public class CoreArmyLite
         "gravelyn",
         "galanoth",
         "class test realm",
-        $"{null}"
+        $"{null}",
     };
     #endregion
 
     #region Butler
-    public void Butler(string playerName, bool LockedMaps = true, string? LockedMapsList = null, ClassType classType = ClassType.Farm, bool CopyWalk = false, int roomNr = 1, bool rejectDrops = true, string? attackPriority = null, int hibernateTimer = 0)
+    public void Butler(
+        string playerName,
+        bool LockedMaps = true,
+        string? LockedMapsList = null,
+        ClassType classType = ClassType.Farm,
+        bool CopyWalk = false,
+        int roomNr = 1,
+        bool rejectDrops = true,
+        string? attackPriority = null,
+        int hibernateTimer = 0
+    )
     {
         Bot.Events.PlayerAFK += PlayerAFK;
 
@@ -1302,15 +1471,16 @@ public class CoreArmyLite
             Core.PrivateRoomNumber = roomNr;
         }
 
-        int[] bypasses = {
-        598, 3004, 3008, 3484, 3799, 4616, 8107, 9126, 5915, 9814, 7522
-    };
+        int[] bypasses = { 598, 3004, 3008, 3484, 3799, 4616, 8107, 9126, 5915, 9814, 7522 };
         Bot.Quests.Load(bypasses);
         foreach (int questId in bypasses)
             Bot.Quests.UpdateQuest(questId);
         Core.SetAchievement(18); // doomvaultb
         if (Bot.Player.Level < 100)
-            Bot.Send.ClientPacket("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}", type: "json"); // level bypass
+            Bot.Send.ClientPacket(
+                "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
+                type: "json"
+            ); // level bypass
         #endregion
 
         int retryLimit = 5; // Set retry limit
@@ -1321,7 +1491,11 @@ public class CoreArmyLite
         {
             #region Ignore me
             // Try to /goto the player with retry logic
-            while (!tryGoto(playerName, out playerObject, roomNr) && playerObject != null && retryCount < retryLimit)
+            while (
+                !tryGoto(playerName, out playerObject, roomNr)
+                && playerObject != null
+                && retryCount < retryLimit
+            )
             {
                 // Increment retry count and log the attempt
                 retryCount++;
@@ -1353,17 +1527,27 @@ public class CoreArmyLite
                         dynamic data = packet["params"].dataObj;
                         if ((type is not null and "json") && (data.houseData is not null))
                         {
-                            toSend = $"{{\"t\":\"xt\",\"b\":{{\"r\":-1,\"o\":{{\"cmd\":\"moveToArea\",\"areaName\":\"house\",\"uoBranch\":{JsonConvert.SerializeObject(data.uoBranch)},\"strMapFileName\":\"{data.strMapFileName}\",\"intType\":\"1\",\"monBranch\":[],\"houseData\":{Regex.Replace(JsonConvert.SerializeObject(data.houseData), Core.Username(), "Skua user", RegexOptions.IgnoreCase)},\"sExtra\":\"\",\"areaId\":{data.areaId},\"strMapName\":\"house\"}}}}}}";
+                            toSend =
+                                $"{{\"t\":\"xt\",\"b\":{{\"r\":-1,\"o\":{{\"cmd\":\"moveToArea\",\"areaName\":\"house\",\"uoBranch\":{JsonConvert.SerializeObject(data.uoBranch)},\"strMapFileName\":\"{data.strMapFileName}\",\"intType\":\"1\",\"monBranch\":[],\"houseData\":{Regex.Replace(JsonConvert.SerializeObject(data.houseData), Core.Username(), "Skua user", RegexOptions.IgnoreCase)},\"sExtra\":\"\",\"areaId\":{data.areaId},\"strMapName\":\"house\"}}}}}}";
                             Bot.Events.ExtensionPacketReceived -= modifyPacket;
                         }
                     }
                 }
-                else Bot.Send.Packet($"%xt%zm%cmd%1%tfer%{Core.Username()}%whitemap-{Core.PrivateRoomNumber}%");
+                else
+                    Bot.Send.Packet(
+                        $"%xt%zm%cmd%1%tfer%{Core.Username()}%whitemap-{Core.PrivateRoomNumber}%"
+                    );
 
-                Core.Logger($"Could not find {playerName}. Ensure they are on the same server.", "tryGoto");
+                Core.Logger(
+                    $"Could not find {playerName}. Ensure they are on the same server.",
+                    "tryGoto"
+                );
 
                 if (b_shouldHibernate)
-                    Core.Logger($"Bot will hibernate and retry every {hibernateTimer} seconds.", "tryGoto");
+                    Core.Logger(
+                        $"Bot will hibernate and retry every {hibernateTimer} seconds.",
+                        "tryGoto"
+                    );
 
                 #region Hybernation
                 int elapsedMinutes = 0;
@@ -1400,7 +1584,9 @@ public class CoreArmyLite
                 // After several failed retries, consider adding a dynamic fallback strategy
                 if (retryCount >= retryLimit)
                 {
-                    Core.Logger($"Unable to locate {playerName} after {retryLimit} attempts, performing alternative action.");
+                    Core.Logger(
+                        $"Unable to locate {playerName} after {retryLimit} attempts, performing alternative action."
+                    );
                     // e.g., join a specific map or wait before retrying
                     Core.Join("whitemap");
                 }
@@ -1430,7 +1616,11 @@ public class CoreArmyLite
             while (!Bot.ShouldExit)
             {
                 // Exit early if {playerName} is not in the map
-                if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Count > 0 && !Bot.Map.PlayerNames.Contains(playerName))
+                if (
+                    Bot.Map.PlayerNames != null
+                    && Bot.Map.PlayerNames.Count > 0
+                    && !Bot.Map.PlayerNames.Contains(playerName)
+                )
                 {
                     Core.Logger($"{playerName} is not in the map");
                     break;
@@ -1438,15 +1628,20 @@ public class CoreArmyLite
 
                 #region ignore this
                 // Handle combat based on attack priority or attack all
-                while (!Bot.ShouldExit && !Bot.Player.Alive) { Core.Sleep(); }
+                while (!Bot.ShouldExit && !Bot.Player.Alive)
+                {
+                    Core.Sleep();
+                }
 
                 if (!string.IsNullOrEmpty(attackPriority))
                 {
                     List<string> Mons = new();
                     if (!string.IsNullOrEmpty(attackPriority))
                     {
-                        var attackPriorityItems = attackPriority
-                            .Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+                        var attackPriorityItems = attackPriority.Split(
+                            ',',
+                            StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
+                        );
                         Mons.AddRange(attackPriorityItems);
                     }
                     if (!Bot.Combat.StopAttacking)
@@ -1463,14 +1658,21 @@ public class CoreArmyLite
                 }
 
                 // Ensure player is in the same cell
-                if (Bot.Map.TryGetPlayer(playerName, out playerObject) && playerObject != null && playerObject?.Cell != Bot.Player.Cell)
+                if (
+                    Bot.Map.TryGetPlayer(playerName, out playerObject)
+                    && playerObject != null
+                    && playerObject?.Cell != Bot.Player.Cell
+                )
                 {
-                    Bot.Map.Jump(playerObject?.Cell ?? Bot.Player.Cell, playerObject?.Pad ?? Bot.Player.Pad, false);
+                    Bot.Map.Jump(
+                        playerObject?.Cell ?? Bot.Player.Cell,
+                        playerObject?.Pad ?? Bot.Player.Pad,
+                        false
+                    );
                     Bot.Wait.ForCellChange(playerObject?.Cell ?? Bot.Player.Cell);
                     Core.Sleep();
                     Bot.Player.SetSpawnPoint();
                 }
-
             }
             #endregion Combat Area
             //itll get here if the player isnt in the map
@@ -1479,13 +1681,13 @@ public class CoreArmyLite
         ButlerStop();
     }
 
-
     public void PlayerAFK()
     {
         Core.Logger("Anti-AFK engaged");
         Core.Sleep(1500);
         Bot.Send.Packet("%xt%zm%afk%1%false%");
     }
+
     public string? b_playerName = null;
     public bool b_doLockedMaps = true;
     public bool b_doCopyWalk = false;
@@ -1505,7 +1707,6 @@ public class CoreArmyLite
     }
     public List<string> __LockedMapsList;
 
-
     public bool tryGoto(string userName, out PlayerInfo? playerObject, int roomNumber)
     {
         playerObject = new();
@@ -1524,7 +1725,11 @@ public class CoreArmyLite
 
         while (!Bot.ShouldExit)
         {
-            if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null && playerObject.Cell == Bot.Player.Cell)
+            if (
+                Bot.Map.TryGetPlayer(userName, out playerObject)
+                && playerObject != null
+                && playerObject.Cell == Bot.Player.Cell
+            )
             {
                 return true;
             }
@@ -1532,7 +1737,10 @@ public class CoreArmyLite
             Core.Sleep();
             Bot.Player.Goto(userName);
             Core.Sleep();
-            playerObject = Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null ? playerObject : null;
+            playerObject =
+                Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null
+                    ? playerObject
+                    : null;
             if (Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null)
             {
                 if (playerObject != null && playerObject?.Cell == Bot.Player.Cell)
@@ -1546,14 +1754,16 @@ public class CoreArmyLite
                 Bot.Map.Jump(targetCell, targetPad, false);
                 Bot.Wait.ForCellChange(targetCell);
                 Core.Sleep();
-                playerObject = Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null ? playerObject : null;
+                playerObject =
+                    Bot.Map.TryGetPlayer(userName, out playerObject) && playerObject != null
+                        ? playerObject
+                        : null;
 
                 if (playerObject != null && playerObject?.Cell == Bot.Player.Cell)
                 {
                     return true;
                 }
             }
-
 
             if (playerObject != null && playerObject.Cell == Bot.Player.Cell)
             {
@@ -1568,7 +1778,6 @@ public class CoreArmyLite
             if (++retry >= 5)
                 break;
             Core.Sleep(1000);
-
         }
 
         // Handle locked zone scenario
@@ -1593,10 +1802,14 @@ public class CoreArmyLite
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
-        string? targetCell = Bot.Map.Cells
-            .Where(c => !Core.BlackListedJumptoCells.Contains(c) &&
-                        !Bot.Monsters.MapMonsters.Any(m => m != null && m.Cell == c))
-            .FirstOrDefault(c => Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1 || !c.Contains("Enter"))
+        string? targetCell =
+            Bot.Map.Cells.Where(c =>
+                    !Core.BlackListedJumptoCells.Contains(c)
+                    && !Bot.Monsters.MapMonsters.Any(m => m != null && m.Cell == c)
+                )
+                .FirstOrDefault(c =>
+                    Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1 || !c.Contains("Enter")
+                )
             ?? "Enter";
 
         Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left");
@@ -1604,6 +1817,7 @@ public class CoreArmyLite
         Core.Sleep();
         Core.JumpWait();
     }
+
     public bool LockedZoneWarning = false;
     public bool MapUnavailable = false;
     public bool insideLockedMaps = false;
@@ -1620,14 +1834,22 @@ public class CoreArmyLite
             {
                 case "warning":
                     string LockerZonePacket = Convert.ToString(packet);
-                    if (LockerZonePacket.Contains("a Locked zone.") || LockerZonePacket.Contains("is not available."))
+                    if (
+                        LockerZonePacket.Contains("a Locked zone.")
+                        || LockerZonePacket.Contains("is not available.")
+                    )
                         LockedZoneWarning = true;
                     break;
             }
         }
     }
 
-    public void LockedMaps(string Pname, bool Cancel = false, int RoomNumber = 100000, List<string>? LockedMapList = null)
+    public void LockedMaps(
+        string Pname,
+        bool Cancel = false,
+        int RoomNumber = 100000,
+        List<string>? LockedMapList = null
+    )
     {
         LockedMapList ??= new();
         LockedMapList.AddRange(_LockedMapsList.ToArray());
@@ -1635,20 +1857,27 @@ public class CoreArmyLite
         GC.Collect();
         if (Cancel || Bot.Map.PlayerExists(Pname))
         {
-            Core.Logger($"Already at {Pname} or Cancel is true, stopping LockedMaps.", "LockedMaps");
+            Core.Logger(
+                $"Already at {Pname} or Cancel is true, stopping LockedMaps.",
+                "LockedMaps"
+            );
             return;
         }
 
         // Flatten any comma-separated entries
         LockedMapList = LockedMapList
-            .SelectMany(entry => entry.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
+            .SelectMany(entry =>
+                entry.Split(
+                    ',',
+                    StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries
+                )
+            )
             .ToList();
 
         _LockedMapsList.AddRange(LockedMapList.Where(map => !_LockedMapsList.Contains(map)));
 
         if (_LockedMapsList.Count > 0)
             Core.Logger($"Custom locked maps added: {string.Join(", ", LockedMapList)}");
-
 
         if (Pname != null)
             b_playerName = Pname;
@@ -1666,13 +1895,17 @@ public class CoreArmyLite
                     Bot.Wait.ForMapLoad(targetMap);
                 }
                 Core.MeasureExecutionTime(() =>
-              {
-                  if (b_playerName != null && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO) && _PO != null)
-                  {
-                      foundPlayer = _PO;
-                      return;
-                  }
-              });
+                {
+                    if (
+                        b_playerName != null
+                        && Bot.Map.TryGetPlayer(b_playerName, out PlayerInfo? _PO)
+                        && _PO != null
+                    )
+                    {
+                        foundPlayer = _PO;
+                        return;
+                    }
+                });
 
                 if (foundPlayer != null)
                 {
@@ -1682,33 +1915,72 @@ public class CoreArmyLite
             }
         }
 
-        string[] NonMemMaps = { "tercessuinotlim", "doomvaultb", "doomvault", "shadowrealmpast", "battlegrounda", "battlegroundb", "battlegroundc", "battlegroundd", "battlegrounde", "battlegroundf", "doomwood", "shadowrealm", "confrontation", "darkoviaforest", "ledgermayne", "hollowdeep", "hyperium", "willowcreek", "voidflibbi", "voidnightbane", "championdrakath", "ultraezrajal", "ultrawarden", "ultraengineer", "ultradage", "ultratyndarius", "ultranulgath", "ultradrago", "ultradarkon", "ultraspeaker" };
+        string[] NonMemMaps =
+        {
+            "tercessuinotlim",
+            "doomvaultb",
+            "doomvault",
+            "shadowrealmpast",
+            "battlegrounda",
+            "battlegroundb",
+            "battlegroundc",
+            "battlegroundd",
+            "battlegrounde",
+            "battlegroundf",
+            "doomwood",
+            "shadowrealm",
+            "confrontation",
+            "darkoviaforest",
+            "ledgermayne",
+            "hollowdeep",
+            "hyperium",
+            "willowcreek",
+            "voidflibbi",
+            "voidnightbane",
+            "championdrakath",
+            "ultraezrajal",
+            "ultrawarden",
+            "ultraengineer",
+            "ultradage",
+            "ultratyndarius",
+            "ultranulgath",
+            "ultradrago",
+            "ultradarkon",
+            "ultraspeaker",
+        };
         string[] MemMaps = { "shadowlordpast", "binky", "superlowe" };
         string[] EventMaps = Array.Empty<string>();
 
         // Map and quests to use to see the boss without doing the story
         (string Map, int QuestUpdate)[] UpdateQuest = new[]
         {
-        ("ultradrakath", 3879),
-        ("bocklincastle", 102520),
-        ("bocklingrove", 10239)
+            ("ultradrakath", 3879),
+            ("bocklincastle", 102520),
+            ("bocklingrove", 10239),
         };
 
         var levelLockedMaps = new[]
         {
-        new { Map = "icestormunder", LevelRequired = 75 },
-        new { Map = "icewing", LevelRequired = 75 },
-        new { Map = "battlegrounde", LevelRequired = 61 },
-        new { Map = "voidxyfrag", LevelRequired = 80 },
-        new { Map = "voidnerfkitten", LevelRequired = 80 }
-    };
+            new { Map = "icestormunder", LevelRequired = 75 },
+            new { Map = "icewing", LevelRequired = 75 },
+            new { Map = "battlegrounde", LevelRequired = 61 },
+            new { Map = "voidxyfrag", LevelRequired = 80 },
+            new { Map = "voidnerfkitten", LevelRequired = 80 },
+        };
 
         int maptry = 1;
-        int mapCount = LockedMapList.Count == 0
-        // If count = 0, add all resticted maps, else do the custom maps only.
-            ? (Core.IsMember ? NonMemMaps.Length + MemMaps.Length + EventMaps.Length + levelLockedMaps.Length
-                             : NonMemMaps.Length + EventMaps.Length + levelLockedMaps.Length)
-            : LockedMapList.Count;
+        int mapCount =
+            LockedMapList.Count == 0
+                // If count = 0, add all resticted maps, else do the custom maps only.
+                ? (
+                    Core.IsMember
+                        ? NonMemMaps.Length
+                            + MemMaps.Length
+                            + EventMaps.Length
+                            + levelLockedMaps.Length
+                        : NonMemMaps.Length + EventMaps.Length + levelLockedMaps.Length
+                )
+                : LockedMapList.Count;
 
         if (LockedMapList.Count == 0)
         {
@@ -1717,9 +1989,13 @@ public class CoreArmyLite
                 if (Bot.ShouldExit)
                     return;
 
-                if (!Core.isSeasonalMapActive(map)) continue;
+                if (!Core.isSeasonalMapActive(map))
+                    continue;
 
-                Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
+                Core.Logger(
+                    $"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}",
+                    "LockedZoneHandler => LockedMapList"
+                );
 
                 if (Bot.Map.Name != map)
                 {
@@ -1729,12 +2005,17 @@ public class CoreArmyLite
 
                 Core.Sleep();
 
-                if (b_playerName != null && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(b_playerName))
+                if (
+                    b_playerName != null
+                    && Bot.Map.PlayerNames != null
+                    && Bot.Map.PlayerNames.Contains(b_playerName)
+                )
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
                     return;
                 }
-                else continue;
+                else
+                    continue;
             }
 
             foreach (var mapInfo in levelLockedMaps)
@@ -1744,26 +2025,41 @@ public class CoreArmyLite
 
                 if (Bot.Player.Level < mapInfo.LevelRequired)
                 {
-                    Core.Logger($"Level too low for /{mapInfo.Map} (required: {mapInfo.LevelRequired}, current: {Bot.Player.Level})");
+                    Core.Logger(
+                        $"Level too low for /{mapInfo.Map} (required: {mapInfo.LevelRequired}, current: {Bot.Player.Level})"
+                    );
                     continue;
                 }
 
-                Core.Logger($"[{maptry++:D2}/{mapCount:D2}] Searching /{mapInfo.Map}", "LockedZoneHandler =>  !LockedMapList");
+                Core.Logger(
+                    $"[{maptry++:D2}/{mapCount:D2}] Searching /{mapInfo.Map}",
+                    "LockedZoneHandler =>  !LockedMapList"
+                );
 
                 if (Bot.Map.Name != mapInfo.Map)
                 {
-                    Bot.Map.Join($"{mapInfo.Map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                    Bot.Map.Join(
+                        $"{mapInfo.Map}-{RoomNumber}",
+                        "Enter",
+                        "Spawn",
+                        autoCorrect: false
+                    );
                     Bot.Wait.ForMapLoad(mapInfo.Map);
                 }
 
                 Core.Sleep();
 
-                if (b_playerName != null && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(b_playerName))
+                if (
+                    b_playerName != null
+                    && Bot.Map.PlayerNames != null
+                    && Bot.Map.PlayerNames.Contains(b_playerName)
+                )
                 {
                     Core.Logger($"Found {b_playerName} in /{mapInfo.Map}");
                     return;
                 }
-                else continue;
+                else
+                    continue;
             }
 
             foreach (string map in NonMemMaps)
@@ -1771,7 +2067,10 @@ public class CoreArmyLite
                 if (Bot.ShouldExit)
                     return;
 
-                Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
+                Core.Logger(
+                    $"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}",
+                    "LockedZoneHandler => LockedMapList"
+                );
 
                 if (Bot.Map.Name != map)
                 {
@@ -1781,12 +2080,17 @@ public class CoreArmyLite
 
                 Core.Sleep();
 
-                if (b_playerName != null && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(b_playerName))
+                if (
+                    b_playerName != null
+                    && Bot.Map.PlayerNames != null
+                    && Bot.Map.PlayerNames.Contains(b_playerName)
+                )
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
                     return;
                 }
-                else continue;
+                else
+                    continue;
             }
 
             if (Core.IsMember)
@@ -1796,7 +2100,10 @@ public class CoreArmyLite
                     if (Bot.ShouldExit)
                         return;
 
-                    Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => LockedMapList");
+                    Core.Logger(
+                        $"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}",
+                        "LockedZoneHandler => LockedMapList"
+                    );
 
                     if (Bot.Map.Name != map)
                     {
@@ -1806,12 +2113,17 @@ public class CoreArmyLite
 
                     Core.Sleep();
 
-                    if (b_playerName != null && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(b_playerName))
+                    if (
+                        b_playerName != null
+                        && Bot.Map.PlayerNames != null
+                        && Bot.Map.PlayerNames.Contains(b_playerName)
+                    )
                     {
                         Core.Logger($"Found {b_playerName} in /{map}");
                         return;
                     }
-                    else continue;
+                    else
+                        continue;
                 }
             }
         }
@@ -1833,7 +2145,11 @@ public class CoreArmyLite
                 if (QuestUpdate > 0)
                     Bot.Quests.UpdateQuest(QuestUpdate);
 
-                if (b_playerName != null && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(b_playerName))
+                if (
+                    b_playerName != null
+                    && Bot.Map.PlayerNames != null
+                    && Bot.Map.PlayerNames.Contains(b_playerName)
+                )
                 {
                     Core.Logger($"Found {b_playerName} in /{Map}");
                     return;
@@ -1846,7 +2162,10 @@ public class CoreArmyLite
                 if (Bot.ShouldExit || LockedMapList.Count <= 0)
                     return;
 
-                Core.Logger($"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}", "LockedZoneHandler => Custom LockedMapList");
+                Core.Logger(
+                    $"[{(_LockedMapsList.Count > 9 ? $"{maptry:D2}/{mapCount:D2}" : $"{maptry}/{mapCount}")}] Searching /{map}",
+                    "LockedZoneHandler => Custom LockedMapList"
+                );
 
                 if (Bot.Map.Name != map)
                 {
@@ -1856,16 +2175,27 @@ public class CoreArmyLite
 
                 Core.Sleep();
 
-                if (b_playerName != null && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(b_playerName))
+                if (
+                    b_playerName != null
+                    && Bot.Map.PlayerNames != null
+                    && Bot.Map.PlayerNames.Contains(b_playerName)
+                )
                 {
                     Core.Logger($"Found {b_playerName} in /{map}");
                     return;
                 }
-                else continue;
+                else
+                    continue;
             }
         }
 
-        if (!(b_playerName != null && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(b_playerName)))
+        if (
+            !(
+                b_playerName != null
+                && Bot.Map.PlayerNames != null
+                && Bot.Map.PlayerNames.Contains(b_playerName)
+            )
+        )
         {
             Core.Join($"whitemap-{RoomNumber}");
             Core.Logger($"Could not find {b_playerName} in any of the maps.", "LockedZoneHandler");
@@ -1874,7 +2204,10 @@ public class CoreArmyLite
         if (!b_shouldHibernate)
             return;
 
-        Core.Logger($"Bot will now hibernate and try to /goto {b_playerName} every {b_hibernationTimer} seconds", "LockedZoneHandler");
+        Core.Logger(
+            $"Bot will now hibernate and try to /goto {b_playerName} every {b_hibernationTimer} seconds",
+            "LockedZoneHandler"
+        );
 
         int min = 0;
         while (!Bot.ShouldExit)
@@ -1886,7 +2219,11 @@ public class CoreArmyLite
                     return;
             }
 
-            if (b_playerName != null && Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(b_playerName))
+            if (
+                b_playerName != null
+                && Bot.Map.PlayerNames != null
+                && Bot.Map.PlayerNames.Contains(b_playerName)
+            )
             {
                 Core.Logger($"{b_playerName} found!");
                 break;
@@ -1913,16 +2250,21 @@ public class CoreArmyLite
         {
             foreach (string mon in mons)
             {
-                Monster? priorityMonster = Bot.Monsters.CurrentMonsters
-                    .FirstOrDefault(m => m.Name?.FormatForCompare() == mon.FormatForCompare() && m.Cell == Bot.Player.Cell) ?? null;
+                Monster? priorityMonster =
+                    Bot.Monsters.CurrentMonsters.FirstOrDefault(m =>
+                        m.Name?.FormatForCompare() == mon.FormatForCompare()
+                        && m.Cell == Bot.Player.Cell
+                    )
+                    ?? null;
 
                 if (priorityMonster != null)
                     Bot.Kill.Monster(priorityMonster.MapID);
-                else Bot.Kill.Monster("*");
+                else
+                    Bot.Kill.Monster("*");
             }
         }
-        else Bot.Combat.Attack("*");
-
+        else
+            Bot.Combat.Attack("*");
     }
 
     private async void MapNumberParses(string map)
@@ -1940,7 +2282,11 @@ public class CoreArmyLite
             }
         }
 
-        if (!int.TryParse(Bot.Map.FullName.Split('-').Last(), out int mapNr) || map == b_prevRoom || !Bot.Map.PlayerExists(b_playerName!))
+        if (
+            !int.TryParse(Bot.Map.FullName.Split('-').Last(), out int mapNr)
+            || map == b_prevRoom
+            || !Bot.Map.PlayerExists(b_playerName!)
+        )
             return;
 
         // If the number is the same number as on the previous map
@@ -1960,6 +2306,7 @@ public class CoreArmyLite
         b_prevRoom = map;
         b_allocRoomNr = mapNr;
     }
+
     private int b_allocRoomNr = 0;
     private string? b_prevRoom = null;
 
@@ -2010,6 +2357,7 @@ public class CoreArmyLite
             }
         }
     }
+
     private int moveX = 0;
     private int moveY = 0;
     private int moveSpeed = 0;
@@ -2033,7 +2381,9 @@ public class CoreArmyLite
         Bot.Events.PlayerAFK -= PlayerAFK;
     }
 
-    private string commFile() => Path.Combine(CoreBots.ButlerLogDir, $"{Core.Username().ToLower()}~!{b_playerName}.txt");
+    private string commFile() =>
+        Path.Combine(CoreBots.ButlerLogDir, $"{Core.Username().ToLower()}~!{b_playerName}.txt");
+
     public string? b_breakOnMap = null;
     #endregion
 }

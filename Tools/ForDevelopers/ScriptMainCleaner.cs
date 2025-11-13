@@ -4,12 +4,12 @@ description: Checks all scripts we have to see if there are any that break forma
 tags: scriptmain, cleaner, formatter, developer
 */
 //cs_include Scripts/CoreBots.cs
-using System.Net.NetworkInformation;
-using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System;
+using System.Net.NetworkInformation;
+using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
 
@@ -21,7 +21,7 @@ public class ScriptMainCleaner
     {
         Cleaner();
     }
- 
+
 #nullable enable
     private void Cleaner()
     {
@@ -61,7 +61,9 @@ public class ScriptMainCleaner
         {
             string[] files = Directory.GetFiles(path);
             string[] dirs = Directory.GetDirectories(path);
-            Bot.Log($"[{DateTime.Now:HH:mm:ss}] ({removeDir(path) ?? "Scripts"})  {(dirs.Length > 0 ? $"{dirs.Length} Director{(dirs.Length == 1 ? "y" : "ies")} & " : "")}{files.Length} File{(files.Length == 1 ? "" : "s")}");
+            Bot.Log(
+                $"[{DateTime.Now:HH:mm:ss}] ({removeDir(path) ?? "Scripts"})  {(dirs.Length > 0 ? $"{dirs.Length} Director{(dirs.Length == 1 ? "y" : "ies")} & " : "")}{files.Length} File{(files.Length == 1 ? "" : "s")}"
+            );
             foreach (var file in files)
             {
                 if (Extensions.Any(e => file.EndsWith(e)))
@@ -74,9 +76,10 @@ public class ScriptMainCleaner
                 string[]? __file = File.ReadAllLines(file);
                 lineCount = lineCount + __file.Length;
                 List<string>? inner = __file
-                                .SkipWhile(l => !l.StartsWith("    public void ScriptMain"))
-                                .TakeWhile(l => !l.StartsWith("    }"))
-                                .ToArray()[2..].ToList();
+                    .SkipWhile(l => !l.StartsWith("    public void ScriptMain"))
+                    .TakeWhile(l => !l.StartsWith("    }"))
+                    .ToArray()[2..]
+                    .ToList();
                 __file = null;
 
                 if (inner == null)
@@ -88,23 +91,27 @@ public class ScriptMainCleaner
                 //else foreach (string line in inner)
                 //        Bot.Log(line);
 
-                if (!inner.Any(l => l.StartsWith("        Core.SetOptions(")) &&
-                    !_file.ToLower().Contains("core") &&
-                    !NoSetOptionsAllowed.Any(o => o == _file))
+                if (
+                    !inner.Any(l => l.StartsWith("        Core.SetOptions("))
+                    && !_file.ToLower().Contains("core")
+                    && !NoSetOptionsAllowed.Any(o => o == _file)
+                )
                 {
                     NoSetOptions.Add(_file);
                     fileCount++;
                     continue;
                 }
 
-                inner = inner.Where(l =>
-                        !l.Contains("Core.SetOptions(") &&
-                        !string.IsNullOrEmpty(l) &&
-                        !string.IsNullOrWhiteSpace(l) &&
-                        !l.Contains("Core.BankingBlackList") &&
-                        !l.Trim().StartsWith("//") &&
-                        !l.Trim().StartsWith('"')
-                    ).ToList();
+                inner = inner
+                    .Where(l =>
+                        !l.Contains("Core.SetOptions(")
+                        && !string.IsNullOrEmpty(l)
+                        && !string.IsNullOrWhiteSpace(l)
+                        && !l.Contains("Core.BankingBlackList")
+                        && !l.Trim().StartsWith("//")
+                        && !l.Trim().StartsWith('"')
+                    )
+                    .ToList();
 
                 if (inner.Count > 1)
                 {
@@ -137,14 +144,7 @@ public class ScriptMainCleaner
     }
 
     #region BlackLists
-    private string[] Extensions =
-    {
-        ".txt",
-        ".csproj",
-        ".md",
-        ".file",
-        ".json",
-    };
+    private string[] Extensions = { ".txt", ".csproj", ".md", ".file", ".json" };
     private string[] Directories =
     {
         ".git",

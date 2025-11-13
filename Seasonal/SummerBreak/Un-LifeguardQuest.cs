@@ -25,8 +25,21 @@ public class UnLifeGuardQuest
         if (!Core.isSeasonalMapActive("summerbreak"))
             return;
 
-        string[] nonMemrewards = { "LifeGuard", "LifeGuard Cap + Locks", "LifeGuard Cap", "LifeGuard Tube" };
-        string[] memRewards = { "LifeGuard", "LifeGuard Cap + Locks", "LifeGuard Cap", "LifeGuard Tube", "LifeGuard Tube of DOOM" };
+        string[] nonMemrewards =
+        {
+            "LifeGuard",
+            "LifeGuard Cap + Locks",
+            "LifeGuard Cap",
+            "LifeGuard Tube",
+        };
+        string[] memRewards =
+        {
+            "LifeGuard",
+            "LifeGuard Cap + Locks",
+            "LifeGuard Cap",
+            "LifeGuard Tube",
+            "LifeGuard Tube of DOOM",
+        };
         string[] rewards = Core.IsMember ? memRewards : nonMemrewards;
         if (Core.CheckInventory(rewards, toInv: false))
             return;

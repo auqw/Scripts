@@ -14,11 +14,23 @@ public class crulonwedding
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -32,7 +44,6 @@ public class crulonwedding
 
     public void StoryLine(bool TestMode = false)
     {
-
         if (Core.isCompletedBefore(9850))
             return;
 
@@ -50,32 +61,19 @@ public class crulonwedding
         // 9848 | The Red Rival
         if (!Story.QuestProgression(9848))
         {
-            Core.HuntMonsterQuest(9848,
-("djinnguard", UseableMonsters[1], ClassType.Solo)
-);
+            Core.HuntMonsterQuest(9848, ("djinnguard", UseableMonsters[1], ClassType.Solo));
         }
-
 
         // 9849 | Pale Invocation
         if (!Story.QuestProgression(9849))
         {
-            Core.HuntMonsterQuest(9849,
-("towerofmirrors", UseableMonsters[2], ClassType.Farm)
-);
+            Core.HuntMonsterQuest(9849, ("towerofmirrors", UseableMonsters[2], ClassType.Farm));
         }
-
 
         // 9850 | Moon's Self-Reflection
         if (!Story.QuestProgression(9850))
         {
-            Core.HuntMonsterQuest(9850,
-("crulonwed", UseableMonsters[0], ClassType.Solo)
-);
+            Core.HuntMonsterQuest(9850, ("crulonwed", UseableMonsters[0], ClassType.Solo));
         }
-
-
     }
 }
-
-
-

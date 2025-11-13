@@ -17,15 +17,35 @@ public class FireChampionsArmor
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static DragonslayerGeneral DSG { get => _DSG ??= new DragonslayerGeneral(); set => _DSG = value; }
+    private static DragonslayerGeneral DSG
+    {
+        get => _DSG ??= new DragonslayerGeneral();
+        set => _DSG = value;
+    }
     private static DragonslayerGeneral _DSG;
-    private static WarfuryEmblem WFE { get => _WFE ??= new WarfuryEmblem(); set => _WFE = value; }
+    private static WarfuryEmblem WFE
+    {
+        get => _WFE ??= new WarfuryEmblem();
+        set => _WFE = value;
+    }
     private static WarfuryEmblem _WFE;
-    private static Lair Lair { get => _Lair ??= new Lair(); set => _Lair = value; }
+    private static Lair Lair
+    {
+        get => _Lair ??= new Lair();
+        set => _Lair = value;
+    }
     private static Lair _Lair;
 
     public void ScriptMain(IScriptInterface bot)
@@ -50,7 +70,6 @@ public class FireChampionsArmor
         Adv.BuyItem("wartraining", 2035, "Fire Champion's Armor", shopItemID: 8759);
     }
 
-
     public void PolishedDragonSlayer()
     {
         if (Core.CheckInventory(58462))
@@ -73,7 +92,6 @@ public class FireChampionsArmor
             Core.KillMonster("lair", "Hole", "Center", "*", isTemp: false, log: false);
         Adv.BuyItem("wartraining", 2035, "Polished DragonSlayer");
     }
-
 
     public void FlameForgedMetal(int Metalquant = 10)
     {
@@ -98,8 +116,12 @@ public class FireChampionsArmor
 
         Core.EquipClass(ClassType.Solo);
 
-        Core.HuntMonster("underlair", "Archfiend Dragonlord", "Void Scale", VoidScaleQuant, isTemp: false);
+        Core.HuntMonster(
+            "underlair",
+            "Archfiend Dragonlord",
+            "Void Scale",
+            VoidScaleQuant,
+            isTemp: false
+        );
     }
-
-
 }

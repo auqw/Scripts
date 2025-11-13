@@ -16,8 +16,18 @@ public class PrinceDarkonsPoleaxePreReqs
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreDarkon Darkon
+    {
+        get => _Darkon ??= new CoreDarkon();
+        set => _Darkon = value;
+    }
+    private static CoreDarkon _Darkon;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -27,6 +37,7 @@ public class PrinceDarkonsPoleaxePreReqs
 
         Core.SetOptions(false);
     }
+
     public void FarmPreReqs()
     {
         if (Core.CheckInventory("Prince Darkon's Poleaxe"))
@@ -47,13 +58,18 @@ public class PrinceDarkonsPoleaxePreReqs
     {
         if (!Core.CheckInventory("Prince Darkon's Poleaxe"))
         {
-            if (!Core.CheckInventory("Algie's Bow") && Core.CheckInventory("Ultra Drago Insignia", 5))
+            if (
+                !Core.CheckInventory("Algie's Bow")
+                && Core.CheckInventory("Ultra Drago Insignia", 5)
+            )
             {
                 Core.BuyItem("ultradrago", 2066, "Algie's Bow");
                 Bot.Wait.ForItemBuy();
             }
 
-            if (!Core.CheckInventory("Dene's Axe") && Core.CheckInventory("Ultra Drago Insignia", 5))
+            if (
+                !Core.CheckInventory("Dene's Axe") && Core.CheckInventory("Ultra Drago Insignia", 5)
+            )
             {
                 Core.BuyItem("ultradrago", 2066, "Dene's Axe");
                 Bot.Wait.ForItemBuy();

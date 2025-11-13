@@ -11,7 +11,11 @@ public class AnniversaryofDoom
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -44,14 +48,27 @@ public class AnniversaryofDoom
             return;
 
         // 8874 Friends by the Fireplace
-        Story.MapItemQuest(8874, "yulgarparty", new[] { 10675, 10676, 10677, 10678, 10679, 10680, 10681, 10682, 10683 });
+        Story.MapItemQuest(
+            8874,
+            "yulgarparty",
+            new[] { 10675, 10676, 10677, 10678, 10679, 10680, 10681, 10682, 10683 }
+        );
 
         // 8875 Allies at the Entrance,
-        Story.MapItemQuest(8875, "yulgarparty", new[] { 10684, 10685, 10686, 10687, 10688, 10689, 10690 });
+        Story.MapItemQuest(
+            8875,
+            "yulgarparty",
+            new[] { 10684, 10685, 10686, 10687, 10688, 10689, 10690 }
+        );
 
         // 8876 Mates near the Music,
-        Story.MapItemQuest(8876, "yulgarparty", new[] { 10691, 10692, 10693, 10694, 10695, 10696, 10697, 10698, 10699 });
+        Story.MapItemQuest(
+            8876,
+            "yulgarparty",
+            new[] { 10691, 10692, 10693, 10694, 10695, 10696, 10697, 10698, 10699 }
+        );
     }
+
     public void Zombae()
     {
         if (Core.isCompletedBefore(8883))
@@ -85,6 +102,7 @@ public class AnniversaryofDoom
         // 8883 The Ultimate Ghoul Fiend
         Story.KillQuest(8883, "zombae", "Ghoul Fiend");
     }
+
     public void Mermaidsushi()
     {
         if (Core.isCompletedBefore(8892))
@@ -107,7 +125,7 @@ public class AnniversaryofDoom
         // 8888 S'KARIN WANT WINGS,
         Story.KillQuest(8888, "mermaidsushi", "Dedbull");
 
-        // 8889 S'KARIN WANT MERMAID SUSHI 
+        // 8889 S'KARIN WANT MERMAID SUSHI
         Story.MapItemQuest(8889, "mermaidsushi", 10719);
 
         // 8890 Mer-Angel Fish Food?!
@@ -119,6 +137,7 @@ public class AnniversaryofDoom
         // 8892 Gore-Made for This
         Story.KillQuest(8892, "mermaidsushi", "Die Fieri");
     }
+
     public void FREE500ACSPLEASE()
     {
         if (Core.isCompletedBefore(8893))
@@ -131,11 +150,14 @@ public class AnniversaryofDoom
         {
             Core.Join("afkquest");
             Bot.Send.Packet("%xt%zm%afk%0%false%");
-            Core.Logger($"**DO NOT CLICK THE GAME SCREEN** this Will Take ~5minutes, Go touch some grass 👍");
+            Core.Logger(
+                $"**DO NOT CLICK THE GAME SCREEN** this Will Take ~5minutes, Go touch some grass 👍"
+            );
             Core.Sleep(360000);
             Core.Logger("Game Complete. You're Welcome for the Acs");
         }
     }
+
     public void Spacepwny()
     {
         if (Core.isCompletedBefore(8898))
@@ -156,7 +178,14 @@ public class AnniversaryofDoom
         if (!Story.QuestProgression(8895))
         {
             Core.EnsureAccept(8895);
-            Core.KillMonster("spacepwny", "r2", "Left", "Thoroughdred", "Thoroughdred Defeated", 10);
+            Core.KillMonster(
+                "spacepwny",
+                "r2",
+                "Left",
+                "Thoroughdred",
+                "Thoroughdred Defeated",
+                10
+            );
             Core.EnsureComplete(8895);
         }
 
@@ -164,7 +193,14 @@ public class AnniversaryofDoom
         if (!Story.QuestProgression(8896))
         {
             Core.EnsureAccept(8896);
-            Core.KillMonster("spacepwny", "r2", "Left", "NecroPrancer", "NecroPrancer Defeated", 10);
+            Core.KillMonster(
+                "spacepwny",
+                "r2",
+                "Left",
+                "NecroPrancer",
+                "NecroPrancer Defeated",
+                10
+            );
             Core.EnsureComplete(8896);
         }
 
@@ -180,6 +216,7 @@ public class AnniversaryofDoom
         // 8898 Defeat Mr DED
         Story.KillQuest(8898, "spacepwny", "Mr DED");
     }
+
     public void Deathofgames()
     {
         if (Core.isCompletedBefore(8924))
@@ -206,16 +243,23 @@ public class AnniversaryofDoom
         Story.KillQuest(8920, "deathofgames", new[] { "Skeletal Fire Mage", "Drakath" });
 
         //MechQuest For Glory 8921
-        Story.KillQuest(8921, "deathofgames", new[] { "Newbatron Prime", "ShadowScythe Mecha", "SkullCrusher Mecha" });
+        Story.KillQuest(
+            8921,
+            "deathofgames",
+            new[] { "Newbatron Prime", "ShadowScythe Mecha", "SkullCrusher Mecha" }
+        );
 
         //DragonFables &amp; Lore 8922
         Story.KillQuest(8922, "deathofgames", new[] { "Titan Fluffy", "Fire Elemental", "Xan" });
 
         //AdventureQuest for Victory 8923
-        Story.KillQuest(8923, "deathofgames", new[] { "Moglin Ghost", "Halenro the Paladin", "Mysterious Stranger" });
+        Story.KillQuest(
+            8923,
+            "deathofgames",
+            new[] { "Moglin Ghost", "Halenro the Paladin", "Mysterious Stranger" }
+        );
 
         //Battle On... FOREVER! 8924
         Story.KillQuest(8924, "deathofgames", "Death of Games");
     }
-
 }

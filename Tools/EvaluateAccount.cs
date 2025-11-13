@@ -6,10 +6,10 @@ tags: tool, evaluate, account, chrono, heromart, beta, founder, badges, enhancem
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
-using Skua.Core.Interfaces;
-using Skua.Core.Models.Items;
 using System.Globalization;
 using Newtonsoft.Json;
+using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 
 public class EvalAcc
 {
@@ -74,52 +74,61 @@ public class EvalAcc
 
         // The actual output
         Bot.ShowMessageBox(
-            $"Level:\t\t\t\t{Bot.Player.Level}\n" +
-            (accAge != null ? $"Account Age:\t\t\t{(int)(accAge.Value.TotalDays / 365.2425)} years, {(int)(accAge.Value.TotalDays - ((int)(accAge.Value.TotalDays / 365.2425) * 365.2425)) / 30} months\n" : string.Empty) +
-            (badges != null ? $"Beta Tester:\t\t\t{checkbox(badges.Contains(2))}\n" : string.Empty) +
-            (badges != null ? $"Founder:\t\t\t\t{checkbox(badges.Contains(1))}\n" : string.Empty) +
-            (gender != null ? $"Gender:\t\t\t\t{(gender[1] == 'M' ? "Male" : "Female")}\n" : string.Empty) +
-
-            $"\nMaxed Factions:\t\t\t{Bot.Reputation.FactionList.Count(f => f.Rank == 10)} out of {Bot.Reputation.FactionList.Count}\n" +
-            $"Joined Legion:\t\t\t{checkbox(Core.isCompletedBefore(793))}\n" +
-            $"Treasure Potion Count:\t\t{Bot.Inventory.GetQuantity(18927)}\n\n" +
-
-            $"Current Gold:\t\t\t{ToKMB((int)Math.Round((double)Bot.Player.Gold / 100000d) * 100000)}\n" +
-            $"Current ACs:\t\t\t{ToKMB((int)Math.Floor((double)ACs / 1000d) * 1000)}{(ACs > 0 ? "+" : string.Empty)}\n" +
-            $"Spent ACs:\t\t\t{ToKMB((int)Math.Floor((double)usedACs / 1000d) * 1000)}{(usedACs > 0 ? "+" : string.Empty)}\n" +
-            $"Extra Slots:\t\t\t{extraSlots} slots worth {extraSlots * 200} ACs\n\n" +
-
-            $"Total Badge Count:\t\t{badges?.Count}\n" +
-            $"Support Badge Count:\t\t{badges?.Count(b => b.Category == BadgeCategory.Support)}\n" +
-            $"HeroMart Badge Count:\t\t{badges?.Count(b => b.Category == BadgeCategory.HeroMart)}\n" +
-            $"Exclusive Badge Count:\t\t{badges?.Count(b => b.Category == BadgeCategory.Exclusive)}\n\n" +
-
-            $"Equipment Count:\t\t\t{equipment}\n" +
-            $"Class Count:\t\t\t{classes}\n" +
-            $"HeroMart Class Count:\t\t{hmClasses}\n" +
-            $"Misc Item Count:\t\t\t{miscItems}\n" +
-            $"House Item Count:\t\t{houseItems}\n" +
-            $"Rare Item Count:\t\t\t{rareItems}\n" +
-            $"Seasonal Item Count:\t\t{seasonalItems}\n" +
-            $"1% Drop Item Count:\t\t{onePercentItems}\n" +
-            $"Collection Chest Count:\t\t{Bot.Inventory.Items.Count(x => isCollectionChest(x)) + Bot.Bank.Items.Count(x => isCollectionChest(x))}\n\n" +
-
-            importantItemCheckbox(3, "Void Highlord", "Void Highlord (IoDA)") +
-            importantItemCheckbox(3, "Legion Revenant") +
-            importantItemCheckbox(3, "ArchMage") +
-            importantItemCheckbox(3, "Dragon of Time") +
-            importantItemCheckbox(3, "Lord Of Order") +
-            importantItemCheckbox(3, "ArchPaladin") +
-
-            importantItemCheckbox(2, "Radiant Goddess of War") +
-            $"Awescended:\t\t\t{checkbox(Core.isCompletedBefore(8042))}\n" +
-            $"75% Race DMG Weapons:\t\t{racial75Items.Count(x => x.Item2)} of the 5 Races\n" +
-            $"51% DMG All Weapons:\t\t{dmgAll51Items} out of 22\n\n" +
-
-            $"Awe   \u200AEnhancements Unlocked:\t{checkbox(Core.isCompletedBefore(2937))}\n" +
-            $"Forge Enhancements Unlocked:\t{forgeEnhIDs.Count(q => Core.isCompletedBefore(q))} out of {forgeEnhIDs.Length}"
-
-            , "Evaluation Complete");
+            $"Level:\t\t\t\t{Bot.Player.Level}\n"
+                + (
+                    accAge != null
+                        ? $"Account Age:\t\t\t{(int)(accAge.Value.TotalDays / 365.2425)} years, {(int)(accAge.Value.TotalDays - ((int)(accAge.Value.TotalDays / 365.2425) * 365.2425)) / 30} months\n"
+                        : string.Empty
+                )
+                + (
+                    badges != null
+                        ? $"Beta Tester:\t\t\t{checkbox(badges.Contains(2))}\n"
+                        : string.Empty
+                )
+                + (
+                    badges != null
+                        ? $"Founder:\t\t\t\t{checkbox(badges.Contains(1))}\n"
+                        : string.Empty
+                )
+                + (
+                    gender != null
+                        ? $"Gender:\t\t\t\t{(gender[1] == 'M' ? "Male" : "Female")}\n"
+                        : string.Empty
+                )
+                + $"\nMaxed Factions:\t\t\t{Bot.Reputation.FactionList.Count(f => f.Rank == 10)} out of {Bot.Reputation.FactionList.Count}\n"
+                + $"Joined Legion:\t\t\t{checkbox(Core.isCompletedBefore(793))}\n"
+                + $"Treasure Potion Count:\t\t{Bot.Inventory.GetQuantity(18927)}\n\n"
+                + $"Current Gold:\t\t\t{ToKMB((int)Math.Round((double)Bot.Player.Gold / 100000d) * 100000)}\n"
+                + $"Current ACs:\t\t\t{ToKMB((int)Math.Floor((double)ACs / 1000d) * 1000)}{(ACs > 0 ? "+" : string.Empty)}\n"
+                + $"Spent ACs:\t\t\t{ToKMB((int)Math.Floor((double)usedACs / 1000d) * 1000)}{(usedACs > 0 ? "+" : string.Empty)}\n"
+                + $"Extra Slots:\t\t\t{extraSlots} slots worth {extraSlots * 200} ACs\n\n"
+                + $"Total Badge Count:\t\t{badges?.Count}\n"
+                + $"Support Badge Count:\t\t{badges?.Count(b => b.Category == BadgeCategory.Support)}\n"
+                + $"HeroMart Badge Count:\t\t{badges?.Count(b => b.Category == BadgeCategory.HeroMart)}\n"
+                + $"Exclusive Badge Count:\t\t{badges?.Count(b => b.Category == BadgeCategory.Exclusive)}\n\n"
+                + $"Equipment Count:\t\t\t{equipment}\n"
+                + $"Class Count:\t\t\t{classes}\n"
+                + $"HeroMart Class Count:\t\t{hmClasses}\n"
+                + $"Misc Item Count:\t\t\t{miscItems}\n"
+                + $"House Item Count:\t\t{houseItems}\n"
+                + $"Rare Item Count:\t\t\t{rareItems}\n"
+                + $"Seasonal Item Count:\t\t{seasonalItems}\n"
+                + $"1% Drop Item Count:\t\t{onePercentItems}\n"
+                + $"Collection Chest Count:\t\t{Bot.Inventory.Items.Count(x => isCollectionChest(x)) + Bot.Bank.Items.Count(x => isCollectionChest(x))}\n\n"
+                + importantItemCheckbox(3, "Void Highlord", "Void Highlord (IoDA)")
+                + importantItemCheckbox(3, "Legion Revenant")
+                + importantItemCheckbox(3, "ArchMage")
+                + importantItemCheckbox(3, "Dragon of Time")
+                + importantItemCheckbox(3, "Lord Of Order")
+                + importantItemCheckbox(3, "ArchPaladin")
+                + importantItemCheckbox(2, "Radiant Goddess of War")
+                + $"Awescended:\t\t\t{checkbox(Core.isCompletedBefore(8042))}\n"
+                + $"75% Race DMG Weapons:\t\t{racial75Items.Count(x => x.Item2)} of the 5 Races\n"
+                + $"51% DMG All Weapons:\t\t{dmgAll51Items} out of 22\n\n"
+                + $"Awe   \u200AEnhancements Unlocked:\t{checkbox(Core.isCompletedBefore(2937))}\n"
+                + $"Forge Enhancements Unlocked:\t{forgeEnhIDs.Count(q => Core.isCompletedBefore(q))} out of {forgeEnhIDs.Length}",
+            "Evaluation Complete"
+        );
 
         #endregion
         #region Methods
@@ -139,19 +148,28 @@ public class EvalAcc
                 int _miscItems = 0;
                 miscItems += _miscItems = list.Count(item => (string)item.sIcon == "iibag");
                 int _houseItems = 0;
-                houseItems += _houseItems = list.Count(item => houseCat.Contains((string)item.sType));
+                houseItems += _houseItems = list.Count(item =>
+                    houseCat.Contains((string)item.sType)
+                );
                 equipment += list.Count - _miscItems - _houseItems - _classes;
-                hmClasses += list.Count(item => (string)item.sIcon == "iiclass" && this.hmClasses.Contains((string)item.sName));
+                hmClasses += list.Count(item =>
+                    (string)item.sIcon == "iiclass" && this.hmClasses.Contains((string)item.sName)
+                );
 
                 for (int i = 0; i < racial75Items.Length; i++)
                 {
-                    if (!racial75Items[i].Item2 &&
-                        list.Any(item =>
-                            item.sMeta != null &&
-                            ((string)item.sMeta).Contains($"{racial75Items[i].Item1}:1.75")))
+                    if (
+                        !racial75Items[i].Item2
+                        && list.Any(item =>
+                            item.sMeta != null
+                            && ((string)item.sMeta).Contains($"{racial75Items[i].Item1}:1.75")
+                        )
+                    )
                         racial75Items[i].Item2 = true;
                 }
-                dmgAll51Items += list.Count(item => item.sMeta != null && ((string)item.sMeta).Contains("dmgAll:1.51"));
+                dmgAll51Items += list.Count(item =>
+                    item.sMeta != null && ((string)item.sMeta).Contains("dmgAll:1.51")
+                );
             }
         }
 
@@ -178,9 +196,9 @@ public class EvalAcc
                 { "Jul", 7 },
                 { "Aug", 8 },
                 { "Sep", 9 },
-                { "Oct", 10},
-                { "Nov", 11},
-                { "Dec", 12}
+                { "Oct", 10 },
+                { "Nov", 11 },
+                { "Dec", 12 },
             };
 
             string[] output = input[1..^1].Split(' ');
@@ -193,7 +211,9 @@ public class EvalAcc
                     int.Parse(time[0]),
                     int.Parse(time[1]),
                     int.Parse(time[2]),
-                    DateTimeKind.Unspecified));
+                    DateTimeKind.Unspecified
+                )
+            );
         }
 
         string ToKMB(int num)
@@ -215,11 +235,11 @@ public class EvalAcc
                 _tabs += '\t';
             return $"{items[0]}:{_tabs}{checkbox(Core.CheckInventory(items, 1, true, false))}\n";
         }
-        string checkbox(bool check)
-            => $"[ {(check ? "🗸" : "\u200AX\u200A")} ]";
+        string checkbox(bool check) => $"[ {(check ? "🗸" : "\u200AX\u200A")} ]";
 
-        bool isCollectionChest(InventoryItem item)
-            => item.Category == ItemCategory.Pet && (item.Name.Contains("Chest") || item.Name.Contains("Collection"));
+        bool isCollectionChest(InventoryItem item) =>
+            item.Category == ItemCategory.Pet
+            && (item.Name.Contains("Chest") || item.Name.Contains("Collection"));
         #endregion
     }
 
@@ -239,12 +259,7 @@ public class EvalAcc
         95, // Super Mega Ultra Rare
     };
 
-    private string[] houseCat =
-    {
-        "Floor Item",
-        "Wall Item",
-        "House",
-    };
+    private string[] houseCat = { "Floor Item", "Wall Item", "House" };
 
     private int[] forgeEnhIDs =
     {
@@ -323,6 +338,6 @@ public class EvalAcc
         "Unchained Rocker",
     };
 
-    private RacialGearBoost[] racialGears =
-        Enum.GetValues<RacialGearBoost>().Except(RacialGearBoost.None, RacialGearBoost.Drakath, RacialGearBoost.Orc);
+    private RacialGearBoost[] racialGears = Enum.GetValues<RacialGearBoost>()
+        .Except(RacialGearBoost.None, RacialGearBoost.Drakath, RacialGearBoost.Orc);
 }

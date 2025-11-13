@@ -17,20 +17,31 @@ public class EridaniMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
+    private static CoreDarkon Darkon
+    {
+        get => _Darkon ??= new CoreDarkon();
+        set => _Darkon = value;
+    }
+    private static CoreDarkon _Darkon;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -54,7 +65,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +78,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Teeth":
                     Darkon.Teeth(quant);
@@ -78,16 +96,71 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("57268", "Re's Attire", "Mode: [select] only\nShould the bot buy \"Re's Attire\" ?", false),
-        new Option<bool>("57277", "Re's Morph", "Mode: [select] only\nShould the bot buy \"Re's Morph\" ?", false),
-        new Option<bool>("57278", "Re's Shades", "Mode: [select] only\nShould the bot buy \"Re's Shades\" ?", false),
-        new Option<bool>("57292", "Re's Sharp Edges Arsenal", "Mode: [select] only\nShould the bot buy \"Re's Sharp Edges Arsenal\" ?", false),
-        new Option<bool>("57293", "Re's Short Stabbers", "Mode: [select] only\nShould the bot buy \"Re's Short Stabbers\" ?", false),
-        new Option<bool>("57294", "Re's Giant Slicers", "Mode: [select] only\nShould the bot buy \"Re's Giant Slicers\" ?", false),
-        new Option<bool>("57295", "Re's Face Masher", "Mode: [select] only\nShould the bot buy \"Re's Face Masher\" ?", false),
-        new Option<bool>("57297", "Re's Neck Snatcher", "Mode: [select] only\nShould the bot buy \"Re's Neck Snatcher\" ?", false),
-        new Option<bool>("57298", "Re's Long Stabber", "Mode: [select] only\nShould the bot buy \"Re's Long Stabber\" ?", false),
-        new Option<bool>("57300", "Re's Sharp Cutter", "Mode: [select] only\nShould the bot buy \"Re's Sharp Cutter\" ?", false),
-        new Option<bool>("57302", "Re's Absolute Annihilator", "Mode: [select] only\nShould the bot buy \"Re's Absolute Annihilator\" ?", false),
+        new Option<bool>(
+            "57268",
+            "Re's Attire",
+            "Mode: [select] only\nShould the bot buy \"Re's Attire\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57277",
+            "Re's Morph",
+            "Mode: [select] only\nShould the bot buy \"Re's Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57278",
+            "Re's Shades",
+            "Mode: [select] only\nShould the bot buy \"Re's Shades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57292",
+            "Re's Sharp Edges Arsenal",
+            "Mode: [select] only\nShould the bot buy \"Re's Sharp Edges Arsenal\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57293",
+            "Re's Short Stabbers",
+            "Mode: [select] only\nShould the bot buy \"Re's Short Stabbers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57294",
+            "Re's Giant Slicers",
+            "Mode: [select] only\nShould the bot buy \"Re's Giant Slicers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57295",
+            "Re's Face Masher",
+            "Mode: [select] only\nShould the bot buy \"Re's Face Masher\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57297",
+            "Re's Neck Snatcher",
+            "Mode: [select] only\nShould the bot buy \"Re's Neck Snatcher\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57298",
+            "Re's Long Stabber",
+            "Mode: [select] only\nShould the bot buy \"Re's Long Stabber\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57300",
+            "Re's Sharp Cutter",
+            "Mode: [select] only\nShould the bot buy \"Re's Sharp Cutter\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57302",
+            "Re's Absolute Annihilator",
+            "Mode: [select] only\nShould the bot buy \"Re's Absolute Annihilator\" ?",
+            false
+        ),
     };
 }

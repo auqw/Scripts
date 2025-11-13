@@ -8,13 +8,24 @@ tags: unoriginal-recipe, seasonal, april-fools
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Seasonal/AprilFools/MeateorHunt.cs
 using Skua.Core.Interfaces;
+
 public class MeateorHuntMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static MeateorHunt MH { get => _MH ??= new MeateorHunt(); set => _MH = value; }    private static MeateorHunt _MH;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static MeateorHunt MH
+    {
+        get => _MH ??= new MeateorHunt();
+        set => _MH = value;
+    }
+    private static MeateorHunt _MH;
 
     public void ScriptMain(IScriptInterface bot)
     {

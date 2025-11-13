@@ -13,11 +13,23 @@ public class EvenNaughtierMonkeys
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static WaterWar WW { get => _WW ??= new WaterWar(); set => _WW = value; }
+    private static WaterWar WW
+    {
+        get => _WW ??= new WaterWar();
+        set => _WW = value;
+    }
     private static WaterWar _WW;
 
     public void ScriptMain(IScriptInterface bot)
@@ -28,7 +40,6 @@ public class EvenNaughtierMonkeys
 
         Core.SetOptions(false);
     }
-
 
     public void Rewards()
     {

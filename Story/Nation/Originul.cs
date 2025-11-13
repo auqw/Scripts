@@ -11,7 +11,12 @@ public class Originul_Story
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -39,14 +44,18 @@ public class Originul_Story
         Story.KillQuest(7883, "Originul", "Grand Inquisitor");
 
         // Portal Unlocked
-        Story.KillQuest(7884, "Originul", new[] { "Inquisitor Guard", "Inquisitor Captain", "Grand Inquisitor" });
+        Story.KillQuest(
+            7884,
+            "Originul",
+            new[] { "Inquisitor Guard", "Inquisitor Captain", "Grand Inquisitor" }
+        );
 
         // Fiend Training
         Story.KillQuest(7885, "Originul", "Bloodfiend");
 
         // Failed Fiend Shards
         Story.KillQuest(7886, "Originul", "Bloodfiend");
-        
+
         // Executed Tasks
         if (!Story.QuestProgression(7887))
         {

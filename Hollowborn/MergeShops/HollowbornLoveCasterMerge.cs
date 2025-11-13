@@ -19,20 +19,37 @@ public class HollowbornLoveCasterMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static HollowSoul HS { get => _HS ??= new HollowSoul(); set => _HS = value; }
+    private static HollowSoul HS
+    {
+        get => _HS ??= new HollowSoul();
+        set => _HS = value;
+    }
     private static HollowSoul _HS;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +73,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,13 +86,20 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "NCS Gem":
                     Daily.NCSGem(quant);
-                    Core.Logger($"{req.Name} is a daily drop, you need {quant - Bot.Inventory.GetQuantity(req.Name)} more to buy this item. Run the script again tomorrow if you don't have enough.");
+                    Core.Logger(
+                        $"{req.Name} is a daily drop, you need {quant - Bot.Inventory.GetQuantity(req.Name)} more to buy this item. Run the script again tomorrow if you don't have enough."
+                    );
                     break;
 
                 case "Hollow Soul":
@@ -91,14 +117,23 @@ private static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("84893", "Hollowborn LoveCaster", "Mode: [select] only\nShould the bot buy \"Hollowborn LoveCaster\" ?", false),
-        new Option<bool>("84894", "Hollowborn LoveCaster TopHat", "Mode: [select] only\nShould the bot buy \"Hollowborn LoveCaster TopHat\" ?", false),
+        new Option<bool>(
+            "84893",
+            "Hollowborn LoveCaster",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn LoveCaster\" ?",
+            false
+        ),
+        new Option<bool>(
+            "84894",
+            "Hollowborn LoveCaster TopHat",
+            "Mode: [select] only\nShould the bot buy \"Hollowborn LoveCaster TopHat\" ?",
+            false
+        ),
     };
 }

@@ -13,9 +13,17 @@ public class FortressDelve
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static TempleDelve TD { get => _TD ??= new TempleDelve(); set => _TD = value; }
+    private static TempleDelve TD
+    {
+        get => _TD ??= new TempleDelve();
+        set => _TD = value;
+    }
     private static TempleDelve _TD;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -69,7 +77,11 @@ public class FortressDelve
         Story.KillQuest(9167, "fortressdelve", "Legion Dreadmarch");
 
         //The Condemner 9168
-        Story.KillQuest(9168, "fortressdelve", new[] { "Enlightened Shadow", "Delirious Elemental" });
+        Story.KillQuest(
+            9168,
+            "fortressdelve",
+            new[] { "Enlightened Shadow", "Delirious Elemental" }
+        );
 
         //Lost Light, Astero 9169
         Story.KillQuest(9169, "fortressdelve", "Astero");

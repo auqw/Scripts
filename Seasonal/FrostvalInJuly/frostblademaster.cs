@@ -11,7 +11,11 @@ public class FrostBladeMaster
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -25,9 +29,9 @@ public class FrostBladeMaster
     public void SagaName()
     {
         if (Core.isCompletedBefore(6992) || !Core.isSeasonalMapActive("akibalight"))
-        {            
+        {
             Core.Logger("You've already completed this storyline");
-            
+
             return;
         }
         Story.PreLoad(this);
@@ -49,7 +53,7 @@ public class FrostBladeMaster
         Story.KillQuest(6986, "yokaigrave", "Skello Kitty");
 
         //Mitsu Bishis Gift 6987
-        Story.KillQuest(6987, "bamboo", new[] {"Tanuki", "Tanuki"});
+        Story.KillQuest(6987, "bamboo", new[] { "Tanuki", "Tanuki" });
 
         //Kunoichis Gift 6988
         Story.KillQuest(6988, "pirates", "Fishwing");

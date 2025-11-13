@@ -17,29 +17,74 @@ public class BrightshadowMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreSoC SoC { get => _SoC ??= new CoreSoC(); set => _SoC = value; }    private static CoreSoC _SoC;
+    private static CoreSoC SoC
+    {
+        get => _SoC ??= new CoreSoC();
+        set => _SoC = value;
+    }
+    private static CoreSoC _SoC;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Shadow BeastMaster", "Venerated Essence", "Shadow BeastMaster's Locks", "Shadow BeastMaster's Shag", "Shadow BeastMaster's Beard", "Shadow BeastMaster Bow", "Shadow BeastMaster Knuckle", "ShadowFlame Glaive", "Shadow BeastMaster Hood", "Shadow BeastMaster Hood + Mask", "Shadow BeastMaster Quiver", "ShadowFlame Spellsword", "Blight Essence", "ShadowFlame Spellsword's Sheathed Blade", "ShadowFlame Spellsword's Hip Blade", "SpellSword's Flame Blade", "ShadowFlame SpellSword's Blade", "ShadowFlame SpellSword's Daggers", "SpellSword's Reversed Daggers", "ShadowFlame SpellSword's Tome " });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Shadow BeastMaster",
+                "Venerated Essence",
+                "Shadow BeastMaster's Locks",
+                "Shadow BeastMaster's Shag",
+                "Shadow BeastMaster's Beard",
+                "Shadow BeastMaster Bow",
+                "Shadow BeastMaster Knuckle",
+                "ShadowFlame Glaive",
+                "Shadow BeastMaster Hood",
+                "Shadow BeastMaster Hood + Mask",
+                "Shadow BeastMaster Quiver",
+                "ShadowFlame Spellsword",
+                "Blight Essence",
+                "ShadowFlame Spellsword's Sheathed Blade",
+                "ShadowFlame Spellsword's Hip Blade",
+                "SpellSword's Flame Blade",
+                "ShadowFlame SpellSword's Blade",
+                "ShadowFlame SpellSword's Daggers",
+                "SpellSword's Reversed Daggers",
+                "ShadowFlame SpellSword's Tome ",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -58,7 +103,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -69,9 +116,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Shadow BeastMaster":
                 case "Shadow BeastMaster Bow":
@@ -86,7 +138,13 @@ public static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("brightshadow", "Gravelyn the Good", req.Name, quant, false);
+                        Core.HuntMonster(
+                            "brightshadow",
+                            "Gravelyn the Good",
+                            req.Name,
+                            quant,
+                            false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -109,11 +167,16 @@ public static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("chaosamulet", "Shadowflame Warrior", req.Name, quant, false);
+                        Core.HuntMonster(
+                            "chaosamulet",
+                            "Shadowflame Warrior",
+                            req.Name,
+                            quant,
+                            false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
-
 
                 case "ShadowFlame Spellsword":
                 case "ShadowFlame Spellsword's Sheathed Blade":
@@ -149,23 +212,113 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("56461", "Eternal BeastMaster", "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster\" ?", false),
-        new Option<bool>("56462", "Eternal BeastMaster's Locks", "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster's Locks\" ?", false),
-        new Option<bool>("56463", "Eternal BeastMaster's Shag", "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster's Shag\" ?", false),
-        new Option<bool>("56464", "Eternal Beastmaster's Beard", "Mode: [select] only\nShould the bot buy \"Eternal Beastmaster's Beard\" ?", false),
-        new Option<bool>("56465", "Eternal BeastMaster's Bow", "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster's Bow\" ?", false),
-        new Option<bool>("56466", "Eternal BeastMaster's Knuckle", "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster's Knuckle\" ?", false),
-        new Option<bool>("56467", "Eternal BeastMaster's Glaive", "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster's Glaive\" ?", false),
-        new Option<bool>("57089", "Eternal BeastMaster Hood", "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster Hood\" ?", false),
-        new Option<bool>("57090", "Eternal BeastMaster Hood + Mask", "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster Hood + Mask\" ?", false),
-        new Option<bool>("57094", "Eternal BeastMaster Quiver", "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster Quiver\" ?", false),
-        new Option<bool>("56269", "Enchanted Spellsword", "Mode: [select] only\nShould the bot buy \"Enchanted Spellsword\" ?", false),
-        new Option<bool>("56280", "Enchanted Spellsword's Sheathed Blade", "Mode: [select] only\nShould the bot buy \"Enchanted Spellsword's Sheathed Blade\" ?", false),
-        new Option<bool>("56281", "Enchanted Spellsword's Hip Blade", "Mode: [select] only\nShould the bot buy \"Enchanted Spellsword's Hip Blade\" ?", false),
-        new Option<bool>("56284", "Enchanted SpellSword's Flame Blade", "Mode: [select] only\nShould the bot buy \"Enchanted SpellSword's Flame Blade\" ?", false),
-        new Option<bool>("56285", "Enchanted SpellSword's Blade", "Mode: [select] only\nShould the bot buy \"Enchanted SpellSword's Blade\" ?", false),
-        new Option<bool>("56288", "Enchanted SpellSword's Daggers", "Mode: [select] only\nShould the bot buy \"Enchanted SpellSword's Daggers\" ?", false),
-        new Option<bool>("56289", "Enchanted Reversed Daggers", "Mode: [select] only\nShould the bot buy \"Enchanted Reversed Daggers\" ?", false),
-        new Option<bool>("56291", "Enchanted SpellSword's Tome", "Mode: [select] only\nShould the bot buy \"Enchanted SpellSword's Tome\" ?", false),
+        new Option<bool>(
+            "56461",
+            "Eternal BeastMaster",
+            "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56462",
+            "Eternal BeastMaster's Locks",
+            "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster's Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56463",
+            "Eternal BeastMaster's Shag",
+            "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster's Shag\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56464",
+            "Eternal Beastmaster's Beard",
+            "Mode: [select] only\nShould the bot buy \"Eternal Beastmaster's Beard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56465",
+            "Eternal BeastMaster's Bow",
+            "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster's Bow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56466",
+            "Eternal BeastMaster's Knuckle",
+            "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster's Knuckle\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56467",
+            "Eternal BeastMaster's Glaive",
+            "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster's Glaive\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57089",
+            "Eternal BeastMaster Hood",
+            "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57090",
+            "Eternal BeastMaster Hood + Mask",
+            "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster Hood + Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "57094",
+            "Eternal BeastMaster Quiver",
+            "Mode: [select] only\nShould the bot buy \"Eternal BeastMaster Quiver\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56269",
+            "Enchanted Spellsword",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Spellsword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56280",
+            "Enchanted Spellsword's Sheathed Blade",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Spellsword's Sheathed Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56281",
+            "Enchanted Spellsword's Hip Blade",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Spellsword's Hip Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56284",
+            "Enchanted SpellSword's Flame Blade",
+            "Mode: [select] only\nShould the bot buy \"Enchanted SpellSword's Flame Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56285",
+            "Enchanted SpellSword's Blade",
+            "Mode: [select] only\nShould the bot buy \"Enchanted SpellSword's Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56288",
+            "Enchanted SpellSword's Daggers",
+            "Mode: [select] only\nShould the bot buy \"Enchanted SpellSword's Daggers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56289",
+            "Enchanted Reversed Daggers",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Reversed Daggers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56291",
+            "Enchanted SpellSword's Tome",
+            "Mode: [select] only\nShould the bot buy \"Enchanted SpellSword's Tome\" ?",
+            false
+        ),
     };
 }

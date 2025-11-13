@@ -12,7 +12,11 @@ public class FreeAcsTBD
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -20,7 +24,12 @@ public class FreeAcsTBD
         // Core.SetOptions();
 
         // GetYourAcsHere();
-        Core.Logger("Quest Isnt aviable yet! if this is untrue, ping @tato2 or @bogalj on disc.", "Quest Isnt aviable yet!", true, true);
+        Core.Logger(
+            "Quest Isnt aviable yet! if this is untrue, ping @tato2 or @bogalj on disc.",
+            "Quest Isnt aviable yet!",
+            true,
+            true
+        );
 
         // Core.SetOptions(false);
     }

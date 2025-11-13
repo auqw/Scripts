@@ -13,11 +13,23 @@ public class TitanAttackStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -51,7 +63,7 @@ public class TitanAttackStory
         // Infernal Investigation 8763
         Story.KillQuest(8763, "titanattack", new[] { "AntiTitan Corps", "Chaorrupted Bandit" });
 
-        // Another Brick in the Wall 8764        
+        // Another Brick in the Wall 8764
         if (!Story.QuestProgression(8764))
         {
             Story.MapItemQuest(8764, "titanattack", 10350, 3);
@@ -111,10 +123,20 @@ public class TitanAttackStory
 
         // Topple Some Titans! 8776
         Core.AddDrop("Heroic Titan's Greatsword");
-        Story.KillQuest(8776, "titanstrike", new[] { "Titanic Paladin", "Titanic DoomKnight", "Titanic Destroyer" });
+        Story.KillQuest(
+            8776,
+            "titanstrike",
+            new[] { "Titanic Paladin", "Titanic DoomKnight", "Titanic Destroyer" }
+        );
 
         // The BIG Finish 8777
-        Adv.EnhanceItem("Heroic Titan's Greatsword", EnhancementType.Lucky, CapeSpecial.None, HelmSpecial.None, WeaponSpecial.Spiral_Carve);
+        Adv.EnhanceItem(
+            "Heroic Titan's Greatsword",
+            EnhancementType.Lucky,
+            CapeSpecial.None,
+            HelmSpecial.None,
+            WeaponSpecial.Spiral_Carve
+        );
 
         Story.KillQuest(8777, "titandrakath", "Titan Drakath");
     }

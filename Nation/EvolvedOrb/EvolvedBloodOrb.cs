@@ -11,7 +11,12 @@ using Skua.Core.Interfaces;
 public class EvolvedBloodOrb
 {
     public CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -32,5 +37,4 @@ public class EvolvedBloodOrb
         Core.BuyItem("archportal", 1211, 33196, shopItemID: 4181);
         Core.Logger($"Done, you have Blood ball");
     }
-
 }

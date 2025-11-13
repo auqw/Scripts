@@ -16,9 +16,24 @@ public class DageChallengeStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static HeadoftheLegionBeast HOTLB { get => _HOTLB ??= new HeadoftheLegionBeast(); set => _HOTLB = value; }    private static HeadoftheLegionBeast _HOTLB;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static HeadoftheLegionBeast HOTLB
+    {
+        get => _HOTLB ??= new HeadoftheLegionBeast();
+        set => _HOTLB = value;
+    }
+    private static HeadoftheLegionBeast _HOTLB;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -28,7 +43,6 @@ public class DageChallengeStory
 
         Core.SetOptions(false);
     }
-
 
     public void DageChallengeQuests()
     {

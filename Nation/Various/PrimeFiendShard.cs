@@ -50,52 +50,132 @@ tags: prime fiend shard, nation, ravenous, fiend shard, nulgath, voidchasm, void
 //cs_include Scripts/Nation/NationLoyaltyRewarded.cs
 //cs_include Scripts/Story/Legion/DarkWarLegionandNation.cs
 using Skua.Core.Interfaces;
-using Skua.Core.Models.Quests;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Quests;
 
 public class PrimeFiendShard
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static Originul_Story Originul { get => _Originul ??= new Originul_Story(); set => _Originul = value; }
+    private static Originul_Story Originul
+    {
+        get => _Originul ??= new Originul_Story();
+        set => _Originul = value;
+    }
     private static Originul_Story _Originul;
-    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }
+    private static CoreVHL VHL
+    {
+        get => _VHL ??= new CoreVHL();
+        set => _VHL = value;
+    }
     private static CoreVHL _VHL;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static VoidRefugeMerge VoidRefugeMerge { get => _VoidRefugeMerge ??= new VoidRefugeMerge(); set => _VoidRefugeMerge = value; }
+    private static VoidRefugeMerge VoidRefugeMerge
+    {
+        get => _VoidRefugeMerge ??= new VoidRefugeMerge();
+        set => _VoidRefugeMerge = value;
+    }
     private static VoidRefugeMerge _VoidRefugeMerge;
-    private static TempleDelveMerge TempleDelveMerge { get => _TempleDelveMerge ??= new TempleDelveMerge(); set => _TempleDelveMerge = value; }
+    private static TempleDelveMerge TempleDelveMerge
+    {
+        get => _TempleDelveMerge ??= new TempleDelveMerge();
+        set => _TempleDelveMerge = value;
+    }
     private static TempleDelveMerge _TempleDelveMerge;
-    private static DirtlickersMerge DirtlickersMerge { get => _DirtlickersMerge ??= new DirtlickersMerge(); set => _DirtlickersMerge = value; }
+    private static DirtlickersMerge DirtlickersMerge
+    {
+        get => _DirtlickersMerge ??= new DirtlickersMerge();
+        set => _DirtlickersMerge = value;
+    }
     private static DirtlickersMerge _DirtlickersMerge;
-    private static VoidPaladin VoidPaladin { get => _VoidPaladin ??= new VoidPaladin(); set => _VoidPaladin = value; }
+    private static VoidPaladin VoidPaladin
+    {
+        get => _VoidPaladin ??= new VoidPaladin();
+        set => _VoidPaladin = value;
+    }
     private static VoidPaladin _VoidPaladin;
-    private static NulgathDiamondMerge NulgathDiamondMerge { get => _NulgathDiamondMerge ??= new NulgathDiamondMerge(); set => _NulgathDiamondMerge = value; }
+    private static NulgathDiamondMerge NulgathDiamondMerge
+    {
+        get => _NulgathDiamondMerge ??= new NulgathDiamondMerge();
+        set => _NulgathDiamondMerge = value;
+    }
     private static NulgathDiamondMerge _NulgathDiamondMerge;
-    private static VoidSpartan VoidSpartan { get => _VoidSpartan ??= new VoidSpartan(); set => _VoidSpartan = value; }
+    private static VoidSpartan VoidSpartan
+    {
+        get => _VoidSpartan ??= new VoidSpartan();
+        set => _VoidSpartan = value;
+    }
     private static VoidSpartan _VoidSpartan;
-    private static SwirlingTheAbyss SwirlingTheAbyss { get => _SwirlingTheAbyss ??= new SwirlingTheAbyss(); set => _SwirlingTheAbyss = value; }
+    private static SwirlingTheAbyss SwirlingTheAbyss
+    {
+        get => _SwirlingTheAbyss ??= new SwirlingTheAbyss();
+        set => _SwirlingTheAbyss = value;
+    }
     private static SwirlingTheAbyss _SwirlingTheAbyss;
-    private static TradingandStuffSingle TradingandStuffSingle { get => _TradingandStuffSingle ??= new TradingandStuffSingle(); set => _TradingandStuffSingle = value; }
+    private static TradingandStuffSingle TradingandStuffSingle
+    {
+        get => _TradingandStuffSingle ??= new TradingandStuffSingle();
+        set => _TradingandStuffSingle = value;
+    }
     private static TradingandStuffSingle _TradingandStuffSingle;
-    private static VoidAvengerScythe VoidAvengerScythe { get => _VoidAvengerScythe ??= new VoidAvengerScythe(); set => _VoidAvengerScythe = value; }
+    private static VoidAvengerScythe VoidAvengerScythe
+    {
+        get => _VoidAvengerScythe ??= new VoidAvengerScythe();
+        set => _VoidAvengerScythe = value;
+    }
     private static VoidAvengerScythe _VoidAvengerScythe;
-    private static NulgathDemandsWork NulgathDemandsWork { get => _NulgathDemandsWork ??= new NulgathDemandsWork(); set => _NulgathDemandsWork = value; }
+    private static NulgathDemandsWork NulgathDemandsWork
+    {
+        get => _NulgathDemandsWork ??= new NulgathDemandsWork();
+        set => _NulgathDemandsWork = value;
+    }
     private static NulgathDemandsWork _NulgathDemandsWork;
-    private static ArchfiendDeathLord ArchfienddDeathLord { get => _ArchfienddDeathLord ??= new ArchfiendDeathLord(); set => _ArchfienddDeathLord = value; }
+    private static ArchfiendDeathLord ArchfienddDeathLord
+    {
+        get => _ArchfienddDeathLord ??= new ArchfiendDeathLord();
+        set => _ArchfienddDeathLord = value;
+    }
     private static ArchfiendDeathLord _ArchfienddDeathLord;
-    private static WrathofNulgath WrathofNulgath { get => _WrathofNulgath ??= new WrathofNulgath(); set => _WrathofNulgath = value; }
+    private static WrathofNulgath WrathofNulgath
+    {
+        get => _WrathofNulgath ??= new WrathofNulgath();
+        set => _WrathofNulgath = value;
+    }
     private static WrathofNulgath _WrathofNulgath;
-    private static DilligasMerge DilligasMerge { get => _DilligasMerge ??= new DilligasMerge(); set => _DilligasMerge = value; }
+    private static DilligasMerge DilligasMerge
+    {
+        get => _DilligasMerge ??= new DilligasMerge();
+        set => _DilligasMerge = value;
+    }
     private static DilligasMerge _DilligasMerge;
-    private static VoidChasmMerge VoidChasmMerge { get => _VoidChasmMerge ??= new VoidChasmMerge(); set => _VoidChasmMerge = value; }
+    private static VoidChasmMerge VoidChasmMerge
+    {
+        get => _VoidChasmMerge ??= new VoidChasmMerge();
+        set => _VoidChasmMerge = value;
+    }
     private static VoidChasmMerge _VoidChasmMerge;
-    private static NationMerge NationMerge { get => _NationMerge ??= new NationMerge(); set => _NationMerge = value; }
+    private static NationMerge NationMerge
+    {
+        get => _NationMerge ??= new NationMerge();
+        set => _NationMerge = value;
+    }
     private static NationMerge _NationMerge;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -125,7 +205,9 @@ public class PrimeFiendShard
         if (Core.isCompletedBefore(9559))
             return;
 
-        Core.Logger("If you're going to use insingias for the roents, please do so before starting the script, as it will stop otherwise if dont have them.");
+        Core.Logger(
+            "If you're going to use insingias for the roents, please do so before starting the script, as it will stop otherwise if dont have them."
+        );
 
         // Required Class
         VHL.GetVHL();
@@ -154,7 +236,12 @@ public class PrimeFiendShard
                 Nation.FarmDarkCrystalShard(13);
                 Nation.FarmDiamondofNulgath(13);
                 Nation.Supplies(Nation.Uni(21));
-                Core.HuntMonster("evilmarsh", "Tainted Elemental", "Tainted Rune of Evil", log: false);
+                Core.HuntMonster(
+                    "evilmarsh",
+                    "Tainted Elemental",
+                    "Tainted Rune of Evil",
+                    log: false
+                );
                 Core.EnsureComplete(629);
             }
             // 9559 requires x13 uni 13
@@ -259,10 +346,15 @@ public class PrimeFiendShard
                 Core.Unbank(Core.EnsureLoad(8916).Requirements.Select(x => x.ID).ToArray());
                 Core.EnsureComplete(9559);
             }
-            else Core.Logger($"Not enough Roents {Bot.Inventory.GetQuantity("Roentgenium of Nulgath")} / 10");
+            else
+                Core.Logger(
+                    $"Not enough Roents {Bot.Inventory.GetQuantity("Roentgenium of Nulgath")} / 10"
+                );
         }
 
-        var filteredReceipts = Nation.Receipt.Where(item => !item.StartsWith("Unidentified")).ToArray();
+        var filteredReceipts = Nation
+            .Receipt.Where(item => !item.StartsWith("Unidentified"))
+            .ToArray();
         Core.ToBank(filteredReceipts);
         Core.ToBank(Nation.tercessBags);
         Core.ToBank(Nation.bagDrops);

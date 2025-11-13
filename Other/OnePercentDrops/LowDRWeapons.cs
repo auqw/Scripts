@@ -12,15 +12,24 @@ public class LowDRWeapons
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public string OptionsStorage = "1%Weapons";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<Weapons>("Weapons", "Choose Your Weapons", "Extra Weapons can be added as long as they are 1% or lower drop chance.", Weapons.None),
+        new Option<Weapons>(
+            "Weapons",
+            "Choose Your Weapons",
+            "Extra Weapons can be added as long as they are 1% or lower drop chance.",
+            Weapons.None
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -40,79 +49,199 @@ public class LowDRWeapons
             return;
         }
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Adas_Overcharged_Scythe || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
-            Core.KillMonster("laken", "r12", "Left", "Ada", "Ada's Overcharged Scythe", isTemp: false);
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Adas_Overcharged_Scythe
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
+            Core.KillMonster(
+                "laken",
+                "r12",
+                "Left",
+                "Ada",
+                "Ada's Overcharged Scythe",
+                isTemp: false
+            );
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Amethyst_Pickaxe || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Amethyst_Pickaxe
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("djinn", "Tibicenas", "Amethyst Pickaxe", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Ancient_Frying_Pan || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Ancient_Frying_Pan
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("timevoid", "Unending Avatar", "Ancient Frying Pan", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Blood_of_the_Void_Daggers || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
-            Core.HuntMonster("voidbattle", "Jir'abin Challenge", "Blood of the Void Daggers", isTemp: false);
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Blood_of_the_Void_Daggers
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
+            Core.HuntMonster(
+                "voidbattle",
+                "Jir'abin Challenge",
+                "Blood of the Void Daggers",
+                isTemp: false
+            );
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Blood_of_the_Void_Blade || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
-            Core.HuntMonster("voidbattle", "Jir'abin Challenge", "Blood of the Void Blade", isTemp: false);
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Blood_of_the_Void_Blade
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
+            Core.HuntMonster(
+                "voidbattle",
+                "Jir'abin Challenge",
+                "Blood of the Void Blade",
+                isTemp: false
+            );
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Purified_Void_Blade || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
-            Core.HuntMonster("voidbattle", "Jir'abin Challenge", "Purified Void Blade", isTemp: false);
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Purified_Void_Blade
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
+            Core.HuntMonster(
+                "voidbattle",
+                "Jir'abin Challenge",
+                "Purified Void Blade",
+                isTemp: false
+            );
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Purified_Void_Daggers || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
-            Core.HuntMonster("voidbattle", "Jir'abin Challenge", "Purified Void Daggers", isTemp: false);
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Purified_Void_Daggers
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
+            Core.HuntMonster(
+                "voidbattle",
+                "Jir'abin Challenge",
+                "Purified Void Daggers",
+                isTemp: false
+            );
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Burning_Blade || Bot.Config.Get<Weapons>("Weapons") == Weapons.All && !Core.CheckInventory(31058))
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Burning_Blade
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All && !Core.CheckInventory(31058)
+        )
             Core.HuntMonster("lostruinswar", "Diabolical Warlord", "Burning Blade");
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Deaths_Bright_Blade || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Deaths_Bright_Blade
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("citadel", "Death's Head", "Death's Bright Blade", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Deaths_Scythe || Bot.Config.Get<Weapons>("Weapons") == Weapons.All && !Core.CheckInventory(25117))
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Deaths_Scythe
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All && !Core.CheckInventory(25117)
+        )
             Core.HuntMonster("shadowattack", "Death", "Death's Scythe", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Bone_Claws_of_Turmoil || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Bone_Claws_of_Turmoil
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("cloister", "Acornent", "Bone Claws of Turmoil", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Diamonds_Of_Time || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Diamonds_Of_Time
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("cloister", "Acornent", "Diamonds Of Time", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Underworldly_Dark_Wand || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
-            Core.HuntMonster("legionarena", "Exalted Legion Champion", "Underworldly Dark Wand", isTemp: false);
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Underworldly_Dark_Wand
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
+            Core.HuntMonster(
+                "legionarena",
+                "Exalted Legion Champion",
+                "Underworldly Dark Wand",
+                isTemp: false
+            );
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Legion_Chain_Whip || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
-            Core.HuntMonster("legionarena", "Exalted Legion Champion", "Legion Chain Whip", isTemp: false);
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Legion_Chain_Whip
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
+            Core.HuntMonster(
+                "legionarena",
+                "Exalted Legion Champion",
+                "Legion Chain Whip",
+                isTemp: false
+            );
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Blood_Scythe_Of_Destruction || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
-            Core.HuntMonster("infernalspire", "Helzekiel", "Blood Scythe Of Destruction", isTemp: false);
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Blood_Scythe_Of_Destruction
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
+            Core.HuntMonster(
+                "infernalspire",
+                "Helzekiel",
+                "Blood Scythe Of Destruction",
+                isTemp: false
+            );
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Sanctified_Guardian_Blade || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Sanctified_Guardian_Blade
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("aqlesson", "Carnax", "Sanctified Guardian Blade", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Feral_Blade_of_Doom || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Feral_Blade_of_Doom
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("stonewooddeep", "Sir Kut", "Feral Blade of Doom", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Feral_DoomBlade || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Feral_DoomBlade
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("stonewooddeep", "Sir Kut", "Feral DoomBlade", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Ruby_Pickaxe || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Ruby_Pickaxe
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("banished", "Desterrat Moya", "Ruby Pickaxe", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Duel_Swords_of_Vindication || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
-            Core.HuntMonster("xancave", "Shurpu Ring Guardian", "Duel Swords of Vindication", isTemp: false);
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Duel_Swords_of_Vindication
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
+            Core.HuntMonster(
+                "xancave",
+                "Shurpu Ring Guardian",
+                "Duel Swords of Vindication",
+                isTemp: false
+            );
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Apocryphal_Blade_Of_The_Truth || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
-            Core.HuntMonster("banished", "Desterrat Moya", "Apocryphal Blade Of The Truth", isTemp: false);
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Apocryphal_Blade_Of_The_Truth
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
+            Core.HuntMonster(
+                "banished",
+                "Desterrat Moya",
+                "Apocryphal Blade Of The Truth",
+                isTemp: false
+            );
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Evolved_Agony_Chain || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.Evolved_Agony_Chain
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("lust", "Lascivia", "Evolved Agony Chain", isTemp: false);
 
-        if (Bot.Config.Get<Weapons>("Weapons") == Weapons.TOO_Big_100K || Bot.Config.Get<Weapons>("Weapons") == Weapons.All)
+        if (
+            Bot.Config.Get<Weapons>("Weapons") == Weapons.TOO_Big_100K
+            || Bot.Config.Get<Weapons>("Weapons") == Weapons.All
+        )
             Core.HuntMonster("lair", "Red Dragon", "TOO Big 100K", isTemp: false);
-
 
         // if (Bot.Config.Get<Weapons>("Weapons") == Weapons.Insert || Bot.Config.Get<Weapons>("Weapons") == Weapons.All && !Core.CheckInventory("Insert"))
         //         //     Core.HuntMonster("Map", "Mob", "Item", isTemp: false);
-        // 
+        //
     }
 }
 
@@ -142,5 +271,5 @@ public enum Weapons
     Purified_Void_Daggers,
     TOO_Big_100K,
     All,
-    None
+    None,
 }

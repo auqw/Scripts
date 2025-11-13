@@ -11,7 +11,12 @@ public class MoglinPunter
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
     bool Datagood = false;
     bool Finished = false;
 
@@ -32,8 +37,11 @@ public class MoglinPunter
             Core.Logger($"Already have the {badge} badge, or the map is not available.");
             return;
         }
-        Core.OneTimeMessage("Minigame Explanation", "This minigame works off of a \"value\" system for ponts, so 9999 is 99, for the quest so youll need to get a value of 10000 points which may take a while.", forcedMessageBox: true);
-
+        Core.OneTimeMessage(
+            "Minigame Explanation",
+            "This minigame works off of a \"value\" system for ponts, so 9999 is 99, for the quest so youll need to get a value of 10000 points which may take a while.",
+            forcedMessageBox: true
+        );
 
         int Punt = 0;
 
@@ -71,14 +79,21 @@ public class MoglinPunter
                 switch (cmd)
                 {
                     case "ia":
-                        if (data.oName.ToString() == "btnPuntting" && data.unm.ToString() == Core.Username())
+                        if (
+                            data.oName.ToString() == "btnPuntting"
+                            && data.unm.ToString() == Core.Username()
+                        )
                         {
                             Datagood = true;
                             double score = data.val;
-                            double RoundedScore = Math.Round(float.Parse($"{score.ToString()[..^2]}.{score.ToString()[^2..]}"));
+                            double RoundedScore = Math.Round(
+                                float.Parse($"{score.ToString()[..^2]}.{score.ToString()[^2..]}")
+                            );
 
-                            Core.Logger($"Punt [#{Punt++}] | Score [{score} (Rounded Score [{RoundedScore}])], \n" +
-                            $"Win? ({(RoundedScore < 100 ? "❌" : "✅")})");
+                            Core.Logger(
+                                $"Punt [#{Punt++}] | Score [{score} (Rounded Score [{RoundedScore}])], \n"
+                                    + $"Win? ({(RoundedScore < 100 ? "❌" : "✅")})"
+                            );
 
                             if (RoundedScore == 100)
                             {
@@ -87,11 +102,10 @@ public class MoglinPunter
                             }
                         }
                         break;
-
                 }
             }
         }
     }
-    private string badge = "Moglin Punter";
 
+    private string badge = "Moglin Punter";
 }

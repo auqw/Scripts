@@ -13,8 +13,18 @@ public class Safiria
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -37,8 +47,16 @@ public class Safiria
         }
 
         Story.PreLoad(this);
-        Core.AddDrop(new[] { "Djinn's Magic Trace", "Chronomancer's Magic Trace", "Darkblood's Magic Trace", "Dragon's Magic Trace", "Safiria's Blood Sample" });
-
+        Core.AddDrop(
+            new[]
+            {
+                "Djinn's Magic Trace",
+                "Chronomancer's Magic Trace",
+                "Darkblood's Magic Trace",
+                "Dragon's Magic Trace",
+                "Safiria's Blood Sample",
+            }
+        );
 
         //The Stolen Ritual 1939
         Story.KillQuest(1939, "Safiria", "Chaos Lycan");
@@ -57,7 +75,15 @@ public class Safiria
         {
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(1943);
-            Core.KillMonster("djinn", "r6", "Up", "Ultra Tibicenas", "Djinn's Magic Trace", 5, isTemp: false);
+            Core.KillMonster(
+                "djinn",
+                "r6",
+                "Up",
+                "Ultra Tibicenas",
+                "Djinn's Magic Trace",
+                5,
+                isTemp: false
+            );
             Core.EnsureComplete(1943);
         }
 
@@ -67,7 +93,15 @@ public class Safiria
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(1944);
             Core.HuntMonster("mqlesson", "Dragonoid", "Dragonoid of Hours", isTemp: false);
-            Core.KillMonster("ultravoid", "Frame2", "Left", "Ultra Iadoa", "Chronomancer's Magic Trace", 5, isTemp: false);
+            Core.KillMonster(
+                "ultravoid",
+                "Frame2",
+                "Left",
+                "Ultra Iadoa",
+                "Chronomancer's Magic Trace",
+                5,
+                isTemp: false
+            );
             Core.EnsureComplete(1944);
         }
 
@@ -76,7 +110,15 @@ public class Safiria
         {
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(1945);
-            Core.KillMonster("ultralionfang", "Enter", "Spanw", "Ultra Lionfang", "Darkblood's Magic Trace", 5, isTemp: false);
+            Core.KillMonster(
+                "ultralionfang",
+                "Enter",
+                "Spanw",
+                "Ultra Lionfang",
+                "Darkblood's Magic Trace",
+                5,
+                isTemp: false
+            );
             Core.EnsureComplete(1945);
         }
 
@@ -85,7 +127,15 @@ public class Safiria
         {
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(1946);
-            Core.KillMonster("ancienttrigoras", "r2a", "Spawn", "Ancient Trigoras", "Dragon's Magic Trace", 5, isTemp: false);
+            Core.KillMonster(
+                "ancienttrigoras",
+                "r2a",
+                "Spawn",
+                "Ancient Trigoras",
+                "Dragon's Magic Trace",
+                5,
+                isTemp: false
+            );
             Core.EnsureComplete(1946);
         }
 

@@ -12,8 +12,18 @@ public class Necromancer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -37,7 +47,15 @@ public class Necromancer
         Farm.DoomWoodREP();
         Core.BuyItem("lightguard", 277, "NUE Necronomicon");
         Core.EquipClass(ClassType.Solo);
-        Core.KillMonster("maul", "r3", "Down", "Creature Creation", "Creature Shard", isTemp: false, publicRoom: true);
+        Core.KillMonster(
+            "maul",
+            "r3",
+            "Down",
+            "Creature Creation",
+            "Creature Shard",
+            isTemp: false,
+            publicRoom: true
+        );
         Core.BuyItem("necrotower", 285, "Necromancer");
 
         if (rankUpClass)

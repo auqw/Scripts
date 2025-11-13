@@ -12,9 +12,17 @@ public class VoidChasm
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static VoidRefuge VR { get => _VR ??= new VoidRefuge(); set => _VR = value; }
+    private static VoidRefuge VR
+    {
+        get => _VR ??= new VoidRefuge();
+        set => _VR = value;
+    }
     private static VoidRefuge _VR;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -45,7 +53,7 @@ public class VoidChasm
         Story.MapItemQuest(9545, "voidchasm", 12619, 6);
         Story.KillQuest(9545, "voidchasm", "Paladin Ascendant");
 
-        // Tangled Aortas 9546        
+        // Tangled Aortas 9546
         Story.MapItemQuest(9546, "voidchasm", new[] { 12620, 12621 });
 
         // Nation Code 9547

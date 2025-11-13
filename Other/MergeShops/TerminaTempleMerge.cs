@@ -21,29 +21,60 @@ public class TerminaTempleMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
     private static CoreBLOD _BLOD;
-    private static CoreNSOD NSOD { get => _NSOD ??= new CoreNSOD(); set => _NSOD = value; }
+    private static CoreNSOD NSOD
+    {
+        get => _NSOD ??= new CoreNSOD();
+        set => _NSOD = value;
+    }
     private static CoreNSOD _NSOD;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Termina Sigil", "Bright Aura", "Void Aura", "Trace of Chaos", "DragonGuard Badge", "Battle Cleric's Draconic Spear", "Bright Dragon Shield" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Termina Sigil",
+                "Bright Aura",
+                "Void Aura",
+                "Trace of Chaos",
+                "DragonGuard Badge",
+                "Battle Cleric's Draconic Spear",
+                "Bright Dragon Shield",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -60,7 +91,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -71,9 +104,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Bright Dragon Shield":
                 case "Battle Cleric's Draconic Spear":
@@ -84,7 +122,13 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(9215);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("terminatemple", "Termina Defender", "Defender Sparred With", 8, log: false);
+                        Core.HuntMonster(
+                            "terminatemple",
+                            "Termina Defender",
+                            "Defender Sparred With",
+                            8,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -106,31 +150,125 @@ private static CoreAdvanced _sAdv;
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("77403", "Dragonlord of Good", "Mode: [select] only\nShould the bot buy \"Dragonlord of Good\" ?", false),
-        new Option<bool>("77404", "Golden Dragonlord's Helmet", "Mode: [select] only\nShould the bot buy \"Golden Dragonlord's Helmet\" ?", false),
-        new Option<bool>("77405", "Royal Dragonlord's Wrap", "Mode: [select] only\nShould the bot buy \"Royal Dragonlord's Wrap\" ?", false),
-        new Option<bool>("77406", "Golden Dragonlord's Blade", "Mode: [select] only\nShould the bot buy \"Golden Dragonlord's Blade\" ?", false),
-        new Option<bool>("77407", "Dragonlord of Evil", "Mode: [select] only\nShould the bot buy \"Dragonlord of Evil\" ?", false),
-        new Option<bool>("77408", "Tyrannical Dragonlord's Helmet", "Mode: [select] only\nShould the bot buy \"Tyrannical Dragonlord's Helmet\" ?", false),
-        new Option<bool>("77409", "Tyrannical Dragonlord's Wrap", "Mode: [select] only\nShould the bot buy \"Tyrannical Dragonlord's Wrap\" ?", false),
-        new Option<bool>("77410", "Tyrannical Dragonlord's Doomblade", "Mode: [select] only\nShould the bot buy \"Tyrannical Dragonlord's Doomblade\" ?", false),
-        new Option<bool>("77411", "Dragonlord of Chaos", "Mode: [select] only\nShould the bot buy \"Dragonlord of Chaos\" ?", false),
-        new Option<bool>("77412", "Chaorrupted Dragonlord's Helmet", "Mode: [select] only\nShould the bot buy \"Chaorrupted Dragonlord's Helmet\" ?", false),
-        new Option<bool>("77413", "Chaorrupted Dragonlord's Wrap", "Mode: [select] only\nShould the bot buy \"Chaorrupted Dragonlord's Wrap\" ?", false),
-        new Option<bool>("77414", "Chaorrupted Dragonblade", "Mode: [select] only\nShould the bot buy \"Chaorrupted Dragonblade\" ?", false),
-        new Option<bool>("77668", "Battle Cleric of the Dragon", "Mode: [select] only\nShould the bot buy \"Battle Cleric of the Dragon\" ?", false),
-        new Option<bool>("77669", "Battle Cleric's Helm", "Mode: [select] only\nShould the bot buy \"Battle Cleric's Helm\" ?", false),
-        new Option<bool>("77670", "Battle Cleric's Bright Cloak", "Mode: [select] only\nShould the bot buy \"Battle Cleric's Bright Cloak\" ?", false),
-        new Option<bool>("77673", "Battle Cleric's Bright Accoutrements", "Mode: [select] only\nShould the bot buy \"Battle Cleric's Bright Accoutrements\" ?", false),
-        new Option<bool>("85297", "Chaos Gaze Scythe", "Mode: [select] only\nShould the bot buy \"Chaos Gaze Scythe\" ?", false),
-        new Option<bool>("85298", "Empire's Origin Scythe", "Mode: [select] only\nShould the bot buy \"Empire's Origin Scythe\" ?", false),
-        new Option<bool>("85299", "Justified Victory Scythe", "Mode: [select] only\nShould the bot buy \"Justified Victory Scythe\" ?", false),
+        new Option<bool>(
+            "77403",
+            "Dragonlord of Good",
+            "Mode: [select] only\nShould the bot buy \"Dragonlord of Good\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77404",
+            "Golden Dragonlord's Helmet",
+            "Mode: [select] only\nShould the bot buy \"Golden Dragonlord's Helmet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77405",
+            "Royal Dragonlord's Wrap",
+            "Mode: [select] only\nShould the bot buy \"Royal Dragonlord's Wrap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77406",
+            "Golden Dragonlord's Blade",
+            "Mode: [select] only\nShould the bot buy \"Golden Dragonlord's Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77407",
+            "Dragonlord of Evil",
+            "Mode: [select] only\nShould the bot buy \"Dragonlord of Evil\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77408",
+            "Tyrannical Dragonlord's Helmet",
+            "Mode: [select] only\nShould the bot buy \"Tyrannical Dragonlord's Helmet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77409",
+            "Tyrannical Dragonlord's Wrap",
+            "Mode: [select] only\nShould the bot buy \"Tyrannical Dragonlord's Wrap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77410",
+            "Tyrannical Dragonlord's Doomblade",
+            "Mode: [select] only\nShould the bot buy \"Tyrannical Dragonlord's Doomblade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77411",
+            "Dragonlord of Chaos",
+            "Mode: [select] only\nShould the bot buy \"Dragonlord of Chaos\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77412",
+            "Chaorrupted Dragonlord's Helmet",
+            "Mode: [select] only\nShould the bot buy \"Chaorrupted Dragonlord's Helmet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77413",
+            "Chaorrupted Dragonlord's Wrap",
+            "Mode: [select] only\nShould the bot buy \"Chaorrupted Dragonlord's Wrap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77414",
+            "Chaorrupted Dragonblade",
+            "Mode: [select] only\nShould the bot buy \"Chaorrupted Dragonblade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77668",
+            "Battle Cleric of the Dragon",
+            "Mode: [select] only\nShould the bot buy \"Battle Cleric of the Dragon\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77669",
+            "Battle Cleric's Helm",
+            "Mode: [select] only\nShould the bot buy \"Battle Cleric's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77670",
+            "Battle Cleric's Bright Cloak",
+            "Mode: [select] only\nShould the bot buy \"Battle Cleric's Bright Cloak\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77673",
+            "Battle Cleric's Bright Accoutrements",
+            "Mode: [select] only\nShould the bot buy \"Battle Cleric's Bright Accoutrements\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85297",
+            "Chaos Gaze Scythe",
+            "Mode: [select] only\nShould the bot buy \"Chaos Gaze Scythe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85298",
+            "Empire's Origin Scythe",
+            "Mode: [select] only\nShould the bot buy \"Empire's Origin Scythe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85299",
+            "Justified Victory Scythe",
+            "Mode: [select] only\nShould the bot buy \"Justified Victory Scythe\" ?",
+            false
+        ),
     };
 }

@@ -17,13 +17,29 @@ public class ArmyFreeAcs
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static FreeAcs ACs { get => _ACs ??= new FreeAcs(); set => _ACs = value; }
+    private static FreeAcs ACs
+    {
+        get => _ACs ??= new FreeAcs();
+        set => _ACs = value;
+    }
     private static FreeAcs _ACs;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -37,7 +53,10 @@ public class ArmyFreeAcs
 
     private void Doit()
     {
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         while (!Bot.ShouldExit && Army.doForAll())
         {

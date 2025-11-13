@@ -4,11 +4,11 @@ description: Pick multiple scripts that you want to run in sequence of one anoth
 tags: generator, queud, script, follow-up, choose
 */
 //cs_include Scripts/CoreBots.cs
-using Skua.Core.Interfaces;
-using Skua.Core.ViewModels;
-using Skua.Core.Models;
 using System.IO;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Skua.Core.Interfaces;
+using Skua.Core.Models;
+using Skua.Core.ViewModels;
 
 public class GenQueueScript
 {
@@ -19,6 +19,7 @@ public class GenQueueScript
     {
         GenerateQueuedScript();
     }
+
 #nullable enable
 
     public void GenerateQueuedScript()
@@ -42,17 +43,27 @@ public class GenQueueScript
             if (path == null)
                 break;
 
-            string includePath = Path.Combine("Scripts", path.Replace('\\', '/').Split("/Scripts/").Last()).Replace('\\', '/');
+            string includePath = Path.Combine(
+                    "Scripts",
+                    path.Replace('\\', '/').Split("/Scripts/").Last()
+                )
+                .Replace('\\', '/');
             if (includePath.ToLower().Contains("core"))
             {
-                Bot.ShowMessageBox($"The bot you selected: [{includePath}] has is a Core-file.\nCore-files are not meant to be run, not even as a queued script", "Core-file selected");
+                Bot.ShowMessageBox(
+                    $"The bot you selected: [{includePath}] has is a Core-file.\nCore-files are not meant to be run, not even as a queued script",
+                    "Core-file selected"
+                );
                 continue;
             }
 
             string[] file = File.ReadAllLines(Path.Combine(ClientFileSources.SkuaDIR, includePath));
             if (file.Any(l => l.Contains("public List<IOption>")))
             {
-                Bot.ShowMessageBox($"The bot you selected: [{includePath}] has \"Script Options\", these are not supported for queued scripts. It will not be added to the queue", "Contains Script Options!");
+                Bot.ShowMessageBox(
+                    $"The bot you selected: [{includePath}] has \"Script Options\", these are not supported for queued scripts. It will not be added to the queue",
+                    "Contains Script Options!"
+                );
                 continue;
             }
 
@@ -70,7 +81,11 @@ public class GenQueueScript
         foreach (var script in scripts)
         {
             // CS Includes
-            foreach (var line in script.SkipWhile(l => !l.StartsWith("//cs_include")).TakeWhile(l => l.StartsWith("//cs_include")))
+            foreach (
+                var line in script
+                    .SkipWhile(l => !l.StartsWith("//cs_include"))
+                    .TakeWhile(l => l.StartsWith("//cs_include"))
+            )
             {
                 if (!csIncludes.Contains(line))
                 {
@@ -79,7 +94,10 @@ public class GenQueueScript
             }
 
             // Class
-            string className = Array.Find(script, l => l.Contains("public class"))!.Split("public class ").Last();
+            string className = Array
+                .Find(script, l => l.Contains("public class"))!
+                .Split("public class ")
+                .Last();
             classes.Add($"    private {className} {className} = new();");
 
             // Script Options (I gave up)
@@ -152,14 +170,19 @@ public class GenQueueScript
             #endregion
 
             // Methods
-            int scriptMainIndex = Array.FindIndex(script, l => l.ToLower().Contains("public void scriptmain(iscriptinterface bot)"));
+            int scriptMainIndex = Array.FindIndex(
+                script,
+                l => l.ToLower().Contains("public void scriptmain(iscriptinterface bot)")
+            );
             if (scriptMainIndex < 0)
             {
                 Bot.Log("Failed to find scriptMainIndex");
                 continue;
             }
 
-            string spaces = new string(script[scriptMainIndex].TakeWhile(c => c == ' ').ToArray()) ?? string.Empty;
+            string spaces =
+                new string(script[scriptMainIndex].TakeWhile(c => c == ' ').ToArray())
+                ?? string.Empty;
             int scriptMainEnd = Array.IndexOf(script, spaces + "}", scriptMainIndex);
             if (scriptMainEnd < 0)
             {
@@ -169,15 +192,28 @@ public class GenQueueScript
 
             foreach (var line in script[(scriptMainIndex + 1)..scriptMainEnd])
             {
-                if (!lineBlackList.Any(l => line.ToLower().Contains(l)) && !string.IsNullOrEmpty(line) && !string.IsNullOrWhiteSpace(line) && !line.Trim().StartsWith("//"))
+                if (
+                    !lineBlackList.Any(l => line.ToLower().Contains(l))
+                    && !string.IsNullOrEmpty(line)
+                    && !string.IsNullOrWhiteSpace(line)
+                    && !line.Trim().StartsWith("//")
+                )
                 {
-                    methods.Add($"        {(line.Contains('.') ? "" : className + ".")}{line.Trim()}");
+                    methods.Add(
+                        $"        {(line.Contains('.') ? "" : className + ".")}{line.Trim()}"
+                    );
                     if (line.Contains('.') && !line.Contains("Core"))
                     {
-                        string? _otherClass = Array.Find(script, l =>
-                                                    (l.Contains("private") || l.Contains("public") &&
-                                                    l.Contains($" {line.Trim().Split('.').First()} =") &&
-                                                    l.Contains(" new();")));
+                        string? _otherClass = Array.Find(
+                            script,
+                            l =>
+                                (
+                                    l.Contains("private")
+                                    || l.Contains("public")
+                                        && l.Contains($" {line.Trim().Split('.').First()} =")
+                                        && l.Contains(" new();")
+                                )
+                        );
                         if (_otherClass != null && !classes.Contains(_otherClass))
                             classes.Add(_otherClass);
                     }
@@ -190,59 +226,70 @@ public class GenQueueScript
         if (options.Count > 0)
             newFile.Add("using Skua.Core.Options;");
 
-        InputDialogViewModel diag = new("Name the bot", "What is the name you wish to give the bot. (case-sensitive)", false);
+        InputDialogViewModel diag = new(
+            "Name the bot",
+            "What is the name you wish to give the bot. (case-sensitive)",
+            false
+        );
         if (Ioc.Default.GetRequiredService<IDialogService>().ShowDialog(diag) != true)
             return;
         string botName = removeInvalidChar(diag.DialogTextInput);
 
-        newFile.AddRange(new List<string>() {
-            "using Skua.Core.Interfaces;",
-            "",
-            "public class Generated_" + botName,
-            "{",
-            "    private IScriptInterface Bot => IScriptInterface.Instance;",
-            "    private CoreBots Core => CoreBots.Instance;",
-        });
+        newFile.AddRange(
+            new List<string>()
+            {
+                "using Skua.Core.Interfaces;",
+                "",
+                "public class Generated_" + botName,
+                "{",
+                "    private IScriptInterface Bot => IScriptInterface.Instance;",
+                "    private CoreBots Core => CoreBots.Instance;",
+            }
+        );
         newFile.AddRange(classes);
         if (staticClasses.Count > 0)
             newFile.AddRange(staticClasses);
         if (options.Count > 0)
         {
-            newFile.AddRange(new List<string>() {
-                "",
-                $"    public string[] MultiOptions = {{ {string.Join(", ", optionNames)} }};",
-                $"    public string OptionsStorage = \"Generated_{botName}\";"
-            });
+            newFile.AddRange(
+                new List<string>()
+                {
+                    "",
+                    $"    public string[] MultiOptions = {{ {string.Join(", ", optionNames)} }};",
+                    $"    public string OptionsStorage = \"Generated_{botName}\";",
+                }
+            );
             newFile.AddRange(options);
         }
-        newFile.AddRange(new List<string>() {
-            "",
-            "    public void ScriptMain(IScriptInterface Bot)",
-            "    {",
-            "        Core.SetOptions();",
-            "",
-        });
+        newFile.AddRange(
+            new List<string>()
+            {
+                "",
+                "    public void ScriptMain(IScriptInterface Bot)",
+                "    {",
+                "        Core.SetOptions();",
+                "",
+            }
+        );
         newFile.AddRange(methods);
-        newFile.AddRange(new List<string>() {
-            "",
-            "        Core.SetOptions(false);",
-            "    }",
-            "}"
-        });
+        newFile.AddRange(
+            new List<string>() { "", "        Core.SetOptions(false);", "    }", "}" }
+        );
 
         if (!Directory.Exists(Path.Combine(ClientFileSources.SkuaScriptsDIR, "Generated")))
             Directory.CreateDirectory(Path.Combine(ClientFileSources.SkuaScriptsDIR, "Generated"));
-        Core.WriteFile(Path.Combine(ClientFileSources.SkuaScriptsDIR, "Generated", botName + ".cs"), newFile);
+        Core.WriteFile(
+            Path.Combine(ClientFileSources.SkuaScriptsDIR, "Generated", botName + ".cs"),
+            newFile
+        );
 
-        Bot.ShowMessageBox($"File Path:\n- Scripts/Generated/{botName}.cs\n\nIt does the following bots in the same order:\n- {string.Join("\n- ", scriptNames)}", "Script is succesfully generated");
+        Bot.ShowMessageBox(
+            $"File Path:\n- Scripts/Generated/{botName}.cs\n\nIt does the following bots in the same order:\n- {string.Join("\n- ", scriptNames)}",
+            "Script is succesfully generated"
+        );
     }
 
-    private string[] lineBlackList = {
-        "{",
-        "core",
-        "bot",
-        "}"
-    };
+    private string[] lineBlackList = { "{", "core", "bot", "}" };
 
     //private string[] optionsBlackList = {
     //    "{",

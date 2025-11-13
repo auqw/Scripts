@@ -13,8 +13,18 @@ public class AssistingOblivionBlade
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +44,14 @@ public class AssistingOblivionBlade
             return;
 
         if (!Core.CheckInventory("Tendurrr The Assistant"))
-            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Tendurrr The Assistant", isTemp: false);
+            Core.KillMonster(
+                "tercessuinotlim",
+                "m2",
+                "Left",
+                "*",
+                "Tendurrr The Assistant",
+                isTemp: false
+            );
 
         List<ItemBase> RewardOptions = Core.EnsureLoad(5818).Rewards;
         List<string> RewardsList = new();

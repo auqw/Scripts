@@ -11,7 +11,12 @@ public class ArtixWedding
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -21,6 +26,7 @@ public class ArtixWedding
 
         Core.SetOptions(false);
     }
+
     public void ArtixWeddingComplete()
     {
         GrimskullAnnex();
@@ -46,7 +52,6 @@ public class ArtixWedding
 
         //Just a FEW More Monsters... 3234
         Story.KillQuest(3234, "GrimskullAnnex", "Grim Soldier");
-
     }
 
     public void ArtixWeddingQuests()

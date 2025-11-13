@@ -8,28 +8,45 @@ tags: arch, mage, army, boss, items, "calamitous ruin", "vital exanima", "everli
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 using Skua.Core.Interfaces;
-using Skua.Core.Options;
-using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Monsters;
+using Skua.Core.Options;
 
 public class ArchMageMatsArmy
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
-private static CoreArmyLite _sArmy;
-
+    private static CoreArmyLite _sArmy;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "BossDrops";
     public List<IOption> Options = new()
     {
-        new Option<bool>("sellToSync", "Sell to Sync", "Sell items to make sure the army stays syncronized.\nIf off, there is a higher chance your army might desyncornize", false),
+        new Option<bool>(
+            "sellToSync",
+            "Sell to Sync",
+            "Sell items to make sure the army stays syncronized.\nIf off, there is a higher chance your army might desyncornize",
+            false
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -38,7 +55,7 @@ private static CoreArmyLite _sArmy;
         sArmy.player6,
         sArmy.player7,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public string[] Drops =
@@ -60,7 +77,10 @@ private static CoreArmyLite _sArmy;
         Core.SetOptions(disableClassSwap: true);
 
         Bot.Events.PlayerAFK += PlayerAFK;
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
         GetmBois();
         Bot.Events.PlayerAFK -= PlayerAFK;
 
@@ -85,7 +105,16 @@ private static CoreArmyLite _sArmy;
         Core.Logger("Jobs done!");
     }
 
-    public void ArmyKillMonster(string map, string cell, int MonID, string item, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
+    public void ArmyKillMonster(
+        string map,
+        string cell,
+        int MonID,
+        string item,
+        int quant = 1,
+        bool isTemp = true,
+        bool log = true,
+        bool publicRoom = false
+    )
     {
         if (string.IsNullOrEmpty(item) || Core.CheckInventory(item, quant))
             return;
@@ -155,14 +184,19 @@ private static CoreArmyLite _sArmy;
             bool shouldExit = false;
             while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             {
-                foreach (Monster M in Bot.Monsters.MapMonsters.Where(mon => mon != null && mon.MapID is 1 or 2))
+                foreach (
+                    Monster M in Bot.Monsters.MapMonsters.Where(mon =>
+                        mon != null && mon.MapID is 1 or 2
+                    )
+                )
                 {
-
                     while (!Bot.ShouldExit && mon.HP >= 0 && !shouldExit)
                     {
                         Bot.Combat.Attack(M.MapID);
                         Core.Sleep();
-                        shouldExit = Bot.TempInv.Contains(item, quant) || Bot.Inventory.Contains(item, quant);
+                        shouldExit =
+                            Bot.TempInv.Contains(item, quant)
+                            || Bot.Inventory.Contains(item, quant);
                     }
 
                     if (shouldExit)
@@ -187,7 +221,6 @@ private static CoreArmyLite _sArmy;
         Core.JumpWait();
     }
 
-
     void DarkCarnaxMove(string zone)
     {
         Core.Sleep();
@@ -210,11 +243,11 @@ private static CoreArmyLite _sArmy;
                 break;
         }
     }
+
     public void PlayerAFK()
     {
         Core.Logger("Anti-AFK engaged");
         Core.Sleep(1500);
         Bot.Send.Packet("%xt%zm%afk%1%false%");
     }
-
 }

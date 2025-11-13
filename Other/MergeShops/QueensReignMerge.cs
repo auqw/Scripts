@@ -15,28 +15,52 @@ public class QueensReignMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Ancient Hourglass", "LightningLord", "LightningLord Helm", "LightningLord Locks", "LightningLord Rune " });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Ancient Hourglass",
+                "LightningLord",
+                "LightningLord Helm",
+                "LightningLord Locks",
+                "LightningLord Rune ",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -54,7 +78,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +91,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Ancient Hourglass":
                     Core.FarmingLogger(req.Name, quant);
@@ -96,32 +127,131 @@ public static CoreAdvanced _sAdv;
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("64192", "Geomancer Armor", "Mode: [select] only\nShould the bot buy \"Geomancer Armor\" ?", false),
-        new Option<bool>("64193", "Geomancer Hair", "Mode: [select] only\nShould the bot buy \"Geomancer Hair\" ?", false),
-        new Option<bool>("64194", "Geomancer Cape", "Mode: [select] only\nShould the bot buy \"Geomancer Cape\" ?", false),
-        new Option<bool>("64195", "Geomancer Dagger", "Mode: [select] only\nShould the bot buy \"Geomancer Dagger\" ?", false),
-        new Option<bool>("64248", "Prismatic LightningLord", "Mode: [select] only\nShould the bot buy \"Prismatic LightningLord\" ?", false),
-        new Option<bool>("64249", "Prismatic LightningLord Helm", "Mode: [select] only\nShould the bot buy \"Prismatic LightningLord Helm\" ?", false),
-        new Option<bool>("64250", "Prismatic LightningLord Locks", "Mode: [select] only\nShould the bot buy \"Prismatic LightningLord Locks\" ?", false),
-        new Option<bool>("64251", "Prismatic LightningLord Rune", "Mode: [select] only\nShould the bot buy \"Prismatic LightningLord Rune\" ?", false),
-        new Option<bool>("64258", "Magistral Aeromancer", "Mode: [select] only\nShould the bot buy \"Magistral Aeromancer\" ?", false),
-        new Option<bool>("64260", "Magistral Sage's Hood", "Mode: [select] only\nShould the bot buy \"Magistral Sage's Hood\" ?", false),
-        new Option<bool>("64261", "Magistral's Velificatio", "Mode: [select] only\nShould the bot buy \"Magistral's Velificatio\" ?", false),
-        new Option<bool>("64262", "Magistral's Divine Velificatio", "Mode: [select] only\nShould the bot buy \"Magistral's Divine Velificatio\" ?", false),
-        new Option<bool>("64263", "Magistral's Longbow", "Mode: [select] only\nShould the bot buy \"Magistral's Longbow\" ?", false),
-        new Option<bool>("64264", "Magistral's Bow + Arrow", "Mode: [select] only\nShould the bot buy \"Magistral's Bow + Arrow\" ?", false),
-        new Option<bool>("64265", "Magistral's Weather Staff", "Mode: [select] only\nShould the bot buy \"Magistral's Weather Staff\" ?", false),
-        new Option<bool>("64359", "Drenched Monk", "Mode: [select] only\nShould the bot buy \"Drenched Monk\" ?", false),
-        new Option<bool>("64365", "Liquified Hood", "Mode: [select] only\nShould the bot buy \"Liquified Hood\" ?", false),
-        new Option<bool>("64361", "Drenched Pigtails", "Mode: [select] only\nShould the bot buy \"Drenched Pigtails\" ?", false),
-        new Option<bool>("64360", "Drenched Cut", "Mode: [select] only\nShould the bot buy \"Drenched Cut\" ?", false),
-        new Option<bool>("64367", "Drenched Ringstaff", "Mode: [select] only\nShould the bot buy \"Drenched Ringstaff\" ?", false),
+        new Option<bool>(
+            "64192",
+            "Geomancer Armor",
+            "Mode: [select] only\nShould the bot buy \"Geomancer Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64193",
+            "Geomancer Hair",
+            "Mode: [select] only\nShould the bot buy \"Geomancer Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64194",
+            "Geomancer Cape",
+            "Mode: [select] only\nShould the bot buy \"Geomancer Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64195",
+            "Geomancer Dagger",
+            "Mode: [select] only\nShould the bot buy \"Geomancer Dagger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64248",
+            "Prismatic LightningLord",
+            "Mode: [select] only\nShould the bot buy \"Prismatic LightningLord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64249",
+            "Prismatic LightningLord Helm",
+            "Mode: [select] only\nShould the bot buy \"Prismatic LightningLord Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64250",
+            "Prismatic LightningLord Locks",
+            "Mode: [select] only\nShould the bot buy \"Prismatic LightningLord Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64251",
+            "Prismatic LightningLord Rune",
+            "Mode: [select] only\nShould the bot buy \"Prismatic LightningLord Rune\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64258",
+            "Magistral Aeromancer",
+            "Mode: [select] only\nShould the bot buy \"Magistral Aeromancer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64260",
+            "Magistral Sage's Hood",
+            "Mode: [select] only\nShould the bot buy \"Magistral Sage's Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64261",
+            "Magistral's Velificatio",
+            "Mode: [select] only\nShould the bot buy \"Magistral's Velificatio\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64262",
+            "Magistral's Divine Velificatio",
+            "Mode: [select] only\nShould the bot buy \"Magistral's Divine Velificatio\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64263",
+            "Magistral's Longbow",
+            "Mode: [select] only\nShould the bot buy \"Magistral's Longbow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64264",
+            "Magistral's Bow + Arrow",
+            "Mode: [select] only\nShould the bot buy \"Magistral's Bow + Arrow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64265",
+            "Magistral's Weather Staff",
+            "Mode: [select] only\nShould the bot buy \"Magistral's Weather Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64359",
+            "Drenched Monk",
+            "Mode: [select] only\nShould the bot buy \"Drenched Monk\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64365",
+            "Liquified Hood",
+            "Mode: [select] only\nShould the bot buy \"Liquified Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64361",
+            "Drenched Pigtails",
+            "Mode: [select] only\nShould the bot buy \"Drenched Pigtails\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64360",
+            "Drenched Cut",
+            "Mode: [select] only\nShould the bot buy \"Drenched Cut\" ?",
+            false
+        ),
+        new Option<bool>(
+            "64367",
+            "Drenched Ringstaff",
+            "Mode: [select] only\nShould the bot buy \"Drenched Ringstaff\" ?",
+            false
+        ),
     };
 }

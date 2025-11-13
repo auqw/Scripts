@@ -14,9 +14,17 @@ public class CoreSoC
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
     private static CoreSoW _SoW;
 
     public void ScriptMain(IScriptInterface bot)
@@ -232,7 +240,17 @@ public class CoreSoC
         Story.PreLoad(this);
 
         // Invasion!
-        Story.KillQuest(7728, "Shadowoff", new[] { "Shadowflame Militia", "Shadowflame Paladin", "Shadowflame Scout", "Shadowflame Sorcerer" });
+        Story.KillQuest(
+            7728,
+            "Shadowoff",
+            new[]
+            {
+                "Shadowflame Militia",
+                "Shadowflame Paladin",
+                "Shadowflame Scout",
+                "Shadowflame Sorcerer",
+            }
+        );
 
         //Rescue Needed
         Story.MapItemQuest(7729, "Shadowoff", 7699, 6);
@@ -242,7 +260,11 @@ public class CoreSoC
         Story.KillQuest(7730, "Shadowoff", "Shadowflame Militia");
 
         //Clue me in
-        Story.KillQuest(7731, "Shadowoff", new[] { "Shadowflame Militia", "Shadowflame Scout", "Shadowflame Sorcerer" });
+        Story.KillQuest(
+            7731,
+            "Shadowoff",
+            new[] { "Shadowflame Militia", "Shadowflame Scout", "Shadowflame Sorcerer" }
+        );
 
         //So Familiar
         Story.KillQuest(7732, "Shadowoff", "Shadowflame Paladin");
@@ -276,7 +298,11 @@ public class CoreSoC
         Story.KillQuest(7737, "BrightShadow", "Gravelyn the Good", AutoCompleteQuest: false);
 
         //Restoring Order 7738
-        Story.KillQuest(7738, "BrightShadow", new[] { "Brightfall light", "Brightfall Guard", "Shadowflame Paladin" });
+        Story.KillQuest(
+            7738,
+            "BrightShadow",
+            new[] { "Brightfall light", "Brightfall Guard", "Shadowflame Paladin" }
+        );
     }
 
     public void BrightChaos()
@@ -296,7 +322,11 @@ public class CoreSoC
         Story.KillQuest(7741, "BrightChaos", "Shadowflame Sorcerer");
 
         //Percision Strike 7742
-        Story.KillQuest(7742, "BrightChaos", new[] { "Shadowflame Militia", "Shadowflame Sorcerer" });
+        Story.KillQuest(
+            7742,
+            "BrightChaos",
+            new[] { "Shadowflame Militia", "Shadowflame Sorcerer" }
+        );
 
         //Pants On Fire 7743
         Story.MapItemQuest(7743, "BrightChaos", 7731, 6);
@@ -375,7 +405,14 @@ public class CoreSoC
         if (!Story.QuestProgression(7764))
         {
             Core.EnsureAccept(7764);
-            Core.KillMonster("BrightForestPast", "r8", "Left", "Twisted Treeant", "Twisted Treeant Slain", 10);
+            Core.KillMonster(
+                "BrightForestPast",
+                "r8",
+                "Left",
+                "Twisted Treeant",
+                "Twisted Treeant Slain",
+                10
+            );
             Core.EnsureComplete(7764);
         }
 

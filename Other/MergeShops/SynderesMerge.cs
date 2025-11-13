@@ -15,21 +15,36 @@ public class SynderesMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -54,7 +69,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +82,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Synderes' Souvenir":
                     Core.FarmingLogger(req.Name, quant);
@@ -76,27 +98,81 @@ public static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         //Synderes Souvenirs Shop 4247
-                        Core.HuntMonster("enemyforest", "Evil Elemental", "Forest Denizen Slain", 5);
+                        Core.HuntMonster(
+                            "enemyforest",
+                            "Evil Elemental",
+                            "Forest Denizen Slain",
+                            5
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("29574", "Synderes' Cape of Doom", "Mode: [select] only\nShould the bot buy \"Synderes' Cape of Doom\" ?", false),
-        new Option<bool>("29576", "NO BOTS Armor", "Mode: [select] only\nShould the bot buy \"NO BOTS Armor\" ?", false),
-        new Option<bool>("29711", "Synderes Groupie Armor", "Mode: [select] only\nShould the bot buy \"Synderes Groupie Armor\" ?", false),
-        new Option<bool>("29753", "Sock Monkey Cape", "Mode: [select] only\nShould the bot buy \"Sock Monkey Cape\" ?", false),
-        new Option<bool>("29754", "Synderes Acoustic Guitar", "Mode: [select] only\nShould the bot buy \"Synderes Acoustic Guitar\" ?", false),
-        new Option<bool>("29755", "Synderes Electric", "Mode: [select] only\nShould the bot buy \"Synderes Electric\" ?", false),
-        new Option<bool>("29756", "Expendable Rogue Mask", "Mode: [select] only\nShould the bot buy \"Expendable Rogue Mask\" ?", false),
-        new Option<bool>("29757", "Expendable Rogue", "Mode: [select] only\nShould the bot buy \"Expendable Rogue\" ?", false),
-        new Option<bool>("29758", "Synderes Minion Mask and Locks", "Mode: [select] only\nShould the bot buy \"Synderes Minion Mask and Locks\" ?", false),
-        new Option<bool>("29759", "Synderes Minion Mask", "Mode: [select] only\nShould the bot buy \"Synderes Minion Mask\" ?", false),
+        new Option<bool>(
+            "29574",
+            "Synderes' Cape of Doom",
+            "Mode: [select] only\nShould the bot buy \"Synderes' Cape of Doom\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29576",
+            "NO BOTS Armor",
+            "Mode: [select] only\nShould the bot buy \"NO BOTS Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29711",
+            "Synderes Groupie Armor",
+            "Mode: [select] only\nShould the bot buy \"Synderes Groupie Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29753",
+            "Sock Monkey Cape",
+            "Mode: [select] only\nShould the bot buy \"Sock Monkey Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29754",
+            "Synderes Acoustic Guitar",
+            "Mode: [select] only\nShould the bot buy \"Synderes Acoustic Guitar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29755",
+            "Synderes Electric",
+            "Mode: [select] only\nShould the bot buy \"Synderes Electric\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29756",
+            "Expendable Rogue Mask",
+            "Mode: [select] only\nShould the bot buy \"Expendable Rogue Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29757",
+            "Expendable Rogue",
+            "Mode: [select] only\nShould the bot buy \"Expendable Rogue\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29758",
+            "Synderes Minion Mask and Locks",
+            "Mode: [select] only\nShould the bot buy \"Synderes Minion Mask and Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29759",
+            "Synderes Minion Mask",
+            "Mode: [select] only\nShould the bot buy \"Synderes Minion Mask\" ?",
+            false
+        ),
     };
 }

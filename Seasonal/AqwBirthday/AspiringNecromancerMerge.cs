@@ -15,28 +15,45 @@ public class AspiringNecromancerMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Necromancer's Pride", "Necromancer's Joy", "Necromancer's Insanity " });
+        Core.BankingBlackList.AddRange(
+            new[] { "Necromancer's Pride", "Necromancer's Joy", "Necromancer's Insanity " }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -57,7 +74,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -68,9 +87,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Necromancer's Pride":
                     Core.FarmingLogger(req.Name, quant);
@@ -79,7 +103,13 @@ public static CoreAdvanced _sAdv;
                     Core.RegisterQuests(7751);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterMapID("battleundera", 10, "Skeleton Captured", 10, log: false);
+                        Core.HuntMonsterMapID(
+                            "battleundera",
+                            10,
+                            "Skeleton Captured",
+                            10,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -92,7 +122,15 @@ public static CoreAdvanced _sAdv;
                     Core.RegisterQuests(7752);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("doomwood", "r8", "Left", "*", "Bones Collected", 15, log: false);
+                        Core.KillMonster(
+                            "doomwood",
+                            "r8",
+                            "Left",
+                            "*",
+                            "Bones Collected",
+                            15,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -115,23 +153,77 @@ public static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("56830", "Ambitious Necromancer", "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer\" ?", false),
-        new Option<bool>("56831", "Ambitious Necromancer Hair", "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Hair\" ?", false),
-        new Option<bool>("56832", "Ambitious Necromancer Locks", "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Locks\" ?", false),
-        new Option<bool>("56833", "Ambitious Necromancer Hair + Scarf", "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Hair + Scarf\" ?", false),
-        new Option<bool>("56834", "Ambitious Necromancer Locks + Scarf", "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Locks + Scarf\" ?", false),
-        new Option<bool>("56835", "Ambitious Necromancer Hat + Locks", "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Hat + Locks\" ?", false),
-        new Option<bool>("56836", "Ambitious Necromancer Hat", "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Hat\" ?", false),
-        new Option<bool>("56837", "Ambitious Necro Lantern on your back", "Mode: [select] only\nShould the bot buy \"Ambitious Necro Lantern on your back\" ?", false),
-        new Option<bool>("56838", "Ambitious Necro Dagger", "Mode: [select] only\nShould the bot buy \"Ambitious Necro Dagger\" ?", false),
-        new Option<bool>("56840", "Ambitious Necro Lantern + Dagger", "Mode: [select] only\nShould the bot buy \"Ambitious Necro Lantern + Dagger\" ?", false),
-        new Option<bool>("56841", "Deaddron", "Mode: [select] only\nShould the bot buy \"Deaddron\" ?", false),
+        new Option<bool>(
+            "56830",
+            "Ambitious Necromancer",
+            "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56831",
+            "Ambitious Necromancer Hair",
+            "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56832",
+            "Ambitious Necromancer Locks",
+            "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56833",
+            "Ambitious Necromancer Hair + Scarf",
+            "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Hair + Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56834",
+            "Ambitious Necromancer Locks + Scarf",
+            "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Locks + Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56835",
+            "Ambitious Necromancer Hat + Locks",
+            "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Hat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56836",
+            "Ambitious Necromancer Hat",
+            "Mode: [select] only\nShould the bot buy \"Ambitious Necromancer Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56837",
+            "Ambitious Necro Lantern on your back",
+            "Mode: [select] only\nShould the bot buy \"Ambitious Necro Lantern on your back\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56838",
+            "Ambitious Necro Dagger",
+            "Mode: [select] only\nShould the bot buy \"Ambitious Necro Dagger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56840",
+            "Ambitious Necro Lantern + Dagger",
+            "Mode: [select] only\nShould the bot buy \"Ambitious Necro Lantern + Dagger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "56841",
+            "Deaddron",
+            "Mode: [select] only\nShould the bot buy \"Deaddron\" ?",
+            false
+        ),
     };
 }

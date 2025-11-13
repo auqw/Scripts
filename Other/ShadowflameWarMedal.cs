@@ -16,9 +16,24 @@ public class ShadowflameWarMedal
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }    private static CoreSoW _SoW;
-    private static CoreSoC SoC { get => _SoC ??= new CoreSoC(); set => _SoC = value; }    private static CoreSoC _SoC;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
+    private static CoreSoW _SoW;
+    private static CoreSoC SoC
+    {
+        get => _SoC ??= new CoreSoC();
+        set => _SoC = value;
+    }
+    private static CoreSoC _SoC;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -42,7 +57,13 @@ public class ShadowflameWarMedal
         while (!Bot.ShouldExit && !Core.CheckInventory("ShadowFlame War Medal", quant))
         {
             Core.HuntMonster("chaosamulet", "Shadowflame Warrior", "Shadow Medal", 5, log: false);
-            Core.HuntMonster("chaosamulet", "Shadowflame Warrior", "Mega Shadow Medal", 3, log: false);
+            Core.HuntMonster(
+                "chaosamulet",
+                "Shadowflame Warrior",
+                "Mega Shadow Medal",
+                3,
+                log: false
+            );
             Bot.Wait.ForPickup("ShadowFlame War Medal");
         }
         Core.CancelRegisteredQuests();

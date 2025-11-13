@@ -8,27 +8,42 @@ tags: totems of nulgath, gem of nulgath, army, voucher item totem of nulgath
 //cs_include Scripts/Army/CoreArmyLite.cs
 //cs_include Scripts/Nation/CoreNation.cs
 
+using System.Collections.Generic;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
-using System.Collections.Generic;
 
 public class ArmyVoucherItemofNulgath
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
 
-    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
     private static CoreBots _sCore;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
-
 
     public int QuestID = 4778;
 
@@ -43,19 +58,24 @@ public class ArmyVoucherItemofNulgath
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        new Option<bool>("FarmTotems", "Farm Totems of Nulgath", "Enable farming Totems of Nulgath.", true),
+        new Option<bool>(
+            "FarmTotems",
+            "Farm Totems of Nulgath",
+            "Enable farming Totems of Nulgath.",
+            true
+        ),
         new Option<int>("TotemQuant", "Totems Quantity", "Maximum number of Totems to farm.", 100),
-        new Option<bool>("FarmGems", "Farm Gems of Nulgath", "Enable farming Gems of Nulgath.", true),
+        new Option<bool>(
+            "FarmGems",
+            "Farm Gems of Nulgath",
+            "Enable farming Gems of Nulgath.",
+            true
+        ),
         new Option<int>("GemQuant", "Gems Quantity", "Maximum number of Gems to farm.", 1000),
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
-    private string[] Loot =
-    {
-        "Totem of Nulgath",
-        "Gem of Nulgath",
-        "Essence of Nulgath"
-    };
+    private string[] Loot = { "Totem of Nulgath", "Gem of Nulgath", "Essence of Nulgath" };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -63,17 +83,25 @@ public class ArmyVoucherItemofNulgath
 
         Core.SetOptions();
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // Setup();
 
         Core.SetOptions(false);
     }
+
     public void Setup()
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         Nation.FarmVoucher(false);
 
@@ -83,7 +111,10 @@ public class ArmyVoucherItemofNulgath
         // Allow only either totems or gems to be farmed, not both
         if (farmTotems && farmGems)
         {
-            Core.Logger("Error: Both 'FarmTotems' and 'FarmGems' options are enabled. Please enable only one of them.", messageBox: true);
+            Core.Logger(
+                "Error: Both 'FarmTotems' and 'FarmGems' options are enabled. Please enable only one of them.",
+                messageBox: true
+            );
             return;
         }
 
@@ -92,7 +123,6 @@ public class ArmyVoucherItemofNulgath
 
         if (farmGems)
             FarmRewards(Rewards.GemofNulgath, Bot.Config?.Get<int>("GemQuant") ?? 0);
-
     }
 
     void FarmRewards(Rewards reward, int quant)
@@ -129,8 +159,6 @@ public class ArmyVoucherItemofNulgath
         Army.AggroMonStart("tercessuinotlim");
         Army.DivideOnCells("Enter", "m1", "m2");
 
-
-
         // Attack monsters until the inventory is filled with the specified quantity
         while (!Core.CheckInventory(item, quant) && !Bot.ShouldExit)
         {
@@ -147,6 +175,6 @@ public class ArmyVoucherItemofNulgath
     public enum Rewards
     {
         TotemofNulgath = 5357,
-        GemofNulgath = 6136
+        GemofNulgath = 6136,
     }
 }

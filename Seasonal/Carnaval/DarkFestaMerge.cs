@@ -16,27 +16,55 @@ public class DarkFestaMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static DarkFesta DF { get => _DF ??= new DarkFesta(); set => _DF = value; }
+    private static DarkFesta DF
+    {
+        get => _DF ??= new DarkFesta();
+        set => _DF = value;
+    }
     private static DarkFesta _DF;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Pena mágica", "Rainha da Bateria", "Rainha da Bateria Headdress", "Rainha da Bateria Headdress + Locks", "Rainha da Bateria Staff", "Rainha da Bateria Feathered Tail", "Rainha da Bateria Feathers" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Pena mágica",
+                "Rainha da Bateria",
+                "Rainha da Bateria Headdress",
+                "Rainha da Bateria Headdress + Locks",
+                "Rainha da Bateria Staff",
+                "Rainha da Bateria Feathered Tail",
+                "Rainha da Bateria Feathers",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -54,7 +82,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +95,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Pena mágica":
                     Core.FarmingLogger(req.Name, quant);
@@ -89,7 +124,14 @@ private static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("darkfesta", "Dark Boitata", req.Name, quant, false, false);
+                        Core.HuntMonster(
+                            "darkfesta",
+                            "Dark Boitata",
+                            req.Name,
+                            quant,
+                            false,
+                            false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -99,11 +141,41 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("47671", "Rainha do Carnaval", "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval\" ?", false),
-        new Option<bool>("47674", "Rainha do Carnaval Headdress", "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval Headdress\" ?", false),
-        new Option<bool>("47673", "Rainha do Carnaval Headdress + Locks", "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval Headdress + Locks\" ?", false),
-        new Option<bool>("47677", "Rainha do Carnaval Staff", "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval Staff\" ?", false),
-        new Option<bool>("47675", "Rainha do Carnaval Feathered Tail", "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval Feathered Tail\" ?", false),
-        new Option<bool>("47676", "Rainha do Carnaval Feathers", "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval Feathers\" ?", false),
+        new Option<bool>(
+            "47671",
+            "Rainha do Carnaval",
+            "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47674",
+            "Rainha do Carnaval Headdress",
+            "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval Headdress\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47673",
+            "Rainha do Carnaval Headdress + Locks",
+            "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval Headdress + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47677",
+            "Rainha do Carnaval Staff",
+            "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47675",
+            "Rainha do Carnaval Feathered Tail",
+            "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval Feathered Tail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "47676",
+            "Rainha do Carnaval Feathers",
+            "Mode: [select] only\nShould the bot buy \"Rainha do Carnaval Feathers\" ?",
+            false
+        ),
     };
 }

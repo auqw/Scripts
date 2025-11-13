@@ -159,9 +159,17 @@ public class FarmerJoeKit0DoAll
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarmerJoe CFJ { get => _CFJ ??= new CoreFarmerJoe(); set => _CFJ = value; }
+    private static CoreFarmerJoe CFJ
+    {
+        get => _CFJ ??= new CoreFarmerJoe();
+        set => _CFJ = value;
+    }
     private static CoreFarmerJoe _CFJ;
-    private static BankAllItems BAI { get => _BAI ??= new BankAllItems(); set => _BAI = value; }
+    private static BankAllItems BAI
+    {
+        get => _BAI ??= new BankAllItems();
+        set => _BAI = value;
+    }
     private static BankAllItems _BAI;
 
     public string OptionsStorage = CFJ.OptionsStorage;
@@ -182,6 +190,5 @@ public class FarmerJoeKit0DoAll
         CFJ.DoAll();
 
         // BAI.BankAll();
-
     }
 }

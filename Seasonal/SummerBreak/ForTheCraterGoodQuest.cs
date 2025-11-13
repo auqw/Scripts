@@ -13,7 +13,11 @@ public class ForTheCraterGood
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CraterHouseMerge CHM { get => _CHM ??= new CraterHouseMerge(); set => _CHM = value; }
+    private static CraterHouseMerge CHM
+    {
+        get => _CHM ??= new CraterHouseMerge();
+        set => _CHM = value;
+    }
     private static CraterHouseMerge _CHM;
 
     public void ScriptMain(IScriptInterface bot)
@@ -27,7 +31,10 @@ public class ForTheCraterGood
 
     public void DoQuest()
     {
-        if (Core.CheckInventory(Core.QuestRewards(9782), toInv: false) || !Core.isSeasonalMapActive("summerbreak"))
+        if (
+            Core.CheckInventory(Core.QuestRewards(9782), toInv: false)
+            || !Core.isSeasonalMapActive("summerbreak")
+        )
             return;
 
         if (!Core.CheckInventory("Big Crater"))
@@ -54,7 +61,13 @@ public class ForTheCraterGood
         {
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(1176);
-            Core.HuntMonster("moonyardb", "Robo Guard", "Ultimate Security Bot Defeated", 600, false);
+            Core.HuntMonster(
+                "moonyardb",
+                "Robo Guard",
+                "Ultimate Security Bot Defeated",
+                600,
+                false
+            );
             Bot.Quests.UnregisterQuests(1176);
         }
 

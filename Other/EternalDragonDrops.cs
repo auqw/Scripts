@@ -16,7 +16,12 @@ public class EternalDragonDrops
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<bool>("CanSolo", "Can solo boss?", "unchecking this will take you to public room", false),
+        new Option<bool>(
+            "CanSolo",
+            "Can solo boss?",
+            "unchecking this will take you to public room",
+            false
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -30,12 +35,10 @@ public class EternalDragonDrops
 
     public void GetDrops()
     {
-        string[] MemDrops = {
-            "Dark Embrace Of The Queen",
-            "ShadowFlame Aura",
-        };
+        string[] MemDrops = { "Dark Embrace Of The Queen", "ShadowFlame Aura" };
 
-        string[] NonMemDrops = {
+        string[] NonMemDrops =
+        {
             "Dark Stars",
             "Embrace of the Queen",
             "Enchanted Dragon's Battle Gear",
@@ -47,7 +50,7 @@ public class EternalDragonDrops
             "Requiescat Regina Hair",
             "Requiescat Regina Locks",
             "ShadowFlame Portal",
-            "Timestream Ravager's Sigil"
+            "Timestream Ravager's Sigil",
         };
 
         if (Core.CheckInventory(NonMemDrops))
@@ -62,13 +65,18 @@ public class EternalDragonDrops
 
         Core.EquipClass(ClassType.Solo);
 
-
         Core.Logger("Starting to get drops");
         //Can't Solo section
         if (!Bot.Config!.Get<bool>("CanSolo"))
             while (!Bot.ShouldExit && !Core.CheckInventory(NonMemDrops))
                 foreach (string item in NonMemDrops)
-                    Core.HuntMonster("deadlines", "Eternal Dragon", item, isTemp: false, publicRoom: true);
+                    Core.HuntMonster(
+                        "deadlines",
+                        "Eternal Dragon",
+                        item,
+                        isTemp: false,
+                        publicRoom: true
+                    );
         else
             while (!Bot.ShouldExit && !Core.CheckInventory(NonMemDrops))
                 foreach (string item in NonMemDrops)

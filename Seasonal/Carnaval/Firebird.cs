@@ -13,9 +13,17 @@ public class Firebird
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static TerraDeFesta TDF { get => _TDF ??= new TerraDeFesta(); set => _TDF = value; }
+    private static TerraDeFesta TDF
+    {
+        get => _TDF ??= new TerraDeFesta();
+        set => _TDF = value;
+    }
     private static TerraDeFesta _TDF;
 
     public void ScriptMain(IScriptInterface Bot)

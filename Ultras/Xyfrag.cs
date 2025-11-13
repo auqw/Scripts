@@ -21,7 +21,12 @@ public class Xyfrag
     public string OptionsStorage = "Xyfrag";
     public List<IOption> Options = new()
     {
-        new Option<string>("taunter", "Taunter Class", "Insert the name of the class that will taunt", "")
+        new Option<string>(
+            "taunter",
+            "Taunter Class",
+            "Insert the name of the class that will taunt",
+            ""
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -30,7 +35,8 @@ public class Xyfrag
         if (string.IsNullOrEmpty(taunter))
         {
             Core.Log("Setup", "Fill the taunter class in Script Options.");
-            Bot.Stop(); return;
+            Bot.Stop();
+            return;
         }
 
         Core.Boot();

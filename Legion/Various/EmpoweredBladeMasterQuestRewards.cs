@@ -19,11 +19,36 @@ public class EmpoweredBladeMaster
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static DageChallengeStory DageChallenge { get => _DageChallenge ??= new DageChallengeStory(); set => _DageChallenge = value; }    private static DageChallengeStory _DageChallenge;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static DageChallengeStory DageChallenge
+    {
+        get => _DageChallenge ??= new DageChallengeStory();
+        set => _DageChallenge = value;
+    }
+    private static DageChallengeStory _DageChallenge;
 
     public bool DontPreconfigure = true;
 
@@ -32,8 +57,18 @@ public class EmpoweredBladeMaster
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<bool>("GetAllRewards", "Pick Automatically", "if true, does the quest till you have all the rewards possible. otherwise Gets selcted item", false),
-        new Option<Rewards>("RewardSelect", "Choose Your Reward", "", Rewards.Empowered_Blade_Master)
+        new Option<bool>(
+            "GetAllRewards",
+            "Pick Automatically",
+            "if true, does the quest till you have all the rewards possible. otherwise Gets selcted item",
+            false
+        ),
+        new Option<Rewards>(
+            "RewardSelect",
+            "Choose Your Reward",
+            "",
+            Rewards.Empowered_Blade_Master
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -61,7 +96,8 @@ public class EmpoweredBladeMaster
 
         if (Bot.Config!.Get<bool>("GetAllRewards"))
             Core.RegisterQuests(8554);
-        else Core.EnsureAccept(8554);
+        else
+            Core.EnsureAccept(8554);
 
         foreach (var Reward in RewardOptions)
         {
@@ -90,11 +126,23 @@ public class EmpoweredBladeMaster
         if (!Core.CheckInventory("Dage the Evil Insignia", 30))
         {
             if (Bot.Quests.IsDailyComplete(8547))
-                Core.Logger("Can't accept quest 8547 because the weekly is complete", messageBox: true, stopBot: true);
+                Core.Logger(
+                    "Can't accept quest 8547 because the weekly is complete",
+                    messageBox: true,
+                    stopBot: true
+                );
             Core.EnsureAccept(8547);
             Core.EquipClass(ClassType.Solo);
 
-            Adv.BoostKillMonster("UltraDage", "Boss", "Right", "Dage the Dark Lord", "Dage the Dark Lord Defeated", isTemp: false, publicRoom: false);
+            Adv.BoostKillMonster(
+                "UltraDage",
+                "Boss",
+                "Right",
+                "Dage the Dark Lord",
+                "Dage the Dark Lord Defeated",
+                isTemp: false,
+                publicRoom: false
+            );
 
             Core.EnsureComplete(8547);
             Bot.Wait.ForPickup("Dage the Evil Insignia");
@@ -107,15 +155,27 @@ public class EmpoweredBladeMaster
             {
                 case "a":
                     //Move to the left
-                    Bot.Player.WalkTo(Bot.Random.Next(40, 175), Bot.Random.Next(400, 410), speed: 8);
+                    Bot.Player.WalkTo(
+                        Bot.Random.Next(40, 175),
+                        Bot.Random.Next(400, 410),
+                        speed: 8
+                    );
                     break;
                 case "b":
                     //Move to the right
-                    Bot.Player.WalkTo(Bot.Random.Next(760, 930), Bot.Random.Next(410, 415), speed: 8);
+                    Bot.Player.WalkTo(
+                        Bot.Random.Next(760, 930),
+                        Bot.Random.Next(410, 415),
+                        speed: 8
+                    );
                     break;
                 default:
                     //Move to the center
-                    Bot.Player.WalkTo(Bot.Random.Next(480, 500), Bot.Random.Next(300, 420), speed: 8);
+                    Bot.Player.WalkTo(
+                        Bot.Random.Next(480, 500),
+                        Bot.Random.Next(300, 420),
+                        speed: 8
+                    );
                     break;
             }
         }
@@ -125,6 +185,6 @@ public class EmpoweredBladeMaster
     {
         Empowered_Blade_Master = 68470,
         Empowered_Blade_Masters_Katana = 68471,
-        Empowered_Dual_Katanas = 68472
+        Empowered_Dual_Katanas = 68472,
     };
 }

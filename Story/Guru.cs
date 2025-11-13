@@ -11,7 +11,12 @@ public class Guru
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -24,7 +29,10 @@ public class Guru
 
     public void StoryLine()
     {
-        if ((Core.IsMember && Core.isCompletedBefore(53)) || (!Core.IsMember && Core.isCompletedBefore(52)))
+        if (
+            (Core.IsMember && Core.isCompletedBefore(53))
+            || (!Core.IsMember && Core.isCompletedBefore(52))
+        )
             return;
 
         Story.PreLoad(this);
@@ -43,7 +51,9 @@ public class Guru
         {
             Core.Join("guru");
             Core.EnsureAccept(50);
-            Core.Logger("Buggy quest >> this will kill all 3 guru chests until it gets the `Cauldron`");
+            Core.Logger(
+                "Buggy quest >> this will kill all 3 guru chests until it gets the `Cauldron`"
+            );
             while (!Bot.ShouldExit && !Core.CheckInventory(356))
             {
                 foreach (string cell in new[] { "Field2", "Field3", "Field4" })
@@ -55,7 +65,6 @@ public class Guru
                 }
             }
             Core.EnsureComplete(50);
-
         }
 
         //Hungry for a Recipe 51
@@ -68,7 +77,6 @@ public class Guru
         {
             //Delicious Ingredient 53
             Story.KillQuest(53, "Guru", "Wisteria");
-
         }
     }
 }

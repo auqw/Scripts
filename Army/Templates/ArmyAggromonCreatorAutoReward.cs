@@ -20,30 +20,70 @@ public class ArmyAggromonCreatorAutoReward
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
-private static CoreBots _sCore;
+    private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
-private static CoreArmyLite _sArmy;
-
+    private static CoreArmyLite _sArmy;
 
     public string OptionsStorage = "ArmyAggromonCreatorAutoReward";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         new Option<string>("Map", "Map to Aggro on", "", ""),
-        new Option<string>("MonsterMIDs", "Monster MapIDs", "A list of the MonsterMapIDs of the mobs you wish to aggro (separate them with a comma: 1, 2, 3)", ""),
-        new Option<string>("QuestIDs", "Quest IDs", "A list of the quest IDs to use (separate them with a comma: 1,2,3)", ""),
-        new Option<string>("Cells", "Army Cells", "Map Cells to split your army \"evenly\" onto [separate them with a comma: r1,r2,r3]", ""),
-        new Option<string>("item-int", "Item & ints", "Items and thier desired quantities,  [separate them like so: `(\"item\", quant),(\"item\", quant)`", ""),
-        new Option<bool>("ContinuousLogging", "Continuous Logging?", "Spam the Chat with \"item:[]]quant/quant]\"", false),
-        new Option<ClassType>("ClassType", "Solo/Farm/None", "What ClassType to equip (goes off of Corebot Options)", ClassType.None),
-
+        new Option<string>(
+            "MonsterMIDs",
+            "Monster MapIDs",
+            "A list of the MonsterMapIDs of the mobs you wish to aggro (separate them with a comma: 1, 2, 3)",
+            ""
+        ),
+        new Option<string>(
+            "QuestIDs",
+            "Quest IDs",
+            "A list of the quest IDs to use (separate them with a comma: 1,2,3)",
+            ""
+        ),
+        new Option<string>(
+            "Cells",
+            "Army Cells",
+            "Map Cells to split your army \"evenly\" onto [separate them with a comma: r1,r2,r3]",
+            ""
+        ),
+        new Option<string>(
+            "item-int",
+            "Item & ints",
+            "Items and thier desired quantities,  [separate them like so: `(\"item\", quant),(\"item\", quant)`",
+            ""
+        ),
+        new Option<bool>(
+            "ContinuousLogging",
+            "Continuous Logging?",
+            "Spam the Chat with \"item:[]]quant/quant]\"",
+            false
+        ),
+        new Option<ClassType>(
+            "ClassType",
+            "Solo/Farm/None",
+            "What ClassType to equip (goes off of Corebot Options)",
+            ClassType.None
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -52,19 +92,21 @@ private static CoreArmyLite _sArmy;
         sArmy.player6,
         sArmy.player7,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
         Core.SetOptions();
 
         WTFisGoingOnv2();
 
         Core.SetOptions(false);
     }
-
 
     //Nothing needs edited, and everything is filled in from the options
     public void WTFisGoingOnv2()
@@ -76,17 +118,23 @@ private static CoreArmyLite _sArmy;
 
         // Retrieving MonsterMIDs from configuration as a string
         string monsterMIDsString = Bot.Config?.Get<string>("MonsterMIDs") ?? "";
-        int[] monsterMIDs = monsterMIDsString.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+        int[] monsterMIDs = monsterMIDsString
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(int.Parse)
+            .ToArray();
 
         // Retrieving QuestIDs from configuration as a string
         string questIDsString = Bot.Config?.Get<string>("QuestIDs") ?? "";
-        int[] questIDs = questIDsString.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
+        int[] questIDs = questIDsString
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(int.Parse)
+            .ToArray();
 
         // Retrieving Cells from configuration
         string[] armyCells = (Bot.Config?.Get<string>("Cells") ?? "")
-                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(cell => cell.Trim())
-                .ToArray();
+            .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+            .Select(cell => cell.Trim())
+            .ToArray();
 
         // Retrieving Map from configuration
         string map = Bot.Config?.Get<string>("Map") ?? "";
@@ -95,19 +143,20 @@ private static CoreArmyLite _sArmy;
         string itemIntString = Bot.Config?.Get<string>("item-int") ?? "";
 
         // Splitting the string into individual ("item", quant) pairs
-        var itemsAndQuantities = Regex.Split(itemIntString.Replace("), (", "),("), "\\s*,\\s*\\(")
-                .Select(pair =>
+        var itemsAndQuantities = Regex
+            .Split(itemIntString.Replace("), (", "),("), "\\s*,\\s*\\(")
+            .Select(pair =>
+            {
+                var parts = pair.Trim('(', ')').Split(',', StringSplitOptions.TrimEntries);
+                if (parts.Length == 2 && int.TryParse(parts[1], out int quantity))
                 {
-                    var parts = pair.Trim('(', ')').Split(',', StringSplitOptions.TrimEntries);
-                    if (parts.Length == 2 && int.TryParse(parts[1], out int quantity))
-                    {
-                        return (parts[0], quantity);
-                    }
-                    // Handle invalid format, e.g., log or throw an exception
-                    return default;
-                })
-                .Where(itemAndQuantity => itemAndQuantity != default)
-                .ToArray();
+                    return (parts[0], quantity);
+                }
+                // Handle invalid format, e.g., log or throw an exception
+                return default;
+            })
+            .Where(itemAndQuantity => itemAndQuantity != default)
+            .ToArray();
 
         #endregion
 
@@ -156,23 +205,37 @@ private static CoreArmyLite _sArmy;
 
         if (itemsAndQuantities != null && itemsAndQuantities.Length > 0)
         {
-            var itemsLog = itemsAndQuantities.Select(item => $"\n(\"{item.Item1}\", {Bot.Inventory.GetQuantity(item.Item1)} / {item.quantity})");
+            var itemsLog = itemsAndQuantities.Select(item =>
+                $"\n(\"{item.Item1}\", {Bot.Inventory.GetQuantity(item.Item1)} / {item.quantity})"
+            );
             Core.Logger($"Item and Quantities:{string.Join("", itemsLog)}");
         }
-
 
         #endregion
 
         #region Execution
 
         // Example usage in ArmyBits method
-        ArmyBits(map!, armyCells!, monsterMIDs!, itemsAndQuantities!, Bot.Config!.Get<ClassType>("ClassType"), questIDs!);
+        ArmyBits(
+            map!,
+            armyCells!,
+            monsterMIDs!,
+            itemsAndQuantities!,
+            Bot.Config!.Get<ClassType>("ClassType"),
+            questIDs!
+        );
 
         #endregion
     }
 
-
-    public void ArmyBits(string map, string[] cell, int[] MonsterMapIDs, (string, int)[] ItemandQuants, ClassType classToUse, int[] QuestIDs)
+    public void ArmyBits(
+        string map,
+        string[] cell,
+        int[] MonsterMapIDs,
+        (string, int)[] ItemandQuants,
+        ClassType classToUse,
+        int[] QuestIDs
+    )
     {
         // Setting up private rooms and class
         Core.EquipClass(classToUse);
@@ -197,7 +260,9 @@ private static CoreArmyLite _sArmy;
         Army.DivideOnCells(cell);
 
         if (!Bot.Config!.Get<bool>("ContinuousLogging"))
-            Core.Logger($"Item and Quantities:{string.Join("", ItemandQuants.Select(pair => $"\n(\"{pair.Item1}\", {Bot.Inventory.GetQuantity(pair.Item1)} / {pair.Item2})"))}");
+            Core.Logger(
+                $"Item and Quantities:{string.Join("", ItemandQuants.Select(pair => $"\n(\"{pair.Item1}\", {Bot.Inventory.GetQuantity(pair.Item1)} / {pair.Item2})"))}"
+            );
 
         Bot.Player.SetSpawnPoint();
         string dividedCell = Bot.Player.Cell;
@@ -206,7 +271,9 @@ private static CoreArmyLite _sArmy;
         {
             // Logging the items for farming
             if (Bot.Config!.Get<bool>("ContinuousLogging") && Bot.Player.Alive)
-                Core.Logger($"Item and Quantities:{string.Join("", ItemandQuants.Select(pair => $"\n(\"{pair.Item1}\", {Bot.Inventory.GetQuantity(pair.Item1)} / {pair.Item2})"))}");
+                Core.Logger(
+                    $"Item and Quantities:{string.Join("", ItemandQuants.Select(pair => $"\n(\"{pair.Item1}\", {Bot.Inventory.GetQuantity(pair.Item1)} / {pair.Item2})"))}"
+                );
 
             foreach (Monster mon in Bot.Monsters.CurrentAvailableMonsters)
             {
@@ -221,12 +288,14 @@ private static CoreArmyLite _sArmy;
                             goto Attack;
                     }
 
-                // Attack the monster
-                Attack:
+                    // Attack the monster
+                    Attack:
                     Bot.Combat.Attack(mon.MapID);
 
                     // Check inventory conditions
-                    inventoryConditionMet = ItemandQuants.All(t => Core.CheckInventory(t.Item1, t.Item2));
+                    inventoryConditionMet = ItemandQuants.All(t =>
+                        Core.CheckInventory(t.Item1, t.Item2)
+                    );
 
                     // Break loop if inventory condition is met
                     if (inventoryConditionMet)
@@ -240,14 +309,12 @@ private static CoreArmyLite _sArmy;
             }
         }
 
-    // Clean up section
-    CleanUp:
+        // Clean up section
+        CleanUp:
         Army.AggroMonStop(true);
         Core.JumpWait();
         Core.CancelRegisteredQuests();
-
     }
-
 
     // private enum ClassType
     // {

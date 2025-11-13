@@ -14,9 +14,24 @@ public class LegionExercise1
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     private string[] Rewards = { "Undead Champion Blade", "Legendary Golden Death Blade" };
 
@@ -38,27 +53,79 @@ public class LegionExercise1
         Legion.JoinLegion();
         Core.BuyItem("underworld", 216, "Undead Champion");
 
-        Core.Logger("Disclaimer: Percentages are randomized, just made purely for fun. i cba making it an actualy %age");
+        Core.Logger(
+            "Disclaimer: Percentages are randomized, just made purely for fun. i cba making it an actualy %age"
+        );
 
-        int Dice = Bot.Random.Next(1, 101);   // creates a number from 1 to 100
+        int Dice = Bot.Random.Next(1, 101); // creates a number from 1 to 100
         //-------------------------------------------------------------------------------------------------------
 
         int i = 1;
         var displayPercentage = $"{(decimal)Dice / 100:P}";
 
-        Core.Logger($"Potato Prediction Inc. Decided: {displayPercentage} is The Chance for Desired Rewards.");
+        Core.Logger(
+            $"Potato Prediction Inc. Decided: {displayPercentage} is The Chance for Desired Rewards."
+        );
 
         Core.EquipClass(ClassType.Farm);
-        while (!Bot.ShouldExit && !Core.CheckInventory(new[] { "Undead Champion Blade", "Legendary Golden Death Blade" }))
+        while (
+            !Bot.ShouldExit
+            && !Core.CheckInventory(
+                new[] { "Undead Champion Blade", "Legendary Golden Death Blade" }
+            )
+        )
         {
             Core.EnsureAccept(821);
-            Core.HuntMonster("lair", "Water Draconian", "Flawless DracoHorn", 40, isTemp: false, publicRoom: false);
-            Core.HuntMonster("lair", "Golden Draconian", "Golden DracoHeart", isTemp: true, publicRoom: false);
-            Core.HuntMonster("lair", "Dark Draconian", "Dark DracoHeart", isTemp: true, publicRoom: false);
-            Core.HuntMonster("lair", "Bronze Draconian", "Mammoth DracoHeart", isTemp: true, publicRoom: false);
-            Core.HuntMonster("lair", "Water Draconian", "Water DracoHeart", isTemp: true, publicRoom: false);
-            Core.HuntMonster("lair", "Venom Draconian", "Venom DracoHeart", isTemp: true, publicRoom: false);
-            Core.HuntMonster("lair", "Purple Draconian", "Iron DracoHeart", isTemp: true, publicRoom: false);
+            Core.HuntMonster(
+                "lair",
+                "Water Draconian",
+                "Flawless DracoHorn",
+                40,
+                isTemp: false,
+                publicRoom: false
+            );
+            Core.HuntMonster(
+                "lair",
+                "Golden Draconian",
+                "Golden DracoHeart",
+                isTemp: true,
+                publicRoom: false
+            );
+            Core.HuntMonster(
+                "lair",
+                "Dark Draconian",
+                "Dark DracoHeart",
+                isTemp: true,
+                publicRoom: false
+            );
+            Core.HuntMonster(
+                "lair",
+                "Bronze Draconian",
+                "Mammoth DracoHeart",
+                isTemp: true,
+                publicRoom: false
+            );
+            Core.HuntMonster(
+                "lair",
+                "Water Draconian",
+                "Water DracoHeart",
+                isTemp: true,
+                publicRoom: false
+            );
+            Core.HuntMonster(
+                "lair",
+                "Venom Draconian",
+                "Venom DracoHeart",
+                isTemp: true,
+                publicRoom: false
+            );
+            Core.HuntMonster(
+                "lair",
+                "Purple Draconian",
+                "Iron DracoHeart",
+                isTemp: true,
+                publicRoom: false
+            );
             Core.EnsureComplete(821);
             Core.Logger($"Finished Quest {i++} Times");
         }
@@ -72,5 +139,4 @@ public class LegionExercise1
 
         Core.ToBank(Rewards);
     }
-
 }

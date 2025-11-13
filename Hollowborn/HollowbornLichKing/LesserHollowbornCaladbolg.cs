@@ -30,9 +30,17 @@ public class LesserHollowbornCaladbolg
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreHollowbornLichKing CoreHollowbornLichKing { get => _CoreHollowbornLichKing ??= new CoreHollowbornLichKing(); set => _CoreHollowbornLichKing = value; }
+    private static CoreHollowbornLichKing CoreHollowbornLichKing
+    {
+        get => _CoreHollowbornLichKing ??= new CoreHollowbornLichKing();
+        set => _CoreHollowbornLichKing = value;
+    }
     private static CoreHollowbornLichKing _CoreHollowbornLichKing;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -50,10 +58,16 @@ public class LesserHollowbornCaladbolg
         if (Core.CheckInventory(85029, toInv: false))
             return;
 
+        Core.AddDrop(
+            "Lesser Hollowborn Caladbolg",
+            "Darkon's Receipt",
+            "Ingredients?",
+            "Hollow Soul"
+        );
 
-        Core.AddDrop("Lesser Hollowborn Caladbolg", "Darkon's Receipt", "Ingredients?", "Hollow Soul");
-
-        CoreHollowbornLichKing.Counterblow(CoreHollowbornLichKing.CounterblowRewards.Altar_Of_the_Hollowborn_Caladbolg);
+        CoreHollowbornLichKing.Counterblow(
+            CoreHollowbornLichKing.CounterblowRewards.Altar_Of_the_Hollowborn_Caladbolg
+        );
 
         Core.EquipClass(ClassType.Solo);
         // for darkon receipts v
@@ -63,6 +77,5 @@ public class LesserHollowbornCaladbolg
         Core.CancelRegisteredQuests();
         Core.Logger("RNG gods have smiled upon you! Banking the weapon.");
         Core.ToBank("Lesser Hollowborn Caladbolg");
-
     }
 }

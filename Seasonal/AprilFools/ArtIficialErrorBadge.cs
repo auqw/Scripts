@@ -12,7 +12,11 @@ public class ArtificialErrorBadge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static EbilArt EA { get => _EA ??= new EbilArt(); set => _EA = value; }
+    private static EbilArt EA
+    {
+        get => _EA ??= new EbilArt();
+        set => _EA = value;
+    }
     private static EbilArt _EA;
 
     public void ScriptMain(IScriptInterface bot)
@@ -38,6 +42,6 @@ public class ArtificialErrorBadge
         Core.GetMapItem(12883, 17, "ebilart");
         Core.EnsureComplete(9666);
     }
-    private string badge = "Art-ificial Error";
 
+    private string badge = "Art-ificial Error";
 }

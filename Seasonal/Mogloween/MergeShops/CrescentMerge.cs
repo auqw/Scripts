@@ -15,28 +15,56 @@ public class CrescentMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Royce's Direclaw", "Spectral Lycan", "Spectral Lycan's Hood", "Spectral Lycan's Morph", "Spectral Lycan's Backfur", "Howling Spectral Lycan", "Spectral Ground Flames", "Spectral Lycan's Spear", "Spectral Lycan's Claws " });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Royce's Direclaw",
+                "Spectral Lycan",
+                "Spectral Lycan's Hood",
+                "Spectral Lycan's Morph",
+                "Spectral Lycan's Backfur",
+                "Howling Spectral Lycan",
+                "Spectral Ground Flames",
+                "Spectral Lycan's Spear",
+                "Spectral Lycan's Claws ",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -56,7 +84,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +97,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Royce's Direclaw":
                 case "Spectral Lycan":
@@ -89,13 +124,53 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("71271", "Enchanted Spectral Lycan", "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Lycan\" ?", false),
-        new Option<bool>("71272", "Enchanted Spectral Hood", "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Hood\" ?", false),
-        new Option<bool>("71273", "Enchanted Spectral Morph", "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Morph\" ?", false),
-        new Option<bool>("71274", "Enchanted Spectral Backfur", "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Backfur\" ?", false),
-        new Option<bool>("71275", "Enchanted Howling Lycan", "Mode: [select] only\nShould the bot buy \"Enchanted Howling Lycan\" ?", false),
-        new Option<bool>("71276", "Enchanted Ground Flames", "Mode: [select] only\nShould the bot buy \"Enchanted Ground Flames\" ?", false),
-        new Option<bool>("71277", "Enchanted Spectral Spear", "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Spear\" ?", false),
-        new Option<bool>("71278", "Enchanted Spectral Claws", "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Claws\" ?", false),
+        new Option<bool>(
+            "71271",
+            "Enchanted Spectral Lycan",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Lycan\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71272",
+            "Enchanted Spectral Hood",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71273",
+            "Enchanted Spectral Morph",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71274",
+            "Enchanted Spectral Backfur",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Backfur\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71275",
+            "Enchanted Howling Lycan",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Howling Lycan\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71276",
+            "Enchanted Ground Flames",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Ground Flames\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71277",
+            "Enchanted Spectral Spear",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Spear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71278",
+            "Enchanted Spectral Claws",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Spectral Claws\" ?",
+            false
+        ),
     };
 }

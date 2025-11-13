@@ -16,26 +16,45 @@ public class SambasFlagMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static SambasFlag SF { get => _SF ??= new SambasFlag(); set => _SF = value; }    private static SambasFlag _SF;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static SambasFlag SF
+    {
+        get => _SF ??= new SambasFlag();
+        set => _SF = value;
+    }
+    private static SambasFlag _SF;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Costume Piece", "Ceremonial Standard", "Cavaquinho", "Pandeiro", "Tantan" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Costume Piece", "Ceremonial Standard", "Cavaquinho", "Pandeiro", "Tantan" }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -58,7 +77,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -69,9 +90,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Ceremonial Standard":
                     Core.FarmingLogger(req.Name, quant);
@@ -86,7 +112,7 @@ private static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-                    
+
                 case "Costume Piece":
                     Core.FarmingLogger(req.Name, quant);
                     Core.RegisterQuests(9110);
@@ -109,22 +135,71 @@ private static CoreAdvanced _sAdv;
                     Core.HuntMonster("sambaflag", "Master Of Ceremonies", req.Name, quant);
                     Bot.Wait.ForPickup(req.Name);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("76366", "Sambista Armor", "Mode: [select] only\nShould the bot buy \"Sambista Armor\" ?", false),
-        new Option<bool>("76367", "Sambista Helm", "Mode: [select] only\nShould the bot buy \"Sambista Helm\" ?", false),
-        new Option<bool>("76371", "Dorival The Moglin", "Mode: [select] only\nShould the bot buy \"Dorival The Moglin\" ?", false),
-        new Option<bool>("76372", "Jorge The Moglin", "Mode: [select] only\nShould the bot buy \"Jorge The Moglin\" ?", false),
-        new Option<bool>("76373", "Zeca The Moglin", "Mode: [select] only\nShould the bot buy \"Zeca The Moglin\" ?", false),
-        new Option<bool>("76375", "Encanto Sambista Armor", "Mode: [select] only\nShould the bot buy \"Encanto Sambista Armor\" ?", false),
-        new Option<bool>("76376", "Encanto Sambista Hat", "Mode: [select] only\nShould the bot buy \"Encanto Sambista Hat\" ?", false),
-        new Option<bool>("76377", "Encanto Cavaquinho", "Mode: [select] only\nShould the bot buy \"Encanto Cavaquinho\" ?", false),
-        new Option<bool>("76378", "Encanto Pandeiro", "Mode: [select] only\nShould the bot buy \"Encanto Pandeiro\" ?", false),
-        new Option<bool>("76379", "Encanto Tantan", "Mode: [select] only\nShould the bot buy \"Encanto Tantan\" ?", false),
+        new Option<bool>(
+            "76366",
+            "Sambista Armor",
+            "Mode: [select] only\nShould the bot buy \"Sambista Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76367",
+            "Sambista Helm",
+            "Mode: [select] only\nShould the bot buy \"Sambista Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76371",
+            "Dorival The Moglin",
+            "Mode: [select] only\nShould the bot buy \"Dorival The Moglin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76372",
+            "Jorge The Moglin",
+            "Mode: [select] only\nShould the bot buy \"Jorge The Moglin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76373",
+            "Zeca The Moglin",
+            "Mode: [select] only\nShould the bot buy \"Zeca The Moglin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76375",
+            "Encanto Sambista Armor",
+            "Mode: [select] only\nShould the bot buy \"Encanto Sambista Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76376",
+            "Encanto Sambista Hat",
+            "Mode: [select] only\nShould the bot buy \"Encanto Sambista Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76377",
+            "Encanto Cavaquinho",
+            "Mode: [select] only\nShould the bot buy \"Encanto Cavaquinho\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76378",
+            "Encanto Pandeiro",
+            "Mode: [select] only\nShould the bot buy \"Encanto Pandeiro\" ?",
+            false
+        ),
+        new Option<bool>(
+            "76379",
+            "Encanto Tantan",
+            "Mode: [select] only\nShould the bot buy \"Encanto Tantan\" ?",
+            false
+        ),
     };
 }

@@ -16,8 +16,17 @@ public class ClassicBladeOfAwe
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static TreasureHuntQuest THQ { get => _THQ ??= new TreasureHuntQuest(); set => _THQ = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static TreasureHuntQuest THQ
+    {
+        get => _THQ ??= new TreasureHuntQuest();
+        set => _THQ = value;
+    }
     private static TreasureHuntQuest _THQ;
 
     public void ScriptMain(IScriptInterface bot)
@@ -62,7 +71,12 @@ public class ClassicBladeOfAwe
         if (!Bot.Quests.IsUnlocked(9704))
         {
             Core.EnsureAccept(8757); // Awe Enhancements At Home
-            Core.HuntMonster("banished", "Desterrat Moya", "Apocryphal Blade Of The Truth", isTemp: false);
+            Core.HuntMonster(
+                "banished",
+                "Desterrat Moya",
+                "Apocryphal Blade Of The Truth",
+                isTemp: false
+            );
             Core.EnsureComplete(8757);
         }
         Core.EnsureAccept(9704); // Mysterious Chest

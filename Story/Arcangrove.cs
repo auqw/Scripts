@@ -14,9 +14,18 @@ public class Arcangrove
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static Core13LoC LoC { get => _LoC ??= new Core13LoC(); set => _LoC = value; }    private static Core13LoC _LoC;
-
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static Core13LoC LoC
+    {
+        get => _LoC ??= new Core13LoC();
+        set => _LoC = value;
+    }
+    private static Core13LoC _LoC;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -35,7 +44,6 @@ public class Arcangrove
         LoC.Ledgermayne();
         LoC.Escherion();
         LoC.Vath();
-
 
         Story.PreLoad(this);
 
@@ -56,6 +64,5 @@ public class Arcangrove
 
         //Kinda Like a Giant Bubble 3375
         Story.MapItemQuest(3375, "arcangrove", new[] { 2514, 2515, 2516, 2517 });
-
     }
 }

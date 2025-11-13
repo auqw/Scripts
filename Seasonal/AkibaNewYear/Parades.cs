@@ -11,7 +11,11 @@ public class Parades
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -30,7 +34,22 @@ public class Parades
 
         Core.EquipClass(ClassType.Farm);
 
-        Story.LegacyQuestManager(QuestLogic, 4830, 4831, 4832, 4833, 4834, 4835, 4836, 4837, 4838, 4839, 4840, 4841, 4842);
+        Story.LegacyQuestManager(
+            QuestLogic,
+            4830,
+            4831,
+            4832,
+            4833,
+            4834,
+            4835,
+            4836,
+            4837,
+            4838,
+            4839,
+            4840,
+            4841,
+            4842
+        );
 
         void QuestLogic()
         {
@@ -49,7 +68,13 @@ public class Parades
                     break;
                 // Un-decorate Yokai 4831
                 case 4831:
-                    Core.HuntMonster("parades", "Paper Lantern", "Paper Lantern Destroyed", 6, log: false);
+                    Core.HuntMonster(
+                        "parades",
+                        "Paper Lantern",
+                        "Paper Lantern Destroyed",
+                        6,
+                        log: false
+                    );
                     Core.GetMapItem(4232, 5, "parades");
                     break;
                 // Naughty Fairies 4832
@@ -81,7 +106,13 @@ public class Parades
                 // I'm Not That Stupid 4837
                 case 4837:
                     Core.GetMapItem(4229, 8, "parades");
-                    Core.HuntMonster("parades", "Carnaval Mask", "Carnaval Mask Destroyed", 6, log: false);
+                    Core.HuntMonster(
+                        "parades",
+                        "Carnaval Mask",
+                        "Carnaval Mask Destroyed",
+                        6,
+                        log: false
+                    );
                     break;
                 // Why Did It Have To Be Snakes 4838
                 case 4838:
@@ -98,14 +129,19 @@ public class Parades
                     break;
                 // One Last Thing 4841
                 case 4841:
-                    Core.HuntMonster("hachiko", "Ninja Nopperabo", "Scroll of Summoning", log: false);
+                    Core.HuntMonster(
+                        "hachiko",
+                        "Ninja Nopperabo",
+                        "Scroll of Summoning",
+                        log: false
+                    );
                     break;
                 // Defeat the Oni 4842
                 case 4842:
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("parades", "Oni", "Oni Defeated", log: false);
                     break;
-                    #endregion  Lengjing
+                #endregion  Lengjing
             }
         }
     }

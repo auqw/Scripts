@@ -14,17 +14,36 @@ tags: fiend's creed blade,fiend's creed blades,maw,nulgath gifts
 //cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiegeMerge.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+
 public class MawOfTheVoid
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static JuggernautItemsofNulgath Jug { get => _Jug ??= new JuggernautItemsofNulgath(); set => _Jug = value; }
+    private static JuggernautItemsofNulgath Jug
+    {
+        get => _Jug ??= new JuggernautItemsofNulgath();
+        set => _Jug = value;
+    }
     private static JuggernautItemsofNulgath _Jug;
-    private static TempleSiegeMerge TSM { get => _TSM ??= new TempleSiegeMerge(); set => _TSM = value; }
+    private static TempleSiegeMerge TSM
+    {
+        get => _TSM ??= new TempleSiegeMerge();
+        set => _TSM = value;
+    }
     private static TempleSiegeMerge _TSM;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -85,7 +104,12 @@ public class MawOfTheVoid
                 {
                     // Burglinster's Revenge 7522
                     Core.EnsureAccept(7522);
-                    Core.HuntMonster("borgars", "Burglinster", "Burglinster Cured", log: !LoggedBefore);
+                    Core.HuntMonster(
+                        "borgars",
+                        "Burglinster",
+                        "Burglinster Cured",
+                        log: !LoggedBefore
+                    );
                     Core.EnsureComplete(7522);
                     Bot.Wait.ForPickup("Burger Buns");
                     LoggedBefore = true;

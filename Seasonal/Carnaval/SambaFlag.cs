@@ -11,7 +11,11 @@ public class SambasFlag
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -45,7 +49,11 @@ public class SambasFlag
         Story.KillQuest(9112, "fotia", new[] { "Fotia Spirit", "Femme Cult Worshiper" });
 
         // Calm Sea and Prosperous Voyage 9113
-        Story.KillQuest(9113, "shipwreck", new[] { "Gilded Merdraconian", "Gilded Crystal Undead" });
+        Story.KillQuest(
+            9113,
+            "shipwreck",
+            new[] { "Gilded Merdraconian", "Gilded Crystal Undead" }
+        );
 
         // Chaos Cleanse 9114
         Story.KillQuest(9114, "falguard", new[] { "Chaonslaught Caster", "Chaonslaught Cavalry" });

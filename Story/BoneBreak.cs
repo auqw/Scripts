@@ -11,7 +11,12 @@ public class BoneBreak
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -29,12 +34,13 @@ public class BoneBreak
 
         if (!Core.HasAchievement(30, "ip6") && !Core.IsMember)
         {
-            Core.Logger("\"BoneBreak\" map requires you to have membership or purchased BoneBreaker Adventure Pack to be able to access it.");
+            Core.Logger(
+                "\"BoneBreak\" map requires you to have membership or purchased BoneBreaker Adventure Pack to be able to access it."
+            );
             return;
         }
         if (Core.HasAchievement(30, "ip6"))
         {
-            
             Core.BuyItem("battleon", 1046, "BoneBreaker Fortress Map");
         }
 
@@ -87,6 +93,5 @@ public class BoneBreak
 
         //Defeat Killek Bonebreaker 5981
         Story.KillQuest(5981, "bonebreak", "Killek BoneBreaker");
-
     }
 }

@@ -11,7 +11,12 @@ public class KaijuWar
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -45,7 +50,7 @@ public class KaijuWar
         "Dark Corsair Silver Back Gear",
         "Dark Corsair Gold Back Gear",
         "Kaiju Cannoneer",
-        "Cannoneer Bandana"
+        "Cannoneer Bandana",
     };
 
     public string[] Booty =
@@ -64,12 +69,18 @@ public class KaijuWar
         "Dark Corsair Cutlass",
         "Dark Corsair",
         "Crossed Golden Corsair Cutlasses",
-        "Gold Corsair Cutlass"
+        "Gold Corsair Cutlass",
     };
 
-    public string[] Mech = { "Dual Golden Corsair Cutlasses", "Dual Silver Corsair Cutlasses", "Dual Dark Corsair Cutlasses" };
+    public string[] Mech =
+    {
+        "Dual Golden Corsair Cutlasses",
+        "Dual Silver Corsair Cutlasses",
+        "Dual Dark Corsair Cutlasses",
+    };
     public string[] Capn = { "Dark Corsair Silver Back Gear", "Dark Corsair Gold Back Gear" };
     public string[] Kaiju = { "Kaiju Cannoneer", "Cannoneer Bandana" };
+
     public void KaijuItems()
     {
         if (!Core.isSeasonalMapActive("kaijuwar"))

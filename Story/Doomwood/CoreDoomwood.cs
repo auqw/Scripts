@@ -11,7 +11,11 @@ public class CoreDoomwood
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -51,7 +55,6 @@ public class CoreDoomwood
         StonewoodForest();
         TechFortress();
     }
-
 
     #region Part 1
 
@@ -755,7 +758,14 @@ public class CoreDoomwood
         if (!Story.QuestProgression(7627))
         {
             Core.EnsureAccept(7627);
-            Core.KillMonster("stonewooddeep", "r3", "Right", "Doomwood Treeant", "Area Cleared", 10);
+            Core.KillMonster(
+                "stonewooddeep",
+                "r3",
+                "Right",
+                "Doomwood Treeant",
+                "Area Cleared",
+                10
+            );
             Core.GetMapItem(7531, 6, "stonewooddeep");
             Core.EnsureComplete(7627);
             Core.Jump("r2");
@@ -769,7 +779,14 @@ public class CoreDoomwood
             // Core.Logger("Updatin the map because dummys are dumb");
             // Core.Join("whitemap");
             Core.EnsureAccept(7628);
-            Core.KillMonster("stonewooddeep", "r3", "Left", "Target Dummy", "Target Dummy Slain", 6);
+            Core.KillMonster(
+                "stonewooddeep",
+                "r3",
+                "Left",
+                "Target Dummy",
+                "Target Dummy Slain",
+                6
+            );
             Core.EnsureComplete(7628);
         }
 
@@ -906,21 +923,21 @@ public class CoreDoomwood
         //2097    Defend the Throne Room
         Story.KillQuest(2097, "doomhaven", "Skeletal Viking");
 
-
-        foreach (int Quest in new[]
+        foreach (
+            int Quest in new[]
             {
-            2117, // Rolith Defeated
-            2120, // Lair
-            2121, // Mythsong
-            2122, // Arcangrove
-            2123, // Willowshire
-            2119  // Battleon
-        })
+                2117, // Rolith Defeated
+                2120, // Lair
+                2121, // Mythsong
+                2122, // Arcangrove
+                2123, // Willowshire
+                2119, // Battleon
+            }
+        )
         {
             Story.ChainQuest(Quest);
             Bot.Wait.ForQuestComplete(Quest);
         }
-
 
         //2124    Keep the Area Clear
         Story.KillQuest(2124, "doomwar", "Angry Zombie");

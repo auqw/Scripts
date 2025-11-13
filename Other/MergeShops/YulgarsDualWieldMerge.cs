@@ -34,45 +34,208 @@ public class YulgarsDualWieldMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static DualWield DW { get => _DW ??= new DualWield(); set => _DW = value; }    private static DualWield _DW;
-    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }    private static DragonBladeofNulgath _DBoN;
-    private static SRoD SRoD { get => _SRoD ??= new SRoD(); set => _SRoD = value; }    private static SRoD _SRoD;
-    private static JuggernautItemsofNulgath juggernaut { get => _juggernaut ??= new JuggernautItemsofNulgath(); set => _juggernaut = value; }    private static JuggernautItemsofNulgath _juggernaut;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static TheLeeryContract TLC { get => _TLC ??= new TheLeeryContract(); set => _TLC = value; }
+    private static DualWield DW
+    {
+        get => _DW ??= new DualWield();
+        set => _DW = value;
+    }
+    private static DualWield _DW;
+    private static DragonBladeofNulgath DBoN
+    {
+        get => _DBoN ??= new DragonBladeofNulgath();
+        set => _DBoN = value;
+    }
+    private static DragonBladeofNulgath _DBoN;
+    private static SRoD SRoD
+    {
+        get => _SRoD ??= new SRoD();
+        set => _SRoD = value;
+    }
+    private static SRoD _SRoD;
+    private static JuggernautItemsofNulgath juggernaut
+    {
+        get => _juggernaut ??= new JuggernautItemsofNulgath();
+        set => _juggernaut = value;
+    }
+    private static JuggernautItemsofNulgath _juggernaut;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static TheLeeryContract TLC
+    {
+        get => _TLC ??= new TheLeeryContract();
+        set => _TLC = value;
+    }
     private static TheLeeryContract _TLC;
-    private static GoldenBladeOfFate GBOF { get => _GBOF ??= new GoldenBladeOfFate(); set => _GBOF = value; }
+    private static GoldenBladeOfFate GBOF
+    {
+        get => _GBOF ??= new GoldenBladeOfFate();
+        set => _GBOF = value;
+    }
     private static GoldenBladeOfFate _GBOF;
-    private static HollowbornOblivionBlade HOB { get => _HOB ??= new HollowbornOblivionBlade(); set => _HOB = value; }
+    private static HollowbornOblivionBlade HOB
+    {
+        get => _HOB ??= new HollowbornOblivionBlade();
+        set => _HOB = value;
+    }
     private static HollowbornOblivionBlade _HOB;
-    private static NulgathDiamondMerge NDM { get => _NDM ??= new NulgathDiamondMerge(); set => _NDM = value; }
+    private static NulgathDiamondMerge NDM
+    {
+        get => _NDM ??= new NulgathDiamondMerge();
+        set => _NDM = value;
+    }
     private static NulgathDiamondMerge _NDM;
-    private static SpiritHunterMerge SHM { get => _SHM ??= new SpiritHunterMerge(); set => _SHM = value; }
+    private static SpiritHunterMerge SHM
+    {
+        get => _SHM ??= new SpiritHunterMerge();
+        set => _SHM = value;
+    }
     private static SpiritHunterMerge _SHM;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Weapon Reflection", "Boom Went The Dynamite", "TheWicked", "Oblivion of Nulgath", "Overlord's DoomBlade", "Blessed Coffee Cup", "Party Slasher Birthday Sword", "Rapier of Skulls", "Unarmed", "Frostbite", "A Rock", "Phoenix Blade of Nulgath", "Shadow Spear of Nulgath", "Guardian of Virtue", "Leviasea Sword", "Iron Dreadsaw", "Blood Axe Of Destruction", "PainSaw of Eidolon", "Hanzamune Dragon Koi Blade", "Ugly Stick", "Balrog Blade", "Legendary Magma Sword", "Dragon Saw", "Overfiend Blade of Nulgath", "Bone Sword", "Honor Guard's Blade", "Ceremonial Legion Blade", "Alteon's Pride", "Ddog Sea Serpent Sword", "Eternity Blade", "Blinding Light of Destiny", "Crystal Claymore", "Dark Crystal Claymore", "Soulreaper of Nulgath", "Grumpy Warhammer", "Crystal Phoenix Blade of Nulgath", "Maximillian's Whip", "Mystic Pencil of Endless Scribbles", "WarpForce War Shovel 20K", "Godly Mace of the Ancients", "Mace of the Grand Inquisitor", "KneeCapper", "Morning Star", "Axe of the Black Knight", "Cruel Axe of Midnight", "Platinum Axe of Destiny", "Star Sword", "Big 100K", "Blister's Chainsaw 08", "Golden Phoenix Sword", "Hydra Blade", "Crusader Sword", "Bloodriver", "Star Sword Breaker", "ReignBringer", "Balor's Cruelty", "Default Sword", "Iron Spear", "Undead Plague Spear", "Mighty Sword Of The Dragons", "Necrotic Sword of Doom", "Burning Blade Of Abezeth", "Blade of Awe", "Abaddon's Terror", "Krom's Brutality", "Burn it Down", "Shadow Terror Axe", "DragonBlade of Nulgath", "ShadowReaper Of Doom", "Cysero's Potato", "Kuro's Wrath", "Lilith Katana", "Mammoth Crusher Blade", "Light Prismatic Katana", "Corpse Maker of Nulgath", "Excavated Glaive: Sword", "Golden Blade of Fate", "Blade of Affliction", "Hex Blade of Nulgath", "Shadowworn", "Bane of Nulgath", "Hollowborn Oblivion Blade", "Loyalty Blade of the Nation", "Katana of Revontheus", "Risoluto", "Soul Terror Sword", "Fiendish Blood Blade", "SpiritHunter Katana" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Weapon Reflection",
+                "Boom Went The Dynamite",
+                "TheWicked",
+                "Oblivion of Nulgath",
+                "Overlord's DoomBlade",
+                "Blessed Coffee Cup",
+                "Party Slasher Birthday Sword",
+                "Rapier of Skulls",
+                "Unarmed",
+                "Frostbite",
+                "A Rock",
+                "Phoenix Blade of Nulgath",
+                "Shadow Spear of Nulgath",
+                "Guardian of Virtue",
+                "Leviasea Sword",
+                "Iron Dreadsaw",
+                "Blood Axe Of Destruction",
+                "PainSaw of Eidolon",
+                "Hanzamune Dragon Koi Blade",
+                "Ugly Stick",
+                "Balrog Blade",
+                "Legendary Magma Sword",
+                "Dragon Saw",
+                "Overfiend Blade of Nulgath",
+                "Bone Sword",
+                "Honor Guard's Blade",
+                "Ceremonial Legion Blade",
+                "Alteon's Pride",
+                "Ddog Sea Serpent Sword",
+                "Eternity Blade",
+                "Blinding Light of Destiny",
+                "Crystal Claymore",
+                "Dark Crystal Claymore",
+                "Soulreaper of Nulgath",
+                "Grumpy Warhammer",
+                "Crystal Phoenix Blade of Nulgath",
+                "Maximillian's Whip",
+                "Mystic Pencil of Endless Scribbles",
+                "WarpForce War Shovel 20K",
+                "Godly Mace of the Ancients",
+                "Mace of the Grand Inquisitor",
+                "KneeCapper",
+                "Morning Star",
+                "Axe of the Black Knight",
+                "Cruel Axe of Midnight",
+                "Platinum Axe of Destiny",
+                "Star Sword",
+                "Big 100K",
+                "Blister's Chainsaw 08",
+                "Golden Phoenix Sword",
+                "Hydra Blade",
+                "Crusader Sword",
+                "Bloodriver",
+                "Star Sword Breaker",
+                "ReignBringer",
+                "Balor's Cruelty",
+                "Default Sword",
+                "Iron Spear",
+                "Undead Plague Spear",
+                "Mighty Sword Of The Dragons",
+                "Necrotic Sword of Doom",
+                "Burning Blade Of Abezeth",
+                "Blade of Awe",
+                "Abaddon's Terror",
+                "Krom's Brutality",
+                "Burn it Down",
+                "Shadow Terror Axe",
+                "DragonBlade of Nulgath",
+                "ShadowReaper Of Doom",
+                "Cysero's Potato",
+                "Kuro's Wrath",
+                "Lilith Katana",
+                "Mammoth Crusher Blade",
+                "Light Prismatic Katana",
+                "Corpse Maker of Nulgath",
+                "Excavated Glaive: Sword",
+                "Golden Blade of Fate",
+                "Blade of Affliction",
+                "Hex Blade of Nulgath",
+                "Shadowworn",
+                "Bane of Nulgath",
+                "Hollowborn Oblivion Blade",
+                "Loyalty Blade of the Nation",
+                "Katana of Revontheus",
+                "Risoluto",
+                "Soul Terror Sword",
+                "Fiendish Blood Blade",
+                "SpiritHunter Katana",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -91,14 +254,22 @@ public static CoreAdvanced _sAdv;
             return;
         }
         //Only edit the map and shopID here
-        Adv.StartBuyAllMerge("nostalgiaquest", 1311, findIngredients, buyOnlyThis, buyMode: buyMode);
+        Adv.StartBuyAllMerge(
+            "nostalgiaquest",
+            1311,
+            findIngredients,
+            buyOnlyThis,
+            buyMode: buyMode
+        );
 
         #region Dont edit this part
         void findIngredients()
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -109,9 +280,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Weapon Reflection":
                     Core.AddDrop(req.Name);
@@ -137,7 +313,9 @@ public static CoreAdvanced _sAdv;
                     break;
 
                 case "Oblivion of Nulgath":
-                    juggernaut.JuggItems(reward: JuggernautItemsofNulgath.RewardsSelection.Oblivion_of_Nulgath);
+                    juggernaut.JuggItems(
+                        reward: JuggernautItemsofNulgath.RewardsSelection.Oblivion_of_Nulgath
+                    );
                     break;
 
                 case "Overlord's DoomBlade":
@@ -152,7 +330,12 @@ public static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(5405);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster("sandsea", "Oasis Monkey", "Pally Luwak Beans", log: false);
+                        Core.HuntMonster(
+                            "sandsea",
+                            "Oasis Monkey",
+                            "Pally Luwak Beans",
+                            log: false
+                        );
                     Core.CancelRegisteredQuests();
                     break;
 
@@ -173,7 +356,9 @@ public static CoreAdvanced _sAdv;
                 case "Frostbite":
                     if (!Core.IsMember || (!Core.isCompletedBefore(793)))
                     {
-                        Core.Logger($"You require Membership for {req.Name}, or you're not part of the Legion");
+                        Core.Logger(
+                            $"You require Membership for {req.Name}, or you're not part of the Legion"
+                        );
                         return;
                     }
                     if (!Core.CheckInventory("Frosted Falchion"))
@@ -192,7 +377,10 @@ public static CoreAdvanced _sAdv;
 
                 case "Phoenix Blade of Nulgath":
                     //  5373 = Oblivion Blade of Nulgath (Pet) ---- 4809 = Oblivion Blade of Nulgath Pet (Rare)
-                    if (!Core.IsMember || (!Core.CheckInventory(5373)) && (!Core.CheckInventory(4809)))
+                    if (
+                        !Core.IsMember
+                        || (!Core.CheckInventory(5373)) && (!Core.CheckInventory(4809))
+                    )
                     {
                         Core.Logger($"You don't own any of the pets/Membership to get {req.Name}");
                         return;
@@ -258,22 +446,42 @@ public static CoreAdvanced _sAdv;
                 case "Blood Axe Of Destruction":
                     Core.EquipClass(ClassType.Farm);
                     if (!Core.CheckInventory(req.Name))
-                        Core.KillMonster("infernalspire", "r2", "Left", "*", req.Name, isTemp: false);
+                        Core.KillMonster(
+                            "infernalspire",
+                            "r2",
+                            "Left",
+                            "*",
+                            req.Name,
+                            isTemp: false
+                        );
                     break;
 
                 case "PainSaw of Eidolon":
                     if (!Core.CheckInventory("Undead Champion"))
                     {
-                        Core.Logger($"You don't own Undead Champion - go and complete the Legion intro (requires 1200 AC)");
+                        Core.Logger(
+                            $"You don't own Undead Champion - go and complete the Legion intro (requires 1200 AC)"
+                        );
                         return;
                     }
-                    Core.AddDrop("PainSaw of Eidolon", "Judgement Scythe", "Soul Eater Advanced", "Legion Token");
+                    Core.AddDrop(
+                        "PainSaw of Eidolon",
+                        "Judgement Scythe",
+                        "Soul Eater Advanced",
+                        "Legion Token"
+                    );
                     Core.RegisterQuests(824);
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && (!Core.CheckInventory(req.Name)))
                     {
                         Core.KillMonster("marsh2", "End", "Left", 72, "Soul Scythe", 1, false);
-                        Core.KillMonster("marsh2", "End", "Left", "Lesser Shadow Serpent", "Potent Viper's Blood");
+                        Core.KillMonster(
+                            "marsh2",
+                            "End",
+                            "Left",
+                            "Lesser Shadow Serpent",
+                            "Potent Viper's Blood"
+                        );
                         Core.HuntMonster("battleundera", "Skeletal Ice Mage", "Frostbit Skull", 15);
                     }
                     if (Core.CheckInventory("Judgement Scythe"))
@@ -316,7 +524,11 @@ public static CoreAdvanced _sAdv;
 
                 case "Overfiend Blade of Nulgath":
                     if (!Core.CheckInventory(req.Name))
-                        juggernaut.JuggItems(reward: JuggernautItemsofNulgath.RewardsSelection.Overfiend_Blade_of_Nulgath);
+                        juggernaut.JuggItems(
+                            reward: JuggernautItemsofNulgath
+                                .RewardsSelection
+                                .Overfiend_Blade_of_Nulgath
+                        );
                     break;
 
                 case "Bone Sword":
@@ -357,7 +569,12 @@ public static CoreAdvanced _sAdv;
                     }
                     Core.EnsureAccept(554);
                     Nation.FarmUni13(1);
-                    Core.HuntMonster("underworld", "Undead Legend", "Undead Legend Rune", log: false);
+                    Core.HuntMonster(
+                        "underworld",
+                        "Undead Legend",
+                        "Undead Legend Rune",
+                        log: false
+                    );
                     Core.EnsureCompleteChoose(554, new[] { "Ddog Sea Serpent Sword" });
                     break;
 
@@ -396,7 +613,12 @@ public static CoreAdvanced _sAdv;
                     {
                         Core.EnsureAccept(554);
                         Nation.FarmUni13(1);
-                        Core.HuntMonster("underworld", "Undead Legend", "Undead Legend Rune", log: false);
+                        Core.HuntMonster(
+                            "underworld",
+                            "Undead Legend",
+                            "Undead Legend Rune",
+                            log: false
+                        );
                         Core.EnsureCompleteChoose(554, new[] { "Godly Golden Dragon Axe" });
                     }
                     Nation.FarmDiamondofNulgath(10);
@@ -418,7 +640,11 @@ public static CoreAdvanced _sAdv;
 
                 case "Crystal Phoenix Blade of Nulgath":
                     if (!Core.CheckInventory(req.Name))
-                        juggernaut.JuggItems(reward: JuggernautItemsofNulgath.RewardsSelection.Crystal_Phoenix_Blade_of_Nulgath);
+                        juggernaut.JuggItems(
+                            reward: JuggernautItemsofNulgath
+                                .RewardsSelection
+                                .Crystal_Phoenix_Blade_of_Nulgath
+                        );
                     break;
 
                 case "Maximillian's Whip":
@@ -465,7 +691,14 @@ public static CoreAdvanced _sAdv;
                 case "Cruel Axe of Midnight":
                     Core.EquipClass(ClassType.Solo);
                     if (!Core.CheckInventory(req.Name))
-                        Core.KillMonster("greenguardwest", "BKWest15", "Down", "Black Knight", req.Name, isTemp: false);
+                        Core.KillMonster(
+                            "greenguardwest",
+                            "BKWest15",
+                            "Down",
+                            "Black Knight",
+                            req.Name,
+                            isTemp: false
+                        );
                     break;
 
                 case "Platinum Axe of Destiny":
@@ -546,15 +779,31 @@ public static CoreAdvanced _sAdv;
                         return;
                     }
                     Core.EquipClass(ClassType.Solo);
-                    Core.AddDrop("Zellare's Death Scale", "Moganth's Death Scale", "Udaroth's Death Scale", "Cellot's Death Scale", "Mighty Sword Of The Dragons");
+                    Core.AddDrop(
+                        "Zellare's Death Scale",
+                        "Moganth's Death Scale",
+                        "Udaroth's Death Scale",
+                        "Cellot's Death Scale",
+                        "Mighty Sword Of The Dragons"
+                    );
                     Core.RegisterQuests(3343);
                     Bot.Quests.UpdateQuest(1416);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name))
                     {
                         Core.HuntMonster("wind", "Cellot", "Cellot's Death Scale", isTemp: false);
                         Core.HuntMonster("fire", "Zellare", "Zellare's Death Scale", isTemp: false);
-                        Core.HuntMonster("water", "Udaroth", "Udaroth's Death Scale", isTemp: false);
-                        Core.HuntMonster("dragonplane", "Moganth", "Moganth's Death Scale", isTemp: false);
+                        Core.HuntMonster(
+                            "water",
+                            "Udaroth",
+                            "Udaroth's Death Scale",
+                            isTemp: false
+                        );
+                        Core.HuntMonster(
+                            "dragonplane",
+                            "Moganth",
+                            "Moganth's Death Scale",
+                            isTemp: false
+                        );
                     }
                     break;
 
@@ -630,7 +879,12 @@ public static CoreAdvanced _sAdv;
                     Core.RegisterQuests(5528);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("nostalgiaquest", "Zardman Grunt", "Enchanted Rubber Ducky", log: false);
+                        Core.HuntMonster(
+                            "nostalgiaquest",
+                            "Zardman Grunt",
+                            "Enchanted Rubber Ducky",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -687,7 +941,14 @@ public static CoreAdvanced _sAdv;
                 case "Shadowworn":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("shadowrealmpast", "Shadow Lord", req.Name, quant, false, false);
+                    Core.HuntMonster(
+                        "shadowrealmpast",
+                        "Shadow Lord",
+                        req.Name,
+                        quant,
+                        false,
+                        false
+                    );
                     break;
 
                 case "Hollowborn Oblivion Blade":
@@ -718,100 +979,539 @@ public static CoreAdvanced _sAdv;
                 case "SpiritHunter Katana":
                     SHM.BuyAllMerge(req.Name);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-         new Option<bool>("37250", "Dual Boom Went The Dynamite", "Mode: [select] only\nShould the bot buy \"Dual Boom Went The Dynamite\" ?", false),
-        new Option<bool>("37249", "Dual TheWicked", "Mode: [select] only\nShould the bot buy \"Dual TheWicked\" ?", false),
-        new Option<bool>("37248", "Dual Oblivion of Nulgath Maces", "Mode: [select] only\nShould the bot buy \"Dual Oblivion of Nulgath Maces\" ?", false),
-        new Option<bool>("37244", "Dual Overlord's DoomBlade", "Mode: [select] only\nShould the bot buy \"Dual Overlord's DoomBlade\" ?", false),
-        new Option<bool>("37241", "Dual Blessed Coffee Cup", "Mode: [select] only\nShould the bot buy \"Dual Blessed Coffee Cup\" ?", false),
-        new Option<bool>("37240", "Dual Party Slasher Birthday Sword", "Mode: [select] only\nShould the bot buy \"Dual Party Slasher Birthday Sword\" ?", false),
-        new Option<bool>("37239", "Dual Rapier of Skulls", "Mode: [select] only\nShould the bot buy \"Dual Rapier of Skulls\" ?", false),
-        new Option<bool>("37238", "Dual Unarmed", "Mode: [select] only\nShould the bot buy \"Dual Unarmed\" ?", false),
-        new Option<bool>("37236", "Dual Frostbite", "Mode: [select] only\nShould the bot buy \"Dual Frostbite\" ?", false),
-        new Option<bool>("37235", "Dual Rocks", "Mode: [select] only\nShould the bot buy \"Dual Rocks\" ?", false),
-        new Option<bool>("37234", "Dual Phoenix Blade of Nulgath", "Mode: [select] only\nShould the bot buy \"Dual Phoenix Blade of Nulgath\" ?", false),
-        new Option<bool>("37233", "Dual Shadow Spear of Nulgath", "Mode: [select] only\nShould the bot buy \"Dual Shadow Spear of Nulgath\" ?", false),
-        new Option<bool>("37230", "Dual Guardian of Virtue", "Mode: [select] only\nShould the bot buy \"Dual Guardian of Virtue\" ?", false),
-        new Option<bool>("37228", "Dual Leviasea Sword", "Mode: [select] only\nShould the bot buy \"Dual Leviasea Sword\" ?", false),
-        new Option<bool>("37227", "Dual Iron Dreadsaw", "Mode: [select] only\nShould the bot buy \"Dual Iron Dreadsaw\" ?", false),
-        new Option<bool>("37226", "Dual Blood Axe Of Destruction", "Mode: [select] only\nShould the bot buy \"Dual Blood Axe Of Destruction\" ?", false),
-        new Option<bool>("37224", "Dual PainSaw of Eidolon", "Mode: [select] only\nShould the bot buy \"Dual PainSaw of Eidolon\" ?", false),
-        new Option<bool>("37223", "Dual Hanzamune Dragon Koi Blade", "Mode: [select] only\nShould the bot buy \"Dual Hanzamune Dragon Koi Blade\" ?", false),
-        new Option<bool>("37222", "Dual Ugly Stick", "Mode: [select] only\nShould the bot buy \"Dual Ugly Stick\" ?", false),
-        new Option<bool>("37221", "Dual Balrog Blade", "Mode: [select] only\nShould the bot buy \"Dual Balrog Blade\" ?", false),
-        new Option<bool>("37219", "Dual Legendary Magma Sword", "Mode: [select] only\nShould the bot buy \"Dual Legendary Magma Sword\" ?", false),
-        new Option<bool>("37218", "Dual Dragon Saw", "Mode: [select] only\nShould the bot buy \"Dual Dragon Saw\" ?", false),
-        new Option<bool>("37217", "Dual Overfiend Blade of Nulgath", "Mode: [select] only\nShould the bot buy \"Dual Overfiend Blade of Nulgath\" ?", false),
-        new Option<bool>("37216", "Dual Bone Sword", "Mode: [select] only\nShould the bot buy \"Dual Bone Sword\" ?", false),
-        new Option<bool>("37215", "Dual Honor Guard's Blade", "Mode: [select] only\nShould the bot buy \"Dual Honor Guard's Blade\" ?", false),
-        new Option<bool>("37214", "Dual Ceremonial Legion Blade", "Mode: [select] only\nShould the bot buy \"Dual Ceremonial Legion Blade\" ?", false),
-        new Option<bool>("37213", "Dual Alteon's Pride", "Mode: [select] only\nShould the bot buy \"Dual Alteon's Pride\" ?", false),
-        new Option<bool>("37211", "Dual Ddog Sea Serpent Sword", "Mode: [select] only\nShould the bot buy \"Dual Ddog Sea Serpent Sword\" ?", false),
-        new Option<bool>("37208", "Dual Eternity Blade", "Mode: [select] only\nShould the bot buy \"Dual Eternity Blade\" ?", false),
-        new Option<bool>("37207", "Dual Blinding Light of Destiny", "Mode: [select] only\nShould the bot buy \"Dual Blinding Light of Destiny\" ?", false),
-        new Option<bool>("37205", "Dual Crystal Claymore", "Mode: [select] only\nShould the bot buy \"Dual Crystal Claymore\" ?", false),
-        new Option<bool>("37204", "Dual Dark Crystal Claymore", "Mode: [select] only\nShould the bot buy \"Dual Dark Crystal Claymore\" ?", false),
-        new Option<bool>("37203", "Dual Soulreaper of Nulgath", "Mode: [select] only\nShould the bot buy \"Dual Soulreaper of Nulgath\" ?", false),
-        new Option<bool>("37201", "Dual Grumpy Warhammer", "Mode: [select] only\nShould the bot buy \"Dual Grumpy Warhammer\" ?", false),
-        new Option<bool>("37200", "Dual Crystal Phoenix Blade of Nulgath", "Mode: [select] only\nShould the bot buy \"Dual Crystal Phoenix Blade of Nulgath\" ?", false),
-        new Option<bool>("37197", "Dual Maximillian's Whip", "Mode: [select] only\nShould the bot buy \"Dual Maximillian's Whip\" ?", false),
-        new Option<bool>("37196", "Dual Pencil of Endless Scribbles", "Mode: [select] only\nShould the bot buy \"Dual Pencil of Endless Scribbles\" ?", false),
-        new Option<bool>("37195", "Dual WarpForce War Shovel 20K", "Mode: [select] only\nShould the bot buy \"Dual WarpForce War Shovel 20K\" ?", false),
-        new Option<bool>("37194", "Dual Godly Mace of the Ancients", "Mode: [select] only\nShould the bot buy \"Dual Godly Mace of the Ancients\" ?", false),
-        new Option<bool>("37193", "Dual Mace of the Grand Inquisitor", "Mode: [select] only\nShould the bot buy \"Dual Mace of the Grand Inquisitor\" ?", false),
-        new Option<bool>("37192", "Dual KneeCappers", "Mode: [select] only\nShould the bot buy \"Dual KneeCappers\" ?", false),
-        new Option<bool>("37191", "Dual Morning Stars", "Mode: [select] only\nShould the bot buy \"Dual Morning Stars\" ?", false),
-        new Option<bool>("37190", "Dual Axe of the Black Knight", "Mode: [select] only\nShould the bot buy \"Dual Axe of the Black Knight\" ?", false),
-        new Option<bool>("37189", "Dual Cruel Axe of Midnight", "Mode: [select] only\nShould the bot buy \"Dual Cruel Axe of Midnight\" ?", false),
-        new Option<bool>("37188", "Dual Platinum Axe of Destiny", "Mode: [select] only\nShould the bot buy \"Dual Platinum Axe of Destiny\" ?", false),
-        new Option<bool>("37186", "Dual Star Sword", "Mode: [select] only\nShould the bot buy \"Dual Star Sword\" ?", false),
-        new Option<bool>("37185", "Dual Big 100K", "Mode: [select] only\nShould the bot buy \"Dual Big 100K\" ?", false),
-        new Option<bool>("37184", "Dual Blister's Chainsaw 08", "Mode: [select] only\nShould the bot buy \"Dual Blister's Chainsaw 08\" ?", false),
-        new Option<bool>("37183", "Dual Golden Phoenix Sword", "Mode: [select] only\nShould the bot buy \"Dual Golden Phoenix Sword\" ?", false),
-        new Option<bool>("37182", "Dual Hydra Blades", "Mode: [select] only\nShould the bot buy \"Dual Hydra Blades\" ?", false),
-        new Option<bool>("37181", "Dual Crusader Sword", "Mode: [select] only\nShould the bot buy \"Dual Crusader Sword\" ?", false),
-        new Option<bool>("37180", "Dual Bloodrivers", "Mode: [select] only\nShould the bot buy \"Dual Bloodrivers\" ?", false),
-        new Option<bool>("37178", "Dual Star Sword Breaker", "Mode: [select] only\nShould the bot buy \"Dual Star Sword Breaker\" ?", false),
-        new Option<bool>("37177", "Dual ReignBringers", "Mode: [select] only\nShould the bot buy \"Dual ReignBringers\" ?", false),
-        new Option<bool>("37176", "Dual Balor's Cruelty", "Mode: [select] only\nShould the bot buy \"Dual Balor's Cruelty\" ?", false),
-        new Option<bool>("37175", "Dual Default Sword", "Mode: [select] only\nShould the bot buy \"Dual Default Sword\" ?", false),
-        new Option<bool>("41805", "Dual Iron Spears", "Mode: [select] only\nShould the bot buy \"Dual Iron Spears\" ?", false),
-        new Option<bool>("41806", "Dual Undead Plague Spear", "Mode: [select] only\nShould the bot buy \"Dual Undead Plague Spear\" ?", false),
-        new Option<bool>("41803", "Dual Mighty Sword Of The Dragons", "Mode: [select] only\nShould the bot buy \"Dual Mighty Sword Of The Dragons\" ?", false),
-        new Option<bool>("45359", "Dual Necrotic Swords of Doom", "Mode: [select] only\nShould the bot buy \"Dual Necrotic Swords of Doom\" ?", false),
-        new Option<bool>("45360", "Dual Burning Blades Of Abezeth", "Mode: [select] only\nShould the bot buy \"Dual Burning Blades Of Abezeth\" ?", false),
-        new Option<bool>("45361", "Dual Blades of Awe", "Mode: [select] only\nShould the bot buy \"Dual Blades of Awe\" ?", false),
-        new Option<bool>("45552", "Dual Abaddon's Terrors", "Mode: [select] only\nShould the bot buy \"Dual Abaddon's Terrors\" ?", false),
-        new Option<bool>("45553", "Dual Krom's Brutalities", "Mode: [select] only\nShould the bot buy \"Dual Krom's Brutalities\" ?", false),
-        new Option<bool>("37000", "Phoenix Blades", "Mode: [select] only\nShould the bot buy \"Phoenix Blades\" ?", false),
-        new Option<bool>("50926", "Dual Burn it Down Staves", "Mode: [select] only\nShould the bot buy \"Dual Burn it Down Staves\" ?", false),
-        new Option<bool>("50927", "Dual Shadow Terror Axes", "Mode: [select] only\nShould the bot buy \"Dual Shadow Terror Axes\" ?", false),
-        new Option<bool>("50928", "Dual DragonBlades of Nulgath", "Mode: [select] only\nShould the bot buy \"Dual DragonBlades of Nulgath\" ?", false),
-        new Option<bool>("50929", "Dual ShadowReapers Of Doom", "Mode: [select] only\nShould the bot buy \"Dual ShadowReapers Of Doom\" ?", false),
-        new Option<bool>("85140", "Cysero's Potatoes", "Mode: [select] only\nShould the bot buy \"Cysero's Potatoes\" ?", false),
-        new Option<bool>("85109", "Dual Kuro's Wrath", "Mode: [select] only\nShould the bot buy \"Dual Kuro's Wrath\" ?", false),
-        new Option<bool>("85110", "Dual Lilith Katana", "Mode: [select] only\nShould the bot buy \"Dual Lilith Katana\" ?", false),
-        new Option<bool>("85111", "Dual Mammoth Crusher Blade", "Mode: [select] only\nShould the bot buy \"Dual Mammoth Crusher Blade\" ?", false),
-        new Option<bool>("85112", "Dual Light Prismatic Katana", "Mode: [select] only\nShould the bot buy \"Dual Light Prismatic Katana\" ?", false),
-        new Option<bool>("85113", "Dual Corpse Maker of Nulgath", "Mode: [select] only\nShould the bot buy \"Dual Corpse Maker of Nulgath\" ?", false),
-        new Option<bool>("85114", "Dual Excavated Glaive: Sword", "Mode: [select] only\nShould the bot buy \"Dual Excavated Glaive: Sword\" ?", false),
-        new Option<bool>("85115", "Dual Golden Blade of Fate", "Mode: [select] only\nShould the bot buy \"Dual Golden Blade of Fate\" ?", false),
-        new Option<bool>("85116", "Dual Blade of Affliction", "Mode: [select] only\nShould the bot buy \"Dual Blade of Affliction\" ?", false),
-        new Option<bool>("37202", "Dual Hex Blade of Nulgath", "Mode: [select] only\nShould the bot buy \"Dual Hex Blade of Nulgath\" ?", false),
-        new Option<bool>("37206", "Dual Shadowworn", "Mode: [select] only\nShould the bot buy \"Dual Shadowworn\" ?", false),
-        new Option<bool>("85246", "Dual Bane of Nulgath", "Mode: [select] only\nShould the bot buy \"Dual Bane of Nulgath\" ?", false),
-        new Option<bool>("85247", "Dual Hollowborn Oblivion Blade", "Mode: [select] only\nShould the bot buy \"Dual Hollowborn Oblivion Blade\" ?", false),
-        new Option<bool>("85248", "Dual Loyalty Blade of the Nation", "Mode: [select] only\nShould the bot buy \"Dual Loyalty Blade of the Nation\" ?", false),
-        new Option<bool>("85300", "Dual Katana of Revontheus", "Mode: [select] only\nShould the bot buy \"Dual Katana of Revontheus\" ?", false),
-        new Option<bool>("85301", "Dual Risoluto", "Mode: [select] only\nShould the bot buy \"Dual Risoluto\" ?", false),
-        new Option<bool>("85302", "Dual Soul Terror Sword", "Mode: [select] only\nShould the bot buy \"Dual Soul Terror Sword\" ?", false),
-        new Option<bool>("85303", "Dual Fiendish Blood Blade", "Mode: [select] only\nShould the bot buy \"Dual Fiendish Blood Blade\" ?", false),
-        new Option<bool>("85304", "SpiritHunter Katanas", "Mode: [select] only\nShould the bot buy \"SpiritHunter Katanas\" ?", false),
+        new Option<bool>(
+            "37250",
+            "Dual Boom Went The Dynamite",
+            "Mode: [select] only\nShould the bot buy \"Dual Boom Went The Dynamite\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37249",
+            "Dual TheWicked",
+            "Mode: [select] only\nShould the bot buy \"Dual TheWicked\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37248",
+            "Dual Oblivion of Nulgath Maces",
+            "Mode: [select] only\nShould the bot buy \"Dual Oblivion of Nulgath Maces\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37244",
+            "Dual Overlord's DoomBlade",
+            "Mode: [select] only\nShould the bot buy \"Dual Overlord's DoomBlade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37241",
+            "Dual Blessed Coffee Cup",
+            "Mode: [select] only\nShould the bot buy \"Dual Blessed Coffee Cup\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37240",
+            "Dual Party Slasher Birthday Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Party Slasher Birthday Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37239",
+            "Dual Rapier of Skulls",
+            "Mode: [select] only\nShould the bot buy \"Dual Rapier of Skulls\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37238",
+            "Dual Unarmed",
+            "Mode: [select] only\nShould the bot buy \"Dual Unarmed\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37236",
+            "Dual Frostbite",
+            "Mode: [select] only\nShould the bot buy \"Dual Frostbite\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37235",
+            "Dual Rocks",
+            "Mode: [select] only\nShould the bot buy \"Dual Rocks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37234",
+            "Dual Phoenix Blade of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dual Phoenix Blade of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37233",
+            "Dual Shadow Spear of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dual Shadow Spear of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37230",
+            "Dual Guardian of Virtue",
+            "Mode: [select] only\nShould the bot buy \"Dual Guardian of Virtue\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37228",
+            "Dual Leviasea Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Leviasea Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37227",
+            "Dual Iron Dreadsaw",
+            "Mode: [select] only\nShould the bot buy \"Dual Iron Dreadsaw\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37226",
+            "Dual Blood Axe Of Destruction",
+            "Mode: [select] only\nShould the bot buy \"Dual Blood Axe Of Destruction\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37224",
+            "Dual PainSaw of Eidolon",
+            "Mode: [select] only\nShould the bot buy \"Dual PainSaw of Eidolon\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37223",
+            "Dual Hanzamune Dragon Koi Blade",
+            "Mode: [select] only\nShould the bot buy \"Dual Hanzamune Dragon Koi Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37222",
+            "Dual Ugly Stick",
+            "Mode: [select] only\nShould the bot buy \"Dual Ugly Stick\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37221",
+            "Dual Balrog Blade",
+            "Mode: [select] only\nShould the bot buy \"Dual Balrog Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37219",
+            "Dual Legendary Magma Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Legendary Magma Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37218",
+            "Dual Dragon Saw",
+            "Mode: [select] only\nShould the bot buy \"Dual Dragon Saw\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37217",
+            "Dual Overfiend Blade of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dual Overfiend Blade of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37216",
+            "Dual Bone Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Bone Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37215",
+            "Dual Honor Guard's Blade",
+            "Mode: [select] only\nShould the bot buy \"Dual Honor Guard's Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37214",
+            "Dual Ceremonial Legion Blade",
+            "Mode: [select] only\nShould the bot buy \"Dual Ceremonial Legion Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37213",
+            "Dual Alteon's Pride",
+            "Mode: [select] only\nShould the bot buy \"Dual Alteon's Pride\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37211",
+            "Dual Ddog Sea Serpent Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Ddog Sea Serpent Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37208",
+            "Dual Eternity Blade",
+            "Mode: [select] only\nShould the bot buy \"Dual Eternity Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37207",
+            "Dual Blinding Light of Destiny",
+            "Mode: [select] only\nShould the bot buy \"Dual Blinding Light of Destiny\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37205",
+            "Dual Crystal Claymore",
+            "Mode: [select] only\nShould the bot buy \"Dual Crystal Claymore\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37204",
+            "Dual Dark Crystal Claymore",
+            "Mode: [select] only\nShould the bot buy \"Dual Dark Crystal Claymore\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37203",
+            "Dual Soulreaper of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dual Soulreaper of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37201",
+            "Dual Grumpy Warhammer",
+            "Mode: [select] only\nShould the bot buy \"Dual Grumpy Warhammer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37200",
+            "Dual Crystal Phoenix Blade of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dual Crystal Phoenix Blade of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37197",
+            "Dual Maximillian's Whip",
+            "Mode: [select] only\nShould the bot buy \"Dual Maximillian's Whip\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37196",
+            "Dual Pencil of Endless Scribbles",
+            "Mode: [select] only\nShould the bot buy \"Dual Pencil of Endless Scribbles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37195",
+            "Dual WarpForce War Shovel 20K",
+            "Mode: [select] only\nShould the bot buy \"Dual WarpForce War Shovel 20K\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37194",
+            "Dual Godly Mace of the Ancients",
+            "Mode: [select] only\nShould the bot buy \"Dual Godly Mace of the Ancients\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37193",
+            "Dual Mace of the Grand Inquisitor",
+            "Mode: [select] only\nShould the bot buy \"Dual Mace of the Grand Inquisitor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37192",
+            "Dual KneeCappers",
+            "Mode: [select] only\nShould the bot buy \"Dual KneeCappers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37191",
+            "Dual Morning Stars",
+            "Mode: [select] only\nShould the bot buy \"Dual Morning Stars\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37190",
+            "Dual Axe of the Black Knight",
+            "Mode: [select] only\nShould the bot buy \"Dual Axe of the Black Knight\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37189",
+            "Dual Cruel Axe of Midnight",
+            "Mode: [select] only\nShould the bot buy \"Dual Cruel Axe of Midnight\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37188",
+            "Dual Platinum Axe of Destiny",
+            "Mode: [select] only\nShould the bot buy \"Dual Platinum Axe of Destiny\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37186",
+            "Dual Star Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Star Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37185",
+            "Dual Big 100K",
+            "Mode: [select] only\nShould the bot buy \"Dual Big 100K\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37184",
+            "Dual Blister's Chainsaw 08",
+            "Mode: [select] only\nShould the bot buy \"Dual Blister's Chainsaw 08\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37183",
+            "Dual Golden Phoenix Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Golden Phoenix Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37182",
+            "Dual Hydra Blades",
+            "Mode: [select] only\nShould the bot buy \"Dual Hydra Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37181",
+            "Dual Crusader Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Crusader Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37180",
+            "Dual Bloodrivers",
+            "Mode: [select] only\nShould the bot buy \"Dual Bloodrivers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37178",
+            "Dual Star Sword Breaker",
+            "Mode: [select] only\nShould the bot buy \"Dual Star Sword Breaker\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37177",
+            "Dual ReignBringers",
+            "Mode: [select] only\nShould the bot buy \"Dual ReignBringers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37176",
+            "Dual Balor's Cruelty",
+            "Mode: [select] only\nShould the bot buy \"Dual Balor's Cruelty\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37175",
+            "Dual Default Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Default Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41805",
+            "Dual Iron Spears",
+            "Mode: [select] only\nShould the bot buy \"Dual Iron Spears\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41806",
+            "Dual Undead Plague Spear",
+            "Mode: [select] only\nShould the bot buy \"Dual Undead Plague Spear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41803",
+            "Dual Mighty Sword Of The Dragons",
+            "Mode: [select] only\nShould the bot buy \"Dual Mighty Sword Of The Dragons\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45359",
+            "Dual Necrotic Swords of Doom",
+            "Mode: [select] only\nShould the bot buy \"Dual Necrotic Swords of Doom\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45360",
+            "Dual Burning Blades Of Abezeth",
+            "Mode: [select] only\nShould the bot buy \"Dual Burning Blades Of Abezeth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45361",
+            "Dual Blades of Awe",
+            "Mode: [select] only\nShould the bot buy \"Dual Blades of Awe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45552",
+            "Dual Abaddon's Terrors",
+            "Mode: [select] only\nShould the bot buy \"Dual Abaddon's Terrors\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45553",
+            "Dual Krom's Brutalities",
+            "Mode: [select] only\nShould the bot buy \"Dual Krom's Brutalities\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37000",
+            "Phoenix Blades",
+            "Mode: [select] only\nShould the bot buy \"Phoenix Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "50926",
+            "Dual Burn it Down Staves",
+            "Mode: [select] only\nShould the bot buy \"Dual Burn it Down Staves\" ?",
+            false
+        ),
+        new Option<bool>(
+            "50927",
+            "Dual Shadow Terror Axes",
+            "Mode: [select] only\nShould the bot buy \"Dual Shadow Terror Axes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "50928",
+            "Dual DragonBlades of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dual DragonBlades of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "50929",
+            "Dual ShadowReapers Of Doom",
+            "Mode: [select] only\nShould the bot buy \"Dual ShadowReapers Of Doom\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85140",
+            "Cysero's Potatoes",
+            "Mode: [select] only\nShould the bot buy \"Cysero's Potatoes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85109",
+            "Dual Kuro's Wrath",
+            "Mode: [select] only\nShould the bot buy \"Dual Kuro's Wrath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85110",
+            "Dual Lilith Katana",
+            "Mode: [select] only\nShould the bot buy \"Dual Lilith Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85111",
+            "Dual Mammoth Crusher Blade",
+            "Mode: [select] only\nShould the bot buy \"Dual Mammoth Crusher Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85112",
+            "Dual Light Prismatic Katana",
+            "Mode: [select] only\nShould the bot buy \"Dual Light Prismatic Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85113",
+            "Dual Corpse Maker of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dual Corpse Maker of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85114",
+            "Dual Excavated Glaive: Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Excavated Glaive: Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85115",
+            "Dual Golden Blade of Fate",
+            "Mode: [select] only\nShould the bot buy \"Dual Golden Blade of Fate\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85116",
+            "Dual Blade of Affliction",
+            "Mode: [select] only\nShould the bot buy \"Dual Blade of Affliction\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37202",
+            "Dual Hex Blade of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dual Hex Blade of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "37206",
+            "Dual Shadowworn",
+            "Mode: [select] only\nShould the bot buy \"Dual Shadowworn\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85246",
+            "Dual Bane of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Dual Bane of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85247",
+            "Dual Hollowborn Oblivion Blade",
+            "Mode: [select] only\nShould the bot buy \"Dual Hollowborn Oblivion Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85248",
+            "Dual Loyalty Blade of the Nation",
+            "Mode: [select] only\nShould the bot buy \"Dual Loyalty Blade of the Nation\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85300",
+            "Dual Katana of Revontheus",
+            "Mode: [select] only\nShould the bot buy \"Dual Katana of Revontheus\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85301",
+            "Dual Risoluto",
+            "Mode: [select] only\nShould the bot buy \"Dual Risoluto\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85302",
+            "Dual Soul Terror Sword",
+            "Mode: [select] only\nShould the bot buy \"Dual Soul Terror Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85303",
+            "Dual Fiendish Blood Blade",
+            "Mode: [select] only\nShould the bot buy \"Dual Fiendish Blood Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85304",
+            "SpiritHunter Katanas",
+            "Mode: [select] only\nShould the bot buy \"SpiritHunter Katanas\" ?",
+            false
+        ),
     };
 }

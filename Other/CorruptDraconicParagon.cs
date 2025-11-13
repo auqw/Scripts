@@ -15,10 +15,19 @@ public class CorruptDraconicParagon
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }    private static CoreSoW _SoW;
-
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
+    private static CoreSoW _SoW;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -52,6 +61,5 @@ public class CorruptDraconicParagon
             Core.HuntMonster("darkally", "Underfiend", "Underfiend Defeated");
         Core.ToBank("Corrupt Draconic Paragon Plate");
         Core.CancelRegisteredQuests();
-
     }
 }

@@ -11,7 +11,11 @@ public class YokaiHunt
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -74,7 +78,15 @@ public class YokaiHunt
         if (!Story.QuestProgression(9093))
         {
             Core.EnsureAccept(9093);
-            Core.KillMonster("wanders", "r5", "Left", "Lotus Spider", "Lotus Seeds", 10, log: false);
+            Core.KillMonster(
+                "wanders",
+                "r5",
+                "Left",
+                "Lotus Spider",
+                "Lotus Seeds",
+                10,
+                log: false
+            );
             Core.HuntMonster("battlefowl", "ChickenCow", "Chickencow Egg", 3, log: false);
             Core.EnsureComplete(9093);
         }
@@ -133,56 +145,48 @@ public class YokaiHunt
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Ox Nopperabo", // UseableMonsters[0],
-	"Golden Ox Guard", // UseableMonsters[1],
-	"Ox Yokai Spirit", // UseableMonsters[2],
-	"Etokoun", // UseableMonsters[3],
-	"Elixir Etokoun", // UseableMonsters[4],
-	"Mutou Hong", // UseableMonsters[5],
-	"Zhenzhu Shé", // UseableMonsters[6]
-};
+            "Ox Nopperabo", // UseableMonsters[0],
+            "Golden Ox Guard", // UseableMonsters[1],
+            "Ox Yokai Spirit", // UseableMonsters[2],
+            "Etokoun", // UseableMonsters[3],
+            "Elixir Etokoun", // UseableMonsters[4],
+            "Mutou Hong", // UseableMonsters[5],
+            "Zhenzhu Shé", // UseableMonsters[6]
+        };
         #endregion Useable Monsters
 
         // 10056 | Xionghuang Remedy
         if (!Story.QuestProgression(10056))
         {
-            Core.HuntMonsterQuest(10056,
+            Core.HuntMonsterQuest(
+                10056,
                 ("yokairiver", "Kappa Ninja", ClassType.Farm),
-                ("yokairiver", "Funa-yurei", ClassType.Farm));
+                ("yokairiver", "Funa-yurei", ClassType.Farm)
+            );
         }
-
 
         // 10057 | Calabash Elixir
         if (!Story.QuestProgression(10057))
         {
-            Core.HuntMonsterQuest(10057,
-                ("yokaihunt", UseableMonsters[4], ClassType.Solo));
+            Core.HuntMonsterQuest(10057, ("yokaihunt", UseableMonsters[4], ClassType.Solo));
         }
-
 
         // 10058 | Duàn Qiáo
         if (!Story.QuestProgression(10058))
         {
-            Core.HuntMonsterQuest(10058,
-                ("hakuvillage", "Mountain Oni", ClassType.Farm));
+            Core.HuntMonsterQuest(10058, ("hakuvillage", "Mountain Oni", ClassType.Farm));
         }
-
 
         // 10059 | Sangharama's Blessing
         if (!Story.QuestProgression(10059))
         {
-            Core.HuntMonsterQuest(10059,
-                ("shogunwar", "Shadow Samurai", ClassType.Farm));
+            Core.HuntMonsterQuest(10059, ("shogunwar", "Shadow Samurai", ClassType.Farm));
         }
-
 
         // 10060 | Lady Suzhen
         if (!Story.QuestProgression(10060))
         {
-            Core.HuntMonsterQuest(10060,
-                ("yokaihunt", UseableMonsters[6], ClassType.Solo));
+            Core.HuntMonsterQuest(10060, ("yokaihunt", UseableMonsters[6], ClassType.Solo));
         }
-
-
     }
 }

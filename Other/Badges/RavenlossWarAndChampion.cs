@@ -12,7 +12,12 @@ public class RavenlossWarAndChampion
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static RavenlossSaga Ravenloss { get => _Ravenloss ??= new RavenlossSaga(); set => _Ravenloss = value; }    private static RavenlossSaga _Ravenloss;
+    private static RavenlossSaga Ravenloss
+    {
+        get => _Ravenloss ??= new RavenlossSaga();
+        set => _Ravenloss = value;
+    }
+    private static RavenlossSaga _Ravenloss;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -39,5 +44,4 @@ public class RavenlossWarAndChampion
         Core.HuntMonster("ravenloss", "ChaosWeaver Magi", "ChaosWeaver Defeated", 100, log: false);
         Core.EnsureComplete(8668);
     }
-
 }

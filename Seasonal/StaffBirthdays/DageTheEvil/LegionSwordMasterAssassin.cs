@@ -17,11 +17,36 @@ public class LegionSwordMasterAssassin
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static AnotherOneBitesTheDust SSand { get => _SSand ??= new AnotherOneBitesTheDust(); set => _SSand = value; }    private static AnotherOneBitesTheDust _SSand;
-    private static LegionBonfire Bon { get => _Bon ??= new LegionBonfire(); set => _Bon = value; }    private static LegionBonfire _Bon;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static AnotherOneBitesTheDust SSand
+    {
+        get => _SSand ??= new AnotherOneBitesTheDust();
+        set => _SSand = value;
+    }
+    private static AnotherOneBitesTheDust _SSand;
+    private static LegionBonfire Bon
+    {
+        get => _Bon ??= new LegionBonfire();
+        set => _Bon = value;
+    }
+    private static LegionBonfire _Bon;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -32,10 +57,12 @@ public class LegionSwordMasterAssassin
         Core.SetOptions(false);
     }
 
-
     public void GetClass(bool rankUpClass = true)
     {
-        if (Core.CheckInventory("Legion SwordMaster Assassin") || !Core.isSeasonalMapActive("darkbirthday"))
+        if (
+            Core.CheckInventory("Legion SwordMaster Assassin")
+            || !Core.isSeasonalMapActive("darkbirthday")
+        )
             return;
 
         Core.AddDrop("Soul Essence");

@@ -16,11 +16,23 @@ public class AtlasFalls
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static AtlasKingdom AtlasKingdom { get => _AtlasKingdom ??= new AtlasKingdom(); set => _AtlasKingdom = value; }
+    private static AtlasKingdom AtlasKingdom
+    {
+        get => _AtlasKingdom ??= new AtlasKingdom();
+        set => _AtlasKingdom = value;
+    }
     private static AtlasKingdom _AtlasKingdom;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -31,7 +43,6 @@ public class AtlasFalls
 
         Core.SetOptions(false);
     }
-
 
     public void Storyline()
     {
@@ -69,11 +80,12 @@ public class AtlasFalls
         // 10128 | Exodus of Dust
         if (!Story.QuestProgression(10128))
         {
-            Core.HuntMonsterQuest(10128,
+            Core.HuntMonsterQuest(
+                10128,
                 ("atlasfalls", UseableMonsters[0], ClassType.Solo),
-                ("atlasfalls", UseableMonsters[2], ClassType.Solo));
+                ("atlasfalls", UseableMonsters[2], ClassType.Solo)
+            );
         }
-
 
         // 10129 | Impeccable Judgement
         if (!Story.QuestProgression(10129))
@@ -83,7 +95,6 @@ public class AtlasFalls
             Story.MapItemQuest(10129, "atlasfalls", 14285, 4);
         }
 
-
         // 10130 | Koinà Tà Phílon
         if (!Story.QuestProgression(10130))
         {
@@ -91,32 +102,35 @@ public class AtlasFalls
             Bot.Wait.ForCellChange("r5");
         }
 
-
         // 10131 | What Walks Ought to Crawl
         if (!Story.QuestProgression(10131))
         {
-
             Core.EnsureAccept(10131);
             Core.HuntMonster("atlasfalls", UseableMonsters[4], "Leo Heart", 8, publicRoom: true);
             Story.MapItemQuest(10131, "atlasfalls", 14288, 4);
         }
-
 
         // 10132 | Vene Vidi Vici
         if (!Story.QuestProgression(10132))
         {
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(10132);
-            Core.KillMonster("atlasfalls", "r7", "Right", UseableMonsters[5], "Elite's Skull", 8, publicRoom: true);
+            Core.KillMonster(
+                "atlasfalls",
+                "r7",
+                "Right",
+                UseableMonsters[5],
+                "Elite's Skull",
+                8,
+                publicRoom: true
+            );
             Story.MapItemQuest(10132, "atlasfalls", 14289);
         }
-
 
         // 10133 | Exocannibalism
         if (!Story.QuestProgression(10133))
         {
-            Core.HuntMonsterQuest(10133,
-                ("atlasfalls", UseableMonsters[6], ClassType.Farm));
+            Core.HuntMonsterQuest(10133, ("atlasfalls", UseableMonsters[6], ClassType.Farm));
         }
 
         // 10134 | Condemnatio Purgatorio
@@ -124,20 +138,29 @@ public class AtlasFalls
         {
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(10134);
-            Core.HuntMonster("atlasfalls", UseableMonsters[7], "Soul Condemned", 21, publicRoom: true);
+            Core.HuntMonster(
+                "atlasfalls",
+                UseableMonsters[7],
+                "Soul Condemned",
+                21,
+                publicRoom: true
+            );
             Story.MapItemQuest(10134, "atlasfalls", 14290, 4);
         }
-
 
         // 10135 | Miserum Votum
         if (!Story.QuestProgression(10135))
         {
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(10135);
-            Core.HuntMonster("atlasfalls", UseableMonsters[8], "Arethusa's Crown", publicRoom: true);
+            Core.HuntMonster(
+                "atlasfalls",
+                UseableMonsters[8],
+                "Arethusa's Crown",
+                publicRoom: true
+            );
             Story.MapItemQuest(10135, "atlasfalls", 14291);
         }
-
 
         // ----- dude isnt soloable. ----- yes he is
         // 10136 | Dante to Beatrice
@@ -148,9 +171,8 @@ public class AtlasFalls
                 Core.UseBossClass();
                 Story.KillQuest(10136, "atlasfalls", UseableMonsters[9]);
             }
-            else Core.Logger("You need to have \"Chaos Avenger\" to kill \"King Zedek\".");
-
+            else
+                Core.Logger("You need to have \"Chaos Avenger\" to kill \"King Zedek\".");
         }
-
     }
 }

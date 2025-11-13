@@ -31,27 +31,61 @@ public class FarmAllDailies
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static LordOfOrder LOO { get => _LOO ??= new LordOfOrder(); set => _LOO = value; }
+    private static LordOfOrder LOO
+    {
+        get => _LOO ??= new LordOfOrder();
+        set => _LOO = value;
+    }
     private static LordOfOrder _LOO;
-    private static GlaceraStory Glac { get => _Glac ??= new GlaceraStory(); set => _Glac = value; }
+    private static GlaceraStory Glac
+    {
+        get => _Glac ??= new GlaceraStory();
+        set => _Glac = value;
+    }
     private static GlaceraStory _Glac;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
     private static CoreBLOD _BLOD;
-    private static Friendship FR { get => _FR ??= new Friendship(); set => _FR = value; }
+    private static Friendship FR
+    {
+        get => _FR ??= new Friendship();
+        set => _FR = value;
+    }
     private static Friendship _FR;
-    private static CoreSDKA CSDKA { get => _CSDKA ??= new CoreSDKA(); set => _CSDKA = value; }
+    private static CoreSDKA CSDKA
+    {
+        get => _CSDKA ??= new CoreSDKA();
+        set => _CSDKA = value;
+    }
     private static CoreSDKA _CSDKA;
-    private static MineCrafting MineCrafting { get => _MineCrafting ??= new MineCrafting(); set => _MineCrafting = value; }
+    private static MineCrafting MineCrafting
+    {
+        get => _MineCrafting ??= new MineCrafting();
+        set => _MineCrafting = value;
+    }
     private static MineCrafting _MineCrafting;
+
     //private BankAllItems BAI = new();
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "FarmAllDailies";
     public List<IOption> Options = new()
     {
-        new Option<DailySet>("Select Dailies Set", "Dailies set: Recommended or All?", "only do the few that we recommend to make it a bit quicker?", DailySet.All),
+        new Option<DailySet>(
+            "Select Dailies Set",
+            "Dailies set: Recommended or All?",
+            "only do the few that we recommend to make it a bit quicker?",
+            DailySet.All
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -104,7 +138,21 @@ public class FarmAllDailies
             Daily.BeastMasterChallenge();
             Daily.FungiforaFunGuy();
             CSDKA.UnlockHardCoreMetals();
-            Daily.HardCoreMetals(new[] { "Arsenic", "Beryllium", "Chromium", "Palladium", "Rhodium", "Rhodium", "Thorium", "Mercury" }, 10, ToBank: true);
+            Daily.HardCoreMetals(
+                new[]
+                {
+                    "Arsenic",
+                    "Beryllium",
+                    "Chromium",
+                    "Palladium",
+                    "Rhodium",
+                    "Rhodium",
+                    "Thorium",
+                    "Mercury",
+                },
+                10,
+                ToBank: true
+            );
             Daily.GoldenInquisitor();
             Daily.BreakIntotheHoard(false, false);
             Daily.EldenRuby();
@@ -133,6 +181,6 @@ public class FarmAllDailies
     {
         Recommended,
         All,
-        All_Without_Friendship
+        All_Without_Friendship,
     }
 }

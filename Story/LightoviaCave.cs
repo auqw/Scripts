@@ -12,8 +12,18 @@ public class LightoviaCave
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static ShadowVoid ShadowVoid { get => _ShadowVoid ??= new ShadowVoid(); set => _ShadowVoid = value; }    private static ShadowVoid _ShadowVoid;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static ShadowVoid ShadowVoid
+    {
+        get => _ShadowVoid ??= new ShadowVoid();
+        set => _ShadowVoid = value;
+    }
+    private static ShadowVoid _ShadowVoid;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -31,13 +41,15 @@ public class LightoviaCave
             if (Bot.Quests.IsUnlocked(7123))
             {
                 Core.Logger(
-                    "Quests are locked Shadowvoid quests should be completed first. Starting Shadowvoid script");
+                    "Quests are locked Shadowvoid quests should be completed first. Starting Shadowvoid script"
+                );
                 ShadowVoid.ShadowVoidQuests();
             }
             else
             {
                 Core.Logger(
-                    "Quests are locked You Should Finish Lords Of Chaos story script first");
+                    "Quests are locked You Should Finish Lords Of Chaos story script first"
+                );
                 return;
             }
         }

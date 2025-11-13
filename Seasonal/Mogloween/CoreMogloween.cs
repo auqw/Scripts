@@ -12,7 +12,11 @@ public class CoreMogloween
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -100,7 +104,6 @@ public class CoreMogloween
 
         //Candy Shop Cutscene 395
         Story.MapItemQuest(395, "candyshop", 69);
-
     }
 
     public void CandyShop()
@@ -139,6 +142,7 @@ public class CoreMogloween
         //What’s Up, Doc? 401
         Story.KillQuest(401, "voltabolt", "Dental Driller");
     }
+
     public void CandyCorn()
     {
         if (!Core.isSeasonalMapActive("candycorn"))
@@ -172,8 +176,8 @@ public class CoreMogloween
 
         //She Who Walks Behind The Stalks 878
         Story.KillQuest(878, "candycorn", "Stalkwalker");
-
     }
+
     public void Pie()
     {
         if (!Core.isSeasonalMapActive("pie"))
@@ -216,7 +220,6 @@ public class CoreMogloween
 
         //Head to WillowCreek! 1363
         Story.MapItemQuest(1363, "willowcreek", 657);
-
     }
 
     public void Asylum()
@@ -781,14 +784,14 @@ public class CoreMogloween
         Story.PreLoad(this);
         #region Useable Monsters
         string[] UseableMonsters = new[]
-                {
-                    "Living Pumpkin", // UseableMonsters[0],
-                    "Dzeza Sapling", // UseableMonsters[1],
-                    "Nudibranch", // UseableMonsters[2],
-                    "Kathool Kultist", // UseableMonsters[3],
-                    "Dzeza Cultist", // UseableMonsters[4],
-                    "Harvest Acromegalia", // UseableMonsters[5]
-                };
+        {
+            "Living Pumpkin", // UseableMonsters[0],
+            "Dzeza Sapling", // UseableMonsters[1],
+            "Nudibranch", // UseableMonsters[2],
+            "Kathool Kultist", // UseableMonsters[3],
+            "Dzeza Cultist", // UseableMonsters[4],
+            "Harvest Acromegalia", // UseableMonsters[5]
+        };
         #endregion Useable Monsters
 
 
@@ -824,7 +827,11 @@ public class CoreMogloween
         // 10448 | Abomination vs Monstrosity
         if (!Story.QuestProgression(10448))
         {
-            Story.KillQuest(10448, "eldritchbattletown", new[] { UseableMonsters[2], UseableMonsters[1] });
+            Story.KillQuest(
+                10448,
+                "eldritchbattletown",
+                new[] { UseableMonsters[2], UseableMonsters[1] }
+            );
         }
 
         // 10449 | The Mom Friend
@@ -850,7 +857,11 @@ public class CoreMogloween
         // 10452 | Recruitment Initiative
         if (!Story.QuestProgression(10452))
         {
-            Story.KillQuest(10452, "eldritchbattletown", new[] { UseableMonsters[3], UseableMonsters[4] });
+            Story.KillQuest(
+                10452,
+                "eldritchbattletown",
+                new[] { UseableMonsters[3], UseableMonsters[4] }
+            );
         }
 
         Core.EquipClass(ClassType.Solo);
@@ -873,28 +884,36 @@ public class CoreMogloween
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Nudibranch", // UseableMonsters[0],
-	"Infested Fisherman", // UseableMonsters[1],
-	"Kathool Cultist", // UseableMonsters[2],
-	"Dzeza Cultist", // UseableMonsters[3],
-	"Dzeza Sapling", // UseableMonsters[4],
-	"Infested Mummy", // UseableMonsters[5],
-	"Mass of Hair", // UseableMonsters[6],
-	"Mass of Teeth", // UseableMonsters[7],
-	"Dzeza the Boundless", // UseableMonsters[8]
-};
+            "Nudibranch", // UseableMonsters[0],
+            "Infested Fisherman", // UseableMonsters[1],
+            "Kathool Cultist", // UseableMonsters[2],
+            "Dzeza Cultist", // UseableMonsters[3],
+            "Dzeza Sapling", // UseableMonsters[4],
+            "Infested Mummy", // UseableMonsters[5],
+            "Mass of Hair", // UseableMonsters[6],
+            "Mass of Teeth", // UseableMonsters[7],
+            "Dzeza the Boundless", // UseableMonsters[8]
+        };
         #endregion Useable Monsters
 
         // 10465 | World of the Eldritch
         if (!Story.QuestProgression(10465))
         {
-            void EnsureItemFromQuest(int sourceQuestId, int monsterIndex, string itemName, int qty = 1)
+            void EnsureItemFromQuest(
+                int sourceQuestId,
+                int monsterIndex,
+                string itemName,
+                int qty = 1
+            )
             {
                 if (Core.CheckInventory(itemName, qty))
                     return;
 
                 Core.AddDrop(itemName);
-                Core.HuntMonsterQuest(sourceQuestId, ("eldritchworld", UseableMonsters[monsterIndex], ClassType.Farm));
+                Core.HuntMonsterQuest(
+                    sourceQuestId,
+                    ("eldritchworld", UseableMonsters[monsterIndex], ClassType.Farm)
+                );
             }
 
             Core.EnsureAccept(10465);
@@ -911,24 +930,21 @@ public class CoreMogloween
             Core.EnsureComplete(10465);
         }
 
-
         // 10466 | Limitless Lengths
         if (!Story.QuestProgression(10466))
         {
-            Core.HuntMonsterQuest(10466,
+            Core.HuntMonsterQuest(
+                10466,
                 ("eldritchworld", UseableMonsters[7], ClassType.Farm),
-                ("eldritchworld", UseableMonsters[6], ClassType.Farm));
+                ("eldritchworld", UseableMonsters[6], ClassType.Farm)
+            );
         }
-
 
         // 10467 | Merely Existing
         if (!Story.QuestProgression(10467))
         {
-            Core.HuntMonsterQuest(10467,
-                ("eldritchworld", UseableMonsters[8], ClassType.Solo));
+            Core.HuntMonsterQuest(10467, ("eldritchworld", UseableMonsters[8], ClassType.Solo));
         }
-
-
     }
 
     public void ElodeaTemple()
@@ -941,90 +957,75 @@ public class CoreMogloween
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Nudibranch", // UseableMonsters[0],
-	"Kathool Cultist", // UseableMonsters[1],
-	"Merdrathoolian", // UseableMonsters[2],
-	"Riptide Adept", // UseableMonsters[3],
-	"Sarasa Maiden", // UseableMonsters[4],
-	"Necroadipocere", // UseableMonsters[5],
-	"Child of the Depths", // UseableMonsters[6]
-};
+            "Nudibranch", // UseableMonsters[0],
+            "Kathool Cultist", // UseableMonsters[1],
+            "Merdrathoolian", // UseableMonsters[2],
+            "Riptide Adept", // UseableMonsters[3],
+            "Sarasa Maiden", // UseableMonsters[4],
+            "Necroadipocere", // UseableMonsters[5],
+            "Child of the Depths", // UseableMonsters[6]
+        };
         #endregion Useable Monsters
 
         // 10469 | Escargot Escorts
         if (!Story.QuestProgression(10469))
         {
-            Core.HuntMonsterQuest(10469,
-                ("elodeatemple", UseableMonsters[0], ClassType.Farm));
+            Core.HuntMonsterQuest(10469, ("elodeatemple", UseableMonsters[0], ClassType.Farm));
         }
-
 
         // 10470 | Plus 2 Minus 2
         Story.MapItemQuest(10470, "elodeatemple", 15090);
         Story.KillQuest(10470, "elodeatemple", UseableMonsters[1]);
 
-
         // 10471 | Bottomfeeder Fruits
         if (!Story.QuestProgression(10471))
         {
-            Core.HuntMonsterQuest(10471,
+            Core.HuntMonsterQuest(
+                10471,
                 ("elodeatemple", UseableMonsters[0], ClassType.Farm),
-                ("elodeatemple", UseableMonsters[1], ClassType.Farm));
+                ("elodeatemple", UseableMonsters[1], ClassType.Farm)
+            );
         }
-
 
         // 10472 | Dirge of the Depths
         if (!Story.QuestProgression(10472))
         {
-            Core.HuntMonsterQuest(10472,
-                ("elodeatemple", UseableMonsters[2], ClassType.Farm));
+            Core.HuntMonsterQuest(10472, ("elodeatemple", UseableMonsters[2], ClassType.Farm));
         }
-
 
         // 10473 | Borrowed Voices
         Story.MapItemQuest(10473, "elodeatemple", 15091);
         Story.KillQuest(10473, "elodeatemple", UseableMonsters[3]);
 
-
         // 10474 | Sea Symphony
         if (!Story.QuestProgression(10474))
         {
-            Core.HuntMonsterQuest(10474,
+            Core.HuntMonsterQuest(
+                10474,
                 ("elodeatemple", UseableMonsters[3], ClassType.Farm),
-                ("elodeatemple", UseableMonsters[2], ClassType.Farm));
+                ("elodeatemple", UseableMonsters[2], ClassType.Farm)
+            );
         }
 
-
         // 10475 | If You Hate the Robe, You'll Hate its Priest
-        Story.MapItemQuest(10475, new[]
-        {
-            (15092, 1, "elodeatemple"),
-            (15093, 8, "elodeatemple")
-        });
+        Story.MapItemQuest(10475, new[] { (15092, 1, "elodeatemple"), (15093, 8, "elodeatemple") });
 
         // 10476 | Comets on the Cliff
         if (!Story.QuestProgression(10476))
         {
-            Core.HuntMonsterQuest(10476,
-                ("elodeatemple", UseableMonsters[4], ClassType.Farm));
+            Core.HuntMonsterQuest(10476, ("elodeatemple", UseableMonsters[4], ClassType.Farm));
         }
-
 
         // 10477 | Pipe Clog
         if (!Story.QuestProgression(10477))
         {
-            Core.HuntMonsterQuest(10477,
-                ("elodeatemple", UseableMonsters[5], ClassType.Farm));
+            Core.HuntMonsterQuest(10477, ("elodeatemple", UseableMonsters[5], ClassType.Farm));
         }
 
         // 10478 | The Victor! The Survivor!
         if (!Story.QuestProgression(10478))
         {
-            Core.HuntMonsterQuest(10478,
-                ("elodeatemple", UseableMonsters[6], ClassType.Solo));
+            Core.HuntMonsterQuest(10478, ("elodeatemple", UseableMonsters[6], ClassType.Solo));
         }
-
-
     }
-
 }

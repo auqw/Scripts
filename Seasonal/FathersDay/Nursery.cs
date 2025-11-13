@@ -11,7 +11,11 @@ public class Nursery
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -56,7 +60,11 @@ public class Nursery
         Story.KillQuest(6943, "nursery", "Skeletal Minion");
 
         //Gross (6944)
-        Story.KillQuest(6944, "nursery", new[] { "Flesh Golem", "Flesh Golem", "Flesh Golem", "Flesh Golem" });
+        Story.KillQuest(
+            6944,
+            "nursery",
+            new[] { "Flesh Golem", "Flesh Golem", "Flesh Golem", "Flesh Golem" }
+        );
 
         //Time to Clean (6945)
         Story.MapItemQuest(6945, "nursery", new[] { 6473, 6474 });

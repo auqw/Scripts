@@ -12,9 +12,17 @@ public class SenlinMas
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -82,7 +90,6 @@ public class SenlinMas
 
         // Tainted Qi 3335
         Story.KillQuest(3335, "akibacny", "Xingzhi");
-
 
         /*
         these are unlocked by default and dont need the rest

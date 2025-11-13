@@ -11,14 +11,27 @@ tags: bright, oak, reputation, rep, rank, farm
 //cs_include Scripts/Story/QueenofMonsters/Extra/BrightOak.cs
 
 using Skua.Core.Interfaces;
+
 public class BrightoakREP
 {
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static BrightOak BrightOak { get => _BrightOak ??= new BrightOak(); set => _BrightOak = value; }
+    private static BrightOak BrightOak
+    {
+        get => _BrightOak ??= new BrightOak();
+        set => _BrightOak = value;
+    }
     private static BrightOak _BrightOak;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -32,9 +45,7 @@ public class BrightoakREP
 
     public void DoRep()
     {
-
         BrightOak.doall(true);
         Farm.BrightoakREP();
-
     }
 }

@@ -17,26 +17,45 @@ public class BlazingBeachMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static BlazingBeachStory BBS { get => _BBS ??= new BlazingBeachStory(); set => _BBS = value; }    private static BlazingBeachStory _BBS;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static BlazingBeachStory BBS
+    {
+        get => _BBS ??= new BlazingBeachStory();
+        set => _BBS = value;
+    }
+    private static BlazingBeachStory _BBS;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
-
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -61,7 +80,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -72,9 +93,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case $"Mother Dragon's Gift":
                     Core.RegisterQuests(8709);
@@ -82,9 +108,33 @@ public static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Farm);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("blazingbeach", "r5", "Right", "Red-Hot Raider", "Raider Repelled", 10, log: false);
-                        Core.KillMonster("blazingbeach", "r2", "Right", "Scalding Shooter", "Sharpshooter Shooed", 8, log: false);
-                        Core.KillMonster("blazingbeach", "r2", "Right", "Burning Bombadier", "Bomber Bye-Byed", 6, log: false);
+                        Core.KillMonster(
+                            "blazingbeach",
+                            "r5",
+                            "Right",
+                            "Red-Hot Raider",
+                            "Raider Repelled",
+                            10,
+                            log: false
+                        );
+                        Core.KillMonster(
+                            "blazingbeach",
+                            "r2",
+                            "Right",
+                            "Scalding Shooter",
+                            "Sharpshooter Shooed",
+                            8,
+                            log: false
+                        );
+                        Core.KillMonster(
+                            "blazingbeach",
+                            "r2",
+                            "Right",
+                            "Burning Bombadier",
+                            "Bomber Bye-Byed",
+                            6,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -95,17 +145,77 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("70495", "Magma BlazeBeard", "Mode: [select] only\nShould the bot buy \"Magma BlazeBeard\" ?", false),
-        new Option<bool>("70496", "Magma BlazeBeard Morph", "Mode: [select] only\nShould the bot buy \"Magma BlazeBeard Morph\" ?", false),
-        new Option<bool>("70497", "Magma BlazeBeard Female Morph", "Mode: [select] only\nShould the bot buy \"Magma BlazeBeard Female Morph\" ?", false),
-        new Option<bool>("70498", "Magma BlazeBeard Flames", "Mode: [select] only\nShould the bot buy \"Magma BlazeBeard Flames\" ?", false),
-        new Option<bool>("70499", "Magma BlazeBeard Cutlass", "Mode: [select] only\nShould the bot buy \"Magma BlazeBeard Cutlass\" ?", false),
-        new Option<bool>("70661", "Dual Magma BlazeBeard Cutlasses", "Mode: [select] only\nShould the bot buy \"Dual Magma BlazeBeard Cutlasses\" ?", false),
-        new Option<bool>("68640", "Magmagilt Odachi", "Mode: [select] only\nShould the bot buy \"Magmagilt Odachi\" ?", false),
-        new Option<bool>("68641", "Magmagilt Odachis", "Mode: [select] only\nShould the bot buy \"Magmagilt Odachis\" ?", false),
-        new Option<bool>("68643", "Magmagilt Kama", "Mode: [select] only\nShould the bot buy \"Magmagilt Kama\" ?", false),
-        new Option<bool>("68644", "Magmagilt Kamas", "Mode: [select] only\nShould the bot buy \"Magmagilt Kamas\" ?", false),
-        new Option<bool>("68647", "Magmagilt Tabar", "Mode: [select] only\nShould the bot buy \"Magmagilt Tabar\" ?", false),
-        new Option<bool>("68648", "Magmagilt Tabars", "Mode: [select] only\nShould the bot buy \"Magmagilt Tabars\" ?", false),
+        new Option<bool>(
+            "70495",
+            "Magma BlazeBeard",
+            "Mode: [select] only\nShould the bot buy \"Magma BlazeBeard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70496",
+            "Magma BlazeBeard Morph",
+            "Mode: [select] only\nShould the bot buy \"Magma BlazeBeard Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70497",
+            "Magma BlazeBeard Female Morph",
+            "Mode: [select] only\nShould the bot buy \"Magma BlazeBeard Female Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70498",
+            "Magma BlazeBeard Flames",
+            "Mode: [select] only\nShould the bot buy \"Magma BlazeBeard Flames\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70499",
+            "Magma BlazeBeard Cutlass",
+            "Mode: [select] only\nShould the bot buy \"Magma BlazeBeard Cutlass\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70661",
+            "Dual Magma BlazeBeard Cutlasses",
+            "Mode: [select] only\nShould the bot buy \"Dual Magma BlazeBeard Cutlasses\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68640",
+            "Magmagilt Odachi",
+            "Mode: [select] only\nShould the bot buy \"Magmagilt Odachi\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68641",
+            "Magmagilt Odachis",
+            "Mode: [select] only\nShould the bot buy \"Magmagilt Odachis\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68643",
+            "Magmagilt Kama",
+            "Mode: [select] only\nShould the bot buy \"Magmagilt Kama\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68644",
+            "Magmagilt Kamas",
+            "Mode: [select] only\nShould the bot buy \"Magmagilt Kamas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68647",
+            "Magmagilt Tabar",
+            "Mode: [select] only\nShould the bot buy \"Magmagilt Tabar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68648",
+            "Magmagilt Tabars",
+            "Mode: [select] only\nShould the bot buy \"Magmagilt Tabars\" ?",
+            false
+        ),
     };
 }

@@ -15,21 +15,36 @@ public class VampireLordMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +71,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +84,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Blood Moon Token":
                     Core.FarmingLogger(req.Name, quant);
@@ -78,24 +100,67 @@ public static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory("Blood Moon Token", quant))
                     {
                         Core.EnsureAccept(Core.IsMember ? 6060 : 6059);
-                        Core.KillMonster("bloodmoon", "r12a", "Left", "Black Unicorn", "Black Blood Vial", isTemp: false);
-                        Core.KillMonster("bloodmoon", "r4a", "Left", "Lycan Guard", "Moon Stone", isTemp: false);
+                        Core.KillMonster(
+                            "bloodmoon",
+                            "r12a",
+                            "Left",
+                            "Black Unicorn",
+                            "Black Blood Vial",
+                            isTemp: false
+                        );
+                        Core.KillMonster(
+                            "bloodmoon",
+                            "r4a",
+                            "Left",
+                            "Lycan Guard",
+                            "Moon Stone",
+                            isTemp: false
+                        );
                         Core.EnsureComplete(Core.IsMember ? 6060 : 6059);
                         Bot.Wait.ForPickup("Blood Moon Token");
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("41575", "Vampire Lord (Class)", "Mode: [select] only\nShould the bot buy \"Vampire Lord\" ?", false),
-        new Option<bool>("41619", "Vampire Lord", "Mode: [select] only\nShould the bot buy \"Vampire Lord\" ?", false),
-        new Option<bool>("41623", "Vampire Lord Morph", "Mode: [select] only\nShould the bot buy \"Vampire Lord Morph\" ?", false),
-        new Option<bool>("41621", "Vampire Lord Locks Morph", "Mode: [select] only\nShould the bot buy \"Vampire Lord Locks Morph\" ?", false),
-        new Option<bool>("41624", "Vampire Lord Cape", "Mode: [select] only\nShould the bot buy \"Vampire Lord Cape\" ?", false),
-        new Option<bool>("41666", "Enraged Vampire Morph", "Mode: [select] only\nShould the bot buy \"Enraged Vampire Morph\" ?", false),
+        new Option<bool>(
+            "41575",
+            "Vampire Lord (Class)",
+            "Mode: [select] only\nShould the bot buy \"Vampire Lord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41619",
+            "Vampire Lord",
+            "Mode: [select] only\nShould the bot buy \"Vampire Lord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41623",
+            "Vampire Lord Morph",
+            "Mode: [select] only\nShould the bot buy \"Vampire Lord Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41621",
+            "Vampire Lord Locks Morph",
+            "Mode: [select] only\nShould the bot buy \"Vampire Lord Locks Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41624",
+            "Vampire Lord Cape",
+            "Mode: [select] only\nShould the bot buy \"Vampire Lord Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "41666",
+            "Enraged Vampire Morph",
+            "Mode: [select] only\nShould the bot buy \"Enraged Vampire Morph\" ?",
+            false
+        ),
     };
 }

@@ -7,12 +7,23 @@ tags: claymore, nulgath, skew, warrior, blade, enchant, poisonous deal
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+
 public class TaintedClaymore
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -62,7 +73,12 @@ public class TaintedClaymore
         Farm.EvilREP(8);
 
         Core.EnsureAccept(121);
-        Core.HuntMonster("battleundera", "Undead Berserker", "Warrior Claymore Blade", isTemp: false);
+        Core.HuntMonster(
+            "battleundera",
+            "Undead Berserker",
+            "Warrior Claymore Blade",
+            isTemp: false
+        );
         Core.EnsureComplete(121);
     }
 }

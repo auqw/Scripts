@@ -22,12 +22,39 @@ public class EternalDrakath
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static DrakathArmorBot Armor { get => _Armor ??= new DrakathArmorBot(); set => _Armor = value; }    private static DrakathArmorBot _Armor;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
-    private static StarSinc Star { get => _Star ??= new StarSinc(); set => _Star = value; }    private static StarSinc _Star;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static DrakathArmorBot Armor
+    {
+        get => _Armor ??= new DrakathArmorBot();
+        set => _Armor = value;
+    }
+    private static DrakathArmorBot _Armor;
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
+    private static CoreBLOD _BLOD;
+    private static StarSinc Star
+    {
+        get => _Star ??= new StarSinc();
+        set => _Star = value;
+    }
+    private static StarSinc _Star;
 
-    private string[] Rewards = new[] { "Drakath the Eternal", "Drakath the Eternal's Visor", "Eternal Chaos Tassels", "Eternal Chaos Tassels", "Dual Everlasting Blades of Chaos" };
+    private string[] Rewards = new[]
+    {
+        "Drakath the Eternal",
+        "Drakath the Eternal's Visor",
+        "Eternal Chaos Tassels",
+        "Eternal Chaos Tassels",
+        "Dual Everlasting Blades of Chaos",
+    };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -52,7 +79,9 @@ public class EternalDrakath
         Armor.DrakathArmor();
         if (!Core.CheckInventory("Drakath Armor")) //"Drakath the Eternal"
         {
-            Core.Logger("Cannot continue with \"Drakath Armor\" not enough \"Dage's Scroll Fragment\", cannot complete \"Drakath the Eternal\".");
+            Core.Logger(
+                "Cannot continue with \"Drakath Armor\" not enough \"Dage's Scroll Fragment\", cannot complete \"Drakath the Eternal\"."
+            );
             return;
         }
         Core.EquipClass(ClassType.Solo);
@@ -66,7 +95,15 @@ public class EternalDrakath
         BLOD.SpiritOrb(2000);
 
         Core.EquipClass(ClassType.Farm);
-        Core.KillMonster("chaoslab", "r3", "Center", "Chaorrupted Moglin", "Crystallized Chaos", 800, false);
+        Core.KillMonster(
+            "chaoslab",
+            "r3",
+            "Center",
+            "Chaorrupted Moglin",
+            "Crystallized Chaos",
+            800,
+            false
+        );
 
         if (!Core.CheckInventory("Star Fragment", 33))
         {
@@ -77,7 +114,13 @@ public class EternalDrakath
             Core.RegisterQuests(4413);
             while (!Bot.ShouldExit && !Core.CheckInventory("Star Fragment", 33))
             {
-                Core.HuntMonster("starsinc", "Living Star", "Living Star Defeated", 30, isTemp: false);
+                Core.HuntMonster(
+                    "starsinc",
+                    "Living Star",
+                    "Living Star Defeated",
+                    30,
+                    isTemp: false
+                );
                 Bot.Wait.ForPickup("Star Fragment");
             }
             Core.CancelRegisteredQuests();
@@ -87,7 +130,15 @@ public class EternalDrakath
         {
             Bot.Quests.UpdateQuest(3799);
             Core.EquipClass(ClassType.Solo);
-            Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Death's Oversight", 5, false);
+            Core.KillMonster(
+                "shadowattack",
+                "Boss",
+                "Left",
+                "Death",
+                "Death's Oversight",
+                5,
+                false
+            );
         }
 
         if (!Core.CheckInventory("Reality Shard", 300))
@@ -99,7 +150,13 @@ public class EternalDrakath
             Core.RegisterQuests(8456);
             while (!Bot.ShouldExit && !Core.CheckInventory("Reality Shard", 200))
             {
-                Core.HuntMonster("eternalchaos", "Chaos Time Fairy", "Preserved Chaos Fairy Wing", 5, log: false);
+                Core.HuntMonster(
+                    "eternalchaos",
+                    "Chaos Time Fairy",
+                    "Preserved Chaos Fairy Wing",
+                    5,
+                    log: false
+                );
                 Bot.Wait.ForPickup("Reality Shard");
             }
             Core.CancelRegisteredQuests();

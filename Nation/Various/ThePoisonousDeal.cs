@@ -15,17 +15,32 @@ public class ThePoisonousDeal
 {
     public static IScriptInterface Bot => IScriptInterface.Instance;
     public static CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static TaintedClaymore TC { get => _TC ??= new TaintedClaymore(); set => _TC = value; }    private static TaintedClaymore _TC;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static TaintedClaymore TC
+    {
+        get => _TC ??= new TaintedClaymore();
+        set => _TC = value;
+    }
+    private static TaintedClaymore _TC;
 
     public string OptionsStorage = "PoisonousDeal";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<int>("TaintedQuantity", "How many Tainted Gems?","Max Stack is 1000" ,0),
-        new Option<int>("ShardQuantity", "How many Dark Crystal Shards?","Max Stack is 1000", 0),
+        new Option<int>("TaintedQuantity", "How many Tainted Gems?", "Max Stack is 1000", 0),
+        new Option<int>("ShardQuantity", "How many Dark Crystal Shards?", "Max Stack is 1000", 0),
         new Option<bool>("BankItems", "Bank nation items at the end", "true/false", false),
     };
 
@@ -80,4 +95,3 @@ public class ThePoisonousDeal
             Core.ToBank(Nation.bagDrops);
     }
 }
-

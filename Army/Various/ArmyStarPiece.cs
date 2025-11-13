@@ -12,11 +12,18 @@ public class Generated_ArmyStarPiece
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
-
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
+    private static CoreArmyLite _sArmy;
 
     public string OptionsStorage = "CustomAggroMon";
     public bool DontPreconfigure = true;
@@ -30,10 +37,7 @@ private static CoreArmyLite _sArmy;
         sArmy.player5,
     };
 
-    public string[] Loot =
-{
-        "Star Piece"
-    };
+    public string[] Loot = { "Star Piece" };
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -47,7 +51,6 @@ private static CoreArmyLite _sArmy;
 
     public void ArmyStarPiece(int quant = 650)
     {
-
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
@@ -69,7 +72,4 @@ private static CoreArmyLite _sArmy;
         Core.JumpWait();
         Core.Sleep(2000);
     }
-
-
-
 }

@@ -12,8 +12,13 @@ public class LegionBlade
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
 
-    private string[] Pets = { "Paragon Fiend Quest Pet", "Shogun Dage Pet", "Shogun Paragon Pet", "Paragon Ringbearer" };
-
+    private string[] Pets =
+    {
+        "Paragon Fiend Quest Pet",
+        "Shogun Dage Pet",
+        "Shogun Paragon Pet",
+        "Paragon Ringbearer",
+    };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -43,7 +48,13 @@ public class LegionBlade
             {
                 Core.EnsureAccept(questID);
                 Core.HuntMonster("styx", "Sullen Soul", "Sullen Soul Received", quant1, log: false);
-                Core.HuntMonster("styx", "Wrathful Soul", "Wrathful Soul Taken", quant2, log: false);
+                Core.HuntMonster(
+                    "styx",
+                    "Wrathful Soul",
+                    "Wrathful Soul Taken",
+                    quant2,
+                    log: false
+                );
                 Core.EnsureComplete(questID);
             }
             Core.Logger($"{RewardOption.Name} Obtainted.");

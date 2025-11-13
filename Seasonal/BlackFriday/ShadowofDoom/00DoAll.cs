@@ -12,9 +12,17 @@ public class ShadowofDoomDoAll
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreShadowofDoom CoreSoD { get => _CoreSoD ??= new CoreShadowofDoom(); set => _CoreSoD = value; }
+    private static CoreShadowofDoom CoreSoD
+    {
+        get => _CoreSoD ??= new CoreShadowofDoom();
+        set => _CoreSoD = value;
+    }
     private static CoreShadowofDoom _CoreSoD;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -25,6 +33,4 @@ public class ShadowofDoomDoAll
 
         Core.SetOptions(false);
     }
-
-
 }

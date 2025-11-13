@@ -6,8 +6,8 @@ tags: death's power,deaths power, death,power, shadowattack,death, hollowborn
 //cs_include Scripts/CoreBots.cs
 
 using Skua.Core.Interfaces;
-using Skua.Core.Models.Quests;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Quests;
 
 public class DeathsPower
 {
@@ -24,6 +24,7 @@ public class DeathsPower
         ItemBase? req = quest.Requirements.FirstOrDefault(r => r.Name == "Death's Power");
         return req?.MaxStack ?? 1;
     }
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();

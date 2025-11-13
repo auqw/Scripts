@@ -14,16 +14,25 @@ public class VorpalBunnyQuestRewards
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     string[] BunnySuit =
     {
         "Transforming Berzerker Bunny Helm",
         "Transforming Spear of the Berzerker Bunny",
-        "Bunny on your Back"
+        "Bunny on your Back",
     };
-
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -37,31 +46,34 @@ public class VorpalBunnyQuestRewards
         Core.SetOptions(false);
     }
 
-
     public void BerzerkerBunnyHelm()
     {
         Core.AddDrop("Transforming Berzerker Bunny Helm");
-        if (!Core.isSeasonalMapActive("grenwog") || Core.CheckInventory("Transforming Berzerker Bunny Helm"))
+        if (
+            !Core.isSeasonalMapActive("grenwog")
+            || Core.CheckInventory("Transforming Berzerker Bunny Helm")
+        )
             return;
 
         Core.EnsureAccept(234);
         Core.HuntMonster("farm", "Treeant", "Wooden Egg");
         Core.EnsureComplete(234);
         Bot.Wait.ForPickup("Transforming Berzerker Bunny Helm");
-
     }
 
     public void TransformingBunnySpear()
     {
         Core.AddDrop("Transforming Spear of the Berzerker Bunny");
-        if (!Core.isSeasonalMapActive("grenwog") || Core.CheckInventory("Transforming Spear of the Berzerker Bunny"))
+        if (
+            !Core.isSeasonalMapActive("grenwog")
+            || Core.CheckInventory("Transforming Spear of the Berzerker Bunny")
+        )
             return;
 
         Core.EnsureAccept(235);
         Core.HuntMonster("boxes", "Grizzlespit", "Egg Shell");
         Core.EnsureComplete(235);
         Bot.Wait.ForPickup("Transforming Spear of the Berzerker Bunny");
-
     }
 
     public void BunnyonyourBack()
@@ -74,6 +86,5 @@ public class VorpalBunnyQuestRewards
         Core.HuntMonster("orctown", "General Porkon", "Quacked Egg");
         Core.EnsureComplete(237);
         Bot.Wait.ForPickup("Bunny on your Back");
-
     }
 }

@@ -12,8 +12,18 @@ public class DreadForest
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -67,8 +77,10 @@ public class DreadForest
         Story.MapItemQuest(8721, "dreadforest", 10272);
 
         // Vulture Pickings 8722
-        Story.KillQuest(8722, "dreadforest", new[] { "Reignolds' Knight", "Taxidermied Servant", "Lord Reignolds" });
-
-
+        Story.KillQuest(
+            8722,
+            "dreadforest",
+            new[] { "Reignolds' Knight", "Taxidermied Servant", "Lord Reignolds" }
+        );
     }
 }

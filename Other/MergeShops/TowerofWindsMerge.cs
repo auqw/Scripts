@@ -16,29 +16,65 @@ public class TowerofWindsMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static GlaceraStory Glacera { get => _Glacera ??= new GlaceraStory(); set => _Glacera = value; }    private static GlaceraStory _Glacera;
+    private static GlaceraStory Glacera
+    {
+        get => _Glacera ??= new GlaceraStory();
+        set => _Glacera = value;
+    }
+    private static GlaceraStory _Glacera;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Frozen Tower Merge Token", "Bits of Cloth", "Pieces of Glass", "Metal bits", "Bits of Hair", "Pieces of Cloth", "Ice Crystals", "Mercury", "Metal Pieces", "Flame of Courage", "Karok's Glaceran Gem " });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Frozen Tower Merge Token",
+                "Bits of Cloth",
+                "Pieces of Glass",
+                "Metal bits",
+                "Bits of Hair",
+                "Pieces of Cloth",
+                "Ice Crystals",
+                "Mercury",
+                "Metal Pieces",
+                "Flame of Courage",
+                "Karok's Glaceran Gem ",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -56,7 +92,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +105,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Frozen Tower Merge Token":
                     Glacera.FrozenTower();
@@ -99,9 +142,14 @@ public static CoreAdvanced _sAdv;
                 case "Metal Pieces":
                     Core.EquipClass(ClassType.Farm);
                     Core.EnsureAccept(3955);
-                    Core.HuntMonster("frozentower", "Polar Elemental", req.Name, quant, isTemp: false);
+                    Core.HuntMonster(
+                        "frozentower",
+                        "Polar Elemental",
+                        req.Name,
+                        quant,
+                        isTemp: false
+                    );
                     break;
-
 
                 case "Flame of Courage":
                     Glacera.FrozenTower();
@@ -120,9 +168,14 @@ public static CoreAdvanced _sAdv;
                 case "Karok's Glaceran Gem":
                     Core.EnsureAccept(3955);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("northstar", "Karok The Fallen", req.Name, quant, isTemp: false);
+                    Core.HuntMonster(
+                        "northstar",
+                        "Karok The Fallen",
+                        req.Name,
+                        quant,
+                        isTemp: false
+                    );
                     break;
-
 
                 case "Mercury":
                     Glacera.FrozenTower();
@@ -137,34 +190,143 @@ public static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("27479", "Northern Lights Wanderer", "Mode: [select] only\nShould the bot buy \"Northern Lights Wanderer\" ?", false),
-        new Option<bool>("27469", "Northern Lights Polearm", "Mode: [select] only\nShould the bot buy \"Northern Lights Polearm\" ?", false),
-        new Option<bool>("27470", "Aurora Wand", "Mode: [select] only\nShould the bot buy \"Aurora Wand\" ?", false),
-        new Option<bool>("27475", "Frozen Fear Lad", "Mode: [select] only\nShould the bot buy \"Frozen Fear Lad\" ?", false),
-        new Option<bool>("27474", "Frozen Fear Lass", "Mode: [select] only\nShould the bot buy \"Frozen Fear Lass\" ?", false),
-        new Option<bool>("27473", "Astromancer Locks", "Mode: [select] only\nShould the bot buy \"Astromancer Locks\" ?", false),
-        new Option<bool>("27472", "Astromancer Hair", "Mode: [select] only\nShould the bot buy \"Astromancer Hair\" ?", false),
-        new Option<bool>("27471", "Aurora Dawn Cape", "Mode: [select] only\nShould the bot buy \"Aurora Dawn Cape\" ?", false),
-        new Option<bool>("27434", "Winged Aurora Staff", "Mode: [select] only\nShould the bot buy \"Winged Aurora Staff\" ?", false),
-        new Option<bool>("25007", "Holy Healer", "Mode: [select] only\nShould the bot buy \"Holy Healer\" ?", false),
-        new Option<bool>("25009", "Holy Healer Locks", "Mode: [select] only\nShould the bot buy \"Holy Healer Locks\" ?", false),
-        new Option<bool>("25010", "Holy Healer Hair", "Mode: [select] only\nShould the bot buy \"Holy Healer Hair\" ?", false),
-        new Option<bool>("25011", "Holy Healer Halo", "Mode: [select] only\nShould the bot buy \"Holy Healer Halo\" ?", false),
-        new Option<bool>("25012", "Holy Healer Halo Locks", "Mode: [select] only\nShould the bot buy \"Holy Healer Halo Locks\" ?", false),
-        new Option<bool>("27458", "BitterEdge Broadsword", "Mode: [select] only\nShould the bot buy \"BitterEdge Broadsword\" ?", false),
-        new Option<bool>("27464", "BitterEdge Wand", "Mode: [select] only\nShould the bot buy \"BitterEdge Wand\" ?", false),
-        new Option<bool>("27484", "Frozen FireOrb Mace", "Mode: [select] only\nShould the bot buy \"Frozen FireOrb Mace\" ?", false),
-        new Option<bool>("27485", "Frozen FireOrb Staff", "Mode: [select] only\nShould the bot buy \"Frozen FireOrb Staff\" ?", false),
-        new Option<bool>("27706", "Scythe of Vengeance", "Mode: [select] only\nShould the bot buy \"Scythe of Vengeance\" ?", false),
-        new Option<bool>("27774", "Cold Scythe of Vengeance", "Mode: [select] only\nShould the bot buy \"Cold Scythe of Vengeance\" ?", false),
-        new Option<bool>("27775", "Frigid Scythe of Vengeance", "Mode: [select] only\nShould the bot buy \"Frigid Scythe of Vengeance\" ?", false),
-        new Option<bool>("27776", "Fallen Scythe of Vengeance", "Mode: [select] only\nShould the bot buy \"Fallen Scythe of Vengeance\" ?", false),
+        new Option<bool>(
+            "27479",
+            "Northern Lights Wanderer",
+            "Mode: [select] only\nShould the bot buy \"Northern Lights Wanderer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27469",
+            "Northern Lights Polearm",
+            "Mode: [select] only\nShould the bot buy \"Northern Lights Polearm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27470",
+            "Aurora Wand",
+            "Mode: [select] only\nShould the bot buy \"Aurora Wand\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27475",
+            "Frozen Fear Lad",
+            "Mode: [select] only\nShould the bot buy \"Frozen Fear Lad\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27474",
+            "Frozen Fear Lass",
+            "Mode: [select] only\nShould the bot buy \"Frozen Fear Lass\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27473",
+            "Astromancer Locks",
+            "Mode: [select] only\nShould the bot buy \"Astromancer Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27472",
+            "Astromancer Hair",
+            "Mode: [select] only\nShould the bot buy \"Astromancer Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27471",
+            "Aurora Dawn Cape",
+            "Mode: [select] only\nShould the bot buy \"Aurora Dawn Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27434",
+            "Winged Aurora Staff",
+            "Mode: [select] only\nShould the bot buy \"Winged Aurora Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25007",
+            "Holy Healer",
+            "Mode: [select] only\nShould the bot buy \"Holy Healer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25009",
+            "Holy Healer Locks",
+            "Mode: [select] only\nShould the bot buy \"Holy Healer Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25010",
+            "Holy Healer Hair",
+            "Mode: [select] only\nShould the bot buy \"Holy Healer Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25011",
+            "Holy Healer Halo",
+            "Mode: [select] only\nShould the bot buy \"Holy Healer Halo\" ?",
+            false
+        ),
+        new Option<bool>(
+            "25012",
+            "Holy Healer Halo Locks",
+            "Mode: [select] only\nShould the bot buy \"Holy Healer Halo Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27458",
+            "BitterEdge Broadsword",
+            "Mode: [select] only\nShould the bot buy \"BitterEdge Broadsword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27464",
+            "BitterEdge Wand",
+            "Mode: [select] only\nShould the bot buy \"BitterEdge Wand\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27484",
+            "Frozen FireOrb Mace",
+            "Mode: [select] only\nShould the bot buy \"Frozen FireOrb Mace\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27485",
+            "Frozen FireOrb Staff",
+            "Mode: [select] only\nShould the bot buy \"Frozen FireOrb Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27706",
+            "Scythe of Vengeance",
+            "Mode: [select] only\nShould the bot buy \"Scythe of Vengeance\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27774",
+            "Cold Scythe of Vengeance",
+            "Mode: [select] only\nShould the bot buy \"Cold Scythe of Vengeance\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27775",
+            "Frigid Scythe of Vengeance",
+            "Mode: [select] only\nShould the bot buy \"Frigid Scythe of Vengeance\" ?",
+            false
+        ),
+        new Option<bool>(
+            "27776",
+            "Fallen Scythe of Vengeance",
+            "Mode: [select] only\nShould the bot buy \"Fallen Scythe of Vengeance\" ?",
+            false
+        ),
     };
 }

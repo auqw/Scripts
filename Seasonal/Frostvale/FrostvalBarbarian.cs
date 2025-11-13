@@ -17,11 +17,36 @@ public class FrostvalBarbarian
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreFrostvale Frostvale { get => _Frostvale ??= new CoreFrostvale(); set => _Frostvale = value; }    private static CoreFrostvale _Frostvale;
-    private static GlaceraStory Glacera { get => _Glacera ??= new GlaceraStory(); set => _Glacera = value; }    private static GlaceraStory _Glacera;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreFrostvale Frostvale
+    {
+        get => _Frostvale ??= new CoreFrostvale();
+        set => _Frostvale = value;
+    }
+    private static CoreFrostvale _Frostvale;
+    private static GlaceraStory Glacera
+    {
+        get => _Glacera ??= new GlaceraStory();
+        set => _Glacera = value;
+    }
+    private static GlaceraStory _Glacera;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +59,6 @@ public class FrostvalBarbarian
 
     public void GetFB(bool rankUpClass = true)
     {
-
         if (Core.CheckInventory("Frostval Barbarian"))
             return;
         if (!Core.isSeasonalMapActive("frostvale"))
@@ -47,10 +71,21 @@ public class FrostvalBarbarian
         {
             Daily.CryptoToken();
             if (!Core.CheckInventory("Crypto Token", 5))
-                Core.Logger($"Please do the Crypto Token Daily {5 - Bot.Inventory.GetQuantity("Crypto Token")} more times before continuing the farm", messageBox: true, stopBot: true);
+                Core.Logger(
+                    $"Please do the Crypto Token Daily {5 - Bot.Inventory.GetQuantity("Crypto Token")} more times before continuing the farm",
+                    messageBox: true,
+                    stopBot: true
+                );
         }
 
-        Core.AddDrop("Frostval Barbarian", "Frosty Barbarian's Helm", "Frosty Barbarian's Horns", "Bearded Barbarian Helm", "Frostval Barbarian Cape", "Frostval Barbarian Sword");
+        Core.AddDrop(
+            "Frostval Barbarian",
+            "Frosty Barbarian's Helm",
+            "Frosty Barbarian's Horns",
+            "Bearded Barbarian Helm",
+            "Frostval Barbarian Cape",
+            "Frostval Barbarian Sword"
+        );
         Core.EnsureAccept(6649);
         Adv.BuyItem("frostdeep", 520, "Sword Of Hope");
         if (!Core.CheckInventory("Sassafras' War Helm"))

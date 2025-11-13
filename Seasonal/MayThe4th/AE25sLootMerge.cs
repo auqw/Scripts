@@ -18,20 +18,37 @@ public class AE25sLootMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static AE25Quests AE25 { get => _AE25 ??= new AE25Quests(); set => _AE25 = value; }
+    private static AE25Quests AE25
+    {
+        get => _AE25 ??= new AE25Quests();
+        set => _AE25 = value;
+    }
     private static AE25Quests _AE25;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +73,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +86,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Obliterator Droid's Generator":
                     Core.FarmingLogger(req.Name, quant);
@@ -86,24 +110,82 @@ private static CoreAdvanced _sAdv;
                 case "Droid Scrap":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster("twigguhunt", "r2", "Down", "*", req.Name, quant, req.Temp, false);
+                    Core.KillMonster(
+                        "twigguhunt",
+                        "r2",
+                        "Down",
+                        "*",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("93302", "Fourth Guardian of Balance", "Mode: [select] only\nShould the bot buy \"Fourth Guardian of Balance\" ?", false),
-        new Option<bool>("93303", "Fourth Guardian Morph", "Mode: [select] only\nShould the bot buy \"Fourth Guardian Morph\" ?", false),
-        new Option<bool>("93304", "Fourth Guardian Visage", "Mode: [select] only\nShould the bot buy \"Fourth Guardian Visage\" ?", false),
-        new Option<bool>("93305", "Fourth Guardian Goggles", "Mode: [select] only\nShould the bot buy \"Fourth Guardian Goggles\" ?", false),
-        new Option<bool>("93306", "Fourth Guardian Eyewear", "Mode: [select] only\nShould the bot buy \"Fourth Guardian Eyewear\" ?", false),
-        new Option<bool>("93307", "Fourth Guardian Cape", "Mode: [select] only\nShould the bot buy \"Fourth Guardian Cape\" ?", false),
-        new Option<bool>("93312", "Fourth Consular of Balance", "Mode: [select] only\nShould the bot buy \"Fourth Consular of Balance\" ?", false),
-        new Option<bool>("93313", "Fourth Consular Goggles", "Mode: [select] only\nShould the bot buy \"Fourth Consular Goggles\" ?", false),
-        new Option<bool>("93314", "Fourth Consular Eyewear", "Mode: [select] only\nShould the bot buy \"Fourth Consular Eyewear\" ?", false),
-        new Option<bool>("93315", "Fourth Consular Cape", "Mode: [select] only\nShould the bot buy \"Fourth Consular Cape\" ?", false),
+        new Option<bool>(
+            "93302",
+            "Fourth Guardian of Balance",
+            "Mode: [select] only\nShould the bot buy \"Fourth Guardian of Balance\" ?",
+            false
+        ),
+        new Option<bool>(
+            "93303",
+            "Fourth Guardian Morph",
+            "Mode: [select] only\nShould the bot buy \"Fourth Guardian Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "93304",
+            "Fourth Guardian Visage",
+            "Mode: [select] only\nShould the bot buy \"Fourth Guardian Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "93305",
+            "Fourth Guardian Goggles",
+            "Mode: [select] only\nShould the bot buy \"Fourth Guardian Goggles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "93306",
+            "Fourth Guardian Eyewear",
+            "Mode: [select] only\nShould the bot buy \"Fourth Guardian Eyewear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "93307",
+            "Fourth Guardian Cape",
+            "Mode: [select] only\nShould the bot buy \"Fourth Guardian Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "93312",
+            "Fourth Consular of Balance",
+            "Mode: [select] only\nShould the bot buy \"Fourth Consular of Balance\" ?",
+            false
+        ),
+        new Option<bool>(
+            "93313",
+            "Fourth Consular Goggles",
+            "Mode: [select] only\nShould the bot buy \"Fourth Consular Goggles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "93314",
+            "Fourth Consular Eyewear",
+            "Mode: [select] only\nShould the bot buy \"Fourth Consular Eyewear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "93315",
+            "Fourth Consular Cape",
+            "Mode: [select] only\nShould the bot buy \"Fourth Consular Cape\" ?",
+            false
+        ),
     };
 }

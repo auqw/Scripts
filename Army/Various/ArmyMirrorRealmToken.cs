@@ -13,17 +13,29 @@ public class ArmyMirrorRealmToken
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
-
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
+    private static CoreArmyLite _sArmy;
 
     public string OptionsStorage = "ArmyMirrorRealmToken";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<Method>("Method", "Which method to farm Mirror Realm Token?", "Choose your method", Method.Kill_Weak_Mob),
+        new Option<Method>(
+            "Method",
+            "Which method to farm Mirror Realm Token?",
+            "Choose your method",
+            Method.Kill_Weak_Mob
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -31,7 +43,7 @@ private static CoreArmyLite _sArmy;
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -49,7 +61,10 @@ private static CoreArmyLite _sArmy;
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
         Core.AddDrop("Mirror Realm Token");
 
         if (Method.ToString() == "Kill_Weak_Mob")
@@ -57,14 +72,11 @@ private static CoreArmyLite _sArmy;
             Core.EquipClass(ClassType.Farm);
             Army.SmartAggroMonStart("overworld", "Undead Bruiser", "Undead Mage", "Undead Minion");
         }
-
         else if (Method.ToString() == "Kill_Boss")
         {
             Core.EquipClass(ClassType.Solo);
             Army.SmartAggroMonStart("mirrorportal", "Chaos Harpy");
         }
-
-        
 
         while (!Bot.ShouldExit && (!Core.CheckInventory("Mirror Realm Token", 300)))
             Bot.Combat.Attack("*");

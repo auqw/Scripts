@@ -14,25 +14,47 @@ public class HelsgroveMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Golden Branch", "Frostval Treat", "Hazel Switch", "Helsgrove Guardian Scarf", "Chibi GroveRider's Locks", "Chibi GroveRider's Locks + Bridle " });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Golden Branch",
+                "Frostval Treat",
+                "Hazel Switch",
+                "Helsgrove Guardian Scarf",
+                "Chibi GroveRider's Locks",
+                "Chibi GroveRider's Locks + Bridle ",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -50,7 +72,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -61,9 +85,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Golden Branch":
                     Core.FarmingLogger(req.Name, quant);
@@ -107,13 +136,53 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("66052", "Helsgrove Guardian", "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian\" ?", false),
-        new Option<bool>("66055", "Helsgrove Guardian Colorful Scarf", "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian Colorful Scarf\" ?", false),
-        new Option<bool>("66056", "Helsgrove Guardian Antlers + Scarf", "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian Antlers + Scarf\" ?", false),
-        new Option<bool>("66057", "Helsgrove Guardian Colorful Antlers + Scarf", "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian Colorful Antlers + Scarf\" ?", false),
-        new Option<bool>("66062", "Chibi GroveRider's Accessories", "Mode: [select] only\nShould the bot buy \"Chibi GroveRider's Accessories\" ?", false),
-        new Option<bool>("66063", "Chibi GroveRider's Accessories + Bridle", "Mode: [select] only\nShould the bot buy \"Chibi GroveRider's Accessories + Bridle\" ?", false),
-        new Option<bool>("66065", "Helsgrove Guardian Baton", "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian Baton\" ?", false),
-        new Option<bool>("66066", "Helsgrove Guardian Dual Batons", "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian Dual Batons\" ?", false),
+        new Option<bool>(
+            "66052",
+            "Helsgrove Guardian",
+            "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian\" ?",
+            false
+        ),
+        new Option<bool>(
+            "66055",
+            "Helsgrove Guardian Colorful Scarf",
+            "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian Colorful Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "66056",
+            "Helsgrove Guardian Antlers + Scarf",
+            "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian Antlers + Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "66057",
+            "Helsgrove Guardian Colorful Antlers + Scarf",
+            "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian Colorful Antlers + Scarf\" ?",
+            false
+        ),
+        new Option<bool>(
+            "66062",
+            "Chibi GroveRider's Accessories",
+            "Mode: [select] only\nShould the bot buy \"Chibi GroveRider's Accessories\" ?",
+            false
+        ),
+        new Option<bool>(
+            "66063",
+            "Chibi GroveRider's Accessories + Bridle",
+            "Mode: [select] only\nShould the bot buy \"Chibi GroveRider's Accessories + Bridle\" ?",
+            false
+        ),
+        new Option<bool>(
+            "66065",
+            "Helsgrove Guardian Baton",
+            "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian Baton\" ?",
+            false
+        ),
+        new Option<bool>(
+            "66066",
+            "Helsgrove Guardian Dual Batons",
+            "Mode: [select] only\nShould the bot buy \"Helsgrove Guardian Dual Batons\" ?",
+            false
+        ),
     };
 }

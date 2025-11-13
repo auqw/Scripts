@@ -14,13 +14,17 @@ public class JointheLegion
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
     private static CoreLegion _Legion;
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.BankingBlackList.Add("Combat Trophy");
-        
+
         Core.SetOptions(disableClassSwap: true);
 
         Legion.JoinLegion();

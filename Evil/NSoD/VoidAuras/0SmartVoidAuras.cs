@@ -21,14 +21,18 @@ public class SmartVoidAuras
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     public static CoreBots sCore => CoreBots.Instance;
-    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }    private static CoreNSOD _NSoD;
-public static CoreNSOD sNSoD
-{
-    get => _sNSoD ??= new CoreNSOD();
-    set => _sNSoD = value;
-}
-public static CoreNSOD _sNSoD;
-
+    private static CoreNSOD NSoD
+    {
+        get => _NSoD ??= new CoreNSOD();
+        set => _NSoD = value;
+    }
+    private static CoreNSOD _NSoD;
+    public static CoreNSOD sNSoD
+    {
+        get => _sNSoD ??= new CoreNSOD();
+        set => _sNSoD = value;
+    }
+    public static CoreNSOD _sNSoD;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = sNSoD.OptionsStorage;
@@ -41,7 +45,10 @@ public static CoreNSOD _sNSoD;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if ((!Bot.Config!.Get<bool>("getSDKA") && !Core.IsMember) || (!Core.CheckInventory(14474, toInv: false) && !Core.IsMember))
+        if (
+            (!Bot.Config!.Get<bool>("getSDKA") && !Core.IsMember)
+            || (!Core.CheckInventory(14474, toInv: false) && !Core.IsMember)
+        )
             Core.BankingBlackList.AddRange(NSoD.Essences);
         Core.BankingBlackList.Add("Void Aura");
 

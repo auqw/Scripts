@@ -17,25 +17,46 @@ public class ArmyUniqueQuarry
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
-private static CoreBots _sCore;
+    private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
-private static CoreArmyLite _sArmy;
-
+    private static CoreArmyLite _sArmy;
 
     public string OptionsStorage = "ArmyUniqueQuarry";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<int>("armysize","Players", "Input the minimum of players to wait for", 1),
+        new Option<int>("armysize", "Players", "Input the minimum of players to wait for", 1),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -43,12 +64,24 @@ private static CoreArmyLite _sArmy;
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Chaos Sphinx", "Chaoroot", "Kathool Annihilator", "Chaotic Manticore Head", "Chaos Tentacle", "Chaos Dragon Slayer", "HarpyHunter", "Naga Baas Pet" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Chaos Sphinx",
+                "Chaoroot",
+                "Kathool Annihilator",
+                "Chaotic Manticore Head",
+                "Chaos Tentacle",
+                "Chaos Dragon Slayer",
+                "HarpyHunter",
+                "Naga Baas Pet",
+            }
+        );
         Core.SetOptions(disableClassSwap: true);
 
         Setup();
@@ -58,7 +91,10 @@ private static CoreArmyLite _sArmy;
 
     public void Setup()
     {
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(9000));
         ItemBase[] RequiredItems = QuestData?.Requirements.ToArray() ?? Array.Empty<ItemBase>();
@@ -88,7 +124,13 @@ private static CoreArmyLite _sArmy;
             Core.ToBank(item.ID);
     }
 
-    void Armykill(string? map = null, string[]? monsters = null, string? item = null, bool isTemp = false, int quant = 1)
+    void Armykill(
+        string? map = null,
+        string[]? monsters = null,
+        string? item = null,
+        bool isTemp = false,
+        int quant = 1
+    )
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
@@ -114,8 +156,6 @@ private static CoreArmyLite _sArmy;
                 if (map != null)
                     Army.SmartAggroMonStart(map, monster);
         }
-
-
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             Bot.Combat.Attack("*");
@@ -237,6 +277,6 @@ F
         GetItem("map", "mob", 000, "item"); //*ONLY* leave Loot Empty for AC(only) quest rewards."
 
         //Examples;
-        //Setup("map", new[] { "mob", "mob" }, 000); 
+        //Setup("map", new[] { "mob", "mob" }, 000);
         //Setup("map", new[] { "mob", "mob" }, 000, new[] {"item", "item"});
 }*/

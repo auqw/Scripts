@@ -4,13 +4,13 @@ description: This will generate the the files needed for the QuestData sheet and
 tags: quests, developer, lists, files, spreadsheet, excel, data
 */
 //cs_include Scripts/CoreBots.cs
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using Skua.Core.Models.Quests;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Skua.Core.Models;
+using Newtonsoft.Json;
 using Skua.Core.Interfaces;
+using Skua.Core.Models;
+using Skua.Core.Models.Quests;
 
 public class GetQuests
 {
@@ -31,7 +31,9 @@ public class GetQuests
         await UpdateQuests();
 
         Core.Logger("Reading Quest.txt");
-        var v = JsonConvert.DeserializeObject<dynamic[]>(File.ReadAllText(ClientFileSources.SkuaQuestsFile))!;
+        var v = JsonConvert.DeserializeObject<dynamic[]>(
+            File.ReadAllText(ClientFileSources.SkuaQuestsFile)
+        )!;
 
         List<string> r = new();
         List<string> d = new();
@@ -52,7 +54,11 @@ public class GetQuests
         Core.Logger("Writing files.");
         Core.WriteFile(Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP", "QuestIds.txt"), r);
         Core.WriteFile(Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP", "QuestData.csv"), d);
-        File.Copy(ClientFileSources.SkuaQuestsFile, Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json"), true);
+        File.Copy(
+            ClientFileSources.SkuaQuestsFile,
+            Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json"),
+            true
+        );
 
         Core.Logger("Files made:");
         Core.Logger(" - \"Scripts/WIP/QuestIds.txt\"");
@@ -63,13 +69,14 @@ public class GetQuests
     private async Task UpdateQuests()
     {
         _loaderCTS = new();
-        List<QuestData> questData =
-            await (service ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>())
-            .UpdateAsync("Quests.txt", false, null, _loaderCTS.Token);
+        List<QuestData> questData = await (
+            service ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>()
+        ).UpdateAsync("Quests.txt", false, null, _loaderCTS.Token);
         _loaderCTS.Cancel();
         _loaderCTS.Dispose();
         _loaderCTS = null;
     }
+
     private CancellationTokenSource? _loaderCTS;
     private IQuestDataLoaderService? service;
 }

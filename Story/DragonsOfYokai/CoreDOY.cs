@@ -11,7 +11,11 @@ public class CoreDOY
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -137,7 +141,6 @@ public class CoreDOY
         Story.KillQuest(9405, "yokaitreasure", "Admiral Zheng");
         Core.EquipClass(ClassType.Farm);
     }
-
 
     public void HakuVillage()
     {
@@ -359,5 +362,4 @@ public class CoreDOY
         Core.EquipClass(ClassType.Solo);
         Story.KillQuest(9802, "novashrine", "Nova Empyrean");
     }
-
 }

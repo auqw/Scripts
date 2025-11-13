@@ -15,28 +15,59 @@ public class ThreeLittleWolvesHousesMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Building Material", "Foundation Material", "Decor Material", "Dragonrune Blueprint", "Mana Golem's Core", "Arcangrove Blueprint", "Falcontower Blueprint", "Citadel Caverns Blueprint", "Citadel Blueprint", "Seraphic Blueprint", "Hachiko Blueprint", "Clubhouse Blueprint " });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Building Material",
+                "Foundation Material",
+                "Decor Material",
+                "Dragonrune Blueprint",
+                "Mana Golem's Core",
+                "Arcangrove Blueprint",
+                "Falcontower Blueprint",
+                "Citadel Caverns Blueprint",
+                "Citadel Blueprint",
+                "Seraphic Blueprint",
+                "Hachiko Blueprint",
+                "Clubhouse Blueprint ",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -54,7 +85,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +98,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Building Material":
                     Core.FarmingLogger(req.Name, quant);
@@ -123,7 +161,13 @@ public static CoreAdvanced _sAdv;
                 case "Mana Golem's Core":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("elemental", "Mana Golem", "Mana Golem's Core", isTemp: false, log: false);
+                    Core.HuntMonster(
+                        "elemental",
+                        "Mana Golem",
+                        "Mana Golem's Core",
+                        isTemp: false,
+                        log: false
+                    );
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -137,7 +181,13 @@ public static CoreAdvanced _sAdv;
                 case "Falcontower Blueprint":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("falconreach", "Dragon Drakath", "Falcontower Blueprint", isTemp: false, log: false);
+                    Core.HuntMonster(
+                        "falconreach",
+                        "Dragon Drakath",
+                        "Falcontower Blueprint",
+                        isTemp: false,
+                        log: false
+                    );
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
@@ -146,7 +196,13 @@ public static CoreAdvanced _sAdv;
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
 
-                    Core.HuntMonster("citadel", "Belrot the Fiend", "Citadel Caverns Blueprint", isTemp: false, log: false);
+                    Core.HuntMonster(
+                        "citadel",
+                        "Belrot the Fiend",
+                        "Citadel Caverns Blueprint",
+                        isTemp: false,
+                        log: false
+                    );
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
@@ -171,25 +227,80 @@ public static CoreAdvanced _sAdv;
                 case "Clubhouse Blueprint":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("clubhouse", "Riddlelord's Golem", "Clubhouse Blueprint", isTemp: false, log: false);
+                    Core.HuntMonster(
+                        "clubhouse",
+                        "Riddlelord's Golem",
+                        "Clubhouse Blueprint",
+                        isTemp: false,
+                        log: false
+                    );
                     Bot.Wait.ForPickup(req.Name);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("48516", "Dragonrune House", "Mode: [select] only\nShould the bot buy \"Dragonrune House\" ?", false),
-        new Option<bool>("48517", "Dragonrune Hall", "Mode: [select] only\nShould the bot buy \"Dragonrune Hall\" ?", false),
-        new Option<bool>("48518", "Arcangrove Tower House", "Mode: [select] only\nShould the bot buy \"Arcangrove Tower House\" ?", false),
-        new Option<bool>("48765", "Tower of Magic House", "Mode: [select] only\nShould the bot buy \"Tower of Magic House\" ?", false),
-        new Option<bool>("48766", "Falcontower House", "Mode: [select] only\nShould the bot buy \"Falcontower House\" ?", false),
-        new Option<bool>("48767", "Citadel Caverns House", "Mode: [select] only\nShould the bot buy \"Citadel Caverns House\" ?", false),
-        new Option<bool>("48771", "Citadel House", "Mode: [select] only\nShould the bot buy \"Citadel House\" ?", false),
-        new Option<bool>("48768", "Seraphic Fortress", "Mode: [select] only\nShould the bot buy \"Seraphic Fortress\" ?", false),
-        new Option<bool>("48769", "Hachiko Hotel", "Mode: [select] only\nShould the bot buy \"Hachiko Hotel\" ?", false),
-        new Option<bool>("48770", "Clubhouse", "Mode: [select] only\nShould the bot buy \"Clubhouse\" ?", false),
+        new Option<bool>(
+            "48516",
+            "Dragonrune House",
+            "Mode: [select] only\nShould the bot buy \"Dragonrune House\" ?",
+            false
+        ),
+        new Option<bool>(
+            "48517",
+            "Dragonrune Hall",
+            "Mode: [select] only\nShould the bot buy \"Dragonrune Hall\" ?",
+            false
+        ),
+        new Option<bool>(
+            "48518",
+            "Arcangrove Tower House",
+            "Mode: [select] only\nShould the bot buy \"Arcangrove Tower House\" ?",
+            false
+        ),
+        new Option<bool>(
+            "48765",
+            "Tower of Magic House",
+            "Mode: [select] only\nShould the bot buy \"Tower of Magic House\" ?",
+            false
+        ),
+        new Option<bool>(
+            "48766",
+            "Falcontower House",
+            "Mode: [select] only\nShould the bot buy \"Falcontower House\" ?",
+            false
+        ),
+        new Option<bool>(
+            "48767",
+            "Citadel Caverns House",
+            "Mode: [select] only\nShould the bot buy \"Citadel Caverns House\" ?",
+            false
+        ),
+        new Option<bool>(
+            "48771",
+            "Citadel House",
+            "Mode: [select] only\nShould the bot buy \"Citadel House\" ?",
+            false
+        ),
+        new Option<bool>(
+            "48768",
+            "Seraphic Fortress",
+            "Mode: [select] only\nShould the bot buy \"Seraphic Fortress\" ?",
+            false
+        ),
+        new Option<bool>(
+            "48769",
+            "Hachiko Hotel",
+            "Mode: [select] only\nShould the bot buy \"Hachiko Hotel\" ?",
+            false
+        ),
+        new Option<bool>(
+            "48770",
+            "Clubhouse",
+            "Mode: [select] only\nShould the bot buy \"Clubhouse\" ?",
+            false
+        ),
     };
 }

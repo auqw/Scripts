@@ -14,25 +14,39 @@ public class EtherstormEvilMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Dark Earth Token", "Dark Water Token", "Dark Fire Token", "Dark Air Token" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Dark Earth Token", "Dark Water Token", "Dark Fire Token", "Dark Air Token" }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -49,7 +63,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,9 +76,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Dark Earth Token":
                 case "Dark Water Token":
@@ -74,10 +95,38 @@ private static CoreAdvanced _sAdv;
                         Core.RegisterQuests(1718, 1719);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster("etherwarevil", "Tainted Emu", "Twisted Emu Feather", 6, true, false);
-                            Core.HuntMonster("etherwarevil", "Tainted Pelican", "Twisted Pelican Feather", 6, true, false);
-                            Core.HuntMonster("etherwarevil", "Tainted Hummingbird", "Twisted Hummingbird Feather", 6, true, false);
-                            Core.HuntMonster("etherwarevil", "Tainted Phoenix", "Twisted Phoenix Feather", 6, true, false);
+                            Core.HuntMonster(
+                                "etherwarevil",
+                                "Tainted Emu",
+                                "Twisted Emu Feather",
+                                6,
+                                true,
+                                false
+                            );
+                            Core.HuntMonster(
+                                "etherwarevil",
+                                "Tainted Pelican",
+                                "Twisted Pelican Feather",
+                                6,
+                                true,
+                                false
+                            );
+                            Core.HuntMonster(
+                                "etherwarevil",
+                                "Tainted Hummingbird",
+                                "Twisted Hummingbird Feather",
+                                6,
+                                true,
+                                false
+                            );
+                            Core.HuntMonster(
+                                "etherwarevil",
+                                "Tainted Phoenix",
+                                "Twisted Phoenix Feather",
+                                6,
+                                true,
+                                false
+                            );
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();
@@ -88,25 +137,72 @@ private static CoreAdvanced _sAdv;
                         Core.RegisterQuests(1719);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
-                            Core.HuntMonster("etherwarevil", "Tainted Emu", "Twisted Emu Feather", 3, true, false);
-                            Core.HuntMonster("etherwarevil", "Tainted Pelican", "Twisted Pelican Feather", 3, true, false);
-                            Core.HuntMonster("etherwarevil", "Tainted Hummingbird", "Twisted Hummingbird Feather", 3, true, false);
-                            Core.HuntMonster("etherwarevil", "Tainted Phoenix", "Twisted Phoenix Feather", 3, true, false);
+                            Core.HuntMonster(
+                                "etherwarevil",
+                                "Tainted Emu",
+                                "Twisted Emu Feather",
+                                3,
+                                true,
+                                false
+                            );
+                            Core.HuntMonster(
+                                "etherwarevil",
+                                "Tainted Pelican",
+                                "Twisted Pelican Feather",
+                                3,
+                                true,
+                                false
+                            );
+                            Core.HuntMonster(
+                                "etherwarevil",
+                                "Tainted Hummingbird",
+                                "Twisted Hummingbird Feather",
+                                3,
+                                true,
+                                false
+                            );
+                            Core.HuntMonster(
+                                "etherwarevil",
+                                "Tainted Phoenix",
+                                "Twisted Phoenix Feather",
+                                3,
+                                true,
+                                false
+                            );
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("11306", "Terragon's Shout", "Mode: [select] only\nShould the bot buy \"Terragon's Shout\" ?", false),
-        new Option<bool>("11269", "Rippled Bone Sword", "Mode: [select] only\nShould the bot buy \"Rippled Bone Sword\" ?", false),
-        new Option<bool>("11266", "Jagged Kill", "Mode: [select] only\nShould the bot buy \"Jagged Kill\" ?", false),
-        new Option<bool>("11315", "Dark Water", "Mode: [select] only\nShould the bot buy \"Dark Water\" ?", false),
+        new Option<bool>(
+            "11306",
+            "Terragon's Shout",
+            "Mode: [select] only\nShould the bot buy \"Terragon's Shout\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11269",
+            "Rippled Bone Sword",
+            "Mode: [select] only\nShould the bot buy \"Rippled Bone Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11266",
+            "Jagged Kill",
+            "Mode: [select] only\nShould the bot buy \"Jagged Kill\" ?",
+            false
+        ),
+        new Option<bool>(
+            "11315",
+            "Dark Water",
+            "Mode: [select] only\nShould the bot buy \"Dark Water\" ?",
+            false
+        ),
     };
 }

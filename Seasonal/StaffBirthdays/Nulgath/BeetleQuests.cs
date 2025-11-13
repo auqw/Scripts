@@ -21,33 +21,58 @@ public class BeetleQuests
     public static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
     private static CoreAdvanced Adv => new();
-    private static TempleSiegeMerge TSM { get => _TSM ??= new TempleSiegeMerge(); set => _TSM = value; }
+    private static TempleSiegeMerge TSM
+    {
+        get => _TSM ??= new TempleSiegeMerge();
+        set => _TSM = value;
+    }
     private static TempleSiegeMerge _TSM;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
     private static CoreHollowborn _HB;
-
 
     public string OptionsStorage = "BeetleQuests";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<bool>("GetCosmetics", "Pet + Cosmetics?", "get the Cosmetics from both pets...? Or only get the 2 pets + the Armor", false),
-        new Option<bool>("BankExtras", "Bank Cosmetics?", "Bank cosmetic rewards, or fill your inventory?", false)
+        new Option<bool>(
+            "GetCosmetics",
+            "Pet + Cosmetics?",
+            "get the Cosmetics from both pets...? Or only get the 2 pets + the Armor",
+            false
+        ),
+        new Option<bool>(
+            "BankExtras",
+            "Bank Cosmetics?",
+            "Bank cosmetic rewards, or fill your inventory?",
+            false
+        ),
     };
 
     public void ScriptMain(IScriptInterface Bot)
     {
         if (Bot.Config!.Get<bool>("GetCosmetics"))
             Core.BankingBlackList.AddRange(Core.QuestRewards(9077, 9078));
-        else Core.BankingBlackList.AddRange(new[] { "Beetle Warlord Pet", "Beetle General Pet", "Beetle EXP" });
+        else
+            Core.BankingBlackList.AddRange(
+                new[] { "Beetle Warlord Pet", "Beetle General Pet", "Beetle EXP" }
+            );
         Core.SetOptions();
 
         if (Bot.Config!.Get<bool>("GetCosmetics"))
             Everything();
-        else PetAndArmor();
+        else
+            PetAndArmor();
 
         Core.SetOptions(false);
     }
@@ -119,7 +144,12 @@ public class BeetleQuests
                 Core.EnsureAccept(9078);
                 Nation.FarmTotemofNulgath(1);
                 Core.EquipClass(ClassType.Farm);
-                Core.HuntMonster("dragonchallenge", "Chaos Dragon", "Baby Chaos Dragon", isTemp: false);
+                Core.HuntMonster(
+                    "dragonchallenge",
+                    "Chaos Dragon",
+                    "Baby Chaos Dragon",
+                    isTemp: false
+                );
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("thevoid", "Reaper", "Reaper's Soul", isTemp: false);
                 Core.EnsureComplete(9078, rewardItem.ID);
@@ -137,7 +167,12 @@ public class BeetleQuests
                     Core.EnsureAccept(9078);
                     Nation.FarmTotemofNulgath(1);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("dragonchallenge", "Chaos Dragon", "Baby Chaos Dragon", isTemp: false);
+                    Core.HuntMonster(
+                        "dragonchallenge",
+                        "Chaos Dragon",
+                        "Baby Chaos Dragon",
+                        isTemp: false
+                    );
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("thevoid", "Reaper", "Reaper's Soul", isTemp: false);
                     Core.EnsureComplete(9078, item.ID);

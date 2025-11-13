@@ -16,7 +16,11 @@ public class CrownedAxes
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static GetLegionCastle LC { get => _LC ??= new GetLegionCastle(); set => _LC = value; }
+    private static GetLegionCastle LC
+    {
+        get => _LC ??= new GetLegionCastle();
+        set => _LC = value;
+    }
     private static GetLegionCastle _LC;
 
     public void ScriptMain(IScriptInterface bot)
@@ -36,10 +40,11 @@ public class CrownedAxes
         LC.AllYourBaseAreBelongToUs();
         if (!Core.CheckInventory("Legion Castle"))
         {
-            Core.Logger("You need to have Legion Castle to complete this quest. It's daily locked, run the script tomorrow.");
+            Core.Logger(
+                "You need to have Legion Castle to complete this quest. It's daily locked, run the script tomorrow."
+            );
             return;
         }
-
 
         Core.AddDrop(Core.QuestRewards(10102));
 

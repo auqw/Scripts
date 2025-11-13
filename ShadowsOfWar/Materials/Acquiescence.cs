@@ -15,7 +15,12 @@ public class Acquiescence
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreSoWMats SOWM { get => _SOWM ??= new CoreSoWMats(); set => _SOWM = value; }    private static CoreSoWMats _SOWM;
+    private static CoreSoWMats SOWM
+    {
+        get => _SOWM ??= new CoreSoWMats();
+        set => _SOWM = value;
+    }
+    private static CoreSoWMats _SOWM;
 
     public void ScriptMain(IScriptInterface bot)
     {

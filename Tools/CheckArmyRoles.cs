@@ -7,16 +7,25 @@ tags: tool, evaluate, account, chrono, heromart, beta, founder, badges, enhancem
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
+using System.Text;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
-using System.Text;
 
 public class CheckArmyRoles
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -58,71 +67,88 @@ public class CheckArmyRoles
         #region OutPut Generator
         // The actual output
         Bot.ShowMessageBox(
-                        $"Evaluation ID: {GenerateEvaluationID()}\n" +
-                        $"Extra Secutity: Account Item Count: {Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).Count()}\n" +
-                        $"Ｅｎｈａｎｃｅｍｅｎｔｓ\n" +
-                        $"(Victor of War) Valiance:\t\t\t\t{Checkbox(Core.isCompletedBefore(8741))}\n" +
-                        $"(Conductor of War) Arcana:\t\t\t\t{Checkbox(Core.isCompletedBefore(8741))}\n" +
-                        $"(Conductor of War) Arcana's Concerto:\t\t{Checkbox(Core.isCompletedBefore(8742))}\n" +
-                        $"(Deliverance of War) Elysium:\t\t\t{Checkbox(Core.isCompletedBefore(8821))}\n" +
-                        $"(Reflectionist of War) Examen:\t\t\t{Checkbox(Core.isCompletedBefore(8825))}\n" +
-                        $"(Penitent of War) Pentience:\t\t\t{Checkbox(Core.isCompletedBefore(8822))}\n" +
-                        $"(Miltonious of War) Ravenous:\t\t\t{Checkbox(Core.isCompletedBefore(9560))}\n" +
-                        $"(Shadow of War) Dauntless:\t\t\t{Checkbox(Core.isCompletedBefore(9172))}\n" +
-
-                        $"Ｃｌａｓｓｅｓ\n" +
-                        "(Avenger of War) " + importantItemCheckbox(3, "Chaos Avenger") +
-                        "(ArchMage of War) " + importantItemCheckbox(3, "ArchMage") +
-                        "(Revenant of War) " + importantItemCheckbox(3, "Legion Revenant") +
-                        "(Highlord of War) " + importantItemCheckbox(3, "Void Highlord", "Void Highlord (IoDA)") +
-                        "(Vera of War) " + importantItemCheckbox(3, "Verus DoomKnight") +
-                        "(Eternal Dragon of War) " + importantItemCheckbox(2, "Dragon of Time") +
-                        "(Diviner of War) " + importantItemCheckbox(3, "Arcana Invoker") +
-                        "(Tempest of War) " + importantItemCheckbox(2, "Sovereign of Storms") +
-                        "(Autist Of War) " + importantItemCheckbox(3, "Martial Artist") +
-                        "(Vindicator of War) " + importantItemCheckbox(2, "Hollowborn Vindicator") +
-
-                        $"Ｗｅａｐｏｎｓ\n" +
-                        "(Prisoner of War) " + importantItemCheckbox(1, "Hollowborn Reaper's Scythe") +
-                        "(Primordial of War) " + importantItemCheckbox(2, "Necrotic Sword of Doom") +
-                        "(Wraith of War) " + importantItemCheckbox(2, "Hollowborn Sword of Doom") +
-                        "(Legatus of War) " + importantItemCheckbox(1, "Necrotic Blade of the Underworld") +
-                        "(Chauvinist of War) " + importantItemCheckbox(1, "Necrotic Sword of the Abyss") +
-                        "(Prudence of War) " + importantItemCheckbox(3, "Providence") +
-                        "(Sinner of War) " + importantItemCheckbox(3, "Sin of the Abyss") +
-                        "(Deacon of War) " + importantItemCheckbox(2, "Exalted Apotheosis") +
-                        "(Deacon of War) " + importantItemCheckbox(2, "Dual Exalted Apotheosis") +
-                        "(Celestial of War) " + importantItemCheckbox(1, "Greatblade of the Entwined Eclipse") +
-                        "(Starlight of War) " + importantItemCheckbox(2, "Star Light of the Empyrean", "Star Lights of the Empyrean") +
-                        "(Mysteries of War) " + importantItemCheckbox(2, "Sin of the Underworld") +
-
-                        $"Ａｒｍｏｒ\n" +
-                        $"(Ascendant of War) Awescended:\t\t\t{Checkbox(Core.isCompletedBefore(8042))}\n" +
-                        "(Radiant Goddess of War) " + importantItemCheckbox(1, "Radiant Goddess of War") +
-
-                        $"Ｃｈｒｏｎｏ Ｃｈｅｃｋ\n" +
-                        $"(Time Lord of War) Chronomancer\t\t\t{Checkbox(ChronoOwned())}\n" +
-
-
-                        $"Ｅｎｄ Ｃｈｅｃｋｓ\n" +
-                        $"Apprentice of War:\t\t\t\t{Checkbox(ApprenticeOfWar())}\n" +
-                        $"Master of War:\t\t\t\t\t{Checkbox(MasterofWar())}\n" +
-                        $"Apostle of War:\t\t\t\t\t{Checkbox(Apostleofwar())}\n" +
-                        $"Bishop of War:\t\t\t\t\t{Checkbox(BishopofWar())}\n" +
-                        $"Cardinal of War:\t\t\t\t\t{Checkbox(CardinalofWar())}\n" +
-                        $"51% DMG All Weapons:\t\t\t\t{dmgAll51Items} out of 30\n\n" +
-
-                        "\n" +
-                        "\n" +
-
-                        $"Ｉｎｆｏ  Ｆｏｒ  Ｐｌａｙｅｒ\n" +
-                        GetStatusReport(),
-
-                        "Evaluation Complete"
-                    );
+            $"Evaluation ID: {GenerateEvaluationID()}\n"
+                + $"Extra Secutity: Account Item Count: {Bot.Inventory.Items.Concat(Bot.Bank.Items).Concat(Bot.House.Items).Count()}\n"
+                + $"Ｅｎｈａｎｃｅｍｅｎｔｓ\n"
+                + $"(Victor of War) Valiance:\t\t\t\t{Checkbox(Core.isCompletedBefore(8741))}\n"
+                + $"(Conductor of War) Arcana:\t\t\t\t{Checkbox(Core.isCompletedBefore(8741))}\n"
+                + $"(Conductor of War) Arcana's Concerto:\t\t{Checkbox(Core.isCompletedBefore(8742))}\n"
+                + $"(Deliverance of War) Elysium:\t\t\t{Checkbox(Core.isCompletedBefore(8821))}\n"
+                + $"(Reflectionist of War) Examen:\t\t\t{Checkbox(Core.isCompletedBefore(8825))}\n"
+                + $"(Penitent of War) Pentience:\t\t\t{Checkbox(Core.isCompletedBefore(8822))}\n"
+                + $"(Miltonious of War) Ravenous:\t\t\t{Checkbox(Core.isCompletedBefore(9560))}\n"
+                + $"(Shadow of War) Dauntless:\t\t\t{Checkbox(Core.isCompletedBefore(9172))}\n"
+                + $"Ｃｌａｓｓｅｓ\n"
+                + "(Avenger of War) "
+                + importantItemCheckbox(3, "Chaos Avenger")
+                + "(ArchMage of War) "
+                + importantItemCheckbox(3, "ArchMage")
+                + "(Revenant of War) "
+                + importantItemCheckbox(3, "Legion Revenant")
+                + "(Highlord of War) "
+                + importantItemCheckbox(3, "Void Highlord", "Void Highlord (IoDA)")
+                + "(Vera of War) "
+                + importantItemCheckbox(3, "Verus DoomKnight")
+                + "(Eternal Dragon of War) "
+                + importantItemCheckbox(2, "Dragon of Time")
+                + "(Diviner of War) "
+                + importantItemCheckbox(3, "Arcana Invoker")
+                + "(Tempest of War) "
+                + importantItemCheckbox(2, "Sovereign of Storms")
+                + "(Autist Of War) "
+                + importantItemCheckbox(3, "Martial Artist")
+                + "(Vindicator of War) "
+                + importantItemCheckbox(2, "Hollowborn Vindicator")
+                + $"Ｗｅａｐｏｎｓ\n"
+                + "(Prisoner of War) "
+                + importantItemCheckbox(1, "Hollowborn Reaper's Scythe")
+                + "(Primordial of War) "
+                + importantItemCheckbox(2, "Necrotic Sword of Doom")
+                + "(Wraith of War) "
+                + importantItemCheckbox(2, "Hollowborn Sword of Doom")
+                + "(Legatus of War) "
+                + importantItemCheckbox(1, "Necrotic Blade of the Underworld")
+                + "(Chauvinist of War) "
+                + importantItemCheckbox(1, "Necrotic Sword of the Abyss")
+                + "(Prudence of War) "
+                + importantItemCheckbox(3, "Providence")
+                + "(Sinner of War) "
+                + importantItemCheckbox(3, "Sin of the Abyss")
+                + "(Deacon of War) "
+                + importantItemCheckbox(2, "Exalted Apotheosis")
+                + "(Deacon of War) "
+                + importantItemCheckbox(2, "Dual Exalted Apotheosis")
+                + "(Celestial of War) "
+                + importantItemCheckbox(1, "Greatblade of the Entwined Eclipse")
+                + "(Starlight of War) "
+                + importantItemCheckbox(
+                    2,
+                    "Star Light of the Empyrean",
+                    "Star Lights of the Empyrean"
+                )
+                + "(Mysteries of War) "
+                + importantItemCheckbox(2, "Sin of the Underworld")
+                + $"Ａｒｍｏｒ\n"
+                + $"(Ascendant of War) Awescended:\t\t\t{Checkbox(Core.isCompletedBefore(8042))}\n"
+                + "(Radiant Goddess of War) "
+                + importantItemCheckbox(1, "Radiant Goddess of War")
+                + $"Ｃｈｒｏｎｏ Ｃｈｅｃｋ\n"
+                + $"(Time Lord of War) Chronomancer\t\t\t{Checkbox(ChronoOwned())}\n"
+                + $"Ｅｎｄ Ｃｈｅｃｋｓ\n"
+                + $"Apprentice of War:\t\t\t\t{Checkbox(ApprenticeOfWar())}\n"
+                + $"Master of War:\t\t\t\t\t{Checkbox(MasterofWar())}\n"
+                + $"Apostle of War:\t\t\t\t\t{Checkbox(Apostleofwar())}\n"
+                + $"Bishop of War:\t\t\t\t\t{Checkbox(BishopofWar())}\n"
+                + $"Cardinal of War:\t\t\t\t\t{Checkbox(CardinalofWar())}\n"
+                + $"51% DMG All Weapons:\t\t\t\t{dmgAll51Items} out of 30\n\n"
+                + "\n"
+                + "\n"
+                + $"Ｉｎｆｏ  Ｆｏｒ  Ｐｌａｙｅｒ\n"
+                + GetStatusReport(),
+            "Evaluation Complete"
+        );
 
         Core.Logger("✅ All processes complete! Ready for final review.");
-
 
         #endregion
 
@@ -133,24 +159,31 @@ public class CheckArmyRoles
             {
                 for (int i = 0; i < racial75Items.Length; i++)
                 {
-                    if (!racial75Items[i].Item2 &&
-                        list.Any(item =>
-                            item.sMeta != null &&
-                            ((string)item.sMeta).Contains($"{racial75Items[i].Item1}:1.75")))
+                    if (
+                        !racial75Items[i].Item2
+                        && list.Any(item =>
+                            item.sMeta != null
+                            && ((string)item.sMeta).Contains($"{racial75Items[i].Item1}:1.75")
+                        )
+                    )
                         racial75Items[i].Item2 = true;
                 }
-                dmgAll51Items += list.Count(item => item.sMeta != null && ((string)item.sMeta).Contains("dmgAll:1.51"));
+                dmgAll51Items += list.Count(item =>
+                    item.sMeta != null && ((string)item.sMeta).Contains("dmgAll:1.51")
+                );
             }
         }
-
     }
 
     private bool ApprenticeOfWar()
     {
-        return Bot.Player.Level >= 100 &&
-                Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(item => dpsClasses.Contains(item.Name)) &&
-                Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(item => farmerClasses.Contains(item.Name)) &&
-                Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(item => supportClasses.Contains(item.Name));
+        return Bot.Player.Level >= 100
+            && Bot.Inventory.Items.Concat(Bot.Bank.Items)
+                .Any(item => dpsClasses.Contains(item.Name))
+            && Bot.Inventory.Items.Concat(Bot.Bank.Items)
+                .Any(item => farmerClasses.Contains(item.Name))
+            && Bot.Inventory.Items.Concat(Bot.Bank.Items)
+                .Any(item => supportClasses.Contains(item.Name));
     }
 
     private bool MasterofWar()
@@ -159,34 +192,47 @@ public class CheckArmyRoles
         string[] boostTypes = { "dmgAll", "Dragonkin", "Elemental", "Human", "Undead", "Chaos" };
 
         // Check for a valid item with a damage boost of 30% or more
-        bool HasThirtyPerceptArmor = Bot.Inventory.Items.Concat(Bot.Bank.Items)
-            .Any(item => item != null &&
-                         item.Meta != null &&
-                         (double.TryParse(Core.GetBoostFloat(item, "dmgAll").ToString(), out double dmgAllValue) && dmgAllValue >= 1.3 ||
-                         boostTypes.Skip(1).All(boostType =>
-                             double.TryParse(Core.GetBoostFloat(item, boostType).ToString(), out double value) &&
-                             value >= 1.3)) &&
-                         !IsNonWeapon(item));
+        bool HasThirtyPerceptArmor = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .Any(item =>
+                item != null
+                && item.Meta != null
+                && (
+                    double.TryParse(
+                        Core.GetBoostFloat(item, "dmgAll").ToString(),
+                        out double dmgAllValue
+                    )
+                        && dmgAllValue >= 1.3
+                    || boostTypes
+                        .Skip(1)
+                        .All(boostType =>
+                            double.TryParse(
+                                Core.GetBoostFloat(item, boostType).ToString(),
+                                out double value
+                            )
+                            && value >= 1.3
+                        )
+                )
+                && !IsNonWeapon(item)
+            );
 
         return ApprenticeOfWar() && HasThirtyPerceptArmor && MasterofWarMeta();
     }
 
-
-
-
-
     private bool Apostleofwar()
     {
         return MasterofWar()
-       && ApostleWeapons.Concat(Apostleinsignias)
-    .Any(item => Core.CheckInventory(new[] { item }, any: true, toInv: false));
+            && ApostleWeapons
+                .Concat(Apostleinsignias)
+                .Any(item => Core.CheckInventory(new[] { item }, any: true, toInv: false));
     }
 
     private bool BishopofWar()
     {
         return Apostleofwar()
             // Check for 51% damage boost weapon
-            && Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(item => item != null && Core.GetBoostFloat(item, "dmgAll") >= 1.5f)
+            && Bot.Inventory.Items.Concat(Bot.Bank.Items)
+                .Any(item => item != null && Core.GetBoostFloat(item, "dmgAll") >= 1.5f)
             // Check for Bishop Data Classes (index 0 to 6)
             && Core.CheckInventory(BishopClasses, any: true, toInv: false)
             // Check for Nulgath insignias or items (index 7 to 9)
@@ -200,29 +246,34 @@ public class CheckArmyRoles
     private bool CardinalofWar()
     {
         bool hasEnhancements =
-        new[] { 8738, 8739, 8740, 8741, 8742, 8758, 8821, 8820, 9560, 8744 }.Any(Core.isCompletedBefore) &&
-        new[] { 8826, 8825, 8758, 8827, 8824 }.Any(Core.isCompletedBefore) &&
-        new[] { 8743, 8745, 8758, 8823, 8822, 8744 }.Any(Core.isCompletedBefore);
+            new[] { 8738, 8739, 8740, 8741, 8742, 8758, 8821, 8820, 9560, 8744 }.Any(
+                Core.isCompletedBefore
+            )
+            && new[] { 8826, 8825, 8758, 8827, 8824 }.Any(Core.isCompletedBefore)
+            && new[] { 8743, 8745, 8758, 8823, 8822, 8744 }.Any(Core.isCompletedBefore);
 
-        int FiftyOneWeaponsOwned = FiftyOneWeapons
-            .Count(weapon => Bot.Inventory.Items
-                .Concat(Bot.Bank.Items)
-                .Any(item => item.Name == weapon));
+        int FiftyOneWeaponsOwned = FiftyOneWeapons.Count(weapon =>
+            Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(item => item.Name == weapon)
+        );
 
-        int bishopClassesOwned = BishopClasses
-            .Count(cls => Bot.Inventory.Items
-                .Concat(Bot.Bank.Items)
-                .Any(item => item.Name == cls));
+        int bishopClassesOwned = BishopClasses.Count(cls =>
+            Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(item => item.Name == cls)
+        );
 
         /* Returns in order:
         1. BishopofWar Status
         2. >= 4 Class Roles
         3. >= 4 Weapon 51% dmgAll weapons
-        4. Has *ATLEAST* 1 weapon,  1 helm, 1 cape Forge Ehn 
+        4. Has *ATLEAST* 1 weapon,  1 helm, 1 cape Forge Ehn
         5. Dark Carnax Quest(& Badge) Completed *or* ArchMage Owned.
         */
-        return BishopofWar() && bishopClassesOwned >= 4 && FiftyOneWeaponsOwned >= 4 && hasEnhancements && (Core.isCompletedBefore(8873) || Core.CheckInventory("ArchMage", toInv: false));
+        return BishopofWar()
+            && bishopClassesOwned >= 4
+            && FiftyOneWeaponsOwned >= 4
+            && hasEnhancements
+            && (Core.isCompletedBefore(8873) || Core.CheckInventory("ArchMage", toInv: false));
     }
+
     #region Variables
     // DPS Classes
     string[] dpsClasses = new[]
@@ -235,8 +286,9 @@ public class CheckArmyRoles
         "LightCaster",
         "Lycan",
         "Psionic MindBreaker",
-        "Void HighLord"
-};
+        "Void HighLord",
+    };
+
     // Farmers
     string[] farmerClasses = new[]
     {
@@ -253,8 +305,9 @@ public class CheckArmyRoles
         "NCM",
         "Scarlet Sorceress",
         "ShadowScythe General",
-        "Shaman"
+        "Shaman",
     };
+
     // Support Classes
     string[] supportClasses = new[]
     {
@@ -270,7 +323,7 @@ public class CheckArmyRoles
         "NorthLands Monk",
         "Quantum Chronomancer",
         "Continuum Chronomancer",
-        "StoneCrusher"
+        "StoneCrusher",
     };
     private int[] rareIDs =
     {
@@ -287,12 +340,7 @@ public class CheckArmyRoles
         90, // Ultra Rare
         95, // Super Mega Ultra Rare
     };
-    private string[] houseCat =
-    {
-        "Floor Item",
-        "Wall Item",
-        "House",
-    };
+    private string[] houseCat = { "Floor Item", "Wall Item", "House" };
     private int[] forgeEnhIDs =
     {
         8738,
@@ -315,26 +363,26 @@ public class CheckArmyRoles
         9171,
     };
     private (string Name, int ID)[] ForgeQuests = new (string Name, int ID)[]
-      {
-    ("Forge Weapon Enhancement", 8738),
-    ("Lacerate", 8739),
-    ("Smite", 8740),
-    ("Hero's Valiance", 8741),
-    ("Arcana's Concerto", 8742),
-    ("Absolution", 8743),
-    ("Avarice", 8745),
-    ("Praxis", 9171),
-    ("Acheron", 8820),
-    ("Elysium", 8821),
-    ("Penitence", 8822),
-    ("Lament", 8823),
-    ("Vim, Ether", 8824),
-    ("Anima", 8826),
-    ("Pneuma", 8827),
-    ("Dauntless", 9172),
-    ("Forge Cape Enhancement", 8758),
-    ("Examen", 8825)
-      };
+    {
+        ("Forge Weapon Enhancement", 8738),
+        ("Lacerate", 8739),
+        ("Smite", 8740),
+        ("Hero's Valiance", 8741),
+        ("Arcana's Concerto", 8742),
+        ("Absolution", 8743),
+        ("Avarice", 8745),
+        ("Praxis", 9171),
+        ("Acheron", 8820),
+        ("Elysium", 8821),
+        ("Penitence", 8822),
+        ("Lament", 8823),
+        ("Vim, Ether", 8824),
+        ("Anima", 8826),
+        ("Pneuma", 8827),
+        ("Dauntless", 9172),
+        ("Forge Cape Enhancement", 8758),
+        ("Examen", 8825),
+    };
     private string[] HeroMartClasses =
     {
         "CardClasher",
@@ -389,30 +437,26 @@ public class CheckArmyRoles
         "Underworld Chronomancer",
         "Unchained Rocker",
     };
-    string[] ApostleWeapons = new[]
-    {
-        "Exalted Penultima",
-        "Exalted Unity",
-        "Exalted Apotheosis"
-    };
+    string[] ApostleWeapons = new[] { "Exalted Penultima", "Exalted Unity", "Exalted Apotheosis" };
     string[] Apostleinsignias = new[]
     {
         "Ezrajal Insignia",
         "Warden Insignia",
-        "Engineer Insignia"
+        "Engineer Insignia",
     };
+
     // Bishop Classes
     string[] BishopClasses = new[]
     {
-    "Chaos Avenger",
-    "ArchMage",
-    "Legion Revenant",
-    "Void HighLord",
-    "Dragon of Time",
-    "Verus DoomKnight",
-    "Arcana Invoker",
-    "Sovereign of Storms"
-};
+        "Chaos Avenger",
+        "ArchMage",
+        "Legion Revenant",
+        "Void HighLord",
+        "Dragon of Time",
+        "Verus DoomKnight",
+        "Arcana Invoker",
+        "Sovereign of Storms",
+    };
 
     // Nulgath Insignias and Items
     string[] NulgathItems = new[]
@@ -432,9 +476,8 @@ public class CheckArmyRoles
         "Empowered Evolved Void",
         "Empowered Evolved Blood",
         "Empowered Evolved Hex",
-        "Empowered Evolved Shadow"
+        "Empowered Evolved Shadow",
     };
-
 
     // Dage Insignias and Items
     string[] DageItems = new[]
@@ -452,9 +495,8 @@ public class CheckArmyRoles
         "Empowered BladeMaster's Katana",
         "Empowered Dual Katanas",
         "Empowered Dark Caster",
-        "Empowered Prismatic Paragon"
+        "Empowered Prismatic Paragon",
     };
-
 
     string[] FiftyOneWeapons = new[]
     {
@@ -467,7 +509,7 @@ public class CheckArmyRoles
         "Exalted Apotheosis",
         "Dual Exalted Apotheosis",
         "Greatblade of the Entwined Eclipse",
-        "Star Light of the Empyrean"
+        "Star Light of the Empyrean",
     };
     #endregion
 
@@ -489,13 +531,14 @@ public class CheckArmyRoles
         // Return the item name, tabs, and its checkbox status (🗸 for true, X for false)
         return $"{items[0]}:{_tabs}{Checkbox(check)}\n";
     }
+
     /// <summary>
     /// Returns a checkbox representation based on a boolean value.
     /// </summary>
     /// <param name="check">The boolean value indicating whether the checkbox should be checked.</param>
     /// <returns>A string representation of a checkbox with a checkmark (🗸) or an X (X) depending on the value of <paramref name="check"/>.</returns>
-    string Checkbox(bool check) =>
-     $"[ {(check ? "✅" : "❌")} ]";
+    string Checkbox(bool check) => $"[ {(check ? "✅" : "❌")} ]";
+
     /// <summary>
     /// Checks the completion status of Forge quests and lists any that are incomplete.
     /// </summary>
@@ -528,24 +571,26 @@ public class CheckArmyRoles
 
         return unlockedQuests;
     }
+
     /// <summary>
-    /// Checks if the player owns any class related to "Chrono" or "Time" 
+    /// Checks if the player owns any class related to "Chrono" or "Time"
     /// from either their inventory or bank.
     /// </summary>
     /// <returns>
-    /// Returns <c>true</c> if a "Chrono" or "Time" class is found, 
+    /// Returns <c>true</c> if a "Chrono" or "Time" class is found,
     /// otherwise returns <c>false</c>.
     /// </returns>
     private bool ChronoOwned()
     {
         // Filter for Chrono/Time classes
-        string[] ChronoClasses = HeroMartClasses.Where(x => x.Contains("Chrono") || x.Contains("Time")).ToArray();
+        string[] ChronoClasses = HeroMartClasses
+            .Where(x => x.Contains("Chrono") || x.Contains("Time"))
+            .ToArray();
 
         // Check if any Chrono class is found in Inventory or Bank
-        return Bot.Inventory.Items
-            .Concat(Bot.Bank.Items)
-            .Any(x => ChronoClasses.Contains(x.Name));
+        return Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(x => ChronoClasses.Contains(x.Name));
     }
+
     /// <summary>
     /// Generates a unique evaluation ID by combining a random alphanumeric string with a hexadecimal representation of the username, and scrambling the result.
     /// </summary>
@@ -559,22 +604,22 @@ public class CheckArmyRoles
         Random random = new();
 
         // Generate a random alphanumeric string
-        string randomString = new(Enumerable.Range(0, 16)
-            .Select(_ => chars[random.Next(chars.Length)])
-            .ToArray());
+        string randomString = new(
+            Enumerable.Range(0, 16).Select(_ => chars[random.Next(chars.Length)]).ToArray()
+        );
 
         // Convert username to hexadecimal string
-        string usernameHex = BitConverter.ToString(Encoding.UTF8.GetBytes(Core.Username()))
+        string usernameHex = BitConverter
+            .ToString(Encoding.UTF8.GetBytes(Core.Username()))
             .Replace("-", "");
 
         // Combine the random string with the hexadecimal string
         string combinedString = randomString + usernameHex;
 
         // Scramble the combined string
-        return new string(combinedString
-            .OrderBy(_ => random.Next())
-            .ToArray());
+        return new string(combinedString.OrderBy(_ => random.Next()).ToArray());
     }
+
     /// <summary>
     /// Builds and returns a status report summarizing the completion of Forge quests and any additional relevant information.
     /// </summary>
@@ -602,12 +647,15 @@ public class CheckArmyRoles
         }
         return reportBuilder.ToString();
     }
+
     /// <summary>
     /// Gets the list of racial gear boosts excluding specific types.
     /// </summary>
     /// <returns>An array of racial gear boosts, excluding the specified types.</returns>
     private RacialGearBoost[] racialGears =>
-        Enum.GetValues<RacialGearBoost>().Except(RacialGearBoost.None, RacialGearBoost.Drakath, RacialGearBoost.Orc);
+        Enum.GetValues<RacialGearBoost>()
+            .Except(RacialGearBoost.None, RacialGearBoost.Drakath, RacialGearBoost.Orc);
+
     /// <summary>
     /// Determines if an inventory item is neither a weapon nor armor.
     /// </summary>
@@ -629,6 +677,7 @@ public class CheckArmyRoles
             && x.Category != ItemCategory.Wand
             && x.Category != ItemCategory.Whip;
     }
+
     private bool IsNumeric(string str)
     {
         return int.TryParse(str, out _);
@@ -637,37 +686,63 @@ public class CheckArmyRoles
     public bool MasterofWarMeta()
     {
         // Define unwanted meta types as a HashSet for faster lookups
-        HashSet<string> unwantedMetaTypes = new() { "AutoAdd", "Drakath", "anim", "chance", "Necromancer", "NoSell" };
+        HashSet<string> unwantedMetaTypes = new()
+        {
+            "AutoAdd",
+            "Drakath",
+            "anim",
+            "chance",
+            "Necromancer",
+            "NoSell",
+        };
 
         // Check for at least one item with 4 or more valid meta types
         bool hasValidItem = false;
 
         // Concatenate inventory and bank items, then filter for Armor or Pet categories
-        foreach (ItemBase item in Bot.Inventory.Items.Concat(Bot.Bank.Items)
-                .Where(item => item != null && item.Meta != null &&
-                               (item.Category == ItemCategory.Armor || item.Category == ItemCategory.Pet)))
+        foreach (
+            ItemBase item in Bot
+                .Inventory.Items.Concat(Bot.Bank.Items)
+                .Where(item =>
+                    item != null
+                    && item.Meta != null
+                    && (item.Category == ItemCategory.Armor || item.Category == ItemCategory.Pet)
+                )
+        )
         {
             // Clean unwanted meta types from the item's meta string
-            string cleanedMeta = unwantedMetaTypes.Aggregate(item.Meta, (currentMeta, unwanted) =>
-                currentMeta.Replace(unwanted + ",", string.Empty)
-                           .Replace("," + unwanted, string.Empty) // Handle cases where the unwanted type is at the end
-                           .Replace(unwanted, string.Empty)); // Handle cases without a comma
+            string cleanedMeta = unwantedMetaTypes.Aggregate(
+                item.Meta,
+                (currentMeta, unwanted) =>
+                    currentMeta
+                        .Replace(unwanted + ",", string.Empty)
+                        .Replace("," + unwanted, string.Empty) // Handle cases where the unwanted type is at the end
+                        .Replace(unwanted, string.Empty)
+            ); // Handle cases without a comma
 
             // Remove purely numeric meta entries
-            cleanedMeta = string.Join(",", cleanedMeta
-                .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                .SelectMany(line => line.Split(','))
-                .Where(entry => !string.IsNullOrWhiteSpace(entry) &&
-                                !IsNumeric(entry.Split(':')[0]) && // Check if the key is numeric
-                                entry.Contains(':'))); // Ensure it has a key-value structure
+            cleanedMeta = string.Join(
+                ",",
+                cleanedMeta
+                    .Split(new[] { '\n' }, StringSplitOptions.RemoveEmptyEntries)
+                    .SelectMany(line => line.Split(','))
+                    .Where(entry =>
+                        !string.IsNullOrWhiteSpace(entry)
+                        && !IsNumeric(entry.Split(':')[0])
+                        && // Check if the key is numeric
+                        entry.Contains(':')
+                    )
+            ); // Ensure it has a key-value structure
 
             // Count valid meta pairs
             int validMetaCount = cleanedMeta
                 .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
                 .Select(metaEntry => metaEntry.Split(':')) // Split each entry into key-value pairs
-                .Count(metaPair => metaPair.Length == 2 // Ensure the pair has exactly two parts
+                .Count(metaPair =>
+                    metaPair.Length == 2 // Ensure the pair has exactly two parts
                     && double.TryParse(metaPair[1], out double value) // Try to parse the value
-                    && value >= 1.3); // Count only if the value is >= 1.3
+                    && value >= 1.3
+                ); // Count only if the value is >= 1.3
 
             // Log the item and its metas if it has 4 or more valid meta types and hasn't been logged yet
             if (validMetaCount >= 4)

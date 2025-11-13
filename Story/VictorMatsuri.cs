@@ -13,10 +13,19 @@ public class VictorMatsuri
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
+
     // Flags for event-driven action
     private bool counterAttackTriggered = false;
     private DateTime lastCounterAttack = DateTime.MinValue;
@@ -40,28 +49,25 @@ public class VictorMatsuri
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Kitsune Himawari", // UseableMonsters[0],
-	"NeOni", // UseableMonsters[1],
-	"Narcis Arrhythmia", // UseableMonsters[2],
-	"Haruki Matsuoka", // UseableMonsters[3],
-	"Lady Laidronette", // UseableMonsters[4],
-	"Masakado", // UseableMonsters[5]
-};
+            "Kitsune Himawari", // UseableMonsters[0],
+            "NeOni", // UseableMonsters[1],
+            "Narcis Arrhythmia", // UseableMonsters[2],
+            "Haruki Matsuoka", // UseableMonsters[3],
+            "Lady Laidronette", // UseableMonsters[4],
+            "Masakado", // UseableMonsters[5]
+        };
         #endregion Useable Monsters
 
         // 10290 | In Kuzunoha's Image
         if (!Story.QuestProgression(10290))
         {
-            Core.HuntMonsterQuest(10290,
-                ("victormatsuri", UseableMonsters[0], ClassType.Solo));
+            Core.HuntMonsterQuest(10290, ("victormatsuri", UseableMonsters[0], ClassType.Solo));
         }
-
 
         // 10291 | NeOni Blue
         if (!Story.QuestProgression(10291))
         {
-            Core.HuntMonsterQuest(10291,
-                ("victormatsuri", UseableMonsters[1], ClassType.Solo));
+            Core.HuntMonsterQuest(10291, ("victormatsuri", UseableMonsters[1], ClassType.Solo));
         }
 
         if (merge)
@@ -70,26 +76,20 @@ public class VictorMatsuri
         // 10292 | Embodiment of Scarlet
         if (!Story.QuestProgression(10292))
         {
-            Core.HuntMonsterQuest(10292,
-                ("victormatsuri", UseableMonsters[2], ClassType.Solo));
+            Core.HuntMonsterQuest(10292, ("victormatsuri", UseableMonsters[2], ClassType.Solo));
         }
-
 
         // 10293 | Onihitokuchi
         if (!Story.QuestProgression(10293))
         {
-            Core.HuntMonsterQuest(10293,
-                ("victormatsuri", UseableMonsters[3], ClassType.Solo));
+            Core.HuntMonsterQuest(10293, ("victormatsuri", UseableMonsters[3], ClassType.Solo));
         }
-
 
         // 10294 | Tsukihime
         if (!Story.QuestProgression(10294))
         {
-            Core.HuntMonsterQuest(10294,
-                ("victormatsuri", UseableMonsters[4], ClassType.Solo));
+            Core.HuntMonsterQuest(10294, ("victormatsuri", UseableMonsters[4], ClassType.Solo));
         }
-
 
         // 10295 | Kanmu Heishi
         if (!Story.QuestProgression(10295))
@@ -108,27 +108,47 @@ public class VictorMatsuri
             );
             Core.EnsureComplete(10295);
         }
-
     }
 
     public void KillMasakado(
-        string map, string cell, string pad, string monster,
+        string map,
+        string cell,
+        string pad,
+        string monster,
         string[] auraNames,
-        string? item = null, int quant = 1, bool isTemp = false, bool log = true,
-        int ItemToUse = 0, int SafeItem = 0,
-        CancellationToken cancellationToken = default)
+        string? item = null,
+        int quant = 1,
+        bool isTemp = false,
+        bool log = true,
+        int ItemToUse = 0,
+        int SafeItem = 0,
+        CancellationToken cancellationToken = default
+    )
     {
-        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
+        if (
+            item != null
+            && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant))
+        )
             return;
 
-        if (!Core.CheckInventory("Legion Revenant") && !(Adv.uPraxis() && Adv.uPenitence() && Adv.uPneuma()))
+        if (
+            !Core.CheckInventory("Legion Revenant")
+            && !(Adv.uPraxis() && Adv.uPenitence() && Adv.uPneuma())
+        )
         {
-            Core.Logger("You need to have the Legion Revenant class, Penitence, Praxis, and the Pneuma enhancements to kill Masakado with this script.");
+            Core.Logger(
+                "You need to have the Legion Revenant class, Penitence, Praxis, and the Pneuma enhancements to kill Masakado with this script."
+            );
             return;
         }
         Adv.GearStore();
         Core.Equip("Legion Revenant");
-        Adv.EnhanceEquipped(EnhancementType.Wizard, CapeSpecial.Penitence, HelmSpecial.Pneuma, WeaponSpecial.Praxis);
+        Adv.EnhanceEquipped(
+            EnhancementType.Wizard,
+            CapeSpecial.Penitence,
+            HelmSpecial.Pneuma,
+            WeaponSpecial.Praxis
+        );
 
         DateTime lastAuraTrigger = DateTime.MinValue;
         TimeSpan auraCooldown = TimeSpan.FromSeconds(0);
@@ -167,9 +187,17 @@ public class VictorMatsuri
             if (log)
                 Core.FarmingLogger(item, quant);
 
-            while (!Bot.ShouldExit && !Core.CheckInventory(item, quant) && !cancellationToken.IsCancellationRequested)
+            while (
+                !Bot.ShouldExit
+                && !Core.CheckInventory(item, quant)
+                && !cancellationToken.IsCancellationRequested
+            )
             {
-                while (!Bot.ShouldExit && !Bot.Player.Alive && !cancellationToken.IsCancellationRequested) { }
+                while (
+                    !Bot.ShouldExit
+                    && !Bot.Player.Alive
+                    && !cancellationToken.IsCancellationRequested
+                ) { }
 
                 if (Bot.Map.Name != map)
                     Core.Join(map, cell, pad);
@@ -193,7 +221,11 @@ public class VictorMatsuri
                     counterAttackTriggered = false;
                 }
 
-                if (isTemp ? Bot.TempInv.Contains(item, quant) : (Bot.Inventory.Contains(item, quant) || Bot.Bank.Contains(item, quant)))
+                if (
+                    isTemp
+                        ? Bot.TempInv.Contains(item, quant)
+                        : (Bot.Inventory.Contains(item, quant) || Bot.Bank.Contains(item, quant))
+                )
                     break;
             }
         }

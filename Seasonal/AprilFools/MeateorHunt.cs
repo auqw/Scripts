@@ -7,12 +7,18 @@ tags: meateor-hunt, seasonal, april-fools
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+
 public class MeateorHunt
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -38,7 +44,6 @@ public class MeateorHunt
         //Defeat the Giant ChickenCow
         Story.KillQuest(8612, "MeateorTown", "Giant ChickenCow");
 
-
         //Chick Your Surroundings
         if (!Story.QuestProgression(8614))
         {
@@ -62,7 +67,7 @@ public class MeateorHunt
             Core.EnsureComplete(8616);
         }
 
-        //Comet-ted to Memory     
+        //Comet-ted to Memory
         Story.KillQuest(8617, "Comet", new[] { "Vaderix", "Vaderix" });
 
         //Right Under Your Nose
@@ -96,7 +101,11 @@ public class MeateorHunt
         Story.KillQuest(8624, "Future", new[] { "The Collector", "The Collector" });
 
         //Poached Eggs
-        Story.KillQuest(8625, "byrodax", new[] { "Byro-Dax Monstrosity", "Space Goop", "Mutated Critter", });
+        Story.KillQuest(
+            8625,
+            "byrodax",
+            new[] { "Byro-Dax Monstrosity", "Space Goop", "Mutated Critter" }
+        );
 
         //Dumpster Diving
         Story.KillQuest(8626, "Junkhoard", new[] { "Magpie Junk Heap", "Junk Golem", "Magpie" });
@@ -105,7 +114,10 @@ public class MeateorHunt
         Story.KillQuest(8627, "Dreadspace", "Troblor");
 
         //Succeed or Fry Trying
-        Story.KillQuest(8628, "thirdspell", new[] { "Great Solar Elemental", "Sun Flare", "Solar Incarnation" });
-
+        Story.KillQuest(
+            8628,
+            "thirdspell",
+            new[] { "Great Solar Elemental", "Sun Flare", "Solar Incarnation" }
+        );
     }
 }

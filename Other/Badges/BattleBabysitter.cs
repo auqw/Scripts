@@ -12,7 +12,12 @@ public class BattleBabysitter
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDoomwood Doomwood { get => _Doomwood ??= new CoreDoomwood(); set => _Doomwood = value; }    private static CoreDoomwood _Doomwood;
+    private static CoreDoomwood Doomwood
+    {
+        get => _Doomwood ??= new CoreDoomwood();
+        set => _Doomwood = value;
+    }
+    private static CoreDoomwood _Doomwood;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -12,7 +12,12 @@ public class PookasGiftsMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static PookaStory Pooka { get => _Pooka ??= new PookaStory(); set => _Pooka = value; }    private static PookaStory _Pooka;
+    private static PookaStory Pooka
+    {
+        get => _Pooka ??= new PookaStory();
+        set => _Pooka = value;
+    }
+    private static PookaStory _Pooka;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -31,7 +36,13 @@ public class PookasGiftsMerge
 
         Pooka.CompletePooka();
 
-        while (!Bot.ShouldExit && !Core.CheckInventory(new[] { "Golden Clover", "Golden Oak Leaf", "Enchanted Gold" }, 100))
+        while (
+            !Bot.ShouldExit
+            && !Core.CheckInventory(
+                new[] { "Golden Clover", "Golden Oak Leaf", "Enchanted Gold" },
+                100
+            )
+        )
         {
             //Golden Clover
             if (!Core.CheckInventory("Golden Clover", 100))

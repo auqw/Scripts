@@ -17,22 +17,43 @@ public class ShadowfallDefenseMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static ShadowGates ShadowGates { get => _ShadowGates ??= new ShadowGates(); set => _ShadowGates = value; }    private static ShadowGates _ShadowGates;
+    private static ShadowGates ShadowGates
+    {
+        get => _ShadowGates ??= new ShadowGates();
+        set => _ShadowGates = value;
+    }
+    private static ShadowGates _ShadowGates;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -57,7 +78,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -68,9 +91,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Dark Heart Medal":
                     ShadowGates.StoryLine();
@@ -85,24 +113,83 @@ public static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("22172", "Tentacular Locks", "Mode: [select] only\nShould the bot buy \"Tentacular Locks\" ?", false),
-        new Option<bool>("22171", "Tentacular Buzzcut", "Mode: [select] only\nShould the bot buy \"Tentacular Buzzcut\" ?", false),
-        new Option<bool>("22169", "Chaos Gem Staff", "Mode: [select] only\nShould the bot buy \"Chaos Gem Staff\" ?", false),
-        new Option<bool>("22168", "Runes, Interrupted", "Mode: [select] only\nShould the bot buy \"Runes, Interrupted\" ?", false),
-        new Option<bool>("22167", "Tentacular Crown", "Mode: [select] only\nShould the bot buy \"Tentacular Crown\" ?", false),
-        new Option<bool>("22166", "Chaorrupted Arcana Mage", "Mode: [select] only\nShould the bot buy \"Chaorrupted Arcana Mage\" ?", false),
-        new Option<bool>("22162", "Chaorrupted Basher", "Mode: [select] only\nShould the bot buy \"Chaorrupted Basher\" ?", false),
-        new Option<bool>("22161", "Broken Horn Basher", "Mode: [select] only\nShould the bot buy \"Broken Horn Basher\" ?", false),
-        new Option<bool>("22103", "Burning Shadow Horns", "Mode: [select] only\nShould the bot buy \"Burning Shadow Horns\" ?", false),
-        new Option<bool>("22102", "Blade of Rage and Fury", "Mode: [select] only\nShould the bot buy \"Blade of Rage and Fury\" ?", false),
-        new Option<bool>("22101", "Cloak of Shadows", "Mode: [select] only\nShould the bot buy \"Cloak of Shadows\" ?", false),
-        new Option<bool>("22100", "Knight of Shadows", "Mode: [select] only\nShould the bot buy \"Knight of Shadows\" ?", false),
+        new Option<bool>(
+            "22172",
+            "Tentacular Locks",
+            "Mode: [select] only\nShould the bot buy \"Tentacular Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22171",
+            "Tentacular Buzzcut",
+            "Mode: [select] only\nShould the bot buy \"Tentacular Buzzcut\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22169",
+            "Chaos Gem Staff",
+            "Mode: [select] only\nShould the bot buy \"Chaos Gem Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22168",
+            "Runes, Interrupted",
+            "Mode: [select] only\nShould the bot buy \"Runes, Interrupted\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22167",
+            "Tentacular Crown",
+            "Mode: [select] only\nShould the bot buy \"Tentacular Crown\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22166",
+            "Chaorrupted Arcana Mage",
+            "Mode: [select] only\nShould the bot buy \"Chaorrupted Arcana Mage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22162",
+            "Chaorrupted Basher",
+            "Mode: [select] only\nShould the bot buy \"Chaorrupted Basher\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22161",
+            "Broken Horn Basher",
+            "Mode: [select] only\nShould the bot buy \"Broken Horn Basher\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22103",
+            "Burning Shadow Horns",
+            "Mode: [select] only\nShould the bot buy \"Burning Shadow Horns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22102",
+            "Blade of Rage and Fury",
+            "Mode: [select] only\nShould the bot buy \"Blade of Rage and Fury\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22101",
+            "Cloak of Shadows",
+            "Mode: [select] only\nShould the bot buy \"Cloak of Shadows\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22100",
+            "Knight of Shadows",
+            "Mode: [select] only\nShould the bot buy \"Knight of Shadows\" ?",
+            false
+        ),
     };
 }

@@ -17,31 +17,58 @@ public class WorldsCoreMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreSoWMats SOWM { get => _SOWM ??= new CoreSoWMats(); set => _SOWM = value; }
+    private static CoreSoWMats SOWM
+    {
+        get => _SOWM ??= new CoreSoWMats();
+        set => _SOWM = value;
+    }
     private static CoreSoWMats _SOWM;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }    private static CoreSoW _SoW;
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
+    private static CoreSoW _SoW;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Acquiescence", "Unbound Thread", "Prismatic Seams " });
+        Core.BankingBlackList.AddRange(
+            new[] { "Acquiescence", "Unbound Thread", "Prismatic Seams " }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -60,7 +87,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -71,9 +100,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Acquiescence":
                     SOWM.Acquiescence(quant);
@@ -86,27 +120,101 @@ public static CoreAdvanced _sAdv;
                 case "Prismatic Seams":
                     SOWM.PrismaticSeams(quant);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("73570", "Mystical Devotee of Mana", "Mode: [select] only\nShould the bot buy \"Mystical Devotee of Mana\" ?", false),
-        new Option<bool>("73571", "Mythical Devotee's Helm", "Mode: [select] only\nShould the bot buy \"Mythical Devotee's Helm\" ?", false),
-        new Option<bool>("73572", "Mystical Devotee's Hair", "Mode: [select] only\nShould the bot buy \"Mystical Devotee's Hair\" ?", false),
-        new Option<bool>("73573", "Mystical Devotee's Locks", "Mode: [select] only\nShould the bot buy \"Mystical Devotee's Locks\" ?", false),
-        new Option<bool>("73574", "Mythical Devotee's Veil + Locks", "Mode: [select] only\nShould the bot buy \"Mythical Devotee's Veil + Locks\" ?", false),
-        new Option<bool>("73575", "Miraculous Orb Of Divination", "Mode: [select] only\nShould the bot buy \"Miraculous Orb Of Divination\" ?", false),
-        new Option<bool>("73576", "Radiant Orb Of Clarity", "Mode: [select] only\nShould the bot buy \"Radiant Orb Of Clarity\" ?", false),
-        new Option<bool>("73577", "Mystical Orb Of Illusions", "Mode: [select] only\nShould the bot buy \"Mystical Orb Of Illusions\" ?", false),
-        new Option<bool>("73578", "Manifestation of Mana", "Mode: [select] only\nShould the bot buy \"Manifestation of Mana\" ?", false),
-        new Option<bool>("73579", "Mystical Devotee's Scimitar", "Mode: [select] only\nShould the bot buy \"Mystical Devotee's Scimitar\" ?", false),
-        new Option<bool>("73580", "Mystical Devotee's Scimitars", "Mode: [select] only\nShould the bot buy \"Mystical Devotee's Scimitars\" ?", false),
-        new Option<bool>("73581", "Staff Of Miracles", "Mode: [select] only\nShould the bot buy \"Staff Of Miracles\" ?", false),
-        new Option<bool>("73582", "Wand Of Miracles", "Mode: [select] only\nShould the bot buy \"Wand Of Miracles\" ?", false),
-        new Option<bool>("73583", "Mystical Chakram Of Illusions", "Mode: [select] only\nShould the bot buy \"Mystical Chakram Of Illusions\" ?", false),
-        new Option<bool>("73584", "Mystical Chakrams Of Illusion", "Mode: [select] only\nShould the bot buy \"Mystical Chakrams Of Illusion\" ?", false),
+        new Option<bool>(
+            "73570",
+            "Mystical Devotee of Mana",
+            "Mode: [select] only\nShould the bot buy \"Mystical Devotee of Mana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73571",
+            "Mythical Devotee's Helm",
+            "Mode: [select] only\nShould the bot buy \"Mythical Devotee's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73572",
+            "Mystical Devotee's Hair",
+            "Mode: [select] only\nShould the bot buy \"Mystical Devotee's Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73573",
+            "Mystical Devotee's Locks",
+            "Mode: [select] only\nShould the bot buy \"Mystical Devotee's Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73574",
+            "Mythical Devotee's Veil + Locks",
+            "Mode: [select] only\nShould the bot buy \"Mythical Devotee's Veil + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73575",
+            "Miraculous Orb Of Divination",
+            "Mode: [select] only\nShould the bot buy \"Miraculous Orb Of Divination\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73576",
+            "Radiant Orb Of Clarity",
+            "Mode: [select] only\nShould the bot buy \"Radiant Orb Of Clarity\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73577",
+            "Mystical Orb Of Illusions",
+            "Mode: [select] only\nShould the bot buy \"Mystical Orb Of Illusions\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73578",
+            "Manifestation of Mana",
+            "Mode: [select] only\nShould the bot buy \"Manifestation of Mana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73579",
+            "Mystical Devotee's Scimitar",
+            "Mode: [select] only\nShould the bot buy \"Mystical Devotee's Scimitar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73580",
+            "Mystical Devotee's Scimitars",
+            "Mode: [select] only\nShould the bot buy \"Mystical Devotee's Scimitars\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73581",
+            "Staff Of Miracles",
+            "Mode: [select] only\nShould the bot buy \"Staff Of Miracles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73582",
+            "Wand Of Miracles",
+            "Mode: [select] only\nShould the bot buy \"Wand Of Miracles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73583",
+            "Mystical Chakram Of Illusions",
+            "Mode: [select] only\nShould the bot buy \"Mystical Chakram Of Illusions\" ?",
+            false
+        ),
+        new Option<bool>(
+            "73584",
+            "Mystical Chakrams Of Illusion",
+            "Mode: [select] only\nShould the bot buy \"Mystical Chakrams Of Illusion\" ?",
+            false
+        ),
     };
 }

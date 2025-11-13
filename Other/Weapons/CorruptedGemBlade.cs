@@ -12,7 +12,12 @@ public class CorruptedGemBlade
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -25,7 +30,10 @@ public class CorruptedGemBlade
 
     public void DrudgentheSalesman()
     {
-        if (Core.CheckInventory("Corrupted Gem Blade") || !Core.CheckInventory("Drudgen the Assistant"))
+        if (
+            Core.CheckInventory("Corrupted Gem Blade")
+            || !Core.CheckInventory("Drudgen the Assistant")
+        )
             return;
 
         Core.AddDrop(Nation.bagDrops);

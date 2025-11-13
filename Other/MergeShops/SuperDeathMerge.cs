@@ -16,22 +16,43 @@ public class SuperDeathMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static SuperDeath SuperDeath { get => _SuperDeath ??= new SuperDeath(); set => _SuperDeath = value; }    private static SuperDeath _SuperDeath;
+    private static SuperDeath SuperDeath
+    {
+        get => _SuperDeath ??= new SuperDeath();
+        set => _SuperDeath = value;
+    }
+    private static SuperDeath _SuperDeath;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +77,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +90,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Fame Token":
                     Core.FarmingLogger(req.Name, quant);
@@ -78,7 +106,12 @@ public static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("superdeath", "Cave Yeti", "Normal Monsters Defeated", 5);
-                        Core.HuntMonster("superdeath", "Shadow Mutant", "Shadow Monsters Defeated", 5);
+                        Core.HuntMonster(
+                            "superdeath",
+                            "Shadow Mutant",
+                            "Shadow Monsters Defeated",
+                            5
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -99,25 +132,125 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("60589", "Ultimate Evil Armor", "Mode: [select] only\nShould the bot buy \"Ultimate Evil Armor\" ?", false),
-        new Option<bool>("60590", "Ultimate Evil Helm", "Mode: [select] only\nShould the bot buy \"Ultimate Evil Helm\" ?", false),
-        new Option<bool>("60586", "Ultimate Evil Sword", "Mode: [select] only\nShould the bot buy \"Ultimate Evil Sword\" ?", false),
-        new Option<bool>("60585", "Ultimate Evil Scythe", "Mode: [select] only\nShould the bot buy \"Ultimate Evil Scythe\" ?", false),
-        new Option<bool>("60591", "Ultimate Good Armor", "Mode: [select] only\nShould the bot buy \"Ultimate Good Armor\" ?", false),
-        new Option<bool>("60592", "Ultimate Good Helm", "Mode: [select] only\nShould the bot buy \"Ultimate Good Helm\" ?", false),
-        new Option<bool>("60593", "Ultimate Good Poleaxe", "Mode: [select] only\nShould the bot buy \"Ultimate Good Poleaxe\" ?", false),
-        new Option<bool>("60594", "Ultimate Good Sword", "Mode: [select] only\nShould the bot buy \"Ultimate Good Sword\" ?", false),
-        new Option<bool>("60637", "Little Green Alien", "Mode: [select] only\nShould the bot buy \"Little Green Alien\" ?", false),
-        new Option<bool>("60598", "Little Green Alien Morph", "Mode: [select] only\nShould the bot buy \"Little Green Alien Morph\" ?", false),
-        new Option<bool>("60600", "Crashlanded Autopsy Morph", "Mode: [select] only\nShould the bot buy \"Crashlanded Autopsy Morph\" ?", false),
-        new Option<bool>("60604", "Goblin Head", "Mode: [select] only\nShould the bot buy \"Goblin Head\" ?", false),
-        new Option<bool>("60596", "Braindy Head", "Mode: [select] only\nShould the bot buy \"Braindy Head\" ?", false),
-        new Option<bool>("60597", "Kitty Helm", "Mode: [select] only\nShould the bot buy \"Kitty Helm\" ?", false),
-        new Option<bool>("60640", "Pencil", "Mode: [select] only\nShould the bot buy \"Pencil\" ?", false),
-        new Option<bool>("60639", "Jumbo Pencil", "Mode: [select] only\nShould the bot buy \"Jumbo Pencil\" ?", false),
-        new Option<bool>("60638", "Ebiltime Chatbomb", "Mode: [select] only\nShould the bot buy \"Ebiltime Chatbomb\" ?", false),
-        new Option<bool>("60630", "Crusader's Blade", "Mode: [select] only\nShould the bot buy \"Crusader's Blade\" ?", false),
-        new Option<bool>("60607", "Yergen's Award of Yergen", "Mode: [select] only\nShould the bot buy \"Yergen's Award of Yergen\" ?", false),
-        new Option<bool>("60608", "Yergen's Award of Awards", "Mode: [select] only\nShould the bot buy \"Yergen's Award of Awards\" ?", false),
+        new Option<bool>(
+            "60589",
+            "Ultimate Evil Armor",
+            "Mode: [select] only\nShould the bot buy \"Ultimate Evil Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60590",
+            "Ultimate Evil Helm",
+            "Mode: [select] only\nShould the bot buy \"Ultimate Evil Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60586",
+            "Ultimate Evil Sword",
+            "Mode: [select] only\nShould the bot buy \"Ultimate Evil Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60585",
+            "Ultimate Evil Scythe",
+            "Mode: [select] only\nShould the bot buy \"Ultimate Evil Scythe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60591",
+            "Ultimate Good Armor",
+            "Mode: [select] only\nShould the bot buy \"Ultimate Good Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60592",
+            "Ultimate Good Helm",
+            "Mode: [select] only\nShould the bot buy \"Ultimate Good Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60593",
+            "Ultimate Good Poleaxe",
+            "Mode: [select] only\nShould the bot buy \"Ultimate Good Poleaxe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60594",
+            "Ultimate Good Sword",
+            "Mode: [select] only\nShould the bot buy \"Ultimate Good Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60637",
+            "Little Green Alien",
+            "Mode: [select] only\nShould the bot buy \"Little Green Alien\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60598",
+            "Little Green Alien Morph",
+            "Mode: [select] only\nShould the bot buy \"Little Green Alien Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60600",
+            "Crashlanded Autopsy Morph",
+            "Mode: [select] only\nShould the bot buy \"Crashlanded Autopsy Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60604",
+            "Goblin Head",
+            "Mode: [select] only\nShould the bot buy \"Goblin Head\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60596",
+            "Braindy Head",
+            "Mode: [select] only\nShould the bot buy \"Braindy Head\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60597",
+            "Kitty Helm",
+            "Mode: [select] only\nShould the bot buy \"Kitty Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60640",
+            "Pencil",
+            "Mode: [select] only\nShould the bot buy \"Pencil\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60639",
+            "Jumbo Pencil",
+            "Mode: [select] only\nShould the bot buy \"Jumbo Pencil\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60638",
+            "Ebiltime Chatbomb",
+            "Mode: [select] only\nShould the bot buy \"Ebiltime Chatbomb\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60630",
+            "Crusader's Blade",
+            "Mode: [select] only\nShould the bot buy \"Crusader's Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60607",
+            "Yergen's Award of Yergen",
+            "Mode: [select] only\nShould the bot buy \"Yergen's Award of Yergen\" ?",
+            false
+        ),
+        new Option<bool>(
+            "60608",
+            "Yergen's Award of Awards",
+            "Mode: [select] only\nShould the bot buy \"Yergen's Award of Awards\" ?",
+            false
+        ),
     };
 }

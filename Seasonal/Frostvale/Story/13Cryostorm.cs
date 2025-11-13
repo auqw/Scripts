@@ -13,8 +13,13 @@ public class Cryostorm
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFrostvale Frost { get => _Frost ??= new CoreFrostvale(); set => _Frost = value; }
+    private static CoreFrostvale Frost
+    {
+        get => _Frost ??= new CoreFrostvale();
+        set => _Frost = value;
+    }
     private static CoreFrostvale _Frost;
+
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
@@ -23,4 +28,3 @@ public class Cryostorm
         Core.SetOptions(false);
     }
 }
-

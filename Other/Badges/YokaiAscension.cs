@@ -12,8 +12,13 @@ public class YokaiAscension
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDOY DOY { get => _DOY ??= new CoreDOY(); set => _DOY = value; }
+    private static CoreDOY DOY
+    {
+        get => _DOY ??= new CoreDOY();
+        set => _DOY = value;
+    }
     private static CoreDOY _DOY;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();

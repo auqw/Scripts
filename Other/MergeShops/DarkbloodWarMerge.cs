@@ -16,21 +16,42 @@ public class DarkbloodWarMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }    private static CoreQOM _QOM;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreQOM QOM
+    {
+        get => _QOM ??= new CoreQOM();
+        set => _QOM = value;
+    }
+    private static CoreQOM _QOM;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +77,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +90,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Darkblood War Medal":
                     Core.FarmingLogger(req.Name, quant);
@@ -78,29 +106,95 @@ public static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.KillMonster("kolyaban", "r2", "Left", "*", "Acolyte's Medallion", 4);
-                        Core.KillMonster("kolyaban", "r2", "Left", "*", "Acolyte's Mega Medallion", 2);
+                        Core.KillMonster(
+                            "kolyaban",
+                            "r2",
+                            "Left",
+                            "*",
+                            "Acolyte's Mega Medallion",
+                            2
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("40270", "Eremon's Armor", "Mode: [select] only\nShould the bot buy \"Eremon's Armor\" ?", false),
-        new Option<bool>("40154", "Anti-Kolyaban Armor", "Mode: [select] only\nShould the bot buy \"Anti-Kolyaban Armor\" ?", false),
-        new Option<bool>("40156", "Anti-Kolyaban Helm", "Mode: [select] only\nShould the bot buy \"Anti-Kolyaban Helm\" ?", false),
-        new Option<bool>("40157", "Anti-Kolyaban Cape", "Mode: [select] only\nShould the bot buy \"Anti-Kolyaban Cape\" ?", false),
-        new Option<bool>("40155", "Anti-Kolyaban Trident", "Mode: [select] only\nShould the bot buy \"Anti-Kolyaban Trident\" ?", false),
-        new Option<bool>("40091", "Reshaper", "Mode: [select] only\nShould the bot buy \"Reshaper\" ?", false),
-        new Option<bool>("40092", "Reshaper Sword", "Mode: [select] only\nShould the bot buy \"Reshaper Sword\" ?", false),
-        new Option<bool>("40277", "Reshaper Swords", "Mode: [select] only\nShould the bot buy \"Reshaper Swords\" ?", false),
-        new Option<bool>("40093", "Reshaper Hair", "Mode: [select] only\nShould the bot buy \"Reshaper Hair\" ?", false),
-        new Option<bool>("40094", "Reshaper Helm", "Mode: [select] only\nShould the bot buy \"Reshaper Helm\" ?", false),
-        new Option<bool>("40095", "Horned Reshaper Helm", "Mode: [select] only\nShould the bot buy \"Horned Reshaper Helm\" ?", false),
-        new Option<bool>("40096", "Reshaper Hood", "Mode: [select] only\nShould the bot buy \"Reshaper Hood\" ?", false),
+        new Option<bool>(
+            "40270",
+            "Eremon's Armor",
+            "Mode: [select] only\nShould the bot buy \"Eremon's Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40154",
+            "Anti-Kolyaban Armor",
+            "Mode: [select] only\nShould the bot buy \"Anti-Kolyaban Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40156",
+            "Anti-Kolyaban Helm",
+            "Mode: [select] only\nShould the bot buy \"Anti-Kolyaban Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40157",
+            "Anti-Kolyaban Cape",
+            "Mode: [select] only\nShould the bot buy \"Anti-Kolyaban Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40155",
+            "Anti-Kolyaban Trident",
+            "Mode: [select] only\nShould the bot buy \"Anti-Kolyaban Trident\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40091",
+            "Reshaper",
+            "Mode: [select] only\nShould the bot buy \"Reshaper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40092",
+            "Reshaper Sword",
+            "Mode: [select] only\nShould the bot buy \"Reshaper Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40277",
+            "Reshaper Swords",
+            "Mode: [select] only\nShould the bot buy \"Reshaper Swords\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40093",
+            "Reshaper Hair",
+            "Mode: [select] only\nShould the bot buy \"Reshaper Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40094",
+            "Reshaper Helm",
+            "Mode: [select] only\nShould the bot buy \"Reshaper Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40095",
+            "Horned Reshaper Helm",
+            "Mode: [select] only\nShould the bot buy \"Horned Reshaper Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "40096",
+            "Reshaper Hood",
+            "Mode: [select] only\nShould the bot buy \"Reshaper Hood\" ?",
+            false
+        ),
     };
 }

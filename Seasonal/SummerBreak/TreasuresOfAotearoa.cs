@@ -49,6 +49,5 @@ public class TreasuresOfAotearoa
         while (!Bot.ShouldExit && !Core.CheckInventory(Core.QuestRewards(questID)[2..3]))
             Core.HuntMonster("burningbeach", "Water Goblin", "Stolen Egg", 5, log: false);
         Core.CancelRegisteredQuests();
-
     }
 }

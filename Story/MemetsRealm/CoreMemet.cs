@@ -11,7 +11,12 @@ public class MemetsRealm
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -207,7 +212,6 @@ public class MemetsRealm
 
         //Reveal the Nightmare (6103)
         Story.KillQuest(6103, "moonlab", "Nightmare Zorbak");
-
     }
 
     public void Spookeasy()

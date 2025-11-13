@@ -25,17 +25,54 @@ public class NecroticBladeoftheUnderworld
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreNSOD NSoD { get => _NSoD ??= new CoreNSOD(); set => _NSoD = value; }    private static CoreNSOD _NSoD;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static DageChallengeStory DageChallenge { get => _DageChallenge ??= new DageChallengeStory(); set => _DageChallenge = value; }    private static DageChallengeStory _DageChallenge;
-    private static AnotherOneBitesTheDust SoulSand { get => _SoulSand ??= new AnotherOneBitesTheDust(); set => _SoulSand = value; }    private static AnotherOneBitesTheDust _SoulSand;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreNSOD NSoD
+    {
+        get => _NSoD ??= new CoreNSOD();
+        set => _NSoD = value;
+    }
+    private static CoreNSOD _NSoD;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static DageChallengeStory DageChallenge
+    {
+        get => _DageChallenge ??= new DageChallengeStory();
+        set => _DageChallenge = value;
+    }
+    private static DageChallengeStory _DageChallenge;
+    private static AnotherOneBitesTheDust SoulSand
+    {
+        get => _SoulSand ??= new AnotherOneBitesTheDust();
+        set => _SoulSand = value;
+    }
+    private static AnotherOneBitesTheDust _SoulSand;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Legion Token", "Beast Soul", "Soul Sand", "Dage the Evil Insignia" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Legion Token", "Beast Soul", "Soul Sand", "Dage the Evil Insignia" }
+        );
         Core.SetOptions();
 
         GetNBoU();
@@ -50,7 +87,18 @@ public class NecroticBladeoftheUnderworld
             return;
 
         //Necessary AddDrops
-        Core.AddDrop(new[] { "Necrotic Blade of the Underworld", "Underworld Blade of DOOM", "Necrotic Sword of Doom", "Legion Token", "Beast Soul", "Soul Sand", "Dage the Evil Insignia" });
+        Core.AddDrop(
+            new[]
+            {
+                "Necrotic Blade of the Underworld",
+                "Underworld Blade of DOOM",
+                "Necrotic Sword of Doom",
+                "Legion Token",
+                "Beast Soul",
+                "Soul Sand",
+                "Dage the Evil Insignia",
+            }
+        );
 
         //Leveling to 95
         Farm.Experience(95);
@@ -70,7 +118,13 @@ public class NecroticBladeoftheUnderworld
         //Underworld Blade of DOOM
         if (!Core.CheckInventory("Underworld Blade of DOOM"))
         {
-            Core.HuntMonster("Dage", "Dage the Evil", "Underworld Blade of DOOM", isTemp: false, publicRoom: false);
+            Core.HuntMonster(
+                "Dage",
+                "Dage the Evil",
+                "Underworld Blade of DOOM",
+                isTemp: false,
+                publicRoom: false
+            );
             Bot.Wait.ForPickup("Underworld Blade of DOOM");
         }
 
@@ -78,7 +132,16 @@ public class NecroticBladeoftheUnderworld
         Legion.FarmLegionToken(25000);
 
         //Beast Souls
-        Adv.BoostKillMonster("SevenCirclesWar", "r17", "Left", "The Beast", "Beast Soul", 25, isTemp: false, publicRoom: false);
+        Adv.BoostKillMonster(
+            "SevenCirclesWar",
+            "r17",
+            "Left",
+            "The Beast",
+            "Beast Soul",
+            25,
+            isTemp: false,
+            publicRoom: false
+        );
 
         //Soul Sand
         SoulSand.SoulSand(7);
@@ -89,13 +152,24 @@ public class NecroticBladeoftheUnderworld
         {
             if (Bot.Quests.IsDailyComplete(8547))
             {
-                Core.Logger("Can't accept quest 8547 because the weekly is complete", messageBox: true);
+                Core.Logger(
+                    "Can't accept quest 8547 because the weekly is complete",
+                    messageBox: true
+                );
                 return;
             }
             Core.EnsureAccept(8547);
             Core.EquipClass(ClassType.Solo);
 
-            Adv.BoostKillMonster("UltraDage", "Boss", "Right", "Dage the Dark Lord", "Dage the Dark Lord Defeated", isTemp: false, publicRoom: false);
+            Adv.BoostKillMonster(
+                "UltraDage",
+                "Boss",
+                "Right",
+                "Dage the Dark Lord",
+                "Dage the Dark Lord Defeated",
+                isTemp: false,
+                publicRoom: false
+            );
 
             Core.EnsureComplete(8547);
             Bot.Wait.ForPickup("Dage the Evil Insignia");
@@ -111,18 +185,29 @@ public class NecroticBladeoftheUnderworld
             {
                 case "a":
                     //Move to the left
-                    Bot.Player.WalkTo(Bot.Random.Next(40, 175), Bot.Random.Next(400, 410), speed: 8);
+                    Bot.Player.WalkTo(
+                        Bot.Random.Next(40, 175),
+                        Bot.Random.Next(400, 410),
+                        speed: 8
+                    );
                     break;
                 case "b":
                     //Move to the right
-                    Bot.Player.WalkTo(Bot.Random.Next(760, 930), Bot.Random.Next(410, 415), speed: 8);
+                    Bot.Player.WalkTo(
+                        Bot.Random.Next(760, 930),
+                        Bot.Random.Next(410, 415),
+                        speed: 8
+                    );
                     break;
                 default:
                     //Move to the center
-                    Bot.Player.WalkTo(Bot.Random.Next(480, 500), Bot.Random.Next(300, 420), speed: 8);
+                    Bot.Player.WalkTo(
+                        Bot.Random.Next(480, 500),
+                        Bot.Random.Next(300, 420),
+                        speed: 8
+                    );
                     break;
             }
         }
-
     }
 }

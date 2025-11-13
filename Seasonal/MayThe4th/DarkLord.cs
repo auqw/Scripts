@@ -15,10 +15,30 @@ public class DarkLord
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static MurderMoonMerge Merge { get => _Merge ??= new MurderMoonMerge(); set => _Merge = value; }    private static MurderMoonMerge _Merge;
-    private static MurderMoon MMS { get => _MMS ??= new MurderMoon(); set => _MMS = value; }    private static MurderMoon _MMS;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static MurderMoonMerge Merge
+    {
+        get => _Merge ??= new MurderMoonMerge();
+        set => _Merge = value;
+    }
+    private static MurderMoonMerge _Merge;
+    private static MurderMoon MMS
+    {
+        get => _MMS ??= new MurderMoon();
+        set => _MMS = value;
+    }
+    private static MurderMoon _MMS;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -42,13 +62,27 @@ public class DarkLord
 
         MMS.MurderMoonStory(true);
 
-        Core.AddDrop($"Cyber Crystal", "S Ring", "Fifth Lord's Filtrinator", "Dark Helmet", "Dotty");
+        Core.AddDrop(
+            $"Cyber Crystal",
+            "S Ring",
+            "Fifth Lord's Filtrinator",
+            "Dark Helmet",
+            "Dotty"
+        );
 
         //Cyber Crystal x66
         Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(8065);
         while (!Bot.ShouldExit && !Core.CheckInventory("Cyber Crystal", 66))
-            Core.KillMonster("murdermoon", "r2", "Left", "Tempest Soldier", "Tempest Soldier Badge", 5, log: false);
+            Core.KillMonster(
+                "murdermoon",
+                "r2",
+                "Left",
+                "Tempest Soldier",
+                "Tempest Soldier Badge",
+                5,
+                log: false
+            );
         Core.CancelRegisteredQuests();
 
         //S Ring x15
@@ -75,6 +109,4 @@ public class DarkLord
         if (rankUpClass)
             Adv.RankUpClass("Dark Lord");
     }
-
-
 }

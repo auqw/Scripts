@@ -11,7 +11,11 @@ public class CaptainLoresQuests
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -54,8 +58,8 @@ public class CaptainLoresQuests
 
         // Clean Up the Core 6823
         Story.KillQuest(6823, "pollution", "Commodore Core");
-
     }
+
     public void TotengeldFactory()
     {
         if (Core.isCompletedBefore(3474) || !Core.isSeasonalMapActive("totengeld"))

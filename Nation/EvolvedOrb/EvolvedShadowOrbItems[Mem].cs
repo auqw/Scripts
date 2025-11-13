@@ -19,19 +19,47 @@ public class EvolvedShadowOrbItems
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static EvolvedShadowOrb ESO { get => _ESO ??= new EvolvedShadowOrb(); set => _ESO = value; }
+    private static EvolvedShadowOrb ESO
+    {
+        get => _ESO ??= new EvolvedShadowOrb();
+        set => _ESO = value;
+    }
     private static EvolvedShadowOrb _ESO;
-    private static Bard Bard { get => _Bard ??= new Bard(); set => _Bard = value; }
+    private static Bard Bard
+    {
+        get => _Bard ??= new Bard();
+        set => _Bard = value;
+    }
     private static Bard _Bard;
-    private static BattleConGearMerge BCon { get => _BCon ??= new BattleConGearMerge(); set => _BCon = value; }
+    private static BattleConGearMerge BCon
+    {
+        get => _BCon ??= new BattleConGearMerge();
+        set => _BCon = value;
+    }
     private static BattleConGearMerge _BCon;
-    private static PotionBuyer Potion { get => _Potion ??= new PotionBuyer(); set => _Potion = value; }
+    private static PotionBuyer Potion
+    {
+        get => _Potion ??= new PotionBuyer();
+        set => _Potion = value;
+    }
     private static PotionBuyer _Potion;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -63,46 +91,77 @@ public class EvolvedShadowOrbItems
         VoidEmotions();
         ShapeNothingness();
     }
+
     public void RebornDarkSide()
     {
-        if (!Core.CheckInventory(33198 /*Evolved Shadow Orb */, 33360 /* Platinum Coin of Nulgath: 2500 */))
+        if (
+            !Core.CheckInventory(
+                33198 /*Evolved Shadow Orb */
+                ,
+                33360 /* Platinum Coin of Nulgath: 2500 */
+            )
+        )
         {
-            Core.Logger("Missing Required Quest Accept Items. CANNOT PROCEED, STOPING THE BOT", stopBot: true);
+            Core.Logger(
+                "Missing Required Quest Accept Items. CANNOT PROCEED, STOPING THE BOT",
+                stopBot: true
+            );
         }
 
         foreach (int Q in new[] { 4771, 4772, 4773 })
         {
             switch (Q)
             {
-
                 // Reborn in the Dark Side (Rare) 4772
                 case 4773:
                 // Reborn in the Dark Side (Shadow) 4773
                 case 4772:
-                    if (!Core.CheckInventory(
-                        Q == 4772 ? 4813 /* Shadow of Nulgath (Rare) */
-                            : 5430 /* Shadow of Nulgath */)
-                                || !Core.IsMember)
+                    if (
+                        !Core.CheckInventory(
+                            Q == 4772
+                                ? 4813 /* Shadow of Nulgath (Rare) */
+                                : 5430 /* Shadow of Nulgath */
+                        ) || !Core.IsMember
+                    )
                         continue;
 
                     // Lightguardian Spirit Blade
-                    Core.HuntMonster("lightguard", "Mysterious Spirit", "Lightguardian Spirit Blade", isTemp: false);
+                    Core.HuntMonster(
+                        "lightguard",
+                        "Mysterious Spirit",
+                        "Lightguardian Spirit Blade",
+                        isTemp: false
+                    );
                     // Mana Mallet
                     Adv.BuyItem("citadel", 44, 843);
                     // Scrolls
                     if (!Core.CheckInventory("Scroll of Dark Energy", 30))
                     {
-                        Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
+                        Core.JoinSWF(
+                            "mobius",
+                            "ChiralValley/town-Mobius-21Feb14.swf",
+                            "Slugfit",
+                            "Bottom"
+                        );
                         Core.HuntMonster("mobius", "Slugfit", "Mystic Quills", 3, false);
                         Core.BuyItem("dragonrune", 549, "Ember Ink", 3);
-                        while (!Bot.ShouldExit && Core.CheckInventory("Ember Ink") && !Core.CheckInventory("Scroll of Dark Energy", 30))
+                        while (
+                            !Bot.ShouldExit
+                            && Core.CheckInventory("Ember Ink")
+                            && !Core.CheckInventory("Scroll of Dark Energy", 30)
+                        )
                             Core.ChainComplete(2298);
                         Bot.Wait.ForPickup("Scroll of Dark Energy");
                     }
 
                     if (!Core.CheckInventory("Scroll of Dark Grip", 30))
                     {
-                        Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
+                        Core.JoinSWF(
+                            "mobius",
+                            "ChiralValley/town-Mobius-21Feb14.swf",
+                            "Slugfit",
+                            "Bottom"
+                        );
                         Core.HuntMonster("mobius", "Slugfit", "Mystic Quills", 3, false);
                         Core.BuyItem("dragonrune", 549, "Runik Ink", 3);
                         while (!Bot.ShouldExit && Core.CheckInventory("Runik Ink"))
@@ -148,7 +207,6 @@ public class EvolvedShadowOrbItems
                     BCon.BuyAllMerge("Azure Starblade");
                     Bot.Wait.ForPickup("Evolved Shadow of Nulgath");
                     break;
-
             }
         }
     }
@@ -173,7 +231,6 @@ public class EvolvedShadowOrbItems
         Core.KillMonster("chaoslord", "r2", "Left", "*", "There is no Myself", isTemp: false);
         Core.EnsureComplete(4774);
         Bot.Wait.ForPickup("Evolved Shadow Helm");
-
     }
 
     public void ShapeNothingness()
@@ -185,7 +242,11 @@ public class EvolvedShadowOrbItems
         }
 
         // Shape your Nothingness 4775
-        Core.AddDrop("Unidentified 29", "Random Weapon of Nulgath", "Evolved Shadow Spear of Nulgath");
+        Core.AddDrop(
+            "Unidentified 29",
+            "Random Weapon of Nulgath",
+            "Evolved Shadow Spear of Nulgath"
+        );
         Core.EnsureAccept(4775);
         Core.EquipClass(ClassType.Farm);
         Nation.FarmUni10(30);

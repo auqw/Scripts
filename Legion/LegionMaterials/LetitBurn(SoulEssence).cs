@@ -17,11 +17,36 @@ public class LetItBurn
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static AnotherOneBitesTheDust SSand { get => _SSand ??= new AnotherOneBitesTheDust(); set => _SSand = value; }    private static AnotherOneBitesTheDust _SSand;
-    private static LegionBonfire Bon { get => _Bon ??= new LegionBonfire(); set => _Bon = value; }    private static LegionBonfire _Bon;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static AnotherOneBitesTheDust SSand
+    {
+        get => _SSand ??= new AnotherOneBitesTheDust();
+        set => _SSand = value;
+    }
+    private static AnotherOneBitesTheDust _SSand;
+    private static LegionBonfire Bon
+    {
+        get => _Bon ??= new LegionBonfire();
+        set => _Bon = value;
+    }
+    private static LegionBonfire _Bon;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -37,7 +62,7 @@ public class LetItBurn
         "Legion Undead Spawn",
         "Legion Undead Visor",
         "Legion Forge Banisher",
-        "Legion Spawn Bonker"
+        "Legion Spawn Bonker",
     };
 
     public void SoulEssence(int quant = 50, int ChooseItem = 0)
@@ -51,7 +76,8 @@ public class LetItBurn
         Core.AddDrop("Soul Essence");
         if (ChooseItem > 0)
             Core.AddDrop(ChooseItem);
-        else Core.AddDrop(rewards);
+        else
+            Core.AddDrop(rewards);
         Core.FarmingLogger("Soul Essence", quant);
 
         Farm.Experience(65);
@@ -59,7 +85,11 @@ public class LetItBurn
 
         Core.EquipClass(ClassType.Solo);
 
-        while (!Bot.ShouldExit && !Core.CheckInventory("Soul Essence", quant) && (ChooseItem <= 0 || !Core.CheckInventory(ChooseItem)))
+        while (
+            !Bot.ShouldExit
+            && !Core.CheckInventory("Soul Essence", quant)
+            && (ChooseItem <= 0 || !Core.CheckInventory(ChooseItem))
+        )
         {
             Core.EnsureAccept(7992);
             Core.HuntMonster("dagefortress", "Grrrberus", "Grrberus' Flame");
@@ -68,7 +98,10 @@ public class LetItBurn
             if (ChooseItem > 0)
             {
                 if (!rewards.All(x => Core.CheckInventory(x, toInv: false)))
-                    Core.EnsureCompleteChoose(7992, rewards.Where(x => !Core.CheckInventory(x)).ToArray());
+                    Core.EnsureCompleteChoose(
+                        7992,
+                        rewards.Where(x => !Core.CheckInventory(x)).ToArray()
+                    );
                 else
                     Core.EnsureComplete(7992);
             }

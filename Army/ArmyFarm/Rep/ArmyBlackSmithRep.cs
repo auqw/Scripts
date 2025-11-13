@@ -21,17 +21,32 @@ public class ArmyBlackSmithRep
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "ArmyBlackSmithRep";
     public bool DontPreconfigure = true;
@@ -44,17 +59,23 @@ public class ArmyBlackSmithRep
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Creature Shard", "Monster Trophy", "Hydra Scale Piece" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Creature Shard", "Monster Trophy", "Hydra Scale Piece" }
+        );
 
         // Core.OneTimeMessage("Urgent", "Please Make sure your goto is on in ingame settings so the buttlering system works properly [turn it back off after your done armying please.]", forcedMessageBox: true);
 
         Core.SetOptions();
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // Setup();
 
         Core.SetOptions(false);
@@ -105,15 +126,16 @@ public class ArmyBlackSmithRep
         if (item == null)
             return;
 
-        if (!Bot.Drops.ToPickup.Contains(item) && Bot.Inventory.Items.Find(x => x.Name == item) == null)
+        if (
+            !Bot.Drops.ToPickup.Contains(item)
+            && Bot.Inventory.Items.Find(x => x.Name == item) == null
+        )
             Core.AddDrop(item);
 
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger(item, quant);
 
         AggroSetup(map);
-
-
 
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             Bot.Combat.Attack("*");

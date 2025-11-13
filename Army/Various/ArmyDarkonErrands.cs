@@ -15,17 +15,29 @@ public class ArmyDarkonErrands
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-private static CoreArmyLite _sArmy;
-
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
+    private static CoreArmyLite _sArmy;
 
     public string OptionsStorage = "ArmyDarkonErrands";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<Method>("Method", "Which method to get Darkon's Receipt?", "Choose your method", Method.First_Errands_Weak_Team),
+        new Option<Method>(
+            "Method",
+            "Which method to get Darkon's Receipt?",
+            "Choose your method",
+            Method.First_Errands_Weak_Team
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -33,7 +45,7 @@ private static CoreArmyLite _sArmy;
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -49,26 +61,61 @@ private static CoreArmyLite _sArmy;
 
     public void Setup(Method Method, int quant = 1)
     {
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players"
+        );
 
         Core.EquipClass(ClassType.Solo);
 
         switch (Method)
         {
             case Method.First_Errands_Strong_Team:
-                ArmyHunt("towerofdoom7", new[] { "Dread Gorillaphant" }, "Darkon's Receipt", ClassType.Farm, false, 222, Method.First_Errands_Strong_Team);
+                ArmyHunt(
+                    "towerofdoom7",
+                    new[] { "Dread Gorillaphant" },
+                    "Darkon's Receipt",
+                    ClassType.Farm,
+                    false,
+                    222,
+                    Method.First_Errands_Strong_Team
+                );
                 break;
 
             case Method.First_Errands_Weak_Team:
-                ArmyHunt("maparcangrove", new[] { "Gorillaphant" }, "Darkon's Receipt", ClassType.Farm, false, 222, Method.First_Errands_Weak_Team);
+                ArmyHunt(
+                    "maparcangrove",
+                    new[] { "Gorillaphant" },
+                    "Darkon's Receipt",
+                    ClassType.Farm,
+                    false,
+                    222,
+                    Method.First_Errands_Weak_Team
+                );
                 break;
 
             case Method.Second_Errands:
-                ArmyHunt("doomvault", new[] { "Binky" }, "Darkon's Receipt", ClassType.Solo, false, 222, Method.Second_Errands);
+                ArmyHunt(
+                    "doomvault",
+                    new[] { "Binky" },
+                    "Darkon's Receipt",
+                    ClassType.Solo,
+                    false,
+                    222,
+                    Method.Second_Errands
+                );
                 break;
 
             case Method.Third_Errands:
-                ArmyHunt("tercessuinotlim", new[] { "Nulgath" }, "Darkon's Receipt", ClassType.Solo, false, 222, Method.Third_Errands);
+                ArmyHunt(
+                    "tercessuinotlim",
+                    new[] { "Nulgath" },
+                    "Darkon's Receipt",
+                    ClassType.Solo,
+                    false,
+                    222,
+                    Method.Third_Errands
+                );
                 break;
 
             default:
@@ -76,8 +123,15 @@ private static CoreArmyLite _sArmy;
         }
     }
 
-
-    void ArmyHunt(string map, string[] monsters, string item, ClassType classType, bool isTemp = false, int quant = 1, Method Method = Method.None)
+    void ArmyHunt(
+        string map,
+        string[] monsters,
+        string item,
+        ClassType classType,
+        bool isTemp = false,
+        int quant = 1,
+        Method Method = Method.None
+    )
     {
         if (!Bot.Config!.Get<bool>("sellToSync") && Core.CheckInventory(item, quant))
             return;
@@ -128,9 +182,11 @@ private static CoreArmyLite _sArmy;
                 break;
         }
 
-
-
-        while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant))
+        while (
+            !Bot.ShouldExit && isTemp
+                ? !Bot.TempInv.Contains(item, quant)
+                : !Core.CheckInventory(item, quant)
+        )
             Bot.Combat.Attack("*");
 
         Core.CancelRegisteredQuests();
@@ -138,13 +194,12 @@ private static CoreArmyLite _sArmy;
         Core.JumpWait();
     }
 
-
     public enum Method
     {
         First_Errands_Weak_Team = 0,
         First_Errands_Strong_Team = 1,
         Second_Errands = 2,
         Third_Errands = 3,
-        None = 4
+        None = 4,
     }
 }

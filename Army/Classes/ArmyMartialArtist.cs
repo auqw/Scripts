@@ -16,23 +16,46 @@ public class ArmyMartialArtist
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
-    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
     private static CoreBots _sCore;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "ArmyMartialArtist";
     public bool DontPreconfigure = true;
@@ -45,7 +68,7 @@ public class ArmyMartialArtist
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -53,25 +76,32 @@ public class ArmyMartialArtist
         Core.BankingBlackList.AddRange(Loot);
         Core.SetOptions();
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
 
         Core.SetOptions(false);
     }
 
     public void Setup()
     {
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
         Farm.Experience(65);
         Core.AddDrop(
-           "Dreadhaven General's Soul Fragment",
-           "Zakhvatchik's Soul Fragment",
-           "Creel's Soul Fragment",
-           "Frogzard Defeated",
-           "Gorillaphant Defeated",
-           "Dragon Defeated"
+            "Dreadhaven General's Soul Fragment",
+            "Zakhvatchik's Soul Fragment",
+            "Creel's Soul Fragment",
+            "Frogzard Defeated",
+            "Gorillaphant Defeated",
+            "Dragon Defeated"
         );
 
         Story.ChainQuest(9922);
@@ -79,7 +109,9 @@ public class ArmyMartialArtist
         // 9923 | 500 Punches and 500 Kicks
         if (!Story.QuestProgression(9923))
         {
-            Core.Logger("Quest is required, we'll stack mats via \"Deathly Slow Start [9933]\" After");
+            Core.Logger(
+                "Quest is required, we'll stack mats via \"Deathly Slow Start [9933]\" After"
+            );
             Core.EnsureAccept(9923);
             Core.EquipClass(ClassType.Farm);
 
@@ -139,7 +171,10 @@ public class ArmyMartialArtist
         Army.WaitForParty("party", "Enter");
 
         // Generate the list of quest IDs
-        int[]? questIDs = Core.FromTo(9922, 9927).Append(Core.IsMember ? 9911 : 9902)?.Where(q => q > 0).ToArray();
+        int[]? questIDs = Core.FromTo(9922, 9927)
+            .Append(Core.IsMember ? 9911 : 9902)
+            ?.Where(q => q > 0)
+            .ToArray();
 
         // Ensure the quest IDs array is not null before passing it to EnsureLoad
         List<Quest> quests = Core.EnsureLoad(questIDs ?? Array.Empty<int>());
@@ -155,7 +190,10 @@ public class ArmyMartialArtist
         Army.DivideOnCells("Enter");
         Bot.Player.SetSpawnPoint();
 
-        while (!Bot.ShouldExit && !Core.CheckInventory("Dreadhaven General's Soul Fragment", Core.IsMember ? 200 : 400))
+        while (
+            !Bot.ShouldExit
+            && !Core.CheckInventory("Dreadhaven General's Soul Fragment", Core.IsMember ? 200 : 400)
+        )
         {
             Bot.Combat.Attack("Dreadhaven General");
             Bot.Sleep(200);
@@ -172,7 +210,10 @@ public class ArmyMartialArtist
         Army.DivideOnCells("r10");
         Bot.Player.SetSpawnPoint();
 
-        while (!Bot.ShouldExit && !Core.CheckInventory("Zakhvatchik's Soul Fragment", Core.IsMember ? 200 : 400))
+        while (
+            !Bot.ShouldExit
+            && !Core.CheckInventory("Zakhvatchik's Soul Fragment", Core.IsMember ? 200 : 400)
+        )
         {
             Bot.Combat.Attack("Zakhvatchik");
             Bot.Sleep(200);
@@ -187,7 +228,10 @@ public class ArmyMartialArtist
         Army.AggroMonStart("towerofdoom5");
         Army.DivideOnCells("r10");
         Bot.Player.SetSpawnPoint();
-        while (!Bot.ShouldExit && !Core.CheckInventory("Creel's Soul Fragment", Core.IsMember ? 200 : 400))
+        while (
+            !Bot.ShouldExit
+            && !Core.CheckInventory("Creel's Soul Fragment", Core.IsMember ? 200 : 400)
+        )
         {
             Bot.Combat.Attack("Creel");
             Bot.Sleep(200);
@@ -235,7 +279,6 @@ public class ArmyMartialArtist
         Bot.Wait.ForPickup("Martial Artist");
 
         Adv.RankUpClass("Martial Artist");
-
     }
 
     private string[] Loot = { "Bone Dust", "Undead Energy" };

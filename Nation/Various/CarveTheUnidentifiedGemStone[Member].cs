@@ -11,19 +11,32 @@ using Skua.Core.Options;
 
 public class CarveTheUnidentifiedGemStone
 {
-
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public string OptionsStorage = "CarveTheUnidentifiedGemStone";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<ChooseReward>("ChooseReward", "Choose Your Reward", "Pick A Reward", ChooseReward.All),
+        new Option<ChooseReward>(
+            "ChooseReward",
+            "Choose Your Reward",
+            "Pick A Reward",
+            ChooseReward.All
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)

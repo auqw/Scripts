@@ -14,7 +14,11 @@ public class LootTheUndresser
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }
+    private static CoreToD TOD
+    {
+        get => _TOD ??= new CoreToD();
+        set => _TOD = value;
+    }
     private static CoreToD _TOD;
 
     public void ScriptMain(IScriptInterface bot)
@@ -40,7 +44,8 @@ public class LootTheUndresser
         {
             if (Core.CheckInventory(Reward.Name, toInv: false))
                 Core.Logger($"{Reward.Name} obtained.");
-            else Core.FarmingLogger(Reward.Name, 1);
+            else
+                Core.FarmingLogger(Reward.Name, 1);
 
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name))
             {

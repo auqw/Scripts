@@ -16,15 +16,35 @@ public class EvolvedBloodOrbItems
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static EvolvedBloodOrb EBO { get => _EBO ??= new EvolvedBloodOrb(); set => _EBO = value; }
+    private static EvolvedBloodOrb EBO
+    {
+        get => _EBO ??= new EvolvedBloodOrb();
+        set => _EBO = value;
+    }
     private static EvolvedBloodOrb _EBO;
-    private static JuggernautItemsofNulgath juggernaut { get => _juggernaut ??= new JuggernautItemsofNulgath(); set => _juggernaut = value; }
+    private static JuggernautItemsofNulgath juggernaut
+    {
+        get => _juggernaut ??= new JuggernautItemsofNulgath();
+        set => _juggernaut = value;
+    }
     private static JuggernautItemsofNulgath _juggernaut;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -83,10 +103,13 @@ public class EvolvedBloodOrbItems
 
         Nation.FarmUni13(3);
         Nation.TheAssistant("Unidentified 25");
-        juggernaut.JuggItems(reward: JuggernautItemsofNulgath.RewardsSelection.Dimensional_Championof_Nulgath);
+        juggernaut.JuggItems(
+            reward: JuggernautItemsofNulgath.RewardsSelection.Dimensional_Championof_Nulgath
+        );
         if (Core.IsMember)
             Nation.ForgeBloodGems(20);
-        else Nation.FarmBloodGem(20);
+        else
+            Nation.FarmBloodGem(20);
 
         Core.EnsureComplete(4780);
         Bot.Wait.ForPickup("Evolved Blood of Nulgath");
@@ -95,7 +118,10 @@ public class EvolvedBloodOrbItems
     public void BloodTears()
     {
         //Void Emotion 4774
-        if (!Core.CheckInventory("Platinum Coin of Nulgath: 300") || !Core.CheckInventory("Evolved Blood Orb"))
+        if (
+            !Core.CheckInventory("Platinum Coin of Nulgath: 300")
+            || !Core.CheckInventory("Evolved Blood Orb")
+        )
             return;
 
         Core.EnsureAccept(4783);
@@ -110,9 +136,5 @@ public class EvolvedBloodOrbItems
         Bot.Wait.ForPickup("Evolved Blood Guard");
     }
 
-    private readonly string[] Rewards =
-    {
-        "Evolved Blood of Nulgath",
-        "Evolved Blood Guard",
-    };
+    private readonly string[] Rewards = { "Evolved Blood of Nulgath", "Evolved Blood Guard" };
 }

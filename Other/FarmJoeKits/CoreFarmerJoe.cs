@@ -151,7 +151,6 @@ tags: null
 #endregion includes
 
 
-
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
 using Skua.Core.Models.Items;
@@ -162,134 +161,412 @@ public class CoreFarmerJoe
 {
     //other
     public static IScriptInterface Bot => IScriptInterface.Instance;
-    private static FreeBoosts Boosts { get => _Boosts ??= new FreeBoosts(); set => _Boosts = value; }
+    private static FreeBoosts Boosts
+    {
+        get => _Boosts ??= new FreeBoosts();
+        set => _Boosts = value;
+    }
     private static FreeBoosts _Boosts;
-    private static FarmAllDailies FAD { get => _FAD ??= new FarmAllDailies(); set => _FAD = value; }
+    private static FarmAllDailies FAD
+    {
+        get => _FAD ??= new FarmAllDailies();
+        set => _FAD = value;
+    }
     private static FarmAllDailies _FAD;
-    private static InventoryEnhancer InvEn { get => _InvEn ??= new InventoryEnhancer(); set => _InvEn = value; }
+    private static InventoryEnhancer InvEn
+    {
+        get => _InvEn ??= new InventoryEnhancer();
+        set => _InvEn = value;
+    }
     private static InventoryEnhancer _InvEn;
-    private static SynderesMerge SM { get => _SM ??= new SynderesMerge(); set => _SM = value; }
+    private static SynderesMerge SM
+    {
+        get => _SM ??= new SynderesMerge();
+        set => _SM = value;
+    }
     private static SynderesMerge _SM;
-    private static ArchfiendDeathLord AFDeath { get => _AFDeath ??= new ArchfiendDeathLord(); set => _AFDeath = value; }
+    private static ArchfiendDeathLord AFDeath
+    {
+        get => _AFDeath ??= new ArchfiendDeathLord();
+        set => _AFDeath = value;
+    }
     private static ArchfiendDeathLord _AFDeath;
-    private static UnlockForgeEnhancements UnlockForgeEnhancements { get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements(); set => _UnlockForgeEnhancements = value; }
+    private static UnlockForgeEnhancements UnlockForgeEnhancements
+    {
+        get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements();
+        set => _UnlockForgeEnhancements = value;
+    }
     private static UnlockForgeEnhancements _UnlockForgeEnhancements;
-    private static ExaltedApotheosisPreReqs ExaltedApotheosisPreReqs { get => _ExaltedApotheosisPreReqs ??= new ExaltedApotheosisPreReqs(); set => _ExaltedApotheosisPreReqs = value; }
+    private static ExaltedApotheosisPreReqs ExaltedApotheosisPreReqs
+    {
+        get => _ExaltedApotheosisPreReqs ??= new ExaltedApotheosisPreReqs();
+        set => _ExaltedApotheosisPreReqs = value;
+    }
     private static ExaltedApotheosisPreReqs _ExaltedApotheosisPreReqs;
 
     //Cores
     public static CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CapeOfAwe COA { get => _COA ??= new CapeOfAwe(); set => _COA = value; }
+    private static CapeOfAwe COA
+    {
+        get => _COA ??= new CapeOfAwe();
+        set => _COA = value;
+    }
     private static CapeOfAwe _COA;
     public static Core13LoC LOC => new();
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }
+    private static CoreVHL VHL
+    {
+        get => _VHL ??= new CoreVHL();
+        set => _VHL = value;
+    }
     private static CoreVHL _VHL;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static CoreYnR YNR { get => _YNR ??= new CoreYnR(); set => _YNR = value; }
+    private static CoreYnR YNR
+    {
+        get => _YNR ??= new CoreYnR();
+        set => _YNR = value;
+    }
     private static CoreYnR _YNR;
 
     //Classes
-    private static MasterRanger MR { get => _MR ??= new MasterRanger(); set => _MR = value; }
+    private static MasterRanger MR
+    {
+        get => _MR ??= new MasterRanger();
+        set => _MR = value;
+    }
     private static MasterRanger _MR;
-    private static Shaman Shaman { get => _Shaman ??= new Shaman(); set => _Shaman = value; }
+    private static Shaman Shaman
+    {
+        get => _Shaman ??= new Shaman();
+        set => _Shaman = value;
+    }
     private static Shaman _Shaman;
-    private static GlacialBerserker GB { get => _GB ??= new GlacialBerserker(); set => _GB = value; }
+    private static GlacialBerserker GB
+    {
+        get => _GB ??= new GlacialBerserker();
+        set => _GB = value;
+    }
     private static GlacialBerserker _GB;
-    private static StoneCrusher SC { get => _SC ??= new StoneCrusher(); set => _SC = value; }
+    private static StoneCrusher SC
+    {
+        get => _SC ??= new StoneCrusher();
+        set => _SC = value;
+    }
     private static StoneCrusher _SC;
-    private static DragonShinobi DS { get => _DS ??= new DragonShinobi(); set => _DS = value; }
+    private static DragonShinobi DS
+    {
+        get => _DS ??= new DragonShinobi();
+        set => _DS = value;
+    }
     private static DragonShinobi _DS;
-    private static ArchPaladin AP { get => _AP ??= new ArchPaladin(); set => _AP = value; }
+    private static ArchPaladin AP
+    {
+        get => _AP ??= new ArchPaladin();
+        set => _AP = value;
+    }
     private static ArchPaladin _AP;
-    private static Dragonslayer DSlayer { get => _DSlayer ??= new Dragonslayer(); set => _DSlayer = value; }
+    private static Dragonslayer DSlayer
+    {
+        get => _DSlayer ??= new Dragonslayer();
+        set => _DSlayer = value;
+    }
     private static Dragonslayer _DSlayer;
-    private static DragonslayerGeneral DSG { get => _DSG ??= new DragonslayerGeneral(); set => _DSG = value; }
+    private static DragonslayerGeneral DSG
+    {
+        get => _DSG ??= new DragonslayerGeneral();
+        set => _DSG = value;
+    }
     private static DragonslayerGeneral _DSG;
-    private static LordOfOrder LOO { get => _LOO ??= new LordOfOrder(); set => _LOO = value; }
+    private static LordOfOrder LOO
+    {
+        get => _LOO ??= new LordOfOrder();
+        set => _LOO = value;
+    }
     private static LordOfOrder _LOO;
-    private static ScarletSorceress SS { get => _SS ??= new ScarletSorceress(); set => _SS = value; }
+    private static ScarletSorceress SS
+    {
+        get => _SS ??= new ScarletSorceress();
+        set => _SS = value;
+    }
     private static ScarletSorceress _SS;
-    private static EternalInversionist EI { get => _EI ??= new EternalInversionist(); set => _EI = value; }
+    private static EternalInversionist EI
+    {
+        get => _EI ??= new EternalInversionist();
+        set => _EI = value;
+    }
     private static EternalInversionist _EI;
-    private static DarkbloodStormKing DBSK { get => _DBSK ??= new DarkbloodStormKing(); set => _DBSK = value; }
+    private static DarkbloodStormKing DBSK
+    {
+        get => _DBSK ??= new DarkbloodStormKing();
+        set => _DBSK = value;
+    }
     private static DarkbloodStormKing _DBSK;
-    private static DragonOfTime DoT { get => _DoT ??= new DragonOfTime(); set => _DoT = value; }
+    private static DragonOfTime DoT
+    {
+        get => _DoT ??= new DragonOfTime();
+        set => _DoT = value;
+    }
     private static DragonOfTime _DoT;
-    private static BloodSorceress BS { get => _BS ??= new BloodSorceress(); set => _BS = value; }
+    private static BloodSorceress BS
+    {
+        get => _BS ??= new BloodSorceress();
+        set => _BS = value;
+    }
     private static BloodSorceress _BS;
-    private static BlazeBinder Bb { get => _Bb ??= new BlazeBinder(); set => _Bb = value; }
+    private static BlazeBinder Bb
+    {
+        get => _Bb ??= new BlazeBinder();
+        set => _Bb = value;
+    }
     private static BlazeBinder _Bb;
-    private static ArchFiend AF { get => _AF ??= new ArchFiend(); set => _AF = value; }
+    private static ArchFiend AF
+    {
+        get => _AF ??= new ArchFiend();
+        set => _AF = value;
+    }
     private static ArchFiend _AF;
-    private static Cryomancer Cryo { get => _Cryo ??= new Cryomancer(); set => _Cryo = value; }
+    private static Cryomancer Cryo
+    {
+        get => _Cryo ??= new Cryomancer();
+        set => _Cryo = value;
+    }
     private static Cryomancer _Cryo;
-    private static FrostSpiritReaver FSR { get => _FSR ??= new FrostSpiritReaver(); set => _FSR = value; }
+    private static FrostSpiritReaver FSR
+    {
+        get => _FSR ??= new FrostSpiritReaver();
+        set => _FSR = value;
+    }
     private static FrostSpiritReaver _FSR;
-    private static NorthlandsMonk NM { get => _NM ??= new NorthlandsMonk(); set => _NM = value; }
+    private static NorthlandsMonk NM
+    {
+        get => _NM ??= new NorthlandsMonk();
+        set => _NM = value;
+    }
     private static NorthlandsMonk _NM;
 
     //Weapons
-    private static DualChainSawKatanas DCSK { get => _DCSK ??= new DualChainSawKatanas(); set => _DCSK = value; }
+    private static DualChainSawKatanas DCSK
+    {
+        get => _DCSK ??= new DualChainSawKatanas();
+        set => _DCSK = value;
+    }
     private static DualChainSawKatanas _DCSK;
-    private static BurningBlade BB { get => _BB ??= new BurningBlade(); set => _BB = value; }
+    private static BurningBlade BB
+    {
+        get => _BB ??= new BurningBlade();
+        set => _BB = value;
+    }
     private static BurningBlade _BB;
-    private static BurningBladeOfAbezeth BBOA { get => _BBOA ??= new BurningBladeOfAbezeth(); set => _BBOA = value; }
+    private static BurningBladeOfAbezeth BBOA
+    {
+        get => _BBOA ??= new BurningBladeOfAbezeth();
+        set => _BBOA = value;
+    }
     private static BurningBladeOfAbezeth _BBOA;
-    private static EnchantedVictoryBladeWeapons EVBW { get => _EVBW ??= new EnchantedVictoryBladeWeapons(); set => _EVBW = value; }
+    private static EnchantedVictoryBladeWeapons EVBW
+    {
+        get => _EVBW ??= new EnchantedVictoryBladeWeapons();
+        set => _EVBW = value;
+    }
     private static EnchantedVictoryBladeWeapons _EVBW;
-    private static ShadowrealmMerge SRM { get => _SRM ??= new ShadowrealmMerge(); set => _SRM = value; }
+    private static ShadowrealmMerge SRM
+    {
+        get => _SRM ??= new ShadowrealmMerge();
+        set => _SRM = value;
+    }
     private static ShadowrealmMerge _SRM;
 
     //Story
-    private static Tutorial Tutorial { get => _Tutorial ??= new Tutorial(); set => _Tutorial = value; }
+    private static Tutorial Tutorial
+    {
+        get => _Tutorial ??= new Tutorial();
+        set => _Tutorial = value;
+    }
     private static Tutorial _Tutorial;
-    private static CelestialArenaQuests CAQ { get => _CAQ ??= new CelestialArenaQuests(); set => _CAQ = value; }
+    private static CelestialArenaQuests CAQ
+    {
+        get => _CAQ ??= new CelestialArenaQuests();
+        set => _CAQ = value;
+    }
     private static CelestialArenaQuests _CAQ;
-    private static GlaceraStory GS { get => _GS ??= new GlaceraStory(); set => _GS = value; }
+    private static GlaceraStory GS
+    {
+        get => _GS ??= new GlaceraStory();
+        set => _GS = value;
+    }
     private static GlaceraStory _GS;
-    private static Mazumi Mazumi { get => _Mazumi ??= new Mazumi(); set => _Mazumi = value; }
+    private static Mazumi Mazumi
+    {
+        get => _Mazumi ??= new Mazumi();
+        set => _Mazumi = value;
+    }
     private static Mazumi _Mazumi;
 
     public string OptionsStorage = "FarmerJoePet";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("OutFit", "Get a Pre-Made Outfit, Curtious of the Community", "We are farmers, bum ba dum bum bum bum bum", false),
+        new Option<bool>(
+            "OutFit",
+            "Get a Pre-Made Outfit, Curtious of the Community",
+            "We are farmers, bum ba dum bum bum bum bum",
+            false
+        ),
         new Option<bool>("EquipOutfit", "Equip outfit at the end?", "Yay or Nay", false),
         new Option<bool>("SellStarterClasses", "SellStarterClasses", "Yay or Nay", false),
-        new Option<bool>("GetBoosts", "GetBoosts", "Do the \"Free Boosts\" quests to get some 10minute boosts (the droprate is < 1% so itll take awhile)", false),
-        new Option<bool>("EquipBoostingGear", "EquipBoostingGear", "use a predetermined set of gear based on what you own, and certain paramiters set, otherwise use whats set for your solo/farm class gear in CBO", true),
-        new Option<PetChoice>("PetChoice", "Choose Your Pet", "Extra stuff to choose, if you have any suggestions -form in disc, and put it under request. or dm Tato(the retarded one on disc)", PetChoice.None),
+        new Option<bool>(
+            "GetBoosts",
+            "GetBoosts",
+            "Do the \"Free Boosts\" quests to get some 10minute boosts (the droprate is < 1% so itll take awhile)",
+            false
+        ),
+        new Option<bool>(
+            "EquipBoostingGear",
+            "EquipBoostingGear",
+            "use a predetermined set of gear based on what you own, and certain paramiters set, otherwise use whats set for your solo/farm class gear in CBO",
+            true
+        ),
+        new Option<PetChoice>(
+            "PetChoice",
+            "Choose Your Pet",
+            "Extra stuff to choose, if you have any suggestions -form in disc, and put it under request. or dm Tato(the retarded one on disc)",
+            PetChoice.None
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
     public static void ScriptMain(IScriptInterface bot) => Core.RunCore();
+
     #region InvClasses
 
-    private readonly InventoryItem? ClassNinja = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Ninja".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassRogue = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Rogue".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassMage = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Mage".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassMasterRanger = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Master Ranger".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassNinja = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Ninja".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassRogue = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Rogue".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassMage = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Mage".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassMasterRanger = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Master Ranger".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+
     // private readonly InventoryItem? ClassShaman = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Shaman".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassScarletSorceress = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Scarlet Sorceress".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassBlazeBinder = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Blaze Binder".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassDragonSoulShinobi = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "DragonSoul Shinobi".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassArchPaladin = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "ArchPaladin".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassArchFiend = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "ArchFiend".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassGlacialBerserker = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Glacial Berserker".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassCryomancer = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Cryomancer".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassDragonofTime = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Dragon of Time".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassDragonslayer = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Dragonslayer".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
-    private readonly InventoryItem? ClassDragonslayerGeneral = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == "Dragonslayer General".ToLower().Trim() && i.Category == ItemCategory.Class && i.Name != null);
+    private readonly InventoryItem? ClassScarletSorceress = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Scarlet Sorceress".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassBlazeBinder = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Blaze Binder".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassDragonSoulShinobi = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "DragonSoul Shinobi".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassArchPaladin = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "ArchPaladin".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassArchFiend = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "ArchFiend".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassGlacialBerserker = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Glacial Berserker".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassCryomancer = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Cryomancer".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassDragonofTime = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Dragon of Time".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassDragonslayer = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Dragonslayer".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
+    private readonly InventoryItem? ClassDragonslayerGeneral = Bot
+        .Inventory.Items.Concat(Bot.Bank.Items)
+        .Find(i =>
+            i.Name.ToLower().Trim() == "Dragonslayer General".ToLower().Trim()
+            && i.Category == ItemCategory.Class
+            && i.Name != null
+        );
     #endregion InvClasses
 
     /// <summary>
@@ -301,7 +578,6 @@ public class CoreFarmerJoe
     /// </summary>
     public void DoAll()
     {
-
         Adv.GearStore();
         Level1to30();
         Level30to75();
@@ -324,7 +600,9 @@ public class CoreFarmerJoe
         BeginnerItems();
 
         //safety incase it desyncs.. the relog fuction isnt exactly perfect
-        Core.Logger("Class points may be desynced at Rank 9, if you are stuck at rank 9, please stop the bot & relog if this happens");
+        Core.Logger(
+            "Class points may be desynced at Rank 9, if you are stuck at rank 9, please stop the bot & relog if this happens"
+        );
     }
 
     #region Leve30 to 75
@@ -344,8 +622,12 @@ public class CoreFarmerJoe
         if (Bot.Player.Level >= 30 && Daily.CheckDailyv2(802, true, true, "Elders' Blood"))
             Daily.EldersBlood();
 
-        Core.Logger("Joe will handle each level bracket (0-30, 30-50, 50-55, 55-60, 60-65, 65-75, 75-100) doing the leveling first, then aquireing classes and items after so its prepared and hopefully strong enough to handle the next level bracket.");
-        Core.Logger("We'll occasionaly get rep/class/gold boosts throguh out the script to help speed things up a bit.");
+        Core.Logger(
+            "Joe will handle each level bracket (0-30, 30-50, 50-55, 55-60, 60-65, 65-75, 75-100) doing the leveling first, then aquireing classes and items after so its prepared and hopefully strong enough to handle the next level bracket."
+        );
+        Core.Logger(
+            "We'll occasionaly get rep/class/gold boosts throguh out the script to help speed things up a bit."
+        );
         foreach (int Level in Core.FromTo(0, 75))
         {
             if (Bot.Config!.Get<bool>("GetBoosts"))
@@ -359,10 +641,35 @@ public class CoreFarmerJoe
             switch (Level)
             {
                 case 30:
-                    if (Bot.Player.Level >= 30 &&
-                     Core.CheckInventory(new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress", "Master Ranger" }, any: true, toInv: false) &&
-                     Core.CheckInventory(new[] { "ArchPaladin", "Dragonslayer General", "Dragonslayer" }, any: true, toInv: false) &&
-                     Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade", "Awethur's Accoutrements" }, any: true, toInv: false))
+                    if (
+                        Bot.Player.Level >= 30
+                        && Core.CheckInventory(
+                            new[]
+                            {
+                                "Archfiend",
+                                "Blaze Binder",
+                                "Scarlet Sorceress",
+                                "Master Ranger",
+                            },
+                            any: true,
+                            toInv: false
+                        )
+                        && Core.CheckInventory(
+                            new[] { "ArchPaladin", "Dragonslayer General", "Dragonslayer" },
+                            any: true,
+                            toInv: false
+                        )
+                        && Core.CheckInventory(
+                            new[]
+                            {
+                                "Burning Blade of Abezeth",
+                                "Burning Blade",
+                                "Awethur's Accoutrements",
+                            },
+                            any: true,
+                            toInv: false
+                        )
+                    )
                     {
                         continue;
                     }
@@ -370,32 +677,72 @@ public class CoreFarmerJoe
                     // Set Solo & FarmClass, and ensure class is ranked up each 5th level
                     SetClass(false, true, false);
                     SetClass(true, false, false);
-                    Core.Logger("Level 30: Getting Master Ranger, Awethur's Accoutrements, & Dragonslayer");
+                    Core.Logger(
+                        "Level 30: Getting Master Ranger, Awethur's Accoutrements, & Dragonslayer"
+                    );
                     Farm.Experience(Level);
                     HandleLevel30();
                     break;
 
                 case 50:
-                    if (Bot.Player.Level >= 50 &&
-                     Core.CheckInventory(new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" }, any: true, toInv: false) &&
-                     Core.CheckInventory(new[] { "ArchPaladin", "Dragonslayer General" }, any: true, toInv: false) &&
-                     Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade" }, any: true, toInv: false))
+                    if (
+                        Bot.Player.Level >= 50
+                        && Core.CheckInventory(
+                            new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" },
+                            any: true,
+                            toInv: false
+                        )
+                        && Core.CheckInventory(
+                            new[] { "ArchPaladin", "Dragonslayer General" },
+                            any: true,
+                            toInv: false
+                        )
+                        && Core.CheckInventory(
+                            new[] { "Burning Blade of Abezeth", "Burning Blade" },
+                            any: true,
+                            toInv: false
+                        )
+                    )
                     {
                         continue;
                     }
                     // Set Solo & FarmClass, and ensure class is ranked up each 5th level
                     SetClass(false, true, false);
                     SetClass(true, false, false);
-                    Core.Logger("Level 50: Getting Scarlet Sorceress, Dragonslayer General, & Burning Blade");
+                    Core.Logger(
+                        "Level 50: Getting Scarlet Sorceress, Dragonslayer General, & Burning Blade"
+                    );
                     Farm.Experience(Level);
                     HandleLevel50();
                     break;
 
                 case 55:
-                    if (Bot.Player.Level >= 55 &&
-                     Core.CheckInventory(new[] { "Archfiend", !Bot.Quests.IsDailyComplete(2209) && !Core.CheckInventory("Blaze Binder") ? "Blaze Binder" : "Scarlet Sorceress" }, any: true, toInv: false) &&
-                     Core.CheckInventory(!Bot.Quests.IsDailyComplete(3966) && !Core.CheckInventory("Cryomancer") ? "Cryomancer" : "Dragonslayer General", toInv: false) &&
-                     Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade" }, any: true, toInv: false))
+                    if (
+                        Bot.Player.Level >= 55
+                        && Core.CheckInventory(
+                            new[]
+                            {
+                                "Archfiend",
+                                !Bot.Quests.IsDailyComplete(2209)
+                                && !Core.CheckInventory("Blaze Binder")
+                                    ? "Blaze Binder"
+                                    : "Scarlet Sorceress",
+                            },
+                            any: true,
+                            toInv: false
+                        )
+                        && Core.CheckInventory(
+                            !Bot.Quests.IsDailyComplete(3966) && !Core.CheckInventory("Cryomancer")
+                                ? "Cryomancer"
+                                : "Dragonslayer General",
+                            toInv: false
+                        )
+                        && Core.CheckInventory(
+                            new[] { "Burning Blade of Abezeth", "Burning Blade" },
+                            any: true,
+                            toInv: false
+                        )
+                    )
                     {
                         continue;
                     }
@@ -408,8 +755,13 @@ public class CoreFarmerJoe
                     break;
 
                 case 60:
-                    if (Bot.Player.Level >= 60 &&
-                     Core.CheckInventory(new[] { "ArchPaladin", "DragonSoul Shinobi" }, toInv: false))
+                    if (
+                        Bot.Player.Level >= 60
+                        && Core.CheckInventory(
+                            new[] { "ArchPaladin", "DragonSoul Shinobi" },
+                            toInv: false
+                        )
+                    )
                     {
                         continue;
                     }
@@ -422,8 +774,13 @@ public class CoreFarmerJoe
                     break;
 
                 case 65:
-                    if (Bot.Player.Level >= 65 &&
-                     Core.CheckInventory(new[] { "ArchPaladin", "Glacial Berserker" }, toInv: false))
+                    if (
+                        Bot.Player.Level >= 65
+                        && Core.CheckInventory(
+                            new[] { "ArchPaladin", "Glacial Berserker" },
+                            toInv: false
+                        )
+                    )
                     {
                         continue;
                     }
@@ -436,8 +793,13 @@ public class CoreFarmerJoe
                     break;
 
                 case 75:
-                    if (Bot.Player.Level >= 75 &&
-                     Core.CheckInventory(new[] { "ArchPaladin", "ArchFiend", "Archfiend DeathLord" }, toInv: false))
+                    if (
+                        Bot.Player.Level >= 75
+                        && Core.CheckInventory(
+                            new[] { "ArchPaladin", "ArchFiend", "Archfiend DeathLord" },
+                            toInv: false
+                        )
+                    )
                     {
                         continue;
                     }
@@ -460,11 +822,15 @@ public class CoreFarmerJoe
         }
     }
 
-
-
     private void HandleLevel30()
     {
-        if (!Core.CheckInventory(new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress", "Master Ranger" }, any: true, toInv: false))
+        if (
+            !Core.CheckInventory(
+                new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress", "Master Ranger" },
+                any: true,
+                toInv: false
+            )
+        )
         {
             if (Core.CheckInventory("Venom Head"))
                 Core.SellItem("Venom Head");
@@ -473,14 +839,26 @@ public class CoreFarmerJoe
             MR.GetMR();
         }
 
-        if (!Core.CheckInventory(new[] { "ArchPaladin", "Dragonslayer General", "Dragonslayer" }, any: true, toInv: false))
+        if (
+            !Core.CheckInventory(
+                new[] { "ArchPaladin", "Dragonslayer General", "Dragonslayer" },
+                any: true,
+                toInv: false
+            )
+        )
         {
             Core.Logger("Getting Dragonslayer");
             SetClass(true, false, false);
             DSlayer.GetDragonslayer();
         }
 
-        if (!Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade", "Awethur's Accoutrements" }, any: true, toInv: false))
+        if (
+            !Core.CheckInventory(
+                new[] { "Burning Blade of Abezeth", "Burning Blade", "Awethur's Accoutrements" },
+                any: true,
+                toInv: false
+            )
+        )
         {
             Core.Logger("Doing BoA rep (for enhancements & sword)");
             SetClass(true, false);
@@ -493,7 +871,13 @@ public class CoreFarmerJoe
 
     private void HandleLevel50()
     {
-        if (!Core.CheckInventory(new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" }, any: true, toInv: false))
+        if (
+            !Core.CheckInventory(
+                new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" },
+                any: true,
+                toInv: false
+            )
+        )
         {
             Core.Logger("Getting Scarlet Socrceress");
             SetClass(true, false);
@@ -501,7 +885,13 @@ public class CoreFarmerJoe
             SS.GetSSorc();
         }
 
-        if (!Core.CheckInventory(new[] { "ArchPaladin", "Dragonslayer General" }, any: true, toInv: false))
+        if (
+            !Core.CheckInventory(
+                new[] { "ArchPaladin", "Dragonslayer General" },
+                any: true,
+                toInv: false
+            )
+        )
         {
             Core.Logger("Getting Dragonslayer General");
             SetClass(true, false);
@@ -509,7 +899,13 @@ public class CoreFarmerJoe
             DSG.GetDSGeneral();
         }
 
-        if (!Core.CheckInventory(new[] { "Burning Blade of Abezeth", "Burning Blade" }, any: true, toInv: false))
+        if (
+            !Core.CheckInventory(
+                new[] { "Burning Blade of Abezeth", "Burning Blade" },
+                any: true,
+                toInv: false
+            )
+        )
         {
             Core.Logger("Getting Burning Blade");
             SetClass(true, false);
@@ -520,7 +916,6 @@ public class CoreFarmerJoe
 
     private void HandleLevel55()
     {
-
         if (!Core.CheckInventory("Blaze Binder", toInv: false))
         {
             Core.Logger("Getting Blaze Binder");
@@ -537,7 +932,13 @@ public class CoreFarmerJoe
 
     private void HandleLevel60()
     {
-        if (!Core.CheckInventory(new[] { "ArchPaladin", "DragonSoul Shinobi" }, any: true, toInv: false))
+        if (
+            !Core.CheckInventory(
+                new[] { "ArchPaladin", "DragonSoul Shinobi" },
+                any: true,
+                toInv: false
+            )
+        )
         {
             Core.Logger("Getting DSS for DoomKittem(ArchPaladin)");
             SetClass(true, false);
@@ -547,7 +948,13 @@ public class CoreFarmerJoe
 
     private void HandleLevel65()
     {
-        if (!Core.CheckInventory(new[] { "ArchPaladin", "Glacial Berserker" }, any: true, toInv: false))
+        if (
+            !Core.CheckInventory(
+                new[] { "ArchPaladin", "Glacial Berserker" },
+                any: true,
+                toInv: false
+            )
+        )
         {
             Core.Logger("Getting Glacial Berserker");
             SetClass(true, false);
@@ -564,7 +971,10 @@ public class CoreFarmerJoe
 
     private void HandleLevel75(int level)
     {
-        if (!Adv.HasMinimalBoost(GenericGearBoost.dmgAll, 30) || !Core.CheckInventory("Archfiend DeathLord", toInv: false))
+        if (
+            !Adv.HasMinimalBoost(GenericGearBoost.dmgAll, 30)
+            || !Core.CheckInventory("Archfiend DeathLord", toInv: false)
+        )
         {
             Core.Logger("Getting ArchFiend DeathLord for +30 dmgAll");
             SetClass(true, false);
@@ -592,8 +1002,10 @@ public class CoreFarmerJoe
     public void Level75to100()
     {
         // Prepare for Lvl100
-        Core.Logger("P1: Healer for xiang, Buying & Ranking Healer\n" +
-            "class to prep for xiang (Skipped if you have Dragon of Time.");
+        Core.Logger(
+            "P1: Healer for xiang, Buying & Ranking Healer\n"
+                + "class to prep for xiang (Skipped if you have Dragon of Time."
+        );
 
         // Prep class for 13LoC
         if (!Core.CheckInventory("Dragon of Time", toInv: false))
@@ -604,9 +1016,11 @@ public class CoreFarmerJoe
                 Adv.RankUpClass(Core.CheckInventory("Healer (Rare)") ? "Healer (Rare)" : "Healer");
             }
         }
-        else if (Core.CheckInventory("Dragon of Time", toInv: false) && ClassDragonofTime?.Quantity < 302500)
+        else if (
+            Core.CheckInventory("Dragon of Time", toInv: false)
+            && ClassDragonofTime?.Quantity < 302500
+        )
             Adv.RankUpClass("Dragon of Time");
-
 
         // P2 Chaos Shenanigans
         Core.Logger("P2: Chaos Shenanigans");
@@ -652,7 +1066,9 @@ public class CoreFarmerJoe
         Forge Helms: Forge, Vim, Examen, Anima, Pneuma
         */
         // Helmets Enhancements
-        Core.Logger("P3 - 4: Starting Helmets Enhancements (Forge Helm Enhancement, Vim, Examen, Anima, Pneuma)");
+        Core.Logger(
+            "P3 - 4: Starting Helmets Enhancements (Forge Helm Enhancement, Vim, Examen, Anima, Pneuma)"
+        );
         UnlockForgeEnhancements.ForgeHelmEnhancement();
         UnlockForgeEnhancements.Vim();
         UnlockForgeEnhancements.Examen();
@@ -660,12 +1076,13 @@ public class CoreFarmerJoe
         UnlockForgeEnhancements.Pneuma();
 
         // Weapons Enhancements
-        Core.Logger("P3 - 4: Starting Weapons Enhancements (Forge Weapon Enhancement, Lacerate, Smite, Praxis)");
+        Core.Logger(
+            "P3 - 4: Starting Weapons Enhancements (Forge Weapon Enhancement, Lacerate, Smite, Praxis)"
+        );
         UnlockForgeEnhancements.ForgeWeaponEnhancement();
         UnlockForgeEnhancements.Lacerate();
         UnlockForgeEnhancements.Smite();
         UnlockForgeEnhancements.Praxis();
-
 
         /*
         Lv to 80
@@ -689,7 +1106,9 @@ public class CoreFarmerJoe
         YnR
         */
 
-        Core.Logger("P4: Forge Capes Enhancements (Forge, Absolution, Vainglory, Avarice, Penitence, Lament)");
+        Core.Logger(
+            "P4: Forge Capes Enhancements (Forge, Absolution, Vainglory, Avarice, Penitence, Lament)"
+        );
         UnlockForgeEnhancements.ForgeCapeEnhancement();
         UnlockForgeEnhancements.Absolution();
         UnlockForgeEnhancements.Avarice();
@@ -711,7 +1130,6 @@ public class CoreFarmerJoe
 
         Core.Logger("P4: Hollowborn Reaper's Scythe");
         SRM.BuyAllMerge("Hollowborn Reaper's Scythe");
-
     }
 
     /// <summary>
@@ -723,17 +1141,19 @@ public class CoreFarmerJoe
     /// </summary>
     public void EndGame()
     {
-        #region Ending & Extras 
+        #region Ending & Extras
 
         if (Bot.Config!.Get<bool>("OutFit"))
             Outfit();
 
         SetClass(true, false);
 
-        #region  Prefarm some non-Skua-able items:       
+        #region  Prefarm some non-Skua-able items:
 
         //Prep for remaning Enh:
-        Core.Logger("P5: Preparing for Remaining Enhancements: Heros Valiance, Elysium, Arcanas Concerto, Ravenous, DauntLess");
+        Core.Logger(
+            "P5: Preparing for Remaining Enhancements: Heros Valiance, Elysium, Arcanas Concerto, Ravenous, DauntLess"
+        );
         UnlockForgeEnhancements.HerosValiance();
         UnlockForgeEnhancements.Elysium();
         UnlockForgeEnhancements.ArcanasConcerto();
@@ -744,8 +1164,7 @@ public class CoreFarmerJoe
         Core.Logger("P5: Apotheosis prereqs");
         ExaltedApotheosisPreReqs.PreReqs();
 
-
-        #endregion Prefarm some non-Skua-able items:   
+        #endregion Prefarm some non-Skua-able items:
 
         #endregion Ending & Extras
     }
@@ -770,7 +1189,15 @@ public class CoreFarmerJoe
 
         if (Bot.Config!.Get<bool>("EquipOutfit"))
         {
-            Core.Equip(new[] { "NO BOTS Armor", "Scarecrow Hat", "The Server is Down", "Hollowborn Reaper's Scythe" });
+            Core.Equip(
+                new[]
+                {
+                    "NO BOTS Armor",
+                    "Scarecrow Hat",
+                    "The Server is Down",
+                    "Hollowborn Reaper's Scythe",
+                }
+            );
             Core.Equip(Bot.Config.Get<PetChoice>("PetChoice").ToString());
         }
 
@@ -783,14 +1210,13 @@ public class CoreFarmerJoe
     /// <summary>
     /// Manages the acquisition and equipping of pets based on the user's configuration or specified choice.
     /// - **Config-Based Acquisition:** Checks the configuration for the selected pet and acquires it if not already owned.
-    /// - **Specific Pets:** 
+    /// - **Specific Pets:**
     ///   - **Hot Mama:** Acquires and equips the "Hot Mama" pet if selected and not already in inventory.
     ///   - **Akriloth Pet:** Acquires and equips the "Akriloth Pet" if selected and not already in inventory.
     /// </summary>
     /// <param name="petChoice">Selected pet choice</param>
     public void Pets(PetChoice petChoice = PetChoice.None)
     {
-
         var configPetChoice = Bot.Config!.Get<PetChoice>("Pets");
 
         if (configPetChoice == PetChoice.None)
@@ -807,7 +1233,13 @@ public class CoreFarmerJoe
         if (configPetChoice == PetChoice.Akriloth && !Core.CheckInventory("Akriloth Pet"))
         {
             SetClass(true, false);
-            Core.HuntMonster("gravestrike", "Ultra Akriloth", "Akriloth Pet", isTemp: false, log: false);
+            Core.HuntMonster(
+                "gravestrike",
+                "Ultra Akriloth",
+                "Akriloth Pet",
+                isTemp: false,
+                log: false
+            );
             Bot.Wait.ForPickup("Akriloth Pet");
             Core.Equip("Akriloth Pet");
         }
@@ -838,31 +1270,41 @@ public class CoreFarmerJoe
 
         Core.FarmingLogger("The Server is Down", 1);
         SetClass(false, true);
-        Core.HuntMonster("undergroundlabb", "Rabid Server Hamster", "The Server is Down", isTemp: false, log: false);
+        Core.HuntMonster(
+            "undergroundlabb",
+            "Rabid Server Hamster",
+            "The Server is Down",
+            isTemp: false,
+            log: false
+        );
         Bot.Wait.ForPickup("The Server is Down");
         Core.Equip("The Server is Down");
     }
 
     /// <summary>
     /// Sets up a character with essential beginner items and classes. This includes:
-    /// - **Equipping Basic Gear:** 
+    /// - **Equipping Basic Gear:**
     ///   - **Helm and Cape:** Equips the "Battle Oracle Hood" and "Battle Oracle Wings" if not already equipped.
     ///   - **Default Weapons:** Replaces any default weapon with the "Battle Oracle Battlestaff" and sells the default weapon.
-    /// - **Class Preparation:** 
+    /// - **Class Preparation:**
     ///   - **Skipping Setup:** If the character is level 30 or higher and has the required classes, skips further setup.
     ///   - **Initial Setup:** Acquires initial badges, level up to 10, and equips a "Rogue" or "Ninja" class if not already owned.
     ///   - **Final Setup:** Obtains and ranks up the "Ninja" class, and acquires a "Mage" class for farming if not already owned.
     /// </summary>
     void BeginnerItems()
     {
-        Core.Logger("Doing `Tutorial Badges` Required for fresh accounts to leave oaklore (this may take a moment to start.. we dont know why.)\n" +
-        "(by bot i mean.. obviously u can do this manualy)");
+        Core.Logger(
+            "Doing `Tutorial Badges` Required for fresh accounts to leave oaklore (this may take a moment to start.. we dont know why.)\n"
+                + "(by bot i mean.. obviously u can do this manualy)"
+        );
 
         Tutorial.Badges();
 
         foreach (ItemCategory category in Enum.GetValues(typeof(ItemCategory)))
         {
-            InventoryItem? equippedItem = Bot.Inventory.Items.Find(i => i.Equipped && i.Category == category);
+            InventoryItem? equippedItem = Bot.Inventory.Items.Find(i =>
+                i.Equipped && i.Category == category
+            );
             switch (category)
             {
                 case ItemCategory.Helm:
@@ -893,7 +1335,9 @@ public class CoreFarmerJoe
                 case ItemCategory.Wand:
                 case ItemCategory.Mace:
                 case ItemCategory.Polearm:
-                    ItemBase? DefaultWep = Bot.Inventory.Items.Find(x => x.Name.StartsWith("Default"));
+                    ItemBase? DefaultWep = Bot.Inventory.Items.Find(x =>
+                        x.Name.StartsWith("Default")
+                    );
                     if (DefaultWep != null && Core.CheckInventory(DefaultWep.ID))
                     {
                         Core.BuyItem("classhalla", 299, "Battle Oracle Battlestaff");
@@ -908,26 +1352,44 @@ public class CoreFarmerJoe
             }
         }
 
-        if (Core.CheckInventory(new[] { "Assassin", "Ninja Warrior", "Ninja" }, any: true, toInv: false) && ClassNinja?.Quantity >= 302500 &&
-            Core.CheckInventory(new[] { "Mage (Rare)", "Mage" }, any: true, toInv: false) && ClassMage?.Quantity >= 302500 &&
-            Bot.Player.Level >= 30)
+        if (
+            Core.CheckInventory(
+                new[] { "Assassin", "Ninja Warrior", "Ninja" },
+                any: true,
+                toInv: false
+            )
+            && ClassNinja?.Quantity >= 302500
+            && Core.CheckInventory(new[] { "Mage (Rare)", "Mage" }, any: true, toInv: false)
+            && ClassMage?.Quantity >= 302500
+            && Bot.Player.Level >= 30
+        )
         {
             Core.Logger("Acc is lvl 30+, skipping beginner items.");
             return;
         }
 
-        Core.Logger("Starting out acc:\n" +
-            "\tGoals: Ninja class & Mage Class");
+        Core.Logger("Starting out acc:\n" + "\tGoals: Ninja class & Mage Class");
 
         Farm.Experience(10);
         Core.Logger("Getting Started: Beginner Levels/Equipment");
-        if (!Core.CheckInventory(new[] { "Rogue (Rare)", "Rogue" }, any: true, toInv: false) && ClassRogue?.Quantity < 302500)
+        if (
+            !Core.CheckInventory(new[] { "Rogue (Rare)", "Rogue" }, any: true, toInv: false)
+            && ClassRogue?.Quantity < 302500
+        )
         {
-            Core.Logger("Getting rogue.. so we can get ninja (thers a 10k hp \"boss\" to kill during the \"Hit Job\" quest.)");
+            Core.Logger(
+                "Getting rogue.. so we can get ninja (thers a 10k hp \"boss\" to kill during the \"Hit Job\" quest.)"
+            );
             Adv.BuyItem("classhalla", 172, "Rogue");
         }
 
-        if (!Core.CheckInventory(new[] { "Assassin", "Ninja Warrior", "Ninja" }, any: true, toInv: false))
+        if (
+            !Core.CheckInventory(
+                new[] { "Assassin", "Ninja Warrior", "Ninja" },
+                any: true,
+                toInv: false
+            )
+        )
         {
             Core.Logger("Getting starter Dodge class (Ninja)");
             SetClass(true, false);
@@ -956,24 +1418,49 @@ public class CoreFarmerJoe
     /// <param name="swapToSoloClass">Flag to determine if the found solo class should be equipped (default: false)</param>
     /// <param name="swapToFarmClass">Flag to determine if the found farm class should be equipped (default: false)</param>
     /// <param name="rankUp">Flag to determine if the found class should be ranked up (default: true)</param>
-    public void SetClass(bool swapToSoloClass = false, bool swapToFarmClass = false, bool rankUp = true)
+    public void SetClass(
+        bool swapToSoloClass = false,
+        bool swapToFarmClass = false,
+        bool rankUp = true
+    )
     {
         if (swapToSoloClass && swapToFarmClass)
         {
-            Core.Logger("Both swapToSoloClass and swapToFarmClass cannot be true at the same time. Please choose only one.");
+            Core.Logger(
+                "Both swapToSoloClass and swapToFarmClass cannot be true at the same time. Please choose only one."
+            );
             return;
         }
 
         // Arrays of classes to check
-        string[] soloClassesToCheck = new[] {
-            "Void Highlord", "Legion Revenant", "Dragon of Time", "ArchPaladin", "Dragonslayer General",
-            "Glacial Berserker", "Dragonslayer", "DragonSoul Shinobi", "Assassin", "Ninja Warrior",
-            "Ninja", "Rogue (Rare)", "Rogue", "Healer (Rare)", "Healer",
+        string[] soloClassesToCheck = new[]
+        {
+            "Void Highlord",
+            "Legion Revenant",
+            "Dragon of Time",
+            "ArchPaladin",
+            "Dragonslayer General",
+            "Glacial Berserker",
+            "Dragonslayer",
+            "DragonSoul Shinobi",
+            "Assassin",
+            "Ninja Warrior",
+            "Ninja",
+            "Rogue (Rare)",
+            "Rogue",
+            "Healer (Rare)",
+            "Healer",
         };
 
-        string[] farmClassesToCheck = new[] {
-           "Legion Revenant", "Blaze Binder", "Archfiend", "Scarlet Sorceress", "Master Ranger",
-            "Mage (Rare)", "Mage"
+        string[] farmClassesToCheck = new[]
+        {
+            "Legion Revenant",
+            "Blaze Binder",
+            "Archfiend",
+            "Scarlet Sorceress",
+            "Master Ranger",
+            "Mage (Rare)",
+            "Mage",
         };
 
         // "Frost Spirit Reaver", "Northlands Monk", "Shaman"
@@ -982,33 +1469,50 @@ public class CoreFarmerJoe
         availableItems.AddRange(Bot.Inventory.Items.Concat(Bot.Bank.Items));
 
         // Determine new solo class
-        string newSoloClass = Core.SoloClass == "Generic"
-            ? soloClassesToCheck.FirstOrDefault(x => availableItems.Any(item => item.Name == x)) ?? Core.SoloClass
-            : Core.SoloClass;
+        string newSoloClass =
+            Core.SoloClass == "Generic"
+                ? soloClassesToCheck.FirstOrDefault(x => availableItems.Any(item => item.Name == x))
+                    ?? Core.SoloClass
+                : Core.SoloClass;
 
         // Determine new farm class
-        string newFarmClass = Core.FarmClass == "Generic"
-            ? farmClassesToCheck.FirstOrDefault(x => availableItems.Any(item => item.Name == x)) ?? Core.FarmClass
-            : Core.FarmClass;
+        string newFarmClass =
+            Core.FarmClass == "Generic"
+                ? farmClassesToCheck.FirstOrDefault(x => availableItems.Any(item => item.Name == x))
+                    ?? Core.FarmClass
+                : Core.FarmClass;
 
         // Skip if no changes needed
-        if (!swapToSoloClass && !swapToFarmClass &&
-            Core.SoloClass != "Generic" && Core.FarmClass != "Generic" &&
-            soloClassesToCheck.Contains(Core.SoloClass) && farmClassesToCheck.Contains(Core.FarmClass))
+        if (
+            !swapToSoloClass
+            && !swapToFarmClass
+            && Core.SoloClass != "Generic"
+            && Core.FarmClass != "Generic"
+            && soloClassesToCheck.Contains(Core.SoloClass)
+            && farmClassesToCheck.Contains(Core.FarmClass)
+        )
         {
-            Core.Logger("CBO classes are set, using what you picked.\n" +
-            $"Solo: {newSoloClass}, Farm: {newFarmClass}");
+            Core.Logger(
+                "CBO classes are set, using what you picked.\n"
+                    + $"Solo: {newSoloClass}, Farm: {newFarmClass}"
+            );
             return;
         }
 
         // Swap to solo class if applicable
-        if (swapToSoloClass && (Core.SoloClass == "Generic" || soloClassesToCheck.Contains(Core.SoloClass)))
+        if (
+            swapToSoloClass
+            && (Core.SoloClass == "Generic" || soloClassesToCheck.Contains(Core.SoloClass))
+        )
         {
             Core.Logger("Setting solo class as requested.");
             newSoloClass = CheckAndSetClass(newSoloClass, soloClassesToCheck, "SoloClass", rankUp);
         }
         // Swap to farm class if applicable
-        else if (swapToFarmClass && (Core.FarmClass == "Generic" || farmClassesToCheck.Contains(Core.FarmClass)))
+        else if (
+            swapToFarmClass
+            && (Core.FarmClass == "Generic" || farmClassesToCheck.Contains(Core.FarmClass))
+        )
         {
             Core.Logger("Setting farm class as requested.");
             newFarmClass = CheckAndSetClass(newFarmClass, farmClassesToCheck, "FarmClass", rankUp);
@@ -1020,15 +1524,60 @@ public class CoreFarmerJoe
             if (swapToSoloClass || swapToFarmClass)
             {
                 var metaPriorities = new Dictionary<string, string[]>
-            {
-                { "Cape", new[] { "dmgAll", "gold", "cp", "rep", "Undead", "Chaos", "Elemental", "Dragonkin", "Human" } },
-                { "Helm", new[] { "dmgAll", "gold", "cp", "rep", "Undead", "Chaos", "Elemental", "Dragonkin", "Human" } },
-                { "Armor", Core.CheckInventory("Polly Roger") ?
-                    new[] { "gold", "cp", "rep" } :
-                    new[] { "dmgAll", "gold", "cp", "rep" } },
-                { "Weapon", new[] { "dmgAll", "gold", "cp", "rep" } },
-                { "Pet", new[] { "dmgAll", "gold", "cp", "rep", "Undead", "Chaos", "Elemental", "Dragonkin", "Human" } }
-            };
+                {
+                    {
+                        "Cape",
+                        new[]
+                        {
+                            "dmgAll",
+                            "gold",
+                            "cp",
+                            "rep",
+                            "Undead",
+                            "Chaos",
+                            "Elemental",
+                            "Dragonkin",
+                            "Human",
+                        }
+                    },
+                    {
+                        "Helm",
+                        new[]
+                        {
+                            "dmgAll",
+                            "gold",
+                            "cp",
+                            "rep",
+                            "Undead",
+                            "Chaos",
+                            "Elemental",
+                            "Dragonkin",
+                            "Human",
+                        }
+                    },
+                    {
+                        "Armor",
+                        Core.CheckInventory("Polly Roger")
+                            ? new[] { "gold", "cp", "rep" }
+                            : new[] { "dmgAll", "gold", "cp", "rep" }
+                    },
+                    { "Weapon", new[] { "dmgAll", "gold", "cp", "rep" } },
+                    {
+                        "Pet",
+                        new[]
+                        {
+                            "dmgAll",
+                            "gold",
+                            "cp",
+                            "rep",
+                            "Undead",
+                            "Chaos",
+                            "Elemental",
+                            "Dragonkin",
+                            "Human",
+                        }
+                    },
+                };
 
                 Core.EquipBestItemsForMeta(metaPriorities);
             }
@@ -1068,7 +1617,12 @@ public class CoreFarmerJoe
     /// <param name="classType">Type of class being checked ("SoloClass" or "FarmClass")</param>
     /// <param name="rankUp">Flag to determine if the found class should be ranked up (default: true)</param>
     /// <returns>The selected class based on checks</returns>
-    private string CheckAndSetClass(string classToCheck, string[] classesToCheck, string classType, bool rankUp)
+    private string CheckAndSetClass(
+        string classToCheck,
+        string[] classesToCheck,
+        string classType,
+        bool rankUp
+    )
     {
         if (classToCheck == "Generic" || classesToCheck.Contains(classToCheck))
         {
@@ -1090,7 +1644,10 @@ public class CoreFarmerJoe
     /// <returns>The first valid class found in the inventory, or "Generic" if no valid class is found.</returns>
     private string FindValidClass(string[] classesToCheck, string classType, bool rankUp)
     {
-        while (!Bot.ShouldExit && !Bot.Player.Alive) { Bot.Wait.ForTrue(() => Bot.Player.Alive, 20); }
+        while (!Bot.ShouldExit && !Bot.Player.Alive)
+        {
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        }
         ItemBase? CurrentClass = Bot.Player.CurrentClass;
 
         if (CurrentClass == null)
@@ -1102,7 +1659,12 @@ public class CoreFarmerJoe
                 continue;
 
             Core.Logger($"Checking for {classType}: {className}");
-            InventoryItem? classItem = Bot.Inventory.Items.Concat(Bot.Bank.Items).Find(i => i.Name.ToLower().Trim() == className.ToLower().Trim() && i.Category == ItemCategory.Class);
+            InventoryItem? classItem = Bot
+                .Inventory.Items.Concat(Bot.Bank.Items)
+                .Find(i =>
+                    i.Name.ToLower().Trim() == className.ToLower().Trim()
+                    && i.Category == ItemCategory.Class
+                );
             if (classItem == null)
             {
                 Core.Logger($"Class item for {classType} is null or not a class.");
@@ -1110,11 +1672,15 @@ public class CoreFarmerJoe
             else
             {
                 Core.Unbank(classItem.ID);
-                Core.Logger($"Found {classType}: {classItem.Name} with quantity: {classItem.Quantity}");
+                Core.Logger(
+                    $"Found {classType}: {classItem.Name} with quantity: {classItem.Quantity}"
+                );
                 // Ensure the class item is unbanked
                 if (classItem.Quantity < 302500)
                 {
-                    Core.Logger($"{classType} is not rank 10. {(rankUp ? "Rankup enabled" : "Rankup disabled")}");
+                    Core.Logger(
+                        $"{classType} is not rank 10. {(rankUp ? "Rankup enabled" : "Rankup disabled")}"
+                    );
                     if (rankUp)
                         Adv.RankUpClass(classItem.Name);
                     return classItem.Name;
@@ -1127,10 +1693,13 @@ public class CoreFarmerJoe
             }
         }
 
-        Core.Logger($"No valid {classType} found, Using your current class: \"{Bot.Player.CurrentClass}\"");
+        Core.Logger(
+            $"No valid {classType} found, Using your current class: \"{Bot.Player.CurrentClass}\""
+        );
         if (CurrentClass != null)
             return CurrentClass.Name; // Return "Player's Current Class" as the default value when no valid class is found.
-        else return string.Empty;
+        else
+            return string.Empty;
     }
 
     /// <summary>
@@ -1144,21 +1713,21 @@ public class CoreFarmerJoe
     {
         string[] itemsToCheck = new[]
         {
-        "ShadowStalker of Time",
-        "ShadowWeaver of Time",
-        "ShadowWalker of Time",
-        "Infinity Knight",
-        "Interstellar Knight",
-        "Void Highlord",
-        "Dragon of Time",
-        "Timeless Dark Caster",
-        "Frostval Barbarian",
-        "Blaze Binder",
-        "DeathKnight",
-        "DragonSoul Shinobi",
-        "Shadow Dragon Shinobi",
-        "Legion Revenant"
-    };
+            "ShadowStalker of Time",
+            "ShadowWeaver of Time",
+            "ShadowWalker of Time",
+            "Infinity Knight",
+            "Interstellar Knight",
+            "Void Highlord",
+            "Dragon of Time",
+            "Timeless Dark Caster",
+            "Frostval Barbarian",
+            "Blaze Binder",
+            "DeathKnight",
+            "DragonSoul Shinobi",
+            "Shadow Dragon Shinobi",
+            "Legion Revenant",
+        };
 
         foreach (string item in itemsToCheck)
         {
@@ -1172,7 +1741,7 @@ public class CoreFarmerJoe
     #endregion BTS
 
 
-    #region Explanation: 
+    #region Explanation:
     /*________________________________________________________________________________________Explanation_____________________________________________________________________________________________
        🖕 The SetClass() method checks whether the swapToSoloClass and swapToFarmClass flags are both set to true. If so, it logs an error message and returns.
        🖕 The method initializes newSoloClass and newFarmClass variables with the current values of SoloClass and FarmClass, respectively.
@@ -1197,19 +1766,18 @@ public class CoreFarmerJoe
        If no valid class is found, it logs a message that no valid class was found and returns "Generic".
 
        This approach allows the SetClass() method to independently set SoloClass and FarmClass, choose valid classes based on predefined lists,
-       and optionally rank up classes, providing flexibility for class management. 
-       ℭ𝔬𝔲𝔯𝔱𝔢𝔰𝔶 𝔬𝔣 ℭ𝔥𝔞𝔱𝔊ℙ𝔗 
+       and optionally rank up classes, providing flexibility for class management.
+       ℭ𝔬𝔲𝔯𝔱𝔢𝔰𝔶 𝔬𝔣 ℭ𝔥𝔞𝔱𝔊ℙ𝔗
        ________________________________________________________________________________________Explanation_____________________________________________________________________________________________*/
 
-    #endregion Explanation: 
-
+    #endregion Explanation:
 
 
     public enum PetChoice
     {
         None,
         HotMama,
-        Akriloth
+        Akriloth,
     };
     #endregion other stuff
 }

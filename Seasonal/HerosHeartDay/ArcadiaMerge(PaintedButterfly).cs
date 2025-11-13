@@ -6,11 +6,13 @@ tags: farm, merge, quest, arcadia, seasonal, painted, butterfly, hero, heart
 //cs_include Scripts/CoreBots.cs
 // Must Have Completed Arcadia Storyline Up To: "Seperation Anxiety": http://aqwwiki.wikidot.com/big-daddy-s-quests#ArcadiaFarm
 using Skua.Core.Interfaces;
+
 public class FarmPaintedButterfly
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -33,7 +35,6 @@ public class FarmPaintedButterfly
             Core.HuntMonster("arcadia", "Spirit Butterfly", "Paper Butterfly Wings", 8);
             Core.HuntMonster("arcadia", "Lightguard Wraith", "Armor Paint Residue", 8);
             Core.EnsureComplete(8520);
-
         }
     }
 }

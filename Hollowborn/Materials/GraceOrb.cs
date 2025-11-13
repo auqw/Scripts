@@ -6,8 +6,8 @@ tags: grace orb, hollowborn, vindicator, farm
 //cs_include Scripts/CoreBots.cs
 
 using Skua.Core.Interfaces;
-using Skua.Core.Models.Quests;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Quests;
 
 public class GraceOrb
 {
@@ -43,7 +43,13 @@ public class GraceOrb
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Grace Orb", orbQuant))
         {
-            Core.HuntMonster("neofortress", "Vindicator Recruit", "Grace Extracted", 20, log: false);
+            Core.HuntMonster(
+                "neofortress",
+                "Vindicator Recruit",
+                "Grace Extracted",
+                20,
+                log: false
+            );
             Bot.Wait.ForPickup("Grace Orb");
         }
 

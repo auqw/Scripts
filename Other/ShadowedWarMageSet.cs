@@ -12,7 +12,12 @@ public class ShadowedWarMageSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -25,7 +30,8 @@ public class ShadowedWarMageSet
 
     public void GetAll()
     {
-        string[] rewards = {
+        string[] rewards =
+        {
             "Dual Shadow War-Mage Blades",
             "Shadowed War-Mage",
             "Shadowed War-Mage Back-blade",
@@ -34,7 +40,7 @@ public class ShadowedWarMageSet
             "Shadowed War-Mage Scarf",
             "Shadowed War-Mage Scarf + Hat",
             "Shadowed War-Mage Staff",
-            "Shadowed War-Mage Staff Cape"
+            "Shadowed War-Mage Staff Cape",
         };
         if (Core.CheckInventory(rewards))
             return;
@@ -47,7 +53,10 @@ public class ShadowedWarMageSet
         Core.EquipClass(ClassType.Solo);
 
         Bot.Events.ItemDropped += ItemDropped;
-        Core.Logger($"Farm for the Shadowed War-Mage set started. Farming to get {rewards.Length - count} more item" + ((rewards.Length - count) > 1 ? "s" : ""));
+        Core.Logger(
+            $"Farm for the Shadowed War-Mage set started. Farming to get {rewards.Length - count} more item"
+                + ((rewards.Length - count) > 1 ? "s" : "")
+        );
         while (!Bot.ShouldExit && !Core.CheckInventory(rewards))
         {
             foreach (string item in rewards)

@@ -6,6 +6,7 @@ tags: seasonal, birthday, ascended, paladin, axe, hammer, mace, blade, light, re
 //cs_include Scripts/CoreBots.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+
 // using Skua.Core.Options;
 
 public class BrightPaladinPresents
@@ -24,10 +25,8 @@ public class BrightPaladinPresents
 
     public void DoQuest()
     {
-        AutoReward(6553);  //-----|
+        AutoReward(6553); //-----|
     }
-
-
 
     public void AutoReward(int questID = 0000)
     {

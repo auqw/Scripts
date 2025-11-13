@@ -12,9 +12,17 @@ public class HanzoOrbQuest
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface bot)
@@ -23,7 +31,6 @@ public class HanzoOrbQuest
 
         HanzoOrb();
     }
-
 
     public void HanzoOrb(string Reward = "Any", int quant = 1, bool AnyReward = false)
     {
@@ -52,11 +59,22 @@ public class HanzoOrbQuest
         {
             foreach (string item in rewards)
             {
-                while (!Bot.ShouldExit && (!Core.CheckInventory(item) || !Bot.Inventory.IsMaxStack(item)))
+                while (
+                    !Bot.ShouldExit
+                    && (!Core.CheckInventory(item) || !Bot.Inventory.IsMaxStack(item))
+                )
                 {
                     Core.HuntMonster("graveyard", "Big Jack Sprat", "Jacked Eye", 5, log: false);
                     Core.HuntMonster("marsh", "Dreadspider", "Dreadspider Silk", log: false);
-                    Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Makai Fang", 5, log: false);
+                    Core.KillMonster(
+                        "tercessuinotlim",
+                        "m2",
+                        "Left",
+                        "*",
+                        "Makai Fang",
+                        5,
+                        log: false
+                    );
                     Core.HuntMonster("bludrut", "Rattlebones", "Rattle Bones", 3, log: false);
                 }
             }

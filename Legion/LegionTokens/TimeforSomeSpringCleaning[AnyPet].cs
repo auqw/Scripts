@@ -10,20 +10,40 @@ tags: legion, legion token
 //cs_include Scripts/CoreAdvanced.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
+
 public class TimeforSomeSpringCleaning_AnyPet_
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public string OptionsStorage = "FarmerJoePet";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("DoClearaPath", "Do the \"Clear a Path\" Quest", "toggles doing the \"Clear a Path\" Quest. during the LT farm", false),
-        new Option<bool>("Enable Logger?", "Toggle Farm Logging", "toggles the \"Farming item (x/x)\"", false),
+        new Option<bool>(
+            "DoClearaPath",
+            "Do the \"Clear a Path\" Quest",
+            "toggles doing the \"Clear a Path\" Quest. during the LT farm",
+            false
+        ),
+        new Option<bool>(
+            "Enable Logger?",
+            "Toggle Farm Logging",
+            "toggles the \"Farming item (x/x)\"",
+            false
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -38,7 +58,9 @@ public class TimeforSomeSpringCleaning_AnyPet_
 
     public void DOthething()
     {
-        Legion.LTShogunParagon(DoClearaPath: Bot.Config!.Get<bool>("DoClearaPath"), Logger: Bot.Config!.Get<bool>("Enable Logger?"));
+        Legion.LTShogunParagon(
+            DoClearaPath: Bot.Config!.Get<bool>("DoClearaPath"),
+            Logger: Bot.Config!.Get<bool>("Enable Logger?")
+        );
     }
-
 }

@@ -11,7 +11,11 @@ public class CoreNewYear
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -238,7 +242,14 @@ public class CoreNewYear
         if (!Story.QuestProgression(7271))
         {
             Core.EnsureAccept(7271);
-            Core.KillMonster("chronophoenix", "r5", "Left", "Phoenix Fire", "Fire Extinguished", 10);
+            Core.KillMonster(
+                "chronophoenix",
+                "r5",
+                "Left",
+                "Phoenix Fire",
+                "Fire Extinguished",
+                10
+            );
             Core.EnsureComplete(7271);
         }
 
@@ -296,10 +307,18 @@ public class CoreNewYear
 
         Core.EquipClass(ClassType.Farm);
         // Raw Gems (9533)
-        Story.KillQuest(9533, "earthstorm", new[] { "Ruby Golem", "Sapphire Golem", "Diamond Golem", "Emerald Golem" });
+        Story.KillQuest(
+            9533,
+            "earthstorm",
+            new[] { "Ruby Golem", "Sapphire Golem", "Diamond Golem", "Emerald Golem" }
+        );
 
         // Rest in Riches (9534)
-        Story.KillQuest(9534, "battleunderc", new[] { "Crystalized Jellyfish", "Green Crystalized Undead" });
+        Story.KillQuest(
+            9534,
+            "battleunderc",
+            new[] { "Crystalized Jellyfish", "Green Crystalized Undead" }
+        );
 
         // Overclocked and Timed (9535)
         Story.KillQuest(9535, "templesiege", new[] { "Overdriven Paladin", "Light Elemental" });
@@ -312,5 +331,4 @@ public class CoreNewYear
             Story.KillQuest(9536, "chronogem", "Gem Forgemaster");
         }
     }
-
 }

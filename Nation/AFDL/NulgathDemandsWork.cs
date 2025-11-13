@@ -16,10 +16,30 @@ public class NulgathDemandsWork
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static GoldenHanzoVoid GHV { get => _GHV ??= new GoldenHanzoVoid(); set => _GHV = value; }    private static GoldenHanzoVoid _GHV;
-    private static WillpowerExtraction WillpowerExtraction { get => _WillpowerExtraction ??= new WillpowerExtraction(); set => _WillpowerExtraction = value; }    private static WillpowerExtraction _WillpowerExtraction;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static GoldenHanzoVoid GHV
+    {
+        get => _GHV ??= new GoldenHanzoVoid();
+        set => _GHV = value;
+    }
+    private static GoldenHanzoVoid _GHV;
+    private static WillpowerExtraction WillpowerExtraction
+    {
+        get => _WillpowerExtraction ??= new WillpowerExtraction();
+        set => _WillpowerExtraction = value;
+    }
+    private static WillpowerExtraction _WillpowerExtraction;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public string[] NDWItems =
     {
@@ -49,15 +69,16 @@ public class NulgathDemandsWork
 
     /// <summary>
     /// <param name="itemNames"></param>
-    /// Complets "Nulgath Demands Work" until the Desired Items are gotten. 
-    /// 
+    /// Complets "Nulgath Demands Work" until the Desired Items are gotten.
+    ///
     /// <param name="quant">Amount of the "item" [Mostly the Archfiend Ess and Uni 35]</param>
     /// </summary>
     public void NDWQuest(string[]? itemNames = null, int quant = 1)
     {
         itemNames ??= NDWItems.Select(item => item).ToArray() ?? Array.Empty<string>(); // Ensure itemNames is not null
 
-        if (itemNames.Length == 0 || Core.CheckInventory(itemNames, quant)) return;
+        if (itemNames.Length == 0 || Core.CheckInventory(itemNames, quant))
+            return;
 
         ItemBase[] Rewards = Core.EnsureLoad(5259).Rewards.ToArray();
 
@@ -93,7 +114,11 @@ public class NulgathDemandsWork
 
                 if (item.Name == "Unidentified 35")
                 {
-                    while (!Bot.ShouldExit && Core.CheckInventory("Archfiend Essence Fragment", 9) && !Core.CheckInventory("Unidentified 35", quant))
+                    while (
+                        !Bot.ShouldExit
+                        && Core.CheckInventory("Archfiend Essence Fragment", 9)
+                        && !Core.CheckInventory("Unidentified 35", quant)
+                    )
                         Adv.BuyItem("tercessuinotlim", 1951, item.ID, shopItemID: 7912);
 
                     if (!Core.CheckInventory(NDWItems))
@@ -101,16 +126,23 @@ public class NulgathDemandsWork
                         foreach (string NDWItem in NDWItems)
                             if (!Core.CheckInventory(NDWItem))
                                 Core.EnsureCompleteChoose(5259, new[] { NDWItem });
-                            else Core.Logger("all NDW items owned, completing quest without Selecting reward.\n" +
-                            "(will still get \"Archfiend Essence Fragment\" and uni 35.)");
+                            else
+                                Core.Logger(
+                                    "all NDW items owned, completing quest without Selecting reward.\n"
+                                        + "(will still get \"Archfiend Essence Fragment\" and uni 35.)"
+                                );
                     }
-                    else Core.EnsureComplete(5259);
+                    else
+                        Core.EnsureComplete(5259);
                 }
-                else Core.EnsureComplete(5259, item.Name == "Archfiend Essence Fragment" ? -1 : item.ID);
+                else
+                    Core.EnsureComplete(
+                        5259,
+                        item.Name == "Archfiend Essence Fragment" ? -1 : item.ID
+                    );
             }
         }
     }
-
 
     public void Uni27()
     {
@@ -126,6 +158,5 @@ public class NulgathDemandsWork
         Bot.Wait.ForDrop("Unidentified 27");
         Bot.Wait.ForPickup("Unidentified 27");
         Core.Logger("Uni 27 acquired");
-
     }
 }

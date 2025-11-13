@@ -40,8 +40,6 @@ tags: nova, shrine, gifts, merge, novashrine, star, light, destiny, celestial, p
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/ShadowsOfWar/MergeShops/StreamwarMerge.cs
 
-
-
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -50,52 +48,129 @@ public class NovaShrineGiftsMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
     private static CoreAdvanced _sAdv;
 
-
-    private static AscendedDrakathGear ADG { get => _ADG ??= new AscendedDrakathGear(); set => _ADG = value; }
+    private static AscendedDrakathGear ADG
+    {
+        get => _ADG ??= new AscendedDrakathGear();
+        set => _ADG = value;
+    }
     private static AscendedDrakathGear _ADG;
-    private static DreadspaceReplicatorMerge DRM { get => _DRM ??= new DreadspaceReplicatorMerge(); set => _DRM = value; }
+    private static DreadspaceReplicatorMerge DRM
+    {
+        get => _DRM ??= new DreadspaceReplicatorMerge();
+        set => _DRM = value;
+    }
     private static DreadspaceReplicatorMerge _DRM;
-    private static VoidPaladin VP { get => _VP ??= new VoidPaladin(); set => _VP = value; }
+    private static VoidPaladin VP
+    {
+        get => _VP ??= new VoidPaladin();
+        set => _VP = value;
+    }
     private static VoidPaladin _VP;
-    private static CyseroItemUpgrade CIU { get => _CIU ??= new CyseroItemUpgrade(); set => _CIU = value; }
+    private static CyseroItemUpgrade CIU
+    {
+        get => _CIU ??= new CyseroItemUpgrade();
+        set => _CIU = value;
+    }
     private static CyseroItemUpgrade _CIU;
-    private static CoreHollowbornPaladin CHP { get => _CHP ??= new CoreHollowbornPaladin(); set => _CHP = value; }
+    private static CoreHollowbornPaladin CHP
+    {
+        get => _CHP ??= new CoreHollowbornPaladin();
+        set => _CHP = value;
+    }
     private static CoreHollowbornPaladin _CHP;
-    private static ObsidianLightofDestiny ObsidianLightofDestiny { get => _ObsidianLightofDestiny ??= new ObsidianLightofDestiny(); set => _ObsidianLightofDestiny = value; }
+    private static ObsidianLightofDestiny ObsidianLightofDestiny
+    {
+        get => _ObsidianLightofDestiny ??= new ObsidianLightofDestiny();
+        set => _ObsidianLightofDestiny = value;
+    }
     private static ObsidianLightofDestiny _ObsidianLightofDestiny;
-    private static UltimateBLoD UltimateBLoD { get => _UltimateBLoD ??= new UltimateBLoD(); set => _UltimateBLoD = value; }
+    private static UltimateBLoD UltimateBLoD
+    {
+        get => _UltimateBLoD ??= new UltimateBLoD();
+        set => _UltimateBLoD = value;
+    }
     private static UltimateBLoD _UltimateBLoD;
-    private static SanctifiedLightofDestiny SanctifiedLightofDestiny { get => _SanctifiedLightofDestiny ??= new SanctifiedLightofDestiny(); set => _SanctifiedLightofDestiny = value; }
+    private static SanctifiedLightofDestiny SanctifiedLightofDestiny
+    {
+        get => _SanctifiedLightofDestiny ??= new SanctifiedLightofDestiny();
+        set => _SanctifiedLightofDestiny = value;
+    }
     private static SanctifiedLightofDestiny _SanctifiedLightofDestiny;
-    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }
+    private static DragonBladeofNulgath DBoN
+    {
+        get => _DBoN ??= new DragonBladeofNulgath();
+        set => _DBoN = value;
+    }
     private static DragonBladeofNulgath _DBoN;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
     private static CoreBLOD _BLOD;
-    private static CoreDOY CoreDOY { get => _CoreDOY ??= new CoreDOY(); set => _CoreDOY = value; }
+    private static CoreDOY CoreDOY
+    {
+        get => _CoreDOY ??= new CoreDOY();
+        set => _CoreDOY = value;
+    }
     private static CoreDOY _CoreDOY;
-    private static StreamwarMerge StreamwarMerge { get => _StreamwarMerge ??= new StreamwarMerge(); set => _StreamwarMerge = value; }
+    private static StreamwarMerge StreamwarMerge
+    {
+        get => _StreamwarMerge ??= new StreamwarMerge();
+        set => _StreamwarMerge = value;
+    }
     private static StreamwarMerge _StreamwarMerge;
-
-
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Star Piece", "Ascended Light of Destiny", "Blackhole Light of Dread Space", "Void Light of Destiny", "Polished Blinding Light of Destiny", "Hollowborn Shadow of Fate", "Obsidian Light of Destiny", "Ultimate Blinding Light of Destiny", "Sanctified Light of Destiny", "DragonBlade of Nulgath", "Star of the Empyrean", "ArchPaladin Armor", "Blinding Aura", "Cosmic Stardust", "Nova Empyrean Tail" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Star Piece",
+                "Ascended Light of Destiny",
+                "Blackhole Light of Dread Space",
+                "Void Light of Destiny",
+                "Polished Blinding Light of Destiny",
+                "Hollowborn Shadow of Fate",
+                "Obsidian Light of Destiny",
+                "Ultimate Blinding Light of Destiny",
+                "Sanctified Light of Destiny",
+                "DragonBlade of Nulgath",
+                "Star of the Empyrean",
+                "ArchPaladin Armor",
+                "Blinding Aura",
+                "Cosmic Stardust",
+                "Nova Empyrean Tail",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -113,26 +188,41 @@ public class NovaShrineGiftsMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
                 return;
             }
 
-
             switch (req.Name)
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Star Piece":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster("starfield", "r3", "bottom", "*", req.Name, quant, req.Temp, log: false);
+                    Core.KillMonster(
+                        "starfield",
+                        "r3",
+                        "bottom",
+                        "*",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        log: false
+                    );
                     break;
 
                 case "Ascended Light of Destiny":
@@ -175,11 +265,19 @@ public class NovaShrineGiftsMerge
                     else
                         DBoN.GetDragonBlade();
 
-                    Core.BuyItem("novashrine", 2458, "Star Light of Destiny", 1, !Bot.Player.IsMember ? 13334 : 13333);
+                    Core.BuyItem(
+                        "novashrine",
+                        2458,
+                        "Star Light of Destiny",
+                        1,
+                        !Bot.Player.IsMember ? 13334 : 13333
+                    );
                     break;
 
                 case "Star of the Empyrean":
-                    Core.Logger($"Cannot Obtain {req.Name} as its from an \"Ultra\", and Skua cannot do ultras. Please Wait until InsertCreates/adds this ultra to his Bot Collecetion (and update grim li to 1.5.2 for the newest handler)");
+                    Core.Logger(
+                        $"Cannot Obtain {req.Name} as its from an \"Ultra\", and Skua cannot do ultras. Please Wait until InsertCreates/adds this ultra to his Bot Collecetion (and update grim li to 1.5.2 for the newest handler)"
+                    );
 
                     break;
 
@@ -199,31 +297,113 @@ public class NovaShrineGiftsMerge
                     Core.RegisterQuests(9802);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster("novashrine", "r2", "left", "Nova Empyrean", req.Name, quant, req.Temp);
+                        Core.KillMonster(
+                            "novashrine",
+                            "r2",
+                            "left",
+                            "Nova Empyrean",
+                            req.Name,
+                            quant,
+                            req.Temp
+                        );
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("86372", "Star Light of Destiny", "Mode: [select] only\nShould the bot buy \"Star Light of Destiny\" ?", false),
-        new Option<bool>("86846", "Celestial Paladin", "Mode: [select] only\nShould the bot buy \"Celestial Paladin\" ?", false),
-        new Option<bool>("86847", "Celestial Paladin Winged Helm", "Mode: [select] only\nShould the bot buy \"Celestial Paladin Winged Helm\" ?", false),
-        new Option<bool>("86848", "Celestial Paladin Helmet", "Mode: [select] only\nShould the bot buy \"Celestial Paladin Helmet\" ?", false),
-        new Option<bool>("86849", "Celestial Nightsky Cloak", "Mode: [select] only\nShould the bot buy \"Celestial Nightsky Cloak\" ?", false),
-        new Option<bool>("86916", "Star Lights of Destiny", "Mode: [select] only\nShould the bot buy \"Star Lights of Destiny\" ?", false),
-        new Option<bool>("82857", "Stella Empyrean Axe", "Mode: [select] only\nShould the bot buy \"Stella Empyrean Axe\" ?", false),
-        new Option<bool>("82858", "Stella Empyrean Axes", "Mode: [select] only\nShould the bot buy \"Stella Empyrean Axes\" ?", false),
-        new Option<bool>("86854", "Nova Empyrean Wings", "Mode: [select] only\nShould the bot buy \"Nova Empyrean Wings\" ?", false),
-        new Option<bool>("86855", "Nova Empyrean Wings and Tail", "Mode: [select] only\nShould the bot buy \"Nova Empyrean Wings and Tail\" ?", false),
-        new Option<bool>("86858", "Nova Empyrean's Claws", "Mode: [select] only\nShould the bot buy \"Nova Empyrean's Claws\" ?", false),
-        new Option<bool>("87394", "Star Light of the Empyrean", "Mode: [select] only\nShould the bot buy \"Star Light of the Empyrean\" ?", false),
-        new Option<bool>("87395", "Star Lights of the Empyrean", "Mode: [select] only\nShould the bot buy \"Star Lights of the Empyrean\" ?", false),
-        new Option<bool>("82861", "Stella Empyrean Reaver", "Mode: [select] only\nShould the bot buy \"Stella Empyrean Reaver\" ?", false),
-        new Option<bool>("82862", "Stella Empyrean Reavers", "Mode: [select] only\nShould the bot buy \"Stella Empyrean Reavers\" ?", false),
+        new Option<bool>(
+            "86372",
+            "Star Light of Destiny",
+            "Mode: [select] only\nShould the bot buy \"Star Light of Destiny\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86846",
+            "Celestial Paladin",
+            "Mode: [select] only\nShould the bot buy \"Celestial Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86847",
+            "Celestial Paladin Winged Helm",
+            "Mode: [select] only\nShould the bot buy \"Celestial Paladin Winged Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86848",
+            "Celestial Paladin Helmet",
+            "Mode: [select] only\nShould the bot buy \"Celestial Paladin Helmet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86849",
+            "Celestial Nightsky Cloak",
+            "Mode: [select] only\nShould the bot buy \"Celestial Nightsky Cloak\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86916",
+            "Star Lights of Destiny",
+            "Mode: [select] only\nShould the bot buy \"Star Lights of Destiny\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82857",
+            "Stella Empyrean Axe",
+            "Mode: [select] only\nShould the bot buy \"Stella Empyrean Axe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82858",
+            "Stella Empyrean Axes",
+            "Mode: [select] only\nShould the bot buy \"Stella Empyrean Axes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86854",
+            "Nova Empyrean Wings",
+            "Mode: [select] only\nShould the bot buy \"Nova Empyrean Wings\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86855",
+            "Nova Empyrean Wings and Tail",
+            "Mode: [select] only\nShould the bot buy \"Nova Empyrean Wings and Tail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "86858",
+            "Nova Empyrean's Claws",
+            "Mode: [select] only\nShould the bot buy \"Nova Empyrean's Claws\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87394",
+            "Star Light of the Empyrean",
+            "Mode: [select] only\nShould the bot buy \"Star Light of the Empyrean\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87395",
+            "Star Lights of the Empyrean",
+            "Mode: [select] only\nShould the bot buy \"Star Lights of the Empyrean\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82861",
+            "Stella Empyrean Reaver",
+            "Mode: [select] only\nShould the bot buy \"Stella Empyrean Reaver\" ?",
+            false
+        ),
+        new Option<bool>(
+            "82862",
+            "Stella Empyrean Reavers",
+            "Mode: [select] only\nShould the bot buy \"Stella Empyrean Reavers\" ?",
+            false
+        ),
     };
 }

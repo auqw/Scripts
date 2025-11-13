@@ -30,11 +30,18 @@ public class HBCE5
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreHollowbornChaosEnvoy HBCE { get => _HBCE ??= new CoreHollowbornChaosEnvoy(); set => _HBCE = value; }
+    private static CoreHollowbornChaosEnvoy HBCE
+    {
+        get => _HBCE ??= new CoreHollowbornChaosEnvoy();
+        set => _HBCE = value;
+    }
     private static CoreHollowbornChaosEnvoy _HBCE;
-private static CoreHollowbornChaosEnvoy sHBCE { get => _sHBCE ??= new CoreHollowbornChaosEnvoy(); set => _sHBCE = value; }
-private static CoreHollowbornChaosEnvoy _sHBCE;
-
+    private static CoreHollowbornChaosEnvoy sHBCE
+    {
+        get => _sHBCE ??= new CoreHollowbornChaosEnvoy();
+        set => _sHBCE = value;
+    }
+    private static CoreHollowbornChaosEnvoy _sHBCE;
 
     public string OptionsStorage = sHBCE.OptionsStorage;
     public bool DontPreconfigure = true;
@@ -43,7 +50,9 @@ private static CoreHollowbornChaosEnvoy _sHBCE;
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
-        HBCE.ShadowsOfDisdain(Bot.Config!.Get<CoreHollowbornChaosEnvoy.ShadowsOfDisdainRewards>("Shadows Of Disdain"));
+        HBCE.ShadowsOfDisdain(
+            Bot.Config!.Get<CoreHollowbornChaosEnvoy.ShadowsOfDisdainRewards>("Shadows Of Disdain")
+        );
 
         Core.SetOptions(false);
     }

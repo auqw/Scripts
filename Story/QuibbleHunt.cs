@@ -11,7 +11,12 @@ public class QuibbleHunt
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -57,7 +62,11 @@ public class QuibbleHunt
         Story.KillQuest(5886, "quibblehunt", "Void Elemental");
 
         //Nauts and Double-crosses 5887
-        Story.KillQuest(5887, "quibblehunt", new[] { "Braken Tentacle", "Jellyfish", "Braken Tentacle" });
+        Story.KillQuest(
+            5887,
+            "quibblehunt",
+            new[] { "Braken Tentacle", "Jellyfish", "Braken Tentacle" }
+        );
 
         //Void Travel Battle 5888
         Story.KillQuest(5888, "quibblehunt", "Void Elemental");
@@ -70,6 +79,5 @@ public class QuibbleHunt
 
         //A Void the Dricken 5891
         Story.KillQuest(5891, "quibblehunt", "Dricken");
-
     }
 }

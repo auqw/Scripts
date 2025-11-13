@@ -15,10 +15,30 @@ public class DragonShinobi
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static YokaiQuests Yokai { get => _Yokai ??= new YokaiQuests(); set => _Yokai = value; }    private static YokaiQuests _Yokai;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static YokaiQuests Yokai
+    {
+        get => _Yokai ??= new YokaiQuests();
+        set => _Yokai = value;
+    }
+    private static YokaiQuests _Yokai;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -48,7 +68,7 @@ public class DragonShinobi
         Core.CancelRegisteredQuests();
 
         Adv.BuyItem("shadowfortress", 1968, 59476, shopItemID: 8078);
-      
+
         if (rankUpClass)
             Adv.RankUpClass("DragonSoul Shinobi");
     }

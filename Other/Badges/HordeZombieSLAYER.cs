@@ -7,7 +7,6 @@ tags: null
 using Skua.Core.Interfaces;
 
 public class HordeZombieSLAYER
-
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
@@ -36,7 +35,6 @@ public class HordeZombieSLAYER
         Core.EnsureAccept(8670);
         Core.KillMonster("darkoviahorde", "r8", "Right", "*", "Zombie Defeated", 100, log: false);
         Core.EnsureComplete(8670);
-
     }
 
     private string badge = "Zombie Slayer";

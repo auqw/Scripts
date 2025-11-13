@@ -11,7 +11,12 @@ public class WatchTower
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +39,7 @@ public class WatchTower
         Story.KillQuest(2602, "watchtower", new[] { "Chaorrupted Wolf", "Chaotic Gorillaphant" });
 
         //Hunt for Answers 2603
-        Story.KillQuest(2603, "watchtower", new[] { "Chaos Spider","Storagebox" });
+        Story.KillQuest(2603, "watchtower", new[] { "Chaos Spider", "Storagebox" });
 
         //Decryption Hunt 2604
         Story.MapItemQuest(2604, "watchtower", 1606);
@@ -60,6 +65,5 @@ public class WatchTower
 
         //Chaos Knight Attacks 2610
         Story.KillQuest(2610, "watchtower", "Chaos Knight");
-
     }
 }

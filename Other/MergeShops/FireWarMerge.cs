@@ -16,28 +16,57 @@ public class FireWarMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static DragonFableOrigins DFO { get => _DFO ??= new DragonFableOrigins(); set => _DFO = value; }
+    private static DragonFableOrigins DFO
+    {
+        get => _DFO ??= new DragonFableOrigins();
+        set => _DFO = value;
+    }
     private static DragonFableOrigins _DFO;
-
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Flame Guardian", "Dragon Flame", "Dragon Eye", "Flame Guardian Helm", "Flame Guardian's Wrap", "Flame Guardian's Blade", "Flame Guardian's Lance", "Flame Guardian's Blade + Shield", "Flame Guardian's Accoutrements" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Flame Guardian",
+                "Dragon Flame",
+                "Dragon Eye",
+                "Flame Guardian Helm",
+                "Flame Guardian's Wrap",
+                "Flame Guardian's Blade",
+                "Flame Guardian's Lance",
+                "Flame Guardian's Blade + Shield",
+                "Flame Guardian's Accoutrements",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -55,7 +84,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,9 +97,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Flame Guardian":
                 case "Flame Guardian Helm":
@@ -86,7 +122,14 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("firewar", "Fire Dragon", "Fire Dragon Slain", 3);
-                        Core.KillMonster("firewar", "r8", "Left", "Inferno Dragon", "Inferno Dragon Slain", 2);
+                        Core.KillMonster(
+                            "firewar",
+                            "r8",
+                            "Left",
+                            "Inferno Dragon",
+                            "Inferno Dragon Slain",
+                            2
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -107,22 +150,71 @@ private static CoreAdvanced _sAdv;
                         Core.Logger("Membership is required.");
 
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("43617", "Ignited Flame Guardian", "Mode: [select] only\nShould the bot buy \"Ignited Flame Guardian\" ?", false),
-        new Option<bool>("43618", "Ignited Guardian's Helm", "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Helm\" ?", false),
-        new Option<bool>("43644", "Ignited Guardian's Wrap", "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Wrap\" ?", false),
-        new Option<bool>("43619", "Ignited Guardian's Runed Wrap", "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Runed Wrap\" ?", false),
-        new Option<bool>("43647", "Ignited Guardian's Rune", "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Rune\" ?", false),
-        new Option<bool>("43620", "Ignited Guardian's Blade", "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Blade\" ?", false),
-        new Option<bool>("43621", "Ignited Guardian Lance", "Mode: [select] only\nShould the bot buy \"Ignited Guardian Lance\" ?", false),
-        new Option<bool>("43623", "Ignited Guardian's Blade + Shield", "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Blade + Shield\" ?", false),
-        new Option<bool>("43643", "Ignited Guardian's Accoutrements", "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Accoutrements\" ?", false),
-        new Option<bool>("43649", "DragonSlayer Twilly Bank", "Mode: [select] only\nShould the bot buy \"DragonSlayer Twilly Bank\" ?", false),
+        new Option<bool>(
+            "43617",
+            "Ignited Flame Guardian",
+            "Mode: [select] only\nShould the bot buy \"Ignited Flame Guardian\" ?",
+            false
+        ),
+        new Option<bool>(
+            "43618",
+            "Ignited Guardian's Helm",
+            "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "43644",
+            "Ignited Guardian's Wrap",
+            "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Wrap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "43619",
+            "Ignited Guardian's Runed Wrap",
+            "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Runed Wrap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "43647",
+            "Ignited Guardian's Rune",
+            "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Rune\" ?",
+            false
+        ),
+        new Option<bool>(
+            "43620",
+            "Ignited Guardian's Blade",
+            "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "43621",
+            "Ignited Guardian Lance",
+            "Mode: [select] only\nShould the bot buy \"Ignited Guardian Lance\" ?",
+            false
+        ),
+        new Option<bool>(
+            "43623",
+            "Ignited Guardian's Blade + Shield",
+            "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Blade + Shield\" ?",
+            false
+        ),
+        new Option<bool>(
+            "43643",
+            "Ignited Guardian's Accoutrements",
+            "Mode: [select] only\nShould the bot buy \"Ignited Guardian's Accoutrements\" ?",
+            false
+        ),
+        new Option<bool>(
+            "43649",
+            "DragonSlayer Twilly Bank",
+            "Mode: [select] only\nShould the bot buy \"DragonSlayer Twilly Bank\" ?",
+            false
+        ),
     };
 }

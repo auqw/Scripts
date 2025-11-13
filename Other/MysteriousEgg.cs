@@ -12,7 +12,12 @@ public class MysteriousEgg
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static Core7DD DD { get => _DD ??= new Core7DD(); set => _DD = value; }    private static Core7DD _DD;
+    private static Core7DD DD
+    {
+        get => _DD ??= new Core7DD();
+        set => _DD = value;
+    }
+    private static Core7DD _DD;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -30,18 +35,28 @@ public class MysteriousEgg
 
         if (Core.CheckInventory("Manticore Cub Pet") && !Core.CheckInventory("Mysterious Egg"))
         {
-            Core.Logger("You own the \"Manticore Cub Pet\" and thus dont need to farm for the \"Mysterious Egg\".\n" +
-                        "It's a lot quicker to use AQW's BuyBack function for the \"Mysterious Egg\". Please do so now\n" +
-                        "https://www.aq.com > Account > Manage Account > left hand side, \"Buy Back\"\n" +
-                        "Relogin and restart the script after hitting ok.",
-                        messageBox: true, stopBot: true);
+            Core.Logger(
+                "You own the \"Manticore Cub Pet\" and thus dont need to farm for the \"Mysterious Egg\".\n"
+                    + "It's a lot quicker to use AQW's BuyBack function for the \"Mysterious Egg\". Please do so now\n"
+                    + "https://www.aq.com > Account > Manage Account > left hand side, \"Buy Back\"\n"
+                    + "Relogin and restart the script after hitting ok.",
+                messageBox: true,
+                stopBot: true
+            );
         }
 
         Core.AddDrop("Mysterious Egg");
         Core.EnsureAccept(6171);
 
         Core.KillMonster("pride", "r13", "Left", "Valsarian", "Key of Pride", isTemp: false);
-        Core.KillMonster("gluttony", "Enter2", "Top", "Deflated Glutus", "Key of Gluttony", isTemp: false);
+        Core.KillMonster(
+            "gluttony",
+            "Enter2",
+            "Top",
+            "Deflated Glutus",
+            "Key of Gluttony",
+            isTemp: false
+        );
         Core.KillMonster("greed", "r16", "Left", "Goregold", "Key of Greed", isTemp: false);
 
         if (!Core.CheckInventory("Key of Sloth"))

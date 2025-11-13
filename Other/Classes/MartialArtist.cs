@@ -14,9 +14,24 @@ public class MartialArtist
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -50,21 +65,42 @@ public class MartialArtist
             // 9923 | 500 Punches and 500 Kicks
             if (!Story.QuestProgression(9923))
             {
-                Core.Logger("Quest is required, we'll stack mats via \"Deathly Slow Start [9933]\" After");
-                Core.HuntMonsterQuest(9923,
-("nexus", "Frogzard", ClassType.Farm),         // Frogzards Defeated (500): Join nexus, kill Frogzards
+                Core.Logger(
+                    "Quest is required, we'll stack mats via \"Deathly Slow Start [9933]\" After"
+                );
+                Core.HuntMonsterQuest(
+                    9923,
+                    ("nexus", "Frogzard", ClassType.Farm), // Frogzards Defeated (500): Join nexus, kill Frogzards
                     ("arcangrove", "Gorillaphant", ClassType.Farm), // Gorillaphants Defeated (500): Join arcangrove, kill Gorillaphants
-                    ("etherwardes", "Water Dragon Warrior", ClassType.Farm)     // Dragons Defeated (500): Join etherwardes, kill dragons
-);
+                    ("etherwardes", "Water Dragon Warrior", ClassType.Farm) // Dragons Defeated (500): Join etherwardes, kill dragons
+                );
             }
 
             //stack and then turn in to  get all required mats for the rest...
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(Core.IsMember ? 9911 : 9902);
-            Core.HuntMonster("dreadfight", "Dreadhaven General", "Dreadhaven General's Soul Fragment", Core.IsMember ? 200 : 400, isTemp: false);
+            Core.HuntMonster(
+                "dreadfight",
+                "Dreadhaven General",
+                "Dreadhaven General's Soul Fragment",
+                Core.IsMember ? 200 : 400,
+                isTemp: false
+            );
             Bot.Quests.UpdateQuest(9607);
-            Core.HuntMonster("hakuwar", "Zakhvatchik", "Zakhvatchik's Soul Fragment", Core.IsMember ? 200 : 400, isTemp: false);
-            Core.HuntMonster("towerofdoom5", "Creel", "Creel's Soul Fragment", Core.IsMember ? 200 : 400, isTemp: false);
+            Core.HuntMonster(
+                "hakuwar",
+                "Zakhvatchik",
+                "Zakhvatchik's Soul Fragment",
+                Core.IsMember ? 200 : 400,
+                isTemp: false
+            );
+            Core.HuntMonster(
+                "towerofdoom5",
+                "Creel",
+                "Creel's Soul Fragment",
+                Core.IsMember ? 200 : 400,
+                isTemp: false
+            );
 
             Core.EnsureCompleteMulti(Core.IsMember ? 9911 : 9902);
             foreach (int i in new[] { 88662, 88661, 88660 })
@@ -104,14 +140,13 @@ public class MartialArtist
 
         while (!Bot.ShouldExit && Bot.Player.Gold <= Gold)
         {
-            Core.HuntMonsterQuest(9933,
-("dreadfight", "Dreadhaven General", ClassType.Solo), // Dreadhaven General's Soul Fragment (10): Join dreadfight, kill Dreadhaven General
-                        ("hakuwar", "Zakhvatchik", ClassType.Solo),           // Zakhvatchik's Soul Fragment (10): Join hakuwar, kill Zakhvatchik (last room)
-                        ("towerofdoom5", "Creel", ClassType.Solo)          // Creel's Soul Fragment (10): Join towerofdoom5, kill Creel (last room)
-);
+            Core.HuntMonsterQuest(
+                9933,
+                ("dreadfight", "Dreadhaven General", ClassType.Solo), // Dreadhaven General's Soul Fragment (10): Join dreadfight, kill Dreadhaven General
+                ("hakuwar", "Zakhvatchik", ClassType.Solo), // Zakhvatchik's Soul Fragment (10): Join hakuwar, kill Zakhvatchik (last room)
+                ("towerofdoom5", "Creel", ClassType.Solo) // Creel's Soul Fragment (10): Join towerofdoom5, kill Creel (last room)
+            );
             Bot.Wait.ForQuestComplete(9933);
         }
     }
 }
-
-

@@ -16,29 +16,64 @@ public class LowTideMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static LowTideStory LT { get => _LT ??= new LowTideStory(); set => _LT = value; }    private static LowTideStory _LT;
+    private static LowTideStory LT
+    {
+        get => _LT ??= new LowTideStory();
+        set => _LT = value;
+    }
+    private static LowTideStory _LT;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Evidence Tag", "Dark Sea Corsair", "Dark Sea Corsair's Mask", "Dark Sea Corsair's Mask + Locks", "Dark Sea Corsair's Hat", "Dark Sea Corsair's Hat + Locks", "Dark Sea Corsair's Battle Mask", "Dark Sea Corsair's Battle Mask + Locks", "Enchanted Corsair's Rapier", "Enchanted Corsair's Pistol " });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Evidence Tag",
+                "Dark Sea Corsair",
+                "Dark Sea Corsair's Mask",
+                "Dark Sea Corsair's Mask + Locks",
+                "Dark Sea Corsair's Hat",
+                "Dark Sea Corsair's Hat + Locks",
+                "Dark Sea Corsair's Battle Mask",
+                "Dark Sea Corsair's Battle Mask + Locks",
+                "Enchanted Corsair's Rapier",
+                "Enchanted Corsair's Pistol ",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -57,7 +92,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -68,9 +105,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Evidence Tag":
                     Core.FarmingLogger(req.Name, quant);
@@ -78,7 +120,12 @@ public static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("lowtide", "Exiled General Miel", "Gem Encrusted Medal", 3);
+                        Core.HuntMonster(
+                            "lowtide",
+                            "Exiled General Miel",
+                            "Gem Encrusted Medal",
+                            3
+                        );
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("lowtide", "Spectral Jellyfish", "Spindley Tentacles", 30);
                         Core.HuntMonster("lowtide", "Ghostly Eel", "Eel Fangs", 30);
@@ -103,30 +150,119 @@ public static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("lowtide", "Spectral Jellyfish", req.Name, 1, false);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("71132", "Enchanted Corsair", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair\" ?", false),
-        new Option<bool>("71133", "Enchanted Corsair's Mask", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Mask\" ?", false),
-        new Option<bool>("71134", "Enchanted Corsair's Mask + Locks", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Mask + Locks\" ?", false),
-        new Option<bool>("71135", "Enchanted Corsair's Hat", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Hat\" ?", false),
-        new Option<bool>("71136", "Enchanted Corsair's Hat + Locks", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Hat + Locks\" ?", false),
-        new Option<bool>("71137", "Enchanted Corsair's Battle Mask", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Battle Mask\" ?", false),
-        new Option<bool>("71138", "Enchanted Corsair's Battle Mask + Locks", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Battle Mask + Locks\" ?", false),
-        new Option<bool>("71140", "Enchanted Corsair's Rapiers", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Rapiers\" ?", false),
-        new Option<bool>("71142", "Enchanted Corsair's Pistols", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Pistols\" ?", false),
-        new Option<bool>("71143", "Enchanted Corsair's Battle Gear", "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Battle Gear\" ?", false),
-        new Option<bool>("72047", "Dark Sea Fleet Captain", "Mode: [select] only\nShould the bot buy \"Dark Sea Fleet Captain\" ?", false),
-        new Option<bool>("72048", "Dark Sea Captain's Hat", "Mode: [select] only\nShould the bot buy \"Dark Sea Captain's Hat\" ?", false),
-        new Option<bool>("72049", "Dark Sea Captain's Hat + Locks", "Mode: [select] only\nShould the bot buy \"Dark Sea Captain's Hat + Locks\" ?", false),
-        new Option<bool>("72050", "Dark Sea Captain's Hat + Beard", "Mode: [select] only\nShould the bot buy \"Dark Sea Captain's Hat + Beard\" ?", false),
-        new Option<bool>("72051", "Dark Sea Captain's Ship", "Mode: [select] only\nShould the bot buy \"Dark Sea Captain's Ship\" ?", false),
-        new Option<bool>("71588", "Explorer Moglin", "Mode: [select] only\nShould the bot buy \"Explorer Moglin\" ?", false),
-        new Option<bool>("71592", "Looter Crew Moglin", "Mode: [select] only\nShould the bot buy \"Looter Crew Moglin\" ?", false),
-        new Option<bool>("71593", "Cap'n MogBeard", "Mode: [select] only\nShould the bot buy \"Cap'n MogBeard\" ?", false),
+        new Option<bool>(
+            "71132",
+            "Enchanted Corsair",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71133",
+            "Enchanted Corsair's Mask",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71134",
+            "Enchanted Corsair's Mask + Locks",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Mask + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71135",
+            "Enchanted Corsair's Hat",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71136",
+            "Enchanted Corsair's Hat + Locks",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Hat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71137",
+            "Enchanted Corsair's Battle Mask",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Battle Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71138",
+            "Enchanted Corsair's Battle Mask + Locks",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Battle Mask + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71140",
+            "Enchanted Corsair's Rapiers",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Rapiers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71142",
+            "Enchanted Corsair's Pistols",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Pistols\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71143",
+            "Enchanted Corsair's Battle Gear",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Corsair's Battle Gear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72047",
+            "Dark Sea Fleet Captain",
+            "Mode: [select] only\nShould the bot buy \"Dark Sea Fleet Captain\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72048",
+            "Dark Sea Captain's Hat",
+            "Mode: [select] only\nShould the bot buy \"Dark Sea Captain's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72049",
+            "Dark Sea Captain's Hat + Locks",
+            "Mode: [select] only\nShould the bot buy \"Dark Sea Captain's Hat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72050",
+            "Dark Sea Captain's Hat + Beard",
+            "Mode: [select] only\nShould the bot buy \"Dark Sea Captain's Hat + Beard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72051",
+            "Dark Sea Captain's Ship",
+            "Mode: [select] only\nShould the bot buy \"Dark Sea Captain's Ship\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71588",
+            "Explorer Moglin",
+            "Mode: [select] only\nShould the bot buy \"Explorer Moglin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71592",
+            "Looter Crew Moglin",
+            "Mode: [select] only\nShould the bot buy \"Looter Crew Moglin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71593",
+            "Cap'n MogBeard",
+            "Mode: [select] only\nShould the bot buy \"Cap'n MogBeard\" ?",
+            false
+        ),
     };
 }

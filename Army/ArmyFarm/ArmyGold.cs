@@ -22,37 +22,81 @@ public class ArmyGold
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static DarkWarLegionandNation DWLN { get => _DWLN ??= new DarkWarLegionandNation(); set => _DWLN = value; }
+    private static DarkWarLegionandNation DWLN
+    {
+        get => _DWLN ??= new DarkWarLegionandNation();
+        set => _DWLN = value;
+    }
     private static DarkWarLegionandNation _DWLN;
-    private static SevenCircles SC { get => _SC ??= new SevenCircles(); set => _SC = value; }
+    private static SevenCircles SC
+    {
+        get => _SC ??= new SevenCircles();
+        set => _SC = value;
+    }
     private static SevenCircles _SC;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
     private static CoreSoW _SoW;
-    private static CoreDOY CoreDOY { get => _CoreDOY ??= new CoreDOY(); set => _CoreDOY = value; }
+    private static CoreDOY CoreDOY
+    {
+        get => _CoreDOY ??= new CoreDOY();
+        set => _CoreDOY = value;
+    }
     private static CoreDOY _CoreDOY;
 
-    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
     private static CoreBots _sCore;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "Army_Gold";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<Method>("mapname", "Map selection", "Which map to farm gold?", Method.BattleGroundE),
+        new Option<Method>(
+            "mapname",
+            "Map selection",
+            "Which map to farm gold?",
+            Method.BattleGroundE
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -61,7 +105,7 @@ public class ArmyGold
         sArmy.player6,
         sArmy.player7,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface Bot)
@@ -75,7 +119,10 @@ public class ArmyGold
 
     public void Setup(Method mapname)
     {
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
@@ -113,13 +160,17 @@ public class ArmyGold
                 PirateBloodWar();
                 break;
         }
-
     }
 
     public void BGE(Method mapname)
     {
         if (mapname == 0 && Bot.Player.Level < 61)
-            Core.Logger($"Minimum level 61 required for this map (Player level: {Bot.Player.Level}).", "Attention Needed. Bot Stopped!", messageBox: true, stopBot: true);
+            Core.Logger(
+                $"Minimum level 61 required for this map (Player level: {Bot.Player.Level}).",
+                "Attention Needed. Bot Stopped!",
+                messageBox: true,
+                stopBot: true
+            );
 
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
@@ -129,8 +180,6 @@ public class ArmyGold
         Army.AggroMonMIDs(1, 2, 3, 4, 5, 6);
         Army.AggroMonStart("battlegrounde");
         Army.DivideOnCells("r4", "r3", "r2", "r1");
-
-
 
         while (!Bot.ShouldExit && Bot.Player.Gold < 999999999)
             Bot.Combat.Attack("*");
@@ -147,12 +196,8 @@ public class ArmyGold
         Army.AggroMonStart("darkwarlegion");
         Army.DivideOnCells("Enter", "r2", "r3");
 
-
-
         Core.RegisterQuests(8584, 8585, 8586, 8587); //Nation Badges 8584, Mega Nation Badges 8585, A Nation Defeated 8586, ManSlayer? More Like ManSLAIN 8587
-                                                     // Army.SmartAggroMonStart("darkwarlegion", "Bloodfiend", "Dreadfiend", "Infernal Fiend", "Manslayer Fiend", "Void Fiend");
-
-
+        // Army.SmartAggroMonStart("darkwarlegion", "Bloodfiend", "Dreadfiend", "Infernal Fiend", "Manslayer Fiend", "Void Fiend");
 
         while (!Bot.ShouldExit && Bot.Player.Gold < 999999999)
             Bot.Combat.Attack("*");
@@ -171,8 +216,6 @@ public class ArmyGold
         Army.AggroMonStart("darkwarnation");
         Army.DivideOnCells("Enter", "r2", "r3");
 
-
-
         // Army.SmartAggroMonStart("darkwarnation", "High Legion Inquisitor", "Legion Doomknight", "Legion Dread Knight");
         while (!Bot.ShouldExit && Bot.Player.Gold < 999999999)
             Bot.Combat.Attack("*");
@@ -190,8 +233,6 @@ public class ArmyGold
         Army.AggroMonMIDs(1, 2, 3, 4, 5, 6);
         Army.AggroMonStart("sevencircleswar");
         Army.DivideOnCells("Enter", "r2", "r3");
-
-
 
         // Army.SmartAggroMonStart("sevencircleswar", "Wrath Guard", "Heresy Guard", "Violence Guard", "Treachery Guard");
         while (!Bot.ShouldExit && Bot.Player.Gold < 999999999)
@@ -212,8 +253,6 @@ public class ArmyGold
         Army.DivideOnCells("r3a");
 
         Core.RegisterQuests(8814, 8815);
-
-
 
         while (!Bot.ShouldExit && Bot.Player.Gold < 999999999)
             Bot.Combat.Attack("*");
@@ -260,8 +299,6 @@ public class ArmyGold
 
         Core.Logger("This method is insane atm.. if the rate is ever complete sh*t please use SCW");
 
-
-
         while (!Bot.ShouldExit && Bot.Player.Gold < 999999999)
             Bot.Combat.Attack("*");
 
@@ -291,8 +328,6 @@ public class ArmyGold
         // Army.AggroMonCells("r2", "r4", "r5", "r6", "r7", "r9");
         Army.AggroMonStart("hakuwar");
         Army.DivideOnCells("r2", "r4", "r5", "r6", "r7", "r9");
-
-
 
         while (!Bot.ShouldExit && Bot.Player.Gold < 999999999)
             Bot.Combat.Attack("*");
@@ -374,7 +409,6 @@ public class ArmyGold
         Army.AggroMonStop(true);
         Farm.ToggleBoost(BoostType.Gold, false);
         Core.CancelRegisteredQuests();
-
     }
 
     public enum Method
@@ -388,7 +422,6 @@ public class ArmyGold
         ShadowBattleonLowerLevels = 6,
         ShadowBattleonHighLevels = 7,
         HakuWar = 8,
-        PirateBloodWar = 9
+        PirateBloodWar = 9,
     }
-
 }

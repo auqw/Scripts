@@ -16,30 +16,50 @@ public class CrystalBrightMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static BrightCrystalStory BrightCrystal { get => _BrightCrystal ??= new BrightCrystalStory(); set => _BrightCrystal = value; }
+    private static BrightCrystalStory BrightCrystal
+    {
+        get => _BrightCrystal ??= new BrightCrystalStory();
+        set => _BrightCrystal = value;
+    }
     private static BrightCrystalStory _BrightCrystal;
-    
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Carnival Ticket"});
+        Core.BankingBlackList.AddRange(new[] { "Carnival Ticket" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -57,7 +77,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -68,9 +90,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Carnival Ticket":
                     Core.FarmingLogger(req.Name, quant);
@@ -81,18 +108,47 @@ private static CoreAdvanced _sAdv;
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("34535", "Carnival Worker", "Mode: [select] only\nShould the bot buy \"Carnival Worker\" ?", false),
-        new Option<bool>("34536", "Carnival Worker Hat", "Mode: [select] only\nShould the bot buy \"Carnival Worker Hat\" ?", false),
-        new Option<bool>("34537", "Carnival Worker Locks", "Mode: [select] only\nShould the bot buy \"Carnival Worker Locks\" ?", false),
-        new Option<bool>("34568", "Miranda and William Outfits", "Mode: [select] only\nShould the bot buy \"Miranda and William Outfits\" ?", false),
-        new Option<bool>("34569", "Miranda's Hair", "Mode: [select] only\nShould the bot buy \"Miranda's Hair\" ?", false),
-        new Option<bool>("34570", "William's Hair", "Mode: [select] only\nShould the bot buy \"William's Hair\" ?", false),
+        new Option<bool>(
+            "34535",
+            "Carnival Worker",
+            "Mode: [select] only\nShould the bot buy \"Carnival Worker\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34536",
+            "Carnival Worker Hat",
+            "Mode: [select] only\nShould the bot buy \"Carnival Worker Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34537",
+            "Carnival Worker Locks",
+            "Mode: [select] only\nShould the bot buy \"Carnival Worker Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34568",
+            "Miranda and William Outfits",
+            "Mode: [select] only\nShould the bot buy \"Miranda and William Outfits\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34569",
+            "Miranda's Hair",
+            "Mode: [select] only\nShould the bot buy \"Miranda's Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34570",
+            "William's Hair",
+            "Mode: [select] only\nShould the bot buy \"William's Hair\" ?",
+            false
+        ),
     };
 }

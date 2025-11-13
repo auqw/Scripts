@@ -14,7 +14,11 @@ public class SRoD
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private static Core13LoC LoC { get => _LoC ??= new Core13LoC(); set => _LoC = value; }
+    private static Core13LoC LoC
+    {
+        get => _LoC ??= new Core13LoC();
+        set => _LoC = value;
+    }
     private static Core13LoC _LoC;
 
     public void ScriptMain(IScriptInterface bot)
@@ -37,7 +41,14 @@ public class SRoD
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonsterMapID("mirrorportal", 1, "Mirror Realm Token", 300, false);
         Core.CancelRegisteredQuests();
-        Core.KillMonster("overworld", "boss1", "Left", "Undead Artix", "Undead Paladin Token", isTemp: false);
+        Core.KillMonster(
+            "overworld",
+            "boss1",
+            "Left",
+            "Undead Artix",
+            "Undead Paladin Token",
+            isTemp: false
+        );
 
         Core.BuyItem("overworld", 618, "ShadowReaper Of Doom", shopItemID: 1806);
     }

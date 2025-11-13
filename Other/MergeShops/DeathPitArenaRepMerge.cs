@@ -14,25 +14,46 @@ public class DeathPitArenaRepMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Death Pit Arena Medal", "General Gall Medal", "General Velm Medal", "General Hun'Gar Medal", "General Chud Medal"});
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Death Pit Arena Medal",
+                "General Gall Medal",
+                "General Velm Medal",
+                "General Hun'Gar Medal",
+                "General Chud Medal",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -49,7 +70,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,9 +83,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Death Pit Arena Medal":
                     Core.EquipClass(ClassType.Farm);
@@ -120,31 +148,125 @@ private static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("35269", "General Gall's Armor", "Mode: [select] only\nShould the bot buy \"General Gall's Armor\" ?", false),
-        new Option<bool>("35270", "General Velm's Armor", "Mode: [select] only\nShould the bot buy \"General Velm's Armor\" ?", false),
-        new Option<bool>("35272", "General Hun'Gar's Armor", "Mode: [select] only\nShould the bot buy \"General Hun'Gar's Armor\" ?", false),
-        new Option<bool>("35274", "General Chud's Armor", "Mode: [select] only\nShould the bot buy \"General Chud's Armor\" ?", false),
-        new Option<bool>("35271", "General Velm's Helm", "Mode: [select] only\nShould the bot buy \"General Velm's Helm\" ?", false),
-        new Option<bool>("35273", "General Hun'Gar's Helm", "Mode: [select] only\nShould the bot buy \"General Hun'Gar's Helm\" ?", false),
-        new Option<bool>("35275", "General Chud's Helm", "Mode: [select] only\nShould the bot buy \"General Chud's Helm\" ?", false),
-        new Option<bool>("35350", "Spinal Carnage Staff", "Mode: [select] only\nShould the bot buy \"Spinal Carnage Staff\" ?", false),
-        new Option<bool>("35355", "Sword of Malice", "Mode: [select] only\nShould the bot buy \"Sword of Malice\" ?", false),
-        new Option<bool>("35419", "Drakel Chud Armor", "Mode: [select] only\nShould the bot buy \"Drakel Chud Armor\" ?", false),
-        new Option<bool>("35417", "Drakel Velm Armor", "Mode: [select] only\nShould the bot buy \"Drakel Velm Armor\" ?", false),
-        new Option<bool>("35418", "Drakel Hun'Gar Armor", "Mode: [select] only\nShould the bot buy \"Drakel Hun'Gar Armor\" ?", false),
-        new Option<bool>("35416", "Drakel Gall Armor (Green)", "Mode: [select] only\nShould the bot buy \"Drakel Gall Armor (Green)\" ?", false),
-        new Option<bool>("35421", "Drakel Velm Helmet", "Mode: [select] only\nShould the bot buy \"Drakel Velm Helmet\" ?", false),
-        new Option<bool>("35422", "Drakel Green Morph", "Mode: [select] only\nShould the bot buy \"Drakel Green Morph\" ?", false),
-        new Option<bool>("35423", "Drakel Gall Armor", "Mode: [select] only\nShould the bot buy \"Drakel Gall Armor\" ?", false),
-        new Option<bool>("35424", "Drakel Gall Morph", "Mode: [select] only\nShould the bot buy \"Drakel Gall Morph\" ?", false),
-        new Option<bool>("34946", "Drakel Chud Helm", "Mode: [select] only\nShould the bot buy \"Drakel Chud Helm\" ?", false),
-        new Option<bool>("35433", "Drakel Warlord", "Mode: [select] only\nShould the bot buy \"Drakel Warlord\" ?", false),
+        new Option<bool>(
+            "35269",
+            "General Gall's Armor",
+            "Mode: [select] only\nShould the bot buy \"General Gall's Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35270",
+            "General Velm's Armor",
+            "Mode: [select] only\nShould the bot buy \"General Velm's Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35272",
+            "General Hun'Gar's Armor",
+            "Mode: [select] only\nShould the bot buy \"General Hun'Gar's Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35274",
+            "General Chud's Armor",
+            "Mode: [select] only\nShould the bot buy \"General Chud's Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35271",
+            "General Velm's Helm",
+            "Mode: [select] only\nShould the bot buy \"General Velm's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35273",
+            "General Hun'Gar's Helm",
+            "Mode: [select] only\nShould the bot buy \"General Hun'Gar's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35275",
+            "General Chud's Helm",
+            "Mode: [select] only\nShould the bot buy \"General Chud's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35350",
+            "Spinal Carnage Staff",
+            "Mode: [select] only\nShould the bot buy \"Spinal Carnage Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35355",
+            "Sword of Malice",
+            "Mode: [select] only\nShould the bot buy \"Sword of Malice\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35419",
+            "Drakel Chud Armor",
+            "Mode: [select] only\nShould the bot buy \"Drakel Chud Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35417",
+            "Drakel Velm Armor",
+            "Mode: [select] only\nShould the bot buy \"Drakel Velm Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35418",
+            "Drakel Hun'Gar Armor",
+            "Mode: [select] only\nShould the bot buy \"Drakel Hun'Gar Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35416",
+            "Drakel Gall Armor (Green)",
+            "Mode: [select] only\nShould the bot buy \"Drakel Gall Armor (Green)\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35421",
+            "Drakel Velm Helmet",
+            "Mode: [select] only\nShould the bot buy \"Drakel Velm Helmet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35422",
+            "Drakel Green Morph",
+            "Mode: [select] only\nShould the bot buy \"Drakel Green Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35423",
+            "Drakel Gall Armor",
+            "Mode: [select] only\nShould the bot buy \"Drakel Gall Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35424",
+            "Drakel Gall Morph",
+            "Mode: [select] only\nShould the bot buy \"Drakel Gall Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34946",
+            "Drakel Chud Helm",
+            "Mode: [select] only\nShould the bot buy \"Drakel Chud Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35433",
+            "Drakel Warlord",
+            "Mode: [select] only\nShould the bot buy \"Drakel Warlord\" ?",
+            false
+        ),
     };
 }

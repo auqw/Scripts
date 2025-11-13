@@ -18,7 +18,6 @@ tags: hollowborn, class, hbv,hollowborn vindicator, vindicator, gramiel, non ins
 //cs_include Scripts/Hollowborn/Materials/VindicatorCrest.cs
 //cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
 
-
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -26,22 +25,59 @@ public class HBVNonInsig
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static HollowSoul HS { get => _HS ??= new HollowSoul(); set => _HS = value; }
+    private static HollowSoul HS
+    {
+        get => _HS ??= new HollowSoul();
+        set => _HS = value;
+    }
     private static HollowSoul _HS;
-    private static CoreHollowbornStory HBS { get => _HBS ??= new CoreHollowbornStory(); set => _HBS = value; }
+    private static CoreHollowbornStory HBS
+    {
+        get => _HBS ??= new CoreHollowbornStory();
+        set => _HBS = value;
+    }
     private static CoreHollowbornStory _HBS;
-    private static VindicatorBadge VB { get => _VB ??= new VindicatorBadge(); set => _VB = value; }
+    private static VindicatorBadge VB
+    {
+        get => _VB ??= new VindicatorBadge();
+        set => _VB = value;
+    }
     private static VindicatorBadge _VB;
-    private static DeathsPower DP { get => _DP ??= new DeathsPower(); set => _DP = value; }
+    private static DeathsPower DP
+    {
+        get => _DP ??= new DeathsPower();
+        set => _DP = value;
+    }
     private static DeathsPower _DP;
-    private static GraceOrb GO { get => _GO ??= new GraceOrb(); set => _GO = value; }
+    private static GraceOrb GO
+    {
+        get => _GO ??= new GraceOrb();
+        set => _GO = value;
+    }
     private static GraceOrb _GO;
-    private static GramielsEmblem GE { get => _GE ??= new GramielsEmblem(); set => _GE = value; }
+    private static GramielsEmblem GE
+    {
+        get => _GE ??= new GramielsEmblem();
+        set => _GE = value;
+    }
     private static GramielsEmblem _GE;
-    private static VindicatorCrest VC { get => _VC ??= new VindicatorCrest(); set => _VC = value; }
+    private static VindicatorCrest VC
+    {
+        get => _VC ??= new VindicatorCrest();
+        set => _VC = value;
+    }
     private static VindicatorCrest _VC;
 
     public string OptionsStorage = "FarmerJoePet";
@@ -52,7 +88,6 @@ public class HBVNonInsig
         CoreBots.Instance.SkipOptions,
     };
 
-
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -60,9 +95,17 @@ public class HBVNonInsig
         Core.SetOptions(false);
     }
 
-    public void GetClass(bool rankUpClass = true, bool merge = false, int quant = 0, bool FarmNextWeeks = false)
+    public void GetClass(
+        bool rankUpClass = true,
+        bool merge = false,
+        int quant = 0,
+        bool FarmNextWeeks = false
+    )
     {
-        if ((!merge && Core.CheckInventory(94357)) || (merge && Core.CheckInventory("Condensed Grace", quant)))
+        if (
+            (!merge && Core.CheckInventory(94357))
+            || (merge && Core.CheckInventory("Condensed Grace", quant))
+        )
         {
             if (!merge && rankUpClass)
                 Adv.RankUpClass("Hollowborn Vindicator");
@@ -99,11 +142,15 @@ public class HBVNonInsig
 
             if (!Bot.Quests.IsAvailable(10299))
             {
-                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
+                Core.Logger(
+                    "This is a weekly quest, you need to wait until next week to get the class."
+                );
                 if (FarmNextWeeks)
                     this.FarmNextWeeks();
                 else
-                    Core.Logger($"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}");
+                    Core.Logger(
+                        $"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}"
+                    );
                 return;
             }
             else
@@ -113,11 +160,15 @@ public class HBVNonInsig
 
         if (!Core.CheckInventory(reqName, 4))
         {
-            Core.Logger($"You need 4x {reqName} to get the class. Run the script next week on: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
+            Core.Logger(
+                $"You need 4x {reqName} to get the class. Run the script next week on: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}"
+            );
             if (FarmNextWeeks)
                 this.FarmNextWeeks();
             else
-                Core.Logger($"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}");
+                Core.Logger(
+                    $"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}"
+                );
             return;
         }
         else
@@ -125,7 +176,6 @@ public class HBVNonInsig
 
         if (rankUpClass)
             Adv.RankUpClass("Hollowborn Vindicator");
-
     }
 
     void FarmNextWeeks()

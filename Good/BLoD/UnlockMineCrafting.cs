@@ -15,10 +15,20 @@ public class UnlockMineCrafting
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }    private static CoreBLOD _BLOD;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
+    private static CoreBLOD _BLOD;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
-    string[] MineCaftingItems = 
+    string[] MineCaftingItems =
     {
         "Blinding Light of Destiny Handle",
         "Bonegrinder Medal",
@@ -26,7 +36,7 @@ public class UnlockMineCrafting
         "Undead Essence",
         "Undead Energy",
         "Spirit Orb",
-        "Loyal Spirit Orb"
+        "Loyal Spirit Orb",
     };
 
     public void ScriptMain(IScriptInterface bot)

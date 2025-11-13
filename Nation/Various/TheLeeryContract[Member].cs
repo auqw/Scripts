@@ -16,9 +16,24 @@ public class TheLeeryContract
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public bool DontPreconfigure = true;
 
@@ -27,7 +42,12 @@ public class TheLeeryContract
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<RewardsSelection>("RewardSelect", "Choose Your Quest Reward", "Select Your Quest Reward for The Leary Contract.", RewardsSelection.Godly_Golden_Dragon_Axe)
+        new Option<RewardsSelection>(
+            "RewardSelect",
+            "Choose Your Quest Reward",
+            "Select Your Quest Reward for The Leary Contract.",
+            RewardsSelection.Godly_Golden_Dragon_Axe
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -54,10 +74,13 @@ public class TheLeeryContract
         ItemBase? item = null;
         if (!getAll)
         {
-            item = Core.EnsureLoad(554).Rewards.Find(x => x.ID == (int)Bot.Config.Get<RewardsSelection>("RewardSelect"));
+            item = Core.EnsureLoad(554)
+                .Rewards.Find(x => x.ID == (int)Bot.Config.Get<RewardsSelection>("RewardSelect"));
             if (item == null)
             {
-                Core.Logger($"{Bot.Config.Get<RewardsSelection>("RewardSelect")} not found in Quest Rewards");
+                Core.Logger(
+                    $"{Bot.Config.Get<RewardsSelection>("RewardSelect")} not found in Quest Rewards"
+                );
                 return;
             }
             if (Core.CheckInventory(item.Name))
@@ -73,16 +96,23 @@ public class TheLeeryContract
 
             if (!getAll)
                 Core.EnsureComplete(554, item!.ID);
-            else Core.EnsureCompleteChoose(554);
+            else
+                Core.EnsureCompleteChoose(554);
         }
     }
-    public readonly string[] Rewards = { "Ddog Sea Serpent Sword", "Godly Golden Dragon Axe", "Corpse Maker of Nulgath" };
+
+    public readonly string[] Rewards =
+    {
+        "Ddog Sea Serpent Sword",
+        "Godly Golden Dragon Axe",
+        "Corpse Maker of Nulgath",
+    };
+
     public enum RewardsSelection
     {
         Ddog_Sea_Serpent_Sword = 4766,
         Godly_Golden_Dragon_Axe = 4724,
         Corpse_Maker_of_Nulgath = 4764,
-
 
         All = 9999,
     };

@@ -11,7 +11,11 @@ public class ChaosLabStory
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -31,14 +35,14 @@ public class ChaosLabStory
         Story.PreLoad(this);
 
         //Survey the Damage 3556
-        Story.MapItemQuest(3556, "chaoslab", new[] { 2704, 2706, 2707, 2708, });
+        Story.MapItemQuest(3556, "chaoslab", new[] { 2704, 2706, 2707, 2708 });
 
         //Defeat Chaorrupted Alina 3557
         Core.EquipClass(ClassType.Farm);
         Story.KillQuest(3557, "chaoslab", "Chaos Alina");
 
         //Gather the Crystals 3558
-        Story.KillQuest(3558,"chaoslab", "Chaorrupted Moglin");
+        Story.KillQuest(3558, "chaoslab", "Chaorrupted Moglin");
 
         //Cleanse Alina 3559
         Story.KillQuest(3559, "chaoslab", "Chaos Alina");
@@ -57,13 +61,17 @@ public class ChaosLabStory
 
         //Ficus Your Powers 3564
         Story.MapItemQuest(3564, "chaoslab", 2705);
-        
+
         //Face the Hamster 3565
         Story.KillQuest(3565, "chaoslab", "Chaotic Server Hamster");
 
         //Cleaning Up 3566
-        Story.KillQuest(3566, "chaoslab", new[] { "Chaos Alina", "Chaos Beleen", "Chaos Cysero", "Chaos Artix"});
-        
+        Story.KillQuest(
+            3566,
+            "chaoslab",
+            new[] { "Chaos Alina", "Chaos Beleen", "Chaos Cysero", "Chaos Artix" }
+        );
+
         //MORE HAMSTER? 3567
         Story.KillQuest(3567, "chaoslab", "Ultra Chaotic Server Hamster");
     }

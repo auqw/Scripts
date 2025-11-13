@@ -27,10 +27,18 @@ public class Tutorial
             return;
 
         string[] achievements = new[]
-            {
-            "Combat", "Interact", "Quest", "Skill", "Shop",
-            "Enhance", "Rest", "World", "Emotes", "Travel"
-            };
+        {
+            "Combat",
+            "Interact",
+            "Quest",
+            "Skill",
+            "Shop",
+            "Enhance",
+            "Rest",
+            "World",
+            "Emotes",
+            "Travel",
+        };
 
         Core.Logger("Doing `Tutorial Badges` to look a bit more \"~legit~\".");
 
@@ -41,12 +49,12 @@ public class Tutorial
         {
             string achievement = achievements[i];
             if (Core.HasAchievement(22 + i))
-                Core.Logger($"Achievement: {achievement}, Status: {(Core.HasAchievement(22 + i) ? "✅" : "❌")}");
+                Core.Logger(
+                    $"Achievement: {achievement}, Status: {(Core.HasAchievement(22 + i) ? "✅" : "❌")}"
+                );
             Core.SetAchievement(22 + i);
             Bot.Wait.ForActionCooldown(GameActions.DoIA);
             Core.Sleep(1500);
         }
     }
-
-
 }

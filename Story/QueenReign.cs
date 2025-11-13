@@ -11,7 +11,12 @@ public class QueenReign
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -50,7 +55,7 @@ public class QueenReign
             Core.HuntMonster("queenreign", "Shadow Samurai", "Shadow Energy", 3);
             Story.MapItemQuest(8304, "queenreign", 9120);
         }
-        
+
         //Into the Yokai Realm
         Story.KillQuest(8305, "queenreign", "Tsukumo-Gami");
 

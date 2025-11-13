@@ -12,7 +12,11 @@ public class UndeadDoomParrot
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -34,10 +38,19 @@ public class UndeadDoomParrot
         Core.AddDrop(Core.QuestRewards(10425));
 
         // Drink Shipment Found!
-        Core.HuntMonster("piratewar", "Blazing Commander", Core.QuestRequirements<string>(10425)[2]);
+        Core.HuntMonster(
+            "piratewar",
+            "Blazing Commander",
+            Core.QuestRequirements<string>(10425)[2]
+        );
 
         // Doomknight Commander Defeated
-        Core.HuntMonster("piratewar", "Doomknight Commander", Core.QuestRequirements<string>(10425)[0], 10);
+        Core.HuntMonster(
+            "piratewar",
+            "Doomknight Commander",
+            Core.QuestRequirements<string>(10425)[0],
+            10
+        );
 
         // Shard of Ice
         Adv.BuyItem("pirates", 724, Core.QuestRequirements<string>(10425)[1]);
@@ -48,6 +61,5 @@ public class UndeadDoomParrot
         Core.EnsureComplete(10425);
         Bot.Wait.ForPickup(Core.QuestRewards(10425)[0]);
         Core.ToBank(Core.QuestRewards(10425));
-
     }
 }

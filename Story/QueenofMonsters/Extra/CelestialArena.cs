@@ -14,9 +14,24 @@ public class CelestialArenaQuests
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +49,6 @@ public class CelestialArenaQuests
         Arena11to20();
         Arena21to29();
         Adv.GearStore(true);
-
     }
 
     public void Arena1to10()
@@ -54,6 +68,7 @@ public class CelestialArenaQuests
         Story.KillQuest(6021, "celestialarenab", "Infernal Warrior Construct");
         Story.KillQuest(6022, "celestialarenab", "Infernal Warlord Construct");
     }
+
     public void Arena11to20()
     {
         if (Core.isCompletedBefore(6032))
@@ -71,6 +86,7 @@ public class CelestialArenaQuests
         Story.KillQuest(6031, "celestialarenac", "Shadow Lord Construct");
         Story.KillQuest(6032, "celestialarenac", "Desolich Construct");
     }
+
     public void Arena21to29()
     {
         if (Core.isCompletedBefore(6042))

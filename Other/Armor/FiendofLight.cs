@@ -16,9 +16,17 @@ public class FiendofLight
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreSepulchure CoreSS { get => _CoreSS ??= new CoreSepulchure(); set => _CoreSS = value; }
+    private static CoreSepulchure CoreSS
+    {
+        get => _CoreSS ??= new CoreSepulchure();
+        set => _CoreSS = value;
+    }
     private static CoreSepulchure _CoreSS;
 
     public bool DontPreconfigure = true;
@@ -26,7 +34,12 @@ public class FiendofLight
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<RewardsSelection>("selectReward", "Choose Your Reward", "", RewardsSelection.All)
+        new Option<RewardsSelection>(
+            "selectReward",
+            "Choose Your Reward",
+            "",
+            RewardsSelection.All
+        ),
     };
 
     public void ScriptMain(IScriptInterface Bot)
@@ -42,9 +55,13 @@ public class FiendofLight
     {
         RewardsSelection reward = Bot.Config!.Get<RewardsSelection>("RewardSelect");
         string[] chosenReward =
-            reward == RewardsSelection.All ?
-                Core.QuestRewards(6408) :
-                new[] { Core.QuestRewards(6408).First(x => x == reward.ToString().ToLower().Replace('_', ' ')) };
+            reward == RewardsSelection.All
+                ? Core.QuestRewards(6408)
+                : new[]
+                {
+                    Core.QuestRewards(6408)
+                        .First(x => x == reward.ToString().ToLower().Replace('_', ' ')),
+                };
 
         if (Core.CheckInventory(chosenReward))
             return;
@@ -75,6 +92,6 @@ public class FiendofLight
         Fiend_of_Light_Tail = 44287,
         Fiend_of_Light_Blade = 44288,
         Doomed_Fiend_of_Light_Blade = 44289,
-        Fiend_of_Light_Blades = 44290
+        Fiend_of_Light_Blades = 44290,
     };
 }

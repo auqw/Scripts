@@ -15,11 +15,23 @@ public class SpoilsofLightMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
     public static CoreAdvanced sAdv
     {
@@ -28,18 +40,30 @@ public class SpoilsofLightMerge
     }
     public static CoreAdvanced _sAdv;
 
-
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Apprentice of the Light", "Medal of Light", "Furred Ruff of the Light", "Apprentice of the Light Hair", "Apprentice of the Light Locks", "Medal of Honor", "Citadel's Light Blade", "Medal of Justice" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Apprentice of the Light",
+                "Medal of Light",
+                "Furred Ruff of the Light",
+                "Apprentice of the Light Hair",
+                "Apprentice of the Light Locks",
+                "Medal of Honor",
+                "Citadel's Light Blade",
+                "Medal of Justice",
+            }
+        );
 
         Core.SetOptions();
 
@@ -77,7 +101,7 @@ public class SpoilsofLightMerge
                         stopBot: shouldStop
                     );
                     break;
-                #endregion
+        #endregion
 
                 case "Apprentice of the Light":
                 case "Furred Ruff of the Light":
@@ -93,7 +117,15 @@ public class SpoilsofLightMerge
 
                     // Combine all relevant quest IDs into one registration
                     Core.RegisterQuests(6560, 6561, 6562, 6563, 6566);
-                    Core.KillMonster("lightguardwar", "r2", "Left", "Citadel Crusader", req.Name, req.Quantity, isTemp: req.Temp);
+                    Core.KillMonster(
+                        "lightguardwar",
+                        "r2",
+                        "Left",
+                        "Citadel Crusader",
+                        req.Name,
+                        req.Quantity,
+                        isTemp: req.Temp
+                    );
 
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
@@ -104,19 +136,89 @@ public class SpoilsofLightMerge
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("45396", "Crusader of the Light", "Mode: [select] only\nShould the bot buy \"Crusader of the Light\" ?", false),
-        new Option<bool>("45399", "Furred Cape of the Light", "Mode: [select] only\nShould the bot buy \"Furred Cape of the Light\" ?", false),
-        new Option<bool>("45397", "Runed Crusader Morph", "Mode: [select] only\nShould the bot buy \"Runed Crusader Morph\" ?", false),
-        new Option<bool>("45398", "Runed Crusader Locks", "Mode: [select] only\nShould the bot buy \"Runed Crusader Locks\" ?", false),
-        new Option<bool>("45400", "High Crusader", "Mode: [select] only\nShould the bot buy \"High Crusader\" ?", false),
-        new Option<bool>("45401", "High Crusader Morph", "Mode: [select] only\nShould the bot buy \"High Crusader Morph\" ?", false),
-        new Option<bool>("45402", "High Crusader Locks", "Mode: [select] only\nShould the bot buy \"High Crusader Locks\" ?", false),
-        new Option<bool>("45404", "High Crusader Light Blade", "Mode: [select] only\nShould the bot buy \"High Crusader Light Blade\" ?", false),
-        new Option<bool>("45403", "Blade + Ruff of the Light", "Mode: [select] only\nShould the bot buy \"Blade + Ruff of the Light\" ?", false),
-        new Option<bool>("45405", "Inquisitor of the Light", "Mode: [select] only\nShould the bot buy \"Inquisitor of the Light\" ?", false),
-        new Option<bool>("45406", "Inquisitor's Helm of the Light", "Mode: [select] only\nShould the bot buy \"Inquisitor's Helm of the Light\" ?", false),
-        new Option<bool>("45407", "Inquisitor's Locks of the Light", "Mode: [select] only\nShould the bot buy \"Inquisitor's Locks of the Light\" ?", false),
-        new Option<bool>("45409", "Inquisitor's Bright Blade", "Mode: [select] only\nShould the bot buy \"Inquisitor's Bright Blade\" ?", false),
-        new Option<bool>("45408", "Ruff, Blade and Cape of the Light", "Mode: [select] only\nShould the bot buy \"Ruff, Blade and Cape of the Light\" ?", false),
+        new Option<bool>(
+            "45396",
+            "Crusader of the Light",
+            "Mode: [select] only\nShould the bot buy \"Crusader of the Light\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45399",
+            "Furred Cape of the Light",
+            "Mode: [select] only\nShould the bot buy \"Furred Cape of the Light\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45397",
+            "Runed Crusader Morph",
+            "Mode: [select] only\nShould the bot buy \"Runed Crusader Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45398",
+            "Runed Crusader Locks",
+            "Mode: [select] only\nShould the bot buy \"Runed Crusader Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45400",
+            "High Crusader",
+            "Mode: [select] only\nShould the bot buy \"High Crusader\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45401",
+            "High Crusader Morph",
+            "Mode: [select] only\nShould the bot buy \"High Crusader Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45402",
+            "High Crusader Locks",
+            "Mode: [select] only\nShould the bot buy \"High Crusader Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45404",
+            "High Crusader Light Blade",
+            "Mode: [select] only\nShould the bot buy \"High Crusader Light Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45403",
+            "Blade + Ruff of the Light",
+            "Mode: [select] only\nShould the bot buy \"Blade + Ruff of the Light\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45405",
+            "Inquisitor of the Light",
+            "Mode: [select] only\nShould the bot buy \"Inquisitor of the Light\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45406",
+            "Inquisitor's Helm of the Light",
+            "Mode: [select] only\nShould the bot buy \"Inquisitor's Helm of the Light\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45407",
+            "Inquisitor's Locks of the Light",
+            "Mode: [select] only\nShould the bot buy \"Inquisitor's Locks of the Light\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45409",
+            "Inquisitor's Bright Blade",
+            "Mode: [select] only\nShould the bot buy \"Inquisitor's Bright Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "45408",
+            "Ruff, Blade and Cape of the Light",
+            "Mode: [select] only\nShould the bot buy \"Ruff, Blade and Cape of the Light\" ?",
+            false
+        ),
     };
 }

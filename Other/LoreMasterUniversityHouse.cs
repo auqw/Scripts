@@ -11,7 +11,12 @@ public class LoreMasterUniversity
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -69,7 +74,15 @@ public class LoreMasterUniversity
         Core.BuyItem("librarium", 1403, "Loremaster Tent");
     }
 
-    private void getHouse(string type, int quest, int fabric, int board, int nail, int paint = 0, int varnish = 0)
+    private void getHouse(
+        string type,
+        int quest,
+        int fabric,
+        int board,
+        int nail,
+        int paint = 0,
+        int varnish = 0
+    )
     {
         Core.AddDrop("Loremaster " + type);
         Core.FarmingLogger("Loremaster " + type, 1);

@@ -13,7 +13,12 @@ public class CelestialStarMageSet
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreSepulchure CoreSS { get => _CoreSS ??= new CoreSepulchure(); set => _CoreSS = value; }    private static CoreSepulchure _CoreSS;
+    private static CoreSepulchure CoreSS
+    {
+        get => _CoreSS ??= new CoreSepulchure();
+        set => _CoreSS = value;
+    }
+    private static CoreSepulchure _CoreSS;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -11,7 +11,12 @@ public class LovesCurse
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,7 +38,16 @@ public class LovesCurse
         Story.ChainQuest(1665);
 
         //Find the Rest of J6 (1656)
-        Story.KillQuest(1656, "curseshore", new[] { "Escaped Ghostly Zardman", "Escaped Ghostly Zardman", "Escaped Ghostly Zardman" });
+        Story.KillQuest(
+            1656,
+            "curseshore",
+            new[]
+            {
+                "Escaped Ghostly Zardman",
+                "Escaped Ghostly Zardman",
+                "Escaped Ghostly Zardman",
+            }
+        );
 
         //Mer'Angel Hunting (1657)
         Story.MapItemQuest(1657, "curseshore", 865);
@@ -57,7 +71,11 @@ public class LovesCurse
         Story.ChainQuest(1668);
 
         //Find the Source of the Curse (1661)
-        Story.KillQuest(1661, "cursered", new[] { "Cyclops Warlord Ghost", "Cyclops Warlord Ghost" });
+        Story.KillQuest(
+            1661,
+            "cursered",
+            new[] { "Cyclops Warlord Ghost", "Cyclops Warlord Ghost" }
+        );
 
         //Defeat the CurseMaker (1662)
         Story.KillQuest(1662, "mercutio", "*");

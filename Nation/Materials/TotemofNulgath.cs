@@ -12,7 +12,12 @@ using Skua.Core.Options;
 public class TotemofNulgath
 {
     public CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     // public string OptionsStorage = "TotemofNulgath";
     // public bool DontPreconfigure = true;
@@ -21,7 +26,6 @@ public class TotemofNulgath
     //     new Option<bool>("Choose", "Taro[true]/VoucherItem[False]", "Pets will be Checked first, then; Choose Between the 2 methods (Taro[true] is harder, Voucher Item[false] takes longer)", false),
     //     CoreBots.Instance.SkipOptions
     // };
-
 
     public void ScriptMain(IScriptInterface bot)
     {

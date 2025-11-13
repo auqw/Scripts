@@ -14,25 +14,58 @@ public class TitanStrikeGearMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Destroyer Essence", "Titanic Destroyer Blade", "Titanic Destroyer Morph", "Titanic Tincture", "Heroic Titan's Greatsword", "Titan Paladin", "Vindicator Titan XL", "Vindicator Titan's Axes", "Titan Paladin's Blades", "Titan Drakath's Blade", "Titan Paladin's Helm", "Vindicator Titan's Helm", "Titan Drakath's Morph", "Titan Paladin's Cloak", "Vindicator Titan's Cloak", "Chaorrupted AntiTitan Corps", "Titan Hunter" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Destroyer Essence",
+                "Titanic Destroyer Blade",
+                "Titanic Destroyer Morph",
+                "Titanic Tincture",
+                "Heroic Titan's Greatsword",
+                "Titan Paladin",
+                "Vindicator Titan XL",
+                "Vindicator Titan's Axes",
+                "Titan Paladin's Blades",
+                "Titan Drakath's Blade",
+                "Titan Paladin's Helm",
+                "Vindicator Titan's Helm",
+                "Titan Drakath's Morph",
+                "Titan Paladin's Cloak",
+                "Vindicator Titan's Cloak",
+                "Chaorrupted AntiTitan Corps",
+                "Titan Hunter",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -49,7 +82,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,9 +95,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Destroyer Essence":
                 case "Titanic Destroyer Blade":
@@ -78,7 +118,11 @@ private static CoreAdvanced _sAdv;
 
                 case "Heroic Titan's Greatsword":
                     if (Core.isCompletedBefore(8776))
-                        Core.Logger($"{req.Name} is obtained from a One-Time only quest that you have already completed. Please check your BuyBack", messageBox: true, stopBot: true);
+                        Core.Logger(
+                            $"{req.Name} is obtained from a One-Time only quest that you have already completed. Please check your BuyBack",
+                            messageBox: true,
+                            stopBot: true
+                        );
 
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -94,39 +138,102 @@ private static CoreAdvanced _sAdv;
                 case "Titan Paladin":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 100, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Chaorrupted Bandit",
+                        "AntiTitan Supplies",
+                        100,
+                        false
+                    );
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 40, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Vindicator",
+                        "Titanic Fluid",
+                        40,
+                        false
+                    );
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
                 case "Vindicator Titan XL":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 100, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Chaorrupted Bandit",
+                        "AntiTitan Supplies",
+                        100,
+                        false
+                    );
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 40, false);
-                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Vindicator Titan", isTemp: false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Vindicator",
+                        "Titanic Fluid",
+                        40,
+                        false
+                    );
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Vindicator",
+                        "Vindicator Titan",
+                        isTemp: false
+                    );
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
                 case "Vindicator Titan's Axes":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 50, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Chaorrupted Bandit",
+                        "AntiTitan Supplies",
+                        50,
+                        false
+                    );
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 20, false);
-                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Vindicator Titan's Axe", isTemp: false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Vindicator",
+                        "Titanic Fluid",
+                        20,
+                        false
+                    );
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Vindicator",
+                        "Vindicator Titan's Axe",
+                        isTemp: false
+                    );
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
                 case "Titan Paladin's Blades":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 50, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Chaorrupted Bandit",
+                        "AntiTitan Supplies",
+                        50,
+                        false
+                    );
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 20, false);
-                    Core.HuntMonster("titanattack", "Titanic Paladin", "Titan Paladin's Blade", isTemp: false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Vindicator",
+                        "Titanic Fluid",
+                        20,
+                        false
+                    );
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Paladin",
+                        "Titan Paladin's Blade",
+                        isTemp: false
+                    );
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
@@ -135,22 +242,45 @@ private static CoreAdvanced _sAdv;
                     Core.HuntMonster("titandrakath", "Titan Drakath", req.Name, quant, false);
                     break;
 
-
                 case "Titan Paladin's Helm":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 25, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Chaorrupted Bandit",
+                        "AntiTitan Supplies",
+                        25,
+                        false
+                    );
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 10, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Vindicator",
+                        "Titanic Fluid",
+                        10,
+                        false
+                    );
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
                 case "Vindicator Titan's Helm":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 25, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Chaorrupted Bandit",
+                        "AntiTitan Supplies",
+                        25,
+                        false
+                    );
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 10, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Vindicator",
+                        "Titanic Fluid",
+                        10,
+                        false
+                    );
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
@@ -162,18 +292,42 @@ private static CoreAdvanced _sAdv;
                 case "Titan Paladin's Cloak":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 25, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Chaorrupted Bandit",
+                        "AntiTitan Supplies",
+                        25,
+                        false
+                    );
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 10, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Vindicator",
+                        "Titanic Fluid",
+                        10,
+                        false
+                    );
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
                 case "Vindicator Titan's Cloak":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("titanattack", "Chaorrupted Bandit", "AntiTitan Supplies", 25, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Chaorrupted Bandit",
+                        "AntiTitan Supplies",
+                        25,
+                        false
+                    );
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("titanattack", "Titanic Vindicator", "Titanic Fluid", 10, false);
+                    Core.HuntMonster(
+                        "titanattack",
+                        "Titanic Vindicator",
+                        "Titanic Fluid",
+                        10,
+                        false
+                    );
                     Adv.BuyItem("titanattack", 2149, req.Name);
                     break;
 
@@ -185,25 +339,89 @@ private static CoreAdvanced _sAdv;
                 case "Titan Hunter":
                     Adv.BuyItem("artistalley", 729, req.Name);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("68002", "Titanic Destroyer", "Mode: [select] only\nShould the bot buy \"Titanic Destroyer\" ?", false),
-        new Option<bool>("68007", "Titanic Destroyer Blades", "Mode: [select] only\nShould the bot buy \"Titanic Destroyer Blades\" ?", false),
-        new Option<bool>("68003", "Titanic Destroyer Helm", "Mode: [select] only\nShould the bot buy \"Titanic Destroyer Helm\" ?", false),
-        new Option<bool>("68005", "Titanic Destroyer Tentacles", "Mode: [select] only\nShould the bot buy \"Titanic Destroyer Tentacles\" ?", false),
-        new Option<bool>("71242", "Heroic Titan", "Mode: [select] only\nShould the bot buy \"Heroic Titan\" ?", false),
-        new Option<bool>("71243", "Heroic Titan's Helm", "Mode: [select] only\nShould the bot buy \"Heroic Titan's Helm\" ?", false),
-        new Option<bool>("71244", "Heroic Titan's Cape", "Mode: [select] only\nShould the bot buy \"Heroic Titan's Cape\" ?", false),
-        new Option<bool>("71246", "Heroic Titan's Greatswords", "Mode: [select] only\nShould the bot buy \"Heroic Titan's Greatswords\" ?", false),
-        new Option<bool>("68008", "Titan Drakath", "Mode: [select] only\nShould the bot buy \"Titan Drakath\" ?", false),
-        new Option<bool>("68013", "Titan Drakath's Blades", "Mode: [select] only\nShould the bot buy \"Titan Drakath's Blades\" ?", false),
-        new Option<bool>("68009", "Titan Drakath's Helm", "Mode: [select] only\nShould the bot buy \"Titan Drakath's Helm\" ?", false),
-        new Option<bool>("68011", "Titan Drakath's Tentacles", "Mode: [select] only\nShould the bot buy \"Titan Drakath's Tentacles\" ?", false),
-        new Option<bool>("71496", "AntiTitan Corps", "Mode: [select] only\nShould the bot buy \"AntiTitan Corps\" ?", false),
+        new Option<bool>(
+            "68002",
+            "Titanic Destroyer",
+            "Mode: [select] only\nShould the bot buy \"Titanic Destroyer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68007",
+            "Titanic Destroyer Blades",
+            "Mode: [select] only\nShould the bot buy \"Titanic Destroyer Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68003",
+            "Titanic Destroyer Helm",
+            "Mode: [select] only\nShould the bot buy \"Titanic Destroyer Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68005",
+            "Titanic Destroyer Tentacles",
+            "Mode: [select] only\nShould the bot buy \"Titanic Destroyer Tentacles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71242",
+            "Heroic Titan",
+            "Mode: [select] only\nShould the bot buy \"Heroic Titan\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71243",
+            "Heroic Titan's Helm",
+            "Mode: [select] only\nShould the bot buy \"Heroic Titan's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71244",
+            "Heroic Titan's Cape",
+            "Mode: [select] only\nShould the bot buy \"Heroic Titan's Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71246",
+            "Heroic Titan's Greatswords",
+            "Mode: [select] only\nShould the bot buy \"Heroic Titan's Greatswords\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68008",
+            "Titan Drakath",
+            "Mode: [select] only\nShould the bot buy \"Titan Drakath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68013",
+            "Titan Drakath's Blades",
+            "Mode: [select] only\nShould the bot buy \"Titan Drakath's Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68009",
+            "Titan Drakath's Helm",
+            "Mode: [select] only\nShould the bot buy \"Titan Drakath's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68011",
+            "Titan Drakath's Tentacles",
+            "Mode: [select] only\nShould the bot buy \"Titan Drakath's Tentacles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "71496",
+            "AntiTitan Corps",
+            "Mode: [select] only\nShould the bot buy \"AntiTitan Corps\" ?",
+            false
+        ),
     };
 }

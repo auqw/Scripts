@@ -15,21 +15,36 @@ public class MogGLOWweenMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +71,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +84,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Glowball":
                     Core.FarmingLogger(req.Name, quant);
@@ -83,22 +105,71 @@ public static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("20753", "Green Glowchucks", "Mode: [select] only\nShould the bot buy \"Green Glowchucks\" ?", false),
-        new Option<bool>("20756", "Blue Glowchucks", "Mode: [select] only\nShould the bot buy \"Blue Glowchucks\" ?", false),
-        new Option<bool>("20758", "Pink Glowchucks", "Mode: [select] only\nShould the bot buy \"Pink Glowchucks\" ?", false),
-        new Option<bool>("20759", "Orange Glowchucks", "Mode: [select] only\nShould the bot buy \"Orange Glowchucks\" ?", false),
-        new Option<bool>("36677", "Glow Dreads", "Mode: [select] only\nShould the bot buy \"Glow Dreads\" ?", false),
-        new Option<bool>("36676", "Glow Falls", "Mode: [select] only\nShould the bot buy \"Glow Falls\" ?", false),
-        new Option<bool>("36675", "Glow Smasher", "Mode: [select] only\nShould the bot buy \"Glow Smasher\" ?", false),
-        new Option<bool>("36674", "Blade of Cursed Glow", "Mode: [select] only\nShould the bot buy \"Blade of Cursed Glow\" ?", false),
-        new Option<bool>("36673", "Glow Flail", "Mode: [select] only\nShould the bot buy \"Glow Flail\" ?", false),
-        new Option<bool>("36672", "Blacklight Bone Club", "Mode: [select] only\nShould the bot buy \"Blacklight Bone Club\" ?", false),
+        new Option<bool>(
+            "20753",
+            "Green Glowchucks",
+            "Mode: [select] only\nShould the bot buy \"Green Glowchucks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "20756",
+            "Blue Glowchucks",
+            "Mode: [select] only\nShould the bot buy \"Blue Glowchucks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "20758",
+            "Pink Glowchucks",
+            "Mode: [select] only\nShould the bot buy \"Pink Glowchucks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "20759",
+            "Orange Glowchucks",
+            "Mode: [select] only\nShould the bot buy \"Orange Glowchucks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "36677",
+            "Glow Dreads",
+            "Mode: [select] only\nShould the bot buy \"Glow Dreads\" ?",
+            false
+        ),
+        new Option<bool>(
+            "36676",
+            "Glow Falls",
+            "Mode: [select] only\nShould the bot buy \"Glow Falls\" ?",
+            false
+        ),
+        new Option<bool>(
+            "36675",
+            "Glow Smasher",
+            "Mode: [select] only\nShould the bot buy \"Glow Smasher\" ?",
+            false
+        ),
+        new Option<bool>(
+            "36674",
+            "Blade of Cursed Glow",
+            "Mode: [select] only\nShould the bot buy \"Blade of Cursed Glow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "36673",
+            "Glow Flail",
+            "Mode: [select] only\nShould the bot buy \"Glow Flail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "36672",
+            "Blacklight Bone Club",
+            "Mode: [select] only\nShould the bot buy \"Blacklight Bone Club\" ?",
+            false
+        ),
     };
 }

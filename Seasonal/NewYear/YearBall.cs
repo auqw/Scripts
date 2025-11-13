@@ -25,7 +25,8 @@ public class YearBall
         if (!Core.isSeasonalMapActive("newyear"))
             return;
 
-        string[] ACNonmem = {
+        string[] ACNonmem =
+        {
             "AntiRetrograde Clock",
             "Aurora Caller",
             "Aurora Caller's Bow",
@@ -55,7 +56,7 @@ public class YearBall
             "Party Time Twig Pet",
             "Sheathed Glacial Knight Cape",
             "Timeseeker's Blades",
-            "Timeseeker's Staff"
+            "Timeseeker's Staff",
         };
 
         if (Core.CheckInventory(ACNonmem, toInv: false))
@@ -70,5 +71,4 @@ public class YearBall
             Core.ToBank(Reward);
         }
     }
-
 }

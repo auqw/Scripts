@@ -17,21 +17,37 @@ public class UndineCommissaryMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
     private static CoreAOR _AOR;
-
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     // If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +72,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +85,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Undine Base Scrip":
                     Core.FarmingLogger(req.Name, quant);
@@ -81,28 +104,89 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(9252);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("sunlightzone", "Marine Snow", "Marine Sample", log: false);
-                        Core.HuntMonster("sunlightzone", "Infernal Illusion", "Infernal Sample", 10, log: false);
-                        Core.HuntMonster("sunlightzone", "Seraphic Illusion", "Seraphic Sample", 10, log: false);
+                        Core.HuntMonster(
+                            "sunlightzone",
+                            "Marine Snow",
+                            "Marine Sample",
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "sunlightzone",
+                            "Infernal Illusion",
+                            "Infernal Sample",
+                            10,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "sunlightzone",
+                            "Seraphic Illusion",
+                            "Seraphic Sample",
+                            10,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("77957", "Fa's Casual Ensemble", "Mode: [select] only\nShould the bot buy \"Fa's Casual Ensemble\" ?", false),
-        new Option<bool>("77960", "Mi's Casual Ensemble", "Mode: [select] only\nShould the bot buy \"Mi's Casual Ensemble\" ?", false),
-        new Option<bool>("77963", "Undine Doctor", "Mode: [select] only\nShould the bot buy \"Undine Doctor\" ?", false),
-        new Option<bool>("77964", "Undine Defence Director", "Mode: [select] only\nShould the bot buy \"Undine Defence Director\" ?", false),
-        new Option<bool>("77965", "Undine Researcher", "Mode: [select] only\nShould the bot buy \"Undine Researcher\" ?", false),
-        new Option<bool>("77958", "Fa's Clean Bob Cut", "Mode: [select] only\nShould the bot buy \"Fa's Clean Bob Cut\" ?", false),
-        new Option<bool>("77959", "Fa's Clean Bob Cut Horn", "Mode: [select] only\nShould the bot buy \"Fa's Clean Bob Cut Horn\" ?", false),
-        new Option<bool>("77961", "Song's High Ponytail Glasses", "Mode: [select] only\nShould the bot buy \"Song's High Ponytail Glasses\" ?", false),
-        new Option<bool>("77962", "Song's High Ponytail", "Mode: [select] only\nShould the bot buy \"Song's High Ponytail\" ?", false),
+        new Option<bool>(
+            "77957",
+            "Fa's Casual Ensemble",
+            "Mode: [select] only\nShould the bot buy \"Fa's Casual Ensemble\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77960",
+            "Mi's Casual Ensemble",
+            "Mode: [select] only\nShould the bot buy \"Mi's Casual Ensemble\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77963",
+            "Undine Doctor",
+            "Mode: [select] only\nShould the bot buy \"Undine Doctor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77964",
+            "Undine Defence Director",
+            "Mode: [select] only\nShould the bot buy \"Undine Defence Director\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77965",
+            "Undine Researcher",
+            "Mode: [select] only\nShould the bot buy \"Undine Researcher\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77958",
+            "Fa's Clean Bob Cut",
+            "Mode: [select] only\nShould the bot buy \"Fa's Clean Bob Cut\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77959",
+            "Fa's Clean Bob Cut Horn",
+            "Mode: [select] only\nShould the bot buy \"Fa's Clean Bob Cut Horn\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77961",
+            "Song's High Ponytail Glasses",
+            "Mode: [select] only\nShould the bot buy \"Song's High Ponytail Glasses\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77962",
+            "Song's High Ponytail",
+            "Mode: [select] only\nShould the bot buy \"Song's High Ponytail\" ?",
+            false
+        ),
     };
 }

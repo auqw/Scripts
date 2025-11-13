@@ -11,7 +11,11 @@ public class Story3
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -32,7 +36,7 @@ public class Story3
         Story.KillQuest(000, "mapname", "MonsterName");
         Story.KillQuest(000, "mapname", new[] { "Monstername", "Monstername" });
         Story.MapItemQuest(000, "mapname", 1, 1);
-        Story.MapItemQuest(000, "mapname", new[] { 000, 000, 000, });
+        Story.MapItemQuest(000, "mapname", new[] { 000, 000, 000 });
         Story.ChainQuest(000);
     }
 }

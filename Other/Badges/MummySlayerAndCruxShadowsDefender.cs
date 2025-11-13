@@ -12,7 +12,12 @@ public class MummySlayerAndCruxShadowsDefender
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CruxShip CS { get => _CS ??= new CruxShip(); set => _CS = value; }    private static CruxShip _CS;
+    private static CruxShip CS
+    {
+        get => _CS ??= new CruxShip();
+        set => _CS = value;
+    }
+    private static CruxShip _CS;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,7 +38,5 @@ public class MummySlayerAndCruxShadowsDefender
 
         Core.Logger("Doing CruxShip story for Mummy Slayer and CruxShadows Defender badge");
         CS.StoryLine(true);
-
     }
-
 }

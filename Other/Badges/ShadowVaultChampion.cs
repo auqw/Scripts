@@ -9,11 +9,15 @@ tags: null
 using Skua.Core.Interfaces;
 
 public class ShadowVaultChampion
-
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static ShadowVault SV { get => _SV ??= new ShadowVault(); set => _SV = value; }    private static ShadowVault _SV;
+    private static ShadowVault SV
+    {
+        get => _SV ??= new ShadowVault();
+        set => _SV = value;
+    }
+    private static ShadowVault _SV;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +38,6 @@ public class ShadowVaultChampion
 
         Core.Logger($"Doing ShadowVault story for {badge} badge");
         SV.StoryLine();
-
     }
 
     private string badge = "ShadowScythe Champion";

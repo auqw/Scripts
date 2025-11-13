@@ -12,7 +12,12 @@ public class SanctifiedArbiter
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,7 +38,6 @@ public class SanctifiedArbiter
         if (Core.CheckInventory(Rewards))
             return;
 
-
         for (int i = 0; i < Rewards.Length; i++)
         {
             if (!Core.CheckInventory(Rewards[i]))
@@ -44,7 +48,12 @@ public class SanctifiedArbiter
 
                 Core.EquipClass(ClassType.Farm);
                 Farm.BattleUnderB("Bone Dust", 500);
-                Core.HuntMonster("Doomwood", "Doomwood Ectomancer", "Raw Essence of the Undead", 10);
+                Core.HuntMonster(
+                    "Doomwood",
+                    "Doomwood Ectomancer",
+                    "Raw Essence of the Undead",
+                    10
+                );
 
                 Core.EnsureCompleteChoose(8114, new[] { Rewards[i] });
             }

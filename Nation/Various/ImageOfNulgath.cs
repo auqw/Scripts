@@ -20,14 +20,41 @@ public class ImageOfNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static JuggernautItemsofNulgath Jug { get => _Jug ??= new JuggernautItemsofNulgath(); set => _Jug = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static JuggernautItemsofNulgath Jug
+    {
+        get => _Jug ??= new JuggernautItemsofNulgath();
+        set => _Jug = value;
+    }
     private static JuggernautItemsofNulgath _Jug;
-    private static TempleDelve TD { get => _TD ??= new TempleDelve(); set => _TD = value; }
+    private static TempleDelve TD
+    {
+        get => _TD ??= new TempleDelve();
+        set => _TD = value;
+    }
     private static TempleDelve _TD;
-    private static VoidChasm VC { get => _VC ??= new VoidChasm(); set => _VC = value; }
+    private static VoidChasm VC
+    {
+        get => _VC ??= new VoidChasm();
+        set => _VC = value;
+    }
     private static VoidChasm _VC;
 
     public void ScriptMain(IScriptInterface bot)
@@ -44,7 +71,9 @@ public class ImageOfNulgath
         if (Core.CheckInventory(Core.QuestRewards(10019)))
             return;
 
-        string[] acceptReqs = Core.EnsureLoad(10019).AcceptRequirements.Select(req => req.Name).ToArray();
+        string[] acceptReqs = Core.EnsureLoad(10019)
+            .AcceptRequirements.Select(req => req.Name)
+            .ToArray();
         string[] reqs = Core.EnsureLoad(10019).Requirements.Select(req => req.Name).ToArray();
 
         Core.AddDrop((acceptReqs).Concat(reqs).ToArray());
@@ -62,19 +91,27 @@ public class ImageOfNulgath
 
             // Doomed Extract
             TD.Storyline();
-            Core.HuntMonsterQuest(9090, new[] {
-                ("templedelve", "Infested Nation", ClassType.Farm),
-                ("templedelve", "Doomed Fiend", ClassType.Solo),
-                ("templedelve", "Delirious Elemental", ClassType.Farm),
-                 });
+            Core.HuntMonsterQuest(
+                9090,
+                new[]
+                {
+                    ("templedelve", "Infested Nation", ClassType.Farm),
+                    ("templedelve", "Doomed Fiend", ClassType.Solo),
+                    ("templedelve", "Delirious Elemental", ClassType.Farm),
+                }
+            );
 
             // Void Remnant
             VC.Storyline();
-            Core.HuntMonsterQuest(9553, new[] {
-                ("voidchasm", "Carcano", ClassType.Solo),
-                ("voidchasm", "Carnage", ClassType.Solo),
-                ("voidchasm", "The Hushed", ClassType.Farm),
-            });
+            Core.HuntMonsterQuest(
+                9553,
+                new[]
+                {
+                    ("voidchasm", "Carcano", ClassType.Solo),
+                    ("voidchasm", "Carnage", ClassType.Solo),
+                    ("voidchasm", "The Hushed", ClassType.Farm),
+                }
+            );
         }
 
         List<ItemBase> RewardOptions = Core.EnsureLoad(10019).Rewards;
@@ -93,15 +130,22 @@ public class ImageOfNulgath
 
             Core.EnsureAccept(10019);
             Core.HuntMonster("fiendshard", "Dirtlicker", "Dirtlicker's Reward", isTemp: false);
-            Core.HuntMonster("shadowblast", "Crag and Bamboozle", "Crag and Bamboozle's Reward", isTemp: false);
+            Core.HuntMonster(
+                "shadowblast",
+                "Crag and Bamboozle",
+                "Crag and Bamboozle's Reward",
+                isTemp: false
+            );
             Core.HuntMonster("citadel", "Death's Head", "Death's Head Reward", isTemp: false);
-            Core.HuntMonster("underlair", "ArchFiend DragonKnight", "ArchFiend DragonKnight's Reward", isTemp: false);
+            Core.HuntMonster(
+                "underlair",
+                "ArchFiend DragonKnight",
+                "ArchFiend DragonKnight's Reward",
+                isTemp: false
+            );
             Core.HuntMonster("evilwardage", "Klunk", "Klunk's Reward", isTemp: false);
             Core.EnsureComplete(10019, Reward.ID);
             Core.ToBank(Reward.Name);
         }
-
     }
 }
-
-

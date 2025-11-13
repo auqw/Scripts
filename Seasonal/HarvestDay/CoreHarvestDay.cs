@@ -11,22 +11,27 @@ public class CoreHarvestDay
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
     public string[] UMManaHarvest { get; private set; }
 
     public CoreHarvestDay()
     {
-        UMManaHarvest = new[] {
-    "Azoth Pumpkin", // UseableMonsters[0],
-	"Cosmic Egg", // UseableMonsters[1],
-	"Ascended Chickencow", // UseableMonsters[2],
-	"Apple of Life", // UseableMonsters[3],
-	"Bunch of Mananas", // UseableMonsters[4],
-	"Cookie Monster", // UseableMonsters[5],
-	"Burgoo", // UseableMonsters[6],
-	"Mananxiety", // UseableMonsters[7]
-};
+        UMManaHarvest = new[]
+        {
+            "Azoth Pumpkin", // UseableMonsters[0],
+            "Cosmic Egg", // UseableMonsters[1],
+            "Ascended Chickencow", // UseableMonsters[2],
+            "Apple of Life", // UseableMonsters[3],
+            "Bunch of Mananas", // UseableMonsters[4],
+            "Cookie Monster", // UseableMonsters[5],
+            "Burgoo", // UseableMonsters[6],
+            "Mananxiety", // UseableMonsters[7]
+        };
     }
 
     public void ScriptMain(IScriptInterface bot)
@@ -137,7 +142,6 @@ public class CoreHarvestDay
 
         Harvest();
 
-
         Story.PreLoad(this);
 
         //Pain-Apple! 139
@@ -169,7 +173,6 @@ public class CoreHarvestDay
             Core.HuntMonster("uppercity", "Rhino Beetle", "Chocolate Covered Beetle", log: false);
             Core.EnsureComplete(430);
         }
-
     }
 
     public void Float()
@@ -180,7 +183,6 @@ public class CoreHarvestDay
             return;
 
         Turdraken();
-
 
         Story.PreLoad(this);
 
@@ -198,14 +200,12 @@ public class CoreHarvestDay
 
         //The Final Pilgrimage 897
         Story.KillQuest(897, "float", "Twilly Balloon");
-
     }
 
     public void Banquet()
     {
         if (!Core.isSeasonalMapActive("banquet") || Core.isCompletedBefore(1436))
             return;
-
 
         Story.PreLoad(this);
 
@@ -220,7 +220,6 @@ public class CoreHarvestDay
 
         //Chaorrupted Captain Encounter 1436
         Story.KillQuest(1436, "banquet", "Hungry Knight Captain");
-
     }
 
     public void Grams()
@@ -229,7 +228,6 @@ public class CoreHarvestDay
             return;
 
         Banquet();
-
 
         Story.PreLoad(this);
         //Bandits are Bad News 1441
@@ -254,7 +252,6 @@ public class CoreHarvestDay
 
         Grams();
 
-
         Story.PreLoad(this);
 
         //Chaos Critters in the Crops 1437
@@ -270,16 +267,17 @@ public class CoreHarvestDay
 
         //28 Battles Later... 1440
         Story.KillQuest(1440, "artixhome", "Zombeh");
-
     }
 
     public void FoulFarm()
     {
-        if (!Core.isSeasonalMapActive("foulfarm") || (Core.isCompletedBefore(6090) && Core.CheckInventory("Muddy Soulflare")))
+        if (
+            !Core.isSeasonalMapActive("foulfarm")
+            || (Core.isCompletedBefore(6090) && Core.CheckInventory("Muddy Soulflare"))
+        )
             return;
 
         ArtixHome();
-
 
         Story.PreLoad(this);
 
@@ -313,7 +311,6 @@ public class CoreHarvestDay
 
         //Face the Rider 6090
         Story.KillQuest(6090, "Dullahan", "Wretched Rider");
-
     }
 
     public void KillerKitchen()
@@ -329,7 +326,7 @@ public class CoreHarvestDay
         //Cornstalkerbread Stuffing 3210
         Story.KillQuest(3210, "harvest", new[] { "Corn Stalker", "Corn Stalker" });
 
-        //Super Special Chutney 3211 
+        //Super Special Chutney 3211
         Story.KillQuest(3211, "harvest", new[] { "Bad Apple", "Grapes of Wrath" });
 
         //Oishii's Secret Ingredient 3212
@@ -340,7 +337,6 @@ public class CoreHarvestDay
 
         //Defeat Ultra Turdrakolich 3214
         Story.KillQuest(3214, "killerkitchen", "Ultra Turdrakolich");
-
     }
 
     public void FurbleFeast()
@@ -383,7 +379,6 @@ public class CoreHarvestDay
 
         // Take Him Out 7224
         Story.KillQuest(7224, "furblefeast", "Furborg");
-
     }
 
     public void FurborgShip()
@@ -392,7 +387,6 @@ public class CoreHarvestDay
             return;
 
         FurbleFeast();
-
 
         Story.PreLoad(this);
 
@@ -416,7 +410,6 @@ public class CoreHarvestDay
 
         // Furbapon 7231
         Story.KillQuest(7231, "furborgship", "Furborg Guard");
-
     }
 
     public void MeatLab()
@@ -479,7 +472,6 @@ public class CoreHarvestDay
 
         // Kill it with Fire 7213
         Story.KillQuest(7213, "meatlab", "Meatmongous");
-
     }
 
     public void GothicDream()
@@ -524,8 +516,11 @@ public class CoreHarvestDay
         Story.KillQuest(7794, "gothicdream", "Sleep Paralysis");
 
         // Clean Up Clean Up Everybody Do Your Scare 7795
-        Story.KillQuest(7795, "gothicdream", new[] { "Spooky Lantern", "Bat Garland", "Ice Scream" });
-
+        Story.KillQuest(
+            7795,
+            "gothicdream",
+            new[] { "Spooky Lantern", "Bat Garland", "Ice Scream" }
+        );
     }
 
     public void MemetNightmare()
@@ -534,7 +529,6 @@ public class CoreHarvestDay
             return;
 
         GothicDream();
-
 
         Story.PreLoad(this);
 
@@ -581,9 +575,11 @@ public class CoreHarvestDay
         Story.KillQuest(7807, "memetnightmare", "Dark Pit of Despair");
 
         // Quiet Down, Will Ya? 7808
-        Story.KillQuest(7808, "memetnightmare", new[] { "Fire Cyclone", "Burning Ember", "Cannibal Mermaid" });
-
-
+        Story.KillQuest(
+            7808,
+            "memetnightmare",
+            new[] { "Fire Cyclone", "Burning Ember", "Cannibal Mermaid" }
+        );
     }
 
     public void NightmareWar()
@@ -592,7 +588,6 @@ public class CoreHarvestDay
             return;
 
         MemetNightmare();
-
 
         Story.PreLoad(this);
 
@@ -610,12 +605,14 @@ public class CoreHarvestDay
 
         // Fire Tornado 7813
         Story.KillQuest(7813, "nightmarewar", "THIS YEAR");
-
     }
 
     public void EpilTakeOver()
     {
-        if ((Core.isCompletedBefore(8953) && Core.isCompletedBefore(8970)) || !Core.isSeasonalMapActive("EbilTakeOver"))
+        if (
+            (Core.isCompletedBefore(8953) && Core.isCompletedBefore(8970))
+            || !Core.isSeasonalMapActive("EbilTakeOver")
+        )
             return;
 
         Story.PreLoad(this);
@@ -657,7 +654,11 @@ public class CoreHarvestDay
         Story.KillQuest(8949, "ebiltakeover", "Ebil General Porkon");
 
         //Variety Is The Spice Of Life 8950
-        Story.KillQuest(8950, "ebiltakeover", new[] { "Ebil Fishman", "EbilCorp Slime", "Ebil Battle Drone" });
+        Story.KillQuest(
+            8950,
+            "ebiltakeover",
+            new[] { "Ebil Fishman", "EbilCorp Slime", "Ebil Battle Drone" }
+        );
 
         //Draconian Destruction 8951
         Story.KillQuest(8951, "ebiltakeover", "Ebil Draconian");
@@ -697,7 +698,13 @@ public class CoreHarvestDay
             Core.EnsureAccept(8973);
             Core.HuntMonster("birdswithharms", "Birdbarian", "Birdbarian Weapon", 1, log: false);
             Core.HuntMonster("birdswithharms", "Fencing Finch", "Finch Weapon", 1, log: false);
-            Core.HuntMonster("birdswithharms", "Unsettling Sparrow", "Sparrow Weapon", 1, log: false);
+            Core.HuntMonster(
+                "birdswithharms",
+                "Unsettling Sparrow",
+                "Sparrow Weapon",
+                1,
+                log: false
+            );
             Core.HuntMonster("birdswithharms", "Robber Ducky", "Ducky Weapon", 1, log: false);
             Core.EnsureComplete(8973);
         }
@@ -714,7 +721,13 @@ public class CoreHarvestDay
             Core.EnsureAccept(8976);
             Core.HuntMonster("birdswithharms", "Birdbarian", "Birdbarian Feather", 1, log: false);
             Core.HuntMonster("birdswithharms", "Fencing Finch", "Finch Feather", 1, log: false);
-            Core.HuntMonster("birdswithharms", "Unsettling Sparrow", "Sparrow Feather", 1, log: false);
+            Core.HuntMonster(
+                "birdswithharms",
+                "Unsettling Sparrow",
+                "Sparrow Feather",
+                1,
+                log: false
+            );
             Core.HuntMonster("birdswithharms", "Robber Ducky", "Ducky Feather", 1, log: false);
             Core.HuntMonster("birdswithharms", "Swole Swan", "Swan Feather", 1, log: false);
             Core.EnsureComplete(8976);
@@ -759,7 +772,14 @@ public class CoreHarvestDay
         // 8992 No Egrets Badge
         Core.EquipClass(ClassType.Farm);
         Core.EnsureAccept(8992);
-        Core.HuntMonster("birdswithharms", "Unsettling Sparrow", "Ruffled Feather", 1000, isTemp: false, log: false);
+        Core.HuntMonster(
+            "birdswithharms",
+            "Unsettling Sparrow",
+            "Ruffled Feather",
+            1000,
+            isTemp: false,
+            log: false
+        );
         Core.EnsureComplete(8992);
     }
 
@@ -811,12 +831,12 @@ public class CoreHarvestDay
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Cursed Corn", // UseableMonsters[0],
-	"Tantalocust", // UseableMonsters[1],
-	"Scales of Greed", // UseableMonsters[2],
-	"Fear Gorta", // UseableMonsters[3],
-	"Famine", // UseableMonsters[4]
-};
+            "Cursed Corn", // UseableMonsters[0],
+            "Tantalocust", // UseableMonsters[1],
+            "Scales of Greed", // UseableMonsters[2],
+            "Fear Gorta", // UseableMonsters[3],
+            "Famine", // UseableMonsters[4]
+        };
         #endregion Useable Monsters
 
         // 9472 | Bug Blight
@@ -826,7 +846,6 @@ public class CoreHarvestDay
             Story.KillQuest(9472, "blightharvest", UseableMonsters[0]);
         }
 
-
         // 9473 | Struggle Soup
         if (!Story.QuestProgression(9473))
         {
@@ -834,26 +853,25 @@ public class CoreHarvestDay
             Story.KillQuest(9473, "blightharvest", UseableMonsters[1]);
         }
 
-
         // 9474 | Fetid Feast
         if (!Story.QuestProgression(9474))
         {
             Story.MapItemQuest(9474, "blightharvest", 12336, 3);
-            Story.KillQuest(9474, "blightharvest", new[] { UseableMonsters[0], UseableMonsters[1] });
+            Story.KillQuest(
+                9474,
+                "blightharvest",
+                new[] { UseableMonsters[0], UseableMonsters[1] }
+            );
         }
-
 
         // 9475 | Dire Disparity
         Story.MapItemQuest(9475, "blightharvest", new[] { 12337, 12338 });
 
-
         // 9476 | Balancing Crumbs
         if (!Story.QuestProgression(9476))
         {
-            Core.HuntMonsterQuest(9476,
-                ("blightharvest", UseableMonsters[2], ClassType.Solo));
+            Core.HuntMonsterQuest(9476, ("blightharvest", UseableMonsters[2], ClassType.Solo));
         }
-
 
         // 9477 | Harrowing Hike
         if (!Story.QuestProgression(9477))
@@ -862,10 +880,8 @@ public class CoreHarvestDay
             Story.KillQuest(9477, "blightharvest", UseableMonsters[3]);
         }
 
-
         // 9478 | Down the Grapevine
         Story.MapItemQuest(9478, "blightharvest", new[] { 12340, 12341 });
-
 
         // 9479 | Hungry Hive
         if (!Story.QuestProgression(9479))
@@ -873,21 +889,21 @@ public class CoreHarvestDay
             Core.HuntMonsterQuest(9479, "blightharvest", UseableMonsters[1]);
         }
 
-
         // 9480 | Acrid Abundance
         if (!Story.QuestProgression(9480))
         {
-
             Story.MapItemQuest(9480, "blightharvest", 12342);
-            Story.KillQuest(9480, "blightharvest", new[] { UseableMonsters[1], UseableMonsters[3] });
+            Story.KillQuest(
+                9480,
+                "blightharvest",
+                new[] { UseableMonsters[1], UseableMonsters[3] }
+            );
         }
-
 
         // 9481 | Keeper of the Scales
         if (!Story.QuestProgression(9481))
         {
-            Core.HuntMonsterQuest(9481,
-                ("blightharvest", UseableMonsters[4], ClassType.Solo));
+            Core.HuntMonsterQuest(9481, ("blightharvest", UseableMonsters[4], ClassType.Solo));
         }
     }
 
@@ -898,58 +914,44 @@ public class CoreHarvestDay
 
         Story.PreLoad(this);
 
-
         // 9966 | Philosopher's Pumpkin
         Story.MapItemQuest(9966, "manaharvest", 13837);
         Story.KillQuest(9966, "manaharvest", UMManaHarvest[0]);
 
-
         // 9967 | Cosmic Surprise
         if (!Story.QuestProgression(9967))
         {
-            Core.HuntMonsterQuest(9967,
-                ("manaharvest", UMManaHarvest[1], ClassType.Farm));
+            Core.HuntMonsterQuest(9967, ("manaharvest", UMManaHarvest[1], ClassType.Farm));
         }
-
 
         // 9968 | Early Birds
         Story.MapItemQuest(9968, "manaharvest", new[] { 13838, 13839 });
-
-
 
         // 9969 | Impossible Meat
         Story.MapItemQuest(9969, "manaharvest", 13840);
         Story.KillQuest(9969, "manaharvest", UMManaHarvest[2]);
 
-
-
         // 9970 | Forbidden Fruit
         Story.MapItemQuest(9970, "manaharvest", 13841);
         Story.KillQuest(9970, "manaharvest", UMManaHarvest[3]);
 
-
         // 9976 | Mananania
         if (!Story.QuestProgression(9976))
         {
-            Core.HuntMonsterQuest(9976,
-                ("manaharvest", UMManaHarvest[4], ClassType.Farm));
+            Core.HuntMonsterQuest(9976, ("manaharvest", UMManaHarvest[4], ClassType.Farm));
         }
 
         // 9971 | How the Cookie Crumbles
         if (!Story.QuestProgression(9971))
         {
-            Core.HuntMonsterQuest(9971,
-                ("manaharvest", UMManaHarvest[5], ClassType.Farm));
+            Core.HuntMonsterQuest(9971, ("manaharvest", UMManaHarvest[5], ClassType.Farm));
         }
-
 
         // 9972 | Everything Burger
         if (!Story.QuestProgression(9972))
         {
-            Core.HuntMonsterQuest(9972,
-                ("manaharvest", UMManaHarvest[6], ClassType.Farm));
+            Core.HuntMonsterQuest(9972, ("manaharvest", UMManaHarvest[6], ClassType.Farm));
         }
-
 
         // 9973 | Pretend You Don't See Anything
         Story.MapItemQuest(9973, "manaharvest", new[] { 13842, 13843 });
@@ -957,12 +959,7 @@ public class CoreHarvestDay
         // 9974 | Coiled Cornucopia
         if (!Story.QuestProgression(9974))
         {
-            Core.HuntMonsterQuest(9974,
-                ("manaharvest", UMManaHarvest[7], ClassType.Solo));
+            Core.HuntMonsterQuest(9974, ("manaharvest", UMManaHarvest[7], ClassType.Solo));
         }
-
-
     }
-
-
 }

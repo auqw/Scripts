@@ -11,7 +11,11 @@ public class SwaggysChateau
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -52,7 +56,7 @@ public class SwaggysChateau
         // Get Some Clues (6192)
         if (!Story.QuestProgression(6192))
         {
-            Core.EnsureAcceptmultiple( new[] { 6192, 6193, 6194, 6195 });
+            Core.EnsureAcceptmultiple(new[] { 6192, 6193, 6194, 6195 });
             Core.HuntMonster("chateau", "Hopeless Romantic", "Pretty Flowers", 6, log: false);
             Core.HuntMonster("chateau", "Barista", "\"Hot Drink\"", 5, log: false);
             Core.HuntMonster("chateau", "Stray Foam", "Floor Cleaned", 6, log: false);
@@ -69,6 +73,4 @@ public class SwaggysChateau
         // Pinky the Unicorn??? (6198)
         Story.KillQuest(6198, "chateau", "Pinky");
     }
-
-   
 }

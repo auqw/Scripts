@@ -14,8 +14,18 @@ public class MidnightAssassinSet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static BloodMoon BloodMoon { get => _BloodMoon ??= new BloodMoon(); set => _BloodMoon = value; }    private static BloodMoon _BloodMoon;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static BloodMoon BloodMoon
+    {
+        get => _BloodMoon ??= new BloodMoon();
+        set => _BloodMoon = value;
+    }
+    private static BloodMoon _BloodMoon;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -28,11 +38,12 @@ public class MidnightAssassinSet
 
     public void GetAll()
     {
-        string[] rewards = {
+        string[] rewards =
+        {
             "Midnight Assassin Daggers",
             "Midnight Assassin Dirk",
             "Midnight Assassin",
-            "Midnight Assassin Helm"
+            "Midnight Assassin Helm",
         };
         if (Core.CheckInventory(rewards))
             return;
@@ -46,7 +57,10 @@ public class MidnightAssassinSet
 
         Core.RegisterQuests(6070, 6071);
         Bot.Events.ItemDropped += ItemDropped;
-        Core.Logger($"Farm for the Midnight Assassin set started. Farming to get {rewards.Length - count} more item" + ((rewards.Length - count) > 1 ? "s" : ""));
+        Core.Logger(
+            $"Farm for the Midnight Assassin set started. Farming to get {rewards.Length - count} more item"
+                + ((rewards.Length - count) > 1 ? "s" : "")
+        );
 
         while (!Bot.ShouldExit && !Core.CheckInventory(rewards))
         {

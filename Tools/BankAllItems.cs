@@ -23,9 +23,13 @@ public class BankAllItems
         new Option<bool>("Inventory", "InventoryACBank", "Bank all Ac Inventory Items", true),
         new Option<bool>("House", "HouseACBank", "Bank all Ac House Items", true),
         new Option<bool>("BanknonAc", "BanknonAc", "Bank non-AC items", false),
-        new Option<string>("BlackList", "BlackList Items", "Fill in the items teh bot *shouldn't* bank, split with a , (comma).", "")
+        new Option<string>(
+            "BlackList",
+            "BlackList Items",
+            "Fill in the items teh bot *shouldn't* bank, split with a , (comma).",
+            ""
+        ),
     };
-
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -55,8 +59,9 @@ public class BankAllItems
         var blackListedItems = new HashSet<string>();
 
         if (!string.IsNullOrEmpty(blackList))
-            blackListedItems = new HashSet<string>(blackList.Split(',')
-                                                    .Select(item => item.Trim()));
+            blackListedItems = new HashSet<string>(
+                blackList.Split(',').Select(item => item.Trim())
+            );
 
         blackListedItems.Add(Core.SoloClass);
         blackListedItems.UnionWith(Core.SoloGear);
@@ -66,11 +71,14 @@ public class BankAllItems
         blackListedItems.UnionWith(Core.BankingBlackList);
 
         int BlackListCount = blackListedItems.Count;
-        Core.Logger($"[{blackListedItems.Where(x => Bot.Inventory.Contains(x)).Count()}x Bag Spaces used] BlackList: {string.Join(", ", blackListedItems.Where(item => !string.IsNullOrEmpty(item)))}");
+        Core.Logger(
+            $"[{blackListedItems.Where(x => Bot.Inventory.Contains(x)).Count()}x Bag Spaces used] BlackList: {string.Join(", ", blackListedItems.Where(item => !string.IsNullOrEmpty(item)))}"
+        );
         foreach (var (items, isForHouse) in itemsToBank)
         {
-            var filter = items.Where(item => !blackListedItems.Contains(item.Name)
-                                             && (bankNonAc || item.Coins) && !item.Equipped);
+            var filter = items.Where(item =>
+                !blackListedItems.Contains(item.Name) && (bankNonAc || item.Coins) && !item.Equipped
+            );
             foreach (var item in filter)
             {
                 if (Bot.Inventory.Contains(item.ID))
@@ -113,8 +121,9 @@ public class BankAllItems
                 }
             }
 
-            Core.Logger($"{(isForHouse ? "House" : "Inventory")} Items: {(filter.Any() ? "✅" : "No items blacklisted")}");
+            Core.Logger(
+                $"{(isForHouse ? "House" : "Inventory")} Items: {(filter.Any() ? "✅" : "No items blacklisted")}"
+            );
         }
     }
-
 }

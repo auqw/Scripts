@@ -25,29 +25,85 @@ public class ArmyLightCaster
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static LightMage LM { get => _LM ??= new LightMage(); set => _LM = value; }    private static LightMage _LM;
-    private static BurningBladeOfAbezeth BBOA { get => _BBOA ??= new BurningBladeOfAbezeth(); set => _BBOA = value; }    private static BurningBladeOfAbezeth _BBOA;
-    private static AvatarOfDeathsScythe AODS { get => _AODS ??= new AvatarOfDeathsScythe(); set => _AODS = value; }    private static AvatarOfDeathsScythe _AODS;
-    private static GuardianOfSpiritsBlade GOSB { get => _GOSB ??= new GuardianOfSpiritsBlade(); set => _GOSB = value; }    private static GuardianOfSpiritsBlade _GOSB;
-    private static LanceOfTime LOT { get => _LOT ??= new LanceOfTime(); set => _LOT = value; }    private static LanceOfTime _LOT;
-    private static BurningBlade BB { get => _BB ??= new BurningBlade(); set => _BB = value; }    private static BurningBlade _BB;
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
-private static CoreBots _sCore;
+    private static LightMage LM
+    {
+        get => _LM ??= new LightMage();
+        set => _LM = value;
+    }
+    private static LightMage _LM;
+    private static BurningBladeOfAbezeth BBOA
+    {
+        get => _BBOA ??= new BurningBladeOfAbezeth();
+        set => _BBOA = value;
+    }
+    private static BurningBladeOfAbezeth _BBOA;
+    private static AvatarOfDeathsScythe AODS
+    {
+        get => _AODS ??= new AvatarOfDeathsScythe();
+        set => _AODS = value;
+    }
+    private static AvatarOfDeathsScythe _AODS;
+    private static GuardianOfSpiritsBlade GOSB
+    {
+        get => _GOSB ??= new GuardianOfSpiritsBlade();
+        set => _GOSB = value;
+    }
+    private static GuardianOfSpiritsBlade _GOSB;
+    private static LanceOfTime LOT
+    {
+        get => _LOT ??= new LanceOfTime();
+        set => _LOT = value;
+    }
+    private static LanceOfTime _LOT;
+    private static BurningBlade BB
+    {
+        get => _BB ??= new BurningBlade();
+        set => _BB = value;
+    }
+    private static BurningBlade _BB;
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
+    private static CoreBots _sCore;
 
-private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
-private static CoreArmyLite _sArmy;
-
+    private static CoreArmyLite _sArmy;
 
     public string OptionsStorage = "ArmyLightCaster";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("sellToSync", "Sell to Sync", "Sell items to make sure the army stays syncronized.\nIf off, there is a higher chance your army might desyncornize", false),
+        new Option<bool>(
+            "sellToSync",
+            "Sell to Sync",
+            "Sell items to make sure the army stays syncronized.\nIf off, there is a higher chance your army might desyncornize",
+            false
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -55,12 +111,17 @@ private static CoreArmyLite _sArmy;
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Aranx's Pure Light, Lightcaster, Lightmage, Burning Blade, Burning Blade of Abezeth, Guardian of Spirits' Blade, Lance of Time, Avatar Of Death's Scythe" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Aranx's Pure Light, Lightcaster, Lightmage, Burning Blade, Burning Blade of Abezeth, Guardian of Spirits' Blade, Lance of Time, Avatar Of Death's Scythe",
+            }
+        );
         Core.SetOptions();
 
         LightCaster();
@@ -70,7 +131,10 @@ private static CoreArmyLite _sArmy;
 
     public void LightCaster()
     {
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         Bot.Events.PlayerAFK += PlayerAFK;
         Core.EquipClass(ClassType.Farm);
@@ -80,11 +144,32 @@ private static CoreArmyLite _sArmy;
         {
             Core.EnsureAcceptmultiple(new[] { 4510, 4511, 4512 });
             if (!Core.CheckInventory(30266))
-                ArmyHunt("lostruinswar", new[] { "Fallen Knight" }, "Trapped Spirits", ClassType.Farm, isTemp: false, 500);
+                ArmyHunt(
+                    "lostruinswar",
+                    new[] { "Fallen Knight" },
+                    "Trapped Spirits",
+                    ClassType.Farm,
+                    isTemp: false,
+                    500
+                );
             if (!Core.CheckInventory(31019))
-                ArmyHunt("lostruinswar", new[] { "Infernal Imp" }, "Energy of Death", ClassType.Farm, isTemp: false, 500);
+                ArmyHunt(
+                    "lostruinswar",
+                    new[] { "Infernal Imp" },
+                    "Energy of Death",
+                    ClassType.Farm,
+                    isTemp: false,
+                    500
+                );
             if (!Core.CheckInventory(31028))
-                ArmyHunt("lostruinswar", new[] { "Underworld Hound" }, "Captured Time", ClassType.Farm, isTemp: false, 500);
+                ArmyHunt(
+                    "lostruinswar",
+                    new[] { "Underworld Hound" },
+                    "Captured Time",
+                    ClassType.Farm,
+                    isTemp: false,
+                    500
+                );
             BB.GetBurningBlade();
             LM.GetLM(true);
             Bot.Quests.UpdateQuest(6042);
@@ -99,8 +184,14 @@ private static CoreArmyLite _sArmy;
         Bot.Events.PlayerAFK -= PlayerAFK;
     }
 
-
-    void ArmyHunt(string map, string[] monsters, string item, ClassType classType, bool isTemp = false, int quant = 1)
+    void ArmyHunt(
+        string map,
+        string[] monsters,
+        string item,
+        ClassType classType,
+        bool isTemp = false,
+        int quant = 1
+    )
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
@@ -116,8 +207,6 @@ private static CoreArmyLite _sArmy;
 
         Army.SmartAggroMonStart(map, monsters);
 
-
-
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             Bot.Combat.Attack("*");
 
@@ -131,5 +220,4 @@ private static CoreArmyLite _sArmy;
         Core.Sleep(1500);
         Bot.Send.Packet("%xt%zm%afk%1%false%");
     }
-
 }

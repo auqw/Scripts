@@ -8,12 +8,16 @@ tags: null
 //cs_include Scripts/Story/Artixpointe.cs
 using Skua.Core.Interfaces;
 
-
 public class BirthdaySavior
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static Artixpointe AP { get => _AP ??= new Artixpointe(); set => _AP = value; }    private static Artixpointe _AP;
+    private static Artixpointe AP
+    {
+        get => _AP ??= new Artixpointe();
+        set => _AP = value;
+    }
+    private static Artixpointe _AP;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +38,6 @@ public class BirthdaySavior
 
         Core.Logger($"Doing Artixpointe story for {badge} badge");
         AP.OmniArtifact();
-
     }
 
     private string badge = "6th Birthday Savior";

@@ -6,12 +6,12 @@ tags: null
 
 //cs_include Scripts/Ultras/CoreEngine.cs
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -20,20 +20,25 @@ public class CoreUltra
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreEngine Core = new();
 
-    public void Test()
-        => Bot.Log("NewCore interface OK!");
+    public void Test() => Bot.Log("NewCore interface OK!");
 
-    public void Taunt(string className, string target, string mode, int delayMs = 0, string? aura = null)
+    public void Taunt(
+        string className,
+        string target,
+        string mode,
+        int delayMs = 0,
+        string? aura = null
+    )
     {
-        if (string.IsNullOrWhiteSpace(className) ||
-            string.IsNullOrWhiteSpace(target))
+        if (string.IsNullOrWhiteSpace(className) || string.IsNullOrWhiteSpace(target))
             return;
 
         if (Bot?.Combat == null || !Core.HasClassEquipped(className))
             return;
 
         Bot.Combat.Attack(target);
-        if (delayMs > 0) Bot.Sleep(delayMs);
+        if (delayMs > 0)
+            Bot.Sleep(delayMs);
 
         switch (mode)
         {
@@ -49,18 +54,36 @@ public class CoreUltra
         }
     }
 
-    public void KillWithPriority(string primaryName, int primaryMapId, string priorityName1, int priorityMapId1, string priorityName2, int priorityMapId2)
+    public void KillWithPriority(
+        string primaryName,
+        int primaryMapId,
+        string priorityName1,
+        int priorityMapId1,
+        string priorityName2,
+        int priorityMapId2
+    )
     {
-        if (string.IsNullOrWhiteSpace(primaryName)) return;
-        if (!string.IsNullOrWhiteSpace(priorityName1) && Core.IsAliveByMapId(priorityMapId1, name: priorityName1)) KillByMapId(priorityMapId1, name: priorityName1);
-        else if (!string.IsNullOrWhiteSpace(priorityName2) && Core.IsAliveByMapId(priorityMapId2, name: priorityName2)) KillByMapId(priorityMapId2, name: priorityName2);
-        else KillByMapId(primaryMapId, name: primaryName);
+        if (string.IsNullOrWhiteSpace(primaryName))
+            return;
+        if (
+            !string.IsNullOrWhiteSpace(priorityName1)
+            && Core.IsAliveByMapId(priorityMapId1, name: priorityName1)
+        )
+            KillByMapId(priorityMapId1, name: priorityName1);
+        else if (
+            !string.IsNullOrWhiteSpace(priorityName2)
+            && Core.IsAliveByMapId(priorityMapId2, name: priorityName2)
+        )
+            KillByMapId(priorityMapId2, name: priorityName2);
+        else
+            KillByMapId(primaryMapId, name: primaryName);
         Bot.Sleep(Core.D1);
     }
 
     public void KillByMapId(int mapId, string? name = null, int? id = null)
     {
-        if (Bot?.Combat == null) return;
+        if (Bot?.Combat == null)
+            return;
         if (Core.IsAliveByMapId(mapId, name, id))
         {
             Bot.Combat.Attack(mapId);
@@ -70,27 +93,37 @@ public class CoreUltra
 
     public bool MonsterAlive(string name)
     {
-        if (!Bot.Player.Alive) Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-        if (string.IsNullOrWhiteSpace(name)) return false;
-        if (Bot.Monsters?.MapMonsters == null) return false;
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        if (string.IsNullOrWhiteSpace(name))
+            return false;
+        if (Bot.Monsters?.MapMonsters == null)
+            return false;
 
-        return Bot.Monsters.MapMonsters
-            .Any(m => m?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true && m.Alive);
+        return Bot.Monsters.MapMonsters.Any(m =>
+            m?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true && m.Alive
+        );
     }
 
     public void UltraWardenTaunter()
     {
-        if (Bot == null) return;
-        if (Bot.Combat == null) return;
-        if (Bot.Player == null) return;
+        if (Bot == null)
+            return;
+        if (Bot.Combat == null)
+            return;
+        if (Bot.Player == null)
+            return;
 
         const string mob = "Ultra Warden";
         Bot.Combat.Attack(mob);
 
         var t = Bot.Player.Target;
-        if (t == null) return;
-        if (t.HP <= 0) return;
-        if (t.MaxHP <= 0) return;
+        if (t == null)
+            return;
+        if (t.HP <= 0)
+            return;
+        if (t.MaxHP <= 0)
+            return;
 
         int hp = t.HP;
         int max = t.MaxHP;
@@ -115,8 +148,10 @@ public class CoreUltra
                 bool focused = Core.HasAura("Focus");
                 bool exit = Bot.ShouldExit;
 
-                if (!alive || focused || exit) go = false;
-                else Core.UsePotion();
+                if (!alive || focused || exit)
+                    go = false;
+                else
+                    Core.UsePotion();
             }
         }
 
@@ -125,10 +160,12 @@ public class CoreUltra
 
     public void DrakathTaunter()
     {
-        if (Bot == null || Bot.Combat == null || Bot.Player == null) return;
+        if (Bot == null || Bot.Combat == null || Bot.Player == null)
+            return;
         Bot.Combat.Attack("Champion Drakath");
         var dummy = Bot.Player.Target;
-        if (dummy == null || dummy.HP <= 0) return;
+        if (dummy == null || dummy.HP <= 0)
+            return;
 
         int[] bands = { 90, 80, 70, 60, 50, 40, 30, 20, 10 };
         double wiggle = 1.5;
@@ -137,13 +174,16 @@ public class CoreUltra
         long oldTicks = 0;
 
         object? tmp = AppDomain.CurrentDomain.GetData("drakath.lastThreshold");
-        if (tmp != null) lastBand = (int)tmp;
+        if (tmp != null)
+            lastBand = (int)tmp;
 
         tmp = AppDomain.CurrentDomain.GetData("drakath.prevPercentage");
-        if (tmp != null) oldPct = (double)tmp;
+        if (tmp != null)
+            oldPct = (double)tmp;
 
         tmp = AppDomain.CurrentDomain.GetData("drakath.lastFireTicks");
-        if (tmp != null) oldTicks = (long)tmp;
+        if (tmp != null)
+            oldTicks = (long)tmp;
 
         double nowPct = Core.GetTargetHealthPercentage();
         long nowTicks = DateTime.UtcNow.Ticks;
@@ -181,7 +221,8 @@ public class CoreUltra
             {
                 Bot.Combat.Attack("Champion Drakath");
                 UseTaunt();
-                if (Core.HasAura("Focus")) break;
+                if (Core.HasAura("Focus"))
+                    break;
                 Bot.Sleep(120);
             }
         }
@@ -190,9 +231,16 @@ public class CoreUltra
         Bot.Sleep(120);
     }
 
-    public void WaitForArmy(int quantity, string syncFilePath = "army_sync.sync", int bufferTimeMs = 3000, int tickMs = 500, int timeoutMs = 0)
+    public void WaitForArmy(
+        int quantity,
+        string syncFilePath = "army_sync.sync",
+        int bufferTimeMs = 3000,
+        int tickMs = 500,
+        int timeoutMs = 0
+    )
     {
-        if (Bot?.Map == null) return;
+        if (Bot?.Map == null)
+            return;
 
         // --- Resolve safe writable sync path ---
         string FindHome(string path)
@@ -207,7 +255,10 @@ public class CoreUltra
                     return path;
 
                 // Default to %AppData%\Skua
-                string baseDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Skua");
+                string baseDir = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "Skua"
+                );
                 string full = Path.Combine(baseDir, Path.GetFileName(path));
                 Directory.CreateDirectory(baseDir);
                 File.AppendAllText(full, ""); // ensure file exists
@@ -227,13 +278,24 @@ public class CoreUltra
             {
                 try
                 {
-                    using FileStream fs = new(path, FileMode.OpenOrCreate, FileAccess.Read, FileShare.ReadWrite);
+                    using FileStream fs = new(
+                        path,
+                        FileMode.OpenOrCreate,
+                        FileAccess.Read,
+                        FileShare.ReadWrite
+                    );
                     using StreamReader sr = new(fs);
                     return sr.ReadToEnd()
-                             .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+                        .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 }
-                catch (IOException) { Bot?.Sleep(50); }
-                catch { break; }
+                catch (IOException)
+                {
+                    Bot?.Sleep(50);
+                }
+                catch
+                {
+                    break;
+                }
             }
             return Array.Empty<string>();
         }
@@ -242,9 +304,19 @@ public class CoreUltra
         {
             for (int i = 0; i < 15; i++)
             {
-                try { File.WriteAllLines(path, lines); return; }
-                catch (IOException) { Bot?.Sleep(50); }
-                catch { return; }
+                try
+                {
+                    File.WriteAllLines(path, lines);
+                    return;
+                }
+                catch (IOException)
+                {
+                    Bot?.Sleep(50);
+                }
+                catch
+                {
+                    return;
+                }
             }
         }
 
@@ -252,10 +324,13 @@ public class CoreUltra
         void Poke(string path, string key, bool ready)
         {
             List<string> lines = Slurp(path).ToList();
-            string entry = $"{key}:{(ready ? "1" : "0")}:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
+            string entry =
+                $"{key}:{(ready ? "1" : "0")}:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
             int idx = lines.FindIndex(l => l.StartsWith(key + ":"));
-            if (idx >= 0) lines[idx] = entry;
-            else lines.Add(entry);
+            if (idx >= 0)
+                lines[idx] = entry;
+            else
+                lines.Add(entry);
             Yeet(path, lines.ToArray());
         }
 
@@ -269,11 +344,13 @@ public class CoreUltra
             foreach (string line in lines)
             {
                 string[] parts = line.Split(':');
-                if (parts.Length < 3) continue;
+                if (parts.Length < 3)
+                    continue;
 
                 string key = parts[0];
                 string status = parts[1];
-                if (!long.TryParse(parts[2], out long ts)) continue;
+                if (!long.TryParse(parts[2], out long ts))
+                    continue;
 
                 if (now - ts <= staleThreshold)
                     valid.Add(line);
@@ -294,9 +371,11 @@ public class CoreUltra
             if (!string.IsNullOrEmpty(dir))
                 Directory.CreateDirectory(dir);
 
-            if (!File.Exists(syncFile) ||
-                (DateTime.UtcNow - File.GetLastWriteTimeUtc(syncFile)).TotalMinutes > 15 ||
-                Slurp(syncFile).All(l => l.EndsWith(":1")))
+            if (
+                !File.Exists(syncFile)
+                || (DateTime.UtcNow - File.GetLastWriteTimeUtc(syncFile)).TotalMinutes > 15
+                || Slurp(syncFile).All(l => l.EndsWith(":1"))
+            )
                 File.WriteAllText(syncFile, "");
         }
         catch (Exception ex)
@@ -304,7 +383,11 @@ public class CoreUltra
             Bot?.Log($"[WaitForArmy] Sync file setup failed: {ex.Message}");
         }
 
-        string me = $"{Bot?.Player?.Username ?? "Nobody"}|{Bot?.Player?.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
+        string me =
+            $"{Bot?.Player?.Username ?? "Nobody"}|{Bot?.Player?.CurrentClass?.Name ?? "Peasant"}".Replace(
+                ":",
+                "-"
+            );
         int need = Math.Max(1, quantity) + 1;
 
         Poke(syncFile, me, false);
@@ -341,7 +424,11 @@ public class CoreUltra
 
         if (Bot?.ShouldExit == true)
         {
-            try { File.WriteAllText(syncFile, ""); } catch { }
+            try
+            {
+                File.WriteAllText(syncFile, "");
+            }
+            catch { }
             return;
         }
 
@@ -349,21 +436,29 @@ public class CoreUltra
         DateTime spam = DateTime.UtcNow.AddMilliseconds(2000);
         while (DateTime.UtcNow < spam && !Bot?.ShouldExit == true)
         {
-            Bot?.Skills.UseSkill(3); Bot?.Sleep(300);
-            Bot?.Skills.UseSkill(2); Bot?.Sleep(300);
-            Bot?.Skills.UseSkill(1); Bot?.Sleep(300);
+            Bot?.Skills.UseSkill(3);
+            Bot?.Sleep(300);
+            Bot?.Skills.UseSkill(2);
+            Bot?.Sleep(300);
+            Bot?.Skills.UseSkill(1);
+            Bot?.Sleep(300);
         }
 
         Bot?.Sleep(bufferTimeMs);
 
-        try { File.WriteAllText(syncFile, ""); } catch { }
+        try
+        {
+            File.WriteAllText(syncFile, "");
+        }
+        catch { }
     }
 
     // --- next set ---------------------------------------------------------------
 
     public void GetScrollOfEnrage()
     {
-        if (!Core.Faction("SpellCrafting", 5)) return;
+        if (!Core.Faction("SpellCrafting", 5))
+            return;
 
         const string parchment = "Mystic Parchment";
         const string ink = "Zealous Ink";
@@ -378,7 +473,8 @@ public class CoreUltra
             // Craft
             Core.Join("spellcraft");
             Bot.Drops.Add(scroll);
-            Bot.Send.Packet("%xt%zm%crafting%1%spellOnStart%7%1555%Spell%"); Bot.Sleep(5000);
+            Bot.Send.Packet("%xt%zm%crafting%1%spellOnStart%7%1555%Spell%");
+            Bot.Sleep(5000);
             Bot.Send.Packet("%xt%zm%crafting%1%spellComplete%7%2330%Enrage%");
 
             Core.WaitForDrop(scroll, 10000);
@@ -404,7 +500,8 @@ public class CoreUltra
 
     public void GetScrollOfDecay()
     {
-        if (!Core.Faction("SpellCrafting", 5)) return;
+        if (!Core.Faction("SpellCrafting", 5))
+            return;
 
         const string parchment = "Mystic Parchment";
         const string ink = "Zealous Ink";
@@ -417,7 +514,8 @@ public class CoreUltra
 
             Core.Join("spellcraft");
             Bot.Drops.Add(scroll);
-            Bot.Send.Packet("%xt%zm%crafting%1%spellOnStart%7%1555%Spell%"); Bot.Sleep(5000);
+            Bot.Send.Packet("%xt%zm%crafting%1%spellOnStart%7%1555%Spell%");
+            Bot.Sleep(5000);
             Bot.Send.Packet("%xt%zm%crafting%1%spellComplete%7%2331%Decay%");
 
             Core.WaitForDrop(scroll, 5000);
@@ -438,20 +536,24 @@ public class CoreUltra
 
     public void UseAlchemyPotions(params string[] names)
     {
-        if (names == null || names.Length == 0) return;
+        if (names == null || names.Length == 0)
+            return;
 
-        string Aura(string x) => x switch
-        {
-            "Might Tonic" => "Might",
-            "Sage Tonic" => "Sage",
-            _ => x
-        };
+        string Aura(string x) =>
+            x switch
+            {
+                "Might Tonic" => "Might",
+                "Sage Tonic" => "Sage",
+                _ => x,
+            };
 
         var seen = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         foreach (var raw in names)
         {
-            if (string.IsNullOrWhiteSpace(raw)) continue;
-            if (!seen.Add(raw)) continue;
+            if (string.IsNullOrWhiteSpace(raw))
+                continue;
+            if (!seen.Add(raw))
+                continue;
 
             var aura = Aura(raw);
             if (Core.HasAura(aura, true))
@@ -470,14 +572,21 @@ public class CoreUltra
                 {
                     Core.UsePotion();
                     long t0 = Environment.TickCount64;
-                    while (!Bot.ShouldExit && !Core.HasAura(aura, true) && Environment.TickCount64 - t0 < 1500)
+                    while (
+                        !Bot.ShouldExit
+                        && !Core.HasAura(aura, true)
+                        && Environment.TickCount64 - t0 < 1500
+                    )
                         Bot.Sleep(50);
                 }
-                else Bot.Sleep(200);
+                else
+                    Bot.Sleep(200);
             }
 
-            if (Core.HasAura(aura, true)) Core.Log("POTION", $"✅ Applied: {aura}");
-            else Core.Log("POTION", $"❌ Nope: {raw} ({aura})");
+            if (Core.HasAura(aura, true))
+                Core.Log("POTION", $"✅ Applied: {aura}");
+            else
+                Core.Log("POTION", $"❌ Nope: {raw} ({aura})");
         }
     }
 
@@ -485,7 +594,8 @@ public class CoreUltra
     {
         if (string.IsNullOrWhiteSpace(n) || Core.Owned(n) >= 1)
         {
-            if (!string.IsNullOrWhiteSpace(n)) Core.Log("POTION", $"🧴 Have: {n}");
+            if (!string.IsNullOrWhiteSpace(n))
+                Core.Log("POTION", $"🧴 Have: {n}");
             return;
         }
 
@@ -512,26 +622,43 @@ public class CoreUltra
         switch (n)
         {
             case "Might Tonic":
-                if (!Core.Faction("Alchemy", 8)) { Core.Log("POTION", "⛔ Alchemy rep 8 required"); return; }
-                NeedV(2); Grab(10);
+                if (!Core.Faction("Alchemy", 8))
+                {
+                    Core.Log("POTION", "⛔ Alchemy rep 8 required");
+                    return;
+                }
+                NeedV(2);
+                Grab(10);
                 break;
 
             case "Sage Tonic":
-                if (!Core.Faction("Alchemy", 8)) { Core.Log("POTION", "⛔ Alchemy rep 8 required"); return; }
-                NeedV(2); Grab(10);
+                if (!Core.Faction("Alchemy", 8))
+                {
+                    Core.Log("POTION", "⛔ Alchemy rep 8 required");
+                    return;
+                }
+                NeedV(2);
+                Grab(10);
                 break;
 
             case "Potent Malevolence Elixir":
-                NeedV(4); Grab(8);
+                NeedV(4);
+                Grab(8);
                 break;
 
             case "Potent Battle Elixir":
-                NeedV(4); Grab(8);
+                NeedV(4);
+                Grab(8);
                 break;
 
             case "Potent Honor Potion":
-                if (!Core.Faction("Good", 10)) { Core.Log("POTION", "⛔ Good rep 10 required"); return; }
-                NeedV(1); Grab(5);
+                if (!Core.Faction("Good", 10))
+                {
+                    Core.Log("POTION", "⛔ Good rep 10 required");
+                    return;
+                }
+                NeedV(1);
+                Grab(5);
                 break;
 
             default:
@@ -571,16 +698,23 @@ public class CoreUltra
     {
         try
         {
-            if (packet?["params"]?.type?.ToString() != "json") return;
+            if (packet?["params"]?.type?.ToString() != "json")
+                return;
             dynamic data = packet["params"].dataObj;
-            if (data?.cmd?.ToString() != "ct") return;
+            if (data?.cmd?.ToString() != "ct")
+                return;
 
             var anims = data?.anims as System.Collections.IEnumerable;
-            if (anims == null) return;
+            if (anims == null)
+                return;
 
             foreach (var anim in anims)
             {
-                if ((anim as dynamic)?.animStr?.ToString()?.Equals("Charge", StringComparison.OrdinalIgnoreCase) == true)
+                if (
+                    (anim as dynamic)
+                        ?.animStr?.ToString()
+                        ?.Equals("Charge", StringComparison.OrdinalIgnoreCase) == true
+                )
                 {
                     _chargeDetected = true;
 

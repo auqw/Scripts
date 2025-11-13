@@ -11,7 +11,12 @@ public class Bludrut
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -24,7 +29,10 @@ public class Bludrut
 
     public void StoryLine()
     {
-        if ((Core.IsMember && Core.isCompletedBefore(1692)) || (!Core.IsMember && Core.isCompletedBefore(102)))
+        if (
+            (Core.IsMember && Core.isCompletedBefore(1692))
+            || (!Core.IsMember && Core.isCompletedBefore(102))
+        )
             return;
 
         Story.PreLoad(this);
@@ -70,7 +78,6 @@ public class Bludrut
 
         if (Core.IsMember)
         {
-
             //Lost Memories 1685
             Story.MapItemQuest(1685, "bludrut", 891);
 
@@ -102,6 +109,5 @@ public class Bludrut
             //Sad Farewells 1692
             Story.MapItemQuest(1692, "bludrut2", 893);
         }
-
     }
 }

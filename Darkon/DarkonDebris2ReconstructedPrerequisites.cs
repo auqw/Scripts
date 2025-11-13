@@ -16,9 +16,18 @@ public class DarkonDebris2ReconstructedPrerequisites
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }    private static CoreDarkon _Darkon;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreDarkon Darkon
+    {
+        get => _Darkon ??= new CoreDarkon();
+        set => _Darkon = value;
+    }
+    private static CoreDarkon _Darkon;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,9 +43,20 @@ public class DarkonDebris2ReconstructedPrerequisites
         bool UseInsigs = false;
         if (Core.CheckInventory("Darkon Insignia", 20))
         {
-            if (Core.OneTimeMessage("Insignia Warning", "20 Darkon Insignia will be used to buy the \"Darkon Debris 2 (Reconstructed)\" item, is this ok?", true, true, true) == true)
+            if (
+                Core.OneTimeMessage(
+                    "Insignia Warning",
+                    "20 Darkon Insignia will be used to buy the \"Darkon Debris 2 (Reconstructed)\" item, is this ok?",
+                    true,
+                    true,
+                    true
+                ) == true
+            )
             {
-                Core.Logger("20 Darkon Insignia will be used to buy the \"Darkon Debris 2 (Reconstructed)\" item, is this ok? (y/n)", messageBox: true);
+                Core.Logger(
+                    "20 Darkon Insignia will be used to buy the \"Darkon Debris 2 (Reconstructed)\" item, is this ok? (y/n)",
+                    messageBox: true
+                );
                 UseInsigs = true;
             }
         }
@@ -53,14 +73,21 @@ public class DarkonDebris2ReconstructedPrerequisites
             Darkon.WheelofFortune(22, 0);
             if (!Core.CheckInventory("Darkon Insignia", 20))
             {
-                Core.Logger(" x20 \"Darkon Insignia\" is Required to continue the quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot", messageBox: true);
+                Core.Logger(
+                    " x20 \"Darkon Insignia\" is Required to continue the quest, our Bots cannot *currently* kill this mob, use Grim (different client) & @InsertNameHere's ultra bot",
+                    messageBox: true
+                );
                 return;
             }
             if (UseInsigs)
                 Core.BuyItem("ultradarkon", 2147, "Darkon's Debris 2 (Reconstructed)");
             else
             {
-                Core.Logger("You have 20 Darkon Insignia, but you didn't want to use them, so we will not buy the \"Darkon Debris 2 (Reconstructed)\" item, do so yourself.", "No Insig Use", messageBox: true);
+                Core.Logger(
+                    "You have 20 Darkon Insignia, but you didn't want to use them, so we will not buy the \"Darkon Debris 2 (Reconstructed)\" item, do so yourself.",
+                    "No Insig Use",
+                    messageBox: true
+                );
                 return;
             }
         }

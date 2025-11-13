@@ -11,7 +11,6 @@ public class ParagonGS
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
 
-
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -21,17 +20,17 @@ public class ParagonGS
         Core.SetOptions(false);
     }
 
-
     public void GetCape()
     {
         if (Core.CheckInventory(43061))
             return;
 
         Core.AddDrop(43061);
-        Core.HuntMonsterQuest(10104,
-        ("darkpath", "Void Knight", ClassType.Farm),
-        ("darkpath", "Void Wyrm", ClassType.Solo),
-        ("darkpath", "Void Elemental", ClassType.Farm)
+        Core.HuntMonsterQuest(
+            10104,
+            ("darkpath", "Void Knight", ClassType.Farm),
+            ("darkpath", "Void Wyrm", ClassType.Solo),
+            ("darkpath", "Void Elemental", ClassType.Farm)
         );
         Bot.Wait.ForPickup(43061);
     }

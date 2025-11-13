@@ -18,12 +18,41 @@ public class WrathofNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static JuggernautItemsofNulgath juggernaut { get => _juggernaut ??= new JuggernautItemsofNulgath(); set => _juggernaut = value; }    private static JuggernautItemsofNulgath _juggernaut;
-    private static DarkWarLegionandNation DWLN { get => _DWLN ??= new DarkWarLegionandNation(); set => _DWLN = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static JuggernautItemsofNulgath juggernaut
+    {
+        get => _juggernaut ??= new JuggernautItemsofNulgath();
+        set => _juggernaut = value;
+    }
+    private static JuggernautItemsofNulgath _juggernaut;
+    private static DarkWarLegionandNation DWLN
+    {
+        get => _DWLN ??= new DarkWarLegionandNation();
+        set => _DWLN = value;
+    }
     private static DarkWarLegionandNation _DWLN;
 
     public void ScriptMain(IScriptInterface bot)
@@ -44,7 +73,9 @@ public class WrathofNulgath
 
         Core.Logger("Farming Wrath of Nulgath.");
 
-        juggernaut.JuggItems(reward: JuggernautItemsofNulgath.RewardsSelection.Overfiend_Blade_of_Nulgath);
+        juggernaut.JuggItems(
+            reward: JuggernautItemsofNulgath.RewardsSelection.Overfiend_Blade_of_Nulgath
+        );
         Nation.FarmVoucher(false, true);
         Nation.FarmVoucher(true, true);
         Nation.FarmUni13(1);
@@ -55,4 +86,3 @@ public class WrathofNulgath
         Bot.Wait.ForPickup("Wrath of Nulgath");
     }
 }
-

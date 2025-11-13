@@ -31,7 +31,12 @@ public class ADK
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreHollowbornDoomKnight HDK { get => _HDK ??= new CoreHollowbornDoomKnight(); set => _HDK = value; }    private static CoreHollowbornDoomKnight _HDK;
+    private static CoreHollowbornDoomKnight HDK
+    {
+        get => _HDK ??= new CoreHollowbornDoomKnight();
+        set => _HDK = value;
+    }
+    private static CoreHollowbornDoomKnight _HDK;
 
     public void ScriptMain(IScriptInterface bot)
     {

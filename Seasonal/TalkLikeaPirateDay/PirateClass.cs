@@ -18,8 +18,17 @@ public class PirateClass
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static BlazeBeardMerge BBM { get => _BBM ??= new BlazeBeardMerge(); set => _BBM = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static BlazeBeardMerge BBM
+    {
+        get => _BBM ??= new BlazeBeardMerge();
+        set => _BBM = value;
+    }
     private static BlazeBeardMerge _BBM;
 
     public void ScriptMain(IScriptInterface bot)
@@ -36,7 +45,9 @@ public class PirateClass
         if (Core.CheckInventory(new[] { "Classic Pirate", "Pirate" }, any: true))
         {
             if (rankUpClass)
-                Adv.RankUpClass(Core.CheckInventory("Classic Pirate") ? "Classic Pirate" : "Pirate");
+                Adv.RankUpClass(
+                    Core.CheckInventory("Classic Pirate") ? "Classic Pirate" : "Pirate"
+                );
             return;
         }
 

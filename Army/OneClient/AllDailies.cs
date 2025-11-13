@@ -27,16 +27,29 @@ public class ArmyAllDailies
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static FarmAllDailies FAD { get => _FAD ??= new FarmAllDailies(); set => _FAD = value; }
+    private static FarmAllDailies FAD
+    {
+        get => _FAD ??= new FarmAllDailies();
+        set => _FAD = value;
+    }
     private static FarmAllDailies _FAD;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArmyAllDailies";
     public List<IOption> Options = new()
     {
-        new Option<FarmAllDailies.DailySet>("Select Dailies Set", "Dailies set: Recommended or All?", "only do the few that we recommend to make it a bit quicker?", FarmAllDailies.DailySet.All),
+        new Option<FarmAllDailies.DailySet>(
+            "Select Dailies Set",
+            "Dailies set: Recommended or All?",
+            "only do the few that we recommend to make it a bit quicker?",
+            FarmAllDailies.DailySet.All
+        ),
         CoreBots.Instance.SkipOptions,
     };
 

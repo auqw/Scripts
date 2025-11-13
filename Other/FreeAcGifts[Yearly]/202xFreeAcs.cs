@@ -12,7 +12,11 @@ public class FreeAcs
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -35,7 +39,10 @@ public class FreeAcs
 
         Core.OneTimeMessage("WARNING", "This Quest is a ONE-TIME quest (per account).", true, true);
 
-        if (!Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified") || Bot.Player.Level < 20)
+        if (
+            !Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified")
+            || Bot.Player.Level < 20
+        )
         {
             Core.Logger("You need to be level 20 and have a verified email!");
             return;

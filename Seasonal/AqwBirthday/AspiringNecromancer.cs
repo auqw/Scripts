@@ -11,7 +11,12 @@ public class AspiringNecromancer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -24,7 +29,6 @@ public class AspiringNecromancer
 
     public void Example()
     {
-
         string[] Quest1Rewards = (Core.EnsureLoad(7751).Rewards.Select(i => i.Name).ToArray());
         string[] Quest2Rewards = (Core.EnsureLoad(7752).Rewards.Select(i => i.Name).ToArray());
         string[] Quest3Rewards = (Core.EnsureLoad(7753).Rewards.Select(i => i.Name).ToArray());
@@ -38,7 +42,13 @@ public class AspiringNecromancer
         //I Want to Be The Very Best Necromancer 7751
         Core.RegisterQuests(7751);
         while (!Bot.ShouldExit && !Core.CheckInventory(Quest1Rewards, toInv: false))
-            Core.HuntMonster("BattleunderA", "Skeletal Warrior", "Skeleton Captured", 10, log: false);
+            Core.HuntMonster(
+                "BattleunderA",
+                "Skeletal Warrior",
+                "Skeleton Captured",
+                10,
+                log: false
+            );
         Core.JumpWait();
         Core.CancelRegisteredQuests();
         Core.ToBank(AllRewards);
@@ -50,7 +60,6 @@ public class AspiringNecromancer
         Core.JumpWait();
         Core.CancelRegisteredQuests();
         Core.ToBank(AllRewards);
-
 
         Bot.Quests.UpdateQuest(2060);
         Bot.Quests.UpdateQuest(3019);

@@ -20,25 +20,61 @@ public class WarTrainingMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreSoW Tynd { get => _Tynd ??= new CoreSoW(); set => _Tynd = value; }    private static CoreSoW _Tynd;
-    private static WarfuryEmblem Emblem { get => _Emblem ??= new WarfuryEmblem(); set => _Emblem = value; }    private static WarfuryEmblem _Emblem;
-    private static DragonslayerGeneral DSG { get => _DSG ??= new DragonslayerGeneral(); set => _DSG = value; }    private static DragonslayerGeneral _DSG;
-    private static FireChampionsArmor FCA { get => _FCA ??= new FireChampionsArmor(); set => _FCA = value; }    private static FireChampionsArmor _FCA;
+    private static CoreSoW Tynd
+    {
+        get => _Tynd ??= new CoreSoW();
+        set => _Tynd = value;
+    }
+    private static CoreSoW _Tynd;
+    private static WarfuryEmblem Emblem
+    {
+        get => _Emblem ??= new WarfuryEmblem();
+        set => _Emblem = value;
+    }
+    private static WarfuryEmblem _Emblem;
+    private static DragonslayerGeneral DSG
+    {
+        get => _DSG ??= new DragonslayerGeneral();
+        set => _DSG = value;
+    }
+    private static DragonslayerGeneral _DSG;
+    private static FireChampionsArmor FCA
+    {
+        get => _FCA ??= new FireChampionsArmor();
+        set => _FCA = value;
+    }
+    private static FireChampionsArmor _FCA;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -63,7 +99,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -74,9 +112,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Warfury Emblem":
                     Core.FarmingLogger(req.Name, quant);
@@ -125,23 +168,113 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("61750", "Ruby DragonTamer", "Mode: [select] only\nShould the bot buy \"Ruby DragonTamer\" ?", false),
-        new Option<bool>("61751", "Ruby DragonTamer's Helmet", "Mode: [select] only\nShould the bot buy \"Ruby DragonTamer's Helmet\" ?", false),
-        new Option<bool>("61752", "DragonTamer's Morph + Locks", "Mode: [select] only\nShould the bot buy \"DragonTamer's Morph + Locks\" ?", false),
-        new Option<bool>("61753", "DragonTamer's Morph", "Mode: [select] only\nShould the bot buy \"DragonTamer's Morph\" ?", false),
-        new Option<bool>("61754", "DragonTamer's Blade", "Mode: [select] only\nShould the bot buy \"DragonTamer's Blade\" ?", false),
-        new Option<bool>("61755", "DragonTamer's Poleaxe", "Mode: [select] only\nShould the bot buy \"DragonTamer's Poleaxe\" ?", false),
-        new Option<bool>("61756", "DragonTamer's Tail", "Mode: [select] only\nShould the bot buy \"DragonTamer's Tail\" ?", false),
-        new Option<bool>("61757", "DragonTamer's Wings", "Mode: [select] only\nShould the bot buy \"DragonTamer's Wings\" ?", false),
-        new Option<bool>("61758", "DragonTamer's Wings + Tail", "Mode: [select] only\nShould the bot buy \"DragonTamer's Wings + Tail\" ?", false),
-        new Option<bool>("58462", "Polished DragonSlayer", "Mode: [select] only\nShould the bot buy \"Polished DragonSlayer\" ?", false),
-        new Option<bool>("58463", "Polished DragonSlayer's Helm", "Mode: [select] only\nShould the bot buy \"Polished DragonSlayer's Helm\" ?", false),
-        new Option<bool>("58464", "Woven DragonSlayer's Cloak", "Mode: [select] only\nShould the bot buy \"Woven DragonSlayer's Cloak\" ?", false),
-        new Option<bool>("62570", "Fire Champion's Armor", "Mode: [select] only\nShould the bot buy \"Fire Champion's Armor\" ?", false),
-        new Option<bool>("62571", "Fire Champion's Armet", "Mode: [select] only\nShould the bot buy \"Fire Champion's Armet\" ?", false),
-        new Option<bool>("62572", "Fire Champion's Cloak", "Mode: [select] only\nShould the bot buy \"Fire Champion's Cloak\" ?", false),
-        new Option<bool>("62607", "WarFury Elite's Armor", "Mode: [select] only\nShould the bot buy \"WarFury Elite's Armor\" ?", false),
-        new Option<bool>("62608", "WarFury Elite's Morph", "Mode: [select] only\nShould the bot buy \"WarFury Elite's Morph\" ?", false),
-        new Option<bool>("62609", "WarFury Elite's Blade", "Mode: [select] only\nShould the bot buy \"WarFury Elite's Blade\" ?", false),
+        new Option<bool>(
+            "61750",
+            "Ruby DragonTamer",
+            "Mode: [select] only\nShould the bot buy \"Ruby DragonTamer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61751",
+            "Ruby DragonTamer's Helmet",
+            "Mode: [select] only\nShould the bot buy \"Ruby DragonTamer's Helmet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61752",
+            "DragonTamer's Morph + Locks",
+            "Mode: [select] only\nShould the bot buy \"DragonTamer's Morph + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61753",
+            "DragonTamer's Morph",
+            "Mode: [select] only\nShould the bot buy \"DragonTamer's Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61754",
+            "DragonTamer's Blade",
+            "Mode: [select] only\nShould the bot buy \"DragonTamer's Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61755",
+            "DragonTamer's Poleaxe",
+            "Mode: [select] only\nShould the bot buy \"DragonTamer's Poleaxe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61756",
+            "DragonTamer's Tail",
+            "Mode: [select] only\nShould the bot buy \"DragonTamer's Tail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61757",
+            "DragonTamer's Wings",
+            "Mode: [select] only\nShould the bot buy \"DragonTamer's Wings\" ?",
+            false
+        ),
+        new Option<bool>(
+            "61758",
+            "DragonTamer's Wings + Tail",
+            "Mode: [select] only\nShould the bot buy \"DragonTamer's Wings + Tail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58462",
+            "Polished DragonSlayer",
+            "Mode: [select] only\nShould the bot buy \"Polished DragonSlayer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58463",
+            "Polished DragonSlayer's Helm",
+            "Mode: [select] only\nShould the bot buy \"Polished DragonSlayer's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "58464",
+            "Woven DragonSlayer's Cloak",
+            "Mode: [select] only\nShould the bot buy \"Woven DragonSlayer's Cloak\" ?",
+            false
+        ),
+        new Option<bool>(
+            "62570",
+            "Fire Champion's Armor",
+            "Mode: [select] only\nShould the bot buy \"Fire Champion's Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "62571",
+            "Fire Champion's Armet",
+            "Mode: [select] only\nShould the bot buy \"Fire Champion's Armet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "62572",
+            "Fire Champion's Cloak",
+            "Mode: [select] only\nShould the bot buy \"Fire Champion's Cloak\" ?",
+            false
+        ),
+        new Option<bool>(
+            "62607",
+            "WarFury Elite's Armor",
+            "Mode: [select] only\nShould the bot buy \"WarFury Elite's Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "62608",
+            "WarFury Elite's Morph",
+            "Mode: [select] only\nShould the bot buy \"WarFury Elite's Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "62609",
+            "WarFury Elite's Blade",
+            "Mode: [select] only\nShould the bot buy \"WarFury Elite's Blade\" ?",
+            false
+        ),
     };
 }

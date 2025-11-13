@@ -17,49 +17,104 @@ tags: void highlord, class, army
 //cs_include Scripts/Army/ArmyNulgath/ArmyTaintedGem.cs
 //cs_include Scripts/Nation/AssistingCragAndBamboozle[Mem].cs
 using Skua.Core.Interfaces;
-using Skua.Core.Options;
-using Skua.Core.Models.Items;
-using Skua.Core.Models.Quests;
-using Skua.Core.Models.Monsters;
 using Skua.Core.Models;
+using Skua.Core.Models.Items;
+using Skua.Core.Models.Monsters;
+using Skua.Core.Models.Quests;
+using Skua.Core.Options;
 
 public class VHLArmy
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }
+    private static CoreVHL VHL
+    {
+        get => _VHL ??= new CoreVHL();
+        set => _VHL = value;
+    }
     private static CoreVHL _VHL;
-    private static AssistingCragAndBamboozle ACAB { get => _ACAB ??= new AssistingCragAndBamboozle(); set => _ACAB = value; }
+    private static AssistingCragAndBamboozle ACAB
+    {
+        get => _ACAB ??= new AssistingCragAndBamboozle();
+        set => _ACAB = value;
+    }
     private static AssistingCragAndBamboozle _ACAB;
-    private static SevenCircles SC { get => _SC ??= new SevenCircles(); set => _SC = value; }
+    private static SevenCircles SC
+    {
+        get => _SC ??= new SevenCircles();
+        set => _SC = value;
+    }
     private static SevenCircles _SC;
-    private static ArmyEmblemOfNulgath EmblemOfNulgath { get => _EmblemOfNulgath ??= new ArmyEmblemOfNulgath(); set => _EmblemOfNulgath = value; }
+    private static ArmyEmblemOfNulgath EmblemOfNulgath
+    {
+        get => _EmblemOfNulgath ??= new ArmyEmblemOfNulgath();
+        set => _EmblemOfNulgath = value;
+    }
     private static ArmyEmblemOfNulgath _EmblemOfNulgath;
-    private static ArmyVoucherItemofNulgath VoucherItemofNulgath { get => _VoucherItemofNulgath ??= new ArmyVoucherItemofNulgath(); set => _VoucherItemofNulgath = value; }
+    private static ArmyVoucherItemofNulgath VoucherItemofNulgath
+    {
+        get => _VoucherItemofNulgath ??= new ArmyVoucherItemofNulgath();
+        set => _VoucherItemofNulgath = value;
+    }
     private static ArmyVoucherItemofNulgath _VoucherItemofNulgath;
-    private static ArmyTaintedGem TaintedGem { get => _TaintedGem ??= new ArmyTaintedGem(); set => _TaintedGem = value; }
+    private static ArmyTaintedGem TaintedGem
+    {
+        get => _TaintedGem ??= new ArmyTaintedGem();
+        set => _TaintedGem = value;
+    }
     private static ArmyTaintedGem _TaintedGem;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
     private static CoreBots _sCore;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
 
     private string[] EmblemItems = { "Fiend Seal", "Gem of Domination", "Emblem of Nulgath" };
-
 
     public string OptionsStorage = "VHLArmy";
     public bool DontPreconfigure = true;
@@ -71,7 +126,7 @@ public class VHLArmy
         sArmy.player4,
         sArmy.player5,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public string[] ItemsToFarm =
@@ -85,7 +140,7 @@ public class VHLArmy
         "Tainted Gem",
         "Voucher of Nulgath (non-mem)",
         "Dark Crystal Shard",
-        "Blood Gem of the Archfiend"
+        "Blood Gem of the Archfiend",
     };
     public string[] QuestRewards =
     {
@@ -95,7 +150,6 @@ public class VHLArmy
         "Highlord's Void Wrap",
         "Unidentified 10",
         "Roentgenium of Nulgath",
-
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -103,7 +157,11 @@ public class VHLArmy
         Core.SetOptions();
         Core.BankingBlackList.AddRange(QuestRewards.Concat(ItemsToFarm).ToArray());
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
 
         // GetVHL();
 
@@ -176,14 +234,19 @@ public class VHLArmy
         Daily.EldersBlood();
         if (!Core.CheckInventory("Elder's Blood", 14))
         {
-            Core.Logger("Script waits until you have 14 Elder's Blood to start the farm, run ElderBlood.cs or this script every day until you have 14 Elder's Blood. Jecht assumed your army will take 3 days to complete it so let him know if it took longer or less to adjust this setting.");
+            Core.Logger(
+                "Script waits until you have 14 Elder's Blood to start the farm, run ElderBlood.cs or this script every day until you have 14 Elder's Blood. Jecht assumed your army will take 3 days to complete it so let him know if it took longer or less to adjust this setting."
+            );
             return;
         }
     }
 
     public void PreReqs()
     {
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         Bot.Events.PlayerAFK += PlayerAFK;
         /*
@@ -198,7 +261,7 @@ public class VHLArmy
             Daily.EldersBlood();
         /*
         ==================================================================================================
-        this snippet is to check current amount of roents vs elder blood 
+        this snippet is to check current amount of roents vs elder blood
         in case we change the minimum elder blood required in the future and need this check for something
         ==================================================================================================
 
@@ -230,7 +293,10 @@ public class VHLArmy
         // //Army.WaitForParty("whitemap", "Totem of Nulgath");
         // Core.SendPackets($"%xt%zm%house%1%{Bot.Player.Username}%");
 
-        Escherion("Tainted Gem", 1000 - (100 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath")));
+        Escherion(
+            "Tainted Gem",
+            1000 - (100 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))
+        );
         // //Army.WaitForParty("whitemap", "Tainted Gem");
         // Core.SendPackets($"%xt%zm%house%1%{Bot.Player.Username}%");
 
@@ -238,9 +304,9 @@ public class VHLArmy
         // //Army.WaitForParty("whitemap", "Voucher of Nulgath (non-mem)");
         // Core.SendPackets($"%xt%zm%house%1%{Bot.Player.Username}%");
 
-        /* Farm lvl 80 and get minimum gold required to 
-           buy 30 blood gems using swindle's ripoff emporium 
-           and the 15 Nulgath's Chocolates at 2 mil each 
+        /* Farm lvl 80 and get minimum gold required to
+           buy 30 blood gems using swindle's ripoff emporium
+           and the 15 Nulgath's Chocolates at 2 mil each
         */
         SCW(80, 43350000);
         Core.Logger("Prerequisites Finished.");
@@ -267,12 +333,23 @@ public class VHLArmy
     /// </summary>
     /// <param name="ArchfiendsFavorQuan">Desired quantity for Archfiend's Favor, 5000 = max stack</param>
     /// <param name="NulgathsApprovalQuant">Desired quantity for Nulgath's Approval, 5000 = max stack</param>
-    public void ArchfiendsFavorAndNulgathsApproval(int ArchfiendsFavorQuan = 1, int NulgathsApprovalQuant = 1)
+    public void ArchfiendsFavorAndNulgathsApproval(
+        int ArchfiendsFavorQuan = 1,
+        int NulgathsApprovalQuant = 1
+    )
     {
         string[] itemsToFarm = { "Archfiend's Favor", "Nulgath's Approval" };
 
-        if (Core.CheckInventory(itemsToFarm[0], ArchfiendsFavorQuan - (300 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath")))
-        && Core.CheckInventory(itemsToFarm[1], NulgathsApprovalQuant - (300 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))))
+        if (
+            Core.CheckInventory(
+                itemsToFarm[0],
+                ArchfiendsFavorQuan - (300 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))
+            )
+            && Core.CheckInventory(
+                itemsToFarm[1],
+                NulgathsApprovalQuant - (300 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))
+            )
+        )
         {
             foreach (string reward in itemsToFarm)
             {
@@ -301,11 +378,21 @@ public class VHLArmy
         Army.AggroMonStart("evilwarnul");
         Army.DivideOnCells("r2", "r3", "r4", "r5", "r6");
 
-
-
-        while (!Bot.ShouldExit
-        && !(Core.CheckInventory(itemsToFarm[0], ArchfiendsFavorQuan - (300 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath")))
-        && Core.CheckInventory(itemsToFarm[1], NulgathsApprovalQuant - (300 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath")))))
+        while (
+            !Bot.ShouldExit
+            && !(
+                Core.CheckInventory(
+                    itemsToFarm[0],
+                    ArchfiendsFavorQuan
+                        - (300 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))
+                )
+                && Core.CheckInventory(
+                    itemsToFarm[1],
+                    NulgathsApprovalQuant
+                        - (300 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))
+                )
+            )
+        )
         {
             Bot.Combat.Attack("*");
         }
@@ -313,8 +400,6 @@ public class VHLArmy
         Army.AggroMonStop(true);
         Core.JumpWait();
     }
-
-
 
     void Emblems(string item = "Emblem of Nulgath", int quantity = 1)
     {
@@ -343,9 +428,13 @@ public class VHLArmy
         Army.AggroMonStart("shadowblast");
         // SetAggro();
 
-
-
-        while (!Bot.ShouldExit && !Core.CheckInventory(item, quantity - (20 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))))
+        while (
+            !Bot.ShouldExit
+            && !Core.CheckInventory(
+                item,
+                quantity - (20 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))
+            )
+        )
             Bot.Combat.Attack("*");
 
         Army.AggroMonStop(true);
@@ -373,8 +462,6 @@ public class VHLArmy
         Army.AggroMonStart("tercessuinotlim");
         Army.DivideOnCells("Enter", "m1", "m2");
 
-
-
         // Attack monsters until the inventory is filled with the specified quantity
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
@@ -387,7 +474,6 @@ public class VHLArmy
         Core.JumpWait();
         Bot.Wait.ForPickup(item);
     }
-
 
     void FarmGemsofNulgath(string item = "Gem of Nulgath", int quant = 1)
     {
@@ -404,9 +490,18 @@ public class VHLArmy
         Core.Unbank("Roentgenium of Nulgath");
         Core.AddDrop(item);
         Core.EquipClass(ClassType.Farm);
-        Core.FarmingLogger(item, quant - (20 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath")));
+        Core.FarmingLogger(
+            item,
+            quant - (20 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))
+        );
 
-        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant - (20 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))))
+        while (
+            !Bot.ShouldExit
+            && !Core.CheckInventory(
+                item,
+                quant - (20 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))
+            )
+        )
         {
             Core.EnsureAccept(4778);
             VoucherItemOfNulgathQuest();
@@ -415,7 +510,6 @@ public class VHLArmy
             Core.EnsureComplete(4778, 6136);
         }
     }
-
 
     void FarmTotemsOfNulgath(string item = "Totem of Nulgath", int quant = 1)
     {
@@ -443,13 +537,18 @@ public class VHLArmy
         }
     }
 
-
     void SCW(int Level, int goldamount)
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
-        if (Bot.Player.Gold >= goldamount - (900000 * Bot.Inventory.GetQuantity("Blood Gem of the Archfiend")) - (2000000 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath")) && Bot.Player.Level >= Level)
+        if (
+            Bot.Player.Gold
+                >= goldamount
+                    - (900000 * Bot.Inventory.GetQuantity("Blood Gem of the Archfiend"))
+                    - (2000000 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))
+            && Bot.Player.Level >= Level
+        )
         {
             Core.Logger($"Gold: {goldamount}, Level: {Level} Reached.");
             return;
@@ -463,16 +562,20 @@ public class VHLArmy
         Army.AggroMonStart("sevencircleswar");
         Army.DivideOnCells("Enter", "r2", "r3");
 
-
-
-        while (!Bot.ShouldExit && Bot.Player.Gold < goldamount - (900000 * Bot.Inventory.GetQuantity("Blood Gem of the Archfiend")) - (2000000 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath")) && Bot.Player.Level < Level)
+        while (
+            !Bot.ShouldExit
+            && Bot.Player.Gold
+                < goldamount
+                    - (900000 * Bot.Inventory.GetQuantity("Blood Gem of the Archfiend"))
+                    - (2000000 * Bot.Inventory.GetQuantity("Roentgenium of Nulgath"))
+            && Bot.Player.Level < Level
+        )
             Bot.Combat.Attack("*");
 
         Army.AggroMonStop(true);
         Farm.ToggleBoost(BoostType.Gold, false);
         Core.CancelRegisteredQuests();
     }
-
 
     public void DCSCheck()
     {
@@ -539,7 +642,6 @@ public class VHLArmy
         Core.CancelRegisteredQuests();
     }
 
-
     void Larvae(string? item, int quant)
     {
         Core.PrivateRooms = true;
@@ -581,18 +683,16 @@ public class VHLArmy
         Core.CancelRegisteredQuests();
     }
 
-
-
-    //                                   ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░                    
-    //                               ▓▓▓▓████████████████▓▓▓▓▒▒              
-    //                           ▓▓▓▓████░░░░░░░░░░░░░░░░██████▓▓            
-    //                         ▓▓████░░░░░░░░░░░░░░░░░░░░░░░░░░████          
-    //                       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██        
-    //                     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██      
-    //                   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██      
-    //                 ▓▓██░░░░░░▓▓██░░  ░░░░░░░░░░░░░░░░░░░░▓▓██░░  ░░██    
-    //               ▓▓██░░░░░░░░██████░░░░░░░░░░░░░░░░░░░░░░██████░░░░░░██  
-    //               ▓▓██░░░░░░░░██████▓▓░░░░░░██░░░░██░░░░░░██████▓▓░░░░██  
+    //                                   ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░
+    //                               ▓▓▓▓████████████████▓▓▓▓▒▒
+    //                           ▓▓▓▓████░░░░░░░░░░░░░░░░██████▓▓
+    //                         ▓▓████░░░░░░░░░░░░░░░░░░░░░░░░░░████
+    //                       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //                     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //                   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //                 ▓▓██░░░░░░▓▓██░░  ░░░░░░░░░░░░░░░░░░░░▓▓██░░  ░░██
+    //               ▓▓██░░░░░░░░██████░░░░░░░░░░░░░░░░░░░░░░██████░░░░░░██
+    //               ▓▓██░░░░░░░░██████▓▓░░░░░░██░░░░██░░░░░░██████▓▓░░░░██
     //             ▓▓██▒▒░░░░░░░░▓▓████▓▓░░░░░░████████░░░░░░▓▓████▓▓░░░░░░██
     //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░██░░░░██░░░░░░░░░░░░░░░░░░░░██
     //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
@@ -603,31 +703,31 @@ public class VHLArmy
     //         ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
     //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
     //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
-    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██    
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░Script Made for Potatos ░░░░░░░░░░░░░░██    
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██    
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██    
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██    
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ░░▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░  
-    //         ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██    
-    //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██      
-    //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██        
-    //             ▓▓████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██          
-    //               ▓▓▓▓████████░░░░░░░░░░░░░░░░░░░░░░░░████████░░          
-    //               ░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░   
+    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░Script Made for Potatos ░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ░░▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░
+    //         ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //             ▓▓████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //               ▓▓▓▓████████░░░░░░░░░░░░░░░░░░░░░░░░████████░░
+    //               ░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░
 
     public void PlayerAFK()
     {
@@ -644,14 +744,13 @@ public class VHLArmy
 
         string[] playerConfigs = new[]
         {
-        Bot.Config?.Get<string>("player1")?.Trim() ?? "",
-        Bot.Config?.Get<string>("player2")?.Trim() ?? "",
-        Bot.Config?.Get<string>("player3")?.Trim() ?? "",
-        Bot.Config?.Get<string>("player4")?.Trim() ?? "",
-        Bot.Config?.Get<string>("player5")?.Trim() ?? "",
-        Bot.Config?.Get<string>("player6")?.Trim() ?? ""
+            Bot.Config?.Get<string>("player1")?.Trim() ?? "",
+            Bot.Config?.Get<string>("player2")?.Trim() ?? "",
+            Bot.Config?.Get<string>("player3")?.Trim() ?? "",
+            Bot.Config?.Get<string>("player4")?.Trim() ?? "",
+            Bot.Config?.Get<string>("player5")?.Trim() ?? "",
+            Bot.Config?.Get<string>("player6")?.Trim() ?? "",
         };
-
 
         int presentPlayersCount = playerConfigs.Count(pc => !string.IsNullOrWhiteSpace(pc));
 
@@ -682,6 +781,4 @@ public class VHLArmy
 
         Core.Sleep(2500);
     }
-
-
 }

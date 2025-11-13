@@ -13,22 +13,44 @@ public class BehemothBlade
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "BehemothBlade";
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<Blade>("BladeChoice", "Choose Your Version", "Choose between Behemoth Blade of Shadow, Light, or both", Blade.Both),
+        new Option<Blade>(
+            "BladeChoice",
+            "Choose Your Version",
+            "Choose between Behemoth Blade of Shadow, Light, or both",
+            Blade.Both
+        ),
     };
-
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "", "Combat Trophy", "Basic War Sword", "Behemoth Blade of Shadow", "Behemoth Blade of Light" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "",
+                "Combat Trophy",
+                "Basic War Sword",
+                "Behemoth Blade of Shadow",
+                "Behemoth Blade of Light",
+            }
+        );
         Core.SetOptions();
 
         Blades();
@@ -49,7 +71,6 @@ public class BehemothBlade
         {
             BehemothBladeof(bladeChoice.ToString());
         }
-
     }
 
     public void BehemothBladeof(string blade)
@@ -79,7 +100,6 @@ public class BehemothBlade
     {
         Shadow,
         Light,
-        Both
+        Both,
     }
-
 }

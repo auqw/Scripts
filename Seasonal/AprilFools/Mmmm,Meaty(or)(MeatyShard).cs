@@ -12,7 +12,12 @@ public class MmmmMeatyQuest
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -44,17 +49,30 @@ public class MmmmMeatyQuest
         if (!Story.QuestProgression(8612))
         {
             Core.EnsureAccept(8612);
-            Core.KillMonster("MeateorTown", "r9", "Right", "Giant ChickenCow", "ChickenCow Tamed", publicRoom: true);
+            Core.KillMonster(
+                "MeateorTown",
+                "r9",
+                "Right",
+                "Giant ChickenCow",
+                "ChickenCow Tamed",
+                publicRoom: true
+            );
             Core.EnsureComplete(8612);
         }
 
         while (!Bot.ShouldExit && (!Core.CheckInventory(Rewards)))
         {
             Core.EnsureAccept(8613);
-            Core.KillMonster("MeateorTown", "r9", "Right", "Giant ChickenCow", "Meaty Shard", publicRoom: true);
+            Core.KillMonster(
+                "MeateorTown",
+                "r9",
+                "Right",
+                "Giant ChickenCow",
+                "Meaty Shard",
+                publicRoom: true
+            );
             Core.EnsureComplete(8613);
             Bot.Wait.ForPickup("*");
         }
     }
-
 }

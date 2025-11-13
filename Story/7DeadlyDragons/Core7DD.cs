@@ -11,7 +11,11 @@ public class Core7DD
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -392,7 +396,11 @@ public class Core7DD
         Story.KillQuest(6003, "Maloth", "Golgar");
 
         // Hand over the Entry Code 6004
-        Story.KillQuest(6004, "Maloth", new[] { "Golgar", "Castle Guard", "Scroll Keeper", "Nervous Serf", "Locked Chest", });
+        Story.KillQuest(
+            6004,
+            "Maloth",
+            new[] { "Golgar", "Castle Guard", "Scroll Keeper", "Nervous Serf", "Locked Chest" }
+        );
 
         // Confront the Dragon King 6005
         Story.KillQuest(6005, "Maloth", "Maloth");

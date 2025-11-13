@@ -15,9 +15,18 @@ public class DarkWitchyAndCurstedJester
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreMogloween CoreMogloween { get => _CoreMogloween ??= new CoreMogloween(); set => _CoreMogloween = value; }    private static CoreMogloween _CoreMogloween;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreMogloween CoreMogloween
+    {
+        get => _CoreMogloween ??= new CoreMogloween();
+        set => _CoreMogloween = value;
+    }
+    private static CoreMogloween _CoreMogloween;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -52,15 +61,28 @@ public class DarkWitchyAndCurstedJester
                 Core.EnsureAccept(8375);
 
                 Core.EquipClass(ClassType.Farm);
-                Core.HuntMonster("necrocarnival", "Mooch Treeant", "Cherry Lemonade", 10, log: false);
-                Core.HuntMonster("necrocarnival", "Gummy Tapeworm", "Crunchy Fried Clusters", 5, log: false);
+                Core.HuntMonster(
+                    "necrocarnival",
+                    "Mooch Treeant",
+                    "Cherry Lemonade",
+                    10,
+                    log: false
+                );
+                Core.HuntMonster(
+                    "necrocarnival",
+                    "Gummy Tapeworm",
+                    "Crunchy Fried Clusters",
+                    5,
+                    log: false
+                );
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("necrocarnival", "Deva", "Felt Patch", log: false);
 
                 Core.EnsureComplete(8375, item.ID);
                 Bot.Wait.ForPickup(item.ID);
             }
-            else Core.Logger($"{item.Name} Found");
+            else
+                Core.Logger($"{item.Name} Found");
             Core.ToBank(item.Name);
         }
     }

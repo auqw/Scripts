@@ -12,7 +12,12 @@ public class GoldenLaurel
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static GoldenArena GA { get => _GA ??= new GoldenArena(); set => _GA = value; }    private static GoldenArena _GA;
+    private static GoldenArena GA
+    {
+        get => _GA ??= new GoldenArena();
+        set => _GA = value;
+    }
+    private static GoldenArena _GA;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,7 +38,6 @@ public class GoldenLaurel
 
         Core.Logger($"Doing Golden Arena story for {badge} badge");
         GA.StoryLine();
-
     }
 
     private string badge = "Golden Laurel";

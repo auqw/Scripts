@@ -16,10 +16,30 @@ public class CoreYnR
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static CoreSoW SOW { get => _SOW ??= new CoreSoW(); set => _SOW = value; }    private static CoreSoW _SOW;
-    private static SwordMaster SM { get => _SM ??= new SwordMaster(); set => _SM = value; }    private static SwordMaster _SM;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static CoreSoW SOW
+    {
+        get => _SOW ??= new CoreSoW();
+        set => _SOW = value;
+    }
+    private static CoreSoW _SOW;
+    private static SwordMaster SM
+    {
+        get => _SM ??= new SwordMaster();
+        set => _SM = value;
+    }
+    private static SwordMaster _SM;
 
     private bool nonLegion = false;
 
@@ -101,7 +121,8 @@ public class CoreYnR
         Core.Logger("Checking which method to use");
         if (!Core.isCompletedBefore(793))
             nonLegion = true;
-        else nonLegion = false;
+        else
+            nonLegion = false;
 
         Core.FarmingLogger("Folded Steel", 1);
         Core.AddDrop("Folded Steel");
@@ -123,7 +144,15 @@ public class CoreYnR
         }
         FlameForgedMetal(13);
         Core.EquipClass(ClassType.Solo);
-        Core.KillMonster("doomvaultb", "r26", "Left", "Undead Raxgore", "Weapon Imprint", 15, false);
+        Core.KillMonster(
+            "doomvaultb",
+            "r26",
+            "Left",
+            "Undead Raxgore",
+            "Weapon Imprint",
+            15,
+            false
+        );
 
         Core.EnsureComplete(7444);
     }
@@ -153,7 +182,8 @@ public class CoreYnR
         Core.Logger("Checking which method to use");
         if (!Core.isCompletedBefore(793))
             nonLegion = true;
-        else nonLegion = false;
+        else
+            nonLegion = false;
 
         SOW.DarkAlly();
         Core.FarmingLogger("Blademaster Sword Scroll", 1);
@@ -164,24 +194,65 @@ public class CoreYnR
         {
             Core.EnsureAccept(7410);
             Core.Logger("Using Non-Legion variant for the Blademaster Sword Scroll");
-            Core.KillMonster("frozenlair", "r3", "Left", "Legion Lich Lord", "Sapphire Orb", 26, false, publicRoom: true);
-            Core.KillMonster("Judgement", "r10a", "Spawn", "Ultra Aeacus", "Aeacus Empowered", 100, false, publicRoom: true);
+            Core.KillMonster(
+                "frozenlair",
+                "r3",
+                "Left",
+                "Legion Lich Lord",
+                "Sapphire Orb",
+                26,
+                false,
+                publicRoom: true
+            );
+            Core.KillMonster(
+                "Judgement",
+                "r10a",
+                "Spawn",
+                "Ultra Aeacus",
+                "Aeacus Empowered",
+                100,
+                false,
+                publicRoom: true
+            );
             Core.HuntMonster("darkally", "Underfiend", "Traitor's Tract", 250, false);
             Core.HuntMonster("shadowsong", "Oh'Garr", "Ogre Titan's Resonance", 250, false);
-            Core.HuntMonster("shadowgrove", "Titan Shadow Dragonlord", "Shadow Dragonlord's Shroud", 250, false);
+            Core.HuntMonster(
+                "shadowgrove",
+                "Titan Shadow Dragonlord",
+                "Shadow Dragonlord's Shroud",
+                250,
+                false
+            );
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("evilwardage", "Blade Master", "Discipline", isTemp: false);
             Legion.DagePvP(400, 50, 1000);
             Core.EnsureComplete(7410);
         }
-
         else
         {
             Core.Logger("Using Legion variant for the Blademaster Sword Scroll");
             Core.EnsureAccept(7443);
-            Core.KillMonster("frozenlair", "r3", "Left", "Legion Lich Lord", "Sapphire Orb", 13, false, publicRoom: true);
+            Core.KillMonster(
+                "frozenlair",
+                "r3",
+                "Left",
+                "Legion Lich Lord",
+                "Sapphire Orb",
+                13,
+                false,
+                publicRoom: true
+            );
             Legion.FarmLegionToken(17500);
-            Core.KillMonster("Judgement", "r10a", "Spawn", "Ultra Aeacus", "Aeacus Empowered", 50, false, publicRoom: true);
+            Core.KillMonster(
+                "Judgement",
+                "r10a",
+                "Spawn",
+                "Ultra Aeacus",
+                "Aeacus Empowered",
+                50,
+                false,
+                publicRoom: true
+            );
 
             if (!Core.CheckInventory("Meditation"))
             {

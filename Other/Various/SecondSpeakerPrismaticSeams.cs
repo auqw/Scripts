@@ -20,15 +20,35 @@ public class SecondSpeakerPrismaticSeams
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
     private static CoreSoW _SoW;
 
     public string OptionsStorage = "SecondSpeakerPrismaticSeams";
@@ -50,23 +70,30 @@ public class SecondSpeakerPrismaticSeams
 
     public void Example(bool TestMode = false)
     {
-
-        Core.Logger(Bot.Config?.Get<bool>("Use Public Boss") == true ? "Public Boss is enabled, THIS IS VERY RISKY!" : "Public Boss room Disabled",
-         Bot.Config?.Get<bool>("Use Public Boss") == true ? "****WARNING***" : "****INFO***");
+        Core.Logger(
+            Bot.Config?.Get<bool>("Use Public Boss") == true
+                ? "Public Boss is enabled, THIS IS VERY RISKY!"
+                : "Public Boss room Disabled",
+            Bot.Config?.Get<bool>("Use Public Boss") == true ? "****WARNING***" : "****INFO***"
+        );
 
         //Test Stuff Below here
         SoW.TimestreamWar();
         if (Bot.Config?.Get<bool>("Use Public Boss") == true)
         {
-            Core.Logger("Joining whitemap then back to streamwar to avoid being stuck in private room from doing the story.");
+            Core.Logger(
+                "Joining whitemap then back to streamwar to avoid being stuck in private room from doing the story."
+            );
             Core.Join("whitemap");
             Core.PrivateRooms = false;
         }
 
         Core.Join("streamwar", publicRoom: Bot.Config?.Get<bool>("Use Public Boss") == true);
 
-        Core.Logger("This Script will use the class you have set as your `SoloClass` in your CBO options.(options > corebots > solo class)\n" +
-        "If you want to use a different class, change your CBO options.");
+        Core.Logger(
+            "This Script will use the class you have set as your `SoloClass` in your CBO options.(options > corebots > solo class)\n"
+                + "If you want to use a different class, change your CBO options."
+        );
         Core.EquipClass(ClassType.Solo);
         Core.AddDrop("Prismatic Seams");
         Core.RegisterQuests(8815);
@@ -75,7 +102,10 @@ public class SecondSpeakerPrismaticSeams
         {
             if (Bot.Map.Name != "streamwar")
             {
-                Core.Join("streamwar", publicRoom: Bot.Config?.Get<bool>("Use Public Boss") == true);
+                Core.Join(
+                    "streamwar",
+                    publicRoom: Bot.Config?.Get<bool>("Use Public Boss") == true
+                );
                 Bot.Wait.ForMapLoad("streamwar");
             }
             if (Bot.Player.Cell != "r5")
@@ -95,6 +125,3 @@ public class SecondSpeakerPrismaticSeams
         Bot.Wait.ForPickup("Prismatic Seams");
     }
 }
-
-
-

@@ -13,7 +13,12 @@ public class Pyrewatch
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFireIsland FI { get => _FI ??= new CoreFireIsland(); set => _FI = value; }    private static CoreFireIsland _FI;
+    private static CoreFireIsland FI
+    {
+        get => _FI ??= new CoreFireIsland();
+        set => _FI = value;
+    }
+    private static CoreFireIsland _FI;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -11,7 +11,11 @@ public class SeraphicWar_Story
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -31,7 +35,17 @@ public class SeraphicWar_Story
         Story.PreLoad(this);
 
         //Get the Parts
-        Story.KillQuest(6238, "worldsoul", new[] { "Dwakel Infiltrator", "Dwakel Infiltrator", "Dwakel Infiltrator", "Dwakel Infiltrator" });
+        Story.KillQuest(
+            6238,
+            "worldsoul",
+            new[]
+            {
+                "Dwakel Infiltrator",
+                "Dwakel Infiltrator",
+                "Dwakel Infiltrator",
+                "Dwakel Infiltrator",
+            }
+        );
         //Get the Water
         Story.KillQuest(6239, "worldsoul", "Divine Water Elemental");
         //Get the Fire

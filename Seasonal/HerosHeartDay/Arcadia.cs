@@ -11,7 +11,11 @@ public class Arcadia
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -92,6 +96,5 @@ public class Arcadia
             Core.HuntMonster("arcadia", "Lightguard Wraith", "Armor Paint Residue", 8);
             Core.EnsureComplete(8520);
         }
-
     }
 }

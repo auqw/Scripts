@@ -11,7 +11,12 @@ public class CoreDageTheEvilIsland
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -22,7 +27,14 @@ public class CoreDageTheEvilIsland
         Core.SetOptions(false);
     }
 
-    public string[] EnvyItems = { "Envy Token V", "Envy Token IV", "Envy Token III", "Envy Token II", "Envy Token I" };
+    public string[] EnvyItems =
+    {
+        "Envy Token V",
+        "Envy Token IV",
+        "Envy Token III",
+        "Envy Token II",
+        "Envy Token I",
+    };
 
     public void CompleteDageTheEvilIslandStory()
     {
@@ -63,7 +75,10 @@ public class CoreDageTheEvilIsland
         }
 
         //Test 3: Bonesaw Break 4086
-        if (!Story.QuestProgression(4086) || !Core.CheckInventory("Ultra Dark Mystery Stone Of Evil Animosity"))
+        if (
+            !Story.QuestProgression(4086)
+            || !Core.CheckInventory("Ultra Dark Mystery Stone Of Evil Animosity")
+        )
         {
             Core.AddDrop("Ultra Dark Mystery Stone Of Evil Animosity");
             Core.EnsureAccept(4086);
@@ -104,7 +119,11 @@ public class CoreDageTheEvilIsland
         Story.KillQuest(4182, "Seraph", "Seraphic Recruit");
 
         //Whispers Rumors and Seraphic Scrolls 4183
-        Story.KillQuest(4183, "Seraph", new[] { "Legion Infiltrator", "Seraphic Recruit", "Legion Augur" });
+        Story.KillQuest(
+            4183,
+            "Seraph",
+            new[] { "Legion Infiltrator", "Seraphic Recruit", "Legion Augur" }
+        );
         //Me? A Spy? 4184
         Story.KillQuest(4184, "Seraph", "Legion Augur");
 
@@ -112,16 +131,34 @@ public class CoreDageTheEvilIsland
         if (!Story.QuestProgression(4185))
         {
             Core.EnsureAccept(4185);
-            Core.KillMonster("Seraph", "r6", "Left", "Legion Infiltrator", "Legion Infiltrators Defeated", 10, log: false);
+            Core.KillMonster(
+                "Seraph",
+                "r6",
+                "Left",
+                "Legion Infiltrator",
+                "Legion Infiltrators Defeated",
+                10,
+                log: false
+            );
             Core.EnsureComplete(4185);
         }
 
-        Core.Logger("if the quest \"Finders Keepers\" [4186] is not Unlocked, the Bot will then do the previous Quest \"It's War!\" 10x");
+        Core.Logger(
+            "if the quest \"Finders Keepers\" [4186] is not Unlocked, the Bot will then do the previous Quest \"It's War!\" 10x"
+        );
 
         while (!Bot.ShouldExit && !Bot.Quests.IsUnlocked(4186))
         {
             Core.EnsureAccept(4185);
-            Core.KillMonster("Seraph", "r6", "Left", "Legion Infiltrator", "Legion Infiltrators Defeated", 10, log: false);
+            Core.KillMonster(
+                "Seraph",
+                "r6",
+                "Left",
+                "Legion Infiltrator",
+                "Legion Infiltrators Defeated",
+                10,
+                log: false
+            );
             Core.EnsureComplete(4185);
         }
     }
@@ -231,7 +268,6 @@ public class CoreDageTheEvilIsland
                     //Fight for Envy 4889 - Envy Token V
                     Core.HuntMonster("Envy", "Legion Spy", "Legion Spies Defeated", 8);
                     break;
-
             }
         }
 
@@ -247,7 +283,11 @@ public class CoreDageTheEvilIsland
         }
 
         //Group Effort 4891
-        Story.KillQuest(4891, "Envy", new[] { "Legion Defector", "Fawning Sycophant", "Disciple of Envy" });
+        Story.KillQuest(
+            4891,
+            "Envy",
+            new[] { "Legion Defector", "Fawning Sycophant", "Disciple of Envy" }
+        );
 
         //Defeat Envy 4892
         Story.KillQuest(4892, "Envy", "Envy");

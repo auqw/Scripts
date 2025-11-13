@@ -17,21 +17,40 @@ public class ArmyNSoDDaily
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
-    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
     private static CoreBots _sCore;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
-
 
     public string OptionsStorage = "ArmyNSODDaily";
     public bool DontPreconfigure = true;
@@ -44,12 +63,14 @@ public class ArmyNSoDDaily
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Glacial Pinion", "Hydra Eyeball", "Flibbitigiblets", "Void Aura" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Glacial Pinion", "Hydra Eyeball", "Flibbitigiblets", "Void Aura" }
+        );
         Core.SetOptions(disableClassSwap: true);
 
         DoDaily();
@@ -59,7 +80,10 @@ public class ArmyNSoDDaily
 
     public void DoDaily()
     {
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
@@ -76,7 +100,6 @@ public class ArmyNSoDDaily
         Army.AggroMonStop();
         Core.JumpWait();
 
-
         Bot.Map.Join("hydrachallenge-" + Core.PrivateRoomNumber, autoCorrect: false);
         Bot.Wait.ForMapLoad("hydrachallenge");
         Army.WaitForPartyCell("h90", "Left", 4, 60);
@@ -84,7 +107,6 @@ public class ArmyNSoDDaily
             Bot.Combat.Attack("*");
         Army.AggroMonStop();
         Core.JumpWait();
-
 
         Bot.Map.Join("hydrachallenge-" + Core.PrivateRoomNumber, autoCorrect: false);
         Bot.Wait.ForMapLoad("hydrachallenge");

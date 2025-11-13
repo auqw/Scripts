@@ -13,8 +13,18 @@ public class DragonslayerGeneral
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -54,14 +64,32 @@ public class DragonslayerGeneral
         if (ScaleQuant > 0)
         {
             Core.AddDrop("Enchanted Scale");
-            Core.Logger($"Farming {ScaleQuant} Enchanted Scale, {Bot.Inventory.GetQuantity("Enchanted Scale")} / {ScaleQuant}");
+            Core.Logger(
+                $"Farming {ScaleQuant} Enchanted Scale, {Bot.Inventory.GetQuantity("Enchanted Scale")} / {ScaleQuant}"
+            );
             Core.RegisterQuests(5294);
         }
 
-        Core.KillMonster("dragontown", "r4", "Right", "Tempest Dracolich", "Dragon Claw", ClawQuant, isTemp: false);
+        Core.KillMonster(
+            "dragontown",
+            "r4",
+            "Right",
+            "Tempest Dracolich",
+            "Dragon Claw",
+            ClawQuant,
+            isTemp: false
+        );
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Enchanted Scale", ScaleQuant))
-            Core.KillMonster("dragontown", "r4", "Right", "Tempest Dracolich", "Dracolich Slain", 12, log: false);
+            Core.KillMonster(
+                "dragontown",
+                "r4",
+                "Right",
+                "Tempest Dracolich",
+                "Dracolich Slain",
+                12,
+                log: false
+            );
         Core.CancelRegisteredQuests();
     }
 }

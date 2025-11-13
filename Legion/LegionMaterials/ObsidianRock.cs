@@ -15,7 +15,12 @@ using Skua.Core.Interfaces;
 public class ObsidianRock
 {
     public CoreBots Core => CoreBots.Instance;
-    private static CoreLegion CL { get => _CL ??= new CoreLegion(); set => _CL = value; }    private static CoreLegion _CL;
+    private static CoreLegion CL
+    {
+        get => _CL ??= new CoreLegion();
+        set => _CL = value;
+    }
+    private static CoreLegion _CL;
 
     public void ScriptMain(IScriptInterface bot)
     {

@@ -6,20 +6,30 @@ tags: scroll, enrage, mystic, parchment, spellcraft, decay
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 using Skua.Core.Interfaces;
-using Skua.Core.Options;
 using Skua.Core.Models.Quests;
+using Skua.Core.Options;
 
 public class BuyScrolls
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "BuyScrolls";
     public List<IOption> Options = new()
     {
-        new Option<bool>("UseMysticParchment", "Use Mystic Parchment", "Use Mystic Parchment instead of gold To Buy Ink", false),
+        new Option<bool>(
+            "UseMysticParchment",
+            "Use Mystic Parchment",
+            "Use Mystic Parchment instead of gold To Buy Ink",
+            false
+        ),
         new Option<Scrolls>("scrollSelect", "Scroll of", "Select the scroll of your choise"),
         new Option<int>("scrollAmount", "How many", "Write -1 to buy up to max. stack", -1),
         CoreBots.Instance.SkipOptions,
@@ -69,11 +79,19 @@ public class BuyScrolls
                 }
                 Core.BuyItem("spellcraft", 622, ink, 5);
             }
-        : () =>
-        {
-            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Mystic Parchment", quant / 10, isTemp: false);
-            Core.BuyItem("spellcraft", 549, ink, 5);
-        };
+            : () =>
+            {
+                Core.KillMonster(
+                    "tercessuinotlim",
+                    "m2",
+                    "Left",
+                    "*",
+                    "Mystic Parchment",
+                    quant / 10,
+                    isTemp: false
+                );
+                Core.BuyItem("spellcraft", 549, ink, 5);
+            };
 
         while (!Bot.ShouldExit && !Core.CheckInventory(scrollName, quant))
         {
@@ -84,7 +102,6 @@ public class BuyScrolls
             Core.FarmingLogger(scrollName, quant);
         }
     }
-
 }
 
 public enum Scrolls

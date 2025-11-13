@@ -8,13 +8,19 @@ tags: creepy-undead-monkey, black-friday, seasonal
 //cs_include Scripts/Story/IsleOfFotia/CoreIsleOfFotia.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+
 // using Skua.Core.Options;
 
 public class CreepyUndeadMonkeyQuest
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreIsleOfFotia Fotia { get => _Fotia ??= new CoreIsleOfFotia(); set => _Fotia = value; }    private static CoreIsleOfFotia _Fotia;
+    private static CoreIsleOfFotia Fotia
+    {
+        get => _Fotia ??= new CoreIsleOfFotia();
+        set => _Fotia = value;
+    }
+    private static CoreIsleOfFotia _Fotia;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -30,7 +36,9 @@ public class CreepyUndeadMonkeyQuest
     {
         if (!Core.IsMember && !CalculateFriday13())
         {
-            Core.Logger("You must be Member or wait until a week before Friday the 13th to access /twig.");
+            Core.Logger(
+                "You must be Member or wait until a week before Friday the 13th to access /twig."
+            );
             return;
         }
 
@@ -87,6 +95,7 @@ public class CreepyUndeadMonkeyQuest
         }
     }
 
-    bool CalculateFriday13()
-        => new DateTime(DateTime.Now.Year, DateTime.Now.Month, 13).DayOfWeek == DayOfWeek.Friday && DateTime.Now.Day >= 5;
+    bool CalculateFriday13() =>
+        new DateTime(DateTime.Now.Year, DateTime.Now.Month, 13).DayOfWeek == DayOfWeek.Friday
+        && DateTime.Now.Day >= 5;
 }

@@ -16,27 +16,56 @@ public class CrulonsWeddingMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static crulonwedding crulonwedding { get => _crulonwedding ??= new crulonwedding(); set => _crulonwedding = value; }
+    private static crulonwedding crulonwedding
+    {
+        get => _crulonwedding ??= new crulonwedding();
+        set => _crulonwedding = value;
+    }
     private static crulonwedding _crulonwedding;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Flame Incantation", "Silver Ward", "Almoravid's Bracer", "Honored Sandsea Guest", "Desert Bandana", "Luminous Emblem", "Luminous Soul Blade", "Luminous Soul Spear", "Luminous Soul Bow" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Flame Incantation",
+                "Silver Ward",
+                "Almoravid's Bracer",
+                "Honored Sandsea Guest",
+                "Desert Bandana",
+                "Luminous Emblem",
+                "Luminous Soul Blade",
+                "Luminous Soul Spear",
+                "Luminous Soul Bow",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -63,7 +92,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -74,9 +105,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Flame Incantation":
                     Core.FarmingLogger(req.Name, quant);
@@ -97,7 +133,12 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(9849);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("towerofmirrors", UseableMonsters[2], "Silver Tincture", 10);
+                        Core.HuntMonster(
+                            "towerofmirrors",
+                            UseableMonsters[2],
+                            "Silver Tincture",
+                            10
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -124,27 +165,101 @@ private static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("crulonwed", UseableMonsters[0], req.Name, quant, req.Temp);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("87682", "Sandsea Ceremonial Attire", "Mode: [select] only\nShould the bot buy \"Sandsea Ceremonial Attire\" ?", false),
-        new Option<bool>("87683", "Crulon's Wedding Morph", "Mode: [select] only\nShould the bot buy \"Crulon's Wedding Morph\" ?", false),
-        new Option<bool>("87684", "Amani's Wedding Visage", "Mode: [select] only\nShould the bot buy \"Amani's Wedding Visage\" ?", false),
-        new Option<bool>("87685", "Crulon's Wedding Helm", "Mode: [select] only\nShould the bot buy \"Crulon's Wedding Helm\" ?", false),
-        new Option<bool>("87686", "Amani's Wedding Veil", "Mode: [select] only\nShould the bot buy \"Amani's Wedding Veil\" ?", false),
-        new Option<bool>("87687", "Crulon's Wedding Mask", "Mode: [select] only\nShould the bot buy \"Crulon's Wedding Mask\" ?", false),
-        new Option<bool>("87688", "Emerald Eons Blade", "Mode: [select] only\nShould the bot buy \"Emerald Eons Blade\" ?", false),
-        new Option<bool>("87689", "Emerald Eons Blades", "Mode: [select] only\nShould the bot buy \"Emerald Eons Blades\" ?", false),
-        new Option<bool>("68243", "Royal Sandsea Guest", "Mode: [select] only\nShould the bot buy \"Royal Sandsea Guest\" ?", false),
-        new Option<bool>("68244", "Enchanted Desert Bandana", "Mode: [select] only\nShould the bot buy \"Enchanted Desert Bandana\" ?", false),
-        new Option<bool>("68245", "Luxorlight Helm", "Mode: [select] only\nShould the bot buy \"Luxorlight Helm\" ?", false),
-        new Option<bool>("68246", "Luxorlight Wings", "Mode: [select] only\nShould the bot buy \"Luxorlight Wings\" ?", false),
-        new Option<bool>("68248", "Luxorlight Blade", "Mode: [select] only\nShould the bot buy \"Luxorlight Blade\" ?", false),
-        new Option<bool>("68249", "Luxorlight Spear", "Mode: [select] only\nShould the bot buy \"Luxorlight Spear\" ?", false),
-        new Option<bool>("68250", "Luxorlight Bow", "Mode: [select] only\nShould the bot buy \"Luxorlight Bow\" ?", false),
+        new Option<bool>(
+            "87682",
+            "Sandsea Ceremonial Attire",
+            "Mode: [select] only\nShould the bot buy \"Sandsea Ceremonial Attire\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87683",
+            "Crulon's Wedding Morph",
+            "Mode: [select] only\nShould the bot buy \"Crulon's Wedding Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87684",
+            "Amani's Wedding Visage",
+            "Mode: [select] only\nShould the bot buy \"Amani's Wedding Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87685",
+            "Crulon's Wedding Helm",
+            "Mode: [select] only\nShould the bot buy \"Crulon's Wedding Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87686",
+            "Amani's Wedding Veil",
+            "Mode: [select] only\nShould the bot buy \"Amani's Wedding Veil\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87687",
+            "Crulon's Wedding Mask",
+            "Mode: [select] only\nShould the bot buy \"Crulon's Wedding Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87688",
+            "Emerald Eons Blade",
+            "Mode: [select] only\nShould the bot buy \"Emerald Eons Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "87689",
+            "Emerald Eons Blades",
+            "Mode: [select] only\nShould the bot buy \"Emerald Eons Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68243",
+            "Royal Sandsea Guest",
+            "Mode: [select] only\nShould the bot buy \"Royal Sandsea Guest\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68244",
+            "Enchanted Desert Bandana",
+            "Mode: [select] only\nShould the bot buy \"Enchanted Desert Bandana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68245",
+            "Luxorlight Helm",
+            "Mode: [select] only\nShould the bot buy \"Luxorlight Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68246",
+            "Luxorlight Wings",
+            "Mode: [select] only\nShould the bot buy \"Luxorlight Wings\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68248",
+            "Luxorlight Blade",
+            "Mode: [select] only\nShould the bot buy \"Luxorlight Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68249",
+            "Luxorlight Spear",
+            "Mode: [select] only\nShould the bot buy \"Luxorlight Spear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "68250",
+            "Luxorlight Bow",
+            "Mode: [select] only\nShould the bot buy \"Luxorlight Bow\" ?",
+            false
+        ),
     };
 }

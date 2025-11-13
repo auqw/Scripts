@@ -16,25 +16,56 @@ public class FableForestMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Plain Dragon Tail", "Wind Stone", "Earth Stone", "OakHeart Helm", "Fire Stone", "Water Stone", "OakHeart ArmBlades", "Chaos Stone", "Not Quite Dread Mask", "Not Quite Dread Shape", "Hydra Cape", "Dreadspider Cape", "Dreadspider Abdomen", "Red Dragon Morph", "Faerie Botanis Sword" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Plain Dragon Tail",
+                "Wind Stone",
+                "Earth Stone",
+                "OakHeart Helm",
+                "Fire Stone",
+                "Water Stone",
+                "OakHeart ArmBlades",
+                "Chaos Stone",
+                "Not Quite Dread Mask",
+                "Not Quite Dread Shape",
+                "Hydra Cape",
+                "Dreadspider Cape",
+                "Dreadspider Abdomen",
+                "Red Dragon Morph",
+                "Faerie Botanis Sword",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -51,7 +82,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -62,9 +95,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
 
                 case "Wind Stone":
@@ -85,8 +123,20 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(3317);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("fableforest", "Earth Elemental", "Earth Aura", 5, log: false);
-                        Core.HuntMonster("fableforest", "Undead Satyr", "Satyr Hoof", 5, log: false);
+                        Core.HuntMonster(
+                            "fableforest",
+                            "Earth Elemental",
+                            "Earth Aura",
+                            5,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "fableforest",
+                            "Undead Satyr",
+                            "Satyr Hoof",
+                            5,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -140,29 +190,113 @@ private static CoreAdvanced _sAdv;
                 case "Faerie Botanis Sword":
                     Adv.BuyItem("fableforest", 814, req.Name);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("22324", "Wind Dragon Tail", "Mode: [select] only\nShould the bot buy \"Wind Dragon Tail\" ?", false),
-        new Option<bool>("22274", "OakHeart Back Shield", "Mode: [select] only\nShould the bot buy \"OakHeart Back Shield\" ?", false),
-        new Option<bool>("22273", "OakHeart Magic Helm", "Mode: [select] only\nShould the bot buy \"OakHeart Magic Helm\" ?", false),
-        new Option<bool>("22271", "OakHeart Magic ArmBlades", "Mode: [select] only\nShould the bot buy \"OakHeart Magic ArmBlades\" ?", false),
-        new Option<bool>("22269", "OakHeart Guardian", "Mode: [select] only\nShould the bot buy \"OakHeart Guardian\" ?", false),
-        new Option<bool>("22254", "Not Quite Chaos Mask", "Mode: [select] only\nShould the bot buy \"Not Quite Chaos Mask\" ?", false),
-        new Option<bool>("22253", "Not Quite Chaos Shape", "Mode: [select] only\nShould the bot buy \"Not Quite Chaos Shape\" ?", false),
-        new Option<bool>("22237", "Chaos Shadowscythe Morph", "Mode: [select] only\nShould the bot buy \"Chaos Shadowscythe Morph\" ?", false),
-        new Option<bool>("22233", "Ultra Hydra Cape", "Mode: [select] only\nShould the bot buy \"Ultra Hydra Cape\" ?", false),
-        new Option<bool>("22230", "Dreadspider Combo", "Mode: [select] only\nShould the bot buy \"Dreadspider Combo\" ?", false),
-        new Option<bool>("22222", "Dwakel Tech Spikes", "Mode: [select] only\nShould the bot buy \"Dwakel Tech Spikes\" ?", false),
-        new Option<bool>("22221", "Fire Dragon Tail", "Mode: [select] only\nShould the bot buy \"Fire Dragon Tail\" ?", false),
-        new Option<bool>("22220", "Water Dragon Tail", "Mode: [select] only\nShould the bot buy \"Water Dragon Tail\" ?", false),
-        new Option<bool>("22219", "Nature Dragon Tail", "Mode: [select] only\nShould the bot buy \"Nature Dragon Tail\" ?", false),
-        new Option<bool>("22210", "Prismatic Dragon Morph", "Mode: [select] only\nShould the bot buy \"Prismatic Dragon Morph\" ?", false),
-        new Option<bool>("22154", "Faerie Botanis Staff", "Mode: [select] only\nShould the bot buy \"Faerie Botanis Staff\" ?", false),
-        new Option<bool>("43451", "FableForest Elements Cape", "Mode: [select] only\nShould the bot buy \"FableForest Elements Cape\" ?", false),
+        new Option<bool>(
+            "22324",
+            "Wind Dragon Tail",
+            "Mode: [select] only\nShould the bot buy \"Wind Dragon Tail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22274",
+            "OakHeart Back Shield",
+            "Mode: [select] only\nShould the bot buy \"OakHeart Back Shield\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22273",
+            "OakHeart Magic Helm",
+            "Mode: [select] only\nShould the bot buy \"OakHeart Magic Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22271",
+            "OakHeart Magic ArmBlades",
+            "Mode: [select] only\nShould the bot buy \"OakHeart Magic ArmBlades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22269",
+            "OakHeart Guardian",
+            "Mode: [select] only\nShould the bot buy \"OakHeart Guardian\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22254",
+            "Not Quite Chaos Mask",
+            "Mode: [select] only\nShould the bot buy \"Not Quite Chaos Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22253",
+            "Not Quite Chaos Shape",
+            "Mode: [select] only\nShould the bot buy \"Not Quite Chaos Shape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22237",
+            "Chaos Shadowscythe Morph",
+            "Mode: [select] only\nShould the bot buy \"Chaos Shadowscythe Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22233",
+            "Ultra Hydra Cape",
+            "Mode: [select] only\nShould the bot buy \"Ultra Hydra Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22230",
+            "Dreadspider Combo",
+            "Mode: [select] only\nShould the bot buy \"Dreadspider Combo\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22222",
+            "Dwakel Tech Spikes",
+            "Mode: [select] only\nShould the bot buy \"Dwakel Tech Spikes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22221",
+            "Fire Dragon Tail",
+            "Mode: [select] only\nShould the bot buy \"Fire Dragon Tail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22220",
+            "Water Dragon Tail",
+            "Mode: [select] only\nShould the bot buy \"Water Dragon Tail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22219",
+            "Nature Dragon Tail",
+            "Mode: [select] only\nShould the bot buy \"Nature Dragon Tail\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22210",
+            "Prismatic Dragon Morph",
+            "Mode: [select] only\nShould the bot buy \"Prismatic Dragon Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "22154",
+            "Faerie Botanis Staff",
+            "Mode: [select] only\nShould the bot buy \"Faerie Botanis Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "43451",
+            "FableForest Elements Cape",
+            "Mode: [select] only\nShould the bot buy \"FableForest Elements Cape\" ?",
+            false
+        ),
     };
 }

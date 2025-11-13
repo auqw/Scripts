@@ -18,16 +18,41 @@ public class DrakathArmorBot
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreBLOD BLOD { get => _BLOD ??= new CoreBLOD(); set => _BLOD = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreBLOD BLOD
+    {
+        get => _BLOD ??= new CoreBLOD();
+        set => _BLOD = value;
+    }
     private static CoreBLOD _BLOD;
-    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }
+    private static Core13LoC LOC
+    {
+        get => _LOC ??= new Core13LoC();
+        set => _LOC = value;
+    }
     private static Core13LoC _LOC;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface bot)
@@ -45,7 +70,9 @@ public class DrakathArmorBot
         DrakathArmorQuest();
         if (!Core.CheckInventory("Dage's Scroll Fragment", 13))
         {
-            Core.Logger("Cannot continue with \"Drakath Armor\" not enough \"Dage's Scroll Fragment\"");
+            Core.Logger(
+                "Cannot continue with \"Drakath Armor\" not enough \"Dage's Scroll Fragment\""
+            );
             return;
         }
         Core.BuyItem(Bot.Map.Name, 994, "Original Drakath Armor");
@@ -77,13 +104,20 @@ public class DrakathArmorBot
         if (Core.CheckInventory("Get Your Original Drakath's Armor"))
             return;
 
-        Core.AddDrop("Dage's Scroll Fragment", "Treasure Chest", "Face of Chaos", "Get Your Original Drakath's Armor");
+        Core.AddDrop(
+            "Dage's Scroll Fragment",
+            "Treasure Chest",
+            "Face of Chaos",
+            "Get Your Original Drakath's Armor"
+        );
         Core.EnsureAccept(3882);
         Core.Logger("Getting Quest Accept Requirement: Blinding Light of Destiny");
         BLOD.BlindingLightOfDestiny();
         if (!Core.CheckInventory("Blinding Light of Destiny"))
         {
-            Core.Logger("You do not own \"Blinding Light of Destiny\". We'll Farm the materials, but you still need top run this again to get BLoD.");
+            Core.Logger(
+                "You do not own \"Blinding Light of Destiny\". We'll Farm the materials, but you still need top run this again to get BLoD."
+            );
         }
 
         // Get Accept Requirement: Blind Light of Destiny
@@ -95,20 +129,37 @@ public class DrakathArmorBot
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster("swordhavenundead", "Left", "Right", "*", "Treasure Chest", 100, false);
         Core.EquipClass(ClassType.Solo);
-        Core.KillMonster("ultradrakath", "r1", "Left", "Champion of Chaos", "Face of Chaos", isTemp: false, publicRoom: true);
+        Core.KillMonster(
+            "ultradrakath",
+            "r1",
+            "Left",
+            "Champion of Chaos",
+            "Face of Chaos",
+            isTemp: false,
+            publicRoom: true
+        );
 
         if (!Core.CheckInventory("Dage's Scroll Fragment", 13))
         {
             Daily.DagesScrollFragment();
             if (!Core.CheckInventory("Dage's Scroll Fragment", 13))
             {
-                Core.Logger("Important", "You do not own \"Dage's Scroll Fragment\". We'll Farm the materials, but you still need to run this again to get Dage's Scroll Fragment -- tomorrow.");
+                Core.Logger(
+                    "Important",
+                    "You do not own \"Dage's Scroll Fragment\". We'll Farm the materials, but you still need to run this again to get Dage's Scroll Fragment -- tomorrow."
+                );
             }
         }
 
-        if (!Core.CheckInventory("Dage's Scroll Fragment", 13) && !Core.CheckInventory("Blinding Light of Destiny"))
-            Core.Logger("Important", $"Dage's Scroll Fragment: {Core.dynamicQuant("Dage's Scroll Fragment", false)}/13\n" +
-            $"Blinding Light of Destiny: {Core.dynamicQuant("Blinding Light of Destiny", false)}/1");
+        if (
+            !Core.CheckInventory("Dage's Scroll Fragment", 13)
+            && !Core.CheckInventory("Blinding Light of Destiny")
+        )
+            Core.Logger(
+                "Important",
+                $"Dage's Scroll Fragment: {Core.dynamicQuant("Dage's Scroll Fragment", false)}/13\n"
+                    + $"Blinding Light of Destiny: {Core.dynamicQuant("Blinding Light of Destiny", false)}/1"
+            );
         else
         {
             Core.EnsureComplete(3882); // Complete Quest: Get Your Original Drakath's Armor

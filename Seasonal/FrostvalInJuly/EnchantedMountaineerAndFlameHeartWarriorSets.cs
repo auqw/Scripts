@@ -8,12 +8,22 @@ tags: flameheart-warrior, enchanted-mountaineer, seasonal, frostvale
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Seasonal/FrostvalInJuly/IceStorm.cs
 using Skua.Core.Interfaces;
+
 public class EnchantedMountaineerAndFlameHeartWarriorSets
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static IceStorm IS { get => _IS ??= new IceStorm(); set => _IS = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static IceStorm IS
+    {
+        get => _IS ??= new IceStorm();
+        set => _IS = value;
+    }
     private static IceStorm _IS;
 
     public void ScriptMain(IScriptInterface bot)
@@ -52,7 +62,6 @@ public class EnchantedMountaineerAndFlameHeartWarriorSets
             }
         }
         Core.ToBank(Rewards);
-
     }
 }
 // Enchanted Mountaineer
@@ -60,7 +69,7 @@ public class EnchantedMountaineerAndFlameHeartWarriorSets
 // Enchanted Moutaineer's Masked Hood + Goggles
 // Enchanted Mountaineer's Backpack
 // Enchanted Mountaineer's Ice Axe
-// Dual Enchanted Ice Axes 
+// Dual Enchanted Ice Axes
 // FlameHeart Warrior
 // FlameHeart Warrior's Hair
 // FlameHeart Warrior's Locks
@@ -71,4 +80,3 @@ public class EnchantedMountaineerAndFlameHeartWarriorSets
 // FlameHeart Warrior's Wings
 // FlameHeart Warrior's Fire Wings
 // FlameHeart Warrior's Closed Wings
-

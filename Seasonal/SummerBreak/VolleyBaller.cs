@@ -13,9 +13,19 @@ public class VolleyBaller
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -28,7 +38,7 @@ public class VolleyBaller
     }
 
     public readonly string[] Rewards =
- {
+    {
         "Volleyball Captain",
         "Volleyball Hero",
         "Volleyball Hero's Hat",
@@ -46,6 +56,7 @@ public class VolleyBaller
         "Volleyball Hero's WaterGun",
         "Volleyball Hero's WaterGuns",
     };
+
     public void VolleyBallerQuest()
     {
         if (!Core.isSeasonalMapActive("summerbreak"))
@@ -64,5 +75,4 @@ public class VolleyBaller
         }
         Core.Logger("All drops Already Acquired");
     }
-
 }

@@ -13,9 +13,24 @@ public class WorthyBlade
 {
     public static IScriptInterface Bot => IScriptInterface.Instance;
     public static CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -46,7 +61,15 @@ public class WorthyBlade
         while (!Bot.ShouldExit && (!Core.CheckInventory("Binky's Uni-horn")))
         {
             Core.EquipClass(ClassType.Solo);
-            Core.KillMonster("doomvault", "r5", "Left", "Binky", "Binky's Uni-horn", isTemp: false, publicRoom: true);
+            Core.KillMonster(
+                "doomvault",
+                "r5",
+                "Left",
+                "Binky",
+                "Binky's Uni-horn",
+                isTemp: false,
+                publicRoom: true
+            );
         }
         Core.Sleep(1500);
         Core.EnsureComplete(6738);

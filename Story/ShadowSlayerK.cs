@@ -17,13 +17,48 @@ public class ShadowSlayerK
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static Core7DD DD { get => _DD ??= new Core7DD(); set => _DD = value; }    private static Core7DD _DD;
-    private static GiantTaleStory GiantTaleStory { get => _GiantTaleStory ??= new GiantTaleStory(); set => _GiantTaleStory = value; }    private static GiantTaleStory _GiantTaleStory;
-    private static BuyScrolls Scroll { get => _Scroll ??= new BuyScrolls(); set => _Scroll = value; }    private static BuyScrolls _Scroll;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static Core7DD DD
+    {
+        get => _DD ??= new Core7DD();
+        set => _DD = value;
+    }
+    private static Core7DD _DD;
+    private static GiantTaleStory GiantTaleStory
+    {
+        get => _GiantTaleStory ??= new GiantTaleStory();
+        set => _GiantTaleStory = value;
+    }
+    private static GiantTaleStory _GiantTaleStory;
+    private static BuyScrolls Scroll
+    {
+        get => _Scroll ??= new BuyScrolls();
+        set => _Scroll = value;
+    }
+    private static BuyScrolls _Scroll;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -46,7 +81,14 @@ public class ShadowSlayerK
             return;
 
         Story.PreLoad(this);
-        Core.AddDrop("Shadowslayer Apprentice Badge", "Dairy Ration", "Grain Ration", "Meat Ration", "Holy Wasabi", "Racing Trophy");
+        Core.AddDrop(
+            "Shadowslayer Apprentice Badge",
+            "Dairy Ration",
+            "Grain Ration",
+            "Meat Ration",
+            "Holy Wasabi",
+            "Racing Trophy"
+        );
 
         // 8829 | Lend an Ear
         if (!Story.QuestProgression(8829))
@@ -79,11 +121,28 @@ public class ShadowSlayerK
         if (!Story.QuestProgression(8832))
         {
             Core.EnsureAccept(8832);
-            Core.HuntMonster("dragonchallenge", "Greenguard Dragon", "Greenguard Dragon Ribs", log: false);
+            Core.HuntMonster(
+                "dragonchallenge",
+                "Greenguard Dragon",
+                "Greenguard Dragon Ribs",
+                log: false
+            );
             Core.HuntMonster("battlefowl", "ChickenCow", "Chickencow Wings", log: false);
             Core.HuntMonster("pirates", "Shark Bait", "Shark Bait Fillet", log: false);
-            Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Big Bad Boar Sausage", log: false);
-            Core.HuntMonster("trunk", "GreenGuard Basilisk", "GreenGuard Basilisk Tail", log: false);
+            Core.KillMonster(
+                "greenguardwest",
+                "West12",
+                "Up",
+                "Big Bad Boar",
+                "Big Bad Boar Sausage",
+                log: false
+            );
+            Core.HuntMonster(
+                "trunk",
+                "GreenGuard Basilisk",
+                "GreenGuard Basilisk Tail",
+                log: false
+            );
             Core.HuntMonster("Well", "Gell Oh No", "Gell Oh No Jello", log: false);
             Core.HuntMonster("deathgazer", "Deathgazer", "Deathgazer Takoyaki", log: false);
             Core.HuntMonster("river", "Kuro", "Kuro Geso Karaage", log: false);
@@ -120,7 +179,6 @@ public class ShadowSlayerK
             Core.HuntMonster("hachiko", "Samurai Nopperabo", "Bitter Matcha");
             Story.KillQuest(8834, "elemental", "Tree of Destiny", false);
         }
-
 
         // 8835 | Shadowslayer Summoning Ritual
         if (!Story.QuestProgression(8835))
@@ -163,7 +221,15 @@ public class ShadowSlayerK
             Core.RegisterQuests(8264);
             while (!Bot.ShouldExit && !Core.CheckInventory("Grain Ration", 2))
             {
-                Core.KillMonster("castletunnels", "r5", "Left", "Blood Maggot", "Bundle of Rice", 3, log: false);
+                Core.KillMonster(
+                    "castletunnels",
+                    "r5",
+                    "Left",
+                    "Blood Maggot",
+                    "Bundle of Rice",
+                    3,
+                    log: false
+                );
                 Bot.Wait.ForPickup("Grain Ration");
             }
             Core.CancelRegisteredQuests();
@@ -180,12 +246,10 @@ public class ShadowSlayerK
 
     public void Part2()
     {
-
         if (Core.isCompletedBefore(9845))
             return;
 
         Story.PreLoad(this);
-
 
         #region Useable Monsters
         string[] UseableMonsters = new[]
@@ -201,20 +265,14 @@ public class ShadowSlayerK
         // 9837 | Stalking Prey
         if (!Story.QuestProgression(9837))
         {
-            Core.HuntMonsterQuest(9837,
-("badmoon", UseableMonsters[0], ClassType.Farm)
-);
+            Core.HuntMonsterQuest(9837, ("badmoon", UseableMonsters[0], ClassType.Farm));
         }
-
 
         // 9838 | Super Creeps
         if (!Story.QuestProgression(9838))
         {
-            Core.HuntMonsterQuest(9838,
-("badmoon", UseableMonsters[1], ClassType.Solo)
-);
+            Core.HuntMonsterQuest(9838, ("badmoon", UseableMonsters[1], ClassType.Solo));
         }
-
 
         // 9839 | Sleepless Villagers
         Story.MapItemQuest(9839, "badmoon", Core.FromTo(13445, 13447));
@@ -222,18 +280,17 @@ public class ShadowSlayerK
         // 9840 | Suspicious Minds
         if (!Story.QuestProgression(9840))
         {
-            Core.HuntMonsterQuest(9840,
-("badmoon", UseableMonsters[0], ClassType.Farm),
-        ("badmoon", UseableMonsters[1], ClassType.Solo)
-);
+            Core.HuntMonsterQuest(
+                9840,
+                ("badmoon", UseableMonsters[0], ClassType.Farm),
+                ("badmoon", UseableMonsters[1], ClassType.Solo)
+            );
         }
 
         // 9841 | Get Out The Way
         if (!Story.QuestProgression(9841))
         {
-            Core.HuntMonsterQuest(9841,
-("badmoon", UseableMonsters[2], ClassType.Farm)
-);
+            Core.HuntMonsterQuest(9841, ("badmoon", UseableMonsters[2], ClassType.Farm));
         }
 
         // 9842 | Door Stuck
@@ -244,32 +301,22 @@ public class ShadowSlayerK
             Story.KillQuest(9842, "badmoon", UseableMonsters[1]);
         }
 
-
         // 9843 | Nothing But A Hound Dog
         if (!Story.QuestProgression(9843))
         {
-            Core.HuntMonsterQuest(9843,
-("badmoon", UseableMonsters[3], ClassType.Solo)
-);
+            Core.HuntMonsterQuest(9843, ("badmoon", UseableMonsters[3], ClassType.Solo));
         }
-
 
         // 9844 | Coldest Regards
         if (!Story.QuestProgression(9844))
         {
-            Core.HuntMonsterQuest(9844,
-("badmoon", UseableMonsters[2], ClassType.Solo)
-);
+            Core.HuntMonsterQuest(9844, ("badmoon", UseableMonsters[2], ClassType.Solo));
         }
-
 
         // 9845 | No Different From Prey
         if (!Story.QuestProgression(9845))
         {
-            Core.HuntMonsterQuest(9845,
-("badmoon", UseableMonsters[4], ClassType.Solo)
-);
+            Core.HuntMonsterQuest(9845, ("badmoon", UseableMonsters[4], ClassType.Solo));
         }
     }
-
 }

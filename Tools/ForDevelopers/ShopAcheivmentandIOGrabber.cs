@@ -17,8 +17,18 @@ public class ShopAcheivmentandIOGrabber
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<string>("ShopMap", "Input Shop Map", "Input Map that the ShopID requires(Leave as none if it doesnt require a map.)", "None"),
-        new Option<int>("ShopID", "InPut ShopID", "Input ShopID that you wish to Grab the AcheivmentID & IO of", 0000),
+        new Option<string>(
+            "ShopMap",
+            "Input Shop Map",
+            "Input Map that the ShopID requires(Leave as none if it doesnt require a map.)",
+            "None"
+        ),
+        new Option<int>(
+            "ShopID",
+            "InPut ShopID",
+            "Input ShopID that you wish to Grab the AcheivmentID & IO of",
+            0000
+        ),
     };
 
     public void ScriptMain(IScriptInterface Bot)
@@ -33,7 +43,7 @@ public class ShopAcheivmentandIOGrabber
     public void GrabME(string? map, int ShopID)
     {
         Core.Join(map == "None" ? Bot.Map.Name : map);
-      
+
         // Load shop data
         int retry = 0;
         while (!Bot.ShouldExit && Bot.Shops.ID != ShopID)
@@ -46,7 +56,8 @@ public class ShopAcheivmentandIOGrabber
             {
                 break;
             }
-            else retry++;
+            else
+                retry++;
         }
 
         int achievementID = Bot.Flash.GetGameObject<int>("world.shopinfo.iIndex");

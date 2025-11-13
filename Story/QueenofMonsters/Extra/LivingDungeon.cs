@@ -11,7 +11,11 @@ public class LivingDungeon
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -49,7 +53,11 @@ public class LivingDungeon
         Story.KillQuest(4353, "livingdungeon", "Chia Warrior");
 
         // Leaf me alone!
-        Story.KillQuest(4354, "livingdungeon", new[] { "Titan Decay", "Seed Spitter", "Evil Plant Horror" });
+        Story.KillQuest(
+            4354,
+            "livingdungeon",
+            new[] { "Titan Decay", "Seed Spitter", "Evil Plant Horror" }
+        );
 
         // Evil Faerie Ambush!
         Story.KillQuest(4355, "livingdungeon", "Evil Tree Faerie");
@@ -58,10 +66,18 @@ public class LivingDungeon
         Story.KillQuest(4356, "livingdungeon", "Vulchurion");
 
         // Committing Tree-son
-        Story.KillQuest(4357, "livingdungeon", new[] { "Evil Plant Horror", "Evil Tree Faerie", "Vulchurion" });
+        Story.KillQuest(
+            4357,
+            "livingdungeon",
+            new[] { "Evil Plant Horror", "Evil Tree Faerie", "Vulchurion" }
+        );
 
         // Heartwood
-        Story.KillQuest(4358, "livingdungeon", new[] { "Evil Plant Horror", "Evil Tree Faerie", "Vulchurion" });
+        Story.KillQuest(
+            4358,
+            "livingdungeon",
+            new[] { "Evil Plant Horror", "Evil Tree Faerie", "Vulchurion" }
+        );
 
         // Drayko BOSS FIGHT!
         Story.KillQuest(4359, "livingdungeon", "Drayko");
@@ -81,9 +97,17 @@ public class LivingDungeon
         // EPIC DROP!
         Story.KillQuest(4364, "livingdungeon", "Epic Drop");
 
-
-        Core.AddDrop("Wooden Ring", "Salad!", "Weeping Widowmaker Bone", "Chia in a pot!", "Fairy Phone", "Vulchurion Quill", "Drayko's Medallion", "Giant Dakka Fang");
-        // ------------------------------------------        
+        Core.AddDrop(
+            "Wooden Ring",
+            "Salad!",
+            "Weeping Widowmaker Bone",
+            "Chia in a pot!",
+            "Fairy Phone",
+            "Vulchurion Quill",
+            "Drayko's Medallion",
+            "Giant Dakka Fang"
+        );
+        // ------------------------------------------
         // Drayko Battle!
         if (!Core.CheckInventory("Drayko's Medallion"))
         {
@@ -122,22 +146,42 @@ public class LivingDungeon
                                 {
                                     Core.Logger("Wooden Ring not found, finding it for you");
                                     Core.EnsureAccept(4377);
-                                    Core.HuntMonster("livingdungeon", "Root of Evil", "Wooden Ring Piece", 5);
+                                    Core.HuntMonster(
+                                        "livingdungeon",
+                                        "Root of Evil",
+                                        "Wooden Ring Piece",
+                                        5
+                                    );
                                     Core.EnsureComplete(4377);
                                     Bot.Wait.ForPickup("Wooden Ring");
                                     Core.Sleep(1000);
                                 }
-                                Core.HuntMonster("livingdungeon", "Evil Plant Horror", "Evil Plant Horror Leaf", 6);
+                                Core.HuntMonster(
+                                    "livingdungeon",
+                                    "Evil Plant Horror",
+                                    "Evil Plant Horror Leaf",
+                                    6
+                                );
                                 Core.EnsureComplete(4378);
                                 Bot.Wait.ForPickup("Salad!");
                                 Core.Sleep(1000);
                             }
-                            Core.HuntMonster("livingdungeon", "Weeping Widowmaker", "Widowmaker deboned", 5);
+                            Core.HuntMonster(
+                                "livingdungeon",
+                                "Weeping Widowmaker",
+                                "Widowmaker deboned",
+                                5
+                            );
                             Core.EnsureComplete(4379);
                             Bot.Wait.ForPickup("Weeping Widowmaker Bone");
                             Core.Sleep(1000);
                         }
-                        Core.HuntMonster("livingdungeon", "Chia Warrior", "Chia Warrior defeated", 3);
+                        Core.HuntMonster(
+                            "livingdungeon",
+                            "Chia Warrior",
+                            "Chia Warrior defeated",
+                            3
+                        );
                         Core.EnsureComplete(4380);
                         Bot.Wait.ForPickup("Chia in a pot!");
                         Core.Sleep(1000);

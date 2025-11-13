@@ -11,7 +11,12 @@ public class NytheraSaga
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -84,7 +89,6 @@ public class NytheraSaga
 
     public void Swallowed()
     {
-
         if (Core.isCompletedBefore(455))
             return;
 
@@ -111,7 +115,6 @@ public class NytheraSaga
 
     public void BlindingSnow()
     {
-
         if (Core.isCompletedBefore(900))
             return;
 
@@ -151,11 +154,13 @@ public class NytheraSaga
         Story.KillQuest(902, "Void", "Void Elemental");
 
         //Null and Void Spheres 903
-        Story.KillQuest(903, "palooza",
-        new[] { "Discordia", "Discordia", "Discordia", "Discordia" });
+        Story.KillQuest(
+            903,
+            "palooza",
+            new[] { "Discordia", "Discordia", "Discordia", "Discordia" }
+        );
 
         //Enter the Great Void Dragon's Lair 904
         Story.KillQuest(904, "Void", "Void Dragon");
-
     }
 }

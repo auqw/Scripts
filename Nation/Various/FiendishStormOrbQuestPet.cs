@@ -15,7 +15,11 @@ public class FiendishStormOrbQuestPet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static StormCacheMerge SCM { get => _SCM ??= new StormCacheMerge(); set => _SCM = value; }
+    private static StormCacheMerge SCM
+    {
+        get => _SCM ??= new StormCacheMerge();
+        set => _SCM = value;
+    }
     private static StormCacheMerge _SCM;
 
     public void ScriptMain(IScriptInterface bot)
@@ -29,9 +33,14 @@ public class FiendishStormOrbQuestPet
 
     public void DoQuest()
     {
-        if ((!Core.CheckInventory(83230) && !Core.CheckInventory(83720)) || (Core.CheckInventory(83720) && !Core.IsMember))
+        if (
+            (!Core.CheckInventory(83230) && !Core.CheckInventory(83720))
+            || (Core.CheckInventory(83720) && !Core.IsMember)
+        )
         {
-            Core.Logger("You need to own Fiendish Storm Orb Quest Pet, and have active membership for Member version to do this quest.");
+            Core.Logger(
+                "You need to own Fiendish Storm Orb Quest Pet, and have active membership for Member version to do this quest."
+            );
             return;
         }
 
@@ -51,6 +60,5 @@ public class FiendishStormOrbQuestPet
             Core.EnsureComplete(9577);
         else
             Core.EnsureComplete(9576);
-
     }
 }

@@ -12,8 +12,18 @@ public class Everfrost
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreNewYear NY { get => _NY ??= new CoreNewYear(); set => _NY = value; }    private static CoreNewYear _NY;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreNewYear NY
+    {
+        get => _NY ??= new CoreNewYear();
+        set => _NY = value;
+    }
+    private static CoreNewYear _NY;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -23,5 +33,4 @@ public class Everfrost
 
         Core.SetOptions(false);
     }
-
 }

@@ -14,9 +14,17 @@ public class DrakelWarlord
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static DeathPitArenaRepMerge DPARM { get => _DPARM ??= new DeathPitArenaRepMerge(); set => _DPARM = value; }
+    private static DeathPitArenaRepMerge DPARM
+    {
+        get => _DPARM ??= new DeathPitArenaRepMerge();
+        set => _DPARM = value;
+    }
     private static DeathPitArenaRepMerge _DPARM;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -31,7 +39,11 @@ public class DrakelWarlord
     {
         if (Core.CheckInventory("Drakel Warlord") || !Core.IsMember)
         {
-            Core.Logger(Core.CheckInventory("Drakel Warlord") ? "You already own Drakel Warlord class." : "Membership is required for this class.");
+            Core.Logger(
+                Core.CheckInventory("Drakel Warlord")
+                    ? "You already own Drakel Warlord class."
+                    : "Membership is required for this class."
+            );
             if (rankUpClass)
                 Adv.RankUpClass("Drakel Warlord");
             return;

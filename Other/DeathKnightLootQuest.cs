@@ -10,6 +10,7 @@ tags: death, knight, loot, chest, fallendeathknight, accoutrements
 //cs_include Scripts/Story/AranxQuests.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+
 // using Skua.Core.Options;
 
 public class DeathKnightLootChestQuest
@@ -17,16 +18,26 @@ public class DeathKnightLootChestQuest
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
 
-    private static AranxQuests AR { get => _AR ??= new AranxQuests(); set => _AR = value; }
+    private static AranxQuests AR
+    {
+        get => _AR ??= new AranxQuests();
+        set => _AR = value;
+    }
     private static AranxQuests _AR;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
-    private static CoreFarms Cf { get => _Cf ??= new CoreFarms(); set => _Cf = value; }
+    private static CoreFarms Cf
+    {
+        get => _Cf ??= new CoreFarms();
+        set => _Cf = value;
+    }
     private static CoreFarms _Cf;
-
-
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -40,9 +51,7 @@ public class DeathKnightLootChestQuest
 
     public void DoQuest()
     {
-
         QuestsIfNeeded();
-
     }
 
     private void RandomReward(int questID = 6509)
@@ -71,8 +80,6 @@ public class DeathKnightLootChestQuest
         }
     }
 
-
-
     public void QuestsIfNeeded()
     {
         AR.StoryLine();
@@ -82,6 +89,7 @@ public class DeathKnightLootChestQuest
     {
         if (Core.CheckInventory(items) || items == null)
             return;
-        else Core.Logger("Required Items not found, Stopping", stopBot: true);
+        else
+            Core.Logger("Required Items not found, Stopping", stopBot: true);
     }
 }

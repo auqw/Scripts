@@ -15,7 +15,11 @@ public class ArmyBloodyChaos
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
     private static readonly CoreArmyLite sArmy = new();
@@ -30,9 +34,14 @@ public class ArmyBloodyChaos
         sArmy.player4,
         sArmy.player5,
         sArmy.player6,
-        new Option<Cell>("mob", "h90 or h85", "h90 for more relic turn ins, but more chance of getting stuck due to deaths - h85 for just Relics from Escherion", Cell.h90),
+        new Option<Cell>(
+            "mob",
+            "h90 or h85",
+            "h90 for more relic turn ins, but more chance of getting stuck due to deaths - h85 for just Relics from Escherion",
+            Cell.h90
+        ),
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -40,7 +49,11 @@ public class ArmyBloodyChaos
         Core.BankingBlackList.AddRange(Loot);
         Core.SetOptions(disableClassSwap: true);
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // Setup(Bot.Config!.Get<Cell>("mob"));
 
         Core.SetOptions(false);
@@ -52,7 +65,10 @@ public class ArmyBloodyChaos
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         Core.AddDrop(Loot);
 
@@ -61,7 +77,12 @@ public class ArmyBloodyChaos
         Core.RegisterQuests(7816, 2857); //
         while (!Bot.ShouldExit && !Core.CheckInventory("Blood Gem of the Archfiend", quant))
         {
-            ArmyHunt("hydrachallenge", mob == Cell.h85 ? new[] { 29, 30, 31 } : new[] { 32, 33, 34 }, "Hydra Scale Piece", 200);
+            ArmyHunt(
+                "hydrachallenge",
+                mob == Cell.h85 ? new[] { 29, 30, 31 } : new[] { 32, 33, 34 },
+                "Hydra Scale Piece",
+                200
+            );
             ArmyHunt("stalagbite", new[] { 7, 8 }, "Shattered Legendary Sword of Dragon Control");
             ArmyHunt("escherion", new[] { 2, 3 }, "Escherion's Helm");
             Bot.Wait.ForQuestComplete(7816);
@@ -196,8 +217,6 @@ public class ArmyBloodyChaos
         Core.JumpWait();
     }
 
-
-
     private readonly string[] Loot =
     {
         "Tainted Gem",
@@ -212,12 +231,12 @@ public class ArmyBloodyChaos
         "Shattered Legendary Sword of Dragon Control",
         "Escherion's Helm",
         "Hydra Scale Piece",
-        "Blood Gem of the Archfiend"
+        "Blood Gem of the Archfiend",
     };
 
     public enum Cell
     {
         h90 = 0,
-        h85 = 1
+        h85 = 1,
     }
 }

@@ -32,10 +32,30 @@ public class UnundeadGoat
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static DragonOfTime DoT { get => _DoT ??= new DragonOfTime(); set => _DoT = value; }    private static DragonOfTime _DoT;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static DragonOfTime DoT
+    {
+        get => _DoT ??= new DragonOfTime();
+        set => _DoT = value;
+    }
+    private static DragonOfTime _DoT;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -48,7 +68,6 @@ public class UnundeadGoat
 
     public void Getthestuff(bool rankUpClass = true)
     {
-
         if (Core.CheckInventory("UnUnundead Goat"))
         {
             if (rankUpClass)
@@ -60,7 +79,7 @@ public class UnundeadGoat
 
         if (!Core.isSeasonalMapActive("goatfield"))
             return;
-            
+
         if (!Core.isCompletedBefore(10139))
         {
             Core.AddDrop(92935);
@@ -102,7 +121,8 @@ public class UnundeadGoat
             Core.Sleep(1000);
             if (Bot.Shops.ID == 2569 || retry == 20)
                 break;
-            else retry++;
+            else
+                retry++;
         }
         retry = 0;
 
@@ -119,5 +139,4 @@ public class UnundeadGoat
         if (rankUpClass)
             Adv.RankUpClass("Unundead Goat");
     }
-
 }

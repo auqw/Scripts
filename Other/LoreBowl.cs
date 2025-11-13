@@ -11,36 +11,41 @@ public class LoreBowl
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     string[] LoreBowlItems =
     {
-    "Broncolich Pennant",
-    "Chaos Pennant",
-    "Cheer Lover",
-    "Cheer Lover's Hair",
-    "Cheer Lover's Locks",
-    "Chieftains Pennant",
-    "Corsairs Pennant",
-    "Crows Pennant",
-    "CyberHounds Pennant",
-    "Diabolical Pennant",
-    "Evil Pennant",
-    "Good Pennant",
-    "Harpies Pennant",
-    "Hollowborn Pennant",
-    "Hoofs Pennant",
-    "Horcs Pennant",
-    "Legion Pennant",
-    "Loyalists Pennant",
-    "Mammoths Pennant",
-    "Miner Pennant",
-    "Nation Pennant",
-    "Saints Pennant",
-    "Satyrs Pennant",
-    "Tigers Pennant",
-    "Void Nation Cheerleader",
-};
+        "Broncolich Pennant",
+        "Chaos Pennant",
+        "Cheer Lover",
+        "Cheer Lover's Hair",
+        "Cheer Lover's Locks",
+        "Chieftains Pennant",
+        "Corsairs Pennant",
+        "Crows Pennant",
+        "CyberHounds Pennant",
+        "Diabolical Pennant",
+        "Evil Pennant",
+        "Good Pennant",
+        "Harpies Pennant",
+        "Hollowborn Pennant",
+        "Hoofs Pennant",
+        "Horcs Pennant",
+        "Legion Pennant",
+        "Loyalists Pennant",
+        "Mammoths Pennant",
+        "Miner Pennant",
+        "Nation Pennant",
+        "Saints Pennant",
+        "Satyrs Pennant",
+        "Tigers Pennant",
+        "Void Nation Cheerleader",
+    };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -62,10 +67,16 @@ public class LoreBowl
         {
             Core.FarmingLogger(item, 1);
             while (!Bot.ShouldExit && !Core.CheckInventory(item, toInv: false))
-                Core.KillMonster("punt", "Enter", "Spawn", "Undead Defender", item, isTemp: false, log: false);
+                Core.KillMonster(
+                    "punt",
+                    "Enter",
+                    "Spawn",
+                    "Undead Defender",
+                    item,
+                    isTemp: false,
+                    log: false
+                );
             Core.ToBank(LoreBowlItems);
         }
-
     }
-
 }

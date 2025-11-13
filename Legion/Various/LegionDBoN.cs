@@ -8,7 +8,7 @@ tags: null
 //cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Legion/CoreLegion.cs 
+//cs_include Scripts/Legion/CoreLegion.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/Various/DragonBlade[mem].cs
 using Skua.Core.Interfaces;
@@ -17,15 +17,39 @@ public class LegionDBoN
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static DragonBladeofNulgath DBoN { get => _DBoN ??= new DragonBladeofNulgath(); set => _DBoN = value; }    private static DragonBladeofNulgath _DBoN;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static DragonBladeofNulgath DBoN
+    {
+        get => _DBoN ??= new DragonBladeofNulgath();
+        set => _DBoN = value;
+    }
+    private static DragonBladeofNulgath _DBoN;
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.BankingBlackList.AddRange(Nation.bagDrops);
         Core.BankingBlackList.AddRange(DBoN.TwistedItems);
-        Core.BankingBlackList.AddRange(new[] { "DragonBlade of Nulgath", "Combat Trophy", "Basic War Sword", "Behemoth Blade of Shadow", "Behemoth Blade of Light" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "DragonBlade of Nulgath",
+                "Combat Trophy",
+                "Basic War Sword",
+                "Behemoth Blade of Shadow",
+                "Behemoth Blade of Light",
+            }
+        );
 
         Core.SetOptions();
 
@@ -33,6 +57,7 @@ public class LegionDBoN
 
         Core.SetOptions(false);
     }
+
     public void GetLegionDBoN()
     {
         if (Core.CheckInventory("Legion DragonBlade of Nulgath"))
@@ -42,7 +67,7 @@ public class LegionDBoN
         DBoN.GetDragonBlade();
         Bot.Wait.ForPickup("Legion DragonBlade of Nulgath");
 
-        //Merge: 
+        //Merge:
         Core.BuyItem("underworld", 238, "Legion DragonBlade of Nulgath");
     }
 }

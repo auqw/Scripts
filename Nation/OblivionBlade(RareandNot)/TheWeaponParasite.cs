@@ -14,8 +14,18 @@ public class TheWeaponParasite
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreOblivionBladeofNulgath COBoN { get => _COBoN ??= new CoreOblivionBladeofNulgath(); set => _COBoN = value; }    private static CoreOblivionBladeofNulgath _COBoN;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreOblivionBladeofNulgath COBoN
+    {
+        get => _COBoN ??= new CoreOblivionBladeofNulgath();
+        set => _COBoN = value;
+    }
+    private static CoreOblivionBladeofNulgath _COBoN;
 
     public void ScriptMain(IScriptInterface bot)
     {

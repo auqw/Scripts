@@ -27,14 +27,17 @@ public class RGRoWBadge
             return;
         }
         if (!Core.CheckInventory("Radiant Goddess of War"))
-            Core.Logger("Missing \"Radiant Goddess of War\", Cannot get badge", stopBot: true, messageBox: true);
+            Core.Logger(
+                "Missing \"Radiant Goddess of War\", Cannot get badge",
+                stopBot: true,
+                messageBox: true
+            );
 
         Core.EnsureAccept(9352);
         // 9352 | Radiant Goddess of War Badge
         Core.EquipClass(ClassType.Solo);
         Core.KillMonster("manacradle", "r10", "Left", "The Mainyu", "Licorice Scale");
         Core.EnsureComplete(9352);
-
     }
 
     private readonly string badge = "Radiant Goddess Of War";

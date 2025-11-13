@@ -1,7 +1,7 @@
 /*
 name: ChaosLab Mergeshop
 description: Gets any item you want in ChaosLab mergeshop
-tags: chaoslab, dage, alina, cysero, artix, beleen, mergeshop, daimyo, moglin, hamster, chaos, necropolis, bots, 
+tags: chaoslab, dage, alina, cysero, artix, beleen, mergeshop, daimyo, moglin, hamster, chaos, necropolis, bots,
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -16,29 +16,52 @@ public class ChaosLabMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static ChaosLabStory ChaosLab { get => _ChaosLab ??= new ChaosLabStory(); set => _ChaosLab = value; }
+    private static ChaosLabStory ChaosLab
+    {
+        get => _ChaosLab ??= new ChaosLabStory();
+        set => _ChaosLab = value;
+    }
     private static ChaosLabStory _ChaosLab;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Chaorrupted Hamster", "Crystallized Chaos", "Daimyo"});
+        Core.BankingBlackList.AddRange(
+            new[] { "Chaorrupted Hamster", "Crystallized Chaos", "Daimyo" }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -55,7 +78,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,35 +91,82 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Chaorrupted Hamster":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("chaoslab", "Chaotic Server Hamster", req.Name, isTemp: false, log: false);
+                    Core.HuntMonster(
+                        "chaoslab",
+                        "Chaotic Server Hamster",
+                        req.Name,
+                        isTemp: false,
+                        log: false
+                    );
                     break;
 
                 case "Crystallized Chaos":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("chaoslab", "Chaorrupted Moglin", req.Name, quant, isTemp: false, log: false);
+                    Core.HuntMonster(
+                        "chaoslab",
+                        "Chaorrupted Moglin",
+                        req.Name,
+                        quant,
+                        isTemp: false,
+                        log: false
+                    );
                     break;
 
                 case "Daimyo":
                     Core.BuyItem("necropolis", 422, "Daimyo");
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("24085", "Chaorrupted BattleHamster", "Mode: [select] only\nShould the bot buy \"Chaorrupted BattleHamster\" ?", false),
-        new Option<bool>("24091", "Eye Am Chaos", "Mode: [select] only\nShould the bot buy \"Eye Am Chaos\" ?", false),
-        new Option<bool>("24090", "Chaorrupted Blade of Awe", "Mode: [select] only\nShould the bot buy \"Chaorrupted Blade of Awe\" ?", false),
-        new Option<bool>("24094", "Chaorrupted Cysero &amp; Alina", "Mode: [select] only\nShould the bot buy \"Chaorrupted Cysero &amp; Alina\" ?", false),
-        new Option<bool>("24095", "Chaorrupted Artix &amp; Beleen", "Mode: [select] only\nShould the bot buy \"Chaorrupted Artix &amp; Beleen\" ?", false),
-        new Option<bool>("17849", "Chaos Daimyo", "Mode: [select] only\nShould the bot buy \"Chaos Daimyo\" ?", false),
+        new Option<bool>(
+            "24085",
+            "Chaorrupted BattleHamster",
+            "Mode: [select] only\nShould the bot buy \"Chaorrupted BattleHamster\" ?",
+            false
+        ),
+        new Option<bool>(
+            "24091",
+            "Eye Am Chaos",
+            "Mode: [select] only\nShould the bot buy \"Eye Am Chaos\" ?",
+            false
+        ),
+        new Option<bool>(
+            "24090",
+            "Chaorrupted Blade of Awe",
+            "Mode: [select] only\nShould the bot buy \"Chaorrupted Blade of Awe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "24094",
+            "Chaorrupted Cysero &amp; Alina",
+            "Mode: [select] only\nShould the bot buy \"Chaorrupted Cysero &amp; Alina\" ?",
+            false
+        ),
+        new Option<bool>(
+            "24095",
+            "Chaorrupted Artix &amp; Beleen",
+            "Mode: [select] only\nShould the bot buy \"Chaorrupted Artix &amp; Beleen\" ?",
+            false
+        ),
+        new Option<bool>(
+            "17849",
+            "Chaos Daimyo",
+            "Mode: [select] only\nShould the bot buy \"Chaos Daimyo\" ?",
+            false
+        ),
     };
 }

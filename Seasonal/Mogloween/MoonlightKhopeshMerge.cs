@@ -16,20 +16,36 @@ public class MoonlightKhopeshMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CruxShip CruxShip { get => _CruxShip ??= new CruxShip(); set => _CruxShip = value; }
+    private static CruxShip CruxShip
+    {
+        get => _CruxShip ??= new CruxShip();
+        set => _CruxShip = value;
+    }
     private static CruxShip _CruxShip;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -53,7 +69,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -64,25 +82,54 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Khonsu Seal":
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("cruxship", "Apephryx", req.Name, quant, false);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("31983", "Moonlit Khopesh", "Mode: [select] only\nShould the bot buy \"Moonlit Khopesh\" ?", false),
-        new Option<bool>("31984", "Great Moonlit Khopesh", "Mode: [select] only\nShould the bot buy \"Great Moonlit Khopesh\" ?", false),
-        new Option<bool>("31985", "Lunar Khopesh", "Mode: [select] only\nShould the bot buy \"Lunar Khopesh\" ?", false),
-        new Option<bool>("31986", "Stellar Khopesh", "Mode: [select] only\nShould the bot buy \"Stellar Khopesh\" ?", false),
-        new Option<bool>("31987", "Celestial Khopesh", "Mode: [select] only\nShould the bot buy \"Celestial Khopesh\" ?", false),
+        new Option<bool>(
+            "31983",
+            "Moonlit Khopesh",
+            "Mode: [select] only\nShould the bot buy \"Moonlit Khopesh\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31984",
+            "Great Moonlit Khopesh",
+            "Mode: [select] only\nShould the bot buy \"Great Moonlit Khopesh\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31985",
+            "Lunar Khopesh",
+            "Mode: [select] only\nShould the bot buy \"Lunar Khopesh\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31986",
+            "Stellar Khopesh",
+            "Mode: [select] only\nShould the bot buy \"Stellar Khopesh\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31987",
+            "Celestial Khopesh",
+            "Mode: [select] only\nShould the bot buy \"Celestial Khopesh\" ?",
+            false
+        ),
     };
 }

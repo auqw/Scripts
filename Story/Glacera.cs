@@ -11,7 +11,11 @@ public class GlaceraStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -161,6 +165,7 @@ public class GlaceraStory
         if (Cryomancer)
             return;
     }
+
     public void FrozenRuins()
     {
         if (Core.isCompletedBefore(3946))
@@ -196,13 +201,14 @@ public class GlaceraStory
             Core.EnsureComplete(3946);
         }
     }
+
     public void Glacera()
     {
         if (Core.isCompletedBefore(3950))
             return;
 
         FrozenRuins();
-        // Glaera     
+        // Glaera
 
         //A Frosty Welcome
         if (!Story.QuestProgression(3947))
@@ -218,8 +224,8 @@ public class GlaceraStory
 
         // Key to the Fortress
         Story.KillQuest(3948, "glacera", "Frost Invader");
-
     }
+
     public void Glacera1()
     {
         if (Core.isCompletedBefore(3950))
@@ -233,6 +239,7 @@ public class GlaceraStory
         // The Scythe of Vengeance
         Story.MapItemQuest(3950, "Glacera", 3047);
     }
+
     public void FrozenRuins2()
     {
         if (Core.isCompletedBefore(3954))
@@ -254,6 +261,7 @@ public class GlaceraStory
         // FrostSpawn General Takedown
         Story.KillQuest(3954, "frozenruins", "Frost General");
     }
+
     public void Northstar()
     {
         if (Core.isCompletedBefore(3971))
@@ -273,17 +281,43 @@ public class GlaceraStory
         Story.KillQuest(3960, "northstar", "Frost Reaper");
 
         // Saving Syrrus' Spirit
-        Story.MapItemQuest(3961, new[] { (3060, 5, "northstar"), (3061, 7, "northstar"), (3073, 5, "northstar") });
+        Story.MapItemQuest(
+            3961,
+            new[] { (3060, 5, "northstar"), (3061, 7, "northstar"), (3073, 5, "northstar") }
+        );
         Story.KillQuest(3961, "northstar", "Frost Reaper");
 
         // It's a Trap!
         Story.MapItemQuest(3972, "northstar", 3063, 10);
 
         // Feast or Famine
-        Story.KillQuest(3973, "northstar", new[] { "Frost Fangbeast", "Frost Invader", "Frost Reaper", "Frost Superreaper", "Monstrous Refugee" });
+        Story.KillQuest(
+            3973,
+            "northstar",
+            new[]
+            {
+                "Frost Fangbeast",
+                "Frost Invader",
+                "Frost Reaper",
+                "Frost Superreaper",
+                "Monstrous Refugee",
+            }
+        );
 
         // Decipher the Freezing
-        Story.KillQuest(3974, "northstar", new[] { "Frost Fangbeast", "Monstrous Refugee", "Frost Fangbeast", "Frost Invader", "Frost Reaper", "Monstrous Refugee" });
+        Story.KillQuest(
+            3974,
+            "northstar",
+            new[]
+            {
+                "Frost Fangbeast",
+                "Monstrous Refugee",
+                "Frost Fangbeast",
+                "Frost Invader",
+                "Frost Reaper",
+                "Monstrous Refugee",
+            }
+        );
 
         // A New Frost Monster
         Story.KillQuest(3970, "northstar", "The Queen's Gift");
@@ -291,6 +325,7 @@ public class GlaceraStory
         // Defeat Karok!
         Story.KillQuest(3971, "northstar", "Karok The Fallen");
     }
+
     public void FrostRuins()
     {
         if (Core.isCompletedBefore(3954))
@@ -306,9 +341,10 @@ public class GlaceraStory
         // Destroy the Frost Reapers
         Story.KillQuest(3953, "frozenruins", "Frost Reaper");
 
-        // FrostSpawn General Takedown        
+        // FrostSpawn General Takedown
         Story.KillQuest(3954, "frozenruins", "Frost General");
     }
+
     public void IceWindPass()
     {
         if (Core.isCompletedBefore(5601))
@@ -325,10 +361,10 @@ public class GlaceraStory
         Story.MapItemQuest(5589, "IceWindPass", 5075, 5);
         Story.KillQuest(5589, "IceWindPass", "Glacial Elemental");
 
-        // Dispell the Spell 
+        // Dispell the Spell
         Story.KillQuest(5590, "IceWindPass", "Polar Golem");
 
-        // Catch Up to Karok 
+        // Catch Up to Karok
         Story.KillQuest(5591, "IceWindPass", "Frost Invader");
 
         // Blast the Frostspawn Symbiote
@@ -337,7 +373,7 @@ public class GlaceraStory
         // Keep Going!
         Story.KillQuest(5593, "IceWindPass", "Frost Invader");
 
-        // Take it Down 
+        // Take it Down
         Story.KillQuest(5594, "IceWindPass", "Frostspawn Horror");
 
         // Keep the Frostspawn Away!
@@ -349,7 +385,7 @@ public class GlaceraStory
         // As these quests are pre-unlocked.. it wont do them if we put them under a quest check. annoyingly.
 
         //Fight For Kezeroth! && (Mega) Fight For Kezeroth! - 5597, 5598
-        //Fight For Karok! && (Mega) Fight For Karok! - 5599, 5600  
+        //Fight For Karok! && (Mega) Fight For Karok! - 5599, 5600
         Core.EnsureAcceptmultiple(new[] { 5597, 5598, 5599, 5600 });
         Core.EquipClass(ClassType.Farm);
         Core.HuntMonster("icewindwar", "Glaceran Defender", "FrostSpawn Medal", 10);
@@ -362,6 +398,7 @@ public class GlaceraStory
         // What is THAT?
         Story.KillQuest(5601, "icewindwar", "Soricomorpha");
     }
+
     public void IceDungeon()
     {
         if (Core.isCompletedBefore(7841))
@@ -369,13 +406,25 @@ public class GlaceraStory
         IceWindPass();
 
         // Cold Open
-        Story.KillQuest(7832, "IceDungeon", new[] { "Ice Symbiote", "Frosted Banshee", "Frozen Undead" });
+        Story.KillQuest(
+            7832,
+            "IceDungeon",
+            new[] { "Ice Symbiote", "Frosted Banshee", "Frozen Undead" }
+        );
 
         // Frost Fight
-        Story.KillQuest(7833, "IceDungeon", new[] { "Spirit of Ice", "Ice Crystal", "Frigid Spirit" });
+        Story.KillQuest(
+            7833,
+            "IceDungeon",
+            new[] { "Spirit of Ice", "Ice Crystal", "Frigid Spirit" }
+        );
 
         // Freeze Frame
-        Story.KillQuest(7834, "IceDungeon", new[] { "Living Ice", "Crystallized Elemental", "Frozen Demon" });
+        Story.KillQuest(
+            7834,
+            "IceDungeon",
+            new[] { "Living Ice", "Crystallized Elemental", "Frozen Demon" }
+        );
 
         // Glace's Trial
         Story.KillQuest(7835, "IceDungeon", "Image of Glace");
@@ -383,19 +432,31 @@ public class GlaceraStory
         // Abel's Trial
         Story.KillQuest(7836, "IceDungeon", "Abel");
 
-        // The Final Trial   
+        // The Final Trial
         Story.KillQuest(7837, "IceDungeon", "Shade of Kyanos");
 
         // Basic Ingredients
-        Story.KillQuest(7838, "IceDungeon", new[] { "Frosted Banshee", "Frozen Undead", "Ice Symbiote" });
+        Story.KillQuest(
+            7838,
+            "IceDungeon",
+            new[] { "Frosted Banshee", "Frozen Undead", "Ice Symbiote" }
+        );
 
         // Cool Flavor
-        Story.KillQuest(7839, "IceDungeon", new[] { "Spirit of Ice", "Ice Crystal", "Frigid Spirit" });
+        Story.KillQuest(
+            7839,
+            "IceDungeon",
+            new[] { "Spirit of Ice", "Ice Crystal", "Frigid Spirit" }
+        );
 
         // Chilled to Perfection
-        Story.KillQuest(7840, "IceDungeon", new[] { "Living Ice", "Crystallized Elemental", "Frozen Demon" });
+        Story.KillQuest(
+            7840,
+            "IceDungeon",
+            new[] { "Living Ice", "Crystallized Elemental", "Frozen Demon" }
+        );
 
-        // Icing on the Cake  
+        // Icing on the Cake
         Story.KillQuest(7841, "IceDungeon", new[] { "Image of Glace", "Abel", "Shade of Kyanos" });
     }
 }

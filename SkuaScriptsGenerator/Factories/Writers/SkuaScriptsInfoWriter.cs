@@ -17,7 +17,10 @@ public class SkuaScriptsInfoWriter : ISkuaScriptWriter
                 continue;
 
             if (!File.ReadLines(script).First().StartsWith("/*"))
-                File.WriteAllText(script, "/*\nname: null\ndescription: null\ntags: null\n*/\n" + File.ReadAllText(script));
+                File.WriteAllText(
+                    script,
+                    "/*\nname: null\ndescription: null\ntags: null\n*/\n" + File.ReadAllText(script)
+                );
         }
     }
 }

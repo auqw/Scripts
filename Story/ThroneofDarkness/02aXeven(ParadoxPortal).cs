@@ -13,7 +13,12 @@ public class ParadoxPortal
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }    private static CoreToD _TOD;
+    private static CoreToD TOD
+    {
+        get => _TOD ??= new CoreToD();
+        set => _TOD = value;
+    }
+    private static CoreToD _TOD;
 
     public void ScriptMain(IScriptInterface bot)
     {

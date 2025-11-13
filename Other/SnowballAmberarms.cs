@@ -11,7 +11,12 @@ public class SnowballAmberarms
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -24,10 +29,10 @@ public class SnowballAmberarms
 
     public string[] Loot =
     {
-    "TundraWyrm Hunter",
-    "WyrmHunter's Cowl",
-    "WyrmHunter's Claymore",
-    "WyrmHunter Back Claymore"
+        "TundraWyrm Hunter",
+        "WyrmHunter's Cowl",
+        "WyrmHunter's Claymore",
+        "WyrmHunter Back Claymore",
     };
 
     public void Snowball()

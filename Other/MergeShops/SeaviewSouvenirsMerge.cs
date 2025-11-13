@@ -17,20 +17,37 @@ public class SeaviewSouvenirsMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
     private static CoreAOR _AOR;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -55,7 +72,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,14 +85,28 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Treasure Chest":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster("finalbattle", "r2", "Left", "*", req.Name, quant, false, false);
+                    Core.KillMonster(
+                        "finalbattle",
+                        "r2",
+                        "Left",
+                        "*",
+                        req.Name,
+                        quant,
+                        false,
+                        false
+                    );
                     break;
 
                 case "Sur-gion Token":
@@ -82,33 +115,119 @@ private static CoreAdvanced _sAdv;
                     Core.RegisterQuests(9235);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("ashray", "Kitefin Shark Bait", "Shark Fin", 7, log: false);
-                        Core.HuntMonster("ashray", "Ashray Fisherman", "Ashray Blood Sample", 7, log: false);
-                        Core.HuntMonster("ashray", "Seafoam Elemental", "Seafoam Bubbles", log: false);
+                        Core.HuntMonster(
+                            "ashray",
+                            "Kitefin Shark Bait",
+                            "Shark Fin",
+                            7,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "ashray",
+                            "Ashray Fisherman",
+                            "Ashray Blood Sample",
+                            7,
+                            log: false
+                        );
+                        Core.HuntMonster(
+                            "ashray",
+                            "Seafoam Elemental",
+                            "Seafoam Bubbles",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("72843", "Ashray Villager", "Mode: [select] only\nShould the bot buy \"Ashray Villager\" ?", false),
-        new Option<bool>("72844", "Gold-trimmed Tricorn", "Mode: [select] only\nShould the bot buy \"Gold-trimmed Tricorn\" ?", false),
-        new Option<bool>("72845", "Ashray Lass' Locks", "Mode: [select] only\nShould the bot buy \"Ashray Lass' Locks\" ?", false),
-        new Option<bool>("72846", "Gemme Numari Bandana", "Mode: [select] only\nShould the bot buy \"Gemme Numari Bandana\" ?", false),
-        new Option<bool>("72847", "Gemme Numari Bandana and Locks", "Mode: [select] only\nShould the bot buy \"Gemme Numari Bandana and Locks\" ?", false),
-        new Option<bool>("72848", "Stingray Leather Sheathed Blade", "Mode: [select] only\nShould the bot buy \"Stingray Leather Sheathed Blade\" ?", false),
-        new Option<bool>("72849", "Seaview Inn Mug", "Mode: [select] only\nShould the bot buy \"Seaview Inn Mug\" ?", false),
-        new Option<bool>("72850", "Seaview Inn Mugs", "Mode: [select] only\nShould the bot buy \"Seaview Inn Mugs\" ?", false),
-        new Option<bool>("72851", "Ashray Pyromancer", "Mode: [select] only\nShould the bot buy \"Ashray Pyromancer\" ?", false),
-        new Option<bool>("72852", "Merchant Mariner", "Mode: [select] only\nShould the bot buy \"Merchant Mariner\" ?", false),
-        new Option<bool>("72853", "Ashray Mariner's Hair", "Mode: [select] only\nShould the bot buy \"Ashray Mariner's Hair\" ?", false),
-        new Option<bool>("72854", "Ashray Mariner's Locks", "Mode: [select] only\nShould the bot buy \"Ashray Mariner's Locks\" ?", false),
-        new Option<bool>("72855", "Mariner's Blazing Parrot Pal", "Mode: [select] only\nShould the bot buy \"Mariner's Blazing Parrot Pal\" ?", false),
-        new Option<bool>("72856", "Ashray Mariner's Hook", "Mode: [select] only\nShould the bot buy \"Ashray Mariner's Hook\" ?", false),
+        new Option<bool>(
+            "72843",
+            "Ashray Villager",
+            "Mode: [select] only\nShould the bot buy \"Ashray Villager\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72844",
+            "Gold-trimmed Tricorn",
+            "Mode: [select] only\nShould the bot buy \"Gold-trimmed Tricorn\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72845",
+            "Ashray Lass' Locks",
+            "Mode: [select] only\nShould the bot buy \"Ashray Lass' Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72846",
+            "Gemme Numari Bandana",
+            "Mode: [select] only\nShould the bot buy \"Gemme Numari Bandana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72847",
+            "Gemme Numari Bandana and Locks",
+            "Mode: [select] only\nShould the bot buy \"Gemme Numari Bandana and Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72848",
+            "Stingray Leather Sheathed Blade",
+            "Mode: [select] only\nShould the bot buy \"Stingray Leather Sheathed Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72849",
+            "Seaview Inn Mug",
+            "Mode: [select] only\nShould the bot buy \"Seaview Inn Mug\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72850",
+            "Seaview Inn Mugs",
+            "Mode: [select] only\nShould the bot buy \"Seaview Inn Mugs\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72851",
+            "Ashray Pyromancer",
+            "Mode: [select] only\nShould the bot buy \"Ashray Pyromancer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72852",
+            "Merchant Mariner",
+            "Mode: [select] only\nShould the bot buy \"Merchant Mariner\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72853",
+            "Ashray Mariner's Hair",
+            "Mode: [select] only\nShould the bot buy \"Ashray Mariner's Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72854",
+            "Ashray Mariner's Locks",
+            "Mode: [select] only\nShould the bot buy \"Ashray Mariner's Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72855",
+            "Mariner's Blazing Parrot Pal",
+            "Mode: [select] only\nShould the bot buy \"Mariner's Blazing Parrot Pal\" ?",
+            false
+        ),
+        new Option<bool>(
+            "72856",
+            "Ashray Mariner's Hook",
+            "Mode: [select] only\nShould the bot buy \"Ashray Mariner's Hook\" ?",
+            false
+        ),
     };
 }

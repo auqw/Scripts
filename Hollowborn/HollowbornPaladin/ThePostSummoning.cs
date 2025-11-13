@@ -25,10 +25,30 @@ public class ThePostSummoning
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreHollowborn HB { get => _HB ??= new CoreHollowborn(); set => _HB = value; }    private static CoreHollowborn _HB;
-    private static CoreHollowbornPaladin HBPal { get => _HBPal ??= new CoreHollowbornPaladin(); set => _HBPal = value; }    private static CoreHollowbornPaladin _HBPal;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreHollowborn HB
+    {
+        get => _HB ??= new CoreHollowborn();
+        set => _HB = value;
+    }
+    private static CoreHollowborn _HB;
+    private static CoreHollowbornPaladin HBPal
+    {
+        get => _HBPal ??= new CoreHollowbornPaladin();
+        set => _HBPal = value;
+    }
+    private static CoreHollowbornPaladin _HBPal;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {

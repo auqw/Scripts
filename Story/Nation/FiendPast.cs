@@ -11,7 +11,12 @@ public class FiendPast
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -28,7 +33,6 @@ public class FiendPast
             return;
 
         Story.PreLoad(this);
-
 
         //Test the Newborn Fiends 8478
         Story.KillQuest(8478, "fiendpast", "Newborn Fiend");
@@ -94,8 +98,5 @@ public class FiendPast
 
         //Defeat Dage the Lich 8494
         Story.KillQuest(8494, "fiendpast", "Dage the Lich");
-
-
-
     }
 }

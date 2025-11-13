@@ -16,26 +16,56 @@ public class AlnswickCastleMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreMogloween CoreMogloween { get => _CoreMogloween ??= new CoreMogloween(); set => _CoreMogloween = value; }    private static CoreMogloween _CoreMogloween;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreMogloween CoreMogloween
+    {
+        get => _CoreMogloween ??= new CoreMogloween();
+        set => _CoreMogloween = value;
+    }
+    private static CoreMogloween _CoreMogloween;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Candy Dragon Egg", "Jiangshi", "Jiangshi Hair", "Jiangshi Locks", "Jiangshi Hat", "Jiangshi Cap", "Jiangshi Talisman Hair", "Jiangshi Talisman Locks", "Jiangshi Bandages" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Candy Dragon Egg",
+                "Jiangshi",
+                "Jiangshi Hair",
+                "Jiangshi Locks",
+                "Jiangshi Hat",
+                "Jiangshi Cap",
+                "Jiangshi Talisman Hair",
+                "Jiangshi Talisman Locks",
+                "Jiangshi Bandages",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -57,7 +87,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -68,9 +100,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Candy Dragon Egg":
                     Core.FarmingLogger(req.Name, quant);
@@ -80,7 +117,12 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("cursedcastle", "Luminous Fungus", "Grilled Shroom Caps", 6);
+                        Core.HuntMonster(
+                            "cursedcastle",
+                            "Luminous Fungus",
+                            "Grilled Shroom Caps",
+                            6
+                        );
                         Core.HuntMonster("cursedcastle", "Noble Gargoyle", "Decorated Gargoyle", 6);
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("cursedcastle", "Unborn Brood", "Unborn Brood Defeated");
@@ -100,39 +142,173 @@ private static CoreAdvanced _sAdv;
                 case "Jiangshi Hat":
                     Core.HuntMonster("cursedcastle", "Noble Ghost", req.Name, quant, req.Temp);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("81206", "Vampiric Gentlefolk", "Mode: [select] only\nShould the bot buy \"Vampiric Gentlefolk\" ?", false),
-        new Option<bool>("81209", "Vampiric Red Eyed Aristohat Morph", "Mode: [select] only\nShould the bot buy \"Vampiric Red Eyed Aristohat Morph\" ?", false),
-        new Option<bool>("81210", "Vampiric Aristohat Stache Morph", "Mode: [select] only\nShould the bot buy \"Vampiric Aristohat Stache Morph\" ?", false),
-        new Option<bool>("81211", "Vampiric Aristohat Morph", "Mode: [select] only\nShould the bot buy \"Vampiric Aristohat Morph\" ?", false),
-        new Option<bool>("81212", "Vampiric Aristocap Visage", "Mode: [select] only\nShould the bot buy \"Vampiric Aristocap Visage\" ?", false),
-        new Option<bool>("81213", "Vampiric Red Eyed Aristocap Visage", "Mode: [select] only\nShould the bot buy \"Vampiric Red Eyed Aristocap Visage\" ?", false),
-        new Option<bool>("81214", "Dapper Vampiric Aristocap Visage", "Mode: [select] only\nShould the bot buy \"Dapper Vampiric Aristocap Visage\" ?", false),
-        new Option<bool>("81215", "Vampiric Bloodshot Aristocap Visage", "Mode: [select] only\nShould the bot buy \"Vampiric Bloodshot Aristocap Visage\" ?", false),
-        new Option<bool>("81216", "Vampiric Aristocap", "Mode: [select] only\nShould the bot buy \"Vampiric Aristocap\" ?", false),
-        new Option<bool>("81217", "Dapper Vampiric Aristohat Morph", "Mode: [select] only\nShould the bot buy \"Dapper Vampiric Aristohat Morph\" ?", false),
-        new Option<bool>("81219", "Crimson Vampire Wings", "Mode: [select] only\nShould the bot buy \"Crimson Vampire Wings\" ?", false),
-        new Option<bool>("81220", "Crimson Winged Cloak", "Mode: [select] only\nShould the bot buy \"Crimson Winged Cloak\" ?", false),
-        new Option<bool>("81226", "Staff of Crimson Wind", "Mode: [select] only\nShould the bot buy \"Staff of Crimson Wind\" ?", false),
-        new Option<bool>("80452", "Soul Starved Jiangshi", "Mode: [select] only\nShould the bot buy \"Soul Starved Jiangshi\" ?", false),
-        new Option<bool>("80455", "Jiangshi Morph", "Mode: [select] only\nShould the bot buy \"Jiangshi Morph\" ?", false),
-        new Option<bool>("80456", "Jiangshi Visage", "Mode: [select] only\nShould the bot buy \"Jiangshi Visage\" ?", false),
-        new Option<bool>("80459", "Jiangshi Hat Morph", "Mode: [select] only\nShould the bot buy \"Jiangshi Hat Morph\" ?", false),
-        new Option<bool>("80460", "Jiangshi Cap Visage", "Mode: [select] only\nShould the bot buy \"Jiangshi Cap Visage\" ?", false),
-        new Option<bool>("80463", "Jiangshi Talisman Morph", "Mode: [select] only\nShould the bot buy \"Jiangshi Talisman Morph\" ?", false),
-        new Option<bool>("80464", "Jiangshi Talisman Visage", "Mode: [select] only\nShould the bot buy \"Jiangshi Talisman Visage\" ?", false),
-        new Option<bool>("80465", "Jiangshi Sedge Hat", "Mode: [select] only\nShould the bot buy \"Jiangshi Sedge Hat\" ?", false),
-        new Option<bool>("80467", "Jiangshi Bandaged Glare", "Mode: [select] only\nShould the bot buy \"Jiangshi Bandaged Glare\" ?", false),
-        new Option<bool>("80468", "Talisman Sealed Coffin", "Mode: [select] only\nShould the bot buy \"Talisman Sealed Coffin\" ?", false),
-        new Option<bool>("80476", "Haunted Tuanshan", "Mode: [select] only\nShould the bot buy \"Haunted Tuanshan\" ?", false),
-        new Option<bool>("80477", "Jiangshi's Haunted Weaponry", "Mode: [select] only\nShould the bot buy \"Jiangshi's Haunted Weaponry\" ?", false),
-        new Option<bool>("80478", "Jiangshi Claw", "Mode: [select] only\nShould the bot buy \"Jiangshi Claw\" ?", false),
-        new Option<bool>("80479", "Jiangshi Claws", "Mode: [select] only\nShould the bot buy \"Jiangshi Claws\" ?", false),
+        new Option<bool>(
+            "81206",
+            "Vampiric Gentlefolk",
+            "Mode: [select] only\nShould the bot buy \"Vampiric Gentlefolk\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81209",
+            "Vampiric Red Eyed Aristohat Morph",
+            "Mode: [select] only\nShould the bot buy \"Vampiric Red Eyed Aristohat Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81210",
+            "Vampiric Aristohat Stache Morph",
+            "Mode: [select] only\nShould the bot buy \"Vampiric Aristohat Stache Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81211",
+            "Vampiric Aristohat Morph",
+            "Mode: [select] only\nShould the bot buy \"Vampiric Aristohat Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81212",
+            "Vampiric Aristocap Visage",
+            "Mode: [select] only\nShould the bot buy \"Vampiric Aristocap Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81213",
+            "Vampiric Red Eyed Aristocap Visage",
+            "Mode: [select] only\nShould the bot buy \"Vampiric Red Eyed Aristocap Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81214",
+            "Dapper Vampiric Aristocap Visage",
+            "Mode: [select] only\nShould the bot buy \"Dapper Vampiric Aristocap Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81215",
+            "Vampiric Bloodshot Aristocap Visage",
+            "Mode: [select] only\nShould the bot buy \"Vampiric Bloodshot Aristocap Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81216",
+            "Vampiric Aristocap",
+            "Mode: [select] only\nShould the bot buy \"Vampiric Aristocap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81217",
+            "Dapper Vampiric Aristohat Morph",
+            "Mode: [select] only\nShould the bot buy \"Dapper Vampiric Aristohat Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81219",
+            "Crimson Vampire Wings",
+            "Mode: [select] only\nShould the bot buy \"Crimson Vampire Wings\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81220",
+            "Crimson Winged Cloak",
+            "Mode: [select] only\nShould the bot buy \"Crimson Winged Cloak\" ?",
+            false
+        ),
+        new Option<bool>(
+            "81226",
+            "Staff of Crimson Wind",
+            "Mode: [select] only\nShould the bot buy \"Staff of Crimson Wind\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80452",
+            "Soul Starved Jiangshi",
+            "Mode: [select] only\nShould the bot buy \"Soul Starved Jiangshi\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80455",
+            "Jiangshi Morph",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80456",
+            "Jiangshi Visage",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80459",
+            "Jiangshi Hat Morph",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi Hat Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80460",
+            "Jiangshi Cap Visage",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi Cap Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80463",
+            "Jiangshi Talisman Morph",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi Talisman Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80464",
+            "Jiangshi Talisman Visage",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi Talisman Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80465",
+            "Jiangshi Sedge Hat",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi Sedge Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80467",
+            "Jiangshi Bandaged Glare",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi Bandaged Glare\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80468",
+            "Talisman Sealed Coffin",
+            "Mode: [select] only\nShould the bot buy \"Talisman Sealed Coffin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80476",
+            "Haunted Tuanshan",
+            "Mode: [select] only\nShould the bot buy \"Haunted Tuanshan\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80477",
+            "Jiangshi's Haunted Weaponry",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi's Haunted Weaponry\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80478",
+            "Jiangshi Claw",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi Claw\" ?",
+            false
+        ),
+        new Option<bool>(
+            "80479",
+            "Jiangshi Claws",
+            "Mode: [select] only\nShould the bot buy \"Jiangshi Claws\" ?",
+            false
+        ),
     };
 }

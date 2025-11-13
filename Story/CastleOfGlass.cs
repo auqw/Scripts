@@ -11,7 +11,12 @@ public class CastleOfGlass
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -63,7 +68,11 @@ public class CastleOfGlass
         Story.MapItemQuest(5348, "castleofglass", 4704);
 
         //Even  More Pieces 5349
-        Story.KillQuest(5349, "castleofglass", new[] { "Glass Golem", "Glass Panther", "Glass Wyvern" });
+        Story.KillQuest(
+            5349,
+            "castleofglass",
+            new[] { "Glass Golem", "Glass Panther", "Glass Wyvern" }
+        );
 
         //Finish the Third Mosaic 5350
         Story.MapItemQuest(5350, "castleofglass", 4705);
@@ -86,6 +95,5 @@ public class CastleOfGlass
 
         //What The Heck Is This Thing?! 5356
         Story.KillQuest(5356, "castleofglass", "Chihuly");
-
     }
 }

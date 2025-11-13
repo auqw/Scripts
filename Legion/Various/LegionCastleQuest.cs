@@ -36,8 +36,24 @@ public class LegionCastleQuest
         Core.RegisterQuests(6822, 6742, 6743);
         while (!Bot.ShouldExit && !Core.CheckInventory(rewards))
         {
-            Core.KillMonster("legionarena", "r2", "Left", "*", "Challenger Slain", 12, publicRoom: true);
-            Core.KillMonster("legionarena", "Boss", "Left", "Legion Fiend Rider", "Legion Fiend Rider Slain", 1, publicRoom: true);
+            Core.KillMonster(
+                "legionarena",
+                "r2",
+                "Left",
+                "*",
+                "Challenger Slain",
+                12,
+                publicRoom: true
+            );
+            Core.KillMonster(
+                "legionarena",
+                "Boss",
+                "Left",
+                "Legion Fiend Rider",
+                "Legion Fiend Rider Slain",
+                1,
+                publicRoom: true
+            );
         }
         Core.CancelRegisteredQuests();
     }

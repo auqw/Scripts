@@ -16,21 +16,36 @@ public class CruxShadowsMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -55,7 +70,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,9 +83,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Glowing Pumpkinseed":
                     if (Core.IsMember)
@@ -79,7 +101,12 @@ public static CoreAdvanced _sAdv;
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
                             //ULTRA Pumpkinseed Farming Quest 4617 [Member]
-                            Core.HuntMonster("CruxShip", "Apephryx", "Otherworld Sigil", isTemp: false);
+                            Core.HuntMonster(
+                                "CruxShip",
+                                "Apephryx",
+                                "Otherworld Sigil",
+                                isTemp: false
+                            );
                             Bot.Wait.ForPickup(req.Name);
                         }
                         Core.CancelRegisteredQuests();
@@ -97,28 +124,107 @@ public static CoreAdvanced _sAdv;
                         Core.CancelRegisteredQuests();
                     }
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("31848", "Evolved Pumpkin Lord", "Mode: [select] only\nShould the bot buy \"Evolved Pumpkin Lord\" ?", false),
-        new Option<bool>("31905", "SteamPunk TreasureHunter", "Mode: [select] only\nShould the bot buy \"SteamPunk TreasureHunter\" ?", false),
-        new Option<bool>("31906", "TreasureHunter Musket", "Mode: [select] only\nShould the bot buy \"TreasureHunter Musket\" ?", false),
-        new Option<bool>("31907", "TreasureHunter Wrap", "Mode: [select] only\nShould the bot buy \"TreasureHunter Wrap\" ?", false),
-        new Option<bool>("31908", "TreasureHunter Hair", "Mode: [select] only\nShould the bot buy \"TreasureHunter Hair\" ?", false),
-        new Option<bool>("31909", "TreasureHunter Musket Cape", "Mode: [select] only\nShould the bot buy \"TreasureHunter Musket Cape\" ?", false),
-        new Option<bool>("31981", "Monster Mummy", "Mode: [select] only\nShould the bot buy \"Monster Mummy\" ?", false),
-        new Option<bool>("31982", "Monster Mummy Wrap", "Mode: [select] only\nShould the bot buy \"Monster Mummy Wrap\" ?", false),
-        new Option<bool>("31929", "Darkwave Dancer", "Mode: [select] only\nShould the bot buy \"Darkwave Dancer\" ?", false),
-        new Option<bool>("31924", "Live/Love Banner (Left)", "Mode: [select] only\nShould the bot buy \"Live/Love Banner (Left)\" ?", false),
-        new Option<bool>("31925", "Be/Believe Banner (Left)", "Mode: [select] only\nShould the bot buy \"Be/Believe Banner (Left)\" ?", false),
-        new Option<bool>("31961", "Darkwave Guitar", "Mode: [select] only\nShould the bot buy \"Darkwave Guitar\" ?", false),
-        new Option<bool>("31959", "Bloodwave Violin and Bow", "Mode: [select] only\nShould the bot buy \"Bloodwave Violin and Bow\" ?", false),
-        new Option<bool>("31960", "Darkwave Violin and Bow", "Mode: [select] only\nShould the bot buy \"Darkwave Violin and Bow\" ?", false),
-        new Option<bool>("31958", "Darkwave Drumset", "Mode: [select] only\nShould the bot buy \"Darkwave Drumset\" ?", false),
-        new Option<bool>("31957", "Darkwave Keyboards", "Mode: [select] only\nShould the bot buy \"Darkwave Keyboards\" ?", false),
+        new Option<bool>(
+            "31848",
+            "Evolved Pumpkin Lord",
+            "Mode: [select] only\nShould the bot buy \"Evolved Pumpkin Lord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31905",
+            "SteamPunk TreasureHunter",
+            "Mode: [select] only\nShould the bot buy \"SteamPunk TreasureHunter\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31906",
+            "TreasureHunter Musket",
+            "Mode: [select] only\nShould the bot buy \"TreasureHunter Musket\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31907",
+            "TreasureHunter Wrap",
+            "Mode: [select] only\nShould the bot buy \"TreasureHunter Wrap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31908",
+            "TreasureHunter Hair",
+            "Mode: [select] only\nShould the bot buy \"TreasureHunter Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31909",
+            "TreasureHunter Musket Cape",
+            "Mode: [select] only\nShould the bot buy \"TreasureHunter Musket Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31981",
+            "Monster Mummy",
+            "Mode: [select] only\nShould the bot buy \"Monster Mummy\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31982",
+            "Monster Mummy Wrap",
+            "Mode: [select] only\nShould the bot buy \"Monster Mummy Wrap\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31929",
+            "Darkwave Dancer",
+            "Mode: [select] only\nShould the bot buy \"Darkwave Dancer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31924",
+            "Live/Love Banner (Left)",
+            "Mode: [select] only\nShould the bot buy \"Live/Love Banner (Left)\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31925",
+            "Be/Believe Banner (Left)",
+            "Mode: [select] only\nShould the bot buy \"Be/Believe Banner (Left)\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31961",
+            "Darkwave Guitar",
+            "Mode: [select] only\nShould the bot buy \"Darkwave Guitar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31959",
+            "Bloodwave Violin and Bow",
+            "Mode: [select] only\nShould the bot buy \"Bloodwave Violin and Bow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31960",
+            "Darkwave Violin and Bow",
+            "Mode: [select] only\nShould the bot buy \"Darkwave Violin and Bow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31958",
+            "Darkwave Drumset",
+            "Mode: [select] only\nShould the bot buy \"Darkwave Drumset\" ?",
+            false
+        ),
+        new Option<bool>(
+            "31957",
+            "Darkwave Keyboards",
+            "Mode: [select] only\nShould the bot buy \"Darkwave Keyboards\" ?",
+            false
+        ),
     };
 }

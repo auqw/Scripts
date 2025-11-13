@@ -12,8 +12,18 @@ public class ShadowfallRise
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreSepulchure CoreSS { get => _CoreSS ??= new CoreSepulchure(); set => _CoreSS = value; }    private static CoreSepulchure _CoreSS;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreSepulchure CoreSS
+    {
+        get => _CoreSS ??= new CoreSepulchure();
+        set => _CoreSS = value;
+    }
+    private static CoreSepulchure _CoreSS;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -23,5 +33,4 @@ public class ShadowfallRise
 
         Core.SetOptions(false);
     }
-
 }

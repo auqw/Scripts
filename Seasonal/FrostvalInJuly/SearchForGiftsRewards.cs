@@ -13,7 +13,11 @@ public class SearchForGiftsRewards
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static FrostBladeMaster FBM { get => _FBM ??= new FrostBladeMaster(); set => _FBM = value; }
+    private static FrostBladeMaster FBM
+    {
+        get => _FBM ??= new FrostBladeMaster();
+        set => _FBM = value;
+    }
     private static FrostBladeMaster _FBM;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -27,7 +31,7 @@ public class SearchForGiftsRewards
     public void SearchForGifts()
     {
         FBM.SagaName();
-        
+
         if (!Core.isSeasonalMapActive("akibalight"))
             return;
 

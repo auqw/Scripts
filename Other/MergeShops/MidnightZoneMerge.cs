@@ -17,20 +17,37 @@ public class MidnightZoneMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreAOR AOR { get => _AOR ??= new CoreAOR(); set => _AOR = value; }
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
     private static CoreAOR _AOR;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -55,7 +72,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,14 +85,26 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Undine Base Scrip":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("sunlightzone", "Infernal Illusion", req.Name, quant, false, false);
+                    Core.HuntMonster(
+                        "sunlightzone",
+                        "Infernal Illusion",
+                        req.Name,
+                        quant,
+                        false,
+                        false
+                    );
                     break;
 
                 case "Water Elf Pearl":
@@ -84,29 +115,89 @@ private static CoreAdvanced _sAdv;
                         Core.EquipClass(ClassType.Solo);
                         Core.HuntMonster("midnightzone", "Sparagmos", "Memory Card", log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster("midnightzone", "Shadow Viscera", "Fleshy Shadows", 8, log: false);
+                        Core.HuntMonster(
+                            "midnightzone",
+                            "Shadow Viscera",
+                            "Fleshy Shadows",
+                            8,
+                            log: false
+                        );
                         Core.HuntMonster("midnightzone", "Venerated Wraith", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("77487", "Elven Heritage Guardian", "Mode: [select] only\nShould the bot buy \"Elven Heritage Guardian\" ?", false),
-        new Option<bool>("77488", "Elven Heritage Helm", "Mode: [select] only\nShould the bot buy \"Elven Heritage Helm\" ?", false),
-        new Option<bool>("77489", "Elven Guardian Morph", "Mode: [select] only\nShould the bot buy \"Elven Guardian Morph\" ?", false),
-        new Option<bool>("77490", "Dark Forest Shawl", "Mode: [select] only\nShould the bot buy \"Dark Forest Shawl\" ?", false),
-        new Option<bool>("77491", "Silver Edged Lamenter", "Mode: [select] only\nShould the bot buy \"Silver Edged Lamenter\" ?", false),
-        new Option<bool>("77492", "Silver Edged Lamenters", "Mode: [select] only\nShould the bot buy \"Silver Edged Lamenters\" ?", false),
-        new Option<bool>("77493", "Elven Heritage Ranger", "Mode: [select] only\nShould the bot buy \"Elven Heritage Ranger\" ?", false),
-        new Option<bool>("77494", "Elven Heritage Hood", "Mode: [select] only\nShould the bot buy \"Elven Heritage Hood\" ?", false),
-        new Option<bool>("77495", "Elven Ranger Morph", "Mode: [select] only\nShould the bot buy \"Elven Ranger Morph\" ?", false),
-        new Option<bool>("77496", "Rustic Elven Quiver", "Mode: [select] only\nShould the bot buy \"Rustic Elven Quiver\" ?", false),
-        new Option<bool>("77497", "Immortal Yew Bow", "Mode: [select] only\nShould the bot buy \"Immortal Yew Bow\" ?", false),
+        new Option<bool>(
+            "77487",
+            "Elven Heritage Guardian",
+            "Mode: [select] only\nShould the bot buy \"Elven Heritage Guardian\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77488",
+            "Elven Heritage Helm",
+            "Mode: [select] only\nShould the bot buy \"Elven Heritage Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77489",
+            "Elven Guardian Morph",
+            "Mode: [select] only\nShould the bot buy \"Elven Guardian Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77490",
+            "Dark Forest Shawl",
+            "Mode: [select] only\nShould the bot buy \"Dark Forest Shawl\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77491",
+            "Silver Edged Lamenter",
+            "Mode: [select] only\nShould the bot buy \"Silver Edged Lamenter\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77492",
+            "Silver Edged Lamenters",
+            "Mode: [select] only\nShould the bot buy \"Silver Edged Lamenters\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77493",
+            "Elven Heritage Ranger",
+            "Mode: [select] only\nShould the bot buy \"Elven Heritage Ranger\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77494",
+            "Elven Heritage Hood",
+            "Mode: [select] only\nShould the bot buy \"Elven Heritage Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77495",
+            "Elven Ranger Morph",
+            "Mode: [select] only\nShould the bot buy \"Elven Ranger Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77496",
+            "Rustic Elven Quiver",
+            "Mode: [select] only\nShould the bot buy \"Rustic Elven Quiver\" ?",
+            false
+        ),
+        new Option<bool>(
+            "77497",
+            "Immortal Yew Bow",
+            "Mode: [select] only\nShould the bot buy \"Immortal Yew Bow\" ?",
+            false
+        ),
     };
 }

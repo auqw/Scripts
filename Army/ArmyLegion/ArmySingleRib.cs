@@ -1,7 +1,7 @@
 /*
 name: ArmySingleRib
 description: Uses an army to kill binky in /doomvault to complet ethe `Single Rib` quest.
-tags: single, rib, binky, legion, tokens, 
+tags: single, rib, binky, legion, tokens,
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -17,10 +17,18 @@ public class ArmySingleRib
 {
     private static IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
     private static readonly CoreArmyLite sArmy = new();
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
     private static CoreLegion _Legion;
 
     // Comment out one of these depending:
@@ -39,9 +47,8 @@ public class ArmySingleRib
         sArmy.player6,
         sArmy.player7,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
-
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -49,7 +56,11 @@ public class ArmySingleRib
 
         Core.SetOptions();
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // WTFisGoingOn();
 
         Core.SetOptions(false);
@@ -62,14 +73,32 @@ public class ArmySingleRib
         Core.EnsureLoad(QuestIDs);
 
         Legion.JoinLegion();
-        Core.OneTimeMessage("##READ ME###", "it will take a minute when u divide on the binky\n" +
-        "cell as the map takes you to the `Innit` cell first\n" +
-        "then itll jump to binky after a moment", true, true);
-        ArmyBits("doomvault", new[] { "r5" }, new[] { 9 }, new[] { ("Legion Token", 50001) }, ClassType.Solo, QuestIDs);
+        Core.OneTimeMessage(
+            "##READ ME###",
+            "it will take a minute when u divide on the binky\n"
+                + "cell as the map takes you to the `Innit` cell first\n"
+                + "then itll jump to binky after a moment",
+            true,
+            true
+        );
+        ArmyBits(
+            "doomvault",
+            new[] { "r5" },
+            new[] { 9 },
+            new[] { ("Legion Token", 50001) },
+            ClassType.Solo,
+            QuestIDs
+        );
     }
 
-
-    public void ArmyBits(string map, string[] cell, int[] MonsterMapIDs, (string, int)[] ItemandQuants, ClassType classToUse, int[] QuestIDs)
+    public void ArmyBits(
+        string map,
+        string[] cell,
+        int[] MonsterMapIDs,
+        (string, int)[] ItemandQuants,
+        ClassType classToUse,
+        int[] QuestIDs
+    )
     {
         // Setting up private rooms and class
         Core.EquipClass(classToUse);
@@ -83,7 +112,9 @@ public class ArmySingleRib
         Core.AddDrop(Core.QuestRewards(QuestIDs));
         Core.RegisterQuests(QuestIDs);
 
-        bool inventoryConditionMet = ItemandQuants.All(t => Core.CheckInventory(t.Item1, t.Item2, toInv: true));
+        bool inventoryConditionMet = ItemandQuants.All(t =>
+            Core.CheckInventory(t.Item1, t.Item2, toInv: true)
+        );
 
         if (inventoryConditionMet)
             return;
@@ -91,7 +122,6 @@ public class ArmySingleRib
         Army.AggroMonStart(map);
         Army.DivideOnCells(cell);
         Army.AggroMonMIDs(MonsterMapIDs);
-
 
         Bot.Player.SetSpawnPoint();
         string dividedCell = Bot.Player.Cell;
@@ -109,11 +139,13 @@ public class ArmySingleRib
                         break;
                 }
 
-                // Single Target: 
+                // Single Target:
                 Bot.Kill.Monster(monster.MapID);
 
                 // Check inventory conditions
-                inventoryConditionMet = ItemandQuants.All(t => Core.CheckInventory(t.Item1, t.Item2, toInv: true));
+                inventoryConditionMet = ItemandQuants.All(t =>
+                    Core.CheckInventory(t.Item1, t.Item2, toInv: true)
+                );
 
                 // Break loop if inventory condition is met
                 if (inventoryConditionMet)
@@ -126,12 +158,10 @@ public class ArmySingleRib
             }
         }
 
-    // Clean up section
-    CleanUp:
+        // Clean up section
+        CleanUp:
         Army.AggroMonStop(true);
         Core.JumpWait();
         Core.CancelRegisteredQuests();
-
     }
-
 }

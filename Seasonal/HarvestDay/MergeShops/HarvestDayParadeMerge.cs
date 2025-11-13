@@ -15,28 +15,45 @@ public class HarvestDayParadeMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Pink Balloon Scrap", "Green Balloon Scrap", "Red Balloon Scrap " });
+        Core.BankingBlackList.AddRange(
+            new[] { "Pink Balloon Scrap", "Green Balloon Scrap", "Red Balloon Scrap " }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -56,7 +73,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +86,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Pink Balloon Scrap":
                 case "Green Balloon Scrap":
@@ -77,22 +101,71 @@ public static CoreAdvanced _sAdv;
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("float", "Beleen Balloon", req.Name, quant);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("32295", "Pilgrim Warrior", "Mode: [select] only\nShould the bot buy \"Pilgrim Warrior\" ?", false),
-        new Option<bool>("32296", "Pilgrim Wizard", "Mode: [select] only\nShould the bot buy \"Pilgrim Wizard\" ?", false),
-        new Option<bool>("32292", "Settler's Greatsword", "Mode: [select] only\nShould the bot buy \"Settler's Greatsword\" ?", false),
-        new Option<bool>("32293", "Settler's Longsword", "Mode: [select] only\nShould the bot buy \"Settler's Longsword\" ?", false),
-        new Option<bool>("32299", "Turdraken Trophy Sword", "Mode: [select] only\nShould the bot buy \"Turdraken Trophy Sword\" ?", false),
-        new Option<bool>("32300", "Shield and Spear o' Plenty", "Mode: [select] only\nShould the bot buy \"Shield and Spear o' Plenty\" ?", false),
-        new Option<bool>("32301", "Turdraken Scale Sword", "Mode: [select] only\nShould the bot buy \"Turdraken Scale Sword\" ?", false),
-        new Option<bool>("32302", "Fallen Leaf Sword", "Mode: [select] only\nShould the bot buy \"Fallen Leaf Sword\" ?", false),
-        new Option<bool>("32382", "Staff of Thanks", "Mode: [select] only\nShould the bot buy \"Staff of Thanks\" ?", false),
-        new Option<bool>("32297", "Harvest Sword and Shield", "Mode: [select] only\nShould the bot buy \"Harvest Sword and Shield\" ?", false),
+        new Option<bool>(
+            "32295",
+            "Pilgrim Warrior",
+            "Mode: [select] only\nShould the bot buy \"Pilgrim Warrior\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32296",
+            "Pilgrim Wizard",
+            "Mode: [select] only\nShould the bot buy \"Pilgrim Wizard\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32292",
+            "Settler's Greatsword",
+            "Mode: [select] only\nShould the bot buy \"Settler's Greatsword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32293",
+            "Settler's Longsword",
+            "Mode: [select] only\nShould the bot buy \"Settler's Longsword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32299",
+            "Turdraken Trophy Sword",
+            "Mode: [select] only\nShould the bot buy \"Turdraken Trophy Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32300",
+            "Shield and Spear o' Plenty",
+            "Mode: [select] only\nShould the bot buy \"Shield and Spear o' Plenty\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32301",
+            "Turdraken Scale Sword",
+            "Mode: [select] only\nShould the bot buy \"Turdraken Scale Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32302",
+            "Fallen Leaf Sword",
+            "Mode: [select] only\nShould the bot buy \"Fallen Leaf Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32382",
+            "Staff of Thanks",
+            "Mode: [select] only\nShould the bot buy \"Staff of Thanks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "32297",
+            "Harvest Sword and Shield",
+            "Mode: [select] only\nShould the bot buy \"Harvest Sword and Shield\" ?",
+            false
+        ),
     };
 }

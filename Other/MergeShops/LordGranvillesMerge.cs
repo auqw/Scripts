@@ -14,18 +14,30 @@ public class LordGranvillesMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -49,7 +61,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,26 +74,64 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Balemorale Crest":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster("balemorale", "r2", "Left", "*", req.Name, quant, false, false);
+                    Core.KillMonster(
+                        "balemorale",
+                        "r2",
+                        "Left",
+                        "*",
+                        req.Name,
+                        quant,
+                        false,
+                        false
+                    );
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("20702", "Defender Of Balemorale", "Mode: [select] only\nShould the bot buy \"Defender Of Balemorale\" ?", false),
-        new Option<bool>("20703", "Defender Of Balemorale Helm", "Mode: [select] only\nShould the bot buy \"Defender Of Balemorale Helm\" ?", false),
-        new Option<bool>("20704", "Defenders of Balemorale Spikes", "Mode: [select] only\nShould the bot buy \"Defenders of Balemorale Spikes\" ?", false),
-        new Option<bool>("20705", "Sheathed Balemorale Defender Blades", "Mode: [select] only\nShould the bot buy \"Sheathed Balemorale Defender Blades\" ?", false),
-        new Option<bool>("20706", "Noble Defender Of Balemorale Blade", "Mode: [select] only\nShould the bot buy \"Noble Defender Of Balemorale Blade\" ?", false),
+        new Option<bool>(
+            "20702",
+            "Defender Of Balemorale",
+            "Mode: [select] only\nShould the bot buy \"Defender Of Balemorale\" ?",
+            false
+        ),
+        new Option<bool>(
+            "20703",
+            "Defender Of Balemorale Helm",
+            "Mode: [select] only\nShould the bot buy \"Defender Of Balemorale Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "20704",
+            "Defenders of Balemorale Spikes",
+            "Mode: [select] only\nShould the bot buy \"Defenders of Balemorale Spikes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "20705",
+            "Sheathed Balemorale Defender Blades",
+            "Mode: [select] only\nShould the bot buy \"Sheathed Balemorale Defender Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "20706",
+            "Noble Defender Of Balemorale Blade",
+            "Mode: [select] only\nShould the bot buy \"Noble Defender Of Balemorale Blade\" ?",
+            false
+        ),
     };
 }

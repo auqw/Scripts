@@ -11,7 +11,12 @@ public class SuperDeath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +39,11 @@ public class SuperDeath
 
         //Cold Open the Portal 8016
         Story.MapItemQuest(8016, "SuperDeath", 8330);
-        Story.KillQuest(8016, "SuperDeath", new[] { "Shadow Cave Yeti", "Shadow Lava Crab", "Shadow Collector", "Shadow Cave Yeti" });
+        Story.KillQuest(
+            8016,
+            "SuperDeath",
+            new[] { "Shadow Cave Yeti", "Shadow Lava Crab", "Shadow Collector", "Shadow Cave Yeti" }
+        );
 
         //VolcaNO Thank You 8017
         Story.KillQuest(8017, "SuperDeath", "Igneous Lava Crab");
@@ -76,13 +85,20 @@ public class SuperDeath
         Story.KillQuest(8029, "SuperDeath", "Shadow Cave Bandit");
 
         //Forging the Shadow Key 8030
-        Story.KillQuest(8030, "SuperDeath", new[] { "Shadow Mutant", "Shadow Scorpion", "Shadow Cave Bandit", "Shadow Goo Pup" });
+        Story.KillQuest(
+            8030,
+            "SuperDeath",
+            new[] { "Shadow Mutant", "Shadow Scorpion", "Shadow Cave Bandit", "Shadow Goo Pup" }
+        );
 
         //Charge the Key 8031
-        Story.KillQuest(8031, "SuperDeath", new[] { "Hottica", "Electina", "General Smash", "Charries" });
+        Story.KillQuest(
+            8031,
+            "SuperDeath",
+            new[] { "Hottica", "Electina", "General Smash", "Charries" }
+        );
 
         //Super Death 8032
         Story.KillQuest(8032, "SuperDeath", "Super Death");
-
     }
 }

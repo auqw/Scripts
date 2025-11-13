@@ -13,12 +13,29 @@ public class DjinnGateStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     private string[] drops =
     {
-        "Armor of Zular", "Djinn's Essence", "Unseen Essence", "Fangs of the Lion", "Claws of the Daeva", "Light of the Serpent", "Pike of the Shimmering Sands", "Reavers of the Gilded Sun"
+        "Armor of Zular",
+        "Djinn's Essence",
+        "Unseen Essence",
+        "Fangs of the Lion",
+        "Claws of the Daeva",
+        "Light of the Serpent",
+        "Pike of the Shimmering Sands",
+        "Reavers of the Gilded Sun",
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -47,8 +64,22 @@ public class DjinnGateStory
             if (!Core.CheckInventory("Fragment 1") || !Core.CheckInventory("Fragment 4"))
             {
                 Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf");
-                Core.KillMonster("mobius", "Slugfit", "Bottom", "Slugfit", "Fragment 1", log: false);
-                Core.KillMonster("mobius", "Slugfit", "Bottom", "Cyclops Warlord", "Fragment 4", log: false);
+                Core.KillMonster(
+                    "mobius",
+                    "Slugfit",
+                    "Bottom",
+                    "Slugfit",
+                    "Fragment 1",
+                    log: false
+                );
+                Core.KillMonster(
+                    "mobius",
+                    "Slugfit",
+                    "Bottom",
+                    "Cyclops Warlord",
+                    "Fragment 4",
+                    log: false
+                );
             }
             Core.KillMonster("faerie", "TopRock", "Left", "*", "Fragment 2");
             Core.KillMonster("faerie", "Side4", "Right", "*", "Fragment 3");

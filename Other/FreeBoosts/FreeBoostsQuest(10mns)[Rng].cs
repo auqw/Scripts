@@ -5,16 +5,20 @@ tags: reagents for zifwin, free, boost, class points, reputation, gold
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
-using Skua.Core.Interfaces;
-using Skua.Core.Options;
-using Skua.Core.Models.Items;
 using System.Collections.Generic;
+using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
+using Skua.Core.Options;
 
 public class FreeBoosts
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public static CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
     public string OptionsStorage = "Booster";
@@ -22,22 +26,48 @@ public class FreeBoosts
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<int>("GoldBoostQuant", "Gold Boost Quant", "Input the number of The Type of Boost For the Bot to Get [Max 9999]", 9999),
-        new Option<int>("ClassBoostQuant", "Class Boost Quant", "Input the number of The Type of Boost For the Bot to Get [Max 9999]", 9999),
-        new Option<int>("RepBoostQuant", "Rep Boost Quant", "Input the number of The Type of Boost For the Bot to Get [Max 9999]", 9999)
+        new Option<int>(
+            "GoldBoostQuant",
+            "Gold Boost Quant",
+            "Input the number of The Type of Boost For the Bot to Get [Max 9999]",
+            9999
+        ),
+        new Option<int>(
+            "ClassBoostQuant",
+            "Class Boost Quant",
+            "Input the number of The Type of Boost For the Bot to Get [Max 9999]",
+            9999
+        ),
+        new Option<int>(
+            "RepBoostQuant",
+            "Rep Boost Quant",
+            "Input the number of The Type of Boost For the Bot to Get [Max 9999]",
+            9999
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
-        GetBoostsSelect(Bot.Config!.Get<int>("GoldBoostQuant"), Bot.Config.Get<int>("ClassBoostQuant"), Bot.Config.Get<int>("RepBoostQuant"));
+        GetBoostsSelect(
+            Bot.Config!.Get<int>("GoldBoostQuant"),
+            Bot.Config.Get<int>("ClassBoostQuant"),
+            Bot.Config.Get<int>("RepBoostQuant")
+        );
         Core.SetOptions(false);
     }
 
-    public void GetBoostsSelect(int GoldBoostQuant = 9999, int ClassBoostQuant = 9999, int RepBoostQuant = 9999)
+    public void GetBoostsSelect(
+        int GoldBoostQuant = 9999,
+        int ClassBoostQuant = 9999,
+        int RepBoostQuant = 9999
+    )
     {
         Core.AddDrop("GOLD Boost! (10 min)", "CLASS Boost! (10 min)", "REPUTATION Boost! (10 min)");
-        Core.OneTimeMessage("RNG Quest Rewards", "Drops are \"randomly\" received, and may take a while... be prepared if quantities are high.");
+        Core.OneTimeMessage(
+            "RNG Quest Rewards",
+            "Drops are \"randomly\" received, and may take a while... be prepared if quantities are high."
+        );
 
         if (!Core.CheckInventory("GOLD Boost! (10 min)", GoldBoostQuant))
             Core.FarmingLogger("GOLD Boost! (10 min)", GoldBoostQuant);
@@ -48,23 +78,32 @@ public class FreeBoosts
 
         Core.EquipClass(ClassType.Farm);
 
-        bool allQuantitiesMet = Core.CheckInventory("GOLD Boost! (10 min)", GoldBoostQuant) &&
-                                           Core.CheckInventory("CLASS Boost! (10 min)", ClassBoostQuant) &&
-                                           Core.CheckInventory("REPUTATION Boost! (10 min)", RepBoostQuant);
+        bool allQuantitiesMet =
+            Core.CheckInventory("GOLD Boost! (10 min)", GoldBoostQuant)
+            && Core.CheckInventory("CLASS Boost! (10 min)", ClassBoostQuant)
+            && Core.CheckInventory("REPUTATION Boost! (10 min)", RepBoostQuant);
 
         while (!Bot.ShouldExit && !allQuantitiesMet)
         {
-            Core.HuntMonsterQuest(6208,
-        ("bloodtusk", "Trollola Plant", ClassType.Solo),
-        ("cloister", "Acornent", ClassType.Farm),
-        ("nibbleon", "Dark Makai", ClassType.Farm));
+            Core.HuntMonsterQuest(
+                6208,
+                ("bloodtusk", "Trollola Plant", ClassType.Solo),
+                ("cloister", "Acornent", ClassType.Farm),
+                ("nibbleon", "Dark Makai", ClassType.Farm)
+            );
 
             if (allQuantitiesMet)
                 break; // Exit the loop when all quantities are met.
 
-            InventoryItem? goldItem = Bot.Inventory.Items.FirstOrDefault(x => x.Name == "GOLD Boost! (10 min)");
-            InventoryItem? classItem = Bot.Inventory.Items.FirstOrDefault(x => x.Name == "CLASS Boost! (10 min)");
-            InventoryItem? repItem = Bot.Inventory.Items.FirstOrDefault(x => x.Name == "REPUTATION Boost! (10 min)");
+            InventoryItem? goldItem = Bot.Inventory.Items.FirstOrDefault(x =>
+                x.Name == "GOLD Boost! (10 min)"
+            );
+            InventoryItem? classItem = Bot.Inventory.Items.FirstOrDefault(x =>
+                x.Name == "CLASS Boost! (10 min)"
+            );
+            InventoryItem? repItem = Bot.Inventory.Items.FirstOrDefault(x =>
+                x.Name == "REPUTATION Boost! (10 min)"
+            );
 
             if (goldItem != null)
                 goldItem.Quantity = Math.Min(GoldBoostQuant, goldItem.MaxStack);

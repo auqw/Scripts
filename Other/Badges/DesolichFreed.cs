@@ -13,8 +13,18 @@ public class DesolichFreed
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static EtherStormWastes ESW { get => _ESW ??= new EtherStormWastes(); set => _ESW = value; }    private static EtherStormWastes _ESW;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static EtherStormWastes ESW
+    {
+        get => _ESW ??= new EtherStormWastes();
+        set => _ESW = value;
+    }
+    private static EtherStormWastes _ESW;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -36,7 +46,9 @@ public class DesolichFreed
             return;
         }
 
-        Core.Logger("Gotta do the EtherStorm story first, will get the badge during the story don't worry :D");
+        Core.Logger(
+            "Gotta do the EtherStorm story first, will get the badge during the story don't worry :D"
+        );
         ESW.DoAll();
     }
 }

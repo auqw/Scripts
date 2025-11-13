@@ -14,14 +14,24 @@ public class VoucherItem
     public IScriptInterface Bot => IScriptInterface.Instance;
 
     public CoreBots Core => CoreBots.Instance;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public string OptionsStorage = "VoucherItem";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<VoucherItemTotem>("VoucherItem", "Choose Your Item", "Extra stuff to choose, if you have any suggestions -form in disc, and put it under request. or dm Tato(the retarded one on disc)", VoucherItemTotem.Totem_of_Nulgath),
+        new Option<VoucherItemTotem>(
+            "VoucherItem",
+            "Choose Your Item",
+            "Extra stuff to choose, if you have any suggestions -form in disc, and put it under request. or dm Tato(the retarded one on disc)",
+            VoucherItemTotem.Totem_of_Nulgath
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)

@@ -25,24 +25,65 @@ public class HBVInsig
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static HollowSoul HS { get => _HS ??= new HollowSoul(); set => _HS = value; }
+    private static HollowSoul HS
+    {
+        get => _HS ??= new HollowSoul();
+        set => _HS = value;
+    }
     private static HollowSoul _HS;
-    private static HBVNonInsig HBV { get => _HBV ??= new HBVNonInsig(); set => _HBV = value; }
+    private static HBVNonInsig HBV
+    {
+        get => _HBV ??= new HBVNonInsig();
+        set => _HBV = value;
+    }
     private static HBVNonInsig _HBV;
-    private static CoreHollowbornStory HBS { get => _HBS ??= new CoreHollowbornStory(); set => _HBS = value; }
+    private static CoreHollowbornStory HBS
+    {
+        get => _HBS ??= new CoreHollowbornStory();
+        set => _HBS = value;
+    }
     private static CoreHollowbornStory _HBS;
-    private static VindicatorBadge VB { get => _VB ??= new VindicatorBadge(); set => _VB = value; }
+    private static VindicatorBadge VB
+    {
+        get => _VB ??= new VindicatorBadge();
+        set => _VB = value;
+    }
     private static VindicatorBadge _VB;
-    private static DeathsPower DP { get => _DP ??= new DeathsPower(); set => _DP = value; }
+    private static DeathsPower DP
+    {
+        get => _DP ??= new DeathsPower();
+        set => _DP = value;
+    }
     private static DeathsPower _DP;
-    private static GraceOrb GO { get => _GO ??= new GraceOrb(); set => _GO = value; }
+    private static GraceOrb GO
+    {
+        get => _GO ??= new GraceOrb();
+        set => _GO = value;
+    }
     private static GraceOrb _GO;
-    private static GramielsEmblem GE { get => _GE ??= new GramielsEmblem(); set => _GE = value; }
+    private static GramielsEmblem GE
+    {
+        get => _GE ??= new GramielsEmblem();
+        set => _GE = value;
+    }
     private static GramielsEmblem _GE;
-    private static VindicatorCrest VC { get => _VC ??= new VindicatorCrest(); set => _VC = value; }
+    private static VindicatorCrest VC
+    {
+        get => _VC ??= new VindicatorCrest();
+        set => _VC = value;
+    }
     private static VindicatorCrest _VC;
 
     public void ScriptMain(IScriptInterface bot)
@@ -97,7 +138,9 @@ public class HBVInsig
             }
             if (!Bot.Quests.IsAvailable(10300))
             {
-                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
+                Core.Logger(
+                    "This is a weekly quest, you need to wait until next week to get the class."
+                );
                 return;
             }
             Core.EnsureComplete(10300);
@@ -114,7 +157,5 @@ public class HBVInsig
 
         if (rankUpClass)
             Adv.RankUpClass("Hollowborn Vindicator");
-
     }
-
 }

@@ -11,7 +11,11 @@ public class OrbHunt
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -171,12 +175,16 @@ public class OrbHunt
         Story.KillQuest(8346, "orbhunt", "Animus of Ice");
 
         // 8347|Bones For Stones
-        Story.KillQuest(8347, "orbhunt", new[] { "Lotus Spider", "Hive", "Ice Infernal", "Seed Stalker" });
+        Story.KillQuest(
+            8347,
+            "orbhunt",
+            new[] { "Lotus Spider", "Hive", "Ice Infernal", "Seed Stalker" }
+        );
 
         // 8348|The Ice Orb
         Story.KillQuest(8348, "orbhunt", "Quetzal");
 
-        // 8349|A Hymn of Ice and Fire, and Light and Dark  
+        // 8349|A Hymn of Ice and Fire, and Light and Dark
         Story.KillQuest(8349, "orbhunt", new[] { "Chamat", "Horothotep", "Kolyaban", "Quetzal" });
     }
 }

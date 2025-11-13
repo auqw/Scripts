@@ -17,20 +17,36 @@ public class ShadowscytheMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static ShadowBlastArena SBA { get => _SBA ??= new ShadowBlastArena(); set => _SBA = value; }
+    private static ShadowBlastArena SBA
+    {
+        get => _SBA ??= new ShadowBlastArena();
+        set => _SBA = value;
+    }
     private static ShadowBlastArena _SBA;
-    private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
     private static CoreAdvanced _sAdv;
-
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +72,9 @@ public class ShadowscytheMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +85,14 @@ public class ShadowscytheMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Diamond Token of Gravelyn":
                     Core.FarmingLogger(req.Name, quant);
@@ -80,16 +103,49 @@ public class ShadowscytheMerge
                         if (!Core.CheckInventory("Defeated Makai", 25))
                         {
                             Core.EquipClass(ClassType.Farm);
-                            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Defeated Makai", 25, false);
+                            Core.KillMonster(
+                                "tercessuinotlim",
+                                "m2",
+                                "Left",
+                                "*",
+                                "Defeated Makai",
+                                25,
+                                false
+                            );
                             Core.JumpWait();
                             Core.Join("aqlesson");
                         }
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster("aqlesson", "Frame9", "Right", "Carnax", "Carnax Eye", publicRoom: true);
-                        Core.HuntMonster("deepchaos", "Kathool", "Kathool Tentacle", publicRoom: true);
-                        Core.KillMonster("dflesson", "r12", "Right", 29, 33257, isTemp: true, publicRoom: true);
+                        Core.KillMonster(
+                            "aqlesson",
+                            "Frame9",
+                            "Right",
+                            "Carnax",
+                            "Carnax Eye",
+                            publicRoom: true
+                        );
+                        Core.HuntMonster(
+                            "deepchaos",
+                            "Kathool",
+                            "Kathool Tentacle",
+                            publicRoom: true
+                        );
+                        Core.KillMonster(
+                            "dflesson",
+                            "r12",
+                            "Right",
+                            29,
+                            33257,
+                            isTemp: true,
+                            publicRoom: true
+                        );
                         Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang");
-                        Core.HuntMonster("bloodtitan", "Blood Titan", "Blood Titan's Blade", publicRoom: true);
+                        Core.HuntMonster(
+                            "bloodtitan",
+                            "Blood Titan",
+                            "Blood Titan's Blade",
+                            publicRoom: true
+                        );
 
                         Bot.Wait.ForQuestComplete(4737);
                         Bot.Wait.ForPickup(req.Name);
@@ -104,23 +160,52 @@ public class ShadowscytheMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonster("shadowblast", "Carnage", "Shadow Seal", isTemp: false);
-                        Core.HuntMonster("shadowblast", "Legion Fenrir", "Gem of Superiority", isTemp: false);
+                        Core.HuntMonster(
+                            "shadowblast",
+                            "Legion Fenrir",
+                            "Gem of Superiority",
+                            isTemp: false
+                        );
                         Bot.Wait.ForQuestComplete(4750);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("33273", "DOOMFire Blade", "Mode: [select] only\nShould the bot buy \"DOOMFire Blade\" ?", false),
-        new Option<bool>("33274", "Empowered DOOMFire Blade", "Mode: [select] only\nShould the bot buy \"Empowered DOOMFire Blade\" ?", false),
-        new Option<bool>("33275", "Flaming DOOMFire Blade", "Mode: [select] only\nShould the bot buy \"Flaming DOOMFire Blade\" ?", false),
-        new Option<bool>("33276", "Exalted DOOMFire Blade", "Mode: [select] only\nShould the bot buy \"Exalted DOOMFire Blade\" ?", false),
-        new Option<bool>("33209", "DOOMFire Cape", "Mode: [select] only\nShould the bot buy \"DOOMFire Cape\" ?", false),
+        new Option<bool>(
+            "33273",
+            "DOOMFire Blade",
+            "Mode: [select] only\nShould the bot buy \"DOOMFire Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "33274",
+            "Empowered DOOMFire Blade",
+            "Mode: [select] only\nShould the bot buy \"Empowered DOOMFire Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "33275",
+            "Flaming DOOMFire Blade",
+            "Mode: [select] only\nShould the bot buy \"Flaming DOOMFire Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "33276",
+            "Exalted DOOMFire Blade",
+            "Mode: [select] only\nShould the bot buy \"Exalted DOOMFire Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "33209",
+            "DOOMFire Cape",
+            "Mode: [select] only\nShould the bot buy \"DOOMFire Cape\" ?",
+            false
+        ),
     };
 }

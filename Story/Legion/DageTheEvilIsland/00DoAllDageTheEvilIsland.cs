@@ -13,7 +13,12 @@ public class DoAllDageTheEvillMapStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDageTheEvilIsland CoreDageTheEvilIsland { get => _CoreDageTheEvilIsland ??= new CoreDageTheEvilIsland(); set => _CoreDageTheEvilIsland = value; }    private static CoreDageTheEvilIsland _CoreDageTheEvilIsland;
+    private static CoreDageTheEvilIsland CoreDageTheEvilIsland
+    {
+        get => _CoreDageTheEvilIsland ??= new CoreDageTheEvilIsland();
+        set => _CoreDageTheEvilIsland = value;
+    }
+    private static CoreDageTheEvilIsland _CoreDageTheEvilIsland;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -23,5 +28,4 @@ public class DoAllDageTheEvillMapStory
 
         Core.SetOptions(false);
     }
-
 }

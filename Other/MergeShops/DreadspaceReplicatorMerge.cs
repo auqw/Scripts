@@ -16,29 +16,63 @@ public class DreadspaceReplicatorMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreSummer Dread { get => _Dread ??= new CoreSummer(); set => _Dread = value; }    private static CoreSummer _Dread;
+    private static CoreSummer Dread
+    {
+        get => _Dread ??= new CoreSummer();
+        set => _Dread = value;
+    }
+    private static CoreSummer _Dread;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Red Space Fabric", "Blue Space Fabric", "Yellow Space Fabric", "Star Scrap Metal", "Daimyo", "Antimatter dye", "Cyber Brain Core", "Blinding Light of Dread Space", "Unstable Isotope" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Red Space Fabric",
+                "Blue Space Fabric",
+                "Yellow Space Fabric",
+                "Star Scrap Metal",
+                "Daimyo",
+                "Antimatter dye",
+                "Cyber Brain Core",
+                "Blinding Light of Dread Space",
+                "Unstable Isotope",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -56,7 +90,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +103,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Red Space Fabric":
                     Core.FarmingLogger(req.Name, quant);
@@ -107,7 +148,13 @@ public static CoreAdvanced _sAdv;
                     Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("dreadspace", "Undead Space Marine", req.Name, quant, false);
+                        Core.HuntMonster(
+                            "dreadspace",
+                            "Undead Space Marine",
+                            req.Name,
+                            quant,
+                            false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -120,7 +167,11 @@ public static CoreAdvanced _sAdv;
                     Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("dreadspace", "Undead Space Marine", "Golden Spork of Justice");
+                        Core.HuntMonster(
+                            "dreadspace",
+                            "Undead Space Marine",
+                            "Golden Spork of Justice"
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -168,27 +219,137 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("29982", "Red Space Crew Shirt", "Mode: [select] only\nShould the bot buy \"Red Space Crew Shirt\" ?", false),
-        new Option<bool>("29986", "Blue Space Crew Shirt", "Mode: [select] only\nShould the bot buy \"Blue Space Crew Shirt\" ?", false),
-        new Option<bool>("29984", "Yellow Space Crew Shirt", "Mode: [select] only\nShould the bot buy \"Yellow Space Crew Shirt\" ?", false),
-        new Option<bool>("29731", "Space Daimyo", "Mode: [select] only\nShould the bot buy \"Space Daimyo\" ?", false),
-        new Option<bool>("29985", "Green Space Crew Shirt", "Mode: [select] only\nShould the bot buy \"Green Space Crew Shirt\" ?", false),
-        new Option<bool>("29988", "Pink Space Crew Shirt", "Mode: [select] only\nShould the bot buy \"Pink Space Crew Shirt\" ?", false),
-        new Option<bool>("29987", "Purple Space Crew Shirt", "Mode: [select] only\nShould the bot buy \"Purple Space Crew Shirt\" ?", false),
-        new Option<bool>("29990", "Black Space Crew Shirt", "Mode: [select] only\nShould the bot buy \"Black Space Crew Shirt\" ?", false),
-        new Option<bool>("29989", "White Space Crew Shirt", "Mode: [select] only\nShould the bot buy \"White Space Crew Shirt\" ?", false),
-        new Option<bool>("30000", "Black Space Paladin", "Mode: [select] only\nShould the bot buy \"Black Space Paladin\" ?", false),
-        new Option<bool>("29999", "White Space Paladin", "Mode: [select] only\nShould the bot buy \"White Space Paladin\" ?", false),
-        new Option<bool>("29992", "Red Space Paladin", "Mode: [select] only\nShould the bot buy \"Red Space Paladin\" ?", false),
-        new Option<bool>("29993", "Orange Space Paladin", "Mode: [select] only\nShould the bot buy \"Orange Space Paladin\" ?", false),
-        new Option<bool>("29994", "Yellow Space Paladin", "Mode: [select] only\nShould the bot buy \"Yellow Space Paladin\" ?", false),
-        new Option<bool>("29995", "Green Space Paladin", "Mode: [select] only\nShould the bot buy \"Green Space Paladin\" ?", false),
-        new Option<bool>("29997", "Purple Space Paladin", "Mode: [select] only\nShould the bot buy \"Purple Space Paladin\" ?", false),
-        new Option<bool>("29996", "Blue Space Paladin", "Mode: [select] only\nShould the bot buy \"Blue Space Paladin\" ?", false),
-        new Option<bool>("29998", "Pink Space Paladin", "Mode: [select] only\nShould the bot buy \"Pink Space Paladin\" ?", false),
-        new Option<bool>("29933", "Starship House", "Mode: [select] only\nShould the bot buy \"Starship House\" ?", false),
-        new Option<bool>("29932", "Space Station House", "Mode: [select] only\nShould the bot buy \"Space Station House\" ?", false),
-        new Option<bool>("30031", "Blackhole Light of Dread Space", "Mode: [select] only\nShould the bot buy \"Blackhole Light of Dread Space\" ?", false),
-        new Option<bool>("29983", "Orange Space Crew Shirt", "Mode: [select] only\nShould the bot buy \"Orange Space Crew Shirt\" ?", false),
+        new Option<bool>(
+            "29982",
+            "Red Space Crew Shirt",
+            "Mode: [select] only\nShould the bot buy \"Red Space Crew Shirt\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29986",
+            "Blue Space Crew Shirt",
+            "Mode: [select] only\nShould the bot buy \"Blue Space Crew Shirt\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29984",
+            "Yellow Space Crew Shirt",
+            "Mode: [select] only\nShould the bot buy \"Yellow Space Crew Shirt\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29731",
+            "Space Daimyo",
+            "Mode: [select] only\nShould the bot buy \"Space Daimyo\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29985",
+            "Green Space Crew Shirt",
+            "Mode: [select] only\nShould the bot buy \"Green Space Crew Shirt\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29988",
+            "Pink Space Crew Shirt",
+            "Mode: [select] only\nShould the bot buy \"Pink Space Crew Shirt\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29987",
+            "Purple Space Crew Shirt",
+            "Mode: [select] only\nShould the bot buy \"Purple Space Crew Shirt\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29990",
+            "Black Space Crew Shirt",
+            "Mode: [select] only\nShould the bot buy \"Black Space Crew Shirt\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29989",
+            "White Space Crew Shirt",
+            "Mode: [select] only\nShould the bot buy \"White Space Crew Shirt\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30000",
+            "Black Space Paladin",
+            "Mode: [select] only\nShould the bot buy \"Black Space Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29999",
+            "White Space Paladin",
+            "Mode: [select] only\nShould the bot buy \"White Space Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29992",
+            "Red Space Paladin",
+            "Mode: [select] only\nShould the bot buy \"Red Space Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29993",
+            "Orange Space Paladin",
+            "Mode: [select] only\nShould the bot buy \"Orange Space Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29994",
+            "Yellow Space Paladin",
+            "Mode: [select] only\nShould the bot buy \"Yellow Space Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29995",
+            "Green Space Paladin",
+            "Mode: [select] only\nShould the bot buy \"Green Space Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29997",
+            "Purple Space Paladin",
+            "Mode: [select] only\nShould the bot buy \"Purple Space Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29996",
+            "Blue Space Paladin",
+            "Mode: [select] only\nShould the bot buy \"Blue Space Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29998",
+            "Pink Space Paladin",
+            "Mode: [select] only\nShould the bot buy \"Pink Space Paladin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29933",
+            "Starship House",
+            "Mode: [select] only\nShould the bot buy \"Starship House\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29932",
+            "Space Station House",
+            "Mode: [select] only\nShould the bot buy \"Space Station House\" ?",
+            false
+        ),
+        new Option<bool>(
+            "30031",
+            "Blackhole Light of Dread Space",
+            "Mode: [select] only\nShould the bot buy \"Blackhole Light of Dread Space\" ?",
+            false
+        ),
+        new Option<bool>(
+            "29983",
+            "Orange Space Crew Shirt",
+            "Mode: [select] only\nShould the bot buy \"Orange Space Crew Shirt\" ?",
+            false
+        ),
     };
 }

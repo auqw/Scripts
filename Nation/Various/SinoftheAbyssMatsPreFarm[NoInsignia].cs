@@ -14,18 +14,37 @@ public class SofAPreFarm
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
 
     public string OptionsStorage = "SinoftheAbyss";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("MergeSword", "Merge \"Sin of the Abyss\"?", "if you have all the Requirements, should the bot buy the sword?", false),
+        new Option<bool>(
+            "MergeSword",
+            "Merge \"Sin of the Abyss\"?",
+            "if you have all the Requirements, should the bot buy the sword?",
+            false
+        ),
         CoreBots.Instance.SkipOptions,
     };
-
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -54,7 +73,9 @@ public class SofAPreFarm
         Nation.FarmBloodGem(50);
 
         // Notify user about materials
-        Core.Logger("Materials Farm finished. Get the Insignias yourself if you own them, and if the option is enabled it'll buy them.");
+        Core.Logger(
+            "Materials Farm finished. Get the Insignias yourself if you own them, and if the option is enabled it'll buy them."
+        );
 
         bool mergeSwordEnabled = Bot.Config.Get<bool>("MergeSword");
 
@@ -70,7 +91,9 @@ public class SofAPreFarm
             else
             {
                 int missingInsignias = insigniasRequired - insigniasOwned;
-                Core.Logger($"Missing {missingInsignias}/25 Nulgath Insignias. Get off your lazy ass and farm more!");
+                Core.Logger(
+                    $"Missing {missingInsignias}/25 Nulgath Insignias. Get off your lazy ass and farm more!"
+                );
             }
         }
         else
@@ -78,5 +101,4 @@ public class SofAPreFarm
             Core.Logger("MergeSword option is disabled. Fucking farm those Insignias yourself!");
         }
     }
-
 }

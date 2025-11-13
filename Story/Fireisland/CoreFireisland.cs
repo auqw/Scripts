@@ -11,7 +11,11 @@ public class CoreFireIsland
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -175,8 +179,11 @@ public class CoreFireIsland
 
         //Rumors and Smoke
         Story.MapItemQuest(4131, "feverfew", 3245);
-        Story.KillQuest(4131, "feverfew", new[]
-        { "Firestorm Knight", "Firestorm Major", "Firestorm Knight", "Firestorm Major" });
+        Story.KillQuest(
+            4131,
+            "feverfew",
+            new[] { "Firestorm Knight", "Firestorm Major", "Firestorm Knight", "Firestorm Major" }
+        );
 
         //Dam the Flood
         Story.MapItemQuest(4132, "feverfew", 3244, 5);
@@ -226,12 +233,19 @@ public class CoreFireIsland
             Core.EnsureComplete(4138);
         }
 
-
         //The Power to Heal
-        Story.KillQuest(4139, "feverfew", new[] { "Locked Chest", "Feverfew Vase", "Twisted Undine" });
+        Story.KillQuest(
+            4139,
+            "feverfew",
+            new[] { "Locked Chest", "Feverfew Vase", "Twisted Undine" }
+        );
 
         //The Deadsea Caverns
-        Story.KillQuest(4140, "feverfew", new[] { "Coral Creeper", "Twisted Undine", "Salamander" });
+        Story.KillQuest(
+            4140,
+            "feverfew",
+            new[] { "Coral Creeper", "Twisted Undine", "Salamander" }
+        );
 
         //Open the Floodgates
         Story.MapItemQuest(4141, "feverfew", 3241);
@@ -259,7 +273,11 @@ public class CoreFireIsland
         Story.MapItemQuest(4203, "phoenixrise", 3283, 4);
 
         //Disguise Fur a Good Cause
-        Story.KillQuest(4204, "phoenixrise", new[] { "Firestorm Tiger", "Lava Troll", "Infernal Goblin" });
+        Story.KillQuest(
+            4204,
+            "phoenixrise",
+            new[] { "Firestorm Tiger", "Lava Troll", "Infernal Goblin" }
+        );
 
         //Hunt for the Stolen
         Story.MapItemQuest(4205, "phoenixrise", 3285);
@@ -283,7 +301,6 @@ public class CoreFireIsland
             Core.HuntMonster("phoenixrise", "Firestorm Tiger", "Tiger Fang", 4);
             Core.HuntMonster("phoenixrise", "Pyrric Ursus", "Ursus Shard", 2);
             Core.EnsureComplete(4209);
-
         }
 
         //Strengthen the Survivors
@@ -351,7 +368,6 @@ public class CoreFireIsland
 
         //Final Round: Tyndarius Tigermaster 4230
         Story.KillQuest(4230, "Fireforge", "Tyndarius", AutoCompleteQuest: false);
-
     }
 
     public void Lavarun()
@@ -377,7 +393,11 @@ public class CoreFireIsland
     {
         if (Core.isCompletedBefore(4115) || !Core.IsMember)
         {
-            Core.Logger(!Core.IsMember ? "You need to be a member to complete /brimestone questline." : "Brimstone Story Complete");
+            Core.Logger(
+                !Core.IsMember
+                    ? "You need to be a member to complete /brimestone questline."
+                    : "Brimstone Story Complete"
+            );
             return;
         }
 

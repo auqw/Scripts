@@ -8,13 +8,29 @@ tags: null
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
 using Skua.Core.Interfaces;
+
 public class TarosManslayer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static PurifiedClaymoreOfDestiny PCoD { get => _PCoD ??= new PurifiedClaymoreOfDestiny(); set => _PCoD = value; }    private static PurifiedClaymoreOfDestiny _PCoD;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static PurifiedClaymoreOfDestiny PCoD
+    {
+        get => _PCoD ??= new PurifiedClaymoreOfDestiny();
+        set => _PCoD = value;
+    }
+    private static PurifiedClaymoreOfDestiny _PCoD;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -41,14 +57,21 @@ public class TarosManslayer
 
         if (ManslayerOnly)
         {
-                Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Taro's Manslayer", isTemp: false);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster(
+                "tercessuinotlim",
+                "Taro Blademaster",
+                "Taro's Manslayer",
+                isTemp: false
+            );
         }
         else
         {
             if (!Bot.Player.IsMember)
             {
-                Core.Logger("Membership REQUIRED for this quest ( \"The Guardian Taro Blademaster\")");
+                Core.Logger(
+                    "Membership REQUIRED for this quest ( \"The Guardian Taro Blademaster\")"
+                );
                 return;
             }
 

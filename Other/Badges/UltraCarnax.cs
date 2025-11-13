@@ -11,7 +11,12 @@ public class UltraCarnaxBadge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -37,7 +42,7 @@ public class UltraCarnaxBadge
         }
 
         Core.Logger($"Doing UltraCarnax story for {badge} badge");
-        // Ultra Carnax Challenge Fight! 2388 
+        // Ultra Carnax Challenge Fight! 2388
         Story.KillQuest(2388, "ultracarnax", "Ultra-Carnax");
     }
 

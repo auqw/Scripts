@@ -16,15 +16,35 @@ public class EvovledHexOrbItems
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
-    private static EvolvedHexOrb EHO { get => _EHO ??= new EvolvedHexOrb(); set => _EHO = value; }
+    private static EvolvedHexOrb EHO
+    {
+        get => _EHO ??= new EvolvedHexOrb();
+        set => _EHO = value;
+    }
     private static EvolvedHexOrb _EHO;
-    private static PotionBuyer Potion { get => _Potion ??= new PotionBuyer(); set => _Potion = value; }
+    private static PotionBuyer Potion
+    {
+        get => _Potion ??= new PotionBuyer();
+        set => _Potion = value;
+    }
     private static PotionBuyer _Potion;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -71,8 +91,13 @@ public class EvovledHexOrbItems
         Nation.FarmUni13(3);
         Nation.TheAssistant("Unidentified 22", 1);
         Nation.TheAssistant("4th Betrayal Blade of Nulgath", 1);
-                Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster("tercessuinotlim", "Taro Blademaster", "Polish's Book of Avalon", isTemp: false);
+        Core.EquipClass(ClassType.Solo);
+        Core.HuntMonster(
+            "tercessuinotlim",
+            "Taro Blademaster",
+            "Polish's Book of Avalon",
+            isTemp: false
+        );
         Farm.BludrutBrawlBoss(quant: 500);
         Adv.BuyItem(Bot.Map.Name, 222, "Warden of Light");
 
@@ -124,6 +149,6 @@ public class EvovledHexOrbItems
     {
         "Evolved Hex of Nulgath",
         "Evolved Hex Helm",
-        "Evolved Hex Staf"
+        "Evolved Hex Staf",
     };
 }

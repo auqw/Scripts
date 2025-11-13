@@ -11,7 +11,12 @@ public class AriaPet
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -53,6 +58,5 @@ public class AriaPet
 
         //Home Sick 46
         Story.KillQuest(46, "marsh2", "Soulseeker");
-
     }
 }

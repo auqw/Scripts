@@ -15,13 +15,24 @@ public class ThanatostheDestroyer
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreIsleOfFotia CoreIsleOfFotia { get => _CoreIsleOfFotia ??= new CoreIsleOfFotia(); set => _CoreIsleOfFotia = value; }
+    private static CoreIsleOfFotia CoreIsleOfFotia
+    {
+        get => _CoreIsleOfFotia ??= new CoreIsleOfFotia();
+        set => _CoreIsleOfFotia = value;
+    }
     private static CoreIsleOfFotia _CoreIsleOfFotia;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,9 +45,13 @@ public class ThanatostheDestroyer
 
     public void GetRewards()
     {
-        if (!Core.CheckInventory("Thanatos Paragon Pet") || Core.CheckInventory(Core.EnsureLoad(4101).Rewards.Select(i => i.Name).ToArray()))
+        if (
+            !Core.CheckInventory("Thanatos Paragon Pet")
+            || Core.CheckInventory(Core.EnsureLoad(4101).Rewards.Select(i => i.Name).ToArray())
+        )
             Core.Logger("Pet not owned, or All Items already owned.", stopBot: true);
-        else Core.Logger("Thanatos Paragon Pet owned, continuing.");
+        else
+            Core.Logger("Thanatos Paragon Pet owned, continuing.");
 
         List<ItemBase> RewardOptions = Core.EnsureLoad(4101).Rewards;
         string[] QuestRewards = RewardOptions.Select(x => x.Name).ToArray();

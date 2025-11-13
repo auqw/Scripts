@@ -11,7 +11,12 @@ public class UnderWorldPirateCasterQuset
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -26,7 +31,9 @@ public class UnderWorldPirateCasterQuset
     {
         if (Core.CheckInventory("Underworld Pirate Caster's Pet"))
         {
-            Core.Logger("You Don't Have \"Underworld Pirate Caster's Pet\". Pet is required for doing the quests.");
+            Core.Logger(
+                "You Don't Have \"Underworld Pirate Caster's Pet\". Pet is required for doing the quests."
+            );
             return;
         }
 
@@ -42,6 +49,5 @@ public class UnderWorldPirateCasterQuset
             Core.EnsureComplete(7086);
         }
         Core.ToBank(Rewards);
-
     }
 }

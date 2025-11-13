@@ -14,11 +14,23 @@ public class ArmyLowTideMergeReqs
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
     public static CoreBots sCore
@@ -35,7 +47,6 @@ public class ArmyLowTideMergeReqs
     }
     public static CoreArmyLite _sArmy;
 
-
     public string OptionsStorage = "ArmyLowTideMergeReqs";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
@@ -47,7 +58,7 @@ public class ArmyLowTideMergeReqs
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -56,7 +67,11 @@ public class ArmyLowTideMergeReqs
 
         Core.SetOptions();
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // Setup();
 
         Core.SetOptions(false);
@@ -67,7 +82,10 @@ public class ArmyLowTideMergeReqs
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
 
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         Army.AggroMonPacketDelay = Bot.Config!.Get<int>("PacketDelay");
 
@@ -79,8 +97,6 @@ public class ArmyLowTideMergeReqs
         Army.DivideOnCells("r4", "r5", "r6");
 
         Core.RegisterQuests(8846);
-
-
 
         while (!Bot.ShouldExit)
             Bot.Combat.Attack("*");

@@ -11,7 +11,11 @@ using Skua.Core.Options;
 public class CelestialPirateCommander
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
     public CoreBots Core => CoreBots.Instance;
@@ -19,7 +23,12 @@ public class CelestialPirateCommander
     public string OptionsStorage = "Pet only or All";
     public List<IOption> Options = new()
     {
-        new Option<bool>("PetOnly", "Do you want to get the pet only?", "Whether to farm only the pet or everthing", false),
+        new Option<bool>(
+            "PetOnly",
+            "Do you want to get the pet only?",
+            "Whether to farm only the pet or everthing",
+            false
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -32,7 +41,8 @@ public class CelestialPirateCommander
         Core.SetOptions(false);
     }
 
-    public string[] Rewards = {
+    public string[] Rewards =
+    {
         "Celestial Pirate Commander",
         "Celestial Commander's Hat",
         "Celestial Commander's Locks",
@@ -44,14 +54,18 @@ public class CelestialPirateCommander
         "Celestial Commander's Hat + Morph",
         "Celestial Commander's Morph + Locks",
         "Celestial Commander's Plank",
-        "Polly Roger"
+        "Polly Roger",
     };
 
     public void GetCPC(bool PetOnly = true)
     {
         if ((PetOnly && Core.CheckInventory("Polly Roger")) || !Bot.Quests.IsAvailable(7713))
         {
-            Core.Logger(!Bot.Quests.IsAvailable(7713) ? "Not the right season ya dummy" : "You already have Polly Roger");
+            Core.Logger(
+                !Bot.Quests.IsAvailable(7713)
+                    ? "Not the right season ya dummy"
+                    : "You already have Polly Roger"
+            );
             return;
         }
 
@@ -63,14 +77,69 @@ public class CelestialPirateCommander
         while (!Bot.ShouldExit && !Core.CheckInventory(Rewards, toInv: false))
         {
             Core.EnsureAccept(7713);
-            Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 5, false, publicRoom: true);
-            Core.HuntMonster("lostruinswar", "Diabolical Warlord", "Rumors of the Celestial Commander", 5, false, publicRoom: true);
-            Core.HuntMonster("iceplane", "Animus of Ice", "Starlit Journal Page 1 Scraps", 10, false);
-            Core.HuntMonster("ivoliss", "Ivoliss", "Starlit Journal Page 2 Scraps", 10, false, publicRoom: true);
-            Core.HuntMonster("voidnightbane", "Nightbane", "Starlit Journal Page 3 Scraps", 10, false, publicRoom: true);
-            Core.HuntMonster("extinction", "Ultra SN.O.W.", "Starlit Journal Page 4 Scraps", 10, false, publicRoom: true);
-            Core.HuntMonster("starsinc", "Empowered Prime", "Map of the Celestial Seas", 1, false, publicRoom: true);
-            Core.HuntMonster("underlair", "ArchFiend DragonLord", "Coffer of the Stars", 1, false, publicRoom: true);
+            Core.HuntMonster(
+                "frozenlair",
+                "Legion Lich Lord",
+                "Sapphire Orb",
+                5,
+                false,
+                publicRoom: true
+            );
+            Core.HuntMonster(
+                "lostruinswar",
+                "Diabolical Warlord",
+                "Rumors of the Celestial Commander",
+                5,
+                false,
+                publicRoom: true
+            );
+            Core.HuntMonster(
+                "iceplane",
+                "Animus of Ice",
+                "Starlit Journal Page 1 Scraps",
+                10,
+                false
+            );
+            Core.HuntMonster(
+                "ivoliss",
+                "Ivoliss",
+                "Starlit Journal Page 2 Scraps",
+                10,
+                false,
+                publicRoom: true
+            );
+            Core.HuntMonster(
+                "voidnightbane",
+                "Nightbane",
+                "Starlit Journal Page 3 Scraps",
+                10,
+                false,
+                publicRoom: true
+            );
+            Core.HuntMonster(
+                "extinction",
+                "Ultra SN.O.W.",
+                "Starlit Journal Page 4 Scraps",
+                10,
+                false,
+                publicRoom: true
+            );
+            Core.HuntMonster(
+                "starsinc",
+                "Empowered Prime",
+                "Map of the Celestial Seas",
+                1,
+                false,
+                publicRoom: true
+            );
+            Core.HuntMonster(
+                "underlair",
+                "ArchFiend DragonLord",
+                "Coffer of the Stars",
+                1,
+                false,
+                publicRoom: true
+            );
 
             if (Bot.Config!.Get<bool>("PetOnly"))
             {

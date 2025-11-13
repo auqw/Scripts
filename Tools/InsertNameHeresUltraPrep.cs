@@ -4,7 +4,7 @@ description: Not for everyday use
 tags: do, not, find, me
 */
 
-#region 
+#region
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
@@ -14,7 +14,6 @@ tags: do, not, find, me
 //cs_include Scripts/Farm/BuyScrolls.cs
 //cs_include Scripts/Tools/BankAllItems.cs
 //cs_include Scripts/Enhancement/UnlockForgeEnhancements.cs
-
 
 //cs_include Scripts/Legion/CoreLegion.cs
 //cs_include Scripts/Good/GearOfAwe/CoreAwe.cs
@@ -129,24 +128,65 @@ public class InsertNameHeresUltraPrep
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static PotionBuyer PotionBuyer { get => _PotionBuyer ??= new PotionBuyer(); set => _PotionBuyer = value; }    private static PotionBuyer _PotionBuyer;
-    private static BuyScrolls Scroll { get => _Scroll ??= new BuyScrolls(); set => _Scroll = value; }
+    private static PotionBuyer PotionBuyer
+    {
+        get => _PotionBuyer ??= new PotionBuyer();
+        set => _PotionBuyer = value;
+    }
+    private static PotionBuyer _PotionBuyer;
+    private static BuyScrolls Scroll
+    {
+        get => _Scroll ??= new BuyScrolls();
+        set => _Scroll = value;
+    }
     private static BuyScrolls _Scroll;
-    private static BankAllItems BankAllItems { get => _BankAllItems ??= new BankAllItems(); set => _BankAllItems = value; }
+    private static BankAllItems BankAllItems
+    {
+        get => _BankAllItems ??= new BankAllItems();
+        set => _BankAllItems = value;
+    }
     private static BankAllItems _BankAllItems;
-    private static UnlockForgeEnhancements UnlockForgeEnhancements { get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements(); set => _UnlockForgeEnhancements = value; }
+    private static UnlockForgeEnhancements UnlockForgeEnhancements
+    {
+        get => _UnlockForgeEnhancements ??= new UnlockForgeEnhancements();
+        set => _UnlockForgeEnhancements = value;
+    }
     private static UnlockForgeEnhancements _UnlockForgeEnhancements;
-    private static DageChallengeStory DageChallengeStory { get => _DageChallengeStory ??= new DageChallengeStory(); set => _DageChallengeStory = value; }
+    private static DageChallengeStory DageChallengeStory
+    {
+        get => _DageChallengeStory ??= new DageChallengeStory();
+        set => _DageChallengeStory = value;
+    }
     private static DageChallengeStory _DageChallengeStory;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
     private static CoreLegion _Legion;
 
     private string[] UltraItems = new[]
@@ -167,47 +207,44 @@ public class InsertNameHeresUltraPrep
         "Volcanic Essence",
         "Darkon Insignia",
         "Dage the Evil Insignia",
-        
-
         //Required Items:
         "The First Speaker Silenced",
         "Scroll of Life Steal",
         "Scroll of Enrage",
-        "Potent Malevolence Elixir"
+        "Potent Malevolence Elixir",
     };
-
-
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraPrep";
 
     public List<IOption> Options = new()
     {
-       CoreBots.Instance.SkipOptions,
-       
+        CoreBots.Instance.SkipOptions,
         // Player options
         new Option<string>("Player1", "Player 1 name", "Username of Player 1", "Player1"),
         new Option<string>("Player2", "Player 2 name", "Username of Player 2", "Player2"),
         new Option<string>("Player3", "Player 3 name", "Username of Player 3", "Player3"),
         new Option<string>("Player4", "Player 4 name", "Username of Player 4", "Player4"),
-
         // Weapon and enhancement options
         new Option<string>("Dauntless", "Dauntless Weapon", "Weapon for Dauntless", ""),
         new Option<string>("Valiance", "Valiance Weapon", "Weapon for Valiance", ""),
-        new Option<string>("Arcanas_Concerto", "Arcanas Concerto Weapon", "Weapon for Arcanas Concerto", ""),
+        new Option<string>(
+            "Arcanas_Concerto",
+            "Arcanas Concerto Weapon",
+            "Weapon for Arcanas Concerto",
+            ""
+        ),
         new Option<string>("Awe_Blast", "Awe Blast Weapon", "Weapon for Awe Blast", ""),
         new Option<string>("Praxis", "Praxis Weapon", "Weapon for Praxis", ""),
         new Option<string>("Ravenous", "Ravenous Weapon", "Weapon for Ravenous", ""),
         new Option<string>("Elysium", "Elysium Weapon", "Weapon for Elysium", ""),
         new Option<string>("Lacerate", "Lacerate Weapon", "Weapon for Lacerate", ""),
         new Option<string>("HealthVamp", "HealthVamp Weapon", "Weapon for HealthVamp", ""),
-
         // Helm options
         new Option<string>("Wizard", "Wizard Helm", "Helm for Wizard", ""),
         new Option<string>("Luck", "Luck Helm", "Helm for Luck", ""),
         new Option<string>("Forge", "Forge Helm", "Helm for Forge", ""),
         new Option<string>("Healer", "Healer Helm", "Helm for Healer", ""),
-
         // Cape options
         new Option<string>("Absolution", "Absolution Cape", "Cape for Absolution", ""),
         new Option<string>("Avarice", "Avarice Cape", "Cape for Avarice", ""),
@@ -215,7 +252,6 @@ public class InsertNameHeresUltraPrep
         new Option<string>("Vainglory", "Vainglory Cape", "Cape for Vainglory", ""),
         new Option<string>("Lament", "Lament Cape", "Cape for Lament", ""),
     };
-
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -230,7 +266,9 @@ public class InsertNameHeresUltraPrep
     public void Example()
     {
         #region  Ignore this
-        Core.Logger("This script is made to help you prep for InsertNamehere's \"ULTRAS - INSERTNAMEHERE.gbot\" on `Grim Li`. First run and fill this script out, once its finished, you can Access your item (for easy copy paste) in `Documents > Skua > options > UltraPrep`, open that and u can simply copy paste names of items. Set your safe pot to: `Potent Malevolence Elixir` as its what this script grabs.");
+        Core.Logger(
+            "This script is made to help you prep for InsertNamehere's \"ULTRAS - INSERTNAMEHERE.gbot\" on `Grim Li`. First run and fill this script out, once its finished, you can Access your item (for easy copy paste) in `Documents > Skua > options > UltraPrep`, open that and u can simply copy paste names of items. Set your safe pot to: `Potent Malevolence Elixir` as its what this script grabs."
+        );
 
         // Stories
         Core.Logger("Story prep for the ultras");
@@ -241,10 +279,10 @@ public class InsertNameHeresUltraPrep
 
         // Insert more stories when you care todo so.
 
-
-
         //prepare inventory
-        Core.Logger("Preparing Inventory!! (insignias will be kept in bank, as they will be auto-added by the quest.)");
+        Core.Logger(
+            "Preparing Inventory!! (insignias will be kept in bank, as they will be auto-added by the quest.)"
+        );
 
         //bank insigs upto, but not including the required items.
         Core.ToBank(UltraItems[..14]);
@@ -340,24 +378,66 @@ public class InsertNameHeresUltraPrep
         // Quest IDs and Enhancement Names
         int[] questIDs =
         {
-            2937, 8738, 8739, 8740, 8741, 8742, 8743, 8744, 8745, 8758,
-            8821, 8820, 8822, 8823, 8824, 8825, 8828, 8827, 8826, 9172,
-            9171, 9560
+            2937,
+            8738,
+            8739,
+            8740,
+            8741,
+            8742,
+            8743,
+            8744,
+            8745,
+            8758,
+            8821,
+            8820,
+            8822,
+            8823,
+            8824,
+            8825,
+            8828,
+            8827,
+            8826,
+            9172,
+            9171,
+            9560,
         };
 
         string[] enhancementNames =
-            {
-            "Health Vamp/AweBlast", "ForgeWeapon", "Lacerate", "Smite", "Valiance", "ArcanasConcerto",
-            "Absolution", "Vainglory", "Avarice", "ForgeCape", "Elysium", "Acheron[P2W]",
-            "Penitence", "Lament", "Vim", "Examen", "ForgeHelm", "Pneuma", "Anima",
-            "Dauntless", "Praxis", "Ravenous"
-            };
+        {
+            "Health Vamp/AweBlast",
+            "ForgeWeapon",
+            "Lacerate",
+            "Smite",
+            "Valiance",
+            "ArcanasConcerto",
+            "Absolution",
+            "Vainglory",
+            "Avarice",
+            "ForgeCape",
+            "Elysium",
+            "Acheron[P2W]",
+            "Penitence",
+            "Lament",
+            "Vim",
+            "Examen",
+            "ForgeHelm",
+            "Pneuma",
+            "Anima",
+            "Dauntless",
+            "Praxis",
+            "Ravenous",
+        };
 
         // List to store missing enhancements
         List<string> missingEnhancements = new();
 
         // Display quest completion status and track missing enhancements
-        foreach (var (questID, enhancementName) in questIDs.Zip(enhancementNames, (q, n) => (questID: q, enhancementName: n)))
+        foreach (
+            var (questID, enhancementName) in questIDs.Zip(
+                enhancementNames,
+                (q, n) => (questID: q, enhancementName: n)
+            )
+        )
         {
             string completionStatus = Core.isCompletedBefore(questID) ? "✅" : "❌";
             Core.Logger($"{enhancementName} - {completionStatus}");
@@ -371,33 +451,32 @@ public class InsertNameHeresUltraPrep
 
         // Dictionary to map enhancement names to their respective methods
         var enhancementActions = new Dictionary<string, Action>
-            {
-                // AweBlast & Health Vamp:
-                { "Awe Enhancments", Farm.UnlockBoA },
-
-                // Forge:
-                { "ForgeWeapon", UnlockForgeEnhancements.ForgeWeaponEnhancement },
-                { "Lacerate", UnlockForgeEnhancements.Lacerate },
-                { "Smite", UnlockForgeEnhancements.Smite },
-                { "Valiance", UnlockForgeEnhancements.HerosValiance },
-                { "ArcanasConcerto", UnlockForgeEnhancements.ArcanasConcerto },
-                { "Absolution", UnlockForgeEnhancements.Absolution },
-                { "Vainglory", UnlockForgeEnhancements.Vainglory },
-                { "Avarice", UnlockForgeEnhancements.Avarice },
-                { "ForgeCape", UnlockForgeEnhancements.ForgeCapeEnhancement },
-                { "Elysium", UnlockForgeEnhancements.Elysium },
-                { "Acheron", UnlockForgeEnhancements.Acheron },
-                { "Penitence", UnlockForgeEnhancements.Penitence },
-                { "Lament", UnlockForgeEnhancements.Lament },
-                { "Vim", UnlockForgeEnhancements.Vim },
-                { "Examen", UnlockForgeEnhancements.Examen },
-                { "ForgeHelm", UnlockForgeEnhancements.ForgeHelmEnhancement },
-                { "Pneuma", UnlockForgeEnhancements.Pneuma },
-                { "Anima", UnlockForgeEnhancements.Anima },
-                { "Dauntless", UnlockForgeEnhancements.DauntLess },
-                { "Praxis", UnlockForgeEnhancements.Praxis },
-                { "Ravenous", UnlockForgeEnhancements.Ravenous }
-            };
+        {
+            // AweBlast & Health Vamp:
+            { "Awe Enhancments", Farm.UnlockBoA },
+            // Forge:
+            { "ForgeWeapon", UnlockForgeEnhancements.ForgeWeaponEnhancement },
+            { "Lacerate", UnlockForgeEnhancements.Lacerate },
+            { "Smite", UnlockForgeEnhancements.Smite },
+            { "Valiance", UnlockForgeEnhancements.HerosValiance },
+            { "ArcanasConcerto", UnlockForgeEnhancements.ArcanasConcerto },
+            { "Absolution", UnlockForgeEnhancements.Absolution },
+            { "Vainglory", UnlockForgeEnhancements.Vainglory },
+            { "Avarice", UnlockForgeEnhancements.Avarice },
+            { "ForgeCape", UnlockForgeEnhancements.ForgeCapeEnhancement },
+            { "Elysium", UnlockForgeEnhancements.Elysium },
+            { "Acheron", UnlockForgeEnhancements.Acheron },
+            { "Penitence", UnlockForgeEnhancements.Penitence },
+            { "Lament", UnlockForgeEnhancements.Lament },
+            { "Vim", UnlockForgeEnhancements.Vim },
+            { "Examen", UnlockForgeEnhancements.Examen },
+            { "ForgeHelm", UnlockForgeEnhancements.ForgeHelmEnhancement },
+            { "Pneuma", UnlockForgeEnhancements.Pneuma },
+            { "Anima", UnlockForgeEnhancements.Anima },
+            { "Dauntless", UnlockForgeEnhancements.DauntLess },
+            { "Praxis", UnlockForgeEnhancements.Praxis },
+            { "Ravenous", UnlockForgeEnhancements.Ravenous },
+        };
 
         // Handle each missing enhancement using the dictionary
         foreach (var missingEnhancement in missingEnhancements)
@@ -426,38 +505,120 @@ public class InsertNameHeresUltraPrep
 
         #region  Potions & Scrolls
         // Buy potions and scrolls
-        PotionBuyer.INeedYourStrongestPotions(new[] { "Potent Malevolence Elixir" }, new bool[] { true }, 300, true, true);
+        PotionBuyer.INeedYourStrongestPotions(
+            new[] { "Potent Malevolence Elixir" },
+            new bool[] { true },
+            300,
+            true,
+            true
+        );
         Scroll.BuyScroll(Scrolls.Enrage, 1000);
         if (!Core.CheckInventory("Scroll of Life Steal", 99))
-            Adv.BuyItem("terminatemple", 2328, "Scroll of Life Steal", 99 - Bot.Inventory.GetQuantity("Scroll of Life Steal"));
+            Adv.BuyItem(
+                "terminatemple",
+                2328,
+                "Scroll of Life Steal",
+                99 - Bot.Inventory.GetQuantity("Scroll of Life Steal")
+            );
         #endregion  Potions & Scrolls
     }
 
     void DoEnhs()
     {
         // Wspecial x8 (x9 with Hvamp)
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Dauntless")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Valiance")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Valiance);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Arcanas_Concerto")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Arcanas_Concerto);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Awe_Blast")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Awe_Blast);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Praxis")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Praxis);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Ravenous")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Elysium")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Elysium);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Lacerate")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Lacerate);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("HealthVamp")!, EnhancementType.Lucky, wSpecial: WeaponSpecial.Health_Vamp);
-
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Dauntless")!,
+            EnhancementType.Lucky,
+            wSpecial: WeaponSpecial.Dauntless
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Valiance")!,
+            EnhancementType.Lucky,
+            wSpecial: WeaponSpecial.Valiance
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Arcanas_Concerto")!,
+            EnhancementType.Lucky,
+            wSpecial: WeaponSpecial.Arcanas_Concerto
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Awe_Blast")!,
+            EnhancementType.Lucky,
+            wSpecial: WeaponSpecial.Awe_Blast
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Praxis")!,
+            EnhancementType.Lucky,
+            wSpecial: WeaponSpecial.Praxis
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Ravenous")!,
+            EnhancementType.Lucky,
+            wSpecial: WeaponSpecial.Ravenous
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Elysium")!,
+            EnhancementType.Lucky,
+            wSpecial: WeaponSpecial.Elysium
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Lacerate")!,
+            EnhancementType.Lucky,
+            wSpecial: WeaponSpecial.Lacerate
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("HealthVamp")!,
+            EnhancementType.Lucky,
+            wSpecial: WeaponSpecial.Health_Vamp
+        );
 
         // Hspecial x3
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Wizard")!, EnhancementType.Wizard, hSpecial: HelmSpecial.None);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Luck")!, EnhancementType.Lucky, hSpecial: HelmSpecial.None);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Forge")!, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Healer")!, EnhancementType.Healer, hSpecial: HelmSpecial.None);
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Wizard")!,
+            EnhancementType.Wizard,
+            hSpecial: HelmSpecial.None
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Luck")!,
+            EnhancementType.Lucky,
+            hSpecial: HelmSpecial.None
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Forge")!,
+            EnhancementType.Lucky,
+            hSpecial: HelmSpecial.Forge
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Healer")!,
+            EnhancementType.Healer,
+            hSpecial: HelmSpecial.None
+        );
 
         // Cspecial x5
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Absolution")!, EnhancementType.Lucky, cSpecial: CapeSpecial.Absolution);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Avarice")!, EnhancementType.Lucky, cSpecial: CapeSpecial.Avarice);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Penitence")!, EnhancementType.Lucky, cSpecial: CapeSpecial.Penitence);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Vainglory")!, EnhancementType.Lucky, cSpecial: CapeSpecial.Vainglory);
-        Adv.EnhanceItem(Bot.Config!.Get<string>("Lament")!, EnhancementType.Lucky, cSpecial: CapeSpecial.Lament);
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Absolution")!,
+            EnhancementType.Lucky,
+            cSpecial: CapeSpecial.Absolution
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Avarice")!,
+            EnhancementType.Lucky,
+            cSpecial: CapeSpecial.Avarice
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Penitence")!,
+            EnhancementType.Lucky,
+            cSpecial: CapeSpecial.Penitence
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Vainglory")!,
+            EnhancementType.Lucky,
+            cSpecial: CapeSpecial.Vainglory
+        );
+        Adv.EnhanceItem(
+            Bot.Config!.Get<string>("Lament")!,
+            EnhancementType.Lucky,
+            cSpecial: CapeSpecial.Lament
+        );
     }
 }

@@ -11,7 +11,11 @@ public class CoreAstravia
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -55,7 +59,14 @@ public class CoreAstravia
         if (!Story.QuestProgression(7770))
         {
             Core.EnsureAccept(7770);
-            Core.KillMonster("eridani", "Enter", "Spawn", "Maggot-Like Creature", "Dress Scraps", 5);
+            Core.KillMonster(
+                "eridani",
+                "Enter",
+                "Spawn",
+                "Maggot-Like Creature",
+                "Dress Scraps",
+                5
+            );
             Core.EnsureComplete(7770);
         }
 
@@ -63,7 +74,14 @@ public class CoreAstravia
         if (!Story.QuestProgression(7771))
         {
             Core.EnsureAccept(7771);
-            Core.KillMonster("eridani", "r10", "Right", "Rat-Like Creature", "Rats Exterminated", 5);
+            Core.KillMonster(
+                "eridani",
+                "r10",
+                "Right",
+                "Rat-Like Creature",
+                "Rats Exterminated",
+                5
+            );
             Core.EnsureComplete(7771);
         }
 
@@ -201,7 +219,6 @@ public class CoreAstravia
             Story.MapItemQuest(8248, "astraviacastle", 8891, 6);
         }
 
-
         //Euterpe, the Spiteful
         Story.MapItemQuest(8249, "astraviacastle", 8892, 6);
         Story.KillQuest(8249, "astraviacastle", "Creature 20");
@@ -268,7 +285,6 @@ public class CoreAstravia
             Core.KillMonster("astraviajudge", "r4", "Left", "Juror", "Jurors Repelled", 9);
             Core.EnsureComplete(8389);
         }
-
 
         //Kalasutra
         Story.MapItemQuest(8390, "astraviajudge", 9276);
@@ -450,7 +466,11 @@ public class CoreAstravia
         Story.KillQuest(8640, "FirstObservatory", "Empress’ Finger");
 
         //Taurus Gugalanna
-        Story.KillQuest(8641, "FirstObservatory", new[] { "Ancient Creature", "Ancient Turret", "Empress’ Finger" });
+        Story.KillQuest(
+            8641,
+            "FirstObservatory",
+            new[] { "Ancient Creature", "Ancient Turret", "Empress’ Finger" }
+        );
     }
 
     public void GenesisGarden()

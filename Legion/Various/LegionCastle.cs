@@ -16,8 +16,18 @@ public class GetLegionCastle
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }    private static CoreDailies _Daily;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreDailies _Daily;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -27,6 +37,7 @@ public class GetLegionCastle
 
         Core.SetOptions(false);
     }
+
     public void AllYourBaseAreBelongToUs()
     {
         if (Core.CheckInventory("Legion Castle"))

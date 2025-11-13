@@ -14,11 +14,33 @@ public class LegionExercise4
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreLegion Legion { get => _Legion ??= new CoreLegion(); set => _Legion = value; }    private static CoreLegion _Legion;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
-    private string[] Rewards = { "Corrupted Dragon Slayer", "Judgement Scythe", "PainSaw of Eidolon", "Soul Eater Advanced", "Legion Token" };
+    private string[] Rewards =
+    {
+        "Corrupted Dragon Slayer",
+        "Judgement Scythe",
+        "PainSaw of Eidolon",
+        "Soul Eater Advanced",
+        "Legion Token",
+    };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -38,7 +60,9 @@ public class LegionExercise4
         Legion.JoinLegion();
         Core.BuyItem("underworld", 216, "Undead Champion");
 
-        Core.Logger("Disclaimer: Percentages are randomized, just made purely for fun. i cba making it an actualy %age");
+        Core.Logger(
+            "Disclaimer: Percentages are randomized, just made purely for fun. i cba making it an actualy %age"
+        );
 
         int Dice = Bot.Random.Next(1, 101);
         //-------------------------------------------------------------------------------------------------------
@@ -46,9 +70,22 @@ public class LegionExercise4
         int i = 1;
         var displayPercentage = $"{(decimal)Dice / 100:P}";
 
-        Core.Logger($"Potato Prediction Inc. Decided: {displayPercentage} is The Chance for Desired Rewards.");
+        Core.Logger(
+            $"Potato Prediction Inc. Decided: {displayPercentage} is The Chance for Desired Rewards."
+        );
 
-        while (!Bot.ShouldExit && !Core.CheckInventory(new[] { "Corrupted Dragon Slayer", "Judgement Scythe", "PainSaw of Eidolon", "Soul Eater Advanced" }))
+        while (
+            !Bot.ShouldExit
+            && !Core.CheckInventory(
+                new[]
+                {
+                    "Corrupted Dragon Slayer",
+                    "Judgement Scythe",
+                    "PainSaw of Eidolon",
+                    "Soul Eater Advanced",
+                }
+            )
+        )
         {
             Core.EnsureAccept(824);
             Core.EquipClass(ClassType.Farm);
@@ -69,5 +106,4 @@ public class LegionExercise4
 
         Core.ToBank(Rewards);
     }
-
 }

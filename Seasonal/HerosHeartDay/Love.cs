@@ -11,7 +11,11 @@ public class Love
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -26,7 +30,7 @@ public class Love
     {
         if (Core.isCompletedBefore(513))
             return;
-            
+
         if (!Core.isSeasonalMapActive("love"))
             return;
 
@@ -48,7 +52,7 @@ public class Love
         Story.KillQuest(510, "citadel", "Inquisitor Guard");
 
         // Imp Ink (511)
-            Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
+        Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
         Story.KillQuest(511, "mobius", "Slugfit");
 
         // Heart Shaped Scale (512)

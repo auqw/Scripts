@@ -16,27 +16,45 @@ public class YguasuFallsMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static YguasuFalls YguasuFalls { get => _YguasuFalls ??= new YguasuFalls(); set => _YguasuFalls = value; }
+    private static YguasuFalls YguasuFalls
+    {
+        get => _YguasuFalls ??= new YguasuFalls();
+        set => _YguasuFalls = value;
+    }
     private static YguasuFalls _YguasuFalls;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Lovely Silk", "Bolsa da Mãe D'água", "Espelho da Mãe D'água" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Lovely Silk", "Bolsa da Mãe D'água", "Espelho da Mãe D'água" }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -60,7 +78,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -71,9 +91,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Lovely Silk":
                     Core.FarmingLogger(req.Name, quant);
@@ -81,8 +106,24 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster("yguasu", "r3", "Left", "*", "Giggling Mask", 10, log: false);
-                        Core.KillMonster("yguasu", "r4", "Left", "*", "Wolfman Talisman", 10, log: false);
+                        Core.KillMonster(
+                            "yguasu",
+                            "r3",
+                            "Left",
+                            "*",
+                            "Giggling Mask",
+                            10,
+                            log: false
+                        );
+                        Core.KillMonster(
+                            "yguasu",
+                            "r4",
+                            "Left",
+                            "*",
+                            "Wolfman Talisman",
+                            10,
+                            log: false
+                        );
 
                         Core.EquipClass(ClassType.Solo);
                         Core.KillMonster("yguasu", "r5", "Left", "*", "M'Boi's Throat", log: false);
@@ -102,10 +143,13 @@ private static CoreAdvanced _sAdv;
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuestChoose(9610, 83981,
-                        ("canalshore", "Trapped Snack", ClassType.Farm),
-                        ("cursedshop", "Ghost Vase", ClassType.Farm),
-                        ("terradefesta", "Baron Sunday", ClassType.Solo));
+                        Core.HuntMonsterQuestChoose(
+                            9610,
+                            83981,
+                            ("canalshore", "Trapped Snack", ClassType.Farm),
+                            ("cursedshop", "Ghost Vase", ClassType.Farm),
+                            ("terradefesta", "Baron Sunday", ClassType.Solo)
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -115,21 +159,101 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("83970", "Vestes da Rainha das Ondas", "Mode: [select] only\nShould the bot buy \"Vestes da Rainha das Ondas\" ?", false),
-        new Option<bool>("83971", "Rainha das Ondas Morph", "Mode: [select] only\nShould the bot buy \"Rainha das Ondas Morph\" ?", false),
-        new Option<bool>("83972", "Turbante das Ondas Visage", "Mode: [select] only\nShould the bot buy \"Turbante das Ondas Visage\" ?", false),
-        new Option<bool>("83973", "Rainha das Ondas Hair", "Mode: [select] only\nShould the bot buy \"Rainha das Ondas Hair\" ?", false),
-        new Option<bool>("83974", "Turbante das Ondas", "Mode: [select] only\nShould the bot buy \"Turbante das Ondas\" ?", false),
-        new Option<bool>("83976", "Espírito da Mãe d'água", "Mode: [select] only\nShould the bot buy \"Espírito da Mãe d'água\" ?", false),
-        new Option<bool>("83979", "Leque da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Leque da Mãe D'água\" ?", false),
-        new Option<bool>("83980", "Leques da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Leques da Mãe D'água\" ?", false),
-        new Option<bool>("83984", "Vestes Encantadas da Rainha das Ondas", "Mode: [select] only\nShould the bot buy \"Vestes Encantadas da Rainha das Ondas\" ?", false),
-        new Option<bool>("83985", "Turbante Ecantado das Ondas Visage", "Mode: [select] only\nShould the bot buy \"Turbante Ecantado das Ondas Visage\" ?", false),
-        new Option<bool>("83986", "Turbante Ecantado das Ondas", "Mode: [select] only\nShould the bot buy \"Turbante Ecantado das Ondas\" ?", false),
-        new Option<bool>("83987", "Bolsa Ecantado da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Bolsa Ecantado da Mãe D'água\" ?", false),
-        new Option<bool>("83988", "Bolsa Ecantado da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Bolsa Ecantado da Mãe D'água\" ?", false),
-        new Option<bool>("83989", "Leque Ecantado da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Leque Ecantado da Mãe D'água\" ?", false),
-        new Option<bool>("83990", "Leques Ecantado da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Leques Ecantado da Mãe D'água\" ?", false),
-        new Option<bool>("83991", "Espelho Ecantado da Mãe D'água", "Mode: [select] only\nShould the bot buy \"Espelho Ecantado da Mãe D'água\" ?", false),
+        new Option<bool>(
+            "83970",
+            "Vestes da Rainha das Ondas",
+            "Mode: [select] only\nShould the bot buy \"Vestes da Rainha das Ondas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83971",
+            "Rainha das Ondas Morph",
+            "Mode: [select] only\nShould the bot buy \"Rainha das Ondas Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83972",
+            "Turbante das Ondas Visage",
+            "Mode: [select] only\nShould the bot buy \"Turbante das Ondas Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83973",
+            "Rainha das Ondas Hair",
+            "Mode: [select] only\nShould the bot buy \"Rainha das Ondas Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83974",
+            "Turbante das Ondas",
+            "Mode: [select] only\nShould the bot buy \"Turbante das Ondas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83976",
+            "Espírito da Mãe d'água",
+            "Mode: [select] only\nShould the bot buy \"Espírito da Mãe d'água\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83979",
+            "Leque da Mãe D'água",
+            "Mode: [select] only\nShould the bot buy \"Leque da Mãe D'água\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83980",
+            "Leques da Mãe D'água",
+            "Mode: [select] only\nShould the bot buy \"Leques da Mãe D'água\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83984",
+            "Vestes Encantadas da Rainha das Ondas",
+            "Mode: [select] only\nShould the bot buy \"Vestes Encantadas da Rainha das Ondas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83985",
+            "Turbante Ecantado das Ondas Visage",
+            "Mode: [select] only\nShould the bot buy \"Turbante Ecantado das Ondas Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83986",
+            "Turbante Ecantado das Ondas",
+            "Mode: [select] only\nShould the bot buy \"Turbante Ecantado das Ondas\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83987",
+            "Bolsa Ecantado da Mãe D'água",
+            "Mode: [select] only\nShould the bot buy \"Bolsa Ecantado da Mãe D'água\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83988",
+            "Bolsa Ecantado da Mãe D'água",
+            "Mode: [select] only\nShould the bot buy \"Bolsa Ecantado da Mãe D'água\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83989",
+            "Leque Ecantado da Mãe D'água",
+            "Mode: [select] only\nShould the bot buy \"Leque Ecantado da Mãe D'água\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83990",
+            "Leques Ecantado da Mãe D'água",
+            "Mode: [select] only\nShould the bot buy \"Leques Ecantado da Mãe D'água\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83991",
+            "Espelho Ecantado da Mãe D'água",
+            "Mode: [select] only\nShould the bot buy \"Espelho Ecantado da Mãe D'água\" ?",
+            false
+        ),
     };
 }

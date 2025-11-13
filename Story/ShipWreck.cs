@@ -11,21 +11,36 @@ public class ShipWreck
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Golden Scale", "Crystal Fragment", "Powder Flask",
-                                               "Broken Anti-Au Crystal", "Flagon of Water", "Old Weapon",
-                                               "Shell", "Crystallized Crowbar", "Trapdoor Key",
-                                               "What is THAT?!", "Lobthulu Claw" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Golden Scale",
+                "Crystal Fragment",
+                "Powder Flask",
+                "Broken Anti-Au Crystal",
+                "Flagon of Water",
+                "Old Weapon",
+                "Shell",
+                "Crystallized Crowbar",
+                "Trapdoor Key",
+                "What is THAT?!",
+                "Lobthulu Claw",
+            }
+        );
         Core.SetOptions();
 
         StoryLine();
 
-
         Core.SetOptions(false);
-
     }
 
     public void StoryLine()
@@ -33,7 +48,20 @@ public class ShipWreck
         if (Core.CheckInventory("Lobthulu Claw"))
             return;
 
-        Story.LegacyQuestManager(QuestLogic, 4418, 4419, 4420, 4421, 4422, 4423, 4424, 4425, 4426, 4427, 4428);
+        Story.LegacyQuestManager(
+            QuestLogic,
+            4418,
+            4419,
+            4420,
+            4421,
+            4422,
+            4423,
+            4424,
+            4425,
+            4426,
+            4427,
+            4428
+        );
 
         void QuestLogic()
         {
@@ -45,7 +73,12 @@ public class ShipWreck
 
                 case 4419: // Clearing the Cargo hold 4419
                     Core.HuntMonster("shipwreck", "Cursed Pirate", "Pirate Interrogated", 4);
-                    Core.HuntMonster("shipwreck", "Gilded Crystal Undead", "Captured Crystal Crew", 8);
+                    Core.HuntMonster(
+                        "shipwreck",
+                        "Gilded Crystal Undead",
+                        "Captured Crystal Crew",
+                        8
+                    );
                     break;
 
                 case 4420: // Au-Dacity to Attack 4420
@@ -65,7 +98,12 @@ public class ShipWreck
                     break;
 
                 case 4424: // Taking Sides 4424
-                    Core.HuntMonster("shipwreck", "Gilded Merdraconian", "Powerfully Persuaded Merdraconian", 11);
+                    Core.HuntMonster(
+                        "shipwreck",
+                        "Gilded Merdraconian",
+                        "Powerfully Persuaded Merdraconian",
+                        11
+                    );
                     break;
 
                 case 4425: // Crystallized Crew 4425
@@ -86,14 +124,29 @@ public class ShipWreck
             }
         }
 
-        Core.Unbank("Golden Scale", "Crystal Fragment", "Powder Flask",
-                            "Broken Anti-Au Crystal", "Flagon of Water", "Old Weapon",
-                            "Shell", "Crystallized Crowbar", "Trapdoor Key",
-                            "What is THAT?!"); // didn't add the last token to it
-        Core.TrashCan("Golden Scale", "Crystal Fragment", "Powder Flask",
-                                           "Broken Anti-Au Crystal", "Flagon of Water", "Old Weapon",
-                                           "Shell", "Crystallized Crowbar", "Trapdoor Key",
-                                           "What is THAT?!");
-
+        Core.Unbank(
+            "Golden Scale",
+            "Crystal Fragment",
+            "Powder Flask",
+            "Broken Anti-Au Crystal",
+            "Flagon of Water",
+            "Old Weapon",
+            "Shell",
+            "Crystallized Crowbar",
+            "Trapdoor Key",
+            "What is THAT?!"
+        ); // didn't add the last token to it
+        Core.TrashCan(
+            "Golden Scale",
+            "Crystal Fragment",
+            "Powder Flask",
+            "Broken Anti-Au Crystal",
+            "Flagon of Water",
+            "Old Weapon",
+            "Shell",
+            "Crystallized Crowbar",
+            "Trapdoor Key",
+            "What is THAT?!"
+        );
     }
 }

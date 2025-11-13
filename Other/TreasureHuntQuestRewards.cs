@@ -15,7 +15,11 @@ public class TreasureHuntQuest
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static DracoCon DR { get => _DR ??= new DracoCon(); set => _DR = value; }
+    private static DracoCon DR
+    {
+        get => _DR ??= new DracoCon();
+        set => _DR = value;
+    }
     private static DracoCon _DR;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -39,7 +43,9 @@ public class TreasureHuntQuest
         if (CBoA && Core.CheckInventory("Spiked Slayer Mace"))
             return;
 
-        List<ItemBase> RewardOptions = CBoA ? Core.EnsureLoad(questID).Rewards.Where(x => x.Name == "Spiked Slayer Mace").ToList() : Core.EnsureLoad(questID).Rewards;
+        List<ItemBase> RewardOptions = CBoA
+            ? Core.EnsureLoad(questID).Rewards.Where(x => x.Name == "Spiked Slayer Mace").ToList()
+            : Core.EnsureLoad(questID).Rewards;
 
         foreach (ItemBase item in RewardOptions)
             Bot.Drops.Add(item.Name);

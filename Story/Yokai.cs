@@ -14,10 +14,30 @@ public class YokaiQuests
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }    private static Core13LoC _LOC;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static Core13LoC LOC
+    {
+        get => _LOC ??= new Core13LoC();
+        set => _LOC = value;
+    }
+    private static Core13LoC _LOC;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +54,6 @@ public class YokaiQuests
         ShinrinGrove();
         Shadowfortress();
     }
-
 
     public void ShogunWar()
     {
@@ -102,7 +121,6 @@ public class YokaiQuests
 
         Story.PreLoad(this);
 
-
         Core.Logger("ShinrinGrove Quest line");
 
         Core.EquipClass(ClassType.Farm);
@@ -155,7 +173,7 @@ public class YokaiQuests
         // Take the Shinrin Do 6471
         Story.MapItemQuest(6471, "greenshell", 5967);
 
-        // Battle for the Shinrin Do 6472  
+        // Battle for the Shinrin Do 6472
         if (!Story.QuestProgression(6472))
         {
             Core.EquipClass(ClassType.Solo);
@@ -181,7 +199,6 @@ public class YokaiQuests
             return;
 
         Story.PreLoad(this);
-
 
         Core.Logger("Shadowfortress Quest line");
 
@@ -217,10 +234,8 @@ public class YokaiQuests
         // Get Some Fur 6479
         Story.KillQuest(6479, "heiwavalley", "Abumi Guchi");
 
-
         // Howl-ing For You! 6480
         Story.KillQuest(6480, "heiwavalley", "Inugami");
-
 
         // Eyes on the Prize 6481
         if (!Story.QuestProgression(6481))
@@ -230,11 +245,9 @@ public class YokaiQuests
             Story.MapItemQuest(6481, "heiwavalley", 5970, 8);
         }
 
-
         // Reveal the Trail 6482
         Story.MapItemQuest(6482, "heiwavalley", 5971);
         Story.MapItemQuest(6482, "heiwavalley", 5972, 8);
-
 
         // Defeat the Onryo 6483
         if (!Story.QuestProgression(6483))
@@ -284,7 +297,7 @@ public class YokaiQuests
             Story.MapItemQuest(6493, "shadowfortress", 5977);
         }
 
-        // Defeat Jaaku! 6494        
+        // Defeat Jaaku! 6494
         if (!Story.QuestProgression(6494))
         {
             Core.EquipClass(ClassType.Solo);

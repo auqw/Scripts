@@ -17,17 +17,40 @@ public class ChaosAvengerClass
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }    private static Core13LoC _LOC;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static Core13LoC LOC
+    {
+        get => _LOC ??= new Core13LoC();
+        set => _LOC = value;
+    }
+    private static Core13LoC _LOC;
 
-    string[] CavItems = new[]{"Fragment of the Dragon",
-                                            "Fragment of the Queen",
-                                            "Fragments of the Lords B",
-                                            "Fragments of the Lords A",
-                                            "Fragment of Mount Doomskull",
-                                            "Parallel Chaos Amulet"};
+    string[] CavItems = new[]
+    {
+        "Fragment of the Dragon",
+        "Fragment of the Queen",
+        "Fragments of the Lords B",
+        "Fragments of the Lords A",
+        "Fragment of Mount Doomskull",
+        "Parallel Chaos Amulet",
+    };
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -43,7 +66,10 @@ public class ChaosAvengerClass
     public void GetClass(bool rankup = true)
     {
         //Progress Check
-        if (Core.CheckInventory("Empowered Chaos Avenger's GreatSword") || Core.CheckInventory("Chaos Avenger"))
+        if (
+            Core.CheckInventory("Empowered Chaos Avenger's GreatSword")
+            || Core.CheckInventory("Chaos Avenger")
+        )
         {
             if (rankup)
                 Adv.RankUpClass("Chaos Avenger");
@@ -101,7 +127,14 @@ public class ChaosAvengerClass
 
         Monster? kys = Bot.Monsters.MapMonsters.FirstOrDefault(x => x != null && (x.MapID == 1));
         if (kys != null)
-            Core.KillMonster("chaoslord", "r2", "Left", kys.MapID == 0 ? 1 : kys.MapID, "Fragment of the Dragon", isTemp: false);
+            Core.KillMonster(
+                "chaoslord",
+                "r2",
+                "Left",
+                kys.MapID == 0 ? 1 : kys.MapID,
+                "Fragment of the Dragon",
+                isTemp: false
+            );
         else
         {
             Core.Logger("No monster found");
@@ -115,7 +148,13 @@ public class ChaosAvengerClass
             return;
 
         Core.EquipClass(ClassType.Farm);
-        Core.HuntMonster("mountdoomskull", "Chaorrupted Rogue", "Fragment of Mount Doomskull", 1300, isTemp: false);
+        Core.HuntMonster(
+            "mountdoomskull",
+            "Chaorrupted Rogue",
+            "Fragment of Mount Doomskull",
+            1300,
+            isTemp: false
+        );
     }
 
     public void FragmentsoftheLordsA()
@@ -142,7 +181,13 @@ public class ChaosAvengerClass
         Core.HuntMonster("palooza", "Discordia", "Discordia Armor", isTemp: false);
 
         //Ledgermayne (Armor)
-        Core.HuntMonster("Ledgermayne", "Ledgermayne", "Ledgermayne", isTemp: !Ledgermayne, publicRoom: Ledgermayne);
+        Core.HuntMonster(
+            "Ledgermayne",
+            "Ledgermayne",
+            "Ledgermayne",
+            isTemp: !Ledgermayne,
+            publicRoom: Ledgermayne
+        );
 
         Core.BuyItem("championdrakath", 2055, "Fragments of the Lords A");
     }
@@ -166,10 +211,20 @@ public class ChaosAvengerClass
 
         //Chaos Lionfang Armor
         Bot.Quests.UpdateQuest(2814);
-        Core.HuntMonster("stormtemple", "Chaos Lord Lionfang", "Chaos Lionfang Armor", isTemp: false);
+        Core.HuntMonster(
+            "stormtemple",
+            "Chaos Lord Lionfang",
+            "Chaos Lionfang Armor",
+            isTemp: false
+        );
 
         //Chaos Lord Alteon (Armor)
-        Core.HuntMonster("swordhavenfalls", "Chaos Lord Alteon", "Chaos Lord Alteon", isTemp: false);
+        Core.HuntMonster(
+            "swordhavenfalls",
+            "Chaos Lord Alteon",
+            "Chaos Lord Alteon",
+            isTemp: false
+        );
 
         //Xiang Chaos
         Adv.GearStore();
@@ -187,7 +242,6 @@ public class ChaosAvengerClass
         Bot.Quests.UpdateQuest(8094);
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("transformation", "Queen of Monsters", "Fragment of the Queen", 13, false);
-
     }
 
     public void CompleteandBuy()

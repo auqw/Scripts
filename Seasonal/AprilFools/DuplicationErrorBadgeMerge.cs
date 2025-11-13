@@ -16,20 +16,37 @@ public class DuplicationErrorBadgeMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static EbilArt EA { get => _EA ??= new EbilArt(); set => _EA = value; }
+    private static EbilArt EA
+    {
+        get => _EA ??= new EbilArt();
+        set => _EA = value;
+    }
     private static EbilArt _EA;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -57,7 +74,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -68,27 +87,61 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Duplication Error":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster("ebilart", "Ebil AI Blender", req.Name, quant, false, false);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("85094", "AI (Oh No!) Miko Guest 0.0", "Mode: [select] only\nShould the bot buy \"AI (Oh No!) Miko Guest 0.0\" ?", false),
-        new Option<bool>("85095", "AI (Oh No!) Miko Guest 1.0", "Mode: [select] only\nShould the bot buy \"AI (Oh No!) Miko Guest 1.0\" ?", false),
-        new Option<bool>("85096", "AI (Oh No!) Miko Guest 2.0", "Mode: [select] only\nShould the bot buy \"AI (Oh No!) Miko Guest 2.0\" ?", false),
-        new Option<bool>("85097", "AI (Oh No!) Miko Guest 3.0", "Mode: [select] only\nShould the bot buy \"AI (Oh No!) Miko Guest 3.0\" ?", false),
-        new Option<bool>("85098", "AI (Oh No!) Miko Guest 4.0", "Mode: [select] only\nShould the bot buy \"AI (Oh No!) Miko Guest 4.0\" ?", false),
-        new Option<bool>("85099", "ULTIMATE AI (Oh No!) Miko Guest", "Mode: [select] only\nShould the bot buy \"ULTIMATE AI (Oh No!) Miko Guest\" ?", false),
+        new Option<bool>(
+            "85094",
+            "AI (Oh No!) Miko Guest 0.0",
+            "Mode: [select] only\nShould the bot buy \"AI (Oh No!) Miko Guest 0.0\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85095",
+            "AI (Oh No!) Miko Guest 1.0",
+            "Mode: [select] only\nShould the bot buy \"AI (Oh No!) Miko Guest 1.0\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85096",
+            "AI (Oh No!) Miko Guest 2.0",
+            "Mode: [select] only\nShould the bot buy \"AI (Oh No!) Miko Guest 2.0\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85097",
+            "AI (Oh No!) Miko Guest 3.0",
+            "Mode: [select] only\nShould the bot buy \"AI (Oh No!) Miko Guest 3.0\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85098",
+            "AI (Oh No!) Miko Guest 4.0",
+            "Mode: [select] only\nShould the bot buy \"AI (Oh No!) Miko Guest 4.0\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85099",
+            "ULTIMATE AI (Oh No!) Miko Guest",
+            "Mode: [select] only\nShould the bot buy \"ULTIMATE AI (Oh No!) Miko Guest\" ?",
+            false
+        ),
     };
 }

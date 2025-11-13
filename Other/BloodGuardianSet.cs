@@ -12,17 +12,21 @@ public class BloodGuardianSet
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static BloodMoon BloodMoon { get => _BloodMoon ??= new BloodMoon(); set => _BloodMoon = value; }
+    private static BloodMoon BloodMoon
+    {
+        get => _BloodMoon ??= new BloodMoon();
+        set => _BloodMoon = value;
+    }
     private static BloodMoon _BloodMoon;
-
 
     string[] Set =
     {
         "Ceremonial Assistant Pet",
         "Blood Guardian Armor",
         "Blood Guardian Shag",
-        "Blood Guardian's Sword"
+        "Blood Guardian's Sword",
     };
+
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();

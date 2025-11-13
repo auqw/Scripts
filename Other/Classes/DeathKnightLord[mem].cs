@@ -16,17 +16,36 @@ public class DeathKnightLord
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    public static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    public static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    public static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    public static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    public static CoreToD ToD { get => _ToD ??= new CoreToD(); set => _ToD = value; }
+    public static CoreToD ToD
+    {
+        get => _ToD ??= new CoreToD();
+        set => _ToD = value;
+    }
     private static CoreToD _ToD;
-    public static BonecastleTowerMerge BCM { get => _BCM ??= new BonecastleTowerMerge(); set => _BCM = value; }
+    public static BonecastleTowerMerge BCM
+    {
+        get => _BCM ??= new BonecastleTowerMerge();
+        set => _BCM = value;
+    }
     private static BonecastleTowerMerge _BCM;
-    public static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    public static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -51,7 +70,9 @@ public class DeathKnightLord
         // Member check
         if (!Core.IsMember)
         {
-            Core.Logger("The DeathKnight Lord is a member-only item. You will not be able to obtain it otherwise.");
+            Core.Logger(
+                "The DeathKnight Lord is a member-only item. You will not be able to obtain it otherwise."
+            );
             return;
         }
 
@@ -59,6 +80,5 @@ public class DeathKnightLord
 
         if (rankUpClass)
             Adv.RankUpClass("DeathKnight Lord");
-
     }
 }

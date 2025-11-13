@@ -15,16 +15,30 @@ public class JuggernautItemsofNulgath
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public string OptionsStorage = "JuggernautItemsofNulgath";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<RewardsSelection>("RewardsSelection", "Select Your Quest Reward", "Select Your Quest Reward for The JuggerNaught items of Nulgath quest.", RewardsSelection.Oblivion_of_Nulgath),
+        new Option<RewardsSelection>(
+            "RewardsSelection",
+            "Select Your Quest Reward",
+            "Select Your Quest Reward for The JuggerNaught items of Nulgath quest.",
+            RewardsSelection.Oblivion_of_Nulgath
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -46,7 +60,6 @@ public class JuggernautItemsofNulgath
         var Count = 0;
         int x = 1;
 
-
         List<ItemBase> RewardOptions = Core.EnsureLoad(837).Rewards;
         List<string> RewardsList = new();
         foreach (Skua.Core.Models.Items.ItemBase Item in RewardOptions)
@@ -56,16 +69,19 @@ public class JuggernautItemsofNulgath
         ItemBase? item = rewards.Find(x => x.ID == (int)reward) ?? null;
         int defaultId = 0;
         int itemId = item?.ID ?? defaultId;
-        while (!Bot.ShouldExit &&
-                (reward == RewardsSelection.All ?
-                    !Core.CheckInventory(rewards.Select(x => x.Name).ToArray(), toInv: false) :
-                    !Core.CheckInventory(itemId, toInv: false)
-                )
-              )
+        while (
+            !Bot.ShouldExit
+            && (
+                reward == RewardsSelection.All
+                    ? !Core.CheckInventory(rewards.Select(x => x.Name).ToArray(), toInv: false)
+                    : !Core.CheckInventory(itemId, toInv: false)
+            )
+        )
         {
             if (reward == RewardsSelection.All)
                 Core.Logger($"Farming All {x++}/{Count}");
-            else Core.Logger($"... {reward} ...");
+            else
+                Core.Logger($"... {reward} ...");
 
             Nation.FarmUni13(1);
             Core.EnsureAccept(837);
@@ -79,7 +95,8 @@ public class JuggernautItemsofNulgath
 
             if (Bot.Config?.Get<RewardsSelection>("RewardsSelection") == RewardsSelection.All)
                 Core.EnsureCompleteChoose(837);
-            else Core.EnsureComplete(837, (int)reward);
+            else
+                Core.EnsureComplete(837, (int)reward);
         }
     }
 
@@ -104,7 +121,7 @@ public class JuggernautItemsofNulgath
         "Void Cowboy Morph",
         "Void Cowboy's Mask + Locks",
         "Void Cowboy's Pistol",
-        "Dual Void Cowboy Pistols"
+        "Dual Void Cowboy Pistols",
     };
 
     public enum RewardsSelection
@@ -129,6 +146,6 @@ public class JuggernautItemsofNulgath
         Void_Cowboys_Mask_Locks = 52802,
         Void_Cowboy_Pistol = 52803,
         Dual_Void_Cowboy_Pistols = 52818,
-        All
+        All,
     };
 }

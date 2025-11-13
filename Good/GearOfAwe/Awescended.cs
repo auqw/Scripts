@@ -36,37 +36,101 @@ public class Awescended
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static ArmorOfAwe AweArmor { get => _AweArmor ??= new ArmorOfAwe(); set => _AweArmor = value; }
+    private static ArmorOfAwe AweArmor
+    {
+        get => _AweArmor ??= new ArmorOfAwe();
+        set => _AweArmor = value;
+    }
     private static ArmorOfAwe _AweArmor;
-    private static HelmOfAwe Helm { get => _Helm ??= new HelmOfAwe(); set => _Helm = value; }
+    private static HelmOfAwe Helm
+    {
+        get => _Helm ??= new HelmOfAwe();
+        set => _Helm = value;
+    }
     private static HelmOfAwe _Helm;
-    private static SEP Pal { get => _Pal ??= new SEP(); set => _Pal = value; }
+    private static SEP Pal
+    {
+        get => _Pal ??= new SEP();
+        set => _Pal = value;
+    }
     private static SEP _Pal;
-    private static FandH FaH { get => _FaH ??= new FandH(); set => _FaH = value; }
+    private static FandH FaH
+    {
+        get => _FaH ??= new FandH();
+        set => _FaH = value;
+    }
     private static FandH _FaH;
-    private static SRoD SRoD { get => _SRoD ??= new SRoD(); set => _SRoD = value; }
+    private static SRoD SRoD
+    {
+        get => _SRoD ??= new SRoD();
+        set => _SRoD = value;
+    }
     private static SRoD _SRoD;
-    private static GetSDD SDD { get => _SDD ??= new GetSDD(); set => _SDD = value; }
+    private static GetSDD SDD
+    {
+        get => _SDD ??= new GetSDD();
+        set => _SDD = value;
+    }
     private static GetSDD _SDD;
-    private static DrakathArmorBot Armor { get => _Armor ??= new DrakathArmorBot(); set => _Armor = value; }
+    private static DrakathArmorBot Armor
+    {
+        get => _Armor ??= new DrakathArmorBot();
+        set => _Armor = value;
+    }
     private static DrakathArmorBot _Armor;
-    private static SepulchuresOriginalHelm Seppy { get => _Seppy ??= new SepulchuresOriginalHelm(); set => _Seppy = value; }
+    private static SepulchuresOriginalHelm Seppy
+    {
+        get => _Seppy ??= new SepulchuresOriginalHelm();
+        set => _Seppy = value;
+    }
     private static SepulchuresOriginalHelm _Seppy;
-    private static ArchDoomKnight ADK { get => _ADK ??= new ArchDoomKnight(); set => _ADK = value; }
+    private static ArchDoomKnight ADK
+    {
+        get => _ADK ??= new ArchDoomKnight();
+        set => _ADK = value;
+    }
     private static ArchDoomKnight _ADK;
-    private static J6Saga J6 { get => _J6 ??= new J6Saga(); set => _J6 = value; }
+    private static J6Saga J6
+    {
+        get => _J6 ??= new J6Saga();
+        set => _J6 = value;
+    }
     private static J6Saga _J6;
-    private static BattleUnder Under { get => _Under ??= new BattleUnder(); set => _Under = value; }
+    private static BattleUnder Under
+    {
+        get => _Under ??= new BattleUnder();
+        set => _Under = value;
+    }
     private static BattleUnder _Under;
-    private static Bamboozle Bam { get => _Bam ??= new Bamboozle(); set => _Bam = value; }
+    private static Bamboozle Bam
+    {
+        get => _Bam ??= new Bamboozle();
+        set => _Bam = value;
+    }
     private static Bamboozle _Bam;
-    private static DjinnGateStory Djinn { get => _Djinn ??= new DjinnGateStory(); set => _Djinn = value; }
+    private static DjinnGateStory Djinn
+    {
+        get => _Djinn ??= new DjinnGateStory();
+        set => _Djinn = value;
+    }
     private static DjinnGateStory _Djinn;
 
     public void ScriptMain(IScriptInterface bot)
@@ -80,7 +144,17 @@ public class Awescended
 
     public void GetAwe()
     {
-        if (Core.CheckInventory(new[] { "Awescended", "Awescended Omni Armblades", "Awescended Omni Cowl", "Awescended Omni Wings" }))
+        if (
+            Core.CheckInventory(
+                new[]
+                {
+                    "Awescended",
+                    "Awescended Omni Armblades",
+                    "Awescended Omni Cowl",
+                    "Awescended Omni Wings",
+                }
+            )
+        )
             return;
 
         Story.PreLoad(this);
@@ -102,7 +176,14 @@ public class Awescended
         if (!Story.QuestProgression(8036))
         {
             Core.EnsureAccept(8036);
-            Core.KillMonster("deathsrealm", "Frame3", "Down", "Undead Mage", "Enchanted Manuscript", 8);
+            Core.KillMonster(
+                "deathsrealm",
+                "Frame3",
+                "Down",
+                "Undead Mage",
+                "Enchanted Manuscript",
+                8
+            );
             Core.EquipCached();
 
             Core.KillMonster("citadel", "m14", "Left", "Grand Inquisitor", "Rite of Renewal");
@@ -116,7 +197,14 @@ public class Awescended
         {
             Core.EnsureAccept(8037);
             Core.Join("thunderfang", "r2", "Left");
-            Core.KillMonster("thunderfang", "r2", "Left", "Energy Elemental", "Supercharged Gem", 8);
+            Core.KillMonster(
+                "thunderfang",
+                "r2",
+                "Left",
+                "Energy Elemental",
+                "Supercharged Gem",
+                8
+            );
             Core.HuntMonster("lab", "Frank", "Lightning Capacitor", 5);
             Core.KillMonster("boxes", "Boss", "Center", "Sneeviltron", "Wooden Control Panel");
             Core.KillMonster("mqlesson", "Boss", "Left", "Dragonoid", "Dragonoid Core");
@@ -127,16 +215,34 @@ public class Awescended
         if (!Story.QuestProgression(8038))
         {
             Core.EnsureAccept(8038);
-            Core.KillMonster("yokaiwar", "Boss", "Left", "O-dokuro's Head", "O-dokuro's Tooth", isTemp: false);
+            Core.KillMonster(
+                "yokaiwar",
+                "Boss",
+                "Left",
+                "O-dokuro's Head",
+                "O-dokuro's Tooth",
+                isTemp: false
+            );
             Core.KillMonster("wardwarf", "r4", "Left", "D'wain Jonsen", "D'wain Jonsen's Stinger");
-            Core.KillMonster("mythsongwar", "War2", "Left", "*", "Music Pirate's Instrument of War", 6);
+            Core.KillMonster(
+                "mythsongwar",
+                "War2",
+                "Left",
+                "*",
+                "Music Pirate's Instrument of War",
+                6
+            );
             Bot.Quests.UpdateQuest(1170);
             Core.KillMonster("shadowfallwar", "Inside", "Right", "Noxus", "Noxus' Necromancy Robe");
             Core.EnsureComplete(8038);
         }
 
         //Which Came First, the Dragon or the Dragonoid?
-        Story.KillQuest(8039, "crashsite", new[] { "Barrier Bot", "Dwakel Warrior", "Mithril Man", "ProtoSartorium" });
+        Story.KillQuest(
+            8039,
+            "crashsite",
+            new[] { "Barrier Bot", "Dwakel Warrior", "Mithril Man", "ProtoSartorium" }
+        );
 
         //Artifact Hunting
         if (!Story.QuestProgression(8040))
@@ -144,12 +250,27 @@ public class Awescended
             Farm.Experience(50);
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(8040);
-            Adv.BoostKillMonster("ledgermayne", "Boss", "Left", "Ledgermayne", "The Supreme Arcane Staff", isTemp: false);
+            Adv.BoostKillMonster(
+                "ledgermayne",
+                "Boss",
+                "Left",
+                "Ledgermayne",
+                "The Supreme Arcane Staff",
+                isTemp: false
+            );
             Core.BuyItem("doomwood", 276, "Blinding Light of Destiny Handle");
             SRoD.ShadowReaperOfDoom();
             Farm.BladeofAweREP(10, true);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("cornelis", "Side1", "Left", "Gargoyle", "Mirror Shield Fragment", 50, false);
+            Core.KillMonster(
+                "cornelis",
+                "Side1",
+                "Left",
+                "Gargoyle",
+                "Mirror Shield Fragment",
+                50,
+                false
+            );
             Core.EnsureComplete(8040);
         }
 
@@ -161,7 +282,15 @@ public class Awescended
             if (!Core.CheckInventory("Vaden's Helm"))
             {
                 Core.EquipClass(ClassType.Solo);
-                Core.KillMonster("bonecastlec", "r25", "Bottom", "Vaden", "Vaden Helm Token", 333, false);
+                Core.KillMonster(
+                    "bonecastlec",
+                    "r25",
+                    "Bottom",
+                    "Vaden",
+                    "Vaden Helm Token",
+                    333,
+                    false
+                );
                 while (!Core.CheckInventory("Vaden's Helm"))
                 {
                     Core.BuyItem("bonecastlec", 1242, "Vaden's Helm", shopItemID: 4363);
@@ -230,7 +359,11 @@ public class Awescended
             Core.EnsureAccept(8042);
             Core.HuntMonster("ectocave", "Ektorax", "Bin Jett's Salvaged Armor Part", 50, false);
 
-            Core.Unbank($"GOLD Boost! (60 min)", "Doom GOLD Boost! (60 min)", "GOLD Boost! (20 min)");
+            Core.Unbank(
+                $"GOLD Boost! (60 min)",
+                "Doom GOLD Boost! (60 min)",
+                "GOLD Boost! (20 min)"
+            );
             Bot.Boosts.UseGoldBoost = true;
 
             Core.EnsureComplete(8042);

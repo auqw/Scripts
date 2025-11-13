@@ -18,24 +18,55 @@ public class CrownsreachDefenseMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }    private static CoreSoW _SoW;
-    private static CoreSoC SoC { get => _SoC ??= new CoreSoC(); set => _SoC = value; }    private static CoreSoC _SoC;
-    private static ShadowflameWarMedal SWM { get => _SWM ??= new ShadowflameWarMedal(); set => _SWM = value; }    private static ShadowflameWarMedal _SWM;
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
+    private static CoreSoW _SoW;
+    private static CoreSoC SoC
+    {
+        get => _SoC ??= new CoreSoC();
+        set => _SoC = value;
+    }
+    private static CoreSoC _SoC;
+    private static ShadowflameWarMedal SWM
+    {
+        get => _SWM ??= new ShadowflameWarMedal();
+        set => _SWM = value;
+    }
+    private static ShadowflameWarMedal _SWM;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -61,7 +92,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -72,9 +105,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "ShadowFlame War Medal":
                     SWM.Medals(quant);
@@ -85,20 +123,95 @@ public static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("54290", "ShadowFlame Warlock", "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock\" ?", false),
-        new Option<bool>("54292", "ShadowFlame Warlock's Hat", "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock's Hat\" ?", false),
-        new Option<bool>("54293", "ShadowFlame Warlock's Hat + Locks", "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock's Hat + Locks\" ?", false),
-        new Option<bool>("54294", "ShadowFlame Warlock's Topper", "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock's Topper\" ?", false),
-        new Option<bool>("54295", "ShadowFlame Warlock's Topper + Locks", "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock's Topper + Locks\" ?", false),
-        new Option<bool>("54300", "ShadowFlame Warlock's Scythe", "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock's Scythe\" ?", false),
-        new Option<bool>("54259", "ShadowFlame Battle Staff", "Mode: [select] only\nShould the bot buy \"ShadowFlame Battle Staff\" ?", false),
-        new Option<bool>("54261", "ShadowFlame Battle Spear", "Mode: [select] only\nShould the bot buy \"ShadowFlame Battle Spear\" ?", false),
-        new Option<bool>("54302", "Shadow Warlock Commander", "Mode: [select] only\nShould the bot buy \"Shadow Warlock Commander\" ?", false),
-        new Option<bool>("54303", "Shadow Commander's Hat", "Mode: [select] only\nShould the bot buy \"Shadow Commander's Hat\" ?", false),
-        new Option<bool>("54304", "Shadow Commander's Hat + Locks", "Mode: [select] only\nShould the bot buy \"Shadow Commander's Hat + Locks\" ?", false),
-        new Option<bool>("54305", "Shadow Commander's Skull Hat", "Mode: [select] only\nShould the bot buy \"Shadow Commander's Skull Hat\" ?", false),
-        new Option<bool>("54306", "Shadow Commander's Topper", "Mode: [select] only\nShould the bot buy \"Shadow Commander's Topper\" ?", false),
-        new Option<bool>("54307", "Shadow Commander's Topper + Locks", "Mode: [select] only\nShould the bot buy \"Shadow Commander's Topper + Locks\" ?", false),
-        new Option<bool>("54308", "Shadow Commander's Skull Topper", "Mode: [select] only\nShould the bot buy \"Shadow Commander's Skull Topper\" ?", false),
+        new Option<bool>(
+            "54290",
+            "ShadowFlame Warlock",
+            "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54292",
+            "ShadowFlame Warlock's Hat",
+            "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54293",
+            "ShadowFlame Warlock's Hat + Locks",
+            "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock's Hat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54294",
+            "ShadowFlame Warlock's Topper",
+            "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock's Topper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54295",
+            "ShadowFlame Warlock's Topper + Locks",
+            "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock's Topper + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54300",
+            "ShadowFlame Warlock's Scythe",
+            "Mode: [select] only\nShould the bot buy \"ShadowFlame Warlock's Scythe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54259",
+            "ShadowFlame Battle Staff",
+            "Mode: [select] only\nShould the bot buy \"ShadowFlame Battle Staff\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54261",
+            "ShadowFlame Battle Spear",
+            "Mode: [select] only\nShould the bot buy \"ShadowFlame Battle Spear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54302",
+            "Shadow Warlock Commander",
+            "Mode: [select] only\nShould the bot buy \"Shadow Warlock Commander\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54303",
+            "Shadow Commander's Hat",
+            "Mode: [select] only\nShould the bot buy \"Shadow Commander's Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54304",
+            "Shadow Commander's Hat + Locks",
+            "Mode: [select] only\nShould the bot buy \"Shadow Commander's Hat + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54305",
+            "Shadow Commander's Skull Hat",
+            "Mode: [select] only\nShould the bot buy \"Shadow Commander's Skull Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54306",
+            "Shadow Commander's Topper",
+            "Mode: [select] only\nShould the bot buy \"Shadow Commander's Topper\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54307",
+            "Shadow Commander's Topper + Locks",
+            "Mode: [select] only\nShould the bot buy \"Shadow Commander's Topper + Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "54308",
+            "Shadow Commander's Skull Topper",
+            "Mode: [select] only\nShould the bot buy \"Shadow Commander's Skull Topper\" ?",
+            false
+        ),
     };
 }

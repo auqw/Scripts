@@ -11,8 +11,12 @@ public class JirabinChallenge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public readonly string[] Drops =
     {
@@ -20,7 +24,7 @@ public class JirabinChallenge
         "Blood of the Void Daggers",
         "Phantasmagoric Vengeance",
         "Purified Void Blade",
-        "Purified Void Daggers"
+        "Purified Void Daggers",
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -37,7 +41,6 @@ public class JirabinChallenge
         RunedWoods();
         DetherTombs();
         VoidBattle();
-
     }
 
     public void RunedWoods()
@@ -164,7 +167,7 @@ public class JirabinChallenge
         //     Core.HuntMonster("dethertombs", "De'ther Vase", "Bottle Of Oil");
         //     Core.HuntMonster("dethertombs", "Jies", "Diamond Tooth", 6);
         //     Core.EnsureComplete(4002);
-        // } //Keep //-ed incase something is wrong here 
+        // } //Keep //-ed incase something is wrong here
 
         //Gain Entrance to the Vault 4003
         Story.MapItemQuest(4003, "dethertombs", 3134);
@@ -191,5 +194,4 @@ public class JirabinChallenge
         }
         Core.Logger($"All Drops Acquired.");
     }
-
 }

@@ -17,19 +17,36 @@ public class SnowviewMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreFrostvale Frostvale { get => _Frostvale ??= new CoreFrostvale(); set => _Frostvale = value; }    private static CoreFrostvale _Frostvale;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreFrostvale Frostvale
+    {
+        get => _Frostvale ??= new CoreFrostvale();
+        set => _Frostvale = value;
+    }
+    private static CoreFrostvale _Frostvale;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -56,7 +73,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -67,9 +86,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Fire Starting Kit":
                     Core.FarmingLogger(req.Name, quant);
@@ -79,31 +103,106 @@ private static CoreAdvanced _sAdv;
                     {
                         Core.HuntMonster("snowview", "Vaderix", "Alien Mandible", log: false);
                         Core.HuntMonster("snowview", "Tundra Steed", "Horse Hair", 7, log: false);
-                        Core.HuntMonster("snowview", "Mountain Owl", "Tinder Feathers", 7, log: false);
+                        Core.HuntMonster(
+                            "snowview",
+                            "Mountain Owl",
+                            "Tinder Feathers",
+                            7,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("74595", "Festive Sled Racer", "Mode: [select] only\nShould the bot buy \"Festive Sled Racer\" ?", false),
-        new Option<bool>("74596", "Festive Sled Racer Hat", "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Hat\" ?", false),
-        new Option<bool>("74597", "Festive Sled Racer Champion Crown", "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Champion Crown\" ?", false),
-        new Option<bool>("74598", "Festive Sled Racer Locks and Hat", "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Locks and Hat\" ?", false),
-        new Option<bool>("74599", "Festive Sled Racer Locks and Crown", "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Locks and Crown\" ?", false),
-        new Option<bool>("74600", "Festive Enamel Snowflakes", "Mode: [select] only\nShould the bot buy \"Festive Enamel Snowflakes\" ?", false),
-        new Option<bool>("74602", "Festive Sled Racer Cape", "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Cape\" ?", false),
-        new Option<bool>("74603", "Festive Sled Racer Cape and Enamel Snowflakes", "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Cape and Enamel Snowflakes\" ?", false),
-        new Option<bool>("74604", "Golden Snowflake Sickle", "Mode: [select] only\nShould the bot buy \"Golden Snowflake Sickle\" ?", false),
-        new Option<bool>("74605", "Golden Snowflake Sickles", "Mode: [select] only\nShould the bot buy \"Golden Snowflake Sickles\" ?", false),
-        new Option<bool>("74606", "Snowflake Sickle", "Mode: [select] only\nShould the bot buy \"Snowflake Sickle\" ?", false),
-        new Option<bool>("74607", "Snowflake Sickles", "Mode: [select] only\nShould the bot buy \"Snowflake Sickles\" ?", false),
-        new Option<bool>("74608", "Festive Golden Snowflake Bow", "Mode: [select] only\nShould the bot buy \"Festive Golden Snowflake Bow\" ?", false),
-        new Option<bool>("74609", "Mix n' Match Sickles", "Mode: [select] only\nShould the bot buy \"Mix n' Match Sickles\" ?", false),
+        new Option<bool>(
+            "74595",
+            "Festive Sled Racer",
+            "Mode: [select] only\nShould the bot buy \"Festive Sled Racer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74596",
+            "Festive Sled Racer Hat",
+            "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74597",
+            "Festive Sled Racer Champion Crown",
+            "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Champion Crown\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74598",
+            "Festive Sled Racer Locks and Hat",
+            "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Locks and Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74599",
+            "Festive Sled Racer Locks and Crown",
+            "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Locks and Crown\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74600",
+            "Festive Enamel Snowflakes",
+            "Mode: [select] only\nShould the bot buy \"Festive Enamel Snowflakes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74602",
+            "Festive Sled Racer Cape",
+            "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74603",
+            "Festive Sled Racer Cape and Enamel Snowflakes",
+            "Mode: [select] only\nShould the bot buy \"Festive Sled Racer Cape and Enamel Snowflakes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74604",
+            "Golden Snowflake Sickle",
+            "Mode: [select] only\nShould the bot buy \"Golden Snowflake Sickle\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74605",
+            "Golden Snowflake Sickles",
+            "Mode: [select] only\nShould the bot buy \"Golden Snowflake Sickles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74606",
+            "Snowflake Sickle",
+            "Mode: [select] only\nShould the bot buy \"Snowflake Sickle\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74607",
+            "Snowflake Sickles",
+            "Mode: [select] only\nShould the bot buy \"Snowflake Sickles\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74608",
+            "Festive Golden Snowflake Bow",
+            "Mode: [select] only\nShould the bot buy \"Festive Golden Snowflake Bow\" ?",
+            false
+        ),
+        new Option<bool>(
+            "74609",
+            "Mix n' Match Sickles",
+            "Mode: [select] only\nShould the bot buy \"Mix n' Match Sickles\" ?",
+            false
+        ),
     };
 }

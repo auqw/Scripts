@@ -16,28 +16,44 @@ public class DjinnGateMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-
-    private static DjinnGateStory DG { get => _DG ??= new DjinnGateStory(); set => _DG = value; }
+    private static DjinnGateStory DG
+    {
+        get => _DG ??= new DjinnGateStory();
+        set => _DG = value;
+    }
     private static DjinnGateStory _DG;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     // If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Unseen Essence"});
+        Core.BankingBlackList.AddRange(new[] { "Unseen Essence" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -55,7 +71,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -66,9 +84,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Unseen Essence":
                     Core.FarmingLogger(req.Name, quant);
@@ -81,29 +104,103 @@ private static CoreAdvanced _sAdv;
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
-                    
-                    break;
 
+                    break;
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("42420", "Jafar Armor", "Mode: [select] only\nShould the bot buy \"Jafar Armor\" ?", false),
-        new Option<bool>("42423", "Helm of Jafar", "Mode: [select] only\nShould the bot buy \"Helm of Jafar\" ?", false),
-        new Option<bool>("42398", "Armor of Valthos", "Mode: [select] only\nShould the bot buy \"Armor of Valthos\" ?", false),
-        new Option<bool>("42400", "Helm of Valthos", "Mode: [select] only\nShould the bot buy \"Helm of Valthos\" ?", false),
-        new Option<bool>("42401", "Runes of Valthos", "Mode: [select] only\nShould the bot buy \"Runes of Valthos\" ?", false),
-        new Option<bool>("42405", "Zular's Circlet", "Mode: [select] only\nShould the bot buy \"Zular's Circlet\" ?", false),
-        new Option<bool>("42406", "Zular's Helm", "Mode: [select] only\nShould the bot buy \"Zular's Helm\" ?", false),
-        new Option<bool>("42404", "Zular's Sigil Cape", "Mode: [select] only\nShould the bot buy \"Zular's Sigil Cape\" ?", false),
-        new Option<bool>("42415", "Armor of Aya", "Mode: [select] only\nShould the bot buy \"Armor of Aya\" ?", false),
-        new Option<bool>("42418", "Aya's Helm", "Mode: [select] only\nShould the bot buy \"Aya's Helm\" ?", false),
-        new Option<bool>("42416", "Aya's Tails", "Mode: [select] only\nShould the bot buy \"Aya's Tails\" ?", false),
-        new Option<bool>("42409", "Agares' Armor", "Mode: [select] only\nShould the bot buy \"Agares' Armor\" ?", false),
-        new Option<bool>("42412", "Agares Morph", "Mode: [select] only\nShould the bot buy \"Agares Morph\" ?", false),
-        new Option<bool>("42413", "Agares' Helm", "Mode: [select] only\nShould the bot buy \"Agares' Helm\" ?", false),
-        new Option<bool>("42410", "Runes of Agares", "Mode: [select] only\nShould the bot buy \"Runes of Agares\" ?", false),
+        new Option<bool>(
+            "42420",
+            "Jafar Armor",
+            "Mode: [select] only\nShould the bot buy \"Jafar Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42423",
+            "Helm of Jafar",
+            "Mode: [select] only\nShould the bot buy \"Helm of Jafar\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42398",
+            "Armor of Valthos",
+            "Mode: [select] only\nShould the bot buy \"Armor of Valthos\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42400",
+            "Helm of Valthos",
+            "Mode: [select] only\nShould the bot buy \"Helm of Valthos\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42401",
+            "Runes of Valthos",
+            "Mode: [select] only\nShould the bot buy \"Runes of Valthos\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42405",
+            "Zular's Circlet",
+            "Mode: [select] only\nShould the bot buy \"Zular's Circlet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42406",
+            "Zular's Helm",
+            "Mode: [select] only\nShould the bot buy \"Zular's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42404",
+            "Zular's Sigil Cape",
+            "Mode: [select] only\nShould the bot buy \"Zular's Sigil Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42415",
+            "Armor of Aya",
+            "Mode: [select] only\nShould the bot buy \"Armor of Aya\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42418",
+            "Aya's Helm",
+            "Mode: [select] only\nShould the bot buy \"Aya's Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42416",
+            "Aya's Tails",
+            "Mode: [select] only\nShould the bot buy \"Aya's Tails\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42409",
+            "Agares' Armor",
+            "Mode: [select] only\nShould the bot buy \"Agares' Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42412",
+            "Agares Morph",
+            "Mode: [select] only\nShould the bot buy \"Agares Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42413",
+            "Agares' Helm",
+            "Mode: [select] only\nShould the bot buy \"Agares' Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42410",
+            "Runes of Agares",
+            "Mode: [select] only\nShould the bot buy \"Runes of Agares\" ?",
+            false
+        ),
     };
 }

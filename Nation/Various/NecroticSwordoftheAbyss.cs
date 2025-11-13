@@ -22,13 +22,29 @@ public class NSoA
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreVHL VHL { get => _VHL ??= new CoreVHL(); set => _VHL = value; }
+    private static CoreVHL VHL
+    {
+        get => _VHL ??= new CoreVHL();
+        set => _VHL = value;
+    }
     private static CoreVHL _VHL;
-    private static CoreNSOD NSOD { get => _NSOD ??= new CoreNSOD(); set => _NSOD = value; }
+    private static CoreNSOD NSOD
+    {
+        get => _NSOD ??= new CoreNSOD();
+        set => _NSOD = value;
+    }
     private static CoreNSOD _NSOD;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
     private static CoreNation _Nation;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -53,6 +69,5 @@ public class NSoA
         VHL.VHLCrystals();
 
         Adv.BuyItem("tercessuinotlim", 1355, "Necrotic Sword of the Abyss");
-
     }
 }

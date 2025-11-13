@@ -11,7 +11,11 @@ public class EtherStormWastes
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
@@ -50,7 +54,11 @@ public class EtherStormWastes
         Story.MapItemQuest(1384, "dragonplane", new[] { 682, 683, 684, 685, 686 });
 
         //Lots Of Fiber 1385
-        Story.KillQuest(1385, "dragonplane", new[] { "Fire Elemental", "Earth Elemental", "Water Elemental", "Wind Elemental" });
+        Story.KillQuest(
+            1385,
+            "dragonplane",
+            new[] { "Fire Elemental", "Earth Elemental", "Water Elemental", "Wind Elemental" }
+        );
 
         //Carrying The Torches 1386
         Story.MapItemQuest(1386, "dragonplane", 687, 6);
@@ -119,7 +127,6 @@ public class EtherStormWastes
 
         //Meet me in the Air Realm 1403
         Story.MapItemQuest(1403, "wind", 688);
-
     }
 
     public void Wind()
@@ -156,7 +163,6 @@ public class EtherStormWastes
 
         //Meet me in the Fire Plane 1411
         Story.MapItemQuest(1411, "fire", 688);
-
     }
 
     public void Fire()
@@ -187,8 +193,8 @@ public class EtherStormWastes
 
         //Meet me in the DragonPlane 1417
         Story.MapItemQuest(1417, "dragonplane", 688);
-
     }
+
     public void Desoloth()
     {
         if (!Core.IsMember)
@@ -236,6 +242,7 @@ public class EtherStormWastes
         //Fire In My Heart 1547
         Story.KillQuest(1547, "firestorm", "Ssikari");
     }
+
     public void AirStorm()
     {
         FireStorm();
@@ -266,6 +273,7 @@ public class EtherStormWastes
         //The Burning Question 1577
         Story.MapItemQuest(1577, "firestorm", 825);
     }
+
     public void WaterStorm()
     {
         AirStorm();
@@ -293,11 +301,16 @@ public class EtherStormWastes
 
         //Hunt for the Greater Good 1621
         Story.MapItemQuest(1621, "waterstorm", 844, 3);
-        Story.KillQuest(1621, "waterstorm", new[] { "Fishman Soldier", "Marsh Lurker", "Frogdrake" });
+        Story.KillQuest(
+            1621,
+            "waterstorm",
+            new[] { "Fishman Soldier", "Marsh Lurker", "Frogdrake" }
+        );
 
         //Kill the Deep Dweller 1622
         Story.KillQuest(1622, "waterstorm", "Deep Dweller");
     }
+
     public void EarthStorm()
     {
         WaterStorm();
@@ -307,7 +320,11 @@ public class EtherStormWastes
         Story.PreLoad(this);
 
         //Call from Deep Within 1633
-        Story.KillQuest(1633, "earthstorm", new[] { "Fire Elemental", "wind Elemental", "Water Elemental", "Earth Elemental" });
+        Story.KillQuest(
+            1633,
+            "earthstorm",
+            new[] { "Fire Elemental", "wind Elemental", "Water Elemental", "Earth Elemental" }
+        );
 
         //Chrysalis of Flames 1634
         Story.MapItemQuest(1634, "earthstorm", 860, 3);
@@ -317,7 +334,7 @@ public class EtherStormWastes
         Story.MapItemQuest(1635, "earthstorm", 862, 8);
         Story.KillQuest(1635, "earthstorm", new[] { "Crystalized Jellyfish", "Diamond Golem" });
 
-        //Aria of Great Significance 
+        //Aria of Great Significance
         if (!Story.QuestProgression(1636))
         {
             Core.EnsureAccept(1636);
@@ -361,7 +378,11 @@ public class EtherStormWastes
         Story.KillQuest(3501, "fotia", "Femme Cult Worshiper");
 
         //The Core of the Problem 3502
-        Story.KillQuest(3502, "dragonplane", new[] { "Earth Elemental", "Water Elemental", "Wind Elemental", "Fire Elemental" });
+        Story.KillQuest(
+            3502,
+            "dragonplane",
+            new[] { "Earth Elemental", "Water Elemental", "Wind Elemental", "Fire Elemental" }
+        );
 
         //The Scroll of Salubris 3503
         Story.KillQuest(3503, "Natatorium", "Merdraconian");
@@ -371,7 +392,14 @@ public class EtherStormWastes
         {
             Core.EnsureAccept(3504);
             Core.KillMonster("wanders", "r5", "Left", "Lotus Spider", "Lotus Petal", 5);
-            Core.KillMonster("wanders", "r2", "Down", "Kalestri Worshiper", "Talisman of Renewal", 5);
+            Core.KillMonster(
+                "wanders",
+                "r2",
+                "Down",
+                "Kalestri Worshiper",
+                "Talisman of Renewal",
+                5
+            );
             Core.EnsureComplete(3504);
         }
 
@@ -417,7 +445,11 @@ public class EtherStormWastes
         Story.KillQuest(3515, "temple", "Dracolich");
 
         //Research in Gilead 3516
-        Story.KillQuest(3516, "DragonPlane", new[] { "Earth Elemental", "Water Elemental", "Wind Elemental", "Fire Elemental" });
+        Story.KillQuest(
+            3516,
+            "DragonPlane",
+            new[] { "Earth Elemental", "Water Elemental", "Wind Elemental", "Fire Elemental" }
+        );
 
         //Fire and Ice in Battleundera 3517
         if (!Story.QuestProgression(3517))
@@ -440,6 +472,7 @@ public class EtherStormWastes
         //Dragonplane in Peril 3522
         Story.ChainQuest(3522);
     }
+
     public void DragonHeart()
     {
         if (Core.isCompletedBefore(3535))
@@ -485,11 +518,19 @@ public class EtherStormWastes
         Story.KillQuest(3533, "dragonheart", "Proto-Air Dracolich");
 
         //Dracolich Disconnection 3534
-        Story.KillQuest(3534, "dragonheart", new[] { "Tempest Dracolich", "Deluge Dracolich", "Granite Dracolich", "Inferno Dracolich" });
+        Story.KillQuest(
+            3534,
+            "dragonheart",
+            new[]
+            {
+                "Tempest Dracolich",
+                "Deluge Dracolich",
+                "Granite Dracolich",
+                "Inferno Dracolich",
+            }
+        );
 
         //Heart-searing Pain 3535
         Story.KillQuest(3535, "dragonheart", "Avatar of Desolich");
-
     }
-
 }

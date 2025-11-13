@@ -19,8 +19,18 @@ public class HeadlessHorsemanGear
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static MogloweenSeasonalMerge MogloweenMerge { get => _MogloweenMerge ??= new MogloweenSeasonalMerge(); set => _MogloweenMerge = value; }    private static MogloweenSeasonalMerge _MogloweenMerge;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static MogloweenSeasonalMerge MogloweenMerge
+    {
+        get => _MogloweenMerge ??= new MogloweenSeasonalMerge();
+        set => _MogloweenMerge = value;
+    }
+    private static MogloweenSeasonalMerge _MogloweenMerge;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -35,14 +45,18 @@ public class HeadlessHorsemanGear
     {
         int[] QuestIDs = new[] { 9457, 9458, 9459, 9460, 9461 };
 
-        if (!Core.isSeasonalMapActive("mogloween") || Core.CheckInventory(Core.QuestRewards(QuestIDs), toInv: false))
+        if (
+            !Core.isSeasonalMapActive("mogloween")
+            || Core.CheckInventory(Core.QuestRewards(QuestIDs), toInv: false)
+        )
         {
-            Core.Logger(Core.CheckInventory(Core.QuestRewards(QuestIDs)) ?
-            "All Rewards Obtained." :
-            "Seasonal Map not available.");
+            Core.Logger(
+                Core.CheckInventory(Core.QuestRewards(QuestIDs))
+                    ? "All Rewards Obtained."
+                    : "Seasonal Map not available."
+            );
             return;
         }
-
 
         // Add all items to the drops
         Core.Logger("Adding all drops & requirements to DropLog");
@@ -50,16 +64,14 @@ public class HeadlessHorsemanGear
         foreach (int QuestID in QuestIDs)
         {
             Core.EnsureLoad(QuestID)
-                .Requirements
-                .Concat(Core.EnsureLoad(QuestID).Rewards)
+                .Requirements.Concat(Core.EnsureLoad(QuestID).Rewards)
                 .ToList()
                 .ForEach(item => Core.AddDrop(item.ID));
         }
 
-
         foreach (int QuestID in QuestIDs)
         {
-            Quest? QuestData = Core.InitializeWithRetries( () => Core.EnsureLoad(QuestID));
+            Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
 
             if (!Core.CheckInventory(Core.QuestRewards(QuestID)))
             {
@@ -68,9 +80,20 @@ public class HeadlessHorsemanGear
                     case 9457:
                         Core.Logger("Get Required Quest item");
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster("crescentmoon", "Royce", "Oversoul's Headless Horseman", isTemp: false);
+                        Core.HuntMonster(
+                            "crescentmoon",
+                            "Royce",
+                            "Oversoul's Headless Horseman",
+                            isTemp: false
+                        );
                         Core.EnsureAccept(QuestID);
-                        Core.HuntMonster("crescentmoon", "Royce", "Royce's Direclaw", 10, isTemp: false);
+                        Core.HuntMonster(
+                            "crescentmoon",
+                            "Royce",
+                            "Royce's Direclaw",
+                            10,
+                            isTemp: false
+                        );
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("pie", "Myst Yaga", "Yaga Staff", 15);
                         Core.HuntMonster("twigsarcade", "Spirit Residue", "Spirit Residue", 15);
@@ -81,8 +104,20 @@ public class HeadlessHorsemanGear
                     case 9458:
                         // The Horseman’s Cape 9458
                         Core.EnsureAccept(QuestID);
-                        Core.KillMonster("mogloween", "Pit1", "Center", "Blister", "Torn Cloth", 10);
-                        Core.HuntMonster("necrocarnival", "ZaZOOOL", "Shadow of Screams", isTemp: false);
+                        Core.KillMonster(
+                            "mogloween",
+                            "Pit1",
+                            "Center",
+                            "Blister",
+                            "Torn Cloth",
+                            10
+                        );
+                        Core.HuntMonster(
+                            "necrocarnival",
+                            "ZaZOOOL",
+                            "Shadow of Screams",
+                            isTemp: false
+                        );
                         Core.HuntMonster("candycorn", "Malik-EYE ", "Knife", 1);
                         Core.EnsureComplete(QuestID);
                         break;
@@ -92,7 +127,7 @@ public class HeadlessHorsemanGear
                         Core.EnsureAccept(QuestID);
                         // Pumpkin Grin
                         Adv.BuyItem("asylum", 507, 36720, shopItemID: 21659);
-                        
+
                         Core.HuntMonster("that", "Will O' The Wisp", "Flames", 30);
                         Core.HuntMonster("twigsarcade", "Ectoplasm", "Ectoplasm", 20);
                         Core.HuntMonster("tricktown", "Rotting Pumpkin", "Pumpkin Seeds", 50);
@@ -119,9 +154,27 @@ public class HeadlessHorsemanGear
                         Core.EnsureAccept(QuestID);
                         MogloweenMerge.BuyAllMerge("Sinister PumpKing Blade");
                         Core.HuntMonster("necronaut", "necronaut", "Aged Metal", 5, isTemp: false);
-                        Core.HuntMonster("mogloweengrave", "Zombie Terror", "Oversoul Essence", 15, isTemp: false);
-                        Core.HuntMonster("cask", "Nitre Golem", "Potassium Nitrate", 10, isTemp: false);
-                        Core.HuntMonster("that", "Congealed Fear", "Fear Essence", 15, isTemp: false);
+                        Core.HuntMonster(
+                            "mogloweengrave",
+                            "Zombie Terror",
+                            "Oversoul Essence",
+                            15,
+                            isTemp: false
+                        );
+                        Core.HuntMonster(
+                            "cask",
+                            "Nitre Golem",
+                            "Potassium Nitrate",
+                            10,
+                            isTemp: false
+                        );
+                        Core.HuntMonster(
+                            "that",
+                            "Congealed Fear",
+                            "Fear Essence",
+                            15,
+                            isTemp: false
+                        );
                         Core.EnsureComplete(QuestID);
                         break;
                 }

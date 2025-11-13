@@ -16,27 +16,52 @@ public class ZodasMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static Zoda Z { get => _Z ??= new Zoda(); set => _Z = value; }
+    private static Zoda Z
+    {
+        get => _Z ??= new Zoda();
+        set => _Z = value;
+    }
     private static Zoda _Z;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Light Blade of the Rebellion", "Zorblatt's Pizza Slice", "Dark Blade of the Fifth", "Chaos Blade of the Imperium" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Light Blade of the Rebellion",
+                "Zorblatt's Pizza Slice",
+                "Dark Blade of the Fifth",
+                "Chaos Blade of the Imperium",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -54,7 +79,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -65,9 +92,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Light Blade of the Rebellion":
                     Core.FarmingLogger(req.Name, quant);
@@ -77,7 +109,13 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Z.AssembledSword();
-                        Core.HuntMonster("greed", "Goregold", "Goregold Resisted", isTemp: false, log: false);
+                        Core.HuntMonster(
+                            "greed",
+                            "Goregold",
+                            "Goregold Resisted",
+                            isTemp: false,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -103,7 +141,13 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Z.AssembledSword();
-                        Core.HuntMonster("murdermoon", "Fifth Sepulchure", "Fifth Sepulchure Defeated", isTemp: false, log: false);
+                        Core.HuntMonster(
+                            "murdermoon",
+                            "Fifth Sepulchure",
+                            "Fifth Sepulchure Defeated",
+                            isTemp: false,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -117,7 +161,13 @@ private static CoreAdvanced _sAdv;
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Z.AssembledSword();
-                        Core.HuntMonster("ledgermayne", "Ledgermayne", "Ledgermayne Defeated", isTemp: false, log: false);
+                        Core.HuntMonster(
+                            "ledgermayne",
+                            "Ledgermayne",
+                            "Ledgermayne Defeated",
+                            isTemp: false,
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -128,38 +178,203 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("70076", "Augmented Light Blade of the Rebellion", "Mode: [select] only\nShould the bot buy \"Augmented Light Blade of the Rebellion\" ?", false),
-        new Option<bool>("70074", "Augmented Dark Blade of the Fifth", "Mode: [select] only\nShould the bot buy \"Augmented Dark Blade of the Fifth\" ?", false),
-        new Option<bool>("70078", "Augmented Chaos Blade of the Imperium", "Mode: [select] only\nShould the bot buy \"Augmented Chaos Blade of the Imperium\" ?", false),
-        new Option<bool>("69863", "Aulorian", "Mode: [select] only\nShould the bot buy \"Aulorian\" ?", false),
-        new Option<bool>("69864", "Aulorian Helm", "Mode: [select] only\nShould the bot buy \"Aulorian Helm\" ?", false),
-        new Option<bool>("69865", "Aulorian Opened Helm", "Mode: [select] only\nShould the bot buy \"Aulorian Opened Helm\" ?", false),
-        new Option<bool>("69866", "Aulorian Sword + Cape", "Mode: [select] only\nShould the bot buy \"Aulorian Sword + Cape\" ?", false),
-        new Option<bool>("69867", "Aulorian Cape", "Mode: [select] only\nShould the bot buy \"Aulorian Cape\" ?", false),
-        new Option<bool>("69868", "Aulorian Blade", "Mode: [select] only\nShould the bot buy \"Aulorian Blade\" ?", false),
-        new Option<bool>("69869", "Aulorian Spear", "Mode: [select] only\nShould the bot buy \"Aulorian Spear\" ?", false),
-        new Option<bool>("69870", "Aulorian Mace", "Mode: [select] only\nShould the bot buy \"Aulorian Mace\" ?", false),
-        new Option<bool>("69871", "Aulorian Pistol", "Mode: [select] only\nShould the bot buy \"Aulorian Pistol\" ?", false),
-        new Option<bool>("69872", "Aulorian Pistols", "Mode: [select] only\nShould the bot buy \"Aulorian Pistols\" ?", false),
-        new Option<bool>("69873", "Aulorian Golden Gun", "Mode: [select] only\nShould the bot buy \"Aulorian Golden Gun\" ?", false),
-        new Option<bool>("69874", "Aulorian Golden Guns", "Mode: [select] only\nShould the bot buy \"Aulorian Golden Guns\" ?", false),
-        new Option<bool>("69875", "Aulorian Guns", "Mode: [select] only\nShould the bot buy \"Aulorian Guns\" ?", false),
-        new Option<bool>("69876", "Aulorian Armaments", "Mode: [select] only\nShould the bot buy \"Aulorian Armaments\" ?", false),
-        new Option<bool>("69885", "Lorosian Hunter", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter\" ?", false),
-        new Option<bool>("69886", "Lorosian Hunter Helm", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Helm\" ?", false),
-        new Option<bool>("69887", "Lorosian Hunter Hat + Mask", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Hat + Mask\" ?", false),
-        new Option<bool>("69888", "Lorosian Hunter's Saber Cape", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter's Saber Cape\" ?", false),
-        new Option<bool>("69889", "Lorosian Hunter Saber", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Saber\" ?", false),
-        new Option<bool>("69890", "Lorosian Hunter Sabers", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Sabers\" ?", false),
-        new Option<bool>("69891", "Lorosian Hunter Blaster", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Blaster\" ?", false),
-        new Option<bool>("69892", "Lorosian Hunter Handgun", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Handgun\" ?", false),
-        new Option<bool>("69893", "Lorosian Hunter Handguns", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Handguns\" ?", false),
-        new Option<bool>("69894", "Lorosian Hunter ArmBlade", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter ArmBlade\" ?", false),
-        new Option<bool>("69895", "Lorosian Hunter ArmBlades", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter ArmBlades\" ?", false),
-        new Option<bool>("69896", "Lorosian Hunter Gun Set", "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Gun Set\" ?", false),
-        new Option<bool>("70044", "Pan-Galactic Double Saber", "Mode: [select] only\nShould the bot buy \"Pan-Galactic Double Saber\" ?", false),
-        new Option<bool>("70045", "Pan-Galactic Double Sabers", "Mode: [select] only\nShould the bot buy \"Pan-Galactic Double Sabers\" ?", false),
-        new Option<bool>("70046", "Pan-Galactic Saber", "Mode: [select] only\nShould the bot buy \"Pan-Galactic Saber\" ?", false),
-        new Option<bool>("70047", "Pan-Galactic Sabers", "Mode: [select] only\nShould the bot buy \"Pan-Galactic Sabers\" ?", false),
+        new Option<bool>(
+            "70076",
+            "Augmented Light Blade of the Rebellion",
+            "Mode: [select] only\nShould the bot buy \"Augmented Light Blade of the Rebellion\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70074",
+            "Augmented Dark Blade of the Fifth",
+            "Mode: [select] only\nShould the bot buy \"Augmented Dark Blade of the Fifth\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70078",
+            "Augmented Chaos Blade of the Imperium",
+            "Mode: [select] only\nShould the bot buy \"Augmented Chaos Blade of the Imperium\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69863",
+            "Aulorian",
+            "Mode: [select] only\nShould the bot buy \"Aulorian\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69864",
+            "Aulorian Helm",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69865",
+            "Aulorian Opened Helm",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Opened Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69866",
+            "Aulorian Sword + Cape",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Sword + Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69867",
+            "Aulorian Cape",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69868",
+            "Aulorian Blade",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69869",
+            "Aulorian Spear",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Spear\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69870",
+            "Aulorian Mace",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Mace\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69871",
+            "Aulorian Pistol",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Pistol\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69872",
+            "Aulorian Pistols",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Pistols\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69873",
+            "Aulorian Golden Gun",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Golden Gun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69874",
+            "Aulorian Golden Guns",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Golden Guns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69875",
+            "Aulorian Guns",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Guns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69876",
+            "Aulorian Armaments",
+            "Mode: [select] only\nShould the bot buy \"Aulorian Armaments\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69885",
+            "Lorosian Hunter",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69886",
+            "Lorosian Hunter Helm",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Helm\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69887",
+            "Lorosian Hunter Hat + Mask",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Hat + Mask\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69888",
+            "Lorosian Hunter's Saber Cape",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter's Saber Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69889",
+            "Lorosian Hunter Saber",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Saber\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69890",
+            "Lorosian Hunter Sabers",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Sabers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69891",
+            "Lorosian Hunter Blaster",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Blaster\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69892",
+            "Lorosian Hunter Handgun",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Handgun\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69893",
+            "Lorosian Hunter Handguns",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Handguns\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69894",
+            "Lorosian Hunter ArmBlade",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter ArmBlade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69895",
+            "Lorosian Hunter ArmBlades",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter ArmBlades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69896",
+            "Lorosian Hunter Gun Set",
+            "Mode: [select] only\nShould the bot buy \"Lorosian Hunter Gun Set\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70044",
+            "Pan-Galactic Double Saber",
+            "Mode: [select] only\nShould the bot buy \"Pan-Galactic Double Saber\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70045",
+            "Pan-Galactic Double Sabers",
+            "Mode: [select] only\nShould the bot buy \"Pan-Galactic Double Sabers\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70046",
+            "Pan-Galactic Saber",
+            "Mode: [select] only\nShould the bot buy \"Pan-Galactic Saber\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70047",
+            "Pan-Galactic Sabers",
+            "Mode: [select] only\nShould the bot buy \"Pan-Galactic Sabers\" ?",
+            false
+        ),
     };
 }

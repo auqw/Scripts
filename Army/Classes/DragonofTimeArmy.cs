@@ -23,65 +23,118 @@ tags: dragon of time, class, army
 //cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 using Skua.Core.Interfaces;
-using Skua.Core.Options;
-using Skua.Core.Models.Items;
-using Skua.Core.Models.Quests;
-using Skua.Core.Models.Monsters;
 using Skua.Core.Models;
+using Skua.Core.Models.Items;
+using Skua.Core.Models.Monsters;
+using Skua.Core.Models.Quests;
+using Skua.Core.Options;
 
 public class DoTArmy
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
-    private static CoreDarkon Darkon { get => _Darkon ??= new CoreDarkon(); set => _Darkon = value; }
+    private static CoreDarkon Darkon
+    {
+        get => _Darkon ??= new CoreDarkon();
+        set => _Darkon = value;
+    }
     private static CoreDarkon _Darkon;
 
-    private static GoldenBladeOfFate GBoF { get => _GBoF ??= new GoldenBladeOfFate(); set => _GBoF = value; }
+    private static GoldenBladeOfFate GBoF
+    {
+        get => _GBoF ??= new GoldenBladeOfFate();
+        set => _GBoF = value;
+    }
     private static GoldenBladeOfFate _GBoF;
 
-    private static PinkBladeOfDestruciton PBoD { get => _PBoD ??= new PinkBladeOfDestruciton(); set => _PBoD = value; }
+    private static PinkBladeOfDestruciton PBoD
+    {
+        get => _PBoD ??= new PinkBladeOfDestruciton();
+        set => _PBoD = value;
+    }
     private static PinkBladeOfDestruciton _PBoD;
 
-    private static CoreQOM QOM { get => _QOM ??= new CoreQOM(); set => _QOM = value; }
+    private static CoreQOM QOM
+    {
+        get => _QOM ??= new CoreQOM();
+        set => _QOM = value;
+    }
     private static CoreQOM _QOM;
 
-    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }
+    private static CoreToD TOD
+    {
+        get => _TOD ??= new CoreToD();
+        set => _TOD = value;
+    }
     private static CoreToD _TOD;
 
-    private static MysteriousEgg Egg { get => _Egg ??= new MysteriousEgg(); set => _Egg = value; }
+    private static MysteriousEgg Egg
+    {
+        get => _Egg ??= new MysteriousEgg();
+        set => _Egg = value;
+    }
     private static MysteriousEgg _Egg;
 
-    private static CoreSummer Coll { get => _Coll ??= new CoreSummer(); set => _Coll = value; }
+    private static CoreSummer Coll
+    {
+        get => _Coll ??= new CoreSummer();
+        set => _Coll = value;
+    }
     private static CoreSummer _Coll;
 
-    private static Borgars Borgars { get => _Borgars ??= new Borgars(); set => _Borgars = value; }
+    private static Borgars Borgars
+    {
+        get => _Borgars ??= new Borgars();
+        set => _Borgars = value;
+    }
     private static Borgars _Borgars;
 
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
-
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
-
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
-
-
 
     public string OptionsStorage = "DoTArmy";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("sellToSync", "Sell to Sync", "Sell items to make sure the army stays syncronized.\nIf off, there is a higher chance your army might desyncornize", false),
+        new Option<bool>(
+            "sellToSync",
+            "Sell to Sync",
+            "Sell items to make sure the army stays syncronized.\nIf off, there is a higher chance your army might desyncornize",
+            false
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -89,7 +142,7 @@ public class DoTArmy
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public string[] QuestRewards =
@@ -133,7 +186,7 @@ public class DoTArmy
         // Core.CheckInventory(QuestRewards[^19], toInv: false);
         //Q10/Extra Quest
         "Dragon of Time Horns + Ponytail",
-        "Dragon of Time Wings + Tail"
+        "Dragon of Time Wings + Tail",
         // Core.CheckInventory(QuestRewards[^22], toInv: false);
     };
 
@@ -143,16 +196,16 @@ public class DoTArmy
         "Myths of Lore",
         "Historia Page",
         "Frost King's Story",
-        "Your Own Memories"
+        "Your Own Memories",
     };
 
     public string[] Quest2 =
     {
-      "Desoloth's Destructive Aura",
-      "Nythera's Patience",
-      "Goregold's Luck",
-      "Victorious's Dignity",
-      "Trigoras's Tenacity"
+        "Desoloth's Destructive Aura",
+        "Nythera's Patience",
+        "Goregold's Luck",
+        "Victorious's Dignity",
+        "Trigoras's Tenacity",
     };
 
     public string[] Quest3 =
@@ -161,7 +214,7 @@ public class DoTArmy
         "Pink Blade of Destruction",
         "Cross-Era Stabilizer",
         "Chronomancer's Codex",
-        "Timestream String"
+        "Timestream String",
     };
 
     public string[] Quest4 =
@@ -169,21 +222,21 @@ public class DoTArmy
         "Time Loop Broken",
         "Anomaly Silenced",
         "Chronolord Stopped",
-        "Is This a Wormhole?"
+        "Is This a Wormhole?",
     };
 
     public string[] Quest5 =
     {
         "Dimensional Dragon Portal",
         "Brutal Slash Studied",
-        "Epic Hydra Fang"
+        "Epic Hydra Fang",
     };
 
     public string[] Quest6 =
     {
         "Dimensional Dragon Portal",
         "Brutal Slash Studied",
-        "Epic Hydra Fang"
+        "Epic Hydra Fang",
     };
 
     public string[] Quest7 =
@@ -193,7 +246,7 @@ public class DoTArmy
         "Semiramis Feather",
         "Cross-Dimensional Weapons",
         "Starlight Singularity",
-        "Collectible Collector"
+        "Collectible Collector",
     };
 
     public string[] Quest8 =
@@ -203,7 +256,7 @@ public class DoTArmy
         "Dragon's Plasma",
         "Chaotic Invertebrae",
         "Cryostatic Essence",
-        "Salvaged Chaos Dragon Biomass"
+        "Salvaged Chaos Dragon Biomass",
     };
 
     public string[] Quest9 =
@@ -211,7 +264,7 @@ public class DoTArmy
         "Fire Essence",
         "Akriloth's Flametongue",
         "Immortal Embers",
-        "Ashes from the Void Realm"
+        "Ashes from the Void Realm",
     };
 
     public string[] Quest10 =
@@ -219,29 +272,34 @@ public class DoTArmy
         "Mysterious Egg",
         "Conquered Past",
         "Slugbutter Trophy",
-        "Icewing's Laurel"
+        "Icewing's Laurel",
     };
-
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.BankingBlackList.AddRange(QuestRewards);
         Core.SetOptions(disableClassSwap: true);
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
 
         // DoT(Bot.Config!.Get<bool>("sellToSync"));
 
         Core.SetOptions(false);
     }
 
-
     public void DoT(bool doExtra = true)
     {
         // if ((!doExtra && Core.CheckInventory("Dragon of Time")) || (doExtra && Core.CheckInventory(QuestRewards, toInv: false)))
         //     return;
 
-        Core.OneTimeMessage("Only for army", "This is intended for use with an army, not for solo players.");
+        Core.OneTimeMessage(
+            "Only for army",
+            "This is intended for use with an army, not for solo players."
+        );
 
         Bot.Events.PlayerAFK += PlayerAFK;
         /*
@@ -300,14 +358,40 @@ public class DoTArmy
 
                     Bot.Quests.UpdateQuest(4614);
                     Core.EquipClass(ClassType.Farm);
-                    ArmyHunt("mummies", new[] { "Mummy" }, "Lost Hieroglyphic", ClassType.Solo, false, 30);
+                    ArmyHunt(
+                        "mummies",
+                        new[] { "Mummy" },
+                        "Lost Hieroglyphic",
+                        ClassType.Solo,
+                        false,
+                        30
+                    );
 
-                    ArmyHunt("timelibrary", new[] { "Training Globe", "Tog", "Moglin Ghost" }, "Historia Page", ClassType.Solo, false, 100);
+                    ArmyHunt(
+                        "timelibrary",
+                        new[] { "Training Globe", "Tog", "Moglin Ghost" },
+                        "Historia Page",
+                        ClassType.Solo,
+                        false,
+                        100
+                    );
 
-                    ArmyHunt("kingcoal", new[] { "Frost King" }, "Frost King's Story", ClassType.Solo);
+                    ArmyHunt(
+                        "kingcoal",
+                        new[] { "Frost King" },
+                        "Frost King's Story",
+                        ClassType.Solo
+                    );
 
                     Core.EquipClass(ClassType.Solo);
-                    Core.KillMonster("baconcatyou", "Enter", "Spawn", "*", "Your Own Memories", isTemp: false);
+                    Core.KillMonster(
+                        "baconcatyou",
+                        "Enter",
+                        "Spawn",
+                        "*",
+                        "Your Own Memories",
+                        isTemp: false
+                    );
 
                     Core.BuyItem("librarium", 651, "Myths of Lore");
 
@@ -323,23 +407,44 @@ public class DoTArmy
             foreach (string reward in QuestRewards[3..5])
                 //Army.WaitForParty("whitemap", reward);
 
-
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[3..5], toInv: false))
                 {
                     Core.EnsureAccept(7717);
 
                     Core.EquipClass(ClassType.Solo);
-                    ArmyHunt("dragonchallenge", new[] { "Desoloth the Final" }, "Desoloth's Destructive Aura", ClassType.Solo);
+                    ArmyHunt(
+                        "dragonchallenge",
+                        new[] { "Desoloth the Final" },
+                        "Desoloth's Destructive Aura",
+                        ClassType.Solo
+                    );
 
                     Bot.Quests.UpdateQuest(899);
-                    ArmyHunt("blindingsnow", new[] { "Nythera" }, "Nythera's Patience", ClassType.Solo);
+                    ArmyHunt(
+                        "blindingsnow",
+                        new[] { "Nythera" },
+                        "Nythera's Patience",
+                        ClassType.Solo
+                    );
 
                     Core.AddDrop("Key of Greed");
                     ArmyHunt("greed", new[] { "Goregold" }, "Goregold's Luck", ClassType.Solo);
 
-                    ArmyHunt("darkplane", new[] { "Victorious" }, "Victorious's Dignity", ClassType.Solo);
+                    ArmyHunt(
+                        "darkplane",
+                        new[] { "Victorious" },
+                        "Victorious's Dignity",
+                        ClassType.Solo
+                    );
 
-                    ArmyHunt("trigoras", new[] { "Trigoras" }, "Trigoras's Tenacity", ClassType.Solo, false, 3);
+                    ArmyHunt(
+                        "trigoras",
+                        new[] { "Trigoras" },
+                        "Trigoras's Tenacity",
+                        ClassType.Solo,
+                        false,
+                        3
+                    );
 
                     Core.EnsureComplete(7717);
                     Core.Logger($"Quest 2: 🖕");
@@ -353,23 +458,44 @@ public class DoTArmy
             foreach (string reward in QuestRewards[6..7])
                 //Army.WaitForParty("whitemap", reward);
 
-
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[6..7], toInv: false))
                 {
                     Core.EnsureAccept(7718);
 
                     Core.EquipClass(ClassType.Solo);
-                    ArmyHunt("underworld", new[] { "Laken" }, "Cross-Era Stabilizer", ClassType.Solo);
+                    ArmyHunt(
+                        "underworld",
+                        new[] { "Laken" },
+                        "Cross-Era Stabilizer",
+                        ClassType.Solo
+                    );
 
                     if (!Core.CheckInventory("Chronomancer's Codex"))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        ArmyHunt("mqlesson", new[] { "Dragonoid" }, "Dragonoid of Hours", ClassType.Solo);
+                        ArmyHunt(
+                            "mqlesson",
+                            new[] { "Dragonoid" },
+                            "Dragonoid of Hours",
+                            ClassType.Solo
+                        );
                         Core.EquipClass(ClassType.Solo);
-                        ArmyHunt("timespace", new[] { "Chaos Lord Iadoa" }, "Chronomancer's Codex", ClassType.Solo);
+                        ArmyHunt(
+                            "timespace",
+                            new[] { "Chaos Lord Iadoa" },
+                            "Chronomancer's Codex",
+                            ClassType.Solo
+                        );
                     }
 
-                    ArmyHunt("arena", new[] { "Timestream Rider" }, "Timestream String", ClassType.Solo, false, 100);
+                    ArmyHunt(
+                        "arena",
+                        new[] { "Timestream Rider" },
+                        "Timestream String",
+                        ClassType.Solo,
+                        false,
+                        100
+                    );
 
                     Core.EnsureComplete(7718);
                     Core.Logger($"Quest 3: 🖕");
@@ -383,22 +509,40 @@ public class DoTArmy
             foreach (string reward in QuestRewards[7..8])
                 //Army.WaitForParty("whitemap", reward);
 
-
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[7..8], toInv: false))
                 {
                     Core.EnsureAccept(7719);
 
                     Core.EquipClass(ClassType.Solo);
-                    ArmyHunt("cathedral", new[] { "Incarnation of Time" }, "Time Loop Broken", ClassType.Solo);
+                    ArmyHunt(
+                        "cathedral",
+                        new[] { "Incarnation of Time" },
+                        "Time Loop Broken",
+                        ClassType.Solo
+                    );
 
                     Core.EquipClass(ClassType.Solo);
                     ArmyHunt("ubear", new[] { "Cornholio" }, "Is This a Wormhole?", ClassType.Solo);
 
                     Core.EquipClass(ClassType.Solo);
-                    ArmyHunt("portalwar", new[] { "Chronorysa", "Tempus Larva", "Time Wraith" }, "Anomaly Silenced", ClassType.Solo, false, 100);
+                    ArmyHunt(
+                        "portalwar",
+                        new[] { "Chronorysa", "Tempus Larva", "Time Wraith" },
+                        "Anomaly Silenced",
+                        ClassType.Solo,
+                        false,
+                        100
+                    );
 
                     Core.EquipClass(ClassType.Solo);
-                    ArmyHunt("portalmaze", new[] { "ChronoLord" }, "Chronolord Stopped", ClassType.Solo, false, 50);
+                    ArmyHunt(
+                        "portalmaze",
+                        new[] { "ChronoLord" },
+                        "Chronolord Stopped",
+                        ClassType.Solo,
+                        false,
+                        50
+                    );
 
                     Core.EnsureComplete(7719);
                     Core.Logger($"Quest 4: 🖕");
@@ -412,16 +556,36 @@ public class DoTArmy
             foreach (string reward in QuestRewards[9..10])
                 //Army.WaitForParty("whitemap", reward);
 
-
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[9..10], toInv: false))
                 {
                     Core.EnsureAccept(7720);
 
-                    ArmyHunt("lairdefend", new[] { "Dragon Summoner" }, "Dimensional Dragon Portal", ClassType.Solo, false, 2);
+                    ArmyHunt(
+                        "lairdefend",
+                        new[] { "Dragon Summoner" },
+                        "Dimensional Dragon Portal",
+                        ClassType.Solo,
+                        false,
+                        2
+                    );
 
-                    ArmyHunt("bosschallenge", new[] { "Grievous Inbunche" }, "Brutal Slash Studied", ClassType.Solo, false, 10);
+                    ArmyHunt(
+                        "bosschallenge",
+                        new[] { "Grievous Inbunche" },
+                        "Brutal Slash Studied",
+                        ClassType.Solo,
+                        false,
+                        10
+                    );
 
-                    ArmyHunt("hydrachallenge", new[] { "Hydra Head 90" }, "Epic Hydra Fang", ClassType.Solo, false, 125);
+                    ArmyHunt(
+                        "hydrachallenge",
+                        new[] { "Hydra Head 90" },
+                        "Epic Hydra Fang",
+                        ClassType.Solo,
+                        false,
+                        125
+                    );
                     Core.EnsureComplete(7720);
                     Core.Logger($"Quest 5: 🖕");
                     Bot.Wait.ForPickup("*");
@@ -434,7 +598,6 @@ public class DoTArmy
             foreach (string reward in QuestRewards[11..12])
                 //Army.WaitForParty("whitemap", reward);
 
-
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[11..12], toInv: false))
                 {
                     Core.EnsureAccept(7721);
@@ -446,19 +609,38 @@ public class DoTArmy
                         Core.AddDrop("Semiramis Feather");
                         // Take Down Terrane 6286
                         Core.EnsureAccept(6286);
-                        ArmyHunt("guardiantree", new[] { "Terrane" }, "Terrane Defeated", ClassType.Solo, isTemp: true);
+                        ArmyHunt(
+                            "guardiantree",
+                            new[] { "Terrane" },
+                            "Terrane Defeated",
+                            ClassType.Solo,
+                            isTemp: true
+                        );
                         Core.EnsureComplete(6286);
                         Bot.Wait.ForPickup("Semiramis Feather");
                     }
 
-                    ArmyHunt("aqw3d", new[] { "Nightlocke Axe", "Nightlocke Blade", "Nightlocke Staff" }, "Cross-Dimensional Weapons", ClassType.Solo, false, 300);
+                    ArmyHunt(
+                        "aqw3d",
+                        new[] { "Nightlocke Axe", "Nightlocke Blade", "Nightlocke Staff" },
+                        "Cross-Dimensional Weapons",
+                        ClassType.Solo,
+                        false,
+                        300
+                    );
 
                     if (!Core.CheckInventory("Starlight Singularity"))
                     {
                         Core.AddDrop("Starlight Singularity");
                         // Serpent of the Stars 5186
                         Core.EnsureAccept(5186);
-                        ArmyHunt("whitehole", new[] { "Mehensi Serpent" }, "Mehen Slain", ClassType.Solo, isTemp: true);
+                        ArmyHunt(
+                            "whitehole",
+                            new[] { "Mehensi Serpent" },
+                            "Mehen Slain",
+                            ClassType.Solo,
+                            isTemp: true
+                        );
                         Core.EnsureComplete(5186);
                         Bot.Wait.ForPickup("Starlight Singularity");
                     }
@@ -479,23 +661,64 @@ public class DoTArmy
             foreach (string reward in QuestRewards[13..14])
                 //Army.WaitForParty("whitemap", reward);
 
-
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[13..14], toInv: false))
                 {
                     Core.EnsureAccept(7722);
 
-                    ArmyHunt("moonlab", new[] { "Slime Mold" }, "Unyielding Slime", ClassType.Farm, false, 300);
+                    ArmyHunt(
+                        "moonlab",
+                        new[] { "Slime Mold" },
+                        "Unyielding Slime",
+                        ClassType.Farm,
+                        false,
+                        300
+                    );
 
-                    ArmyHunt("bosschallenge", new[] { "Mutated Void Dragon" }, "Omnipotent Cells", ClassType.Solo, false, 20);
+                    ArmyHunt(
+                        "bosschallenge",
+                        new[] { "Mutated Void Dragon" },
+                        "Omnipotent Cells",
+                        ClassType.Solo,
+                        false,
+                        20
+                    );
 
-                    ArmyHunt("underlair", new[] { "ArchFiend Dragonlord" }, "Dragon's Plasma", ClassType.Solo, false, 20);
+                    ArmyHunt(
+                        "underlair",
+                        new[] { "ArchFiend Dragonlord" },
+                        "Dragon's Plasma",
+                        ClassType.Solo,
+                        false,
+                        20
+                    );
 
-                    ArmyHunt("chaoskraken", new[] { "Chaos Kraken" }, "Chaotic Invertebrae", ClassType.Solo, false, 20);
+                    ArmyHunt(
+                        "chaoskraken",
+                        new[] { "Chaos Kraken" },
+                        "Chaotic Invertebrae",
+                        ClassType.Solo,
+                        false,
+                        20
+                    );
                     Bot.Quests.UpdateQuest(9, 159);
 
-                    ArmyHunt("towerofdoom9", new[] { "Dread Fang" }, "Cryostatic Essence", ClassType.Farm, false, 20);
+                    ArmyHunt(
+                        "towerofdoom9",
+                        new[] { "Dread Fang" },
+                        "Cryostatic Essence",
+                        ClassType.Farm,
+                        false,
+                        20
+                    );
 
-                    ArmyHunt("castleroof", new[] { "Ultra Chaos Dragon" }, "Salvaged Chaos Dragon Biomass", ClassType.Solo, false, 20);
+                    ArmyHunt(
+                        "castleroof",
+                        new[] { "Ultra Chaos Dragon" },
+                        "Salvaged Chaos Dragon Biomass",
+                        ClassType.Solo,
+                        false,
+                        20
+                    );
 
                     Core.EnsureComplete(7722);
                     Core.Logger($"Quest 7: 🖕");
@@ -511,16 +734,43 @@ public class DoTArmy
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[14..15], toInv: false))
                 {
-
                     Core.EnsureAccept(7723);
 
-                    ArmyHunt("volcano", new[] { "Fire Imp" }, "Fire Essence", ClassType.Farm, false, 3000);
+                    ArmyHunt(
+                        "volcano",
+                        new[] { "Fire Imp" },
+                        "Fire Essence",
+                        ClassType.Farm,
+                        false,
+                        3000
+                    );
 
-                    ArmyHunt("charredplains", new[] { "Akriloth" }, "Akriloth's Flametongue", ClassType.Solo, false, 100);
+                    ArmyHunt(
+                        "charredplains",
+                        new[] { "Akriloth" },
+                        "Akriloth's Flametongue",
+                        ClassType.Solo,
+                        false,
+                        100
+                    );
 
-                    ArmyHunt("ultraphedra", new[] { "Ultra Phedra" }, "Immortal Embers", ClassType.Solo, false, 50);
+                    ArmyHunt(
+                        "ultraphedra",
+                        new[] { "Ultra Phedra" },
+                        "Immortal Embers",
+                        ClassType.Solo,
+                        false,
+                        50
+                    );
 
-                    ArmyHunt("thevoid", new[] { "Reaper" }, "Ashes from the Void Realm", ClassType.Solo, false, 50);
+                    ArmyHunt(
+                        "thevoid",
+                        new[] { "Reaper" },
+                        "Ashes from the Void Realm",
+                        ClassType.Solo,
+                        false,
+                        50
+                    );
 
                     Core.EnsureComplete(7723);
                     Core.Logger($"Quest 8: 🖕");
@@ -534,7 +784,6 @@ public class DoTArmy
             foreach (string reward in QuestRewards[16..19])
                 //Army.WaitForParty("whitemap", reward);
 
-
                 while (!Bot.ShouldExit && !Core.CheckInventory(QuestRewards[16..19], toInv: false))
                 {
                     Core.EnsureAccept(7724);
@@ -543,9 +792,23 @@ public class DoTArmy
                     ArmyHunt("chaoslord", 1770, "Conquered Past", ClassType.Solo, false);
 
                     Bot.Quests.UpdateQuest(10, 159);
-                    ArmyHunt("towerofdoom10", new[] { "Slugbutter" }, "Slugbutter Trophy", ClassType.Solo, false, 100);
+                    ArmyHunt(
+                        "towerofdoom10",
+                        new[] { "Slugbutter" },
+                        "Slugbutter Trophy",
+                        ClassType.Solo,
+                        false,
+                        100
+                    );
 
-                    ArmyHunt("icewing", new[] { "Warlord Icewing" }, "Icewing's Laurel", ClassType.Solo, false, 30);
+                    ArmyHunt(
+                        "icewing",
+                        new[] { "Warlord Icewing" },
+                        "Icewing's Laurel",
+                        ClassType.Solo,
+                        false,
+                        30
+                    );
 
                     Core.EnsureComplete(7724);
                     Core.Logger($"Quest 9: 🖕");
@@ -576,7 +839,12 @@ public class DoTArmy
                 {
                     // Burglinster's Revenge 7522
                     Core.EnsureAccept(7522);
-                    ArmyHunt("borgars", new[] { "Burglinster" }, "Burglinster Cured", ClassType.Solo);
+                    ArmyHunt(
+                        "borgars",
+                        new[] { "Burglinster" },
+                        "Burglinster Cured",
+                        ClassType.Solo
+                    );
                     Core.EnsureComplete(7522);
                     Bot.Wait.ForPickup("Burger Buns");
                 }
@@ -585,20 +853,22 @@ public class DoTArmy
 
             Core.EnsureCompleteChoose(7725, QuestRewards);
             Bot.Wait.ForPickup("*");
-            Core.ToBank(Bot.Inventory.Items.Select(x => x.Name).ToList().Except(PreQuestInv).ToArray());
+            Core.ToBank(
+                Bot.Inventory.Items.Select(x => x.Name).ToList().Except(PreQuestInv).ToArray()
+            );
         }
     }
 
-    //                                   ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░                    
-    //                               ▓▓▓▓████████████████▓▓▓▓▒▒              
-    //                           ▓▓▓▓████░░░░░░░░░░░░░░░░██████▓▓            
-    //                         ▓▓████░░░░░░░░░░░░░░░░░░░░░░░░░░████          
-    //                       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██        
-    //                     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██      
-    //                   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██      
-    //                 ▓▓██░░░░░░▓▓██░░  ░░░░░░░░░░░░░░░░░░░░▓▓██░░  ░░██    
-    //               ▓▓██░░░░░░░░██████░░░░░░░░░░░░░░░░░░░░░░██████░░░░░░██  
-    //               ▓▓██░░░░░░░░██████▓▓░░░░░░██░░░░██░░░░░░██████▓▓░░░░██  
+    //                                   ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░
+    //                               ▓▓▓▓████████████████▓▓▓▓▒▒
+    //                           ▓▓▓▓████░░░░░░░░░░░░░░░░██████▓▓
+    //                         ▓▓████░░░░░░░░░░░░░░░░░░░░░░░░░░████
+    //                       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //                     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //                   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //                 ▓▓██░░░░░░▓▓██░░  ░░░░░░░░░░░░░░░░░░░░▓▓██░░  ░░██
+    //               ▓▓██░░░░░░░░██████░░░░░░░░░░░░░░░░░░░░░░██████░░░░░░██
+    //               ▓▓██░░░░░░░░██████▓▓░░░░░░██░░░░██░░░░░░██████▓▓░░░░██
     //             ▓▓██▒▒░░░░░░░░▓▓████▓▓░░░░░░████████░░░░░░▓▓████▓▓░░░░░░██
     //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░██░░░░██░░░░░░░░░░░░░░░░░░░░██
     //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
@@ -609,33 +879,40 @@ public class DoTArmy
     //         ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
     //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
     //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
-    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██    
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░Script Made for Potatos ░░░░░░░░░░░░░░██    
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██    
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██    
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██    
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //     ░░▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██  
-    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░  
-    //         ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██    
-    //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██      
-    //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██        
-    //             ▓▓████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██          
-    //               ▓▓▓▓████████░░░░░░░░░░░░░░░░░░░░░░░░████████░░          
-    //               ░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░   
+    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░Script Made for Potatos ░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //   ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //     ░░▓▓▓▓░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //       ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██░░
+    //         ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //           ▓▓██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //             ▓▓████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██
+    //               ▓▓▓▓████████░░░░░░░░░░░░░░░░░░░░░░░░████████░░
+    //               ░░░░▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░
 
-    void ArmyHunt(string map, string[] monsters, string item, ClassType classType, bool isTemp = false, int quant = 1)
+    void ArmyHunt(
+        string map,
+        string[] monsters,
+        string item,
+        ClassType classType,
+        bool isTemp = false,
+        int quant = 1
+    )
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
@@ -655,27 +932,25 @@ public class DoTArmy
         {
             if (monsters == new[] { "Hydra Head 90" })
             {
-                Core.Logger("Swapping classes to 1 of the 3\n" +
-                ">> so that we can be sure you arent doing multi targeting\n" +
-                ">> as itd fuck it up");
+                Core.Logger(
+                    "Swapping classes to 1 of the 3\n"
+                        + ">> so that we can be sure you arent doing multi targeting\n"
+                        + ">> as itd fuck it up"
+                );
 
                 foreach (string Class in new[] { "StoneCrusher", "Lord of Order", "Void Highlord" })
                     if (Core.CheckInventory(Class))
                         Core.Equip(Class);
 
-
                 while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                     Bot.Combat.Attack("*");
                 break;
             }
-
             else if (monsters == new[] { "Tigoras" })
             {
                 Core.KillTrigoras(item, quant, 1, isTemp);
                 break;
             }
-
-
             else if (monsters != new[] { "Tigoras" } || monsters != new[] { "Hydra Head 90" })
                 Bot.Combat.Attack("*");
         }
@@ -690,7 +965,14 @@ public class DoTArmy
         //Army.WaitForParty(map, item);
     }
 
-    void ArmyHunt(string map, int monsterID, string item, ClassType classType, bool isTemp = false, int quant = 1)
+    void ArmyHunt(
+        string map,
+        int monsterID,
+        string item,
+        ClassType classType,
+        bool isTemp = false,
+        int quant = 1
+    )
     {
         Core.PrivateRooms = true;
         Core.PrivateRoomNumber = Army.getRoomNr();
@@ -713,8 +995,6 @@ public class DoTArmy
 
         Army.SmartAggroMonStart(map, monster.Name);
 
-
-
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             Bot.Combat.Attack("*");
 
@@ -728,7 +1008,6 @@ public class DoTArmy
         }
         //Army.WaitForParty(map, item);
     }
-
 
     public void PlayerAFK()
     {

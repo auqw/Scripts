@@ -18,31 +18,72 @@ public class BeleensDyeMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CyseroMerge CyseroMerge { get => _CyseroMerge ??= new CyseroMerge(); set => _CyseroMerge = value; }
+    private static CyseroMerge CyseroMerge
+    {
+        get => _CyseroMerge ??= new CyseroMerge();
+        set => _CyseroMerge = value;
+    }
     private static CyseroMerge _CyseroMerge;
-    private static ArtixWeddingMerge ArtixWeddingMerge { get => _ArtixWeddingMerge ??= new ArtixWeddingMerge(); set => _ArtixWeddingMerge = value; }
+    private static ArtixWeddingMerge ArtixWeddingMerge
+    {
+        get => _ArtixWeddingMerge ??= new ArtixWeddingMerge();
+        set => _ArtixWeddingMerge = value;
+    }
     private static ArtixWeddingMerge _ArtixWeddingMerge;
-    private static SwaggysChateau SwaggysChateau { get => _SwaggysChateau ??= new SwaggysChateau(); set => _SwaggysChateau = value; }
+    private static SwaggysChateau SwaggysChateau
+    {
+        get => _SwaggysChateau ??= new SwaggysChateau();
+        set => _SwaggysChateau = value;
+    }
     private static SwaggysChateau _SwaggysChateau;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Astral Entity", "Pink Potion", "Mr. Cuddles Pet", "Mr. Cuddles on your Head", "Fists of Fire", "Like a Battlemoglin", "Green Sockatana", "Chainsaw Katana", "Unarmed", "Kitty SkyFighter", "BaconCat Force Face", "Ebil Ninja", "Ebil Ninja Hood" });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Astral Entity",
+                "Pink Potion",
+                "Mr. Cuddles Pet",
+                "Mr. Cuddles on your Head",
+                "Fists of Fire",
+                "Like a Battlemoglin",
+                "Green Sockatana",
+                "Chainsaw Katana",
+                "Unarmed",
+                "Kitty SkyFighter",
+                "BaconCat Force Face",
+                "Ebil Ninja",
+                "Ebil Ninja Hood",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -61,7 +102,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -72,9 +115,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Astral Entity":
                     Core.EquipClass(ClassType.Solo);
@@ -105,7 +153,13 @@ private static CoreAdvanced _sAdv;
 
                 case "Chainsaw Katana":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("darkoviahorde", "Zombie Dragon", req.Name, quant, isTemp: false);
+                    Core.HuntMonster(
+                        "darkoviahorde",
+                        "Zombie Dragon",
+                        req.Name,
+                        quant,
+                        isTemp: false
+                    );
                     break;
 
                 case "Unarmed":
@@ -121,24 +175,83 @@ private static CoreAdvanced _sAdv;
                 case "Ebil Ninja Hood":
                     ArtixWeddingMerge.BuyAllMerge(req.Name);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("42721", "Magentity", "Mode: [select] only\nShould the bot buy \"Magentity\" ?", false),
-        new Option<bool>("42722", "Mrs. Cuddles Pet", "Mode: [select] only\nShould the bot buy \"Mrs. Cuddles Pet\" ?", false),
-        new Option<bool>("42723", "Mrs. Cuddles on Your Head", "Mode: [select] only\nShould the bot buy \"Mrs. Cuddles on Your Head\" ?", false),
-        new Option<bool>("42725", "Fists of Fierceness", "Mode: [select] only\nShould the bot buy \"Fists of Fierceness\" ?", false),
-        new Option<bool>("42730", "Like A Pretty Battlemoglin", "Mode: [select] only\nShould the bot buy \"Like A Pretty Battlemoglin\" ?", false),
-        new Option<bool>("42732", "Pink Sockatana", "Mode: [select] only\nShould the bot buy \"Pink Sockatana\" ?", false),
-        new Option<bool>("42735", "Pink Chainsaw Katana", "Mode: [select] only\nShould the bot buy \"Pink Chainsaw Katana\" ?", false),
-        new Option<bool>("42729", "Pink Unarmed", "Mode: [select] only\nShould the bot buy \"Pink Unarmed\" ?", false),
-        new Option<bool>("42737", "Derp Llama Overlord", "Mode: [select] only\nShould the bot buy \"Derp Llama Overlord\" ?", false),
-        new Option<bool>("42738", "Derp Llama Face", "Mode: [select] only\nShould the bot buy \"Derp Llama Face\" ?", false),
-        new Option<bool>("42739", "Rose Ebil Ninja", "Mode: [select] only\nShould the bot buy \"Rose Ebil Ninja\" ?", false),
-        new Option<bool>("42741", "Rose Ninja Hood", "Mode: [select] only\nShould the bot buy \"Rose Ninja Hood\" ?", false),
+        new Option<bool>(
+            "42721",
+            "Magentity",
+            "Mode: [select] only\nShould the bot buy \"Magentity\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42722",
+            "Mrs. Cuddles Pet",
+            "Mode: [select] only\nShould the bot buy \"Mrs. Cuddles Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42723",
+            "Mrs. Cuddles on Your Head",
+            "Mode: [select] only\nShould the bot buy \"Mrs. Cuddles on Your Head\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42725",
+            "Fists of Fierceness",
+            "Mode: [select] only\nShould the bot buy \"Fists of Fierceness\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42730",
+            "Like A Pretty Battlemoglin",
+            "Mode: [select] only\nShould the bot buy \"Like A Pretty Battlemoglin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42732",
+            "Pink Sockatana",
+            "Mode: [select] only\nShould the bot buy \"Pink Sockatana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42735",
+            "Pink Chainsaw Katana",
+            "Mode: [select] only\nShould the bot buy \"Pink Chainsaw Katana\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42729",
+            "Pink Unarmed",
+            "Mode: [select] only\nShould the bot buy \"Pink Unarmed\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42737",
+            "Derp Llama Overlord",
+            "Mode: [select] only\nShould the bot buy \"Derp Llama Overlord\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42738",
+            "Derp Llama Face",
+            "Mode: [select] only\nShould the bot buy \"Derp Llama Face\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42739",
+            "Rose Ebil Ninja",
+            "Mode: [select] only\nShould the bot buy \"Rose Ebil Ninja\" ?",
+            false
+        ),
+        new Option<bool>(
+            "42741",
+            "Rose Ninja Hood",
+            "Mode: [select] only\nShould the bot buy \"Rose Ninja Hood\" ?",
+            false
+        ),
     };
 }

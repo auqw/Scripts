@@ -11,7 +11,11 @@ public class Friendship
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -58,7 +62,19 @@ public class Friendship
 
         // Darkness Distress (9103)
         Story.MapItemQuest(9103, "greyguard", 11205);
-        Story.KillQuest(9103, "greyguard", new[] { "Gloombloom", "Carcass Creeper", "Fearweaver", "Darkbark", "Twilighteeth", "Maulignant", });
+        Story.KillQuest(
+            9103,
+            "greyguard",
+            new[]
+            {
+                "Gloombloom",
+                "Carcass Creeper",
+                "Fearweaver",
+                "Darkbark",
+                "Twilighteeth",
+                "Maulignant",
+            }
+        );
 
         // Your New FF (9104)
         if (!Story.QuestProgression(9104))

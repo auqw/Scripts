@@ -15,8 +15,13 @@ public class Mockingbird
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFrostvale Frost { get => _Frost ??= new CoreFrostvale(); set => _Frost = value; }
+    private static CoreFrostvale Frost
+    {
+        get => _Frost ??= new CoreFrostvale();
+        set => _Frost = value;
+    }
     private static CoreFrostvale _Frost;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -27,6 +32,7 @@ public class Mockingbird
     }
 
     int QuestID = 10004;
+
     public void GetRewards()
     {
         Frost.HolidayHotel();
@@ -64,7 +70,7 @@ Possible extras:
     List<ItemBase> RewardOptions1 = Core.EnsureLoad(QuestID).Rewards;
     List<ItemBase> RewardOptions2 = Core.EnsureLoad(QuestID).Rewards;
   foreach (ItemBase item in RewardOptions1.Concat(RewardOptions2).ToArray())
-  {    
+  {
     if(Core.CheckInventory(item.ID, Quant))
         return;
     

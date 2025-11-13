@@ -9,14 +9,27 @@ tags: thunder forge, thunderforge, thunder, forge, rep, rank, reputation
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
 using Skua.Core.Interfaces;
+
 public class ThunderForgeREP
 {
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }
+    private static Core13LoC LOC
+    {
+        get => _LOC ??= new Core13LoC();
+        set => _LOC = value;
+    }
     private static Core13LoC _LOC;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -32,8 +45,6 @@ public class ThunderForgeREP
     {
         LOC.Lionfang();
 
-
         Farm.ThunderForgeREP();
-
     }
 }

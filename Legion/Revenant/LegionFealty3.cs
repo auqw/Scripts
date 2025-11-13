@@ -16,7 +16,11 @@ using Skua.Core.Interfaces;
 public class LegionFealty3
 {
     private CoreBots Core => CoreBots.Instance;
-    private static CoreLR LR { get => _LR ??= new CoreLR(); set => _LR = value; }
+    private static CoreLR LR
+    {
+        get => _LR ??= new CoreLR();
+        set => _LR = value;
+    }
     private static CoreLR _LR;
 
     public void ScriptMain(IScriptInterface bot)

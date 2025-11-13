@@ -14,8 +14,17 @@ public class MurderMoon
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
     public void ScriptMain(IScriptInterface bot)
@@ -69,13 +78,22 @@ public class MurderMoon
                     Core.Equip("Dark Lord");
                 else if (Core.CheckInventory("Darkside"))
                     Core.Equip("Darkside");
-                else Core.Logger("Neither `Darkside or `Dark Lord` owned... guess we'll use what u have on peasant");
+                else
+                    Core.Logger(
+                        "Neither `Darkside or `Dark Lord` owned... guess we'll use what u have on peasant"
+                    );
             }
 
             if (Adv.uElysium())
             {
-                InventoryItem? EquippedWeapon = Bot.Inventory.Items.Find(i => i != null && i.Equipped && Adv.WeaponCatagories.Contains(i.Category));
-                Adv.EnhanceItem(EquippedWeapon!.Name, EnhancementType.Wizard, wSpecial: WeaponSpecial.Elysium);
+                InventoryItem? EquippedWeapon = Bot.Inventory.Items.Find(i =>
+                    i != null && i.Equipped && Adv.WeaponCatagories.Contains(i.Category)
+                );
+                Adv.EnhanceItem(
+                    EquippedWeapon!.Name,
+                    EnhancementType.Wizard,
+                    wSpecial: WeaponSpecial.Elysium
+                );
             }
 
             Story.KillQuest(9224, "murdermoon", "Fourth Lynaria");
@@ -89,13 +107,27 @@ public class MurderMoon
         if (Core.CheckInventory("Dark Lord"))
             return;
 
-        Core.AddDrop($"Cyber Crystal", "S Ring", "Fifth Lord's Filtrinator", "Dark Helmet", "Dotty");
+        Core.AddDrop(
+            $"Cyber Crystal",
+            "S Ring",
+            "Fifth Lord's Filtrinator",
+            "Dark Helmet",
+            "Dotty"
+        );
 
         //Cyber Crystal x66
         Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(8065);
         while (!Bot.ShouldExit && !Core.CheckInventory("Cyber Crystal", 66))
-            Core.KillMonster("murdermoon", "r2", "Left", "Tempest Soldier", "Tempest Soldier Badge", 5, log: false);
+            Core.KillMonster(
+                "murdermoon",
+                "r2",
+                "Left",
+                "Tempest Soldier",
+                "Tempest Soldier Badge",
+                5,
+                log: false
+            );
         Core.CancelRegisteredQuests();
 
         //S Ring x15
@@ -121,5 +153,4 @@ public class MurderMoon
 
         Adv.RankUpClass("Dark Lord");
     }
-
 }

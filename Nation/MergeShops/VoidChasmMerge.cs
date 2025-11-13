@@ -54,27 +54,52 @@ public class VoidChasmMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
-    private static VoidChasm VoidChasm { get => _VoidChasm ??= new VoidChasm(); set => _VoidChasm = value; }    private static VoidChasm _VoidChasm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
+    private static VoidChasm VoidChasm
+    {
+        get => _VoidChasm ??= new VoidChasm();
+        set => _VoidChasm = value;
+    }
+    private static VoidChasm _VoidChasm;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Void Remnant", "Tainted Gem", "Essence of Nulgath" });
+        Core.BankingBlackList.AddRange(
+            new[] { "Void Remnant", "Tainted Gem", "Essence of Nulgath" }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -93,7 +118,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -104,9 +131,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Void Remnant":
                     Core.FarmingLogger(req.Name, quant);
@@ -115,10 +147,29 @@ private static CoreAdvanced _sAdv;
                         Core.AddDrop("Void Remnant");
                         Core.EnsureAccept(9553);
                         Core.EquipClass(ClassType.Solo);
-                        Core.KillMonster("voidchasm", "r10", "Left", "Carcano", "Carcano's Teratoma");
-                        Core.KillMonster("voidchasm", "r9", "Left", "Carnage", "Bloodied Chainlink");
+                        Core.KillMonster(
+                            "voidchasm",
+                            "r10",
+                            "Left",
+                            "Carcano",
+                            "Carcano's Teratoma"
+                        );
+                        Core.KillMonster(
+                            "voidchasm",
+                            "r9",
+                            "Left",
+                            "Carnage",
+                            "Bloodied Chainlink"
+                        );
                         Core.EquipClass(ClassType.Farm);
-                        Core.KillMonster("voidchasm", "r7", "Left", "The Hushed", "Defunct Seal of Approval", 6);
+                        Core.KillMonster(
+                            "voidchasm",
+                            "r7",
+                            "Left",
+                            "The Hushed",
+                            "Defunct Seal of Approval",
+                            6
+                        );
                         Core.EnsureComplete(9553);
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -131,30 +182,119 @@ private static CoreAdvanced _sAdv;
                 case "Essence of Nulgath":
                     Nation.EssenceofNulgath(quant);
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("83042", "Abyssal Gravity Ball", "Mode: [select] only\nShould the bot buy \"Abyssal Gravity Ball\" ?", false),
-        new Option<bool>("83043", "Abyssal Gravity Balls", "Mode: [select] only\nShould the bot buy \"Abyssal Gravity Balls\" ?", false),
-        new Option<bool>("83130", "Midnight Fiend of Nulgath", "Mode: [select] only\nShould the bot buy \"Midnight Fiend of Nulgath\" ?", false),
-        new Option<bool>("83131", "Midnight Fiend Hood", "Mode: [select] only\nShould the bot buy \"Midnight Fiend Hood\" ?", false),
-        new Option<bool>("83132", "Midnight Blood Moon", "Mode: [select] only\nShould the bot buy \"Midnight Blood Moon\" ?", false),
-        new Option<bool>("83133", "Winged Midnight Fiend Cape", "Mode: [select] only\nShould the bot buy \"Winged Midnight Fiend Cape\" ?", false),
-        new Option<bool>("83134", "Winged Bloodmoon Cape", "Mode: [select] only\nShould the bot buy \"Winged Bloodmoon Cape\" ?", false),
-        new Option<bool>("83135", "Darksided Fiend Blade", "Mode: [select] only\nShould the bot buy \"Darksided Fiend Blade\" ?", false),
-        new Option<bool>("83136", "Darksided Fiend Blades", "Mode: [select] only\nShould the bot buy \"Darksided Fiend Blades\" ?", false),
-        new Option<bool>("83137", "Midnight Fiend Sword", "Mode: [select] only\nShould the bot buy \"Midnight Fiend Sword\" ?", false),
-        new Option<bool>("83138", "Midnight Fiend Swords", "Mode: [select] only\nShould the bot buy \"Midnight Fiend Swords\" ?", false),
-        new Option<bool>("83228", "Energized Archfiend Spines", "Mode: [select] only\nShould the bot buy \"Energized Archfiend Spines\" ?", false),
-        new Option<bool>("83229", "Runed Archfiend Spines", "Mode: [select] only\nShould the bot buy \"Runed Archfiend Spines\" ?", false),
-        new Option<bool>("69634", "Draconic Nation Double Axe", "Mode: [select] only\nShould the bot buy \"Draconic Nation Double Axe\" ?", false),
-        new Option<bool>("69635", "Inferno Nation Double Axe", "Mode: [select] only\nShould the bot buy \"Inferno Nation Double Axe\" ?", false),
-        new Option<bool>("83524", "Draconic Nation Double Axes", "Mode: [select] only\nShould the bot buy \"Draconic Nation Double Axes\" ?", false),
-        new Option<bool>("83525", "Inferno Nation Double Axes", "Mode: [select] only\nShould the bot buy \"Inferno Nation Double Axes\" ?", false),
-        new Option<bool>("70184", "Prime Fiend Shard", "Mode: [select] only\nShould the bot buy \"Prime Fiend Shard\" ?", false),
+        new Option<bool>(
+            "83042",
+            "Abyssal Gravity Ball",
+            "Mode: [select] only\nShould the bot buy \"Abyssal Gravity Ball\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83043",
+            "Abyssal Gravity Balls",
+            "Mode: [select] only\nShould the bot buy \"Abyssal Gravity Balls\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83130",
+            "Midnight Fiend of Nulgath",
+            "Mode: [select] only\nShould the bot buy \"Midnight Fiend of Nulgath\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83131",
+            "Midnight Fiend Hood",
+            "Mode: [select] only\nShould the bot buy \"Midnight Fiend Hood\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83132",
+            "Midnight Blood Moon",
+            "Mode: [select] only\nShould the bot buy \"Midnight Blood Moon\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83133",
+            "Winged Midnight Fiend Cape",
+            "Mode: [select] only\nShould the bot buy \"Winged Midnight Fiend Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83134",
+            "Winged Bloodmoon Cape",
+            "Mode: [select] only\nShould the bot buy \"Winged Bloodmoon Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83135",
+            "Darksided Fiend Blade",
+            "Mode: [select] only\nShould the bot buy \"Darksided Fiend Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83136",
+            "Darksided Fiend Blades",
+            "Mode: [select] only\nShould the bot buy \"Darksided Fiend Blades\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83137",
+            "Midnight Fiend Sword",
+            "Mode: [select] only\nShould the bot buy \"Midnight Fiend Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83138",
+            "Midnight Fiend Swords",
+            "Mode: [select] only\nShould the bot buy \"Midnight Fiend Swords\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83228",
+            "Energized Archfiend Spines",
+            "Mode: [select] only\nShould the bot buy \"Energized Archfiend Spines\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83229",
+            "Runed Archfiend Spines",
+            "Mode: [select] only\nShould the bot buy \"Runed Archfiend Spines\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69634",
+            "Draconic Nation Double Axe",
+            "Mode: [select] only\nShould the bot buy \"Draconic Nation Double Axe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "69635",
+            "Inferno Nation Double Axe",
+            "Mode: [select] only\nShould the bot buy \"Inferno Nation Double Axe\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83524",
+            "Draconic Nation Double Axes",
+            "Mode: [select] only\nShould the bot buy \"Draconic Nation Double Axes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "83525",
+            "Inferno Nation Double Axes",
+            "Mode: [select] only\nShould the bot buy \"Inferno Nation Double Axes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "70184",
+            "Prime Fiend Shard",
+            "Mode: [select] only\nShould the bot buy \"Prime Fiend Shard\" ?",
+            false
+        ),
     };
 }

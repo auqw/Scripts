@@ -5,14 +5,19 @@ tags: story, quest, dragon-road
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
-using Skua.Core.Interfaces;
 using System.Collections.Generic;
+using Skua.Core.Interfaces;
 
 public class DragonRoad
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -34,7 +39,11 @@ public class DragonRoad
         Story.PreLoad(this);
 
         //Obtain the DragonStar Radar 4534
-        if (!Story.QuestProgression(4534) || !Core.CheckInventory("Dragon Star Radar") || !Core.CheckInventory("DragonStar Map"))
+        if (
+            !Story.QuestProgression(4534)
+            || !Core.CheckInventory("Dragon Star Radar")
+            || !Core.CheckInventory("DragonStar Map")
+        )
         {
             Core.AddDrop("Dragon Star Radar", "DragonStar Map");
             Core.EnsureAccept(4534);
@@ -87,7 +96,6 @@ public class DragonRoad
             Core.EnsureComplete(4539);
         }
 
-
         //Find the Sixth DragonStar Crystal  4540
         if (!Story.QuestProgression(4540))
         {
@@ -117,6 +125,5 @@ public class DragonRoad
 
         //Defeat Super Dragon Twig! 4547
         Story.KillQuest(4547, "DragonRoad", "Super Dragon Twig");
-
     }
 }

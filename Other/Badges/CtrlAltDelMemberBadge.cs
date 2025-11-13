@@ -12,8 +12,18 @@ public class CtrlAltDelMemberBadge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -47,7 +57,7 @@ public class CtrlAltDelMemberBadge
         // Investigate the Storage Room
         Story.MapItemQuest(944, "gamehaven", 269);
 
-        // Map - WareHouse: 
+        // Map - WareHouse:
 
         // Inventory In Your Inventory
         Story.MapItemQuest(945, "WareHouse", 270, 10);
@@ -60,7 +70,6 @@ public class CtrlAltDelMemberBadge
 
         // Hey There Lie-lah
         Story.MapItemQuest(948, "WareHouse", 272);
-
 
         // Map - Arcadion:
         Core.EquipClass(ClassType.Solo);

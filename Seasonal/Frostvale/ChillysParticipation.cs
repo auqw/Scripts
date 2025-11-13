@@ -11,9 +11,14 @@ public class ChillysQuest
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
     public static int questID = 9988;
+
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();

@@ -12,7 +12,12 @@ public class NoEgrets
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreHarvestDay HarvestDay { get => _HarvestDay ??= new CoreHarvestDay(); set => _HarvestDay = value; }    private static CoreHarvestDay _HarvestDay;
+    private static CoreHarvestDay HarvestDay
+    {
+        get => _HarvestDay ??= new CoreHarvestDay();
+        set => _HarvestDay = value;
+    }
+    private static CoreHarvestDay _HarvestDay;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -33,7 +38,9 @@ public class NoEgrets
 
         if (!Core.isSeasonalMapActive("birdswithharms"))
         {
-            Core.Logger($"Can't get {badge} badge at this moment, because this is a seasonal badge (Harvest Day Event)");
+            Core.Logger(
+                $"Can't get {badge} badge at this moment, because this is a seasonal badge (Harvest Day Event)"
+            );
             return;
         }
 

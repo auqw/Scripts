@@ -10,26 +10,46 @@ tags: story, quest, elegy-of-madness, darkon, complete, all, higure
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
 
+using System.Collections.Generic;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
 using Skua.Core.Options;
-using System.Collections.Generic;
 
 public class FarmHigure
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
     private static CoreArmyLite _sArmy;
 
-    private static CoreAstravia Astravia { get => _Astravia ??= new CoreAstravia(); set => _Astravia = value; }
+    private static CoreAstravia Astravia
+    {
+        get => _Astravia ??= new CoreAstravia();
+        set => _Astravia = value;
+    }
     private static CoreAstravia _Astravia;
 
     public string OptionsStorage = "ArmyHigure";
@@ -42,22 +62,27 @@ public class FarmHigure
         sArmy.player5,
         sArmy.player6,
         sArmy.packetDelay,
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(Core.QuestRewards(7326, 8001, 8257, 8396, 8602, 8641, 8688, 9394));
+        Core.BankingBlackList.AddRange(
+            Core.QuestRewards(7326, 8001, 8257, 8396, 8602, 8641, 8688, 9394)
+        );
 
         Core.SetOptions();
 
-        Core.Logger("~\"All\"~ Army Scripts have been disabled by the author.", "**READ ME!!**", stopBot: true);
+        Core.Logger(
+            "~\"All\"~ Army Scripts have been disabled by the author.",
+            "**READ ME!!**",
+            stopBot: true
+        );
         // Higure();
         // EndCredits();
 
         Core.SetOptions(false);
     }
-
 
     void Higure()
     {
@@ -69,25 +94,24 @@ public class FarmHigure
 
         // Define item quantities
         var itemQuantities = new Dictionary<string, int>
-    {
-        { "Darkon's Receipt", 66 },
-        { "La's Gratitude", 66 },
-        { "Astravian Medal", 66 },
-        { "A Melody", 66 },
-        { "Suki's Prestige", 66 },
-        { "Ancient Remnant", 66 },
-        { "Mourning Flower", 66 },
-        { "Unfinished Musical Score", 66 },
-        { "Bounty Hunter Dubloon", 222 }
-    };
+        {
+            { "Darkon's Receipt", 66 },
+            { "La's Gratitude", 66 },
+            { "Astravian Medal", 66 },
+            { "A Melody", 66 },
+            { "Suki's Prestige", 66 },
+            { "Ancient Remnant", 66 },
+            { "Mourning Flower", 66 },
+            { "Unfinished Musical Score", 66 },
+            { "Bounty Hunter Dubloon", 222 },
+        };
 
         // Add items to the drops
         Core.Logger("Adding all drops & requirements to DropLog");
         foreach (int QuestID in new[] { 7326, 8001, 8257, 8396, 8602, 8641, 8688, 9394 })
         {
             Core.EnsureLoad(QuestID)
-                .Requirements
-                .Concat(Core.EnsureLoad(QuestID).Rewards)
+                .Requirements.Concat(Core.EnsureLoad(QuestID).Rewards)
                 .ToList()
                 .ForEach(item => Core.AddDrop(item.ID));
         }
@@ -96,7 +120,9 @@ public class FarmHigure
         Core.Logger("Required Items & Quants");
         foreach (var (item, quant) in itemQuantities)
         {
-            var quantityInInventory = Bot.Inventory.Contains(item) ? Bot.Inventory.GetQuantity(item) : 0;
+            var quantityInInventory = Bot.Inventory.Contains(item)
+                ? Bot.Inventory.GetQuantity(item)
+                : 0;
             var remainingQuantity = Math.Max(0, quant - quantityInInventory);
             Core.Logger($"{item} - Have: {quantityInInventory}, Need: {remainingQuantity}");
         }
@@ -104,7 +130,9 @@ public class FarmHigure
         // Handle getting items
         foreach (var (item, quant) in itemQuantities)
         {
-            var quantityInInventory = Bot.Inventory.Contains(item) ? Bot.Inventory.GetQuantity(item) : 0;
+            var quantityInInventory = Bot.Inventory.Contains(item)
+                ? Bot.Inventory.GetQuantity(item)
+                : 0;
             var remainingQuantity = Math.Max(0, quant - quantityInInventory);
             Core.FarmingLogger(item, quant);
             HandleItem(item);
@@ -220,7 +248,11 @@ public class FarmHigure
                 {
                     if (Bot.Map.PlayerCount < 3)
                     {
-                        Core.OneTimeMessage("Ancient Remnant - SoloMode", "Players Missing, Soloing", false);
+                        Core.OneTimeMessage(
+                            "Ancient Remnant - SoloMode",
+                            "Players Missing, Soloing",
+                            false
+                        );
                         Army.AggroMonStop(true);
                         while (!Bot.ShouldExit && !Core.CheckInventory("Ancient Remnant", 66))
                         {
@@ -279,25 +311,16 @@ public class FarmHigure
         }
     }
 
-
-
-
-
-
-
-
-
-
     //commented this out but kept incase previos breaks this does "ok" jsut broken butlering.
     // void Higure()
     // {
     //     Core.PrivateRooms = true;
     //     Core.PrivateRoomNumber = Army.getRoomNr();
 
-    //     #region prerequisites 
+    //     #region prerequisites
     //     Core.Logger("Checking quest completion and Doing / continuing");
     //     Astravia.CompleteCoreAstravia();
-    //     #endregion prerequisites 
+    //     #endregion prerequisites
 
     //     #region Space check & Adding items to droplog.
 
@@ -354,7 +377,6 @@ public class FarmHigure
     //             //Army.WaitForParty("whitemap", item);
     //             continue;
     //         }
-
 
     //         Core.FarmingLogger(item, quant);
     //         switch (item)
@@ -507,6 +529,4 @@ public class FarmHigure
         //⠄⠄⠄⠄⠄⠄⠄⠉⠲⣝⣫⣓⡙⣿⣜⣛⣛⣛⣻⡯⠹⠛⠁⠄⠄⠄⠄⠄⠄⠄
         //⠄⠄⠄⠄⠄⠄⠄⠄⠄⠈⠙⠛⢻⡈⢿⡿⠟⠛⠁⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄⠄
     }
-
-
 }

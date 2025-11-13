@@ -14,7 +14,11 @@ public class DragonsOfYokaiDrops
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreDOY DOY { get => _DOY ??= new CoreDOY(); set => _DOY = value; }
+    private static CoreDOY DOY
+    {
+        get => _DOY ??= new CoreDOY();
+        set => _DOY = value;
+    }
     private static CoreDOY _DOY;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -31,7 +35,8 @@ public class DragonsOfYokaiDrops
         DOY.DoAll();
 
         #region Yokai Pirate
-        string[] DisguisedPirate = {
+        string[] DisguisedPirate =
+        {
             "Backup Battle Blunderbuss",
             "Battlescarred Backup Cutlass",
             "Coastal Raider's Backup Rifle",
@@ -49,23 +54,21 @@ public class DragonsOfYokaiDrops
             "Maurader's Mane + Beard",
             "Maurader's Monkey Morph + Hat",
             "Pi-Rat Pet",
-            "Star Pirate's Cutlass + Rapier"
+            "Star Pirate's Cutlass + Rapier",
         };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(DisguisedPirate, "yokaipirate", "r2", "Left");
 
-        string[] NevergladesKnight = {
-            "Swashbuckler's Rapier",
-            "Yokai Gunpowder"
-        };
+        string[] NevergladesKnight = { "Swashbuckler's Rapier", "Yokai Gunpowder" };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(NevergladesKnight, "yokaipirate", "Enter", "Spawn");
         #endregion
 
         #region Yokai Treasure
-        string[] AdmiralZheng = {
+        string[] AdmiralZheng =
+        {
             "Daitengu Cloak",
             "Dual Loyal Alloy Tourne",
             "Dual Pearl Dust Shuriken",
@@ -80,13 +83,14 @@ public class DragonsOfYokaiDrops
             "Tengu Feather Cap",
             "Tengu Feather Locks",
             "Tengu Typhoon Cutlass",
-            "Wuji Zodiac Wheel"
+            "Wuji Zodiac Wheel",
         };
 
         Core.EquipClass(ClassType.Solo);
         runEngine(AdmiralZheng, "yokaitreasure", "r10", "Bottom");
 
-        string[] ImperialWarrior = {
+        string[] ImperialWarrior =
+        {
             "Iron Flight Cutlass",
             "Loyal Alloy Dirk",
             "Loyal Alloy Dirks",
@@ -101,13 +105,14 @@ public class DragonsOfYokaiDrops
             "Stygian Navigator's Hair",
             "Stygian Navigator's Locks",
             "Stygian Navigator's Morph",
-            "Stygian Navigator's Visage"
+            "Stygian Navigator's Visage",
         };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(ImperialWarrior, "yokaitreasure", "r9", "Right");
 
-        string[] NeedleMouth = {
+        string[] NeedleMouth =
+        {
             "Grim Sailor's Battle Gear",
             "GrimSailor's Pistol",
             "GrimSailor's Pistols",
@@ -116,16 +121,17 @@ public class DragonsOfYokaiDrops
             "Necro Crewmember's Blades",
             "Necro Crewmember's Blunderbuss",
             "Necro Crewmember's Flintlock",
-            "Necro Crewmember's Flintlocks"
+            "Necro Crewmember's Flintlocks",
         };
 
         Core.EquipClass(ClassType.Farm);
         runEngine(NeedleMouth, "yokaitreasure", "r2", "Right");
 
-        string[] Quicksilver = {
+        string[] Quicksilver =
+        {
             "J6's Backup Shotguns",
             "Raging Storm Blunderbuss",
-            "Westion Commander's Backup Shotguns"
+            "Westion Commander's Backup Shotguns",
         };
 
         Core.EquipClass(ClassType.Farm);
@@ -133,11 +139,12 @@ public class DragonsOfYokaiDrops
         #endregion
 
         #region Haku Village
-        string[] DaiTengu = {
+        string[] DaiTengu =
+        {
             "Elegant Changshan",
             "Hooded Loose Noble Topknot",
             "Loose Noble Topknot",
-            "Noble Incognito Cloak"
+            "Noble Incognito Cloak",
         };
 
         Core.EquipClass(ClassType.Solo);
@@ -158,7 +165,7 @@ public class DragonsOfYokaiDrops
                 Core.RemoveDrop(drop);
                 continue;
             }
-            
+
             Core.Logger($"{drop}: ({i + 1}/{rewards.Length})");
 
             while (!Bot.ShouldExit && !Core.CheckInventory(drop))

@@ -9,13 +9,29 @@ tags: null
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
 using Skua.Core.Interfaces;
+
 public class NoHollowbornClass
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-    private static CoreHollowbornStory HB { get => _HB ??= new CoreHollowbornStory(); set => _HB = value; }    private static CoreHollowbornStory _HB;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreHollowbornStory HB
+    {
+        get => _HB ??= new CoreHollowbornStory();
+        set => _HB = value;
+    }
+    private static CoreHollowbornStory _HB;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -39,7 +55,7 @@ public class NoHollowbornClass
                 Adv.RankUpClass("No Hollowborn Class");
             return;
         }
-      
+
         HB.Trygve();
 
         Core.AddDrop("No Hollowborn Class");

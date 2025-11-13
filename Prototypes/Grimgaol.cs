@@ -118,17 +118,17 @@ tags: grimgoal, dungeon, why, did, we, make, this, Testing, WIP, beta
 //cs_include Scripts/Story/Yokai.cs
 #endregion includes
 
+using System.Diagnostics;
+using System.Globalization;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using Skua.Core.Interfaces;
+using Skua.Core.Models;
+using Skua.Core.Models.Auras;
+using Skua.Core.Models.Items;
+using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Players;
 using Skua.Core.Options;
-using Newtonsoft.Json.Linq;
-using Skua.Core.Models.Monsters;
-using Skua.Core.Models.Items;
-using Skua.Core.Models.Auras;
-using System.Diagnostics;
-using Skua.Core.Models;
-using System.Globalization;
 using Skua.Core.Utils;
 
 public class Grimgaol
@@ -136,19 +136,47 @@ public class Grimgaol
     private IScriptInterface Bot => IScriptInterface.Instance;
     private static CoreBots Core => CoreBots.Instance;
 
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static DoomVaultB DVB { get => _DVB ??= new DoomVaultB(); set => _DVB = value; }
+    private static DoomVaultB DVB
+    {
+        get => _DVB ??= new DoomVaultB();
+        set => _DVB = value;
+    }
     private static DoomVaultB _DVB;
-    private static InfernalArenaMerge InfernalArena { get => _InfernalArena ??= new InfernalArenaMerge(); set => _InfernalArena = value; }
+    private static InfernalArenaMerge InfernalArena
+    {
+        get => _InfernalArena ??= new InfernalArenaMerge();
+        set => _InfernalArena = value;
+    }
     private static InfernalArenaMerge _InfernalArena;
-    private static J6Saga J6 { get => _J6 ??= new J6Saga(); set => _J6 = value; }
+    private static J6Saga J6
+    {
+        get => _J6 ??= new J6Saga();
+        set => _J6 = value;
+    }
     private static J6Saga _J6;
-    private static UnlockForgeEnhancements Forge { get => _Forge ??= new UnlockForgeEnhancements(); set => _Forge = value; }
+    private static UnlockForgeEnhancements Forge
+    {
+        get => _Forge ??= new UnlockForgeEnhancements();
+        set => _Forge = value;
+    }
     private static UnlockForgeEnhancements _Forge;
 
     Stopwatch runTimer = new();
@@ -165,25 +193,66 @@ public class Grimgaol
 
         // Skip Options
         CoreBots.Instance.SkipOptions,
-
         // Skip Enhancements
-        new Option<bool>("SkipEnhancements", "Skip Item Enhancing", "If enabled, will not enhance items for the run (this doesnt mean skip enhancements you dont have... these enhancements are **VERY** important).", false),
-        new Option<bool>("RoomTimers", "Time each room?", "If enabled, this will log the time for each room into chat/the Logs > scripts tab.", false),
-
+        new Option<bool>(
+            "SkipEnhancements",
+            "Skip Item Enhancing",
+            "If enabled, will not enhance items for the run (this doesnt mean skip enhancements you dont have... these enhancements are **VERY** important).",
+            false
+        ),
+        new Option<bool>(
+            "RoomTimers",
+            "Time each room?",
+            "If enabled, this will log the time for each room into chat/the Logs > scripts tab.",
+            false
+        ),
         // Weapons
-        new Option<string>("Valiance", "Weapon: Valiance", "insert Name of your Valiance weapon", ""),
-        new Option<string>("Dauntless", "Weapon: Dauntless", "insert Name of your Dauntless weapon ( this will be subbed with Valiance if u dont have Daunt so just copy your Valiance weapon Name here)", ""),
+        new Option<string>(
+            "Valiance",
+            "Weapon: Valiance",
+            "insert Name of your Valiance weapon",
+            ""
+        ),
+        new Option<string>(
+            "Dauntless",
+            "Weapon: Dauntless",
+            "insert Name of your Dauntless weapon ( this will be subbed with Valiance if u dont have Daunt so just copy your Valiance weapon Name here)",
+            ""
+        ),
         new Option<string>("Elysium", "Weapon: Elysium", "insert Name of your Elysium weapon", ""),
-      
         // Helm
         new Option<string>("LuckHelm", "Helm: LuckHelm", "insert Name of your Lucky helm", ""),
-        new Option<string>("HealerHelm", "Helm: HealerHelm", "insert Name of your Healer helm (used for DoT Sheltons)", ""),
-        new Option<string>("AnimaHelm", "Helm: AnimaHelm", "insert Name of your AnimaHelm helm", ""),
-        new Option<string>("PneumaHelm", "Helm: PneumaHelm", "insert Name of your Pneuma helm (used for VHL Sheltons)", ""),
-        
+        new Option<string>(
+            "HealerHelm",
+            "Helm: HealerHelm",
+            "insert Name of your Healer helm (used for DoT Sheltons)",
+            ""
+        ),
+        new Option<string>(
+            "AnimaHelm",
+            "Helm: AnimaHelm",
+            "insert Name of your AnimaHelm helm",
+            ""
+        ),
+        new Option<string>(
+            "PneumaHelm",
+            "Helm: PneumaHelm",
+            "insert Name of your Pneuma helm (used for VHL Sheltons)",
+            ""
+        ),
         // Cape
-        new Option<string>("Penitence", "Cape: Penitence", "insert Name of your Penitence cape", ""),
-        new Option<string>("Vainglory", "Cape: Vainglory", "insert Name of your Vainglory cape", ""),
+        new Option<string>(
+            "Penitence",
+            "Cape: Penitence",
+            "insert Name of your Penitence cape",
+            ""
+        ),
+        new Option<string>(
+            "Vainglory",
+            "Cape: Vainglory",
+            "insert Name of your Vainglory cape",
+            ""
+        ),
         new Option<string>("HealerCape", "Cape: HealerCape", "insert Name of your Healer cape", ""),
     };
 
@@ -217,11 +286,15 @@ public class Grimgaol
             if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
                 Core.EnsureAccept(9469);
 
-            Core.EnsureAccept(!Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467));
+            Core.EnsureAccept(
+                !Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467)
+            );
 
             if (Bot.Map.Name.ToLower() == "grimgaol")
             {
-                Core.Logger("Already in the dungeon (weird flex but ok)... we'll continue from where you left off");
+                Core.Logger(
+                    "Already in the dungeon (weird flex but ok)... we'll continue from where you left off"
+                );
                 Init();
             }
             else
@@ -258,14 +331,24 @@ public class Grimgaol
         TimeSpan bestTime = LoadBestTime();
         bool isNewPB = currentTime < bestTime;
 
-        Core.Logger($"Dungeon run took: {currentTime:mm\\:ss\\.fff} | Personal Best: {(bestTime == TimeSpan.MaxValue ? "N/A" : bestTime.ToString("mm\\:ss\\.fff"))}" +
-                    (isNewPB ? " (New PB!)" : ""));
+        Core.Logger(
+            $"Dungeon run took: {currentTime:mm\\:ss\\.fff} | Personal Best: {(bestTime == TimeSpan.MaxValue ? "N/A" : bestTime.ToString("mm\\:ss\\.fff"))}"
+                + (isNewPB ? " (New PB!)" : "")
+        );
     }
 
     TimeSpan LoadBestTime()
     {
-        string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
-        string backupPath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes_backup.txt");
+        string path = Path.Combine(
+            ClientFileSources.SkuaScriptsDIR,
+            "Prototypes",
+            "GrimGaolRunTimes.txt"
+        );
+        string backupPath = Path.Combine(
+            ClientFileSources.SkuaScriptsDIR,
+            "Prototypes",
+            "GrimGaolRunTimes_backup.txt"
+        );
 
         // Auto-restore from backup if main file missing or empty
         if (!File.Exists(path) || new FileInfo(path).Length == 0)
@@ -290,7 +373,15 @@ public class Grimgaol
             if (string.IsNullOrWhiteSpace(trimmed))
                 continue;
 
-            if (TimeSpan.TryParseExact(trimmed, "c", CultureInfo.InvariantCulture, out TimeSpan parsed) && parsed >= TimeSpan.Zero)
+            if (
+                TimeSpan.TryParseExact(
+                    trimmed,
+                    "c",
+                    CultureInfo.InvariantCulture,
+                    out TimeSpan parsed
+                )
+                && parsed >= TimeSpan.Zero
+            )
             {
                 validLines.Add(parsed.ToString("c", CultureInfo.InvariantCulture));
                 if (parsed < best)
@@ -305,7 +396,15 @@ public class Grimgaol
             Core.Logger("All main file entries were invalid, restored from backup.");
             foreach (string line in File.ReadAllLines(path))
             {
-                if (TimeSpan.TryParseExact(line.Trim(), "c", CultureInfo.InvariantCulture, out TimeSpan parsed) && parsed >= TimeSpan.Zero)
+                if (
+                    TimeSpan.TryParseExact(
+                        line.Trim(),
+                        "c",
+                        CultureInfo.InvariantCulture,
+                        out TimeSpan parsed
+                    )
+                    && parsed >= TimeSpan.Zero
+                )
                 {
                     validLines.Add(parsed.ToString("c", CultureInfo.InvariantCulture));
                     if (parsed < best)
@@ -321,9 +420,10 @@ public class Grimgaol
         // Maintain backup with last MaxBackupRuns
         if (validLines.Count > 0)
         {
-            List<string> backupLines = validLines.Count > MaxBackupRuns
-                ? validLines.GetRange(validLines.Count - MaxBackupRuns, MaxBackupRuns)
-                : new List<string>(validLines);
+            List<string> backupLines =
+                validLines.Count > MaxBackupRuns
+                    ? validLines.GetRange(validLines.Count - MaxBackupRuns, MaxBackupRuns)
+                    : new List<string>(validLines);
 
             File.WriteAllLines(backupPath, backupLines);
         }
@@ -336,12 +436,19 @@ public class Grimgaol
         if (run < TimeSpan.Zero)
             run = TimeSpan.Zero;
 
-        string path = Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes", "GrimGaolRunTimes.txt");
+        string path = Path.Combine(
+            ClientFileSources.SkuaScriptsDIR,
+            "Prototypes",
+            "GrimGaolRunTimes.txt"
+        );
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
 
         try
         {
-            File.AppendAllText(path, run.ToString("c", CultureInfo.InvariantCulture) + Environment.NewLine);
+            File.AppendAllText(
+                path,
+                run.ToString("c", CultureInfo.InvariantCulture) + Environment.NewLine
+            );
         }
         catch (IOException ex)
         {
@@ -350,6 +457,7 @@ public class Grimgaol
     }
 
     bool Daunt = false;
+
     private void Init()
     {
         if (Bot.Player.Cell.ToLower().Contains("cut"))
@@ -517,7 +625,6 @@ public class Grimgaol
                         }
                         break;
 
-
                     default:
                         break;
                 }
@@ -536,7 +643,9 @@ public class Grimgaol
             LogRun();
         }
 
-        Core.EnsureComplete(!Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467));
+        Core.EnsureComplete(
+            !Core.HasWebBadge("SkullCrusher") ? 9466 : (Core.IsMember ? 9468 : 9467)
+        );
 
         if (!Bot.Quests.IsDailyComplete(9469) && Core.HasWebBadge("SkullCrusher"))
             Core.EnsureComplete(9469);
@@ -570,7 +679,9 @@ public class Grimgaol
         EquipIfAvailable(voidhighlord);
         EquipIfAvailable(Bot.Config!.Get<string>(Daunt ? "Dauntless" : "Valiance"));
         EquipIfAvailable(Bot.Config.Get<string>("AnimaHelm") ?? Bot.Config.Get<string>("LuckHelm"));
-        EquipIfAvailable(Bot.Config.Get<string>("Vainglory") ?? Bot.Config.Get<string>("Penitence"));
+        EquipIfAvailable(
+            Bot.Config.Get<string>("Vainglory") ?? Bot.Config.Get<string>("Penitence")
+        );
         #endregion
         // Run Timer starts here
         runTimer.Restart();
@@ -607,9 +718,19 @@ public class Grimgaol
                 Bot.Sleep(1000);
 
                 // Wait until the target has the "Retaliate" aura
-                Bot.Wait.ForTrue(() => Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Retaliate") == true, 20);
+                Bot.Wait.ForTrue(
+                    () => Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Retaliate") == true,
+                    20
+                );
 
-                while (!Bot.ShouldExit && Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Retaliate") == true) { Bot.Sleep(100); }
+                while (
+                    !Bot.ShouldExit
+                    && Bot.Player.HasTarget
+                    && Bot.Target?.HasActiveAura("Retaliate") == true
+                )
+                {
+                    Bot.Sleep(100);
+                }
 
                 Bot.Combat.StopAttacking = false;
                 skillIndex = 0;
@@ -626,15 +747,24 @@ public class Grimgaol
             if (Bot.Player!.Health <= 2500 && Bot.Skills.CanUseSkill(2))
                 Bot.Skills.UseSkill(2);
 
-            if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && !Bot.Self.HasActiveAura("Shackled") && skillIndex == 0
-            && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+            if (
+                Bot.Player.HasTarget
+                && Bot.Player.Target?.HP > 0
+                && !Bot.Self.HasActiveAura("Shackled")
+                && skillIndex == 0
+                && Bot.Skills.CanUseSkill(skillList[skillIndex])
+            )
             {
                 Bot.Skills.UseSkill(skillList[skillIndex]);
                 skillIndex = (skillIndex + 1) % skillList.Length;
             }
 
-            if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && skillIndex != 0
-            && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+            if (
+                Bot.Player.HasTarget
+                && Bot.Player.Target?.HP > 0
+                && skillIndex != 0
+                && Bot.Skills.CanUseSkill(skillList[skillIndex])
+            )
             {
                 Bot.Skills.UseSkill(skillList[skillIndex]);
                 skillIndex = (skillIndex + 1) % skillList.Length;
@@ -734,7 +864,6 @@ public class Grimgaol
     //         }
     //     }
 
-
     // }
 
     private void R6()
@@ -789,7 +918,6 @@ public class Grimgaol
                         return;
                     }
 
-
                     if (!Bot.Player!.Alive)
                     {
                         Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
@@ -797,7 +925,10 @@ public class Grimgaol
                     }
 
                     // Check if target is set, otherwise target this monster
-                    if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player.Target?.MapID != m!.MapID)
+                    if (
+                        !Bot.Player.HasTarget
+                        || Bot.Player.HasTarget && Bot.Player.Target?.MapID != m!.MapID
+                    )
                         Bot.Combat.Attack(m!.MapID);
 
                     Bot.Sleep(500);
@@ -810,15 +941,22 @@ public class Grimgaol
                     }
 
                     // Exit loop if target has "Crit Damage Amplified" aura
-                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-                     && Bot.Target.HasActiveAura("Crit Damage Amplified"))
+                    if (
+                        Bot.Player.HasTarget
+                        && Bot.Player.Target?.HP > 0
+                        && Bot.Target.HasActiveAura("Crit Damage Amplified")
+                    )
                     {
                         Bot.Combat.CancelAutoAttack();
                         Bot.Combat.StopAttacking = true;
 
-                        Bot.Wait.ForTrue(() => Bot.Player.HasTarget
-                                                && Bot.Player.Target?.HP > 0
-                                                && Bot.Target?.HasActiveAura("Crit Damage Amplified") == false, 20);
+                        Bot.Wait.ForTrue(
+                            () =>
+                                Bot.Player.HasTarget
+                                && Bot.Player.Target?.HP > 0
+                                && Bot.Target?.HasActiveAura("Crit Damage Amplified") == false,
+                            20
+                        );
 
                         Bot.Combat.CancelAutoAttack();
                         Bot.Combat.CancelTarget();
@@ -826,16 +964,19 @@ public class Grimgaol
                         continue;
                     }
 
-
-                    if (Bot.Player.Health <= (usechaosAvenger ? 3500 : 2500) && Bot.Skills.CanUseSkill(usechaosAvenger ? 3 : 2))
+                    if (
+                        Bot.Player.Health <= (usechaosAvenger ? 3500 : 2500)
+                        && Bot.Skills.CanUseSkill(usechaosAvenger ? 3 : 2)
+                    )
                         Bot.Skills.UseSkill(2);
-
 
                     if (usechaosAvenger)
                     {
-                        if (Bot.Player.HasTarget
-                          && Bot.Player.Target?.HP > 0
-                          && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+                        if (
+                            Bot.Player.HasTarget
+                            && Bot.Player.Target?.HP > 0
+                            && Bot.Skills.CanUseSkill(skillList[skillIndex])
+                        )
                         {
                             Bot.Skills.UseSkill(skillList[skillIndex]);
                         }
@@ -844,14 +985,22 @@ public class Grimgaol
                     }
                     else
                     {
-                        if (Bot.Player.Health >= 2500 && (skillIndex == 0 || skillIndex == 2) && Bot.Player.HasTarget
-                        && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+                        if (
+                            Bot.Player.Health >= 2500
+                            && (skillIndex == 0 || skillIndex == 2)
+                            && Bot.Player.HasTarget
+                            && Bot.Skills.CanUseSkill(skillList[skillIndex])
+                        )
                         {
                             Bot.Skills.UseSkill(skillList[skillIndex]);
                             skillIndex = (skillIndex + 1) % skillList.Length;
                         }
-                        else if (skillIndex != 0 && skillIndex != 2 && Bot.Player.HasTarget
-                        && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+                        else if (
+                            skillIndex != 0
+                            && skillIndex != 2
+                            && Bot.Player.HasTarget
+                            && Bot.Skills.CanUseSkill(skillList[skillIndex])
+                        )
                         {
                             Bot.Skills.UseSkill(skillList[skillIndex]);
                         }
@@ -892,7 +1041,6 @@ public class Grimgaol
 
         while (!Bot.ShouldExit)
         {
-
             if (!Bot.Player!.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
@@ -915,8 +1063,11 @@ public class Grimgaol
                 break;
             }
 
-            if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-             && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+            if (
+                Bot.Player.HasTarget
+                && Bot.Player.Target?.HP > 0
+                && Bot.Skills.CanUseSkill(skillList[skillIndex])
+            )
             {
                 Bot.Skills.UseSkill(skillList[skillIndex]);
             }
@@ -957,7 +1108,6 @@ public class Grimgaol
 
         while (!Bot.ShouldExit)
         {
-
             if (!Bot.Player!.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
@@ -970,19 +1120,25 @@ public class Grimgaol
                 return;
             }
 
-            if (monsId != "*" && Bot.Monsters.MapMonsters.Any(
-                x => x != null
-                && x?.Cell == Bot.Player?.Cell
-                && x?.MapID.ToString() == monsId
-                && (x?.HP <= 70000 || x?.HP <= 50000 || x?.HP <= 20000)))
+            if (
+                monsId != "*"
+                && Bot.Monsters.MapMonsters.Any(x =>
+                    x != null
+                    && x?.Cell == Bot.Player?.Cell
+                    && x?.MapID.ToString() == monsId
+                    && (x?.HP <= 70000 || x?.HP <= 50000 || x?.HP <= 20000)
+                )
+            )
             {
                 switch (monsId)
                 {
                     case "16":
-                        monsId = "17"; monsIdInt = 17;
+                        monsId = "17";
+                        monsIdInt = 17;
                         break;
                     case "17":
-                        monsId = "18"; monsIdInt = 18;
+                        monsId = "18";
+                        monsIdInt = 18;
                         break;
                     case "18":
                         monsId = "*";
@@ -990,12 +1146,16 @@ public class Grimgaol
                 }
             }
 
+            if (monsId == "*")
+                doPriorityAttackId(new int[] { 16, 17, 18, 19 });
+            else
+                doPriorityAttackId(new int[] { monsIdInt });
 
-            if (monsId == "*") doPriorityAttackId(new int[] { 16, 17, 18, 19 });
-            else doPriorityAttackId(new int[] { monsIdInt });
-
-            if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-            && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+            if (
+                Bot.Player.HasTarget
+                && Bot.Player.Target?.HP > 0
+                && Bot.Skills.CanUseSkill(skillList[skillIndex])
+            )
             {
                 // Use next skill in rotation
                 Bot.Skills.UseSkill(skillList[skillIndex]);
@@ -1031,9 +1191,9 @@ public class Grimgaol
 
 
         runTimer.Start();
-    Restart:
+        Restart:
         int skillIndex = 0;
-        // 1 and 4 will be used conditionaly ( hopefully) 
+        // 1 and 4 will be used conditionaly ( hopefully)
         int[] skillList = { 2, 3 };
         while (!Bot.ShouldExit)
         {
@@ -1068,7 +1228,12 @@ public class Grimgaol
                     if (!Bot.Player!.HasTarget || !Bot.Player.InCombat)
                         Bot.Combat.Attack(m!.MapID);
 
-                    if (Bot.Player.Target?.HP <= 0 || m?.HP <= 0 || m?.State == 0 || m?.Alive == false)
+                    if (
+                        Bot.Player.Target?.HP <= 0
+                        || m?.HP <= 0
+                        || m?.State == 0
+                        || m?.Alive == false
+                    )
                     {
                         if (Bot.Player.InCombat)
                             Bot.Combat.CancelTarget();
@@ -1082,21 +1247,28 @@ public class Grimgaol
                     //     Bot.Skills.UseSkill(4);
 
                     // 1.2.5.1
-                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-                    && !Bot.Target!.HasActiveAura("Incinerating")
-                    && Bot.Skills.CanUseSkill(1))
+                    if (
+                        Bot.Player.HasTarget
+                        && Bot.Player.Target?.HP > 0
+                        && !Bot.Target!.HasActiveAura("Incinerating")
+                        && Bot.Skills.CanUseSkill(1)
+                    )
                         Bot.Skills.UseSkill(1);
-
-                    else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-                    && !Bot.Self.HasActiveAura("Corporeal Ascension")
-                    && Bot.Skills.CanUseSkill(4))
+                    else if (
+                        Bot.Player.HasTarget
+                        && Bot.Player.Target?.HP > 0
+                        && !Bot.Self.HasActiveAura("Corporeal Ascension")
+                        && Bot.Skills.CanUseSkill(4)
+                    )
                         Bot.Skills.UseSkill(4);
-
                     else
                     {
                         // Use next skill
-                        if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-                        && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+                        if (
+                            Bot.Player.HasTarget
+                            && Bot.Player.Target?.HP > 0
+                            && Bot.Skills.CanUseSkill(skillList[skillIndex])
+                        )
                         {
                             Bot.Skills.UseSkill(skillList[skillIndex]);
                         }
@@ -1126,7 +1298,7 @@ public class Grimgaol
     //     }
     //     Bot.Player?.SetSpawnPoint();
 
-    //     #region Equipment Setup  
+    //     #region Equipment Setup
     //     EquipIfAvailable(legionrevenant);
     //     EquipIfAvailable(Bot.Config!.Get<string>("Elysium"));
     //     EquipIfAvailable(Bot.Config!.Get<string>("Wizard"));
@@ -1273,9 +1445,19 @@ public class Grimgaol
                 Bot.Sleep(500);
 
                 // Wait until the target has the "Retaliate" aura
-                Bot.Wait.ForTrue(() => Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Retaliate") == true, 20);
+                Bot.Wait.ForTrue(
+                    () => Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Retaliate") == true,
+                    20
+                );
 
-                while (!Bot.ShouldExit && Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Retaliate") == true) { Bot.Sleep(100); }
+                while (
+                    !Bot.ShouldExit
+                    && Bot.Player.HasTarget
+                    && Bot.Target?.HasActiveAura("Retaliate") == true
+                )
+                {
+                    Bot.Sleep(100);
+                }
 
                 Bot.Combat.StopAttacking = false;
                 skillIndex = 0;
@@ -1294,21 +1476,28 @@ public class Grimgaol
             }
 
             // Heal if needed
-            if (Bot.Player.Health <= 2500
-            && Bot.Skills.CanUseSkill(2))
+            if (Bot.Player.Health <= 2500 && Bot.Skills.CanUseSkill(2))
                 Bot.Skills.UseSkill(2);
 
             // Use next skill
             if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0)
             {
-                if (Bot.Player.Health >= 2500 && (skillIndex == 0 || skillIndex == 2) && Bot.Player.HasTarget
-                && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+                if (
+                    Bot.Player.Health >= 2500
+                    && (skillIndex == 0 || skillIndex == 2)
+                    && Bot.Player.HasTarget
+                    && Bot.Skills.CanUseSkill(skillList[skillIndex])
+                )
                 {
                     Bot.Skills.UseSkill(skillList[skillIndex]);
                     skillIndex = (skillIndex + 1) % skillList.Length;
                 }
-                else if (skillIndex != 0 && skillIndex != 2 && Bot.Player.HasTarget
-                && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+                else if (
+                    skillIndex != 0
+                    && skillIndex != 2
+                    && Bot.Player.HasTarget
+                    && Bot.Skills.CanUseSkill(skillList[skillIndex])
+                )
                 {
                     Bot.Skills.UseSkill(skillList[skillIndex]);
                 }
@@ -1347,7 +1536,7 @@ public class Grimgaol
 
 
         runTimer.Start();
-    Restart:
+        Restart:
         int skillIndex = 0;
         int[] skillList = { 2, 3 };
 
@@ -1379,9 +1568,11 @@ public class Grimgaol
                     return;
                 }
 
-                if (!Bot.Player!.HasTarget
-                || !Bot.Player.InCombat
-                || (Bot.Player.HasTarget && !Bot.Target.HasActiveAura("Crit Damage Amplified")))
+                if (
+                    !Bot.Player!.HasTarget
+                    || !Bot.Player.InCombat
+                    || (Bot.Player.HasTarget && !Bot.Target.HasActiveAura("Crit Damage Amplified"))
+                )
                     Bot.Combat.Attack(m!.MapID);
 
                 if (Bot.Player.Target?.HP <= 0 || m?.HP <= 0 || m?.State == 0 || m?.Alive == false)
@@ -1393,33 +1584,48 @@ public class Grimgaol
 
                 // For Fell Statues; Whilst Fell Statue has "Crit Damage Amplified" aura, wait for it to end, reneable combat
                 // sort of like a retaliate or counter atk, except in this case the more u hit them during this, they do ++100 dmg.
-                if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-                 && Bot.Target.HasActiveAura("Crit Damage Amplified"))
+                if (
+                    Bot.Player.HasTarget
+                    && Bot.Player.Target?.HP > 0
+                    && Bot.Target.HasActiveAura("Crit Damage Amplified")
+                )
                 {
                     Bot.Combat.CancelAutoAttack();
                     Bot.Combat.StopAttacking = true;
 
                     Bot.Wait.ForTrue(
-                    () => Bot.Player.HasTarget &&
-                            (Bot.Player.Target?.HP <= 0
-                            || !Bot.Target.HasActiveAura("Crit Damage Amplified")), 20);
+                        () =>
+                            Bot.Player.HasTarget
+                            && (
+                                Bot.Player.Target?.HP <= 0
+                                || !Bot.Target.HasActiveAura("Crit Damage Amplified")
+                            ),
+                        20
+                    );
 
                     Bot.Combat.StopAttacking = false;
                 }
 
                 // Conditional aura skills
-                if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 == true
-                 && !Bot.Target!.HasActiveAura("Incinerating")
-                 && Bot.Skills.CanUseSkill(1))
+                if (
+                    Bot.Player.HasTarget
+                    && Bot.Player.Target?.HP > 0 == true
+                    && !Bot.Target!.HasActiveAura("Incinerating")
+                    && Bot.Skills.CanUseSkill(1)
+                )
                     Bot.Skills.UseSkill(1);
-
-                else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-                && !Bot.Self.HasActiveAura("Corporeal Ascension")
-                && Bot.Skills.CanUseSkill(4))
+                else if (
+                    Bot.Player.HasTarget
+                    && Bot.Player.Target?.HP > 0
+                    && !Bot.Self.HasActiveAura("Corporeal Ascension")
+                    && Bot.Skills.CanUseSkill(4)
+                )
                     Bot.Skills.UseSkill(4);
-
-                else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-                && Bot.Skills.CanUseSkill(skillList[skillIndex]))
+                else if (
+                    Bot.Player.HasTarget
+                    && Bot.Player.Target?.HP > 0
+                    && Bot.Skills.CanUseSkill(skillList[skillIndex])
+                )
                 {
                     // Use next skill in rotation
                     Bot.Skills.UseSkill(skillList[skillIndex]);
@@ -1495,7 +1701,11 @@ public class Grimgaol
                 break;
             }
 
-            if (Bot.Player.HasTarget && Bot.Player.Health < Bot.Player.MaxHealth * 0.9 && Bot.Skills?.CanUseSkill(2) == true)
+            if (
+                Bot.Player.HasTarget
+                && Bot.Player.Health < Bot.Player.MaxHealth * 0.9
+                && Bot.Skills?.CanUseSkill(2) == true
+            )
                 Bot.Skills.UseSkill(2);
             // Use next skill
             else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0)
@@ -1585,9 +1795,19 @@ public class Grimgaol
                 //     Bot.Skills.UseSkill(4);
 
                 //1.2.5.1
-                if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && !Bot.Target!.HasActiveAura("Yami") && Bot.Skills.CanUseSkill(2))
+                if (
+                    Bot.Player.HasTarget
+                    && Bot.Player.Target?.HP > 0
+                    && !Bot.Target!.HasActiveAura("Yami")
+                    && Bot.Skills.CanUseSkill(2)
+                )
                     Bot.Skills.UseSkill(2);
-                else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && Bot.Target!.HasActiveAura("Yami") && Bot.Skills.CanUseSkill(4))
+                else if (
+                    Bot.Player.HasTarget
+                    && Bot.Player.Target?.HP > 0
+                    && Bot.Target!.HasActiveAura("Yami")
+                    && Bot.Skills.CanUseSkill(4)
+                )
                     Bot.Skills.UseSkill(4);
                 else
                 {
@@ -1629,7 +1849,6 @@ public class Grimgaol
         int skillIndex = 0;
         int[] skillList = new[] { 3, 2, 1, 2, 4 };
 
-
         while (!Bot.ShouldExit)
         {
             if (!monsterAvail())
@@ -1659,7 +1878,12 @@ public class Grimgaol
                     if (!Bot.Player.HasTarget || !Bot.Player.InCombat)
                         Bot.Combat.Attack(m!.MapID);
 
-                    if (Bot.Player.Target?.HP <= 0 || m?.HP <= 0 || m?.State == 0 || m?.Alive == false)
+                    if (
+                        Bot.Player.Target?.HP <= 0
+                        || m?.HP <= 0
+                        || m?.State == 0
+                        || m?.Alive == false
+                    )
                     {
                         if (Bot.Player.InCombat)
                             Bot.Combat.CancelTarget();
@@ -1667,13 +1891,19 @@ public class Grimgaol
                     }
 
                     // Exit loop if target has "Crit Damage Amplified" aura
-                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-                     && Bot.Target.HasActiveAura("Crit Damage Amplified"))
+                    if (
+                        Bot.Player.HasTarget
+                        && Bot.Player.Target?.HP > 0
+                        && Bot.Target.HasActiveAura("Crit Damage Amplified")
+                    )
                     {
                         Bot.Combat.CancelAutoAttack();
                         Bot.Combat.StopAttacking = true;
 
-                        Bot.Wait.ForTrue(() => Bot.Target?.HasActiveAura("Crit Damage Amplified") == false, 20);
+                        Bot.Wait.ForTrue(
+                            () => Bot.Target?.HasActiveAura("Crit Damage Amplified") == false,
+                            20
+                        );
 
                         Bot.Combat.CancelAutoAttack();
                         Bot.Combat.CancelTarget();
@@ -1692,7 +1922,6 @@ public class Grimgaol
             }
         }
     }
-
 
     #endregion
 
@@ -1716,7 +1945,6 @@ public class Grimgaol
         }
     }
 
-
     private void doPriorityAttackId(int[] monsterListId)
     {
         foreach (int id in monsterListId)
@@ -1729,14 +1957,25 @@ public class Grimgaol
 
     private bool monsterAvailId(int id)
     {
-        if (Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == id && x.Cell == Bot.Player?.Cell && (x.HP > 0 || x.State != 0)))
+        if (
+            Bot.Monsters.MapMonsters.Any(x =>
+                x != null
+                && x.MapID == id
+                && x.Cell == Bot.Player?.Cell
+                && (x.HP > 0 || x.State != 0)
+            )
+        )
             return true;
         return false;
     }
 
     private bool monsterAvail()
     {
-        if (Bot.Monsters.MapMonsters.Any(x => x != null && x?.Cell == Bot.Player?.Cell && (x?.HP > 0 || x?.State != 0)))
+        if (
+            Bot.Monsters.MapMonsters.Any(x =>
+                x != null && x?.Cell == Bot.Player?.Cell && (x?.HP > 0 || x?.State != 0)
+            )
+        )
             return true;
         return false;
     }
@@ -1757,51 +1996,61 @@ public class Grimgaol
         }
     }
 
-
     // Auto-select IoDA version if available
-    string dragonoftime = Core.CheckInventory("Dragon of Time (IoDA)") ? "Dragon of Time (IoDA)" : "Dragon of Time";
-    string legionrevenant = Core.CheckInventory("Legion Revenant (IoDA)") ? "Legion Revenant (IoDA)" : "Legion Revenant";
-    string voidhighlord = Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord";
-    string verusdoomdnight = Core.CheckInventory("Verus DoomKnight (IoDA)") ? "Verus DoomKnight (IoDA)" : "Verus DoomKnight";
+    string dragonoftime = Core.CheckInventory("Dragon of Time (IoDA)")
+        ? "Dragon of Time (IoDA)"
+        : "Dragon of Time";
+    string legionrevenant = Core.CheckInventory("Legion Revenant (IoDA)")
+        ? "Legion Revenant (IoDA)"
+        : "Legion Revenant";
+    string voidhighlord = Core.CheckInventory("Void HighLord (IoDA)")
+        ? "Void HighLord (IoDA)"
+        : "Void Highlord";
+    string verusdoomdnight = Core.CheckInventory("Verus DoomKnight (IoDA)")
+        ? "Verus DoomKnight (IoDA)"
+        : "Verus DoomKnight";
     string chaosAvenger = "Chaos Avenger";
     string archmage = "ArchMage";
+
     private void CheckConfig()
     {
         // Load config values into dictionary
         Dictionary<string, string?> gear = new()
-    {
-        // Weapon Enhancements
-        { "Dauntless", Bot.Config!.Get<string>("Dauntless") },
-        { "Valiance", Bot.Config!.Get<string>("Valiance") },
-        { "Elysium",  Bot.Config!.Get<string>("Elysium") },
-
-        // Cape Enhancements
-        { "Vainglory", Bot.Config!.Get<string>("Vainglory") },
-        { "Penitence", Bot.Config!.Get<string>("Penitence") },
-        { "HealerCape", Bot.Config!.Get<string>("HealerCape") },
-
-        // Helm Enhancements
-        { "PneumaHelm", Bot.Config!.Get<string>("PneumaHelm")},
-        { "AnimaHelm", Bot.Config!.Get<string>("AnimaHelm") },
-        { "HealerHelm", Bot.Config!.Get<string>("HealerHelm") },
-        { "LuckHelm", Bot.Config!.Get<string>("LuckHelm") },
-    };
+        {
+            // Weapon Enhancements
+            { "Dauntless", Bot.Config!.Get<string>("Dauntless") },
+            { "Valiance", Bot.Config!.Get<string>("Valiance") },
+            { "Elysium", Bot.Config!.Get<string>("Elysium") },
+            // Cape Enhancements
+            { "Vainglory", Bot.Config!.Get<string>("Vainglory") },
+            { "Penitence", Bot.Config!.Get<string>("Penitence") },
+            { "HealerCape", Bot.Config!.Get<string>("HealerCape") },
+            // Helm Enhancements
+            { "PneumaHelm", Bot.Config!.Get<string>("PneumaHelm") },
+            { "AnimaHelm", Bot.Config!.Get<string>("AnimaHelm") },
+            { "HealerHelm", Bot.Config!.Get<string>("HealerHelm") },
+            { "LuckHelm", Bot.Config!.Get<string>("LuckHelm") },
+        };
 
         // Optional: Check all and log missing
         string[] requiredClasses = { dragonoftime, voidhighlord, verusdoomdnight, archmage };
         string[] missingClasses = requiredClasses.Where(c => !Core.CheckInventory(c)).ToArray();
         if (missingClasses.Length > 0)
-            Core.Logger($"Missing required classes ({missingClasses.Length}):\n- {string.Join("\n- ", missingClasses)}", "Missing required classes", stopBot: true, messageBox: true);
+            Core.Logger(
+                $"Missing required classes ({missingClasses.Length}):\n- {string.Join("\n- ", missingClasses)}",
+                "Missing required classes",
+                stopBot: true,
+                messageBox: true
+            );
 
         // Filter non-null and non-whitespace items and cast to non-nullable string
-        List<string> requiredItems = gear.Values
-     .Where(item => !string.IsNullOrWhiteSpace(item))
-     .Select(item => item!) // Cast to non-nullable string
-     .Where(item => !Bot.Inventory.IsEquipped(item) && !Bot.Bank.Contains(item))
-     .ToList();
+        List<string> requiredItems = gear
+            .Values.Where(item => !string.IsNullOrWhiteSpace(item))
+            .Select(item => item!) // Cast to non-nullable string
+            .Where(item => !Bot.Inventory.IsEquipped(item) && !Bot.Bank.Contains(item))
+            .ToList();
 
         Core.CheckInventory(requiredItems.ToArray());
-
 
         // Determine whether to skip enhancements
         bool skipEnh = Bot.Config!.Get<bool>("SkipEnhancements");
@@ -1818,24 +2067,31 @@ public class Grimgaol
             if (string.IsNullOrWhiteSpace(value))
             {
                 Core.Logger(
-                    $"The item for enhancement '{opt.Name}' is missing.\n" +
-                    $"Go to: Scripts > [Edit Script Options], then enter the exact item Name (case-sensitive).\n" +
-                    $"Use Tools > Grabber > Inventory to get the correct Name.",
+                    $"The item for enhancement '{opt.Name}' is missing.\n"
+                        + $"Go to: Scripts > [Edit Script Options], then enter the exact item Name (case-sensitive).\n"
+                        + $"Use Tools > Grabber > Inventory to get the correct Name.",
                     $"Missing Item: {opt.Name}",
-                    stopBot: true);
+                    stopBot: true
+                );
             }
         }
 
         // Precompile lowercase Name list for comparison
-        HashSet<string> allItemNames = Bot.Inventory.Items
-            .Concat(Bot.Bank.Items)
+        HashSet<string> allItemNames = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
             .Select(i => i.Name.ToLowerInvariant().Trim())
             .ToHashSet();
 
         // Enhancement result log
         List<string> summaryLogs = new();
 
-        void EnhanceIfFound(string? Name, EnhancementType type, CapeSpecial cape = CapeSpecial.None, HelmSpecial helm = HelmSpecial.None, WeaponSpecial weapon = WeaponSpecial.None)
+        void EnhanceIfFound(
+            string? Name,
+            EnhancementType type,
+            CapeSpecial cape = CapeSpecial.None,
+            HelmSpecial helm = HelmSpecial.None,
+            WeaponSpecial weapon = WeaponSpecial.None
+        )
         {
             if (string.IsNullOrWhiteSpace(Name))
                 return;
@@ -1844,19 +2100,28 @@ public class Grimgaol
             {
                 string key = Name.ToLowerInvariant().Trim();
                 if (allItemNames.Contains(key))
-                    Core.Logger($"[WARN] \"{Name}\" is in inventory/bank but may have a capitalization/spacing mismatch.");
+                    Core.Logger(
+                        $"[WARN] \"{Name}\" is in inventory/bank but may have a capitalization/spacing mismatch."
+                    );
                 else
-                    Core.Logger($"[MISSING] Enhancement target \"{Name}\" not found in inventory or bank.");
+                    Core.Logger(
+                        $"[MISSING] Enhancement target \"{Name}\" not found in inventory or bank."
+                    );
                 return;
             }
 
             if (!skipEnh)
             {
                 Adv.EnhanceItem(Name, type, cape, helm, weapon, logging: false);
-                summaryLogs.Add($"- {Name}: {type}" +
-                    (weapon != WeaponSpecial.None ? $" ({weapon})" :
-                     cape != CapeSpecial.None ? $" ({cape})" :
-                     helm != HelmSpecial.None ? $" ({helm})" : ""));
+                summaryLogs.Add(
+                    $"- {Name}: {type}"
+                        + (
+                            weapon != WeaponSpecial.None ? $" ({weapon})"
+                            : cape != CapeSpecial.None ? $" ({cape})"
+                            : helm != HelmSpecial.None ? $" ({helm})"
+                            : ""
+                        )
+                );
             }
         }
 

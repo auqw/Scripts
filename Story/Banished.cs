@@ -15,15 +15,35 @@ public class Banished
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
-    private static CoreQOM CoreQOM { get => _CoreQOM ??= new CoreQOM(); set => _CoreQOM = value; }
+    private static CoreQOM CoreQOM
+    {
+        get => _CoreQOM ??= new CoreQOM();
+        set => _CoreQOM = value;
+    }
     private static CoreQOM _CoreQOM;
 
     public string[] QuestDrops = { "Diabolical Tome Pet", "Diabolical Tome Cape" };
@@ -88,7 +108,7 @@ public class Banished
         Story.KillQuest(8461, "aozorahills", "Ghostly Hasu");
 
         // Health is Wealth
-        // Vial of Antitoxins x1  
+        // Vial of Antitoxins x1
         if (!Story.QuestProgression(8462))
         {
             Core.EnsureAccept(8462);
@@ -107,7 +127,6 @@ public class Banished
     {
         if (Core.isCompletedBefore(2027))
             return;
-
 
         // Knave1's Route to the Void
         Story.MapItemQuest(2022, "northlands", 979);

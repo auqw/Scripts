@@ -11,23 +11,43 @@ tags: daily-gifts, rare-items
 //cs_include Scripts/Other/Pets/CursedWazikashi.cs
 using System.Globalization;
 using Skua.Core.Interfaces;
-using Skua.Core.Options;
 using Skua.Core.Models.Monsters;
+using Skua.Core.Options;
 
 public class CurrentDailyGifts
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
-private static CoreBots _sCore;
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
+    private static CoreBots _sCore;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static TwiggusGearMerge TGM { get => _TGM ??= new TwiggusGearMerge(); set => _TGM = value; }
+    private static TwiggusGearMerge TGM
+    {
+        get => _TGM ??= new TwiggusGearMerge();
+        set => _TGM = value;
+    }
     private static TwiggusGearMerge _TGM;
-    private static RoseRapiers RR { get => _RR ??= new RoseRapiers(); set => _RR = value; }
+    private static RoseRapiers RR
+    {
+        get => _RR ??= new RoseRapiers();
+        set => _RR = value;
+    }
     private static RoseRapiers _RR;
-    private static CursedWazikashi CursedWazikashi { get => _CursedWazikashi ??= new CursedWazikashi(); set => _CursedWazikashi = value; }
+    private static CursedWazikashi CursedWazikashi
+    {
+        get => _CursedWazikashi ??= new CursedWazikashi();
+        set => _CursedWazikashi = value;
+    }
     private static CursedWazikashi _CursedWazikashi;
 
     public string OptionsStorage = "CurrentDailyGifts";
@@ -35,7 +55,12 @@ private static CoreBots _sCore;
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<DailyGiftsMode>("mode", "Daily Gift Mode", "Please select what behavior you would like the bot to have.", DailyGiftsMode.All_Chronological)
+        new Option<DailyGiftsMode>(
+            "mode",
+            "Daily Gift Mode",
+            "Please select what behavior you would like the bot to have.",
+            DailyGiftsMode.All_Chronological
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -64,24 +89,140 @@ private static CoreBots _sCore;
 
             //Any gifts before this are either permanent or are gone. You guys can add more permanent ones if you feel like doing grunt work.
             //GetGift(Permanent, "map", "monster", "");
-            GetGift(Permanent, "legionarena", "Blade Master", "Soulfire Scarf", "Soulfire Sheath", "Soulfire Sheath + Scarf");
-            GetGift(Permanent, "maul", "Vending Machine", "Carmel Sandwich Cookie", "Carmel Sandwich Cookies", "Chocolate Sandwich Cookie", "Dual Sandwich Cookies", "Grilled Provolone Sandwich", "Milanesa And Mashed Potatoes", "Sweet Tart", "Sweet Tart with Coconut");
+            GetGift(
+                Permanent,
+                "legionarena",
+                "Blade Master",
+                "Soulfire Scarf",
+                "Soulfire Sheath",
+                "Soulfire Sheath + Scarf"
+            );
+            GetGift(
+                Permanent,
+                "maul",
+                "Vending Machine",
+                "Carmel Sandwich Cookie",
+                "Carmel Sandwich Cookies",
+                "Chocolate Sandwich Cookie",
+                "Dual Sandwich Cookies",
+                "Grilled Provolone Sandwich",
+                "Milanesa And Mashed Potatoes",
+                "Sweet Tart",
+                "Sweet Tart with Coconut"
+            );
             GetGift(Permanent, "garden", "Fa", "Re and Fa House Guest Duo");
-            GetGift(Permanent, "garden", "Creature 83", "Creature 83 Bat", "Bag of Creature 83 Fluffles", "Creature 83 Bats", "Creature 83 Hoodie", "Creature 83 Hood + Locks", "Creature 83 Hood");
-            GetGift(Permanent, "eden", "Klawaii Machine", "Apa's Tour Guide Morph", "Crystallis Megaphone", "Eden City Tour Flag", "Eden Tour Guide's Vest", "Eta's Tour Guide Morph", "Furled Eden City Umbrella", "Key to Eden City", "Keys to Eden City", "Rainy Day Tour Guide");
-            GetGift(Permanent, "garden", "Creature 83", "Chibi Darkon's Shag", "Chibi Darkon's Twintails", "Chibi Drago's Shag", "Chibi Drago's Twintails", "Chibi Fa's Shag", "Chibi Fa's Twintails", "Chibi La's Shag", "Chibi La's Twintails", "Chibi Mi's Shag", "Chibi Mi's Twintails", "Chibi Re's Shag", "Chibi Re's Twintails", "Chibi So's Shag", "Chibi So's Twintails", "Chibi Suki's Shag", "Chibi Suki's Twintails", "Chibi Ti's Shag", "Chibi Ti's Twintails");
-            GetGift(Permanent, "garden", "Creature 72", "Chibi Darkon's Pillow", "Chibi Drago's Pillow", "Chibi Fa's Pillow", "Chibi La's Pillow", "Chibi Mi's Pillow", "Chibi Re's Pillow", "Chibi So's Pillow", "Chibi Suki's Pillow", "Chibi Ti's Pillow");
+            GetGift(
+                Permanent,
+                "garden",
+                "Creature 83",
+                "Creature 83 Bat",
+                "Bag of Creature 83 Fluffles",
+                "Creature 83 Bats",
+                "Creature 83 Hoodie",
+                "Creature 83 Hood + Locks",
+                "Creature 83 Hood"
+            );
+            GetGift(
+                Permanent,
+                "eden",
+                "Klawaii Machine",
+                "Apa's Tour Guide Morph",
+                "Crystallis Megaphone",
+                "Eden City Tour Flag",
+                "Eden Tour Guide's Vest",
+                "Eta's Tour Guide Morph",
+                "Furled Eden City Umbrella",
+                "Key to Eden City",
+                "Keys to Eden City",
+                "Rainy Day Tour Guide"
+            );
+            GetGift(
+                Permanent,
+                "garden",
+                "Creature 83",
+                "Chibi Darkon's Shag",
+                "Chibi Darkon's Twintails",
+                "Chibi Drago's Shag",
+                "Chibi Drago's Twintails",
+                "Chibi Fa's Shag",
+                "Chibi Fa's Twintails",
+                "Chibi La's Shag",
+                "Chibi La's Twintails",
+                "Chibi Mi's Shag",
+                "Chibi Mi's Twintails",
+                "Chibi Re's Shag",
+                "Chibi Re's Twintails",
+                "Chibi So's Shag",
+                "Chibi So's Twintails",
+                "Chibi Suki's Shag",
+                "Chibi Suki's Twintails",
+                "Chibi Ti's Shag",
+                "Chibi Ti's Twintails"
+            );
+            GetGift(
+                Permanent,
+                "garden",
+                "Creature 72",
+                "Chibi Darkon's Pillow",
+                "Chibi Drago's Pillow",
+                "Chibi Fa's Pillow",
+                "Chibi La's Pillow",
+                "Chibi Mi's Pillow",
+                "Chibi Re's Pillow",
+                "Chibi So's Pillow",
+                "Chibi Suki's Pillow",
+                "Chibi Ti's Pillow"
+            );
             // GetGift(Permanent, "eridani", 25, "Malevolent Hourglass");
-            GetGift(Permanent, "falcontower", "Alteon", "Alteon's Dragon Sword", "Alteon's Polished Dragon Sword");
-            GetGift(Permanent, "aqlesson", "Carnax", "Guardian Blade Evolution", "Sanctified Guardian Blade");
-            GetGift(Permanent, "superdeath", "Super Death", "HeroSmash Electina Guard", "HeroSmash General Smash Guard", "HeroSmash Hottica Guard", "HeroSmash Rider Guard", "HeroSmash Ultimate Good Guard", "HeroSmash Ultimate Evil Guard");
+            GetGift(
+                Permanent,
+                "falcontower",
+                "Alteon",
+                "Alteon's Dragon Sword",
+                "Alteon's Polished Dragon Sword"
+            );
+            GetGift(
+                Permanent,
+                "aqlesson",
+                "Carnax",
+                "Guardian Blade Evolution",
+                "Sanctified Guardian Blade"
+            );
+            GetGift(
+                Permanent,
+                "superdeath",
+                "Super Death",
+                "HeroSmash Electina Guard",
+                "HeroSmash General Smash Guard",
+                "HeroSmash Hottica Guard",
+                "HeroSmash Rider Guard",
+                "HeroSmash Ultimate Good Guard",
+                "HeroSmash Ultimate Evil Guard"
+            );
             // GetGift(Permanent, "sepulchure", "Dark Sepulchure", "Gravelyn's Champion Wings", "Gravelyn's Purified DoomBlade", "Vampragon of DOOM");
-            GetGift(Permanent, "dflesson", "Fluffy the Dracolich", "Zurvana's Blessing", "Zurvana's Wrath", "Zurvana's Wrath", "Zurvana's Pity", "Zurvana's Pity");
+            GetGift(
+                Permanent,
+                "dflesson",
+                "Fluffy the Dracolich",
+                "Zurvana's Blessing",
+                "Zurvana's Wrath",
+                "Zurvana's Wrath",
+                "Zurvana's Pity",
+                "Zurvana's Pity"
+            );
             GetGift(Permanent, "mqlesson", "Dragonoid", "Dragonoid Edge", "Dragonoid Edges");
             GetGift(Permanent, "aqw3d", "Trolluk", "Underworld Anguish Scythe");
             // GetGift(Permanent, "lavarockbay", "Kalayo", "Lavarock Orb Pet");
             // GetGift(Permanent, "burningbeach", "Lava Guardian", "Burnt Ember Scrap Pet");
-            GetGift(Permanent, "twilightzone", "Leviathan", "Fallen Leviathan's Spear", "Staff of the Twilight Sea God", "Sea Dragon's Scimitars", "Sea Dragon's Scimitar");
+            GetGift(
+                Permanent,
+                "twilightzone",
+                "Leviathan",
+                "Fallen Leviathan's Spear",
+                "Staff of the Twilight Sea God",
+                "Sea Dragon's Scimitars",
+                "Sea Dragon's Scimitar"
+            );
 
             #endregion
             //GetGift(AvailableUntil(30, 11, 2022), "moonlab", "Nightmare Zorbak", "Zorbak's VordredSlayer", "Zorbak's VordredSlayers");
@@ -114,7 +255,19 @@ private static CoreBots _sCore;
             //GetGift(AvailableUntil(31, 1), "timeretaliate", "Retrograde Maw", "Nascent ChronoWeaver's Clock", "Polychronic Magister's Hourglasses", "Polychronic Magister's Hourglass", "Chronobound Gear", "Nascent Temporal Portal");
             //GetGift(AvailableUntil(31, 1), "timeretaliate", $"Min’et’s Corpse", "Astromancer's Shag", "Astromancer's Locks", "Astromancer's Cowl + locks", "Astromancer's Cowl", "BlackHole Shrine", "Astral Balance", "Astral Lantern");
             //GetGift(AvailableUntil(31, 1), "timeritual", "Chronocide", "Space-timeless Claws", "Space-timeless Sword", "Space-timeless Staff", "Space-timeless Daggers", "Space-timeless Axe", "Hollowborn Alchemist's Fist");
-            GetGift(Permanent, "brokenwoods", "Eldritch Amalgamation", "Diabolical Warden's Katana", "Diabolical Warden's Katanas", "Possessed Diabolical Blade", "Inflamed Diabolical Tail", "Diabolical Banner", "Diabolical Bed", "Diablocal BookShelf", "Diabolical Torch");
+            GetGift(
+                Permanent,
+                "brokenwoods",
+                "Eldritch Amalgamation",
+                "Diabolical Warden's Katana",
+                "Diabolical Warden's Katanas",
+                "Possessed Diabolical Blade",
+                "Inflamed Diabolical Tail",
+                "Diabolical Banner",
+                "Diabolical Bed",
+                "Diablocal BookShelf",
+                "Diabolical Torch"
+            );
             //Bot.Quests.UpdateQuest(7874);
             //GetGift(AvailableUntil(31, 1), "dreampalace", "Zahad", "Mana Rift", "Mana Spiral", "Golden Hawk of Dreams Statue", "Golden Lion of Dreams Statue");
             //GetGift(AvailableUntil(31, 1), "tercessuinotlim", "Dark Makai", "Birthday Helm + Locks of Evil", "Birthday Helm + Locks of Good", "Birthday Helm of Evil", "Birthday Helm of Good");
@@ -139,15 +292,31 @@ private static CoreBots _sCore;
             //GetGift(AvailableUntil(27, 3), "eden", "Klawaii Machine", "Minty Fresh Gacha Orb", "Sweet Treat Gacha Orb", "Dragon Lover's Gacha Orb", "TreasureHunter's Gacha Orb", "TechFiend's Gacha Orb", "TreasureHunter's Gacha Orb Decor", "Sweet Treat Gacha Orb Decor", "Minty Fresh Gacha Orb Decor", "TechFiend's Gacha Orb Decor", "Dragon Lover's Gacha Orb Decor");
             #endregion
 
-            #region April 2023 ( + Scavenger Clues)        
+            #region April 2023 ( + Scavenger Clues)
             //Dark Scavenger Clue
             GetGift(AvailableUntil(3, 4), "fireplanewar", "ShadowClaw", "Trident of Destruction");
 
             //Shadowy Scavenger Clue
-            GetGift(AvailableUntil(27, 3), "manacradle", "The Mainyu", "ShadowFlame Eviscerator Pistol", "ShadowFlame Eviscerator Pistols", "ShadowFlame Eviscerator Revolver", "ShadowFlame Eviscerator Revolvers", "ShadowFlame Annihilator Rifle", "ShadowFlame Devastator");
+            GetGift(
+                AvailableUntil(27, 3),
+                "manacradle",
+                "The Mainyu",
+                "ShadowFlame Eviscerator Pistol",
+                "ShadowFlame Eviscerator Pistols",
+                "ShadowFlame Eviscerator Revolver",
+                "ShadowFlame Eviscerator Revolvers",
+                "ShadowFlame Annihilator Rifle",
+                "ShadowFlame Devastator"
+            );
 
             //Undead Scavenger Clue
-            GetGift(AvailableUntil(10, 4), "dragontown", "Chaos Fluffy", "Dracosaster", "Dracotastrophe");
+            GetGift(
+                AvailableUntil(10, 4),
+                "dragontown",
+                "Chaos Fluffy",
+                "Dracosaster",
+                "Dracotastrophe"
+            );
 
             //O_o Scavenger Clue
             GetGift(AvailableUntil(17, 4), "andre", "Giant Fist", "Navel Top Hat");
@@ -169,9 +338,14 @@ private static CoreBots _sCore;
             if (DateTime.Now.Month == 7)
                 Core.BuyItem(Bot.Map.Name, 1348, 78735, shopItemID: 48402);
 
-            GetGift(AvailableUntil(10, 6), "ashray", "Ashray Fisherman", "Twig's Totally FUN-ctional Ride");
+            GetGift(
+                AvailableUntil(10, 6),
+                "ashray",
+                "Ashray Fisherman",
+                "Twig's Totally FUN-ctional Ride"
+            );
             GetGift(AvailableUntil(16, 6), "garden", "Creature 35", "Dark Astravian General Lance");
-            #endregion April 2023 ( + Scavenger Clues) 
+            #endregion April 2023 ( + Scavenger Clues)
 
             #region July 2023
             GetGift(Permanent, "ontherun", "lumberhorc", "Maple Party Twig");
@@ -182,22 +356,54 @@ private static CoreBots _sCore;
 
             // Cursed Wakizashi Pet (Treasure Hunt?)
             // CursedWazikashi.CursedWakizashiPet();
-            GetGift(AvailableUntil(15, 9), "superslayin", "Charidon", "Charidon Pet", "Charidon Battlepet");
-            GetGift(AvailableUntil(15, 9), "garden", "Creature 343", "Debris .45 Revolver", "Debris .45 Revolvers");
+            GetGift(
+                AvailableUntil(15, 9),
+                "superslayin",
+                "Charidon",
+                "Charidon Pet",
+                "Charidon Battlepet"
+            );
+            GetGift(
+                AvailableUntil(15, 9),
+                "garden",
+                "Creature 343",
+                "Debris .45 Revolver",
+                "Debris .45 Revolvers"
+            );
 
             #endregion August 2023
 
             #region September 2023
-            
-            GetGift(AvailableUntil(30, 9), "septhub", "Cursed Cecaelia", "DeepWater Waves", "Master Gunner Gween");
+
+            GetGift(
+                AvailableUntil(30, 9),
+                "septhub",
+                "Cursed Cecaelia",
+                "DeepWater Waves",
+                "Master Gunner Gween"
+            );
             GetGift(AvailableUntil(30, 9), "twilightzone", "Whale Louse", "Compact Cyamidae");
-            
+
             #endregion
 
             #region October 2023
 
-            GetGift(AvailableUntil(30, 10), "eventhub", "Slayer Cake", "Gravelyn's TopHat + Locks of DOOM", "Gravelyn's TopHat of DOOM", "ShadowScythe Commander's TopHat", "ShadowScythe Commander's TopHat + Locks");
-            GetGift(AvailableUntil(30, 10), "lair", "Red Dragon", "Blacksteel Dragon Bow", "Blacksteel Dragon Spear");
+            GetGift(
+                AvailableUntil(30, 10),
+                "eventhub",
+                "Slayer Cake",
+                "Gravelyn's TopHat + Locks of DOOM",
+                "Gravelyn's TopHat of DOOM",
+                "ShadowScythe Commander's TopHat",
+                "ShadowScythe Commander's TopHat + Locks"
+            );
+            GetGift(
+                AvailableUntil(30, 10),
+                "lair",
+                "Red Dragon",
+                "Blacksteel Dragon Bow",
+                "Blacksteel Dragon Spear"
+            );
 
             #endregion
 
@@ -230,7 +436,8 @@ private static CoreBots _sCore;
                         return;
                     break;
                 case DailyGiftsMode.Rare_only:
-                    return; ;
+                    return;
+                    ;
             }
         }
         else
@@ -260,10 +467,17 @@ private static CoreBots _sCore;
             return;
 
         Bot.Drops.Add(items);
-        Core.Logger($"Daily Gift from {monster} in /{map.ToLower()}, " +
-            (expiresAt == Permanent ? "they're permanent. " :
-            $"available untill {expiresAt.ToString(formatInfo)[..10]}. ") +
-            $"This monster drops the following items:\n[{DateTime.Now:HH:mm:ss}] (GetGift) \"" + string.Join("\" | \"", items) + "\"");
+        Core.Logger(
+            $"Daily Gift from {monster} in /{map.ToLower()}, "
+                + (
+                    expiresAt == Permanent
+                        ? "they're permanent. "
+                        : $"available untill {expiresAt.ToString(formatInfo)[..10]}. "
+                )
+                + $"This monster drops the following items:\n[{DateTime.Now:HH:mm:ss}] (GetGift) \""
+                + string.Join("\" | \"", items)
+                + "\""
+        );
 
         foreach (string item in items)
         {
@@ -271,6 +485,7 @@ private static CoreBots _sCore;
             Core.ToBank(item);
         }
     }
+
     /// <summary>
     /// Checks if the items have expired yet, and if not it farms it
     /// </summary>
@@ -289,7 +504,8 @@ private static CoreBots _sCore;
                         return;
                     break;
                 case DailyGiftsMode.Rare_only:
-                    return; ;
+                    return;
+                    ;
             }
         }
         else
@@ -318,7 +534,9 @@ private static CoreBots _sCore;
         Monster? monster = Bot.Monsters.MapMonsters.Find(m => m.MapID == monsterMapID);
         if (monster == null)
         {
-            Core.Logger($"Something went wrong, the bot could not find any monster by the MapID of {monsterMapID} in {map}. Please report.");
+            Core.Logger(
+                $"Something went wrong, the bot could not find any monster by the MapID of {monsterMapID} in {map}. Please report."
+            );
             return;
         }
 
@@ -326,10 +544,17 @@ private static CoreBots _sCore;
             return;
 
         Bot.Drops.Add(items);
-        Core.Logger($"Daily Gift from {monster.Name} in /{map.ToLower()}, " +
-            (expiresAt == Permanent ? "they're permanent. " :
-            $"available untill {expiresAt.ToString(formatInfo)[..10]}. ") +
-            $"This monster drops the following items:\n[{DateTime.Now:HH:mm:ss}] (GetGift) \"" + string.Join("\" | \"", items) + "\"");
+        Core.Logger(
+            $"Daily Gift from {monster.Name} in /{map.ToLower()}, "
+                + (
+                    expiresAt == Permanent
+                        ? "they're permanent. "
+                        : $"available untill {expiresAt.ToString(formatInfo)[..10]}. "
+                )
+                + $"This monster drops the following items:\n[{DateTime.Now:HH:mm:ss}] (GetGift) \""
+                + string.Join("\" | \"", items)
+                + "\""
+        );
 
         foreach (string item in items)
         {
@@ -338,8 +563,12 @@ private static CoreBots _sCore;
         }
     }
 
-    private DateTime AvailableUntil(int Day, int Month, int Year = 2023) => new(Year, Month, Day, 07, 00, 00, DateTimeKind.Utc);
-    private DateTime AvailableUntil(int Day, Month Month, int Year = 2023) => new(Year, (int)Month, Day, 07, 00, 00, DateTimeKind.Utc);
+    private DateTime AvailableUntil(int Day, int Month, int Year = 2023) =>
+        new(Year, Month, Day, 07, 00, 00, DateTimeKind.Utc);
+
+    private DateTime AvailableUntil(int Day, Month Month, int Year = 2023) =>
+        new(Year, (int)Month, Day, 07, 00, 00, DateTimeKind.Utc);
+
     private DateTime Permanent = DateTime.MaxValue;
     private DateTimeFormatInfo formatInfo = CultureInfo.CurrentUICulture.DateTimeFormat;
     private DailyGiftsMode mode = DailyGiftsMode.All_Chronological;
@@ -361,7 +590,7 @@ public enum Month
     September = 9,
     October = 10,
     November = 11,
-    December = 12
+    December = 12,
 }
 
 public enum DailyGiftsMode

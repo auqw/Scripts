@@ -14,18 +14,30 @@ public class DiogonsMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
-private static CoreAdvanced _sAdv;
-
+    private static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    private static CoreAdvanced _sAdv;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
@@ -49,7 +61,9 @@ private static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -60,9 +74,14 @@ private static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Toxic Gem":
                     Core.FarmingLogger(req.Name, quant);
@@ -82,7 +101,6 @@ private static CoreAdvanced _sAdv;
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
@@ -118,20 +136,95 @@ private static CoreAdvanced _sAdv;
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("85281", "Toxian Metal", "Mode: [select] only\nShould the bot buy \"Toxian Metal\" ?", false),
-        new Option<bool>("85957", "Toxian Strider", "Mode: [select] only\nShould the bot buy \"Toxian Strider\" ?", false),
-        new Option<bool>("85959", "Toxian Strider Hair", "Mode: [select] only\nShould the bot buy \"Toxian Strider Hair\" ?", false),
-        new Option<bool>("85960", "Toxian Strider Locks", "Mode: [select] only\nShould the bot buy \"Toxian Strider Locks\" ?", false),
-        new Option<bool>("85961", "Toxian Strider Masked Hair", "Mode: [select] only\nShould the bot buy \"Toxian Strider Masked Hair\" ?", false),
-        new Option<bool>("85962", "Toxian Strider Masked Locks", "Mode: [select] only\nShould the bot buy \"Toxian Strider Masked Locks\" ?", false),
-        new Option<bool>("85963", "Toxian Strider Hat", "Mode: [select] only\nShould the bot buy \"Toxian Strider Hat\" ?", false),
-        new Option<bool>("85964", "Toxian Strider Panama", "Mode: [select] only\nShould the bot buy \"Toxian Strider Panama\" ?", false),
-        new Option<bool>("85965", "Toxian Strider Morph", "Mode: [select] only\nShould the bot buy \"Toxian Strider Morph\" ?", false),
-        new Option<bool>("85966", "Toxian Strider Visage", "Mode: [select] only\nShould the bot buy \"Toxian Strider Visage\" ?", false),
-        new Option<bool>("85967", "Toxian Radiation Vessel", "Mode: [select] only\nShould the bot buy \"Toxian Radiation Vessel\" ?", false),
-        new Option<bool>("85968", "Radioactive Warning", "Mode: [select] only\nShould the bot buy \"Radioactive Warning\" ?", false),
-        new Option<bool>("85969", "Toxian Synthesis Sword", "Mode: [select] only\nShould the bot buy \"Toxian Synthesis Sword\" ?", false),
-        new Option<bool>("85970", "Toxian Synthesis Swords", "Mode: [select] only\nShould the bot buy \"Toxian Synthesis Swords\" ?", false),
-        new Option<bool>("85971", "Toxian Synthesis Armblades", "Mode: [select] only\nShould the bot buy \"Toxian Synthesis Armblades\" ?", false),
+        new Option<bool>(
+            "85281",
+            "Toxian Metal",
+            "Mode: [select] only\nShould the bot buy \"Toxian Metal\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85957",
+            "Toxian Strider",
+            "Mode: [select] only\nShould the bot buy \"Toxian Strider\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85959",
+            "Toxian Strider Hair",
+            "Mode: [select] only\nShould the bot buy \"Toxian Strider Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85960",
+            "Toxian Strider Locks",
+            "Mode: [select] only\nShould the bot buy \"Toxian Strider Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85961",
+            "Toxian Strider Masked Hair",
+            "Mode: [select] only\nShould the bot buy \"Toxian Strider Masked Hair\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85962",
+            "Toxian Strider Masked Locks",
+            "Mode: [select] only\nShould the bot buy \"Toxian Strider Masked Locks\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85963",
+            "Toxian Strider Hat",
+            "Mode: [select] only\nShould the bot buy \"Toxian Strider Hat\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85964",
+            "Toxian Strider Panama",
+            "Mode: [select] only\nShould the bot buy \"Toxian Strider Panama\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85965",
+            "Toxian Strider Morph",
+            "Mode: [select] only\nShould the bot buy \"Toxian Strider Morph\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85966",
+            "Toxian Strider Visage",
+            "Mode: [select] only\nShould the bot buy \"Toxian Strider Visage\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85967",
+            "Toxian Radiation Vessel",
+            "Mode: [select] only\nShould the bot buy \"Toxian Radiation Vessel\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85968",
+            "Radioactive Warning",
+            "Mode: [select] only\nShould the bot buy \"Radioactive Warning\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85969",
+            "Toxian Synthesis Sword",
+            "Mode: [select] only\nShould the bot buy \"Toxian Synthesis Sword\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85970",
+            "Toxian Synthesis Swords",
+            "Mode: [select] only\nShould the bot buy \"Toxian Synthesis Swords\" ?",
+            false
+        ),
+        new Option<bool>(
+            "85971",
+            "Toxian Synthesis Armblades",
+            "Mode: [select] only\nShould the bot buy \"Toxian Synthesis Armblades\" ?",
+            false
+        ),
     };
 }

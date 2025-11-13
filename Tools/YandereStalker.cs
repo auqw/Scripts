@@ -1,7 +1,7 @@
 /*
 name: Player Finder
 description: Finds a player in a range of roomnumbers, with a specific map name, player name, stop location (wether u want to stop at the player or your default location), and a start and stop range for room#
-tags: find, player, 
+tags: find, player,
 */
 //cs_include Scripts/CoreBots.cs
 using Skua.Core.Interfaces;
@@ -16,12 +16,22 @@ public class YandereStalker
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("Stay at player", "Stay at player", "stay at player, or goto default stop location", false),
+        new Option<bool>(
+            "Stay at player",
+            "Stay at player",
+            "stay at player, or goto default stop location",
+            false
+        ),
         new Option<string>("Player Name", "Player Name", "Insert playername to find", ""),
         new Option<string>("Map Name", "Map Name", "Insert map name to find", ""),
-        new Option<int>("Starting Room Number", "Starting Room Number", "RoomNumber to start at.", 0),
+        new Option<int>(
+            "Starting Room Number",
+            "Starting Room Number",
+            "RoomNumber to start at.",
+            0
+        ),
         new Option<int>("Ending Room Number", "Ending Room Number", "RoomNumber to end at.", 0),
-        CoreBots.Instance.SkipOptions
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface Bot)
@@ -42,7 +52,9 @@ public class YandereStalker
         int lowestMapnumber = Bot.Config!.Get<int>("Starting Room Number");
         int highestMapNumber = Bot.Config!.Get<int>("Ending Room Number");
 
-        Core.Logger($"Lowest Map Number: {lowestMapnumber}, Highest Map Number: {highestMapNumber}");
+        Core.Logger(
+            $"Lowest Map Number: {lowestMapnumber}, Highest Map Number: {highestMapNumber}"
+        );
 
         if (player == null || map == null)
         {
@@ -50,7 +62,9 @@ public class YandereStalker
             return;
         }
 
-        Core.Logger("Joining whitemap to then move to the next room (in case of navigation issues)");
+        Core.Logger(
+            "Joining whitemap to then move to the next room (in case of navigation issues)"
+        );
 
         for (int mapnumber = lowestMapnumber; mapnumber <= highestMapNumber; mapnumber++)
         {
@@ -69,14 +83,9 @@ public class YandereStalker
             }
         }
 
-        Core.Logger($"{player} not found in {Bot.Map.FullName}, stopping (bot will go to the default home location)", stopBot: true);
+        Core.Logger(
+            $"{player} not found in {Bot.Map.FullName}, stopping (bot will go to the default home location)",
+            stopBot: true
+        );
     }
-
-
-
-
-
-
-
-
 }

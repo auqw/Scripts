@@ -13,8 +13,18 @@ public class VoidShogun
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreNation Nation { get => _Nation ??= new CoreNation(); set => _Nation = value; }    private static CoreNation _Nation;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreNation Nation
+    {
+        get => _Nation ??= new CoreNation();
+        set => _Nation = value;
+    }
+    private static CoreNation _Nation;
 
     public readonly string[] Rewards =
     {
@@ -29,7 +39,7 @@ public class VoidShogun
         "Mini Void Shogun",
         "Mini Void Shogun Battlepet",
         "Void Shogun Katanas on your Hip",
-        "Dual Void Shogun Katanas"
+        "Dual Void Shogun Katanas",
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -61,7 +71,11 @@ public class VoidShogun
         Farm.YokaiREP();
         Nation.FarmVoucher(false);
 
-        foreach (ItemBase item in Core.EnsureLoad(6484).Rewards.Where(x => x != null && Rewards.Contains(x.Name)).Select(x => x))
+        foreach (
+            ItemBase item in Core.EnsureLoad(6484)
+                .Rewards.Where(x => x != null && Rewards.Contains(x.Name))
+                .Select(x => x)
+        )
         {
             if (Core.CheckInventory(item.ID))
             {

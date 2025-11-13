@@ -12,7 +12,12 @@ public class RefreshmentRetrieval
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
     int questID = 9029;
     int quant = 1;
 
@@ -20,12 +25,10 @@ public class RefreshmentRetrieval
     {
         Core.SetOptions();
 
-
         RandomReward(questID, quant);
 
         Core.SetOptions(false);
     }
-
 
     private void RandomReward(int questID, int quant)
     {
@@ -50,7 +53,6 @@ public class RefreshmentRetrieval
                 Core.FarmingLogger(Reward.Name, 1);
                 while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name, toInv: false))
                 {
-
                     Core.HuntMonster("caroltown", "Frostval Deer", "Frostval Refreshments", 10);
 
                     i++;
@@ -83,7 +85,9 @@ public class RefreshmentRetrieval
             {
                 Bot.Kill.Monster(1);
 
-                Core.Logger($"Kill: {killCount + 1}/3, {(killCount < 2 ? "Swapping Map at 3" : "Swapping map to respawn mob")}");
+                Core.Logger(
+                    $"Kill: {killCount + 1}/3, {(killCount < 2 ? "Swapping Map at 3" : "Swapping map to respawn mob")}"
+                );
                 Bot.Wait.ForMonsterSpawn(1);
             }
         }

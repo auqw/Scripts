@@ -13,8 +13,13 @@ public class GetSDDB
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static DarknessShard DS { get => _DS ??= new DarknessShard(); set => _DS = value; }
+    private static DarknessShard DS
+    {
+        get => _DS ??= new DarknessShard();
+        set => _DS = value;
+    }
     private static DarknessShard _DS;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -26,9 +31,17 @@ public class GetSDDB
 
     public void GetWeapon()
     {
-        if (Core.CheckInventory("Sepulchure's Dark DoomBlade") || (!Core.CheckInventory("Sepulchure's Dark DoomBlade") && !Core.CheckInventory("Sepulchure's Undead DoomBlade")))
+        if (
+            Core.CheckInventory("Sepulchure's Dark DoomBlade")
+            || (
+                !Core.CheckInventory("Sepulchure's Dark DoomBlade")
+                && !Core.CheckInventory("Sepulchure's Undead DoomBlade")
+            )
+        )
         {
-            Core.Logger("You already own this weapon or you don't have the required weapon (Sepulchure's Undead DoomBlade).");
+            Core.Logger(
+                "You already own this weapon or you don't have the required weapon (Sepulchure's Undead DoomBlade)."
+            );
             return;
         }
 

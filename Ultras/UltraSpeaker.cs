@@ -57,7 +57,7 @@ public class UltraSpeaker
     private int timeWait;
     private bool forceSkill = false;
     private int skillToForce;
-private string skills = "1,2,3,4";
+    private string skills = "1,2,3,4";
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -137,7 +137,6 @@ private string skills = "1,2,3,4";
                 if (Bot.Skills.CanUseSkill(currentSkill))
                     Bot.Skills.UseSkill(currentSkill);
                 skillIndex = (skillIndex + 1) % intSkillList.Length;
-
             }
             Bot.Sleep(100);
         }
@@ -146,7 +145,7 @@ private string skills = "1,2,3,4";
 
     void _walkFlash(int X, int Y) => Bot.Flash.Call("walkTo", X, Y, 8);
 
-async void UltraSpeakerListener(dynamic packet)
+    async void UltraSpeakerListener(dynamic packet)
     {
         try
         {
@@ -176,7 +175,10 @@ async void UltraSpeakerListener(dynamic packet)
                             string? msg = (a as dynamic)?.msg?.ToString();
                             if (!string.IsNullOrEmpty(msg))
                             {
-                                if (msg.ToLower().Contains("listen") || msg.ToLower().Contains("truth"))
+                                if (
+                                    msg.ToLower().Contains("listen")
+                                    || msg.ToLower().Contains("truth")
+                                )
                                 {
                                     var act = whatAction();
 
@@ -198,7 +200,6 @@ async void UltraSpeakerListener(dynamic packet)
                                     {
                                         setForceSkill(5, act.Item4);
                                     }
-
                                 }
                             }
                         }
@@ -206,7 +207,9 @@ async void UltraSpeakerListener(dynamic packet)
                 }
             }
         }
-        catch { /* ignored */ }
+        catch
+        { /* ignored */
+        }
     }
 
     private int speakerCounter = 0;
@@ -255,7 +258,7 @@ async void UltraSpeakerListener(dynamic packet)
         timeWait = time;
     }
 
-private void setSKill()
+    private void setSKill()
     {
         switch (className)
         {

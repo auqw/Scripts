@@ -39,7 +39,13 @@ public class TowerOfDoom
         Core.EnsureAccept(3474 + Floor);
         Core.Join(Floor == 1 ? "towerofdoom" : $"towerofdoom{Floor}", "r10", "Left");
         Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m.Cell == "r10");
-        Core.KillMonster(Floor == 1 ? "towerofdoom" : $"towerofdoom{Floor}", "r10", "Left", mob!.Name, $"{mob!.Name} Defeated");
+        Core.KillMonster(
+            Floor == 1 ? "towerofdoom" : $"towerofdoom{Floor}",
+            "r10",
+            "Left",
+            mob!.Name,
+            $"{mob!.Name} Defeated"
+        );
         Core.EnsureComplete(3474 + Floor);
     }
 }

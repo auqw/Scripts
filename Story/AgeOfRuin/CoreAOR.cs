@@ -20,11 +20,23 @@ public class CoreAOR
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
-    private static CoreSoW SoW { get => _SoW ??= new CoreSoW(); set => _SoW = value; }
+    private static CoreSoW SoW
+    {
+        get => _SoW ??= new CoreSoW();
+        set => _SoW = value;
+    }
     private static CoreSoW _SoW;
 
     public void ScriptMain(IScriptInterface bot)
@@ -56,10 +68,15 @@ public class CoreAOR
         ForgeAlbedo();
     }
 
-
     public void TerminaTemple(bool seaVoice = false, bool coldThunder = false)
     {
-        if (Core.isCompletedBefore(coldThunder ? 9851 : seaVoice ? 9351 : 10438))
+        if (
+            Core.isCompletedBefore(
+                coldThunder ? 9851
+                : seaVoice ? 9351
+                : 10438
+            )
+        )
             return;
 
         SoW.ManaCradle();
@@ -355,7 +372,11 @@ public class CoreAOR
         }
     }
 
-    public void DeepWater(bool panopticonMerge = false, bool seaVoice = false, bool coldThunder = false)
+    public void DeepWater(
+        bool panopticonMerge = false,
+        bool seaVoice = false,
+        bool coldThunder = false
+    )
     {
         if (Core.isCompletedBefore(9338))
             return;
@@ -424,20 +445,31 @@ public class CoreAOR
             Core.EnsureAccept(9348);
 
             // Define the possible solo classes
-            string[] PossibleSoloClasses = new[] { "Chaos Avenger", "Verus Doomknight", "Void Highlord", "ArchPaladin" };
+            string[] PossibleSoloClasses = new[]
+            {
+                "Chaos Avenger",
+                "Verus Doomknight",
+                "Void Highlord",
+                "ArchPaladin",
+            };
 
             if (!Core.CheckInventory(PossibleSoloClasses, any: true))
-                Core.Logger("no Soloing classes found stopping (go get AP atleast and rerun)", stopBot: true);
+                Core.Logger(
+                    "no Soloing classes found stopping (go get AP atleast and rerun)",
+                    stopBot: true
+                );
 
             // Find the first available class in inventory or bank
             string? selectedClass = PossibleSoloClasses.FirstOrDefault(className =>
-     Bot.Inventory.Items.Any(item => item.Name == className) ||
-     Bot.Bank.Items.Any(item => item.Name == className)
- );
+                Bot.Inventory.Items.Any(item => item.Name == className)
+                || Bot.Bank.Items.Any(item => item.Name == className)
+            );
 
             if (string.IsNullOrWhiteSpace(selectedClass))
             {
-                Core.Logger("No soloing class found; aborting SeaVoice. Go get a solo class and re-run.");
+                Core.Logger(
+                    "No soloing class found; aborting SeaVoice. Go get a solo class and re-run."
+                );
                 return;
             }
 
@@ -460,7 +492,6 @@ public class CoreAOR
             Core.EnsureComplete(9348);
             Core.SellItem("Vigil", all: true);
         }
-
     }
 
     public void Balemorale(bool seaVoice = false, bool coldThunder = false)
@@ -526,35 +557,39 @@ public class CoreAOR
 
         Core.EquipClass(ClassType.Farm);
 
-        // Skye's Raindrops 9732 
+        // Skye's Raindrops 9732
         Story.KillQuest(9732, "castleeblana", "Skye Warrior");
 
-        // Doctor's Orders 9733 
+        // Doctor's Orders 9733
         Story.MapItemQuest(9733, "castleeblana", 13202, 5);
         Story.MapItemQuest(9733, "castleeblana", 13203);
 
         // Shockwave's Ripples 9734
         Story.KillQuest(9734, "castleeblana", "Skye Executor");
 
-        // Caretaker's Shadow 9735 
+        // Caretaker's Shadow 9735
         Story.MapItemQuest(9735, "castleeblana", 13204);
-        Story.KillQuest(9735, "castleeblana", new[] { "Skye Warrior", "Skye Executor", "Skye Executor" });
+        Story.KillQuest(
+            9735,
+            "castleeblana",
+            new[] { "Skye Warrior", "Skye Executor", "Skye Executor" }
+        );
 
-        // Harbinger's Tears 9736 
+        // Harbinger's Tears 9736
         Story.KillQuest(9736, "castleeblana", "Bananach Raven");
 
-        // Spectre of Hunger 9737 
+        // Spectre of Hunger 9737
         Story.MapItemQuest(9737, "castleeblana", 13205);
         Story.KillQuest(9737, "castleeblana", "Fear Gorta");
 
-        // InnJustice 9738 
+        // InnJustice 9738
         Story.MapItemQuest(9738, "castleeblana", 13206);
         Story.KillQuest(9738, "castleeblana", new[] { "Bananach Raven", "Fear Gorta" });
 
-        // Find Shelter in... 9739 
+        // Find Shelter in... 9739
         Story.MapItemQuest(9739, "castleeblana", new[] { 13207, 13208 });
 
-        // Heavy Handed 9740 
+        // Heavy Handed 9740
         Story.KillQuest(9740, "castleeblana", "Skye Warrior");
 
         // Miserable Monsoon 9741
@@ -705,7 +740,6 @@ public class CoreAOR
             Story.KillQuest(9814, "liatarahill", "Warden Illaria");
             Core.EquipClass(ClassType.Farm);
         }
-
     }
 
     public void CastleGaheris(bool seaVoice = false, bool coldThunder = false)
@@ -782,37 +816,35 @@ public class CoreAOR
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Noelle Knight", // UseableMonsters[0],
-	"Drow Soldier", // UseableMonsters[1],
-	"Dwarven Aegis", // UseableMonsters[2],
-	"Maleno Elemental", // UseableMonsters[3],
-	"Maleno Match", // UseableMonsters[4],
-	"Flame of Maleno", // UseableMonsters[5],
-	"Eternal Flames", // UseableMonsters[6]
-};
+            "Noelle Knight", // UseableMonsters[0],
+            "Drow Soldier", // UseableMonsters[1],
+            "Dwarven Aegis", // UseableMonsters[2],
+            "Maleno Elemental", // UseableMonsters[3],
+            "Maleno Match", // UseableMonsters[4],
+            "Flame of Maleno", // UseableMonsters[5],
+            "Eternal Flames", // UseableMonsters[6]
+        };
         #endregion Useable Monsters
 
         // 10347 | Sister Statues
         Story.MapItemQuest(10347, "thelimacity", new[] { 14770, 14771 });
 
-
         // 10348 | Starstruck Chivalry
         if (!Story.QuestProgression(10348))
             Core.HuntMonsterQuest(10348, "thelimacity", UseableMonsters[0]);
 
-
         // 10349 | Black Dahlia
         Story.MapItemQuest(10349, "thelimacity", new[] { 14772, 14773 });
-
 
         // 10350 | Talls and Stouts
         if (!Story.QuestProgression(10350))
         {
-            Core.HuntMonsterQuest(10350,
+            Core.HuntMonsterQuest(
+                10350,
                 ("thelimacity", UseableMonsters[2], ClassType.Farm),
-                ("thelimacity", UseableMonsters[1], ClassType.Farm));
+                ("thelimacity", UseableMonsters[1], ClassType.Farm)
+            );
         }
-
 
         // 10351 | A Lost Matchstick
         if (!Story.QuestProgression(10351))
@@ -823,44 +855,36 @@ public class CoreAOR
             Core.EnsureComplete(10351);
         }
 
-
         // 10352 | Flash Fire
         Story.MapItemQuest(10352, "thelimacity", 14775, 4);
-
 
         // 10353 | Unio Naturalis
         if (!Story.QuestProgression(10353))
         {
-            Core.HuntMonsterQuest(10353,
-                ("thelimacity", UseableMonsters[3], ClassType.Solo));
+            Core.HuntMonsterQuest(10353, ("thelimacity", UseableMonsters[3], ClassType.Solo));
         }
-
 
         // 10354 | A Friend's Distant Laugh
         if (!Story.QuestProgression(10354))
         {
-            Core.HuntMonsterQuest(10354,
-                ("thelimacity", UseableMonsters[4], ClassType.Farm));
+            Core.HuntMonsterQuest(10354, ("thelimacity", UseableMonsters[4], ClassType.Farm));
         }
-
 
         // 10355 | Putrefaction
         if (!Story.QuestProgression(10355))
         {
-            Core.HuntMonsterQuest(10355,
+            Core.HuntMonsterQuest(
+                10355,
                 ("thelimacity", UseableMonsters[3], ClassType.Solo),
-                ("thelimacity", UseableMonsters[4], ClassType.Farm));
+                ("thelimacity", UseableMonsters[4], ClassType.Farm)
+            );
         }
-
 
         // 10356 | Enatiodromia
         if (!Story.QuestProgression(10356))
         {
-            Core.HuntMonsterQuest(10356,
-                ("thelimacity", UseableMonsters[5], ClassType.Solo));
+            Core.HuntMonsterQuest(10356, ("thelimacity", UseableMonsters[5], ClassType.Solo));
         }
-
-
     }
 
     public void MountMaleno(bool seaVoice = false, bool coldThunder = false)
@@ -873,78 +897,66 @@ public class CoreAOR
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Soul Raven", // UseableMonsters[0],
-	"Maleno Match", // UseableMonsters[1],
-	"Maleno Elemental", // UseableMonsters[2],
-	"Draconian Bandit", // UseableMonsters[3],
-	"Idalion", // UseableMonsters[4]
-};
+            "Soul Raven", // UseableMonsters[0],
+            "Maleno Match", // UseableMonsters[1],
+            "Maleno Elemental", // UseableMonsters[2],
+            "Draconian Bandit", // UseableMonsters[3],
+            "Idalion", // UseableMonsters[4]
+        };
         #endregion Useable Monsters
 
         // 10359 | A-Luring Song
         Story.MapItemQuest(10359, "mountmaleno", 14805);
         Story.KillQuest(10359, "mountmaleno", "Soul Raven");
 
-
         // 10360 | Splendid Ashes, Pompous Grave
         if (!Story.QuestProgression(10360))
         {
-            Core.HuntMonsterQuest(10360,
-                ("mountmaleno", UseableMonsters[1], ClassType.Farm));
+            Core.HuntMonsterQuest(10360, ("mountmaleno", UseableMonsters[1], ClassType.Farm));
         }
 
-
         // 10361 | Echolocation
-        Story.MapItemQuest(10361, new[] {
-            (14806, 1, "mountmaleno"),
-            (14807, 5, "mountmaleno")
-        });
-
+        Story.MapItemQuest(10361, new[] { (14806, 1, "mountmaleno"), (14807, 5, "mountmaleno") });
 
         // 10362 | Chymerical Ash
         if (!Story.QuestProgression(10362))
         {
-            Core.HuntMonsterQuest(10362,
+            Core.HuntMonsterQuest(
+                10362,
                 ("mountmaleno", UseableMonsters[0], ClassType.Farm),
-                ("mountmaleno", UseableMonsters[1], ClassType.Farm));
+                ("mountmaleno", UseableMonsters[1], ClassType.Farm)
+            );
         }
-
 
         // 10363 | Journey Through the Dark Night
         Story.MapItemQuest(10363, "mountmaleno", new[] { 14808, 14809 });
-
 
         // 10364 | Lunar Caustic
         Story.MapItemQuest(10364, "mountmaleno", 14810);
         Story.KillQuest(10364, "mountmaleno", UseableMonsters[2]);
 
-
         // 10365 | Like Water and Lithium
         Story.MapItemQuest(10365, "mountmaleno", 14811);
         Story.KillQuest(10365, "mountmaleno", UseableMonsters[3]);
 
-
         // 10366 | The Shadows Lengthen in…
         Story.MapItemQuest(10366, "mountmaleno", 14812);
-
 
         // 10367 | Blithe Hospitality
         if (!Story.QuestProgression(10367))
         {
-            Core.HuntMonsterQuest(10367,
+            Core.HuntMonsterQuest(
+                10367,
                 ("mountmaleno", UseableMonsters[3], ClassType.Farm),
-                ("mountmaleno", UseableMonsters[2], ClassType.Solo));
+                ("mountmaleno", UseableMonsters[2], ClassType.Solo)
+            );
         }
-
 
         // 10368 | Sal Volatile
         if (!Story.QuestProgression(10368))
         {
-            Core.HuntMonsterQuest(10368,
-                ("mountmaleno", UseableMonsters[4], ClassType.Solo));
+            Core.HuntMonsterQuest(10368, ("mountmaleno", UseableMonsters[4], ClassType.Solo));
         }
-
-
     }
 
     public void SanctuaryAiwass(bool seaVoice = false, bool coldThunder = false)
@@ -1032,87 +1044,77 @@ public class CoreAOR
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
-    "Albedo Elemental", // UseableMonsters[0],
-	"Defensive Turret", // UseableMonsters[1],
-	"Runehawk Husk", // UseableMonsters[2],
-	"Collapsed Husk", // UseableMonsters[3],
-	"Albedo Match", // UseableMonsters[4],
-	"Defense Droid", // UseableMonsters[5],
-	"Flame of Albedo", // UseableMonsters[6]
-};
+            "Albedo Elemental", // UseableMonsters[0],
+            "Defensive Turret", // UseableMonsters[1],
+            "Runehawk Husk", // UseableMonsters[2],
+            "Collapsed Husk", // UseableMonsters[3],
+            "Albedo Match", // UseableMonsters[4],
+            "Defense Droid", // UseableMonsters[5],
+            "Flame of Albedo", // UseableMonsters[6]
+        };
         #endregion Useable Monsters
 
         // 10413 | Discerning Threats
         if (!Story.QuestProgression(10413))
         {
-            Core.HuntMonsterQuest(10413,
-                ("forgealbedo", UseableMonsters[0], ClassType.Farm));
+            Core.HuntMonsterQuest(10413, ("forgealbedo", UseableMonsters[0], ClassType.Farm));
         }
-
 
         // 10414 | Model Students
         Story.MapItemQuest(10414, "forgealbedo", new[] { 14959, 14960, 14961 });
-
 
         // 10415 | System Delusion
         Story.MapItemQuest(10415, "forgealbedo", 14962);
         Story.KillQuest(10415, "forgealbedo", UseableMonsters[1]);
 
-
         // 10416 | The Leap that Never Landed
         Story.MapItemQuest(10416, "forgealbedo", 14963, 4);
         Story.KillQuest(10416, "forgealbedo", UseableMonsters[2]);
-
 
         // 10417 | Insistent Existence
         Story.MapItemQuest(10417, "forgealbedo", 14964, 4);
         Story.KillQuest(10417, "forgealbedo", UseableMonsters[3]);
 
-
         // 10418 | Failed Reflection
         if (!Story.QuestProgression(10418))
         {
-            Core.HuntMonsterQuest(10418,
-                ("forgealbedo", UseableMonsters[4], ClassType.Farm));
+            Core.HuntMonsterQuest(10418, ("forgealbedo", UseableMonsters[4], ClassType.Farm));
         }
-
 
         // 10419 | Technically Aware
         if (!Story.QuestProgression(10419))
         {
-            Core.HuntMonsterQuest(10419,
-                ("forgealbedo", UseableMonsters[5], ClassType.Solo));
+            Core.HuntMonsterQuest(10419, ("forgealbedo", UseableMonsters[5], ClassType.Solo));
         }
-
 
         // 10420 | Mental Barrier
         Story.MapItemQuest(10420, "forgealbedo", 14965, 6);
         Story.KillQuest(10420, "forgealbedo", UseableMonsters[1]);
 
-
         // 10421 | Lost Admin Privileges
         if (!Story.QuestProgression(10421))
         {
-            Core.HuntMonsterQuest(10421,
+            Core.HuntMonsterQuest(
+                10421,
                 ("forgealbedo", UseableMonsters[1], ClassType.Farm),
-                ("forgealbedo", UseableMonsters[5], ClassType.Farm));
+                ("forgealbedo", UseableMonsters[5], ClassType.Farm)
+            );
         }
-
 
         // 10422 | Conscious Unconsciousness
         if (!Story.QuestProgression(10422))
         {
-            Core.HuntMonsterQuest(10422,
-                ("forgealbedo", UseableMonsters[6], ClassType.Solo));
+            Core.HuntMonsterQuest(10422, ("forgealbedo", UseableMonsters[6], ClassType.Solo));
         }
-
-
     }
 
     // Mostly for `Skye's Lightning` for the Merge
     public void ColdThunderBoss(string? item = null, int quant = 1, bool isTemp = true)
     {
-        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
+        if (
+            item != null
+            && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant))
+        )
         {
             Bot.Events.ExtensionPacketReceived -= Listener;
             Core.JumpWait();
@@ -1145,9 +1147,15 @@ public class CoreAOR
         Bot.Wait.ForActionCooldown(GameActions.EquipItem);
         Core.Sleep();
 
-        Core.Logger("About to attack Cold Thunder boss. It's very unstable; recommended to do it with more accounts.");
+        Core.Logger(
+            "About to attack Cold Thunder boss. It's very unstable; recommended to do it with more accounts."
+        );
 
-        while (!Bot.ShouldExit && item != null && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant)))
+        while (
+            !Bot.ShouldExit
+            && item != null
+            && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant))
+        )
         {
             if (Bot.Map.Name != "coldthunder")
                 Core.Join("coldthunder");
@@ -1158,7 +1166,9 @@ public class CoreAOR
             // Check if potion is needed and handle it
             if (needsPotion && !potionApplied)
             {
-                Core.Logger("Detected 'The skies rumble. Prepare yourself!' - applying Bananach's Last Will potion...");
+                Core.Logger(
+                    "Detected 'The skies rumble. Prepare yourself!' - applying Bananach's Last Will potion..."
+                );
 
                 // Keep trying to use potion until it's successfully applied
                 while (!Bot.ShouldExit && needsPotion && !potionApplied)
@@ -1189,7 +1199,10 @@ public class CoreAOR
                 Bot.Combat.Attack("*");
             }
 
-            if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant)))
+            if (
+                item != null
+                && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant))
+            )
             {
                 Core.JumpWait();
                 break;
@@ -1223,11 +1236,16 @@ public class CoreAOR
                                 if (a is null)
                                     continue;
 
-                                if (a.msg is not null && (string)a.msg is "The skies rumble. Prepare yourself!")
+                                if (
+                                    a.msg is not null
+                                    && (string)a.msg is "The skies rumble. Prepare yourself!"
+                                )
                                 {
                                     needsPotion = true;
                                     potionApplied = false;
-                                    Core.Logger("Event detected: The skies rumble. Prepare yourself! - Potion needed.");
+                                    Core.Logger(
+                                        "Event detected: The skies rumble. Prepare yourself! - Potion needed."
+                                    );
                                 }
                             }
                         }
@@ -1237,7 +1255,15 @@ public class CoreAOR
         }
     }
 
-    public void KillThing(string map, int mobMapID, int itemUsed, string Class, string item, int quant = 1, bool isTemp = false)
+    public void KillThing(
+        string map,
+        int mobMapID,
+        int itemUsed,
+        string Class,
+        string item,
+        int quant = 1,
+        bool isTemp = false
+    )
     {
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
@@ -1254,7 +1280,9 @@ public class CoreAOR
             string? classNameToUse = Class ?? classFromPlayer;
             if (string.IsNullOrWhiteSpace(classNameToUse))
             {
-                Core.Logger("KillThing aborted: no class specified and player has no current class.");
+                Core.Logger(
+                    "KillThing aborted: no class specified and player has no current class."
+                );
                 return;
             }
             Bot.Skills.StartAdvanced(classNameToUse, true, ClassUseMode.Base);
@@ -1273,7 +1301,10 @@ public class CoreAOR
             Core.Jump(mob.Cell);
         Bot.Player.SetSpawnPoint();
 
-        while (!Bot.ShouldExit && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant)))
+        while (
+            !Bot.ShouldExit
+            && (isTemp ? !Bot.TempInv.Contains(item, quant) : !Core.CheckInventory(item, quant))
+        )
         {
             if (!Bot.Player.Alive)
             {
@@ -1290,8 +1321,14 @@ public class CoreAOR
                 while (!Bot.ShouldExit && Bot.Player.Alive && Bot.Skills.CanUseSkill(5))
                 {
                     var skill = Bot.Flash.GetArrayObject<dynamic>("world.actions.active", 5);
-                    if (skill == null) return;
-                    Bot.Flash.CallGameFunction("world.testAction", JsonConvert.DeserializeObject<ExpandoObject>(JsonConvert.SerializeObject(skill))!);
+                    if (skill == null)
+                        return;
+                    Bot.Flash.CallGameFunction(
+                        "world.testAction",
+                        JsonConvert.DeserializeObject<ExpandoObject>(
+                            JsonConvert.SerializeObject(skill)
+                        )!
+                    );
 
                     Core.Sleep(Core.ActionDelay);
                     if (!Bot.Skills.CanUseSkill(5))
@@ -1310,5 +1347,4 @@ public class CoreAOR
 
         Core.Logger($"KillThing completed for {item} ({quant}).");
     }
-
 }

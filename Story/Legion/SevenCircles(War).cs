@@ -11,7 +11,12 @@ public class SevenCircles
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -47,7 +52,7 @@ public class SevenCircles
             Core.EnsureComplete(7970);
         }
 
-        //Lest Ye Be Destroyed    
+        //Lest Ye Be Destroyed
         Story.KillQuest(7971, "sevencircles", "Luxuria");
 
         //Canto VI
@@ -84,7 +89,12 @@ public class SevenCircles
 
         Circles();
 
-        Core.AddDrop("Essence of Treachery", "Essence of Violence", "Souls of Heresy", "Essence of Wrath");
+        Core.AddDrop(
+            "Essence of Treachery",
+            "Essence of Violence",
+            "Souls of Heresy",
+            "Essence of Wrath"
+        );
 
         //Guards of Wrath
         Core.EquipClass(ClassType.Farm);
@@ -99,7 +109,7 @@ public class SevenCircles
         if (StopForGoldFarm)
             return;
 
-        //Wrath Against the Machine  
+        //Wrath Against the Machine
         Core.EquipClass(ClassType.Solo);
         Story.KillQuest(7982, "sevencircleswar", "Wrath");
 
@@ -141,6 +151,4 @@ public class SevenCircles
             Core.EnsureComplete(7990);
         }
     }
-
-
 }

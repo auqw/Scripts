@@ -14,9 +14,24 @@ public class DarkWarLegionandNation
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static Core13LoC LOC { get => _LOC ??= new Core13LoC(); set => _LOC = value; }    private static Core13LoC _LOC;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static Core13LoC LOC
+    {
+        get => _LOC ??= new Core13LoC();
+        set => _LOC = value;
+    }
+    private static Core13LoC _LOC;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -47,7 +62,14 @@ public class DarkWarLegionandNation
         if (!Story.QuestProgression(8557))
         {
             Core.EnsureAccept(8557);
-            Core.KillMonster("dagerecruit", "Enter", "Spawn", "Dreadfiend", "Fiend Energy Collected", 4);
+            Core.KillMonster(
+                "dagerecruit",
+                "Enter",
+                "Spawn",
+                "Dreadfiend",
+                "Fiend Energy Collected",
+                4
+            );
             Story.MapItemQuest(8557, "dagerecruit", 9883, 4);
         }
 
@@ -55,7 +77,14 @@ public class DarkWarLegionandNation
         if (!Story.QuestProgression(8558))
         {
             Core.EnsureAccept(8558);
-            Core.KillMonster("dagerecruit", "Enter", "Spawn", "Dreadfiend", "Dreadfiend Defeated", 6);
+            Core.KillMonster(
+                "dagerecruit",
+                "Enter",
+                "Spawn",
+                "Dreadfiend",
+                "Dreadfiend Defeated",
+                6
+            );
             Core.EnsureComplete(8558);
         }
 
@@ -158,7 +187,14 @@ public class DarkWarLegionandNation
         if (!Story.QuestProgression(8576))
         {
             Core.EnsureAccept(8576);
-            Core.KillMonster("dagerecruit", "Enter", "Spawn", "Dreadfiend", "Dreadfiend Defeated", 6);
+            Core.KillMonster(
+                "dagerecruit",
+                "Enter",
+                "Spawn",
+                "Dreadfiend",
+                "Dreadfiend Defeated",
+                6
+            );
             Core.HuntMonster("dagerecruit", "Dark Makai", "Dark Makai Defeated", 6);
             Core.HuntMonster("dagerecruit", "Bloodfiend ", "Bloodfiend Defeated", 6);
             Core.HuntMonster("dagerecruit", "Infernal Fiend", "Infernal Fiend Defeated", 6);
@@ -174,7 +210,7 @@ public class DarkWarLegionandNation
         // ManSlayer? More Like ManSLAIN
         Story.KillQuest(8587, "darkwarlegion", "Manslayer Fiend");
 
-        // Defeat Dirtlicker            
+        // Defeat Dirtlicker
         Story.KillQuest(8588, "darkwarlegion", "Dirtlicker");
     }
 
@@ -188,7 +224,7 @@ public class DarkWarLegionandNation
         // Legion Badges && Legion Badges,Mega Legion Badges - 8578, 8579
         if (!Story.QuestProgression(8580))
         {
-            Core.EnsureAcceptmultiple( new[] { 8578, 8579 });
+            Core.EnsureAcceptmultiple(new[] { 8578, 8579 });
             Core.KillMonster("darkwarnation", "Enter", "Spawn", "*", "Legion Badge", 5);
             Core.KillMonster("darkwarnation", "Enter", "Spawn", "*", "Mega Legion Badge", 3);
             Core.EnsureComplete(new[] { 8578, 8579 });
@@ -203,8 +239,7 @@ public class DarkWarLegionandNation
         // Defeat War
         Story.KillQuest(8582, "darkwarnation", "War");
 
-        // The Traitor           
+        // The Traitor
         Story.KillQuest(8583, "darkwarnation", "Dage the Evil");
     }
-
 }

@@ -16,30 +16,64 @@ public class TachyonMerge
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }    private static CoreAdvanced _Adv;
-public static CoreAdvanced sAdv
-{
-    get => _sAdv ??= new CoreAdvanced();
-    set => _sAdv = value;
-}
-public static CoreAdvanced _sAdv;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    public static CoreAdvanced sAdv
+    {
+        get => _sAdv ??= new CoreAdvanced();
+        set => _sAdv = value;
+    }
+    public static CoreAdvanced _sAdv;
 
-    private static CoreToD TOD { get => _TOD ??= new CoreToD(); set => _TOD = value; }
+    private static CoreToD TOD
+    {
+        get => _TOD ??= new CoreToD();
+        set => _TOD = value;
+    }
     private static CoreToD _TOD;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
     public string[] MultiOptions = { "Generic", "Select" };
     public string OptionsStorage = sAdv.OptionsStorage;
+
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.BankingBlackList.AddRange(new[] { "Tachyon Core Piece", "Blue Powercell", "Blue Overdrive", "Blue Tachyon Grip", "Blue Tachyon Trigger", "Orange Powercell", "Orange Overdrive", "Orange Tachyon Grip", "Orange Tachyon Trigger", "Saeculum Gem " });
+        Core.BankingBlackList.AddRange(
+            new[]
+            {
+                "Tachyon Core Piece",
+                "Blue Powercell",
+                "Blue Overdrive",
+                "Blue Tachyon Grip",
+                "Blue Tachyon Trigger",
+                "Orange Powercell",
+                "Orange Overdrive",
+                "Orange Tachyon Grip",
+                "Orange Tachyon Trigger",
+                "Saeculum Gem ",
+            }
+        );
         Core.SetOptions();
 
         BuyAllMerge();
@@ -65,7 +99,9 @@ public static CoreAdvanced _sAdv;
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp
+                ? Bot.TempInv.GetQuantity(req.Name)
+                : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -76,9 +112,14 @@ public static CoreAdvanced _sAdv;
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
+                    Core.Logger(
+                        $"The bot hasn't been taught how to get {req.Name}."
+                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        messageBox: shouldStop,
+                        stopBot: shouldStop
+                    );
                     break;
-                #endregion
+        #endregion
 
                 case "Blue Overdrive":
                 case "Blue Powercell":
@@ -91,7 +132,11 @@ public static CoreAdvanced _sAdv;
                     Core.RegisterQuests(5084);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("tachyon", "Svelgr the Devourer", "Svelgr the Devourer Defeated");
+                        Core.HuntMonster(
+                            "tachyon",
+                            "Svelgr the Devourer",
+                            "Svelgr the Devourer Defeated"
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -107,7 +152,11 @@ public static CoreAdvanced _sAdv;
                     Core.RegisterQuests(5083);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("tachyon", "Svelgr the Devourer", "Svelgr the Devourer Defeated");
+                        Core.HuntMonster(
+                            "tachyon",
+                            "Svelgr the Devourer",
+                            "Svelgr the Devourer Defeated"
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -119,28 +168,89 @@ public static CoreAdvanced _sAdv;
                     Core.RegisterQuests(5085);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("tachyon", "Svelgr the Devourer", "Svelgr Fang", isTemp: false);
-                        Core.HuntMonster("portalwar", "Chronorysa", "Sands of Time", 6, isTemp: false);
-                        Core.HuntMonster("portalmaze", "Time Wraith", "Wraith Wisp", 12, isTemp: false);
+                        Core.HuntMonster(
+                            "tachyon",
+                            "Svelgr the Devourer",
+                            "Svelgr Fang",
+                            isTemp: false
+                        );
+                        Core.HuntMonster(
+                            "portalwar",
+                            "Chronorysa",
+                            "Sands of Time",
+                            6,
+                            isTemp: false
+                        );
+                        Core.HuntMonster(
+                            "portalmaze",
+                            "Time Wraith",
+                            "Wraith Wisp",
+                            12,
+                            isTemp: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
-
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("34915", "Blue Tachyon Blade", "Mode: [select] only\nShould the bot buy \"Blue Tachyon Blade\" ?", false),
-        new Option<bool>("34916", "Orange Tachyon Blade", "Mode: [select] only\nShould the bot buy \"Orange Tachyon Blade\" ?", false),
-        new Option<bool>("34737", "Chrono Assassin", "Mode: [select] only\nShould the bot buy \"Chrono Assassin\" ?", false),
-        new Option<bool>("35096", "Chrono Assassin Armor", "Mode: [select] only\nShould the bot buy \"Chrono Assassin Armor\" ?", false),
-        new Option<bool>("34817", "Time Assassin", "Mode: [select] only\nShould the bot buy \"Time Assassin\" ?", false),
-        new Option<bool>("34818", "Time Assassin Cowl", "Mode: [select] only\nShould the bot buy \"Time Assassin Cowl\" ?", false),
-        new Option<bool>("34819", "Time Slicer", "Mode: [select] only\nShould the bot buy \"Time Slicer\" ?", false),
-        new Option<bool>("34820", "Ruins of Time Cape", "Mode: [select] only\nShould the bot buy \"Ruins of Time Cape\" ?", false),
-        new Option<bool>("35140", "Dual Tachyon Blades", "Mode: [select] only\nShould the bot buy \"Dual Tachyon Blades\" ?", false),
+        new Option<bool>(
+            "34915",
+            "Blue Tachyon Blade",
+            "Mode: [select] only\nShould the bot buy \"Blue Tachyon Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34916",
+            "Orange Tachyon Blade",
+            "Mode: [select] only\nShould the bot buy \"Orange Tachyon Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34737",
+            "Chrono Assassin",
+            "Mode: [select] only\nShould the bot buy \"Chrono Assassin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35096",
+            "Chrono Assassin Armor",
+            "Mode: [select] only\nShould the bot buy \"Chrono Assassin Armor\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34817",
+            "Time Assassin",
+            "Mode: [select] only\nShould the bot buy \"Time Assassin\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34818",
+            "Time Assassin Cowl",
+            "Mode: [select] only\nShould the bot buy \"Time Assassin Cowl\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34819",
+            "Time Slicer",
+            "Mode: [select] only\nShould the bot buy \"Time Slicer\" ?",
+            false
+        ),
+        new Option<bool>(
+            "34820",
+            "Ruins of Time Cape",
+            "Mode: [select] only\nShould the bot buy \"Ruins of Time Cape\" ?",
+            false
+        ),
+        new Option<bool>(
+            "35140",
+            "Dual Tachyon Blades",
+            "Mode: [select] only\nShould the bot buy \"Dual Tachyon Blades\" ?",
+            false
+        ),
     };
 }

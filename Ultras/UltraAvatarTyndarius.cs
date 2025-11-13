@@ -16,13 +16,24 @@ public class UltraAvatarTyndarius
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
-    string a, b;
+    string a,
+        b;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraAvatarTyndarius";
     public List<IOption> Options = new()
     {
-        new Option<string>("a", "First Taunter Class", "Insert the name of the class that will taunt", ""),
-        new Option<string>("b", "Second Taunter Class", "Insert the name of the class that will taunt", "")
+        new Option<string>(
+            "a",
+            "First Taunter Class",
+            "Insert the name of the class that will taunt",
+            ""
+        ),
+        new Option<string>(
+            "b",
+            "Second Taunter Class",
+            "Insert the name of the class that will taunt",
+            ""
+        ),
     };
 
     public void ScriptMain(IScriptInterface bot)
@@ -32,7 +43,8 @@ public class UltraAvatarTyndarius
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
             Core.Log("Setup", "Fill both taunter classes in Script Options.");
-            Bot.Stop(); return;
+            Bot.Stop();
+            return;
         }
 
         Core.Boot();
@@ -67,7 +79,8 @@ public class UltraAvatarTyndarius
 
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive) Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
             if (Bot.Map.Name != map)
                 Core.Join(map);
             if (Bot.Player.Cell != "Boss")

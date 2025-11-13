@@ -1,7 +1,7 @@
 /*
 name: PockeyMogs Story
 description: Compeletes the PockeyMogs Story
-tags: lim, pockeymogs, 
+tags: lim, pockeymogs,
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -11,7 +11,11 @@ public class PockeyMogsStory
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface Bot)
@@ -50,7 +54,7 @@ public class PockeyMogsStory
 
         //Pockey-Chew 5267
         Story.MapItemQuest(5267, "crossroads", 4613);
-        
+
         //Pukasnooze vs the Moglurker 5268
         Story.KillQuest(5268, "pockeymogs", "Moglurker");
 

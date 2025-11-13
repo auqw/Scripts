@@ -36,6 +36,3 @@ public class EasterEggHouse
         Core.EnsureCompleteChoose(5788);
     }
 }
-
-
-

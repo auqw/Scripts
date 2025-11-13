@@ -12,8 +12,18 @@ public class J6Saga
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }    private static CoreFarms _Farm;
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }    private static CoreStory _Story;
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -91,7 +101,6 @@ public class J6Saga
         //Planet Banzai!
         Story.ChainQuest(2168);
 
-
         //L.O.S.E.R. Battle!
         Story.ChainQuest(2169);
 
@@ -113,8 +122,10 @@ public class J6Saga
             Bot.Combat.CancelTarget();
             Core.JumpWait();
             Bot.Wait.ForCombatExit();
-            Core.Logger("Joining Whitemap to amke sure your outa xantown as the mobs\n" +
-            "are aggressive.. and you amy potentialy be stuck there");
+            Core.Logger(
+                "Joining Whitemap to amke sure your outa xantown as the mobs\n"
+                    + "are aggressive.. and you amy potentialy be stuck there"
+            );
             Core.Join("whitemap");
             Core.SellItem("Auxiliary Clue 3");
         }
@@ -198,7 +209,7 @@ public class J6Saga
         Story.KillQuest(2849, "alley", "Thug Boss");
 
         //Security Breach
-        Story.KillQuest(2844, "alley", new[] { "Security Cam"," Guard Robot" });
+        Story.KillQuest(2844, "alley", new[] { "Security Cam", " Guard Robot" });
 
         //No Sniffin' Around
         Story.KillQuest(2845, "alley", "Guard Dog Robot");

@@ -23,10 +23,10 @@ public class VanquishTheBetrayers
     }
 
     int QuestID = 9932;
+
     public void GetRewards()
     {
-
-       List<ItemBase> RewardOptions = Core.EnsureLoad(QuestID).Rewards;
+        List<ItemBase> RewardOptions = Core.EnsureLoad(QuestID).Rewards;
 
         foreach (ItemBase item in RewardOptions)
             Core.AddDrop(item.Name);
@@ -40,11 +40,16 @@ public class VanquishTheBetrayers
 
             Core.FarmingLogger(Reward.Name, 1);
 
-            Core.HuntMonsterQuestChoose(QuestID, Reward.Name, new[] {
-("voidrefuge","Nation Outrider",ClassType.Farm),
-("fiendpast","Scarvitas",ClassType.Farm),
-("darkalliance","Shadowblade",ClassType.Farm)
-});
+            Core.HuntMonsterQuestChoose(
+                QuestID,
+                Reward.Name,
+                new[]
+                {
+                    ("voidrefuge", "Nation Outrider", ClassType.Farm),
+                    ("fiendpast", "Scarvitas", ClassType.Farm),
+                    ("darkalliance", "Shadowblade", ClassType.Farm),
+                }
+            );
             Core.JumpWait();
             Bot.Wait.ForPickup(Reward.Name);
             Core.ToBank(Reward.Name);
