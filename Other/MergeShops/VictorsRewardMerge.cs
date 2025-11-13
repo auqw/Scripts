@@ -109,7 +109,7 @@ public class VictorsRewardMerge
                         {
                             Core.HuntMonster(
                                 "coliseum",
-                                "Nethersea Shark",
+                                "Ebil Shadowscythe",
                                 "Level 25 Boss Defeated",
                                 log: false
                             );
@@ -142,7 +142,7 @@ public class VictorsRewardMerge
                         {
                             Core.HuntMonster(
                                 "coliseum",
-                                "Void Dragon",
+                                "Eurythane",
                                 "Level 50 Boss Defeated",
                                 log: false
                             );
@@ -175,7 +175,7 @@ public class VictorsRewardMerge
                         {
                             Core.HuntMonster(
                                 "coliseum",
-                                "Chimera",
+                                "Undead Raxgore",
                                 "Level 75 Boss Defeated",
                                 log: false
                             );
