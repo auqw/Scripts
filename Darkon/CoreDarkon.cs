@@ -54,15 +54,15 @@ public class CoreDarkon
         Core.EquipClass(ClassType.Farm);
 
         Core.RegisterQuests(7324);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
-            Core.KillMonster(
-                "arcangrove",
-                "LeftBack",
-                "Left",
-                "Gorillaphant",
-                isTemp: false,
-                log: false
-            );
+        Core.KillMonster(
+            "arcangrove",
+            "LeftBack",
+            "Left",
+            "*",
+            "Darkon's Receipt",
+            Quantity,
+            isTemp: false
+        );
         Core.CancelRegisteredQuests();
     }
 
