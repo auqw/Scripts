@@ -4131,7 +4131,7 @@ public class CoreBots
                 // Check if player doenst havea  target after the attacking
                 // if not then its dead and we can move on
                 if (!Bot.Player.HasTarget)
-                    break;
+                    return;
             }
         }
         else
@@ -4287,7 +4287,7 @@ public class CoreBots
                     // Check if player doenst havea  target after the attacking
                     // if not then its dead and we can move on
                     if (!Bot.Player.HasTarget)
-                        break;
+                        return;
                 }
             }
             else
@@ -4419,7 +4419,7 @@ public class CoreBots
                 Sleep(500);
 
                 if (!Bot.Player.HasTarget)
-                    break; // Monster likely dead
+                    return; // Monster likely dead
             }
         }
         else
@@ -9257,6 +9257,10 @@ public class CoreBots
             return;
         }
 
+        //if aggro/aggroall is enabled when joining a map, disable it [forced]
+        Bot.Options.AggroMonsters = false;
+        Bot.Options.AggroAllMonsters = false;
+
         if (map != null)
             Join(map);
 
@@ -9311,6 +9315,10 @@ public class CoreBots
     {
         if (items == null)
             return;
+
+        //if aggro/aggroall is enabled when joining a map, disable it [forced]
+        Bot.Options.AggroMonsters = false;
+        Bot.Options.AggroAllMonsters = false;
 
         if (map != null)
             Join(map);
