@@ -2072,17 +2072,14 @@ public class CoreArmyLite
                     "LockedZoneHandler => LockedMapList"
                 );
 
-                if (Bot.Map.Name != map)
-                {
-                    Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
-                    Bot.Wait.ForMapLoad(map);
-                }
+                Bot.Map.Join($"{map}-{RoomNumber}", "Enter", "Spawn", autoCorrect: false);
+                Bot.Wait.ForMapLoad(map);
 
-                Core.Sleep();
+                Core.Sleep(1500);
 
                 if (
-                    b_playerName != null
-                    && Bot.Map.PlayerNames != null
+                    !string.IsNullOrEmpty(b_playerName)
+                    && Bot.Map.PlayerNames?.Count > 1
                     && Bot.Map.PlayerNames.Contains(b_playerName)
                 )
                 {
