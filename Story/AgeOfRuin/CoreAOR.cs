@@ -1265,28 +1265,36 @@ public class CoreAOR
         bool isTemp = false
     )
     {
+        string? classFromPlayer = Bot.Player.CurrentClass?.Name;
+
+        var itemToEnhance = Bot
+            .Inventory?.Items?.FirstOrDefault(x =>
+                x?.Equipped == true && Adv.WeaponCatagories.Contains(x.Category)
+            )
+            ?.Name;
+
+        if (itemToEnhance != null)
+            Adv.EnhanceItem(
+                itemToEnhance,
+                EnhancementType.Lucky,
+                wSpecial: WeaponSpecial.Awe_Blast
+            );
+
+        string? classNameToUse = Class ?? classFromPlayer;
+        if (string.IsNullOrWhiteSpace(classNameToUse))
+        {
+            Core.Logger("KillThing aborted: no class specified and player has no current class.");
+            return;
+        }
+
         Core.Join(map);
+        Adv.BuyItem("seavoice", 2320, "Vigil", 1000, 12023);
+        Core.Equip(itemUsed);
+        Core.Logger($"{itemUsed} [Vigil] Equiped? {Bot.Inventory?.IsEquipped("Vigil")}");
         Bot.Wait.ForMapLoad(map);
         Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
 
-        string? classFromPlayer = Bot.Player.CurrentClass?.Name;
-
-        if (Class == "Void Highlord")
-        {
-            Bot.Skills.StartAdvanced("Void HighLord", true, ClassUseMode.Def);
-        }
-        else
-        {
-            string? classNameToUse = Class ?? classFromPlayer;
-            if (string.IsNullOrWhiteSpace(classNameToUse))
-            {
-                Core.Logger(
-                    "KillThing aborted: no class specified and player has no current class."
-                );
-                return;
-            }
-            Bot.Skills.StartAdvanced(classNameToUse, true, ClassUseMode.Base);
-        }
+        Bot.Skills.StartAdvanced(classNameToUse, true, ClassUseMode.Base);
 
         // Locate mob by MapID
         Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m?.MapID == mobMapID);
