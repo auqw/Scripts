@@ -59,7 +59,7 @@ public class CoreQOM
         Story.KillQuest(
             4495,
             "celestialrealm",
-            new[] { "Fallen Knight", "Celestial Bird of Paradise" }
+            new[] { "Celestial Bird of Paradise", "Fallen Knight" }
         );
 
         //Power Up!
@@ -175,7 +175,7 @@ public class CoreQOM
         Story.KillQuest(
             5377,
             "infernalspire",
-            new[] { "Infernal Hound", "Dungeon Fiend", "Dungeon Fiend" }
+            new[] { "Dungeon Fiend", "Dungeon Fiend", "Infernal Hound" }
         );
 
         //Free the Captives
