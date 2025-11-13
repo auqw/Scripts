@@ -444,12 +444,12 @@ public class CoreAOR
         {
             Core.EnsureAccept(9348);
 
-            // Define the possible solo classes
             string[] PossibleSoloClasses = new[]
             {
                 "Chaos Avenger",
                 "Verus Doomknight",
-                "Void Highlord",
+                "Hollowborn Vindicator",
+                "Lich",
                 "ArchPaladin",
             };
 

@@ -328,7 +328,8 @@ public class VerusDoomKnightClass
         {
             "Chaos Avenger",
             "Verus Doomknight",
-            "Void Highlord",
+            "Hollowborn Vindicator",
+            "Lich",
             "ArchPaladin",
         };
 

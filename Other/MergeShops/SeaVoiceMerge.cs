@@ -233,7 +233,8 @@ public class SeaVoiceMerge
         {
             "Chaos Avenger",
             "Verus Doomknight",
-            "Void Highlord",
+            "Hollowborn Vindicator",
+            "Lich",
             "ArchPaladin",
         };
 
