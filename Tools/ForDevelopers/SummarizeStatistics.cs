@@ -30,7 +30,7 @@ public class SummarizeStats
 #nullable enable
     private void ReadData(IScriptInterface Bot)
     {
-        string? path = null; //@"C:\Users\jesse\Downloads\Skua Script Statistics Form.csv\Skua Script Statistics Form.csv";
+        string? path = null;
         if (path == null)
         {
             _fileDialog = Ioc.Default.GetRequiredService<IFileDialogService>();
