@@ -1,11 +1,20 @@
 {
   "ArchMage": {
-    "Farm": {
+    "Base": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "incinerate",
+              "auraTarget": "target"
+            }
+          ]
         },
         {
           "skillId": 4,
@@ -18,7 +27,14 @@
             {
               "type": "Mana",
               "value": 70,
-              "comparison": "greater"
+              "comparison": "less"
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Corporeal Ascenion",
+              "auraTarget": "self"
             }
           ]
         },
@@ -34,42 +50,6 @@
         },
         {
           "skillId": 3
-        }
-      ]
-    },
-    "Base": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
-      "skills": [
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4
         }
       ]
     }
@@ -2776,7 +2756,7 @@
       ]
     }
   },
-    "Dragonslayer General": {
+  "Dragonslayer General": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
@@ -4385,7 +4365,7 @@
   },
   "King\u0027s Echo": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
