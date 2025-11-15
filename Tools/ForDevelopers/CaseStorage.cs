@@ -29366,7 +29366,97 @@ case ""Fish Oil"":
                     break;
     "
         },
-    };
+    {
+    "Hollow Horn",
+    @"
+case ""Hollow Horn"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10488, ""hbchallenge"", ""The Darkdweller"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Hollow Hoof",
+    @"
+case ""Hollow Hoof"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10487, ""hbchallenge"", ""Fallen Darkblood"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Fallen Darkblood Skull",
+    @"
+case ""Fallen Darkblood Skull"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""hbchallenge"",
+                        ""Fallen Darkblood"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Vici's Hood",
+    @"
+case ""Vici's Hood"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""hbchallenge"",
+                        ""Fallen Darkblood"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+};
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);
