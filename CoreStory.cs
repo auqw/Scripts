@@ -485,7 +485,7 @@ public class CoreStory
             }
 
             foreach (
-                Monster M in Bot.Monsters.CurrentAvailableMonsters?.Where(m =>
+                Monster? M in Bot.Monsters.CurrentAvailableMonsters?.Where(m =>
                     m != null && m.Name.FormatForCompare() == monster.FormatForCompare()
                 ) ?? Enumerable.Empty<Monster>()
             )
@@ -519,16 +519,15 @@ public class CoreStory
                         Bot.Wait.ForCellChange(targetCell);
                         Bot.Player?.SetSpawnPoint();
                     }
-                    if (!hasTarget || targetHP <= 0)
+                    if (!Bot.Player!.HasTarget || M != null && Bot.Player?.Target?.MapID != M.MapID)
                     {
-                        Bot.Combat.Attack(M.MapID);
-                        Bot.Sleep(500);
+                        Bot.Combat.Attack(M!.MapID);
                     }
 
-                    if (hasTarget && targetHP <= 0)
+                    Bot.Sleep(500);
+
+                    if (!Bot.Player!.HasTarget || Bot.Player?.Target?.HP <= 0)
                     {
-                        Bot.Combat.CancelAutoAttack();
-                        Bot.Combat.CancelTarget();
                         break;
                     }
 
