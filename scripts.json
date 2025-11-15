@@ -5812,6 +5812,37 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/NeotowerMerge.cs"
   },
   {
+    "name": "Vici Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Vici Merge [2635] in /hbchallenge",
+    "tags": [
+      "vici",
+      "merge",
+      "hbchallenge",
+      "hollowborn",
+      "darkblood",
+      "morph",
+      "face",
+      "backblades",
+      "darkdwellers",
+      "backhand",
+      "spear",
+      "chains",
+      "fallen",
+      "warden",
+      "keeper",
+      "venis",
+      "vicis",
+      "crown",
+      "vidis",
+      "armet"
+    ],
+    "path": "Hollowborn/MergeShops/ViciMerge.cs",
+    "size": 9525,
+    "sha256": "5c96f4ef6183c7ff4b154020144b50f6e3ba19cf0249b61898a0f9222c0259f9",
+    "fileName": "ViciMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/ViciMerge.cs"
+  },
+  {
     "name": "Hollowborn Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Hollowborn Merge [1887] in /hbchallenge",
     "tags": [
