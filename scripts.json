@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 55792,
-    "sha256": "8a0e6d6249c52630ca72a53f580e036a714cc37eb52ebefaa94628408f0160ec",
+    "size": 55760,
+    "sha256": "876e29713f64a01ba87e9ed60ea3f8c5b97336aa9d773bc02c4fd40fcd58554d",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -10972,8 +10972,8 @@
       "null"
     ],
     "path": "Story/LordsofChaos/Core13LoC.cs",
-    "size": 83264,
-    "sha256": "73c90ceeff3599c220aa6305cecbc296b5c73eae708fb737cfa3a2b7230641fc",
+    "size": 83010,
+    "sha256": "135b49157085cbecff544ca085f57a97da87b2fe69ceb1f41931837943c176e2",
     "fileName": "Core13LoC.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/LordsofChaos/Core13LoC.cs"
   },
