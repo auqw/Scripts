@@ -2499,15 +2499,8 @@ public class Core13LoC
             {
                 Bot.Combat.Attack("*");
                 Core.Sleep();
-
-                // Check if the item is in the temporary inventory
-                if (Bot.TempInv.Contains(26880))
-                {
-                    Core.Logger("Item 26880 found in temporary inventory.");
-                    break;
-                }
             }
-            Core.Sleep();
+            Core.JumpWait();
             Core.EnsureComplete(3880);
             Core.Join("whitemap");
 
