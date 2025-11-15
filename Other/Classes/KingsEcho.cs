@@ -15,6 +15,7 @@ tags: King's, King, Echo, class, kingsecho
 //cs_include Scripts/Other/MergeShops/BocklinGroveMerge.cs
 //cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
 //cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
+//cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
 
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
@@ -60,6 +61,12 @@ public class KingsEcho
         set => _BTM = value;
     }
     private static BocklinTreasuryMerge _BTM;
+    private static Core13LoC LOC
+    {
+        get => _LOC ??= new Core13LoC();
+        set => _LOC = value;
+    }
+    private static Core13LoC _LOC;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -81,6 +88,7 @@ public class KingsEcho
 
         // Level 80
         Farm.Experience(80);
+        LOC.Complete13LOC(true);
 
         // Rank 10 in the Good and Swordhaven factions
         Farm.GoodREP();
