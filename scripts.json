@@ -13483,8 +13483,8 @@
       "kingsecho"
     ],
     "path": "Other/Classes/KingsEcho.cs",
-    "size": 8642,
-    "sha256": "06ea2a217a08daab3f893ddc3861898c3b33b41d3d347b3799ad168d2b3667f3",
+    "size": 8878,
+    "sha256": "ef90375138b5059c70b3a5911b6075bcef658d64f5d97fe809336810f106c72d",
     "fileName": "KingsEcho.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/KingsEcho.cs"
   },
@@ -24750,8 +24750,8 @@
       "null"
     ],
     "path": "Tools/ForDevelopers/SummarizeStatistics.cs",
-    "size": 4738,
-    "sha256": "0a466e19cdb59fb98feca60fa853448283151889473b7940119e0b9d2a0123df",
+    "size": 4643,
+    "sha256": "27da368a5aba12d7bb8e373f75042ab6a34f20bfc6be1235b15bbcd4705ffec3",
     "fileName": "SummarizeStatistics.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/SummarizeStatistics.cs"
   },
