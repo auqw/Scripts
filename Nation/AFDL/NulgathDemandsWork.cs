@@ -11,6 +11,7 @@ tags: archfiend, doomlord, ADFL, nulgath, demands, work, unidentified, uni, 35, 
 //cs_include Scripts/Nation/Various/GoldenHanzoVoid.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Quests;
 
 public class NulgathDemandsWork
 {
@@ -81,7 +82,7 @@ public class NulgathDemandsWork
             return;
 
         ItemBase[] Rewards = Core.EnsureLoad(5259).Rewards.ToArray();
-
+        Quest? NDW = Core.InitializeWithRetries(() => Core.EnsureLoad(5259));
         Core.AddDrop(Nation.bagDrops);
         Core.AddDrop(Rewards.Select(x => x.Name).ToArray());
 
@@ -114,6 +115,7 @@ public class NulgathDemandsWork
 
                 if (item.Name == "Unidentified 35")
                 {
+                    // Buy U35 if fragments exist
                     while (
                         !Bot.ShouldExit
                         && Core.CheckInventory("Archfiend Essence Fragment", 9)
@@ -121,25 +123,30 @@ public class NulgathDemandsWork
                     )
                         Adv.BuyItem("tercessuinotlim", 1951, item.ID, shopItemID: 7912);
 
-                    if (!Core.CheckInventory(NDWItems))
-                    {
-                        foreach (string NDWItem in NDWItems)
-                            if (!Core.CheckInventory(NDWItem))
-                                Core.EnsureCompleteChoose(5259, new[] { NDWItem });
-                            else
-                                Core.Logger(
-                                    "all NDW items owned, completing quest without Selecting reward.\n"
-                                        + "(will still get \"Archfiend Essence Fragment\" and uni 35.)"
-                                );
-                    }
+                    // Pick ONE NDW reward that isn't maxed
+                    string? rewardToPick = NDW
+                        ?.Rewards.Where(x =>
+                            x != null
+                            && NDWItems.Contains(x.Name)
+                            && !Core.CheckInventory(x.Name, x.MaxStack)
+                        )
+                        .Select(x => x.Name)
+                        .FirstOrDefault();
+
+                    if (!string.IsNullOrEmpty(rewardToPick))
+                        Core.EnsureCompleteChoose(5259, new[] { rewardToPick });
                     else
+                    {
+                        Core.Logger(
+                            "All NDW items are at MaxStack. Completing quest without selecting a reward.\n"
+                                + "(You will still receive Archfiend Essence Fragment and Unidentified 35.)"
+                        );
+
                         Core.EnsureComplete(5259);
+                    }
+
+                    return;
                 }
-                else
-                    Core.EnsureComplete(
-                        5259,
-                        item.Name == "Archfiend Essence Fragment" ? -1 : item.ID
-                    );
             }
         }
     }
