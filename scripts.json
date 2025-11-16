@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 416304,
-    "sha256": "a8379eead663e5e5917c2bc7c45f64b6c00f34f3b1df77c9324657722efad231",
+    "size": 416578,
+    "sha256": "1158672ddde8c56c9a9f6ed07ee36bad045fdbc44254bbf31fb6b77a5f894cab",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -25112,8 +25112,8 @@
       "fragment"
     ],
     "path": "Nation/AFDL/NulgathDemandsWork.cs",
-    "size": 5607,
-    "sha256": "5904ec31d8ead0a948a734b9753f27b178f2307446fcf7d4a055834a0a34fc9a",
+    "size": 5871,
+    "sha256": "410d8f87c7e8edbef2e85d5edfd7214188db0459545fb5354a7e15de64b7c488",
     "fileName": "NulgathDemandsWork.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/AFDL/NulgathDemandsWork.cs"
   },
