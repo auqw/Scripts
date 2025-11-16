@@ -436,6 +436,7 @@ public class CoreAOR
     {
         if (Core.isCompletedBefore(9348))
             return;
+
         SoW.ManaCradle();
         DeepWater(panopticonMerge: false, seaVoice: false, coldThunder: false);
         Story.PreLoad(this);
@@ -455,28 +456,25 @@ public class CoreAOR
 
             if (!Core.CheckInventory(PossibleSoloClasses, any: true))
                 Core.Logger(
-                    "no Soloing classes found stopping (go get AP atleast and rerun)",
+                    "No soloing classes found in inventory; stopping (go get AP at least and rerun)",
                     stopBot: true
                 );
 
-            // Find the first available class in inventory or bank
-            string? selectedClass = PossibleSoloClasses.FirstOrDefault(className =>
-                Bot.Inventory.Items.Any(item => item.Name == className)
-                || Bot.Bank.Items.Any(item => item.Name == className)
-            );
+            string? selectedClass =
+                PossibleSoloClasses.FirstOrDefault(className =>
+                    Bot.Inventory.Items.Any(item => item.Name == className)
+                    || Bot.Bank.Items.Any(item => item.Name == className)
+                ) ?? Bot.Player.CurrentClass?.Name;
 
             if (string.IsNullOrWhiteSpace(selectedClass))
             {
-                Core.Logger(
-                    "No soloing class found; aborting SeaVoice. Go get a solo class and re-run."
-                );
+                Core.Logger("No soloing class found and nothing equipped; aborting SeaVoice.");
                 return;
             }
 
             Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
 
             Adv.GearStore();
-
             Adv.SmartEnhance(selectedClass);
 
             KillThing(
@@ -488,6 +486,7 @@ public class CoreAOR
                 quant: 1,
                 isTemp: true
             );
+
             Adv.GearStore(true);
             Core.EnsureComplete(9348);
             Core.SellItem("Vigil", all: true);

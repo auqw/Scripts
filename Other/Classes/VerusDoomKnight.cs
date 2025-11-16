@@ -333,12 +333,6 @@ public class VerusDoomKnightClass
             "ArchPaladin",
         };
 
-        if (!Core.CheckInventory(PossibleSoloClasses, any: true))
-            Core.Logger(
-                "no Soloing classes found stopping (go get AP atleast and rerun)",
-                stopBot: true
-            );
-
         // Find the first available class in inventory or bank
         string? selectedClass = PossibleSoloClasses.FirstOrDefault(className =>
             Bot.Inventory.Items.Any(item => item.Name == className)
@@ -347,16 +341,27 @@ public class VerusDoomKnightClass
 
         if (string.IsNullOrWhiteSpace(selectedClass))
         {
+            // Warn the user but fallback to currently equipped class
+            string? equippedClass = Bot.Player.CurrentClass?.Name;
             Core.Logger(
-                "No soloing class found; aborting SeaVoice. Go get a solo class and re-run."
+                $"No preferred solo class found in inventory or bank.\n"
+                    + $"Preferred options: ({string.Join(", ", PossibleSoloClasses)})\n"
+                    + $"Using currently equipped class: {equippedClass}. This may not be optimal.\n"
             );
-            return;
+
+            selectedClass = equippedClass;
+            if (string.IsNullOrWhiteSpace(selectedClass))
+            {
+                Core.Logger("No class is currently equipped; aborting SeaVoice.");
+                return;
+            }
+        }
+        else
+        {
+            Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
         }
 
-        Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
-
         Adv.GearStore();
-
         Adv.SmartEnhance(selectedClass);
 
         // Call the KillThing method with the specified parameters
