@@ -3185,6 +3185,7 @@ public class CoreBots
             return false;
         }
 
+        // Check turnin requirements
         if (!quest.Requirements.All(req => req != null && CheckInventory(req.ID, req.Quantity)))
         {
             string missing = string.Join(
@@ -3195,40 +3196,52 @@ public class CoreBots
             );
 
             if (quest.Requirements.Any(x => Bot.Bank.Contains(x.ID)))
-            {
                 Logger(
-                    $"Missing turnin requirements, and it seems to be in the bank, restart the script *or* stop the script, unbank w/e it is, and restart the script."
+                    "Missing turnin requirements, and something is in the bank. Unbank it then restart."
                 );
-            }
             else
                 Logger($"Missing {missing}");
+
             return false;
         }
 
         bool hasAllRewardItems = true;
         bool questCompleted = false;
 
-        // Filter the rewards based on the itemList if provided
+        // Filter rewards by provided list, unless null
         IEnumerable<ItemBase> rewards =
             itemList == null
                 ? quest.Rewards
                 : quest.Rewards.Where(item => itemList.Contains(item.Name));
 
+        // -------------------------
+        // FIX: If no reward matches, still complete the quest normally.
+        // -------------------------
+        if (!rewards.Any())
+        {
+            if (!Bot.Quests.EnsureComplete(questID))
+            {
+                Logger($"Failed to complete quest [{questID}] (no rewards matched).");
+                return false;
+            }
+
+            Bot.Wait.ForQuestComplete(questID);
+            return true;
+        }
+
+        // Handle actual reward selection
         foreach (ItemBase item in rewards)
         {
             if (CheckInventory(item.ID, item.MaxStack, false))
                 continue;
 
-            // Check if no space in inventory and item isn't in the inventory
+            // Ensure inventory space
             if (!HasSpace && !CheckInventory(item.ID, toInv: false))
             {
-                // Attempt to make a spot by banking an item.
                 BankACMisc(1);
                 if (!HasSpace)
                 {
-                    Logger(
-                        $"Skipping item \"{item.Name}\" from quest [{questID}] due to not having space, and it's not being in the inventory."
-                    );
+                    Logger($"Skipping \"{item.Name}\" from quest [{questID}] due to no space.");
                     continue;
                 }
             }
@@ -3254,7 +3267,7 @@ public class CoreBots
 
         if (hasAllRewardItems)
         {
-            Logger($"Quest [{questID}] not completed. All rewards already owned.");
+            Logger($"Quest [{questID}] not completed. All reward items already owned.");
             return false;
         }
 
@@ -6149,7 +6162,7 @@ public class CoreBots
 
         if (log && name != "*")
             Logger(
-                $"⚔️ Attacking Monster: {name}, for {item}  {dynamicQuant(item, isTemp)}/{quantity}"
+                $"⚔️ Attacking Monster: {name}, for {item} {dynamicQuant(item, isTemp)}/{quantity}[isTemp: {isTemp}]"
             );
 
         while (
