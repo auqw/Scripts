@@ -3275,7 +3275,7 @@ public class CoreAdvanced
 
                 #region Unassigned Region
 
-             // This list serves as an overview of what classes dont have a Forge Enhancement yet, when adding a setup for it, remove it from here
+                // This list serves as an overview of what classes dont have a Forge Enhancement yet, when adding a setup for it, remove it from here
                 case "Phantom Chronomancer":
                 case "acolyte":
                 case "alpha doommega":
