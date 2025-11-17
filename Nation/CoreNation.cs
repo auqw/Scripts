@@ -1106,30 +1106,14 @@ public class CoreNation
                 Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies)
                 && _returnSupplies
             );
-        if (Bot.Version.ToString() == "1.3.0.0")
-            UltraAlteon =
-                UltraAlteon
-                || (
-                    Core.CBOBool("UltraAlteonForSupplies", out bool _UltraAlteonForSupplies)
-                    && _UltraAlteonForSupplies
-                );
-        else
-            UltraAlteon =
-                UltraAlteon || (Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon);
+        UltraAlteon = UltraAlteon || (Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon);
 
-        if (KeepVoucher && sellMemVoucher)
-        {
-            Core.Logger(
-                "KeepVoucher is enabled via the script, Overriding Cbo Setting, Voucher of Nulgath will be kept"
-            );
-            sellMemVoucher = false; // If KeepVoucher is enabled, don't sell the voucher}
-        }
+        sellMemVoucher = !KeepVoucher && Bot.Player.Gold < 100000000;
 
-        if (sellMemVoucher == true && Bot.Player.Gold >= 100000000)
-        {
-            Core.Logger("Gold is capped, no reason to sell Vouchers");
-            sellMemVoucher = false;
-        }
+        if (KeepVoucher)
+            Core.Logger("KeepVoucher enabled, overriding auto-sell. Voucher will NOT be sold.");
+        else if (!sellMemVoucher)
+            Core.Logger("Gold is capped, no reason to sell Vouchers.");
 
         Core.Logger(
             $"Do Return Policy?: {returnPolicyDuringSupplies}\n"
