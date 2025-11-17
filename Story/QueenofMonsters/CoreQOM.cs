@@ -449,14 +449,16 @@ public class CoreQOM
                 "r4",
                 "Left",
                 "Fallen Knight",
-                "Fallen Knight's Armor"
+                "Fallen Knight's Armor",
+                5
             );
             Core.KillMonster(
                 "safiriainvasion",
                 "r4",
                 "Left",
                 "Infernal Knight",
-                "Infernal Knight's Armor"
+                "Infernal Knight's Armor",
+                5
             );
             Core.EnsureComplete(5575);
         }
