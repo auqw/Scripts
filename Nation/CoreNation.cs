@@ -1097,23 +1097,32 @@ public class CoreNation
             "if Swindles is enabled, it will only accept the quest when it has the required Unis it needs"
         );
 
+        // Fetch Nation_SellMemVoucher settings from CBO
         bool sellMemVoucher =
-            Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher)
-            && _sellMemVoucher == true;
+            Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher;
+
+        // Fetch Nation_ReturnPolicyDuringSupplies settings from CBO
         returnPolicyDuringSupplies =
             returnPolicyDuringSupplies
             || (
                 Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies)
                 && _returnSupplies
             );
-        UltraAlteon = UltraAlteon || (Core.CBOBool("PublicDifficult", out bool _Alteon) && _Alteon);
 
-        sellMemVoucher = !KeepVoucher && Bot.Player.Gold < 100000000;
-
-        if (KeepVoucher)
-            Core.Logger("KeepVoucher enabled, overriding auto-sell. Voucher will NOT be sold.");
-        else if (!sellMemVoucher)
-            Core.Logger("Gold is capped, no reason to sell Vouchers.");
+        // Voucher selling logic
+        if (KeepVoucher && sellMemVoucher)
+        {
+            Core.Logger(
+                "KeepVoucher is enabled via the script, overriding CBO. Voucher will be kept"
+            );
+            sellMemVoucher = false; // Keep always wins
+        }
+        else if (!KeepVoucher && sellMemVoucher && Bot.Player.Gold >= 100_000_000)
+        {
+            Core.Logger("Gold is capped, no reason to sell Vouchers");
+            sellMemVoucher = false; // Gold cap blocks selling
+        }
+        // else: !Keep & sellMemVoucher & gold < cap → sell stays true (auto-sell)
 
         Core.Logger(
             $"Do Return Policy?: {returnPolicyDuringSupplies}\n"
@@ -1178,19 +1187,20 @@ public class CoreNation
         #endregion ignore me
 
         Core.EquipClass(ClassType.Solo);
+
         if (item == null)
         {
             foreach (string Thing in SuppliesRewards)
             {
                 List<ItemBase> rewards = Core.EnsureLoad(2857).Rewards;
-                ItemBase? Item = rewards.Find(x => x.Name == Thing);
+                ItemBase? rewardItem = rewards.Find(x => x.Name == Thing);
 
-                if (Item != null)
+                if (rewardItem != null)
                 {
-                    if (Core.CheckInventory(CragName) && !UltraAlteon)
+                    if (Core.CheckInventory(CragName))
                         BambloozevsDrudgen(
-                            Item!.Name,
-                            Item.MaxStack,
+                            rewardItem.Name,
+                            rewardItem.MaxStack,
                             KeepVoucher,
                             AssistantDuring,
                             ReturnItem,
@@ -1198,8 +1208,12 @@ public class CoreNation
                         );
                     else
                     {
-                        while (!Bot.ShouldExit && !Core.CheckInventory(Item.ID, Item.MaxStack))
+                        while (
+                            !Bot.ShouldExit
+                            && !Core.CheckInventory(rewardItem.ID, rewardItem.MaxStack)
+                        )
                         {
+                            // Kill monsters
                             if (UltraAlteon)
                                 Core.KillMonster(
                                     "ultraalteon",
@@ -1216,44 +1230,29 @@ public class CoreNation
                                     log: false,
                                     FromSupplies: true
                                 );
-                            Core.Sleep();
 
-                            // Sell voucher area
+                            // Sell Voucher of Nulgath if allowed
                             if (
-                                Core.CheckInventory("Voucher of Nulgath")
-                                && item != "Voucher of Nulgath"
-                                && sellMemVoucher
-                                && KeepVoucher == false
-                                && Bot.Player.Gold < 100000000
+                                sellMemVoucher
+                                && rewardItem.Name != "Voucher of Nulgath"
+                                && Core.CheckInventory("Voucher of Nulgath")
                             )
                             {
                                 Core.Jump("Enter", "Spawn");
                                 Core.SellItem("Voucher of Nulgath", all: true);
                             }
 
-                            // Waste Gold
-                            if (AssistantDuring)
+                            // Spend gold if AssistantDuring
+                            if (AssistantDuring && Bot.Player.Gold >= 100_000)
                             {
-                                if (Bot.Player.Gold >= 100000)
-                                {
-                                    Core.Jump("Enter", "Spawn");
-
-                                    decimal calculatedAmount = Bot.Player.Gold / 100000M;
-                                    int quantityToBuy = (int)calculatedAmount;
-
-                                    quantityToBuy = Math.Min(quantityToBuy, 250);
-
-                                    Core.EnsureAccept(2859);
-                                    Core.BuyItem(
-                                        "yulgar",
-                                        41,
-                                        "War-Torn Memorabilia",
-                                        quantityToBuy
-                                    );
-                                    Core.EnsureCompleteMulti(2859, quantityToBuy);
-                                }
+                                Core.Jump("Enter", "Spawn");
+                                int quantityToBuy = (int)Math.Min(Bot.Player.Gold / 100_000M, 250);
+                                Core.EnsureAccept(2859);
+                                Core.BuyItem("yulgar", 41, "War-Torn Memorabilia", quantityToBuy);
+                                Core.EnsureCompleteMulti(2859, quantityToBuy);
                             }
 
+                            // Handle Totems/Diamonds
                             if (
                                 Core.CheckInventory("Voucher of Nulgath (non-mem)")
                                 && Core.CheckInventory("Essence of Nulgath", 60)
@@ -1266,26 +1265,26 @@ public class CoreNation
                                 bool totemsMaxed = Core.CheckInventory("Totem of Nulgath", 100);
 
                                 if (
-                                    item?.Equals(
+                                    rewardItem.Name.Equals(
                                         "Diamond of Nulgath",
                                         StringComparison.OrdinalIgnoreCase
-                                    ) == true
+                                    )
                                 )
                                 {
                                     if (diamondsMaxed && !totemsMaxed)
                                         Core.EnsureCompleteMulti(4778, 100, 5357); // Totems
                                 }
                                 else if (
-                                    item?.Equals(
+                                    rewardItem.Name.Equals(
                                         "Totem of Nulgath",
                                         StringComparison.OrdinalIgnoreCase
-                                    ) == true
+                                    )
                                 )
                                 {
                                     if (totemsMaxed && !diamondsMaxed)
                                         Core.EnsureCompleteMulti(4778, 1000, 6136); // Diamonds
                                 }
-                                else // item == null or any other item
+                                else
                                 {
                                     if (!totemsMaxed)
                                         Core.EnsureCompleteMulti(4778, 100, 5357); // Prioritize Totems
@@ -1298,42 +1297,35 @@ public class CoreNation
                 }
             }
         }
-        else // Handle the case when item is not null
+        else
         {
-            if (Core.CheckInventory(CragName) && !UltraAlteon)
+            if (Core.CheckInventory(CragName))
                 BambloozevsDrudgen(item, quant, KeepVoucher, AssistantDuring, ReturnItem, true);
             else
             {
                 List<ItemBase> rewards = Core.EnsureLoad(2857).Rewards;
-                ItemBase? Item = rewards.Find(x => x.Name == item);
-                Quest? voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
-                if (voucherQuest == null)
-                {
-                    Core.Logger("Failed to load voucher quest (ID: 7551) after multiple attempts.");
-                }
-                else
-                {
-                    // If return item = null, use firs non-maxed reward, if this returns null then use -1 as an id
-                    ReturnItem ??=
-                        voucherQuest
-                            .Rewards.FirstOrDefault(x => x != null && x.Quantity < x.MaxStack)
-                            ?.Name
-                        ?? "None";
-                }
+                ItemBase? rewardItem = rewards.Find(x => x.Name == item);
 
-                if (Item != null && Core.CheckInventory(Item.ID, quant))
+                // Initialize ReturnItem if needed
+                Quest? voucherQuest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+                ReturnItem ??=
+                    voucherQuest
+                        ?.Rewards.FirstOrDefault(x => x != null && x.Quantity < x.MaxStack)
+                        ?.Name ?? "None";
+
+                if (rewardItem != null && Core.CheckInventory(rewardItem.ID, quant))
                 {
                     Core.Logger(
-                        $"Item: {item}, {Bot.Inventory.GetQuantity(Item.ID)}/ {Item.MaxStack}"
+                        $"Item: {item}, {Bot.Inventory.GetQuantity(rewardItem.ID)}/{rewardItem.MaxStack}"
                     );
-
-                    if (ReturnItem != null)
-                        Core.Logger($"Item: {ReturnItem}");
-                    else
-                        Core.Logger("ReturnItem is null, setting to first non-maxed item.");
+                    Core.Logger(
+                        ReturnItem != null
+                            ? $"ReturnItem: {ReturnItem}"
+                            : "ReturnItem is null, using first non-maxed item."
+                    );
                     return;
                 }
-                else if (Item == null)
+                else if (rewardItem == null)
                     Core.Logger("Item is null or all rewards maxed.");
 
                 while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
@@ -1351,13 +1343,11 @@ public class CoreNation
                     else
                         Core.KillEscherion("Relic of Chaos", log: false, FromSupplies: true);
 
-                    // Sell voucher area
+                    // Sell Voucher of Nulgath if allowed
                     if (
-                        Core.CheckInventory("Voucher of Nulgath")
+                        sellMemVoucher
                         && item != "Voucher of Nulgath"
-                        && sellMemVoucher
-                        && KeepVoucher == false
-                        && Bot.Player.Gold < 100000000
+                        && Core.CheckInventory("Voucher of Nulgath")
                     )
                     {
                         Core.Jump("Enter", "Spawn");
@@ -1366,6 +1356,7 @@ public class CoreNation
 
                     DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
+                    // Handle Totems/Diamonds
                     if (
                         Core.CheckInventory("Voucher of Nulgath (non-mem)")
                         && Core.CheckInventory("Essence of Nulgath", 60)
@@ -1380,7 +1371,7 @@ public class CoreNation
                         )
                         {
                             if (diamondsMaxed && !totemsMaxed)
-                                Core.EnsureCompleteMulti(4778, itemID: 5357); // Totems
+                                Core.EnsureCompleteMulti(4778, 100, 5357); // Totems
                         }
                         else if (
                             item?.Equals("Totem of Nulgath", StringComparison.OrdinalIgnoreCase)
@@ -1388,14 +1379,14 @@ public class CoreNation
                         )
                         {
                             if (totemsMaxed && !diamondsMaxed)
-                                Core.EnsureCompleteMulti(4778, itemID: 6136); // Diamonds
+                                Core.EnsureCompleteMulti(4778, 1000, 6136); // Diamonds
                         }
-                        else // item == null or any other item
+                        else
                         {
                             if (!totemsMaxed)
-                                Core.EnsureCompleteMulti(4778, itemID: 5357); // Prioritize Totems
+                                Core.EnsureCompleteMulti(4778, 100, 5357); // Prioritize Totems
                             else if (!diamondsMaxed)
-                                Core.EnsureCompleteMulti(4778, itemID: 6136); // Then Diamonds
+                                Core.EnsureCompleteMulti(4778, 1000, 6136); // Then Diamonds
                         }
                     }
                 }
@@ -1764,10 +1755,13 @@ public class CoreNation
         bool returnPolicyDuringSupplies =
             Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies)
             && _returnSupplies == true;
+
         bool sellMemVoucher =
             Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher)
             && _sellMemVoucher == true;
+
         bool HasLogged = false;
+
         if (!CamefromSupplies)
             Core.Logger(
                 $"Do Return Policy?: {returnPolicyDuringSupplies}\n"
@@ -1823,19 +1817,16 @@ public class CoreNation
         {
             Core.KillMonster("evilmarsh", "End", "Left", "Tainted Elemental", log: false);
             if (
-                item != "Voucher of Nulgath"
-                && sellMemVoucher == true
+                sellMemVoucher
+                && item != "Voucher of Nulgath"
                 && Core.CheckInventory("Voucher of Nulgath")
-                && Bot.Player.Gold < 100000000
             )
             {
                 Core.Jump("Enter", "Spawn");
 
-                // Wait for pickup, and sell the item
+                // Wait for pickup, then sell
                 Bot.Wait.ForPickup("Voucher of Nulgath");
-
-                if (!KeepVoucher)
-                    Core.SellItem("Voucher of Nulgath", all: true);
+                Core.SellItem("Voucher of Nulgath", all: true);
             }
 
             if (Bot.Player.Gold >= 1000000 && AssistantDuring)
