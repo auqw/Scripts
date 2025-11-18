@@ -627,7 +627,14 @@ public class CoreQOM
         Story.KillQuest(5830, "charredpath", "Ravenous Parasite");
 
         //Shinies!
-        Story.KillQuest(5831, "skytower", new[] { "Sunstone", "Moonstone", "Star Sapphire" });
+        if (!Story.QuestProgression(5831))
+        {
+            Core.EnsureAccept(5831);
+            Core.KillMonster("skytower", "r3", "Bottom", "Sunstone", "Sunstone", 3);
+            Core.KillMonster("skytower", "r3", "Bottom", "Moonstone", "Moonstone", 3);
+            Core.KillMonster("skytower", "r3", "Bottom", "Star Sapphire", "Star Sapphire", 3);
+            Core.EnsureComplete(5831);
+        }
 
         //Plushies
         Story.KillQuest(5832, "sewerpink", "Cutie Grumbley");
