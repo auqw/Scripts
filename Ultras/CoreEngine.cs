@@ -1140,11 +1140,26 @@ public class CoreEngine
 
     public record MonsterKey(int? MapId = null, string? Name = null, int? Id = null)
     {
-        public static MonsterKey FromName(string name) => new(Name: name);
+        public static MonsterKey FromName(string? name)
+        {
+            if (name != null)
+                return new(Name: name);
+            return new();
+        }
 
-        public static MonsterKey FromId(int id) => new(Id: id);
+        public static MonsterKey? FromId(int? id)
+        {
+            if (id != null)
+                return new(Id: id);
+            return null;
+        }
 
-        public static MonsterKey FromMapId(int mapId) => new(MapId: mapId);
+        public static MonsterKey? FromMapId(int? mapId)
+        {
+            if (mapId != null)
+                return new(MapId: mapId);
+            return null;
+        }
     }
 
     IEnumerable<Monster> Match(MonsterKey k)
@@ -1244,7 +1259,7 @@ public class CoreEngine
             return;
 
         var hpKey = MonsterKey.FromMapId(target.MapID);
-        Attack(hpKey);
+        Attack(hpKey!);
         Bot.Sleep(D1);
     }
 
@@ -1267,7 +1282,7 @@ public class CoreEngine
             return;
 
         var hpKey = MonsterKey.FromMapId(target.MapID);
-        Attack(hpKey);
+        Attack(hpKey!);
         Bot.Sleep(D1);
     }
 
@@ -1323,18 +1338,30 @@ public class CoreEngine
         KillWithPriority(tmp.ToArray());
     }
 
-    public void KillAtMapId(int mapId) => Kill(MonsterKey.FromMapId(mapId));
+    public void KillAtMapId(int? mapId)
+    {
+        var key = MonsterKey.FromMapId(mapId);
+        if (key != null)
+            Kill(key);
+    }
 
-    public void KillWithPriority(string primaryName, string priorityName1) =>
-        KillWithPriority(MonsterKey.FromName(priorityName1), MonsterKey.FromName(primaryName));
+    public void KillWithPriority(string? primaryName, string? priorityName1) =>
+        KillWithPriority(MonsterKey.FromName(priorityName1)!, MonsterKey.FromName(primaryName)!);
 
-    public void KillWithPriority(int primaryId, int priorityId1) =>
-        KillWithPriority(MonsterKey.FromId(priorityId1), MonsterKey.FromId(primaryId));
+    public void KillWithPriority(int? primaryId, int? priorityId1) =>
+        KillWithPriority(MonsterKey.FromId(priorityId1)!, MonsterKey.FromId(primaryId)!);
 
-    public void KillWithPriorityAtMapId(int primaryMapId, int priorityMapId1) =>
-        KillWithPriority(MonsterKey.FromMapId(priorityMapId1), MonsterKey.FromMapId(primaryMapId));
+    public void KillWithPriorityAtMapId(int? primaryMapId, int? priorityMapId1) =>
+        KillWithPriority(
+            MonsterKey.FromMapId(priorityMapId1)!,
+            MonsterKey.FromMapId(primaryMapId)!
+        );
 
-    public void KillWithPriority(string primaryName, string priorityName1, string priorityName2) =>
+    public void KillWithPriority(
+        string? primaryName = null,
+        string? priorityName1 = null,
+        string? priorityName2 = null
+    ) =>
         KillWithPriority(
             MonsterKey.FromName(priorityName1),
             MonsterKey.FromName(priorityName2),
@@ -1343,9 +1370,9 @@ public class CoreEngine
 
     public void KillWithPriorityAtMapId(int primaryMapId, int priorityMapId1, int priorityMapId2) =>
         KillWithPriority(
-            MonsterKey.FromMapId(priorityMapId1),
-            MonsterKey.FromMapId(priorityMapId2),
-            MonsterKey.FromMapId(primaryMapId)
+            MonsterKey.FromMapId(priorityMapId1)!,
+            MonsterKey.FromMapId(priorityMapId2)!,
+            MonsterKey.FromMapId(primaryMapId)!
         );
 
     #endregion
