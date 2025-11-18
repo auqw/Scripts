@@ -81,7 +81,7 @@ public class Core7DD
         Story.KillQuest(5910, "Gluttony", "Skeletal Slayer");
 
         // Bile Burns 5911
-        Story.KillQuest(5911, "Gluttony", new[] { "Bile", "Bowel Worm" });
+        Story.KillQuest(5911, "Gluttony", new[] { "Bowel Worm", "Bile" });
 
         // Find the Chest 5912
         Story.MapItemQuest(5912, "Gluttony", 5349);
