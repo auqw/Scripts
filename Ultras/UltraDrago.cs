@@ -63,7 +63,7 @@ public class UltraDrago
             true,
             true
         );
-        
+
         if (
             Bot.Config != null
             && Bot.Config.Options.Contains(CoreBots.Instance.SkipOptions)
@@ -156,17 +156,6 @@ public class UltraDrago
         while (!Bot.ShouldExit && Ultra.MonsterAlive(boss))
         {
             // ======================================================
-            //              CURRENT CLASS - FOCUS BOSS
-            // ======================================================
-
-            if (IsCurrentClass())
-            {
-                Core.KillWithPriority(boss, null, null);
-                Bot.Skills.UseSkill(5);
-                continue;
-            }
-
-            // ======================================================
             //              ARCHPALADIN TAUNTER LOGIC
             // ======================================================
 
@@ -207,7 +196,7 @@ public class UltraDrago
             }
 
             // ======================================================
-            //              NON-TAUNTER BEHAVIOR AREA (LR & DPS)
+            //              NON-TAUNTER BEHAVIOR AREA (LR / DPS / CurrentClass)
             // ======================================================
 
             // LegionRevenant and other DPS focus on right summon (Bow)
