@@ -775,8 +775,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDrago.cs",
-    "size": 2945,
-    "sha256": "729244be63faba65774d2eb653dc91c51ec680f41d21b9f952bbd00a00ff3805",
+    "size": 4859,
+    "sha256": "1353710724dc1676504e0828dd310303b5a6f35492df57fa73c6c2ef18a065de",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },
@@ -8654,11 +8654,12 @@
       "elegy-of-madness",
       "darkon",
       "complete",
-      "all"
+      "all",
+      "astravia"
     ],
     "path": "Story/ElegyofMadness(Darkon)/0CompleteAll.cs",
-    "size": 962,
-    "sha256": "7fbc42ec2c0184eb1bb0a2e5cc167be2aad05c224397659355e753d4ad7b21bd",
+    "size": 972,
+    "sha256": "2613bf77acc7841a51b44720f6045a5cc6e21309a94b99306e034ee598f4b8be",
     "fileName": "0CompleteAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ElegyofMadness(Darkon)/0CompleteAll.cs"
   },
@@ -8702,8 +8703,8 @@
       "null"
     ],
     "path": "Story/ElegyofMadness(Darkon)/CoreAstravia.cs",
-    "size": 16261,
-    "sha256": "03ae2fa92893162c092cce62fe0a1f249f52404f343c2b3050fa9a0105bf6ba7",
+    "size": 16263,
+    "sha256": "8bb58fde38cd63fffedf92fdee1914dd4e988c37e55e64dc27f9f80f7283b535",
     "fileName": "CoreAstravia.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ElegyofMadness(Darkon)/CoreAstravia.cs"
   },
@@ -10317,8 +10318,8 @@
       "null"
     ],
     "path": "Story/QueenofMonsters/CoreQOM.cs",
-    "size": 35121,
-    "sha256": "693e1198c0e9e9b0291dd1ee6c217e4fac3c0eced9d910b25cc3a630a5607e25",
+    "size": 35411,
+    "sha256": "cd282bd239e40dbc9b2e0a6cf3b8da753d3a78851ec2ffd5e4027ba2bc0ac32e",
     "fileName": "CoreQOM.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/CoreQOM.cs"
   },
