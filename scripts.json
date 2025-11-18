@@ -3887,8 +3887,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 118622,
-    "sha256": "551ebd4ed229be0304cdcf0ddfdf5d6787c45f33847491c19bb8d6e229b8c4f6",
+    "size": 118950,
+    "sha256": "fcb423322978dbd6d3481db776b0ebb0089c099733016385cca0fb4440a8f11a",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -10436,8 +10436,8 @@
       "null"
     ],
     "path": "Story/7DeadlyDragons/Core7DD.cs",
-    "size": 15167,
-    "sha256": "0d4cdd2ed8b044e0163c89f85c356ca551127dbc2cd87fdf9498fdcd6e876352",
+    "size": 15243,
+    "sha256": "d15653b15d005d5082a6f89abe170c1c568835c813ebcba53a22e98dcbfc0938",
     "fileName": "Core7DD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/7DeadlyDragons/Core7DD.cs"
   },
