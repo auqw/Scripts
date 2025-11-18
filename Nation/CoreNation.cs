@@ -1100,7 +1100,7 @@ public class CoreNation
         // if params = false and cbo = true use cbo
         // if params = true (regardless of cbo) use do alteon
         UltraAlteon =
-            UltraAlteon
+            UltraAlteon == true
             || (
                 !UltraAlteon
                 && Core.CBOBool("Nation_UseUltraAlteon", out bool _ultraAlteon)
@@ -1292,7 +1292,7 @@ public class CoreNation
         }
         else
         {
-            if (Core.CheckInventory(CragName))
+            if (!Core.CheckInventory(CragName))
                 BambloozevsDrudgen(item, quant, KeepVoucher, AssistantDuring, ReturnItem, true);
             else
             {
