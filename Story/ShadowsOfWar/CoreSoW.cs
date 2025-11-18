@@ -968,7 +968,7 @@ public class CoreSoW
         Story.KillQuest(
             8779,
             "ruinedcrown",
-            new[] { "Mana-Burdened Minion", "Mana-Burdened Knight" }
+            new[] { "Mana-Burdened Knight", "Mana-Burdened Minion" }
         );
 
         // 8780 Fractals
