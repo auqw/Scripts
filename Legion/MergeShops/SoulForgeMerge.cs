@@ -131,6 +131,10 @@ public class SoulForgeMerge
                 case "Dage's Favor":
                     Legion.ApprovalAndFavor(0, quant);
                     break;
+
+                case "Obsidian Rock":
+                    Legion.ObsidianRock(quant);
+                    break;
             }
         }
     }
