@@ -237,7 +237,7 @@ public class CoreFireIsland
         Story.KillQuest(
             4139,
             "feverfew",
-            new[] { "Locked Chest", "Feverfew Vase", "Twisted Undine" }
+            new[] { "Feverfew Vase", "Twisted Undine", "Locked Chest" }
         );
 
         //The Deadsea Caverns
