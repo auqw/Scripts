@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 55760,
-    "sha256": "876e29713f64a01ba87e9ed60ea3f8c5b97336aa9d773bc02c4fd40fcd58554d",
+    "size": 56033,
+    "sha256": "6ebf96ced08221abd9511bfde887e57853109ba14d69e3048993ad96294fca53",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 416578,
-    "sha256": "1158672ddde8c56c9a9f6ed07ee36bad045fdbc44254bbf31fb6b77a5f894cab",
+    "size": 416564,
+    "sha256": "e126697cdff4384b348f2ab0d769d23d882163569bc704d3cdc349fd38d919a9",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -3887,8 +3887,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 121239,
-    "sha256": "6a4c6ee3f4eee82bcb1952d242b58359f5b500e1fa05de7904b77040b02edf61",
+    "size": 118622,
+    "sha256": "551ebd4ed229be0304cdcf0ddfdf5d6787c45f33847491c19bb8d6e229b8c4f6",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -7536,8 +7536,8 @@
       "keraunos"
     ],
     "path": "Legion/MergeShops/SoulForgeMerge.cs",
-    "size": 7989,
-    "sha256": "018c96a1615d94c393d1030d62bd97bb12f68d13daea3fd1f0754255416801c5",
+    "size": 8103,
+    "sha256": "df50385d742319b3b8a08360f4e506acfff38b04d645798dac557d3d06a05b4f",
     "fileName": "SoulForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/SoulForgeMerge.cs"
   },
