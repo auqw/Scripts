@@ -1094,9 +1094,18 @@ public class CoreNation
         );
 
         // Fetch Nation_SellMemVoucher settings from CBO
-        bool sellMemVoucher =
+        sellMemVoucher =
             Core.CBOBool("Nation_SellMemVoucher", out bool _sellMemVoucher) && _sellMemVoucher;
 
+        // if params = false and cbo = true use cbo
+        // if params = true (regardless of cbo) use do alteon
+        UltraAlteon =
+            UltraAlteon
+            || (
+                !UltraAlteon
+                && Core.CBOBool("Nation_UseUltraAlteon", out bool _ultraAlteon)
+                && _ultraAlteon
+            );
         // Fetch Nation_ReturnPolicyDuringSupplies settings from CBO
         returnPolicyDuringSupplies =
             returnPolicyDuringSupplies
