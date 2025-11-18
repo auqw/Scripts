@@ -249,21 +249,14 @@
               "type": "MultiAura",
               "value": 0,
               "comparison": "less",
-              "auraName": "0 - The Fool",
-              "auraTarget": "self"
-            },
-            {
-              "type": "MultiAura",
-              "value": 0,
-              "comparison": "greater",
-              "auraName": "XX - Judgement",
-              "auraTarget": "self"
-            },
-            {
-              "type": "MultiAura",
-              "value": 0,
-              "comparison": "greater",
               "auraName": "XXI - The World",
+              "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "0 - The Fool",
               "auraTarget": "self"
             }
           ],
@@ -274,31 +267,37 @@
           "skillId": 1,
           "rules": [
             {
-              "type": "MultiAura",
+              "type": "Aura",
               "value": 0.5,
               "comparison": "greater",
               "auraName": "XX - Judgement",
               "auraTarget": "self"
-            },
-            {
-              "type": "MultiAura",
-              "value": 0,
-              "comparison": "greater",
-              "auraName": "XXI - The World",
-              "auraTarget": "self"
             }
-          ],
-          "isMultiAura": true,
-          "multiAuraOperator": "AND"
+          ]
         },
         {
-          "skillId": 4
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 22,
+              "comparison": "greater",
+              "auraName": "End of the World",
+              "auraTarget": "self"
+            }
+          ]
         },
         {
           "skillId": 2
         },
         {
           "skillId": 3
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4
         }
       ]
     }
