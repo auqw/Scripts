@@ -3887,8 +3887,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 118950,
-    "sha256": "fcb423322978dbd6d3481db776b0ebb0089c099733016385cca0fb4440a8f11a",
+    "size": 118959,
+    "sha256": "5b5f1d9df96a64c7c0c369f31f28e911c865305c728d4660c4ddc652cb2d0b44",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -8355,7 +8355,7 @@
     ],
     "path": "Story/ShadowsOfWar/CoreSoW.cs",
     "size": 39063,
-    "sha256": "ef7383b69e1f714913914735a02ff3efc1f418f3496b6ed2a296ff6f254c61cc",
+    "sha256": "bba5dc0b4a43f6f50e74c78e7be08893e61906731ce4d18158a65aaf09c39021",
     "fileName": "CoreSoW.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ShadowsOfWar/CoreSoW.cs"
   },
