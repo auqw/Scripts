@@ -2314,29 +2314,16 @@ public class CoreBots
         int sell_count = all ? Bot.Inventory.GetQuantity(itemName) : quant;
         int QuantAfterSale = Bot.Inventory.GetQuantity(itemName) - sell_count;
         Retry:
-        while (!Bot.ShouldExit && Bot.Player.InCombat)
-        {
-            JumpWait();
-            Sleep();
-            if (!Bot.Player.InCombat)
-                break;
-        }
 
-        if (!all)
-        {
-            // Inv quant >= current quantity.
-            Bot.Wait.ForActionCooldown(GameActions.SellItem);
-            Bot.Send.Packet(
-                $"%xt%zm%sellItem%{Bot.Map.RoomID}%{item.ID}%{sell_count}%{item.CharItemID}%"
-            );
-            Bot.Wait.ForItemSell();
-            Sleep();
-        }
-        else
-        {
-            Bot.Shops.SellItem(itemName);
-            Bot.Wait.ForItemSell();
-        }
+        JumpWait();
+
+        // Inv quant >= current quantity.
+        Bot.Wait.ForActionCooldown(GameActions.SellItem);
+        Bot.Send.Packet(
+            $"%xt%zm%sellItem%{Bot.Map.RoomID}%{item.ID}%{sell_count}%{item.CharItemID}%"
+        );
+        Bot.Wait.ForItemSell();
+        Sleep();
 
         if (
             !all
@@ -2348,11 +2335,13 @@ public class CoreBots
         {
             if (Bot.Inventory.GetQuantity(itemName) == QuantAfterSale)
                 Logger($"Sold x{sell_count} \"{itemName}\"");
-            return;
+            {
+                return;
+            }
         }
-        else if (all && !Bot.Inventory.Contains(itemName))
+        else if (all && !CheckInventory(itemName))
         {
-            Logger($"Sold ALL of \"{itemName}\"");
+            Logger($"Sold all of \"{itemName}\"");
             return;
         }
         else
@@ -4135,15 +4124,17 @@ public class CoreBots
                     Bot.Map.Jump(cell, pad); // ➡️
                     Bot.Wait.ForCellChange(cell); // ⏳
                 }
-
-                if (!Bot.Player.HasTarget)
+                if (
+                    !Bot.Player.HasTarget
+                    || Bot.Player.Target == null && Bot.Player?.Target?.HP <= 0
+                )
                     Bot.Combat.Attack("*"); // ⚔️
 
                 Sleep(500); // 💤
 
                 // Check if player doenst havea  target after the attacking
                 // if not then its dead and we can move on
-                if (!Bot.Player.HasTarget)
+                if (!Bot.Player!.HasTarget)
                     return;
             }
         }
@@ -4578,14 +4569,18 @@ public class CoreBots
                 if (!Bot.Player!.HasTarget && targetMonster != null)
                     Bot.Combat.Attack(targetMonster.Name);
 
-                if (!Bot.Player.HasTarget)
+                Sleep();
+
+                if (
+                    !Bot.Player.HasTarget
+                    || (Bot.Player.Target != null && Bot.Player.Target.HP <= 0)
+                )
                 {
                     Bot.Options.AttackWithoutTarget = false;
                     Bot.Options.AggroMonsters = false;
                     Bot.Options.HidePlayers = false;
                     return;
                 }
-                Sleep();
             }
             JumpWait();
             Rest();
@@ -4721,10 +4716,10 @@ public class CoreBots
                 )
                     Bot.Combat.Attack(target!.MapID);
 
-                Sleep();
-
                 if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
                     return;
+
+                Sleep();
             }
         }
         else
@@ -5671,7 +5666,7 @@ public class CoreBots
                     Bot.Wait.ForMapLoad("kitsune");
                 }
 
-                if (Bot.Player.Cell != "Boss")
+                if (Bot.Player!.Cell != "Boss")
                 {
                     Bot.Map.Jump("Boss", "Left");
                     Bot.Wait.ForCellChange("Boss");
@@ -5679,7 +5674,11 @@ public class CoreBots
 
                 #endregion Map & Cell insurance
 
-                Bot.Combat.Attack("*");
+                if (
+                    !Bot.Player.HasTarget
+                    || Bot.Player.Target == null && Bot.Player?.Target?.HP <= 0
+                )
+                    Bot.Combat.Attack("*");
                 Bot.Sleep(200);
             }
         }
@@ -5819,7 +5818,11 @@ public class CoreBots
                             )
                         )
                         {
-                            Bot.Combat.Attack("*");
+                            if (
+                                !Bot.Player!.HasTarget
+                                || Bot.Player.Target == null && Bot.Player?.Target?.HP <= 0
+                            )
+                                Bot.Combat.Attack("*");
                             Bot.Sleep(500);
                         }
                     }
@@ -5963,6 +5966,7 @@ public class CoreBots
 
         if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
             return;
+
         if (log)
             FarmingLogger(item, quantity);
 
@@ -5985,9 +5989,8 @@ public class CoreBots
                 Bot.Wait.ForCellChange(name!.Cell);
             }
 
-            if (monsters.Count == 0)
+            if (name == null || !monsters.Any())
             {
-                Sleep(); // Wait if no monsters found
                 continue;
             }
 
@@ -6160,93 +6163,63 @@ public class CoreBots
         if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
             return;
 
-        if (log && name != "*")
-            Logger(
-                $"⚔️ Attacking Monster: {name}, for {item} {dynamicQuant(item, isTemp)}/{quantity}[isTemp: {isTemp}]"
-            );
+        if (log)
+            FarmingLogger(item, quantity);
 
-        while (
-            !Bot.ShouldExit
-            && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
-        )
+        if (name == "*")
         {
-            while (!Bot.ShouldExit && !Bot.Player.Alive)
+            while (
+                !Bot.ShouldExit
+                && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
+            )
             {
-                Sleep();
-            }
+                if (!Bot.Player!.Alive)
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-            if (cell != null && Bot.Player.Cell != null && Bot.Player.Cell != cell)
-            {
-                Bot.Map.Jump(cell, "Left");
-                Bot.Wait.ForCellChange(cell);
-            }
-
-            if (name == "*")
-            {
-                while (
-                    !Bot.ShouldExit
-                    && !(
-                        isTemp
-                            ? Bot.TempInv.Contains(item, quantity)
-                            : CheckInventory(item, quantity)
-                    )
-                )
+                if (cell != null && Bot.Player.Cell != cell)
                 {
-                    while (!Bot.ShouldExit && !Bot.Player.Alive)
-                    {
-                        Sleep();
-                    }
-
-                    if (cell != null && Bot.Player.Cell != cell)
-                    {
-                        Bot.Map.Jump(cell, "Left");
-                        Bot.Wait.ForCellChange(cell);
-                    }
-
-                    if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack("*");
-
-                    Sleep(500);
-
-                    if (
-                        isTemp
-                            ? Bot.TempInv.Contains(item, quantity)
-                            : CheckInventory(item, quantity)
-                    )
-                        break;
-                }
-            }
-            else
-            {
-                while (!Bot.ShouldExit && !CheckInventory(item, quantity))
-                {
-                    // Make sure player is alive
-                    while (!Bot.ShouldExit && !Bot.Player.Alive)
-                        Sleep();
-
-                    // Move to the correct cell
-                    if (cell != null && Bot.Player.Cell != cell)
-                    {
-                        Bot.Map.Jump(cell, "Left");
-                        Bot.Wait.ForCellChange(cell);
-                    }
-
-                    if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack(name.FormatForCompare());
-                    Sleep(500); // short pacing
-
-                    // Stop loop if we have the required items
-                    if (CheckInventory(item, quantity))
-                        break;
+                    Bot.Map.Jump(cell, "Left");
+                    Bot.Wait.ForCellChange(cell);
                 }
 
-                if (rejectElse)
-                    Bot.Drops.RejectExcept(item);
-            }
+                Bot.Combat.Attack("*");
 
-            Bot.Wait.ForDrop(item);
-            Bot.Wait.ForPickup(item);
+                Sleep(500);
+
+                if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
+                {
+                    Bot.Wait.ForPickup(item);
+                    return;
+                }
+            }
         }
+        else
+        {
+            while (!Bot.ShouldExit && !CheckInventory(item, quantity))
+            {
+                // Make sure player is alive
+                if (!Bot.Player!.Alive)
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                // Move to the correct cell
+                if (cell != null && Bot.Player.Cell != cell)
+                {
+                    Bot.Map.Jump(cell, "Left");
+                    Bot.Wait.ForCellChange(cell);
+                }
+                if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player?.Target?.HP <= 0)
+                    Bot.Combat.Attack(name);
+                Sleep(500); // short pacing
+
+                if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
+                {
+                    Bot.Wait.ForPickup(item);
+                    return;
+                }
+            }
+        }
+
+        Bot.Wait.ForPickup(item);
     }
 
     #region IsMonsterAlive
@@ -6394,14 +6367,29 @@ public class CoreBots
         bool stopBot = false
     )
     {
-        // Word wrap the message
-        message = WordWrap(message, 50); // Adjust the line length as needed
+        message = message.Replace('[', '(').Replace(']', ')');
+        message = WordWrap(message, 50);
 
         Bot.Log($"[{DateTime.Now:HH:mm:ss}] ({caller})  {message}");
         if (LoggerInChat && Bot.Player.LoggedIn)
-            Bot.Send.ClientModerator(message.Replace('[', '(').Replace(']', ')'), caller);
+        {
+            // Remove emojis for ClientModerator since it doesn't support them well
+            string cleanMessage = System.Text.RegularExpressions.Regex.Replace(
+                message,
+                @"[\p{So}\p{Sk}]",
+                ""
+            );
+            Bot.Send.ClientModerator(cleanMessage, caller);
+        }
+
         if (messageBox & !ForceOffMessageboxes)
-            Message(message, caller);
+        {
+            // Ensure proper UTF-8 encoding for all Unicode characters (emojis, etc)
+            byte[] utf8Bytes = System.Text.Encoding.UTF8.GetBytes(message);
+            string properlyEncoded = System.Text.Encoding.UTF8.GetString(utf8Bytes);
+            Message(properlyEncoded, caller);
+        }
+
         if (stopBot)
         {
             scriptFinished = false;
@@ -6421,7 +6409,6 @@ public class CoreBots
 
         foreach (string word in input.Split(' ', StringSplitOptions.RemoveEmptyEntries))
         {
-            // Detect punctuation that signals a small pause
             if (
                 word.EndsWith('.')
                 || word.EndsWith('!')
@@ -6432,7 +6419,7 @@ public class CoreBots
             )
                 inSentencePause = true;
 
-            // Handle long words by hard breaking them
+            // Handle long words by hard breaking them - use StringInfo to respect emoji/surrogate pairs
             if (word.Length > lineLength)
             {
                 if (length > 0)
@@ -6440,23 +6427,25 @@ public class CoreBots
                     sb.AppendLine();
                     length = 0;
                 }
-                for (int i = 0; i < word.Length; i += lineLength)
-                    sb.AppendLine(word.Substring(i, Math.Min(lineLength, word.Length - i)));
+
+                var si = new StringInfo(word);
+                for (int i = 0; i < si.LengthInTextElements; i += lineLength)
+                {
+                    int takeCount = Math.Min(lineLength, si.LengthInTextElements - i);
+                    sb.AppendLine(si.SubstringByTextElements(i, takeCount));
+                }
                 inSentencePause = false;
                 continue;
             }
 
-            // Line wrap logic
             if (length + word.Length + 1 > lineLength)
             {
                 sb.AppendLine();
                 length = 0;
             }
-
             sb.Append(word).Append(' ');
             length += word.Length + 1;
 
-            // Add soft break after punctuation for readability
             if (inSentencePause && length > lineLength / 1.3)
             {
                 sb.AppendLine();
@@ -6464,7 +6453,6 @@ public class CoreBots
                 inSentencePause = false;
             }
         }
-
         return sb.ToString().TrimEnd();
     }
 
@@ -6479,7 +6467,8 @@ public class CoreBots
         int quantity = string.IsNullOrEmpty(item)
             ? 0
             : Bot.TempInv.GetQuantity(item) + Bot.Inventory.GetQuantity(item);
-        Logger($"Farming {item} ({quantity}/{quant})", caller);
+
+        Logger($"Farming 💎 {item} ({quantity}/{quant})", caller);
     }
 
     /// <summary>
@@ -9457,12 +9446,15 @@ public class CoreBots
 
             while (!Bot.ShouldExit)
             {
-                if (!Bot.Player.HasTarget)
+                if (
+                    !Bot.Player.HasTarget
+                    || Bot.Player.Target == null && Bot.Player?.Target?.HP <= 0
+                )
                     Bot.Combat.Attack("*");
 
                 Sleep();
 
-                if (!Bot.Player.HasTarget)
+                if (!Bot.Player!.HasTarget)
                     break;
             }
         }
