@@ -29366,9 +29366,9 @@ case ""Fish Oil"":
                     break;
     "
         },
-    {
-    "Hollow Horn",
-    @"
+        {
+            "Hollow Horn",
+            @"
 case ""Hollow Horn"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29386,10 +29386,10 @@ case ""Hollow Horn"":
                     }
                     break;
     "
-},
-{
-    "Hollow Hoof",
-    @"
+        },
+        {
+            "Hollow Hoof",
+            @"
 case ""Hollow Hoof"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29407,10 +29407,10 @@ case ""Hollow Hoof"":
                     }
                     break;
     "
-},
-{
-    "Fallen Darkblood Skull",
-    @"
+        },
+        {
+            "Fallen Darkblood Skull",
+            @"
 case ""Fallen Darkblood Skull"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29431,10 +29431,10 @@ case ""Fallen Darkblood Skull"":
                     );
                     break;
     "
-},
-{
-    "Vici's Hood",
-    @"
+        },
+        {
+            "Vici's Hood",
+            @"
 case ""Vici's Hood"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29455,8 +29455,8 @@ case ""Vici's Hood"":
                     );
                     break;
     "
-},
-};
+        },
+    };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);
