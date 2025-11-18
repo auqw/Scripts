@@ -100,7 +100,9 @@ public class CoreUltra
         if (Bot.Monsters?.MapMonsters == null)
             return false;
 
-        return Bot.Monsters.MapMonsters.Any(m => m != null && m.Name.Equals(name) && m.HP > 0);
+        return Bot.Monsters.MapMonsters.Any(m =>
+            m != null && m.Name.ToLower().Equals(name.ToLower()) && m.HP > 0
+        );
     }
 
     public void UltraWardenTaunter()
