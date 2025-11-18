@@ -82,12 +82,14 @@ public class UltraDrago
 
         // All conditions satisfied → START script
         Core.Boot();
+        C.AddDrop("King Drago Insignia");
         Adv.GearStore();
         Bot.Quests.UpdateQuest(8395);
         Prep();
         C.EnsureAccept(8397);
         Fight();
         C.EnsureComplete(8397);
+        Bot.Wait.ForPickup("King Drago Insignia");
         C.JumpWait();
         Adv.GearStore(true);
     }
