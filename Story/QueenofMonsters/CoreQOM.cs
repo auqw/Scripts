@@ -172,11 +172,14 @@ public class CoreQOM
         Story.KillQuest(5376, "infernalspire", "Helzekiel");
 
         //Get the Keys
-        Story.KillQuest(
-            5377,
-            "infernalspire",
-            new[] { "Dungeon Fiend", "Dungeon Fiend", "Infernal Hound" }
-        );
+        if (!Story.QuestProgression(5377))
+        {
+            Core.EnsureAccept(5377);
+            Core.KillMonster("infernalspire", "r7", "Left", "Dungeon Fiend", "Infernal Key", 6);
+            Core.KillMonster("infernalspire", "r7", "Left", "Dungeon Fiend", "Dungeon Fiend Slain", 6);
+            Core.KillMonster("infernalspire", "r7", "Left", "Infernal Hound", "Infernal Hound Slain", 6);
+            Core.EnsureComplete(5377);
+        }
 
         //Free the Captives
         Story.MapItemQuest(5378, "infernalspire", 4731, 6);
