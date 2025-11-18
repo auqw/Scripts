@@ -267,7 +267,7 @@ public class CoreFrostvale
         Story.KillQuest(
             2532,
             "frostdeep",
-            new[] { "Polar Elemental", "Polar Golem", "Polar Golem" }
+            new[] { "Polar Golem", "Polar Elemental", "Polar Golem" }
         );
 
         // Cold-Hearted Trophies
