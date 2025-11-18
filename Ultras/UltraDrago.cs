@@ -59,7 +59,9 @@ public class UltraDrago
     {
         C.OneTimeMessage(
             "WARNING",
-            "Please use the classes in the options to ensure proper role functionality. We've allowed you to choose 'Current Class', but it's recommended to select a specific role for optimal performance.",
+            "Please use the classes in the options to ensure proper role functionality.\n"
+                + "We've allowed you to choose 'Current Class', but it's recommended to select a specific role for optimal (safe) performance.\n"
+                + "Curent CLass\" Will Focus Boss -> Left Summon -> Right Summon",
             true,
             true
         );
