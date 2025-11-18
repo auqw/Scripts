@@ -77,31 +77,25 @@ public class NulgathDemandsWork
     public void NDWQuest(string[]? itemNames = null, int quant = 1)
     {
         itemNames ??= NDWItems.Select(item => item).ToArray() ?? Array.Empty<string>(); // Ensure itemNames is not null
-
         if (itemNames.Length == 0 || Core.CheckInventory(itemNames, quant))
             return;
-
         ItemBase[] Rewards = Core.EnsureLoad(5259).Rewards.ToArray();
         Quest? NDW = Core.InitializeWithRetries(() => Core.EnsureLoad(5259));
         Core.AddDrop(Nation.bagDrops);
         Core.AddDrop(Rewards.Select(x => x.Name).ToArray());
-
         foreach (string itemName in itemNames)
         {
-            ItemBase item = Rewards.Find(x => x.Name == itemName) ?? new ItemBase(); // Ensure item is not null
-
+            ItemBase item =
+                Rewards.FirstOrDefault(x => x != null && x.Name == itemName) ?? new ItemBase(); // Ensure item is not null
             if (Core.CheckInventory(item.Name, quant))
             {
                 Core.Logger($"{item.Name}, x[{quant}] owned, continuing.");
                 continue;
             }
-
             Core.FarmingLogger(item.Name, quant);
-
             while (!Bot.ShouldExit && !Core.CheckInventory(item.Name, quant))
             {
                 Core.EnsureAccept(5259);
-
                 WillpowerExtraction.Unidentified34(10);
                 Nation.FarmUni13(2);
                 Nation.FarmBloodGem(2);
@@ -112,7 +106,6 @@ public class NulgathDemandsWork
                 Nation.FarmTaintedGem(50);
                 GHV.GetGHV();
                 Nation.FarmVoucher(true);
-
                 if (item.Name == "Unidentified 35")
                 {
                     // Buy U35 if fragments exist
@@ -121,32 +114,29 @@ public class NulgathDemandsWork
                         && Core.CheckInventory("Archfiend Essence Fragment", 9)
                         && !Core.CheckInventory("Unidentified 35", quant)
                     )
-                        Adv.BuyItem("tercessuinotlim", 1951, item.ID, shopItemID: 7912);
-
-                    // Pick ONE NDW reward that isn't maxed
-                    string? rewardToPick = NDW
-                        ?.Rewards.Where(x =>
-                            x != null
-                            && NDWItems.Contains(x.Name)
-                            && !Core.CheckInventory(x.Name, x.MaxStack)
-                        )
-                        .Select(x => x.Name)
-                        .FirstOrDefault();
-
-                    if (!string.IsNullOrEmpty(rewardToPick))
-                        Core.EnsureCompleteChoose(5259, new[] { rewardToPick });
-                    else
                     {
-                        Core.Logger(
-                            "All NDW items are at MaxStack. Completing quest without selecting a reward.\n"
-                                + "(You will still receive Archfiend Essence Fragment and Unidentified 35.)"
-                        );
-
-                        Core.EnsureComplete(5259);
+                        Adv.BuyItem("tercessuinotlim", 1951, item.ID, shopItemID: 7912);
                     }
-
-                    return;
                 }
+            }
+            // Pick ONE NDW reward that isn't maxed
+            string? rewardToPick = NDW
+                ?.Rewards.Where(x =>
+                    x != null
+                    && NDWItems.Contains(x.Name)
+                    && !Core.CheckInventory(x.Name, x.MaxStack)
+                )
+                .Select(x => x.Name)
+                .FirstOrDefault();
+            if (!string.IsNullOrEmpty(rewardToPick))
+                Core.EnsureCompleteChoose(5259, new[] { rewardToPick });
+            else
+            {
+                Core.Logger(
+                    "All NDW items are at MaxStack. Completing quest without selecting a reward.\n"
+                        + "(You will still receive Archfiend Essence Fragment and Unidentified 35.)"
+                );
+                Core.EnsureComplete(5259);
             }
         }
     }
