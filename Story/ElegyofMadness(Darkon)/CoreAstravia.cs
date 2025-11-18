@@ -28,7 +28,8 @@ public class CoreAstravia
         Eridani();
         Astravia();
         AstraviaCastle();
-        // AstraviaPast will do the 2 voids before it
+        AstraviaJudgement();
+        EridaniPast();
         AstraviaPast();
         FirstObservatory();
         GenesisGarden();
