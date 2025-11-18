@@ -12,7 +12,10 @@ tags: Ultra
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
 
+using System.ComponentModel;
+using System.Reflection;
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
 public class UltraDrago
@@ -34,84 +37,99 @@ public class UltraDrago
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
-#nullable enable
-
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraDrago";
 
     // User options
     public List<IOption> Options = new()
     {
-        new Option<string>(
-            "TaunterOne",
-            "First Taunter Class",
-            "Insert the name of the class that will taunt",
-            ""
+        new Option<RoleSelection>(
+            "role",
+            "Role Selection",
+            "Select your role for Ultra King Drago fight. Make sure to equip the corresponding class before running the script.",
+            RoleSelection.ChaosAvenger
         ),
-        new Option<bool>(
-            "useSecondTaunter",
-            "Use Second Taunter",
-            "Enable if you have a second taunter.",
-            false
-        ),
-        new Option<string>(
-            "TaunterTwo",
-            "Second Taunter Class",
-            "Insert the name of the class that will taunt",
-            ""
-        ),
+        CoreBots.Instance.SkipOptions,
     };
 
     // Filled at runtime
-    private string a = "";
-    private string b = "";
+    private RoleSelection role;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        // Pull options
-        a = (Bot.Config?.Get<string>("TaunterOne") ?? "").Trim();
-        b = (Bot.Config?.Get<string>("TaunterTwo") ?? "").Trim();
-        bool useSecond = Bot.Config?.Get<bool>("useSecondTaunter") ?? false;
+        C.OneTimeMessage(
+            "WARNING",
+            "Please use the classes in the options to ensure proper role functionality. We've allowed you to choose 'Current Class', but it's recommended to select a specific role for optimal performance.",
+            true,
+            true
+        );
+        
+        if (
+            Bot.Config != null
+            && Bot.Config.Options.Contains(CoreBots.Instance.SkipOptions)
+            && !Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions)
+        )
+            Bot.Config.Configure();
 
-        // ============================
-        //   TAUNTER REQUIREMENT LOGIC
-        // ============================
+        // Determine role from user selection or equipped class
+        role = Bot.Config?.Get<RoleSelection>("role") ?? GetEquippedRole();
 
-        // Rule 0: T1 must always be filled
-        if (string.IsNullOrEmpty(a))
-        {
-            C.Logger("Setup", "First taunter class is not filled in Script Options.");
-            Bot.Stop();
-            return;
-        }
+        C.Join("whitemap");
 
-        // If T2 is required but not provided → STOP
-        if (useSecond && string.IsNullOrEmpty(b))
-        {
-            C.Logger("Setup", "Second taunter class is enabled but not filled.");
-            Bot.Stop();
-            return;
-        }
-
-        Astravia.CompleteCoreAstravia();
+        Astravia.AstraviaJudgement();
 
         // All conditions satisfied → START script
         Core.Boot();
+        Adv.GearStore();
         Bot.Quests.UpdateQuest(8395);
         Prep();
+        C.EnsureAccept(8397);
         Fight();
-        Bot.Stop();
+        C.EnsureComplete(8397);
+        C.JumpWait();
+        Adv.GearStore(true);
     }
 
-    // Check if current player is taunter
-    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
+    RoleSelection GetEquippedRole()
+    {
+        string currentClass = Bot.Player?.CurrentClass?.Name ?? "";
+
+        foreach (var roleEnum in Enum.GetValues(typeof(RoleSelection)).Cast<RoleSelection>())
+        {
+            string roleDesc = GetDescription(roleEnum);
+
+            // Match CurrentClass role
+            if (roleEnum == RoleSelection.CurrentClass)
+                continue;
+
+            if (roleDesc == currentClass)
+            {
+                return roleEnum;
+            }
+        }
+
+        C.Logger("Setup", "No valid role class equipped.");
+        Bot.Stop();
+        return RoleSelection.CurrentClass; // Fallback
+    }
+
+    bool IsTaunter() => role == RoleSelection.ArchPaladin || role == RoleSelection.LordOfOrder;
+
+    bool IsCurrentClass() => role == RoleSelection.CurrentClass;
 
     void Prep()
     {
-        // Taunters prep differently
+        // CurrentClass and non-taunters don't need special prep
+        if (IsCurrentClass())
+        {
+            return;
+        }
+
+        C.Equip(GetDescription(role));
+
+        // Taunters (ArchPaladin & LordOfOrder) prep with Scroll of Enrage
         if (IsTaunter())
         {
-            // Only taunters need Scroll of Enrage
             Ultra.GetScrollOfEnrage();
             return;
         }
@@ -126,34 +144,216 @@ public class UltraDrago
     {
         const string map = "ultradrago";
         const string boss = "King Drago";
-        const string executioner = "Executioner Dene";
-        const string bowmaster = "Bowmaster Algie";
+        const string leftSummon = "Bowmaster Algie"; // Right summon (Bow)
+        const string rightSummon = "Executioner Dene"; // Left summon (Axe)
 
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_drago.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        // Main fight loop
-        while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
+        // ===== MAIN LOOP =====
+        while (!Bot.ShouldExit && Ultra.MonsterAlive(boss))
         {
-            if (IsTaunter())
+            // ======================================================
+            //              CURRENT CLASS - FOCUS BOSS
+            // ======================================================
+
+            if (IsCurrentClass())
             {
-                // Taunter's responsibility: keep Executioner locked
-                while (Ultra.MonsterAlive(executioner) && !Bot.ShouldExit)
+                Core.KillWithPriority(boss, null, null);
+                Bot.Skills.UseSkill(5);
+                continue;
+            }
+
+            // ======================================================
+            //              ARCHPALADIN TAUNTER LOGIC
+            // ======================================================
+
+            if (role == RoleSelection.ArchPaladin)
+            {
+                // ArchPaladin taunts the left summon (Axe)
+                while (!Bot.ShouldExit && Ultra.MonsterAlive(rightSummon))
                 {
-                    // Prefer primary taunter when equipped
-                    if (Core.HasClassEquipped(a))
-                        Ultra.Taunt(a, executioner, "aura", 250, "Focus");
-                    else if (Core.HasClassEquipped(b))
-                        Ultra.Taunt(b, executioner, "aura", 700, "Focus");
+                    Ultra.Taunt(
+                        GetDescription(RoleSelection.ArchPaladin),
+                        rightSummon,
+                        "aura",
+                        250,
+                        "Focus"
+                    );
                 }
                 continue;
             }
 
-            // Non-taunter role: kill priority mobs + maintain DPS
-            Core.KillWithPriority(boss, bowmaster, executioner);
+            // ======================================================
+            //              LORD OF ORDER TAUNTER LOGIC
+            // ======================================================
+
+            if (role == RoleSelection.LordOfOrder)
+            {
+                // LordOfOrder loops taunt with ArchPaladin (left summon)
+                while (!Bot.ShouldExit && Ultra.MonsterAlive(rightSummon))
+                {
+                    Ultra.Taunt(
+                        GetDescription(RoleSelection.LordOfOrder),
+                        rightSummon,
+                        "aura",
+                        700,
+                        "Focus"
+                    );
+                }
+                continue;
+            }
+
+            // ======================================================
+            //              NON-TAUNTER BEHAVIOR AREA (LR & DPS)
+            // ======================================================
+
+            // LegionRevenant and other DPS focus on right summon (Bow)
+            Core.KillWithPriority(boss, leftSummon, rightSummon);
             Bot.Skills.UseSkill(5);
         }
+    }
+
+#nullable enable
+
+    void Enhancements(RoleSelection selectedRole)
+    {
+        // CurrentClass doesn't need enhancements
+        if (selectedRole == RoleSelection.CurrentClass)
+        {
+            return;
+        }
+
+        // Resolve class name via enum description.
+        string className = GetDescription(selectedRole);
+
+        // Ensure user owns the class.
+        if (!C.CheckInventory(className))
+        {
+            C.Logger($"[ERROR] Missing required class: {className}", stopBot: true);
+            return;
+        }
+
+        // Equip class before scanning gear.
+        C.Equip(className);
+
+        // Cache equipped gear once (avoids allocations & repeated scans).
+        InventoryItem? weaponItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
+            x?.Equipped == true && Adv.WeaponCatagories.Contains(x.Category)
+        );
+
+        InventoryItem? helmItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
+            x?.Equipped == true && x.Category == ItemCategory.Helm
+        );
+
+        InventoryItem? capeItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
+            x?.Equipped == true && x.Category == ItemCategory.Cape
+        );
+
+        string weapon = weaponItem?.Name ?? "";
+        string helm = helmItem?.Name ?? "";
+        string cape = capeItem?.Name ?? "";
+
+        // Debug snapshot
+        C.Logger(
+            $"[Enhancements]\n"
+                + $"  Class: {className}\n"
+                + $"  Weapon: {weapon}\n"
+                + $"  Helm:   {helm}\n"
+                + $"  Cape:   {cape}",
+            "info"
+        );
+
+        // ===============================
+        //  Enhancement Table
+        // ===============================
+        switch (selectedRole)
+        {
+            // -----------------------------------------------------------
+            // Chaos Avenger: anima, lucky, valiance, vainglory
+            // -----------------------------------------------------------
+            case RoleSelection.ChaosAvenger:
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Anima);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Valiance);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Vainglory);
+                break;
+
+            // -----------------------------------------------------------
+            // Legion Revenant: pneuma, wizard, ravenous/valiance, vainglory
+            //
+            // uRavenous() determines priority:
+            // if (uRavenous()) → Ravenous
+            // else → Valiance
+            // -----------------------------------------------------------
+            case RoleSelection.LegionRevenant:
+                Adv.EnhanceItem(helm, EnhancementType.Wizard, hSpecial: HelmSpecial.Pneuma);
+                Adv.EnhanceItem(className, EnhancementType.Wizard);
+                Adv.EnhanceItem(
+                    weapon,
+                    EnhancementType.Wizard,
+                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance
+                );
+                Adv.EnhanceItem(cape, EnhancementType.Wizard, CapeSpecial.Vainglory);
+                break;
+
+            // -----------------------------------------------------------
+            // ArchPaladin: forge, lucky, valiance, lament
+            // -----------------------------------------------------------
+            case RoleSelection.ArchPaladin:
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Valiance);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+                break;
+
+            // -----------------------------------------------------------
+            // Lord of Order: forge, lucky, valiance / AweBlast, absolution
+            //
+            // Uses same dual-weapon logic as LR:
+            // if (uRavenous()) → Awe_Blast
+            // else → Valiance
+            // -----------------------------------------------------------
+            case RoleSelection.LordOfOrder:
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(
+                    weapon,
+                    EnhancementType.Lucky,
+                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Awe_Blast : WeaponSpecial.Valiance
+                );
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Absolution);
+                break;
+        }
+    }
+
+    public static string GetDescription(Enum value)
+    {
+        FieldInfo? field = value.GetType().GetField(value.ToString());
+        DescriptionAttribute? attribute =
+            field?.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault()
+            as DescriptionAttribute;
+
+        return attribute?.Description ?? value.ToString();
+    }
+
+    public enum RoleSelection
+    {
+        [Description("Current Class")]
+        CurrentClass,
+
+        [Description("Chaos Avenger")]
+        ChaosAvenger,
+
+        [Description("Legion Revenant")]
+        LegionRevenant,
+
+        [Description("ArchPaladin")]
+        ArchPaladin,
+
+        [Description("Lord of Order")]
+        LordOfOrder,
     }
 }
