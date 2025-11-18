@@ -384,6 +384,7 @@ public class Core7DD
         Story.KillQuest(5999, "DragonCrown", "Zathas");
 
         // Argo’s Not Stopping Us! 6000
+        Bot.Log("please wait whilst it hunts out of the cutscene cell...");
         Story.KillQuest(6000, "DragonCrown", "Argo");
 
         // Defeat Ukki, The 1st Sentinel 6001
@@ -418,7 +419,7 @@ public class Core7DD
         Story.PreLoad(this);
 
         // Decimate the Horde 6110
-        Story.KillQuest(6110, "Wrath", new[] { "Bone Terror", "Fishbones" });
+        Story.KillQuest(6110, "Wrath", new[] { "Fishbones", "Bone Terror" });
 
         // Douse with Flames 6111
         Story.KillQuest(6111, "Wrath", "Dark Fire");
