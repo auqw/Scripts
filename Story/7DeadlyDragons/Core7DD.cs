@@ -81,7 +81,7 @@ public class Core7DD
         Story.KillQuest(5910, "Gluttony", "Skeletal Slayer");
 
         // Bile Burns 5911
-        Story.KillQuest(5911, "Gluttony", new[] { "Bile", "Bowel Worm" });
+        Story.KillQuest(5911, "Gluttony", new[] { "Bowel Worm", "Bile" });
 
         // Find the Chest 5912
         Story.MapItemQuest(5912, "Gluttony", 5349);
@@ -495,21 +495,21 @@ public class Core7DD
     #region Hazmat Suit for Sloth
     public void HazMatSuit()
     {
-        if (!Core.CheckInventory(40710))
+        if (!Bot.TempInv.Contains(40710))
         {
             Core.Logger("Suit not found");
-            Core.Join("Sloth");
             Core.EnsureAccept(5944);
-            Core.GetMapItem(5380, 1, "Sloth");
-            Core.GetMapItem(5381, 1, "Sloth");
+            Core.GetMapItems(new[] { (5381, 1), (5380, 1) }, "Sloth");
             Core.EnsureComplete(5944);
             Bot.Wait.ForDrop("Hazmat Suit (Temp)");
-            Bot.Send.Packet($"%xt%zm%equipItem%{Bot.Map.RoomID}%40710%");
+            Bot.Wait.ForPickup("Hazmat Suit (Temp)");
+            Bot.Sleep(2500);
         }
         else
         {
-            Core.JumpWait();
+            Core.Logger("Suit found in Temp Inventory");
             Bot.Send.Packet($"%xt%zm%equipItem%{Bot.Map.RoomID}%40710%");
+            Bot.Sleep(2500);
         }
     }
     #endregion Hazmat Suit for Sloth

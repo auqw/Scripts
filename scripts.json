@@ -10436,8 +10436,8 @@
       "null"
     ],
     "path": "Story/7DeadlyDragons/Core7DD.cs",
-    "size": 15155,
-    "sha256": "4f89bb37ed715484eab4a24c7af6ee14fd36528a78dd775b55d969a4f4da1021",
+    "size": 15167,
+    "sha256": "0d4cdd2ed8b044e0163c89f85c356ca551127dbc2cd87fdf9498fdcd6e876352",
     "fileName": "Core7DD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/7DeadlyDragons/Core7DD.cs"
   },
@@ -25113,8 +25113,8 @@
       "fragment"
     ],
     "path": "Nation/AFDL/NulgathDemandsWork.cs",
-    "size": 5871,
-    "sha256": "410d8f87c7e8edbef2e85d5edfd7214188db0459545fb5354a7e15de64b7c488",
+    "size": 5762,
+    "sha256": "ed65d60b268e6547bc1df481b9fa3e88de9ad21f12a6386783899014f4a90511",
     "fileName": "NulgathDemandsWork.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/AFDL/NulgathDemandsWork.cs"
   },
