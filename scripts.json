@@ -703,8 +703,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 93561,
-    "sha256": "47b9dd6223a4af73366176560b10ec1e8057789f80cbb9186a6630d8bb7047ae",
+    "size": 94026,
+    "sha256": "a3c22fad9ec21bbb7c95e95a63859c2e055550fa87a950262a1618ffc149bb37",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -775,8 +775,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDrago.cs",
-    "size": 4859,
-    "sha256": "1353710724dc1676504e0828dd310303b5a6f35492df57fa73c6c2ef18a065de",
+    "size": 12771,
+    "sha256": "205daeecd536e272d2114b396c3986ad7b0ea9779ec60b1ff04b1ec7aec09322",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },
@@ -787,8 +787,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 21182,
-    "sha256": "630f7bd8d9aad34e0e453eb4fe639bd6275bf8646cbf55d0d0f3703d284a3001",
+    "size": 21223,
+    "sha256": "17c1ab04b4ac2064d5ffb6dec1c58fff78089fac46a7b5ba2e2f734b3b7ae4cb",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -8703,8 +8703,8 @@
       "null"
     ],
     "path": "Story/ElegyofMadness(Darkon)/CoreAstravia.cs",
-    "size": 16263,
-    "sha256": "8bb58fde38cd63fffedf92fdee1914dd4e988c37e55e64dc27f9f80f7283b535",
+    "size": 16261,
+    "sha256": "03ae2fa92893162c092cce62fe0a1f249f52404f343c2b3050fa9a0105bf6ba7",
     "fileName": "CoreAstravia.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ElegyofMadness(Darkon)/CoreAstravia.cs"
   },
@@ -24826,8 +24826,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1068145,
-    "sha256": "a196c2bdf2a1930698706580114d09b1c3ea08d2bb9d9fcec635560131f48d0d",
+    "size": 1068273,
+    "sha256": "4c75c951084759aec2e8f256d1d31f09dcd0f4493c9502cfd4af00d260b2d15c",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
