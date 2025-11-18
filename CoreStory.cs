@@ -960,15 +960,25 @@ public class CoreStory
             }
         }
 
-        if (Core.isCompletedBefore(QuestID) && (!TestBot || QuestData.Once))
+        if (Core.isCompletedBefore(QuestID))
         {
-            if (Log)
-                if (TestBot)
+            // Always skip one-time quests after completion
+            if (QuestData.Once)
+            {
+                if (Log)
                     Core.Logger($"Skipped (Once = true): [{QuestID}] - \"{QuestData.Name}\"");
-                else
+                PreviousQuestState = true;
+                return true;
+            }
+
+            // For non-one-time quests, skip unless TestBot is enabled
+            if (!TestBot)
+            {
+                if (Log)
                     Core.Logger($"Already Completed: [{QuestID}] - \"{QuestData.Name}\"");
-            PreviousQuestState = true;
-            return true;
+                PreviousQuestState = true;
+                return true;
+            }
         }
 
         if (GetReward)
