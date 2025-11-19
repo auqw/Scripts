@@ -673,7 +673,7 @@ public class CoreAdvanced
                     if (
                         wasinshop.Requirements.Count == 0
                         && ((wasinshop.Coins && wasinshop.Cost <= 0) || !wasinshop.Coins)
-                    )
+                    ) //|| wasinshop.Name.Contains("Gold Voucher") || wasinshop.Name.Contains("Dragon Runestone"))
                     {
                         // Otherwise buy the item directly
                         BuyItem(
@@ -689,15 +689,6 @@ public class CoreAdvanced
                     else
                     {
                         IngredientWasintheShop(wasinshop, ReqQuant);
-                        BuyItem(
-                            map,
-                            shopID,
-                            Req.ID,
-                            ReqQuant,
-                            shopItemID: wasinshop.ShopItemID,
-                            Log: Log
-                        );
-                        Bot.Wait.ForPickup(Req.ID);
                     }
 
                     if (Core.CheckInventory(Req.ID, ReqQuant))
@@ -760,7 +751,7 @@ public class CoreAdvanced
             }
 
             // If item is already in inventory, no need to continue
-            if (Core.CheckInventory(item.ID, craftingQ))
+            if (Core.CheckInventory(item.ID, item.Quantity))
                 return;
 
             // Ensure shop is loaded before proceeding
@@ -801,22 +792,20 @@ public class CoreAdvanced
                     if (req.Name.Contains("Dragon Runestone"))
                     {
                         Farm.DragonRunestone(ReqQuant);
+                        continue;
                     }
                     if (req.Name.StartsWith("Gold Voucher"))
                     {
                         Farm.Voucher(req.Name, ReqQuant);
+                        continue;
                     }
-                    else
-                    {
-                        externalItem = req;
-                        externalQuant = ReqQuant;
-                        Core.AddDrop(externalItem.ID);
-                        Core.Logger(
-                            $"{externalItem.Name} [{externalItem.ID}] is an external item (not a shop item), attempting to farm it from The ingredient list."
-                        );
-                        findIngredients();
-                        Bot.Wait.ForPickup(externalItem.ID);
-                    }
+                    externalItem = req;
+                    externalQuant = ReqQuant;
+                    Core.AddDrop(externalItem.ID);
+                    Core.Logger(
+                        $"{externalItem.Name} [{externalItem.ID}] is an external item (not a shop item), attempting to farm it from The ingredient list."
+                    );
+                    findIngredients();
                 }
             }
 
