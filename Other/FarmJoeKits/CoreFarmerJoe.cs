@@ -535,14 +535,15 @@ public class CoreFarmerJoe
             Daily.EldersBlood();
 
         Core.Logger(
-            "Joe will handle each level bracket (0-30, 30-50, 50-55, 55-60, 60-65, 65-75, 75-100) doing the leveling first, then aquireing classes and items after so its prepared and hopefully strong enough to handle the next level bracket."
-        );
-        Core.Logger(
-            "We'll occasionaly get rep/class/gold boosts throguh out the script to help speed things up a bit."
+            "Joe will handle each level bracket (0-30, 30-50, 50-55, 55-60, 60-65, 65-75, 75-100)\n doing the leveling first, then acquiring classes and items after\n so its prepared... and hopefully strong enough to handle the next level bracket."
         );
 
         if (Bot.Config!.Get<bool>("GetBoosts"))
         {
+            Core.OneTimeMessage(
+                "GetBoosts Message",
+                "We'll occasionaly get rep/class/gold boosts throguh out the script to help speed things up a bit."
+            );
             // Always ensure we have 10 of each boost type
             Farm.GetBoost("REP", 10, true);
             Farm.GetBoost("XP", Bot.Player.Level >= 100 ? 0 : 10, true);
