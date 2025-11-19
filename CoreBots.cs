@@ -4128,7 +4128,7 @@ public class CoreBots
                     !Bot.Player.HasTarget
                     || Bot.Player.Target == null && Bot.Player?.Target?.HP <= 0
                 )
-                    Bot.Combat.Attack("*"); // ⚔️
+                    Bot.Combat.Attack(monster); // ⚔️
 
                 Sleep(500); // 💤
 
