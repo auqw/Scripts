@@ -2609,6 +2609,18 @@ public class CoreAdvanced
             {
                 #region Lucky Region
 
+                #region Lucky - Vim - vainglory - lacerate
+                case "horc evader":
+                    if (!uLacerate() || !uVim() || !uVainglory())
+                        goto default;
+
+                    type = EnhancementType.Lucky;
+                    cSpecial = CapeSpecial.Vainglory;
+                    wSpecial = WeaponSpecial.Lacerate;
+                    hSpecial = HelmSpecial.Vim;
+                    break;
+                #endregion
+
                 #region Luck - Awe_Blast | Arcanas_Concerto - ForgeHelm - Penitence
                 case "lord of order":
                     if (!uAwe() || !uForgeHelm() || !uPenitence())
@@ -3371,7 +3383,6 @@ public class CoreAdvanced
                 case "heroic naval commander":
                 case "highseas commander":
                 case "hobo highlord":
-                case "horc evader":
                 case "immortal dark caster":
                 case "imperial chunin":
                 case "infinite dark caster":
