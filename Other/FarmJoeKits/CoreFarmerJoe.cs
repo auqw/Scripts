@@ -4,150 +4,125 @@ description: null
 tags: null
 */
 #region includes
-//cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/CoreBots.cs
-//cs_include Scripts/CoreDailies.cs
-//cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Chaos/DrakathsArmor.cs
+//cs_include Scripts/Chaos/EternalDrakathSet.cs
 //cs_include Scripts/Dailies/0AllDailies.cs
-//cs_include Scripts/Dailies/LordOfOrder.cs
 //cs_include Scripts/Dailies/Cryomancer.cs
+//cs_include Scripts/Dailies/LordOfOrder.cs
+//cs_include Scripts/Darkon/CoreDarkon.cs
+//cs_include Scripts/Darkon/Various/PrinceDarkonsPoleaxePreReqs.cs
 //cs_include Scripts/Enhancement/InventoryEnhancer.cs
-//cs_include Scripts/Good/ArchPaladin.cs
-//cs_include Scripts/Good/BLoD/CoreBLOD.cs
+//cs_include Scripts/Enhancement/UnlockForgeEnhancements.cs
+//cs_include Scripts/Evil/ADK.cs
+//cs_include Scripts/Evil/NSoD/CoreNSOD.cs
+//cs_include Scripts/Evil/SepulchuresOriginalHelm.cs
+//cs_include Scripts/Good/GearOfAwe/ArmorOfAwe.cs
+//cs_include Scripts/Good/GearOfAwe/Awescended.cs
 //cs_include Scripts/Good/GearOfAwe/CapeOfAwe.cs
 //cs_include Scripts/Good/GearOfAwe/CoreAwe.cs
+//cs_include Scripts/Good/GearOfAwe/HelmOfAwe.cs
+//cs_include Scripts/Good/ArchPaladin.cs
+//cs_include Scripts/Good/BLoD/CoreBLOD.cs
 //cs_include Scripts/Good/Paladin.cs
+//cs_include Scripts/Hollowborn/CoreHollowborn.cs
+//cs_include Scripts/Hollowborn/MergeShops/DawnFortressMerge.cs
 //cs_include Scripts/Hollowborn/MergeShops/ShadowrealmMerge.cs
-//cs_include Scripts/Dailies/MineCrafting.cs
-//cs_include Scripts/Enhancement/UnlockForgeEnhancements.cs
+//cs_include Scripts/Hollowborn/TradingandStuff(single).cs
+//cs_include Scripts/Legion/CoreLegion.cs
+//cs_include Scripts/Legion/HeadOfTheLegionBeast.cs
+//cs_include Scripts/Legion/SwordMaster.cs
+//cs_include Scripts/Legion/YamiNoRonin/CoreYnR.cs
+//cs_include Scripts/Nation/AFDL/NulgathDemandsWork.cs
+//cs_include Scripts/Nation/AFDL/WillpowerExtraction.cs
 //cs_include Scripts/Nation/AssistingCragAndBamboozle[Mem].cs
+//cs_include Scripts/Nation/EmpoweringItems.cs
+//cs_include Scripts/Nation/MergeShops/DilligasMerge.cs
+//cs_include Scripts/Nation/MergeShops/DirtlickersMerge.cs
+//cs_include Scripts/Nation/MergeShops/NulgathDiamondMerge.cs
+//cs_include Scripts/Nation/MergeShops/VoidChasmMerge.cs
+//cs_include Scripts/Nation/MergeShops/VoidRefugeMerge.cs
+//cs_include Scripts/Nation/MergeShops/NationMerge.cs
 //cs_include Scripts/Nation/CoreNation.cs
-//cs_include Scripts/Nation/VHL/CoreVHL.cs
+//cs_include Scripts/Nation/NationLoyaltyRewarded.cs
+//cs_include Scripts/Nation/Various/Archfiend.cs
+//cs_include Scripts/Nation/Various/ArchfiendDeathLord.cs
+//cs_include Scripts/Nation/Various/DragonBlade[mem].cs
+//cs_include Scripts/Nation/Various/GoldenHanzoVoid.cs
+//cs_include Scripts/Nation/Various/JuggernautItems.cs
+//cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
+//cs_include Scripts/Nation/Various/TarosManslayer.cs
+//cs_include Scripts/Nation/Various/TheLeeryContract[Member].cs
+//cs_include Scripts/Nation/Various/VoidPaladin.cs
+//cs_include Scripts/Nation/Various/VoidSpartan.cs
+//cs_include Scripts/Other/Armor/FireChampionsArmor.cs
+//cs_include Scripts/Other/Armor/MalgorsArmorSet.cs
+//cs_include Scripts/Other/Classes/BloodSorceress.cs
+//cs_include Scripts/Other/Classes/Daily-Classes/BlazeBinder.cs
+//cs_include Scripts/Other/Classes/DragonOfTime.cs
 //cs_include Scripts/Other/Classes/DragonShinobi.cs
+//cs_include Scripts/Other/Classes/Dragonslayer.cs
+//cs_include Scripts/Other/Classes/DragonslayerGeneral.cs
+//cs_include Scripts/Other/Classes/REP-based/DarkbloodStormKing.cs
 //cs_include Scripts/Other/Classes/REP-based/EternalInversionist.cs
 //cs_include Scripts/Other/Classes/REP-based/GlacialBerserker.cs
+//cs_include Scripts/Other/Classes/REP-based/MasterRanger.cs
 //cs_include Scripts/Other/Classes/REP-based/Shaman.cs
 //cs_include Scripts/Other/Classes/REP-based/StoneCrusher.cs
 //cs_include Scripts/Other/Classes/ScarletSorceress.cs
-//cs_include Scripts/Other/Classes/BloodSorceress.cs
 //cs_include Scripts/Other/Classes/FrostSpiritReaver.cs
+//cs_include Scripts/Other/Classes/Necromancer.cs
 //cs_include Scripts/Other/FreeBoosts/FreeBoostsQuest(10mns)[Rng].cs
-//cs_include Scripts/Other/Weapons/BurningBladeOfAbezeth.cs
+//cs_include Scripts/Other/MergeShops/CelestialChampMerge.cs
+//cs_include Scripts/Other/MergeShops/SynderesMerge.cs
+//cs_include Scripts/Other/MergeShops/YulgarsUndineMerge.cs
+//cs_include Scripts/Other/MysteriousEgg.cs
+//cs_include Scripts/Other/ShadowDragonDefender.cs
 //cs_include Scripts/Other/Weapons/BurningBlade.cs
+//cs_include Scripts/Other/Weapons/BurningBladeOfAbezeth.cs
 //cs_include Scripts/Other/Weapons/DualChainSawKatanas.cs
 //cs_include Scripts/Other/Weapons/EnchantedVictoryBladeWeapons.cs
+//cs_include Scripts/Other/Weapons/FortitudeAndHubris.cs
+//cs_include Scripts/Other/Weapons/ExaltedApotheosisPreReqs.cs
+//cs_include Scripts/Other/Weapons/GoldenBladeOfFate.cs
+//cs_include Scripts/Other/Weapons/PinkBladeofDestruction.cs
+//cs_include Scripts/Other/Weapons/ShadowReaperOfDoom.cs
+//cs_include Scripts/Other/Weapons/VoidAvengerScythe.cs
+//cs_include Scripts/Other/Weapons/WrathofNulgath.cs
 //cs_include Scripts/Seasonal/Frostvale/NorthlandsMonk.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleDelve.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleDelveMerge.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiege.cs
+//cs_include Scripts/Story/7DeadlyDragons/Core7DD.cs
+//cs_include Scripts/Story/7DeadlyDragons/Extra/HatchTheEgg.cs
+//cs_include Scripts/Story/AgeofRuin/CoreAOR.cs
+//cs_include Scripts/Story/Borgars.cs
 //cs_include Scripts/Story/BattleUnder.cs
-//cs_include Scripts/Story/DragonFableOrigins.cs
+//cs_include Scripts/Story/DjinnGate.cs
+//cs_include Scripts/Story/Doomwood/CoreDoomwood.cs
+//cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
+//cs_include Scripts/Story/Friendship.cs
 //cs_include Scripts/Story/Glacera.cs
-//cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
+//cs_include Scripts/Story/DragonFableOrigins.cs
+//cs_include Scripts/Story/J6Saga.cs
+//cs_include Scripts/Story/Lair.cs
+//cs_include Scripts/Story/Legion/SevenCircles(War).cs
+//cs_include Scripts/Story/Mazumi.cs
 //cs_include Scripts/Story/Nation/CitadelRuins.cs
+//cs_include Scripts/Story/Nation/Fiendshard.cs
+//cs_include Scripts/Story/Nation/Originul.cs
+//cs_include Scripts/Story/Nation/VoidRefuge.cs
+//cs_include Scripts/Story/Nation/Bamboozle.cs
+//cs_include Scripts/Story/QueenofMonsters/CoreQoM.cs
 //cs_include Scripts/Story/QueenofMonsters/Extra/BrightOak.cs
+//cs_include Scripts/Story/QueenofMonsters/Extra/CelestialArena.cs
+//cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
+//cs_include Scripts/Story/StarSinc.cs
+//cs_include Scripts/Story/Summer2015AdventureMap/CoreSummer.cs
 //cs_include Scripts/Story/ThroneofDarkness/CoreToD.cs
 //cs_include Scripts/Story/Tutorial.cs
 //cs_include Scripts/Story/XansLair.cs
-//cs_include Scripts/Story/Lair.cs
 //cs_include Scripts/Story/Yokai.cs
 //cs_include Scripts/Tools/BankAllItems.cs
-//cs_include Scripts/Story/Friendship.cs
-//cs_include Scripts/Other/Classes/REP-based/MasterRanger.cs
-//cs_include Scripts/Evil/SDKA/CoreSDKA.cs
-//cs_include Scripts/Legion/SwordMaster.cs
-//cs_include Scripts/Legion/YamiNoRonin/CoreYnR.cs
-//cs_include Scripts/Legion/CoreLegion.cs
-//cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
-//cs_include Scripts/Other/MergeShops/SynderesMerge.cs
-//cs_include Scripts/Other/Classes/REP-based/DarkbloodStormKing.cs
-//cs_include Scripts/Nation/Various/ArchfiendDeathLord.cs
-//cs_include Scripts/Story/Nation/Originul.cs
-//cs_include Scripts/Story/Nation/Fiendshard.cs
-//cs_include Scripts/Nation/AFDL/WillpowerExtraction.cs
-//cs_include Scripts/Darkon/CoreDarkon.cs
-//cs_include Scripts/Other/Weapons/GoldenBladeOfFate.cs
-//cs_include Scripts/Other/Weapons/PinkBladeofDestruction.cs
-//cs_include Scripts/Story/Doomwood/CoreDoomwood.cs
-//cs_include Scripts/Story/QueenofMonsters/CoreQoM.cs
-//cs_include Scripts/Story/7DeadlyDragons/Core7DD.cs
-//cs_include Scripts/Other/MysteriousEgg.cs
-//cs_include Scripts/Story/Summer2015AdventureMap/CoreSummer.cs
-//cs_include Scripts/Story/Borgars.cs
-//cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
-//cs_include Scripts/Other/Classes/DragonOfTime.cs
-//cs_include Scripts/Story/AgeofRuin/CoreAOR.cs
-//cs_include Scripts/Other/MergeShops/YulgarsUndineMerge.cs
-//cs_include Scripts/Hollowborn/MergeShops/DawnFortressMerge.cs
-//cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
-//cs_include Scripts/Other/MergeShops/CelestialChampMerge.cs
-//cs_include Scripts/Story/QueenofMonsters/Extra/CelestialArena.cs
-//cs_include Scripts/Other/Classes/Daily-Classes/BlazeBinder.cs
-//cs_include Scripts/Nation/Various/Archfiend.cs
-//cs_include Scripts/Evil/NSoD/CoreNSOD.cs
-//cs_include Scripts/Other/Classes/Necromancer.cs
-//cs_include Scripts/ShadowsOfWar/CoreSoWMats.cs
-//cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
-//cs_include Scripts/Other/Armor/FireChampionsArmor.cs
-//cs_include Scripts/Chaos/EternalDrakathSet.cs
-//cs_include Scripts/Evil/SepulchuresOriginalHelm.cs
-//cs_include Scripts/Darkon/Various/PrinceDarkonsPoleaxePreReqs.cs
-//cs_include Scripts/Legion/HeadOfTheLegionBeast.cs
-//cs_include Scripts/Good/GearOfAwe/Awescended.cs
-//cs_include Scripts/Nation/AFDL/NulgathDemandsWork.cs
-//cs_include Scripts/Story/ThirdSpell.cs
-//cs_include Scripts/Story/Legion/SevenCircles(War).cs
-//cs_include Scripts/Nation/Various/PrimeFiendShard.cs
-//cs_include Scripts/Other/Armor/MalgorsArmorSet.cs
-//cs_include Scripts/Good/GearOfAwe/ArmorOfAwe.cs
-//cs_include Scripts/Story/StarSinc.cs
-//cs_include Scripts/Nation/Various/VoidPaladin.cs
-//cs_include Scripts/Good/GearOfAwe/HelmOfAwe.cs
-//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleDelveMerge.cs
-//cs_include Scripts/Story/Nation/VoidRefuge.cs
-//cs_include Scripts/Nation/MergeShops/VoidRefugeMerge.cs
-//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleDelve.cs
-//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiege.cs
-//cs_include Scripts/Nation/Various/TheLeeryContract[Member].cs
-//cs_include Scripts/Nation/Various/JuggernautItems.cs
-//cs_include Scripts/Nation/MergeShops/NulgathDiamondMerge.cs
-//cs_include Scripts/Nation/Various/DragonBlade[mem].cs
-//cs_include Scripts/Nation/Various/TarosManslayer.cs
-//cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
-//cs_include Scripts/Nation/Various/VoidSpartan.cs
-//cs_include Scripts/Nation/Various/SwirlingTheAbyss.cs
-//cs_include Scripts/Hollowborn/TradingandStuff(single).cs
-//cs_include Scripts/Nation/EmpoweringItems.cs
-//cs_include Scripts/Other/Weapons/VoidAvengerScythe.cs
-//cs_include Scripts/Nation/Various/GoldenHanzoVoid.cs
-//cs_include Scripts/Nation/MergeShops/DilligasMerge.cs
-//cs_include Scripts/Nation/MergeShops/DirtlickersMerge.cs
-//cs_include Scripts/Other/Weapons/WrathofNulgath.cs
-//cs_include Scripts/Nation/MergeShops/VoidChasmMerge.cs
-//cs_include Scripts/Story/Nation/VoidChasm.cs
-//cs_include Scripts/Nation/MergeShops/NationMerge.cs
-//cs_include Scripts/Nation/NationLoyaltyRewarded.cs
-//cs_include Scripts/Story/Legion/DarkWarLegionandNation.cs
-//cs_include Scripts/Hollowborn/CoreHollowborn.cs
-//cs_include Scripts/Other/Classes/DragonslayerGeneral.cs
-//cs_include Scripts/ShadowsOfWar/MergeShops/DeadLinesMerge.cs
-//cs_include Scripts/Other/WarFuryEmblem.cs
-//cs_include Scripts/ShadowsOfWar/MergeShops/ShadowflameFinaleMerge.cs
-//cs_include Scripts/ShadowsOfWar/MergeShops/TimekeepMerge.cs
-//cs_include Scripts/Chaos/DrakathsArmor.cs
-//cs_include Scripts/ShadowsOfWar/MergeShops/StreamwarMerge.cs
-//cs_include Scripts/ShadowsOfWar/MergeShops/WorldsCoreMerge.cs
-//cs_include Scripts/ShadowsOfWar/MergeShops/ManaCradleMerge.cs
-//cs_include Scripts/Other/ShadowDragonDefender.cs
-//cs_include Scripts/Other/Weapons/ShadowReaperOfDoom.cs
-//cs_include Scripts/Story/J6Saga.cs
-//cs_include Scripts/Evil/ADK.cs
-//cs_include Scripts/Good/SilverExaltedPaladin.cs
-//cs_include Scripts/Story/7DeadlyDragons/Extra/HatchTheEgg.cs
-//cs_include Scripts/Story/Nation/Bamboozle.cs
-//cs_include Scripts/Story/DjinnGate.cs
-//cs_include Scripts/Other/Weapons/FortitudeAndHubris.cs
-//cs_include Scripts/Other/Weapons/ExaltedApotheosisPreReqs.cs
-//cs_include Scripts/Story/Mazumi.cs
-//cs_include Scripts/Other/Classes/Dragonslayer.cs
 #endregion includes
 
 
@@ -159,6 +134,7 @@ using Skua.Core.Options;
 
 public class CoreFarmerJoe
 {
+    #region dependicies
     //other
     public static IScriptInterface Bot => IScriptInterface.Instance;
     private static FreeBoosts Boosts
@@ -428,6 +404,8 @@ public class CoreFarmerJoe
         get => _Mazumi ??= new Mazumi();
         set => _Mazumi = value;
     }
+    #endregion
+
     private static Mazumi _Mazumi;
     private const int RANK_10_CLASS_POINTS = 302500;
     public string OptionsStorage = "FarmerJoePet";
@@ -562,185 +540,46 @@ public class CoreFarmerJoe
         Core.Logger(
             "We'll occasionaly get rep/class/gold boosts throguh out the script to help speed things up a bit."
         );
+
+        if (Bot.Config!.Get<bool>("GetBoosts"))
+        {
+            // Always ensure we have 10 of each boost type
+            Farm.GetBoost("REP", 10, true);
+            Farm.GetBoost("XP", Bot.Player.Level >= 100 ? 0 : 10, true);
+            Boosts.GetBoostsSelect(10, 10, 0);
+        }
+
         foreach (int Level in Core.FromTo(0, 75))
         {
-            if (Bot.Config!.Get<bool>("GetBoosts"))
-            { // Always ensure we have 10 of each boost type
-                Farm.GetBoost("REP", 10, true);
-                Farm.GetBoost("XP", Bot.Player.Level >= 100 ? 0 : 10, true);
-                Boosts.GetBoostsSelect(Bot.Player.Gold >= 100000000 ? 0 : 10, 10, 0);
-            }
-
             // Handle special cases and leveling
             switch (Level)
             {
                 case 30:
-                    if (
-                        Bot.Player.Level >= 30
-                        && Core.CheckInventory(
-                            new[]
-                            {
-                                "Archfiend",
-                                "Blaze Binder",
-                                "Scarlet Sorceress",
-                                "Master Ranger",
-                            },
-                            any: true,
-                            toInv: false
-                        )
-                        && Core.CheckInventory(
-                            new[] { "ArchPaladin", "Dragonslayer General", "Dragonslayer" },
-                            any: true,
-                            toInv: false
-                        )
-                        && Core.CheckInventory(
-                            new[]
-                            {
-                                "Burning Blade of Abezeth",
-                                "Burning Blade",
-                                "Awethur's Accoutrements",
-                            },
-                            any: true,
-                            toInv: false
-                        )
-                    )
-                    {
-                        continue;
-                    }
-
-                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
-                    SetClass();
-                    SetClass();
-                    Core.Logger(
-                        "Level 30: Getting Master Ranger, Awethur's Accoutrements, & Dragonslayer"
-                    );
                     Farm.Experience(Level);
                     HandleLevel30();
                     break;
 
                 case 50:
-                    if (
-                        Bot.Player.Level >= 50
-                        && Core.CheckInventory(
-                            new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" },
-                            any: true,
-                            toInv: false
-                        )
-                        && Core.CheckInventory(
-                            new[] { "ArchPaladin", "Dragonslayer General" },
-                            any: true,
-                            toInv: false
-                        )
-                        && Core.CheckInventory(
-                            new[] { "Burning Blade of Abezeth", "Burning Blade" },
-                            any: true,
-                            toInv: false
-                        )
-                    )
-                    {
-                        continue;
-                    }
-                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
-                    SetClass();
-                    SetClass();
-                    Core.Logger(
-                        "Level 50: Getting Scarlet Sorceress, Dragonslayer General, & Burning Blade"
-                    );
                     Farm.Experience(Level);
                     HandleLevel50();
                     break;
 
                 case 55:
-                    if (
-                        Bot.Player.Level >= 55
-                        && Core.CheckInventory(
-                            new[]
-                            {
-                                "Archfiend",
-                                !Bot.Quests.IsDailyComplete(2209)
-                                && !Core.CheckInventory("Blaze Binder")
-                                    ? "Blaze Binder"
-                                    : "Scarlet Sorceress",
-                            },
-                            any: true,
-                            toInv: false
-                        )
-                        && Core.CheckInventory(
-                            !Bot.Quests.IsDailyComplete(3966) && !Core.CheckInventory("Cryomancer")
-                                ? "Cryomancer"
-                                : "Dragonslayer General",
-                            toInv: false
-                        )
-                        && Core.CheckInventory(
-                            new[] { "Burning Blade of Abezeth", "Burning Blade" },
-                            any: true,
-                            toInv: false
-                        )
-                    )
-                    {
-                        continue;
-                    }
-                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
-                    SetClass();
-                    SetClass();
-                    Core.Logger("Level 55: Getting Blaze Binder & Cryomancer");
                     Farm.Experience(Level);
                     HandleLevel55();
                     break;
 
                 case 60:
-                    if (
-                        Bot.Player.Level >= 60
-                        && Core.CheckInventory(
-                            new[] { "ArchPaladin", "DragonSoul Shinobi" },
-                            toInv: false
-                        )
-                    )
-                    {
-                        continue;
-                    }
-                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
-                    SetClass();
-                    SetClass();
-                    Core.Logger("Level 60: Getting DragonSoul Shinobi for DoomKittem(ArchPaladin)");
                     Farm.Experience(Level);
                     HandleLevel60();
                     break;
 
                 case 65:
-                    if (
-                        Bot.Player.Level >= 65
-                        && Core.CheckInventory(
-                            new[] { "ArchPaladin", "Glacial Berserker" },
-                            toInv: false
-                        )
-                    )
-                    {
-                        continue;
-                    }
-                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
-                    SetClass();
-                    SetClass();
-                    Core.Logger("Level 65: Getting Glacial Berserker &  ArchPaladin");
                     Farm.Experience(Level);
                     HandleLevel65();
                     break;
 
                 case 75:
-                    if (
-                        Bot.Player.Level >= 75
-                        && Core.CheckInventory(
-                            new[] { "ArchPaladin", "ArchFiend", "Archfiend DeathLord" },
-                            toInv: false
-                        )
-                    )
-                    {
-                        continue;
-                    }
-                    // Set Solo & FarmClass, and ensure class is ranked up each 5th level
-                    SetClass();
-                    SetClass();
-                    Core.Logger("Level 75: Getting ArchFiend DeathLord (for +30dmgAll), ArchFiend");
                     Farm.Experience();
                     HandleLevel75();
                     break;
@@ -756,47 +595,64 @@ public class CoreFarmerJoe
         }
     }
 
+    private bool AnyRank10(string[] names)
+    {
+        foreach (string name in names)
+        {
+            if (
+                Bot.Inventory.TryGetItem(name, out InventoryItem? item)
+                && item?.Category == ItemCategory.Class
+                && item.Quantity >= RANK_10_CLASS_POINTS
+            )
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void HandleLevel30()
     {
-        // Master Ranger or farm alternative
-        if (
-            !Core.CheckInventory(
-                new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress", "Master Ranger" },
-                any: true,
-                toInv: false
-            )
-        )
+        // --- MASTER RANGER / FARM ALTERNATIVES ---
+        string[] mrClasses = new[]
+        {
+            "Archfiend",
+            "Blaze Binder",
+            "Scarlet Sorceress",
+            "Master Ranger",
+        };
+
+        // Only run if NONE of them are rank 10 AND none are in inventory
+        if (!AnyRank10(mrClasses) && Core.CheckInventory(mrClasses, any: true, toInv: false))
         {
             if (Core.CheckInventory("Venom Head"))
                 Core.SellItem("Venom Head");
 
             Core.Logger("Level 30: Acquiring Master Ranger");
             SetClass();
-            MR.GetMR();
+            if (!mrClasses[0..3].Any(c => Core.CheckInventory(c, toInv: false)))
+                MR.GetMR();
         }
 
-        // Dragonslayer or higher tier
-        if (
-            !Core.CheckInventory(
-                new[] { "ArchPaladin", "Dragonslayer General", "Dragonslayer" },
-                any: true,
-                toInv: false
-            )
-        )
+        // --- DRAGONSLAYER / ALTERNATIVES ---
+        string[] dsClasses = new[] { "ArchPaladin", "Dragonslayer General", "Dragonslayer" };
+
+        if (!AnyRank10(dsClasses) && !Core.CheckInventory(dsClasses, any: true, toInv: false))
         {
             Core.Logger("Level 30: Acquiring Dragonslayer");
             SetClass();
             DSlayer.GetDragonslayer();
         }
 
-        // Blade of Awe progression
-        if (
-            !Core.CheckInventory(
-                new[] { "Burning Blade of Abezeth", "Burning Blade", "Awethur's Accoutrements" },
-                any: true,
-                toInv: false
-            )
-        )
+        // --- BLADE OF AWE PROGRESSION ---
+        string[] aweItems = new[]
+        {
+            "Burning Blade of Abezeth",
+            "Burning Blade",
+            "Awethur's Accoutrements",
+        };
+
+        if (!AnyRank10(aweItems) && !Core.CheckInventory(aweItems, any: true, toInv: false))
         {
             Core.Logger("Level 30: Farming Blade of Awe Rep for enhancements & sword");
             SetClass();
@@ -807,42 +663,29 @@ public class CoreFarmerJoe
 
     private void HandleLevel50()
     {
-        // Scarlet Sorceress or farm alternative
-        if (
-            !Core.CheckInventory(
-                new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" },
-                any: true,
-                toInv: false
-            )
-        )
+        // --- SCARLET SORCERESS / FARM ALTERNATIVES ---
+        string[] ssClasses = new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" };
+        if (!AnyRank10(ssClasses) && Core.CheckInventory(ssClasses, any: true, toInv: false))
         {
             Core.Logger("Level 50: Acquiring Scarlet Sorceress");
             SetClass();
-            SS.GetSSorc();
+            if (!ssClasses[0..2].Any(c => Core.CheckInventory(c, toInv: false)))
+                SS.GetSSorc();
         }
 
-        // Dragonslayer General or ArchPaladin
-        if (
-            !Core.CheckInventory(
-                new[] { "ArchPaladin", "Dragonslayer General" },
-                any: true,
-                toInv: false
-            )
-        )
+        // --- DRAGONSLAYER GENERAL / ALTERNATIVES ---
+        string[] dsgClasses = new[] { "ArchPaladin", "Dragonslayer General" };
+        if (!AnyRank10(dsgClasses) && Core.CheckInventory(dsgClasses, any: true, toInv: false))
         {
             Core.Logger("Level 50: Acquiring Dragonslayer General");
             SetClass();
-            DSG.GetDSGeneral();
+            if (!dsgClasses[0..1].Any(c => Core.CheckInventory(c, toInv: false)))
+                DSG.GetDSGeneral();
         }
 
-        // Burning Blade progression
-        if (
-            !Core.CheckInventory(
-                new[] { "Burning Blade of Abezeth", "Burning Blade" },
-                any: true,
-                toInv: false
-            )
-        )
+        // --- BURNING BLADE PROGRESSION ---
+        string[] bbItems = new[] { "Burning Blade of Abezeth", "Burning Blade" };
+        if (!AnyRank10(bbItems) && Core.CheckInventory(bbItems, any: true, toInv: false))
         {
             Core.Logger("Level 50: Acquiring Burning Blade");
             SetClass();
@@ -853,7 +696,8 @@ public class CoreFarmerJoe
     private void HandleLevel55()
     {
         // Blaze Binder
-        if (!Core.CheckInventory("Blaze Binder", toInv: false))
+        string[] blazeBinder = new[] { "Blaze Binder" };
+        if (!AnyRank10(blazeBinder) && Core.CheckInventory(blazeBinder, any: true, toInv: false))
         {
             Core.Logger("Level 55: Acquiring Blaze Binder");
             SetClass();
@@ -861,7 +705,8 @@ public class CoreFarmerJoe
         }
 
         // Cryomancer
-        if (!Core.CheckInventory("Cryomancer", toInv: false))
+        string[] cryo = new[] { "Cryomancer" };
+        if (!AnyRank10(cryo) && Core.CheckInventory(cryo, any: true, toInv: false))
         {
             Core.Logger("Level 55: Acquiring Cryomancer");
             SetClass();
@@ -871,39 +716,31 @@ public class CoreFarmerJoe
 
     private void HandleLevel60()
     {
-        // DragonSoul Shinobi or ArchPaladin
-        if (
-            !Core.CheckInventory(
-                new[] { "ArchPaladin", "DragonSoul Shinobi" },
-                any: true,
-                toInv: false
-            )
-        )
+        string[] dss = new[] { "ArchPaladin", "DragonSoul Shinobi" };
+        if (!AnyRank10(dss) && Core.CheckInventory(dss, any: true, toInv: false))
         {
             Core.Logger("Level 60: Acquiring DragonSoul Shinobi");
             SetClass();
-            DS.GetDSS();
+            if (!dss[0..1].Any(c => Core.CheckInventory(c, toInv: false)))
+                DS.GetDSS();
         }
     }
 
     private void HandleLevel65()
     {
-        // Glacial Berserker or ArchPaladin
-        if (
-            !Core.CheckInventory(
-                new[] { "ArchPaladin", "Glacial Berserker" },
-                any: true,
-                toInv: false
-            )
-        )
+        // Glacial Berserker / ArchPaladin
+        string[] gb = new[] { "ArchPaladin", "Glacial Berserker" };
+        if (!AnyRank10(gb) && Core.CheckInventory(gb, any: true, toInv: false))
         {
             Core.Logger("Level 65: Acquiring Glacial Berserker");
             SetClass();
-            GB.GetGB();
+            if (!gb[0..1].Any(c => Core.CheckInventory(c, toInv: false)))
+                GB.GetGB();
         }
 
         // ArchPaladin
-        if (!Core.CheckInventory("ArchPaladin", toInv: false))
+        string[] ap = new[] { "ArchPaladin" };
+        if (!AnyRank10(ap) && Core.CheckInventory(ap, any: true, toInv: false))
         {
             Core.Logger("Level 65: Acquiring ArchPaladin");
             SetClass();
@@ -913,10 +750,11 @@ public class CoreFarmerJoe
 
     private void HandleLevel75()
     {
-        // Archfiend DeathLord with +30 dmgAll boost
+        // Archfiend DeathLord (+30 dmgAll)
+        string[] afdl = new[] { "Archfiend DeathLord" };
         if (
-            !Adv.HasMinimalBoost(GenericGearBoost.dmgAll, 30)
-            || !Core.CheckInventory("Archfiend DeathLord", toInv: false)
+            (!AnyRank10(afdl) && Core.CheckInventory(afdl, any: true, toInv: false))
+            || !Adv.HasMinimalBoost(GenericGearBoost.dmgAll, 30)
         )
         {
             Core.Logger("Level 75: Acquiring Archfiend DeathLord for +30 dmgAll");
@@ -925,13 +763,16 @@ public class CoreFarmerJoe
         }
 
         // Archfiend
-        if (!Core.CheckInventory("Archfiend", toInv: false))
+        string[] af = new[] { "Archfiend" };
+        if (!AnyRank10(af) && Core.CheckInventory(af, any: true, toInv: false))
         {
             Core.Logger("Level 75: Acquiring Archfiend");
             SetClass();
-            AF.GetArchfiend();
+            if (!af[0..0].Any(c => Core.CheckInventory(c, toInv: false)))
+                AF.GetArchfiend();
         }
     }
+
     #endregion Leve 30-75
 
     /// <summary>
@@ -946,8 +787,9 @@ public class CoreFarmerJoe
     /// </summary>
     public void Level75to100()
     {
-        // Phase 1: Prepare healer class for 13 LoC (or rank Dragon of Time)
+        // --- Phase 1: Healer / Dragon of Time ---
         Core.Logger("Phase 1: Class Preparation - Healer/Dragon of Time for 13 LoC");
+
         if (Core.CheckInventory("Dragon of Time", toInv: false))
         {
             if (ClassDragonOfTime?.Quantity < RANK_10_CLASS_POINTS)
@@ -956,65 +798,66 @@ public class CoreFarmerJoe
                 Adv.RankUpClass("Dragon of Time");
             }
         }
-        else if (!Core.CheckInventory(new[] { "Healer", "Healer (Rare)" }, any: true))
+        else
         {
-            Core.Logger("No healing class found - acquiring Healer");
-            Adv.BuyItem("classhalla", 176, "Healer");
-            Adv.RankUpClass(Core.CheckInventory("Healer (Rare)") ? "Healer (Rare)" : "Healer");
+            string healer = Core.CheckInventory("Healer (Rare)") ? "Healer (Rare)" : "Healer";
+            if (!Core.CheckInventory(new[] { "Healer", "Healer (Rare)" }, any: true))
+            {
+                Core.Logger("No healing class found - acquiring Healer");
+                Adv.BuyItem("classhalla", 176, "Healer");
+                Adv.RankUpClass(healer);
+            }
         }
 
-        // Phase 2: Chaos quests and enhancements
+        // --- Phase 2: Chaos quests & enhancements ---
         Core.Logger("Phase 2: Chaos Shenanigans - CoA & 13 LoC");
         COA.GetCoA();
         Core.Equip("Cape of Awe");
         SetClass();
         LOC.Complete13LOC();
 
-        // Phase 3: Solo classes and weapons
+        // --- Phase 3: Solo Classes & Weapons ---
         Core.Logger("Phase 3: Solo Classes & Weapon - LoO Daily");
         LOO.GetLoO();
+
+        // Bank any LoO rewards
         Core.ToBank(Core.EnsureLoad(7156).Rewards.Select(i => i.Name).ToArray());
 
-        // Acquire additional farming classes
-        Core.Logger("Phase 3: Acquiring Additional Classes (FSR, Northlands Monk, Shaman)");
-        SC.GetSC();
-
-        if (!Core.CheckInventory("Frost Spirit Reaver", toInv: false))
+        // Additional farming classes
+        string[] additionalClasses = { "Frost Spirit Reaver", "Northlands Monk", "Shaman" };
+        Action[] getters =
         {
-            Core.Logger("Acquiring Frost Spirit Reaver");
-            SetClass();
-            FSR.GetFSR();
+            () => FSR.GetFSR(), // default rankUpClass = true
+            () => NM.GetNlMonk(),
+            () => Shaman.GetShaman(),
+        };
+
+        for (int i = 0; i < additionalClasses.Length; i++)
+        {
+            if (!Core.CheckInventory(additionalClasses[i], toInv: false))
+            {
+                Core.Logger($"Acquiring {additionalClasses[i]}");
+                SetClass();
+                getters[i].Invoke();
+            }
         }
 
-        if (!Core.CheckInventory("Northlands Monk", toInv: false))
-        {
-            Core.Logger("Acquiring Northlands Monk");
-            SetClass();
-            NM.GetNlMonk();
-        }
-
-        if (!Core.CheckInventory("Shaman", toInv: false))
-        {
-            Core.Logger("Acquiring Shaman");
-            SetClass();
-            Shaman.GetShaman();
-        }
-
-        // Unlock enhancements
-        Core.Logger("Phase 3: Unlocking Helmet Enhancements (Forge, Vim, Examen, Anima, Pneuma)");
+        // Unlock Helmet Enhancements
+        Core.Logger("Phase 3: Unlocking Helmet Enhancements");
         UnlockForgeEnhancements.ForgeHelmEnhancement();
         UnlockForgeEnhancements.Vim();
         UnlockForgeEnhancements.Examen();
         UnlockForgeEnhancements.Anima();
         UnlockForgeEnhancements.Pneuma();
 
-        Core.Logger("Phase 3: Unlocking Weapon Enhancements (Forge, Lacerate, Smite, Praxis)");
+        // Unlock Weapon Enhancements
+        Core.Logger("Phase 3: Unlocking Weapon Enhancements");
         UnlockForgeEnhancements.ForgeWeaponEnhancement();
         UnlockForgeEnhancements.Lacerate();
         UnlockForgeEnhancements.Smite();
         UnlockForgeEnhancements.Praxis();
 
-        // Phase 4: Level and acquire endgame items
+        // --- Phase 4: Leveling & Endgame ---
         Core.Logger("Phase 4: Leveling to 80");
         Farm.Experience(80);
 
@@ -1023,26 +866,29 @@ public class CoreFarmerJoe
         CAQ.DoAll();
         BBOA.GetBBoA();
 
-        Core.Logger(
-            "Phase 4: Unlocking Cape Enhancements (Forge, Absolution, Vainglory, Avarice, Penitence, Lament)"
-        );
+        // Unlock Cape Enhancements
+        Core.Logger("Phase 4: Unlocking Cape Enhancements");
         UnlockForgeEnhancements.ForgeCapeEnhancement();
         UnlockForgeEnhancements.Absolution();
         UnlockForgeEnhancements.Vainglory();
         UnlockForgeEnhancements.Avarice();
         UnlockForgeEnhancements.Lament();
 
+        // Acquire Yin & Yang Roentgenium
         Core.Logger("Phase 4: Acquiring Yin & Yang Roentgenium (YnR)");
         YNR.GetYnR();
 
+        // Acquire Dragon of Time (ensure class is set)
         Core.Logger("Phase 4: Acquiring Dragon of Time");
         SetClass();
         DoT.GetDoT();
 
+        // Final leveling to 100
         Core.Logger("Phase 4: Final Leveling to 100");
         SetClass();
         Farm.Experience();
 
+        // Acquire Hollowborn Reaper's Scythe
         Core.Logger("Phase 4: Acquiring Hollowborn Reaper's Scythe");
         SRM.BuyAllMerge("Hollowborn Reaper's Scythe");
 
@@ -1329,6 +1175,14 @@ public class CoreFarmerJoe
     #endregion Extra:
 
     #region BTS
+
+    /// <summary>
+    /// Configures the character's solo and farm classes based on available inventory items. This includes:
+    /// - **Class Selection:** Chooses appropriate classes for solo and farm activities from predefined lists
+    ///  based on availability in inventory or bank.
+    /// - **Class Ranking:** Ranks up selected classes to Rank 10 if they are not already at that level.
+    /// - **Boosting Gear:** Equips boosting gear if the configuration option is enabled, prioritizing items based on specified meta priorities.
+    /// </summary>
     public void SetClass()
     {
         // Class lists for solo and farm activities
