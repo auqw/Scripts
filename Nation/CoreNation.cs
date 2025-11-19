@@ -1292,7 +1292,7 @@ public class CoreNation
         }
         else
         {
-            if (!Core.CheckInventory(CragName))
+            if (Core.CheckInventory(CragName))
                 BambloozevsDrudgen(item, quant, KeepVoucher, AssistantDuring, ReturnItem, true);
             else
             {
@@ -2097,16 +2097,8 @@ public class CoreNation
             if (farmUni13 && !Core.CheckInventory(Uni(13)))
                 FarmUni13(3);
             Core.ResetQuest(870);
-            Core.KillMonster(
-                "tercessuinotlim",
-                "m4",
-                "Top",
-                "Shadow of Nulgath",
-                "Blade Master Rune",
-                log: false
-            );
+            Core.KillMonster("tercessuinotlim", "m4", "Top", "Shadow of Nulgath", log: false);
             Core.EnsureComplete(870, (int)rewardEnum);
-            Core.FarmingLogger(reward, quant);
         }
     }
 
