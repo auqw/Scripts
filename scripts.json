@@ -10628,8 +10628,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 45820,
-    "sha256": "64a184c86cfd36eb869eab10c9b398a0c2bbfc1effe4790ff2d5ce029ef1c07e",
+    "size": 45777,
+    "sha256": "637c7e9cea004a2ab769b4956f1ba89b7753a772770e9089f55382490a8e4996",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -13610,8 +13610,8 @@
       "class"
     ],
     "path": "Other/Classes/VerusDoomKnight.cs",
-    "size": 16618,
-    "sha256": "1d7f440acc3ee1b46dd78829173280558c8ec2bca8d08a535c257db00fb3d9df",
+    "size": 16571,
+    "sha256": "6a27fbf40e06b52b6f68e2f88e06e8775b3eb6a7e723f84d05fa2757c5502f5e",
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
@@ -18657,8 +18657,8 @@
       "trident"
     ],
     "path": "Other/MergeShops/SeaVoiceMerge.cs",
-    "size": 15893,
-    "sha256": "c12893fda0a82dffe748129db7971d5021d2516aba67559897b8477c91fcc64e",
+    "size": 15846,
+    "sha256": "ee42aa53b05de4a5d29daa061459850732785934c7067a93a9798ab2ed7e6846",
     "fileName": "SeaVoiceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SeaVoiceMerge.cs"
   },
