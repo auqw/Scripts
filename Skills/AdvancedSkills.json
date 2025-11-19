@@ -2711,12 +2711,21 @@
     }
   },
   "Dragon Shinobi": {
-    "Farm": {
-      "skillUseMode": "WaitForCooldown",
+    "Base": {
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Shadow Soul",
+              "auraTarget": "self"
+            }
+          ]
         },
         {
           "skillId": 2,
@@ -2730,6 +2739,13 @@
               "type": "Mana",
               "value": 70,
               "comparison": "greater"
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Shadow Soul",
+              "auraTarget": "self"
             }
           ]
         },
@@ -2737,9 +2753,26 @@
           "skillId": 3,
           "rules": [
             {
+              "type": "Health",
+              "value": 30,
+              "comparison": "greater"
+            },
+            {
               "type": "Mana",
               "value": 10,
               "comparison": "less"
+            }
+          ]
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Shadow Soul",
+              "auraTarget": "self"
             }
           ]
         }
@@ -2816,12 +2849,21 @@
     }
   },
   "DragonSoul Shinobi": {
-    "Farm": {
+    "Base": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Shadow Soul",
+              "auraTarget": "self"
+            }
+          ]
         },
         {
           "skillId": 2,
@@ -2835,6 +2877,13 @@
               "type": "Mana",
               "value": 70,
               "comparison": "greater"
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Shadow Soul",
+              "auraTarget": "self"
             }
           ]
         },
@@ -2852,55 +2901,16 @@
               "comparison": "less"
             }
           ]
-        }
-      ]
-    },
-    "Base": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
-      "skills": [
+        },
         {
           "skillId": 4,
           "rules": [
             {
-              "type": "Health",
-              "value": 50,
-              "comparison": "greater"
-            }
-          ]
-        },
-        {
-          "skillId": 3,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 70,
-              "comparison": "less"
-            }
-          ]
-        },
-        {
-          "skillId": 2,
-          "rules": [
-            {
-              "type": "Health",
-              "value": 50,
-              "comparison": "less"
-            },
-            {
-              "type": "Mana",
-              "value": 70,
-              "comparison": "greater"
-            }
-          ]
-        },
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Health",
-              "value": 50,
-              "comparison": "greater"
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Shadow Soul",
+              "auraTarget": "self"
             }
           ]
         }
@@ -6386,12 +6396,21 @@
     }
   },
   "Shadow Dragon Shinobi": {
-    "Farm": {
+    "Base": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Shadow Soul",
+              "auraTarget": "self"
+            }
+          ]
         },
         {
           "skillId": 2,
@@ -6405,67 +6424,40 @@
               "type": "Mana",
               "value": 70,
               "comparison": "greater"
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Shadow Soul",
+              "auraTarget": "self"
             }
           ]
         },
         {
           "skillId": 3,
           "rules": [
+            {
+              "type": "Health",
+              "value": 30,
+              "comparison": "greater"
+            },
             {
               "type": "Mana",
               "value": 10,
               "comparison": "less"
             }
           ]
-        }
-      ]
-    },
-    "Base": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
-      "skills": [
+        },
         {
           "skillId": 4,
           "rules": [
             {
-              "type": "Health",
-              "value": 50,
-              "comparison": "greater"
-            }
-          ]
-        },
-        {
-          "skillId": 3,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 70,
-              "comparison": "less"
-            }
-          ]
-        },
-        {
-          "skillId": 2,
-          "rules": [
-            {
-              "type": "Health",
-              "value": 50,
-              "comparison": "less"
-            },
-            {
-              "type": "Mana",
-              "value": 70,
-              "comparison": "greater"
-            }
-          ]
-        },
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Health",
-              "value": 50,
-              "comparison": "greater"
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Shadow Soul",
+              "auraTarget": "self"
             }
           ]
         }
