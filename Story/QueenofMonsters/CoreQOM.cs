@@ -568,7 +568,13 @@ public class CoreQOM
 
         //The PTM is Ready!
         Story.MapItemQuest(5805, "charredpath", 5256);
-        Story.KillQuest(5805, "charredpath", new[] { "Noxious Fumes", "Toxic Bile" });
+        if (!Story.QuestProgression(5805))
+        {
+            Core.EnsureAccept(5805);
+            Core.KillMonster("charredpath", "r3", "Left", "Noxious Fumes", "Noxious Fumes Eradicated", 7);
+            Core.KillMonster("charredpath", "r3", "Left", "Toxic Bile", "Toxic Bile Eradicated", 5);
+            Core.EnsureComplete(5805);
+        }
 
         //Save the Creatures
         Story.MapItemQuest(5806, "charredpath", 5250, 6);
