@@ -234,7 +234,12 @@ public class MemetsRealm
         Story.KillQuest(6659, "spookeasy", "Nightmare Shade");
 
         //One Dream, One World (6660)
-        Story.KillQuest(6660, "spookeasy", "*");
+        if (!Story.QuestProgression(6660))
+        {
+            Core.EnsureAccept(6660);
+            Core.KillMonster("spookeasy", "r6", "Left", "*", "Dream Dust", 8);
+            Core.EnsureComplete(6660);
+        }
 
         //A Nocturnal Vacation (6661)
         Story.KillQuest(6661, "spookeasy", "Nightmare Goo");
