@@ -429,7 +429,7 @@ public class CoreFarmerJoe
         set => _Mazumi = value;
     }
     private static Mazumi _Mazumi;
-
+    private const int RANK_10_CLASS_POINTS = 302500;
     public string OptionsStorage = "FarmerJoePet";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
@@ -950,7 +950,7 @@ public class CoreFarmerJoe
         Core.Logger("Phase 1: Class Preparation - Healer/Dragon of Time for 13 LoC");
         if (Core.CheckInventory("Dragon of Time", toInv: false))
         {
-            if (ClassDragonOfTime?.Quantity < 302500)
+            if (ClassDragonOfTime?.Quantity < RANK_10_CLASS_POINTS)
             {
                 Core.Logger("Dragon of Time found but not rank 10 - ranking up");
                 Adv.RankUpClass("Dragon of Time");
@@ -1275,9 +1275,9 @@ public class CoreFarmerJoe
                 any: true,
                 toInv: false
             )
-            && ClassNinja?.Quantity >= 302500
+            && ClassNinja?.Quantity >= RANK_10_CLASS_POINTS
             && Core.CheckInventory(new[] { "Mage (Rare)", "Mage" }, any: true, toInv: false)
-            && ClassMage?.Quantity >= 302500
+            && ClassMage?.Quantity >= RANK_10_CLASS_POINTS
             && Bot.Player.Level >= 30
         )
         {
@@ -1291,7 +1291,7 @@ public class CoreFarmerJoe
         Core.Logger("Getting Started: Beginner Levels/Equipment");
         if (
             !Core.CheckInventory(new[] { "Rogue (Rare)", "Rogue" }, any: true, toInv: false)
-            && ClassRogue?.Quantity < 302500
+            && ClassRogue?.Quantity < RANK_10_CLASS_POINTS
         )
         {
             Core.Logger(
@@ -1388,7 +1388,7 @@ public class CoreFarmerJoe
         var soloItem = available.FirstOrDefault(i =>
             i.Name == newSolo && i.Category == ItemCategory.Class
         );
-        if (soloItem != null && soloItem.Quantity < 302500)
+        if (soloItem != null && soloItem.Quantity < RANK_10_CLASS_POINTS)
         {
             Core.Unbank(soloItem.ID);
             Adv.RankUpClass(newSolo);
@@ -1398,7 +1398,7 @@ public class CoreFarmerJoe
         var farmItem = available.FirstOrDefault(i =>
             i.Name == newFarm && i.Category == ItemCategory.Class
         );
-        if (farmItem != null && farmItem.Quantity < 302500)
+        if (farmItem != null && farmItem.Quantity < RANK_10_CLASS_POINTS)
         {
             Core.Unbank(farmItem.ID);
             Adv.RankUpClass(newFarm);
