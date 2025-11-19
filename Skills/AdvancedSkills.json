@@ -808,26 +808,57 @@
   },
   "Blood Sorceress": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 4
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 60,
+              "comparison": "greater"
+            },
+            {
+              "type": "MultiAura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Mirrored Pact",
+              "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Arcane Pact",
+              "auraTarget": "self"
+            }
+          ],
+          "isMultiAura": true,
+          "multiAuraOperator": "OR"
         },
         {
           "skillId": 2
         },
         {
-          "skillId": 1
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 80,
+              "comparison": "greater"
+            }
+          ]
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 60,
+              "comparison": "less"
+            }
+          ]
         }
       ]
     }
@@ -6279,20 +6310,57 @@
   },
   "Scarlet Sorceress": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 60,
+              "comparison": "greater"
+            },
+            {
+              "type": "MultiAura",
+              "value": 0,
+              "comparison": "greater",
+              "auraName": "Mirrored Pact",
+              "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Arcane Pact",
+              "auraTarget": "self"
+            }
+          ],
+          "isMultiAura": true,
+          "multiAuraOperator": "OR"
         },
         {
           "skillId": 2
         },
         {
-          "skillId": 3
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 80,
+              "comparison": "greater"
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 60,
+              "comparison": "less"
+            }
+          ]
         }
       ]
     }
