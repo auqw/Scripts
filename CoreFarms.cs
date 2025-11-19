@@ -3912,7 +3912,7 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank} for Yew Mountains");
 
-        Core.RegisterQuests(10341, 10346);
+        Core.RegisterQuests(Core.IsMember ? new[] { 10345 } : new[] { 10341, 10346 });
         Core.AddDrop(
             Core.EnsureLoad(10342)
                 .Rewards.Select(r => r.Name)
@@ -3933,7 +3933,13 @@ public class CoreFarms
                     didDaily = true;
                 }
             }
-            Core.KillMonster("thelimacity", "r6", "Left", "*", log: false);
+            Core.KillMonster(
+                !Core.IsMember ? "thelimacity" : "dwarfhold",
+                !Core.IsMember ? "r6" : "New1",
+                !Core.IsMember ? "Left" : "Right",
+                !Core.IsMember ? "*" : "Gemrald",
+                log: false
+            );
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
