@@ -294,7 +294,13 @@ public class CoreDoomwood
         Story.KillQuest(1127, "temple", "Doomwood Ectomancer");
 
         //1128    Level 6
-        Story.KillQuest(1128, "temple", new[] { "Doomwood Bonemuncher", "Sanguine Souleater" });
+        if (!Story.QuestProgression(1128))
+        {
+            Core.EnsureAccept(1128);
+            Core.KillMonster("temple", "r2", "Up", "Doomwood Bonemuncher", "Masticated Mandible", 2);
+            Core.KillMonster("temple", "r7", "Up", "Sanguine Souleater", "Freed Soul", 4);
+            Core.EnsureComplete(1128);
+        }
 
         //1129    Level 7
         Story.MapItemQuest(1129, "temple", 458, 12);

@@ -568,7 +568,13 @@ public class CoreQOM
 
         //The PTM is Ready!
         Story.MapItemQuest(5805, "charredpath", 5256);
-        Story.KillQuest(5805, "charredpath", new[] { "Noxious Fumes", "Toxic Bile" });
+        if (!Story.QuestProgression(5805))
+        {
+            Core.EnsureAccept(5805);
+            Core.KillMonster("charredpath", "r3", "Left", "Noxious Fumes", "Noxious Fumes Eradicated", 7);
+            Core.KillMonster("charredpath", "r3", "Left", "Toxic Bile", "Toxic Bile Eradicated", 5);
+            Core.EnsureComplete(5805);
+        }
 
         //Save the Creatures
         Story.MapItemQuest(5806, "charredpath", 5250, 6);
@@ -627,7 +633,14 @@ public class CoreQOM
         Story.KillQuest(5830, "charredpath", "Ravenous Parasite");
 
         //Shinies!
-        Story.KillQuest(5831, "skytower", new[] { "Sunstone", "Moonstone", "Star Sapphire" });
+        if (!Story.QuestProgression(5831))
+        {
+            Core.EnsureAccept(5831);
+            Core.KillMonster("skytower", "r3", "Bottom", "Sunstone", "Sunstone", 3);
+            Core.KillMonster("skytower", "r3", "Bottom", "Moonstone", "Moonstone", 3);
+            Core.KillMonster("skytower", "r3", "Bottom", "Star Sapphire", "Star Sapphire", 3);
+            Core.EnsureComplete(5831);
+        }
 
         //Plushies
         Story.KillQuest(5832, "sewerpink", "Cutie Grumbley");
