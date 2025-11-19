@@ -2723,8 +2723,10 @@ public class CoreEngine
 
         switch (className)
         {
+            #region Ultra Classes
             // Ultra classes
             case "legion revenant":
+            case "legion revenant (ioda)":
                 LegionRevenantClass();
                 break;
             case "archpaladin":
@@ -2740,6 +2742,7 @@ public class CoreEngine
                 LordsOfOrderClass();
                 break;
             case "void highlord":
+            case "void highlord (ioda)":
                 VoidHighlordClass();
                 break;
             case "chaos avenger":
@@ -2763,7 +2766,9 @@ public class CoreEngine
             case "arcana invoker":
                 ArcanaInvokerClass();
                 break;
+            #endregion
 
+            #region Chrono Classes
             // Chrono classes
             case "chrono dragonknight":
             case "chrono dataknight":
@@ -2789,7 +2794,9 @@ public class CoreEngine
             case "chrono shadowhunter":
                 ChronoShadowSlayerClass();
                 break;
+            #endregion
 
+            #region  Common classes
             // Common classes
             case "master ranger":
                 MasterRangerClass();
@@ -2830,22 +2837,53 @@ public class CoreEngine
             case "chaos slayer thief":
                 ChaosSlayerClass();
                 break;
+            #endregion
 
+            #region Basic classes
             // Basic classes
             case "mage":
+            case "mage (rare)":
                 MageClass();
                 break;
             case "dragonslayer":
                 DragonslayerClass();
                 break;
+            #endregion
 
             default:
-                // No rotation available - just return silently
+                // use base 1-2-3-4
+                BasicClass();
                 break;
         }
     }
 
+    void BasicClass()
+    {
+        if (Cast(1))
+            return;
+        if (Cast(2))
+            return;
+        if (Cast(3))
+            return;
+        if (Cast(4))
+            return;
+    }
+
     // --- ultra classes ---------------------------------------------------------------
+
+    void KingsEcho()
+    {
+        if (IsHealthLow(90))
+            if (Cast(3))
+                return;
+        if (IsManaLow(25))
+            if (Cast(4))
+                return;
+        if (Cast(1))
+            return;
+        if (Cast(2))
+            return;
+    }
 
     void LegionRevenantClass()
     {
