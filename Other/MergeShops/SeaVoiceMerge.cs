@@ -235,6 +235,7 @@ public class SeaVoiceMerge
             "Hollowborn Vindicator",
             "Lich",
             "ArchPaladin",
+            "Unundead Goat",
         };
 
         if (!Core.CheckInventory(PossibleSoloClasses, any: true))
@@ -322,8 +323,6 @@ public class SeaVoiceMerge
         Core.Logger($"{itemUsed} [Vigil] Equiped? {Bot.Inventory?.IsEquipped("Vigil")}");
         Bot.Wait.ForMapLoad(map);
         Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
-
-        Bot.Skills.StartAdvanced(classNameToUse, true, ClassUseMode.Base);
 
         // Locate mob by MapID
         Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m?.MapID == mobMapID);
