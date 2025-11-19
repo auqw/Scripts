@@ -7776,8 +7776,8 @@
       "null"
     ],
     "path": "Story/Doomwood/CoreDoomwood.cs",
-    "size": 30950,
-    "sha256": "5b09cb7feacbbd8976e85ade226bd598fb812288f00da2cf3d8b18e429efb06f",
+    "size": 31185,
+    "sha256": "d1dbb31d0cc09dfcf185f32d940cbbe89cdaf4edf621e2e364ca21a693e98acc",
     "fileName": "CoreDoomwood.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Doomwood/CoreDoomwood.cs"
   },
@@ -10318,8 +10318,8 @@
       "null"
     ],
     "path": "Story/QueenofMonsters/CoreQOM.cs",
-    "size": 35411,
-    "sha256": "cd282bd239e40dbc9b2e0a6cf3b8da753d3a78851ec2ffd5e4027ba2bc0ac32e",
+    "size": 35982,
+    "sha256": "71a54a3f9c1d8988ed7da2699e09ca37b0b42131a062a16adf474f75b4772160",
     "fileName": "CoreQOM.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/CoreQOM.cs"
   },
