@@ -816,7 +816,7 @@
           "rules": [
             {
               "type": "Health",
-              "value": 60,
+              "value": 70,
               "comparison": "greater"
             },
             {
@@ -845,7 +845,7 @@
           "rules": [
             {
               "type": "Health",
-              "value": 80,
+              "value": 70,
               "comparison": "greater"
             }
           ]
@@ -855,7 +855,7 @@
           "rules": [
             {
               "type": "Health",
-              "value": 60,
+              "value": 70,
               "comparison": "less"
             }
           ]
@@ -4008,10 +4008,10 @@
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 2
         },
         {
-          "skillId": 2
+          "skillId": 1
         },
         {
           "skillId": 3
@@ -6318,7 +6318,7 @@
           "rules": [
             {
               "type": "Health",
-              "value": 60,
+              "value": 70,
               "comparison": "greater"
             },
             {
@@ -6347,7 +6347,7 @@
           "rules": [
             {
               "type": "Health",
-              "value": 80,
+              "value": 70,
               "comparison": "greater"
             }
           ]
@@ -6357,7 +6357,7 @@
           "rules": [
             {
               "type": "Health",
-              "value": 60,
+              "value": 70,
               "comparison": "less"
             }
           ]
