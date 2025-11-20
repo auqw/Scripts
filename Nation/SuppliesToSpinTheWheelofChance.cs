@@ -51,6 +51,13 @@ public class SuppliesToSpinTheWheelofChance
             "Instead of \"Escherion\" or bamboozle, do \"Ultra Alteon\"?",
             false
         ),
+        // add option for Voucher Item: Totem of Nulgath During
+        new Option<bool>(
+            "VoucherItemQuestDuring",
+            "Do `Voucher Item: Totem of Nulgath` During?",
+            "Do Voucher Item: Totem of Nulgath During?",
+            false
+        ),
         new Option<bool>("KeepVoucher", "Keep Voucher?", "Keep Voucher? (false = gold)", false),
     };
 
@@ -210,7 +217,8 @@ public class SuppliesToSpinTheWheelofChance
                 Bot.Config!.Get<bool>("AssistantDuring"),
                 SwindlesReturnItem ?? item.Name, // Use SwindlesReturnItem if set, otherwise use item.Name
                 Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies)
-                    && _returnSupplies
+                    && _returnSupplies,
+                Bot.Config.Get<bool>("VoucherItemQuestDuring")
             );
         }
     }

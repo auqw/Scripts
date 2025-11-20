@@ -1069,7 +1069,8 @@ public class CoreNation
         bool KeepVoucher = false,
         bool AssistantDuring = false,
         string? ReturnItem = null,
-        bool returnPolicyDuringSupplies = false
+        bool returnPolicyDuringSupplies = false,
+        bool VoucherItemDuring = false
     )
     {
         // Case 1: item specified and already in inventory
@@ -1345,9 +1346,11 @@ public class CoreNation
                     // Do Swindles Return Policy if enabled
                     DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
+                    // Do Voucher Item: Totem of Nulgath During if enabled
                     // Handle Totems/Diamonds
                     if (
-                        Core.CheckInventory("Voucher of Nulgath (non-mem)")
+                        VoucherItemDuring
+                        && Core.CheckInventory("Voucher of Nulgath (non-mem)")
                         && Core.CheckInventory("Essence of Nulgath", 60)
                     )
                     {
