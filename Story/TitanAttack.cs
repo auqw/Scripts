@@ -61,7 +61,7 @@ public class TitanAttackStory
         Story.KillQuest(8762, "titanattack", new[] { "Chaos Wyvern", "Corrosive Crawler" });
 
         // Infernal Investigation 8763
-        Story.KillQuest(8763, "titanattack", new[] { "AntiTitan Corps", "Chaorrupted Bandit" });
+        Story.KillQuest(8763, "titanattack", new[] { "Chaorrupted Bandit", "AntiTitan Corps" });
 
         // Another Brick in the Wall 8764
         if (!Story.QuestProgression(8764))
