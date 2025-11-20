@@ -638,11 +638,12 @@ public class CoreFarmerJoe
         // --- DRAGONSLAYER / ALTERNATIVES ---
         string[] dsClasses = new[] { "ArchPaladin", "Dragonslayer General", "Dragonslayer" };
 
-        if (!AnyRank10(dsClasses) && !Core.CheckInventory(dsClasses, any: true, toInv: false))
+        if (!AnyRank10(dsClasses) && Core.CheckInventory(dsClasses, any: true, toInv: false))
         {
             Core.Logger("Level 30: Acquiring Dragonslayer");
             SetClass();
-            DSlayer.GetDragonslayer();
+            if (!dsClasses[0..2].Any(c => Core.CheckInventory(c, toInv: false)))
+                DSlayer.GetDragonslayer();
         }
 
         // --- BLADE OF AWE PROGRESSION ---
