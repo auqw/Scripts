@@ -42,7 +42,7 @@ public class ExaltiaTower
         );
 
         //Unlocking the Antechamber 8146
-        Story.KillQuest(8146, "timeinn", new[] { "Fire Elemental", "Ice Elemental" });
+        Story.KillQuest(8146, "timeinn", new[] { "Ice Elemental", "Fire Elemental" });
 
         //Ezrajal 8147
         Story.KillQuest(8147, "timeinn", "Ezrajal");
