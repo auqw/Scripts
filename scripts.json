@@ -15810,8 +15810,8 @@
       "powerfist"
     ],
     "path": "Other/MergeShops/TitanAttackGearMerge.cs",
-    "size": 9778,
-    "sha256": "71a35d7a95023b2691de306571087085c2935d59e48536441e2ef0a485e4bfab",
+    "size": 10046,
+    "sha256": "f905d2209448ed8c5d635663405673f6716cb7a6805fd77861de6ecbe84b9eb9",
     "fileName": "TitanAttackGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TitanAttackGearMerge.cs"
   },
@@ -17239,8 +17239,8 @@
       "corps"
     ],
     "path": "Other/MergeShops/TitanStrikeGearMerge.cs",
-    "size": 15700,
-    "sha256": "a808d91cf368d580abce80e622cab3ae920932e509851a12916d763a1ddffc25",
+    "size": 15968,
+    "sha256": "a5561fbe6829324b04230c7f9bb75cc9e9c1eddada979e0bb4ac5c9aafb87d97",
     "fileName": "TitanStrikeGearMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TitanStrikeGearMerge.cs"
   },
