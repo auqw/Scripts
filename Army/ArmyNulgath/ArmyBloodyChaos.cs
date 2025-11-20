@@ -7,6 +7,8 @@ tags: blood gem of the archfiend, army
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
+using System.ComponentModel;
+using System.Reflection;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Options;
@@ -71,6 +73,8 @@ public class ArmyBloodyChaos
         );
 
         Core.AddDrop(Loot);
+        string mobDesc = GetDescription(mob);
+        Core.Logger("Selected mob: " + mobDesc);
 
         Bot.Quests.UpdateQuest(363);
         //Bloody Chaos
@@ -217,6 +221,13 @@ public class ArmyBloodyChaos
         Core.JumpWait();
     }
 
+    public static string GetDescription(Cell value)
+    {
+        FieldInfo? field = value.GetType().GetField(value.ToString());
+        DescriptionAttribute? attribute = field?.GetCustomAttribute<DescriptionAttribute>();
+        return attribute?.Description ?? value.ToString();
+    }
+
     private readonly string[] Loot =
     {
         "Tainted Gem",
@@ -236,7 +247,10 @@ public class ArmyBloodyChaos
 
     public enum Cell
     {
+        [Description("Hydra Head 90")]
         h90 = 0,
+
+        [Description("Hydra Head 85")]
         h85 = 1,
     }
 }
