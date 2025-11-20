@@ -1687,7 +1687,7 @@
     ],
     "path": "Story/TitanAttack.cs",
     "size": 4701,
-    "sha256": "18a0e0edcf6e1af17be48fc9042db4c864ad563f4f6cd1ecfe9e5a5bf6481bbb",
+    "sha256": "aab8239348a5d73b35714554794afb365c74eaac3b57ccd6d085537ec1528e4e",
     "fileName": "TitanAttack.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TitanAttack.cs"
   },
@@ -4566,8 +4566,8 @@
       "army"
     ],
     "path": "Army/ArmyNulgath/ArmyBloodyChaos.cs",
-    "size": 7827,
-    "sha256": "766e0517b54c50b54c625a118edcf521f8f0862cf9ade6612aa82828739e7efb",
+    "size": 8343,
+    "sha256": "b21010748fb42dd0ff35d02cab8441ec4ea03cc0d05e767349693b22e126c2d8",
     "fileName": "ArmyBloodyChaos.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyNulgath/ArmyBloodyChaos.cs"
   },
