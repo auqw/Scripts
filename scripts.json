@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 145962,
-    "sha256": "067a98463d19d0f90ff79bf0ef462e79796cecbe2d8295700eaf848734ab8ac6",
+    "size": 146006,
+    "sha256": "83d845f760ef617257d6e9ea577af51e2a68262bb185a831b46b76c2265b51f3",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -1510,8 +1510,8 @@
       "eclipse"
     ],
     "path": "Story/VictorMatsuri.cs",
-    "size": 8690,
-    "sha256": "191ca2ca71ac7e7c63dcc9fbf96ab6d8ff6705da2065de0d8f968e09f5a1c465",
+    "size": 9339,
+    "sha256": "a2f130256637d3eea5871958f6bab2287d14a14ea3794f17016d965dc61a0598",
     "fileName": "VictorMatsuri.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/VictorMatsuri.cs"
   },
@@ -4331,8 +4331,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 53183,
-    "sha256": "3a027a35ad4c9a9671c8f5fb1b6d27ab76e7ef436aa25b98dc49e4ef78305b0c",
+    "size": 53218,
+    "sha256": "c383649b7ea3952979af9c9f274c6b438433221b3ae122507e542d4b5b0bb1a7",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -13455,8 +13455,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 51551,
-    "sha256": "3df4eabb0ae0e52b8df3e69bea2b6a724f34906bda1771313c4e7f7462fabe05",
+    "size": 51635,
+    "sha256": "9ca9d10cb6deb64e8463266c8bd1a20fc92caaa563b7d89cdf570ba25c79009a",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
