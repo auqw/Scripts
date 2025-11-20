@@ -720,6 +720,7 @@ public class UnlockForgeEnhancements
 
         Core.Logger("Unlocking Enhancement: Praxis");
 
+        Core.EnsureAccept(9171);
         Farm.BlacksmithingREP(
             6,
             Bot.Config!.Get<bool>("UseGold"),
@@ -751,7 +752,7 @@ public class UnlockForgeEnhancements
 
         Adv.BuyItem("shadowfortress", 1968, 59465, shopItemID: 8079);
 
-        Core.ChainComplete(9171);
+        Core.EnsureComplete(9171);
         Core.Logger("Enhancement Unlocked: Praxis");
     }
 
