@@ -125,22 +125,40 @@ public class VictorMatsuri
         CancellationToken cancellationToken = default
     )
     {
+        // return if item already in inventory
         if (
             item != null
             && (isTemp ? Bot.TempInv.Contains(item, quant) : Core.CheckInventory(item, quant))
         )
+        {
             return;
+        }
 
-        if (
-            !Core.CheckInventory("Legion Revenant")
-            && !(Adv.uPraxis() && Adv.uPenitence() && Adv.uPneuma())
-        )
+        // if Legion Revenant class not owned, log and return
+        if (!Core.CheckInventory("Legion Revenant"))
+        {
+            Core.Logger("You need to own the Legion Revenant class to use this script.");
+            return;
+        }
+
+        // Check for praxis only first (as it's the most important and 100% required)
+        if (!Adv.uPraxis())
         {
             Core.Logger(
-                "You need to have the Legion Revenant class, Penitence, Praxis, and the Pneuma enhancements to kill Masakado with this script."
+                "You **HAVE** to have the Praxis enhancement to kill Masakado with this script."
             );
             return;
         }
+
+        // Then check for penitence and pneuma
+        if (!Adv.uPenitence() || !Adv.uPneuma())
+        {
+            Core.Logger(
+                "You need to have the Penitence cape and Pneuma helm enhancements to kill Masakado with this script."
+            );
+            return;
+        }
+
         Adv.GearStore();
         Core.Equip("Legion Revenant");
         Adv.EnhanceEquipped(
@@ -197,14 +215,18 @@ public class VictorMatsuri
                     !Bot.ShouldExit
                     && !Bot.Player.Alive
                     && !cancellationToken.IsCancellationRequested
-                ) { }
+                )
+                {
+                    Bot.Sleep(500);
+                }
 
                 if (Bot.Map.Name != map)
                     Core.Join(map, cell, pad);
                 if (Bot.Player.Cell != cell)
                     Core.Jump(cell, pad);
 
-                Bot.Combat.Attack(monster);
+                if (!counterAttackTriggered)
+                    Bot.Combat.Attack(monster);
                 Bot.Sleep(500);
 
                 // Handle counter attack outside the listener
