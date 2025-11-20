@@ -694,9 +694,11 @@ public class CoreAdvanced
                     if (Core.CheckInventory(Req.ID, ReqQuant))
                         break;
                     else
+                    {
                         Core.Logger(
                             $"Failed to meet requirements for \"{Req.Name}\" [{Req.ID}] x{ReqQuant}, Retrying the farm (items may have been used)."
                         );
+                    }
                 }
             }
             else if (
