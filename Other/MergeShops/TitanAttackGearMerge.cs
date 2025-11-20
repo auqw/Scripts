@@ -6,6 +6,8 @@ tags: titan, attack, gear, merge, titanattack, paladin, paladins, cloak, , vindi
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Story/TitanAttack.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -32,6 +34,12 @@ public class TitanAttackGearMerge
         set => _sAdv = value;
     }
     private static CoreAdvanced _sAdv;
+    private static TitanAttackStory TAS
+    {
+        get => _TAS ??= new TitanAttackStory();
+        set => _TAS = value;
+    }
+    private static TitanAttackStory _TAS;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -65,6 +73,7 @@ public class TitanAttackGearMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        TAS.DoAll();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("titanattack", 2149, findIngredients, buyOnlyThis, buyMode: buyMode);
 
