@@ -152,24 +152,15 @@ public class DrakathArmorBot
                     "Important",
                     "You do not own \"Dage's Scroll Fragment\". We'll Farm the materials, but you still need to run this again to get Dage's Scroll Fragment -- tomorrow."
                 );
+                return;
             }
         }
 
         if (
-            !Core.CheckInventory("Dage's Scroll Fragment", 13)
-            && !Core.CheckInventory("Blinding Light of Destiny")
+            Core.CheckInventory("Dage's Scroll Fragment", 13)
+            && Core.CheckInventory("Blinding Light of Destiny")
         )
-        {
-            Core.Logger(
-                "Cannot continue with \"Drakath Armor Quest\" not enough \"Dage's Scroll Fragment\" *or* missing \"Blinding Light of Destiny\""
-            );
-            Core.AbandonQuest(3882);
-            return;
-        }
-        else
-        {
             Core.EnsureComplete(3882); // Complete Quest: Get Your Original Drakath's Armor
-            Bot.Wait.ForPickup("Get Your Original Drakath's Armor");
-        }
+        Bot.Wait.ForPickup("Get Your Original Drakath's Armor");
     }
 }
