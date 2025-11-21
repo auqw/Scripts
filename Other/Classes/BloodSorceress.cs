@@ -50,8 +50,7 @@ public class BloodSorceress
         }
 
         Core.EquipClass(ClassType.Solo);
-        while (!Bot.ShouldExit && !Core.CheckInventory(36298))
-            Core.KillMonster("towerofmirrors", "r16", "Top", "*");
+        Core.KillMonster("towerofmirrors", "r16", "Top", 32, ItemID: 36298, 1, false, false, false);
         Core.JumpWait();
         Bot.Wait.ForPickup(36298);
 
