@@ -339,6 +339,7 @@ public class CoreAdvanced
             !string.IsNullOrEmpty(item.Faction)
             && item.Faction != "None"
             && item.RequiredReputation > 0
+            && Farm.FactionRank(item.Faction) < item.RequiredReputation
         )
         {
             Core.Logger(
