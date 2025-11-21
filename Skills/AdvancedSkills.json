@@ -52,6 +52,30 @@
           "skillId": 3
         }
       ]
+    },
+    "Farm": {
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Corporeal Ascenion",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        }
+      ]
     }
   },
   "Abyssal Angel": {
