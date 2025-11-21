@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 416932,
-    "sha256": "49eb4da219795aaad2bf3d07a51a87fcb7f736bb6bb636a5aa1d188fcd5e9952",
+    "size": 416938,
+    "sha256": "07771845254e4a0b869a19f74c45c827aa3488ef53bd26199765bbcf7314e7f5",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -3540,8 +3540,8 @@
       "original drakath armor"
     ],
     "path": "Chaos/DrakathsArmor.cs",
-    "size": 5372,
-    "sha256": "ffc8fbb5df04d1eaa727169775f141ca9d10e6e94ecd3cbe759c89ed67698239",
+    "size": 5087,
+    "sha256": "da01395c55e184ec07fc862d5e4c903d78c6564caa96f78a12480a558d93b30c",
     "fileName": "DrakathsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Chaos/DrakathsArmor.cs"
   },
