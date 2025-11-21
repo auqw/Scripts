@@ -7494,7 +7494,7 @@ public class CoreBots
                 && item.Coins
                 // Bank non-equipped items with EnhancementPatternID 0 (Adventurer)
                 && !item.Equipped
-                && item.Meta == string.Empty
+                && string.IsNullOrEmpty(item.Meta)
                 && (item?.EnhancementPatternID == 1 || item?.EnhancementLevel == 0)
                 && allowedCategories.Contains(item.Category)
                 && !BankingBlackList.Contains(item.Name)
