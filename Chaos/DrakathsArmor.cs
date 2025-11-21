@@ -101,7 +101,11 @@ public class DrakathArmorBot
 
     public void DrakathArmorQuest()
     {
-        if (Core.CheckInventory("Get Your Original Drakath's Armor"))
+        if (
+            Core.CheckInventory(
+                60796 /* Get Your Original Drakath's Armor */
+            )
+        )
             return;
 
         Core.AddDrop(
@@ -155,17 +159,16 @@ public class DrakathArmorBot
             !Core.CheckInventory("Dage's Scroll Fragment", 13)
             && !Core.CheckInventory("Blinding Light of Destiny")
         )
+        {
             Core.Logger(
-                "Important",
-                $"Dage's Scroll Fragment: {Core.dynamicQuant("Dage's Scroll Fragment", false)}/13\n"
-                    + $"Blinding Light of Destiny: {Core.dynamicQuant("Blinding Light of Destiny", false)}/1"
+                "Cannot continue with \"Drakath Armor Quest\" not enough \"Dage's Scroll Fragment\" *or* missing \"Blinding Light of Destiny\""
             );
+            Core.AbandonQuest(3882);
+            return;
+        }
         else
         {
             Core.EnsureComplete(3882); // Complete Quest: Get Your Original Drakath's Armor
-
-            //wait and pickup drop (if not already picked up)
-            Bot.Wait.ForDrop("Get Your Original Drakath's Armor");
             Bot.Wait.ForPickup("Get Your Original Drakath's Armor");
         }
     }
