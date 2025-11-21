@@ -7058,7 +7058,7 @@ public class CoreBots
                 "OK"
             ).Text == "OK"
         )
-            Process.Start("explorer", "https://github.com/BrenoHenrike/Skua/releases/latest");
+            Process.Start("explorer", "https://github.com/auqw/Skua/releases/tag/latest");
         Logger(
             $"This script requires Skua {targetVersion} or above. Stopping the script",
             messageBox: true,
