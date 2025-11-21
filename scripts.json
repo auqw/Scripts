@@ -3887,8 +3887,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 118780,
-    "sha256": "e0fd18863f5fc9bf47f92400c5bc0f712fc197a8e0ccb365f590a8b62c9b476c",
+    "size": 118940,
+    "sha256": "141fe7be3ac327812f7170305d394e01718a2517bea39155ff55931a3bfe4826",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -3958,8 +3958,8 @@
       "escherion"
     ],
     "path": "Nation/SuppliesToSpinTheWheelofChance.cs",
-    "size": 8888,
-    "sha256": "862831651f10409269ab83d1c9559ad1ef4e87758f80021c5025498595fa6d62",
+    "size": 9225,
+    "sha256": "d20357e427f55bf5858e630439926f82209525cbeb2888f47ee3f56a21b2595a",
     "fileName": "SuppliesToSpinTheWheelofChance.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/SuppliesToSpinTheWheelofChance.cs"
   },
