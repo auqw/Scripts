@@ -7466,6 +7466,11 @@ public class CoreBots
             ItemCategory.Item,
             ItemCategory.Resource,
             ItemCategory.QuestItem,
+            ItemCategory.Helm,
+            ItemCategory.Cape,
+            ItemCategory.Armor,
+            ItemCategory.Item,
+            ItemCategory.Pet,
         };
 
         // Include ServerUse if boosts are not active
@@ -7485,9 +7490,12 @@ public class CoreBots
         // Filter AC-tagged misc items to bank
         var toBankItems = Bot
             .Inventory.Items.Where(item =>
-                item is not null
+                item != null
                 && item.Coins
+                // Bank non-equipped items with EnhancementPatternID 0 (Adventurer)
                 && !item.Equipped
+                && item.Meta == string.Empty
+                && (item?.EnhancementPatternID == 1 || item?.EnhancementLevel == 0)
                 && allowedCategories.Contains(item.Category)
                 && !BankingBlackList.Contains(item.Name)
                 && !exemptIDs.Contains(item.ID)
