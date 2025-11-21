@@ -795,7 +795,7 @@ public class CoreEngine
             {
                 if (it is ItemBase ib)
                 {
-                    if (ib.Category == Skua.Core.Models.Items.ItemCategory.Class)
+                    if (ib.Category == ItemCategory.Class)
                         return true;
                     if (
                         !string.IsNullOrWhiteSpace(ib.CategoryString)
@@ -1527,8 +1527,8 @@ public class CoreEngine
                 if (
                     double.TryParse(
                         vStr,
-                        System.Globalization.NumberStyles.Float,
-                        System.Globalization.CultureInfo.InvariantCulture,
+                        NumberStyles.Float,
+                        CultureInfo.InvariantCulture,
                         out var v
                     )
                 )
