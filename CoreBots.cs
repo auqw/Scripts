@@ -7499,6 +7499,14 @@ public class CoreBots
                 && allowedCategories.Contains(item.Category)
                 && !BankingBlackList.Contains(item.Name)
                 && !exemptIDs.Contains(item.ID)
+                && !FarmGear.Contains(item.Name)
+                && item.Name != FarmClass
+                && !SoloGear.Contains(item.Name)
+                && item.Name != SoloClass
+                && !DodgeGear.Contains(item.Name)
+                && item.Name != DodgeClass
+                && !BossGear.Contains(item.Name)
+                && item.Name != BossClass
             )
             .ToArray();
 
