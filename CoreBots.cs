@@ -159,7 +159,7 @@ public class CoreBots
     public void SetOptions(bool changeTo = true, bool disableClassSwap = false)
     {
         EnforceInvariantCulture();
-        SkuaVersionChecker("1.3.0.0");
+        SkuaVersionChecker();
         Bot.UltraBossHelper.EnableCounterAttack();
 
         if (changeTo)
@@ -7045,7 +7045,7 @@ public class CoreBots
     /// Checks, and prompts for the latest Skua Version
     /// <param name="targetVersion">Current Skua Version to Check against</param>
     /// </summary>
-    private void SkuaVersionChecker(string targetVersion)
+    private void SkuaVersionChecker(string targetVersion = "1.3.0.1")
     {
         if (Bot.Version == null || Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
             return;
