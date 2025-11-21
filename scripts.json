@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 146006,
-    "sha256": "83d845f760ef617257d6e9ea577af51e2a68262bb185a831b46b76c2265b51f3",
+    "size": 146078,
+    "sha256": "3f22f292a837b39257590ef208a1cf9a5a9e2f00f98ed9164309dfb744de57fd",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 147098,
-    "sha256": "635169bbfec0c8aff77e16ac81bf3dc13b58891015b61deff38deabbbc5f5b7c",
+    "size": 146706,
+    "sha256": "b8b808c2a114143cb9f622833e77eddace343ca050def38637e8b00aa1d10df4",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -13823,8 +13823,8 @@
       "null"
     ],
     "path": "Other/Classes/BloodSorceress.cs",
-    "size": 1446,
-    "sha256": "f5b3537600b771f18a6a209cc4b12d8adafc015edcdf01097dc0db33239b8ebd",
+    "size": 1417,
+    "sha256": "7210c2c68f9ba87beb20a379fa630383d468b016c1ee008a67db748153efa178",
     "fileName": "BloodSorceress.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/BloodSorceress.cs"
   },
