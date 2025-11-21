@@ -777,7 +777,7 @@ public class CoreFarms
                     if (Bot.Map.Name != "icestormarena")
                         Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
                     if (Bot.Player.Cell != "r17")
-                        Core.Jump("r20", "Left");
+                        Core.Jump("r17", "Left");
 
                     Core.CanWeAggro();
                     Bot.Combat.Attack("*");
