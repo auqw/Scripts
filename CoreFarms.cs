@@ -379,7 +379,14 @@ public class CoreFarms
 
         Core.ByPassCheck();
         // Farming between levels 1-5
-        while (!Bot.ShouldExit && Bot.Player.Level < 5)
+        Bot.Log($"rankUpClass: {rankUpClass}, CurrentClassRank: {Bot.Player.CurrentClassRank}");
+        while (
+            !Bot.ShouldExit
+            && (
+                (Bot.Player.Level < 5 && rankUpClass && Bot.Player.CurrentClassRank < 10)
+                || (!rankUpClass && Bot.Player.Level < 5)
+            )
+        )
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
@@ -411,18 +418,18 @@ public class CoreFarms
 
             Core.CanWeAggro();
             Bot.Combat.Attack("*");
-            if (
-                Bot.Player.Alive
-                && rankUpClass
-                && Core.CheckClassRank(true) >= 10
-                && Bot.Player.Level >= 5
-            )
-                break;
+            Core.Sleep(200);
         }
 
         Core.ByPassCheck();
         // Farming between levels 5-10
-        while (!Bot.ShouldExit && Bot.Player.Level >= 5 && Bot.Player.Level < 10)
+        while (
+            !Bot.ShouldExit
+            && (
+                Bot.Player.Level < 10 && rankUpClass && Bot.Player.CurrentClassRank != 10
+                || !rankUpClass && Bot.Player.Level >= 5 && Bot.Player.Level < 10
+            )
+        )
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
@@ -453,20 +460,20 @@ public class CoreFarms
             }
 
             Core.CanWeAggro();
-            Core.Sleep();
+
             Bot.Combat.Attack("*");
-            if (
-                Bot.Player.Alive
-                && rankUpClass
-                && Core.CheckClassRank(true) >= 10
-                && Bot.Player.Level >= 10
-            )
-                break;
+            Core.Sleep(200);
         }
 
         Core.ByPassCheck();
         // Farming between levels 10-20
-        while (!Bot.ShouldExit && Bot.Player.Level >= 10 && Bot.Player.Level < 20)
+        while (
+            !Bot.ShouldExit
+            && (
+                Bot.Player.Level < 20 && rankUpClass && Bot.Player.CurrentClassRank != 10
+                || !rankUpClass && Bot.Player.Level >= 10 && Bot.Player.Level < 20
+            )
+        )
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
@@ -498,14 +505,7 @@ public class CoreFarms
 
             Core.CanWeAggro();
             Bot.Combat.Attack("*");
-            Core.Sleep();
-            if (
-                Bot.Player.Alive
-                && rankUpClass
-                && Core.CheckClassRank(true) >= 10
-                && Bot.Player.Level >= 20
-            )
-                break;
+            Core.Sleep(200);
         }
 
         Core.ByPassCheck();
@@ -513,7 +513,13 @@ public class CoreFarms
         if (Bot.Player.Level < 25)
         {
             Core.RegisterQuests(6628);
-            while (!Bot.ShouldExit && Bot.Player.Level >= 20 && Bot.Player.Level < 25)
+            while (
+                !Bot.ShouldExit
+                && (
+                    Bot.Player.Level < 25 && rankUpClass && Bot.Player.CurrentClassRank != 10
+                    || !rankUpClass && Bot.Player.Level >= 20 && Bot.Player.Level < 25
+                )
+            )
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                 {
@@ -545,21 +551,21 @@ public class CoreFarms
                 Core.CanWeAggro();
 
                 Bot.Combat.Attack("*");
-                Core.Sleep();
-                if (
-                    Bot.Player.Alive
-                    && rankUpClass
-                    && Core.CheckClassRank(true) >= 10
-                    && Bot.Player.Level >= 25
-                )
-                    break;
+                Core.Sleep(200);
             }
+            Bot.Quests.UnregisterQuests(6628);
             Core.AbandonQuest(6628);
         }
 
         Core.ByPassCheck();
         // Farming between levels 25-30
-        while (!Bot.ShouldExit && Bot.Player.Level >= 25 && Bot.Player.Level < 30)
+        while (
+            !Bot.ShouldExit
+            && (
+                Bot.Player.Level < 30 && rankUpClass && Bot.Player.CurrentClassRank != 10
+                || !rankUpClass && Bot.Player.Level >= 25 && Bot.Player.Level < 30
+            )
+        )
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
@@ -591,14 +597,7 @@ public class CoreFarms
 
             Core.CanWeAggro();
             Bot.Combat.Attack("*");
-            Core.Sleep();
-            if (
-                Bot.Player.Alive
-                && rankUpClass
-                && Core.CheckClassRank(true) >= 10
-                && Bot.Player.Level >= 30
-            )
-                break;
+            Core.Sleep(200);
         }
 
         Core.ByPassCheck();
@@ -608,7 +607,13 @@ public class CoreFarms
             if (!rankUpClass)
                 Core.EquipClass(ClassType.Solo);
             Core.RegisterQuests(6629);
-            while (!Bot.ShouldExit && Bot.Player.Level >= 30 && Bot.Player.Level < 35)
+            while (
+                !Bot.ShouldExit
+                && (
+                    Bot.Player.Level < 35 && rankUpClass && Bot.Player.CurrentClassRank != 10
+                    || !rankUpClass && Bot.Player.Level >= 30 && Bot.Player.Level < 35
+                )
+            )
             {
                 while (!Bot.ShouldExit && !Bot.Player.Alive)
                 {
@@ -640,16 +645,10 @@ public class CoreFarms
                 Core.CanWeAggro();
 
                 Bot.Combat.Attack("*");
-                Core.Sleep();
-                if (
-                    Bot.Player.Alive
-                    && rankUpClass
-                    && Core.CheckClassRank(true) >= 10
-                    && Bot.Player.Level >= 35
-                )
-                    break;
+                Core.Sleep(200);
             }
             Core.AbandonQuest(6629);
+            Bot.Quests.UnregisterQuests(6629);
         }
 
         if (!rankUpClass)
@@ -658,7 +657,13 @@ public class CoreFarms
         Core.ByPassCheck();
         // Farming between levels 35-50
         Core.RegisterQuests(6629);
-        while (!Bot.ShouldExit && Bot.Player.Level >= 35 && Bot.Player.Level < 50)
+        while (
+            !Bot.ShouldExit
+            && (
+                Bot.Player.Level < 50 && rankUpClass && Bot.Player.CurrentClassRank != 10
+                || !rankUpClass && Bot.Player.Level >= 35 && Bot.Player.Level < 50
+            )
+        )
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
@@ -690,21 +695,20 @@ public class CoreFarms
 
             Core.CanWeAggro();
             Bot.Combat.Attack("*");
-            Core.Sleep();
-            if (
-                Bot.Player.Alive
-                && rankUpClass
-                && Core.CheckClassRank(true) >= 10
-                && Bot.Player.Level >= 50
-            )
-                break;
+            Core.Sleep(200);
         }
         Bot.Quests.UnregisterQuests(6629);
         Core.AbandonQuest(6629);
 
         Core.ByPassCheck();
         // Farming between levels 50-61
-        while (!Bot.ShouldExit && Bot.Player.Level >= 50 && Bot.Player.Level < 61)
+        while (
+            !Bot.ShouldExit
+            && (
+                Bot.Player.Level < 61 && rankUpClass && Bot.Player.CurrentClassRank != 10
+                || !rankUpClass && Bot.Player.Level >= 50 && Bot.Player.Level < 61
+            )
+        )
         {
             while (!Bot.ShouldExit && !Bot.Player.Alive)
             {
@@ -736,14 +740,7 @@ public class CoreFarms
             }
 
             Bot.Combat.Attack("*");
-            Core.Sleep();
-            if (
-                Bot.Player.Alive
-                && rankUpClass
-                && Core.CheckClassRank(true) >= 10
-                && Bot.Player.Level >= 61
-            )
-                break;
+            Core.Sleep(200);
         }
 
         Core.ByPassCheck();
@@ -752,7 +749,13 @@ public class CoreFarms
         {
             if (rankUpClass)
             {
-                while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
+                while (
+                    !Bot.ShouldExit
+                    && (
+                        Bot.Player.Level < 75 && rankUpClass && Bot.Player.CurrentClassRank != 10
+                        || !rankUpClass && Bot.Player.Level >= 61 && Bot.Player.Level < 75
+                    )
+                )
                 {
                     while (!Bot.ShouldExit && !Bot.Player.Alive)
                     {
@@ -774,18 +777,11 @@ public class CoreFarms
                     if (Bot.Map.Name != "icestormarena")
                         Core.Join("icestormarena", publicRoom: Core.PrivateRooms);
                     if (Bot.Player.Cell != "r17")
-                        Core.Jump("r17", "Left");
+                        Core.Jump("r20", "Left");
 
                     Core.CanWeAggro();
                     Bot.Combat.Attack("*");
-                    Core.Sleep();
-                    if (
-                        Bot.Player.Alive
-                        && rankUpClass
-                        && Core.CheckClassRank(true) >= 10
-                        && Bot.Player.Level >= 75
-                    )
-                        break;
+                    Core.Sleep(200);
                 }
             }
             else
@@ -811,6 +807,7 @@ public class CoreFarms
                         Bot.Combat.Attack("*");
                     Core.Sleep();
                 }
+                Bot.Quests.UnregisterQuests(3991, 3992);
                 Core.AbandonQuest(3991, 3992);
                 ToggleBoost(BoostType.Gold, false);
             }
@@ -818,7 +815,13 @@ public class CoreFarms
 
         Core.ByPassCheck();
         // Farming between levels 75-100
-        while (!Bot.ShouldExit)
+        while (
+            !Bot.ShouldExit
+            && (
+                Bot.Player.Level < level && rankUpClass && Bot.Player.CurrentClassRank != 10
+                || !rankUpClass && Bot.Player.Level < level
+            )
+        )
         {
             // Wait if dead, then spoof levelUp
             if (!Bot.Player.Alive)
@@ -843,24 +846,9 @@ public class CoreFarms
                 Bot.Player.SetSpawnPoint();
             }
 
-            // Break conditions
-            if (!rankUpClass && Bot.Player.Level >= level)
-                break;
-
-            if (rankUpClass && Core.CheckClassRank(true) >= 10 && Bot.Player.Level >= level)
-                break;
-
             Core.CanWeAggro();
-
-            // Attack first living mob (fallback: first non-null)
-            Monster? target =
-                Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && x?.HP > 0)
-                ?? Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null);
-
-            if (target != null)
-                Bot.Combat.Attack(target.MapID);
-
-            Bot.Sleep(500);
+            Bot.Combat.Attack("*");
+            Bot.Sleep(200);
         }
         #endregion level checks
 
