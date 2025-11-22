@@ -1104,7 +1104,7 @@ public class CoreNation
             UltraAlteon == true
             || (
                 !UltraAlteon
-                && Core.CBOBool("Nation_UseUltraAlteon", out bool _ultraAlteon)
+                && Core.CBOBool("UltraAlteonForSupplies", out bool _ultraAlteon)
                 && _ultraAlteon
             );
         // Fetch Nation_ReturnPolicyDuringSupplies settings from CBO
