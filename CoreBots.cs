@@ -4064,17 +4064,6 @@ public class CoreBots
 
         Bot.Options.AggroAllMonsters = false; // ⚔️
 
-        if (
-            Bot.Map.PlayerNames != null
-            && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any()
-        )
-        {
-            Bot.Options.AggroMonsters = true; // 👹
-            Bot.Options.HidePlayers = true; // 🙈
-        }
-        else
-            Bot.Options.AggroMonsters = false; // ❌
-
         List<Monster> FindMonsters()
         {
             if (!Bot.Player.Alive)
@@ -4131,7 +4120,6 @@ public class CoreBots
                     Bot.Combat.Attack(monster); // ⚔️
 
                 Sleep(500); // 💤
-
                 // Check if player doenst havea  target after the attacking
                 // if not then its dead and we can move on
                 if (!Bot.Player!.HasTarget)
@@ -6186,6 +6174,7 @@ public class CoreBots
 
                 Sleep(500);
 
+                CanWeAggro();
                 if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
                 {
                     Bot.Wait.ForPickup(item);
@@ -6211,6 +6200,7 @@ public class CoreBots
                     Bot.Combat.Attack(name);
                 Sleep(500); // short pacing
 
+                CanWeAggro();
                 if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
                 {
                     Bot.Wait.ForPickup(item);
