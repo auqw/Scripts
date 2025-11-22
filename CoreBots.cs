@@ -7458,7 +7458,6 @@ public class CoreBots
     {
         // Items to never bank (e.g., important consumables)
         int[] exemptIDs = { 18927, 38575 }; // Treasure Potion, Dark Potion
-
         // Allowed inventory categories
         List<ItemCategory> allowedCategories = new()
         {
@@ -7469,10 +7468,8 @@ public class CoreBots
             ItemCategory.Helm,
             ItemCategory.Cape,
             ItemCategory.Armor,
-            ItemCategory.Item,
             ItemCategory.Pet,
         };
-
         // Include ServerUse if boosts are not active
         if (
             !Bot.Boosts.Enabled
@@ -7486,7 +7483,6 @@ public class CoreBots
         {
             allowedCategories.Add(ItemCategory.ServerUse);
         }
-
         // Filter AC-tagged misc items to bank
         var toBankItems = Bot
             .Inventory.Items.Where(item =>
@@ -7494,10 +7490,12 @@ public class CoreBots
                 // if item is AC tagged
                 && item.Coins
                 // Check if the item is equipped or worn (maingear override.. transmog sorta thing)
-                && (!item.Equipped || !item.Wearing)
+                && !item.Equipped
+                // Check if the item is worn (maingear override.. transmog sorta thing) - FIXED: Added null check
+                && (item.Wearing == false)
                 // If meta (boost type) is null ( doesnt exist) or empty ("")
                 && string.IsNullOrEmpty(item.Meta)
-                // If the enhacement is "Adventurer" or if the enhancement level is 0
+                // If the enhancement is "Adventurer" or if the enhancement level is 0
                 && (item?.EnhancementPatternID == 1 || item?.EnhancementLevel == 0)
                 // If allowedCategories (above) contains the item's category ( `ItemCategory .Helm` for example)
                 && allowedCategories.Contains(item.Category)
@@ -7520,12 +7518,18 @@ public class CoreBots
         if (toBankItems.Length == 0)
             return;
 
+        // Add debug logging to verify what's being banked
+        foreach (var item in toBankItems)
+        {
+            Logger(
+                $"DEBUG - Banking: {item.Name} | Equipped: {item.Equipped} | Wearing: {item.Wearing} | ID: {item.ID}"
+            );
+        }
+
         var selected =
             RequiredSpaces > 0 ? toBankItems.Take(RequiredSpaces).ToArray() : toBankItems;
-
         string names = string.Join(", ", selected.Select(item => $"\"{item.Name}\""));
         Logger($"Banking misc AC items [{selected.Length} items]: {names}");
-
         ToBank(selected.Select(item => item.ID).ToArray());
     }
 
