@@ -4433,6 +4433,18 @@
       "skillTimeout": 100,
       "skills": [
         {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Royal Resolve",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
           "skillId": 1
         },
         {
@@ -4443,18 +4455,8 @@
           "rules": [
             {
               "type": "Mana",
-              "value": 25,
-              "comparison": "less"
-            }
-          ]
-        },
-        {
-          "skillId": 3,
-          "rules": [
-            {
-              "type": "Health",
-              "value": 90,
-              "comparison": "less"
+              "value": 10,
+              "comparison": "greater"
             }
           ]
         }
