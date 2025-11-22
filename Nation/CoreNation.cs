@@ -1330,7 +1330,6 @@ public class CoreNation
                             "r10",
                             "Left",
                             "*",
-                            "Relic of Chaos",
                             isTemp: false,
                             log: false
                         );
