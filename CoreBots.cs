@@ -7519,11 +7519,14 @@ public class CoreBots
             return;
 
         // Add debug logging to verify what's being banked
-        foreach (var item in toBankItems)
+        if (DL_Enabled)
         {
-            Logger(
-                $"DEBUG - Banking: {item.Name} | Equipped: {item.Equipped} | Wearing: {item.Wearing} | ID: {item.ID}"
-            );
+            foreach (var item in toBankItems)
+            {
+                DebugLogger(
+                    $"DEBUG - Banking: {item.Name} | Equipped: {item.Equipped} | Wearing: {item.Wearing} | ID: {item.ID}"
+                );
+            }
         }
 
         var selected =
