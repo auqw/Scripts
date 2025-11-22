@@ -7491,14 +7491,21 @@ public class CoreBots
         var toBankItems = Bot
             .Inventory.Items.Where(item =>
                 item != null
+                // if item is AC tagged
                 && item.Coins
-                // Bank non-equipped items with EnhancementPatternID 0 (Adventurer)
-                && !item.Equipped
+                // Check if the item is equipped or worn (maingear override.. transmog sorta thing)
+                && (!item.Equipped || !item.Wearing)
+                // If meta (boost type) is null ( doesnt exist) or empty ("")
                 && string.IsNullOrEmpty(item.Meta)
+                // If the enhacement is "Adventurer" or if the enhancement level is 0
                 && (item?.EnhancementPatternID == 1 || item?.EnhancementLevel == 0)
+                // If allowedCategories (above) contains the item's category ( `ItemCategory .Helm` for example)
                 && allowedCategories.Contains(item.Category)
+                // If the banking blacklist (set at the top of a script before the first `setoptions()` ...sometimes) contains the item's name
                 && !BankingBlackList.Contains(item.Name)
+                // If the exemptIDs list above contains the items ItemID
                 && !exemptIDs.Contains(item.ID)
+                // If Farm/Solo/Boss/Dodge Gear ( set in `options > corebots`) contains the item
                 && !FarmGear.Contains(item.Name)
                 && item.Name != FarmClass
                 && !SoloGear.Contains(item.Name)
