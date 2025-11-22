@@ -363,7 +363,6 @@ public class CoreBots
             SetOptionsAsync();
 
             Bot.Options.HuntDelay = HuntDelay;
-
             if (BankMiscAC)
                 BankACMisc();
 
@@ -373,12 +372,26 @@ public class CoreBots
             EquipmentBeforeBot.AddRange(
                 Bot.Inventory.Items.Where(i => i.Equipped).Select(x => x.Name)
             );
-            currentClass = ClassType.None;
+
+            var currentClassName = Bot.Player.CurrentClass?.Name ?? "generic";
+
             usingSoloGeneric = SoloClass.ToLower() == "generic";
             usingFarmGeneric = FarmClass.ToLower() == "generic";
             usingDodgeGeneric = DodgeClass.ToLower() == "generic";
             usingBossGeneric = BossClass.ToLower() == "generic";
-            Bot.Skills.StartAdvanced(Bot.Player.CurrentClass?.Name ?? "generic", false);
+
+            Bot.Skills.StartAdvanced(
+                currentClassName,
+                false,
+                currentClassName.ToLower() switch
+                {
+                    var n when n == SoloClass.ToLower() => SoloUseMode,
+                    var n when n == FarmClass.ToLower() => FarmUseMode,
+                    var n when n == BossClass.ToLower() => BossUseMode,
+                    var n when n == DodgeClass.ToLower() => DodgeUseMode,
+                    _ => ClassUseMode.Base,
+                }
+            );
             Bot.Events.ScriptStopping += StopBotEvent;
 
             // Alive Check handling
@@ -7473,6 +7486,7 @@ public class CoreBots
         {
             allowedCategories.Add(ItemCategory.ServerUse);
         }
+
         // Filter AC-tagged misc items to bank
         var toBankItems = Bot
             .Inventory.Items.Where(item =>
