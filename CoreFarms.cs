@@ -818,8 +818,8 @@ public class CoreFarms
         while (
             !Bot.ShouldExit
             && (
-                Bot.Player.Level <= level && rankUpClass && Bot.Player.CurrentClassRank != 10
-                || !rankUpClass && Bot.Player.Level <= level
+                (Bot.Player.Level == 100 || Bot.Player.Level < level) && rankUpClass && Bot.Player.CurrentClassRank != 10
+                || !rankUpClass && (Bot.Player.Level == 100 || Bot.Player.Level < level) 
             )
         )
         {
