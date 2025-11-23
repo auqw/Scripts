@@ -1131,7 +1131,7 @@ public class CoreNation
         }
 
         Core.Logger(
-            $"Item: {item} "
+            $"Item: {item}\n"
                 + $"Quantity: {quant}\n"
                 + $"UltraAlteon: {UltraAlteon}\n"
                 + $"KeepVoucher: {KeepVoucher}\n"
