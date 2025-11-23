@@ -4066,7 +4066,7 @@ public class CoreBots
 
         if (Bot.Player.Cell != cell)
         {
-            Bot.Map.Jump(cell, pad); // ➡️
+            Bot.Map.Jump(cell, pad, autoCorrect: false); // ➡️
             Bot.Wait.ForCellChange(cell); // ⏳
         }
 
@@ -4084,7 +4084,7 @@ public class CoreBots
 
             while (!Bot.ShouldExit && Bot.Player.Loaded && Bot.Player.Cell != cell)
             {
-                Bot.Map.Jump(cell, pad); // ➡️
+                Bot.Map.Jump(cell, pad, autoCorrect: false); // ➡️
                 Bot.Wait.ForCellChange(cell); // ⏳
             }
 
@@ -4123,7 +4123,7 @@ public class CoreBots
 
                 if (cell != null && Bot.Player.Cell != cell)
                 {
-                    Bot.Map.Jump(cell, pad); // ➡️
+                    Bot.Map.Jump(cell, pad, autoCorrect: false); // ➡️
                     Bot.Wait.ForCellChange(cell); // ⏳
                 }
                 if (
@@ -4168,7 +4168,7 @@ public class CoreBots
                 )
             ?? "Enter";
 
-        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left"); // ➡️
+        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left", autoCorrect: false); // ➡️
         Bot.Wait.ForCellChange(targetCell); // ⏳
         Sleep(); // 💤
         JumpWait(); // 🏃‍♂️
@@ -4230,8 +4230,10 @@ public class CoreBots
 
         // Ensure the player is in the correct cell
         if (Bot.Player.Cell != cell)
-            Bot.Map.Jump(cell, pad); // ➡️
-        Bot.Wait.ForCellChange(cell); // ⏳
+        {
+            Bot.Map.Jump(cell, pad, autoCorrect: false); // ➡️
+            Bot.Wait.ForCellChange(cell); // ⏳
+        }
 
         // Set bot options for monster aggression
         Bot.Options.AggroAllMonsters = false; // ⚔️❌
@@ -4280,7 +4282,7 @@ public class CoreBots
 
                     if (cell != null && Bot.Player.Cell != cell)
                     {
-                        Bot.Map.Jump(cell, pad); // ➡️
+                        Bot.Map.Jump(cell, pad, autoCorrect: false); // ➡️
                         Bot.Wait.ForCellChange(cell); // ⏳
                     }
 
@@ -4389,8 +4391,10 @@ public class CoreBots
         if (Bot.Map.Name != map)
             Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
         if (Bot.Player.Cell != cell)
-            Bot.Map.Jump(cell, pad);
-        Bot.Wait.ForCellChange(cell); // ⏳
+        {
+            Bot.Map.Jump(cell, pad, autoCorrect: false);
+            Bot.Wait.ForCellChange(cell); // ⏳
+        }
 
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
@@ -4415,7 +4419,7 @@ public class CoreBots
 
                 if (Bot.Player.Cell != cell)
                 {
-                    Bot.Map.Jump(cell, pad);
+                    Bot.Map.Jump(cell, pad, autoCorrect: false);
                     Bot.Wait.ForCellChange(cell);
                 }
 
@@ -4439,9 +4443,15 @@ public class CoreBots
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
                 if (Bot.Map.Name != map)
+                {
                     Join(map, cell, pad, publicRoom: publicRoom);
+                    Bot.Wait.ForMapLoad(map);
+                }
                 if (Bot.Player.Cell != cell)
-                    Bot.Map.Jump(cell, pad);
+                {
+                    Bot.Map.Jump(cell, pad, autoCorrect: false);
+                    Bot.Wait.ForCellChange(cell);
+                }
 
                 if (target == null || target.MapID == 0)
                     target = Bot.Monsters.MapMonsters.FirstOrDefault(m => m?.MapID == MonsterMapID);
@@ -6179,15 +6189,16 @@ public class CoreBots
 
                 if (cell != null && Bot.Player.Cell != cell)
                 {
-                    Bot.Map.Jump(cell, "Left");
+                    Bot.Map.Jump(cell, "Left", false);
                     Bot.Wait.ForCellChange(cell);
                 }
+
+                CanWeAggro();
 
                 Bot.Combat.Attack("*");
 
                 Sleep(500);
 
-                CanWeAggro();
                 if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
                 {
                     Bot.Wait.ForPickup(item);
@@ -6206,14 +6217,16 @@ public class CoreBots
                 // Move to the correct cell
                 if (cell != null && Bot.Player.Cell != cell)
                 {
-                    Bot.Map.Jump(cell, "Left");
+                    Bot.Map.Jump(cell, "Left", false);
                     Bot.Wait.ForCellChange(cell);
                 }
-                if (!Bot.Player.HasTarget || Bot.Player.HasTarget && Bot.Player?.Target?.HP <= 0)
-                    Bot.Combat.Attack(name);
-                Sleep(500); // short pacing
 
                 CanWeAggro();
+
+                Bot.Combat.Attack(name);
+
+                Sleep(500); // short pacing
+
                 if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
                 {
                     Bot.Wait.ForPickup(item);
@@ -6709,18 +6722,24 @@ public class CoreBots
     /// </remarks>
     public void CanWeAggro()
     {
-        Bot.Options.AggroAllMonsters = false;
+        if (Bot.Options.AggroAllMonsters == true)
+            Bot.Options.AggroAllMonsters = false;
+
         // Check if there are any other players in the cell
-        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Any(x => x != Bot.Player.Username))
+        if (Bot.Map.PlayerNames != null && Bot.Map.PlayerNames!.Any(x => x != Bot.Player.Username))
         {
-            if (!Bot.Options.AggroMonsters)
+            if (Bot.Options.AggroMonsters == false)
                 Bot.Options.AggroMonsters = true;
-            Bot.Options.HidePlayers = true; // Hide players to reduce lag
+
+            if (Bot.Options.HidePlayers == false)
+                Bot.Options.HidePlayers = true; // Hide players to reduce lag
         }
         else
         {
-            Bot.Options.AggroMonsters = false;
-            Bot.Options.HidePlayers = false;
+            if (Bot.Options.AggroMonsters == true)
+                Bot.Options.AggroMonsters = false;
+            if (Bot.Options.HidePlayers == true)
+                Bot.Options.HidePlayers = false;
         }
     }
 
@@ -7960,8 +7979,10 @@ public class CoreBots
         {
             // Bot.Send.Packet($"%xt%zm%moveToCell%{Bot.Map.RoomID}%{cell}%{pad}%");
             if (!string.IsNullOrEmpty(cell) && Bot.Player.Cell != cell)
-                Bot.Map.Jump(cell, pad);
-            Bot.Wait.ForCellChange(cell ?? "Enter");
+            {
+                Bot.Map.Jump(cell, pad, autoCorrect: false);
+                Bot.Wait.ForCellChange(cell ?? "Enter");
+            }
             Sleep();
 
             if (Bot.Player.Cell == cell)
@@ -9213,8 +9234,10 @@ public class CoreBots
             while (!Bot.ShouldExit && (Bot.Player.Cell != cell || Bot.Player.Cell == cutsceneCell))
             {
                 if (!string.IsNullOrEmpty(cell) && Bot.Player.Cell != cell)
-                    Bot.Map.Jump(cell, pad);
-                Bot.Wait.ForCellChange(cell ?? "Enter");
+                {
+                    Bot.Map.Jump(cell, pad, autoCorrect: false);
+                    Bot.Wait.ForCellChange(cell ?? "Enter");
+                }
 
                 Sleep();
             }
