@@ -1283,14 +1283,17 @@ public class CoreArmyLite
             Server[] availableServers = ServerList
                 .Where(x =>
                     !BlacklistedServers.Contains(x.Name.ToLower())
-                    && (Core.IsMember || !x.Upgrade)
+                    && !x.Upgrade
                     && x.Online
+                    && x.PlayerCount < x.MaxPlayers
                 )
                 .ToArray();
 
             if (availableServers.Length > 0)
             {
-                var targetServer = availableServers.First(x => x.Name == Bot.Options.ReloginServer);
+                Server? targetServer = availableServers.First(x =>
+                    x.Name == Bot.Options.ReloginServer
+                );
 
                 Bot.Servers.Connect(targetServer);
             }
