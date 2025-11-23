@@ -6,6 +6,7 @@ tags: farm, pet, polly-rogers, celestial-pirate-commander, pirate
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
 public class CelestialPirateCommander
@@ -132,6 +133,16 @@ public class CelestialPirateCommander
                 false,
                 publicRoom: true
             );
+            //why the fuck was the class buffed!?
+            InventoryItem? usethis = Bot
+                .Inventory.Items.Concat(Bot.Bank.Items)
+                .FirstOrDefault(n => n.Name.StartsWith("Chaos Slayer"));
+
+            if (usethis != null)
+                Core.Equip(usethis.ID);
+            else
+                Core.EquipClass(ClassType.Solo);
+
             Core.HuntMonster(
                 "underlair",
                 "ArchFiend DragonLord",
@@ -140,6 +151,7 @@ public class CelestialPirateCommander
                 false,
                 publicRoom: true
             );
+            Core.EquipClass(ClassType.Solo);
 
             if (Bot.Config!.Get<bool>("PetOnly"))
             {

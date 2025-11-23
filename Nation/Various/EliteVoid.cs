@@ -9,6 +9,7 @@ tags: null
 //cs_include Scripts/Story/Nation/CitadelRuins.cs
 //cs_include Scripts/Nation/CoreNation.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 
 public class EliteVoid
 {
@@ -114,7 +115,16 @@ public class EliteVoid
             {
                 //Staying Humble 6682
                 Core.EnsureAccept(6682);
-                Core.EquipClass(ClassType.Farm);
+                //why the fuck was the class buffed!?
+                InventoryItem? usethis = Bot
+                    .Inventory.Items.Concat(Bot.Bank.Items)
+                    .FirstOrDefault(n => n.Name.StartsWith("Chaos Slayer"));
+
+                if (usethis != null)
+                    Core.Equip(usethis.ID);
+                else
+                    Core.EquipClass(ClassType.Solo);
+
                 Core.HuntMonster("underlair", "ArchFiend DragonLord", "Twisted Armor Piece", 3);
                 Core.EnsureComplete(6682);
             }

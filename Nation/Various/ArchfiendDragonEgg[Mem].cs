@@ -7,6 +7,7 @@ tags: null
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Hollowborn/CoreHollowborn.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 using Skua.Core.Models.Skills;
 
 public class ArchfiendDragonEgg
@@ -54,17 +55,19 @@ public class ArchfiendDragonEgg
             isTemp: false
         );
         HB.FreshSouls(1, 10);
-        if (Core.CheckInventory("Yami no Ronin") || Core.CheckInventory("Dragon of Time"))
-            Bot.Skills.StartAdvanced(
-                Core.CheckInventory("Yami no Ronin") ? "Yami no Ronin" : "Dragon of Time",
-                true,
-                ClassUseMode.Solo
-            );
+        //why the fuck was the class buffed!?
+        InventoryItem? usethis = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(n => n.Name.StartsWith("Chaos Slayer"));
+
+        if (usethis != null)
+            Core.Equip(usethis.ID);
         else
             Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("Underlair", "ArchFiend DragonLord", "Fiendish Brimstone", isTemp: false);
         Core.BuyItem("Ariapet", 12, "ArchFiend Dragon Egg");
         Core.EnsureComplete(7296);
         Bot.Wait.ForPickup("ArchFiend Baby Dragon Pet");
+        Core.EquipClass(ClassType.Solo);
     }
 }

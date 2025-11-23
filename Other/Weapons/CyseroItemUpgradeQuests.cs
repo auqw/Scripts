@@ -20,6 +20,7 @@ tags: null
 //cs_include Scripts/Nation/Various/PurifiedClaymoreOfDestiny.cs
 
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
 public class CyseroItemUpgrade
@@ -235,12 +236,21 @@ public class CyseroItemUpgrade
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("Lair", "Bronze Draconian", "Wisp of Dragonspirit", 12);
             Core.HuntMonster("Lair", "Dark Draconian", "Crystallized Flame");
-            Core.EquipClass(ClassType.Solo);
+            //why the fuck was the class buffed!?
+            InventoryItem? usethis = Bot
+                .Inventory.Items.Concat(Bot.Bank.Items)
+                .FirstOrDefault(n => n.Name.StartsWith("Chaos Slayer"));
+
+            if (usethis != null)
+                Core.Equip(usethis.ID);
+            else
+                Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false);
 
             Core.EnsureComplete(7065);
             Bot.Wait.ForPickup("Burning Phoenix Blade");
         }
+        Core.EquipClass(ClassType.Solo);
     }
 
     public void GetOdokuroBlight()

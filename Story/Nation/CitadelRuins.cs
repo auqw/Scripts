@@ -8,6 +8,7 @@ tags: story, quest, nation, citadel-ruins
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Nation/CoreNation.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 
 public class CitadelRuins
 {
@@ -111,6 +112,15 @@ public class CitadelRuins
 
         // Staying Humble
         Core.AddDrop("Elite Void Sword Pet");
+        //why the fuck was the class buffed!?
+        InventoryItem? usethis = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(n => n.Name.StartsWith("Chaos Slayer"));
+
+        if (usethis != null)
+            Core.Equip(usethis.ID);
+        else
+            Core.EquipClass(ClassType.Solo);
         Story.KillQuest(6682, "underlair", "ArchFiend DragonLord");
     }
 

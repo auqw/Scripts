@@ -12,6 +12,7 @@ tags: fire-champion-s-armor, fire-champions-armor, polished-dragon-slayer, flame
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/Story/Lair.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 
 public class FireChampionsArmor
 {
@@ -114,7 +115,15 @@ public class FireChampionsArmor
         if (Core.CheckInventory("Void Scale", VoidScaleQuant))
             return;
 
-        Core.EquipClass(ClassType.Solo);
+        //why the fuck was the class buffed!?
+        InventoryItem? usethis = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(n => n.Name.StartsWith("Chaos Slayer"));
+
+        if (usethis != null)
+            Core.Equip(usethis.ID);
+        else
+            Core.EquipClass(ClassType.Solo);
 
         Core.HuntMonster(
             "underlair",
