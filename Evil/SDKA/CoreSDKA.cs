@@ -336,7 +336,10 @@ public class CoreSDKA
         foreach (int q in Core.FromTo(2137, 2143))
         {
             if (Story.QuestProgression(q, Log: false))
+            {
                 DoomSquireUnlocked = true;
+                break;
+            }
             else
                 DoomSquireUnlocked = false;
         }
