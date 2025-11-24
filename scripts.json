@@ -6636,14 +6636,15 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/LegionCastle.cs"
   },
   {
-    "name": "NecroticBladeoftheUnderworld",
+    "name": "Necrotic Blade of the Underworld",
     "description": "null",
     "tags": [
-      "null"
+      "nsod",
+      "underworld"
     ],
     "path": "Legion/Various/NecroticBladeoftheUnderworld.cs",
-    "size": 6185,
-    "sha256": "2f7bb4a9aaf8291f076ca628a93f80eac8f55f054cef2f262964dd9e378a413c",
+    "size": 6200,
+    "sha256": "e93a0af549fca222335dce9f1b47115dce4ed034cbd53658c43a864441d6de36",
     "fileName": "NecroticBladeoftheUnderworld.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/NecroticBladeoftheUnderworld.cs"
   },
