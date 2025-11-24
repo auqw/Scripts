@@ -332,8 +332,17 @@ public class CoreSDKA
         if (Core.CheckInventory("DoomSquire Weapon Kit", quant))
             return;
 
+        bool DoomSquireUnlocked = false;
+        foreach (int q in Core.FromTo(2137, 2143))
+        {
+            if (Story.QuestProgression(q, Log: false))
+                DoomSquireUnlocked = true;
+            else
+                DoomSquireUnlocked = false;
+        }
+
         // Ensure DoomSquire Weapon Kit quest is unlocked
-        if (!Story.QuestProgression(2144, Log: false))
+        if (!DoomSquireUnlocked)
         {
             Core.Logger("DoomSquire Weapon Kit Quest not unlocked, unlocking via metal upgrade...");
 
