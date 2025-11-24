@@ -203,6 +203,7 @@ public class ShadowSlayerKMerge
                                 4
                             );
                             Core.GetMapItem(428, 1, "lightguard");
+                            Core.Join("lightguard");
 
                             Core.EnsureComplete(1075);
                             Bot.Wait.ForPickup("Holy Wasabi");

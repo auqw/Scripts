@@ -190,11 +190,13 @@ public class ShadowSlayerK
                 Daily.EldersBlood();
                 if (!Core.CheckInventory("Holy Wasabi"))
                 {
+                    Core.AddDrop("Holy Wasabi");
                     Core.EnsureAccept(1075);
 
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("doomwood", "Doomwood Ectomancer", "Dried Wasabi Powder", 4);
                     Core.GetMapItem(428, 1, "lightguard");
+                    Core.Join("lightguard");
 
                     Core.EnsureComplete(1075);
                     Bot.Wait.ForPickup("Holy Wasabi");

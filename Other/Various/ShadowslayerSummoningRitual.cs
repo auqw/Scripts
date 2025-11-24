@@ -180,6 +180,7 @@ public class ShadowslayerSummoningRitual
                 Core.EquipClass(ClassType.Farm);
                 Core.HuntMonster("doomwood", "Doomwood Ectomancer", "Dried Wasabi Powder", 4);
                 Core.GetMapItem(428, 1, "lightguard");
+                Core.Join("lightguard");
 
                 Core.EnsureComplete(1075);
                 Bot.Wait.ForPickup("Holy Wasabi");

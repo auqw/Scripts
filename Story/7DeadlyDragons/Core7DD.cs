@@ -431,14 +431,18 @@ public class Core7DD
         // The Final Ingredient 6113
         if (!Story.QuestProgression(6113))
         {
-            Core.AddDrop("Holy Wasabi");
-            if (!Core.CheckInventory("Holy Wasabi", 1))
+            if (!Core.CheckInventory("Holy Wasabi"))
             {
+                Core.AddDrop("Holy Wasabi");
                 Core.EnsureAccept(1075);
-                Core.HuntMonster("Doomwood", "Doomwood Ectomancer", "Dried Wasabi Powder", 4, true);
+
+                Core.EquipClass(ClassType.Farm);
+                Core.HuntMonster("doomwood", "Doomwood Ectomancer", "Dried Wasabi Powder", 4);
                 Core.GetMapItem(428, 1, "lightguard");
+                Core.Join("lightguard");
+
                 Core.EnsureComplete(1075);
-                Core.Sleep(5000);
+                Bot.Wait.ForPickup("Holy Wasabi");
             }
             Core.EnsureComplete(6113);
         }
