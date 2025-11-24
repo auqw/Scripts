@@ -1239,6 +1239,7 @@ public class CoreEngine
 
     void Attack(MonsterKey k)
     {
+        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
         if (k.MapId.HasValue)
             Bot.Combat.Attack(k.MapId.Value);
         else if (k.Id.HasValue)
@@ -1312,8 +1313,10 @@ public class CoreEngine
 
         foreach (var k in keys)
         {
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
             if (IsAlive(k))
             {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 Attack(k);
                 Bot.Sleep(D1);
                 return;

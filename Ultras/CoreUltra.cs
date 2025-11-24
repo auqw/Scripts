@@ -453,6 +453,214 @@ public class CoreUltra
         catch { }
     }
 
+    private static bool _syncInitialized = false;
+    private bool startNewRun = false;
+
+    public bool CheckArmyProgress(
+        string itemName,
+        int targetQuantity,
+        bool isTemp,
+        string syncFilePath = "army_sync.sync"
+    )
+    {
+        if (Bot?.Map == null)
+            return false;
+
+        string syncFile = ResolveSyncPath(syncFilePath);
+        string myKey =
+            $"{Bot.Player.Username}|{Bot.Player.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
+        int myQty = isTemp
+            ? (Bot?.TempInv?.GetQuantity(itemName) ?? 0)
+            : (Bot?.Inventory?.GetQuantity(itemName) ?? 0);
+
+        // --- Update my progress, now including TEMP/INV tag ---
+        UpdateEntry(syncFile, myKey, $"{myQty}:{targetQuantity}:{(isTemp ? "TEMP" : "INV")}");
+
+        // --- Read file and check all members ---
+        string[] lines = ReadLines(syncFile);
+        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        const int staleThreshold = 600; // 10 min
+
+        int activeMembers = 0;
+        int completedMembers = 0;
+
+        foreach (string line in lines)
+        {
+            string[] parts = line.Split(':');
+            if (parts.Length < 5)
+                continue;
+
+            // Parse quantities
+            if (!int.TryParse(parts[1], out int current))
+                continue;
+            if (!int.TryParse(parts[2], out int target))
+                continue;
+
+            // Parse timestamp (last part)
+            if (!long.TryParse(parts[4], out long ts))
+                continue;
+
+            if (now - ts > staleThreshold)
+                continue;
+
+            activeMembers++;
+            if (current >= target)
+                completedMembers++;
+        }
+
+        return activeMembers > 0 && completedMembers == activeMembers;
+    }
+
+    public void ClearSyncFile(string filePath)
+    {
+        try
+        {
+            // If file doesn't exist → create it empty.
+            if (!File.Exists(filePath))
+            {
+                File.WriteAllText(filePath, "");
+                Bot?.Log($"[ArmySync] Created fresh sync file: {filePath}");
+                return;
+            }
+
+            // If file exists but is already empty → do nothing.
+            FileInfo fi = new FileInfo(filePath);
+            if (fi.Length == 0)
+            {
+                Bot?.Log("[ArmySync] Sync file already empty — no action needed.");
+                return;
+            }
+
+            // Clear it.
+            File.WriteAllText(filePath, "");
+            Bot?.Log("[ArmySync] Sync file cleared.");
+        }
+        catch (Exception ex)
+        {
+            Bot?.Log($"[ArmySync] ERROR clearing sync file: {ex.Message}");
+        }
+    }
+
+    // -------------------------------------------------------
+    // Resolve a safe writable path for the sync file
+    // -------------------------------------------------------
+    public string ResolveSyncPath(string path)
+    {
+        try
+        {
+            string expanded = Environment.ExpandEnvironmentVariables(path);
+            string? dir = Path.GetDirectoryName(expanded);
+
+            if (Path.IsPathRooted(expanded) && !string.IsNullOrEmpty(dir) && Directory.Exists(dir))
+                return expanded;
+
+            string baseDir = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Skua",
+                "Options"
+            );
+
+            if (!Directory.Exists(baseDir))
+                Directory.CreateDirectory(baseDir);
+
+            string final = Path.Combine(baseDir, Path.GetFileName(path));
+
+            // Ensure file exists (retry for Windows lock)
+            for (int i = 0; i < 10; i++)
+            {
+                try
+                {
+                    if (!File.Exists(final))
+                        File.WriteAllText(final, "");
+                    return final;
+                }
+                catch (IOException)
+                {
+                    Bot?.Sleep(50);
+                }
+            }
+
+            return final;
+        }
+        catch
+        {
+            return Path.GetFullPath(path);
+        }
+    }
+
+    // -------------------------------------------------------
+    // Read all lines from a file with retry
+    // -------------------------------------------------------
+    public string[] ReadLines(string path)
+    {
+        for (int i = 0; i < 12; i++)
+        {
+            try
+            {
+                using FileStream fs = new(
+                    path,
+                    FileMode.OpenOrCreate,
+                    FileAccess.Read,
+                    FileShare.ReadWrite
+                );
+                using StreamReader sr = new(fs);
+                string raw = sr.ReadToEnd();
+                return raw.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            }
+            catch (IOException)
+            {
+                Bot?.Sleep(50);
+            }
+        }
+        return Array.Empty<string>();
+    }
+
+    // -------------------------------------------------------
+    // Insert or update a key in the sync file
+    // -------------------------------------------------------
+    public void UpdateEntry(string path, string key, string payload)
+    {
+        // Extract just the player name
+        string playerName = key.Split('|')[0];
+
+        List<string> lines = ReadLines(path).ToList();
+        string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+
+        // Preserve class in the file, but key matching should be only by playername
+        string entry = $"{key}:{payload}:{stamp}";
+
+        int idx = lines.FindIndex(l =>
+        {
+            string[] parts = l.Split(':');
+            if (parts.Length < 1)
+                return false;
+
+            // parts[0] is "Player|Class"
+            string existingName = parts[0].Split('|')[0];
+            return existingName.Equals(playerName, StringComparison.OrdinalIgnoreCase);
+        });
+
+        if (idx >= 0)
+            lines[idx] = entry;
+        else
+            lines.Add(entry);
+
+        // Write back with retry
+        string[] arr = lines.ToArray();
+        for (int i = 0; i < 20; i++)
+        {
+            try
+            {
+                File.WriteAllLines(path, arr);
+                return;
+            }
+            catch (IOException)
+            {
+                Bot?.Sleep(50);
+            }
+        }
+    }
+
     // --- next set ---------------------------------------------------------------
 
     public void GetScrollOfEnrage()
