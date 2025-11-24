@@ -2070,8 +2070,8 @@
       "shadow-slayer"
     ],
     "path": "Story/ShadowSlayerK.cs",
-    "size": 10922,
-    "sha256": "bc5b08a92e85b47eb9c7e88d72b93e5394fee8ed0cacdd68fa0d0e6b35419dd2",
+    "size": 11016,
+    "sha256": "5dbfaba8ac597d57f6500376e8429786175709e1d84d70567915f57c6c5e5b07",
     "fileName": "ShadowSlayerK.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ShadowSlayerK.cs"
   },
@@ -3557,8 +3557,8 @@
       "ascended face of chaos"
     ],
     "path": "Chaos/AscendedDrakathGear.cs",
-    "size": 2600,
-    "sha256": "711d232e0f8d450f128fcfea980760963ca05c3833861b61a290c6f096c5d50d",
+    "size": 2968,
+    "sha256": "149bc44463337bd0b8a69b276a6e2dbf4fb7874e5cf55d115f4c47039a55b7d0",
     "fileName": "AscendedDrakathGear.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Chaos/AscendedDrakathGear.cs"
   },
@@ -10442,8 +10442,8 @@
       "null"
     ],
     "path": "Story/7DeadlyDragons/Core7DD.cs",
-    "size": 15243,
-    "sha256": "d15653b15d005d5082a6f89abe170c1c568835c813ebcba53a22e98dcbfc0938",
+    "size": 15347,
+    "sha256": "e3785a60659aa13f2ddba20b88c44d3917526ca75e96374aac35113c5f960df8",
     "fileName": "Core7DD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/7DeadlyDragons/Core7DD.cs"
   },
@@ -14593,8 +14593,8 @@
       "null"
     ],
     "path": "Other/Various/ShadowslayerSummoningRitual.cs",
-    "size": 6515,
-    "sha256": "b88023c1e1e67d78ef4d1ba522f24cd52402719d2de550ace1bedd9f222f805c",
+    "size": 6556,
+    "sha256": "2a75ede795f68ed1ee49882fc1e7de9cea6996420282f0a754ec6229e0a23323",
     "fileName": "ShadowslayerSummoningRitual.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/ShadowslayerSummoningRitual.cs"
   },
@@ -16510,8 +16510,8 @@
       "null"
     ],
     "path": "Other/MergeShops/ShadowSlayerKMerge.cs",
-    "size": 13592,
-    "sha256": "d2da05f7aa02068ab178dee7c0b9ded4631cc6aa9e136dd4e00cc8d43cc7a064",
+    "size": 13645,
+    "sha256": "3334b71030a56ff1e376ade714691a484dbb98a81109786a1f4e0244b846fef4",
     "fileName": "ShadowSlayerKMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ShadowSlayerKMerge.cs"
   },
