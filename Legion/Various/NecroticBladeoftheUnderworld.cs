@@ -1,7 +1,7 @@
 /*
-name: NecroticBladeoftheUnderworld
+name: Necrotic Blade of the Underworld
 description: null
-tags: null
+tags: nsod,underworld
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
