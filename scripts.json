@@ -6639,12 +6639,17 @@
     "name": "Necrotic Blade of the Underworld",
     "description": "null",
     "tags": [
-      "nsod",
-      "underworld"
+      "necrotic blade of the underworld",
+      "necrotic",
+      "blade",
+      "of",
+      "the",
+      "underworld",
+      "nsod"
     ],
     "path": "Legion/Various/NecroticBladeoftheUnderworld.cs",
-    "size": 6200,
-    "sha256": "e93a0af549fca222335dce9f1b47115dce4ed034cbd53658c43a864441d6de36",
+    "size": 6260,
+    "sha256": "d83b4ba24b54dd597f1abf36e389e220379dcf0f2e5773104af190d872e4e492",
     "fileName": "NecroticBladeoftheUnderworld.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Various/NecroticBladeoftheUnderworld.cs"
   },
