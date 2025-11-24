@@ -80,13 +80,18 @@ public class AscendedDrakathGear
             return;
 
         DA.DrakathOriginalArmor();
+        if (!Core.CheckInventory("Original Drakath Armor"))
+        {
+            Core.Logger(
+                "Missing \"Original Drakath Armor\", which is required to accept and turnin this quest. returning to previous script/stopping script.\n"
+                    + $"Probably Missing \"Dage's Scroll fragments\" [{Core.dynamicQuant("Dage's Scroll Fragment", false) / 13}], try again tomarrow when the dailys available."
+            );
+            return;
+        }
+
         Core.AddDrop(Target);
         Core.RegisterQuests(3767);
-        while (!Bot.ShouldExit && !Core.CheckInventory(Target))
-        {
-            Core.HuntMonster("towerofdoom4", "Dread Stranglerfish", "Holy Wasabi");
-            Bot.Wait.ForPickup(Target);
-        }
+        Core.HuntMonster("towerofdoom4", "Dread Stranglerfish", Target, isTemp: false, log: false);
         Core.CancelRegisteredQuests();
     }
 }
