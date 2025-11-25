@@ -519,6 +519,8 @@ public class CoreFarmerJoe
         );
     }
 
+    bool HasEnhancedThisBracket = false;
+
     #region Leve30 to 75
     /// <summary>
     /// Progresses the character from level 30 to 75 by acquiring essential items and enhancing classes. This includes:
@@ -550,49 +552,42 @@ public class CoreFarmerJoe
             Boosts.GetBoostsSelect(10, 10, 0);
         }
 
-        foreach (int Level in Core.FromTo(0, 75))
+        var levelHandlers = new Dictionary<int, Action>
         {
-            // Handle special cases and leveling
-            switch (Level)
+            { 30, HandleLevel30 },
+            { 50, HandleLevel50 },
+            { 55, HandleLevel55 },
+            { 60, HandleLevel60 },
+            { 65, HandleLevel65 },
+            { 75, HandleLevel75 },
+        };
+
+        foreach (int level in new[] { 30, 50, 55, 60, 65, 75 })
+        {
+            if (Bot.Player.Level > 75)
+                HasEnhancedThisBracket = true;
+
+            // Smart enhance at start of each bracket
+            if (
+                !HasEnhancedThisBracket
+                || Bot.Inventory.Items.Any(x => x != null && x.EnhancementLevel < Bot.Player.Level)
+            )
             {
-                case 30:
-                    Farm.Experience(Level);
-                    HandleLevel30();
-                    break;
-
-                case 50:
-                    Farm.Experience(Level);
-                    HandleLevel50();
-                    break;
-
-                case 55:
-                    Farm.Experience(Level);
-                    HandleLevel55();
-                    break;
-
-                case 60:
-                    Farm.Experience(Level);
-                    HandleLevel60();
-                    break;
-
-                case 65:
-                    Farm.Experience(Level);
-                    HandleLevel65();
-                    break;
-
-                case 75:
-                    Farm.Experience();
-                    HandleLevel75();
-                    break;
-
-                default:
-                    if (Bot.Player.Level >= 75)
-                    {
-                        continue;
-                    }
-                    Farm.Experience(Level);
-                    break;
+                Adv.SmartEnhance(Bot.Player.CurrentClass?.Name ?? string.Empty);
+                HasEnhancedThisBracket = true;
             }
+
+            // Level up to target
+            Farm.Experience(level);
+
+            // Execute level-specific handler if it exists
+            if (levelHandlers.TryGetValue(level, out Action? handler))
+            {
+                Bot.Log($"Level Handler: {level} bracket");
+                handler();
+            }
+            // Reset enhancement flag for next bracket
+            HasEnhancedThisBracket = false;
         }
     }
 
@@ -614,36 +609,27 @@ public class CoreFarmerJoe
 
     private void HandleLevel30()
     {
-        // --- MASTER RANGER / FARM ALTERNATIVES ---
-        string[] mrClasses = new[]
-        {
-            "Archfiend",
-            "Blaze Binder",
-            "Scarlet Sorceress",
-            "Master Ranger",
-        };
-
-        // Only run if NONE of them are rank 10 AND none are in inventory
-        if (!AnyRank10(mrClasses) && Core.CheckInventory(mrClasses, any: true, toInv: false))
+        if (
+            !Core.CheckInventory("Master Ranger", toInv: false)
+            || !AnyRank10(new[] { "Master Ranger" })
+        )
         {
             if (Core.CheckInventory("Venom Head"))
                 Core.SellItem("Venom Head");
 
             Core.Logger("Level 30: Acquiring Master Ranger");
             SetClass();
-            if (!mrClasses[0..3].Any(c => Core.CheckInventory(c, toInv: false)))
-                MR.GetMR();
+            MR.GetMR();
         }
 
-        // --- DRAGONSLAYER / ALTERNATIVES ---
-        string[] dsClasses = new[] { "ArchPaladin", "Dragonslayer General", "Dragonslayer" };
-
-        if (!AnyRank10(dsClasses) && Core.CheckInventory(dsClasses, any: true, toInv: false))
+        if (
+            !Core.CheckInventory("Dragonslayer", toInv: false)
+            || !AnyRank10(new[] { "Dragonslayer" })
+        )
         {
             Core.Logger("Level 30: Acquiring Dragonslayer");
             SetClass();
-            if (!dsClasses[0..2].Any(c => Core.CheckInventory(c, toInv: false)))
-                DSlayer.GetDragonslayer();
+            DSlayer.GetDragonslayer();
         }
 
         // --- BLADE OF AWE PROGRESSION ---
@@ -654,52 +640,47 @@ public class CoreFarmerJoe
             "Awethur's Accoutrements",
         };
 
-        if (!AnyRank10(aweItems) && !Core.CheckInventory(aweItems, any: true, toInv: false))
-        {
-            Core.Logger("Level 30: Farming Blade of Awe Rep for enhancements & sword");
-            SetClass();
-            Farm.BladeofAweREP();
-            Adv.BuyItem("museum", 631, "Awethur's Accoutrements");
-        }
+        Core.Logger("Level 30: Farming Blade of Awe Rep for enhancements & sword");
+        SetClass();
+        Farm.BladeofAweREP();
+        Adv.BuyItem("museum", 631, "Awethur's Accoutrements");
     }
 
     private void HandleLevel50()
     {
         // --- SCARLET SORCERESS / FARM ALTERNATIVES ---
-        string[] ssClasses = new[] { "Archfiend", "Blaze Binder", "Scarlet Sorceress" };
-        if (!AnyRank10(ssClasses) && Core.CheckInventory(ssClasses, any: true, toInv: false))
+        if (
+            !Core.CheckInventory("Scarlet Sorceress", toInv: false)
+            || !AnyRank10(new[] { "Scarlet Sorceress" })
+        )
         {
             Core.Logger("Level 50: Acquiring Scarlet Sorceress");
             SetClass();
-            if (!ssClasses[0..2].Any(c => Core.CheckInventory(c, toInv: false)))
-                SS.GetSSorc();
+            SS.GetSSorc();
         }
 
-        // --- DRAGONSLAYER GENERAL / ALTERNATIVES ---
-        string[] dsgClasses = new[] { "ArchPaladin", "Dragonslayer General" };
-        if (!AnyRank10(dsgClasses) && Core.CheckInventory(dsgClasses, any: true, toInv: false))
+        if (
+            !Core.CheckInventory("Dragonslayer General", toInv: false)
+            || !AnyRank10(new[] { "Dragonslayer General" })
+        )
         {
             Core.Logger("Level 50: Acquiring Dragonslayer General");
             SetClass();
-            if (!dsgClasses[0..1].Any(c => Core.CheckInventory(c, toInv: false)))
-                DSG.GetDSGeneral();
+            DSG.GetDSGeneral();
         }
 
-        // --- BURNING BLADE PROGRESSION ---
-        string[] bbItems = new[] { "Burning Blade of Abezeth", "Burning Blade" };
-        if (!AnyRank10(bbItems) && Core.CheckInventory(bbItems, any: true, toInv: false))
-        {
-            Core.Logger("Level 50: Acquiring Burning Blade");
-            SetClass();
-            BB.GetBurningBlade();
-        }
+        Core.Logger("Level 50: Acquiring Burning Blade");
+        SetClass();
+        BB.GetBurningBlade();
     }
 
     private void HandleLevel55()
     {
         // Blaze Binder
-        string[] blazeBinder = new[] { "Blaze Binder" };
-        if (!AnyRank10(blazeBinder) && Core.CheckInventory(blazeBinder, any: true, toInv: false))
+        if (
+            !Core.CheckInventory("Blaze Binder", toInv: false)
+            || !AnyRank10(new[] { "Blaze Binder" })
+        )
         {
             Core.Logger("Level 55: Acquiring Blaze Binder");
             SetClass();
@@ -707,8 +688,7 @@ public class CoreFarmerJoe
         }
 
         // Cryomancer
-        string[] cryo = new[] { "Cryomancer" };
-        if (!AnyRank10(cryo) && Core.CheckInventory(cryo, any: true, toInv: false))
+        if (!Core.CheckInventory("Cryomancer", toInv: false) || !AnyRank10(new[] { "Cryomancer" }))
         {
             Core.Logger("Level 55: Acquiring Cryomancer");
             SetClass();
@@ -719,30 +699,33 @@ public class CoreFarmerJoe
     private void HandleLevel60()
     {
         string[] dss = new[] { "ArchPaladin", "DragonSoul Shinobi" };
-        if (!AnyRank10(dss) && Core.CheckInventory(dss, any: true, toInv: false))
+        if (
+            !Core.CheckInventory("DragonSoul Shinobi", toInv: false)
+            || !AnyRank10(new[] { "DragonSoul Shinobi" })
+        )
         {
             Core.Logger("Level 60: Acquiring DragonSoul Shinobi");
             SetClass();
-            if (!dss[0..1].Any(c => Core.CheckInventory(c, toInv: false)))
-                DS.GetDSS();
+            DS.GetDSS();
         }
     }
 
     private void HandleLevel65()
     {
-        // Glacial Berserker / ArchPaladin
-        string[] gb = new[] { "ArchPaladin", "Glacial Berserker" };
-        if (!AnyRank10(gb) && Core.CheckInventory(gb, any: true, toInv: false))
+        if (
+            !Core.CheckInventory("Glacial Berserker", toInv: false)
+            || !AnyRank10(new[] { "Glacial Berserker" })
+        )
         {
             Core.Logger("Level 65: Acquiring Glacial Berserker");
             SetClass();
-            if (!gb[0..1].Any(c => Core.CheckInventory(c, toInv: false)))
-                GB.GetGB();
+            GB.GetGB();
         }
 
         // ArchPaladin
-        string[] ap = new[] { "ArchPaladin" };
-        if (!AnyRank10(ap) && Core.CheckInventory(ap, any: true, toInv: false))
+        if (
+            !Core.CheckInventory("ArchPaladin", toInv: false) || !AnyRank10(new[] { "ArchPaladin" })
+        )
         {
             Core.Logger("Level 65: Acquiring ArchPaladin");
             SetClass();
@@ -753,10 +736,11 @@ public class CoreFarmerJoe
     private void HandleLevel75()
     {
         // Archfiend DeathLord (+30 dmgAll)
-        string[] afdl = new[] { "Archfiend DeathLord" };
         if (
-            (!AnyRank10(afdl) && Core.CheckInventory(afdl, any: true, toInv: false))
-            || !Adv.HasMinimalBoost(GenericGearBoost.dmgAll, 30)
+            (
+                !Core.CheckInventory("Archfiend DeathLord", toInv: false)
+                || !AnyRank10(new[] { "Archfiend DeathLord" })
+            ) || !Adv.HasMinimalBoost(GenericGearBoost.dmgAll, 30)
         )
         {
             Core.Logger("Level 75: Acquiring Archfiend DeathLord for +30 dmgAll");
@@ -766,12 +750,11 @@ public class CoreFarmerJoe
 
         // Archfiend
         string[] af = new[] { "Archfiend" };
-        if (!AnyRank10(af) && Core.CheckInventory(af, any: true, toInv: false))
+        if (!Core.CheckInventory("Archfiend", toInv: false) || !AnyRank10(new[] { "Archfiend" }))
         {
             Core.Logger("Level 75: Acquiring Archfiend");
             SetClass();
-            if (!af[0..0].Any(c => Core.CheckInventory(c, toInv: false)))
-                AF.GetArchfiend();
+            AF.GetArchfiend();
         }
     }
 
@@ -805,7 +788,9 @@ public class CoreFarmerJoe
             string healer = Core.CheckInventory("Healer (Rare)") ? "Healer (Rare)" : "Healer";
             if (!Core.CheckInventory(new[] { "Healer", "Healer (Rare)" }, any: true))
             {
-                Core.Logger("No healing class found - acquiring Healer");
+                Core.Logger(
+                    "No healing class found - acquiring Healer todo xang later during 13LoC"
+                );
                 Adv.BuyItem("classhalla", 176, "Healer");
                 Adv.RankUpClass(healer);
             }
@@ -836,7 +821,10 @@ public class CoreFarmerJoe
 
         for (int i = 0; i < additionalClasses.Length; i++)
         {
-            if (!Core.CheckInventory(additionalClasses[i], toInv: false))
+            if (
+                !Core.CheckInventory(additionalClasses[i], toInv: false)
+                || !AnyRank10(new[] { additionalClasses[i] })
+            )
             {
                 Core.Logger($"Acquiring {additionalClasses[i]}");
                 SetClass();
