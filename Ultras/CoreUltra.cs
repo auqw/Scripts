@@ -453,8 +453,8 @@ public class CoreUltra
         catch { }
     }
 
-    private static bool _syncInitialized = false;
-    private bool startNewRun = false;
+    // private static bool _syncInitialized = false;
+    // private bool startNewRun = false;
 
     public bool CheckArmyProgress(
         string itemName,

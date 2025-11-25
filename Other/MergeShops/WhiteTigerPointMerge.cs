@@ -22,12 +22,12 @@ public class WhiteTigerPointMerge
         set => _Farm = value;
     }
     private static CoreFarms _Farm;
-    private static whitetigerpoint whitetigerpoint
+    private static Whitetigerpoint whitetigerpoint
     {
-        get => _whitetigerpoint ??= new whitetigerpoint();
+        get => _whitetigerpoint ??= new Whitetigerpoint();
         set => _whitetigerpoint = value;
     }
-    private static whitetigerpoint _whitetigerpoint;
+    private static Whitetigerpoint _whitetigerpoint;
     private static CoreAdvanced Adv
     {
         get => _Adv ??= new CoreAdvanced();

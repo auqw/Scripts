@@ -1174,12 +1174,12 @@ public class AllStories
         set => _WatchTower = value;
     }
     private static WatchTower _WatchTower;
-    private static whitetigerpoint WhiteTigerPoint
+    private static Whitetigerpoint WhiteTigerPoint
     {
-        get => _WhiteTigerPoint ??= new whitetigerpoint();
+        get => _WhiteTigerPoint ??= new Whitetigerpoint();
         set => _WhiteTigerPoint = value;
     }
-    private static whitetigerpoint _WhiteTigerPoint;
+    private static Whitetigerpoint _WhiteTigerPoint;
     private static WillowCreek WillowCreek
     {
         get => _WillowCreek ??= new WillowCreek();

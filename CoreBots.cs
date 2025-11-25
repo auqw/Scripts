@@ -11099,7 +11099,7 @@ public class CoreBots
                                     {
                                         // Ensure proper cleanup
                                         progressForm.Invoke(
-                                            (MethodInvoker)(
+                                            (System.Windows.Forms.MethodInvoker)(
                                                 () =>
                                                 {
                                                     progressForm.Close();
