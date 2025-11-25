@@ -9,7 +9,7 @@ tags: crulonwed, weekly, story
 //cs_include Scripts/CoreFarms.cs
 using Skua.Core.Interfaces;
 
-public class crulonwedding
+public class Crulonwedding
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;

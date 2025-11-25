@@ -8,7 +8,7 @@ tags: whitetigerpoint, storyline, story, white tiger point, white tiger point st
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 
-public class whitetigerpoint
+public class Whitetigerpoint
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;

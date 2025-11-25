@@ -28,12 +28,12 @@ public class CrulonsWeddingMerge
         set => _Adv = value;
     }
     private static CoreAdvanced _Adv;
-    private static crulonwedding crulonwedding
+    private static Crulonwedding crulonwedding
     {
-        get => _crulonwedding ??= new crulonwedding();
+        get => _crulonwedding ??= new Crulonwedding();
         set => _crulonwedding = value;
     }
-    private static crulonwedding _crulonwedding;
+    private static Crulonwedding _crulonwedding;
     private static CoreAdvanced sAdv
     {
         get => _sAdv ??= new CoreAdvanced();
