@@ -574,7 +574,7 @@ public class CoreHollowbornChaosEnvoy
         {
             Core.EnsureAccept(9000);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("chaoswar", "r2", "Spawn", "*", "Chaos Tentacle", 300, isTemp: false);
+            Core.KillMonster("chaoswar", "r13", "Left", "*", "Chaos Tentacle", 300, isTemp: false);
 
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("sandcastle", "Chaos Sphinx", "Chaos Sphinx", isTemp: false);

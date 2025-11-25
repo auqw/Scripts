@@ -55,8 +55,8 @@ public class ChaorrupterUnlocked
             );
             Core.KillMonster(
                 "chaoswar",
-                "r2",
-                "Spawn",
+                "r13",
+                "Left",
                 "*",
                 "Chaos Tentacle",
                 100,
@@ -80,8 +80,8 @@ public class ChaorrupterUnlocked
             );
             Core.KillMonster(
                 "chaoswar",
-                "r2",
-                "Spawn",
+                "r13",
+                "Left",
                 "*",
                 "Chaos Tentacle",
                 250,

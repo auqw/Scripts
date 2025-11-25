@@ -105,8 +105,8 @@ public class ChaosWarMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         Core.KillMonster(
                             "chaoswar",
-                            "r2",
-                            "Spawn",
+                            "r13",
+                            "Left",
                             "*",
                             req.Name,
                             quant,
