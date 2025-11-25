@@ -26,13 +26,13 @@ public class UltraDrago
         set => _Adv = value;
     }
     private static CoreAdvanced _Adv;
+    private CoreBots C => CoreBots.Instance;
     private static CoreAstravia Astravia
     {
         get => _Astravia ??= new CoreAstravia();
         set => _Astravia = value;
     }
     private static CoreAstravia _Astravia;
-    private CoreBots C => CoreBots.Instance;
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
@@ -49,7 +49,6 @@ public class UltraDrago
             "Select your role for Ultra King Drago fight. Make sure to equip the corresponding class before running the script.",
             RoleSelection.ChaosAvenger
         ),
-        CoreBots.Instance.SkipOptions,
     };
 
     // Filled at runtime
