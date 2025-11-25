@@ -1747,7 +1747,7 @@
     ],
     "path": "Story/WhiteTigerPoint.cs",
     "size": 3410,
-    "sha256": "11fba6026ee0178c878e46b4ffa75b0cb8f8f7bd2ea07559051ce71de332a314",
+    "sha256": "1a974aeb63ad6127592232c3ed0299e6c54d09bc0c022a59a1570647b8d40128",
     "fileName": "WhiteTigerPoint.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/WhiteTigerPoint.cs"
   },
@@ -2155,7 +2155,7 @@
     ],
     "path": "Story/0AllStories.cs",
     "size": 52435,
-    "sha256": "1e6565ab189a61894d7762605205b57bfc9e1d04eae60d53fdc758c018e67d32",
+    "sha256": "4ce74c575224b7df1d4709d53bb9ba5596035fb954fb3b56741863ca7ef156cf",
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -2557,7 +2557,7 @@
     ],
     "path": "Story/Crulonwed.cs",
     "size": 2012,
-    "sha256": "2e8522b73fd0615b4c7f58a700caaba26337205d408b6d9777882bb9684eebe0",
+    "sha256": "12c9eee860958173e70a84d2167a5eee95f1ec6f5670490aaff1398a4b4cb130",
     "fileName": "Crulonwed.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Crulonwed.cs"
   },
@@ -17862,7 +17862,7 @@
     ],
     "path": "Other/MergeShops/WhiteTigerPointMerge.cs",
     "size": 6813,
-    "sha256": "aa94c7d17ebcb99bf45ffece5255ccedbd74c7cf8b81d94f634ab71eab69c413",
+    "sha256": "936a3b51a87cab78adeca2b3165f4e6207a75c5079298091f5f59b6fd697f704",
     "fileName": "WhiteTigerPointMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/WhiteTigerPointMerge.cs"
   },
@@ -18529,7 +18529,7 @@
     ],
     "path": "Other/MergeShops/CrulonsWeddingMerge.cs",
     "size": 9116,
-    "sha256": "915eb92483190b564b43795192eaa7c33aab23ff2906960e67aa083dd2e6a341",
+    "sha256": "239a6b4f6667722d32809f69c2acafaccd994f48f94bbd1de196e9c9b8e4ce5b",
     "fileName": "CrulonsWeddingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CrulonsWeddingMerge.cs"
   },
