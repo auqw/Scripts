@@ -775,8 +775,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDrago.cs",
-    "size": 12595,
-    "sha256": "e52a34f3a2534c98187b0bd436ad1ff11e64fc35c0a35c1c393171d46b646db0",
+    "size": 12555,
+    "sha256": "4d8a30965994050bf5b767723ccac77e5add1d85a6dd76002f739783a7c87864",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },
@@ -5600,7 +5600,7 @@
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/CoreHollowbornChaosEnvoy.cs",
     "size": 37931,
-    "sha256": "972b6497f7fe58b4713875dd769155bbc1d91f1bc64b2deafd7c91e74c9759e3",
+    "sha256": "45f5f13f4e04d938e6b35efb6f383d8953567059d5bad072c91eb9ff934bf637",
     "fileName": "CoreHollowbornChaosEnvoy.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/CoreHollowbornChaosEnvoy.cs"
   },
@@ -13286,7 +13286,7 @@
     ],
     "path": "Other/Weapons/ChaorrupterUnlocked.cs",
     "size": 2483,
-    "sha256": "d974f98382d1f7a363a189011e4981480e861d1a8960e16b9f95b315a96ca509",
+    "sha256": "51e5007924aaa6d7f49217307c6bd40d451495d5d073ab755e5d1fb44269435e",
     "fileName": "ChaorrupterUnlocked.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/ChaorrupterUnlocked.cs"
   },
@@ -15642,7 +15642,7 @@
     ],
     "path": "Other/MergeShops/ChaosWarMerge.cs",
     "size": 6317,
-    "sha256": "4002ef2965feb8259f5bbac5513998ae8b2517128f6084d7352dbfd00f8c1081",
+    "sha256": "4f1fa722b94e5cd177ed862b8bf27e4f27f6d1e26dce7d82d7e80b7251e95dd7",
     "fileName": "ChaosWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ChaosWarMerge.cs"
   },
@@ -24833,7 +24833,7 @@
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
     "size": 1068273,
-    "sha256": "4c75c951084759aec2e8f256d1d31f09dcd0f4493c9502cfd4af00d260b2d15c",
+    "sha256": "46b860f604333eb1c12e6d0e48f6b0a9605926cf72860ce2205c8a5032e9fd9a",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
