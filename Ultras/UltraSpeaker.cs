@@ -51,8 +51,14 @@ using Skua.Core.Options;
 
 public class UltraSpeaker
 {
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private CoreBots C => CoreBots.Instance;
+    private static CoreAdvanced _Adv;
     public IScriptInterface Bot => IScriptInterface.Instance;
-    private static CoreBots CoreBot => CoreBots.Instance;
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
     string? className = null;
@@ -87,18 +93,37 @@ public class UltraSpeaker
 
     void Kill()
     {
+        C.EnsureAccept(9173);
+        C.AddDrop("The First Speaker Silenced");
         Bot.Quests.UpdateQuest(9125);
         Core.Join("ultraspeaker");
         Ultra.WaitForArmy(3, "ultra_speaker.sync");
         Core.ChooseBestCell("The First Speaker");
-        // Core.EnableSkills();
 
+        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
+        Ultra.ClearSyncFile(syncPath);
+
+        // Core.EnableSkills();
         string[] skillList = skills.Split(',');
         int[] intSkillList = skillList.Select(int.Parse).ToArray();
         int skillIndex = 0;
-
-        while (!Bot.ShouldExit && Core.IsMonsterAliveByName("The First Speaker"))
+        while (!Bot.ShouldExit)
         {
+            if (Ultra.CheckArmyProgress("The First Speaker Silenced", 1, false, syncPath))
+            {
+                C.Jump("Enter", "Spawn");
+                C.Logger("All players finished farm.");
+                C.EnsureComplete(9173);
+                break;
+            }
+
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
             if (Core.IsInCell("Boss"))
             {
                 int targetX = inZone ? 203 : 100;

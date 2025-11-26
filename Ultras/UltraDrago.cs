@@ -49,6 +49,7 @@ public class UltraDrago
             "Select your role for Ultra King Drago fight. Make sure to equip the corresponding class before running the script.",
             RoleSelection.ChaosAvenger
         ),
+        CoreBots.Instance.SkipOptions,
     };
 
     // Filled at runtime
@@ -67,8 +68,8 @@ public class UltraDrago
 
         if (
             Bot.Config != null
-            && Bot.Config.Options.Contains(CoreBots.Instance.SkipOptions)
-            && !Bot.Config.Get<bool>(CoreBots.Instance.SkipOptions)
+            && Bot.Config.Options.Contains(C.SkipOptions)
+            && !Bot.Config.Get<bool>(C.SkipOptions)
         )
             Bot.Config.Configure();
 
@@ -150,18 +151,27 @@ public class UltraDrago
         const string leftSummon = "Bowmaster Algie"; // Right summon (Bow)
         const string rightSummon = "Executioner Dene"; // Left summon (Axe)
 
+        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
+        Ultra.ClearSyncFile(syncPath);
+
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_drago.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
         // ===== MAIN LOOP =====
-        while (!Bot.ShouldExit && Ultra.MonsterAlive(boss))
+        while (!Bot.ShouldExit)
         {
             // ======================================================
             //              ARCHPALADIN TAUNTER LOGIC
             // ======================================================
-
+            if (Ultra.CheckArmyProgress("Drago Dethroned", 1, true, syncPath))
+            {
+                C.Jump("Enter", "Spawn");
+                C.Logger("All players finished farm.");
+                C.EnsureComplete(8547);
+                break;
+            }
             if (role == RoleSelection.ArchPaladin)
             {
                 // ArchPaladin taunts the left summon (Axe)

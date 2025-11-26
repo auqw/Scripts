@@ -15,6 +15,13 @@ using Skua.Core.Options;
 
 public class UltraWarden
 {
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private CoreBots C => CoreBots.Instance;
+    private static CoreAdvanced _Adv;
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
@@ -69,13 +76,32 @@ public class UltraWarden
         const string map = "ultrawarden";
         const string boss = "Ultra Warden";
 
+        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
+        Ultra.ClearSyncFile(syncPath);
+        C.EnsureAccept(8153);
+        C.AddDrop("Warden Insignia");
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_warden.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
+        while (!Bot.ShouldExit)
         {
+            if (Ultra.CheckArmyProgress("Ultra Warden Defeated", 1, true, syncPath))
+            {
+                C.Jump("Enter", "Spawn");
+                C.Logger("All players finished farm.");
+                C.EnsureComplete(8153);
+                break;
+            }
+
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
             if (Core.HasClassEquipped(a))
             {
                 Ultra.UltraWardenTaunter();

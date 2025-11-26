@@ -17,12 +17,26 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
 public class CoreUltra
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreEngine Core = new();
+    private CoreBots C => CoreBots.Instance;
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void Test() => Bot.Log("NewCore interface OK!");
 
@@ -37,7 +51,10 @@ public class CoreUltra
         if (string.IsNullOrWhiteSpace(className) || string.IsNullOrWhiteSpace(target))
             return;
 
-        if (Bot?.Combat == null || !Core.HasClassEquipped(className))
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+        if (!Core.HasClassEquipped(className))
             return;
 
         Bot.Combat.Attack(target);
@@ -73,21 +90,34 @@ public class CoreUltra
             !string.IsNullOrWhiteSpace(priorityName1)
             && Core.IsAliveByMapId(priorityMapId1, name: priorityName1)
         )
+        {
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
             KillByMapId(priorityMapId1, name: priorityName1);
+        }
         else if (
             !string.IsNullOrWhiteSpace(priorityName2)
             && Core.IsAliveByMapId(priorityMapId2, name: priorityName2)
         )
+        {
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
             KillByMapId(priorityMapId2, name: priorityName2);
+        }
         else
+        {
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
             KillByMapId(primaryMapId, name: primaryName);
+        }
         Bot.Sleep(Core.D1);
     }
 
     public void KillByMapId(int mapId, string? name = null, int? id = null)
     {
-        if (Bot?.Combat == null)
-            return;
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
         if (Core.IsAliveByMapId(mapId, name, id))
         {
             Bot.Combat.Attack(mapId);
@@ -111,13 +141,6 @@ public class CoreUltra
 
     public void UltraWardenTaunter()
     {
-        if (Bot == null)
-            return;
-        if (Bot.Combat == null)
-            return;
-        if (Bot.Player == null)
-            return;
-
         const string mob = "Ultra Warden";
         Bot.Combat.Attack(mob);
 
@@ -164,8 +187,6 @@ public class CoreUltra
 
     public void DrakathTaunter()
     {
-        if (Bot == null || Bot.Combat == null || Bot.Player == null)
-            return;
         Bot.Combat.Attack("Champion Drakath");
         var dummy = Bot.Player.Target;
         if (dummy == null || dummy.HP <= 0)
@@ -467,8 +488,9 @@ public class CoreUltra
         string syncFilePath = "army_sync.sync"
     )
     {
-        if (Bot?.Map == null)
-            return false;
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        C.DebugLogger(this);
 
         string syncFile = ResolveSyncPath(syncFilePath);
         string myKey =
@@ -943,6 +965,170 @@ public class CoreUltra
             }
         }
         catch { }
+    }
+
+    public void Enhancements()
+    {
+        string? playerName = Bot.Player?.Username;
+        if (string.IsNullOrWhiteSpace(playerName))
+        {
+            C.Logger("[ERROR] Unable to determine player name.", stopBot: true);
+            return;
+        }
+        var acceptableDPSClasses = new HashSet<string>
+        {
+            "Legion Revenant",
+            "Chrono ShadowSlayer",
+            "Lich",
+            "Archfiend",
+            "Quantum Chronomancer",
+            "Hollowborn Vindicator",
+            "Arachnomancer",
+            "Infinity Knight",
+            "Verus Doomknight",
+            "King's Echo",
+            "Phantom Chronomancer",
+            "Great Thief",
+        };
+
+        // Cache currently equipped items
+        InventoryItem? weaponItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
+            x?.Equipped == true && Adv.WeaponCatagories.Contains(x.Category)
+        );
+        InventoryItem? helmItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
+            x?.Equipped == true && x.Category == ItemCategory.Helm
+        );
+        InventoryItem? capeItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
+            x?.Equipped == true && x.Category == ItemCategory.Cape
+        );
+        string weapon = weaponItem?.Name ?? "";
+        string helm = helmItem?.Name ?? "";
+        string cape = capeItem?.Name ?? "";
+        string className = Bot.Player?.CurrentClass?.Name ?? "";
+        C.Logger(
+            $"[Enhancement]\nClass: {className}\nWeapon: {weapon}\nHelm: {helm}\nCape: {cape}",
+            "info"
+        );
+        // Apply enhancement rules per role
+        switch (className.ToLower())
+        {
+            case "chaos avenger":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Anima);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Vainglory);
+                break;
+
+            case "archpaladion":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+                break;
+
+            case "legion revenant":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Pneuma);
+                Adv.EnhanceItem(className, EnhancementType.Wizard);
+                Adv.EnhanceItem(weapon, EnhancementType.Wizard, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Wizard, CapeSpecial.Vainglory);
+                break;
+
+            case "archfiend":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Vainglory);
+                break;
+
+            case "arachnomancer":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Anima);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Vainglory);
+                break;
+
+            case "king's echo":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Pneuma);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+                break;
+
+            case "chrono shadowslayer":
+            case "chrono shadowhunter":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Vim);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Health_Vamp);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+                break;
+
+            case "quantum chronomancer":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Anima);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Vainglory);
+                break;
+
+            case "phantom chronomancer":
+                Adv.EnhanceItem(helm, EnhancementType.Wizard, hSpecial: HelmSpecial.Pneuma);
+                Adv.EnhanceItem(className, EnhancementType.Wizard);
+                Adv.EnhanceItem(weapon, EnhancementType.Wizard, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Wizard, CapeSpecial.Vainglory); // or Lament if needed
+                break;
+
+            case "infinity knight":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Pneuma);
+                Adv.EnhanceItem(className, EnhancementType.Wizard);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Wizard, CapeSpecial.Vainglory);
+                break;
+
+            case "lich":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Examen);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Penitence);
+                break;
+
+            case "verus doomknight":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Anima);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Vainglory);
+                break;
+
+            case "hollowborn vindicator":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless);
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Penitence);
+                break;
+
+            case "great thief":
+                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge); // or Vim if needed
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Dauntless); // or Lucky HealthVamp
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Vainglory);
+                break;
+
+            case "dragon of time":
+                Adv.EnhanceItem(helm, EnhancementType.Wizard, hSpecial: HelmSpecial.Pneuma); // or Vim if needed
+                Adv.EnhanceItem(className, EnhancementType.Wizard);
+                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Elysium); // or Lucky HealthVamp
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Vainglory);
+                break;
+
+            case "arcana invoker":
+                Adv.EnhanceItem(helm, EnhancementType.Wizard, hSpecial: HelmSpecial.Examen); // or Vim if needed
+                Adv.EnhanceItem(className, EnhancementType.Lucky);
+                Adv.EnhanceItem(
+                    weapon,
+                    EnhancementType.Lucky,
+                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance
+                ); // or Lucky HealthVamp
+                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Vainglory);
+                break;
+        }
     }
 
     #endregion

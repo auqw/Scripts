@@ -15,6 +15,13 @@ using Skua.Core.Options;
 
 public class ChampionDrakath
 {
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private CoreBots C => CoreBots.Instance;
+    private static CoreAdvanced _Adv;
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
@@ -69,13 +76,33 @@ public class ChampionDrakath
         const string map = "championdrakath";
         const string boss = "Champion Drakath";
 
+        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
+        Ultra.ClearSyncFile(syncPath);
+
+        C.EnsureAccept(8300);
+        C.AddDrop("Champion Drakath Insignia");
+
         Core.Join(map);
         Ultra.WaitForArmy(3, "champion_drakath.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
+        while (!Bot.ShouldExit)
         {
+            if (Ultra.CheckArmyProgress("Champion Drakath Defeated", 1, true, syncPath))
+            {
+                C.Jump("Enter", "Spawn");
+                C.Logger("All players finished farm.");
+                C.EnsureComplete(8300);
+                break;
+            }
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
             if (Core.HasClassEquipped(a))
             {
                 Ultra.DrakathTaunter();

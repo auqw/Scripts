@@ -15,6 +15,13 @@ using Skua.Core.Options;
 
 public class Xyfrag
 {
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private CoreBots C => CoreBots.Instance;
+    private static CoreAdvanced _Adv;
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
@@ -30,10 +37,20 @@ public class Xyfrag
             "Insert the name of the class that will taunt",
             ""
         ),
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
+        if (
+            Bot.Config != null
+            && Bot.Config.Options.Contains(C.SkipOptions)
+            && !Bot.Config.Get<bool>(C.SkipOptions)
+        )
+            Bot.Config.Configure();
+
+        Bot.Options.InfiniteRange = true;
+
         taunter = (Bot.Config!.Get<string>("taunter") ?? "").Trim();
         if (string.IsNullOrEmpty(taunter))
         {
@@ -71,13 +88,33 @@ public class Xyfrag
         const string map = "voidxyfrag";
         const string boss = "Xyfrag";
 
+        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
+        Ultra.ClearSyncFile(syncPath);
+
+        // 'Wrong Turn at Voidbuquerque' && 'Doom Spikes'
+        C.EnsureAcceptmultiple(9091, 9418);
+        C.AddDrop("Xyfrag's ??? Essence", "Xyfrag's Slimy Tooth", "Void Energy");
+
         Core.Join(map);
         Ultra.WaitForArmy(6, "xyfrag.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
-
-        while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
+        while (!Bot.ShouldExit)
         {
+            if (Ultra.CheckArmyProgress("Xyfrag's Slimy Tooth", 5, true, syncPath))
+            {
+                C.Jump("Enter", "Spawn");
+                C.Logger("All players finished farm.");
+                C.EnsureComplete(8547);
+                break;
+            }
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+
             if (Core.HasClassEquipped(taunter))
                 Ultra.Taunt(taunter, boss, "charge", 250);
             else

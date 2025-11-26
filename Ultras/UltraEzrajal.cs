@@ -80,14 +80,14 @@ public class UltraEzrajal
     {
         const string map = "ultraezrajal";
         const string boss = "Ultra Ezrajal";
-        const string syncFile = "ArmyEzrajalItemCheck.sync";
-        string syncPath = Ultra.ResolveSyncPath("ArmyEzrajalItemCheck.sync");
+
+        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
 
         // ---------------------------
         // ENHANCEMENTS
         // ---------------------------
-        Enhancements(); // new version with auto-role detection
+        Ultra.Enhancements(); // new version with auto-role detection
 
         // ---------------------------
         // POTIONS
@@ -113,7 +113,7 @@ public class UltraEzrajal
         while (!Bot.ShouldExit)
         {
             // Check if the whole army has finished
-            if (Ultra.CheckArmyProgress("Ultra Ezrajal Defeated", 1, true, syncFile))
+            if (Ultra.CheckArmyProgress("Ultra Ezrajal Defeated", 1, true, syncPath))
             {
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8152);

@@ -15,6 +15,13 @@ using Skua.Core.Options;
 
 public class UltraEngineer
 {
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private CoreBots C => CoreBots.Instance;
+    private static CoreAdvanced _Adv;
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
@@ -33,17 +40,34 @@ public class UltraEngineer
         const string priority1 = "Defense Drone";
         const string priority2 = "Attack Drone";
 
+        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
+        Ultra.ClearSyncFile(syncPath);
+
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Ultra.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");
-
+        C.EnsureAccept(8154);
+        C.AddDrop("Engineer Insignia");
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_engineer.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
+        while (!Bot.ShouldExit)
         {
+            // Check if the whole army has finished
+            if (Ultra.CheckArmyProgress("Ultra Engineer Defeated", 1, true, syncPath))
+            {
+                C.Logger("All players finished farm.");
+                C.EnsureComplete(8154);
+                break;
+            }
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
             Ultra.KillWithPriority(boss, 3, priority1, 2, priority2, 1);
             Bot.Skills.UseSkill(5);
         }

@@ -15,6 +15,13 @@ using Skua.Core.Options;
 
 public class UltraNulgath
 {
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private CoreBots C => CoreBots.Instance;
+    private static CoreAdvanced _Adv;
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
@@ -76,6 +83,10 @@ public class UltraNulgath
         const string boss = "Nulgath the Archfiend";
         const string blade = "Overfiend Blade";
 
+        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
+        Ultra.ClearSyncFile(syncPath);
+        C.EnsureAccept(8692);
+        C.AddDrop("Nulgath Insignia");
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_nulgath.sync");
 
@@ -85,8 +96,21 @@ public class UltraNulgath
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
 
-        while (Ultra.MonsterAlive(boss) && !Bot.ShouldExit)
+        while (!Bot.ShouldExit)
         {
+            // Check if the whole army has finished
+            if (Ultra.CheckArmyProgress("Nulgath the Archfiend Defeated?", 1, true, syncPath))
+            {
+                C.Logger("All players finished farm.");
+                C.EnsureComplete(8692);
+                break;
+            }
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
             if (Core.HasClassEquipped(a))
                 Ultra.Taunt(a, boss, "aura", 250, "Focus");
             else if (Core.HasClassEquipped(b))

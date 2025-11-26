@@ -5,8 +5,8 @@ tags: Ultra
 */
 
 //cs_include Scripts/Ultras/CoreEngine.cs
-//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
@@ -89,7 +89,6 @@ public class UltraDage
 
         C.Join("whitemap");
         Bot.Config!.Configure();
-        C.AddDrop("Dage the Evil Insignia");
         a = NormalizeString(Bot.Config!.Get<string>("a")!);
         b = NormalizeString(Bot.Config.Get<string>("b")!);
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
@@ -129,21 +128,20 @@ public class UltraDage
     {
         const string map = "ultradage";
         const string boss = "Dage the Dark Lord";
+
+        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
+        Ultra.ClearSyncFile(syncPath);
+
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_dage.sync");
         Core.ChooseBestCell(boss);
         Core.EnableSkills();
+
+        C.AddDrop("Dage the Evil Insignia");
         C.EnsureAccept(8547);
         while (!Bot.ShouldExit)
         {
-            if (
-                Ultra.CheckArmyProgress(
-                    "Dage the Dark Lord Defeated",
-                    1,
-                    true,
-                    "ArmyUDage_ItemSync.sync"
-                )
-            )
+            if (Ultra.CheckArmyProgress("Dage the Dark Lord Defeated", 1, true, syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
