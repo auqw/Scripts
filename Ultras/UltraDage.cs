@@ -135,6 +135,7 @@ public class UltraDage
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_dage.sync");
         Core.ChooseBestCell(boss);
+        Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
         C.AddDrop("Dage the Evil Insignia");

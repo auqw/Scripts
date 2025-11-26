@@ -99,6 +99,7 @@ public class UltraSpeaker
         Core.Join("ultraspeaker");
         Ultra.WaitForArmy(3, "ultra_speaker.sync");
         Core.ChooseBestCell("The First Speaker");
+        Bot.Player.SetSpawnPoint();
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);

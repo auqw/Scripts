@@ -157,6 +157,7 @@ public class UltraDrago
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_drago.sync");
         Core.ChooseBestCell(boss);
+        Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
         // ===== MAIN LOOP =====

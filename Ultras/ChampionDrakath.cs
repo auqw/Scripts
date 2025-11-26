@@ -85,6 +85,8 @@ public class ChampionDrakath
         Core.Join(map);
         Ultra.WaitForArmy(3, "champion_drakath.sync");
         Core.ChooseBestCell(boss);
+        Bot.Player.SetSpawnPoint();
+
         Core.EnableSkills();
 
         while (!Bot.ShouldExit)

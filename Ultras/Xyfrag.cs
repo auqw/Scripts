@@ -98,6 +98,7 @@ public class Xyfrag
         Core.Join(map);
         Ultra.WaitForArmy(6, "xyfrag.sync");
         Core.ChooseBestCell(boss);
+        Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
         while (!Bot.ShouldExit)
         {

@@ -51,6 +51,7 @@ public class UltraEngineer
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_engineer.sync");
         Core.ChooseBestCell(boss);
+        Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
         while (!Bot.ShouldExit)

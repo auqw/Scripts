@@ -94,6 +94,7 @@ public class UltraNulgath
             Bot.Sleep(5000);
 
         Core.ChooseBestCell(boss);
+        Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
         while (!Bot.ShouldExit)

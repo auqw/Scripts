@@ -83,6 +83,7 @@ public class UltraWarden
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_warden.sync");
         Core.ChooseBestCell(boss);
+        Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
         while (!Bot.ShouldExit)

@@ -146,13 +146,13 @@ public class UltraAvatarTyndarius
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
 
-        C.DL_Enable();
         C.AddDrop("Avatar Tyndarius Insignia");
         C.EnsureAccept(8245);
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_tyndarius.sync");
-        Core.EnableSkills();
         Core.ChooseBestCell(boss);
+        Bot.Player.SetSpawnPoint();
+        Core.EnableSkills();
 
         while (!Bot.ShouldExit)
         {
@@ -169,12 +169,11 @@ public class UltraAvatarTyndarius
 
             if (Bot.Map.Name != map)
             {
-                C.DebugLogger(this, "we got here?");
                 Core.Join(map);
+                Bot.Wait.ForMapLoad(map);
             }
             if (Bot.Player.Cell != "Boss")
             {
-                C.DebugLogger(this, "we got here?");
                 Bot.Map.Jump("Boss", "Left", autoCorrect: false);
                 Bot.Wait.ForCellChange("Boss");
             }
@@ -184,7 +183,6 @@ public class UltraAvatarTyndarius
             // ======================================================
             if (isBall1Taunter || isBall2Taunter)
             {
-                C.DebugLogger(this, isBall1Taunter ? "isBall1Taunter" : "isBall2Taunter");
                 Ultra.Taunt(
                     playerClass,
                     "Ultra Fire Orb",
@@ -193,7 +191,6 @@ public class UltraAvatarTyndarius
                     "Focus"
                 );
 
-                C.DebugLogger(this, "we got here?");
                 Ultra.KillWithPriority(
                     "Ultra Fire Orb",
                     isBall2Taunter ? 1 : 3,
@@ -203,7 +200,6 @@ public class UltraAvatarTyndarius
                     2
                 );
 
-                C.DebugLogger(this, "we got here?");
                 Bot.Skills.UseSkill(5);
                 continue;
             }
@@ -213,13 +209,10 @@ public class UltraAvatarTyndarius
             // ======================================================
             if (isMustTauntTyn)
             {
-                C.DebugLogger(this, "isMustTauntTyn");
                 Ultra.Taunt(playerClass, boss, "aura", 700, "Focus");
 
-                C.DebugLogger(this, "we got here?");
                 Ultra.KillWithPriority(boss, 2, "Ultra Fire Orb", 1, "Ultra Fire Orb", 3);
 
-                C.DebugLogger(this, "we got here?");
                 Bot.Skills.UseSkill(5);
                 continue;
             }
@@ -229,13 +222,11 @@ public class UltraAvatarTyndarius
             // ======================================================
             if (isFocusTyn)
             {
-                C.DebugLogger(this, "isFocusTyn");
                 Bot.Combat.Attack(boss);
                 Bot.Sleep(500);
                 Bot.Skills.UseSkill(5);
                 continue;
             }
-            C.DebugLogger(this, "we got here?");
         }
     }
 
