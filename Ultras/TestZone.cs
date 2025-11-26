@@ -1,6 +1,9 @@
 //cs_include Scripts/Ultras/CoreEngine.cs
 //cs_include Scripts/Ultras/CoreUltra.cs
-
+//cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
 using System;
 using System.Linq;
 using System.Dynamic;

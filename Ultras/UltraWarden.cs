@@ -9,6 +9,7 @@ tags: Ultra
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
