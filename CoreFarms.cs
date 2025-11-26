@@ -2980,10 +2980,11 @@ public class CoreFarms
         while (
             !Bot.ShouldExit
             && (
-                item != null
+                (
+                    item != null
                     && !Core.CheckInventory(item, quant)
                     && FactionRank("Death Pit Brawl") < rank
-                || (item == null && FactionRank("Death Pit Brawl") < rank)
+                ) || (item == null && FactionRank("Death Pit Brawl") < rank)
             )
         )
         {
@@ -3041,10 +3042,8 @@ public class CoreFarms
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-            if (!string.IsNullOrEmpty(item))
+            if (item != null)
             {
-                Bot.Wait.ForDrop(item, 40);
-                Core.Sleep(1500);
                 Bot.Wait.ForPickup(item, 40);
                 Core.FarmingLogger(item, quant);
             }
