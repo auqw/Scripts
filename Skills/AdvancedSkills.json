@@ -1128,13 +1128,31 @@
       "skillTimeout": 100,
       "skills": [
         {
+          "skillId": 3
+        },
+        {
           "skillId": 1
         },
+        {
+          "skillId": 2
+        }
+        {
+          "skillId": 4
+        }
+      ]
+    },
+    "Farm": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
         {
           "skillId": 3
         },
         {
           "skillId": 2
+        }
+        {
+          "skillId": 4
         }
       ]
     }
@@ -1145,13 +1163,31 @@
       "skillTimeout": 100,
       "skills": [
         {
+          "skillId": 3
+        },
+        {
           "skillId": 1
         },
+        {
+          "skillId": 2
+        }
+        {
+          "skillId": 4
+        }
+      ]
+    },
+    "Farm": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
         {
           "skillId": 3
         },
         {
           "skillId": 2
+        }
+        {
+          "skillId": 4
         }
       ]
     }
@@ -1162,13 +1198,31 @@
       "skillTimeout": 100,
       "skills": [
         {
+          "skillId": 3
+        },
+        {
           "skillId": 1
         },
+        {
+          "skillId": 2
+        }
+        {
+          "skillId": 4
+        }
+      ]
+    },
+    "Farm": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
         {
           "skillId": 3
         },
         {
           "skillId": 2
+        }
+        {
+          "skillId": 4
         }
       ]
     }
@@ -1179,13 +1233,31 @@
       "skillTimeout": 100,
       "skills": [
         {
+          "skillId": 3
+        },
+        {
           "skillId": 1
         },
+        {
+          "skillId": 2
+        }
+        {
+          "skillId": 4
+        }
+      ]
+    },
+    "Farm": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
         {
           "skillId": 3
         },
         {
           "skillId": 2
+        }
+        {
+          "skillId": 4
         }
       ]
     }
