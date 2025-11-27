@@ -361,23 +361,20 @@ public class DragonOfTime
                 false,
                 publicRoom: true
             );
-            //why the fuck was the class buffed!?
-            InventoryItem? usethis = Bot
-                .Inventory.Items.Concat(Bot.Bank.Items)
-                .FirstOrDefault(n => n.Name.StartsWith("Chaos Slayer"));
+            if (!Core.CheckInventory("Dragon's Plasma", 20))
+            {
+                //why the fuck was the class buffed!?
+                InventoryItem? usethis = Bot
+                    .Inventory.Items.Concat(Bot.Bank.Items)
+                    .FirstOrDefault(n => n.Name.StartsWith("Chaos Slayer"));
 
-            if (usethis != null)
-                Core.Equip(usethis.ID);
-            else
-                Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "underlair",
-                "ArchFiend Dragonlord",
-                "Dragon's Plasma",
-                20,
-                false,
-                publicRoom: true
-            );
+                if (usethis != null)
+                    Core.Equip(usethis.ID);
+                else
+                    Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false);
+            }
+            Core.JumpWait();
             Core.EquipClass(ClassType.Solo);
 
             Core.HuntMonster(
