@@ -4456,7 +4456,7 @@
             {
               "type": "Mana",
               "value": 10,
-              "comparison": "greater"
+              "comparison": "less"
             }
           ]
         }
