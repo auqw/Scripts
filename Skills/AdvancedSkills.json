@@ -1563,10 +1563,72 @@
     }
   },
   "Chrono ShadowSlayer": {
+    "Solo": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "less",
+              "auraName": "Rounds Empty!",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 15,
+              "comparison": "greater"
+            },
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "greater",
+              "auraName": "Gunslinger Stance!",
+              "auraTarget": "self"
+            }
+          ]
+        }
+      ]
+    },
     "Atk": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
+        {
+          "skillId": 1
+        },
         {
           "skillId": 3
         },
@@ -1587,9 +1649,6 @@
         },
         {
           "skillId": 4
-        },
-        {
-          "skillId": 1
         }
       ]
     },
@@ -1632,6 +1691,33 @@
         },
         {
           "skillId": 1
+        }
+      ]
+    },
+    "Farm": {
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "greater",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
         }
       ]
     }
