@@ -11,6 +11,7 @@ using Skua.Core.Options;
 
 public class BloodGem
 {
+    private IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
     private static CoreNation Nation
     {
@@ -31,9 +32,15 @@ public class BloodGem
     {
         Core.SetOptions();
 
-        Nation.FarmBloodGem(100, (int)bot.Config!.Get<HydraLevel>("HydraLevel"));
+        SetupHydras();
 
         Core.SetOptions(false);
+    }
+
+    void SetupHydras()
+    {
+        int HydraLevel = (int)Bot.Config!.Get<HydraLevel>("HydraLevel");
+        Nation.FarmBloodGem(100, HydraLevel);
     }
 
     private enum HydraLevel
