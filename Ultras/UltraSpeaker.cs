@@ -93,16 +93,17 @@ public class UltraSpeaker
 
     void Kill()
     {
+        if (!C.isCompletedBefore(9173))
+            C.Logger("Quest 9173 not unlocked.");
+
+        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
+        Ultra.ClearSyncFile(syncPath);
         C.EnsureAccept(9173);
         C.AddDrop("The First Speaker Silenced");
         Bot.Quests.UpdateQuest(9125);
         Core.Join("ultraspeaker");
         Ultra.WaitForArmy(3, "ultra_speaker.sync");
         Core.ChooseBestCell("The First Speaker");
-        Bot.Player.SetSpawnPoint();
-
-        string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
-        Ultra.ClearSyncFile(syncPath);
 
         // Core.EnableSkills();
         string[] skillList = skills.Split(',');
@@ -119,7 +120,7 @@ public class UltraSpeaker
             }
 
             // Dead → wait for respawn
-            if (!Bot.Player.Alive)
+            if (Bot.Player?.Alive == false)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
@@ -142,7 +143,7 @@ public class UltraSpeaker
 
             if (Bot.Player?.HasTarget == true)
             {
-                Core.Log("ATTACK", "ATTACKING");
+                C.Logger("ATTACK", "ATTACKING");
                 Bot.Combat.Attack("*");
             }
             else
@@ -169,7 +170,7 @@ public class UltraSpeaker
             }
             Bot.Sleep(100);
         }
-        Core.Log("LOG", "FINISHED");
+        C.Logger("LOG", "FINISHED");
     }
 
     void _walkFlash(int X, int Y) => Bot.Flash.Call("walkTo", X, Y, 8);
@@ -189,7 +190,7 @@ public class UltraSpeaker
                         string zone = data.args?["zoneSet"]!;
                         if (zone is not null && zone == "A" && className == "legion revenant")
                         {
-                            Core.Log("ZONE", "FORCE SKILL 1");
+                            C.Logger("ZONE", "FORCE SKILL 1");
                             setForceSkill(1);
                             return;
                         }

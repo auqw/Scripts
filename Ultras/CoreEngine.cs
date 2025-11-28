@@ -2247,22 +2247,57 @@ public class CoreEngine
     }
 
     // Returns true if current HP is below the given threshold.
-    public bool IsHealthLow(double percentage = 30) => GetHealthPercentage() < percentage;
+    public bool IsHealthLow(double percentage = 30)
+    {
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        return Bot.Player.Alive && GetHealthPercentage() < percentage;
+    }
 
     // Returns true if current MP is below the given threshold.
-    public bool IsManaLow(double percentage = 30) => GetManaPercentage() < percentage;
+    public bool IsManaLow(double percentage = 30)
+    {
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        return Bot.Player.Alive && GetManaPercentage() < percentage;
+    }
 
     // Returns true if current HP is above the given threshold.
-    public bool IsHealthHigh(double percentage = 90) => GetHealthPercentage() > percentage;
+    public bool IsHealthHigh(double percentage = 90)
+    {
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        return Bot.Player.Alive && GetHealthPercentage() > percentage;
+    }
 
     // Returns true if current MP is above the given threshold.
-    public bool IsManaHigh(double percentage = 90) => GetManaPercentage() > percentage;
+    public bool IsManaHigh(double percentage = 90)
+    {
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        return Bot.Player.Alive && GetManaPercentage() > percentage;
+    }
 
-    public bool IsFullHealth() => Bot.Player.Health >= Bot.Player.MaxHealth;
+    public bool IsFullHealth()
+    {
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        return Bot.Player.Alive && Bot.Player.Health >= Bot.Player.MaxHealth;
+    }
 
-    public bool IsFullMana() => Bot.Player.Mana >= Bot.Player.MaxMana;
+    public bool IsFullMana()
+    {
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        return Bot.Player.Alive && Bot.Player.Mana >= Bot.Player.MaxMana;
+    }
 
-    public bool IsFullHealthAndMana() => IsFullHealth() && IsFullMana();
+    public bool IsFullHealthAndMana()
+    {
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        return Bot.Player.Alive && IsFullHealth() && IsFullMana();
+    }
 
     public bool IsDead() => Bot.Player.State == 0;
 
@@ -2421,7 +2456,13 @@ public class CoreEngine
         return lowest;
     }
 
-    public bool IsArmyHealthLow(double percentage = 30.0) => GetLowestHpPercentage() < percentage;
+    public bool IsArmyHealthLow(double percentage = 30.0)
+    {
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+        return GetLowestHpPercentage() < percentage;
+    }
 
     public bool InLoadedMap(string name) =>
         Bot?.Map?.Loaded == true
