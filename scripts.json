@@ -739,8 +739,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 9505,
-    "sha256": "c736aee4f47c2458b1de82522f101882ccb45d393262ea80f107a1872c7092a0",
+    "size": 9324,
+    "sha256": "a20512d513dae1823134968377fc4fffe938ad1eba321766b0a90cbbaf958234",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
