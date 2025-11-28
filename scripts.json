@@ -703,8 +703,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 104234,
-    "sha256": "0ec5f39b0ea1a090cb12dd7dea14b0c209201b126cb36df19e2f5ade25258d9a",
+    "size": 103862,
+    "sha256": "eff9b0656a9d82fe5ee986a5aa0a024fe310bc799c6a6a0890a0b194254ee7c3",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -715,8 +715,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 8859,
-    "sha256": "711c995649ac34394cffdf237054a3c64d5d9646f9a35b618a5032085baf1599",
+    "size": 8642,
+    "sha256": "ff00f34f2e6d4cc6b35933edd272e32eca5baa80baf471076c004d30f2e40362",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -752,7 +752,7 @@
     ],
     "path": "Ultras/UltraDage.cs",
     "size": 14275,
-    "sha256": "bd1f2ebe957cbe8c39b67161ce8f695715df68884e52e17f62d02f4ac13d02e4",
+    "sha256": "6d730e8c9c9ef845185bbb23fae63e7ad47490da7f79919ea78c93cfcc7ad78f",
     "fileName": "UltraDage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDage.cs"
   },
@@ -787,8 +787,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 36870,
-    "sha256": "1259c6887313f4774a14f8fbb7c8c613698e3e4c29d800516258fb287af97ee5",
+    "size": 36883,
+    "sha256": "fa4ed7722ff8c1b2a40100d659266692eb50fc1368d8a2124db24253034db654",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
