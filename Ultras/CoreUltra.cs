@@ -698,7 +698,7 @@ public class CoreUltra
         const string ink = "Zealous Ink";
         const string scroll = "Scroll of Enrage";
 
-        if (Core.Owned(scroll) < 10)
+        if (!C.CheckInventory(scroll, 10))
         {
             // Mats
             Core.ForItem("Undead Infantry", "underworld", parchment, 2);
@@ -716,7 +716,7 @@ public class CoreUltra
         }
 
         Core.EquipConsumable(scroll);
-        Core.EquipRandomClassAndReequip();
+        // Core.EquipRandomClassAndReequip();
     }
 
     public void UseTaunt()
@@ -741,7 +741,7 @@ public class CoreUltra
         const string ink = "Zealous Ink";
         const string scroll = "Scroll of Decay";
 
-        while (Core.Owned(scroll) < 10 && !Bot.ShouldExit)
+        while (!Bot.ShouldExit && C.CheckInventory(scroll, 10))
         {
             Core.ForItem("Undead Infantry", "underworld", parchment, 2);
             Core.BuyItem(ink, 549, "dragonrune", 5, calculateRemaining: false);
@@ -770,7 +770,7 @@ public class CoreUltra
 
     public void UseAlchemyPotions(params string[] names)
     {
-        if (names == null || names.Length == 0)
+        if (names.Length == 0)
             return;
 
         string Aura(string x) =>
@@ -826,7 +826,7 @@ public class CoreUltra
 
     public void BuyAlchemyPotion(string n)
     {
-        if (string.IsNullOrWhiteSpace(n) || Core.Owned(n) >= 1)
+        if (string.IsNullOrWhiteSpace(n) || C.CheckInventory(n))
         {
             if (!string.IsNullOrWhiteSpace(n))
                 Core.Log("POTION", $"🧴 Have: {n}");
@@ -839,7 +839,7 @@ public class CoreUltra
 
         void NeedV(int want)
         {
-            int miss = Math.Max(0, want - Core.Owned(voucher));
+            int miss = Math.Max(0, want - Bot.Inventory.GetQuantity(voucher));
             if (miss > 0)
             {
                 Core.Log("POTION", $"💰 Need {miss}× {voucher}");
