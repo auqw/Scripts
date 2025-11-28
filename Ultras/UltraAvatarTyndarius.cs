@@ -106,6 +106,7 @@ public class UltraAvatarTyndarius
             Bot.Config.Configure();
 
         Bot.Options.InfiniteRange = true;
+        string playerClass = Bot.Player.CurrentClass?.Name ?? string.Empty;
         bool isBall1Taunter =
             Bot.Player.CurrentClass?.Name
             == GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter"));
