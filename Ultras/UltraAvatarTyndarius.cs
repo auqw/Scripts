@@ -108,16 +108,18 @@ public class UltraAvatarTyndarius
         Bot.Options.InfiniteRange = true;
 
         // Get player's actual class
-        string playerClass = Bot.Player.CurrentClass?.Name ?? string.Empty;
         bool isBall1Taunter =
-            playerClass == GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter"));
+            Bot.Player.CurrentClass?.Name
+            == GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter"));
         bool isBall2Taunter =
-            playerClass == GetDescription(Bot.Config!.Get<Ball2Taunter>("Ball2Taunter"));
+            Bot.Player.CurrentClass?.Name
+            == GetDescription(Bot.Config!.Get<Ball2Taunter>("Ball2Taunter"));
         bool isMustTauntTyn =
-            playerClass
+            Bot.Player.CurrentClass?.Name
             == GetDescription(Bot.Config!.Get<MustTauntTyndarius>("MustTauntTyndarius"));
         bool isFocusTyn =
-            playerClass == GetDescription(Bot.Config!.Get<FocusTyndarius>("FocusTyndarius"));
+            Bot.Player.CurrentClass?.Name
+            == GetDescription(Bot.Config!.Get<FocusTyndarius>("FocusTyndarius"));
 
         Core.Boot();
         Prep();
@@ -150,9 +152,8 @@ public class UltraAvatarTyndarius
         C.EnsureAccept(8245);
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_tyndarius.sync");
-        Core.ChooseBestCell(boss);
-        Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
+        Core.ChooseBestCell(boss);
 
         while (!Bot.ShouldExit)
         {
@@ -170,7 +171,6 @@ public class UltraAvatarTyndarius
             if (Bot.Map.Name != map)
             {
                 Core.Join(map);
-                Bot.Wait.ForMapLoad(map);
             }
             if (Bot.Player.Cell != "Boss")
             {
@@ -199,9 +199,6 @@ public class UltraAvatarTyndarius
                     boss,
                     2
                 );
-
-                Bot.Skills.UseSkill(5);
-                continue;
             }
 
             // ======================================================
@@ -212,9 +209,6 @@ public class UltraAvatarTyndarius
                 Ultra.Taunt(playerClass, boss, "aura", 700, "Focus");
 
                 Ultra.KillWithPriority(boss, 2, "Ultra Fire Orb", 1, "Ultra Fire Orb", 3);
-
-                Bot.Skills.UseSkill(5);
-                continue;
             }
 
             // ======================================================
@@ -224,9 +218,8 @@ public class UltraAvatarTyndarius
             {
                 Bot.Combat.Attack(boss);
                 Bot.Sleep(500);
-                Bot.Skills.UseSkill(5);
-                continue;
             }
+            Bot.Skills.UseSkill(5);
         }
     }
 
