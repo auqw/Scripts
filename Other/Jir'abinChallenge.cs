@@ -57,7 +57,7 @@ public class JirabinChallenge
         Story.MapItemQuest(3977, "runedwoods", new[] { 3104, 3105, 3106, 3107, 3108, 3109 });
 
         //Ruining the Dragonwood 3978
-        Story.KillQuest(3978, "runedwoods", new[] { "Jies", "Void Warrior", "Frask" });
+        Story.KillQuest(3978, "runedwoods", new[] { "Void Warrior", "Frask", "Jies" });
 
         //Catch the Ki'lks! 3979
         if (!Story.QuestProgression(3979))
