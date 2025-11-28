@@ -106,17 +106,17 @@ public class UltraAvatarTyndarius
             Bot.Config.Configure();
 
         Bot.Options.InfiniteRange = true;
-        string playerClass = Bot.Player.CurrentClass?.Name ?? string.Empty;
-        bool isBall1Taunter =
+        playerClass = Bot.Player.CurrentClass?.Name ?? string.Empty;
+        isBall1Taunter =
             Bot.Player.CurrentClass?.Name
             == GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter"));
-        bool isBall2Taunter =
+        isBall2Taunter =
             Bot.Player.CurrentClass?.Name
             == GetDescription(Bot.Config!.Get<Ball2Taunter>("Ball2Taunter"));
-        bool isMustTauntTyn =
+        isMustTauntTyn =
             Bot.Player.CurrentClass?.Name
             == GetDescription(Bot.Config!.Get<MustTauntTyndarius>("MustTauntTyndarius"));
-        bool isFocusTyn =
+        isFocusTyn =
             Bot.Player.CurrentClass?.Name
             == GetDescription(Bot.Config!.Get<FocusTyndarius>("FocusTyndarius"));
 
