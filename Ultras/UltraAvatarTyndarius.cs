@@ -66,29 +66,29 @@ public class UltraAvatarTyndarius
     {
         // Ball 1 Taunter selection
         new Option<Ball1Taunter>(
-            "Ball 1 Taunter",
             "Ball1Taunter",
+            "Ball 1 Taunter",
             "Select which class should taunt Ball 1.",
             Ball1Taunter.ChronoShadowSlayer
         ),
         // Ball 2 Taunter selection
         new Option<Ball2Taunter>(
-            "Ball 2 Taunter",
             "Ball2Taunter",
+            "Ball 2 Taunter",
             "Select which class should taunt Ball 2.",
             Ball2Taunter.LegionRevenant
         ),
         // Must Taunt Tyndarius selection
         new Option<MustTauntTyndarius>(
-            "Must Taunt Tyndarius",
             "MustTauntTyndarius",
+            "Must Taunt Tyndarius",
             "Select which class must taunt Tyndarius.",
             MustTauntTyndarius.ArchPaladin
         ),
         // Focus Tyndarius selection
         new Option<FocusTyndarius>(
-            "Focus Tyndarius",
             "FocusTyndarius",
+            "Focus Tyndarius",
             "Select which class should focus Tyndarius.",
             FocusTyndarius.LordOfOrder
         ),
@@ -106,8 +106,6 @@ public class UltraAvatarTyndarius
             Bot.Config.Configure();
 
         Bot.Options.InfiniteRange = true;
-
-        // Get player's actual class
         bool isBall1Taunter =
             Bot.Player.CurrentClass?.Name
             == GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter"));
