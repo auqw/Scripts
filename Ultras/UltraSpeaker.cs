@@ -125,7 +125,7 @@ public class UltraSpeaker
                 continue;
             }
 
-            if (Core.IsInCell("Boss"))
+            if (Bot.Player?.Cell == "Boss")
             {
                 int targetX = inZone ? 203 : 100;
                 int targetY = inZone ? 301 : 321;
@@ -140,10 +140,10 @@ public class UltraSpeaker
             )
                 Bot.Skills.UseSkill(2);
 
-            if (!Bot.Player.HasTarget)
+            if (Bot.Player?.HasTarget == true)
             {
                 Core.Log("ATTACK", "ATTACKING");
-                Bot.Combat.Attack("The First Speaker");
+                Bot.Combat.Attack("*");
             }
             else
             {
@@ -289,21 +289,11 @@ public class UltraSpeaker
 
     private void setSKill()
     {
-        switch (className)
+        skills = className switch
         {
-            case "legion revenant":
-                skills = "2,3,4";
-                break;
-
-            case "archpaladin":
-            case "lord of order":
-            case "verus doomknight":
-                skills = "1,2,3,4";
-                break;
-
-            default:
-                skills = "1,2,3,4";
-                break;
-        }
+            "legion revenant" => "2,3,4",
+            "archpaladin" or "lord of order" or "verus doomknight" => "1,2,3,4",
+            _ => "1,2,3,4",
+        };
     }
 }
