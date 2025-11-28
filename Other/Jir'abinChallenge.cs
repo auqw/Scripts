@@ -155,7 +155,7 @@ public class JirabinChallenge
         Story.KillQuest(3999, "dethertombs", new[] { "De'ther Shade", "De'ther Shade" });
 
         //Find the Resonator Components 4000
-        Story.KillQuest(4000, "dethertombs", new[] { "Sand Frask", "Tomb Drifter" });
+        Story.KillQuest(4000, "dethertombs", new[] { "Tomb Drifter", "Sand Frask" });
 
         //More Components needed 4001
         Story.KillQuest(4001, "dethertombs", new[] { "Darkfang", "Tomb Shark" });
