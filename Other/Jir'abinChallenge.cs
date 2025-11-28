@@ -161,7 +161,7 @@ public class JirabinChallenge
         Story.KillQuest(4001, "dethertombs", new[] { "Darkfang", "Tomb Shark" });
 
         //Final Components 4002
-        Story.KillQuest(4002, "dethertombs", new[] { "De'ther Vase", "Jies" });
+        Story.KillQuest(4002, "dethertombs", new[] { "Jies", "De'ther Vase" });
         // if (!Story.QuestProgression(4002))
         // {
         //     Core.EnsureAccept(4002);
