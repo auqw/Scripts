@@ -24,7 +24,7 @@ public class BloodGem
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<HydraLevel>("Hydra Lvl to kill", "HydraLevel", "", HydraLevel.Head_85),
+        new Option<HydraLevel>("HydraLevel", "Hydra Lvl to kill", "", HydraLevel.Head_85),
         CoreBots.Instance.SkipOptions,
     };
 
