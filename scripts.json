@@ -3171,7 +3171,7 @@
     ],
     "path": "Other/Jir'abinChallenge.cs",
     "size": 6655,
-    "sha256": "103dc0cc935875cec52f944c0e1294c3f68446ef3710ac9283babd53f0d4cbbb",
+    "sha256": "93b526e5906ed580183ef6b5bf0f437b8ca6e3830cfcc7f734f09faf0e4bf981",
     "fileName": "Jir'abinChallenge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Jir'abinChallenge.cs"
   },
@@ -3887,8 +3887,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 118896,
-    "sha256": "88b2b8d50b6cf28167bbc923add37ae69783d308ea96c83e76079e531d9fc079",
+    "size": 118828,
+    "sha256": "2ca265c4ca6509178fc500ac66853a17c951ef6f1e248f723a4fc0c8e138b290",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
