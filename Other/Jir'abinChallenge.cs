@@ -123,6 +123,7 @@ public class JirabinChallenge
         Story.KillQuest(3985, "void", new[] { "Void Elemental", "Void Bear" });
 
         //Confront Jir'abin 3986
+        Core.EquipClass(ClassType.Solo);
         Story.KillQuest(3986, "runedwoods", "Jir'abin");
 
         // The Void Expands 3987
