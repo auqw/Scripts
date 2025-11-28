@@ -131,6 +131,8 @@ public class UltraDage
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        C.AddDrop("Dage the Evil Insignia");
+        C.EnsureAccept(8547);
 
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_dage.sync");
@@ -138,8 +140,6 @@ public class UltraDage
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
-        C.AddDrop("Dage the Evil Insignia");
-        C.EnsureAccept(8547);
         while (!Bot.ShouldExit)
         {
             if (Ultra.CheckArmyProgress("Dage the Dark Lord Defeated", 1, true, syncPath))
