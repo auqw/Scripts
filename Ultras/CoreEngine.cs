@@ -1433,7 +1433,7 @@ public class CoreEngine
         Chill();
         try
         {
-            if (Owned(name) < 1)
+            if (!C.CheckInventory(name))
                 return;
             if (Bot.Inventory.IsEquipped(name))
                 return;
@@ -1450,7 +1450,7 @@ public class CoreEngine
 
     public void EquipEnrage()
     {
-        if (Owned("Scroll of Enrage") < 1)
+        if (!C.CheckInventory("Scroll of Enrage"))
             return;
         if (Bot.Inventory.IsEquipped("Scroll of Enrage"))
             return;
