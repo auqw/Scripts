@@ -917,18 +917,15 @@ public class CoreNation
         if (Core.CheckInventory("Essence of Nulgath", quant))
             return;
 
-        Core.FarmingLogger("Essence of Nulgath", quant);
-
         Core.AddDrop("Essence of Nulgath");
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster(
             "tercessuinotlim",
             "m2",
             "Left",
-            "*",
+            "Dark Makai",
             "Essence of Nulgath",
             quant,
-            false,
             false
         );
         Core.JumpWait();
