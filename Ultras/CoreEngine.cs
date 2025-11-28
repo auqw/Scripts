@@ -680,7 +680,7 @@ public class CoreEngine
         {
             Chill();
             Bot.Bank.ToInventory(name);
-            Bot.Sleep(D2);
+            Bot.Wait.ForBankToInventory(name);
             Log("BANK", $"🏦→🎒 {name}");
             return true;
         }
@@ -699,7 +699,7 @@ public class CoreEngine
         {
             Chill();
             Bot.Bank.ToInventory(id);
-            Bot.Sleep(D2);
+            Bot.Wait.ForBankToInventory(id);
             Log("BANK", $"🏦→🎒 #{id}");
             return true;
         }
@@ -721,7 +721,7 @@ public class CoreEngine
         {
             Chill();
             Bot.Inventory.ToBank(name);
-            Bot.Sleep(D2);
+            Bot.Wait.ForInventoryToBank(name);
             Log("BANK", $"🎒→🏦 {name}");
             return true;
         }
@@ -743,7 +743,7 @@ public class CoreEngine
         {
             Chill();
             Bot.Inventory.ToBank(id);
-            Bot.Sleep(D2);
+            Bot.Wait.ForInventoryToBank(id);
             Log("BANK", $"🎒→🏦 #{id}");
             return true;
         }
@@ -754,39 +754,17 @@ public class CoreEngine
         }
     }
 
-    public int Owned(string name, bool isTemp = false)
-    {
-        try
-        {
-            return string.IsNullOrWhiteSpace(name)
-                ? 0
-                : (
-                    isTemp
-                        ? Bot.TempInv?.GetQuantity(name) ?? 0
-                        : Bot.Inventory?.GetQuantity(name) ?? 0
-                );
-        }
-        catch
-        {
-            return 0;
-        }
-    }
+    public int Owned(string name, bool isTemp = false) =>
+        string.IsNullOrWhiteSpace(name)
+            ? 0
+            : (
+                isTemp ? Bot.TempInv?.GetQuantity(name) ?? 0 : Bot.Inventory?.GetQuantity(name) ?? 0
+            );
 
-    public int Owned(int id, bool isTemp = false)
-    {
-        try
-        {
-            return id <= 0
-                ? 0
-                : (
-                    isTemp ? Bot.TempInv?.GetQuantity(id) ?? 0 : Bot.Inventory?.GetQuantity(id) ?? 0
-                );
-        }
-        catch
-        {
-            return 0;
-        }
-    }
+    public int Owned(int id, bool isTemp = false) =>
+        id <= 0
+            ? 0
+            : (isTemp ? Bot.TempInv?.GetQuantity(id) ?? 0 : Bot.Inventory?.GetQuantity(id) ?? 0);
 
     public bool Owned(string name, int quantity, bool isTemp = false) =>
         Owned(name, isTemp) >= quantity;
@@ -795,14 +773,8 @@ public class CoreEngine
 
     public void EquipRandomClassAndReequip(int holdMs = 1000)
     {
-        if (Bot?.Inventory == null || Bot.Player == null)
-            return;
-
         bool IsClass(InventoryItem it)
         {
-            if (it == null)
-                return false;
-
             try
             {
                 if (it is ItemBase ib)
