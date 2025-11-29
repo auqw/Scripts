@@ -87,7 +87,7 @@ public class UltraEzrajal
         // ---------------------------
         // ENHANCEMENTS
         // ---------------------------
-        Ultra.Enhancements(); // new version with auto-role detection
+        Enhancements(); // new version with auto-role detection
 
         // ---------------------------
         // POTIONS
