@@ -10081,8 +10081,8 @@
       "nation"
     ],
     "path": "Story/Nation/Bamboozle.cs",
-    "size": 5142,
-    "sha256": "a0d7948a2cb680142ece503d0b00914f9d0478ec2d544a48a7e4c0330d6d5b80",
+    "size": 5214,
+    "sha256": "d67949ab52522fcbdc4e473a1f7eba29bc59d95f7071267ff483c02ad10b199f",
     "fileName": "Bamboozle.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/Bamboozle.cs"
   },
@@ -26692,8 +26692,8 @@
       "gear"
     ],
     "path": "Good/GearOfAwe/Awescended.cs",
-    "size": 12704,
-    "sha256": "3d9675ab91e1f8ac16661bfbe66106e999ae20a85296ccbcd6eb4d7e6fde76a4",
+    "size": 12564,
+    "sha256": "6b979a3e5ed242204f8144ebd053fc1ea571e272c3f4f79423cb69d8fded33c6",
     "fileName": "Awescended.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/GearOfAwe/Awescended.cs"
   },
