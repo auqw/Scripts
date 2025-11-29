@@ -156,12 +156,13 @@ public class Bamboozle
         }
 
         //Time Quartz
-        if (!Story.QuestProgression(7292))
-        {
-            Core.EnsureAccept(7292);
-            Core.GetMapItem(6910, 1, "Thespan");
-            Bot.Wait.ForPickup("Time Quartz");
-            Core.EnsureComplete(7292);
-        }
+        // if (!Story.QuestProgression(7292))
+        // {
+        Story.MapItemQuest(7292, "thespan", 6910);
+        //     Core.EnsureAccept(7292);
+        //     Core.GetMapItem(6910, 1, "Thespan");
+        //     Bot.Wait.ForPickup("Time Quartz");
+        //     Core.EnsureComplete(7292);
+        // }
     }
 }
