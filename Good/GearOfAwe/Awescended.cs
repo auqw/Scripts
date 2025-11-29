@@ -327,14 +327,17 @@ public class Awescended
                         Core.HuntMonster("earthstorm", "Emerald Golem", "Chip of Emerald");
                         Core.HuntMonster("earthstorm", "Diamond Golem", "Chip of Diamond");
                         Core.EnsureComplete(7291);
+                        Bot.Wait.ForDrop("Rainbow Moonstone");
+                        Bot.Wait.ForPickup("Rainbow Moonstone");
                     }
-                    Bot.Wait.ForPickup("Rainbow Moonstone");
                     Core.EnsureComplete(7290);
+                    Bot.Wait.ForDrop("Floozer");
+                    Bot.Wait.ForPickup("Floozer");
                 }
-                Bot.Wait.ForPickup("Floozer");
                 Core.EnsureComplete(8043);
+                Bot.Wait.ForDrop("Valoth's Cannon of Doom");
+                Bot.Wait.ForPickup("Valoth's Cannon of Doom");
             }
-            Bot.Wait.ForPickup(60685);
             Core.EnsureComplete(8041);
         }
 
