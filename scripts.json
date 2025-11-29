@@ -620,26 +620,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Dailies/CyserosSuperHammer.cs"
   },
   {
-    "name": "Butler",
-    "description": "This will follow a player and copy their actions and do attack actions.",
-    "tags": [
-      "butler",
-      "follow",
-      "player",
-      "copy",
-      "actions",
-      "attack",
-      "maidr",
-      "auto",
-      "goto"
-    ],
-    "path": "Prototypes/Butler2[WIP].cs",
-    "size": 29652,
-    "sha256": "bf6de089916b8d29b7dd426b8e125e2138f22acd7b5f767e9298bc62b06d15a7",
-    "fileName": "Butler2[WIP].cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/Butler2[WIP].cs"
-  },
-  {
     "name": "Grimgoal",
     "description": "Goes through the grimgaol dungeon... Testing Phase",
     "tags": [
@@ -3822,7 +3802,7 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/YandereStalker.cs"
   },
   {
-    "name": "Butler",
+    "name": "Butler version 3.0",
     "description": "This will follow a player and copy their actions and do attack actions.",
     "tags": [
       "butler",
@@ -3833,13 +3813,14 @@
       "attack",
       "maidr",
       "auto",
-      "goto"
+      "goto",
+      "version 3"
     ],
-    "path": "Tools/Butler.cs",
-    "size": 12238,
-    "sha256": "4f1e7d91162d75e72c4b4ba16512282279a7d02554a56232cf2fb68d7c329663",
-    "fileName": "Butler.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butler.cs"
+    "path": "Tools/Butlerv3.cs",
+    "size": 13808,
+    "sha256": "4421235306ecadbee544dc17cec8c067a93e3c23e724e4521e83f2ce690f6f85",
+    "fileName": "Butlerv3.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv3.cs"
   },
   {
     "name": "BankAllItems",
