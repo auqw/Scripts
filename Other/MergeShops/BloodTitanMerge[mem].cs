@@ -5,7 +5,9 @@ tags: blood, titan, merge, classhallc, horns, titans, gilded, crusher
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/Story/TitanAttack.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -32,6 +34,12 @@ public class BloodTitanMerge
         set => _sAdv = value;
     }
     private static CoreAdvanced _sAdv;
+    private static TitanAttackStory Tas
+    {
+        get => _Tas ??= new TitanAttackStory();
+        set => _Tas = value;
+    }
+    private static TitanAttackStory _Tas;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -53,6 +61,7 @@ public class BloodTitanMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        Tas.DoAll();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("classhallc", 617, findIngredients, buyOnlyThis, buyMode: buyMode);
 
