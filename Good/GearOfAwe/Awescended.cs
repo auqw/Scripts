@@ -302,23 +302,20 @@ public class Awescended
             FaH.FortitudeAndHubris();
             SDD.ShadowDragonDefender();
             Pal.SilverExaltedPaladin();
+            Bam.BamboozleQuest();
+            J6.J6();
 
-            if (!Core.CheckInventory("Valoth's Cannon of Doom"))
+            // "Valoth's Cannon of Doom"
+            if (!Core.CheckInventory(60685))
             {
-                Core.AddDrop("Valoth's Cannon of Doom");
-
-                if (!Core.CheckInventory("Valoth's Broken Cannon"))
-                {
-                    Farm.Gold(5000000);
-                    Core.BuyItem("crashruins", 1212, "Valoth's Broken Cannon");
-                }
+                Core.AddDrop(60685);
 
                 Core.EnsureAccept(8043);
-                J6.J6();
-                Core.BuyItem("hyperspace", 603, "Peanut");
-                Bam.BamboozleQuest();
+                Adv.BuyItem("crashruins", 1212, "Valoth's Broken Cannon");
+                Adv.BuyItem("hyperspace", 603, "Peanut");
                 if (!Core.CheckInventory("Floozer"))
                 {
+                    Core.FarmingLogger("Floozer");
                     Core.AddDrop("Floozer");
                     Core.EnsureAccept(7290);
                     if (!Core.CheckInventory("Rainbow Moonstone"))
@@ -330,15 +327,14 @@ public class Awescended
                         Core.HuntMonster("earthstorm", "Emerald Golem", "Chip of Emerald");
                         Core.HuntMonster("earthstorm", "Diamond Golem", "Chip of Diamond");
                         Core.EnsureComplete(7291);
-                        Bot.Wait.ForPickup("Rainbow Moonstone");
                     }
+                    Bot.Wait.ForPickup("Rainbow Moonstone");
                     Core.EnsureComplete(7290);
-                    Bot.Wait.ForPickup("Floozer");
                 }
+                Bot.Wait.ForPickup("Floozer");
                 Core.EnsureComplete(8043);
-                Bot.Wait.ForPickup("Valoth's Cannon of Doom");
             }
-
+            Bot.Wait.ForPickup(60685);
             Core.EnsureComplete(8041);
         }
 
