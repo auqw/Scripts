@@ -17003,8 +17003,8 @@
       "crusher"
     ],
     "path": "Other/MergeShops/BloodTitanMerge[mem].cs",
-    "size": 6454,
-    "sha256": "2fe2710c7fd983459ef6b19bcef795417b3f2ffae9f4ebf1c790581146272ed5",
+    "size": 6722,
+    "sha256": "cd63fa368e37eb426fafb3e87e4eda573d31dbc0e7c61db7ba973c5e1d5ed5df",
     "fileName": "BloodTitanMerge[mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BloodTitanMerge[mem].cs"
   },
@@ -28513,8 +28513,8 @@
       "class"
     ],
     "path": "Other/Classes/Members-CLasses/BloodTitan[Mem].cs",
-    "size": 1215,
-    "sha256": "bb35376f17ffdc1ae2a25afd1e111c5450088319ec89556f20b0259ed4261595",
+    "size": 1483,
+    "sha256": "2097c4d189f7d791b5178344f45025563f3c6b72309502ca06ddc96b18d918a7",
     "fileName": "BloodTitan[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/Members-CLasses/BloodTitan[Mem].cs"
   },
