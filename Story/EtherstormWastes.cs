@@ -448,7 +448,7 @@ public class EtherStormWastes
         Story.KillQuest(
             3516,
             "DragonPlane",
-            new[] { "Earth Elemental", "Water Elemental", "Wind Elemental", "Fire Elemental" }
+            new[] { "Wind Elemental", "Earth Elemental", "Fire Elemental", "Water Elemental" }
         );
 
         //Fire and Ice in Battleundera 3517
