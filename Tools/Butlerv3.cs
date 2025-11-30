@@ -96,10 +96,7 @@ public class Butler3
                 // If {playerName} isnt in current map, jumpwait(); & goto, then wait [ActionDelay]
                 if (!Bot.Map.PlayerExists(playerName))
                 {
-                    Core.DebugLogger(
-                        this,
-                        $"{playerName} has isn't on the current map, following!"
-                    );
+                    Core.DebugLogger(this, $"{playerName} isn't on the current map, following!");
 
                     if (LockedZoneWarning)
                     {
