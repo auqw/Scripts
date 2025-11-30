@@ -1067,9 +1067,11 @@ public class Core13LoC
         Story.KillQuest(998, "sandcastle", "War Hyena");
 
         //Enter the Sphinx
+        Core.EquipClass(ClassType.Solo);
         Story.KillQuest(999, "sandcastle", "Chaos Sphinx");
 
         //Unlamented Lamia
+        Core.EquipClass(ClassType.Farm);
         Story.KillQuest(1000, "djinn", "Lamia");
 
         //E-vase-ive Measures
@@ -1085,6 +1087,7 @@ public class Core13LoC
         Story.MapItemQuest(1004, "djinn", 370, 5);
 
         //Chaos Lord Tibicenas
+        Core.EquipClass(ClassType.Solo);
         Story.KillQuest(1005, "djinn", "Tibicenas");
     }
 
@@ -1098,6 +1101,7 @@ public class Core13LoC
         //Troll Stink!
         if (!Story.QuestProgression(1232))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(1232);
             Core.HuntMonster("crossroads", "Chinchilizard", "Scaly Skin Scrub", 7);
             Core.HuntMonster("bloodtusk", "Trollola Plant", "Perfumed Trollola Flower", 5);
@@ -1107,6 +1111,7 @@ public class Core13LoC
         // It Not Time Yet
         if (!Story.QuestProgression(1233))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(1233);
             Core.HuntMonster("crossroads", "Lemurphant", "Lemurphant Stones", 5);
             Core.HuntMonster("crossroads", "Koalion", "Golden Down-fur", 5);
@@ -1116,6 +1121,7 @@ public class Core13LoC
         //Mountain Protection
         if (!Story.QuestProgression(1234))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(1234);
             Core.HuntMonsterMapID("bloodtusk", 21, "Polished Rocks", 3);
             Core.HuntMonster("crossroads", "Lemurphant", "Lemurphant Ivory", 5);
@@ -1126,6 +1132,7 @@ public class Core13LoC
         //Clear Mind, Cleanse Spirit
         if (!Story.QuestProgression(1235))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(1235);
             Core.HuntMonster("bloodtusk", "Trollola Plant", "Trollola Plant Resin", 4);
             Core.HuntMonster("crossroads", "Lemurphant", "Lemurphant Musk", 5);
@@ -1139,6 +1146,7 @@ public class Core13LoC
         //Be Horc Inside
         if (!Story.QuestProgression(1237))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(1237);
             Core.HuntMonster("bloodtusk", "Rock", "Skin of the Mountain", 3);
             Core.HuntMonster("crossroads", "Koalion", "Koalion Claw", 5);
@@ -1177,6 +1185,7 @@ public class Core13LoC
         //Good and Evil Not Always Right
         if (!Story.QuestProgression(1376))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(1376);
             Core.HuntMonster("alliance", "Good Soldier", "Good Soldier Vanquished", 10);
             Core.HuntMonster("alliance", "Evil Soldier", "Evil Soldier Vanquished", 10);
@@ -2440,11 +2449,19 @@ public class Core13LoC
             Core.Jump("r15", "Left");
             Bot.Wait.ForPickup(25903);
             Core.EnsureComplete(3798);
+            Bot.Wait.ForQuestComplete(3789);
         }
 
         //Beat Death!
+        // Get out of any cutscene cells
+        Core.Jump("Enter", "Spawn");
         Core.EquipClass(ClassType.Solo);
-        Story.KillQuest(3799, "shadowattack", "Death");
+        if (!Story.QuestProgression(3799))
+        {
+            Core.EnsureAccept(3799);
+            Core.HuntMonster("shadowattack", "Death", "You Beat Death?!");
+            Core.EnsureComplete(3799);
+        }
 
         //Enter Confrontation
         if (!Core.isCompletedBefore(3876))
