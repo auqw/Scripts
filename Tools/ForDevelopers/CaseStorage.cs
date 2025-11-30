@@ -29456,7 +29456,154 @@ case ""Vici's Hood"":
                     break;
     "
         },
-    };
+    {
+    "Golden Leaves",
+    @"
+case ""Golden Leaves"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(
+                            10498,
+                            (""moglinfeast"", ""Hay Fever Sylph"", ClassType.Farm),
+                            (""moglinfeast"", ""Redcap Mush"", ClassType.Farm),
+                            (""moglinfeast"", ""Fall Fae Queen"", ClassType.Solo)
+                        );
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Persimmon Branch",
+    @"
+case ""Persimmon Branch"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""moglinfeast"",
+                        ""Pumpkin Mimic"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Fall Fruit Basket",
+    @"
+case ""Fall Fruit Basket"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""moglinfeast"",
+                        ""Pumpkin Mimic"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Fae Dust",
+    @"
+case ""Fae Dust"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.KillMonster(
+                        ""moglinfeast"",
+                        ""r7"",
+                        ""Left"",
+                        ""*"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Fall Fae Assassin Morph",
+    @"
+case ""Fall Fae Assassin Morph"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""moglinfeast"",
+                        ""Fall Fae Queen"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Fall Fae Assassin Visage",
+    @"
+case ""Fall Fae Assassin Visage"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""moglinfeast"",
+                        ""Fall Fae Queen"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+};
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);
