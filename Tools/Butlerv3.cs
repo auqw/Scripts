@@ -54,6 +54,7 @@ public class Butler3
     string RN;
     List<string?> lockedMapList;
     String? TargetCell;
+    bool RoomFull;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -66,6 +67,10 @@ public class Butler3
     {
         #region Ignore
         // Core.DL_Enable();
+        Core.Logger(
+            "Joining whitemap, as starting on certain maps.. just breaks things? Not sure why :| "
+        );
+        Core.Join("whitemap");
         Bot.Events.ExtensionPacketReceived += ChatListener;
         LockedZoneWarning = false;
         // Null-safe config reads
@@ -100,12 +105,13 @@ public class Butler3
 
                     if (LockedZoneWarning)
                     {
-                        Bot.Map.Jump("Enter", "Spawn");
-                        Bot.Wait.ForCellChange("Enter");
+                        Bot.Events.ExtensionPacketReceived -= ChatListener;
+                        Core.JumpWait();
                         LockedZoneWarning = false;
 
                         if (lockedMapList.Count > 0)
                         {
+                            Core.Logger("LockedMaps handler Initiated.", "LockedMapList.Count > 0");
                             foreach (string? map in lockedMapList.Where(m => m != null))
                             {
                                 if (Bot.ShouldExit)
@@ -119,14 +125,20 @@ public class Butler3
 
                                 if (Bot.Map.PlayerExists(playerName))
                                 {
+                                    Bot.Events.ExtensionPacketReceived += ChatListener;
                                     Bot.Player?.Goto(playerName);
                                     break;
                                 }
                             }
+                            Bot.Events.ExtensionPacketReceived += ChatListener;
+                            continue;
                         }
-                        else
+                        else if (lockedMapList.Count <= 0)
                         {
-                            Bot.Log("LockedMap list is Empty, we'll Sleep incrimentaly");
+                            Core.Logger(
+                                "LockedMap list is Empty, we'll Sleep incrimentaly",
+                                "lockedMapList <= 0"
+                            );
                             Random random = new();
                             int sleepTimer = 500; // Start at 500ms
                             const int maxSleep = 5000; // 5 seconds max
@@ -146,19 +158,52 @@ public class Butler3
                                 }
 
                                 if (Bot.Map.PlayerExists(playerName))
+                                {
+                                    Bot.Events.ExtensionPacketReceived += ChatListener;
                                     break;
+                                }
                             }
+                            Bot.Events.ExtensionPacketReceived += ChatListener;
+                            continue;
                         }
                     }
-                    else
+                    if (RoomFull)
                     {
-                        Bot.Map.Jump("Enter", "Spawn");
-                        Bot.Wait.ForCellChange("Enter");
+                        Bot.Events.ExtensionPacketReceived -= ChatListener;
+                        Random random = new();
+                        int sleepTimer = 1000; // Start at 500ms
+                        const int maxSleep = 5000; // 10 seconds max
+                        const int increment = 1000; // 500ms random increment
 
-                        if (!Bot.Map.PlayerExists(playerName))
-                            Bot.Player.Goto(playerName);
-                        Bot.Sleep(1000);
+                        while (!Bot.ShouldExit && !Bot.Map.PlayerExists(playerName!))
+                        {
+                            Bot.Sleep(sleepTimer);
+
+                            // Increment sleep time if under 5 seconds
+                            if (sleepTimer < maxSleep)
+                            {
+                                sleepTimer += random.Next(increment); // Add 0-500ms randomly
+                                sleepTimer = Math.Min(sleepTimer, maxSleep); // Cap at 5 seconds
+                            }
+                            Bot.Player.Goto(playerName!);
+                            if (Bot.Map.PlayerExists(playerName!))
+                            {
+                                Bot.Events.ExtensionPacketReceived += ChatListener;
+                                RoomFull = false;
+                                break;
+                            }
+                            if (RoomFull && sleepTimer >= maxSleep)
+                                Bot.Log(
+                                    "Room is still full, we'll continue waiting for the map to be accessable, or till we can goto the player."
+                                );
+                        }
+                        continue;
                     }
+
+                    Core.JumpWait();
+
+                    Bot.Player.Goto(playerName);
+                    Bot.Sleep(1000);
                 }
 
                 while (!Bot.ShouldExit)
@@ -169,11 +214,6 @@ public class Butler3
                     if (!Bot.Map.PlayerExists(playerName))
                         break;
 
-                    // if (
-                    //     Bot.Map?.GetPlayer(playerName) != null
-                    //     && Bot.Map?.GetPlayer(playerName)?.Cell != null
-                    //     && Bot.Map?.GetPlayer(playerName)?.Cell != Bot.Player?.Cell
-                    // )
                     Bot.Player.Goto(playerName);
                     Bot.Sleep(500);
                     Bot.Combat.Attack("*");
@@ -225,30 +265,14 @@ public class Butler3
                 {
                     LockedZoneWarning = true;
                 }
-                // if (ChatListenerPacket.Contains("is full", StringComparison.OrdinalIgnoreCase))
-                // {
-                //     Core.DebugLogger(this,
-                //         $"Room is full, we'll wait incrementally, whilst trying to goto {playerName}"
-                //     );
-
-                //     Random random = new();
-                //     int sleepTimer = 500; // Start at 500ms
-                //     const int maxSleep = 5000; // 5 seconds max
-                //     const int increment = 500; // 500ms random increment
-
-                //     while (!Bot.ShouldExit && !Bot.Map.PlayerNames.Contains(playerName!))
-                //     {
-                //         Bot.Sleep(sleepTimer);
-
-                //         // Increment sleep time if under 5 seconds
-                //         if (sleepTimer < maxSleep)
-                //         {
-                //             sleepTimer += random.Next(increment); // Add 0-500ms randomly
-                //             sleepTimer = Math.Min(sleepTimer, maxSleep); // Cap at 5 seconds
-                //         }
-                //         Bot.Player.Goto(playerName!);
-                //     }
-                // }
+                if (ChatListenerPacket.Contains("is full", StringComparison.OrdinalIgnoreCase))
+                {
+                    Core.DebugLogger(
+                        this,
+                        $"Room is full, we'll wait incrementally, whilst trying to goto {playerName}"
+                    );
+                    RoomFull = true;
+                }
             }
         }
         catch (Exception ex)
