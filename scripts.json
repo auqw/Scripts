@@ -3817,8 +3817,8 @@
       "version 3"
     ],
     "path": "Tools/Butlerv3.cs",
-    "size": 18831,
-    "sha256": "d4bb1226fa63fe85992d78dcf6f3e39a2c1429962112b26020196ab0e62bd18d",
+    "size": 18835,
+    "sha256": "0b297c6c3fde28c43eb82f626c90ad41c9f02d0c8ebe842cd886a390c58fe59f",
     "fileName": "Butlerv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv3.cs"
   },
@@ -29876,6 +29876,34 @@
     "sha256": "68e1d4396fd196ddffe04ee00908ba7d9c5769bc183735d392c126c7b870f7de",
     "fileName": "FreeasaBirdMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/FreeasaBirdMerge.cs"
+  },
+  {
+    "name": "Moglin Feast Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Moglin Feast Merge [2637] in /moglinfeast",
+    "tags": [
+      "moglin",
+      "feast",
+      "merge",
+      "moglinfeast",
+      "fall",
+      "forest",
+      "traveler",
+      "morph",
+      "cap",
+      "fruit",
+      "assortment",
+      "fae",
+      "ruler",
+      "king",
+      "queen",
+      "assassin",
+      "scarf"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/MoglinFeastMerge.cs",
+    "size": 9604,
+    "sha256": "6f1795b6624afe1674a9b7c0beefeb9f0efe0d732cac6209acc25c9dfe23d600",
+    "fileName": "MoglinFeastMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/MoglinFeastMerge.cs"
   },
   {
     "name": "Harvest Day Parade Merge",
