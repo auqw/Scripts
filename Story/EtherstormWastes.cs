@@ -381,7 +381,7 @@ public class EtherStormWastes
         Story.KillQuest(
             3502,
             "dragonplane",
-            new[] { "Earth Elemental", "Water Elemental", "Wind Elemental", "Fire Elemental" }
+            new[] { "Earth Elemental", "Fire Elemental", "Water Elemental", "Wind Elemental" }
         );
 
         //The Scroll of Salubris 3503
