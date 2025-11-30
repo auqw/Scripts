@@ -22315,6 +22315,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbonyDragonBladeOfNulgath.cs"
   },
   {
+    "name": "Ebil Mega Mall Story",
+    "description": "This will complete the Ebil Mega Mall story.",
+    "tags": [
+      "story",
+      "quest",
+      "ebil mega mall",
+      "black friday",
+      "seasonal",
+      "yes ma'am",
+      "yes maam",
+      "ebilmegamall"
+    ],
+    "path": "Seasonal/BlackFriday/EbilMegaMallStory.cs",
+    "size": 3393,
+    "sha256": "df9b13bbc5447c294c9eaa014551abf45b14de6a16ac73f55207e5a657f15e17",
+    "fileName": "EbilMegaMallStory.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallStory.cs"
+  },
+  {
     "name": "Technocaster Merge",
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
