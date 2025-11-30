@@ -8195,6 +8195,13 @@ public class CoreBots
                 blackListedCells.UnionWith(new[] { "New6" });
                 break;
 
+            case "shadowrise":
+                blackListedCells.UnionWith(
+                    new[] { "Enter", "After", "noDrak", "noChaos", "Cut1", "Cut37" }
+                );
+
+                break;
+
             case "bloodmoon":
                 blackListedCells.UnionWith(new[] { "Enter", "r17" });
                 break;
@@ -8231,6 +8238,11 @@ public class CoreBots
 
             case "necroU":
                 blackListedCells.UnionWith(new[] { "Leave", "r6" });
+                break;
+
+            case "finalbattle":
+            case "confrontation":
+                blackListedCells.UnionWith(new[] { "noChaos" });
                 break;
 
             default:
