@@ -66,8 +66,9 @@ public class Butler3
         Bot.Events.ExtensionPacketReceived += LockedZoneListener;
 
         LockedZoneWarning = false;
-        lockedMapList = Bot.Config!.Get<string>("lockedMapsList")
-            .Split(',')
+        string? lockedMapsRaw = Bot.Config?.Get<string>("lockedMapsList") ?? string.Empty;
+        lockedMapList = lockedMapsRaw
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
             .Select(m => m.Trim())
             .ToList();
         playerName = Bot.Config!.Get<string>("playerName");
@@ -88,7 +89,11 @@ public class Butler3
             if (!Bot.Player!.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-            if (Bot.Player.Alive && Bot.Map.PlayerNames.Contains(playerName))
+            if (
+                Bot.Player.Alive
+                && Bot.Map.PlayerNames != null
+                && Bot.Map.PlayerNames.Contains(playerName)
+            )
             {
                 if (
                     Bot.Map.TryGetPlayer(playerName, out PlayerInfo? targetPlayer)
@@ -113,7 +118,7 @@ public class Butler3
                 }
             }
 
-            if (!Bot.Map.PlayerNames.Contains(playerName))
+            if (Bot.Map.PlayerNames == null || !Bot.Map.PlayerNames.Contains(playerName))
             {
                 if (LockedZoneWarning)
                 {
@@ -150,7 +155,7 @@ public class Butler3
         Core.JumpWait();
     }
 
-    bool PlayerInMap => Bot.Map.PlayerNames.Contains(playerName!);
+    bool PlayerInMap => Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(playerName!);
 
     void LockedZoneListener(dynamic packet)
     {
