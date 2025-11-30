@@ -683,8 +683,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 104907,
-    "sha256": "a68d9218e0c695774cb519942e9e7a90f55fe29d279fca6a3cba6058b4b9b3e7",
+    "size": 104915,
+    "sha256": "32db70f2c235640b5f84e5e15ea117c449ac66c78901ca75aa586b2ebdb49a12",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -695,8 +695,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 8652,
-    "sha256": "fc5e602f40ec1afd2d3b31690c83ad97f061aa4b1efbf54fcecab2de35986dbf",
+    "size": 8830,
+    "sha256": "3897fbfe4ddef9044c3451f93804e129b04536234011e4120a423955a3e414da",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -768,7 +768,7 @@
     ],
     "path": "Ultras/CoreUltra.cs",
     "size": 36883,
-    "sha256": "fa4ed7722ff8c1b2a40100d659266692eb50fc1368d8a2124db24253034db654",
+    "sha256": "650fc257b0069d1e275843b70e63d10b3c09d7387bc5586a4a2ced77b5c810b4",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -10960,8 +10960,8 @@
       "null"
     ],
     "path": "Story/LordsofChaos/Core13LoC.cs",
-    "size": 83010,
-    "sha256": "135b49157085cbecff544ca085f57a97da87b2fe69ceb1f41931837943c176e2",
+    "size": 83684,
+    "sha256": "264004ddadfb5f82bfa8aff46abe3db7016a5bdb32e649deb2f490a63458c14d",
     "fileName": "Core13LoC.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/LordsofChaos/Core13LoC.cs"
   },
