@@ -21295,8 +21295,8 @@
       "null"
     ],
     "path": "Seasonal/HarvestDay/CoreHarvestDay.cs",
-    "size": 29435,
-    "sha256": "5183ae963bac4a642ead4ce57f7a3507ab2fdd8cde01e2a0575ff2b3f7c43a8d",
+    "size": 32212,
+    "sha256": "329c4be9ad1ed5068ee0f604474bbe9cd2800e2f1acc947ad3a74554ec0cb6cf",
     "fileName": "CoreHarvestDay.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/CoreHarvestDay.cs"
   },
@@ -21314,6 +21314,23 @@
     "sha256": "9c3f005d6ba6b07029f4682db0143f657328862f30c2ea12a3d449b006c728c5",
     "fileName": "06ArtixHomeStory[Member].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/06ArtixHomeStory[Member].cs"
+  },
+  {
+    "name": "Moglin Feast Story",
+    "description": "This will finish the Moglin Feast storyline.",
+    "tags": [
+      "moglinfeast",
+      "moglin feast",
+      "seasonal",
+      "harvest-day",
+      "moglin",
+      "feast"
+    ],
+    "path": "Seasonal/HarvestDay/20MoglinFeast.cs",
+    "size": 800,
+    "sha256": "921f17a7e44df6196fb16b06051250ecc7a086c9d2c3b7e1500debe6d2c78953",
+    "fileName": "20MoglinFeast.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/20MoglinFeast.cs"
   },
   {
     "name": "Ebil Corp HQ Story",
