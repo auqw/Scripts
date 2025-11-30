@@ -3817,8 +3817,8 @@
       "version 3"
     ],
     "path": "Tools/Butlerv3.cs",
-    "size": 18835,
-    "sha256": "0b297c6c3fde28c43eb82f626c90ad41c9f02d0c8ebe842cd886a390c58fe59f",
+    "size": 18839,
+    "sha256": "ae5305eca91576f8bafdc662d062f201ab1107843643fdeadd9fc08611dd0dfe",
     "fileName": "Butlerv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv3.cs"
   },
@@ -24897,8 +24897,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1073222,
-    "sha256": "1eaf9d89bf62a0634cc5db7b12e170385e8fc208e5b0bb83e8ee0f2adb24a875",
+    "size": 1082444,
+    "sha256": "5c28df8efabec361e59b208c423f3d930d988f6d91d3164d7534249c9f87fcdc",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
