@@ -1240,6 +1240,7 @@ public class Core13LoC
         Story.KillQuest(1459, "orecavern", "Chaorrupted Evil Soldier");
 
         //Battle the Baas!
+        Core.EquipClass(ClassType.Solo);
         Story.KillQuest(1460, "orecavern", "Naga Baas");
 
         //Know the Nexus
@@ -1248,6 +1249,7 @@ public class Core13LoC
         //Secure a Route Home
         if (!Story.QuestProgression(1470))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(1470);
             Core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Scales", 2);
             Core.HuntMonster("dreamnexus", "Dark Wyvern", "Wyvern Claws", 2);
@@ -1263,6 +1265,7 @@ public class Core13LoC
         //Master the Flames
         if (!Story.QuestProgression(1472))
         {
+            Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(1472);
             Core.HuntMonster("dreamnexus", "Solar Phoenix", "Phoenix Tear", 10);
             Core.HuntMonster("dreamnexus", "Solar Phoenix", "Phoenix Blood", 5);
@@ -1272,6 +1275,7 @@ public class Core13LoC
         //Choose: Khasaanda Confrontation?
         if (!Story.QuestProgression(1473))
         {
+            Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(1473);
             Core.KillMonster(
                 "dreamnexus",
