@@ -52,7 +52,7 @@ public class Concert
         Story.KillQuest(1021, "vertigo", new[] { "Fear Muncher", "Banished Banshee" });
 
         //Elevation Sensation 1022
-        Story.KillQuest(1022, "vertigo", new[] { "Banished Banshee", "Cloaked Fiend" });
+        Story.KillQuest(1022, "vertigo", new[] { "Cloaked Fiend", "Banished Banshee" });
 
         //Altitude Adjustment 1023
         Story.KillQuest(1023, "vertigo", new[] { "Cloaked Fiend", "Abandoned Dolly" });
