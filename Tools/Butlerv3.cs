@@ -19,7 +19,7 @@ public class Butler3
     private static CoreBots Core => CoreBots.Instance;
     private static CoreArmyLite Army => new();
     public bool DontPreconfigure = true;
-    public string OptionsStorage = "Butler";
+    public string OptionsStorage = "ButlerV3";
     public List<IOption> Options = new()
     {
         new Option<string>(
@@ -52,7 +52,8 @@ public class Butler3
     string? playerName;
     ClassType classType;
     string RN;
-    List<string> lockedMapList;
+    List<string?> lockedMapList;
+    String? TargetCell;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -63,124 +64,203 @@ public class Butler3
 
     public void BasicAFButler()
     {
-        Bot.Events.ExtensionPacketReceived += LockedZoneListener;
-
+        #region Ignore
+        Core.DL_Enable();
+        Bot.Events.ExtensionPacketReceived += ChatListener;
         LockedZoneWarning = false;
-        string? lockedMapsRaw = Bot.Config?.Get<string>("lockedMapsList") ?? string.Empty;
-        lockedMapList = lockedMapsRaw
-            .Split(',', StringSplitOptions.RemoveEmptyEntries)
-            .Select(m => m.Trim())
-            .ToList();
+        // Null-safe config reads
+        var lockedMapsConfig = Bot.Config!.Get<string>("lockedMapsList");
+        lockedMapList =
+            lockedMapsConfig?.Split(',').Select(m => m?.Trim()).ToList() ?? new List<string?>();
+
         playerName = Bot.Config!.Get<string>("playerName");
         classType = Bot.Config!.Get<ClassType>("classType");
-        RN = Bot.Config!.Get<string>("RoomNumber") ?? Core.PrivateRoomNumber.ToString();
+
+        RN = !string.IsNullOrEmpty(RN) ? RN : Core.PrivateRoomNumber.ToString();
 
         if (string.IsNullOrEmpty(playerName))
         {
-            Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
+            Bot.Events.ExtensionPacketReceived -= ChatListener;
+            Core.Logger("PlayerName is empty", "Empty PlayerName", true);
             return;
         }
 
         if (classType != ClassType.None)
             Core.EquipClass(classType);
+        #endregion
 
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player!.Alive)
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-            if (
-                Bot.Player.Alive
-                && Bot.Map.PlayerNames != null
-                && Bot.Map.PlayerNames.Contains(playerName)
-            )
+            try
             {
-                if (
-                    Bot.Map.TryGetPlayer(playerName, out PlayerInfo? targetPlayer)
-                    && targetPlayer != null
-                )
+                // If {playerName} isnt in current map, jumpwait(); & goto, then wait [ActionDelay]
+                if (!Bot.Map.PlayerExists(playerName))
                 {
-                    if (targetPlayer.Cell != Bot.Player.Cell)
+                    Core.DebugLogger(
+                        this,
+                        $"{playerName} has isn't on the current map, following!"
+                    );
+
+                    if (LockedZoneWarning)
                     {
-                        Bot.Player.Goto(playerName);
-                        Bot.Sleep(1000);
+                        Bot.Map.Jump("Enter", "Spawn");
+                        Bot.Wait.ForCellChange("Enter");
+                        LockedZoneWarning = false;
+
+                        if (lockedMapList.Count > 0)
+                        {
+                            foreach (string? map in lockedMapList.Where(m => m != null))
+                            {
+                                if (Bot.ShouldExit)
+                                {
+                                    Bot.Events.ExtensionPacketReceived -= ChatListener;
+                                    return;
+                                }
+
+                                Core.Join($"{map}-{RN}");
+                                Bot.Wait.ForMapLoad(map!);
+
+                                if (Bot.Map?.PlayerNames?.Any(x => x == playerName) == true)
+                                {
+                                    Bot.Player?.Goto(playerName);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Bot.Log("LockedMap list is Empty, we'll Sleep incrimentaly");
+                            Random random = new();
+                            int sleepTimer = 500; // Start at 500ms
+                            const int maxSleep = 5000; // 5 seconds max
+                            const int increment = 1000; // 500ms random increment
+
+                            while (!Bot.ShouldExit && !Bot.Map.PlayerNames.Contains(playerName))
+                            {
+                                Core.DebugLogger(this, $"Sleeping for: {sleepTimer}");
+                                Bot.Sleep(sleepTimer);
+
+                                Bot.Player.Goto(playerName);
+                                // Increment sleep time if under 5 seconds
+                                if (sleepTimer < maxSleep)
+                                {
+                                    sleepTimer += random.Next(increment); // Add 0-500ms randomly
+                                    sleepTimer = Math.Min(sleepTimer, maxSleep); // Cap at 5 seconds
+                                }
+
+                                if (Bot.Map.PlayerNames.Contains(playerName))
+                                    break;
+                            }
+                        }
                     }
                     else
                     {
-                        if (!Bot.Monsters.CurrentAvailableMonsters.Any(x => x != null && x.HP > 0))
-                            Bot.Sleep(500);
-                        else
-                        {
-                            Bot.Combat.Attack("*");
-                        }
-                        Bot.Sleep(500);
-                    }
-                }
-            }
+                        Bot.Map.Jump("Enter", "Spawn");
+                        Bot.Wait.ForCellChange("Enter");
 
-            if (Bot.Map.PlayerNames == null || !Bot.Map.PlayerNames.Contains(playerName))
-            {
-                if (LockedZoneWarning)
-                {
-                    Core.JumpWait();
-                    LockedZoneWarning = false;
-                    foreach (string map in lockedMapList)
-                    {
-                        if (Bot.ShouldExit)
-                        {
-                            Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
-                            return;
-                        }
-
-                        Core.Join($"{map}-{RN}");
-                        Bot.Wait.ForMapLoad(map);
-
-                        if (Bot.Map.PlayerNames!.Any(x => x != null && x == playerName))
-                        {
+                        if (!Bot.Map.PlayerNames.Contains(playerName))
                             Bot.Player.Goto(playerName);
-                            Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
-                            break;
-                        }
+                        Bot.Sleep(1000);
                     }
                 }
 
-                Core.JumpWait();
-                Bot.Sleep(1000);
-                Bot.Player.Goto(playerName);
-                Bot.Sleep(1000);
+                while (!Bot.ShouldExit)
+                {
+                    if (!Bot.Player.Alive)
+                        Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
+
+                    if (!Bot.Map.PlayerNames.Contains(playerName))
+                        break;
+
+                    // if (
+                    //     Bot.Map?.GetPlayer(playerName) != null
+                    //     && Bot.Map?.GetPlayer(playerName)?.Cell != null
+                    //     && Bot.Map?.GetPlayer(playerName)?.Cell != Bot.Player?.Cell
+                    // )
+                    Bot.Player.Goto(playerName);
+                    Bot.Sleep(500);
+                    Bot.Combat.Attack("*");
+                }
             }
+            catch { }
         }
 
-        Bot.Events.ExtensionPacketReceived -= LockedZoneListener;
+        Bot.Events.ExtensionPacketReceived -= ChatListener;
         Core.JumpWait();
     }
 
-    bool PlayerInMap => Bot.Map.PlayerNames != null && Bot.Map.PlayerNames.Contains(playerName!);
-
-    void LockedZoneListener(dynamic packet)
+    void ChatListener(dynamic packet)
     {
-        string? type = packet["params"].type;
-
-        if (type is "str")
+        try
         {
-            dynamic data = packet["params"].dataObj;
-            string cmd = data[0];
-
-            if (cmd == null || data == null)
+            if (packet == null)
                 return;
 
-            if (cmd is "warning")
+            var paramsObj = packet["params"];
+            if (paramsObj == null)
+                return;
+
+            string? type = paramsObj.type;
+            if (type != "str")
+                return;
+
+            dynamic? dataObj = paramsObj.dataObj;
+            if (dataObj == null)
+                return;
+
+            string? cmd = dataObj[0];
+            if (string.IsNullOrEmpty(cmd))
+                return;
+
+            if (cmd == "warning")
             {
-                string lockerZonePacket = Convert.ToString(packet);
+                string ChatListenerPacket = Convert.ToString(packet) ?? string.Empty;
                 if (
-                    lockerZonePacket.Contains("a Locked zone.")
-                    || lockerZonePacket.Contains("is not available.")
+                    ChatListenerPacket.Contains(
+                        "a Locked zone.",
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                    || ChatListenerPacket.Contains(
+                        "is not available.",
+                        StringComparison.OrdinalIgnoreCase
+                    )
                 )
+                {
                     LockedZoneWarning = true;
+                }
+                // if (ChatListenerPacket.Contains("is full", StringComparison.OrdinalIgnoreCase))
+                // {
+                //     Core.DebugLogger(this,
+                //         $"Room is full, we'll wait incrementally, whilst trying to goto {playerName}"
+                //     );
+
+                //     Random random = new();
+                //     int sleepTimer = 500; // Start at 500ms
+                //     const int maxSleep = 5000; // 5 seconds max
+                //     const int increment = 500; // 500ms random increment
+
+                //     while (!Bot.ShouldExit && !Bot.Map.PlayerNames.Contains(playerName!))
+                //     {
+                //         Bot.Sleep(sleepTimer);
+
+                //         // Increment sleep time if under 5 seconds
+                //         if (sleepTimer < maxSleep)
+                //         {
+                //             sleepTimer += random.Next(increment); // Add 0-500ms randomly
+                //             sleepTimer = Math.Min(sleepTimer, maxSleep); // Cap at 5 seconds
+                //         }
+                //         Bot.Player.Goto(playerName!);
+                //     }
+                // }
             }
+        }
+        catch (Exception ex)
+        {
+            Core.DebugLogger(this, $"Error in ChatListener: {ex.Message}");
         }
     }
 }
+
 #region MyChild
 //
 //                                  ▒▒▒▒▒▒▒▒▒▒▒▒▒▒░░
