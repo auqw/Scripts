@@ -66,6 +66,7 @@ public class CoreHarvestDay
             EbilCorpHQ();
             BlightHarvest();
             ManaHarvest();
+            MoglinFeast();
         }
         else
         {
@@ -75,7 +76,7 @@ public class CoreHarvestDay
 
     public void Harvest()
     {
-        if (!Core.isSeasonalMapActive("harvest") || Core.isCompletedBefore(136))
+        if (Core.isCompletedBefore(136) || !Core.isSeasonalMapActive("harvest"))
             return;
 
         Story.PreLoad(this);
@@ -137,7 +138,7 @@ public class CoreHarvestDay
         if (!Core.IsMember)
             return;
 
-        if (!Core.isSeasonalMapActive("turdraken") || Core.isCompletedBefore(430))
+        if (Core.isCompletedBefore(430) || !Core.isSeasonalMapActive("turdraken"))
             return;
 
         Harvest();
@@ -179,7 +180,7 @@ public class CoreHarvestDay
     {
         if (!Core.IsMember)
             return;
-        if (!Core.isSeasonalMapActive("float") || Core.isCompletedBefore(897))
+        if (Core.isCompletedBefore(897) || !Core.isSeasonalMapActive("float"))
             return;
 
         Turdraken();
@@ -204,7 +205,7 @@ public class CoreHarvestDay
 
     public void Banquet()
     {
-        if (!Core.isSeasonalMapActive("banquet") || Core.isCompletedBefore(1436))
+        if (Core.isCompletedBefore(1436) || !Core.isSeasonalMapActive("banquet"))
             return;
 
         Story.PreLoad(this);
@@ -224,7 +225,7 @@ public class CoreHarvestDay
 
     public void Grams()
     {
-        if (!Core.isSeasonalMapActive("grams") || Core.isCompletedBefore(1444))
+        if (Core.isCompletedBefore(1444) || !Core.isSeasonalMapActive("grams"))
             return;
 
         Banquet();
@@ -247,7 +248,7 @@ public class CoreHarvestDay
     {
         if (!Core.IsMember)
             return;
-        if (!Core.isSeasonalMapActive("artixhome") || Core.isCompletedBefore(1440))
+        if (Core.isCompletedBefore(1440) || !Core.isSeasonalMapActive("artixhome"))
             return;
 
         Grams();
@@ -272,8 +273,8 @@ public class CoreHarvestDay
     public void FoulFarm()
     {
         if (
-            !Core.isSeasonalMapActive("foulfarm")
-            || (Core.isCompletedBefore(6090) && Core.CheckInventory("Muddy Soulflare"))
+            Core.isCompletedBefore(6090) && Core.CheckInventory("Muddy Soulflare")
+            || !Core.isSeasonalMapActive("foulfarm")
         )
             return;
 
@@ -315,7 +316,7 @@ public class CoreHarvestDay
 
     public void KillerKitchen()
     {
-        if (!Core.isSeasonalMapActive("killerkitchen") || Core.isCompletedBefore(3214))
+        if (Core.isCompletedBefore(3214) || !Core.isSeasonalMapActive("killerkitchen"))
             return;
 
         Story.PreLoad(this);
@@ -341,7 +342,7 @@ public class CoreHarvestDay
 
     public void FurbleFeast()
     {
-        if (!Core.isSeasonalMapActive("furblefeast") || Core.isCompletedBefore(7224))
+        if (Core.isCompletedBefore(7224) || !Core.isSeasonalMapActive("furblefeast"))
             return;
 
         Story.PreLoad(this);
@@ -383,7 +384,7 @@ public class CoreHarvestDay
 
     public void FurborgShip()
     {
-        if (!Core.isSeasonalMapActive("furborgship") || Core.isCompletedBefore(7231))
+        if (Core.isCompletedBefore(7231) || !Core.isSeasonalMapActive("furborgship"))
             return;
 
         FurbleFeast();
@@ -414,7 +415,7 @@ public class CoreHarvestDay
 
     public void MeatLab()
     {
-        if (!Core.isSeasonalMapActive("meatlab") || Core.isCompletedBefore(7213))
+        if (Core.isCompletedBefore(7213) || !Core.isSeasonalMapActive("meatlab"))
             return;
 
         Story.PreLoad(this);
@@ -476,7 +477,7 @@ public class CoreHarvestDay
 
     public void GothicDream()
     {
-        if (!Core.isSeasonalMapActive("gothicdream") || Core.isCompletedBefore(7795))
+        if (Core.isCompletedBefore(7795) || !Core.isSeasonalMapActive("gothicdream"))
             return;
 
         Story.PreLoad(this);
@@ -525,7 +526,7 @@ public class CoreHarvestDay
 
     public void MemetNightmare()
     {
-        if (!Core.isSeasonalMapActive("memetnightmare") || Core.isCompletedBefore(7808))
+        if (Core.isCompletedBefore(7808) || !Core.isSeasonalMapActive("memetnightmare"))
             return;
 
         GothicDream();
@@ -584,7 +585,7 @@ public class CoreHarvestDay
 
     public void NightmareWar()
     {
-        if (!Core.isSeasonalMapActive("nightmarewar") || Core.isCompletedBefore(7813))
+        if (Core.isCompletedBefore(7813) || !Core.isSeasonalMapActive("nightmarewar"))
             return;
 
         MemetNightmare();
@@ -960,6 +961,91 @@ public class CoreHarvestDay
         if (!Story.QuestProgression(9974))
         {
             Core.HuntMonsterQuest(9974, ("manaharvest", UMManaHarvest[7], ClassType.Solo));
+        }
+    }
+
+    public void MoglinFeast()
+    {
+        if (Core.isCompletedBefore(10497) || !Core.isSeasonalMapActive("moglinfeast"))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Dianthus Fae", // UseableMonsters[0],
+            "Pumpkin Mimic", // UseableMonsters[1],
+            "Hay Fever Sylph", // UseableMonsters[2],
+            "Redcap Mush", // UseableMonsters[3],
+            "Fall Fae Queen", // UseableMonsters[4]
+        };
+        #endregion Useable Monsters
+
+        // 10489 | Magical Ladies
+        if (!Story.QuestProgression(10489))
+        {
+            Story.MapItemQuest(10489, "moglinfeast", 15189);
+            Core.HuntMonsterQuest(10489, ("moglinfeast", UseableMonsters[0], ClassType.Farm));
+        }
+
+        // 10490 | Baby Boo Pumpkins
+        if (!Story.QuestProgression(10490))
+        {
+            Story.MapItemQuest(10490, "moglinfeast", 15190);
+            Core.HuntMonsterQuest(10490, ("moglinfeast", UseableMonsters[1], ClassType.Farm));
+        }
+
+        // 10491 | Vegetarian Fricassee
+        if (!Story.QuestProgression(10491))
+        {
+            Core.HuntMonsterQuest(
+                10491,
+                ("moglinfeast", UseableMonsters[0], ClassType.Farm),
+                ("moglinfeast", UseableMonsters[1], ClassType.Farm)
+            );
+        }
+
+        // 10492 | No Thoughts, Head Empty
+        if (!Story.QuestProgression(10492))
+        {
+            Story.MapItemQuest(10492, "moglinfeast", 15191, 6);
+        }
+
+        // 10493 | Fluid Displacement
+        if (!Story.QuestProgression(10493))
+        {
+            Story.MapItemQuest(10493, "moglinfeast", 15192);
+            Core.HuntMonsterQuest(10493, ("moglinfeast", UseableMonsters[2], ClassType.Farm));
+        }
+
+        // 10494 | Sir-Tainly Prepared
+        if (!Story.QuestProgression(10494))
+        {
+            Story.MapItemQuest(10494, "moglinfeast", 15193);
+            Core.HuntMonsterQuest(10494, ("moglinfeast", UseableMonsters[3], ClassType.Farm));
+        }
+
+        // 10495 | Main Entree
+        if (!Story.QuestProgression(10495))
+        {
+            Story.MapItemQuest(10495, "moglinfeast", 15194, 6);
+        }
+
+        // 10496 | Putrid Potpourri
+        if (!Story.QuestProgression(10496))
+        {
+            Core.HuntMonsterQuest(
+                10496,
+                ("moglinfeast", UseableMonsters[2], ClassType.Farm),
+                ("moglinfeast", UseableMonsters[3], ClassType.Farm)
+            );
+        }
+
+        // 10497 | Fairy Foray
+        if (!Story.QuestProgression(10497))
+        {
+            Core.HuntMonsterQuest(10497, ("moglinfeast", UseableMonsters[4], ClassType.Solo));
         }
     }
 }
