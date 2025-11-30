@@ -33,6 +33,22 @@ AI, LICH, VDK, DOT
  ===================
 */
 
+/*
+ ===================
+Safe Comp:
+CAV, LR, AP, LOO
+
+Fast Comp:
+CSS,LR,AP,LOO
+
+Fast F2P:
+KE, LR, AP, LOO
+
+Other Comp:
+AI, LICH, VDK, DOT
+ ===================
+*/
+
 public class UltraAvatarTyndarius
 {
     private CoreBots C => CoreBots.Instance;

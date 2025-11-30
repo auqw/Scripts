@@ -2234,16 +2234,16 @@ public class CoreEngine
 
     public double GetHealthPercentage()
     {
-        int max = Bot.Player?.MaxHealth ?? 0;
-        int cur = Bot.Player?.Health ?? 0;
-        return max > 0 ? (double)cur / max * 100 : 0;
+        if (Bot?.Player == null || Bot.Player.MaxHealth <= 0)
+            return 0;
+        return (double)Bot.Player.Health / Bot.Player.MaxHealth * 100;
     }
 
     public double GetManaPercentage()
     {
-        int max = Bot.Player?.MaxMana ?? 0;
-        int cur = Bot.Player?.Mana ?? 0;
-        return max > 0 ? (double)cur / max * 100 : 0;
+        if (Bot?.Player == null || Bot.Player.MaxMana <= 0)
+            return 0;
+        return (double)Bot.Player.Mana / Bot.Player.MaxMana * 100;
     }
 
     // Returns true if current HP is below the given threshold.
@@ -2280,28 +2280,36 @@ public class CoreEngine
 
     public bool IsFullHealth()
     {
-        if (!Bot.Player.Alive)
-            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-        return Bot.Player.Alive && Bot.Player.Health >= Bot.Player.MaxHealth;
+        if (Bot?.Player == null)
+            return false;
+        return Bot.Player.Health >= Bot.Player.MaxHealth;
     }
 
     public bool IsFullMana()
     {
-        if (!Bot.Player.Alive)
-            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-        return Bot.Player.Alive && Bot.Player.Mana >= Bot.Player.MaxMana;
+        if (Bot?.Player == null)
+            return false;
+        return Bot.Player.Mana >= Bot.Player.MaxMana;
     }
 
     public bool IsFullHealthAndMana()
     {
-        if (!Bot.Player.Alive)
-            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-        return Bot.Player.Alive && IsFullHealth() && IsFullMana();
+        return IsFullHealth() && IsFullMana();
     }
 
-    public bool IsDead() => Bot.Player.State == 0;
+    public bool IsDead()
+    {
+        if (Bot?.Player == null)
+            return true; // Assume dead if can't check
+        return Bot.Player.State == 0;
+    }
 
-    public bool IsIdle() => Bot.Player.State == 1;
+    public bool IsIdle()
+    {
+        if (Bot?.Player == null)
+            return false;
+        return Bot.Player.State == 1;
+    }
 
     public double GetDistanceTo(int x, int y)
     {
