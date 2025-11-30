@@ -65,7 +65,7 @@ public class Butler3
     public void BasicAFButler()
     {
         #region Ignore
-        Core.DL_Enable();
+        // Core.DL_Enable();
         Bot.Events.ExtensionPacketReceived += ChatListener;
         LockedZoneWarning = false;
         // Null-safe config reads
