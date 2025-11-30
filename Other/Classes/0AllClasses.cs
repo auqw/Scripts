@@ -265,6 +265,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Story/Nation/VoidChasm.cs
 //cs_include Scripts/Story/StarSinc.cs
 //cs_include Scripts/Story/ThirdSpell.cs
+//cs_include Scripts/Story/TitanAttack.cs
 //cs_include Scripts/Story/TowerOfDoom.cs
 //cs_include Scripts/Prototypes/Grimgaol.cs
 //cs_include Scripts/Story/7DeadlyDragons/Extra/HatchTheEgg.cs
