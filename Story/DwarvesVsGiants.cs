@@ -36,7 +36,7 @@ public class DwarvesVsGiants
 
     public void StoryLine()
     {
-        if (Core.isCompletedBefore(2784))
+        if (Core.isCompletedBefore(Core.IsMember ? 2785 : 2783))
             return;
 
         Story.PreLoad(this);
@@ -66,8 +66,8 @@ public class DwarvesVsGiants
             // Challenge Meatball 2784
             Story.KillQuest(2784, "dvgchallenge", "Meatball");
 
-            // Challenge Blixx 2784
-            Story.KillQuest(2784, "dvgchallenge", "Blixx");
+            // Challenge Blixx 2785
+            Story.KillQuest(2785, "dvgchallenge", "Blixx");
         }
     }
 }
