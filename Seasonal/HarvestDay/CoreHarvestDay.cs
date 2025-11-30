@@ -1015,8 +1015,10 @@ public class CoreHarvestDay
         // 10493 | Fluid Displacement
         if (!Story.QuestProgression(10493))
         {
+            Core.EnsureAccept(10493);
             Story.MapItemQuest(10493, "moglinfeast", 15192);
-            Core.HuntMonsterQuest(10493, ("moglinfeast", UseableMonsters[2], ClassType.Farm));
+            Core.HuntMonster("moglinfeast", UseableMonsters[2], "Golden Blooms", 40);
+            Core.EnsureComplete(10493);
         }
 
         // 10494 | Sir-Tainly Prepared
