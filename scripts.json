@@ -3817,8 +3817,8 @@
       "version 3"
     ],
     "path": "Tools/Butlerv3.cs",
-    "size": 14065,
-    "sha256": "7049d6fb61fc555f43a84fddb4d2f1f3e00a65041d33195076202ced22abf127",
+    "size": 17647,
+    "sha256": "9ea3d44cb889b379a8fd084476cff97721aba2fb43baf5c23ae1b2de31740c1c",
     "fileName": "Butlerv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv3.cs"
   },
@@ -10960,8 +10960,8 @@
       "null"
     ],
     "path": "Story/LordsofChaos/Core13LoC.cs",
-    "size": 83684,
-    "sha256": "264004ddadfb5f82bfa8aff46abe3db7016a5bdb32e649deb2f490a63458c14d",
+    "size": 83860,
+    "sha256": "1f1fea186113348751773a9acc55f9dbd0a1b7b7c69739c4a37d79e9c24e6952",
     "fileName": "Core13LoC.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/LordsofChaos/Core13LoC.cs"
   },
