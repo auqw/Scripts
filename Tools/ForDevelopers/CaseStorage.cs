@@ -29456,9 +29456,9 @@ case ""Vici's Hood"":
                     break;
     "
         },
-    {
-    "Golden Leaves",
-    @"
+        {
+            "Golden Leaves",
+            @"
 case ""Golden Leaves"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29480,10 +29480,10 @@ case ""Golden Leaves"":
                     }
                     break;
     "
-},
-{
-    "Persimmon Branch",
-    @"
+        },
+        {
+            "Persimmon Branch",
+            @"
 case ""Persimmon Branch"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29504,10 +29504,10 @@ case ""Persimmon Branch"":
                     );
                     break;
     "
-},
-{
-    "Fall Fruit Basket",
-    @"
+        },
+        {
+            "Fall Fruit Basket",
+            @"
 case ""Fall Fruit Basket"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29528,10 +29528,10 @@ case ""Fall Fruit Basket"":
                     );
                     break;
     "
-},
-{
-    "Fae Dust",
-    @"
+        },
+        {
+            "Fae Dust",
+            @"
 case ""Fae Dust"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29554,10 +29554,10 @@ case ""Fae Dust"":
                     );
                     break;
     "
-},
-{
-    "Fall Fae Assassin Morph",
-    @"
+        },
+        {
+            "Fall Fae Assassin Morph",
+            @"
 case ""Fall Fae Assassin Morph"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29578,10 +29578,10 @@ case ""Fall Fae Assassin Morph"":
                     );
                     break;
     "
-},
-{
-    "Fall Fae Assassin Visage",
-    @"
+        },
+        {
+            "Fall Fae Assassin Visage",
+            @"
 case ""Fall Fae Assassin Visage"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29602,8 +29602,8 @@ case ""Fall Fae Assassin Visage"":
                     );
                     break;
     "
-},
-};
+        },
+    };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);
