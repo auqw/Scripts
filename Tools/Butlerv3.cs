@@ -120,7 +120,7 @@ public class Butler3
                                 Core.Join($"{map}-{RN}");
                                 Bot.Wait.ForMapLoad(map!);
 
-                                if (Bot.Map?.PlayerNames?.Any(x => x == playerName) == true)
+                                if (Bot.Map.PlayerExists(playerName))
                                 {
                                     Bot.Player?.Goto(playerName);
                                     break;
@@ -135,7 +135,7 @@ public class Butler3
                             const int maxSleep = 5000; // 5 seconds max
                             const int increment = 1000; // 500ms random increment
 
-                            while (!Bot.ShouldExit && !Bot.Map.PlayerNames.Contains(playerName))
+                            while (!Bot.ShouldExit && !Bot.Map.PlayerExists(playerName))
                             {
                                 Core.DebugLogger(this, $"Sleeping for: {sleepTimer}");
                                 Bot.Sleep(sleepTimer);
@@ -148,7 +148,7 @@ public class Butler3
                                     sleepTimer = Math.Min(sleepTimer, maxSleep); // Cap at 5 seconds
                                 }
 
-                                if (Bot.Map.PlayerNames.Contains(playerName))
+                                if (Bot.Map.PlayerExists(playerName))
                                     break;
                             }
                         }
@@ -158,7 +158,7 @@ public class Butler3
                         Bot.Map.Jump("Enter", "Spawn");
                         Bot.Wait.ForCellChange("Enter");
 
-                        if (!Bot.Map.PlayerNames.Contains(playerName))
+                        if (!Bot.Map.PlayerExists(playerName))
                             Bot.Player.Goto(playerName);
                         Bot.Sleep(1000);
                     }
@@ -169,7 +169,7 @@ public class Butler3
                     if (!Bot.Player.Alive)
                         Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
 
-                    if (!Bot.Map.PlayerNames.Contains(playerName))
+                    if (!Bot.Map.PlayerExists(playerName))
                         break;
 
                     // if (
