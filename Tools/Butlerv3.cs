@@ -54,7 +54,8 @@ public class Butler3
     ClassType classType;
     string RN;
     List<string?> lockedMapList;
-    String? TargetCell;
+
+    // String? TargetCell;
     bool RoomFull;
 
     public void ScriptMain(IScriptInterface bot)

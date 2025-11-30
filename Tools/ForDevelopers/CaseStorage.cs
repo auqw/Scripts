@@ -29603,6 +29603,261 @@ case ""Fall Fae Assassin Visage"":
                     break;
     "
         },
+        {
+            "EbilCorp Scalper",
+            @"
+case ""EbilCorp Scalper"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Scalper"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "Pockeymog Card Pack",
+            @"
+case ""Pockeymog Card Pack"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Scalper"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "EbilCorp Scalper Morph",
+            @"
+case ""EbilCorp Scalper Morph"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Scalper"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "EbilCorp Scalper Locks",
+            @"
+case ""EbilCorp Scalper Locks"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Scalper"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "EbilCorp Scalper Hair",
+            @"
+case ""EbilCorp Scalper Hair"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Scalper"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "EbilCorp Scalper Visage",
+            @"
+case ""EbilCorp Scalper Visage"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Scalper"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "Mogugu Display Case",
+            @"
+case ""Mogugu Display Case"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "Red Mogugu Box",
+            @"
+case ""Red Mogugu Box"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "Yellow Mogugu Box",
+            @"
+case ""Yellow Mogugu Box"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "Blue Mogugu Box",
+            @"
+case ""Blue Mogugu Box"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "Blue Mogugu Critter",
+            @"
+case ""Blue Mogugu Critter"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "Yellow Mogugu Critter",
+            @"
+case ""Yellow Mogugu Critter"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "Red Mogugu Critter",
+            @"
+case ""Red Mogugu Critter"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "Black Mogugu Critter",
+            @"
+case ""Black Mogugu Critter"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
+        {
+            "Black Mogugu Box",
+            @"
+case ""Black Mogugu Box"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+        },
     };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
