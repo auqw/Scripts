@@ -677,7 +677,7 @@ public class Grimgaol
 
         #region Equipment Setup
         EquipIfAvailable(voidhighlord);
-        EquipIfAvailable(Bot.Config!.Get<string>(Daunt ? "Dauntless" : "Valiance"));
+        EquipIfAvailable(Bot.Config!.Get<string>("Dauntless"));
         EquipIfAvailable(Bot.Config.Get<string>("AnimaHelm") ?? Bot.Config.Get<string>("LuckHelm"));
         EquipIfAvailable(
             Bot.Config.Get<string>("Vainglory") ?? Bot.Config.Get<string>("Penitence")
@@ -886,7 +886,7 @@ public class Grimgaol
         bool usechaosAvenger = Core.CheckInventory("Chaos Avenger");
         #region Equipment Setup
         EquipIfAvailable(usechaosAvenger ? "Chaos Avenger" : voidhighlord);
-        EquipIfAvailable(Bot.Config!.Get<string>(Daunt ? "Dauntless" : "Valiance"));
+        EquipIfAvailable(Bot.Config!.Get<string>("Dauntless"));
         EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm"));
         EquipIfAvailable(Bot.Config!.Get<string>("Penitence"));
         #endregion
@@ -1657,7 +1657,7 @@ public class Grimgaol
 
         #region Equipment Setup
         EquipIfAvailable(verusdoomdnight);
-        EquipIfAvailable(Bot.Config!.Get<string>(Daunt ? "Dauntless" : "Valiance"));
+        EquipIfAvailable(Bot.Config!.Get<string>("Dauntless"));
         EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm"));
         EquipIfAvailable(Bot.Config!.Get<string>("Vainglory"));
         #endregion
@@ -1737,7 +1737,7 @@ public class Grimgaol
         Bot.Player?.SetSpawnPoint();
         #region Equipment Setup
         EquipIfAvailable("Yami No Ronin");
-        EquipIfAvailable(Bot.Config!.Get<string>(Adv.uDauntless() ? "Dauntless" : "Valiance"));
+        EquipIfAvailable(Bot.Config!.Get<string>("Dauntless"));
         EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm"));
         EquipIfAvailable(Bot.Config!.Get<string>("Vainglory"));
         #endregion
