@@ -1290,7 +1290,7 @@ public class CoreNation
         }
         else
         {
-            if (!Core.CheckInventory(CragName))
+            if (Core.CheckInventory(CragName))
                 BambloozevsDrudgen(item, quant, KeepVoucher, AssistantDuring, ReturnItem, true);
             else
             {
