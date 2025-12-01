@@ -1106,7 +1106,7 @@
     ],
     "path": "Story/Concert[MEM].cs",
     "size": 2963,
-    "sha256": "62fc9a61b53d9b99ccfccd2e39043c648d6d35bb1ee453696443981f0432eca2",
+    "sha256": "5a1638cb8de578431283d949389cf8beaa5af28548d83b3ff38f1486fdd4fa96",
     "fileName": "Concert[MEM].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Concert[MEM].cs"
   },
@@ -3817,8 +3817,8 @@
       "version 3"
     ],
     "path": "Tools/Butlerv3.cs",
-    "size": 18831,
-    "sha256": "d4bb1226fa63fe85992d78dcf6f3e39a2c1429962112b26020196ab0e62bd18d",
+    "size": 18839,
+    "sha256": "ae5305eca91576f8bafdc662d062f201ab1107843643fdeadd9fc08611dd0dfe",
     "fileName": "Butlerv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv3.cs"
   },
@@ -13474,8 +13474,8 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 45722,
-    "sha256": "6aaaf31d0848a58a5e46bed35cef94279c35b476d9b1162afe4f0dcc14d1c99b",
+    "size": 45764,
+    "sha256": "94dfd1e6783cc940505bcd123db7f867ce545ab46738a064906ab72ed705626d",
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -21295,8 +21295,8 @@
       "null"
     ],
     "path": "Seasonal/HarvestDay/CoreHarvestDay.cs",
-    "size": 29435,
-    "sha256": "5183ae963bac4a642ead4ce57f7a3507ab2fdd8cde01e2a0575ff2b3f7c43a8d",
+    "size": 32281,
+    "sha256": "35f0fc28ccbc81f8b3470baa00c9f88008720edcfe4a77637e31f8d8c8563511",
     "fileName": "CoreHarvestDay.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/CoreHarvestDay.cs"
   },
@@ -21314,6 +21314,23 @@
     "sha256": "9c3f005d6ba6b07029f4682db0143f657328862f30c2ea12a3d449b006c728c5",
     "fileName": "06ArtixHomeStory[Member].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/06ArtixHomeStory[Member].cs"
+  },
+  {
+    "name": "Moglin Feast Story",
+    "description": "This will finish the Moglin Feast storyline.",
+    "tags": [
+      "moglinfeast",
+      "moglin feast",
+      "seasonal",
+      "harvest-day",
+      "moglin",
+      "feast"
+    ],
+    "path": "Seasonal/HarvestDay/20MoglinFeast.cs",
+    "size": 800,
+    "sha256": "921f17a7e44df6196fb16b06051250ecc7a086c9d2c3b7e1500debe6d2c78953",
+    "fileName": "20MoglinFeast.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/20MoglinFeast.cs"
   },
   {
     "name": "Ebil Corp HQ Story",
@@ -22298,6 +22315,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbonyDragonBladeOfNulgath.cs"
   },
   {
+    "name": "Ebil Mega Mall Story",
+    "description": "This will complete the Ebil Mega Mall story.",
+    "tags": [
+      "story",
+      "quest",
+      "ebil mega mall",
+      "black friday",
+      "seasonal",
+      "yes ma'am",
+      "yes maam",
+      "ebilmegamall"
+    ],
+    "path": "Seasonal/BlackFriday/EbilMegaMallStory.cs",
+    "size": 3393,
+    "sha256": "df9b13bbc5447c294c9eaa014551abf45b14de6a16ac73f55207e5a657f15e17",
+    "fileName": "EbilMegaMallStory.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallStory.cs"
+  },
+  {
     "name": "Technocaster Merge",
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
@@ -22338,6 +22374,54 @@
     "sha256": "a3e600b6d5ed60e093e0693050e94f0e24db06f84a1718c4252380b05eba505a",
     "fileName": "ShadowDragonShinobiMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/ShadowDragonShinobiMerge.cs"
+  },
+  {
+    "name": "EbilMegaMall Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the EbilMegaMall Merge [2641] in /ebilmegamall",
+    "tags": [
+      "ebilmegamall",
+      "merge",
+      "ebilmegamall",
+      "super",
+      "rare",
+      "mogugu",
+      "common",
+      "successful",
+      "ebilcorp",
+      "scalper",
+      "undercover",
+      "morph",
+      "sunglasses",
+      "shades",
+      "ebil",
+      "capital",
+      "cyber",
+      "night",
+      "prowler",
+      "mohawk",
+      "cut",
+      "tail",
+      "prowlers",
+      "catastrophe",
+      "cannons",
+      "executor",
+      "executors",
+      "denken",
+      "reserve",
+      "claw",
+      "claws",
+      "collection",
+      "",
+      "ultimate",
+      "display",
+      "mogugudra",
+      "behemoth"
+    ],
+    "path": "Seasonal/BlackFriday/EbilMegaMallMerge.cs",
+    "size": 12506,
+    "sha256": "2b835df084ccff83ff325fcd10dd1ef3e269c6ddd70c44fdc2be0a3c0c204625",
+    "fileName": "EbilMegaMallMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallMerge.cs"
   },
   {
     "name": "Alpha Hunter And Rogue Set",
@@ -24813,8 +24897,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1068273,
-    "sha256": "46b860f604333eb1c12e6d0e48f6b0a9605926cf72860ce2205c8a5032e9fd9a",
+    "size": 1082444,
+    "sha256": "5c28df8efabec361e59b208c423f3d930d988f6d91d3164d7534249c9f87fcdc",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -29859,6 +29943,34 @@
     "sha256": "68e1d4396fd196ddffe04ee00908ba7d9c5769bc183735d392c126c7b870f7de",
     "fileName": "FreeasaBirdMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/FreeasaBirdMerge.cs"
+  },
+  {
+    "name": "Moglin Feast Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Moglin Feast Merge [2637] in /moglinfeast",
+    "tags": [
+      "moglin",
+      "feast",
+      "merge",
+      "moglinfeast",
+      "fall",
+      "forest",
+      "traveler",
+      "morph",
+      "cap",
+      "fruit",
+      "assortment",
+      "fae",
+      "ruler",
+      "king",
+      "queen",
+      "assassin",
+      "scarf"
+    ],
+    "path": "Seasonal/HarvestDay/MergeShops/MoglinFeastMerge.cs",
+    "size": 9604,
+    "sha256": "6f1795b6624afe1674a9b7c0beefeb9f0efe0d732cac6209acc25c9dfe23d600",
+    "fileName": "MoglinFeastMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HarvestDay/MergeShops/MoglinFeastMerge.cs"
   },
   {
     "name": "Harvest Day Parade Merge",

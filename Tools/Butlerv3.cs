@@ -54,7 +54,8 @@ public class Butler3
     ClassType classType;
     string RN;
     List<string?> lockedMapList;
-    String? TargetCell;
+
+    // String? TargetCell;
     bool RoomFull;
 
     public void ScriptMain(IScriptInterface bot)
@@ -150,7 +151,7 @@ public class Butler3
                                 Core.DebugLogger(this, $"Sleeping for: {sleepTimer}");
                                 Bot.Sleep(sleepTimer);
 
-                                Bot.Player.Goto(playerName);
+                                Bot.Player!.Goto(playerName);
                                 // Increment sleep time if under 5 seconds
                                 if (sleepTimer < maxSleep)
                                 {
@@ -186,7 +187,7 @@ public class Butler3
                                 sleepTimer += random.Next(increment); // Add 0-500ms randomly
                                 sleepTimer = Math.Min(sleepTimer, maxSleep); // Cap at 5 seconds
                             }
-                            Bot.Player.Goto(playerName!);
+                            Bot.Player!.Goto(playerName!);
                             if (Bot.Map.PlayerExists(playerName!))
                             {
                                 Bot.Events.ExtensionPacketReceived += ChatListener;
@@ -203,13 +204,13 @@ public class Butler3
 
                     Core.JumpWait();
 
-                    Bot.Player.Goto(playerName);
+                    Bot.Player!.Goto(playerName);
                     Bot.Sleep(1000);
                 }
 
                 while (!Bot.ShouldExit)
                 {
-                    if (!Bot.Player.Alive)
+                    if (!Bot.Player!.Alive)
                         Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
 
                     if (!Bot.Map.PlayerExists(playerName))
