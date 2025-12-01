@@ -141,12 +141,12 @@ public class CoreNSOD
             else
                 Core.Logger("NSoD: PreFarm Steps skipped, continuing with the farm.");
 
-            Core.Logger("NSoD: Step #10/16: NSAura.");
-            NSAura();
-            Core.Logger("NSoD: Step #11/16: NSBlade.");
+            Core.Logger("NSoD: Step #10/16: NSBlade.");
             NSBlade();
-            Core.Logger("NSoD: Step #12/16: NSHilt.");
+            Core.Logger("NSoD: Step #11/16: NSHilt.");
             NSHilt();
+            Core.Logger("NSoD: Step #12/16: NSAura.");
+            NSAura();
             Core.Logger("NSoD: Step #13/16: ULTRA Sepulchure for \"Doom Heart\"");
             Core.HuntMonster(
                 "sepulchurebattle",
@@ -385,9 +385,11 @@ public class CoreNSOD
     public void NSBlade()
     {
         if (Core.CheckInventory("Necrotic Sword's Blade"))
+        {
+            Core.FarmingLogger("Necrotic Sword's Blade");
             return;
+        }
 
-        Core.Logger("Necrotic Sword's Blade");
         EnergizedBlade();
         BariumOfDoom(1);
         VoidAuras(200);
@@ -398,9 +400,11 @@ public class CoreNSOD
     public void NSHilt()
     {
         if (Core.CheckInventory("Necrotic Sword's Hilt"))
+        {
+            Core.FarmingLogger("Necrotic Sword's Hilt");
             return;
+        }
 
-        Core.Logger("Necrotic Sword's Hilt");
         EnergizedHilt();
         BonesVoidRealm(1);
         VoidAuras(200);
@@ -411,9 +415,12 @@ public class CoreNSOD
     public void NSAura()
     {
         if (Core.CheckInventory("Necrotic Sword's Aura"))
+        {
+            Core.FarmingLogger("Necrotic Sword's Aura");
             return;
+        }
 
-        Core.Logger("Necrotic Sword's Aura");
+        Core.AddDrop("Necrotic Sword's Aura");
         EnergizedAura();
         TimeLordNecro(1);
         VoidAuras(300);
@@ -424,9 +431,11 @@ public class CoreNSOD
     public void EnergizedBlade()
     {
         if (Core.CheckInventory("Energized Blade"))
+        {
+            Core.FarmingLogger("Energized Blade");
             return;
+        }
 
-        Core.Logger("Energized Blade");
         FindBlade();
         BariumOfDoom(1);
         VoidAuras(100);
@@ -437,9 +446,12 @@ public class CoreNSOD
     public void EnergizedHilt()
     {
         if (Core.CheckInventory("Energized Hilt"))
+        {
+            Core.FarmingLogger("Energized Hilt");
             return;
+        }
 
-        Core.Logger("Energized Hilt");
+        Core.AddDrop("Energized Hilt");
         FindHilt();
         BonesVoidRealm(1);
         VoidAuras(100);
@@ -450,9 +462,12 @@ public class CoreNSOD
     public void EnergizedAura()
     {
         if (Core.CheckInventory("Energized Aura"))
+        {
+            Core.FarmingLogger("Energized Aura");
             return;
+        }
 
-        Core.Logger("Energized Aura");
+        Core.AddDrop("Energized Aura");
         FindAura();
         TimeLordNecro(1);
         VoidAuras(150);
@@ -464,11 +479,10 @@ public class CoreNSOD
     {
         if (Core.CheckInventory("Unenhanced Doom Blade"))
         {
-            Core.Logger("Unenhanced Doom Blade Owned!");
+            Core.FarmingLogger("Unenhanced Doom Blade");
             return;
         }
 
-        Core.Logger("Unenhanced Doom Blade");
         Core.AddDrop("Unenhanced Doom Blade");
         Core.EnsureAccept(4433);
         BladeEssence(1);
@@ -481,9 +495,11 @@ public class CoreNSOD
     public void FindHilt()
     {
         if (Core.CheckInventory("Unenhanced Hilt"))
+        {
+            Core.FarmingLogger("Unenhanced Hilt");
             return;
+        }
 
-        Core.Logger("Unenhanced Hilt");
         Core.AddDrop("Unenhanced Hilt", "Bone Dust");
         Core.EnsureAccept(4434);
         CavernCelestite(800);
@@ -498,9 +514,12 @@ public class CoreNSOD
     public void FindAura()
     {
         if (Core.CheckInventory("Unenhanced Aura"))
+        {
+            Core.FarmingLogger("Unenhanced Aura");
             return;
+        }
 
-        Core.Logger("Unenhanced Aura");
+        Core.AddDrop("Unenhanced Aura");
         Adv.GearStore();
         Necro.GetNecromancer(true);
         Adv.GearStore(true);
