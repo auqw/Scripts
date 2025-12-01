@@ -1146,9 +1146,9 @@ public class CoreFarmerJoe
         {
             Core.Logger("Getting starter Dodge class (Ninja)");
             Adv.RankUpClass("Rogue");
+            Farm.Experience(25);
             SetClass();
             //ninja requires a few quets.. its ok tho
-            Farm.Experience(25);
             Mazumi.MazumiQuests();
             Core.BuyItem("classhalla", 178, "Ninja");
         }
