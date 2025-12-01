@@ -67,12 +67,6 @@ public class CoreAdvanced
         Bot.Wait.ForMapLoad(map);
         Core.JumpWait();
 
-        if (Bot.Player.InCombat || Bot.Player.HasTarget)
-        {
-            Core.JumpWait();
-            Bot.Wait.ForCombatExit();
-        }
-
         ShopItem? item = Core.parseShopItem(
             Core.GetShopItems(map, shopID)
                 .Where(x =>
