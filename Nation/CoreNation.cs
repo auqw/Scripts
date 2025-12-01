@@ -1132,7 +1132,7 @@ public class CoreNation
                 + $"Quantity: {quant}\n"
                 + $"UltraAlteon: {UltraAlteon}\n"
                 + $"KeepVoucher: {KeepVoucher}\n"
-                + $"SellmemVoucher{sellMemVoucher}\n"
+                + $"SellmemVoucher: {sellMemVoucher}\n"
                 + $"AssistantDuring: {AssistantDuring}\n"
                 + $"Do Return Policy: {returnPolicyDuringSupplies}\n"
                 + $"ReturnItem: {ReturnItem ?? "no Item selected"}"
@@ -1290,7 +1290,7 @@ public class CoreNation
         }
         else
         {
-            if (Core.CheckInventory(CragName))
+            if (!Core.CheckInventory(CragName))
                 BambloozevsDrudgen(item, quant, KeepVoucher, AssistantDuring, ReturnItem, true);
             else
             {
@@ -1331,7 +1331,7 @@ public class CoreNation
                             log: false
                         );
                     else
-                        Core.KillEscherion("Relic of Chaos", log: false, FromSupplies: true);
+                        Core.KillEscherion(log: false, FromSupplies: true);
 
                     // Sell Voucher of Nulgath if allowed
                     SellVoucherOfNulgath(sellMemVoucher);
