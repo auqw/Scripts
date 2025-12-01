@@ -77,6 +77,7 @@ public class RankUpAll
                     && !excludedClasses.Contains(c.Name) // Exclude specific classes
                     && (Core.IsMember || !c.Upgrade) // Remove upgrade classes if not a member
                     && c.EnhancementLevel > 0
+                    && c.EnhancementPatternID > 0
                 ) // Ensure enhancement level is greater than 0
                 .Select(x => x.Name)
                 .ToList();
@@ -86,17 +87,6 @@ public class RankUpAll
 
         // Optional: Log the updated SelectedClasses
         Core.Logger("Classes to Rank: " + string.Join(", ", SelectedClasses));
-
-        // Check if Smart Enhance is enabled
-        if (Core.CBOBool("DisableAutoEnhance", out bool _disableAutoEnhance) && _disableAutoEnhance)
-        {
-            Core.Logger(
-                "This bot requires Smart Enhance to work properly, please modify your CBO settings",
-                messageBox: true,
-                stopBot: true
-            );
-            return; // Stop the execution if Smart Enhance is disabled
-        }
 
         // Rank up classes and bank them if they were sourced from the bank
         foreach (string Class in SelectedClasses)
