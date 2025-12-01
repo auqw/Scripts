@@ -5432,18 +5432,6 @@ public class CoreBots
 
             CheckMap();
 
-            Bot.Options.AggroAllMonsters = false; // ⚔️
-            if (
-                Bot.Map.PlayerNames != null
-                && Bot.Map.PlayerNames.Where(x => x != Bot.Player.Username).Any()
-            )
-            {
-                Bot.Options.AggroMonsters = true; // 👹
-                Bot.Options.HidePlayers = true; // 🙈
-            }
-            else
-                Bot.Options.AggroMonsters = false; // ❌
-
             bool done = false;
             while (!Bot.ShouldExit && !done)
             {
@@ -5491,7 +5479,6 @@ public class CoreBots
                 }
             }
 
-            Bot.Options.AggroMonsters = false;
             if (!isTemp && item != null)
                 Bot.Wait.ForPickup(item);
         }
@@ -5521,13 +5508,6 @@ public class CoreBots
                 Bot.Player.SetSpawnPoint();
             }
         }
-        Bot.Options.AttackWithoutTarget = false;
-        ToggleAggro(false);
-        Jump();
-        Bot.Options.AggroMonsters = false;
-        JumpWait();
-        Rest();
-        Bot.Options.HidePlayers = false;
     }
 
     /// <summary>
