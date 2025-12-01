@@ -474,6 +474,49 @@
           ]
         }
       ]
+    },
+    "Atk": {
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Righteous Seal",
+              "auraTarget": "target"
+            }
+          ]
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "greater",
+              "auraName": "Righteous Seal",
+              "auraTarget": "target"
+            }
+          ]
+        },
+        {
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 70,
+              "comparison": "less"
+            }
+          ]
+        },
+        {
+          "skillId": 1
+        }
+      ]
     }
   },
   "Artifact Hunter": {
