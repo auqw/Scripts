@@ -82,7 +82,7 @@ public class UltraSpeaker
         Kill();
 
         Bot.Events.ExtensionPacketReceived -= UltraSpeakerListener;
-        Bot.Stop();
+        C.SetOptions(false);
 
         bool OnScriptStopping(Exception? e)
         {
@@ -136,37 +136,37 @@ public class UltraSpeaker
             }
 
             if (
-                (className == "lord of order" || className == "archpaladin")
-                && (Core.IsArmyHealthLow(75) || Core.IsHealthLow(75))
+                (
+                    Bot.Player.CurrentClass?.Name == "lord of order"
+                    || Bot.Player.CurrentClass?.Name == "archpaladin"
+                ) && (Core.IsArmyHealthLow(75) || Core.IsHealthLow(75))
             )
                 Bot.Skills.UseSkill(2);
 
-            if (Bot.Player.HasTarget)
+            if (!Bot.Player.HasTarget)
             {
                 Bot.Combat.Attack("*");
             }
-            else
-            {
-                if (forceSkill)
-                {
-                    // Bot.Sleep(timeWait);
-                    while (!Bot.ShouldExit)
-                    {
-                        if (Bot.Skills.CanUseSkill(skillToForce))
-                        {
-                            Bot.Skills.UseSkill(skillToForce);
-                            break;
-                        }
-                        Bot.Sleep(100);
-                    }
-                    forceSkill = false;
-                }
 
-                int currentSkill = intSkillList[skillIndex];
-                if (Bot.Skills.CanUseSkill(currentSkill))
-                    Bot.Skills.UseSkill(currentSkill);
-                skillIndex = (skillIndex + 1) % intSkillList.Length;
+            if (forceSkill)
+            {
+                // Bot.Sleep(timeWait);
+                while (!Bot.ShouldExit)
+                {
+                    if (Bot.Skills.CanUseSkill(skillToForce))
+                    {
+                        Bot.Skills.UseSkill(skillToForce);
+                        break;
+                    }
+                    Bot.Sleep(100);
+                }
+                forceSkill = false;
             }
+
+            int currentSkill = intSkillList[skillIndex];
+            if (Bot.Skills.CanUseSkill(currentSkill))
+                Bot.Skills.UseSkill(currentSkill);
+            skillIndex = (skillIndex + 1) % intSkillList.Length;
             Bot.Sleep(100);
         }
         C.Logger("LOG", "FINISHED");
@@ -187,7 +187,11 @@ public class UltraSpeaker
                 {
                     case "event":
                         string zone = data.args?["zoneSet"]!;
-                        if (zone is not null && zone == "A" && className == "legion revenant")
+                        if (
+                            zone is not null
+                            && zone == "A"
+                            && Bot.Player.CurrentClass?.Name == "legion revenant"
+                        )
                         {
                             C.Logger("ZONE", "FORCE SKILL 1");
                             setForceSkill(1);
@@ -196,11 +200,13 @@ public class UltraSpeaker
                         break;
 
                     case "ct":
-                        var anims = data.anims as System.Collections.IEnumerable;
-                        if (anims == null)
-                            return;
-                        foreach (var a in anims)
+                        if (data.anims is not null)
                         {
+                            foreach (var a in data.anims)
+                            {
+                                if (a is null)
+                                    continue;
+                                    
                             string? msg = (a as dynamic)?.msg?.ToString();
                             if (!string.IsNullOrEmpty(msg))
                             {
@@ -213,7 +219,7 @@ public class UltraSpeaker
 
                                     speakerCounter++;
 
-                                    if (className == act.Item2)
+                                    if (Bot.Player.CurrentClass?.Name == act.Item2)
                                     {
                                         if (act.Item3 == "IN")
                                         {
@@ -225,7 +231,7 @@ public class UltraSpeaker
                                         }
                                     }
 
-                                    if (className == act.Item1)
+                                    if (Bot.Player.CurrentClass?.Name == act.Item1)
                                     {
                                         setForceSkill(5, act.Item4);
                                     }
