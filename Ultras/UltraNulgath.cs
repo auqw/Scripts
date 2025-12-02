@@ -13,6 +13,31 @@ tags: Ultra
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
+/* "Safe" Comp: (Enhancements go in order of `Helm | Class | Weapon | Cape`)
+====================
+            ===Taunters===
+
+ArchPaladin
+- Forge | Lucky | Valiance | Lament -
+
+Lord Of Order:
+- Forge | Lucky | Lucky aweblast / Valiance | Absolution -
+
+            ===Taunters===
+====================
+
+====================
+            ===DPSers===
+
+King's Echo
+- Examen | Lucky | Ravenous | Vainglory -
+
+Legion Revenant
+- Pneuma | Wizard | Valiance / Ravenous / Arcana | Vainglory -
+
+            ===DPSers===
+====================
+*/
 public class UltraNulgath
 {
     private static CoreAdvanced Adv
@@ -49,6 +74,11 @@ public class UltraNulgath
 
     public void ScriptMain(IScriptInterface bot)
     {
+        C.OneTimeMessage(
+            "Ultra Nulgath",
+            "Deaths more then likely will happen, Suggested class and thier enhs are in the script at the top"
+        );
+        
         if (
             Bot.Config != null
             && Bot.Config.Options.Contains(C.SkipOptions)
@@ -57,25 +87,22 @@ public class UltraNulgath
             Bot.Config.Configure();
 
         a = (Bot.Config!.Get<string>("a") ?? "").Trim();
-        b = (Bot.Config.Get<string>("b") ?? "").Trim();
+        b = (Bot.Config!.Get<string>("b") ?? "").Trim();
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
-            Core.Log("Setup", "Fill both taunter classes in Script Options.");
-            Bot.Stop();
-            return;
+            C.Logger("Setup", "Fill both taunter classes in Script Options.");
+            C.SetOptions(false);
         }
 
         Core.Boot();
         Prep();
         Fight();
-        Bot.Stop();
+        C.SetOptions(false);
     }
-
-    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
 
     void Prep()
     {
-        if (IsTaunter())
+        if (Bot.Inventory.Items.Any(x => x != null && x.Equipped && (x.Name == a || x.Name == b)))
             Ultra.GetScrollOfEnrage();
         else
         {
@@ -98,33 +125,44 @@ public class UltraNulgath
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_nulgath.sync");
 
-        if (!IsTaunter())
-            Bot.Sleep(5000);
-
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
         while (!Bot.ShouldExit)
         {
-            // Check if the whole army has finished
-            if (Ultra.CheckArmyProgress("Nulgath the Archfiend Defeated?", 1, true, syncPath))
-            {
-                C.Logger("All players finished farm.");
-                C.EnsureComplete(8692);
-                break;
-            }
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-            if (Core.HasClassEquipped(a))
-                Ultra.Taunt(a, boss, "aura", 250, "Focus");
-            else if (Core.HasClassEquipped(b))
-                Ultra.Taunt(b, boss, "aura", 700, "Focus");
+            // Check if the whole army has finished
+            if (Ultra.CheckArmyProgress("Nulgath the Archfiend Defeated?", 1, true, syncPath))
+            {
+                C.Logger("All players finished farm.");
+                C.Join("whitemap");
+                C.EnsureComplete(8692);
+                break;
+            }
 
-            Core.KillWithPriority(boss, blade);
-            Bot.Skills.UseSkill(5);
+            if (
+                Bot.Inventory.Items.Any(x =>
+                    x != null && x.Equipped && (x.Name == a || x.Name == b)
+                )
+            )
+            {
+                Bot.Combat.Attack(2);
+                if (Bot.Skills.CanUseSkill(5) && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    Bot.Skills.UseSkill(5);
+            }
+            else
+            {
+                Bot.Combat.Attack(
+                    Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 1 && x.HP > 0) ? 1 : 2
+                );
+                if (Bot.Skills.CanUseSkill(5))
+                    Bot.Skills.UseSkill(5);
+            }
+            Bot.Sleep(500);
         }
     }
 }
