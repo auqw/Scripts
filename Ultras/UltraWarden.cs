@@ -34,10 +34,17 @@ public class UltraWarden
     {
         new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", ""),
         new Option<string>("b", "Taunter Class (Backup)", "Backup taunter class", ""),
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
+        if (
+            Bot.Config != null
+            && Bot.Config.Options.Contains(C.SkipOptions)
+            && !Bot.Config.Get<bool>(C.SkipOptions)
+        )
+            Bot.Config.Configure();
         a = (Bot.Config!.Get<string>("a") ?? "").Trim();
         b = (Bot.Config.Get<string>("b") ?? "").Trim();
 

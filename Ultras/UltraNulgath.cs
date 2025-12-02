@@ -44,10 +44,18 @@ public class UltraNulgath
             "Insert the name of the class that will taunt",
             ""
         ),
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
+        if (
+            Bot.Config != null
+            && Bot.Config.Options.Contains(C.SkipOptions)
+            && !Bot.Config.Get<bool>(C.SkipOptions)
+        )
+            Bot.Config.Configure();
+
         a = (Bot.Config!.Get<string>("a") ?? "").Trim();
         b = (Bot.Config.Get<string>("b") ?? "").Trim();
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))

@@ -74,6 +74,7 @@ public class UltraDage
             "Insert the name of the class that will taunt ( examples: AP, Cav, LR, KE(?))",
             ""
         ),
+        CoreBots.Instance.SkipOptions,
     };
 
     private string NormalizeString(string input) => (input ?? "").Trim().ToLower();
@@ -88,7 +89,13 @@ public class UltraDage
             );
 
         C.Join("whitemap");
-        Bot.Config!.Configure();
+
+        if (
+            Bot.Config != null
+            && Bot.Config.Options.Contains(C.SkipOptions)
+            && !Bot.Config.Get<bool>(C.SkipOptions)
+        )
+            Bot.Config.Configure();
         a = NormalizeString(Bot.Config!.Get<string>("a")!);
         b = NormalizeString(Bot.Config.Get<string>("b")!);
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))

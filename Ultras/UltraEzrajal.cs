@@ -62,11 +62,17 @@ public class UltraEzrajal
             "Lord Of Order Player",
             "Player name assigned to Lord Of Order role."
         ),
+        CoreBots.Instance.SkipOptions,
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        Bot.Config!.Configure();
+        if (
+            Bot.Config != null
+            && Bot.Config.Options.Contains(C.SkipOptions)
+            && !Bot.Config.Get<bool>(C.SkipOptions)
+        )
+            Bot.Config.Configure();
         Core.Boot();
         Bot.UltraBossHelper.EnableCounterAttack();
         Adv.GearStore();
