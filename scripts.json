@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 145979,
-    "sha256": "8eb910d3f852cc8e5882846ba26f1b179ed0ca25006afe5aeb1fdb0d9277ff36",
+    "size": 147032,
+    "sha256": "99f3522021e897eaad3d92c7ca3bdb2b561084295e3c6b3cb8dd5259148af696",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -22418,8 +22418,8 @@
       "behemoth"
     ],
     "path": "Seasonal/BlackFriday/EbilMegaMallMerge.cs",
-    "size": 12576,
-    "sha256": "25463bc52dd836a146c285dab89b95abfb7f6142f1a90ea280429ef5788e6428",
+    "size": 12846,
+    "sha256": "68619364fd32005cfd15af93e53993cefb27d3e00523117eface4e1b4e191dc7",
     "fileName": "EbilMegaMallMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallMerge.cs"
   },
