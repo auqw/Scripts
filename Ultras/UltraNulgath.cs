@@ -116,10 +116,8 @@ public class UltraNulgath
             }
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
-            {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                continue;
-            }
+
             if (Core.HasClassEquipped(a))
                 Ultra.Taunt(a, boss, "aura", 250, "Focus");
             else if (Core.HasClassEquipped(b))
