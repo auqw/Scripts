@@ -2939,15 +2939,19 @@ public class CoreFarms
         string? item = null,
         int quant = 1,
         int rank = 10,
-        bool canSoloBoss = true
+        bool canSoloBoss = true,
+        bool ForStory = false
     )
     {
         var runTimer = new System.Diagnostics.Stopwatch();
         runTimer.Start();
 
-        foreach (int QID in new[] { 5156, 5165 })
-            if (Bot.Quests.IsUnlocked(QID))
-                Core.RegisterQuests(QID);
+        if (!ForStory)
+        {
+            foreach (int QID in new[] { 5156, 5165 })
+                if (Bot.Quests.IsUnlocked(QID))
+                    Core.RegisterQuests(QID);
+        }
 
         if (Bot.Map.Name == "deathpitbrawl")
         {
@@ -3107,13 +3111,18 @@ public class CoreFarms
         }
     }
 
-    public void DeathPitToken(string? item = "Death Pit Token", int quant = 30, bool isTemp = false)
+    public void DeathPitToken(
+        string? item = "Death Pit Token",
+        int quant = 30,
+        bool isTemp = false,
+        bool ForStory = false
+    )
     {
         // Do not call this with registered quests, or it technically never exits.
         if (Core.CheckInventory(item, quant))
             return;
 
-        RunDeathPitBrawl(item, quant, 1);
+        RunDeathPitBrawl(item, quant, 1, ForStory: ForStory);
     }
 
     public void FaerieCourtREP(int rank = 10) // Seasonal

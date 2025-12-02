@@ -786,14 +786,14 @@ public class CoreToD
         if (!Story.QuestProgression(5155))
         {
             Core.EnsureAccept(5155);
-            Farm.DeathPitToken(quant: 1);
+            Farm.DeathPitToken(quant: 1, ForStory: true);
             Core.EnsureComplete(5155);
         }
         // Flex For Hun'Gar
         if (!Story.QuestProgression(5156))
         {
             Core.EnsureAccept(5156);
-            Farm.DeathPitToken(quant: 15);
+            Farm.DeathPitToken(quant: 15, ForStory: true);
             Core.EnsureComplete(5156);
         }
 
