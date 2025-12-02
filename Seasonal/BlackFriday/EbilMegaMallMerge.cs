@@ -83,7 +83,6 @@ public class EbilMegaMallMerge
         EbilMegaMall.StoryLine();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("ebilmegamall", 2641, findIngredients, buyOnlyThis, buyMode: buyMode);
-
         #region Dont edit this part
         void findIngredients()
         {
@@ -140,17 +139,36 @@ public class EbilMegaMallMerge
                 case "Red Mogugu Critter":
                 case "Black Mogugu Critter":
                 case "Black Mogugu Box":
+                case "Commmon Mogugu":
+                case "Super Rare Mogugu":
+                case "Super Super Rare Mogugu":
+                case "Super Super Super Rare Mogugu":
                     if (req.Upgrade && !Core.IsMember)
                     {
                         Core.Logger($"{req.Name} requires membership to farm, skipping.");
                         return;
                     }
-
+                    Core.AddDrop(
+                        "Commmon Mogugu",
+                        "Super Rare Mogugu",
+                        "Super Super Rare Mogugu",
+                        "Super Super Super Rare Mogugu",
+                        "Mogugu Display Case",
+                        "Red Mogugu Box",
+                        "Yellow Mogugu Box",
+                        "Blue Mogugu Box",
+                        "Blue Mogugu Critter",
+                        "Yellow Mogugu Critter",
+                        "Red Mogugu Critter",
+                        "Black Mogugu Critter",
+                        "Black Mogugu Box"
+                    );
+                    Core.RegisterQuests(10509);
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.AddDrop(req.ID);
                     Core.HuntMonster("ebilmegamall", "Mogugudra", req.Name, quant, req.Temp, false);
                     break;
+
                 #endregion
             }
         }
@@ -158,30 +176,6 @@ public class EbilMegaMallMerge
 
     public List<IOption> Select = new()
     {
-        new Option<bool>(
-            "97180",
-            "Super Rare Mogugu",
-            "Mode: [select] only\nShould the bot buy \"Super Rare Mogugu\" ?",
-            false
-        ),
-        new Option<bool>(
-            "97181",
-            "Super Super Rare Mogugu",
-            "Mode: [select] only\nShould the bot buy \"Super Super Rare Mogugu\" ?",
-            false
-        ),
-        new Option<bool>(
-            "97182",
-            "Super Super Super Rare Mogugu",
-            "Mode: [select] only\nShould the bot buy \"Super Super Super Rare Mogugu\" ?",
-            false
-        ),
-        new Option<bool>(
-            "97179",
-            "Common Mogugu",
-            "Mode: [select] only\nShould the bot buy \"Common Mogugu\" ?",
-            false
-        ),
         new Option<bool>(
             "96808",
             "Successful EbilCorp Scalper",
