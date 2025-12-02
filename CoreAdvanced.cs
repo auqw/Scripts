@@ -762,7 +762,11 @@ public class CoreAdvanced
                 int ReqQuant = req.Quantity * craftingQ;
                 ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
 
-                if (wasinshop != null && !wasinshop.Name.Contains("Gold Voucher"))
+                if (
+                    wasinshop != null
+                    && !wasinshop.Name.Contains("Gold Voucher")
+                    && !MergeItemisinShopExceptions.Contains(req.Name)
+                )
                 {
                     Core.Logger($"Item: \"{wasinshop.Name}  [{wasinshop.ID}\"] is in the shop.");
                     ReqQuant = Math.Min(ReqQuant, wasinshop.MaxStack);
@@ -780,10 +784,13 @@ public class CoreAdvanced
                         Bot.Wait.ForPickup(wasinshop.ID);
                     }
                     else
+                    {
+                        // Core.Logger($"Requirements: {string.Join(", ", wasinshop.Requirements)}");
                         IngredientWasintheShop(wasinshop, ReqQuant);
+                    }
                     continue;
                 }
-                else if (wasinshop == null)
+                else if (wasinshop == null || MergeItemisinShopExceptions.Contains(req.Name))
                 {
                     // Items not in the shop, so we have to get it externally
                     if (req.Name.Contains("Dragon Runestone"))
@@ -856,6 +863,24 @@ public class CoreAdvanced
             }
         }
     }
+
+    // If an item is in the shop, and it loops without going to the findingredients, add it here. with a comment above it saying what merge its for.
+    public List<string> MergeItemisinShopExceptions = new()
+    {
+        /* No need to add to this. Do so in the merge script itself above the `Adv.StartBuyAllMerge` line
+            Example:
+
+            Adv.MergeItemisinShopExceptions.AddRange(
+                        new[]
+                        {
+                            "Commmon Mogugu",
+                            "Super Rare Mogugu",
+                            "Super Super Rare Mogugu",
+                            "Super Super Super Rare Mogugu",
+                        }
+                    );
+    */
+    };
 
     public List<ItemCategory> miscCatagories = new()
     {
