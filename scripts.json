@@ -719,8 +719,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 9329,
-    "sha256": "bb97cf1dc5d495b4dfe2346c8bdea9113faf8242dbf741e0f5d439a2a77cfcc7",
+    "size": 9535,
+    "sha256": "233e4b9b3094dec022770a69c748db5af5e8c425e35f6925e7a0be56f4147691",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
@@ -791,8 +791,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 5010,
-    "sha256": "c6ef8b3c6fbaaa4f3a53fe0f3b7aec1625e16b5980f0c3ad15a0134d9a7d32e8",
+    "size": 4953,
+    "sha256": "6ba20d8877c32d5f9bb6205f8a275046159da695a2a4dbeda7ca0eb6a2636add",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
