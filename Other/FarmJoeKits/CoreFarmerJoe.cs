@@ -483,6 +483,37 @@ public class CoreFarmerJoe
 
     #endregion InvClasses
 
+    // Class lists for solo and farm activities
+    string[] soloClasses = new[]
+    {
+        "Void Highlord",
+        "Legion Revenant",
+        "Dragon of Time",
+        "ArchPaladin",
+        "Dragonslayer General",
+        "Glacial Berserker",
+        "Dragonslayer",
+        "DragonSoul Shinobi",
+        "Assassin",
+        "Ninja Warrior",
+        "Ninja",
+        "Rogue (Rare)",
+        "Rogue",
+        "Healer (Rare)",
+        "Healer",
+    };
+
+    string[] farmClasses = new[]
+    {
+        "Legion Revenant",
+        "Blaze Binder",
+        "Archfiend",
+        "Scarlet Sorceress",
+        "Master Ranger",
+        "Mage (Rare)",
+        "Mage",
+    };
+
     /// <summary>
     /// Orchestrates the entire progression process from level 1 to endgame, including:
     /// - **Leveling:** Progresses through levels 1 to 100 with specific milestones and enhancements.
@@ -1046,6 +1077,36 @@ public class CoreFarmerJoe
     /// </summary>
     void BeginnerItems()
     {
+        // Combined skip logic: skip if EITHER high-tier classes exist OR both beginner classes are rank 10+
+        bool hasHighTier =
+            Core.CheckInventory(
+                soloClasses.Except("Assassin", "Ninja Warrior", "Ninja"),
+                any: true,
+                toInv: false
+            )
+            && Core.CheckInventory(
+                farmClasses.Except("Mage", "Mage (rare)"),
+                any: true,
+                toInv: false
+            );
+
+        bool hasBothRank10Beginners =
+            Core.CheckInventory(
+                new[] { "Assassin", "Ninja Warrior", "Ninja" },
+                any: true,
+                toInv: false
+            )
+            && ClassNinja?.Quantity >= RANK_10_CLASS_POINTS
+            && Core.CheckInventory(new[] { "Mage (Rare)", "Mage" }, any: true, toInv: false)
+            && ClassMage?.Quantity >= RANK_10_CLASS_POINTS
+            && Bot.Player.Level >= 30;
+
+        if (hasHighTier || hasBothRank10Beginners)
+        {
+            Core.Logger("Acc is lvl 30+, skipping beginner items.");
+            return;
+        }
+
         Core.Logger(
             "Doing `Tutorial Badges` Required for fresh accounts to leave oaklore (this may take a moment to start.. we dont know why.)\n"
                 + "(by bot i mean.. obviously u can do this manualy)"
@@ -1105,22 +1166,6 @@ public class CoreFarmerJoe
             }
         }
 
-        if (
-            Core.CheckInventory(
-                new[] { "Assassin", "Ninja Warrior", "Ninja" },
-                any: true,
-                toInv: false
-            )
-            && ClassNinja?.Quantity >= RANK_10_CLASS_POINTS
-            && Core.CheckInventory(new[] { "Mage (Rare)", "Mage" }, any: true, toInv: false)
-            && ClassMage?.Quantity >= RANK_10_CLASS_POINTS
-            && Bot.Player.Level >= 30
-        )
-        {
-            Core.Logger("Acc is lvl 30+, skipping beginner items.");
-            return;
-        }
-
         Core.Logger("Starting out acc:\n" + "\tGoals: Ninja class & Mage Class");
 
         Farm.Experience(10);
@@ -1176,37 +1221,6 @@ public class CoreFarmerJoe
     /// </summary>
     public void SetClass()
     {
-        // Class lists for solo and farm activities
-        string[] soloClasses = new[]
-        {
-            "Void Highlord",
-            "Legion Revenant",
-            "Dragon of Time",
-            "ArchPaladin",
-            "Dragonslayer General",
-            "Glacial Berserker",
-            "Dragonslayer",
-            "DragonSoul Shinobi",
-            "Assassin",
-            "Ninja Warrior",
-            "Ninja",
-            "Rogue (Rare)",
-            "Rogue",
-            "Healer (Rare)",
-            "Healer",
-        };
-
-        string[] farmClasses = new[]
-        {
-            "Legion Revenant",
-            "Blaze Binder",
-            "Archfiend",
-            "Scarlet Sorceress",
-            "Master Ranger",
-            "Mage (Rare)",
-            "Mage",
-        };
-
         // Combine inventory and bank items once for reuse
         List<InventoryItem> available = Bot.Inventory.Items.Concat(Bot.Bank.Items).ToList();
         bool equipBoosting = Bot.Config!.Get<bool>("EquipBoostingGear");
