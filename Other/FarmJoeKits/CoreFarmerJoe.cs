@@ -1221,52 +1221,34 @@ public class CoreFarmerJoe
     /// </summary>
     public void SetClass()
     {
-        // Combine inventory and bank items once for reuse
-        List<InventoryItem> available = Bot.Inventory.Items.Concat(Bot.Bank.Items).ToList();
-        bool equipBoosting = Bot.Config!.Get<bool>("EquipBoostingGear");
+        var available = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .Where(x => x?.Category == ItemCategory.Class)
+            .ToList();
 
-        // Determine which classes to use based on availability
-        string newSolo =
-            soloClasses.FirstOrDefault(c =>
-                available.Any(i => i.Name == c && i.Category == ItemCategory.Class)
-            ) ?? Core.SoloClass;
-        string newFarm =
-            farmClasses.FirstOrDefault(c =>
-                available.Any(i => i.Name == c && i.Category == ItemCategory.Class)
-            ) ?? Core.FarmClass;
+        var newSolo =
+            soloClasses.FirstOrDefault(c => available.Any(i => i.Name == c)) ?? Core.SoloClass;
+        var newFarm =
+            farmClasses.FirstOrDefault(c => available.Any(i => i.Name == c)) ?? Core.FarmClass;
 
-        // Update class settings
         Core.SoloClass = newSolo;
         Core.FarmClass = newFarm;
 
-        // If CBO classes are not set to Generic, we're done
-        if (Core.SoloClass != "Generic" && Core.FarmClass != "Generic")
-            return;
+        foreach (var className in new[] { newSolo, newFarm })
+            if (
+                className != "Generic"
+                && (available.FirstOrDefault(i => i.Name == className)?.Quantity ?? 0)
+                    < RANK_10_CLASS_POINTS
+            )
+            {
+                var item = available.First(i => i.Name == className);
+                Core.Unbank(item.ID);
+                Adv.RankUpClass(className);
+            }
 
-        // Find and rank up solo class if needed
-        var soloItem = available.FirstOrDefault(i =>
-            i.Name == newSolo && i.Category == ItemCategory.Class
-        );
-        if (soloItem != null && soloItem.Quantity < RANK_10_CLASS_POINTS)
+        if (Bot.Config!.Get<bool>("EquipBoostingGear"))
         {
-            Core.Unbank(soloItem.ID);
-            Adv.RankUpClass(newSolo);
-        }
-
-        // Find and rank up farm class if needed
-        var farmItem = available.FirstOrDefault(i =>
-            i.Name == newFarm && i.Category == ItemCategory.Class
-        );
-        if (farmItem != null && farmItem.Quantity < RANK_10_CLASS_POINTS)
-        {
-            Core.Unbank(farmItem.ID);
-            Adv.RankUpClass(newFarm);
-        }
-
-        // Equip boosting gear if enabled
-        if (equipBoosting)
-        {
-            var dmgPriority = new[]
+            var dmg = new[]
             {
                 "dmgAll",
                 "gold",
@@ -1278,20 +1260,17 @@ public class CoreFarmerJoe
                 "Dragonkin",
                 "Human",
             };
-            var armorPriority = Core.CheckInventory("Polly Roger")
-                ? new[] { "gold", "cp", "rep" }
-                : dmgPriority;
-
-            var metaPriorities = new Dictionary<string, string[]>
-            {
-                { "Cape", dmgPriority },
-                { "Helm", dmgPriority },
-                { "Armor", armorPriority },
-                { "Weapon", new[] { "dmgAll", "gold", "cp", "rep" } },
-                { "Pet", dmgPriority },
-            };
-
-            Core.EquipBestItemsForMeta(metaPriorities);
+            var arm = Core.CheckInventory("Polly Roger") ? new[] { "gold", "cp", "rep" } : dmg;
+            Core.EquipBestItemsForMeta(
+                new()
+                {
+                    { "Cape", dmg },
+                    { "Helm", dmg },
+                    { "Armor", arm },
+                    { "Weapon", new[] { "dmgAll", "gold", "cp", "rep" } },
+                    { "Pet", dmg },
+                }
+            );
         }
 
         Core.Logger($"Setting SoloClass to: {newSolo}.\nSetting FarmClass to: {newFarm}.");
