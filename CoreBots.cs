@@ -5457,7 +5457,7 @@ public class CoreBots
                 // MonsterMapIDs:
                 // 2 = Staff
                 // 3 = Escherion
-                if (!Bot.Player.HasTarget)
+                if (!Bot.Player!.HasTarget)
                     Bot.Combat.Attack(3);
                 else if (
                     Bot.Player?.Target?.MapID == 3
