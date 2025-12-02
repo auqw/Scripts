@@ -124,11 +124,9 @@ public class UltraNulgath
                 Ultra.Taunt(a, boss, "aura", 250, "Focus");
             else if (Core.HasClassEquipped(b))
                 Ultra.Taunt(b, boss, "aura", 700, "Focus");
-            else
-            {
-                Core.KillWithPriority(boss, blade);
-                Bot.Skills.UseSkill(5);
-            }
+
+            Core.KillWithPriority(boss, blade);
+            Bot.Skills.UseSkill(5);
         }
     }
 }
