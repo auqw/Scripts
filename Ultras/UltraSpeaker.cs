@@ -141,9 +141,8 @@ public class UltraSpeaker
             )
                 Bot.Skills.UseSkill(2);
 
-            if (Bot.Player?.HasTarget == true)
+            if (Bot.Player.HasTarget)
             {
-                C.Logger("ATTACK", "ATTACKING");
                 Bot.Combat.Attack("*");
             }
             else
