@@ -2942,30 +2942,23 @@ public class CoreFarms
         bool canSoloBoss = true
     )
     {
-        // Create and start timer
         var runTimer = new System.Diagnostics.Stopwatch();
         runTimer.Start();
 
         foreach (int QID in new[] { 5156, 5165 })
-        {
             if (Bot.Quests.IsUnlocked(QID))
                 Core.RegisterQuests(QID);
-        }
 
         if (Bot.Map.Name == "deathpitbrawl")
         {
-            Core.Logger(
-                "Started in PvP map, which doesnt allow us to equip things if needed and can cause issues. Joining whitemap first."
-            );
+            Core.Logger("Started in PvP map, warping to whitemap first.");
             Core.Join("whitemap");
         }
 
-        // Find the first matching amulet in inventory or bank
         string? amulet = AcceptablePvPAmulets.FirstOrDefault(name =>
             Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i?.Name == name)
         );
 
-        // Equip the amulet if found in inventory or bank
         if (amulet != null)
         {
             Core.Unbank(amulet);
@@ -2973,20 +2966,63 @@ public class CoreFarms
         }
 
         if (item != null)
+        {
             Core.FarmingLogger(item, quant, "RunDeathPitBrawl");
+            Core.AddDrop(item);
+        }
+
         int RunCount = 1;
 
         Start:
-        while (
-            !Bot.ShouldExit
-            && (
-                (
-                    item != null
-                    && !Core.CheckInventory(item, quant)
-                    && FactionRank("Death Pit Brawl") < rank
-                ) || (item == null && FactionRank("Death Pit Brawl") < rank)
-            )
-        )
+
+        // -------------------------
+        // 1) Faction Rank farming
+        // -------------------------
+        while (!Bot.ShouldExit && FactionRank("Death Pit Brawl") < rank)
+        {
+            ExecuteOneBrawlRun();
+
+            // timer + completion reporting
+            runTimer.Stop();
+            TimeSpan ts = runTimer.Elapsed;
+            Core.Logger($"Run #{RunCount++} completed in {ts.Minutes:00}:{ts.Seconds:00}");
+
+            ReturnToBattleonAndRestart();
+            goto Start;
+        }
+
+        // -------------------------
+        // 2) Token farming (only AFTER rank is done)
+        // -------------------------
+        if (item != null)
+        {
+            while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
+            {
+                ExecuteOneBrawlRun();
+
+                if (item != null)
+                {
+                    Bot.Wait.ForPickup(item, 40);
+                    Core.FarmingLogger(item, quant);
+                }
+
+                runTimer.Stop();
+                TimeSpan ts = runTimer.Elapsed;
+                Core.Logger($"Run #{RunCount++} completed in {ts.Minutes:00}:{ts.Seconds:00}");
+
+                ReturnToBattleonAndRestart();
+                goto Start;
+            }
+        }
+
+        foreach (string reward in new[] { "Yoshino's Citrine", "The Secret 4" })
+            if (item != reward && Bot.Inventory.Contains(reward))
+                Core.ToBank(reward);
+
+        // ----------------------------------------------------------
+        // Encapsulated reusable Brawl logic (your full path preserved)
+        // ----------------------------------------------------------
+        void ExecuteOneBrawlRun()
         {
             while (!Bot.ShouldExit && Bot.Map.Name != "deathpitbrawl")
             {
@@ -3017,9 +3053,9 @@ public class CoreFarms
             Core.PvPMove(21, "Resource1A", 9, 435);
             Core.PvPMove(19, "Crossupper", 461, 315);
             Core.PvPMove(17, "Crosslower", 54, 339);
-            #endregion Restorers
+            #endregion
 
-            #region  Brawlers area
+            #region Brawlers
             Core.PvPMove(15, "Morale1A", 509, 286);
             Core.PVPKilling();
             if (!Bot.Player.Alive)
@@ -3034,38 +3070,16 @@ public class CoreFarms
             Core.PVPKilling();
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
-            #endregion  Brawlers area
+            #endregion
 
-            #region Captain & Exit
+            #region Captain
             Core.PvPMove(28, "Captain1", 943, 404);
             Core.PVPKilling();
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
+            #endregion
 
-            if (item != null)
-            {
-                Bot.Wait.ForPickup(item, 40);
-                Core.FarmingLogger(item, quant);
-            }
-            Core.Sleep(1500);
-            goto Exit;
-            #endregion Captain & Exit
-
-            Exit:
-            // Stop timer and log elapsed time for pvp run
-            runTimer.Stop();
-            TimeSpan ts = runTimer.Elapsed;
-            Core.Logger($"Run #{RunCount++} completed in {ts.Minutes:00}:{ts.Seconds:00}");
-
-            while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
-            {
-                Bot.Combat.CancelTarget();
-                Bot.Wait.ForCombatExit();
-                Bot.Map.Join("battleon-999999", "Enter", "Spawn", autoCorrect: false);
-                Bot.Wait.ForMapLoad("battleon");
-                if (Bot.Map.Name == "battleon")
-                    goto Start;
-            }
+            return;
 
             RestartOnDeath:
             while (!Bot.ShouldExit)
@@ -3074,19 +3088,26 @@ public class CoreFarms
                 Bot.Map.Join("battleon-999999", "Enter", "Spawn", autoCorrect: false);
                 Bot.Wait.ForMapLoad("battleon");
                 Core.Sleep(1500);
-                if (Bot.Map.Name == "battleon")
-                    goto Start;
+                return; // Return so caller can restart loop
             }
         }
 
-        foreach (string reward in new[] { "Yoshino's Citrine", "The Secret 4" })
+        // Reusable return+reset
+        void ReturnToBattleonAndRestart()
         {
-            if (item != reward && Bot.Inventory.Contains(reward))
-                Core.ToBank(reward);
+            while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
+            {
+                Bot.Combat.CancelTarget();
+                Bot.Wait.ForCombatExit();
+                Bot.Map.Join("battleon-999999", "Enter", "Spawn", autoCorrect: false);
+                Bot.Wait.ForMapLoad("battleon");
+                if (Bot.Map.Name == "battleon")
+                    return;
+            }
         }
     }
 
-    public void DeathPitToken(string item = "Death Pit Token", int quant = 30, bool isTemp = false)
+    public void DeathPitToken(string? item = "Death Pit Token", int quant = 30, bool isTemp = false)
     {
         // Do not call this with registered quests, or it technically never exits.
         if (Core.CheckInventory(item, quant))
