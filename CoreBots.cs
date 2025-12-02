@@ -181,8 +181,13 @@ public class CoreBots
             )
                 Bot.Config.Configure();
 
-            if (!Bot.Player.LoggedIn)
+            int retries = 0;
+            const int maxRetries = 3;
+
+            while (!Bot.Player.LoggedIn && retries < maxRetries)
             {
+                retries++;
+
                 if (Bot.Servers.CachedServers.Any())
                 {
                     Logger("Auto Login triggered");
@@ -191,7 +196,12 @@ public class CoreBots
                         if (
                             !Bot.Servers.EnsureRelogin(
                                 Bot.Options.ReloginServer
-                                    ?? Bot.Servers.CachedServers[0]?.Name ?? "Twilly"
+                                    ?? Bot.Servers.CachedServers.FirstOrDefault(s =>
+                                        s.Name != "Class Test Realm"
+                                        && s.Online
+                                        && s.PlayerCount < s.MaxPlayers
+                                    )?.Name
+                                    ?? "Twilly"
                             )
                         )
                             Logger(
@@ -217,8 +227,12 @@ public class CoreBots
                         stopBot: true
                     );
             }
+
             Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10);
         }
+
+        if (!Bot.Player.LoggedIn)
+            Bot.Stop();
         ReadCBO();
 
         #region Social Privacy Options
@@ -5443,7 +5457,7 @@ public class CoreBots
                 // MonsterMapIDs:
                 // 2 = Staff
                 // 3 = Escherion
-                if (Bot.Player is not { HasTarget: true })
+                if (!Bot.Player.HasTarget)
                     Bot.Combat.Attack(3);
                 else if (
                     Bot.Player?.Target?.MapID == 3
@@ -6830,136 +6844,6 @@ public class CoreBots
         }
     }
 
-    #region Old relogin funct.
-
-    // public void Relogin(string reason = "")
-    // {
-    //     // Save original options
-    //     bool origAutoRelog = Bot.Options.AutoRelogin;
-    //     bool origAutoRelogAny = Bot.Options.AutoReloginAny;
-    //     bool origRetryRelogin = Bot.Options.RetryRelogin;
-    //     bool origSafeRelogin = Bot.Options.SafeRelogin;
-
-    //     try
-    //     {
-    //         Bot.Log($"Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
-    //         Bot.Servers.SetLoginInfo(Bot.Player?.Username, Bot.Player?.Password);
-
-    //         int tries = 0;
-    //         int maxTries = 5;
-    //         string? lastTriedServer = null;
-
-    //         while (!Bot.ShouldExit && tries < maxTries)
-    //         {
-    //             // Reset options each iteration
-    //             Bot.Options.AutoRelogin = false;
-    //             Bot.Options.AutoReloginAny = false;
-    //             Bot.Options.RetryRelogin = false;
-    //             Bot.Options.SafeRelogin = false;
-
-    //             Bot.Sleep(500);
-
-    //             // Logout if already logged in
-    //             if (Bot.Player?.LoggedIn == true)
-    //                 Bot.Servers.Logout();
-
-    //             Bot.Wait.ForTrue(() => !Bot.Player.LoggedIn, 20);
-    //             Bot.Sleep(2000);
-
-    //             // Fetch servers
-    //             var servers = Bot.Servers.GetServers(true).GetAwaiter().GetResult();
-    //             if (servers.Count == 0)
-    //             {
-    //                 Bot.Log("Failed to relogin: could not fetch server details.");
-    //                 break;
-    //             }
-
-    //             // Choose server
-    //             string? serverName = Bot.Servers.LastName;
-
-    //             if (string.IsNullOrWhiteSpace(serverName))
-    //             {
-    //                 serverName = servers
-    //                     .OfType<Server>()
-    //                     .FirstOrDefault(s =>
-    //                         s.Name != "Class Test Realm" &&
-    //                         !s.Upgrade &&
-    //                         s.PlayerCount < s.MaxPlayers &&
-    //                         s.Online
-    //                     )?.Name;
-    //             }
-
-    //             serverName ??= "Twilly";
-    //             lastTriedServer = serverName;
-
-    //             Bot.Log($"Attempting to relog... Server: {serverName}");
-    //             Bot.Servers.Login();
-    //             Bot.Wait.ForTrue(() => Bot.Player.LoggedIn, 20);
-
-    //             // Try LastIP first, otherwise fallback to Twilly
-    //             string? targetIP = servers.FirstOrDefault(s => s.IP == Bot.Servers.LastIP)?.IP
-    //                                ?? servers.FirstOrDefault(s => s != null && s.Name == "Twilly")?.IP;
-
-    //             if (targetIP != null)
-    //                 Bot.Servers.ConnectIP(targetIP);
-    //             else
-    //                 Bot.Log("No suitable server found to connect!");
-
-    //             if (!Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20))
-    //             {
-    //                 tries++;
-    //                 Bot.Log($"Player failed to fully load. Retrying relogin (try {tries}/{maxTries})...");
-    //                 continue;
-    //             }
-
-    //             // Attempt relogin
-    //             else
-    //             {
-    //                 // Success: send to house
-    //                 Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
-    //                 Bot.Log($"Relogin successful! Sending to house from {serverName}.");
-    //                 Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
-
-    //                 if (!Bot.Wait.ForMapLoad("house", 20))
-    //                 {
-    //                     Bot.Log("Failed to load house map, falling back to Battleon.");
-    //                     Join("battleon-100000");
-    //                 }
-    //                 return;
-    //             }
-    //         }
-
-    //         // Final fallback: Try Twilly if not already attempted, otherwise Twig
-    //         string fallbackServer = lastTriedServer?.Equals("Twilly", StringComparison.OrdinalIgnoreCase) == true
-    //             ? "Twig"
-    //             : "Twilly";
-
-    //         Bot.Log($"Max relogin attempts reached. Trying fallback server: {fallbackServer}...");
-    //         if (Bot.Servers.EnsureRelogin(fallbackServer))
-    //         {
-    //             if (Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20))
-    //             {
-    //                 Bot.Log($"Fallback relogin to {fallbackServer} successful.");
-    //                 Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
-    //                 return;
-    //             }
-    //         }
-
-    //         Bot.Log($"Relogin failed after all attempts including {fallbackServer} fallback.");
-    //         Bot.Stop();
-    //     }
-    //     finally
-    //     {
-    //         // Restore original AutoRelogin options
-    //         Bot.Options.AutoRelogin = origAutoRelog;
-    //         Bot.Options.AutoReloginAny = origAutoRelogAny;
-    //         Bot.Options.RetryRelogin = origRetryRelogin;
-    //         Bot.Options.SafeRelogin = origSafeRelogin;
-    //     }
-    // }
-
-    #endregion Old relogin funct.
-
     public void Relogin(string reason = "")
     {
         Bot.Log($"⚡ Relogin Triggered{(string.IsNullOrWhiteSpace(reason) ? "" : $": {reason}")}");
@@ -6989,7 +6873,6 @@ public class CoreBots
             // Try preferred server first (LastIP server or Twilly)
             string preferredServer = Bot.Servers.LastName ?? "Twilly";
             Bot.Log($"🎯 Attempting relogin to: {preferredServer} 🌐");
-
             CancellationTokenSource cts = new();
             Bot.Wait.ForTrue(() => Bot.Servers.EnsureRelogin(cts.Token).Result, 20);
             if (Bot.Wait.ForTrue(() => (Bot.Player?.Loaded ?? false), 20))
