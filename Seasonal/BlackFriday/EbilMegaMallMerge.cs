@@ -121,21 +121,17 @@ public class EbilMegaMallMerge
 
                 #region Items not setup
 
-                    case "Common Mogugu":
+                case "Common Mogugu":
                     Core.AddDrop(
                         "Common Mogugu",
                         "Super Rare Mogugu",
                         "Super Super Rare Mogugu",
                         "Super Super Super Rare Mogugu"
                     );
-                    Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(10509);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.KillMonster("ebilmegamall", "r8", "Left", "*", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
 
@@ -144,16 +140,33 @@ public class EbilMegaMallMerge
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(10509);
 
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    int needed = quant;
+                    const int MAX_STACK = 1000;
+
+                    while (!Bot.ShouldExit && needed > 0)
                     {
-                        while (!Bot.ShouldExit && !Core.CheckInventory("Common Mogugu", 10))
+                        if (Core.CheckInventory(req.Name, needed))
+                        {
+                            needed = 0;
+                            continue;
+                        }
+
+                        int commonNeeded = Math.Min(needed * 10, MAX_STACK);
+
+                        while (
+                            !Bot.ShouldExit && !Core.CheckInventory("Common Mogugu", commonNeeded)
+                        )
                         {
                             Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
                             Bot.Wait.ForPickup("Common Mogugu");
                         }
-                        Core.BuyItem("ebilmegamall", 2641, req.Name);
+
+                        int batchSize = commonNeeded / 10;
+                        Core.BuyItem("ebilmegamall", 2641, req.Name, batchSize);
                         Bot.Wait.ForPickup(req.Name);
+                        needed -= batchSize;
                     }
+
                     Core.CancelRegisteredQuests();
                     break;
 
@@ -162,21 +175,57 @@ public class EbilMegaMallMerge
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(10509);
 
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    string[] tiers =
                     {
-                        while (!Bot.ShouldExit && !Core.CheckInventory("Super Rare Mogugu", 10))
+                        "Common Mogugu",
+                        "Super Rare Mogugu",
+                        "Super Super Rare Mogugu",
+                    };
+                    needed = quant;
+
+                    while (!Bot.ShouldExit && needed > 0)
+                    {
+                        if (Core.CheckInventory(req.Name, needed))
                         {
-                            while (!Bot.ShouldExit && !Core.CheckInventory("Common Mogugu", 10))
-                            {
-                                Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
-                                Bot.Wait.ForPickup("Common Mogugu");
-                            }
-                            Core.BuyItem("ebilmegamall", 2641, "Super Rare Mogugu");
-                            Bot.Wait.ForPickup("Super Rare Mogugu");
+                            needed = 0;
+                            continue;
                         }
-                        Adv.BuyItem("ebilmegamall", 2641, req.Name);
+
+                        // Batch in chunks to avoid exceeding stack limit
+                        int batchSize = Math.Min(needed, MAX_STACK / 100); // Max 10 per batch since 10 needs 1000 Common
+                        if (batchSize == 0)
+                            batchSize = 1;
+
+                        // Work backwards through tiers
+                        for (int tier = tiers.Length - 2; tier >= 0; tier--)
+                        {
+                            int tierNeeded = batchSize * (int)Math.Pow(10, tiers.Length - 2 - tier);
+                            while (!Bot.ShouldExit && tierNeeded > 0)
+                            {
+                                if (Core.CheckInventory(tiers[tier], tierNeeded))
+                                {
+                                    tierNeeded = 0;
+                                    continue;
+                                }
+
+                                if (tier == 0) // Common Mogugu - farm it
+                                {
+                                    Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
+                                    Bot.Wait.ForPickup("Common Mogugu");
+                                }
+                                else // Buy from shop
+                                {
+                                    Core.BuyItem("ebilmegamall", 2641, tiers[tier], tierNeeded);
+                                    Bot.Wait.ForPickup(tiers[tier]);
+                                }
+                            }
+                        }
+
+                        Adv.BuyItem("ebilmegamall", 2641, req.Name, batchSize);
                         Bot.Wait.ForPickup(req.Name);
+                        needed -= batchSize;
                     }
+
                     Core.CancelRegisteredQuests();
                     break;
 
@@ -185,28 +234,57 @@ public class EbilMegaMallMerge
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(10509);
 
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    string[] tiersSSSR =
                     {
-                        while (!Bot.ShouldExit && !Core.CheckInventory("Super Super Rare Mogugu", 10))
+                        "Common Mogugu",
+                        "Super Rare Mogugu",
+                        "Super Super Rare Mogugu",
+                        "Super Super Super Rare Mogugu",
+                    };
+                    needed = quant;
+
+                    while (!Bot.ShouldExit && needed > 0)
+                    {
+                        if (Core.CheckInventory(req.Name, needed))
                         {
-                            while (!Bot.ShouldExit && !Core.CheckInventory("Super Rare Mogugu", 10))
+                            needed = 0;
+                            continue;
+                        }
+
+                        // Batch in chunks to avoid exceeding stack limit
+                        int batchSize = Math.Min(needed, MAX_STACK / 1000); // Max 1 per batch since 1 needs 1000 Common
+                        if (batchSize == 0)
+                            batchSize = 1;
+
+                        // Work backwards through tiers
+                        for (int tier = tiersSSSR.Length - 2; tier >= 0; tier--)
+                        {
+                            int tierNeeded =
+                                batchSize * (int)Math.Pow(10, tiersSSSR.Length - 2 - tier);
+                            while (!Bot.ShouldExit && tierNeeded > 0)
                             {
-                                while (!Bot.ShouldExit && !Core.CheckInventory("Common Mogugu", 10))
+                                if (Core.CheckInventory(tiersSSSR[tier], tierNeeded))
+                                {
+                                    tierNeeded = 0;
+                                    continue;
+                                }
+
+                                if (tier == 0) // Common Mogugu - farm it
                                 {
                                     Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
                                     Bot.Wait.ForPickup("Common Mogugu");
                                 }
-
-                                Core.BuyItem("ebilmegamall", 2641, "Super Rare Mogugu");
-                                Bot.Wait.ForPickup("Super Rare Mogugu");
+                                else // Buy from shop
+                                {
+                                    Core.BuyItem("ebilmegamall", 2641, tiersSSSR[tier], tierNeeded);
+                                    Bot.Wait.ForPickup(tiersSSSR[tier]);
+                                }
                             }
-
-                            Core.BuyItem("ebilmegamall", 2641, "Super Super Rare Mogugu");
-                            Bot.Wait.ForPickup("Super Super Rare Mogugu");
                         }
 
-                        Adv.BuyItem("ebilmegamall", 2641, req.Name);
+                        Adv.BuyItem("ebilmegamall", 2641, req.Name, batchSize);
                         Bot.Wait.ForPickup(req.Name);
+                        needed -= batchSize;
                     }
 
                     Core.CancelRegisteredQuests();
@@ -264,6 +342,55 @@ public class EbilMegaMallMerge
                 #endregion
             }
         }
+    }
+
+    void CommonMogugu(int quant)
+    {
+        if (Core.CheckInventory("Common Mogugu", quant))
+            return;
+
+        Core.FarmingLogger("Common Mogugu", quant);
+        Core.KillMonster(
+            "ebilmegamall",
+            "r8",
+            "Left",
+            "*",
+            "Common Mogugu",
+            quant,
+            isTemp: false,
+            false
+        );
+        Bot.Wait.ForPickup("Common Mogugu");
+    }
+
+    void SuperRareMogugu(int quant)
+    {
+        if (Core.CheckInventory("Super Rare Mogugu", quant))
+            return;
+
+        Core.FarmingLogger("Super Rare Mogugu", quant);
+        CommonMogugu(10 * quant);
+        Core.BuyItem("ebilmegamall", 2641, "Super Rare Mogugu", quant);
+        Bot.Wait.ForPickup("Super Rare Mogugu");
+    }
+
+    void SuperSuperRareMogugu(int quant)
+    {
+        if (Core.CheckInventory("Super Super Rare Mogugu", quant))
+            return;
+        Core.FarmingLogger("Super Super Rare Mogugu", quant);
+        SuperRareMogugu(10 * quant);
+        Core.BuyItem("ebilmegamall", 2641, "Super Super Rare Mogugu", quant);
+        Bot.Wait.ForPickup("Super Super Rare Mogugu");
+    }
+
+    void SuperSuperSuperRareMogugu(int quant)
+    {
+        if (Core.CheckInventory("Super Super Super Rare Mogugu", quant))
+            return;
+        SuperSuperRareMogugu(10 * quant);
+        Core.BuyItem("ebilmegamall", 2641, "Super Super Super Rare Mogugu", quant);
+        Bot.Wait.ForPickup("Super Super Super Rare Mogugu");
     }
 
     public List<IOption> Select = new()
