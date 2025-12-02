@@ -84,7 +84,7 @@ public class EbilMegaMallMerge
         Adv.MergeItemisinShopExceptions.AddRange(
             new[]
             {
-                "Commmon Mogugu",
+                "Common Mogugu",
                 "Super Rare Mogugu",
                 "Super Super Rare Mogugu",
                 "Super Super Super Rare Mogugu",
@@ -121,6 +121,97 @@ public class EbilMegaMallMerge
 
                 #region Items not setup
 
+                    case "Common Mogugu":
+                    Core.AddDrop(
+                        "Common Mogugu",
+                        "Super Rare Mogugu",
+                        "Super Super Rare Mogugu",
+                        "Super Super Super Rare Mogugu"
+                    );
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.RegisterQuests(10509);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+
+                case "Super Rare Mogugu":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.RegisterQuests(10509);
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        while (!Bot.ShouldExit && !Core.CheckInventory("Common Mogugu", 10))
+                        {
+                            Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
+                            Bot.Wait.ForPickup("Common Mogugu");
+                        }
+                        Core.BuyItem("ebilmegamall", 2641, req.Name);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+
+                case "Super Super Rare Mogugu":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.RegisterQuests(10509);
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        while (!Bot.ShouldExit && !Core.CheckInventory("Super Rare Mogugu", 10))
+                        {
+                            while (!Bot.ShouldExit && !Core.CheckInventory("Common Mogugu", 10))
+                            {
+                                Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
+                                Bot.Wait.ForPickup("Common Mogugu");
+                            }
+                            Core.BuyItem("ebilmegamall", 2641, "Super Rare Mogugu");
+                            Bot.Wait.ForPickup("Super Rare Mogugu");
+                        }
+                        Adv.BuyItem("ebilmegamall", 2641, req.Name);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+
+                case "Super Super Super Rare Mogugu":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.RegisterQuests(10509);
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        while (!Bot.ShouldExit && !Core.CheckInventory("Super Super Rare Mogugu", 10))
+                        {
+                            while (!Bot.ShouldExit && !Core.CheckInventory("Super Rare Mogugu", 10))
+                            {
+                                while (!Bot.ShouldExit && !Core.CheckInventory("Common Mogugu", 10))
+                                {
+                                    Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
+                                    Bot.Wait.ForPickup("Common Mogugu");
+                                }
+
+                                Core.BuyItem("ebilmegamall", 2641, "Super Rare Mogugu");
+                                Bot.Wait.ForPickup("Super Rare Mogugu");
+                            }
+
+                            Core.BuyItem("ebilmegamall", 2641, "Super Super Rare Mogugu");
+                            Bot.Wait.ForPickup("Super Super Rare Mogugu");
+                        }
+
+                        Adv.BuyItem("ebilmegamall", 2641, req.Name);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+
+                    Core.CancelRegisteredQuests();
+                    break;
+
                 case "EbilCorp Scalper":
                 case "Pockeymog Card Pack":
                 case "EbilCorp Scalper Morph":
@@ -148,20 +239,12 @@ public class EbilMegaMallMerge
                 case "Red Mogugu Critter":
                 case "Black Mogugu Critter":
                 case "Black Mogugu Box":
-                case "Commmon Mogugu":
-                case "Super Rare Mogugu":
-                case "Super Super Rare Mogugu":
-                case "Super Super Super Rare Mogugu":
                     if (req.Upgrade && !Core.IsMember)
                     {
                         Core.Logger($"{req.Name} requires membership to farm, skipping.");
                         return;
                     }
                     Core.AddDrop(
-                        "Commmon Mogugu",
-                        "Super Rare Mogugu",
-                        "Super Super Rare Mogugu",
-                        "Super Super Super Rare Mogugu",
                         "Mogugu Display Case",
                         "Red Mogugu Box",
                         "Yellow Mogugu Box",
