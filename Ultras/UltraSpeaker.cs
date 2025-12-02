@@ -137,7 +137,7 @@ public class UltraSpeaker
 
             if (
                 (
-                    Bot.Player.CurrentClass?.Name == "lord of order"
+                    Bot.Player!.CurrentClass?.Name == "lord of order"
                     || Bot.Player.CurrentClass?.Name == "archpaladin"
                 ) && (Core.IsArmyHealthLow(75) || Core.IsHealthLow(75))
             )
@@ -206,34 +206,35 @@ public class UltraSpeaker
                             {
                                 if (a is null)
                                     continue;
-                                    
-                            string? msg = (a as dynamic)?.msg?.ToString();
-                            if (!string.IsNullOrEmpty(msg))
-                            {
-                                if (
-                                    msg.ToLower().Contains("listen")
-                                    || msg.ToLower().Contains("truth")
-                                )
+
+                                string? msg = (a as dynamic)?.msg?.ToString();
+                                if (!string.IsNullOrEmpty(msg))
                                 {
-                                    var act = whatAction();
-
-                                    speakerCounter++;
-
-                                    if (Bot.Player.CurrentClass?.Name == act.Item2)
+                                    if (
+                                        msg.ToLower().Contains("listen")
+                                        || msg.ToLower().Contains("truth")
+                                    )
                                     {
-                                        if (act.Item3 == "IN")
-                                        {
-                                            inZone = true;
-                                        }
-                                        if (act.Item3 == "OUT")
-                                        {
-                                            inZone = false;
-                                        }
-                                    }
+                                        var act = whatAction();
 
-                                    if (Bot.Player.CurrentClass?.Name == act.Item1)
-                                    {
-                                        setForceSkill(5, act.Item4);
+                                        speakerCounter++;
+
+                                        if (Bot.Player.CurrentClass?.Name == act.Item2)
+                                        {
+                                            if (act.Item3 == "IN")
+                                            {
+                                                inZone = true;
+                                            }
+                                            if (act.Item3 == "OUT")
+                                            {
+                                                inZone = false;
+                                            }
+                                        }
+
+                                        if (Bot.Player.CurrentClass?.Name == act.Item1)
+                                        {
+                                            setForceSkill(5, act.Item4);
+                                        }
                                     }
                                 }
                             }
