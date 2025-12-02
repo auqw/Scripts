@@ -54,7 +54,7 @@ public class CoreUltra
         if (!Bot.Player.Alive)
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-        if (!Core.HasClassEquipped(className))
+        if (!Bot.Inventory.IsEquipped(className))
             return;
 
         Bot.Combat.Attack(target);
@@ -65,11 +65,14 @@ public class CoreUltra
         {
             case "aura":
                 if (!string.IsNullOrWhiteSpace(aura) && Core.GetAuraSecondsRemaining(aura) < 1)
+                {
+                    Bot.Log("UseTaunt");
                     UseTaunt();
+                }
                 break;
 
             case "charge":
-                if ((_chargeDetected) && !Core.HasAura("Focus"))
+                if (_chargeDetected && !Bot.Self.Auras.Any(x => x != null && x.Name == "Focus"))
                     UseTaunt();
                 break;
         }
@@ -723,10 +726,11 @@ public class CoreUltra
     {
         Core.DisableSkills();
 
-        while (!Core.HasAura("Focus"))
+        while (!Bot.Self.Auras.Any(a => a != null && a.Name == "Focus"))
         {
-            Bot.Skills.UseSkill(5);
-            Bot.Sleep(100);
+            if (Bot.Skills.CanUseSkill(5))
+                Bot.Skills.UseSkill(5);
+            Bot.Sleep(200);
         }
 
         Core.EnableSkills();
