@@ -499,7 +499,7 @@ public class CoreAOR
         if (Core.isCompletedBefore(9729))
             return;
 
-        TerminaTemple(false, false);
+        TerminaTemple(seaVoice, coldThunder);
 
         Core.EquipClass(ClassType.Farm);
 
