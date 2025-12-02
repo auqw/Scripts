@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 147162,
-    "sha256": "517f1546b8fdc08ded850aeece49fab7af72a0b957411334d5fbcb7a210c9239",
+    "size": 147329,
+    "sha256": "0e9e6d3d9dc42464e1500a3f24770320052518bad91a879ba30128360f46efa6",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -9175,8 +9175,8 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 48958,
-    "sha256": "67f56b61a9bd34c11061d2ed5690108dcfb7bcc2748860c373706b949fc9749d",
+    "size": 48990,
+    "sha256": "90cf46db231675ed2fd85bdfeb9cf6016433b89187622f617d68194fe442c426",
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
