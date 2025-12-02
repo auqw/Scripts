@@ -62,6 +62,7 @@ public class Butler3
     {
         Core.SetOptions(disableClassSwap: true);
         BasicAFButler();
+        Bot.Events.ExtensionPacketReceived -= ChatListener;
         Core.SetOptions(false);
     }
 
@@ -95,6 +96,15 @@ public class Butler3
         if (classType != ClassType.None)
             Core.EquipClass(classType);
         #endregion
+
+        if (playerName == Bot.Player.Username)
+        {
+            Core.Logger(
+                "THE FUCK ARE YOU FOLLOWING YOURSELF FOR RETARD?",
+                "Retard alert",
+                messageBox: true
+            );
+        }
 
         while (!Bot.ShouldExit)
         {
@@ -251,29 +261,57 @@ public class Butler3
             if (string.IsNullOrEmpty(cmd))
                 return;
 
+            // ------------------------------
+            // SERVER MESSAGES (%xt%server ...)
+            // ------------------------------
+            if (cmd == "server")
+            {
+                string? text = dataObj[2]?.ToString();
+                if (string.IsNullOrWhiteSpace(text))
+                    return;
+
+                // Detect "is ignoring goto requests" on server channel
+                if (text.Contains("is ignoring goto requests", StringComparison.OrdinalIgnoreCase))
+                {
+                    Core.Logger($"{playerName} is ignoring goto requests, Stopping script!");
+
+                    Bot.Events.ExtensionPacketReceived -= ChatListener;
+                    Bot.Stop(true);
+                    return;
+                }
+            }
+
+            // ------------------------------
+            // WARNING MESSAGES (existing)
+            // ------------------------------
             if (cmd == "warning")
             {
-                string ChatListenerPacket = Convert.ToString(packet) ?? string.Empty;
+                string chatPacket = Convert.ToString(packet) ?? string.Empty;
+
                 if (
-                    ChatListenerPacket.Contains(
-                        "a Locked zone.",
-                        StringComparison.OrdinalIgnoreCase
-                    )
-                    || ChatListenerPacket.Contains(
-                        "is not available.",
-                        StringComparison.OrdinalIgnoreCase
-                    )
+                    chatPacket.Contains("a Locked zone.", StringComparison.OrdinalIgnoreCase)
+                    || chatPacket.Contains("is not available.", StringComparison.OrdinalIgnoreCase)
                 )
-                {
                     LockedZoneWarning = true;
-                }
-                if (ChatListenerPacket.Contains("is full", StringComparison.OrdinalIgnoreCase))
+
+                if (chatPacket.Contains("is full", StringComparison.OrdinalIgnoreCase))
                 {
                     Core.DebugLogger(
                         this,
                         $"Room is full, we'll wait incrementally, whilst trying to goto {playerName}"
                     );
                     RoomFull = true;
+                }
+
+                if (chatPacket.Contains("ignoring goto", StringComparison.OrdinalIgnoreCase))
+                {
+                    Core.DebugLogger(
+                        this,
+                        $"{playerName} is ignoring goto requests, Stopping script!"
+                    );
+
+                    Bot.Events.ExtensionPacketReceived -= ChatListener;
+                    Bot.Stop(true);
                 }
             }
         }
