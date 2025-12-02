@@ -78,7 +78,7 @@ public class UltraNulgath
             "Ultra Nulgath",
             "Deaths more then likely will happen, Suggested class and thier enhs are in the script at the top"
         );
-        
+
         if (
             Bot.Config != null
             && Bot.Config.Options.Contains(C.SkipOptions)
@@ -116,7 +116,6 @@ public class UltraNulgath
     {
         const string map = "ultranulgath";
         const string boss = "Nulgath the Archfiend";
-        const string blade = "Overfiend Blade";
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
