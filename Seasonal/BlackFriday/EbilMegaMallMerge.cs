@@ -81,6 +81,15 @@ public class EbilMegaMallMerge
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         EbilMegaMall.StoryLine();
+        Adv.MergeItemisinShopExceptions.AddRange(
+            new[]
+            {
+                "Commmon Mogugu",
+                "Super Rare Mogugu",
+                "Super Super Rare Mogugu",
+                "Super Super Super Rare Mogugu",
+            }
+        );
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("ebilmegamall", 2641, findIngredients, buyOnlyThis, buyMode: buyMode);
         #region Dont edit this part
