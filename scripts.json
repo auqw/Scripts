@@ -659,8 +659,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 9821,
-    "sha256": "96b56c03adeee9a2b9e262e1f84e259d531f58018413bc7b9760e1e29e5f9bc1",
+    "size": 10033,
+    "sha256": "30282ee2c5f6c3e66b155c3a6d03e911cbacaf4140b804cdf1f7db65f6b648e2",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
@@ -671,8 +671,8 @@
       "ultra"
     ],
     "path": "Ultras/ChampionDrakath.cs",
-    "size": 3659,
-    "sha256": "bf6f2ce085dd1d3efa319c4cc25731be7862429d36d4353d22970d762b531318",
+    "size": 3905,
+    "sha256": "643d931d47e7a24e1a8cacfcd4fc471a882b69dbb4c4db3a0d6eb0654acf85d9",
     "fileName": "ChampionDrakath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/ChampionDrakath.cs"
   },
@@ -731,8 +731,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDage.cs",
-    "size": 14275,
-    "sha256": "6d730e8c9c9ef845185bbb23fae63e7ad47490da7f79919ea78c93cfcc7ad78f",
+    "size": 14489,
+    "sha256": "35ff1d13e0b1d5475caa16af9f99925ba165649fdc3cf8406a6199b0bd1fbb8c",
     "fileName": "UltraDage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDage.cs"
   },
@@ -779,8 +779,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraWarden.cs",
-    "size": 3491,
-    "sha256": "cc877634254f3c01a4da89077e13079827fadfa66af6fe99b201249cd72c7f16",
+    "size": 3737,
+    "sha256": "73236eb7ba8a7654917ff230cf953e9eb2932e612ff03b6aec6d3bf6f40898eb",
     "fileName": "UltraWarden.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraWarden.cs"
   },
@@ -791,8 +791,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 3741,
-    "sha256": "43d18de1e46f1710f4cb7bc79f990fb65327ea6110d67960e129b24daba50a1c",
+    "size": 3989,
+    "sha256": "47b8cbdacca25e3b19408f4c4180eab947d5e54e70dd89829549b7c7f9c05048",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
