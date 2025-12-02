@@ -3817,8 +3817,8 @@
       "version 3"
     ],
     "path": "Tools/Butlerv3.cs",
-    "size": 18839,
-    "sha256": "ae5305eca91576f8bafdc662d062f201ab1107843643fdeadd9fc08611dd0dfe",
+    "size": 20261,
+    "sha256": "e4b0e71a33d159f0a4fe90cc86ac9ba8f054e64ededa7b2583573c579a038e50",
     "fileName": "Butlerv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv3.cs"
   },
@@ -10615,8 +10615,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 45573,
-    "sha256": "e0b4ba461281785ffd6a149365310ba86b3983950d4977e177b18cd1aab1f968",
+    "size": 45582,
+    "sha256": "36c6b8f0e20fad8974828bfd4db24676d3bf8f338667dfda8ef77ebeee5c81e5",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -13442,8 +13442,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 50948,
-    "sha256": "d98de88220cddaf733ec5dbf766131879dc3555cf3907d636355f7db14b61596",
+    "size": 50116,
+    "sha256": "c9372b909bfa2f2afd8f9c7ed0e5ecf4f9adad1b891609fa4dc9dc02d4fc97d1",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
