@@ -19,20 +19,18 @@ using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
 // LR:
-// "Weapon: Arcana"
+// "Weapon: Arcana/Valiance"
 // "Class: Wizard"
 // "Helm: Wizard"
 // "Cape: Penitence"
 // "Scroll: Enrage"
-// "Pots: Sage, Male";
 
 // AP:
-// "Weapon: Lacerate"
+// "Weapon: Lacerate/Valiance"
 // "Class: Luck"
 // "Helm: Luck"
 // "Cape: Penitence"
 // "Scroll: Enrage"
-// "Pots: Fate, Battle";
 
 // LOO:
 // "Weapon: Valiance"
@@ -40,14 +38,13 @@ using Skua.Core.Options;
 // "Helm: Luck"
 // "Cape: Penitence"
 // "Scroll: Enrage"
-// "Pots: Fate, Battle";
 
-// VDK:
+// VDK/Other dps:
 // "Weapon: Valiance"
 // "Class: Luck"
 // "Helm: Anima"
 // "Cape: Penitence"
-// "Pots: Fate, Battle, Honor";
+// "Scroll: Enrage"
 
 public class UltraSpeaker
 {
@@ -70,25 +67,20 @@ public class UltraSpeaker
 
     public void ScriptMain(IScriptInterface bot)
     {
-        // need custom skill, so can't use EnableSkills()
-        Core.Boot();
+        C.Logger("This script uses the `corner spam taunt method.. and works ^_^");
         className = Bot.Player.CurrentClass?.Name?.ToLower();
-        Core.DisableSkills();
-        Bot.Events.ExtensionPacketReceived += UltraSpeakerListener;
-        Bot.Events.ScriptStopping += OnScriptStopping;
-        // Ultra.GetScrollOfEnrage();
-        Core.EquipEnrage();
-        setSKill();
+        Core.Boot();
+        Core.EnableSkills();
+        Prep();
         Kill();
-
-        Bot.Events.ExtensionPacketReceived -= UltraSpeakerListener;
         C.SetOptions(false);
+    }
 
-        bool OnScriptStopping(Exception? e)
-        {
-            Bot.Events.ExtensionPacketReceived -= UltraSpeakerListener;
-            return true;
-        }
+    void Prep()
+    {
+        Ultra.GetScrollOfEnrage();
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        Core.EquipEnrage();
     }
 
     void Kill()
@@ -104,11 +96,8 @@ public class UltraSpeaker
         Core.Join("ultraspeaker");
         Ultra.WaitForArmy(3, "ultra_speaker.sync");
         Core.ChooseBestCell("The First Speaker");
+        Bot.Options.DisableCollisions = true;
 
-        // Core.EnableSkills();
-        string[] skillList = skills.Split(',');
-        int[] intSkillList = skillList.Select(int.Parse).ToArray();
-        int skillIndex = 0;
         while (!Bot.ShouldExit)
         {
             if (Ultra.CheckArmyProgress("The First Speaker Silenced", 1, false, syncPath))
@@ -126,181 +115,40 @@ public class UltraSpeaker
                 continue;
             }
 
+            // Put the player in a random spot within ((x=0,y=0), (x=101, y=101)) -- in the corner.
             if (Bot.Player?.Cell == "Boss")
             {
-                int targetX = inZone ? 203 : 100;
-                int targetY = inZone ? 301 : 321;
+                // Define box boundaries (0,0 to 101,101)
+                int minX = 0;
+                int maxX = 100;
+                int minY = 485;
+                int maxY = 500;
 
-                if (Bot.Player.Position.X != targetX)
-                    _walkFlash(targetX, targetY);
+                // Check if player is within the box
+                bool isInBox =
+                    Bot.Player.Position.X >= minX
+                    && Bot.Player.Position.X <= maxX
+                    && Bot.Player.Position.Y >= minY
+                    && Bot.Player.Position.Y <= maxY;
+
+                // If not in box, move to random location within box
+                if (!isInBox)
+                {
+                    Random rand = new();
+                    int randomX = rand.Next(minX, maxX + 1);
+                    int randomY = rand.Next(minY, maxY + 1);
+                    Bot.Player.WalkTo(randomX, randomY);
+                }
             }
-
-            if (
-                (
-                    Bot.Player!.CurrentClass?.Name == "lord of order"
-                    || Bot.Player.CurrentClass?.Name == "archpaladin"
-                ) && (Core.IsArmyHealthLow(75) || Core.IsHealthLow(75))
-            )
-                Bot.Skills.UseSkill(2);
 
             if (!Bot.Player.HasTarget)
-            {
                 Bot.Combat.Attack("*");
-            }
-
-            if (forceSkill)
-            {
-                // Bot.Sleep(timeWait);
-                while (!Bot.ShouldExit)
-                {
-                    if (Bot.Skills.CanUseSkill(skillToForce))
-                    {
-                        Bot.Skills.UseSkill(skillToForce);
-                        break;
-                    }
-                    Bot.Sleep(100);
-                }
-                forceSkill = false;
-            }
-
-            int currentSkill = intSkillList[skillIndex];
-            if (Bot.Skills.CanUseSkill(currentSkill))
-                Bot.Skills.UseSkill(currentSkill);
-            skillIndex = (skillIndex + 1) % intSkillList.Length;
-            Bot.Sleep(100);
+            Bot.Sleep(200);
+            if (
+                !Bot.Self.Auras.Any(x => x != null && x.Name == "Focus")
+                && Bot.Skills.CanUseSkill(5)
+            )
+                Bot.Skills.UseSkill(5);
         }
-        C.Logger("LOG", "FINISHED");
-    }
-
-    void _walkFlash(int X, int Y) => Bot.Flash.Call("walkTo", X, Y, 8);
-
-    async void UltraSpeakerListener(dynamic packet)
-    {
-        try
-        {
-            string type = packet["params"].type;
-            dynamic data = packet["params"].dataObj;
-            if (type is not null and "json")
-            {
-                string cmd = data.cmd;
-                switch (cmd)
-                {
-                    case "event":
-                        string zone = data.args?["zoneSet"]!;
-                        if (
-                            zone is not null
-                            && zone == "A"
-                            && Bot.Player.CurrentClass?.Name == "legion revenant"
-                        )
-                        {
-                            C.Logger("ZONE", "FORCE SKILL 1");
-                            setForceSkill(1);
-                            return;
-                        }
-                        break;
-
-                    case "ct":
-                        if (data.anims is not null)
-                        {
-                            foreach (var a in data.anims)
-                            {
-                                if (a is null)
-                                    continue;
-
-                                string? msg = (a as dynamic)?.msg?.ToString();
-                                if (!string.IsNullOrEmpty(msg))
-                                {
-                                    if (
-                                        msg.ToLower().Contains("listen")
-                                        || msg.ToLower().Contains("truth")
-                                    )
-                                    {
-                                        var act = whatAction();
-
-                                        speakerCounter++;
-
-                                        if (Bot.Player.CurrentClass?.Name == act.Item2)
-                                        {
-                                            if (act.Item3 == "IN")
-                                            {
-                                                inZone = true;
-                                            }
-                                            if (act.Item3 == "OUT")
-                                            {
-                                                inZone = false;
-                                            }
-                                        }
-
-                                        if (Bot.Player.CurrentClass?.Name == act.Item1)
-                                        {
-                                            setForceSkill(5, act.Item4);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                }
-            }
-        }
-        catch
-        { /* ignored */
-        }
-    }
-
-    private int speakerCounter = 0;
-
-    private (string?, string?, string?, int) whatAction()
-    {
-        // who taunt, who zone, in/out, wait skillLR
-        switch (speakerCounter)
-        {
-            case 0:
-                return ("legion revenant", null, null, 0);
-            case 1:
-                return ("lord of order", "verus doomknight", "IN", 0);
-            case 2:
-                return ("archpaladin", "verus doomknight", "OUT", 0);
-            case 3:
-            case 7:
-                return ("lord of order", null, null, 500);
-            case 4:
-                return (null, "legion revenant", "IN", 0);
-            case 5:
-                return ("legion revenant", "legion revenant", "OUT", 500);
-            case 8:
-                return (null, "archpaladin", "IN", 0);
-            case 9:
-                return ("archpaladin", "archpaladin", "OUT", 0);
-            case 10:
-                return ("legion revenant", null, null, 500);
-            case 11:
-                return (null, "lord of order", "IN", 0);
-            case 12:
-                return ("lord of order", "lord of order", "OUT", 500);
-            case 14:
-                return ("legion revenant", null, null, 0);
-            case 15:
-                speakerCounter = 1;
-                return ("lord of order", "verus doomknight", "IN", 500);
-        }
-        return (null, null, null, 0);
-    }
-
-    private void setForceSkill(int skill, int time = 0)
-    {
-        forceSkill = true;
-        skillToForce = skill;
-        timeWait = time;
-    }
-
-    private void setSKill()
-    {
-        skills = className switch
-        {
-            "legion revenant" => "2,3,4",
-            "archpaladin" or "lord of order" or "verus doomknight" => "1,2,3,4",
-            _ => "1,2,3,4",
-        };
     }
 }
