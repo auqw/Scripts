@@ -39,13 +39,11 @@ except ET.ParseError:
     print(f"Failed to parse XML in {old_config_path}")
     exit()
 
-# Extract accounts (display,user,pass only)
+# Extract accounts (keep original {=} format)
 accounts = []
 for s in root_xml.findall(".//ArrayOfString/string"):
     if s.text and "{=}" in s.text:
-        parts = s.text.split("{=}")
-        if len(parts) == 3:
-            accounts.append(f"{parts[0]},{parts[1]},{parts[2]}")
+        accounts.append(s.text)
 
 if not accounts:
     print("No valid accounts found in the selected file.")
@@ -88,8 +86,15 @@ else:
             )
             exit()
 
-    # Replace ManagedAccounts
-    data["ManagedAccounts"] = accounts
+    # Update ManagedAccounts in the manager section
+    if "manager" in data:
+        data["manager"]["ManagedAccounts"] = accounts
+    else:
+        data["ManagedAccounts"] = accounts
+    
+    # Remove any root-level ManagedAccounts if it exists (shouldn't, but just in case)
+    if "ManagedAccounts" in data and "manager" in data:
+        del data["ManagedAccounts"]
 
     # Write back updated JSON
     with open(skua_settings_path, "w", encoding="utf-8") as f:
