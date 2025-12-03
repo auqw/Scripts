@@ -622,7 +622,12 @@ public class CoreFrostvale
         }
 
         // Fire from the Hole 3904
-        Story.KillQuest(3904, "icerisepast", "Ice Drumlinster");
+        if (!Story.QuestProgression(3904))
+        {
+            Core.EnsureAccept(3904);
+            Core.HuntMonster("icerisepast", "Ice Drumlinster", "Ice Drumlinster Defeated");
+            Core.EnsureComplete(3904);
+        }
     }
 
     public void Winterhorror()
