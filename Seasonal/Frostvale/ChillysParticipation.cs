@@ -40,5 +40,6 @@ public class ChillysQuest
         Core.EnsureAccept(questID);
         Core.HuntMonsterMapID("battleontown", 1, "Reminder Delivered");
         Core.EnsureComplete(questID);
+        Bot.Sleep(2000);
     }
 }
