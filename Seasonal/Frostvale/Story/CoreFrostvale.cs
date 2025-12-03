@@ -324,14 +324,11 @@ public class CoreFrostvale
         Story.KillQuest(2545, "frostdeep", new[] { "Ancient Mole", "Ancient Mole" });
 
         // Older and Colder
-        if (!Story.QuestProgression(2546))
-        {
-            Core.EnsureAccept(2546);
-            Core.KillMonster("frostdeep", "r11", "Left", "Ancient Mole", "Dried Blood", 5);
-            Core.KillMonster("frostdeep", "r18", "Left", "Ancient Prowler", "Wyrm Dirt", 4);
-            Core.KillMonster("frostdeep", "r17", "Left", "Ancient Maggot", "Temple Dust Mite", 4);
-            Core.EnsureComplete(2546);
-        }
+        Story.KillQuest(
+            2546,
+            "frostdeep",
+            new[] { "Ancient Prowler", "Ancient Maggot", "Ancient Mole" }
+        );
 
         // The Sword Of Hope
         Story.KillQuest(2547, "frostdeep", new[] { "Ancient Terror", "Ancient Terror" });
