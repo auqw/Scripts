@@ -421,8 +421,13 @@ public class CoreFrostvale
         Story.KillQuest(6131, "coldwindvalley", "Arctusk");
 
         // Holly and Ice
-        Story.MapItemQuest(6132, "coldwindvalley", 5557, 8);
-        Story.KillQuest(6132, "coldwindvalley", "Snow Golem");
+        if (!Story.QuestProgression(6132))
+        {
+            Core.EnsureAccept(6132);
+            Core.GetMapItem(5557, 8, "coldwindvalley");
+            Core.HuntMonster("coldwindvalley", "Snow Golem", "Elemental Ice", 5);
+            Core.EnsureComplete(6132);
+        }
     }
 
     public void Battlefield(bool ReturnEarly = false)
