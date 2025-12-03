@@ -29801,8 +29801,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/Story/CoreFrostvale.cs",
-    "size": 45911,
-    "sha256": "020d4d1f8a597cf6cf7d864befc23400d94a85aaf9f692cd006ae5cbff0edec3",
+    "size": 45641,
+    "sha256": "5ebd4ae6f9df3d4a0ee50538b611dd64244c1a97d8d8c11c1c4865b6c91c7b93",
     "fileName": "CoreFrostvale.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/Story/CoreFrostvale.cs"
   },
