@@ -235,7 +235,12 @@ public class CoreDOY
         Core.EquipClass(ClassType.Farm);
 
         // Tense Reunion (9667)
-        Story.MapItemQuest(9667, "yokaiportal", new[] { 12982, 12983, 12984 });
+        if (!Story.QuestProgression(9667))
+        {
+            Core.EnsureAccept(9667);
+            Core.GetMapItems(new[] { (12982, 1), (12983, 1), (12984, 1) }, "yokaiportal");
+            Core.EnsureComplete(9667);
+        }
 
         // Kimon (9668)
         Story.KillQuest(9668, "yokaiportal", "Oni Spirits");
