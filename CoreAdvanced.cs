@@ -659,7 +659,7 @@ public class CoreAdvanced
             EnsureShopLoaded(map, shopID);
             ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == Req.ID);
 
-            if (wasinshop?.Name.Contains("Gold Voucher") == false)
+            if (wasinshop != null)
             {
                 Core.Logger($"Item: \"{Req.Name}  [{Req.ID}\"] is in the shop!");
                 while (!Bot.ShouldExit && !Core.CheckInventory(Req.ID, ReqQuant))
@@ -683,6 +683,17 @@ public class CoreAdvanced
                     }
                     else
                     {
+                        // Items not in the shop, so we have to get it externally
+                        if (wasinshop.Name.Contains("Dragon Runestone"))
+                        {
+                            Farm.DragonRunestone(ReqQuant);
+                            continue;
+                        }
+                        if (wasinshop.Name.Contains("Gold Voucher"))
+                        {
+                            Farm.Voucher(wasinshop.Name, ReqQuant);
+                            continue;
+                        }
                         IngredientWasintheShop(wasinshop, ReqQuant);
                     }
 
@@ -762,11 +773,7 @@ public class CoreAdvanced
                 int ReqQuant = req.Quantity * craftingQ;
                 ShopItem? wasinshop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
 
-                if (
-                    wasinshop != null
-                    && !wasinshop.Name.Contains("Gold Voucher")
-                    && !MergeItemisinShopExceptions.Contains(req.Name)
-                )
+                if (wasinshop != null && !MergeItemisinShopExceptions.Contains(req.Name))
                 {
                     Core.Logger($"Item: \"{wasinshop.Name}  [{wasinshop.ID}\"] is in the shop.");
                     ReqQuant = Math.Min(ReqQuant, wasinshop.MaxStack);
@@ -785,6 +792,17 @@ public class CoreAdvanced
                     }
                     else
                     {
+                        // Items not in the shop, so we have to get it externally
+                        if (req.Name.Contains("Dragon Runestone"))
+                        {
+                            Farm.DragonRunestone(ReqQuant);
+                            continue;
+                        }
+                        if (req.Name.Contains("Gold Voucher"))
+                        {
+                            Farm.Voucher(req.Name, ReqQuant);
+                            continue;
+                        }
                         // Core.Logger($"Requirements: {string.Join(", ", wasinshop.Requirements)}");
                         IngredientWasintheShop(wasinshop, ReqQuant);
                     }
