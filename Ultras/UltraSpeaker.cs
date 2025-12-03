@@ -59,11 +59,6 @@ public class UltraSpeaker
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
     string? className = null;
-    private bool inZone = false;
-    private int timeWait;
-    private bool forceSkill = false;
-    private int skillToForce;
-    private string skills = "1,2,3,4";
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -141,7 +136,7 @@ public class UltraSpeaker
                 }
             }
 
-            if (!Bot.Player.HasTarget)
+            if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
             Bot.Sleep(200);
             if (
