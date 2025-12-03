@@ -145,9 +145,13 @@ public class UltraAvatarTyndarius
     void Prep()
     {
         if (isBall1Taunter || isBall2Taunter || isMustTauntTyn)
+        {
+            Bot.Log("isTaunter = true");
             Ultra.GetScrollOfEnrage();
+        }
         else
         {
+            Bot.Log("isTaunter = fasle");
             Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
             Ultra.BuyAlchemyPotion("Potent Honor Potion");
             Core.EquipConsumable("Potent Honor Potion");
