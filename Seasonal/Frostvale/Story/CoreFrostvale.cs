@@ -245,7 +245,7 @@ public class CoreFrostvale
         Story.MapItemQuest(2526, "frostdeep", 1587, AutoCompleteQuest: false);
 
         // Heart of Ice
-        Story.KillQuest(2527, "frostdeep", new[] { "Polar Golem", "Polar Elemental" });
+        Story.KillQuest(2527, "frostdeep", new[] { "Polar Elemental", "Polar Golem" });
 
         // Absolute Zero Success
         Story.KillQuest(
@@ -1003,7 +1003,7 @@ public class CoreFrostvale
         Story.MapItemQuest(8429, "deerhunt", 9376, 6);
 
         // 8430  Final Blessing
-        Story.KillQuest(8430, "deerhunt", new[] { "Deer?", "Scared Wolf", "Frightened Owl" });
+        Story.KillQuest(8430, "deerhunt", new[] { "Frightened Owl", "Deer?", "Scared Wolf" });
 
         // 8431 The Zweinichthirsch
         Story.KillQuest(8431, "deerhunt", "Zweinichthirsch");
