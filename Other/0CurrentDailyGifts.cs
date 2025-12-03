@@ -6,9 +6,8 @@ tags: daily-gifts, rare-items
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Seasonal/MayThe4th/TwiggusGearMerge.cs
-//cs_include Scripts/Seasonal/SummerBreak/RoseRapiers.cs
-//cs_include Scripts/Other/Pets/CursedWazikashi.cs
+//cs_include Scripts/Legion/CoreLegion.cs
+//cs_include Scripts/CoreStory.cs
 using System.Globalization;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Monsters;
@@ -31,24 +30,12 @@ public class CurrentDailyGifts
         set => _Adv = value;
     }
     private static CoreAdvanced _Adv;
-    private static TwiggusGearMerge TGM
+    private static CoreLegion Legion
     {
-        get => _TGM ??= new TwiggusGearMerge();
-        set => _TGM = value;
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
     }
-    private static TwiggusGearMerge _TGM;
-    private static RoseRapiers RR
-    {
-        get => _RR ??= new RoseRapiers();
-        set => _RR = value;
-    }
-    private static RoseRapiers _RR;
-    private static CursedWazikashi CursedWazikashi
-    {
-        get => _CursedWazikashi ??= new CursedWazikashi();
-        set => _CursedWazikashi = value;
-    }
-    private static CursedWazikashi _CursedWazikashi;
+    private static CoreLegion _Legion;
 
     public string OptionsStorage = "CurrentDailyGifts";
     public bool DontPreconfigure = true;
@@ -274,135 +261,53 @@ public class CurrentDailyGifts
 
             #endregion
 
-            #region Febuari 2023
-            //GetGift(AvailableUntil(10, 2), "dreampalace", "Zahad", "Mana Spiral", "Mana Rift");
-            //GetGift(AvailableUntil(10, 2), "tercessuinotlim", "Void Knight", "Carnage Void's Morph");
-            //GetGift(AvailableUntil(10, 2), "tercessuinotlim", "Taro Blademaster", "Infernal SoulRipper", "Infernal SoulRippers");
-            //GetGift(AvailableUntil(10, 2), "tercessuinotlim", "Shadow of Nulgath", "Shadow of Nulgath Guard", "Void of Nulgath Guard", "Fiend of Nulgath Guard", "GrimLord of Nulgath Guard");
-            //GetGift(AvailableUntil(28, 2), "manor", "Bird of Paradise", "Bird of Coeurs Snowboard");
-            //GetGift(AvailableUntil(28, 2), "worldscore", "Crystalized Mana", "Twisted Shadow Daggers");
-            //GetGift(AvailableUntil(28, 2), "brokenwoods", "Eldritch Amalgamation", "Diabolical Banner", "Diabolical Bed", "Diabolical BookShelf", "Diabolical Carpet", "Diabolical Couch", "Diabolical Eye Lamp", "Diabolical Fountain", "Diabolical Throne", "Diabolical Torch", "Diabolical Work Desk");
-            //GetGift(AvailableUntil(28, 2), "yokaihunt", "Elixir Etokoun", "Lunarian Blasters", "Lunarian Blaster", "Lunarian Gohei", "Lunarian Cresent");
-            #endregion
+            #region December 2025
 
-            #region March 2023
-            //Fix this its not perm.. i just dont have a date atm...
-            //GetGift(AvailableUntil(31, 3), "undervoid", "Conquest", "Dark Birthday Party Guests I", "Dark Birthday Party Guests II", "Evil Birthday Party Guest", "Hungry Dark Birthday Party Guest");
-            //GetGift(AvailableUntil(20, 3), "shadowrealmpast", "*", "Shadow Warrior Sword");
-            //GetGift(AvailableUntil(27, 3), "eden", "Klawaii Machine", "Minty Fresh Gacha Orb", "Sweet Treat Gacha Orb", "Dragon Lover's Gacha Orb", "TreasureHunter's Gacha Orb", "TechFiend's Gacha Orb", "TreasureHunter's Gacha Orb Decor", "Sweet Treat Gacha Orb Decor", "Minty Fresh Gacha Orb Decor", "TechFiend's Gacha Orb Decor", "Dragon Lover's Gacha Orb Decor");
-            #endregion
+            //Shop items
+            if (DateTime.Now <= AvailableUntil(31, 12))
+            {
+                if (!Core.CheckInventory("Darkest BladeMaster Assassin", toInv: false))
+                {
+                    if (!Core.CheckInventory("Legion Token", 6666))
+                        Legion.FarmLegionToken(6666);
 
-            #region April 2023 ( + Scavenger Clues)
-            //Dark Scavenger Clue
-            GetGift(AvailableUntil(3, 4), "fireplanewar", "ShadowClaw", "Trident of Destruction");
+                    Core.BuyItem("underworld", 238, "Darkest BladeMaster Assassin");
+                }
+            }
 
-            //Shadowy Scavenger Clue
+            if (DateTime.Now <= AvailableUntil(31, 12))
+            {
+                if (!Core.CheckInventory("CyberStrike Achievement Blade", toInv: false))
+                    Core.BuyItem("ebilmegamall", 2641, "CyberStrike Achievement Blade");
+
+                if (!Core.CheckInventory("CyberStrike Achievement Blades", toInv: false))
+                    Core.BuyItem("ebilmegamall", 2641, "CyberStrike Achievement Blades");
+
+                if (!Core.CheckInventory("CyberStrike Blade Pet", toInv: false))
+                    Core.BuyItem("ebilmegamall", 2641, "CyberStrike Blade Pet");
+            }
+
+            //Drop Items
             GetGift(
-                AvailableUntil(27, 3),
-                "manacradle",
-                "The Mainyu",
-                "ShadowFlame Eviscerator Pistol",
-                "ShadowFlame Eviscerator Pistols",
-                "ShadowFlame Eviscerator Revolver",
-                "ShadowFlame Eviscerator Revolvers",
-                "ShadowFlame Annihilator Rifle",
-                "ShadowFlame Devastator"
-            );
-
-            //Undead Scavenger Clue
-            GetGift(
-                AvailableUntil(10, 4),
-                "dragontown",
-                "Chaos Fluffy",
-                "Dracosaster",
-                "Dracotastrophe"
-            );
-
-            //O_o Scavenger Clue
-            GetGift(AvailableUntil(17, 4), "andre", "Giant Fist", "Navel Top Hat");
-
-            //GigaWUT Scavenger Clue
-            GetGift(AvailableUntil(24, 4), "dvg", "Munthor", "Giga Twilly");
-
-            //Golden Treasure Hunt clue
-            GetGift(AvailableUntil(1, 5), "necrodungeon", 48, "Golden Spear of Light");
-
-            //Message Capsule Clue
-            TGM.BuyAllMerge("L'il Twiggu Guest");
-            TGM.BuyAllMerge("Baby Twiggu's Pod Pet");
-
-            //Throny Scavenger Clue
-            RR.GetWeapons();
-
-            // Fireworks twilly
-            if (DateTime.Now.Month == 7)
-                Core.BuyItem(Bot.Map.Name, 1348, 78735, shopItemID: 48402);
-
-            GetGift(
-                AvailableUntil(10, 6),
-                "ashray",
-                "Ashray Fisherman",
-                "Twig's Totally FUN-ctional Ride"
-            );
-            GetGift(AvailableUntil(16, 6), "garden", "Creature 35", "Dark Astravian General Lance");
-            #endregion April 2023 ( + Scavenger Clues)
-
-            #region July 2023
-            GetGift(Permanent, "ontherun", "lumberhorc", "Maple Party Twig");
-
-            #endregion July 2023
-
-            #region August 2023
-
-            // Cursed Wakizashi Pet (Treasure Hunt?)
-            // CursedWazikashi.CursedWakizashiPet();
-            GetGift(
-                AvailableUntil(15, 9),
-                "superslayin",
-                "Charidon",
-                "Charidon Pet",
-                "Charidon Battlepet"
+                AvailableUntil(31, 12),
+                "ebilmegamall",
+                "Black BOGOdrone Prime",
+                "Cyber Hacker Ninja",
+                "Umbra Cobra's Serpentine Staff"
             );
             GetGift(
-                AvailableUntil(15, 9),
-                "garden",
-                "Creature 343",
-                "Debris .45 Revolver",
-                "Debris .45 Revolvers"
-            );
-
-            #endregion August 2023
-
-            #region September 2023
-
-            GetGift(
-                AvailableUntil(30, 9),
-                "septhub",
-                "Cursed Cecaelia",
-                "DeepWater Waves",
-                "Master Gunner Gween"
-            );
-            GetGift(AvailableUntil(30, 9), "twilightzone", "Whale Louse", "Compact Cyamidae");
-
-            #endregion
-
-            #region October 2023
-
-            GetGift(
-                AvailableUntil(30, 10),
-                "eventhub",
-                "Slayer Cake",
-                "Gravelyn's TopHat + Locks of DOOM",
-                "Gravelyn's TopHat of DOOM",
-                "ShadowScythe Commander's TopHat",
-                "ShadowScythe Commander's TopHat + Locks"
+                AvailableUntil(31, 12),
+                "shinkansen",
+                "Saint Apa",
+                "Crystallis Saint's Hair",
+                "Crystallis Sovereign's Locks"
             );
             GetGift(
-                AvailableUntil(30, 10),
-                "lair",
-                "Red Dragon",
-                "Blacksteel Dragon Bow",
-                "Blacksteel Dragon Spear"
+                AvailableUntil(31, 12),
+                "shinkansen",
+                "Saint Eta",
+                "Brilliant Hood of The Anomaly",
+                "Radiant Hood of the Anomaly"
             );
 
             #endregion
@@ -563,10 +468,10 @@ public class CurrentDailyGifts
         }
     }
 
-    private DateTime AvailableUntil(int Day, int Month, int Year = 2023) =>
+    private DateTime AvailableUntil(int Day, int Month, int Year = 2025) =>
         new(Year, Month, Day, 07, 00, 00, DateTimeKind.Utc);
 
-    private DateTime AvailableUntil(int Day, Month Month, int Year = 2023) =>
+    private DateTime AvailableUntil(int Day, Month Month, int Year = 2025) =>
         new(Year, (int)Month, Day, 07, 00, 00, DateTimeKind.Utc);
 
     private DateTime Permanent = DateTime.MaxValue;
