@@ -1049,7 +1049,7 @@ public class CoreFrostvale
         }
 
         //Both Sides are Guilty (7825)
-        Story.KillQuest(7825, "judgement", new[] { "Aeacus", "Minos", "Rhadamanthys" });
+        Story.KillQuest(7825, "judgement", new[] { "Minos", "Rhadamanthys", "Aeacus" });
 
         //Bait and Switch (7826)
         Story.KillQuest(7826, "doomvault", "Princess Angler");
