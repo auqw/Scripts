@@ -695,8 +695,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 8907,
-    "sha256": "fa706cdfd5475d657812f15985ffffe8f8c1142c7c9447f63ae45dbd0d92e3a4",
+    "size": 9014,
+    "sha256": "ed45912a751cf8086dfec5b902890b6d78d2b0070b4327e62c23da23c648ec3f",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -20613,8 +20613,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/ChillysParticipation.cs",
-    "size": 1234,
-    "sha256": "d8c7c36ba31ee2d7bc6bac539edbcfcffbb01957bc6accadf29635884118f39e",
+    "size": 1259,
+    "sha256": "99ce4348622f8226dea91df0f43d23fce4e7f763d9e94eb7dfc1596bcc9b8e27",
     "fileName": "ChillysParticipation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/ChillysParticipation.cs"
   },
