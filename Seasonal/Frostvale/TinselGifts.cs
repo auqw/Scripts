@@ -56,7 +56,7 @@ public class TinselGifts
         {
             Core.EnsureAccept(questId);
             Core.HuntMonster(mapName, monsterName, itemBow, log: false);
-            Core.EnsureComplete(questId);
+            Core.EnsureCompleteChoose(questId, rewards);
         }
         Core.ToBank(rewards);
     }
