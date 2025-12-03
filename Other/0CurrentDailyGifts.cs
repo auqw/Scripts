@@ -30,7 +30,7 @@ public class CurrentDailyGifts
         set => _Adv = value;
     }
     private static CoreAdvanced _Adv;
-        private static CoreLegion Legion
+    private static CoreLegion Legion
     {
         get => _Legion ??= new CoreLegion();
         set => _Legion = value;
@@ -288,9 +288,27 @@ public class CurrentDailyGifts
             }
 
             //Drop Items
-            GetGift(AvailableUntil(31, 12), "ebilmegamall", "Black BOGOdrone Prime", "Cyber Hacker Ninja", "Umbra Cobra's Serpentine Staff");
-            GetGift(AvailableUntil(31, 12), "shinkansen", "Saint Apa", "Crystallis Saint's Hair", "Crystallis Sovereign's Locks");
-            GetGift(AvailableUntil(31, 12), "shinkansen", "Saint Eta", "Brilliant Hood of The Anomaly", "Radiant Hood of the Anomaly");
+            GetGift(
+                AvailableUntil(31, 12),
+                "ebilmegamall",
+                "Black BOGOdrone Prime",
+                "Cyber Hacker Ninja",
+                "Umbra Cobra's Serpentine Staff"
+            );
+            GetGift(
+                AvailableUntil(31, 12),
+                "shinkansen",
+                "Saint Apa",
+                "Crystallis Saint's Hair",
+                "Crystallis Sovereign's Locks"
+            );
+            GetGift(
+                AvailableUntil(31, 12),
+                "shinkansen",
+                "Saint Eta",
+                "Brilliant Hood of The Anomaly",
+                "Radiant Hood of the Anomaly"
+            );
 
             #endregion
 
