@@ -17,7 +17,7 @@ public class ChillysQuest
         set => _Farm = value;
     }
     private static CoreFarms _Farm;
-    public static int questID = 9988;
+    public static int questID = 10510;
 
     public void ScriptMain(IScriptInterface Bot)
     {
