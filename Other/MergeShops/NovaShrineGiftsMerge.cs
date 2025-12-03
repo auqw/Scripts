@@ -181,6 +181,7 @@ public class NovaShrineGiftsMerge
     {
         CoreDOY.NovaShrine();
         //Only edit the map and shopID here
+        Adv.MergeItemisinShopExceptions.AddRange(new[] { "Green Dragon Slayer's Halberd" });
         Adv.StartBuyAllMerge("novashrine", 2458, findIngredients, buyOnlyThis, buyMode: buyMode);
 
         #region Dont edit this part
@@ -287,7 +288,6 @@ public class NovaShrineGiftsMerge
 
                 case "Blinding Aura":
                     BLOD.BlindingAura(quant);
-
                     break;
 
                 case "Cosmic Stardust":
