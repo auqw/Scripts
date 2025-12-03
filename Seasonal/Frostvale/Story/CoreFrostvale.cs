@@ -653,7 +653,7 @@ public class CoreFrostvale
         Story.KillQuest(7858, "winterhorror", "Arthur and Elise");
 
         // He's Ragin' 7859
-        Story.KillQuest(7859, "winterhorror", $"Howard’s Rage");
+        Story.KillQuest(7859, "winterhorror", "Howard's Rage");
     }
 
     public void Gifthulu()
