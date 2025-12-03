@@ -254,6 +254,9 @@ public class UltraAvatarTyndarius
         [Description("Chrono ShadowSlayer")]
         ChronoShadowSlayer,
 
+        [Description("Chrono ShadowHunter")]
+        ChronoShadowHunter,
+
         [Description("Chaos Avenger")]
         ChaosAvenger,
 
@@ -283,7 +286,7 @@ public class UltraAvatarTyndarius
     public enum FocusTyndarius
     {
         // In order of fast > safe > f2p fast > other
-        [Description("Lord of Order")]
+        [Description("Lord Of Order")]
         LordOfOrder,
 
         [Description("Dragon of Time")]
