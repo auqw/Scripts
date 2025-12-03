@@ -64,8 +64,8 @@ public class FrostvalBarbarian
         if (!Core.isSeasonalMapActive("frostvale"))
             return;
 
-        Glacera.Northstar();
-        Frostvale.Battlefield(true);
+        Glacera.DoAll();
+        Frostvale.DoAll();
 
         if (!Core.CheckInventory("Infernal Ice Heart") && !Core.CheckInventory("Crypto Token", 5))
         {
