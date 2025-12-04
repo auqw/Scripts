@@ -1003,7 +1003,7 @@ public class CoreFrostvale
         Story.MapItemQuest(8429, "deerhunt", 9376, 6);
 
         // 8430  Final Blessing
-        Story.KillQuest(8430, "deerhunt", new[] { "Frightened Owl", "Deer?", "Scared Wolf" });
+        Story.KillQuest(8430, "deerhunt", new[] { "Scared Wolf", "Frightened Owl", "Deer?" });
 
         // 8431 The Zweinichthirsch
         Story.KillQuest(8431, "deerhunt", "Zweinichthirsch");
@@ -1124,7 +1124,7 @@ public class CoreFrostvale
         Story.KillQuest(9510, "fimbultomb", "Sullied Auberon");
 
         // Caving Hazards 9511
-        Story.KillQuest(9511, "fimbultomb", new[] { "Sullied Auberon", "Draugr" });
+        Story.KillQuest(9511, "fimbultomb", new[] { "Draugr", "Sullied Auberon" });
 
         // Poetic Ettin 9512
         Story.MapItemQuest(9512, "fimbultomb", 12493);
