@@ -153,6 +153,7 @@ public class EbilMegaMallMerge
                         if (missing > 0)
                         {
                             int goal = currentCommon + missing;
+                            Core.FarmingLogger("Common Mogugu", goal);
                             while (
                                 !Bot.ShouldExit && Bot.Inventory.GetQuantity("Common Mogugu") < goal
                             )
@@ -213,6 +214,7 @@ public class EbilMegaMallMerge
                             if (t == 0) // Common = incremental farm
                             {
                                 int goal = current + missing;
+                                Core.FarmingLogger("Common Mogugu", goal);
                                 while (
                                     !Bot.ShouldExit
                                     && Bot.Inventory.GetQuantity("Common Mogugu") < goal
@@ -285,6 +287,7 @@ public class EbilMegaMallMerge
                             if (t == 0) // Common incremental farm
                             {
                                 int goal = current + missing;
+                                Core.FarmingLogger("Common Mogugu", goal);
                                 while (
                                     !Bot.ShouldExit
                                     && Bot.Inventory.GetQuantity("Common Mogugu") < goal
