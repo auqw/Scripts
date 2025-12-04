@@ -4142,12 +4142,12 @@ public class CoreBots
                 }
                 if (
                     !Bot.Player.HasTarget
-                    || Bot.Player.Target == null && Bot.Player?.Target?.HP <= 0
+                    || Bot.Player.Target != null && Bot.Player?.Target?.HP <= 0
                 )
                     Bot.Combat.Attack(monster); // ⚔️
 
                 Sleep(500); // 💤
-                // Check if player doenst havea  target after the attacking
+                // Check if player doenst have a target after the attacking
                 // if not then its dead and we can move on
                 if (!Bot.Player!.HasTarget)
                     return;
