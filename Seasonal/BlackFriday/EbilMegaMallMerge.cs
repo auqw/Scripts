@@ -154,7 +154,9 @@ public class EbilMegaMallMerge
                         {
                             int goal = currentCommon + missing;
                             Core.FarmingLogger("Common Mogugu", goal);
-                            while (!Bot.ShouldExit && !Core.CheckInventory("Common Mogugu", goal))
+                            while (
+                                !Bot.ShouldExit && Bot.Inventory.GetQuantity("Common Mogugu") < goal
+                            )
                             {
                                 Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
                                 Bot.Wait.ForPickup("Common Mogugu");
@@ -214,7 +216,8 @@ public class EbilMegaMallMerge
                                 int goal = current + missing;
                                 Core.FarmingLogger("Common Mogugu", goal);
                                 while (
-                                    !Bot.ShouldExit && Core.CheckInventory("Common Mogugu", goal)
+                                    !Bot.ShouldExit
+                                    && Bot.Inventory.GetQuantity("Common Mogugu") < goal
                                 )
                                 {
                                     Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
@@ -286,7 +289,8 @@ public class EbilMegaMallMerge
                                 int goal = current + missing;
                                 Core.FarmingLogger("Common Mogugu", goal);
                                 while (
-                                    !Bot.ShouldExit && Core.CheckInventory("Common Mogugu", goal)
+                                    !Bot.ShouldExit
+                                    && Bot.Inventory.GetQuantity("Common Mogugu") < goal
                                 )
                                 {
                                     Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
