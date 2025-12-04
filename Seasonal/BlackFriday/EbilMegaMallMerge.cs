@@ -226,6 +226,7 @@ public class EbilMegaMallMerge
         Core.FarmingLogger(finalName, quant);
         Core.EquipClass(ClassType.Solo);
         Core.RegisterQuests(10509);
+        Core.Unbank(tiers);
 
         int needed = quant;
         const int MAX_STACK = 1000;
