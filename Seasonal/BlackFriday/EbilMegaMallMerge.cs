@@ -134,7 +134,6 @@ public class EbilMegaMallMerge
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
-
                 case "Super Rare Mogugu":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -221,7 +220,7 @@ public class EbilMegaMallMerge
                             }
                         }
 
-                        Adv.BuyItem("ebilmegamall", 2641, req.Name, batchSize);
+                        Core.BuyItem("ebilmegamall", 2641, req.Name, batchSize);
                         Bot.Wait.ForPickup(req.Name);
                         needed -= batchSize;
                     }
@@ -282,14 +281,13 @@ public class EbilMegaMallMerge
                             }
                         }
 
-                        Adv.BuyItem("ebilmegamall", 2641, req.Name, batchSize);
+                        Core.BuyItem("ebilmegamall", 2641, req.Name, batchSize);
                         Bot.Wait.ForPickup(req.Name);
                         needed -= batchSize;
                     }
 
                     Core.CancelRegisteredQuests();
                     break;
-
                 case "EbilCorp Scalper":
                 case "Pockeymog Card Pack":
                 case "EbilCorp Scalper Morph":
