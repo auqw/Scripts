@@ -120,6 +120,15 @@ public class EbilMegaMallMerge
         #endregion
 
                 #region Items not setup
+                case "Common Mogugu":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.RegisterQuests(10509);
+                    Core.KillMonster("ebilmegamall", "r8", "Left", "*", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+
                 case "Super Rare Mogugu":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -137,17 +146,23 @@ public class EbilMegaMallMerge
                         }
 
                         int commonNeeded = Math.Min(needed * 10, MAX_STACK);
+                        int currentCommon = Bot.Inventory.GetQuantity("Common Mogugu");
+                        int missing = commonNeeded - currentCommon;
 
-                        // Farm Common Mogugu first
-                        while (
-                            !Bot.ShouldExit && !Core.CheckInventory("Common Mogugu", commonNeeded)
-                        )
+                        // Incremental farm for Common Mogugu
+                        if (missing > 0)
                         {
-                            Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
-                            Bot.Wait.ForPickup("Common Mogugu");
+                            int goal = currentCommon + missing;
+                            while (
+                                !Bot.ShouldExit && Bot.Inventory.GetQuantity("Common Mogugu") < goal
+                            )
+                            {
+                                Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
+                                Bot.Wait.ForPickup("Common Mogugu");
+                            }
                         }
 
-                        // Now buy Super Rare
+                        // Buy Super Rare
                         int batchSize = commonNeeded / 10;
                         Core.BuyItem("ebilmegamall", 2641, req.Name, batchSize);
                         Bot.Wait.ForPickup(req.Name);
@@ -168,6 +183,7 @@ public class EbilMegaMallMerge
                         "Super Rare Mogugu",
                         "Super Super Rare Mogugu",
                     };
+
                     needed = quant;
 
                     while (!Bot.ShouldExit && needed > 0)
@@ -182,83 +198,38 @@ public class EbilMegaMallMerge
                         if (batchSize == 0)
                             batchSize = 1;
 
-                        // Ensure all prerequisites are farmed/bought (start from Common, work up)
-                        for (int tier = 0; tier < tiers.Length - 1; tier++)
+                        // Work through each tier
+                        for (int t = 0; t < tiers.Length - 1; t++)
                         {
-                            int tierNeeded = batchSize * (int)Math.Pow(10, tiers.Length - 2 - tier);
-                            Core.DebugLogger(
-                                this,
-                                $"[DEBUG] Processing tier {tier}: {tiers[tier]}, need {tierNeeded}"
-                            );
+                            int tierNeeded = batchSize * (int)Math.Pow(10, tiers.Length - 2 - t);
+                            string tierName = tiers[t];
 
-                            int attempts = 0;
-                            while (!Bot.ShouldExit && !Core.CheckInventory(tiers[tier], tierNeeded))
+                            int current = Bot.Inventory.GetQuantity(tierName);
+                            int missing = tierNeeded - current;
+
+                            if (missing <= 0)
+                                continue;
+
+                            if (t == 0) // Common = incremental farm
                             {
-                                attempts++;
-                                int currentQty = Bot.Inventory.GetQuantity(tiers[tier]);
-                                Core.DebugLogger(
-                                    this,
-                                    $"[DEBUG] Attempt {attempts}: {tiers[tier]} have {currentQty}/{tierNeeded}"
-                                );
-
-                                if (tier == 0) // Common Mogugu - farm it
+                                int goal = current + missing;
+                                while (
+                                    !Bot.ShouldExit
+                                    && Bot.Inventory.GetQuantity("Common Mogugu") < goal
+                                )
                                 {
-                                    int stillNeeded = tierNeeded - currentQty;
-                                    Core.DebugLogger(
-                                        this,
-                                        $"[DEBUG] Farming {tiers[tier]}: need {stillNeeded} more"
-                                    );
-                                    Core.KillMonster(
-                                        "ebilmegamall",
-                                        "r8",
-                                        "Left",
-                                        "*",
-                                        "Common Mogugu",
-                                        stillNeeded,
-                                        false
-                                    );
+                                    Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
                                     Bot.Wait.ForPickup("Common Mogugu");
-                                    Core.Sleep(300);
-
-                                    int newQty = Bot.Inventory.GetQuantity("Common Mogugu");
-                                    Core.DebugLogger(
-                                        this,
-                                        $"[DEBUG] After farm: {newQty} Common Mogugu in inventory"
-                                    );
-
-                                    if (attempts > 20)
-                                    {
-                                        Core.DebugLogger(
-                                            this,
-                                            $"[DEBUG] WARNING: Too many farm attempts ({attempts}), breaking loop"
-                                        );
-                                        break;
-                                    }
-                                }
-                                else // Buy from shop
-                                {
-                                    Core.DebugLogger(
-                                        this,
-                                        $"[DEBUG] Buying {tiers[tier]}: {tierNeeded}"
-                                    );
-                                    Core.BuyItem("ebilmegamall", 2641, tiers[tier], tierNeeded);
-                                    Bot.Wait.ForPickup(tiers[tier]);
-                                    Core.Sleep(300);
-
-                                    int newQty = Bot.Inventory.GetQuantity(tiers[tier]);
-                                    Core.DebugLogger(
-                                        this,
-                                        $"[DEBUG] After buy: {newQty} {tiers[tier]} in inventory"
-                                    );
                                 }
                             }
-                            Core.DebugLogger(
-                                this,
-                                $"[DEBUG] Tier {tiers[tier]} complete, have {Bot.Inventory.GetQuantity(tiers[tier])}/{tierNeeded}"
-                            );
+                            else // Buy higher tiers
+                            {
+                                Core.BuyItem("ebilmegamall", 2641, tierName, missing);
+                                Bot.Wait.ForPickup(tierName);
+                            }
                         }
 
-                        // All prerequisites met, now buy the item
+                        // Now buy the final item
                         if (
                             Core.CheckInventory("Common Mogugu", batchSize * 100)
                             && Core.CheckInventory("Super Rare Mogugu", batchSize * 10)
@@ -278,13 +249,14 @@ public class EbilMegaMallMerge
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(10509);
 
-                    string[] tiersSSSR =
+                    string[] tiers3 =
                     {
                         "Common Mogugu",
                         "Super Rare Mogugu",
                         "Super Super Rare Mogugu",
                         "Super Super Super Rare Mogugu",
                     };
+
                     needed = quant;
 
                     while (!Bot.ShouldExit && needed > 0)
@@ -299,86 +271,37 @@ public class EbilMegaMallMerge
                         if (batchSize == 0)
                             batchSize = 1;
 
-                        // Ensure all prerequisites are farmed/bought (start from Common, work up)
-                        for (int tier = 0; tier < tiersSSSR.Length - 1; tier++)
+                        for (int t = 0; t < tiers3.Length - 1; t++)
                         {
-                            int tierNeeded =
-                                batchSize * (int)Math.Pow(10, tiersSSSR.Length - 2 - tier);
-                            Core.DebugLogger(
-                                this,
-                                $"[DEBUG] Processing tier {tier}: {tiersSSSR[tier]}, need {tierNeeded}"
-                            );
+                            int tierNeeded = batchSize * (int)Math.Pow(10, tiers3.Length - 2 - t);
+                            string tierName = tiers3[t];
 
-                            int attempts = 0;
-                            while (
-                                !Bot.ShouldExit && !Core.CheckInventory(tiersSSSR[tier], tierNeeded)
-                            )
+                            int current = Bot.Inventory.GetQuantity(tierName);
+                            int missing = tierNeeded - current;
+
+                            if (missing <= 0)
+                                continue;
+
+                            if (t == 0) // Common incremental farm
                             {
-                                attempts++;
-                                int currentQty = Bot.Inventory.GetQuantity(tiersSSSR[tier]);
-                                Core.DebugLogger(
-                                    this,
-                                    $"[DEBUG] Attempt {attempts}: {tiersSSSR[tier]} have {currentQty}/{tierNeeded}"
-                                );
-
-                                if (tier == 0) // Common Mogugu - farm it
+                                int goal = current + missing;
+                                while (
+                                    !Bot.ShouldExit
+                                    && Bot.Inventory.GetQuantity("Common Mogugu") < goal
+                                )
                                 {
-                                    int stillNeeded = tierNeeded - currentQty;
-                                    Core.DebugLogger(
-                                        this,
-                                        $"[DEBUG] Farming {tiersSSSR[tier]}: need {stillNeeded} more"
-                                    );
-                                    Core.KillMonster(
-                                        "ebilmegamall",
-                                        "r8",
-                                        "Left",
-                                        "*",
-                                        "Common Mogugu",
-                                        stillNeeded,
-                                        false
-                                    );
+                                    Core.KillMonster("ebilmegamall", "r8", "Left", "*", log: false);
                                     Bot.Wait.ForPickup("Common Mogugu");
-                                    Core.Sleep(300);
-
-                                    int newQty = Bot.Inventory.GetQuantity("Common Mogugu");
-                                    Core.DebugLogger(
-                                        this,
-                                        $"[DEBUG] After farm: {newQty} Common Mogugu in inventory"
-                                    );
-
-                                    if (attempts > 20)
-                                    {
-                                        Core.DebugLogger(
-                                            this,
-                                            $"[DEBUG] WARNING: Too many farm attempts ({attempts}), breaking loop"
-                                        );
-                                        break;
-                                    }
-                                }
-                                else // Buy from shop
-                                {
-                                    Core.DebugLogger(
-                                        this,
-                                        $"[DEBUG] Buying {tiersSSSR[tier]}: {tierNeeded}"
-                                    );
-                                    Core.BuyItem("ebilmegamall", 2641, tiersSSSR[tier], tierNeeded);
-                                    Bot.Wait.ForPickup(tiersSSSR[tier]);
-                                    Core.Sleep(300);
-
-                                    int newQty = Bot.Inventory.GetQuantity(tiersSSSR[tier]);
-                                    Core.DebugLogger(
-                                        this,
-                                        $"[DEBUG] After buy: {newQty} {tiersSSSR[tier]} in inventory"
-                                    );
                                 }
                             }
-                            Core.DebugLogger(
-                                this,
-                                $"[DEBUG] Tier {tiersSSSR[tier]} complete, have {Bot.Inventory.GetQuantity(tiersSSSR[tier])}/{tierNeeded}"
-                            );
+                            else // Buy higher tiers
+                            {
+                                Core.BuyItem("ebilmegamall", 2641, tierName, missing);
+                                Bot.Wait.ForPickup(tierName);
+                            }
                         }
 
-                        // All prerequisites met, now buy the item
+                        // After all tiers ready → buy final item
                         if (
                             Core.CheckInventory("Common Mogugu", batchSize * 1000)
                             && Core.CheckInventory("Super Rare Mogugu", batchSize * 100)
@@ -393,6 +316,7 @@ public class EbilMegaMallMerge
 
                     Core.CancelRegisteredQuests();
                     break;
+
                 case "EbilCorp Scalper":
                 case "Pockeymog Card Pack":
                 case "EbilCorp Scalper Morph":
@@ -458,16 +382,7 @@ public class EbilMegaMallMerge
             return;
 
         Core.FarmingLogger("Common Mogugu", quant);
-        Core.KillMonster(
-            "ebilmegamall",
-            "r8",
-            "Left",
-            "*",
-            "Common Mogugu",
-            quant,
-            isTemp: false,
-            false
-        );
+        Core.KillMonster("ebilmegamall", "r8", "Left", "*", "Common Mogugu", quant, isTemp: false);
         Bot.Wait.ForPickup("Common Mogugu");
     }
 
