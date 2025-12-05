@@ -449,21 +449,17 @@ public class VerusDoomKnightClass
             if (Bot.Self?.Auras?.Any(a => a?.Name == "Oxidize") == true)
             {
                 Bot.Skills.Pause();
-                while (!Bot.ShouldExit && Bot.Player.Alive && Bot.Skills.CanUseSkill(5))
+                while (!Bot.ShouldExit)
                 {
-                    Bot.Skills.UseSkill(5);
+                    if (Bot.Skills.CanUseSkill(5))
+                        Bot.Skills.UseSkill(5);
                     Core.Sleep(500);
-                    if (
-                        !Bot.Skills.CanUseSkill(5)
-                        || Bot.Self?.Auras?.Any(a => a?.Name == "Oxidize") == false
-                    )
+                    if (Bot.Self?.Auras?.Any(a => a?.Name == "Oxidize") == false)
+                    {
                         Bot.Skills.Resume();
-                    break;
+                        break;
+                    }
                 }
-
-                // Wait a bit for aura removal before resuming combat
-                Core.Sleep(1000);
-                continue;
             }
 
             // === Attack phase ===
