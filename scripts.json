@@ -78,8 +78,8 @@
       "null"
     ],
     "path": "Army/ArmySpiritOrbs.cs",
-    "size": 3279,
-    "sha256": "49e7f46adb398a74235d4b9f8c6de010e11925b337817cd7a3e5fb3fbf91081e",
+    "size": 3353,
+    "sha256": "6c72b8014cc5ebd4248718099f7a60b524d5b59ea9438da5b8549676c7348e43",
     "fileName": "ArmySpiritOrbs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmySpiritOrbs.cs"
   },
@@ -748,8 +748,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 37076,
-    "sha256": "8c09499ddd2fe8b644f35ee8c124d68bd2b861d036b41830ea07ae95ad622bf0",
+    "size": 37156,
+    "sha256": "26b1aba722013fe512e9ba9c6313cc86ad8b72586d42609f5fe3bbbaab168cb8",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
