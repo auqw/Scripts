@@ -1,7 +1,7 @@
 /*
-name: EbilMegaMall Merge
-description: This bot will farm the items belonging to the selected mode for the EbilMegaMall Merge [2641] in /ebilmegamall
-tags: ebilmegamall, merge, ebilmegamall, super, rare, mogugu, common, successful, ebilcorp, scalper, undercover, morph, sunglasses, shades, ebil, capital, cyber, night, prowler, mohawk, cut, tail, prowlers, catastrophe, cannons, executor, executors, denken, reserve, claw, claws, collection, , ultimate, display, mogugudra, behemoth
+name: Ebil Mega Mall Merch Merge
+description: This bot will farm the items belonging to the selected mode for the Ebil Mega Mall Merch Merge [2641] in /ebilmegamall
+tags: ebil, mega, mall, merch, merge, ebilmegamall, super, rare, mogugu, common, successful, ebilcorp, scalper, undercover, morph, sunglasses, shades, capital, cyber, night, prowler, mohawk, cut, tail, prowlers, catastrophe, cannons, executor, executors, denken, reserve, claw, claws, collection, , ultimate, display, mogugudra, behemoth, cyberstrike, pet, achievement
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -302,6 +302,30 @@ public class EbilMegaMallMerge
     public List<IOption> Select = new()
     {
         new Option<bool>(
+            "97180",
+            "Super Rare Mogugu",
+            "Mode: [select] only\nShould the bot buy \"Super Rare Mogugu\" ?",
+            false
+        ),
+        new Option<bool>(
+            "97181",
+            "Super Super Rare Mogugu",
+            "Mode: [select] only\nShould the bot buy \"Super Super Rare Mogugu\" ?",
+            false
+        ),
+        new Option<bool>(
+            "97182",
+            "Super Super Super Rare Mogugu",
+            "Mode: [select] only\nShould the bot buy \"Super Super Super Rare Mogugu\" ?",
+            false
+        ),
+        new Option<bool>(
+            "97179",
+            "Common Mogugu",
+            "Mode: [select] only\nShould the bot buy \"Common Mogugu\" ?",
+            false
+        ),
+        new Option<bool>(
             "96808",
             "Successful EbilCorp Scalper",
             "Mode: [select] only\nShould the bot buy \"Successful EbilCorp Scalper\" ?",
@@ -473,6 +497,24 @@ public class EbilMegaMallMerge
             "97233",
             "Mogugu Collection: 100%",
             "Mode: [select] only\nShould the bot buy \"Mogugu Collection: 100%\" ?",
+            false
+        ),
+        new Option<bool>(
+            "97343",
+            "CyberStrike Blade Pet",
+            "Mode: [select] only\nShould the bot buy \"CyberStrike Blade Pet\" ?",
+            false
+        ),
+        new Option<bool>(
+            "96832",
+            "CyberStrike Achievement Blade",
+            "Mode: [select] only\nShould the bot buy \"CyberStrike Achievement Blade\" ?",
+            false
+        ),
+        new Option<bool>(
+            "96833",
+            "CyberStrike Achievement Blades",
+            "Mode: [select] only\nShould the bot buy \"CyberStrike Achievement Blades\" ?",
             false
         ),
     };
