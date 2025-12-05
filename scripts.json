@@ -22376,10 +22376,13 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/ShadowDragonShinobiMerge.cs"
   },
   {
-    "name": "EbilMegaMall Merge",
-    "description": "This bot will farm the items belonging to the selected mode for the EbilMegaMall Merge [2641] in /ebilmegamall",
+    "name": "Ebil Mega Mall Merch Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Ebil Mega Mall Merch Merge [2641] in /ebilmegamall",
     "tags": [
-      "ebilmegamall",
+      "ebil",
+      "mega",
+      "mall",
+      "merch",
       "merge",
       "ebilmegamall",
       "super",
@@ -22393,7 +22396,6 @@
       "morph",
       "sunglasses",
       "shades",
-      "ebil",
       "capital",
       "cyber",
       "night",
@@ -22415,11 +22417,14 @@
       "ultimate",
       "display",
       "mogugudra",
-      "behemoth"
+      "behemoth",
+      "cyberstrike",
+      "pet",
+      "achievement"
     ],
     "path": "Seasonal/BlackFriday/EbilMegaMallMerge.cs",
-    "size": 16897,
-    "sha256": "198240cfccf6a886992066d57cd2caa6217d5d175744703ec396c1c65cf230be",
+    "size": 18351,
+    "sha256": "011f0928a14644309d8f63c12c4f570ed2125c7f2e888ddf9f1f1e46ad751191",
     "fileName": "EbilMegaMallMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallMerge.cs"
   },
