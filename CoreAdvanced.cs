@@ -1150,7 +1150,7 @@ public class CoreAdvanced
                 }
 
                 EnsureShopLoaded(map, shopID);
-                ShopItem? reqInShop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
+                ShopItem? reqInShop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req!.ID);
 
                 if (reqInShop != null)
                 {
@@ -1184,10 +1184,10 @@ public class CoreAdvanced
                             findIngredients,
                             depth + 1
                         );
-                        Bot.Wait.ForPickup(req.ID);
+                        Bot.Wait.ForPickup(req!.ID);
                     }
                 }
-                else if (req.Name?.Contains("Dragon Runestone") == true)
+                else if (req!.Name?.Contains("Dragon Runestone") == true)
                 {
                     Core.Logger($"Farming Dragon Runestone x{requiredQty}");
                     Farm.DragonRunestone(requiredQty);
@@ -1211,7 +1211,7 @@ public class CoreAdvanced
                 }
 
                 // Verify we got it
-                if (!Core.CheckInventory(req.ID, requiredQty))
+                if (!Core.CheckInventory(req!.ID, requiredQty))
                 {
                     Core.Logger($"Warning: Failed to acquire {req.Name} x{requiredQty}, retrying.");
                     // Optionally retry here
