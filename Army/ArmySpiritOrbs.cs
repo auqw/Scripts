@@ -77,7 +77,9 @@ public class ArmySpiritOrbs
     {
         if (sArmy.Players().Length <= 0)
         {
-            C.Logger("Players empty, please add players to the options ( scripts botton > edit scripts option > insert account names exactly as is)");
+            C.Logger(
+                "Players empty, please add players to the options ( scripts botton > edit scripts option > insert account names exactly as is)"
+            );
             return;
         }
         const string map = "necroproject";
@@ -88,8 +90,9 @@ public class ArmySpiritOrbs
         C.AddDrop("Spirit Orb", "Bone Dust");
         C.RegisterQuests(2083);
         Core.Join(map);
-        Ultra.WaitForArmy(sArmy.Players().Length - 1, "ArmySpiritOrbs.sync");
         C.Jump("r5", "Left");
+        if (sArmy.Players().Length > 1)
+            Ultra.WaitForArmy(sArmy.Players().Length - 1, "ArmySpiritOrbs.sync");
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(1500);
         Bot.Options.AggroMonsters = true;
