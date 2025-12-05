@@ -259,6 +259,7 @@ public class CoreUltra
         Bot.Sleep(120);
     }
 
+    // Waits for `quantity` + 1  (quant + self) so for 1 player, wait for 0(+1)
     public void WaitForArmy(
         int quantity,
         string syncFilePath = "army_sync.sync",
