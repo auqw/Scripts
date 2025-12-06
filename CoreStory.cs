@@ -262,7 +262,9 @@ public class CoreStory
                     : lastMonster;
 
             itemToMonster[validRequirements[i].Name] = monster;
-            Core.Logger($"Requirement {validRequirements[i].Name} mapped to monster {monster}");
+            Core.Logger(
+                $"[{QuestID}] Requirement {validRequirements[i].Name} mapped to monster {monster}"
+            );
         }
 
         // Snapshot CurrentRequirements to avoid nulls
