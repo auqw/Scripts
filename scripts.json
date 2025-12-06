@@ -1408,6 +1408,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/PockeymogsStory.cs"
   },
   {
+    "name": "Tavern",
+    "description": "Quest from `Ulfgar Geirsson` in /tavern",
+    "tags": [
+      "tavern",
+      "ulfgar geirsson"
+    ],
+    "path": "Story/Tavern.cs",
+    "size": 2700,
+    "sha256": "744852c1af3a14c3560b1151231e4355c9f99c194c6c228cdf9a6d941d03e7eb",
+    "fileName": "Tavern.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Tavern.cs"
+  },
+  {
     "name": "Battle Under Story",
     "description": "This will complete the Battle Under Story.",
     "tags": [
