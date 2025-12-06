@@ -335,7 +335,7 @@ public class CoreSummer
         Story.KillQuest(
             1308,
             "Terrarium",
-            new[] { "Doppleganger of Will", "Doppleganger of Fred" }
+            new[] { "Doppleganger of Fred", "Doppleganger of Will" }
         );
 
         // Catapult Climb
