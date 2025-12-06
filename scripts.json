@@ -19748,8 +19748,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/CheckForDonatedACs.cs",
-    "size": 8052,
-    "sha256": "97c9c56e8c9965dd9c13bfc2715291c6469462aff0cef1a55165373b773fbc91",
+    "size": 8462,
+    "sha256": "47591caca5ff26cac4627c754083e9fdb2886079d89210b5f43b2826fcda4574",
     "fileName": "CheckForDonatedACs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/CheckForDonatedACs.cs"
   },
@@ -19840,8 +19840,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/ChillysParticipation.cs",
-    "size": 1259,
-    "sha256": "99ce4348622f8226dea91df0f43d23fce4e7f763d9e94eb7dfc1596bcc9b8e27",
+    "size": 1518,
+    "sha256": "bafb27d727d3fed1f7a4e9de49bae3ff8f020c5a5fda9a548cba769f1589f6a3",
     "fileName": "ChillysParticipation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/ChillysParticipation.cs"
   },
