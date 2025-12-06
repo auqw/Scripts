@@ -113,7 +113,6 @@ public class SpoilsofLightMerge
                 case "Medal of Justice":
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
-                    Core.FarmingLogger(req.Name, req.Quantity);
 
                     // Combine all relevant quest IDs into one registration
                     Core.RegisterQuests(6560, 6561, 6562, 6563, 6566);
