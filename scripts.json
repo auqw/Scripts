@@ -19832,6 +19832,35 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/NorthlandsMonk.cs"
   },
   {
+    "name": "SkadePass Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the SkadePass Merge [2642] in /skadespass",
+    "tags": [
+      "skadepass",
+      "merge",
+      "skadespass",
+      "frostborne",
+      "dragonslayer",
+      "cloak",
+      "dragonblade",
+      "shield",
+      "luminary",
+      "scythe",
+      "skade",
+      "skades",
+      "winged",
+      "snowpiercer",
+      "dragonblades",
+      "permafrost",
+      "juggernaut",
+      "snowsaga"
+    ],
+    "path": "Seasonal/Frostvale/SkadePassMerge.cs",
+    "size": 8629,
+    "sha256": "266162236a4464d9e4e2a23576162b963e14e9e314e4c8bf72cb20052cee1108",
+    "fileName": "SkadePassMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/SkadePassMerge.cs"
+  },
+  {
     "name": "Chilly's Participation",
     "description": "This will finish the quest that is required to get free acs throughout the event.",
     "tags": [
