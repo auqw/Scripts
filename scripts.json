@@ -7097,7 +7097,7 @@
     ],
     "path": "Story/Summer2015AdventureMap/CoreSummer.cs",
     "size": 28498,
-    "sha256": "f5e13c9d124785fcb8b696c207d05568f066ca12c0648572d39d66cd962ce0a8",
+    "sha256": "62721626570da53e91e63011adc5f7688faa401ae4788dcaa796bc412aa1fa65",
     "fileName": "CoreSummer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Summer2015AdventureMap/CoreSummer.cs"
   },
@@ -15784,8 +15784,8 @@
       "bright"
     ],
     "path": "Other/MergeShops/SpoilsofLightMerge.cs",
-    "size": 7731,
-    "sha256": "14e5dbdac099d0d239c6f3568d34e64d4d4f2221850fb41f1ada21f9e4ec3ed9",
+    "size": 7666,
+    "sha256": "114ef37f3d3b659b1993890ed54f7adaf067d36bfd20a63470ed1b1ae959c4e0",
     "fileName": "SpoilsofLightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SpoilsofLightMerge.cs"
   },
@@ -19748,8 +19748,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/CheckForDonatedACs.cs",
-    "size": 8157,
-    "sha256": "03c207468b25a3f9d7e58b0d0247a3af67c1d8008aed17a00860d7669668e4a7",
+    "size": 7827,
+    "sha256": "a15ac4cf467c2bcaa3d721f5565b6712a948a2efce529199bf10394706cf5979",
     "fileName": "CheckForDonatedACs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/CheckForDonatedACs.cs"
   },
