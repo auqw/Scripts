@@ -17,7 +17,6 @@ public class ChillysQuest
         set => _Farm = value;
     }
     private static CoreFarms _Farm;
-    public static int questID = 10510;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -28,7 +27,8 @@ public class ChillysQuest
         Core.SetOptions(false);
     }
 
-    public void ChillysParticipation()
+    //Edit for future years quests vv <- No need to edit now, just edit the quest ID in ChillysParticipation.cs
+    public void ChillysParticipation(int questID = 10510)
     {
         if (Core.isCompletedBefore(questID))
             return;
@@ -40,6 +40,9 @@ public class ChillysQuest
         Core.EnsureAccept(questID);
         Core.HuntMonsterMapID("battleontown", 1, "Reminder Delivered");
         Core.EnsureComplete(questID);
-        Bot.Sleep(2000);
+        Bot.Wait.ForQuestComplete(questID);
+        // Longer delay as soemtimes ae would throttle ppl with alot of 
+        //  accs to just get stuck on loading in.
+        Bot.Sleep(5000);
     }
 }
