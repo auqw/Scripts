@@ -63,7 +63,7 @@ public class Tavern
         if (!Story.QuestProgression(3178))
         {
             Core.HuntMonsterQuest(3178,
-                ("crashsite", "Sentry Bot", ClassType.Solo));
+                ("crashsite", "Barrier Bot", ClassType.Solo));
         }
 
 
