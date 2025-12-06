@@ -15,40 +15,47 @@ using Skua.Core.ViewModels;
 
 public class CheckForDonatedACs
 {
-    private static IScriptInterface Bot => IScriptInterface.Instance;
-    private static CoreBots Core => CoreBots.Instance;
-    private static CoreFarms Farm
-    {
-        get => _Farm ??= new CoreFarms();
-        set => _Farm = value;
-    }
-    private static CoreFarms _Farm;
-    private static ChillysQuest CQ
-    {
-        get => _CQ ??= new ChillysQuest();
-        set => _CQ = value;
-    }
+    private static CoreArmyLite _Army;
     private static ChillysQuest _CQ;
-    private static CoreDailies Daily
-    {
-        get => _Daily ??= new CoreDailies();
-        set => _Daily = value;
-    }
     private static CoreDailies _Daily;
+    private static CoreFarms _Farm;
+
+    private readonly Dictionary<string, int> Months = new()
+    {
+        { "Jan", 1 },
+        { "Feb", 2 },
+        { "Mar", 3 },
+        { "Apr", 4 },
+        { "May", 5 },
+        { "Jun", 6 },
+        { "Jul", 7 },
+        { "Aug", 8 },
+        { "Sep", 9 },
+        { "Oct", 10 },
+        { "Nov", 11 },
+        { "Dec", 12 },
+    };
     private static CoreArmyLite Army
     {
         get => _Army ??= new CoreArmyLite();
         set => _Army = value;
     }
-    private static CoreArmyLite _Army;
-
-    public void ScriptMain(IScriptInterface Bot)
+    private static IScriptInterface Bot => IScriptInterface.Instance;
+    private static ChillysQuest CQ
     {
-        Core.SetOptions();
-
-        CheckACs();
-
-        Core.SetOptions(false);
+        get => _CQ ??= new ChillysQuest();
+        set => _CQ = value;
+    }
+    private static CoreBots Core => CoreBots.Instance;
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
     }
 
     public void CheckACs()
@@ -74,21 +81,13 @@ public class CheckForDonatedACs
 
         while (Army.doForAll())
         {
-            Core.Sleep(2000);
-            Bot.Wait.ForMapLoad("battleon");
+            while (!Bot.ShouldExit && !Bot.Player.Loaded)
+            {
+                Core.Sleep(2000);
+                Bot.Wait.ForMapLoad("battleon");
+            }
 
-            //just adding all the checks sometimes u still get your char as a flame.. and unloaded ._.
-            while (
-                !Bot.ShouldExit
-                && Bot.Player.LoggedIn
-                && !Bot.Player.Loaded
-                && Bot.Player.Playing
-                && Bot.Map.Loaded
-            )
-                Core.Sleep(1500);
-
-            Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
-            Bot.Wait.ForMapLoad("house");
+            Core.Join("whitemap-100000");
 
             Daily.WheelofDoom();
             Daily.MonthlyTreasureChestKeys();
@@ -202,19 +201,12 @@ public class CheckForDonatedACs
         }
     }
 
-    private readonly Dictionary<string, int> Months = new()
+    public void ScriptMain(IScriptInterface Bot)
     {
-        { "Jan", 1 },
-        { "Feb", 2 },
-        { "Mar", 3 },
-        { "Apr", 4 },
-        { "May", 5 },
-        { "Jun", 6 },
-        { "Jul", 7 },
-        { "Aug", 8 },
-        { "Sep", 9 },
-        { "Oct", 10 },
-        { "Nov", 11 },
-        { "Dec", 12 },
-    };
+        Core.SetOptions();
+
+        CheckACs();
+
+        Core.SetOptions(false);
+    }
 }
