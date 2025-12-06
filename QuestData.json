@@ -858330,5 +858330,171 @@
         "sMeta": null
       }
     ]
+  },
+  {
+    "ID": 10512,
+    "Slot": -1,
+    "Value": 0,
+    "Name": "Twilight of Winter",
+    "Once": false,
+    "Field": null,
+    "Index": 0,
+    "Upgrade": false,
+    "Level": 1,
+    "RequiredClassID": 0,
+    "RequiredClassPoints": 0,
+    "RequiredFactionId": 1,
+    "RequiredFactionRep": 0,
+    "Gold": 4000,
+    "XP": 8000,
+    "AcceptRequirements": [],
+    "Requirements": [
+      {
+        "ItemID": 97257,
+        "sName": "Permafrost Ice",
+        "sDesc": " ",
+        "iQty": 1,
+        "iStk": 20,
+        "bUpg": "0",
+        "bWear": "0",
+        "bCoins": "0",
+        "sType": "Quest Item",
+        "EnhPatternID": 0,
+        "ProcID": 0,
+        "Category": "Unknown",
+        "bTemp": "1",
+        "sES": "None",
+        "sLink": "none",
+        "sFile": null,
+        "sMeta": null
+      }
+    ],
+    "Rewards": [
+      {
+        "ItemID": 97258,
+        "sName": "Icy Bone",
+        "sDesc": " ",
+        "iQty": 1,
+        "iStk": 200,
+        "bUpg": "0",
+        "bWear": "0",
+        "bCoins": "0",
+        "sType": "Resource",
+        "EnhPatternID": 0,
+        "ProcID": 0,
+        "Category": "Resource",
+        "bTemp": "0",
+        "sES": "None",
+        "sLink": "none",
+        "sFile": null,
+        "sMeta": null
+      }
+    ],
+    "SimpleRewards": [
+      {
+        "iRate": 100.0,
+        "iType": 0,
+        "ItemID": 97258,
+        "sName": null,
+        "sDesc": null,
+        "iQty": 1,
+        "iStk": 0,
+        "bUpg": "0",
+        "bWear": "0",
+        "bCoins": "0",
+        "sType": null,
+        "EnhPatternID": 0,
+        "ProcID": 0,
+        "Category": "Unknown",
+        "bTemp": "0",
+        "sES": null,
+        "sLink": null,
+        "sFile": null,
+        "sMeta": null
+      }
+    ]
+  },
+  {
+    "ID": 10513,
+    "Slot": -1,
+    "Value": 0,
+    "Name": "Twilight of Winter (Legend)",
+    "Once": false,
+    "Field": null,
+    "Index": 0,
+    "Upgrade": true,
+    "Level": 1,
+    "RequiredClassID": 0,
+    "RequiredClassPoints": 0,
+    "RequiredFactionId": 1,
+    "RequiredFactionRep": 0,
+    "Gold": 4000,
+    "XP": 8000,
+    "AcceptRequirements": [],
+    "Requirements": [
+      {
+        "ItemID": 97257,
+        "sName": "Permafrost Ice",
+        "sDesc": " ",
+        "iQty": 1,
+        "iStk": 20,
+        "bUpg": "0",
+        "bWear": "0",
+        "bCoins": "0",
+        "sType": "Quest Item",
+        "EnhPatternID": 0,
+        "ProcID": 0,
+        "Category": "Unknown",
+        "bTemp": "1",
+        "sES": "None",
+        "sLink": "none",
+        "sFile": null,
+        "sMeta": null
+      }
+    ],
+    "Rewards": [
+      {
+        "ItemID": 97258,
+        "sName": "Icy Bone",
+        "sDesc": " ",
+        "iQty": 2,
+        "iStk": 200,
+        "bUpg": "0",
+        "bWear": "0",
+        "bCoins": "0",
+        "sType": "Resource",
+        "EnhPatternID": 0,
+        "ProcID": 0,
+        "Category": "Resource",
+        "bTemp": "0",
+        "sES": "None",
+        "sLink": "none",
+        "sFile": null,
+        "sMeta": null
+      }
+    ],
+    "SimpleRewards": [
+      {
+        "iRate": 100.0,
+        "iType": 0,
+        "ItemID": 97258,
+        "sName": null,
+        "sDesc": null,
+        "iQty": 2,
+        "iStk": 0,
+        "bUpg": "0",
+        "bWear": "0",
+        "bCoins": "0",
+        "sType": null,
+        "EnhPatternID": 0,
+        "ProcID": 0,
+        "Category": "Unknown",
+        "bTemp": "0",
+        "sES": null,
+        "sLink": null,
+        "sFile": null,
+        "sMeta": null
+      }
+    ]
   }
 ]
