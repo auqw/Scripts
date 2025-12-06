@@ -29858,7 +29858,162 @@ case ""Black Mogugu Box"":
                     break;
     "
         },
-    };
+    {
+    "Common Mogugu",
+    @"
+case ""Common Mogugu"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.RegisterQuests(10509);
+                    Core.KillMonster(""ebilmegamall"", ""r8"", ""Left"", ""*"", req.Name, quant, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Super Rare Mogugu",
+    @"
+case ""Super Rare Mogugu"":
+                    HandleMogugu(
+                        req.Name,
+                        quant,
+                        new[] { ""Common Mogugu"", ""Super Rare Mogugu"" },
+                        new[] { 10 }
+                    );
+                    break;
+    "
+},
+{
+    "Super Super Rare Mogugu",
+    @"
+case ""Super Super Rare Mogugu"":
+                    HandleMogugu(
+                        req.Name,
+                        quant,
+                        new[] { ""Common Mogugu"", ""Super Rare Mogugu"", ""Super Super Rare Mogugu"" },
+                        new[] { 100, 10 }
+                    );
+                    break;
+    "
+},
+{
+    "Super Super Super Rare Mogugu",
+    @"
+case ""Super Super Super Rare Mogugu"":
+                    HandleMogugu(
+                        req.Name,
+                        quant,
+                        new[]
+                        {
+                            ""Common Mogugu"",
+                            ""Super Rare Mogugu"",
+                            ""Super Super Rare Mogugu"",
+                            ""Super Super Super Rare Mogugu"",
+                        },
+                        new[] { 1000, 100, 10 }
+                    );
+                    break;
+    "
+},
+{
+    "Icy Bone",
+    @"
+case ""Icy Bone"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(
+                            Core.IsMember ? 10513 : 10512,
+                            ""skadepass"",
+                            ""Permafrost Dragon""
+                        );
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Skade's Snowpiercer",
+    @"
+case ""Skade's Snowpiercer"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""skadepass"",
+                        ""Permafrost Dragon"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Permafrost Heart",
+    @"
+case ""Permafrost Heart"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""skadepass"",
+                        ""Permafrost Dragon"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Frostborne Dragonslayer Helm",
+    @"
+case ""Frostborne Dragonslayer Helm"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""skadepass"",
+                        ""Permafrost Dragon"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+};
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);
