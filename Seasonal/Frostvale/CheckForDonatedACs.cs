@@ -87,7 +87,13 @@ public class CheckForDonatedACs
                 Bot.Wait.ForMapLoad("battleon");
             }
 
-            Core.Join("whitemap-100000");
+            if (!Bot.House.Items.Any(x => x.Equipped))
+                Core.Join("whitemap-100000");
+            else
+            {
+                Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
+                Bot.Wait.ForMapLoad("house");
+            }
 
             Daily.WheelofDoom();
             Daily.MonthlyTreasureChestKeys();
