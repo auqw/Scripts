@@ -215,9 +215,9 @@ public class CheckForDonatedACs
     {
         Core.SetOptions();
 
+        Bot.Options.ReloginServer = PreviousReloginServer ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
         CheckACs();
 
-        Bot.Options.ReloginServer = PreviousReloginServer ?? "Twilly";
         Core.SetOptions(false);
     }
 }
