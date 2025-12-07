@@ -297,7 +297,14 @@ public class CoreDoomwood
         if (!Story.QuestProgression(1128))
         {
             Core.EnsureAccept(1128);
-            Core.KillMonster("temple", "r2", "Up", "Doomwood Bonemuncher", "Masticated Mandible", 2);
+            Core.KillMonster(
+                "temple",
+                "r2",
+                "Up",
+                "Doomwood Bonemuncher",
+                "Masticated Mandible",
+                2
+            );
             Core.KillMonster("temple", "r7", "Up", "Sanguine Souleater", "Freed Soul", 4);
             Core.EnsureComplete(1128);
         }

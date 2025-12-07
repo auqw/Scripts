@@ -176,8 +176,22 @@ public class CoreQOM
         {
             Core.EnsureAccept(5377);
             Core.KillMonster("infernalspire", "r7", "Left", "Dungeon Fiend", "Infernal Key", 6);
-            Core.KillMonster("infernalspire", "r7", "Left", "Dungeon Fiend", "Dungeon Fiend Slain", 6);
-            Core.KillMonster("infernalspire", "r7", "Left", "Infernal Hound", "Infernal Hound Slain", 6);
+            Core.KillMonster(
+                "infernalspire",
+                "r7",
+                "Left",
+                "Dungeon Fiend",
+                "Dungeon Fiend Slain",
+                6
+            );
+            Core.KillMonster(
+                "infernalspire",
+                "r7",
+                "Left",
+                "Infernal Hound",
+                "Infernal Hound Slain",
+                6
+            );
             Core.EnsureComplete(5377);
         }
 
@@ -571,7 +585,14 @@ public class CoreQOM
         if (!Story.QuestProgression(5805))
         {
             Core.EnsureAccept(5805);
-            Core.KillMonster("charredpath", "r3", "Left", "Noxious Fumes", "Noxious Fumes Eradicated", 7);
+            Core.KillMonster(
+                "charredpath",
+                "r3",
+                "Left",
+                "Noxious Fumes",
+                "Noxious Fumes Eradicated",
+                7
+            );
             Core.KillMonster("charredpath", "r3", "Left", "Toxic Bile", "Toxic Bile Eradicated", 5);
             Core.EnsureComplete(5805);
         }

@@ -59,6 +59,7 @@ public class CheckForDonatedACs
         set => _Farm = value;
     }
     string PreviousReloginServer;
+
     public void CheckACs()
     {
         Core.OneTimeMessage(
@@ -211,6 +212,7 @@ public class CheckForDonatedACs
             }
         }
     }
+
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
