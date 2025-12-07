@@ -1,7 +1,7 @@
 /*
 name: SkadePass Merge
-description: This bot will farm the items belonging to the selected mode for the SkadePass Merge [2642] in /skadepass
-tags: skadepass, merge, skadepass, frostborne, dragonslayer, cloak, dragonblade, shield, luminary, scythe, skade, skades, winged, snowpiercer, dragonblades, permafrost, juggernaut, snowsaga
+description: This bot will farm the items belonging to the selected mode for the SkadePass Merge [2642] in /skadespass
+tags: skadepass, merge, skadespass, frostborne, dragonslayer, cloak, dragonblade, shield, luminary, scythe, skade, skades, winged, snowpiercer, dragonblades, permafrost, juggernaut, snowsaga
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -62,7 +62,7 @@ public class SkadePassMerge
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         //Only edit the map and shopID here
-        Adv.StartBuyAllMerge("skadepass", 2642, findIngredients, buyOnlyThis, buyMode: buyMode);
+        Adv.StartBuyAllMerge("skadespass", 2642, findIngredients, buyOnlyThis, buyMode: buyMode);
 
         #region Dont edit this part
         void findIngredients()
@@ -107,7 +107,7 @@ public class SkadePassMerge
                     {
                         Core.HuntMonsterQuest(
                             Core.IsMember ? 10513 : 10512,
-                            "skadepass",
+                            "skadespass",
                             "Permafrost Dragon"
                         );
                         Bot.Wait.ForPickup(req.Name);
@@ -127,7 +127,7 @@ public class SkadePassMerge
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
                     Core.HuntMonster(
-                        "skadepass",
+                        "skadespass",
                         "Permafrost Dragon",
                         req.Name,
                         quant,
