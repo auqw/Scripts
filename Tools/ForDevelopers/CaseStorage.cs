@@ -29718,7 +29718,7 @@ case ""Mogugu Display Case"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(""ebilmegamall"", ""Black BOGOdrone Prime"", req.Name, quant, req.Temp, false);
                     break;
     "
         },
@@ -29735,7 +29735,7 @@ case ""Red Mogugu Box"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(""ebilmegamall"", ""Black BOGOdrone Prime"", req.Name, quant, req.Temp, false);
                     break;
     "
         },
@@ -29752,7 +29752,7 @@ case ""Yellow Mogugu Box"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(""ebilmegamall"", ""Black BOGOdrone Prime"", req.Name, quant, req.Temp, false);
                     break;
     "
         },
@@ -29769,7 +29769,7 @@ case ""Blue Mogugu Box"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(""ebilmegamall"", ""Black BOGOdrone Prime"", req.Name, quant, req.Temp, false);
                     break;
     "
         },
@@ -29786,7 +29786,7 @@ case ""Blue Mogugu Critter"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(""ebilmegamall"", ""Black BOGOdrone Prime"", req.Name, quant, req.Temp, false);
                     break;
     "
         },
@@ -29803,7 +29803,7 @@ case ""Yellow Mogugu Critter"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(""ebilmegamall"", ""Black BOGOdrone Prime"", req.Name, quant, req.Temp, false);
                     break;
     "
         },
@@ -29820,7 +29820,7 @@ case ""Red Mogugu Critter"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(""ebilmegamall"", ""Black BOGOdrone Prime"", req.Name, quant, req.Temp, false);
                     break;
     "
         },
@@ -29837,7 +29837,7 @@ case ""Black Mogugu Critter"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(""ebilmegamall"", ""Black BOGOdrone Prime"", req.Name, quant, req.Temp, false);
                     break;
     "
         },
@@ -29854,7 +29854,7 @@ case ""Black Mogugu Box"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(""ebilmegamall"", ""Mogugudra"", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(""ebilmegamall"", ""Black BOGOdrone Prime"", req.Name, quant, req.Temp, false);
                     break;
     "
         },
