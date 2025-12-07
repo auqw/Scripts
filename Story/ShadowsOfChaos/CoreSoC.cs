@@ -125,7 +125,12 @@ public class CoreSoC
         }
 
         //Defeat Goldun 7687
-        Story.KillQuest(7687, "chaosamulet", "Goldun");
+        if (!Bot.Quests.IsUnlocked(7686))
+        {
+            Core.EnsureAccept(7686);
+            Core.HuntMonster("chaosamulet", "Goldun", "Goldun Defeated");
+            Core.EnsureComplete(7686);
+        }
 
         //Goldun Wants Revenge 7688
         Story.KillQuest(7688, "chaosamulet", new[] { "Goldun", "Shadowflame Berserker" });
