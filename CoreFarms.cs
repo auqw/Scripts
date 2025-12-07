@@ -852,7 +852,6 @@ public class CoreFarms
     //     }
     //     #endregion level checks
 
-
     //     Bot.Options.AttackWithoutTarget = false;
     //     Core.ToggleAggro(false);
     //     Core.Jump();
@@ -937,7 +936,8 @@ public class CoreFarms
             Core.Sleep(200);
         }
 
-        if (Bot.Player.Level >= level && !rankUpClass) goto Cleanup;
+        if (Bot.Player.Level >= level && !rankUpClass)
+            goto Cleanup;
         Core.ByPassCheck();
         // Farming between levels 5-10
         while (
@@ -984,7 +984,8 @@ public class CoreFarms
             Core.Sleep(200);
         }
 
-        if (Bot.Player.Level >= level && !rankUpClass) goto Cleanup;
+        if (Bot.Player.Level >= level && !rankUpClass)
+            goto Cleanup;
         Core.ByPassCheck();
         // Farming between levels 10-20
         while (
@@ -1030,7 +1031,8 @@ public class CoreFarms
             Core.Sleep(200);
         }
 
-        if (Bot.Player.Level >= level && !rankUpClass) goto Cleanup;
+        if (Bot.Player.Level >= level && !rankUpClass)
+            goto Cleanup;
         Core.ByPassCheck();
         // Farming between levels 20-25
         if (Bot.Player.Level < 25)
@@ -1082,7 +1084,8 @@ public class CoreFarms
             Core.AbandonQuest(6628);
         }
 
-        if (Bot.Player.Level >= level && !rankUpClass) goto Cleanup;
+        if (Bot.Player.Level >= level && !rankUpClass)
+            goto Cleanup;
         Core.ByPassCheck();
         // Farming between levels 25-30
         while (
@@ -1128,7 +1131,8 @@ public class CoreFarms
             Core.Sleep(200);
         }
 
-        if (Bot.Player.Level >= level && !rankUpClass) goto Cleanup;
+        if (Bot.Player.Level >= level && !rankUpClass)
+            goto Cleanup;
         Core.ByPassCheck();
         // Farming between levels 30-35 (and switching to solo class if needed)
         if (Bot.Player.Level >= 30 && Bot.Player.Level < 35)
@@ -1182,7 +1186,8 @@ public class CoreFarms
             Bot.Quests.UnregisterQuests(6629);
         }
 
-        if (Bot.Player.Level >= level && !rankUpClass) goto Cleanup;
+        if (Bot.Player.Level >= level && !rankUpClass)
+            goto Cleanup;
 
         if (!rankUpClass)
             Core.EquipClass(ClassType.Farm);
@@ -1237,7 +1242,8 @@ public class CoreFarms
         Bot.Quests.UnregisterQuests(6629);
         Core.AbandonQuest(6629);
 
-        if (Bot.Player.Level >= level && !rankUpClass) goto Cleanup;
+        if (Bot.Player.Level >= level && !rankUpClass)
+            goto Cleanup;
         Core.ByPassCheck();
         // Farming between levels 50-61
         while (
@@ -1283,7 +1289,8 @@ public class CoreFarms
             Core.Sleep(200);
         }
 
-        if (Bot.Player.Level >= level && !rankUpClass) goto Cleanup;
+        if (Bot.Player.Level >= level && !rankUpClass)
+            goto Cleanup;
         Core.ByPassCheck();
         // Farming between levels 61-75 with BattleGroundE for non-rank-up class
         if (Bot.Player.Level >= 61 && Bot.Player.Level < 75)
@@ -1359,7 +1366,8 @@ public class CoreFarms
             }
         }
 
-        if (Bot.Player.Level >= level && !rankUpClass) goto Cleanup;
+        if (Bot.Player.Level >= level && !rankUpClass)
+            goto Cleanup;
         Core.ByPassCheck();
         // Farming between levels 75-100
         while (
@@ -1400,9 +1408,9 @@ public class CoreFarms
             Bot.Combat.Attack("*");
             Bot.Sleep(200);
         }
-    #endregion level checks
+        #endregion level checks
 
-    Cleanup:
+        Cleanup:
         Bot.Options.AttackWithoutTarget = false;
         Core.ToggleAggro(false);
         Core.Jump();
@@ -1415,8 +1423,6 @@ public class CoreFarms
             ToggleBoost(BoostType.Class, false);
         ToggleBoost(BoostType.Experience, false);
     }
-
-
 
     /// <summary>
     /// Farms in Seven Circles War for level and items
@@ -1601,7 +1607,7 @@ public class CoreFarms
             Core.Equip(amulet);
         }
 
-    Start:
+        Start:
         int ExitAttempt = 1;
         int Death = 0;
         Random random = new();
@@ -1679,7 +1685,7 @@ public class CoreFarms
             Core.Sleep(1500);
             goto Exit;
 
-        Exit:
+            Exit:
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
                 Bot.Combat.CancelTarget();
@@ -1692,7 +1698,7 @@ public class CoreFarms
                     goto Start;
             }
 
-        RestartOnDeath:
+            RestartOnDeath:
             Core.Logger($"Death: {Death++}, resetting");
             while (!Bot.ShouldExit)
             {
@@ -3529,7 +3535,7 @@ public class CoreFarms
 
         int RunCount = 1;
 
-    Start:
+        Start:
 
         // -------------------------
         // 1) Faction Rank farming
@@ -3637,7 +3643,7 @@ public class CoreFarms
 
             return;
 
-        RestartOnDeath:
+            RestartOnDeath:
             while (!Bot.ShouldExit)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);

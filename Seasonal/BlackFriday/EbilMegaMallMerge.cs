@@ -213,7 +213,14 @@ public class EbilMegaMallMerge
                     Core.RegisterQuests(10509);
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("ebilmegamall", "Mogugudra", req.Name, quant, req.Temp, false);
+                    Core.HuntMonster(
+                        "ebilmegamall",
+                        "Black BOGOdrone Prime",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
                     break;
 
                 #endregion

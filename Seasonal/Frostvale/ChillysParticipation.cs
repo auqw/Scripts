@@ -41,7 +41,7 @@ public class ChillysQuest
         Core.HuntMonsterMapID("battleontown", 1, "Reminder Delivered");
         Core.EnsureComplete(questID);
         Bot.Wait.ForQuestComplete(questID);
-        // Longer delay as soemtimes ae would throttle ppl with alot of 
+        // Longer delay as soemtimes ae would throttle ppl with alot of
         //  accs to just get stuck on loading in.
         Bot.Sleep(5000);
     }

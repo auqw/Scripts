@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 168171,
-    "sha256": "121bfcdd01fc4a397fc158b5d4af035718b9ff02ba0028ee9f0e7a0325314ded",
+    "size": 168304,
+    "sha256": "c3649bad051333e22cb8cdb3ca0964fb97d29e4e1c1049bdd2431c29d0660631",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -1415,8 +1415,8 @@
       "ulfgar geirsson"
     ],
     "path": "Story/Tavern.cs",
-    "size": 2701,
-    "sha256": "57a96f6d3353fc10e56419e312a7aa4e74531368712c47d40a6d39d7977eb4cb",
+    "size": 2687,
+    "sha256": "b8aa194d5b0fbe2253c5e29f4363ce847223c57e7aa86af9e0cd3b9dac4bae90",
     "fileName": "Tavern.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Tavern.cs"
   },
@@ -7003,8 +7003,8 @@
       "null"
     ],
     "path": "Story/Doomwood/CoreDoomwood.cs",
-    "size": 31185,
-    "sha256": "d1dbb31d0cc09dfcf185f32d940cbbe89cdaf4edf621e2e364ca21a693e98acc",
+    "size": 31295,
+    "sha256": "8b1b8e86c3c7b22d52cde516bb36c52450d71b225bce077ffd26e650ef1fa93b",
     "fileName": "CoreDoomwood.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Doomwood/CoreDoomwood.cs"
   },
@@ -9545,8 +9545,8 @@
       "null"
     ],
     "path": "Story/QueenofMonsters/CoreQOM.cs",
-    "size": 35982,
-    "sha256": "71a54a3f9c1d8988ed7da2699e09ca37b0b42131a062a16adf474f75b4772160",
+    "size": 36312,
+    "sha256": "e61bd3506fe2509ba33a4f43f2ae566e61dbe5de1fa701ca96cf3b9c98fc01b5",
     "fileName": "CoreQOM.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/CoreQOM.cs"
   },
@@ -19761,8 +19761,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/CheckForDonatedACs.cs",
-    "size": 8462,
-    "sha256": "47591caca5ff26cac4627c754083e9fdb2886079d89210b5f43b2826fcda4574",
+    "size": 8464,
+    "sha256": "bef19d97477fa4285eec218361000c7011a395c2245324fcb41cc6fa78aac3fc",
     "fileName": "CheckForDonatedACs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/CheckForDonatedACs.cs"
   },
@@ -19882,8 +19882,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/ChillysParticipation.cs",
-    "size": 1518,
-    "sha256": "bafb27d727d3fed1f7a4e9de49bae3ff8f020c5a5fda9a548cba769f1589f6a3",
+    "size": 1517,
+    "sha256": "151adab0ed855118131d340907af7aa39625610f3304866158c0f56c510a81bd",
     "fileName": "ChillysParticipation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/ChillysParticipation.cs"
   },
@@ -21692,8 +21692,8 @@
       "achievement"
     ],
     "path": "Seasonal/BlackFriday/EbilMegaMallMerge.cs",
-    "size": 18351,
-    "sha256": "011f0928a14644309d8f63c12c4f570ed2125c7f2e888ddf9f1f1e46ad751191",
+    "size": 18529,
+    "sha256": "b6b245ecf21a33f1c9b55c5c93e04443f5721681e06897e38491986fd242f9cc",
     "fileName": "EbilMegaMallMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/EbilMegaMallMerge.cs"
   },
@@ -24171,8 +24171,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1087589,
-    "sha256": "758c92105f0fd1f0c8deda1f52820bc360f650175f3d5f3ab77a91bccad1c475",
+    "size": 1087697,
+    "sha256": "1c82074db0692fcd4e8a386a7a94f48e9aaab018c35925bc0cb0c60072947006",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
