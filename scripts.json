@@ -1005,8 +1005,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 42055,
-    "sha256": "859f33d88228bdd5fa80df3414d4d71a766f7f41b64479e83db3d57ed691b1a0",
+    "size": 42268,
+    "sha256": "ffa1ab290b2960ff0b74e76a6a425e3053d0422d7ec4b17712f2819a50fabe9a",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -5978,8 +5978,8 @@
       "thanatos helm"
     ],
     "path": "Legion/LegionTokens/ParagonInsanelyInsane.cs",
-    "size": 916,
-    "sha256": "caf81105d39623f18debccacede590830346b6846d8aa1f4afa7addddb7a382a",
+    "size": 936,
+    "sha256": "ff0687b6bb3190373e54a85adb6f87873bb05cced2b3336416e08174e579780e",
     "fileName": "ParagonInsanelyInsane.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/LegionTokens/ParagonInsanelyInsane.cs"
   },
@@ -19761,8 +19761,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/CheckForDonatedACs.cs",
-    "size": 8464,
-    "sha256": "bef19d97477fa4285eec218361000c7011a395c2245324fcb41cc6fa78aac3fc",
+    "size": 8504,
+    "sha256": "b76fb6109a30971df588495091578cb950edca376f5fa59ef3cf7a0702d41cff",
     "fileName": "CheckForDonatedACs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/CheckForDonatedACs.cs"
   },
