@@ -19846,11 +19846,11 @@
   },
   {
     "name": "SkadePass Merge",
-    "description": "This bot will farm the items belonging to the selected mode for the SkadePass Merge [2642] in /skadepass",
+    "description": "This bot will farm the items belonging to the selected mode for the SkadePass Merge [2642] in /skadespass",
     "tags": [
       "skadepass",
       "merge",
-      "skadepass",
+      "skadespass",
       "frostborne",
       "dragonslayer",
       "cloak",
@@ -19868,8 +19868,8 @@
       "snowsaga"
     ],
     "path": "Seasonal/Frostvale/SkadePassMerge.cs",
-    "size": 8626,
-    "sha256": "bb8adc9bda398f31ea87749c0627e0d4aa8a690d3aa577c036fcfb7efc08113f",
+    "size": 8631,
+    "sha256": "2eb0c9bdd752c0a6c95a7a60a2e6f7975d499c2504b9d1a3f48df6bdf0341982",
     "fileName": "SkadePassMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/SkadePassMerge.cs"
   },
