@@ -29858,9 +29858,9 @@ case ""Black Mogugu Box"":
                     break;
     "
         },
-    {
-    "Common Mogugu",
-    @"
+        {
+            "Common Mogugu",
+            @"
 case ""Common Mogugu"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -29870,10 +29870,10 @@ case ""Common Mogugu"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Super Rare Mogugu",
-    @"
+        },
+        {
+            "Super Rare Mogugu",
+            @"
 case ""Super Rare Mogugu"":
                     HandleMogugu(
                         req.Name,
@@ -29883,10 +29883,10 @@ case ""Super Rare Mogugu"":
                     );
                     break;
     "
-},
-{
-    "Super Super Rare Mogugu",
-    @"
+        },
+        {
+            "Super Super Rare Mogugu",
+            @"
 case ""Super Super Rare Mogugu"":
                     HandleMogugu(
                         req.Name,
@@ -29896,10 +29896,10 @@ case ""Super Super Rare Mogugu"":
                     );
                     break;
     "
-},
-{
-    "Super Super Super Rare Mogugu",
-    @"
+        },
+        {
+            "Super Super Super Rare Mogugu",
+            @"
 case ""Super Super Super Rare Mogugu"":
                     HandleMogugu(
                         req.Name,
@@ -29915,10 +29915,10 @@ case ""Super Super Super Rare Mogugu"":
                     );
                     break;
     "
-},
-{
-    "Icy Bone",
-    @"
+        },
+        {
+            "Icy Bone",
+            @"
 case ""Icy Bone"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29933,17 +29933,17 @@ case ""Icy Bone"":
                     {
                         Core.HuntMonsterQuest(
                             Core.IsMember ? 10513 : 10512,
-                            ""skadepass"",
+                            ""s"",
                             ""Permafrost Dragon""
                         );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
     "
-},
-{
-    "Skade's Snowpiercer",
-    @"
+        },
+        {
+            "Skade's Snowpiercer",
+            @"
 case ""Skade's Snowpiercer"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29955,7 +29955,7 @@ case ""Skade's Snowpiercer"":
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
                     Core.HuntMonster(
-                        ""skadepass"",
+                        ""skadespass"",
                         ""Permafrost Dragon"",
                         req.Name,
                         quant,
@@ -29964,10 +29964,10 @@ case ""Skade's Snowpiercer"":
                     );
                     break;
     "
-},
-{
-    "Permafrost Heart",
-    @"
+        },
+        {
+            "Permafrost Heart",
+            @"
 case ""Permafrost Heart"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -29979,7 +29979,7 @@ case ""Permafrost Heart"":
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
                     Core.HuntMonster(
-                        ""skadepass"",
+                        ""skadespass"",
                         ""Permafrost Dragon"",
                         req.Name,
                         quant,
@@ -29988,10 +29988,10 @@ case ""Permafrost Heart"":
                     );
                     break;
     "
-},
-{
-    "Frostborne Dragonslayer Helm",
-    @"
+        },
+        {
+            "Frostborne Dragonslayer Helm",
+            @"
 case ""Frostborne Dragonslayer Helm"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30003,7 +30003,7 @@ case ""Frostborne Dragonslayer Helm"":
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
                     Core.HuntMonster(
-                        ""skadepass"",
+                        ""s"",
                         ""Permafrost Dragon"",
                         req.Name,
                         quant,
@@ -30012,8 +30012,8 @@ case ""Frostborne Dragonslayer Helm"":
                     );
                     break;
     "
-},
-};
+        },
+    };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);
