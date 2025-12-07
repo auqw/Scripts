@@ -30,7 +30,7 @@ public class ParagonInsanelyInsane
     {
         Core.SetOptions();
 
-        Legion.LTParagon();
+        Legion.LTParagon(FromStandAlone: true);
 
         Core.SetOptions(false);
     }

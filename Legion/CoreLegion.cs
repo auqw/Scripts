@@ -682,10 +682,17 @@ public class CoreLegion
         Core.CancelRegisteredQuests();
     }
 
-    public void LTParagon(int quant = 50000) // Paragon Pet
+    public void LTParagon(int quant = 50000, bool FromStandAlone = false) // Paragon Pet
     {
-        if (Core.CheckInventory("Legion Token", quant) || !Core.CheckInventory(11260))
+        if (Core.CheckInventory("Legion Token", quant))
             return;
+
+        if (!Core.CheckInventory(11260))
+        {
+            if (FromStandAlone)
+                Core.Logger("Missing `Paragon Pet` (the pets actual name.. not just \a paragon pet\")");
+            return;
+        }
 
         JoinLegion();
 
@@ -1239,7 +1246,7 @@ public class CoreLegion
                 }
             }
 
-            Death:
+        Death:
             Core.Logger($"Death: {Death++}, resetting");
             while (!Bot.ShouldExit)
             {
