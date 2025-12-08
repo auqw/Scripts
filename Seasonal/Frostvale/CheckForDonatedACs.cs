@@ -159,8 +159,7 @@ public class CheckForDonatedACs
                 Core.Logger($"{username}; ACs:{totalACs}");
 
                 // Update total ACs log
-                string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                string logEntry = $"{username}:{totalACs}:{timestamp}";
+                string logEntry = $"{username}:{totalACs}";
 
                 // Replace old entry if exists, otherwise add new
                 var existingIndex = totalACsLog.FindIndex(x => x.StartsWith(username + ":"));
@@ -169,7 +168,7 @@ public class CheckForDonatedACs
                 else
                     totalACsLog.Add(logEntry);
 
-                // Save immediately after each account
+                // Save immediately after each account (only updates the specific player)
                 Core.WriteFile(totalACsLogPath, totalACsLog);
             }
             else
@@ -240,6 +239,7 @@ public class CheckForDonatedACs
             }
         }
     }
+
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
