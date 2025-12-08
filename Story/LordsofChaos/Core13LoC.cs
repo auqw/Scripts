@@ -297,16 +297,16 @@ public class Core13LoC
         //Talc to Me
         Story.KillQuest(340, "dwarfhold", "Albino Bat");
 
-        //Upper City Gates
-        if (!Story.QuestProgression(343))
-        {
-            Core.Join("dwarfhold", "rdoor", "Right");
-            Core.EnsureComplete(343);
-            Core.Sleep(2500);
-        }
-
         //Rock me Amadeus
         Story.KillQuest(341, "dwarfhold", "Amadeus");
+
+        // //Upper City Gates
+        // if (!Story.QuestProgression(343))
+        // {
+        //     Core.Join("dwarfhold", "rdoor", "Right");
+        //     Core.EnsureComplete(343);
+        //     Core.Sleep(2500);
+        // }
 
         //Disapoofed
         Story.MapItemQuest(346, "uppercity", 61);
