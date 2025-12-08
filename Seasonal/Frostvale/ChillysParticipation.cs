@@ -30,7 +30,7 @@ public class ChillysQuest
     //Edit for future years quests vv <- No need to edit now, just edit the quest ID in ChillysParticipation.cs
     public void ChillysParticipation(int questID = 10510)
     {
-        if (Core.isCompletedBefore(questID))
+        if (Core.isCompletedBefore(questID, false))
             return;
 
         if (!Bot.Flash.CallGameFunction<bool>("world.myAvatar.isEmailVerified"))
