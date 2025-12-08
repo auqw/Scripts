@@ -19777,8 +19777,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/CheckForDonatedACs.cs",
-    "size": 9826,
-    "sha256": "694f4d7dc0f5a494961e18116ffdc148ee4f8905e62ea420c9d7f7c799d63993",
+    "size": 9769,
+    "sha256": "753eebe5935df1a8109db195809a62d55fd24f1aded1531daee5abd6c12ea57a",
     "fileName": "CheckForDonatedACs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/CheckForDonatedACs.cs"
   },
