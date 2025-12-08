@@ -541,6 +541,47 @@ public class CoreUltra
         return activeMembers > 0 && completedMembers == activeMembers;
     }
 
+    public bool CheckArmyProgressBool(
+        Func<bool> condition,
+        string syncFilePath = "army_sync.sync"
+    )
+    {
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        C.DebugLogger(this);
+        string syncFile = ResolveSyncPath(syncFilePath);
+        string myKey =
+            $"{Bot.Player.Username}|{Bot.Player.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
+        bool myCondition = condition();
+        // --- Update my progress with bool status ---
+        UpdateEntry(syncFile, myKey, $"{(myCondition ? "1" : "0")}");
+        // --- Read file and check all members ---
+        string[] lines = ReadLines(syncFile);
+        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        const int staleThreshold = 600; // 10 min
+        int activeMembers = 0;
+        int completedMembers = 0;
+        foreach (string line in lines)
+        {
+            string[] parts = line.Split(':');
+            if (parts.Length < 2)
+                continue;
+            // Parse bool status (first part after key)
+            if (!int.TryParse(parts[1], out int status))
+                continue;
+            // Parse timestamp (last part)
+            if (!long.TryParse(parts[parts.Length - 1], out long ts))
+                continue;
+            if (now - ts > staleThreshold)
+                continue;
+            activeMembers++;
+            if (status == 1)
+                completedMembers++;
+        }
+        return activeMembers > 0 && completedMembers == activeMembers;
+    }
+
+
     public void ClearSyncFile(string filePath)
     {
         try
