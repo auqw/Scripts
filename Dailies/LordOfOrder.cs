@@ -180,6 +180,7 @@ public class LordOfOrder
                 publicRoom: Core.PublicDifficult
             );
             Bot.Quests.UpdateQuest(4361);
+            Bot.Sleep(2000);
             Core.HuntMonster(
                 "treetitanbattle",
                 "Dakka the Dire Dragon",

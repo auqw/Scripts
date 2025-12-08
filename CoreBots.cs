@@ -8690,7 +8690,10 @@ public class CoreBots
                 switch (map)
                 {
                     case "titandrakath":
-                        Bot.Quests.UpdateQuest(470, 18);
+                        Bot.Quests.UpdateQuest(18, 470);
+                        break;
+                    case "treetitanbattle":
+                        Bot.Quests.UpdateQuest(14, 196);
                         break;
                 }
                 JumpWait();
