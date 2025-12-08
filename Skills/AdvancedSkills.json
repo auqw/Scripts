@@ -22,12 +22,14 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 70,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Aura",
@@ -44,7 +46,8 @@
             {
               "type": "Mana",
               "value": 30,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -98,14 +101,15 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
       ]
     }
   },
-  "Abyssal Angel\u0027s Shadow": {
+  "Abyssal Angel's Shadow": {
     "Base": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
@@ -125,7 +129,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -175,7 +180,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -202,7 +208,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -404,7 +411,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -417,7 +425,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -430,7 +439,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -443,7 +453,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -456,7 +467,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -469,7 +481,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -509,7 +522,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -884,7 +898,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "MultiAura",
@@ -913,7 +928,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -923,7 +939,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -985,7 +1002,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -999,7 +1017,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -1013,7 +1032,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -1027,7 +1047,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -1043,7 +1064,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -1053,7 +1075,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -1063,7 +1086,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -1073,7 +1097,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -1091,7 +1116,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -1101,7 +1127,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -1111,7 +1138,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -1121,7 +1149,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -1652,7 +1681,8 @@
             {
               "type": "Mana",
               "value": 15,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "Aura",
@@ -1812,7 +1842,8 @@
             {
               "type": "Mana",
               "value": 15,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "Aura",
@@ -2002,7 +2033,8 @@
             {
               "type": "Health",
               "value": 60,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -2127,7 +2159,8 @@
             {
               "type": "Health",
               "value": 60,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -2264,7 +2297,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -2288,7 +2322,8 @@
             {
               "type": "Health",
               "value": 35,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -2513,7 +2548,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -2578,7 +2614,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -2714,7 +2751,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -2750,7 +2788,8 @@
             {
               "type": "Health",
               "value": 40,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -2794,7 +2833,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -3057,12 +3097,14 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 70,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "Aura",
@@ -3079,12 +3121,14 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 10,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -3195,12 +3239,14 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 70,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "Aura",
@@ -3217,12 +3263,14 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 10,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -4077,7 +4125,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -4158,7 +4207,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -4168,12 +4218,14 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -4197,7 +4249,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -4224,7 +4277,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -4254,7 +4308,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -4582,7 +4637,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -4595,7 +4651,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -4608,7 +4665,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -4727,7 +4785,7 @@
       ]
     }
   },
-  "King\u0027s Echo": {
+  "King's Echo": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
@@ -4756,7 +4814,8 @@
             {
               "type": "Mana",
               "value": 10,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -5405,7 +5464,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -5644,7 +5704,8 @@
             {
               "type": "Health",
               "value": 60,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -5671,7 +5732,8 @@
             {
               "type": "Health",
               "value": 60,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -5704,12 +5766,14 @@
             {
               "type": "Mana",
               "value": 25,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Health",
               "value": 30,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -5865,12 +5929,14 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -5964,12 +6030,14 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 95,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -5979,12 +6047,14 @@
             {
               "type": "Health",
               "value": 60,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 75,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -6117,12 +6187,14 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 95,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -6132,12 +6204,14 @@
             {
               "type": "Health",
               "value": 60,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 75,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -6190,7 +6264,8 @@
             {
               "type": "Health",
               "value": 60,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -6254,12 +6329,14 @@
             {
               "type": "Mana",
               "value": 25,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Health",
               "value": 30,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -6343,7 +6420,8 @@
             {
               "type": "Mana",
               "value": 25,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -6658,7 +6736,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "MultiAura",
@@ -6687,7 +6766,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -6697,7 +6777,8 @@
             {
               "type": "Health",
               "value": 70,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -6747,12 +6828,14 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 70,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "Aura",
@@ -6769,12 +6852,14 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             },
             {
               "type": "Mana",
               "value": 10,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -7466,7 +7551,8 @@
             {
               "type": "Mana",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -7479,7 +7565,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         },
@@ -8085,7 +8172,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8112,7 +8200,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8162,7 +8251,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "less"
+              "comparison": "less",
+              "isPercentage": true
             }
           ]
         }
@@ -8400,7 +8490,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8416,7 +8507,8 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8426,7 +8518,8 @@
             {
               "type": "Health",
               "value": 90,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8439,7 +8532,8 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8449,7 +8543,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8462,7 +8557,8 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -8487,7 +8583,8 @@
             {
               "type": "Health",
               "value": 90,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -8503,7 +8600,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8519,7 +8617,8 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -8537,7 +8636,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8553,7 +8653,8 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8563,7 +8664,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8576,7 +8678,8 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8586,7 +8689,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8599,7 +8703,8 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -8624,7 +8729,8 @@
             {
               "type": "Health",
               "value": 90,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -8640,7 +8746,8 @@
             {
               "type": "Health",
               "value": 50,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
@@ -8656,7 +8763,8 @@
             {
               "type": "Health",
               "value": 30,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -8716,7 +8824,8 @@
             {
               "type": "Health",
               "value": 90,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         }
@@ -8834,7 +8943,8 @@
             {
               "type": "Mana",
               "value": 60,
-              "comparison": "greater"
+              "comparison": "greater",
+              "isPercentage": true
             }
           ]
         },
