@@ -1163,7 +1163,12 @@ public class CoreAdvanced
                         && ((reqInShop.Coins && reqInShop.Cost <= 0) || !reqInShop.Coins)
                     )
                     {
-                        BuyItem(
+                        if (reqInShop.Upgrade && !Bot.Player.IsMember)
+                        {
+                            Core.Logger($"{reqInShop.Name} is MEMBERS ONLY, you are not.... we can't buy it >.>");
+                            return;
+                        }
+                        else BuyItem(
                             map,
                             shopID,
                             reqInShop.ID,
@@ -3871,7 +3876,7 @@ public class CoreAdvanced
                     type = EnhancementType.Lucky;
                     return false;
 
-                #endregion
+                    #endregion
             }
             return true;
 
