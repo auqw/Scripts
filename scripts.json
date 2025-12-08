@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 414363,
-    "sha256": "6ddd4c4b03dbc1a6f414b67dd66200184a4bcf3edc2aadb8bcd9cd045c9913a9",
+    "size": 414362,
+    "sha256": "d1af915a89aeff03293f519ac84e545352499ab6a04d01a19408be01d2dd674c",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -581,8 +581,8 @@
       "khasaanda"
     ],
     "path": "Dailies/LordOfOrder.cs",
-    "size": 13148,
-    "sha256": "4186ac98963bc3adbfb889ae52de47f481a3f495494e1d9dce9d3fb651a1f243",
+    "size": 13041,
+    "sha256": "10e86811b6cd3e4d2ee016d4f253754f3a4dded35ec99202c06aa7bf23732de0",
     "fileName": "LordOfOrder.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Dailies/LordOfOrder.cs"
   },
