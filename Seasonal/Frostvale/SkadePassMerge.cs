@@ -89,7 +89,7 @@ public class SkadePassMerge
                         stopBot: shouldStop
                     );
                     break;
-        #endregion
+                #endregion
 
                 #region Items not setup
 
@@ -135,7 +135,7 @@ public class SkadePassMerge
                         false
                     );
                     break;
-                #endregion
+                    #endregion
             }
         }
     }
