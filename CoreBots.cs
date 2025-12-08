@@ -8690,14 +8690,14 @@ public class CoreBots
                 switch (map)
                 {
                     case "titandrakath":
-                        Bot.Quests.UpdateQuest(18, 470);
+                        Bot.Quests.UpdateQuest(8776);
                         break;
                     case "treetitanbattle":
-                        Bot.Quests.UpdateQuest(14, 196);
+                        Bot.Quests.UpdateQuest(4361);
                         break;
                 }
                 JumpWait();
-                map = strippedMap + "-999999";
+                map = strippedMap + "-" + "100000";
                 tryJoin();
                 break;
 

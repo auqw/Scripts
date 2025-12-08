@@ -82,7 +82,6 @@ public class LordOfOrder
             return;
         }
 
-        Story.PreLoad(this);
         Core.Logger("Daily: Lord Of Order Class");
         Core.Logger(
             "For the idiots that keep complaining its not continuing, this is a *daily* Quest, upto the LOO Quest [7165] (10 dailies)"
@@ -181,12 +180,7 @@ public class LordOfOrder
             );
             Bot.Quests.UpdateQuest(4361);
             Bot.Sleep(2000);
-            Core.HuntMonster(
-                "treetitanbattle",
-                "Dakka the Dire Dragon",
-                "Dakka's Crystal",
-                isTemp: false
-            );
+            Core.HuntMonster("treetitanbattle", "Dakka the Dire Dragon", "Dakka's Crystal", isTemp: false);
             Core.HuntMonster("andre", "Giant Necklace", "Andre's Necklace Fragment", isTemp: false);
             // Perma-Aggroed mob escape.
             Core.JumpWait();
