@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 414136,
-    "sha256": "ccbbf0fff2c2891362ea84044fffe2bbe29e16c63869fe1070f37a527bf1cdf7",
+    "size": 414174,
+    "sha256": "b168549744d325843bfa8188ecfd1d88d1ef7c36cd94e195faf6646edee65bf2",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -66,8 +66,8 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 80178,
-    "sha256": "a3776d1585a6b3d2ccf41961c83bfc0c03ab5e4b83c07bb0e6dc4fab0cfea899",
+    "size": 80405,
+    "sha256": "fa25c38530766f1cc5e5e36e11ceebe208a84eb6e34d334eef7fd1b7e668baa8",
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -748,8 +748,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 37156,
-    "sha256": "26b1aba722013fe512e9ba9c6313cc86ad8b72586d42609f5fe3bbbaab168cb8",
+    "size": 38707,
+    "sha256": "4737d2df859ec2e642fd5ac8ae95ebd4cd40aed5f30785b2e2f6743ffeef29fd",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -4359,6 +4359,22 @@
     "sha256": "f7d82550b678bda9a4e777bc4f837d1f30ffb51fe721e5184ad11ed3075fec1f",
     "fileName": "SilverExaltedPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/SilverExaltedPaladin.cs"
+  },
+  {
+    "name": "TouchMass",
+    "description": "gets u the million kills for the `Touch Mass` badge",
+    "tags": [
+      "touch",
+      "mass",
+      "badge",
+      "starfield",
+      "badge"
+    ],
+    "path": "Army/Badges/TouchMass.cs",
+    "size": 5634,
+    "sha256": "6445d700dda39fe663ec46a203104a9d4dcdd36c7faec0c7d7ea42f2f3868abc",
+    "fileName": "TouchMass.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Badges/TouchMass.cs"
   },
   {
     "name": "HBDK - A Dark Knight",
@@ -19761,8 +19777,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/CheckForDonatedACs.cs",
-    "size": 8504,
-    "sha256": "b76fb6109a30971df588495091578cb950edca376f5fa59ef3cf7a0702d41cff",
+    "size": 9708,
+    "sha256": "2094b65f1baa41325748637da5251507482b3e0f8327714747bcc65625b36c2e",
     "fileName": "CheckForDonatedACs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/CheckForDonatedACs.cs"
   },
@@ -19882,8 +19898,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/ChillysParticipation.cs",
-    "size": 1517,
-    "sha256": "151adab0ed855118131d340907af7aa39625610f3304866158c0f56c510a81bd",
+    "size": 1524,
+    "sha256": "4f9d18ede21889bddfa128720db8351fc6f2127ab4a1e0b08934cfd8e4fa8505",
     "fileName": "ChillysParticipation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/ChillysParticipation.cs"
   },
