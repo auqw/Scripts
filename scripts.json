@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 162875,
-    "sha256": "0d9e480d1835de821fa9cc7d8753bba853206b72d763918b5e1501742e87b4d7",
+    "size": 163158,
+    "sha256": "159e1e91aa2fac65e88b97429ceb9d46af330a18c53d8897c21486f8cc650119",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -19896,8 +19896,8 @@
       "snowsaga"
     ],
     "path": "Seasonal/Frostvale/SkadePassMerge.cs",
-    "size": 8631,
-    "sha256": "2eb0c9bdd752c0a6c95a7a60a2e6f7975d499c2504b9d1a3f48df6bdf0341982",
+    "size": 8643,
+    "sha256": "c34735f2d2a247f43b3771ac1da0637d597bd8ecf3c9c2833b2923225dca27bc",
     "fileName": "SkadePassMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/SkadePassMerge.cs"
   },
