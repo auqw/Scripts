@@ -168,6 +168,9 @@ public class CheckForDonatedACs
                     totalACsLog[existingIndex] = logEntry;
                 else
                     totalACsLog.Add(logEntry);
+
+                // Save immediately after each account
+                Core.WriteFile(totalACsLogPath, totalACsLog);
             }
             else
             {
