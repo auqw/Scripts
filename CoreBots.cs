@@ -529,7 +529,7 @@ public class CoreBots
                         }
                     }
 
-                #endregion Handlers
+                    #endregion Handlers
 
                     // Anti-lag option
                     if (AntiLag)
@@ -2340,7 +2340,7 @@ public class CoreBots
         int retryCount = 0;
         int sell_count = all ? Bot.Inventory.GetQuantity(itemName) : quant;
         int QuantAfterSale = Bot.Inventory.GetQuantity(itemName) - sell_count;
-        Retry:
+    Retry:
 
         JumpWait();
 
@@ -3709,7 +3709,7 @@ public class CoreBots
     /// </summary>
     /// <param name="QuestID">The ID of the quest to check.</param>
     /// <returns>True if the quest is completed, otherwise false.</returns>
-    public bool isCompletedBefore(int QuestID)
+    public bool isCompletedBefore(int QuestID, bool log = true)
     {
         Quest? quest = InitializeWithRetries(() => EnsureLoad(QuestID));
         if (quest == null)
@@ -3733,7 +3733,8 @@ public class CoreBots
                     >= QuestData.Value;
 
             // Commented out to reduce spam
-            Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
+            if (log)
+                Logger($"{questName} [{QuestID}] completion check [{(complete ? '✔' : '❌')}]");
             return complete;
         }
 
@@ -8732,7 +8733,7 @@ public class CoreBots
             case "downbelow": // 8107
                 goto default;
 
-            #endregion Bypass Banned
+                #endregion Bypass Banned
         }
 
         if (strippedMap == Bot.Map.Name?.ToLower())
@@ -9131,7 +9132,7 @@ public class CoreBots
         bool ignoreCheck = false
     )
     {
-        retry:
+    retry:
         // Attempt to join the map and load SWF
         Join(map, cell, pad, ignoreCheck: ignoreCheck, publicRoom: false);
         Bot.Wait.ForMapLoad(map);
@@ -9317,7 +9318,7 @@ public class CoreBots
     /// <param name="moveY">Y position of the door</param>
     public void PvPMove(int mtcid, string cell, int moveX = 0, int moveY = 0)
     {
-        retry:
+    retry:
         // Different maps = differnt walk speeds for pvp appearenty
         Bot.Send.Packet(
             $"%xt%zm%mv%{Bot.Map.RoomID}%{moveX}%{moveY}%{(Bot.Map.Name == "dagepvp" ? "10%" : "8%")}"
