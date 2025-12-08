@@ -75,20 +75,27 @@ public class CheckForDonatedACs
         string skuaOptionsPath = Path.Combine(appDataPath, "skua", "options");
         Directory.CreateDirectory(skuaOptionsPath); // Create directory if it doesn't exist
         string logPath = Path.Combine(skuaOptionsPath, "FrostvaleDonationLog.txt");
+        string totalACsLogPath = Path.Combine(skuaOptionsPath, "TotalACsLog.txt");
 
         bool firstTime = !File.Exists(logPath);
+        bool firstTimeTotal = !File.Exists(totalACsLogPath);
         List<string> ACs = new();
         List<string> oldACs = new();
         List<string> newACs = new();
         List<string> warnings = new();
+        List<string> totalACsLog = new();
 
         if (firstTime)
             File.WriteAllText(logPath, string.Empty);
         else
             oldACs = File.ReadAllLines(logPath).ToList();
 
-        Bot.Events.ExtensionPacketReceived += ACsListener;
+        if (firstTimeTotal)
+            File.WriteAllText(totalACsLogPath, string.Empty);
+        else
+            totalACsLog = File.ReadAllLines(totalACsLogPath).ToList();
 
+        Bot.Events.ExtensionPacketReceived += ACsListener;
         while (Army.doForAll())
         {
             while (!Bot.ShouldExit && !Bot.Player.Loaded)
@@ -143,7 +150,24 @@ public class CheckForDonatedACs
             {
                 //Edit for future years quests vv <- No need to edit now, just edit the quest ID in ChillysParticipation.cs
                 // Participation Quest (*previous years*: 9988, 10510)
+
                 CQ.ChillysParticipation(10510);
+
+                // Log total ACs owned
+                string username = Bot.Player.Username;
+                int totalACs = int.Parse(Bot.Flash.GetGameObject("world.myAvatar.objData.intCoins")!.ToString());
+                Core.Logger($"{username}; ACs:{totalACs}");
+
+                // Update total ACs log
+                string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                string logEntry = $"{username}:{totalACs}:{timestamp}";
+
+                // Replace old entry if exists, otherwise add new
+                var existingIndex = totalACsLog.FindIndex(x => x.StartsWith(username + ":"));
+                if (existingIndex >= 0)
+                    totalACsLog[existingIndex] = logEntry;
+                else
+                    totalACsLog.Add(logEntry);
             }
             else
             {
@@ -165,6 +189,7 @@ public class CheckForDonatedACs
                 writeACs.Add(p);
         }
         Core.WriteFile(logPath, writeACs);
+        Core.WriteFile(totalACsLogPath, totalACsLog);
 
         if (newACs.Count == 0)
             Bot.ShowMessageBox(
@@ -212,11 +237,9 @@ public class CheckForDonatedACs
             }
         }
     }
-
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
-
         Bot.Options.ReloginServer = PreviousReloginServer ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
         CheckACs();
 
