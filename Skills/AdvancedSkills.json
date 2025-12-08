@@ -81,6 +81,26 @@
       ]
     }
   },
+  "Archivist of Time": {
+    "Base": {
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 3
+        }
+      ]
+    }
+  },
   "Abyssal Angel": {
     "Base": {
       "skillUseMode": "WaitForCooldown",
