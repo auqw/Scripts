@@ -164,6 +164,7 @@ public class ShadowrealmMerge
                         Core.EnsureComplete(7553);
                         Core.EnsureComplete(7555);
                     }
+                    Core.JumpWait();
                     break;
 
                 case "Bone Dust":
