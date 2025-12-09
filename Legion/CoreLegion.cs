@@ -1026,31 +1026,24 @@ public class CoreLegion
         SoulForgeHammer();
 
         Core.EquipClass(ClassType.Farm);
-
-        Core.FarmingLogger("Obsidian Rock", quant);
         Core.AddDrop("Obsidian Rock");
+        Core.Logger(!Core.IsMember ? "Using Non-Member Method" : "Using Members Method");
+
         if (!Core.IsMember)
-        {
-            Core.Logger("Using Non-Member Method");
             Bot.Quests.UpdateQuest(1542);
-        }
-        else
-            Core.Logger("Using Members Method");
 
         Core.RegisterQuests(2742);
         while (!Bot.ShouldExit && !Core.CheckInventory("Obsidian Rock", quant))
         {
-            if (Core.IsMember)
-                Core.HuntMonster("hydra", "Fire Imp", "Obsidian Deposit", 10);
-            else
-                Core.KillMonster(
-                    "firestorm",
-                    "r8",
-                    "Left",
-                    "Firestorm Hatchling",
-                    "Obsidian Deposit",
-                    10
-                );
+            Core.KillMonster(
+                Core.IsMember ? "hydra" : "firestorm",
+                Core.IsMember ? "Rune2" : "r8",
+                Core.IsMember ? "Right" : "Left",
+                Core.IsMember ? "Fire Imp" : "Firestorm Hatchling",
+                "Obsidian Deposit",
+                10,
+                log: false
+            );
 
             Bot.Wait.ForPickup("Obsidian Rock");
         }
