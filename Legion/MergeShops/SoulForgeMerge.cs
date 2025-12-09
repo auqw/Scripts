@@ -80,6 +80,8 @@ public class SoulForgeMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        Core.DL_Enable();
+        // Adv.MergeItemisinShopExceptions.AddRange(new[] { "Obsidian Rock" });
         Legion.SoulForgeHammer();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("underworld", 577, findIngredients, buyOnlyThis, buyMode: buyMode);
@@ -103,13 +105,13 @@ public class SoulForgeMerge
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
                     Core.Logger(
-                        $"The bot hasn't been taught how to get {req.Name}."
-                            + (shouldStop ? " Please report the issue." : " Skipping"),
+                        $"The bot hasn't been taught how to get {req.Name}"
+                            + (shouldStop ? " Please report the issue" : " Skipping"),
                         messageBox: shouldStop,
                         stopBot: shouldStop
                     );
                     break;
-        #endregion
+                #endregion
 
                 case "Legion Token":
                     Legion.FarmLegionToken(quant);
@@ -134,6 +136,23 @@ public class SoulForgeMerge
 
                 case "Obsidian Rock":
                     Legion.ObsidianRock(quant);
+                    break;
+
+                case "Solidified Soul":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.RegisterQuests(2743);
+                    while (!Core.CheckInventory(req.Name, req.Quantity))
+                    {
+                        Core.HuntMonster(
+                            "ShadowFallInvasion",
+                            "Bone Creeper",
+                            "Shards of a Soul",
+                            10, log: false
+                        );
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
                     break;
             }
         }
