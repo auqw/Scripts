@@ -3874,8 +3874,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 118812,
-    "sha256": "feb7fa29a893856948724523e1beb5d91d37db27f8f98c88138b1c62b6c64547",
+    "size": 120344,
+    "sha256": "99dc5c2fefc31febfda792c459ec1a3a054cd6a5fdcd015e95f54d591b302294",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -5176,8 +5176,8 @@
       "armaments"
     ],
     "path": "Hollowborn/MergeShops/ShadowrealmMerge.cs",
-    "size": 23192,
-    "sha256": "aaa9473a19ce7b53291dd63c65547e4073587e3aa7fd5a29d170eac4b01d5a15",
+    "size": 23229,
+    "sha256": "6e69cee58b850326e4589207ff7d92f00e8081aaecb5732bbf0512cedbb9b09a",
     "fileName": "ShadowrealmMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/ShadowrealmMerge.cs"
   },
