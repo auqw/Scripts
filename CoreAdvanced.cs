@@ -1121,10 +1121,13 @@ public class CoreAdvanced
             // Look up the item in the shop to get its requirements
             ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.ID == item.ID);
             if (shopItem == null)
+            {
+                Core.Logger("ShopItem Returned null.. some how", "ProcessItemWithDependencies");
                 return;
+            }
 
             // Process all requirements first
-            foreach (ItemBase req in shopItem.Requirements ?? new List<ItemBase>())
+            foreach (ItemBase req in shopItem.Requirements)
             {
                 if (req == null)
                     continue;
