@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 163301,
-    "sha256": "17eab5bd132c041560c218d804d89e687a699bfca1dd99f3dce6be726c3070c3",
+    "size": 164261,
+    "sha256": "32b21d896b065962bd6eb36bd7f946cc35b42fdc5d8197685d709b4bea745fc5",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -1017,8 +1017,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 42268,
-    "sha256": "ffa1ab290b2960ff0b74e76a6a425e3053d0422d7ec4b17712f2819a50fabe9a",
+    "size": 42012,
+    "sha256": "446272d8970605bd22a3b04d86ce655c192cff577efe98606190de4099685acb",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -6791,8 +6791,8 @@
       "keraunos"
     ],
     "path": "Legion/MergeShops/SoulForgeMerge.cs",
-    "size": 8103,
-    "sha256": "df50385d742319b3b8a08360f4e506acfff38b04d645798dac557d3d06a05b4f",
+    "size": 8916,
+    "sha256": "4f31af9d12050cdad7e14420c36cc8abb39eb1abfbac9c33a9a7b87746108f4b",
     "fileName": "SoulForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/SoulForgeMerge.cs"
   },
