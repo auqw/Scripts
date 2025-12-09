@@ -3693,8 +3693,8 @@
       "seasonal"
     ],
     "path": "Tools/CheckArmyRoles.cs",
-    "size": 28124,
-    "sha256": "b0b692fe06fb645ffb905d0da2e5309fe6fcb5be14cc9c5782b4ca51b7bd9e08",
+    "size": 28153,
+    "sha256": "7c61df4d7c3c7e694d093165b2a8a79f14255f842acab857a788a99ae288bba3",
     "fileName": "CheckArmyRoles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/CheckArmyRoles.cs"
   },
@@ -3874,8 +3874,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 120344,
-    "sha256": "99dc5c2fefc31febfda792c459ec1a3a054cd6a5fdcd015e95f54d591b302294",
+    "size": 120720,
+    "sha256": "9c3e07d9e4eaadaf0c643876018d9c0a4d6c8ad508afb792784a3c06ae84d833",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
