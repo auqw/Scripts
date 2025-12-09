@@ -728,18 +728,19 @@ public class CoreDailies
         Core.ToBank("Crypto Token");
     }
 
-    public void MonthlyTreasureChestKeys()
+    public void MonthlyTreasureChestKeys(bool log = true)
     {
         if (!Core.IsMember || !Core.CheckInventory("Treasure Chest"))
             return;
 
         Core.Logger("Montly: Treasure Chest Keys");
         if (!CheckDailyv2(1239))
-            Core.Logger(
-                $"Next keys are available on {new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToLongDateString()}"
-            );
-        else
-            Core.ChainComplete(1239);
+            if (log)
+                Core.Logger(
+                    $"Next keys are available on {new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(1).ToLongDateString()}"
+                );
+            else
+                Core.ChainComplete(1239);
 
         Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(1238));
         if (questData == null)
@@ -771,7 +772,7 @@ public class CoreDailies
         Core.ToBank(Bot.Inventory.Items.Select(x => x.Name).ToList().Except(PreQuestInv).ToArray());
     }
 
-    public void WheelofDoom()
+    public void WheelofDoom(bool log = true)
     {
         // Fetch Gear of Doom from Inventory and Bank
         ItemBase? GoD = Bot
@@ -783,13 +784,14 @@ public class CoreDailies
             .FirstOrDefault(x => x?.Name == "Treasure Potion");
 
         // Log Gear of Doom progress
-        Bot.Log(
-            $"Wheel of Doom\n"
-                + $"Gear of Doom: {GoD?.Quantity ?? 0}/3 | Treasure Potion: {TP?.Quantity ?? 0}\n"
-                + $"{(Core.IsMember
-                ? $"Daily: {(CheckDailyv2(3075) ? "✅" : "❌")} | Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}"
-                : $"Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}")}"
-        );
+        if (log)
+            Core.Logger(
+                $"Wheel of Doom\n"
+                    + $"Gear of Doom: {GoD?.Quantity ?? 0}/3 | Treasure Potion: {TP?.Quantity ?? 0}\n"
+                    + $"{(Core.IsMember
+                    ? $"Daily: {(CheckDailyv2(3075) ? "✅" : "❌")} | Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}"
+                    : $"Weekly: {(CheckDailyv2(3076) ? "✅" : "❌")}")}"
+            );
 
         // Snapshot inventory before completing quests
         List<int> PreQuestInv = Bot
