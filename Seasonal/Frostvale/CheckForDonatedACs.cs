@@ -84,6 +84,7 @@ public class CheckForDonatedACs
         List<string> newACs = new();
         List<string> warnings = new();
         List<string> totalACsLog = new();
+        int TotalAcsChecked = new();
 
         if (firstTime)
             File.WriteAllText(logPath, string.Empty);
@@ -113,8 +114,8 @@ public class CheckForDonatedACs
                 Bot.Wait.ForMapLoad("house");
             }
 
-            Daily.WheelofDoom();
-            Daily.MonthlyTreasureChestKeys();
+            Daily.WheelofDoom(false);
+            Daily.MonthlyTreasureChestKeys(false);
 
             //Requierments:
             // Level 30
@@ -159,7 +160,16 @@ public class CheckForDonatedACs
                 Core.Logger($"{username}; ACs:{totalACs}");
 
                 // Update total ACs log
-                string logEntry = $"{username}:{totalACs}";
+                bool JoinedLegion = Core.isCompletedBefore(793, false);
+                // Check if they *could* join the Legion (1200+ ACs) only if they haven't joined yet.
+                bool canJoinLegion = !JoinedLegion && totalACs > 1200;
+
+                string logEntry =
+                    $"{username}:{totalACs}: " +
+                    $"| JoinedLegion: {(JoinedLegion ? "YES" : canJoinLegion ? "CAN JOIN" : "NO")} " +
+                    $"| Legion Rev. Owned: {Core.CheckInventory(new[] { "Legion Revenant", "Legion Revenant (IoDA)" }, any: true)}";
+                TotalAcsChecked += totalACs;
+
 
                 // Replace old entry if exists, otherwise add new
                 var existingIndex = totalACsLog.FindIndex(x => x.StartsWith(username + ":"));
@@ -180,6 +190,7 @@ public class CheckForDonatedACs
                 continue;
             }
         }
+        totalACsLog.Add($"{TotalAcsChecked}");
         Bot.Events.ExtensionPacketReceived -= ACsListener;
 
         List<string> writeACs = new();
@@ -244,6 +255,7 @@ public class CheckForDonatedACs
     {
         Core.SetOptions();
         Bot.Options.ReloginServer = PreviousReloginServer ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
+
         CheckACs();
 
         Core.SetOptions(false);
