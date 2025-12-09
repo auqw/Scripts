@@ -246,11 +246,11 @@ public class CheckArmyRoles
     private bool CardinalofWar()
     {
         bool hasEnhancements =
-            new[] { 8738, 8739, 8740, 8741, 8742, 8758, 8821, 8820, 9560, 8744 }.Any(
-                Core.isCompletedBefore
+            new[] { 8738, 8739, 8740, 8741, 8742, 8758, 8821, 8820, 9560, 8744 }.Any(id =>
+                Core.isCompletedBefore(id)
             )
-            && new[] { 8826, 8825, 8758, 8827, 8824 }.Any(Core.isCompletedBefore)
-            && new[] { 8743, 8745, 8758, 8823, 8822, 8744 }.Any(Core.isCompletedBefore);
+            && new[] { 8826, 8825, 8758, 8827, 8824 }.Any(id => Core.isCompletedBefore(id))
+            && new[] { 8743, 8745, 8758, 8823, 8822, 8744 }.Any(id => Core.isCompletedBefore(id));
 
         int FiftyOneWeaponsOwned = FiftyOneWeapons.Count(weapon =>
             Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(item => item.Name == weapon)
