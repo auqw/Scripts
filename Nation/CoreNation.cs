@@ -1491,7 +1491,7 @@ public class CoreNation
             goto Retry7551;
         }
 
-    Retry2859:
+        Retry2859:
         Quest? Assistant = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2859));
         if (Assistant == null)
         {
@@ -1834,7 +1834,7 @@ public class CoreNation
             // Do Swindles Return Policy if enabled
             DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
-        Retry:
+            Retry:
             //reduce spam
             Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
             if (quest != null)
@@ -1987,7 +1987,10 @@ public class CoreNation
     /// <param name="quant">The quantity of the item to obtain (default: 1).</param>
     public void VoidKnightSwordQuest(string? item = null, int quant = 1)
     {
-        if ((item != null && Core.CheckInventory(item, quant)) || (!Core.CheckInventory(new[] { 38275, 38254 }, any: true)))
+        if (
+            (item != null && Core.CheckInventory(item, quant))
+            || (!Core.CheckInventory(new[] { 38275, 38254 }, any: true))
+        )
             return;
 
         Core.AddDrop(bagDrops);
@@ -1996,21 +1999,30 @@ public class CoreNation
 
         if (item == null)
         {
-            Core.AddDrop(Core.QuestRewards(Core.CheckInventory(38275) ? 5662 : 5659));
-            foreach (ItemBase Reward in Bot.Quests.EnsureLoad(Core.CheckInventory(38275) ? 5662 : 5659).Rewards)
+            int questId = Core.CheckInventory(38275) ? 5662 : 5659;
+            Core.AddDrop(Core.QuestRewards(questId));
+            Quest? quest = Bot.Quests.EnsureLoad(questId);
+            if (quest == null)
+            {
+                Core.Logger($"Failed to load quest {questId} for VoidKnightSwordQuest.");
+                return;
+            }
+
+            foreach (ItemBase Reward in quest.Rewards)
             {
                 if (Core.CheckInventory(Reward.ID, Reward.MaxStack))
-                {
-                    Core.Logger($"{Reward.Name} Max Stacked [x {Reward.MaxStack}]");
                     continue;
-                }
 
-                Core.FarmingLogger(Reward.Name, Reward.MaxStack);
                 while (!Bot.ShouldExit && !Core.CheckInventory(Reward.ID, Reward.MaxStack))
                 {
-                    Core.EnsureAccept(Core.CheckInventory(38275) ? 5662 : 5659);
+                    Core.EnsureAccept(questId);
                     Core.EquipClass(ClassType.Solo);
-                    Core.JoinSWF("mobius", "ChiralValley/town-Mobius-21Feb14.swf", "Slugfit", "Bottom");
+                    Core.JoinSWF(
+                        "mobius",
+                        "ChiralValley/town-Mobius-21Feb14.swf",
+                        "Slugfit",
+                        "Bottom"
+                    );
                     Core.HuntMonster("mobius", "Slugfit", "Slugfit Horn", 5);
                     Core.HuntMonster("faerie", "Aracara", "Aracara Silk");
 
@@ -2018,10 +2030,15 @@ public class CoreNation
                     Core.EquipClass(ClassType.Farm);
                     Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Makai Fang", 5);
                     Core.HuntMonster("hydra", "Fire Imp", "Imp Flame", 3, log: false);
-                    Core.HuntMonster("battleunderc", "Crystalized Jellyfish", "Aquamarine of Nulgath", 3, false);
-                    Core.EnsureComplete(Core.CheckInventory(38275) ? 5662 : 5659);
+                    Core.HuntMonster(
+                        "battleunderc",
+                        "Crystalized Jellyfish",
+                        "Aquamarine of Nulgath",
+                        3,
+                        false
+                    );
+                    Core.EnsureComplete(questId);
                 }
-
             }
         }
         else
@@ -2040,7 +2057,13 @@ public class CoreNation
                 Core.EquipClass(ClassType.Farm);
                 Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Makai Fang", 5);
                 Core.HuntMonster("hydra", "Fire Imp", "Imp Flame", 3, log: false);
-                Core.HuntMonster("battleunderc", "Crystalized Jellyfish", "Aquamarine of Nulgath", 3, false);
+                Core.HuntMonster(
+                    "battleunderc",
+                    "Crystalized Jellyfish",
+                    "Aquamarine of Nulgath",
+                    3,
+                    false
+                );
                 Core.EnsureComplete(Core.CheckInventory(38275) ? 5662 : 5659);
             }
         }
