@@ -1033,20 +1033,17 @@ public class CoreLegion
             Bot.Quests.UpdateQuest(1542);
 
         Core.RegisterQuests(2742);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Obsidian Rock", quant))
-        {
             Core.KillMonster(
-                Core.IsMember ? "hydra" : "firestorm",
-                Core.IsMember ? "Rune2" : "r8",
-                Core.IsMember ? "Right" : "Left",
-                Core.IsMember ? "Fire Imp" : "Firestorm Hatchling",
-                "Obsidian Deposit",
-                10,
-                log: false
-            );
+            Core.IsMember ? "hydra" : "firestorm",
+            Core.IsMember ? "Rune2" : "r8",
+            Core.IsMember ? "Right" : "Left",
+            Core.IsMember ? "Fire Imp" : "Firestorm Hatchling",
+            "Obsidian Rock",
+            quant,
+            log: false
+        );
 
-            Bot.Wait.ForPickup("Obsidian Rock");
-        }
+        Bot.Wait.ForPickup("Obsidian Rock");
         Core.CancelRegisteredQuests();
     }
 
