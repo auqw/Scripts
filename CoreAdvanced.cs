@@ -1012,12 +1012,9 @@ public class CoreAdvanced
             }
         }
 
-        if (items.Count == 0)
+        if (items.Count <= 0)
         {
-            Core.Logger(
-                $"Found {items.Count} items to purchase from shop [{shopID}] on map [{map}]."
-            );
-            HandleNoItemsFound(mode, memSkipped);
+             HandleNoItemsFound(mode, memSkipped);
             return;
         }
         #endregion
@@ -1027,7 +1024,10 @@ public class CoreAdvanced
         foreach (ShopItem item in items)
         {
             if (Core.CheckInventory(item.ID, toInv: false))
+            {
+                Core.Logger($"{item.Name} Owned x{Bot.Inventory.GetQuantity(item.ID)}/{1}");
                 continue;
+            }
 
             if (item.Upgrade && !Core.IsMember)
             {
@@ -1114,7 +1114,9 @@ public class CoreAdvanced
 
             // If already have enough, skip
             if (Core.CheckInventory(item.ID, quantity))
+            {
                 return;
+            }
 
             EnsureShopLoaded(map, shopID);
 
@@ -1130,13 +1132,23 @@ public class CoreAdvanced
             foreach (ItemBase req in shopItem.Requirements)
             {
                 if (req == null)
+                {
                     continue;
+                }
 
                 int requiredQty = req.Quantity * quantity;
-
+                Core.FarmingLogger(req.Name, requiredQty);
                 // Check if already have it
                 if (Core.CheckInventory(req.ID, requiredQty))
+                {
+                    Core.Logger($"{req.Name} Owned x{Bot.Inventory.GetQuantity(req.ID)}/{requiredQty}");
                     continue;
+                }
+                EnsureShopLoaded(map, shopID);
+                ShopItem? reqInShop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
+
+                // if (reqInShop != null && reqInShop.Requirements.Any(x => !Bot.Shops.Items.Contains(x)))
+                //     MergeItemisinShopExceptions.Add(reqInShop.Name);
 
                 // Check exceptions first - these should always be farmed/merged, never bought
                 if (req != null && MergeItemisinShopExceptions.Contains(req.Name!))
@@ -1152,12 +1164,20 @@ public class CoreAdvanced
                     continue;
                 }
 
-                EnsureShopLoaded(map, shopID);
-                ShopItem? reqInShop = Bot.Shops.Items.FirstOrDefault(x => x.ID == req!.ID);
 
+                if (req!.Name?.Contains("Dragon Runestone") == true)
+                {
+                    Core.Logger($"Farming Dragon Runestone x{requiredQty}");
+                    Farm.DragonRunestone(requiredQty);
+                }
+                if (req.Name?.Contains("Gold Voucher") == true)
+                {
+                    Core.Logger($"Farming Gold Voucher x{requiredQty}");
+                    Farm.Voucher(req.Name, requiredQty);
+                }
                 if (reqInShop != null)
                 {
-                    Core.Logger($"Requirement \"{reqInShop.Name}\" [{reqInShop.ID}] is in shop.");
+                    Core.Logger($"Requirement \"{reqInShop.Name}\" [{reqInShop.ID}] is in shop.", "ProcessItemWithDependencies");
                     requiredQty = Math.Min(requiredQty, reqInShop.MaxStack);
 
                     // If requirement has no dependencies, buy it directly
@@ -1171,14 +1191,18 @@ public class CoreAdvanced
                             Core.Logger($"{reqInShop.Name} is MEMBERS ONLY, you are not.... we can't buy it >.>");
                             return;
                         }
-                        else BuyItem(
-                            map,
-                            shopID,
-                            reqInShop.ID,
-                            requiredQty,
-                            shopItemID: reqInShop.ShopItemID,
-                            Log: Log
-                        );
+                        else
+                        {
+                            {
+                                BuyItem(
+                                    map,
+                                    shopID,
+                                    reqInShop.ID,
+                                    requiredQty,
+                                    shopItemID: reqInShop.ShopItemID
+                                );
+                            }
+                        }
                         Bot.Wait.ForPickup(reqInShop.ID);
                     }
                     else if (reqInShop.Requirements.Count > 0)
@@ -1195,25 +1219,13 @@ public class CoreAdvanced
                         Bot.Wait.ForPickup(req!.ID);
                     }
                 }
-                else if (req!.Name?.Contains("Dragon Runestone") == true)
-                {
-                    Core.Logger($"Farming Dragon Runestone x{requiredQty}");
-                    Farm.DragonRunestone(requiredQty);
-                }
-                else if (req.Name?.Contains("Gold Voucher") == true)
-                {
-                    Core.Logger($"Farming Gold Voucher x{requiredQty}");
-                    Farm.Voucher(req.Name, requiredQty);
-                }
                 else
                 {
                     // Item not in current shop - must be farmed/crafted externally
                     externalItem = req;
                     externalQuant = requiredQty;
                     Core.AddDrop(externalItem.ID);
-                    Core.Logger(
-                        $"{externalItem.Name} [{externalItem.ID}] not in shop, using merge script."
-                    );
+                    Core.Logger($"{externalItem.Name} [{externalItem.ID}] not in shop, using merge script.");
                     findIngredients();
                     Bot.Wait.ForPickup(req.ID);
                 }
@@ -1221,10 +1233,22 @@ public class CoreAdvanced
                 // Verify we got it
                 if (!Core.CheckInventory(req!.ID, requiredQty))
                 {
-                    Core.Logger($"Warning: Failed to acquire {req.Name} x{requiredQty}, retrying.");
-                    // Optionally retry here
+                    Core.Logger($"Warning: Failed to acquire {req.Name} x{requiredQty}.");
                 }
             }
+
+            EnsureShopLoaded(map, shopID);
+            if (shopItem.Requirements.All(x => Core.CheckInventory(x.ID, x.Quantity)))
+            {
+                BuyItem(
+                                  map,
+                                  shopID,
+                                  shopItem.ID,
+                                  quantity,
+                                  shopItemID: shopItem.ShopItemID
+                              );
+            }
+
         }
 
         void HandleNoItemsFound(int mode, bool memSkipped)
