@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 59950,
-    "sha256": "a5a8cfc230f252f5b461add48561b3dff5dee1c1e45570776aa9414fb08e55ad",
+    "size": 60070,
+    "sha256": "c6ced0d6c30f2a36438bce97a6e1e92736da5e2955b9b6fe8ee4bfaf3b81646b",
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreDailies.cs"
   },
@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 163200,
-    "sha256": "b8e7330399f0c56b6d0d082e860735960386b0dcd05daf5e686dc30d3429dd7f",
+    "size": 163301,
+    "sha256": "17eab5bd132c041560c218d804d89e687a699bfca1dd99f3dce6be726c3070c3",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -19789,8 +19789,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/CheckForDonatedACs.cs",
-    "size": 9769,
-    "sha256": "753eebe5935df1a8109db195809a62d55fd24f1aded1531daee5abd6c12ea57a",
+    "size": 10415,
+    "sha256": "e2f40b43ca947d788ea22a926e038ac7e02e0bb2782228a425798ff8a5812e38",
     "fileName": "CheckForDonatedACs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/CheckForDonatedACs.cs"
   },
@@ -24751,8 +24751,8 @@
       "reavers"
     ],
     "path": "Nation/Various/FiendishStormOrbQuestPet.cs",
-    "size": 1917,
-    "sha256": "30b0cb7d258a1da0465e0a6b091612f915d7bde87b1dc1cd795ec554a056d2c9",
+    "size": 1753,
+    "sha256": "da289e45b3d5948baafded6204a898effb30239b0ea21c69b4c81e367bbaa084",
     "fileName": "FiendishStormOrbQuestPet.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/FiendishStormOrbQuestPet.cs"
   },
