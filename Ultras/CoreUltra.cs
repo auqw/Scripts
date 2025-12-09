@@ -78,6 +78,40 @@ public class CoreUltra
         }
     }
 
+    public void Taunt(
+            string className,
+            int target,
+            string mode,
+            int delayMs = 0,
+            string? aura = null
+        )
+    {
+        if (string.IsNullOrWhiteSpace(className) || target <= 0)
+            return;
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+        if (!Bot.Inventory.IsEquipped(className))
+            return;
+        Bot.Combat.Attack(target);
+        if (delayMs > 0)
+            Bot.Sleep(delayMs);
+        switch (mode)
+        {
+            case "aura":
+                if (!string.IsNullOrWhiteSpace(aura) && Core.GetAuraSecondsRemaining(aura) < 1)
+                {
+                    Bot.Log("UseTaunt");
+                    UseTaunt();
+                }
+                break;
+            case "charge":
+                if (_chargeDetected && !Bot.Self.Auras.Any(x => x != null && x.Name == "Focus"))
+                    UseTaunt();
+                break;
+        }
+    }
+
+
     public void KillWithPriority(
         string primaryName,
         int primaryMapId,
@@ -775,6 +809,23 @@ public class CoreUltra
             Bot.Sleep(200);
         }
 
+        Core.EnableSkills();
+    }
+
+    public void UseTaunt(int target)
+    {
+        // Attack the target first
+        Bot.Combat.Attack(target);
+        Bot.Sleep(200);
+
+        // Then apply taunt
+        Core.DisableSkills();
+        while (!Bot.Self.Auras.Any(a => a != null && a.Name == "Focus"))
+        {
+            if (Bot.Skills.CanUseSkill(5))
+                Bot.Skills.UseSkill(5);
+            Bot.Sleep(200);
+        }
         Core.EnableSkills();
     }
 

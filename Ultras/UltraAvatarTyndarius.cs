@@ -18,35 +18,38 @@ using Skua.Core.Options;
 using Skua.Core.Threading;
 
 /*
- ===================
-Safe Comp:
-CAV, LR, AP, LOO
+============================================================================
+
+Enhancements are in order of (Helm - Class - Weapon - Cape)
+
+Safe Comp (HIGHLY RECOMMENDED):
+// CAV (anima / lucky / valiance / vainglory)
+// LR  (pneuma / wizard / valiance-ravenous-arcana / vainglory)
+// AP  (forge / lucky / valiance / lament)
+// LOO (forge / lucky / valiance / absolution)
+
 
 Fast Comp:
-CSS,LR,AP,LOO
+// CSS (vim / lucky / valiance / vainglory-lament)
+// LR  (pneuma / wizard / valiance-ravenous-arcana / vainglory)
+// AP  (forge / lucky / valiance / lament)
+// LOO (forge / lucky / lucky-aweblast-valiance / absolution)
+
 
 Fast F2P:
-KE, LR, AP, LOO
+// KE  (examen / lucky / ravenous / vainglory)
+// LR  (pneuma / wizard / valiance-ravenous-arcana / vainglory)
+// AP  (forge / lucky / valiance / lament)
+// LOO (forge / lucky / lucky-aweblast-valiance / absolution)
 
-Other Comp:
-AI, LICH, VDK, DOT
- ===================
-*/
 
-/*
- ===================
-Safe Comp:
-CAV, LR, AP, LOO
+Other Dps Options:
+// AI   (examen / lucky / ravenous-valiance / vainglory)
+// LICH (examen / lucky / ravenous / penitence)
+// VDK  (anima / lucky / ravenous-valiance / vainglory)
+// DOT  (pneuma / wizard / elysium / vainglory)
 
-Fast Comp:
-CSS,LR,AP,LOO
-
-Fast F2P:
-KE, LR, AP, LOO
-
-Other Comp:
-AI, LICH, VDK, DOT
- ===================
+============================================================================
 */
 
 public class UltraAvatarTyndarius
@@ -71,13 +74,13 @@ public class UltraAvatarTyndarius
     private string NormalizeString(string input) => (input ?? "").Trim().ToLower();
 
     string playerClass;
+    bool isBall2killer;
     bool isBall1Taunter;
-    bool isBall2Taunter;
     bool isMustTauntTyn;
     bool isFocusTyn;
 
     public bool DontPreconfigure = true;
-    public string OptionsStorage = "UltraAvatarTyndarius";
+    public string OptionsStorage = "UltraAvatarTyndarius2";
     public List<IOption> Options = new()
     {
         // Ball 1 Taunter selection
@@ -85,14 +88,14 @@ public class UltraAvatarTyndarius
             "Ball1Taunter",
             "Ball 1 Taunter",
             "Select which class should taunt Ball 1.",
-            Ball1Taunter.ChronoShadowSlayer
+            Ball1Taunter.LegionRevenant
         ),
         // Ball 2 Taunter selection
-        new Option<Ball2Taunter>(
-            "Ball2Taunter",
-            "Ball 2 Taunter",
-            "Select which class should taunt Ball 2.",
-            Ball2Taunter.LegionRevenant
+        new Option<Ball2killer>(
+            "Ball2killer",
+            "Ball 2 killer",
+            "Select which class should kill Ball 2.",
+            Ball2killer.ChronoShadowHunter
         ),
         // Must Taunt Tyndarius selection
         new Option<MustTauntTyndarius>(
@@ -102,11 +105,11 @@ public class UltraAvatarTyndarius
             MustTauntTyndarius.ArchPaladin
         ),
         // Focus Tyndarius selection
-        new Option<FocusTyndarius>(
-            "FocusTyndarius",
+        new Option<DebuffTyndarius>(
+            "DebuffTyndarius",
             "Focus Tyndarius",
             "Select which class should focus Tyndarius.",
-            FocusTyndarius.LordOfOrder
+            DebuffTyndarius.LordOfOrder
         ),
         CoreBots.Instance.SkipOptions,
     };
@@ -126,15 +129,15 @@ public class UltraAvatarTyndarius
         isBall1Taunter =
             Bot.Player.CurrentClass?.Name
             == GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter"));
-        isBall2Taunter =
+        isBall2killer =
             Bot.Player.CurrentClass?.Name
-            == GetDescription(Bot.Config!.Get<Ball2Taunter>("Ball2Taunter"));
+            == GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer"));
         isMustTauntTyn =
             Bot.Player.CurrentClass?.Name
             == GetDescription(Bot.Config!.Get<MustTauntTyndarius>("MustTauntTyndarius"));
         isFocusTyn =
             Bot.Player.CurrentClass?.Name
-            == GetDescription(Bot.Config!.Get<FocusTyndarius>("FocusTyndarius"));
+            == GetDescription(Bot.Config!.Get<DebuffTyndarius>("DebuffTyndarius"));
 
         Core.Boot();
         Prep();
@@ -144,14 +147,14 @@ public class UltraAvatarTyndarius
 
     void Prep()
     {
-        if (isBall1Taunter || isBall2Taunter || isMustTauntTyn)
+        if (isBall1Taunter || isMustTauntTyn)
         {
             Bot.Log("isTaunter = true");
             Ultra.GetScrollOfEnrage();
         }
         else
         {
-            Bot.Log("isTaunter = fasle");
+            Bot.Log("isTaunter = false");
             Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
             Ultra.BuyAlchemyPotion("Potent Honor Potion");
             Core.EquipConsumable("Potent Honor Potion");
@@ -166,6 +169,7 @@ public class UltraAvatarTyndarius
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(1500);
 
         C.AddDrop("Avatar Tyndarius Insignia");
         C.EnsureAccept(8245);
@@ -181,6 +185,7 @@ public class UltraAvatarTyndarius
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8245);
+                Ultra.ClearSyncFile(syncPath);
                 break;
             }
 
@@ -200,24 +205,34 @@ public class UltraAvatarTyndarius
             // ======================================================
             // BALL 1 TAUNTER
             // ======================================================
-            if (isBall1Taunter || isBall2Taunter)
+            if (isBall1Taunter)
             {
-                Ultra.Taunt(
-                    playerClass,
-                    "Ultra Fire Orb",
-                    "aura",
-                    isBall2Taunter ? 700 : 250,
-                    "Focus"
-                );
+                Bot.Combat.Attack(Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 1 && x.HP > 0) ? 1 : Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 3 && x.HP > 0) ? 3 : 2);
+                Bot.Sleep(500);
+                Bot.Skills.UseSkill(5);
+            }
 
-                Ultra.KillWithPriority(
-                    "Ultra Fire Orb",
-                    isBall2Taunter ? 1 : 3,
-                    "Ultra Fire Orb",
-                    isBall2Taunter ? 3 : 1,
-                    boss,
-                    2
-                );
+            if (isBall2killer)
+            {
+                if (Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 3 && x.HP > 0))
+                {
+                    Bot.Combat.Attack(3);
+                    Bot.Sleep(500);
+                    Bot.Skills.UseSkill(5);
+                    Bot.Sleep(500);
+                }
+                else if (Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 1 && x.HP > 0))
+                {
+                    Bot.Combat.Attack(1);
+                    Bot.Sleep(500);
+                    Bot.Skills.UseSkill(5);
+                    Bot.Sleep(500);
+                }
+                else
+                {
+                    Bot.Combat.Attack(2);
+                    Bot.Sleep(500);
+                }
             }
 
             // ======================================================
@@ -225,9 +240,9 @@ public class UltraAvatarTyndarius
             // ======================================================
             if (isMustTauntTyn)
             {
-                Ultra.Taunt(playerClass, boss, "aura", 700, "Focus");
-
-                Ultra.KillWithPriority(boss, 2, "Ultra Fire Orb", 1, "Ultra Fire Orb", 3);
+                Bot.Combat.Attack(2);
+                Bot.Skills.UseSkill(5);
+                Bot.Sleep(500);
             }
 
             // ======================================================
@@ -235,10 +250,10 @@ public class UltraAvatarTyndarius
             // ======================================================
             if (isFocusTyn)
             {
-                Bot.Combat.Attack(boss);
+                Bot.Combat.Attack(2);
+                Bot.Skills.UseSkill(5);
                 Bot.Sleep(500);
             }
-            Bot.Skills.UseSkill(5);
         }
     }
 
@@ -252,7 +267,7 @@ public class UltraAvatarTyndarius
         return attribute?.Description ?? value.ToString();
     }
 
-    public enum Ball1Taunter
+    public enum Ball2killer
     {
         // In order of fast > safe > f2p fast > other
         [Description("Chrono ShadowSlayer")]
@@ -274,7 +289,7 @@ public class UltraAvatarTyndarius
         CurrentClass,
     }
 
-    public enum Ball2Taunter
+    public enum Ball1Taunter
     {
         // In order of fast > safe > f2p fast > other
         [Description("Legion Revenant")]
@@ -287,7 +302,7 @@ public class UltraAvatarTyndarius
         CurrentClass,
     }
 
-    public enum FocusTyndarius
+    public enum DebuffTyndarius
     {
         // In order of fast > safe > f2p fast > other
         [Description("Lord Of Order")]
