@@ -182,25 +182,33 @@
   },
   "Alpha DOOMmega": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 70,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ]
         },
         {
           "skillId": 1
         },
         {
+          "skillId": 4
+        },
+        {
           "skillId": 2,
           "rules": [
             {
-              "type": "Health",
+              "type": "Mana",
               "value": 50,
-              "comparison": "less",
+              "comparison": "greater",
               "isPercentage": true
             }
           ]
@@ -210,25 +218,33 @@
   },
   "Alpha Omega": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 70,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ]
         },
         {
           "skillId": 1
         },
         {
+          "skillId": 4
+        },
+        {
           "skillId": 2,
           "rules": [
             {
-              "type": "Health",
+              "type": "Mana",
               "value": 50,
-              "comparison": "less",
+              "comparison": "greater",
               "isPercentage": true
             }
           ]
