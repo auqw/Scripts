@@ -96,6 +96,18 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyLeveling.cs"
   },
   {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Army/Template.cs",
+    "size": 5829,
+    "sha256": "12b46638a1411369f41a44cd5c1a56c4868a476bd8634dfe728fe04e68127bab",
+    "fileName": "Template.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Template.cs"
+  },
+  {
     "name": "Golden Inquisitor Daily",
     "description": "Golden Inquisitor",
     "tags": [
