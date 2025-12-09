@@ -33,32 +33,19 @@ public class FiendishStormOrbQuestPet
 
     public void DoQuest()
     {
-        if (
-            (!Core.CheckInventory(83230) && !Core.CheckInventory(83720))
-            || (Core.CheckInventory(83720) && !Core.IsMember)
-        )
+        if (!Core.CheckInventory(new[] { 83230, 83720 }) || (Core.CheckInventory(83720) && !Core.IsMember))
         {
-            Core.Logger(
-                "You need to own Fiendish Storm Orb Quest Pet, and have active membership for Member version to do this quest."
-            );
+            Core.Logger("You need to own Fiendish Storm Orb Quest Pet, and have active membership for Member version to do this quest.");
             return;
         }
 
-        Core.AddDrop(Core.QuestRewards(9576));
-
-        if (Core.CheckInventory(83720))
-            Core.EnsureAccept(9577);
-        else
-            Core.EnsureAccept(9576);
-
+        Core.AddDrop(Core.QuestRewards(Core.CheckInventory(83720) ? 9577 : 9576));
+        Core.EnsureAccept(Core.CheckInventory(83720) ? 9577 : 9576);
         SCM.BuyAllMerge("Cape of Lightning");
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("pride", "Valsarian", "BoltStriker Armor", isTemp: false);
         Core.HuntMonster("queenreign", "Extriki", "LightningLord", isTemp: false);
 
-        if (Core.CheckInventory(83720))
-            Core.EnsureComplete(9577);
-        else
-            Core.EnsureComplete(9576);
+        Core.EnsureComplete(Core.CheckInventory(83720) ? 9577 : 9576);
     }
 }
