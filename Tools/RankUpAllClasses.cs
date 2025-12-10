@@ -52,8 +52,8 @@ public class RankUpAll
     public void RankUpAllClasses(bool includeBank = false)
     {
         // Define the classes to exclude
-        List<string> excludedClasses = new() { "Hobo Highlord", "No Class", "Obsidian No Class" };
-
+        string InitialClass = Bot.Player!.CurrentClass!.Name;
+        List<string> excludedClasses = new() { "Hobo Highlord", "No Class", "Obsidian No Class", InitialClass };
         // Populate SelectedClasses from inventory, excluding specific classes
         List<string> SelectedClasses = Bot
             .Inventory.Items.Where(c =>
@@ -89,11 +89,14 @@ public class RankUpAll
         Core.Logger("Classes to Rank: " + string.Join(", ", SelectedClasses));
 
         // Rank up classes and bank them if they were sourced from the bank
-        foreach (string Class in SelectedClasses)
+        foreach (string Class in SelectedClasses.Except(InitialClass))
         {
             if (Core.CheckInventory(Class))
             {
                 Adv.RankUpClass(Class, false);
+
+                //Equip class we started with so we can bank this one
+                Core.Equip(InitialClass);
 
                 // Bank the class if it was originally from the bank
                 if (bankClasses.Contains(Class))
