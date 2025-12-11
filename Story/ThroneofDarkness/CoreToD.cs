@@ -1143,7 +1143,7 @@ public class CoreToD
         Story.MapItemQuest(5225, "yasaris", 4582);
 
         //Take the Offering 5226
-        if (!Bot.Quests.IsUnlocked(5227) || !Core.CheckInventory("Charged Spear of Anubyx"))
+        if ( !Core.CheckInventory("Charged Spear of Anubyx"))
         {
             Core.AddDrop("Get Charged Spear of Anubyx", "Charged Spear of Anubyx");
             Core.EnsureAccept(5226);
