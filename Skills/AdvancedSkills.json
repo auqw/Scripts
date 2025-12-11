@@ -82,21 +82,193 @@
     }
   },
   "Archivist of Time": {
-    "Base": {
-      "skillUseMode": "UseIfAvailable",
+    "Solo": {
+      "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
+        {
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "less",
+              "auraName": "Lore Inscribed",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "The Second Index",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Superpower",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "less",
+              "auraName": "Lore Inscribed",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "The First Index",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Splotched",
+              "auraTarget": "target"
+            }
+          ]
+        },
+        {
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "less",
+              "auraName": "Lore Inscribed",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 75,
+              "comparison": "less",
+              "isPercentage": true
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "The Third Index",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 75,
+              "comparison": "less",
+              "isPercentage": true
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rewind",
+              "auraTarget": "self"
+            }
+          ]
+        }
+      ]
+    },
+    "Atk": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 0
+        },
         {
           "skillId": 1
         },
         {
-          "skillId": 2
-        },
-        {
-          "skillId": 4
-        },
-        {
           "skillId": 3
+        },
+        {
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 75,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 75,
+              "comparison": "less",
+              "isPercentage": true
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "The Third Index",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 75,
+              "comparison": "less",
+              "isPercentage": true
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rewind",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         }
       ]
     }
