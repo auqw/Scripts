@@ -1014,7 +1014,7 @@ public class CoreAdvanced
 
         if (items.Count <= 0)
         {
-             HandleNoItemsFound(mode, memSkipped);
+            HandleNoItemsFound(mode, memSkipped);
             return;
         }
         #endregion
@@ -3406,6 +3406,20 @@ public class CoreAdvanced
                     wSpecial = !uValiance() ? WeaponSpecial.Praxis : WeaponSpecial.Valiance;
                     hSpecial = !uPneuma() ? CurrentHelmSpecial() : HelmSpecial.Pneuma;
                     break;
+                #endregion
+
+                case "archivist of time":
+                    #region Wizard -  Valiance - Pneuna - Vainglory
+                    if (!uValiance() || !uPneuma() || !uVainglory())
+                    {
+                        goto default;
+                    }
+                    type = EnhancementType.Wizard;
+                    cSpecial = CapeSpecial.Vainglory;
+                    wSpecial = WeaponSpecial.Valiance;
+                    hSpecial = HelmSpecial.Pneuma;
+                    break;
+
                 #endregion
 
                 #region Wizard - Forge - Awe Blast
