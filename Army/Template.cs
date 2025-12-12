@@ -12,6 +12,7 @@ tags: null
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Quests;
 using Skua.Core.Options;
 
 public class ArmyTemplate
@@ -81,23 +82,29 @@ public class ArmyTemplate
 
     void Examples()
     {
-        ArmyHandler(
-            map: "mapname",
-            QuestIDs: new int[] { },
-            WaitForArmysyncPath: "phase1_items",
-            AggroCell: "Enter",
-            checkType: CheckType.Item,
-            Itemname: "ItemName",
-            quant: 9999,
-            UseBool: false
+        Ultra.ArmyHandler(
+            map: "map",
+            QuestIDs: new int[] { 1, 2, 3 },
+            WaitForArmysyncPath: "SyncFileName",
+            AggroCell: "Cell",
+            checkType: CoreUltra.CheckType.Item,
+            Itemname: "QuestItem",
+            quant: 1,
+            isTemp: true,
+            UseBool: false,
+            PlayerCount: sArmy.Players().Length,
+            QuestReward: "QuestReward"
         );
 
+
+
         ArmyHandler(
-            map: "Shadowbattleon",
-            QuestIDs: new int[] {9421, 9422, 9426 },
-            WaitForArmysyncPath: "ArmySBO",
-            AggroCell: "r11",
+            map: "mapname",
+            QuestIDs: new int[] { 1, 2, 3 },
+            WaitForArmysyncPath: "SyncFileName",
+            AggroCell: "Cell",
             checkType: CheckType.Bool,
+            // Replace teh condition below with *any* bool check
             condition: () => Bot.Player.Level >= 100,
             UseBool: true
         );
@@ -105,7 +112,7 @@ public class ArmyTemplate
 
 
     // You can either make a secondary void or add all of the below to the first one under the first item.
-    private void ArmyHandler(string map, int[] QuestIDs, string WaitForArmysyncPath, string AggroCell, CheckType checkType, string? Itemname = null, int quant = 0, bool UseBool = false, Func<bool>? condition = null)
+    private void ArmyHandler(string map, int[] QuestIDs, string WaitForArmysyncPath, string AggroCell, CheckType checkType, string? Itemname = null, int quant = 0, bool isTemp = false, bool UseBool = false, Func<bool>? condition = null)
     {
         // Sync file used to keep track of what accs are done.
         string syncPath = Ultra.ResolveSyncPath(WaitForArmysyncPath);
