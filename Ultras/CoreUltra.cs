@@ -1228,5 +1228,97 @@ public class CoreUltra
         }
     }
 
+    // You can either make a secondary void or add all of the below to the first one under the first item.
+    public void ArmyHandler(string map, int[] QuestIDs, string WaitForArmysyncPath, string AggroCell, CheckType checkType, string? Itemname = null, int quant = 0, bool isTemp = false, bool UseBool = false, Func<bool>? condition = null, int PlayerCount = 0, string? QuestReward = null)
+    {
+        // Sync file used to keep track of what accs are done.
+        string syncPath = ResolveSyncPath(WaitForArmysyncPath);
+        ClearSyncFile(WaitForArmysyncPath);
+
+        // Log Players in current army.
+        C.Logger($"Players in Curreny Army: {PlayerCount}");
+
+        // Uncomment below, and add any questids that are used for this portion
+        // C.RegisterQuests(1,2,3);
+        if (QuestReward != null)
+            C.AddDrop(QuestReward);
+
+        Core.Join(map);
+
+        C.Jump(AggroCell, "Left");
+
+        // Don't Touch vv
+        if (PlayerCount > 1)
+            // Dont make this the same as the syncPath
+            WaitForArmy(PlayerCount - 1, WaitForArmysyncPath);
+        Bot.Player.SetSpawnPoint();
+        Bot.Sleep(1500);
+        Bot.Options.AggroMonsters = true;
+        // Pick a variant below ( multiple can be used as long as the sync files are different.)
+
+        if (UseBool && condition != null)
+        {
+            // Bool variant
+            while (!Bot.ShouldExit)
+            {
+                // Replace the `Bot.Player.Level >= 100` below with the bool
+                // you want want all accs to have true, leave the rest of this alone.
+                if (CheckArmyProgressBool(condition, syncPath))
+                {
+                    Bot.Options.AggroMonsters = false;
+                    C.Jump("Enter", "Spawn");
+                    C.Logger("All players finished farm.");
+                    break;
+                }
+                // Dead → wait for respawn
+                if (!Bot.Player.Alive)
+                {
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    continue;
+                }
+
+                Bot.Combat.Attack("*");
+                Bot.Sleep(500);
+            }
+            return;
+        }
+
+        if (Itemname != null)
+        {
+            //Int variant
+            while (!Bot.ShouldExit)
+            {
+                // Replace `Itemname` with the wanted item
+                // Replace the 500 with the quantity you desire
+                // Replace `false` if the item is a temp item with `true` or leave as `false` for non-temp items.
+                if (CheckArmyProgress(Itemname, quant, false, syncPath))
+                {
+                    Bot.Options.AggroMonsters = false;
+                    C.Jump("Enter", "Spawn");
+                    C.Logger("All players finished farm.");
+                    break;
+                }
+
+                // Dead → wait for respawn
+                if (!Bot.Player.Alive)
+                {
+                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    continue;
+                }
+
+                Bot.Combat.Attack("*");
+                Bot.Sleep(500);
+            }
+            return;
+        }
+    }
+
+
+    public enum CheckType
+    {
+        Bool = 1,
+        Item = 2
+    }
+
     #endregion
 }
