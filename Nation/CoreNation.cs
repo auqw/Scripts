@@ -536,8 +536,8 @@ public class CoreNation
             Core.ResetQuest(7551);
             Core.DarkMakaiItem("Dark Makai Rune");
             Core.EnsureComplete(7551, Item.ID);
-            if (Item.Name != "Voucher of Nulgath" && sellMemVoucher)
-                Core.SellItem("Voucher of Nulgath", all: true);
+            SellVoucherOfNulgath(sellMemVoucher, item);
+
 
             Core.FarmingLogger(Item.Name, quant);
         }
@@ -1236,7 +1236,7 @@ public class CoreNation
                                 );
 
                             // Sell Voucher of Nulgath if allowed
-                            SellVoucherOfNulgath(sellMemVoucher);
+                            SellVoucherOfNulgath(sellMemVoucher, item);
 
                             // Spend gold if AssistantDuring
                             AssistantDuringSupplies(AssistantDuring);
@@ -1334,7 +1334,7 @@ public class CoreNation
                         Core.KillEscherion(log: false, FromSupplies: true);
 
                     // Sell Voucher of Nulgath if allowed
-                    SellVoucherOfNulgath(sellMemVoucher);
+                    SellVoucherOfNulgath(sellMemVoucher, item);
 
                     // Spend gold if AssistantDuring
                     AssistantDuringSupplies(AssistantDuring);
@@ -1384,9 +1384,9 @@ public class CoreNation
         Core.CancelRegisteredQuests();
     }
 
-    public void SellVoucherOfNulgath(bool sellMemVoucher = true)
+    public void SellVoucherOfNulgath(bool sellMemVoucher = true, string? item = null)
     {
-        if (!sellMemVoucher)
+        if (!sellMemVoucher || sellMemVoucher && item == "Voucher of Nulgath")
             return;
 
         if (Core.CheckInventory("Voucher of Nulgath"))
@@ -1491,7 +1491,7 @@ public class CoreNation
             goto Retry7551;
         }
 
-        Retry2859:
+    Retry2859:
         Quest? Assistant = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2859));
         if (Assistant == null)
         {
@@ -1780,7 +1780,7 @@ public class CoreNation
                     + $"Sell Voucher of Nulgath: {sellMemVoucher}"
             );
 
-        SellVoucherOfNulgath(sellMemVoucher);
+        SellVoucherOfNulgath(sellMemVoucher, item);
 
         if (returnPolicyDuringSupplies)
             Core.AddDrop(Uni(1), Uni(6), Uni(9), Uni(16), Uni(20));
@@ -1826,7 +1826,7 @@ public class CoreNation
             Core.KillMonster("evilmarsh", "End", "Left", "Tainted Elemental", log: false);
 
             // Sell Voucher of Nulgath if allowed
-            SellVoucherOfNulgath(sellMemVoucher);
+            SellVoucherOfNulgath(sellMemVoucher, item);
 
             // Spend gold if AssistantDuring
             AssistantDuringSupplies(AssistantDuring);
@@ -1834,7 +1834,7 @@ public class CoreNation
             // Do Swindles Return Policy if enabled
             DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
-            Retry:
+        Retry:
             //reduce spam
             Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
             if (quest != null)
@@ -2729,7 +2729,7 @@ public class CoreNation
             Bot.Wait.ForDrop(itemToPickup);
             Bot.Wait.ForPickup(itemToPickup);
 
-            SellVoucherOfNulgath(sellMemVoucher);
+            SellVoucherOfNulgath(KeepVoucher || sellMemVoucher, itemToPickup);
 
             // if `Blood Gem of the Archfiend` isnt max stack, do the quest if enabled.
             if (!Core.CheckInventory("Blood Gem of the Archfiend", 100))
