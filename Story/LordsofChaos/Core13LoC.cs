@@ -294,22 +294,39 @@ public class Core13LoC
         //Gemeralds
         Story.KillQuest(339, "dwarfhold", "Chaotic Draconian");
 
+        if (!Story.QuestProgression(346))
+        {
         //Talc to Me
-        Story.KillQuest(340, "dwarfhold", "Albino Bat");
+        Getkey:
+            if (!Bot.TempInv.Contains("Upper City Key"))
+            {
+                Core.AddDrop("Upper City Key");
+                Core.EnsureAccept(340);
+                Core.HuntMonster("dwarfhold", "Albino Bat", "Key Mold");
+                Core.EnsureComplete(340);
+                Bot.Wait.ForTrue(() => Bot.TempInv.Contains("Upper City Key"), 20);
 
-        //Rock me Amadeus
+                // //Upper City Gates
+                Core.ChainComplete(343);
 
-        Core.EnsureAccept(341);
-        Core.HuntMonster("dwarfhold", "Amadeus", "Key Mold");
-        Core.EnsureComplete(341);
 
-        // //Upper City Gates
-        // if (!Story.QuestProgression(343))
-        // {
-        //     Core.Join("dwarfhold", "rdoor", "Right");
-        //     Core.EnsureComplete(343);
-        //     Core.Sleep(2500);
-        // }
+                // if (!Story.QuestProgression(343))
+                // {
+                //     Core.Join("dwarfhold", "rdoor", "Right");
+                //     Core.EnsureComplete(343);
+                //     Core.Sleep(2500);
+                // }
+            }
+
+            //Rock me Amadeus
+            if (!Bot.TempInv.Contains("Upper City Key"))
+                goto Getkey;
+
+            Core.EnsureAccept(341);
+            Core.HuntMonster("dwarfhold", "Amadeus", "Key Mold");
+            Core.EnsureComplete(341);
+
+        }
 
         //Disapoofed
         Story.MapItemQuest(346, "uppercity", 61);
