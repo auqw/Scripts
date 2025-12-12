@@ -8498,6 +8498,7 @@ public class CoreBots
                     SimpleQuestBypass((15, 8), (542, 2));
                     Join("citadel");
                     Jump("m22", "Left");
+                    EquipClass(ClassType.Solo);
                     EnsureAccept(9540);
                     KillMonster("citadel", "m22", "Left", "Death's Head", "Death's Head Bested");
                     EnsureComplete(9540);
