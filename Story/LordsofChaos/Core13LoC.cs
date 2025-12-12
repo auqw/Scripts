@@ -298,12 +298,10 @@ public class Core13LoC
         Story.KillQuest(340, "dwarfhold", "Albino Bat");
 
         //Rock me Amadeus
-        if (!Story.QuestProgression(341))
-        {
-            Core.EnsureAccept(341);
-            Core.HuntMonster("dwarfhold", "Amadeus", "Key Mold");
-            Core.EnsureComplete(341);
-        }
+
+        Core.EnsureAccept(341);
+        Core.HuntMonster("dwarfhold", "Amadeus", "Key Mold");
+        Core.EnsureComplete(341);
 
         // //Upper City Gates
         // if (!Story.QuestProgression(343))
