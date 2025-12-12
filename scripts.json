@@ -102,8 +102,8 @@
       "null"
     ],
     "path": "Army/Template.cs",
-    "size": 5829,
-    "sha256": "12b46638a1411369f41a44cd5c1a56c4868a476bd8634dfe728fe04e68127bab",
+    "size": 2551,
+    "sha256": "fd64bb3a4ecaaaf0a12f6e1d776eb12cae960fede92216b3abd7d887ae7af267",
     "fileName": "Template.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Template.cs"
   },
@@ -772,8 +772,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 40140,
-    "sha256": "65b1cbdecb33e641a89eb7c5662c22a91740e2a9a8f50671fd3d57cbd5fa3593",
+    "size": 43414,
+    "sha256": "29789dd62b4f58b0a18b66da1addc588dee8cbdfeefb0a67622b91127a0e0220",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
