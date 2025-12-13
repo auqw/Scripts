@@ -304,27 +304,27 @@ public class Core13LoC
             Core.HuntMonster("dwarfhold", "Albino Bat", "Key Mold");
             Core.EnsureComplete(340);
             Bot.Wait.ForTrue(() => Bot.TempInv.Contains("Upper City Key"), 20);
-
-            // //Upper City Gates
-            Core.ChainComplete(343);
-
-
-            // if (!Story.QuestProgression(343))
-            // {
-            //     Core.Join("dwarfhold", "rdoor", "Right");
-            //     Core.EnsureComplete(343);
-            //     Core.Sleep(2500);
-            // }
-
-            //Rock me Amadeus
-            if (!Bot.TempInv.Contains("Upper City Key"))
-                goto Getkey;
-
-            Core.EnsureAccept(341);
-            Core.HuntMonster("dwarfhold", "Amadeus", "Key Mold");
-            Core.EnsureComplete(341);
-
         }
+
+        // //Upper City Gates
+        Core.ChainComplete(343);
+
+
+        // if (!Story.QuestProgression(343))
+        // {
+        //     Core.Join("dwarfhold", "rdoor", "Right");
+        //     Core.EnsureComplete(343);
+        //     Core.Sleep(2500);
+        // }
+
+        //Rock me Amadeus
+        if (!Bot.TempInv.Contains("Upper City Key"))
+            goto Getkey;
+
+        Core.EnsureAccept(341);
+        Core.HuntMonster("dwarfhold", "Amadeus", "Key Mold");
+        Core.EnsureComplete(341);
+
 
         //Disapoofed
         Story.MapItemQuest(346, "uppercity", 61);
