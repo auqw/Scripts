@@ -2336,10 +2336,10 @@ public class CoreNation
         KisstheVoid(quant);
     }
 
-    public void FarmTaintedGem(int quant = 100)
+    public void FarmTaintedGem(int quant = 1000)
     {
         if (Core.CheckInventory("Tainted Gem", quant))
-            return;
+            return;            
 
         Core.AddDrop("Tainted Gem");
         FarmContractExchage("Tainted Gem", quant);
@@ -3318,6 +3318,11 @@ public class CoreNation
         }
         Core.CancelRegisteredQuests();
     }
+
+
+    private int GetQuestRewardMaxStack(string itemName, int QuestID = 555) =>
+        Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(QuestID), 20)
+            .Rewards.FirstOrDefault(x => x != null && x.Name == itemName)?.MaxStack ?? 0;
 }
 
 public enum ChooseReward
