@@ -24129,6 +24129,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/NooneAskeforThese/BuyAllGoldVouchers.cs"
   },
   {
+    "name": "PickRandomScript",
+    "description": "This class provides functionality to randomly select one non-utility script from subdirectories in the Scripts folder. It excludes specific folders and file prefixes, then logs the selected script.",
+    "tags": [
+      "file management",
+      "random selection",
+      "script picker"
+    ],
+    "path": "Tools/NooneAskeforThese/PickAScript4Me.cs",
+    "size": 4446,
+    "sha256": "9777f43ae3420193f8130e604889a751341c8d89e010473f6465efab6741d850",
+    "fileName": "PickAScript4Me.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/NooneAskeforThese/PickAScript4Me.cs"
+  },
+  {
     "name": "GrabFiveRandomMerges",
     "description": "This class provides functionality to randomly select up to five filenames from a specified directory within the user's \"Documents\" folder. It writes the selected filenames to a temporary markdown file and opens the file in the default associated application.",
     "tags": [
