@@ -27,73 +27,83 @@ public class PickRandomScript
     {
         try
         {
-            // Get all script files from subdirectories only (not directly in Scripts folder)
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string sourceDirectory = Path.Combine(appDataPath, "Skua", "Scripts");
 
-            // Excluded folders
-            string[] excludedFolders = { "obj", "plugins", "Templates", "Ultras", "Tools", "WIP", "Core", "docs", "Army", ".config", ".github", "bin" };
+            // Folders to exclude anywhere in the tree
+            HashSet<string> excludedFolders = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "obj", "plugins", "Templates", "Ultras", "Tools", "WIP",
+            "Core", "docs", "Army", ".config", ".github", "bin"
+        };
 
-            // Get immediate subdirectories only
-            string[] subdirectories = Directory.GetDirectories(sourceDirectory)
-                .Where(d => !excludedFolders.Contains(Path.GetFileName(d)))
-                .ToArray();
+            EnumerationOptions options = new()
+            {
+                RecurseSubdirectories = true,
+                IgnoreInaccessible = true,
+                AttributesToSkip = FileAttributes.Hidden | FileAttributes.System
+            };
 
-            // Get all files from immediate subdirectories only (not recursive)
-            string[] files = subdirectories
-                .SelectMany(d => Directory.GetFiles(d))
+            string[] files = Directory.EnumerateFiles(sourceDirectory, "*.cs", options)
                 .Where(f =>
                 {
+                    string directory = Path.GetDirectoryName(f)!;
+
+                    // Exclude any file inside banned folders (at any depth)
+                    foreach (string part in directory.Split(Path.DirectorySeparatorChar))
+                        if (excludedFolders.Contains(part))
+                            return false;
+
                     string filename = Path.GetFileName(f);
-                    return !filename.StartsWith("Generate", StringComparison.OrdinalIgnoreCase);
+
+                    // Exclude utility / generator scripts
+                    return !filename.StartsWith("Generate", StringComparison.OrdinalIgnoreCase)
+                        && !filename.StartsWith("Core", StringComparison.OrdinalIgnoreCase);
                 })
                 .ToArray();
 
-            // Log the total number of non-core files
             Core.Logger("");
             Core.Logger("🎰 ═══════════════════════════════════════ 🎰");
             Core.Logger("🎲 ACTIVATING SCRIPT RANDOMIZER PROTOCOL 🎲");
             Core.Logger("🃏 ═══════════════════════════════════════ 🃏");
             Core.Logger("");
-            Core.Logger("💰 Spinning the wheel of fate...");
-            System.Threading.Thread.Sleep(500);
-            Core.Logger("🎯 Calibrating quantum randomness matrices...");
-            System.Threading.Thread.Sleep(300);
-            Core.Logger("✨ Harvesting cosmic entropy from the void...");
-            System.Threading.Thread.Sleep(400);
-            Core.Logger("🎪 Rolling the RNG dice of destiny...");
-            Core.Logger("");
+
             Core.Logger($"🔍 Discovered {files.Length} viable scripts in the vault...");
             Core.Logger("");
 
-            // Check if any non-core files exist
             if (files.Length == 0)
             {
-                Core.Logger("⚠️  No non-core scripts found in the source directory.");
+                Core.Logger("⚠️  No valid scripts found after filtering.");
                 return;
             }
 
-            // Randomly select one file
+            Random random = new();
+
             Core.Logger("🎡 SPINNING THE GREAT WHEEL OF FORTUNE 🎡");
-            System.Threading.Thread.Sleep(600);
-            Core.Logger("⚡ bzzzzzzzzzzzzzzzz ⚡");
             System.Threading.Thread.Sleep(400);
+
+            for (int i = 0; i < 8; i++)
+            {
+                string tempFile = files[random.Next(files.Length)];
+                Core.Logger($"🎰 {Path.GetFileName(tempFile)}");
+                System.Threading.Thread.Sleep(120);
+            }
+
+            Core.Logger("");
             Core.Logger("💫 CLICK! 💫");
             Core.Logger("");
-            
-            Random random = new();
-            string selectedFile = files[random.Next(files.Length)];
-            string selectedFileName = Path.GetFileName(selectedFile);
 
-            // Log the selected script with fanfare
+            string selectedFile = files[random.Next(files.Length)];
+
             Core.Logger("🎊 ═══════════════════════════════════════ 🎊");
-            Core.Logger($"🏆 JACKPOT! Selected script: {selectedFileName} 🏆");
+            Core.Logger($"🏆 JACKPOT! Selected script: {Path.GetFileName(selectedFile)} 🏆");
             Core.Logger("🎉 ═══════════════════════════════════════ 🎉");
         }
         catch (Exception ex)
         {
-            // Log any exceptions
-            Core.Logger($"An error occurred: {ex.Message}");
+            Core.Logger($"❌ Error: {ex}");
         }
     }
+
+
 }
