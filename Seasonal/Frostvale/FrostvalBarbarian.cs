@@ -65,7 +65,7 @@ public class FrostvalBarbarian
             return;
 
         Glacera.DoAll();
-        Frostvale.DoAll();
+        Frostvale.HolidayHorror();
 
         if (!Core.CheckInventory("Infernal Ice Heart") && !Core.CheckInventory("Crypto Token", 5))
         {

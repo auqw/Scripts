@@ -68,6 +68,7 @@ public class CoreFrostvale
         Otziwar();
         HolidayHotel();
         HolidayHorror();
+        FrostvalGala();
     }
 
     public void IceCave()
@@ -1419,11 +1420,105 @@ public class CoreFrostvale
         }
     }
 
-    // if (!Core.isCompletedBefore(10003))
-    //     HolidayHorror();
-    // --------------------------------------------------------------------------------------------------------------------------
+    public void FrostvalGala()
+    {
+        if (Core.isCompletedBefore(10523) || !Core.isSeasonalMapActive("frostvalgala"))
+            return;
 
-    // The rest of the Frostval quests are not necessary for Frostval Barbarian. Can skip and farm Frozen Orb directly using jump.
+        Story.PreLoad(this);
 
-    // --------------------------------------------------------------------------------------------------------------------------
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Vaughn Knight", // UseableMonsters[0],
+            "Granville Knight", // UseableMonsters[1],
+            "Noelle Knight", // UseableMonsters[2],
+            "Unsung Knight", // UseableMonsters[3],
+            "Unsung Beast", // UseableMonsters[4],
+            "Unsung Queen", // UseableMonsters[5]
+        };
+        #endregion Useable Monsters
+
+        // 10514 | Miraculous Reunion
+        if (!Story.QuestProgression(10514))
+        {
+            Story.MapItemQuest(10514, "frostvalgala", new[] { 15286, 15287 });
+            Core.HuntMonsterQuest(10514, ("frostvalgala", UseableMonsters[0], ClassType.Farm));
+        }
+
+        // 10515 | Emergency Management
+        if (!Story.QuestProgression(10515))
+        {
+            Core.EnsureAccept(10515);
+            Story.MapItemQuest(10515, "frostvalgala", 15288, AutoCompleteQuest: false);
+            Core.HuntMonster("frostvalgala", UseableMonsters[1], "Granville Crest", 6);
+            Core.EnsureComplete(10515);
+        }
+
+        // 10516 | Noble Character
+        if (!Story.QuestProgression(10516))
+        {
+            Story.MapItemQuest(10516, "frostvalgala", 15289);
+            Core.HuntMonsterQuest(10516, ("frostvalgala", UseableMonsters[2], ClassType.Farm));
+        }
+
+        // 10517 | Breaking Bread
+        if (!Story.QuestProgression(10517))
+        {
+            Story.MapItemQuest(
+                10517,
+                new[]
+                {
+                    (15290, 5, "frostvalgala"),
+                    (15291, 1, "frostvalgala"),
+                    (15292, 1, "frostvalgala"),
+                }
+            );
+        }
+
+        // 10518 | The Poacher and the Stag
+        if (!Story.QuestProgression(10518))
+        {
+            Core.HuntMonsterQuest(
+                10518,
+                ("frostvalgala", UseableMonsters[0], ClassType.Farm),
+                ("frostvalgala", UseableMonsters[1], ClassType.Farm)
+            );
+        }
+
+        // 10519 | Knights Unsung
+        if (!Story.QuestProgression(10519))
+        {
+            Core.HuntMonsterQuest(10519, ("frostvalgala", UseableMonsters[3], ClassType.Farm));
+        }
+
+        // 10520 | Silver Spoon Fed
+        if (!Story.QuestProgression(10520))
+        {
+            Story.MapItemQuest(10520, "frostvalgala", 15293, 5);
+        }
+
+        // 10521 | Like-Minded Enemies
+        if (!Story.QuestProgression(10521))
+        {
+            Story.MapItemQuest(10521, "frostvalgala", 15294);
+            Core.HuntMonsterQuest(10521, ("frostvalgala", UseableMonsters[4], ClassType.Farm));
+        }
+
+        // 10522 | Heroic Entrance
+        if (!Story.QuestProgression(10522))
+        {
+            Core.HuntMonsterQuest(
+                10522,
+                ("frostvalgala", UseableMonsters[4], ClassType.Farm),
+                ("frostvalgala", UseableMonsters[3], ClassType.Farm)
+            );
+        }
+
+        // 10523 | I'm With You in the Dark
+        if (!Story.QuestProgression(10523))
+        {
+            Core.HuntMonsterQuest(10523, ("frostvalgala", UseableMonsters[5], ClassType.Solo));
+        }
+    }
 }
