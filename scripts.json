@@ -19779,6 +19779,42 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/HelsgroveMerge.cs"
   },
   {
+    "name": "Frostvalgala Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Frostvalgala Merge [2645] in /frostvalgala",
+    "tags": [
+      "frostvalgala",
+      "merge",
+      "frostvalgala",
+      "golden",
+      "granville",
+      "knight",
+      "noble",
+      "red",
+      "sash",
+      "carteret",
+      "spear",
+      "shield",
+      "stella",
+      "dei",
+      "miracoli",
+      "royal",
+      "frostval",
+      "tree",
+      "stelle",
+      "invernali",
+      "sanctolina",
+      "halberd",
+      "mace",
+      "lucevan",
+      "le"
+    ],
+    "path": "Seasonal/Frostvale/FrostvalgalaMerge.cs",
+    "size": 8695,
+    "sha256": "3a3e38e4cba9af352ae6e1b9d02da1f1889b13810a91768d200df53ecb588f8c",
+    "fileName": "FrostvalgalaMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/FrostvalgalaMerge.cs"
+  },
+  {
     "name": "Snowview Merge",
     "description": "This will get all or selected items on this merge shop.",
     "tags": [
