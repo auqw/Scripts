@@ -306,12 +306,13 @@ public class Core13LoC
             Bot.Wait.ForTrue(() => Bot.TempInv.Contains("Upper City Key"), 20);
         }
 
-        // //Upper City Gates
-        Core.ChainComplete(343);
 
         //Rock me Amadeus
         if (!Bot.TempInv.Contains("Upper City Key"))
             goto Getkey;
+
+        // //Upper City Gates
+        Core.ChainComplete(343);
 
         Core.EnsureAccept(341);
         Core.HuntMonster("dwarfhold", "Amadeus", "Key Mold");
