@@ -58,7 +58,7 @@ public class CoreHollowborn
         Core.AddDrop("Human Soul");
 
         Core.EquipClass(ClassType.Farm);
-        Core.KillMonster("noxustower", "r14", "Left", "*", "Human Soul", quant, false);
+        Core.KillMonster("noxustower", "r13", "Left", "*", "Human Soul", quant, false);
     }
 
     public void FreshSouls(int Uni36Quant = 3, int FSQuant = 1000)

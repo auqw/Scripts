@@ -110,7 +110,7 @@ public class ArchDoomKnight
 
         Core.EquipClass(ClassType.Farm);
         Farm.BattleUnderB("Undead Energy", 1800);
-        Core.HuntMonster("noxustower", "Lightguard Paladin", "Human Souls", 500, isTemp: false);
+        Core.KillMonster("noxustower", "r13", "Left", "*", "Human Souls", 500, isTemp: false);
         Core.HuntMonster("lair", "Water Draconian", "Dragon Energy", 600, isTemp: false);
         Core.EnsureComplete(6795);
         Core.ToBank(Q1items);
