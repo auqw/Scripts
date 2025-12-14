@@ -19759,8 +19759,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/FrostvalBarbarian.cs",
-    "size": 4846,
-    "sha256": "abf356585e0efbf4700efc9b6b91e2698bd3308b993755057ec64ee8df9bda5e",
+    "size": 4854,
+    "sha256": "eec05162deb0ecb57d40f97f4affb397f534f714b4d773c7fcb962f139570c83",
     "fileName": "FrostvalBarbarian.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/FrostvalBarbarian.cs"
   },
@@ -28342,11 +28342,12 @@
       "otziwar",
       "holidayhotel",
       "holidayhorror",
+      "frostvalgala",
       "doall"
     ],
     "path": "Seasonal/Frostvale/Story/00DoAll.cs",
-    "size": 1104,
-    "sha256": "f7995bbb65182d734fb5ce29f8ad57b5f3ba7c5ea080960675b961705ed8ec0d",
+    "size": 1117,
+    "sha256": "a02f8ea014fbc462f3edb1d2df69fdab54dc19d3eea40a1fe80dc2585745116a",
     "fileName": "00DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/Story/00DoAll.cs"
   },
@@ -28560,6 +28561,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/Story/12Winterhorror.cs"
   },
   {
+    "name": "Frostval Gala Story",
+    "description": "This script completes the FrostvalGala quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "frostvalgala",
+      "blank reflection"
+    ],
+    "path": "Seasonal/Frostvale/Story/27FrostvalGala.cs",
+    "size": 842,
+    "sha256": "5509ed5fa387ccc9489f97371cc980f9e841a4b2eff51d0bc4ac341624459d48",
+    "fileName": "27FrostvalGala.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/Story/27FrostvalGala.cs"
+  },
+  {
     "name": "Frostvale All Stories",
     "description": "This will finish the entire frostvale storylines.",
     "tags": [
@@ -28568,8 +28589,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/Story/CoreFrostvale.cs",
-    "size": 45957,
-    "sha256": "8cce79bf4472893bf8ae4582f73ed83557aec56aec8e5034319007101bc41664",
+    "size": 48869,
+    "sha256": "efd87d577f2a7a09fa734b26efadae04d5b3840888a030a25e5e7bab97c26325",
     "fileName": "CoreFrostvale.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/Story/CoreFrostvale.cs"
   },
