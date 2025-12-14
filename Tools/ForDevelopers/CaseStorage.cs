@@ -30013,7 +30013,172 @@ case ""Frostborne Dragonslayer Helm"":
                     break;
     "
         },
-    };
+    {
+    "Solidified Soul",
+    @"
+case ""Solidified Soul"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.RegisterQuests(2743);
+                    while (!Core.CheckInventory(req.Name, req.Quantity))
+                    {
+                        Core.HuntMonster(
+                            ""ShadowFallInvasion"",
+                            ""Bone Creeper"",
+                            ""Shards of a Soul"",
+                            10, log: false
+                        );
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Whistler Bullion",
+    @"
+case ""Whistler Bullion"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(
+                            Core.IsMember ? 10525 : 10524,
+                            (""frostvalgala"", ""Unsung Queen"", ClassType.Solo),
+                            (""frostvalgala"", ""Granville Knight"", ClassType.Farm),
+                            (""frostvalgala"", ""Unsung Beast"", ClassType.Farm)
+                        );
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Granville Knight",
+    @"
+case ""Granville Knight"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""frostvalgala"",
+                        ""Unsung Queen"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Granville Helm",
+    @"
+case ""Granville Helm"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""frostvalgala"",
+                        ""Unsung Queen"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Noble Blue Sash",
+    @"
+case ""Noble Blue Sash"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""frostvalgala"",
+                        ""Unsung Queen"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Silver Carteret Spear",
+    @"
+case ""Silver Carteret Spear"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""frostvalgala"",
+                        ""Unsung Queen"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Silver Carteret Spear and Shield",
+    @"
+case ""Silver Carteret Spear and Shield"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""frostvalgala"",
+                        ""Unsung Queen"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+};
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);
