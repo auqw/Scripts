@@ -640,8 +640,8 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 75336,
-    "sha256": "7ee52c5e142109b5194c85434e6e7d3469a803f548965bb69a1bd83c9ef37a8f",
+    "size": 75314,
+    "sha256": "d09e4290a274d3153f51a381428223f1cf585f74d22f24fc514aa150c08aa25c",
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
@@ -13048,8 +13048,8 @@
       "null"
     ],
     "path": "Other/Classes/FrostSpiritReaver.cs",
-    "size": 12688,
-    "sha256": "9d5a877f179c13176964a1821742dfa2dcbf5b6b429173635493f22b824d1516",
+    "size": 12686,
+    "sha256": "787896808a5f03bbd90f8703589f16527ab9effcb86f2abae0f4678f0924085f",
     "fileName": "FrostSpiritReaver.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/FrostSpiritReaver.cs"
   },
