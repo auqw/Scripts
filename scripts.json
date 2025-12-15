@@ -4402,6 +4402,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/SilverExaltedPaladin.cs"
   },
   {
+    "name": "ArmyLR",
+    "description": "use an army strategy to aquire Legion Revenant",
+    "tags": [
+      "legion",
+      "legion rev",
+      "legion revenant",
+      "revenant",
+      "army"
+    ],
+    "path": "Army/Classes/ArmyLR.cs",
+    "size": 15631,
+    "sha256": "e358173de19ed957496c8bebbcf9a20a7edf9838da89ea3628fbe99ddc13e215",
+    "fileName": "ArmyLR.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyLR.cs"
+  },
+  {
     "name": "TouchMass",
     "description": "gets u the million kills for the `Touch Mass` badge",
     "tags": [
