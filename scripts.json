@@ -3220,8 +3220,8 @@
       "perpetuum"
     ],
     "path": "Other/CelestialOfMysteries.cs",
-    "size": 4449,
-    "sha256": "197cd78f87e7290f551df7aaa7060a4546360008537ceb8c636c586a69528e24",
+    "size": 4462,
+    "sha256": "9f96092d0f270690f91853597dc5f646bc5e9e79fdb28b4aa4b380333547b15c",
     "fileName": "CelestialOfMysteries.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/CelestialOfMysteries.cs"
   },
@@ -4347,8 +4347,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 53557,
-    "sha256": "92fbcffef5e6f2085b7f7efbdb9cbf2f87d969d2a48c88ae2153876920da9f12",
+    "size": 53601,
+    "sha256": "886217464b40e63a2beaaf6ae5fea26a92804844e771ead998ce2e5c1833f644",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -9341,8 +9341,8 @@
       "citadel-ruins"
     ],
     "path": "Story/Nation/CitadelRuins.cs",
-    "size": 9396,
-    "sha256": "b8c7c65b7b6b9ad7bb03c419a01b1c37740db1ed3f5082186e64b44ea9f36dd6",
+    "size": 9397,
+    "sha256": "e0be2a6188103126d1d1d945ae4b07b1abea6022971af14faf73de3e56aed2c4",
     "fileName": "CitadelRuins.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/CitadelRuins.cs"
   },
@@ -12621,8 +12621,8 @@
       "null"
     ],
     "path": "Other/Weapons/CyseroItemUpgradeQuests.cs",
-    "size": 12296,
-    "sha256": "6c7b4122e13f1f441ce7123191d940912962015dcd2d57d7655538a3efbe9b51",
+    "size": 12297,
+    "sha256": "ca717d9619c2a6a007561d559797ee999eee1f64bb04341f4179e57e753fffe8",
     "fileName": "CyseroItemUpgradeQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/CyseroItemUpgradeQuests.cs"
   },
@@ -12847,8 +12847,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 17884,
-    "sha256": "698c4210e1fe84466ce30eaa5626ce52afa36add16c053e826780ee1fafe3cba",
+    "size": 17885,
+    "sha256": "a18bf09f9ad4066a590f87b660cfd840dc2778cb94888ad2b5875872f522f558",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
@@ -16278,8 +16278,8 @@
       "mysteries"
     ],
     "path": "Other/MergeShops/InfernalParadiseMerge.cs",
-    "size": 12191,
-    "sha256": "e1de372de9c3089a28cf097842432de126ccc719737f2e51ef6ad1005a6a224a",
+    "size": 12192,
+    "sha256": "f690037d33bc51ccb908be49fbac116a19eefda072c6dcddbdfe6877744f8914",
     "fileName": "InfernalParadiseMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/InfernalParadiseMerge.cs"
   },
@@ -17660,8 +17660,8 @@
       "freed"
     ],
     "path": "Other/MergeShops/AranxsAzalithRewardsMerge.cs",
-    "size": 8296,
-    "sha256": "41b6b57e7f4474604fdb47a83c5580c37c985ad310b60597f824466a9674036a",
+    "size": 8305,
+    "sha256": "5ca5ac7a58e6e4ceaddd43e76c30870a894e770d354e02ef646b2950a5d1dde3",
     "fileName": "AranxsAzalithRewardsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/AranxsAzalithRewardsMerge.cs"
   },
@@ -18840,8 +18840,8 @@
       "hero-s-valiance"
     ],
     "path": "Other/Armor/FireChampionsArmor.cs",
-    "size": 4020,
-    "sha256": "9a4f72b926f6216215b90be8ea81aff3f1a1c7dd062d5485af57718c383b5265",
+    "size": 4021,
+    "sha256": "adba0d7cfb9013c6e2ddb856191c7a6ec6eeb4d1e97c742cfd909a4154e4fe5d",
     "fileName": "FireChampionsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Armor/FireChampionsArmor.cs"
   },
@@ -22726,8 +22726,8 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs",
-    "size": 5092,
-    "sha256": "53c896e4c9946e1e30009de0428bdec7a52d5bae41f02a07bf6ca174f6708f23",
+    "size": 5093,
+    "sha256": "fcb6a37c784647757049bad5c0b4fe5240e5d44bf332228623a695258e72acd2",
     "fileName": "CelestialPirateCommander[PollyRogers].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs"
   },
@@ -24294,8 +24294,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1093184,
-    "sha256": "739dc62087954d835fda27138c80d0a2577c641237cd9116196449d47605824a",
+    "size": 1093239,
+    "sha256": "dab9a421c657bd0ef3dcff66f2681fe7c58e9287d69e70cacee370cd26adc5e7",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -25002,8 +25002,8 @@
       "null"
     ],
     "path": "Nation/Various/EliteVoid.cs",
-    "size": 4194,
-    "sha256": "b001cb9b683a51e280025a966da850e71b51d7d7d3660edfa892cb6c9d48a834",
+    "size": 4195,
+    "sha256": "f75e2c480a5bba54c29bd6dc287457b4eaa6a555505e04ea755d5c581948ad69",
     "fileName": "EliteVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/EliteVoid.cs"
   },
@@ -25283,8 +25283,8 @@
       "null"
     ],
     "path": "Nation/Various/ArchfiendDragonEgg[Mem].cs",
-    "size": 2005,
-    "sha256": "ac35fcbd15c243cd8f2d1ff40d84e0d4aa08a79432845a14d498d48176a2080f",
+    "size": 2006,
+    "sha256": "7587d1d77cb41a8ff4976d9e4b5cfb859ae2864bc62112147e889e15dc9ab288",
     "fileName": "ArchfiendDragonEgg[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/ArchfiendDragonEgg[Mem].cs"
   },
@@ -27129,8 +27129,8 @@
       "qom"
     ],
     "path": "Story/QueenofMonsters/Extra/InfernalParadise.cs",
-    "size": 3383,
-    "sha256": "6b6b2b656ffc18c64e28a420931ca36005fcfc3aa562259831685cf1fe589fa5",
+    "size": 3429,
+    "sha256": "bb58ea81c2fbabdc5aa2549be6a60ab122cd0a549c538c750538200517089bf1",
     "fileName": "InfernalParadise.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/Extra/InfernalParadise.cs"
   },
@@ -27165,8 +27165,8 @@
       "extra"
     ],
     "path": "Story/QueenofMonsters/Extra/CelestialPast.cs",
-    "size": 2105,
-    "sha256": "ea0f533c778aebbe9b963219e530442c636c8a69ab91ce6f2e1b5c8b1d4c7549",
+    "size": 2147,
+    "sha256": "249ed9c68c0bff433e84aaa78211a3c12c31be1f1046b6c60133d721fff793e5",
     "fileName": "CelestialPast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/Extra/CelestialPast.cs"
   },
@@ -27450,8 +27450,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 28158,
-    "sha256": "1a05d67fff2b5b57392b16be8d41e1ad5203ef3fbff883744e98cd42a7f22e2a",
+    "size": 28204,
+    "sha256": "51e245ed95f5ec870f4cec49d8311c89222330676b30842b89344f3df08ec2dd",
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },
