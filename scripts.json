@@ -4153,8 +4153,8 @@
       "evil"
     ],
     "path": "Evil/VordredsArmor.cs",
-    "size": 9374,
-    "sha256": "a6e3b36e7ba5c9af837896c5d2fa48628e141e86467a2d59ceb67b61e1c9aa9a",
+    "size": 9467,
+    "sha256": "a460076e7d97c202d17a2d6eaf77313c9275b60009bbbeb02e5eaacb42b1c012",
     "fileName": "VordredsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/VordredsArmor.cs"
   },
@@ -6234,8 +6234,8 @@
       "null"
     ],
     "path": "Legion/YamiNoRonin/CoreYnR.cs",
-    "size": 9301,
-    "sha256": "3ac50420871d658951bb9c9833ce747e891390ad0fe6b5594be3010b3d1441b7",
+    "size": 9483,
+    "sha256": "146aa09f28a3e3fa83d4b35af36b1c0507edebf3100b98329dd75aaa9a5cc95c",
     "fileName": "CoreYnR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/YamiNoRonin/CoreYnR.cs"
   },
@@ -6840,8 +6840,8 @@
       "mini"
     ],
     "path": "Legion/MergeShops/LichKingsBountyMerge.cs",
-    "size": 7762,
-    "sha256": "bb5d6e9a86e6d9ef377d77236ae863c51bbf528ab90b1c23ddd010238dfdc657",
+    "size": 7800,
+    "sha256": "b0504a91a5128be6e063543c920613e88ebeab9a886c95f422f979822c94879a",
     "fileName": "LichKingsBountyMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/LichKingsBountyMerge.cs"
   },
@@ -12966,8 +12966,8 @@
       "legion"
     ],
     "path": "Other/Classes/Lich.cs",
-    "size": 13529,
-    "sha256": "b44403dc94417164e93441cb195d7fd9d544ef6167acf0e996d5000cc081db2b",
+    "size": 13617,
+    "sha256": "37b4386e8aee3191d86415a18964d488b50ea27c17791a598fe98684587626c7",
     "fileName": "Lich.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/Lich.cs"
   },
@@ -13048,8 +13048,8 @@
       "null"
     ],
     "path": "Other/Classes/FrostSpiritReaver.cs",
-    "size": 12686,
-    "sha256": "787896808a5f03bbd90f8703589f16527ab9effcb86f2abae0f4678f0924085f",
+    "size": 12732,
+    "sha256": "5907cfca77e6ae37efef8d4d73ee2017c4ba6995de8a0dc6a15c9ab4b36316d7",
     "fileName": "FrostSpiritReaver.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/FrostSpiritReaver.cs"
   },
@@ -22693,8 +22693,8 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs",
-    "size": 5001,
-    "sha256": "3195918e80f3b5950ae4a828f65975d6ef06dc32b17c5b2182456d1247f30fa0",
+    "size": 5092,
+    "sha256": "53c896e4c9946e1e30009de0428bdec7a52d5bae41f02a07bf6ca174f6708f23",
     "fileName": "CelestialPirateCommander[PollyRogers].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs"
   },
@@ -24261,8 +24261,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1093183,
-    "sha256": "60416d271cb52ed1cb79184a39082a77673cce103b2cdccb50d63cfd21fed4d4",
+    "size": 1093184,
+    "sha256": "739dc62087954d835fda27138c80d0a2577c641237cd9116196449d47605824a",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
