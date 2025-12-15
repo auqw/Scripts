@@ -670,6 +670,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
   {
+    "name": "UltraDarkon",
+    "description": "Ultra Darkon spam taunt",
+    "tags": [
+      "ultra",
+      "darkon",
+      "taunt",
+      "spam",
+      "ultra darkon",
+      "ultra darkon"
+    ],
+    "path": "Ultras/UltraDarkon.cs",
+    "size": 6076,
+    "sha256": "1035eaed4b73ba00625e1f859f002a561aa0f3bbbf830ec16bba7a247cc6757a",
+    "fileName": "UltraDarkon.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDarkon.cs"
+  },
+  {
     "name": "ChampionDrakath",
     "description": "Champion Drakath helper with threshold-based taunt timing and army sync.",
     "tags": [
