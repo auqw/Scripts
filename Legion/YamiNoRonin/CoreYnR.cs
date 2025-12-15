@@ -194,6 +194,7 @@ public class CoreYnR
         {
             Core.EnsureAccept(7410);
             Core.Logger("Using Non-Legion variant for the Blademaster Sword Scroll");
+            Core.EquipClass(ClassType.Dodge);
             Core.KillMonster(
                 "frozenlair",
                 "r3",
@@ -204,6 +205,7 @@ public class CoreYnR
                 false,
                 publicRoom: true
             );
+            Core.EquipClass(ClassType.Solo);
             Core.KillMonster(
                 "Judgement",
                 "r10a",
@@ -232,6 +234,7 @@ public class CoreYnR
         {
             Core.Logger("Using Legion variant for the Blademaster Sword Scroll");
             Core.EnsureAccept(7443);
+            Core.EquipClass(ClassType.Dodge);
             Core.KillMonster(
                 "frozenlair",
                 "r3",
@@ -243,6 +246,7 @@ public class CoreYnR
                 publicRoom: true
             );
             Legion.FarmLegionToken(17500);
+            Core.EquipClass(ClassType.Solo);
             Core.KillMonster(
                 "Judgement",
                 "r10a",

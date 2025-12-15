@@ -2498,7 +2498,7 @@ case ""Sapphire Orb"":
             @"
 case ""Necrotic Orb"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Solo);
+                    Core.EquipClass(ClassType.Dodge);
                     Core.HuntMonster(""frozenlair"", ""Lich Lord"", req.Name, quant, false, false);
                     break;
 

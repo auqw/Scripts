@@ -232,6 +232,7 @@ public class FrostSpiritReaver
                 isTemp: false,
                 log: false
             );
+            Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster(
                 "frozenlair",
                 "Legion Lich Lord",

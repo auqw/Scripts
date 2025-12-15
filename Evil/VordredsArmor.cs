@@ -182,6 +182,7 @@ public class VordredArmor
                 10,
                 isTemp: false
             );
+            Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster(
                 "frozenlair",
                 "Legion Lich Lord",
@@ -189,6 +190,7 @@ public class VordredArmor
                 15,
                 isTemp: false
             );
+            Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("thevoid", "Reaper", "Reaper's Skull", 20, isTemp: false);
             Core.EnsureComplete(8379);
         }

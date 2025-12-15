@@ -78,6 +78,7 @@ public class CelestialPirateCommander
         while (!Bot.ShouldExit && !Core.CheckInventory(Rewards, toInv: false))
         {
             Core.EnsureAccept(7713);
+            Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster(
                 "frozenlair",
                 "Legion Lich Lord",
@@ -86,6 +87,7 @@ public class CelestialPirateCommander
                 false,
                 publicRoom: true
             );
+            Core.EquipClass(ClassType.Solo);
             Core.HuntMonster(
                 "lostruinswar",
                 "Diabolical Warlord",
