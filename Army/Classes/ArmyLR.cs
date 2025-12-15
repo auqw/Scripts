@@ -144,7 +144,7 @@ public class ArmyLR
                 map: "judgement",
                 QuestIDs: new int[] { },
                 WaitForArmysyncPath: "judgement_items",
-                AggroCell: "r10",
+                AggroCell: "r10a",
                 checkType: CheckType.Item,
                 Itemname: "Aeacus Empowered",
                 quant: 50,
