@@ -142,52 +142,104 @@ public class UltraDarkon
 
     void DoEnhs()
     {
-        Adv.GearStore(EnhAfter: true);
         string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
-        if (className != null)
+        if (string.IsNullOrEmpty(className))
+            return;
+
+        switch (className)
         {
-            switch (className)
-            {
-                // Light Caster
-                case "LightCaster":
-                    Adv.EnhanceEquipped(
-                        type: EnhancementType.Lucky,                 // Class
-                        hSpecial: HelmSpecial.Pneuma,                // Helm
-                        wSpecial: WeaponSpecial.Ravenous,            // Weapon
-                        cSpecial: CapeSpecial.Penitence              // Cape
-                    );
-                    break;
 
-                // Legion Revenant
-                case "Legion Revenant":
-                    Adv.EnhanceEquipped(
-                        type: EnhancementType.Wizard,                // Class
-                        hSpecial: HelmSpecial.Pneuma,                // Helm
-                        wSpecial: WeaponSpecial.Valiance,            // Weapon
-                        cSpecial: CapeSpecial.Penitence              // Cape
-                    );
-                    break;
+            case "LightCaster":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Penitence,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Ravenous);
+                break;
 
-                // Lord Of Order
-                case "Lord Of Order":
-                    Adv.EnhanceEquipped(
-                        type: EnhancementType.Lucky,                 // Class
-                        hSpecial: HelmSpecial.Forge,                 // Helm
-                        wSpecial: WeaponSpecial.Valiance,            // Weapon
-                        cSpecial: CapeSpecial.Absolution             // Cape
-                    );
-                    break;
+            case "Legion Revenant":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Penitence,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Ravenous);
+                break;
 
-                // StoneCrusher
-                case "StoneCrusher":
-                    Adv.EnhanceEquipped(
-                        type: EnhancementType.Fighter,               // Class
-                        hSpecial: HelmSpecial.Anima,                 // Helm
-                        wSpecial: WeaponSpecial.Valiance,            // Weapon
-                        cSpecial: CapeSpecial.Absolution             // Cape
-                    );
-                    break;
-            }
+            case "Lord Of Order":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Penitence,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Ravenous);
+                break;
+
+            case "StoneCrusher":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Penitence,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Valiance);
+                break;
+
+
+            case "Chrono ShadowSlayer":
+            case "Chrono ShadowHunter":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Lament,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Arcanas_Concerto);
+                break;
+
+            case "Paladin Chronomancer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    cSpecial: CapeSpecial.Absolution,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Mana_Vamp);
+                break;
+
+            case "Alpha Omega":
+            case "Alpha DOOMmega":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Avarice,
+                    hSpecial: HelmSpecial.Vim,
+                    wSpecial: WeaponSpecial.Praxis);
+                break;
+
+
+            case "Arcana Invoker":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Penitence,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous);
+                break;
+
+            case "Lich":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Penitence,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous);
+                break;
+
+            case "Hollowborn Vindicator":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Penitence,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Dauntless);
+                break;
+
+            case "King's Echo":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    cSpecial: CapeSpecial.Lament,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous);
+                break;
         }
     }
 
