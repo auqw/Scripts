@@ -456,7 +456,7 @@ public class Grimgaol
         }
     }
 
-    bool Daunt = false;
+    bool Daunt => Adv.uDauntless();
 
     private void Init()
     {
@@ -467,7 +467,6 @@ public class Grimgaol
             Bot.Wait.ForCellChange("Enter");
         }
 
-        Daunt = Adv.uDauntless();
 
         // Stop usage of AdvSkills after story & prereqs. as we'll use our own here.
         while (!Bot.ShouldExit && !Bot.TempInv.Contains("Grimskull's Gaol Cleared"))
