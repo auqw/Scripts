@@ -70,7 +70,7 @@ public class FrostSpiritReaver
         if (!Core.CheckInventory("Frost Sigil"))
         {
             Core.Logger(
-                "Cryomancer Required for \"Frost Sigil\" for \"IceNinth\", Comeback tomarrow."
+                "\"Frost Sigil\" for \"IceNinth\"(Quest `Cold Hearted`), Comeback tomarrow."
             );
             return;
         }
