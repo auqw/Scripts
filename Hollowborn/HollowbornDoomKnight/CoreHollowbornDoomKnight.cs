@@ -266,6 +266,7 @@ public class CoreHollowbornDoomKnight
         Bot.Quests.UpdateQuest(3008);
         Core.SetAchievement(18);
         Bot.Quests.UpdateQuest(3004);
+        Core.EquipClass(ClassType.Solo);
         Core.KillMonster("doomvaultb", "r26", "Left", "Undead Raxgore", "Weapon Imprint", 1, false);
 
         Core.EnsureComplete(8415);
@@ -317,6 +318,7 @@ public class CoreHollowbornDoomKnight
         Bot.Quests.UpdateQuest(3008);
         Core.SetAchievement(18);
         Bot.Quests.UpdateQuest(3004);
+        Core.EquipClass(ClassType.Solo);
         Core.KillMonster(
             "doomvaultb",
             "r26",

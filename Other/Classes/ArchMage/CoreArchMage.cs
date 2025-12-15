@@ -677,7 +677,7 @@ public class CoreArchMage
 
                 case "The Mortal Coil":
                     Adv.GearStore();
-                    Core.UseDodgeClass();
+                    Core.EquipClass(ClassType.Dodge);
                     Core.KillMonster(
                         "tercessuinotlim",
                         "Boss2",
@@ -690,7 +690,7 @@ public class CoreArchMage
                     break;
 
                 case "The Divine Will":
-            Core.EquipClass(ClassType.Dodge);
+                    Core.EquipClass(ClassType.Dodge);
                     Item("celestialpast", "Azalith", item, quant);
                     break;
 

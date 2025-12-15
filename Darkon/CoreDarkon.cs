@@ -145,13 +145,12 @@ public class CoreDarkon
 
         Core.AddDrop("Darkon's Receipt");
         Core.FarmingLogger("Darkon's Receipt", Quantity);
-        Core.EquipClass(ClassType.Solo);
+        Core.EquipClass(ClassType.Dodge);
 
         Core.RegisterQuests(7326);
         while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
         {
             Adv.GearStore();
-            Core.UseDodgeClass();
             Core.HuntMonster(
                 "tercessuinotlim",
                 "Nulgath",

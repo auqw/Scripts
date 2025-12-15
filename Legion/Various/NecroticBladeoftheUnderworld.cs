@@ -132,6 +132,7 @@ public class NecroticBladeoftheUnderworld
         Legion.FarmLegionToken(25000);
 
         //Beast Souls
+        Core.EquipClass(ClassType.Dodge);
         Adv.BoostKillMonster(
             "SevenCirclesWar",
             "r17",

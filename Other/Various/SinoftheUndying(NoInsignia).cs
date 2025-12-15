@@ -142,7 +142,7 @@ public class SinoftheSinoftheUndyingNoInsignia
         // 20 Beast's Soul
         if (!Core.CheckInventory("Beast Soul", 20))
         {
-            Core.EquipClass(ClassType.Solo);
+            Core.EquipClass(ClassType.Dodge);
             Core.FarmingLogger("Beast Soul", 20);
             Core.HuntMonster(
                 "sevencircleswar",

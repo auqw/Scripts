@@ -138,6 +138,7 @@ public class DoomVaultB
         // Grim Underdungeon XXIX 3004
         if (!Story.QuestProgression(3004))
         {
+            Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(3004);
             Core.KillMonster(
                 "doomvaultb",

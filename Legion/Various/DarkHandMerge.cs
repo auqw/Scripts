@@ -182,7 +182,7 @@ public class DarkHandMerge
 
                 case "Primarch's Trophy":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Solo);
+                    Core.EquipClass(ClassType.Dodge);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonsterQuest(10052, "bosschallenge", "Colossal Primarch");

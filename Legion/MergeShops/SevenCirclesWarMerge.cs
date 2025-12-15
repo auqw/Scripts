@@ -168,8 +168,8 @@ public class SevenCirclesWarMerge
                         break;
 
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Solo);
-                    Adv.SmartEnhance(Core.SoloClass);
+                    Core.EquipClass(ClassType.Dodge);
+                    Adv.SmartEnhance(Core.DodgeClass);
                     Core.HuntMonster(
                         "sevencircleswar",
                         "The Beast",

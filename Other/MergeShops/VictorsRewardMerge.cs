@@ -83,7 +83,7 @@ public class VictorsRewardMerge
                         stopBot: shouldStop
                     );
                     break;
-        #endregion
+                #endregion
 
                 #region Items not setup
 
@@ -171,6 +171,7 @@ public class VictorsRewardMerge
                     if (pvlQuests.Count > 0)
                     {
                         Core.RegisterQuests(pvlQuests.ToArray());
+                        Core.EquipClass(ClassType.Solo);
                         for (int i = 0; i < pvlQuests.Count; i++)
                         {
                             Core.HuntMonster(
@@ -185,7 +186,7 @@ public class VictorsRewardMerge
                     }
                     Core.HuntMonster("coliseum", "Chimera", req.Name, quant, false, false);
                     break;
-                #endregion
+                    #endregion
             }
         }
     }

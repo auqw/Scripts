@@ -173,6 +173,7 @@ public class VordredArmor
         {
             Core.EnsureAccept(8379);
             Core.HuntMonster("desolich", "Desolich", "Desolich's Skull", 5, isTemp: false);
+            Core.EquipClass(ClassType.Solo);
             Core.KillMonster(
                 "doomvaultb",
                 "r26",
@@ -182,7 +183,6 @@ public class VordredArmor
                 10,
                 isTemp: false
             );
-            Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster(
                 "frozenlair",
                 "Legion Lich Lord",

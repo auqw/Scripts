@@ -107,18 +107,11 @@ public class FiendishLoreMasterMerge
                         stopBot: shouldStop
                     );
                     break;
-        #endregion
+                #endregion
 
                 case "Abyssal Lore Scrap":
                     Core.FarmingLogger(req.Name, quant);
-
-                    if (Core.CheckInventory("Great Thief"))
-                        Bot.Skills.StartAdvanced("Great Thief", true, ClassUseMode.Def);
-                    else if (Core.CheckInventory("Yami no Ronin"))
-                        Bot.Skills.StartAdvanced("Yami no Ronin)", true, ClassUseMode.Def);
-                    else
-                        Core.EquipClass(ClassType.Solo);
-
+                    Core.EquipClass(ClassType.Dodge);
                     Core.RegisterQuests(8475);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {

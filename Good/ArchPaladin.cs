@@ -208,7 +208,7 @@ public class ArchPaladin
             if (!Story.QuestProgression(Core.CheckInventory("Silver Paladin") ? 5478 : 5474))
             {
                 Core.EnsureAccept(Core.CheckInventory("Silver Paladin") ? 5478 : 5474);
-                Core.EquipClass(ClassType.Solo);
+                Core.EquipClass(ClassType.Dodge);
                 Core.HuntMonster(
                     "bosschallenge",
                     "Colossal Primarch",

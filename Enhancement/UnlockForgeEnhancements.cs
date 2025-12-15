@@ -938,7 +938,7 @@ public class UnlockForgeEnhancements
         Core.CancelRegisteredQuests();
 
         Adv.GearStore();
-        Core.UseDodgeClass();
+        Core.EquipClass(ClassType.Dodge);
         Core.HuntMonster("tercessuinotlim", "Nulgath", "The Mortal Coil", isTemp: false);
         Adv.GearStore(true);
         Core.EnsureComplete(8820);

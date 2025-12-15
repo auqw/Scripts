@@ -112,7 +112,7 @@ public class HeadoftheLegionBeast
         Indulgence(30);
         Legion.FarmLegionToken(15000);
 
-        Core.EquipClass(ClassType.Solo);
+        Core.EquipClass(ClassType.Dodge);
         Core.KillMonster(
             "sevencircleswar",
             "r17",

@@ -484,6 +484,7 @@ public class DragonOfTime
                 publicRoom: true
             );
 
+            Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster(
                 "icewing",
                 "Warlord Icewing",

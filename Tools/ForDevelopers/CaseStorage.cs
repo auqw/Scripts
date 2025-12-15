@@ -2807,8 +2807,8 @@ case ""Beast Soul"":
                         break;
 
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Solo);
-                    Adv.SmartEnhance(Core.SoloClass);
+                    Core.EquipClass(ClassType.Dodge);
+                    Adv.SmartEnhance(Core.DodgeClass);
                     Core.HuntMonster(""sevencircleswar"", ""The Beast"", req.Name, quant, isTemp: false, publicRoom: true);
                     break;
     "
@@ -3029,7 +3029,7 @@ case ""Essence of Blade Master"":
             @"
 case ""Primarch's Trophy"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Solo);
+                    Core.EquipClass(ClassType.Dodge);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonsterQuest(10052, ""bosschallenge"", ""Colossal Primarch"");
@@ -4235,13 +4235,7 @@ case ""Void Aura"":
             @"
 case ""Abyssal Lore Scrap"":
                     Core.FarmingLogger(req.Name, quant);
-
-                    if (Core.CheckInventory(""Great Thief""))
-                        Bot.Skills.StartAdvanced(""Great Thief"", true, ClassUseMode.Def);
-                    else if (Core.CheckInventory(""Yami no Ronin""))
-                        Bot.Skills.StartAdvanced(""Yami no Ronin)"", true, ClassUseMode.Def);
-                    else Core.EquipClass(ClassType.Solo);
-
+                    Core.EquipClass(ClassType.Dodge);
                     Core.RegisterQuests(8475);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {

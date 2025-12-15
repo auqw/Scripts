@@ -617,7 +617,7 @@ public class CoreNSOD
         if (Core.CheckInventory("Primarch's Hilt", quant))
             return;
 
-        Core.EquipClass(ClassType.Solo);
+        Core.EquipClass(ClassType.Dodge);
         Core.HuntMonster(
             "bosschallenge",
             "Colossal Primarch",
