@@ -5126,7 +5126,7 @@ case ""Infernalis Penna"":
             @"
 case ""Infernalis Oculus"":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Solo);
+                    Core.EquipClass(ClassType.Dodge);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonsterQuest(9888,
@@ -13183,6 +13183,7 @@ case ""Laurel Crown"":
             @"
 case ""Divine Down"":
                     Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Dodge);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonsterQuest(10082,

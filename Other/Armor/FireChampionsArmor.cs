@@ -123,7 +123,7 @@ public class FireChampionsArmor
         if (usethis != null)
             Core.Equip(usethis.ID);
         else
-            Core.EquipClass(ClassType.Solo);
+            Core.EquipClass(ClassType.Dodge);
 
         Core.HuntMonster(
             "underlair",

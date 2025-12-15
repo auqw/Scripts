@@ -690,6 +690,7 @@ public class CoreArchMage
                     break;
 
                 case "The Divine Will":
+            Core.EquipClass(ClassType.Dodge);
                     Item("celestialpast", "Azalith", item, quant);
                     break;
 

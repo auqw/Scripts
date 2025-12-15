@@ -177,7 +177,7 @@ public class InfernalParadiseMerge
                         Core.HuntMonsterQuest(
                             10082,
                             ("infernalparadise", "Akh-a", ClassType.Solo),
-                            ("infernalparadise", "Azalith", ClassType.Solo),
+                            ("infernalparadise", "Azalith", ClassType.Dodge),
                             ("infernalparadise", "Infernal Knight", ClassType.Farm)
                         );
                         Bot.Wait.ForPickup(req.Name);

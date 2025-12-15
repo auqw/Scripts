@@ -83,7 +83,7 @@ public class AranxsAzalithRewardsMerge
                         stopBot: shouldStop
                     );
                     break;
-        #endregion
+                #endregion
 
                 case "Infernalis Penna":
                     Core.FarmingLogger(req.Name, quant);
@@ -101,7 +101,7 @@ public class AranxsAzalithRewardsMerge
 
                 case "Infernalis Oculus":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Solo);
+                    Core.EquipClass(ClassType.Dodge);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonsterQuest(9888, ("champazalith", "Azalith", ClassType.Solo));

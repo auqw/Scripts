@@ -1295,6 +1295,7 @@ public class UnlockForgeEnhancements
             Core.KillMonster("doomvault", "r5", "Left", "Binky", "Yulgar's Lost Scythe");
             Core.EnsureComplete(3270);
         }
+        Core.EquipClass(ClassType.Dodge);
         Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 100, isTemp: false);
         Core.HuntMonster("icewing", "Warlord Icewing", "Boreal Cavalier Bardiche", isTemp: false);
 
@@ -1306,7 +1307,7 @@ public class UnlockForgeEnhancements
         if (usethis != null)
             Core.Equip(usethis.ID);
         else
-            Core.EquipClass(ClassType.Solo);
+            Core.EquipClass(ClassType.Dodge);
         Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false);
 
         Core.EnsureComplete(8822);

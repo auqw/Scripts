@@ -244,7 +244,7 @@ public class CyseroItemUpgrade
             if (usethis != null)
                 Core.Equip(usethis.ID);
             else
-                Core.EquipClass(ClassType.Solo);
+                Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false);
 
             Core.EnsureComplete(7065);

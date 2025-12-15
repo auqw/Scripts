@@ -123,7 +123,7 @@ public class EliteVoid
                 if (usethis != null)
                     Core.Equip(usethis.ID);
                 else
-                    Core.EquipClass(ClassType.Solo);
+                    Core.EquipClass(ClassType.Dodge);
 
                 Core.HuntMonster("underlair", "ArchFiend DragonLord", "Twisted Armor Piece", 3);
                 Core.EnsureComplete(6682);

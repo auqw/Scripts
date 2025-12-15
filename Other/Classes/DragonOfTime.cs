@@ -371,7 +371,7 @@ public class DragonOfTime
                 if (usethis != null)
                     Core.Equip(usethis.ID);
                 else
-                    Core.EquipClass(ClassType.Solo);
+                    Core.EquipClass(ClassType.Dodge);
                 Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false);
             }
             Core.JumpWait();

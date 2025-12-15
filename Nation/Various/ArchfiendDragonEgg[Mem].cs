@@ -63,7 +63,7 @@ public class ArchfiendDragonEgg
         if (usethis != null)
             Core.Equip(usethis.ID);
         else
-            Core.EquipClass(ClassType.Solo);
+            Core.EquipClass(ClassType.Dodge);
         Core.HuntMonster("Underlair", "ArchFiend DragonLord", "Fiendish Brimstone", isTemp: false);
         Core.BuyItem("Ariapet", 12, "ArchFiend Dragon Egg");
         Core.EnsureComplete(7296);

@@ -120,7 +120,7 @@ public class CitadelRuins
         if (usethis != null)
             Core.Equip(usethis.ID);
         else
-            Core.EquipClass(ClassType.Solo);
+            Core.EquipClass(ClassType.Dodge);
         Story.KillQuest(6682, "underlair", "ArchFiend DragonLord");
     }
 

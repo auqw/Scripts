@@ -123,7 +123,7 @@ public class CelestialOfMysteries
             Core.Logger(
                 "Farming Azalith for The Divine Will. Azalith is tough, consider using an army to speed it up."
             );
-            Core.UseBossClass();
+            Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster("celestialpast", "Azalith", "The Divine Will", 1, false);
         }
 
