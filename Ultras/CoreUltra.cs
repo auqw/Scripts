@@ -887,7 +887,7 @@ public class CoreUltra
                 continue;
 
             var aura = Aura(raw);
-            if (Core.HasAura(aura, true))
+            if (Bot.Self.Auras.Any(a => a != null && a.Name == aura))
             {
                 Core.Log("POTION", $"🟢 Already on: {aura}");
                 continue;
@@ -896,7 +896,7 @@ public class CoreUltra
             Core.Log("POTION", $"🧪 Queueing: {raw} ({aura})");
             BuyAlchemyPotion(raw);
 
-            for (int tries = 0; tries < 3 && !Core.HasAura(aura, true) && !Bot.ShouldExit; tries++)
+            for (int tries = 0; tries < 3 && !Bot.Self.Auras.Any(a => a != null && a.Name == aura) && !Bot.ShouldExit; tries++)
             {
                 Core.EquipConsumable(raw);
                 if (Bot.Inventory.IsEquipped(raw))
@@ -914,7 +914,7 @@ public class CoreUltra
                     Bot.Sleep(200);
             }
 
-            if (Core.HasAura(aura, true))
+            if (Bot.Self.Auras.Any(a => a != null && a.Name == aura))
                 Core.Log("POTION", $"✅ Applied: {aura}");
             else
                 Core.Log("POTION", $"❌ Nope: {raw} ({aura})");
