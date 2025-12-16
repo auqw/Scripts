@@ -5653,41 +5653,395 @@
     }
   },
   "Master Martial Artist": {
-    "Base": {
+    "Atk": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 2
         },
         {
-          "skillId": 2
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 3
+        }
+      ]
+    },
+    "Def": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2
         }
       ]
     }
   },
   "Martial Artist": {
-    "Base": {
+    "Atk": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 2
         },
         {
-          "skillId": 2
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 3
+        }
+      ]
+    },
+    "Def": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "None"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2
         }
       ]
     }
