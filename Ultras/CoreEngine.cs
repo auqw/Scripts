@@ -1753,20 +1753,20 @@ public class CoreEngine
 
     #region Auras
 
-    public IEnumerable<Aura> GetAuras(bool self) =>
-        (self ? Bot?.Self?.Auras : Bot?.Target?.Auras) ?? Enumerable.Empty<Aura>();
-
     public Aura? GetAuraByName(string auraName, bool self)
     {
         if (string.IsNullOrWhiteSpace(auraName))
             return null;
-        return GetAuras(self)
-            .FirstOrDefault(a =>
-                a != null
-                && !string.IsNullOrWhiteSpace(a.Name)
-                && auraName.Equals(a.Name, StringComparison.OrdinalIgnoreCase)
-            );
+
+        if ((self ? Bot?.Self?.Auras : Bot?.Target?.Auras)?.Count > 0)
+            foreach (Aura aura in self ? Bot.Self.Auras : Bot.Target.Auras)
+                if (aura?.Name != null &&
+                    auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase))
+                    return aura;
+
+        return null; // only return null after checking all auras
     }
+
 
     public bool HasAura(string auraName, bool self = false)
     {
@@ -1791,20 +1791,15 @@ public class CoreEngine
         if (string.IsNullOrWhiteSpace(auraName))
             return false;
 
-        var auras = GetAuras(self)?.ToArray();
-        if (auras == null || auras.Length == 0)
-            return false;
-
-        foreach (var aura in auras)
-            if (
-                aura != null
-                && !string.IsNullOrWhiteSpace(aura.Name)
-                && !auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase)
-            )
-                return true;
+        if ((self ? Bot?.Self?.Auras : Bot?.Target?.Auras)?.Count > 0)
+            foreach (Aura aura in self ? Bot.Self.Auras : Bot.Target.Auras)
+                if (aura?.Name != null &&
+                    !auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase))
+                    return true;
 
         return false;
     }
+
 
     // Returns the number of stacks of a specific aura; returns 0 if missing.
     public int GetAuraStacks(string auraName, bool self = false)
