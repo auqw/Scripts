@@ -6245,6 +6245,9 @@
       "skillTimeout": 100,
       "skills": [
         {
+          "skillId": 4
+        },
+        {
           "skillId": 2
         },
         {
