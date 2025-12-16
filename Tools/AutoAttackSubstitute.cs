@@ -42,11 +42,23 @@ public class AutoAttackSubstitute
             "Fill in the Items that the bot should Pickup. Split them with a , (comma). CAPITALS & EXACT spelling matter! You can go to tools > grabber > Inventory/Bank > grab to get their EXACT name",
             ""
         ),
-        new Option<string>(
-            "QuestsToAccept",
-            "Quests To Accept",
-            "Specify a comma-separated list of quest IDs to accept before starting the script.",
-            ""
+        new Option<int>(
+            "QuestToAccept",
+            "Quest To Accept",
+            "Specify a quest ID to accept before starting the script.",
+            0000
+        ),
+        new Option<int>(
+            "QuestReward",
+            "Reward To Pick",
+            "Quest Reward to pick ( by ItemID)",
+            0000
+        ),
+        new Option<int>(
+            "RewardAmount",
+            "stop when reward quant owned",
+            "when you've reached xxx of reward > stop script.",
+            0000
         ),
         new Option<ClassType>(
             "classType",
@@ -71,28 +83,29 @@ public class AutoAttackSubstitute
         //Test To See if this goes through.. prayge
         AttackMode attackMode =
             Bot.Config?.Get<AttackMode>("AttackMode") ?? AttackMode.Attack_All_In_Cell;
+
         string[] dropsToPickupArray =
             Bot.Config?.Get<string>("DropsToPickup")?.Split(',')?.ToArray()
             ?? Array.Empty<string>();
-        string? questsToAcceptString = Bot.Config?.Get<string>("QuestsToAccept");
-        int[] questIdsArray = !string.IsNullOrEmpty(questsToAcceptString)
-            ? questsToAcceptString.Split(',').Select(int.Parse).ToArray()
-            : Array.Empty<int>();
+
+        int questToAccept = Bot.Config!.Get<int>("QuestsToAccept");
+        int questReward = Bot.Config!.Get<int>("QuestReward");
+        int Rewardquant = Bot.Config!.Get<int>("RewardAmount");
 
         string? monstersString = Bot.Config?.Get<string>("Monsters");
+
         string[] monstersArray = !string.IsNullOrEmpty(monstersString)
             ? monstersString.Split(',').Select(m => m.Trim()).ToArray()
             : Array.Empty<string>();
 
+
         Core.AddDrop(dropsToPickupArray);
-        Core.RegisterQuests(questIdsArray);
 
         Core.EquipClass(
             Bot.Config?.Get<ClassType>("classType") == ClassType.Solo
                 ? ClassType.Solo
                 : ClassType.Farm
         );
-        string RespawnCell = Bot.Player.Cell; // Store the initial cell
         Bot.Player.SetSpawnPoint();
 
         foreach (AttackMode mode in Enum.GetValues(typeof(AttackMode)))
@@ -110,44 +123,17 @@ public class AutoAttackSubstitute
                             : $"Aggro: enabled\nAttacking:\n{string.Join("\n", monstersArray.Select(m => $"\"{m}\""))}"
                     );
 
+
                     // Continuously attack monsters in the cell until bot should exit
-                    while (!Bot.ShouldExit)
+                    while (!Bot.ShouldExit && !Core.CheckInventory(questReward, Rewardquant))
                     {
+                        Core.EnsureAccept(questToAccept);
                         // If monstersArray is empty, attack all monsters in the cell
                         if (monstersArray.Length == 0)
                         {
-                            foreach (
-                                Monster mob in Bot.Monsters.CurrentAvailableMonsters.Where(m =>
-                                    m.Name != null && m.Cell == Bot.Player.Cell
-                                )
-                            )
-                            {
-                                if (mob.Name == null)
-                                    continue;
+                            Bot.Combat.Attack("*");
+                            Bot.Sleep(500);
 
-                                while (!Bot.ShouldExit && !Bot.Player.Alive) { }
-
-                                if (Bot.Player.Cell != RespawnCell)
-                                    Core.Jump(RespawnCell);
-                                bool ded = false;
-                                Bot.Events.MonsterKilled += b => ded = true;
-                                while (!Bot.ShouldExit && !ded)
-                                {
-                                    while (!Bot.ShouldExit && Bot.Player.Cell != RespawnCell)
-                                    {
-                                        Core.Jump(RespawnCell);
-                                        Bot.Wait.ForCellChange(RespawnCell);
-                                    }
-                                    if (!Bot.Combat.StopAttacking)
-                                        Bot.Combat.Attack(mob);
-                                    if (mob.MaxHP == 1)
-                                    {
-                                        ded = true;
-                                        continue;
-                                    }
-                                    Core.Sleep();
-                                }
-                            }
                         }
                         else
                         {
@@ -162,31 +148,11 @@ public class AutoAttackSubstitute
                             {
                                 if (mob.Name == null)
                                     continue;
-
-                                while (!Bot.ShouldExit && !Bot.Player.Alive) { }
-
-                                if (Bot.Player.Cell != RespawnCell)
-                                    Core.Jump(RespawnCell);
-                                bool ded = false;
-                                Bot.Events.MonsterKilled += b => ded = true;
-                                while (!Bot.ShouldExit && !ded)
-                                {
-                                    while (!Bot.ShouldExit && Bot.Player.Cell != RespawnCell)
-                                    {
-                                        Core.Jump(RespawnCell);
-                                        Bot.Wait.ForCellChange(RespawnCell);
-                                    }
-                                    if (!Bot.Combat.StopAttacking)
-                                        Bot.Combat.Attack(mob);
-                                    if (mob.MaxHP == 1)
-                                    {
-                                        ded = true;
-                                        continue;
-                                    }
-                                    Core.Sleep();
-                                }
+                                Bot.Kill.Monster(mob);
                             }
                         }
+                        if (Bot.Quests.CanComplete(questToAccept))
+                            Core.EnsureComplete(questToAccept, Rewardquant);
                     }
 
                     // Reset AggroMonsters option and perform additional actions
@@ -206,8 +172,10 @@ public class AutoAttackSubstitute
                         );
 
                     // Continuously hunt monsters across the entire map until bot should exit
-                    while (!Bot.ShouldExit)
+                    while (!Bot.ShouldExit && !Core.CheckInventory(questReward, Rewardquant))
                     {
+                        Core.EnsureAccept(questToAccept);
+
                         // Check if monstersArray is null or empty
                         if (monstersArray == null || monstersArray.Length == 0)
                         {
@@ -225,27 +193,25 @@ public class AutoAttackSubstitute
                                 if (mob.Name == null)
                                     continue;
 
-                                while (!Bot.ShouldExit && !Bot.Player.Alive) { }
-
-                                bool ded = false;
-                                Bot.Events.MonsterKilled += b => ded = true;
-                                while (!Bot.ShouldExit && !ded)
+                                while (!Bot.ShouldExit && !Core.CheckInventory(questReward, Rewardquant))
                                 {
-                                    while (!Bot.ShouldExit && Bot.Player.Cell != mob.Cell)
+                                    if (!Bot.Player.Alive)
+                                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                                    if (Bot.Player.Cell != mob.Cell)
                                     {
                                         Core.Jump(mob.Cell, "Left");
                                         Bot.Wait.ForCellChange(mob.Cell);
                                     }
-                                    if (!Bot.Combat.StopAttacking)
-                                        Bot.Combat.Attack(mob);
-                                    if (mob.MaxHP == 1)
-                                    {
-                                        ded = true;
-                                        continue;
-                                    }
+
+                                    Bot.Combat.Attack(mob);
                                     Core.Sleep();
+
                                 }
                             }
+
+                            if (Bot.Quests.CanComplete(questToAccept))
+                                Core.EnsureComplete(questToAccept, Rewardquant);
                         }
                     }
                     // Break out of the loop when bot should exit
