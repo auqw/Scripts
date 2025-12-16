@@ -739,6 +739,33 @@
           "skillId": 1
         }
       ]
+    },
+    "Def": {
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 100,
+      "skills": [
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Righteous Seal",
+              "auraTarget": "target"
+            }
+          ]
+        }
+      ]
     }
   },
   "Artifact Hunter": {
@@ -6218,9 +6245,6 @@
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 3
-        },
-        {
           "skillId": 2
         },
         {
@@ -6255,6 +6279,9 @@
         },
         {
           "skillId": 2
+        },
+        {
+          "skillId": 3
         },
         {
           "skillId": 4
