@@ -30045,7 +30045,7 @@ case ""Whistler Bullion"":
                         Core.HuntMonsterQuest(
                             Core.IsMember ? 10525 : 10524,
                             (""frostvalgala"", ""Unsung Queen"", ClassType.Solo),
-                            (""frostvalgala"", ""Granville Knight"", ClassType.Farm),
+                            (""frostvalgala"", ""Unsung Knight"", ClassType.Farm),
                             (""frostvalgala"", ""Unsung Beast"", ClassType.Farm)
                         );
                         Bot.Wait.ForPickup(req.Name);
