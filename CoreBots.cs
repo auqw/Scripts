@@ -2929,6 +2929,85 @@ public class CoreBots
         questCTS = new();
     }
 
+    #region Will Require 1.3.1.1 and still requires work
+
+    // /// <summary>
+    // /// This will register quests to be completed while doing something else, i.e. while in combat.
+    // /// If it has quests already registered, it will cancel them first and then register the new quests.
+    // /// </summary>
+    // /// <param name="quests">Tuples of (questID, rewardID) to be completed.</param>
+    // public void RegisterQuests(params (int questId, int rewardId)[] quests)
+    // {
+    //     if (quests == null || quests.Length == 0)
+    //         return;
+
+    //     Dictionary<Quest, int> questRewards = new();
+
+    //     foreach ((int questID, int rewardID) in quests)
+    //     {
+    //         Quest? q = InitializeWithRetries(() => EnsureLoad(questID));
+    //         if (q == null)
+    //         {
+    //             Logger($"Failed to initialize quest with ID {questID}.");
+    //             continue;
+    //         }
+
+    //         if (q.Upgrade && !Bot.Player.IsMember)
+    //         {
+    //             Logger($"Quest {questID} requires membership, but the player is not a member.");
+    //             continue;
+    //         }
+
+    //         List<ItemBase> missingRequirements = q
+    //             .AcceptRequirements.Where(x => x != null && !CheckInventory(x.ID))
+    //             .ToList();
+    //         if (missingRequirements.Any())
+    //         {
+    //             Logger(
+    //                 $"Player is missing the following accept requirements for quest {questID}: {string.Join(", ", missingRequirements.Select(x => x.Name))}"
+    //             );
+    //             continue;
+    //         }
+
+    //         if (!questRewards.ContainsKey(q))
+    //             questRewards.Add(q, rewardID == 0 ? -1 : rewardID);
+
+    //         // Collect unique item IDs and unbank them in one call
+    //         int[] itemsToUnbank = q
+    //             .AcceptRequirements.Concat(q.Requirements)
+    //             .Select(x => x.ID)
+    //             .Distinct()
+    //             .ToArray();
+
+    //         Unbank(itemsToUnbank);
+    //     }
+    //     GC.Collect();
+
+    //     var quesToRegister = questRewards
+    //         .Where(kvp => !Bot.Quests.Registered.Contains(kvp.Key.ID))
+    //         .ToList();
+
+    //     foreach ((Quest Q, int rewardID) in quesToRegister)
+    //     {
+    //         Bot.Quests.RegisterQuests((Q.ID, rewardID));
+    //     }
+    // }
+
+    // /// <summary>
+    // /// Overload for registering quests with default reward ID (-1).
+    // /// </summary>
+    // /// <param name="questIDs">IDs of the quests to be completed.</param>
+    // public void RegisterQuests(params int[] questIDs)
+    // {
+    //     if (questIDs == null || questIDs.Length == 0)
+    //         return;
+
+    //     var questTuples = questIDs.Select(id => (id, -1)).ToArray();
+    //     RegisterQuests(questTuples);
+    // }
+
+    #endregion
+
     /// <summary>
     /// Cancels the current registered quests.
     /// </summary>
