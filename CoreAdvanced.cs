@@ -3623,7 +3623,17 @@ public class CoreAdvanced
 
                 #endregion
 
-                #region Wizard - Elysium - Pneuma | Wizard - Vainglory
+                #region Wizard - Elysium/Ravenous - Examen - Lament
+                case "phantom chronomancer":
+                case "phantasm chronomancer":
+
+                    if (uElysium() || uRavenous())
+                        goto default;
+                    type = EnhancementType.Wizard;
+                    cSpecial = CapeSpecial.Lament;
+                    wSpecial = uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Ravenous;
+                    hSpecial = HelmSpecial.Examen;
+                    break;
 
                 #endregion
 
@@ -3748,8 +3758,6 @@ public class CoreAdvanced
                 #region Unassigned Region
 
                 // This list serves as an overview of what classes dont have a Forge Enhancement yet, when adding a setup for it, remove it from here
-                case "phantom chronomancer":
-                case "phantasm chronomancer":
                 case "acolyte":
                 case "alpha doommega":
                 case "alpha omega":
@@ -4134,6 +4142,8 @@ public class CoreAdvanced
                 case "lord of order":
                 case "legendary hero":
                 case "nechronomancer":
+                case "phantom chronomancer":
+                case "phantasm chronomancer":
                 case "necrotic chronomancer":
                 case "Draconic Chronomancer":
                 case "no class":
