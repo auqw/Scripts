@@ -1459,7 +1459,6 @@ public class CoreNation
             else
             {
                 Core.EnsureComplete(7551);
-                Bot.Wait.ForQuestComplete(7551);
             }
         }
     }
@@ -1490,7 +1489,7 @@ public class CoreNation
             goto Retry7551;
         }
 
-        Retry2859:
+    Retry2859:
         Quest? Assistant = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2859));
         if (Assistant == null)
         {
@@ -1809,9 +1808,6 @@ public class CoreNation
         if (hasOBoNPet)
             QuestToRegister.Add(Core.CheckInventory(4809) ? 599 : 2561);
 
-        // 7551 - Swindle's Return Policy
-        if (returnPolicyDuringSupplies)
-            QuestToRegister.Add(7551);
 
         // 9542 - Swindle's Bonus Deal - Swindle Bilk's To Go Hut
         if (Core.CheckInventory(38261))
@@ -1831,9 +1827,10 @@ public class CoreNation
             AssistantDuringSupplies(AssistantDuring);
 
             // Do Swindles Return Policy if enabled
+            // 7551 - Swindle's Return Policy
             DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
-            Retry:
+        Retry:
             //reduce spam
             Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
             if (quest != null)
