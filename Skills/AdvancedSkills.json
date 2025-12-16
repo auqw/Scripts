@@ -1844,24 +1844,9 @@
   },
   "Chrono ShadowSlayer": {
     "Solo": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 200,
       "skills": [
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Aura",
-              "value": 1,
-              "comparison": "less",
-              "auraName": "Rounds Empty!",
-              "auraTarget": "self"
-            }
-          ]
-        },
-        {
-          "skillId": 3
-        },
         {
           "skillId": 3
         },
@@ -1881,55 +1866,46 @@
           "skillId": 2
         },
         {
-          "skillId": 4
+          "skillId": 0
         },
         {
-          "skillId": 0,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 15,
-              "comparison": "greater",
-              "isPercentage": true
-            },
-            {
-              "type": "Aura",
-              "value": 1,
-              "comparison": "greater",
-              "auraName": "Gunslinger Stance!",
-              "auraTarget": "self"
-            }
-          ]
-        }
-      ]
-    },
-    "Atk": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
-      "skills": [
+          "skillId": 0
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 4
+        },
         {
           "skillId": 1
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
         }
       ]
     },
@@ -1938,16 +1914,7 @@
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
+          "skillId": 1
         },
         {
           "skillId": 2
@@ -1969,9 +1936,6 @@
         },
         {
           "skillId": 4
-        },
-        {
-          "skillId": 1
         }
       ]
     },
@@ -2006,23 +1970,8 @@
   "Chrono ShadowHunter": {
     "Solo": {
       "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
+      "skillTimeout": 200,
       "skills": [
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Aura",
-              "value": 1,
-              "comparison": "less",
-              "auraName": "Rounds Empty!",
-              "auraTarget": "self"
-            }
-          ]
-        },
-        {
-          "skillId": 3
-        },
         {
           "skillId": 3
         },
@@ -2042,55 +1991,46 @@
           "skillId": 2
         },
         {
-          "skillId": 4
+          "skillId": 0
         },
         {
-          "skillId": 0,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 15,
-              "comparison": "greater",
-              "isPercentage": true
-            },
-            {
-              "type": "Aura",
-              "value": 1,
-              "comparison": "greater",
-              "auraName": "Gunslinger Stance!",
-              "auraTarget": "self"
-            }
-          ]
-        }
-      ]
-    },
-    "Atk": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
-      "skills": [
+          "skillId": 0
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 0
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 4
+        },
         {
           "skillId": 1
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
         }
       ]
     },
@@ -2099,16 +2039,7 @@
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
+          "skillId": 1
         },
         {
           "skillId": 2
@@ -2130,9 +2061,6 @@
         },
         {
           "skillId": 4
-        },
-        {
-          "skillId": 1
         }
       ]
     },
@@ -2160,103 +2088,6 @@
             }
           ],
           "skipOnMatch": true
-        }
-      ]
-    }
-  },
-  "Chronomancer": {
-    "Base": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
-      "skills": [
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 3
-        }
-      ]
-    },
-    "Solo": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 120,
-      "skills": [
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2,
-          "rules": [
-            {
-              "type": "Health",
-              "value": 60,
-              "comparison": "less",
-              "isPercentage": true
-            }
-          ]
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 3
         }
       ]
     }
