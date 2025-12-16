@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 414410,
-    "sha256": "93492149731fd7f8e84893e67eb52c0ef599915ffd97e89991f9600a04b1f134",
+    "size": 417315,
+    "sha256": "524410e6da67aa8ed0808b6635cbb49ae7f4ac3246df749963b215106d0405b5",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -705,8 +705,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 104915,
-    "sha256": "32db70f2c235640b5f84e5e15ea117c449ac66c78901ca75aa586b2ebdb49a12",
+    "size": 104837,
+    "sha256": "fe446b5469ec3688d3adbdd5bf331614506bea993307ecd8c60cd9db97729299",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -789,8 +789,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 43414,
-    "sha256": "29789dd62b4f58b0a18b66da1addc588dee8cbdfeefb0a67622b91127a0e0220",
+    "size": 43498,
+    "sha256": "64f1cdcdbc40a89c18cd07f4e550840432be395d96a717601f1c369a2d413d7f",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -3903,8 +3903,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 121023,
-    "sha256": "4b5956ceac1b30e413734a76c7702be82892bca8ce2cec071d77c69e23d76624",
+    "size": 120891,
+    "sha256": "bc3cccf056d32b62c830106a3e76cc3fc9c1871cc9a75c9af78339b025f28729",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -12787,8 +12787,8 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 45764,
-    "sha256": "94dfd1e6783cc940505bcd123db7f867ce545ab46738a064906ab72ed705626d",
+    "size": 45847,
+    "sha256": "e85a0915d89d267114c1f0747a75d27b6df48afdf2e63e56848558a4cb17671b",
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -12999,8 +12999,8 @@
       "legion"
     ],
     "path": "Other/Classes/Lich.cs",
-    "size": 13617,
-    "sha256": "37b4386e8aee3191d86415a18964d488b50ea27c17791a598fe98684587626c7",
+    "size": 13700,
+    "sha256": "50627dec128f68bd76769308fefe6f45a83cdcef6fad2db90f34e0e42148dba9",
     "fileName": "Lich.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/Lich.cs"
   },
