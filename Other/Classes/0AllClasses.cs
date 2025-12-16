@@ -208,6 +208,8 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Prototypes/MoreSkullsBoss.cs
 //cs_include Scripts/Other/Classes/Lich.cs
 //cs_include Scripts/Chaos/DrakathsArmor.cs
+//cs_include Scripts/Ultras/CoreEngine.cs
+//cs_include Scripts/Ultras/CoreUltra.cs
 //cs_include Scripts/Chaos/EternalDrakathSet.cs
 //cs_include Scripts/Darkon/Various/PrinceDarkonsPoleaxePreReqs.cs
 //cs_include Scripts/Enhancement/UnlockForgeEnhancements.cs
