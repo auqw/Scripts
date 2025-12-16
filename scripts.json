@@ -3637,8 +3637,8 @@
       "no wonder this didn't push"
     ],
     "path": "Tools/AutoAttackSubstitute.cs",
-    "size": 11254,
-    "sha256": "340fb5bb55dd292be96ed2f88b877baa4ee2eb614ceab8d7182e7db130f1a17c",
+    "size": 8884,
+    "sha256": "33f8b35f3253d7cf4c16f6d0462e00a3dad6a72f53c5da7a363ebcfb94bcea00",
     "fileName": "AutoAttackSubstitute.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/AutoAttackSubstitute.cs"
   },
