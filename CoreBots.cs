@@ -2929,7 +2929,7 @@ public class CoreBots
         questCTS = new();
     }
 
-    #region Will Require 1.3.1.1 and still requires work
+    // #region Will Require 1.3.1.1 and still requires work
 
     // /// <summary>
     // /// This will register quests to be completed while doing something else, i.e. while in combat.
@@ -3006,7 +3006,7 @@ public class CoreBots
     //     RegisterQuests(questTuples);
     // }
 
-    #endregion
+    // #endregion
 
     /// <summary>
     /// Cancels the current registered quests.
