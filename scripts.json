@@ -11928,8 +11928,8 @@
       "voyage"
     ],
     "path": "Darkon/MergeShops/ArcanaInvokerResourceMerge.cs",
-    "size": 44560,
-    "sha256": "f086d84826d7d51a0c37f79d3e8f849f39a8d3899cf9d2c98d1306b408d963aa",
+    "size": 44288,
+    "sha256": "d6e882d55fd321f828fe7b88ac1858c870670e4f29f08ff73b3b7e368e61d127",
     "fileName": "ArcanaInvokerResourceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/MergeShops/ArcanaInvokerResourceMerge.cs"
   },
@@ -21568,7 +21568,7 @@
     ],
     "path": "Seasonal/BlackFriday/CamlanMerge.cs",
     "size": 6940,
-    "sha256": "fd1395db0b67941f3e18f8844625bff9d177a96a4ca6decebc1d13872b69e354",
+    "sha256": "398a1b9df74961534f1918a1dc60f017c06ec369021834a2f45b75da9a238f91",
     "fileName": "CamlanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/CamlanMerge.cs"
   },
@@ -24295,7 +24295,7 @@
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
     "size": 1092917,
-    "sha256": "671f59468e1d3ed6abe40421d5232ec648dbd98ff79d79bb01e6cc611dfef53a",
+    "sha256": "a9bd97aea0894f6a50a29875966884dd06169a555e1f4e01c473574f5bfe9471",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
