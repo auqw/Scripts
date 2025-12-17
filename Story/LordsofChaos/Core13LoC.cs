@@ -2465,14 +2465,14 @@ public class Core13LoC
         {
             Core.EnsureAccept(3798);
             Core.Join("shadowattack", "Boss", "Left");
-            Core.Jump("r15", "Left");
-            Bot.Wait.ForPickup(25903);
-            Core.EnsureComplete(3798);
-            Bot.Wait.ForQuestComplete(3789);
+            Core.GetMapItem(2896, 1, "shadowattack");
+            Bot.Wait.ForTrue(() => Bot.TempInv.Contains(25903), 20);
+            Bot.Wait.ForQuestComplete(3798);
         }
 
         //Beat Death!
         // Get out of any cutscene cells
+        Core.JumpWait();
         Core.Jump("Enter", "Spawn");
         Core.EquipClass(ClassType.Solo);
         if (!Story.QuestProgression(3799))
