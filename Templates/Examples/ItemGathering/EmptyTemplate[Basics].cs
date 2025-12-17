@@ -40,14 +40,6 @@ public class DefaultTemplate
     {
         // Test Area vv
 
-        Core.RegisterQuests(9443);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Ouroboros Scale", 100))
-        {
-            Core.HuntMonster("camlan", "Sleih", "Sleih's Changeling Records", log: false);
-            Core.HuntMonster("camlan", "Bellona", "Bellona's Edict of War", log: false);
-            Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale", log: false);
-            Bot.Wait.ForPickup("Ouroboros Scale");
-        }
         // Test Area ^^
 
         // Optional Test Mode
