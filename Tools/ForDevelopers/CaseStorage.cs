@@ -3311,8 +3311,8 @@ case ""Ouroboros Scale"":
                     Core.Logger(""Good luck with this \""ultra\""! --the maw"");
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""camlan"", ""Bellona"", ""Bellona's Edict of War"", log: false);
                         Core.HuntMonster(""camlan"", ""Sleih"", ""Sleih's Changeling Records"", log: false);
+                        Core.HuntMonster(""camlan"", ""Bellona"", ""Bellona's Edict of War"", log: false);
                         Core.HuntMonster(""camlan"", ""Metamorphosis Maw"", ""Alchemic Snake Scale"", log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }

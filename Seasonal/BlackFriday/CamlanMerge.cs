@@ -109,8 +109,8 @@ public class CamlanMerge
                     Core.Logger("Good luck with this \"ultra\"! --the maw");
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("camlan", "Bellona", "Bellona's Edict of War");
                         Core.HuntMonster("camlan", "Sleih", "Sleih's Changeling Records");
+                        Core.HuntMonster("camlan", "Bellona", "Bellona's Edict of War");
                         Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale");
                         Bot.Wait.ForPickup(req.Name);
                     }

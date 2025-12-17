@@ -1938,7 +1938,7 @@
     },
     "Def": {
       "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
+      "skillTimeout": 200,
       "skills": [
         {
           "skillId": 1
@@ -1968,7 +1968,7 @@
     },
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 100,
+      "skillTimeout": 200,
       "skills": [
         {
           "skillId": 1,
@@ -2063,7 +2063,7 @@
     },
     "Def": {
       "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
+      "skillTimeout": 200,
       "skills": [
         {
           "skillId": 1
@@ -2093,7 +2093,7 @@
     },
     "Farm": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 100,
+      "skillTimeout": 200,
       "skills": [
         {
           "skillId": 1,
