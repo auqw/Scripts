@@ -9642,6 +9642,8 @@ public class CoreBots
             Bot.Combat.Attack("Dark Makai");
             Sleep();
         }
+        EquipClass(ClassType.Solo);
+
     }
 
     public void AuraHandling(string? targetAuraName)
