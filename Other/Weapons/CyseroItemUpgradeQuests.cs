@@ -237,9 +237,9 @@ public class CyseroItemUpgrade
             Core.HuntMonster("Lair", "Bronze Draconian", "Wisp of Dragonspirit", 12);
             Core.HuntMonster("Lair", "Dark Draconian", "Crystallized Flame");
             //why the fuck was the class buffed!?
-            InventoryItem? usethis = Bot
-                .Inventory.Items.Concat(Bot.Bank.Items)
-                .FirstOrDefault(n => n.Name.StartsWith("Chaos Slayer"));
+        InventoryItem? usethis = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(n => n.Name.StartsWith("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer"));
 
             if (usethis != null)
                 Core.Equip(usethis.ID);
