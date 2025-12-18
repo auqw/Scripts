@@ -1759,14 +1759,15 @@ public class CoreEngine
             return null;
 
         if ((self ? Bot?.Self?.Auras : Bot?.Target?.Auras)?.Count > 0)
-            foreach (Aura aura in self ? Bot.Self.Auras : Bot.Target.Auras)
-                if (aura?.Name != null &&
-                    auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase))
+            foreach (Aura aura in self ? Bot!.Self.Auras : Bot!.Target.Auras)
+                if (
+                    aura?.Name != null
+                    && auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase)
+                )
                     return aura;
 
         return null; // only return null after checking all auras
     }
-
 
     public bool HasAura(string auraName, bool self = false)
     {
@@ -1792,14 +1793,15 @@ public class CoreEngine
             return false;
 
         if ((self ? Bot?.Self?.Auras : Bot?.Target?.Auras)?.Count > 0)
-            foreach (Aura aura in self ? Bot.Self.Auras : Bot.Target.Auras)
-                if (aura?.Name != null &&
-                    !auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase))
+            foreach (Aura aura in self ? Bot!.Self.Auras : Bot!.Target.Auras)
+                if (
+                    aura?.Name != null
+                    && !auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase)
+                )
                     return true;
 
         return false;
     }
-
 
     // Returns the number of stacks of a specific aura; returns 0 if missing.
     public int GetAuraStacks(string auraName, bool self = false)
