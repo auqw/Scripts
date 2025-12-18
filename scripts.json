@@ -24212,7 +24212,7 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/NooneAskeforThese/PickAScript4Me.cs"
   },
   {
-    "name": "GrabFiveRandomMerges",
+    "name": "PickFiveMergeShopsforme",
     "description": "This class provides functionality to randomly select up to five filenames from a specified directory within the user's \"Documents\" folder. It writes the selected filenames to a temporary markdown file and opens the file in the default associated application.",
     "tags": [
       "file management",
@@ -24222,8 +24222,8 @@
       "user directory"
     ],
     "path": "Tools/NooneAskeforThese/PickFiveMergeShopsforme.cs",
-    "size": 3432,
-    "sha256": "77e94a6ac8fee4e90df9438a67f19f5385f1deaa656d179ede07ad2d83440811",
+    "size": 3435,
+    "sha256": "0587771e22766d5543fcffe57e6e032d49c9f975239e32ce90b7923090773271",
     "fileName": "PickFiveMergeShopsforme.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/NooneAskeforThese/PickFiveMergeShopsforme.cs"
   },
