@@ -1871,7 +1871,7 @@
   },
   "Chrono ShadowSlayer": {
     "Solo": {
-      "skillUseMode": "UseIfAvailable",
+      "skillUseMode": "WaitForCooldown",
       "skillTimeout": 200,
       "skills": [
         {
@@ -1911,7 +1911,7 @@
           "skillId": 0
         },
         {
-          "skillId": 2
+          "skillId": 1
         },
         {
           "skillId": 3
@@ -2036,7 +2036,7 @@
           "skillId": 0
         },
         {
-          "skillId": 2
+          "skillId": 1
         },
         {
           "skillId": 3
