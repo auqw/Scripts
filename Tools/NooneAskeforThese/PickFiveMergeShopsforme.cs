@@ -1,5 +1,5 @@
 /*
-name: GrabFiveRandomMerges
+name: PickFiveMergeShopsforme
 description: This class provides functionality to randomly select up to five filenames from a specified directory within the user's "Documents" folder. It writes the selected filenames to a temporary markdown file and opens the file in the default associated application.
 tags: file management, random selection, markdown, temporary file, user directory
 */
