@@ -47,7 +47,6 @@ using Skua.Core.Options;
 // Scroll: Enrage
 // Potion: Divine Elixir
 
-
 public class UltraDarkon
 {
     private static CoreAdvanced Adv
@@ -75,7 +74,7 @@ public class UltraDarkon
 
     void Prep()
     {
-        if (Bot.Player.CurrentClass.Name == "Stonecrusher")
+        if (Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "Stonecrusher")
         {
             C.HuntMonster("poisonforest", "Xavier Lionfang", "Divine Elixir", 10, isTemp: false);
             Ultra.UseAlchemyPotions("Divine Elixir");
@@ -133,7 +132,8 @@ public class UltraDarkon
             Bot.Sleep(200);
 
             // Spam Taunt here
-            if (!Bot.Self.Auras.Any(x => x != null && x.Name == "Focus")
+            if (
+                !Bot.Self.Auras.Any(x => x != null && x.Name == "Focus")
                 && Bot.Skills.CanUseSkill(5)
             )
                 Bot.Skills.UseSkill(5);
@@ -148,44 +148,43 @@ public class UltraDarkon
 
         switch (className)
         {
-
             // Light Caster
             case "LightCaster":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,                 // Class
-                    hSpecial: HelmSpecial.Pneuma,                // Helm
-                    wSpecial: WeaponSpecial.Ravenous,            // Weapon
-                    cSpecial: CapeSpecial.Penitence              // Cape
+                    type: EnhancementType.Lucky, // Class
+                    hSpecial: HelmSpecial.Pneuma, // Helm
+                    wSpecial: WeaponSpecial.Ravenous, // Weapon
+                    cSpecial: CapeSpecial.Penitence // Cape
                 );
                 break;
 
             // Legion Revenant
             case "Legion Revenant":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Wizard,                // Class
-                    hSpecial: HelmSpecial.Pneuma,                // Helm
-                    wSpecial: WeaponSpecial.Valiance,            // Weapon
-                    cSpecial: CapeSpecial.Penitence              // Cape
+                    type: EnhancementType.Wizard, // Class
+                    hSpecial: HelmSpecial.Pneuma, // Helm
+                    wSpecial: WeaponSpecial.Valiance, // Weapon
+                    cSpecial: CapeSpecial.Penitence // Cape
                 );
                 break;
 
             // Lord Of Order
             case "Lord Of Order":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,                 // Class
-                    hSpecial: HelmSpecial.Forge,                 // Helm
-                    wSpecial: WeaponSpecial.Valiance,            // Weapon
-                    cSpecial: CapeSpecial.Absolution             // Cape
+                    type: EnhancementType.Lucky, // Class
+                    hSpecial: HelmSpecial.Forge, // Helm
+                    wSpecial: WeaponSpecial.Valiance, // Weapon
+                    cSpecial: CapeSpecial.Absolution // Cape
                 );
                 break;
 
             // StoneCrusher
             case "StoneCrusher":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Fighter,               // Class
-                    hSpecial: HelmSpecial.Anima,                 // Helm
-                    wSpecial: WeaponSpecial.Valiance,            // Weapon
-                    cSpecial: CapeSpecial.Absolution             // Cape
+                    type: EnhancementType.Fighter, // Class
+                    hSpecial: HelmSpecial.Anima, // Helm
+                    wSpecial: WeaponSpecial.Valiance, // Weapon
+                    cSpecial: CapeSpecial.Absolution // Cape
                 );
                 break;
             // ===== NEW ADDITIONS =====
@@ -194,20 +193,20 @@ public class UltraDarkon
             case "Chrono ShadowSlayer":
             case "Chrono ShadowHunter":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,                 // Class
-                    hSpecial: HelmSpecial.Forge,                 // Helm
-                    wSpecial: WeaponSpecial.Arcanas_Concerto,      // Weapon
-                    cSpecial: CapeSpecial.Lament                 // Cape
+                    type: EnhancementType.Lucky, // Class
+                    hSpecial: HelmSpecial.Forge, // Helm
+                    wSpecial: WeaponSpecial.Arcanas_Concerto, // Weapon
+                    cSpecial: CapeSpecial.Lament // Cape
                 );
                 break;
 
             // Paladin Chronomancer
             case "Paladin Chronomancer":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Wizard,                // Class
-                    hSpecial: HelmSpecial.None,                // Helm
-                    wSpecial: WeaponSpecial.Mana_Vamp,            // Weapon
-                    cSpecial: CapeSpecial.Absolution             // Cape
+                    type: EnhancementType.Wizard, // Class
+                    hSpecial: HelmSpecial.None, // Helm
+                    wSpecial: WeaponSpecial.Mana_Vamp, // Weapon
+                    cSpecial: CapeSpecial.Absolution // Cape
                 );
                 break;
 
@@ -215,54 +214,52 @@ public class UltraDarkon
             case "Alpha Omega":
             case "Alpha DOOMmega":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,                 // Class
-                    hSpecial: HelmSpecial.Vim,                   // Helm
-                    wSpecial: WeaponSpecial.Praxis,              // Weapon
-                    cSpecial: CapeSpecial.Avarice                // Cape
+                    type: EnhancementType.Lucky, // Class
+                    hSpecial: HelmSpecial.Vim, // Helm
+                    wSpecial: WeaponSpecial.Praxis, // Weapon
+                    cSpecial: CapeSpecial.Avarice // Cape
                 );
                 break;
 
             // Arcana Invoker
             case "Arcana Invoker":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,                 // Class
-                    hSpecial: HelmSpecial.Forge,                 // Helm
-                    wSpecial: WeaponSpecial.Ravenous,            // Weapon
-                    cSpecial: CapeSpecial.Penitence              // Cape
+                    type: EnhancementType.Lucky, // Class
+                    hSpecial: HelmSpecial.Forge, // Helm
+                    wSpecial: WeaponSpecial.Ravenous, // Weapon
+                    cSpecial: CapeSpecial.Penitence // Cape
                 );
                 break;
 
             // Lich
             case "Lich":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,                 // Class
-                    hSpecial: HelmSpecial.Examen,                // Helm
-                    wSpecial: WeaponSpecial.Ravenous,            // Weapon
-                    cSpecial: CapeSpecial.Penitence              // Cape
+                    type: EnhancementType.Lucky, // Class
+                    hSpecial: HelmSpecial.Examen, // Helm
+                    wSpecial: WeaponSpecial.Ravenous, // Weapon
+                    cSpecial: CapeSpecial.Penitence // Cape
                 );
                 break;
 
             // Hollowborn VIndicator
             case "Hollowborn VIndicator":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,                 // Class
-                    hSpecial: HelmSpecial.Forge,                 // Helm
-                    wSpecial: WeaponSpecial.Dauntless,           // Weapon
-                    cSpecial: CapeSpecial.Penitence              // Cape
+                    type: EnhancementType.Lucky, // Class
+                    hSpecial: HelmSpecial.Forge, // Helm
+                    wSpecial: WeaponSpecial.Dauntless, // Weapon
+                    cSpecial: CapeSpecial.Penitence // Cape
                 );
                 break;
 
             // King's Echo
             case "King's Echo":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,                 // Class
-                    hSpecial: HelmSpecial.Examen,                // Helm
-                    wSpecial: WeaponSpecial.Ravenous,            // Weapon
-                    cSpecial: CapeSpecial.Lament                 // Cape
+                    type: EnhancementType.Lucky, // Class
+                    hSpecial: HelmSpecial.Examen, // Helm
+                    wSpecial: WeaponSpecial.Ravenous, // Weapon
+                    cSpecial: CapeSpecial.Lament // Cape
                 );
                 break;
-
         }
     }
-
 }
