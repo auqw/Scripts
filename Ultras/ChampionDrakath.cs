@@ -82,17 +82,19 @@ public class ChampionDrakath
     {
         const string map = "championdrakath";
         const string boss = "Champion Drakath";
+
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+
         C.EnsureAccept(8300);
         C.AddDrop("Champion Drakath Insignia");
+
         Core.Join(map);
         Ultra.WaitForArmy(3, "champion_drakath.sync");
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
-        Core.EnableSkills();
 
-        HashSet<int> tautedBands = new HashSet<int>();
+        Core.EnableSkills();
 
         while (!Bot.ShouldExit)
         {
@@ -110,27 +112,17 @@ public class ChampionDrakath
                 continue;
             }
 
-            double healthPct = Core.GetTargetHealthPercentage();
-            bool hasClassAorB = Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
-
-            if (healthPct > 10 && healthPct < 2000000 && hasClassAorB)
+            if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
             {
-                int band = (int)healthPct / 10 * 10;
-                if (!tautedBands.Contains(band))
-                {
-                    Ultra.DrakathTaunter();
-                    tautedBands.Add(band);
-                }
+                Ultra.DrakathTaunter();
+                Bot.Sleep(500);
             }
 
             Bot.Combat.Attack(boss);
             Bot.Sleep(250);
-
-            if (healthPct < 2000000 && hasClassAorB)
+            if (Core.GetTargetHealthPercentage() < 10)
                 Bot.Skills.UseSkill(5);
-
             Bot.Sleep(250);
         }
     }
-
 }
