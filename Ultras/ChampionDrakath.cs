@@ -112,20 +112,16 @@ public class ChampionDrakath
                 continue;
             }
 
-            if (Core.HasClassEquipped(a))
+            if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
             {
                 Ultra.DrakathTaunter();
+                Bot.Sleep(500);
             }
-            else if (Core.HasClassEquipped(b))
-            {
-                Ultra.DrakathTaunter();
-            }
-            else
-            {
-                Core.Kill(boss);
-                if (Core.GetTargetHealthPercentage() < 10)
-                    Bot.Skills.UseSkill(5);
-            }
+
+            Bot.Combat.Attack(boss);
+            Bot.Sleep(250);
+            if (Core.GetTargetHealthPercentage() < 10)
+                Bot.Skills.UseSkill(5);
             Bot.Sleep(250);
         }
     }
