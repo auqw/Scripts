@@ -113,7 +113,7 @@ public class ChampionDrakath
             double healthPct = Core.GetTargetHealthPercentage();
             bool hasClassAorB = Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
 
-            if (healthPct > 10 && hasClassAorB)
+            if (healthPct > 10 && healthPct < 2000000 && hasClassAorB)
             {
                 int band = (int)healthPct / 10 * 10;
                 if (!tautedBands.Contains(band))
@@ -126,7 +126,7 @@ public class ChampionDrakath
             Bot.Combat.Attack(boss);
             Bot.Sleep(250);
 
-            if (healthPct < 10 && hasClassAorB)
+            if (healthPct < 2000000 && hasClassAorB)
                 Bot.Skills.UseSkill(5);
 
             Bot.Sleep(250);
