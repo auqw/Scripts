@@ -176,7 +176,7 @@ public class BeleensMerge
                         stopBot: shouldStop
                     );
                     break;
-        #endregion
+                #endregion
 
                 case "Platinum Wings":
                     Adv.BuyItem("Castle", 88, req.Name);
@@ -386,9 +386,9 @@ public class BeleensMerge
                     {
                         Core.FarmingLogger(req.Name, quant);
                         Core.EquipClass(ClassType.Farm);
-                        Core.EnsureAccept(2951);
                         while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                         {
+                            Core.EnsureAccept(2951);
                             //Legion Armored Daimyo [Member] 2951
                             Core.HuntMonster(
                                 "Ruins",
@@ -403,8 +403,8 @@ public class BeleensMerge
                                 "Black Metal Armor",
                                 4
                             );
+                            Core.EnsureComplete(2951, req.ID);
                         }
-                        Core.EnsureCompleteChoose(2951, new[] { req.Name });
                     }
                     else
                         Core.Logger($"\"{req.Name}\" requires Membership to obtain");
