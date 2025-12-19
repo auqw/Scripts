@@ -4418,6 +4418,129 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyLR.cs"
   },
   {
+    "name": "Generate Queued OneClient Script",
+    "description": "Pick multiple scripts that you want to run in sequence of one another, and the script will generate a new file that does exactly those bots for you. It will run it as a OneClient bot.",
+    "tags": [
+      "generator",
+      "queud",
+      "script",
+      "follow-up",
+      "choose",
+      "army",
+      "oneclient"
+    ],
+    "path": "Army/OneClient/GenerateQueuedOneClientScript.cs",
+    "size": 12261,
+    "sha256": "c2bc48c122bd87d86c0c683d03924fa8e3cca2f01fc4ec77e2e47fd7c31dd80a",
+    "fileName": "GenerateQueuedOneClientScript.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/GenerateQueuedOneClientScript.cs"
+  },
+  {
+    "name": "Army All Dailies",
+    "description": "One-client version of All Dailies",
+    "tags": [
+      "all",
+      "dailies",
+      "army"
+    ],
+    "path": "Army/OneClient/AllDailies.cs",
+    "size": 2184,
+    "sha256": "025e60718b6d5b7a1cb6c5d3312f92b85be924827b380f9438bcd7a3e4b10a8c",
+    "fileName": "AllDailies.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AllDailies.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Army/OneClient/OneClientTemplate.cs",
+    "size": 1653,
+    "sha256": "11752eac1b608e49b9df8f19a938638ccf9c0df66bcc81983e58ffc9452812c8",
+    "fileName": "OneClientTemplate.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/OneClientTemplate.cs"
+  },
+  {
+    "name": "Elders Blood (Army)",
+    "description": "One-client version of the Elders' Blood daily",
+    "tags": [
+      "daily",
+      "dailies",
+      "army",
+      "elders",
+      "blood",
+      "vhl",
+      "void highlord",
+      "oneclient"
+    ],
+    "path": "Army/OneClient/EldersBlood.cs",
+    "size": 1209,
+    "sha256": "5178ecf42308836841685f27bcd67961d9499b9e404703c5b9c3a5da41436b01",
+    "fileName": "EldersBlood.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/EldersBlood.cs"
+  },
+  {
+    "name": "All accs bank all",
+    "description": "banks all items on all accs in the \"thefamily.txt\" file.",
+    "tags": [
+      "bank",
+      "army",
+      "all"
+    ],
+    "path": "Army/OneClient/AllBankAllItems.cs",
+    "size": 1551,
+    "sha256": "d745d8495057abb36286563b30efb8944268b7f73b7231da0f945732f3305919",
+    "fileName": "AllBankAllItems.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AllBankAllItems.cs"
+  },
+  {
+    "name": "All accs bank all",
+    "description": "banks all items on all accs in the \"thefamily.txt\" file.",
+    "tags": [
+      "bank",
+      "army",
+      "all"
+    ],
+    "path": "Army/OneClient/AllRankAllClasses.cs",
+    "size": 1239,
+    "sha256": "b0c661d091d8b03585a9c1a633adfe06457d44c867f085d3f863dd951a1aa202",
+    "fileName": "AllRankAllClasses.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AllRankAllClasses.cs"
+  },
+  {
+    "name": "Army Free 500 accs",
+    "description": "the 500 free acs quest",
+    "tags": [
+      "acs",
+      "free",
+      "thefamily",
+      "army."
+    ],
+    "path": "Army/OneClient/AccsForAll.cs",
+    "size": 1599,
+    "sha256": "71d36850520565d6f3a495205eed2e48996f378227b93ba86168bd961ca89b9e",
+    "fileName": "AccsForAll.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AccsForAll.cs"
+  },
+  {
+    "name": "The Wheel of Doom (Army)",
+    "description": "One-client version of the Wheel of Doom",
+    "tags": [
+      "daily",
+      "dailies",
+      "army",
+      "wheel",
+      "doom",
+      "oneclient"
+    ],
+    "path": "Army/OneClient/WheelOfDoom.cs",
+    "size": 1162,
+    "sha256": "e10d00d1bf91165356f43f483f28f5b05ba8f3a7a952576c496f9cda62efb1b8",
+    "fileName": "WheelOfDoom.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/WheelOfDoom.cs"
+  },
+  {
     "name": "TouchMass",
     "description": "gets u the million kills for the `Touch Mass` badge",
     "tags": [
@@ -18013,8 +18136,8 @@
       "null"
     ],
     "path": "Other/MergeShops/BeleensMerge.cs",
-    "size": 26793,
-    "sha256": "66808a9805a4ce948bdbfd5b8172bb9202613a4796b41bc43d0fa075129e6092",
+    "size": 26791,
+    "sha256": "8b01f58658518c70e87d327f44814d324eafc154c3ef6d468a07598d21a82963",
     "fileName": "BeleensMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BeleensMerge.cs"
   },
