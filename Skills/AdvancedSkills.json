@@ -5654,95 +5654,113 @@
   },
   "Master Martial Artist": {
     "Atk": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4,
           "rules": [
             {
-              "type": "None"
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": false
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Fully Focused",
+              "auraTarget": "self"
             }
           ],
           "skipOnMatch": true
         },
         {
-          "skillId": 2
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Wait",
+              "timeout": 1500
+            },
+            {
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 4,
           "rules": [
             {
-              "type": "None"
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": false
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Fully Focused",
+              "auraTarget": "self"
             }
           ],
           "skipOnMatch": true
         },
         {
-          "skillId": 1
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Wait",
+              "timeout": 1500
+            },
+            {
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 4,
           "rules": [
             {
-              "type": "None"
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": false
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Fully Focused",
+              "auraTarget": "self"
             }
           ],
           "skipOnMatch": true
         },
         {
-          "skillId": 2
-        },
-        {
-          "skillId": 4,
+          "skillId": 1,
           "rules": [
             {
-              "type": "None"
-            }
-          ],
-          "skipOnMatch": true
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 4,
-          "rules": [
+              "type": "Wait",
+              "timeout": 1500
+            },
             {
-              "type": "None"
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": true
             }
           ],
           "skipOnMatch": true
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4,
-          "rules": [
-            {
-              "type": "None"
-            }
-          ],
-          "skipOnMatch": true
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 4,
-          "rules": [
-            {
-              "type": "None"
-            }
-          ],
-          "skipOnMatch": true
-        },
-        {
-          "skillId": 3
         }
       ]
     },
@@ -5851,95 +5869,113 @@
   },
   "Martial Artist": {
     "Atk": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
           "skillId": 4,
           "rules": [
             {
-              "type": "None"
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": false
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Fully Focused",
+              "auraTarget": "self"
             }
           ],
           "skipOnMatch": true
         },
         {
-          "skillId": 2
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Wait",
+              "timeout": 1500
+            },
+            {
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 4,
           "rules": [
             {
-              "type": "None"
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": false
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Fully Focused",
+              "auraTarget": "self"
             }
           ],
           "skipOnMatch": true
         },
         {
-          "skillId": 1
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Wait",
+              "timeout": 1500
+            },
+            {
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 4,
           "rules": [
             {
-              "type": "None"
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": false
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Fully Focused",
+              "auraTarget": "self"
             }
           ],
           "skipOnMatch": true
         },
         {
-          "skillId": 2
-        },
-        {
-          "skillId": 4,
+          "skillId": 1,
           "rules": [
             {
-              "type": "None"
-            }
-          ],
-          "skipOnMatch": true
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 4,
-          "rules": [
+              "type": "Wait",
+              "timeout": 1500
+            },
             {
-              "type": "None"
+              "type": "Mana",
+              "value": 100,
+              "comparison": "less",
+              "isPercentage": true
             }
           ],
           "skipOnMatch": true
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4,
-          "rules": [
-            {
-              "type": "None"
-            }
-          ],
-          "skipOnMatch": true
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 4,
-          "rules": [
-            {
-              "type": "None"
-            }
-          ],
-          "skipOnMatch": true
-        },
-        {
-          "skillId": 3
         }
       ]
     },
