@@ -28498,6 +28498,28 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/Story/21GlaceTomb.cs"
   },
   {
+    "name": "Unsung Necropolis Story",
+    "description": "This script completes the UnsungNecropolis quests.",
+    "tags": [
+      "saga",
+      "story",
+      "quest",
+      "seasonal",
+      "frostval",
+      "frostvale",
+      "frost",
+      "unsungnecropolis",
+      "blank reflection",
+      "unsung",
+      "necropolis"
+    ],
+    "path": "Seasonal/Frostvale/Story/28UnsungNecropolis.cs",
+    "size": 881,
+    "sha256": "d5e521715901a5443d4f98dffa46535fcb07556a3d5d72427e96322a639836b4",
+    "fileName": "28UnsungNecropolis.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/Story/28UnsungNecropolis.cs"
+  },
+  {
     "name": "Frostvale (All)",
     "description": "This script completes the full Frostvale saga.",
     "tags": [
@@ -28781,8 +28803,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/Story/CoreFrostvale.cs",
-    "size": 48869,
-    "sha256": "efd87d577f2a7a09fa734b26efadae04d5b3840888a030a25e5e7bab97c26325",
+    "size": 52103,
+    "sha256": "d51ee75466da276821af7b707805232a66be98f9f00f86ce1f02eb7673a25c20",
     "fileName": "CoreFrostvale.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/Story/CoreFrostvale.cs"
   },
