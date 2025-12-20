@@ -61,7 +61,7 @@ public class BonebreakerMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-        if (!Core.IsMember)
+        if (!Core.IsMember || !Core.CheckInventory("BoneBreaker Fortress Map"))
         {
             Core.Logger("Membership Required.");
             return;
@@ -105,7 +105,7 @@ public class BonebreakerMerge
                     )
                     {
                         Core.EnsureAccept(3898);
-                        Core.HuntMonster("bonebreaker", "Undead Berserker", "Warrior Defeated", 5);
+                        Core.HuntMonster("bonebreak", "Undead Berserker", "Warrior Defeated", 5);
                         Core.EnsureComplete(3898);
                         Bot.Wait.ForPickup(req.Name);
                     }
