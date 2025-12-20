@@ -30173,7 +30173,425 @@ case ""Silver Carteret Spear and Shield"":
                     break;
     "
         },
-    };
+    {
+    "Tattered Page",
+    @"
+case ""Tattered Page"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""Unsung Knight"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Unsung Warden Hair",
+    @"
+case ""Unsung Warden Hair"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""The Unsung"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Unsung Angel Locks",
+    @"
+case ""Unsung Angel Locks"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""The Unsung"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Azurefall Dragonblood",
+    @"
+case ""Azurefall Dragonblood"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""The Unsung"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Azurefall Helm",
+    @"
+case ""Azurefall Helm"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""The Unsung"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Azurefall Crest",
+    @"
+case ""Azurefall Crest"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""The Unsung"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Ice Gale Cape",
+    @"
+case ""Ice Gale Cape"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""The Unsung"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Ice Gale Cloak",
+    @"
+case ""Ice Gale Cloak"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""The Unsung"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Glacial Vestige Tail",
+    @"
+case ""Glacial Vestige Tail"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""The Unsung"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Glacial Vestige Wings",
+    @"
+case ""Glacial Vestige Wings"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""The Unsung"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Glacial Vestige Wings and Tail",
+    @"
+case ""Glacial Vestige Wings and Tail"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""The Unsung"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Non-Melt Ice",
+    @"
+case ""Non-Melt Ice"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        if (Core.CheckInventory(57565))
+                            Core.HuntMonsterQuestChoose(
+                                10539,
+                                null,
+                                (""unsungnecropolis"", ""The Unsung"", ClassType.Solo),
+                                (""unsungnecropolis"", ""Unsung Warrior"", ClassType.Farm),
+                                (""unsungnecropolis"", ""Bone Dragonling"", ClassType.Farm)
+                            );
+                        else
+                            Core.HuntMonsterQuest(
+                                Core.IsMember ? 10538 : 10537,
+                                (""unsungnecropolis"", ""The Unsung"", ClassType.Solo),
+                                (""unsungnecropolis"", ""Unsung Warrior"", ClassType.Farm),
+                                (""unsungnecropolis"", ""Bone Dragonling"", ClassType.Farm)
+                            );
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Azureblood Blade",
+    @"
+case ""Azureblood Blade"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""Dracolich Sole"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Azureblood Great Axe",
+    @"
+case ""Azureblood Great Axe"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""Dracolich Sole"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Azureblood Great Axes",
+    @"
+case ""Azureblood Great Axes"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""Dracolich Sole"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Azureblood Battleaxe",
+    @"
+case ""Azureblood Battleaxe"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""Dracolich Blain"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+{
+    "Azureblood Battleaxes",
+    @"
+case ""Azureblood Battleaxes"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(
+                        ""unsungnecropolis"",
+                        ""Dracolich Blain"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    break;
+    "
+},
+};
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);
