@@ -69,6 +69,7 @@ public class CoreFrostvale
         HolidayHotel();
         HolidayHorror();
         FrostvalGala();
+        UnsungNecropolis();
     }
 
     public void IceCave()
@@ -1519,6 +1520,100 @@ public class CoreFrostvale
         if (!Story.QuestProgression(10523))
         {
             Core.HuntMonsterQuest(10523, ("frostvalgala", UseableMonsters[5], ClassType.Solo));
+        }
+    }
+
+    public void UnsungNecropolis()
+    {
+        if (Core.isCompletedBefore(10535) || !Core.isSeasonalMapActive("unsungnecropolis"))
+            return;
+
+        FrostvalGala();
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Unsung Beast", // UseableMonsters[0],
+            "Unsung Knight", // UseableMonsters[1],
+            "Bone Dragonling", // UseableMonsters[2],
+            "Doom Figment", // UseableMonsters[3],
+            "Dracolich Blain", // UseableMonsters[4],
+            "Unsung Mage", // UseableMonsters[5],
+            "Dracolich Sole", // UseableMonsters[6],
+            "Unsung Warrior", // UseableMonsters[7],
+            "The Unsung", // UseableMonsters[8]
+        };
+        #endregion Useable Monsters
+
+        // 10526 | Fade in from Black
+        if (!Story.QuestProgression(10526))
+        {
+            Core.HuntMonsterQuest(10526, ("unsungnecropolis", UseableMonsters[0], ClassType.Farm));
+        }
+
+        // 10527 | Hyping Up
+        if (!Story.QuestProgression(10527))
+        {
+            Core.HuntMonsterQuest(10527, ("unsungnecropolis", UseableMonsters[1], ClassType.Farm));
+        }
+
+        // 10528 | Little Buddies
+        if (!Story.QuestProgression(10528))
+        {
+            Core.EnsureAccept(10528);
+            Core.HuntMonster("unsungnecropolis", UseableMonsters[2], "Dragonling ID Tag", 3);
+            Core.GetMapItem(15311, 1, "unsungnecropolis");
+            Core.EnsureComplete(10528);
+        }
+
+        // 10529 | Selective Memory
+        if (!Story.QuestProgression(10529))
+        {
+            Story.MapItemQuest(10529, "unsungnecropolis", 15312);
+            Core.HuntMonsterQuest(10529, ("unsungnecropolis", UseableMonsters[3], ClassType.Farm));
+        }
+
+        // 10530 | Old Painless
+        if (!Story.QuestProgression(10530))
+        {
+            Core.HuntMonsterQuest(10530, ("unsungnecropolis", UseableMonsters[4], ClassType.Solo));
+        }
+
+        // 10531 | Peeved and Peckish
+        if (!Story.QuestProgression(10531))
+        {
+            Story.MapItemQuest(10531, "unsungnecropolis", 15313);
+            Core.HuntMonsterQuest(10531, ("unsungnecropolis", UseableMonsters[5], ClassType.Farm));
+        }
+
+        // 10532 | Machetes at Dawn
+        if (!Story.QuestProgression(10532))
+        {
+            Core.HuntMonsterQuest(10532, ("unsungnecropolis", UseableMonsters[6], ClassType.Solo));
+        }
+
+        // 10533 | Lowlife Poachers
+        if (!Story.QuestProgression(10533))
+        {
+            Story.MapItemQuest(
+                10533,
+                new[] { (15314, 6, "unsungnecropolis"), (15315, 1, "unsungnecropolis") }
+            );
+        }
+
+        // 10534 | Serene Meditation
+        if (!Story.QuestProgression(10534))
+        {
+            Story.MapItemQuest(10534, "unsungnecropolis", 15316);
+            Core.HuntMonsterQuest(10534, ("unsungnecropolis", UseableMonsters[7], ClassType.Farm));
+        }
+
+        // 10535 | The Right to Choose
+        if (!Story.QuestProgression(10535))
+        {
+            Core.HuntMonsterQuest(10535, ("unsungnecropolis", UseableMonsters[8], ClassType.Solo));
         }
     }
 }
