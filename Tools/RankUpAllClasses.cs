@@ -53,7 +53,13 @@ public class RankUpAll
     {
         // Define the classes to exclude
         string InitialClass = Bot.Player!.CurrentClass!.Name;
-        List<string> excludedClasses = new() { "Hobo Highlord", "No Class", "Obsidian No Class", InitialClass };
+        List<string> excludedClasses = new()
+        {
+            "Hobo Highlord",
+            "No Class",
+            "Obsidian No Class",
+            InitialClass,
+        };
         // Populate SelectedClasses from inventory, excluding specific classes
         List<string> SelectedClasses = Bot
             .Inventory.Items.Where(c =>

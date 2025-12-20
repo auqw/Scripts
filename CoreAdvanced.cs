@@ -1141,7 +1141,9 @@ public class CoreAdvanced
                 // Check if already have it
                 if (Core.CheckInventory(req.ID, requiredQty))
                 {
-                    Core.Logger($"{req.Name} Owned x{Bot.Inventory.GetQuantity(req.ID)}/{requiredQty}");
+                    Core.Logger(
+                        $"{req.Name} Owned x{Bot.Inventory.GetQuantity(req.ID)}/{requiredQty}"
+                    );
                     continue;
                 }
                 EnsureShopLoaded(map, shopID);
@@ -1164,7 +1166,6 @@ public class CoreAdvanced
                     continue;
                 }
 
-
                 if (req!.Name?.Contains("Dragon Runestone") == true)
                 {
                     Core.Logger($"Farming Dragon Runestone x{requiredQty}");
@@ -1177,7 +1178,10 @@ public class CoreAdvanced
                 }
                 if (reqInShop != null)
                 {
-                    Core.Logger($"Requirement \"{reqInShop.Name}\" [{reqInShop.ID}] is in shop.", "ProcessItemWithDependencies");
+                    Core.Logger(
+                        $"Requirement \"{reqInShop.Name}\" [{reqInShop.ID}] is in shop.",
+                        "ProcessItemWithDependencies"
+                    );
                     requiredQty = Math.Min(requiredQty, reqInShop.MaxStack);
 
                     // If requirement has no dependencies, buy it directly
@@ -1188,7 +1192,9 @@ public class CoreAdvanced
                     {
                         if (reqInShop.Upgrade && !Bot.Player.IsMember)
                         {
-                            Core.Logger($"{reqInShop.Name} is MEMBERS ONLY, you are not.... we can't buy it >.>");
+                            Core.Logger(
+                                $"{reqInShop.Name} is MEMBERS ONLY, you are not.... we can't buy it >.>"
+                            );
                             return;
                         }
                         else
@@ -1225,7 +1231,9 @@ public class CoreAdvanced
                     externalItem = req;
                     externalQuant = requiredQty;
                     Core.AddDrop(externalItem.ID);
-                    Core.Logger($"{externalItem.Name} [{externalItem.ID}] not in shop, using merge script.");
+                    Core.Logger(
+                        $"{externalItem.Name} [{externalItem.ID}] not in shop, using merge script."
+                    );
                     findIngredients();
                     Bot.Wait.ForPickup(req.ID);
                 }
@@ -1240,15 +1248,8 @@ public class CoreAdvanced
             EnsureShopLoaded(map, shopID);
             if (shopItem.Requirements.All(x => Core.CheckInventory(x.ID, x.Quantity)))
             {
-                BuyItem(
-                                  map,
-                                  shopID,
-                                  shopItem.ID,
-                                  quantity,
-                                  shopItemID: shopItem.ShopItemID
-                              );
+                BuyItem(map, shopID, shopItem.ID, quantity, shopItemID: shopItem.ShopItemID);
             }
-
         }
 
         void HandleNoItemsFound(int mode, bool memSkipped)
@@ -3420,7 +3421,7 @@ public class CoreAdvanced
                     hSpecial = HelmSpecial.Pneuma;
                     break;
 
-                #endregion
+                    #endregion
 
                 #region Wizard - Forge - Awe Blast
                 case "infinity knight":
@@ -3925,7 +3926,7 @@ public class CoreAdvanced
                     type = EnhancementType.Lucky;
                     return false;
 
-                    #endregion
+                #endregion
             }
             return true;
 

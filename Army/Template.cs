@@ -78,8 +78,6 @@ public class ArmyTemplate
         C.SetOptions(false);
     }
 
-
-
     void Examples()
     {
         Ultra.ArmyHandler(
@@ -100,6 +98,6 @@ public class ArmyTemplate
     enum CheckType
     {
         Bool = 1,
-        Item = 2
+        Item = 2,
     }
 }

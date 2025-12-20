@@ -114,7 +114,7 @@ public class LichKingsBountyMerge
 
                 case "Sapphire Orb":
                     Core.FarmingLogger(req.Name, quant);
-            Core.EquipClass(ClassType.Dodge);
+                    Core.EquipClass(ClassType.Dodge);
                     Core.HuntMonster(
                         "frozenlair",
                         "Legion Lich Lord",
@@ -123,7 +123,7 @@ public class LichKingsBountyMerge
                         false,
                         false
                     );
-            Core.EquipClass(ClassType.Solo);
+                    Core.EquipClass(ClassType.Solo);
                     break;
 
                 case "Necrotic Orb":

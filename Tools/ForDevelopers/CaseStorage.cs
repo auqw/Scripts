@@ -30008,9 +30008,9 @@ case ""Frostborne Dragonslayer Helm"":
                     break;
     "
         },
-    {
-    "Solidified Soul",
-    @"
+        {
+            "Solidified Soul",
+            @"
 case ""Solidified Soul"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
@@ -30028,10 +30028,10 @@ case ""Solidified Soul"":
                     Core.CancelRegisteredQuests();
                     break;
     "
-},
-{
-    "Whistler Bullion",
-    @"
+        },
+        {
+            "Whistler Bullion",
+            @"
 case ""Whistler Bullion"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30052,10 +30052,10 @@ case ""Whistler Bullion"":
                     }
                     break;
     "
-},
-{
-    "Granville Knight",
-    @"
+        },
+        {
+            "Granville Knight",
+            @"
 case ""Granville Knight"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30076,10 +30076,10 @@ case ""Granville Knight"":
                     );
                     break;
     "
-},
-{
-    "Granville Helm",
-    @"
+        },
+        {
+            "Granville Helm",
+            @"
 case ""Granville Helm"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30100,10 +30100,10 @@ case ""Granville Helm"":
                     );
                     break;
     "
-},
-{
-    "Noble Blue Sash",
-    @"
+        },
+        {
+            "Noble Blue Sash",
+            @"
 case ""Noble Blue Sash"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30124,10 +30124,10 @@ case ""Noble Blue Sash"":
                     );
                     break;
     "
-},
-{
-    "Silver Carteret Spear",
-    @"
+        },
+        {
+            "Silver Carteret Spear",
+            @"
 case ""Silver Carteret Spear"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30148,10 +30148,10 @@ case ""Silver Carteret Spear"":
                     );
                     break;
     "
-},
-{
-    "Silver Carteret Spear and Shield",
-    @"
+        },
+        {
+            "Silver Carteret Spear and Shield",
+            @"
 case ""Silver Carteret Spear and Shield"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30172,8 +30172,8 @@ case ""Silver Carteret Spear and Shield"":
                     );
                     break;
     "
-},
-};
+        },
+    };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);

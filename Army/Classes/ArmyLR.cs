@@ -115,7 +115,6 @@ public class ArmyLR
         C.BankingBlackList.AddRange(LF3);
         C.SetOptions(disableClassSwap: true);
 
-
         C.PrivateRooms = true;
         C.PrivateRoomNumber = Army.getRoomNr();
 
@@ -129,7 +128,14 @@ public class ArmyLR
     {
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgress("Revenant's Spellscroll", quant, false, "Revenants_Spellscroll.Sync"))
+            if (
+                Ultra.CheckArmyProgress(
+                    "Revenant's Spellscroll",
+                    quant,
+                    false,
+                    "Revenants_Spellscroll.Sync"
+                )
+            )
             {
                 Bot.Wait.ForPickup("Revenant's Spellscroll");
                 Bot.Options.AggroMonsters = false;
@@ -314,8 +320,6 @@ public class ArmyLR
             Bot.Wait.ForPickup("Conquest Wreath");
             C.EnsureComplete(6898);
         }
-
-
     }
 
     void LF3Items(int quant = 0)
@@ -412,7 +416,17 @@ public class ArmyLR
         );
     }
 
-    private void ArmyHandler(string map, int[] QuestIDs, string WaitForArmysyncPath, string AggroCell, CheckType checkType, string? Itemname = null, int quant = 0, bool UseBool = false, Func<bool>? condition = null)
+    private void ArmyHandler(
+        string map,
+        int[] QuestIDs,
+        string WaitForArmysyncPath,
+        string AggroCell,
+        CheckType checkType,
+        string? Itemname = null,
+        int quant = 0,
+        bool UseBool = false,
+        Func<bool>? condition = null
+    )
     {
         // Sync file used to keep track of what accs are done.
         string syncPath = Ultra.ResolveSyncPath(WaitForArmysyncPath);
@@ -512,6 +526,6 @@ public class ArmyLR
     enum CheckType
     {
         Bool = 1,
-        Item = 2
+        Item = 2,
     }
 }

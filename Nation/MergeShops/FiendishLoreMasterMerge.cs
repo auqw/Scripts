@@ -107,7 +107,7 @@ public class FiendishLoreMasterMerge
                         stopBot: shouldStop
                     );
                     break;
-                #endregion
+        #endregion
 
                 case "Abyssal Lore Scrap":
                     Core.FarmingLogger(req.Name, quant);

@@ -467,7 +467,6 @@ public class Grimgaol
             Bot.Wait.ForCellChange("Enter");
         }
 
-
         // Stop usage of AdvSkills after story & prereqs. as we'll use our own here.
         while (!Bot.ShouldExit && !Bot.TempInv.Contains("Grimskull's Gaol Cleared"))
         {

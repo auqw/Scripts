@@ -156,7 +156,9 @@ public class CheckForDonatedACs
 
                 // Log total ACs owned
                 string username = Bot.Player.Username;
-                int totalACs = int.Parse(Bot.Flash.GetGameObject("world.myAvatar.objData.intCoins")!.ToString());
+                int totalACs = int.Parse(
+                    Bot.Flash.GetGameObject("world.myAvatar.objData.intCoins")!.ToString()
+                );
                 Core.Logger($"{username}; ACs:{totalACs}");
 
                 // Update total ACs log
@@ -165,11 +167,10 @@ public class CheckForDonatedACs
                 bool canJoinLegion = !JoinedLegion && totalACs > 1200;
 
                 string logEntry =
-                    $"{username}:{totalACs}: " +
-                    $"| JoinedLegion: {(JoinedLegion ? "YES" : canJoinLegion ? "CAN JOIN" : "NO")} " +
-                    $"| Legion Rev. Owned: {Core.CheckInventory(new[] { "Legion Revenant", "Legion Revenant (IoDA)" }, any: true)}";
+                    $"{username}:{totalACs}: "
+                    + $"| JoinedLegion: {(JoinedLegion ? "YES" : canJoinLegion ? "CAN JOIN" : "NO")} "
+                    + $"| Legion Rev. Owned: {Core.CheckInventory(new[] { "Legion Revenant", "Legion Revenant (IoDA)" }, any: true)}";
                 TotalAcsChecked += totalACs;
-
 
                 // Replace old entry if exists, otherwise add new
                 var existingIndex = totalACsLog.FindIndex(x => x.StartsWith(username + ":"));
@@ -254,7 +255,8 @@ public class CheckForDonatedACs
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
-        Bot.Options.ReloginServer = PreviousReloginServer ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
+        Bot.Options.ReloginServer =
+            PreviousReloginServer ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
 
         CheckACs();
 

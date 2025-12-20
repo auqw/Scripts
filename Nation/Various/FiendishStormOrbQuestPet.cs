@@ -33,9 +33,14 @@ public class FiendishStormOrbQuestPet
 
     public void DoQuest()
     {
-        if (!Core.CheckInventory(new[] { 83230, 83720 }) || (Core.CheckInventory(83720) && !Core.IsMember))
+        if (
+            !Core.CheckInventory(new[] { 83230, 83720 })
+            || (Core.CheckInventory(83720) && !Core.IsMember)
+        )
         {
-            Core.Logger("You need to own Fiendish Storm Orb Quest Pet, and have active membership for Member version to do this quest.");
+            Core.Logger(
+                "You need to own Fiendish Storm Orb Quest Pet, and have active membership for Member version to do this quest."
+            );
             return;
         }
 

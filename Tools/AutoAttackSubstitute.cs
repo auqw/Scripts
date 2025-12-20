@@ -48,12 +48,7 @@ public class AutoAttackSubstitute
             "Specify a quest ID to accept before starting the script.",
             0000
         ),
-        new Option<int>(
-            "QuestReward",
-            "Reward To Pick",
-            "Quest Reward to pick ( by ItemID)",
-            0000
-        ),
+        new Option<int>("QuestReward", "Reward To Pick", "Quest Reward to pick ( by ItemID)", 0000),
         new Option<int>(
             "RewardAmount",
             "stop when reward quant owned",
@@ -98,7 +93,6 @@ public class AutoAttackSubstitute
             ? monstersString.Split(',').Select(m => m.Trim()).ToArray()
             : Array.Empty<string>();
 
-
         Core.AddDrop(dropsToPickupArray);
 
         Core.EquipClass(
@@ -123,7 +117,6 @@ public class AutoAttackSubstitute
                             : $"Aggro: enabled\nAttacking:\n{string.Join("\n", monstersArray.Select(m => $"\"{m}\""))}"
                     );
 
-
                     // Continuously attack monsters in the cell until bot should exit
                     while (!Bot.ShouldExit && !Core.CheckInventory(questReward, Rewardquant))
                     {
@@ -133,7 +126,6 @@ public class AutoAttackSubstitute
                         {
                             Bot.Combat.Attack("*");
                             Bot.Sleep(500);
-
                         }
                         else
                         {
@@ -193,7 +185,10 @@ public class AutoAttackSubstitute
                                 if (mob.Name == null)
                                     continue;
 
-                                while (!Bot.ShouldExit && !Core.CheckInventory(questReward, Rewardquant))
+                                while (
+                                    !Bot.ShouldExit
+                                    && !Core.CheckInventory(questReward, Rewardquant)
+                                )
                                 {
                                     if (!Bot.Player.Alive)
                                         Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
@@ -206,7 +201,6 @@ public class AutoAttackSubstitute
 
                                     Bot.Combat.Attack(mob);
                                     Core.Sleep();
-
                                 }
                             }
 

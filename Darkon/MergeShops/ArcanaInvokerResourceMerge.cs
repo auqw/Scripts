@@ -373,7 +373,7 @@ public class ArcanaInvokerResourceMerge
                         stopBot: shouldStop
                     );
                     break;
-                #endregion
+        #endregion
 
                 case "Staff of Inversion":
                     Core.KillEscherion(req.Name, isTemp: req.Temp);
@@ -586,9 +586,19 @@ public class ArcanaInvokerResourceMerge
                     Core.Logger("Good luck with this \"ultra\"! --the maw");
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, 100))
                     {
-                        Core.HuntMonster("camlan", "Sleih", "Sleih's Changeling Records", log: false);
+                        Core.HuntMonster(
+                            "camlan",
+                            "Sleih",
+                            "Sleih's Changeling Records",
+                            log: false
+                        );
                         Core.HuntMonster("camlan", "Bellona", "Bellona's Edict of War", log: false);
-                        Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale", log: false);
+                        Core.HuntMonster(
+                            "camlan",
+                            "Metamorphosis Maw",
+                            "Alchemic Snake Scale",
+                            log: false
+                        );
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();

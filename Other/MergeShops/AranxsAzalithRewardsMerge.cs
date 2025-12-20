@@ -83,7 +83,7 @@ public class AranxsAzalithRewardsMerge
                         stopBot: shouldStop
                     );
                     break;
-                #endregion
+        #endregion
 
                 case "Infernalis Penna":
                     Core.FarmingLogger(req.Name, quant);

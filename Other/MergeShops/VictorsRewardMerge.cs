@@ -83,7 +83,7 @@ public class VictorsRewardMerge
                         stopBot: shouldStop
                     );
                     break;
-                #endregion
+        #endregion
 
                 #region Items not setup
 
@@ -186,7 +186,7 @@ public class VictorsRewardMerge
                     }
                     Core.HuntMonster("coliseum", "Chimera", req.Name, quant, false, false);
                     break;
-                    #endregion
+                #endregion
             }
         }
     }

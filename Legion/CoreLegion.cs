@@ -690,7 +690,9 @@ public class CoreLegion
         if (!Core.CheckInventory(11260))
         {
             if (FromStandAlone)
-                Core.Logger("Missing `Paragon Pet` (the pets actual name.. not just \a paragon pet\")");
+                Core.Logger(
+                    "Missing `Paragon Pet` (the pets actual name.. not just \a paragon pet\")"
+                );
             return;
         }
 
@@ -1033,7 +1035,7 @@ public class CoreLegion
             Bot.Quests.UpdateQuest(1542);
 
         Core.RegisterQuests(2742);
-            Core.KillMonster(
+        Core.KillMonster(
             Core.IsMember ? "hydra" : "firestorm",
             Core.IsMember ? "Rune2" : "r8",
             Core.IsMember ? "Right" : "Left",
@@ -1236,7 +1238,7 @@ public class CoreLegion
                 }
             }
 
-        Death:
+            Death:
             Core.Logger($"Death: {Death++}, resetting");
             while (!Bot.ShouldExit)
             {

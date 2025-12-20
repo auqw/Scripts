@@ -79,12 +79,12 @@ public class CoreUltra
     }
 
     public void Taunt(
-            string className,
-            int target,
-            string mode,
-            int delayMs = 0,
-            string? aura = null
-        )
+        string className,
+        int target,
+        string mode,
+        int delayMs = 0,
+        string? aura = null
+    )
     {
         if (string.IsNullOrWhiteSpace(className) || target <= 0)
             return;
@@ -110,7 +110,6 @@ public class CoreUltra
                 break;
         }
     }
-
 
     public void KillWithPriority(
         string primaryName,
@@ -575,10 +574,7 @@ public class CoreUltra
         return activeMembers > 0 && completedMembers == activeMembers;
     }
 
-    public bool CheckArmyProgressBool(
-        Func<bool> condition,
-        string syncFilePath = "army_sync.sync"
-    )
+    public bool CheckArmyProgressBool(Func<bool> condition, string syncFilePath = "army_sync.sync")
     {
         if (!Bot.Player.Alive)
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
@@ -614,7 +610,6 @@ public class CoreUltra
         }
         return activeMembers > 0 && completedMembers == activeMembers;
     }
-
 
     public void ClearSyncFile(string filePath)
     {
@@ -896,7 +891,13 @@ public class CoreUltra
             Core.Log("POTION", $"🧪 Queueing: {raw} ({aura})");
             BuyAlchemyPotion(raw);
 
-            for (int tries = 0; tries < 3 && !Bot.Self.Auras.Any(a => a != null && a.Name == aura) && !Bot.ShouldExit; tries++)
+            for (
+                int tries = 0;
+                tries < 3
+                    && !Bot.Self.Auras.Any(a => a != null && a.Name == aura)
+                    && !Bot.ShouldExit;
+                tries++
+            )
             {
                 Core.EquipConsumable(raw);
                 if (Bot.Inventory.IsEquipped(raw))
@@ -1229,7 +1230,20 @@ public class CoreUltra
     }
 
     // You can either make a secondary void or add all of the below to the first one under the first item.
-    public void ArmyHandler(string map, int[] QuestIDs, string WaitForArmysyncPath, string AggroCell, CheckType checkType, string? Itemname = null, int quant = 0, bool isTemp = false, bool UseBool = false, Func<bool>? condition = null, int PlayerCount = 0, string? QuestReward = null)
+    public void ArmyHandler(
+        string map,
+        int[] QuestIDs,
+        string WaitForArmysyncPath,
+        string AggroCell,
+        CheckType checkType,
+        string? Itemname = null,
+        int quant = 0,
+        bool isTemp = false,
+        bool UseBool = false,
+        Func<bool>? condition = null,
+        int PlayerCount = 0,
+        string? QuestReward = null
+    )
     {
         // Sync file used to keep track of what accs are done.
         string syncPath = ResolveSyncPath(WaitForArmysyncPath);
@@ -1313,11 +1327,10 @@ public class CoreUltra
         }
     }
 
-
     public enum CheckType
     {
         Bool = 1,
-        Item = 2
+        Item = 2,
     }
 
     #endregion

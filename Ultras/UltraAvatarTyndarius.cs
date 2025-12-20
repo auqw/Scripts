@@ -207,7 +207,11 @@ public class UltraAvatarTyndarius
             // ======================================================
             if (isBall1Taunter)
             {
-                Bot.Combat.Attack(Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 1 && x.HP > 0) ? 1 : Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 3 && x.HP > 0) ? 3 : 2);
+                Bot.Combat.Attack(
+                    Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 1 && x.HP > 0) ? 1
+                    : Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 3 && x.HP > 0) ? 3
+                    : 2
+                );
                 Bot.Sleep(500);
                 Bot.Skills.UseSkill(5);
             }

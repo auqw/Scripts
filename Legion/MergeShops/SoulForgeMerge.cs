@@ -111,7 +111,7 @@ public class SoulForgeMerge
                         stopBot: shouldStop
                     );
                     break;
-                #endregion
+        #endregion
 
                 case "Legion Token":
                     Legion.FarmLegionToken(quant);
@@ -148,7 +148,8 @@ public class SoulForgeMerge
                             "ShadowFallInvasion",
                             "Bone Creeper",
                             "Shards of a Soul",
-                            10, log: false
+                            10,
+                            log: false
                         );
                         Bot.Wait.ForPickup(req.Name);
                     }

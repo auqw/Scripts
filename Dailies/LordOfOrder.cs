@@ -180,7 +180,12 @@ public class LordOfOrder
             );
             Bot.Quests.UpdateQuest(4361);
             Bot.Sleep(2000);
-            Core.HuntMonster("treetitanbattle", "Dakka the Dire Dragon", "Dakka's Crystal", isTemp: false);
+            Core.HuntMonster(
+                "treetitanbattle",
+                "Dakka the Dire Dragon",
+                "Dakka's Crystal",
+                isTemp: false
+            );
             Core.HuntMonster("andre", "Giant Necklace", "Andre's Necklace Fragment", isTemp: false);
             // Perma-Aggroed mob escape.
             Core.JumpWait();

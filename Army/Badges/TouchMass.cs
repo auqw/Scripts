@@ -23,33 +23,58 @@ public class TouchMass
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots C => CoreBots.Instance;
 
-    private static CoreAdvanced Adv { get => _Adv ??= new CoreAdvanced(); set => _Adv = value; }
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
     private static CoreAdvanced _Adv;
 
-    private static CoreFarms Farm { get => _Farm ??= new CoreFarms(); set => _Farm = value; }
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
     private static CoreFarms _Farm;
 
-    private static CoreStory Story { get => _Story ??= new CoreStory(); set => _Story = value; }
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
     private static CoreStory _Story;
 
-    private static CoreDailies Daily { get => _Daily ??= new CoreDailies(); set => _Daily = value; }
+    private static CoreDailies Daily
+    {
+        get => _Daily ??= new CoreDailies();
+        set => _Daily = value;
+    }
     private static CoreDailies _Daily;
 
-    private static CoreArmyLite Army { get => _Army ??= new CoreArmyLite(); set => _Army = value; }
+    private static CoreArmyLite Army
+    {
+        get => _Army ??= new CoreArmyLite();
+        set => _Army = value;
+    }
     private static CoreArmyLite _Army;
 
-
-    private static CoreBots sCore { get => _sCore ??= new CoreBots(); set => _sCore = value; }
-
+    private static CoreBots sCore
+    {
+        get => _sCore ??= new CoreBots();
+        set => _sCore = value;
+    }
 
     private static CoreBots _sCore;
 
-    private static CoreArmyLite sArmy { get => _sArmy ??= new CoreArmyLite(); set => _sArmy = value; }
+    private static CoreArmyLite sArmy
+    {
+        get => _sArmy ??= new CoreArmyLite();
+        set => _sArmy = value;
+    }
 
     private static CoreArmyLite _sArmy;
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
-
 
     public string OptionsStorage = "Starfield Badge";
     public bool DontPreconfigure = true;
@@ -97,7 +122,6 @@ public class TouchMass
         C.PrivateRoomNumber = Army.getRoomNr();
         C.Logger("Setting Additional options to try and mitigate some lag.");
 
-
         C.AddDrop(86808); // Stars Destroyed
         C.EnsureAccept(9818);
 
@@ -132,6 +156,7 @@ public class TouchMass
             Bot.Sleep(500);
         }
     }
+
     private string badge = "Touch Mass";
 
     private void SetAdditonOptions()
@@ -186,8 +211,4 @@ public class TouchMass
         Bot.Lite.DisableDamageStrobe = true;
         C.Sleep();
     }
-
 }
-
-
-

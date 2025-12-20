@@ -58,7 +58,9 @@ public class ArchfiendDragonEgg
         //why the fuck was the class buffed!?
         InventoryItem? usethis = Bot
             .Inventory.Items.Concat(Bot.Bank.Items)
-            .FirstOrDefault(n => n.Name.StartsWith("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer"));
+            .FirstOrDefault(n =>
+                n.Name.StartsWith("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
+            );
 
         if (usethis != null)
             Core.Equip(usethis.ID);

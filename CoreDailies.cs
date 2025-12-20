@@ -890,12 +890,12 @@ public class CoreDailies
             Core.EnsureAccept(8653);
             Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster(
-               "icewing",
-               "Warlord Icewing",
-               "Glacial Pinion",
-               isTemp: false,
-               publicRoom: true
-           );
+                "icewing",
+                "Warlord Icewing",
+                "Glacial Pinion",
+                isTemp: false,
+                publicRoom: true
+            );
             Core.HuntMonster("hydrachallenge", "Hydra Head 90", "Hydra Eyeball", 3, isTemp: false);
             Core.HuntMonster(
                 "voidflibbi",

@@ -27,24 +27,37 @@ public class PickRandomScript
     {
         try
         {
-            string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            string appDataPath = Environment.GetFolderPath(
+                Environment.SpecialFolder.ApplicationData
+            );
             string sourceDirectory = Path.Combine(appDataPath, "Skua", "Scripts");
 
             // Folders to exclude anywhere in the tree
             HashSet<string> excludedFolders = new(StringComparer.OrdinalIgnoreCase)
-        {
-            "obj", "plugins", "Templates", "Ultras", "Tools", "WIP",
-            "Core", "docs", "Army", ".config", ".github", "bin"
-        };
+            {
+                "obj",
+                "plugins",
+                "Templates",
+                "Ultras",
+                "Tools",
+                "WIP",
+                "Core",
+                "docs",
+                "Army",
+                ".config",
+                ".github",
+                "bin",
+            };
 
             EnumerationOptions options = new()
             {
                 RecurseSubdirectories = true,
                 IgnoreInaccessible = true,
-                AttributesToSkip = FileAttributes.Hidden | FileAttributes.System
+                AttributesToSkip = FileAttributes.Hidden | FileAttributes.System,
             };
 
-            string[] files = Directory.EnumerateFiles(sourceDirectory, "*.cs", options)
+            string[] files = Directory
+                .EnumerateFiles(sourceDirectory, "*.cs", options)
                 .Where(f =>
                 {
                     string directory = Path.GetDirectoryName(f)!;
@@ -104,6 +117,4 @@ public class PickRandomScript
             Core.Logger($"❌ Error: {ex}");
         }
     }
-
-
 }

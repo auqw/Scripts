@@ -211,22 +211,22 @@ public class CoreArmyLite
         void PopulateAggroMonMapIDs()
         {
             foreach (string cell in _AggroMonCells)
-                foreach (int id in Bot.Monsters.GetMonstersByCell(cell).Select(m => m.MapID))
-                    AggroMonMapIDs.Add(id);
+            foreach (int id in Bot.Monsters.GetMonstersByCell(cell).Select(m => m.MapID))
+                AggroMonMapIDs.Add(id);
 
             foreach (string name in _AggroMonNames)
-                foreach (
-                    int id in Bot.Monsters.MapMonsters.Where(m => m.Name == name).Select(m => m.MapID)
-                )
-                    AggroMonMapIDs.Add(id);
+            foreach (
+                int id in Bot.Monsters.MapMonsters.Where(m => m.Name == name).Select(m => m.MapID)
+            )
+                AggroMonMapIDs.Add(id);
 
             foreach (int id in _AggroMonIDs)
-                foreach (
-                    int mapId in Bot
-                        .Monsters.MapMonsters.Where(m => m.ID == id || m.MapID == id)
-                        .Select(m => m.MapID)
-                )
-                    AggroMonMapIDs.Add(mapId);
+            foreach (
+                int mapId in Bot
+                    .Monsters.MapMonsters.Where(m => m.ID == id || m.MapID == id)
+                    .Select(m => m.MapID)
+            )
+                AggroMonMapIDs.Add(mapId);
 
             foreach (int mapID in _AggroMonMIDs)
                 AggroMonMapIDs.Add(mapID);
@@ -264,7 +264,7 @@ public class CoreArmyLite
     /// </summary>
     public void AggroMonStop(bool clear = false)
     {
-    Retry:
+        Retry:
         Bot.Options.AttackWithoutTarget = false;
         aggroCTS?.Cancel();
         aggroCTS?.Dispose();
@@ -1314,7 +1314,8 @@ public class CoreArmyLite
             Bot.Wait.ForMapLoad("house");
             Core.Sleep();
         }
-        else Core.Join("whitemap");
+        else
+            Core.Join("whitemap");
 
         if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
             Bot.Bank.Open();

@@ -1489,7 +1489,7 @@ public class CoreNation
             goto Retry7551;
         }
 
-    Retry2859:
+        Retry2859:
         Quest? Assistant = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2859));
         if (Assistant == null)
         {
@@ -1808,7 +1808,6 @@ public class CoreNation
         if (hasOBoNPet)
             QuestToRegister.Add(Core.CheckInventory(4809) ? 599 : 2561);
 
-
         // 9542 - Swindle's Bonus Deal - Swindle Bilk's To Go Hut
         if (Core.CheckInventory(38261))
             QuestToRegister.Add(9542);
@@ -1830,7 +1829,7 @@ public class CoreNation
             // 7551 - Swindle's Return Policy
             DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
-        Retry:
+            Retry:
             //reduce spam
             Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
             if (quest != null)
