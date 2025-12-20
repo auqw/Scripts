@@ -819,6 +819,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
   {
+    "name": "AstralEmpyrean",
+    "description": "Two-taunter strategy for Astral Empyrean with aura-based taunting and army synchronization.",
+    "tags": [
+      "ultra",
+      "astralempyrean",
+      "astral empyrean"
+    ],
+    "path": "Ultras/AstralEmpyrean.cs",
+    "size": 13058,
+    "sha256": "0c6e0c2cf796ce619c9bcafef98b108b9285d32962ded2d69c95127da838cef7",
+    "fileName": "AstralEmpyrean.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
