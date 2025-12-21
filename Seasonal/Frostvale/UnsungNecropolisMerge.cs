@@ -271,7 +271,24 @@ public class UnsungNecropolisMerge
                 case "Uncut Ruby":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("wentira", "Pesugihan Boar", req.Name, quant, false, false);
+                    if (Core.isSeasonalMapActive("wentira"))
+                        Core.HuntMonster(
+                            "wentira",
+                            "Pesugihan Boar",
+                            req.Name,
+                            quant,
+                            false,
+                            false
+                        );
+                    else
+                        Core.HuntMonster(
+                            "frostvalgala",
+                            "Vaughn Knight",
+                            req.Name,
+                            quant,
+                            false,
+                            false
+                        );
                     break;
 
                 case "Gleaming Ore":
