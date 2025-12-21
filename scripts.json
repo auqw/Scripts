@@ -84,18 +84,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmySpiritOrbs.cs"
   },
   {
-    "name": "Army Leveling",
-    "description": "Levles using aggroing on cell",
-    "tags": [
-      "null"
-    ],
-    "path": "Army/ArmyLeveling.cs",
-    "size": 3333,
-    "sha256": "df142aedb31d92b2c9bf39f3326b3ce28538a87c745770230886685a6c864bba",
-    "fileName": "ArmyLeveling.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmyLeveling.cs"
-  },
-  {
     "name": "null",
     "description": "null",
     "tags": [
@@ -4429,6 +4417,18 @@
     "sha256": "6228e6c19f04d481abdd08d1187bd8453ef6aba045027181e1a4a926035fcd0d",
     "fileName": "ArmyPrismatas.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyPrismatas.cs"
+  },
+  {
+    "name": "Army Leveling",
+    "description": "Levles using aggroing on cell",
+    "tags": [
+      "null"
+    ],
+    "path": "Army/Farm/ArmyLeveling.cs",
+    "size": 3333,
+    "sha256": "df142aedb31d92b2c9bf39f3326b3ce28538a87c745770230886685a6c864bba",
+    "fileName": "ArmyLeveling.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLeveling.cs"
   },
   {
     "name": "ArmyLR",
