@@ -55,7 +55,7 @@
     ],
     "path": "CoreBots.cs",
     "size": 417355,
-    "sha256": "7da2b9c68668bc757b673dab55ce725e458081d913c012660dbefaeab29cea01",
+    "sha256": "200b25938afd29fada801d5321cec79a30ec08000cbdf013c94e8fbd45d5c308",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4414,6 +4414,21 @@
     "sha256": "f7d82550b678bda9a4e777bc4f837d1f30ffb51fe721e5184ad11ed3075fec1f",
     "fileName": "SilverExaltedPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/SilverExaltedPaladin.cs"
+  },
+  {
+    "name": "Army Pristmas",
+    "description": "Farms gold using the Pristmas in /archmage and selling the elemental bindings",
+    "tags": [
+      "pristmas",
+      "elemental binding",
+      "gold",
+      "farm"
+    ],
+    "path": "Army/Farm/ArmyPrismatas.cs",
+    "size": 3085,
+    "sha256": "6228e6c19f04d481abdd08d1187bd8453ef6aba045027181e1a4a926035fcd0d",
+    "fileName": "ArmyPrismatas.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyPrismatas.cs"
   },
   {
     "name": "ArmyLR",
