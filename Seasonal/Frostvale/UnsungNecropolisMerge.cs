@@ -1,7 +1,7 @@
 /*
 name: Unsung Necropolis Merge
 description: This bot will farm the items belonging to the selected mode for the Unsung Necropolis Merge [2652] in /unsungnecropolis
-tags: unsung, necropolis, merge, unsungnecropolis, angel, azaveyr, wardens, angels, warden, morph, saviors, shadow, crown, royal, convalescence, ivoryfall, dragonblood, crest, snow, gale, cloak, arctic, vestige, tail, wings, ivoryblood, battleaxe, battleaxes, great
+tags: unsung, necropolis, merge, unsungnecropolis, angel, azaveyr, wardens, angels, warden, morph, saviors, shadow, crown, royal, convalescence, ivoryfall, dragonblood, crest, snow, gale, cloak, arctic, vestige, tail, wings, ivoryblood, battleaxe, battleaxes, great, shining, dragons, frostvale
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -73,8 +73,12 @@ public class UnsungNecropolisMerge
                 "Azureblood Battleaxes",
                 "Azureblood Great Axe",
                 "Azureblood Great Axes",
+                "Whistler Bullion",
+                "Uncut Ruby",
+                "Gleaming Ore",
             }
         );
+
         Core.SetOptions();
 
         BuyAllMerge();
@@ -243,6 +247,45 @@ public class UnsungNecropolisMerge
                         false
                     );
                     break;
+
+                case "Whistler Bullion":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(
+                            Core.IsMember ? 10525 : 10524,
+                            ("frostvalgala", "Unsung Queen", ClassType.Solo),
+                            ("frostvalgala", "Unsung Knight", ClassType.Farm),
+                            ("frostvalgala", "Unsung Beast", ClassType.Farm)
+                        );
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+
+                case "Uncut Ruby":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.HuntMonster("wentira", "Pesugihan Boar", req.Name, quant, false, false);
+                    break;
+
+                case "Gleaming Ore":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("castleparty", "Treasure Chest", req.Name, quant, req.Temp);
+                    break;
                 #endregion
             }
         }
@@ -380,6 +423,12 @@ public class UnsungNecropolisMerge
             "98048",
             "Ivoryblood Great Axes",
             "Mode: [select] only\nShould the bot buy \"Ivoryblood Great Axes\" ?",
+            false
+        ),
+        new Option<bool>(
+            "98058",
+            "Shining Dragon's Blade of Frostvale",
+            "Mode: [select] only\nShould the bot buy \"Shining Dragon's Blade of Frostvale\" ?",
             false
         ),
     };
