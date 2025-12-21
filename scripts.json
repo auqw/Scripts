@@ -19722,11 +19722,14 @@
       "ivoryblood",
       "battleaxe",
       "battleaxes",
-      "great"
+      "great",
+      "shining",
+      "dragons",
+      "frostvale"
     ],
     "path": "Seasonal/Frostvale/UnsungNecropolisMerge.cs",
-    "size": 13448,
-    "sha256": "211baa35ba1cfad6b9d6b59a75ae34e0188065587ba9d1b4ba31fb16e52a26a7",
+    "size": 15547,
+    "sha256": "61f23e823a89d78b6fb003d7efeb7f08893ddeed942d99422479361db5b6d9da",
     "fileName": "UnsungNecropolisMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/UnsungNecropolisMerge.cs"
   },
