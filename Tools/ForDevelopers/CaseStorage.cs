@@ -24073,16 +24073,6 @@ case ""Beloved Blessing Hair"":
     "
         },
         {
-            "Uncut Ruby",
-            @"
-case ""Uncut Ruby"":
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster(""wentira"", ""Pesugihan Boar"", req.Name, quant, false, false);
-                    break;
-    "
-        },
-        {
             "Beloved Blessing Locks",
             @"
 case ""Beloved Blessing Locks"":
@@ -30173,9 +30163,9 @@ case ""Silver Carteret Spear and Shield"":
                     break;
     "
         },
-    {
-    "Tattered Page",
-    @"
+        {
+            "Tattered Page",
+            @"
 case ""Tattered Page"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30196,10 +30186,10 @@ case ""Tattered Page"":
                     );
                     break;
     "
-},
-{
-    "Unsung Warden Hair",
-    @"
+        },
+        {
+            "Unsung Warden Hair",
+            @"
 case ""Unsung Warden Hair"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30220,10 +30210,10 @@ case ""Unsung Warden Hair"":
                     );
                     break;
     "
-},
-{
-    "Unsung Angel Locks",
-    @"
+        },
+        {
+            "Unsung Angel Locks",
+            @"
 case ""Unsung Angel Locks"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30244,10 +30234,10 @@ case ""Unsung Angel Locks"":
                     );
                     break;
     "
-},
-{
-    "Azurefall Dragonblood",
-    @"
+        },
+        {
+            "Azurefall Dragonblood",
+            @"
 case ""Azurefall Dragonblood"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30268,10 +30258,10 @@ case ""Azurefall Dragonblood"":
                     );
                     break;
     "
-},
-{
-    "Azurefall Helm",
-    @"
+        },
+        {
+            "Azurefall Helm",
+            @"
 case ""Azurefall Helm"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30292,10 +30282,10 @@ case ""Azurefall Helm"":
                     );
                     break;
     "
-},
-{
-    "Azurefall Crest",
-    @"
+        },
+        {
+            "Azurefall Crest",
+            @"
 case ""Azurefall Crest"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30316,10 +30306,10 @@ case ""Azurefall Crest"":
                     );
                     break;
     "
-},
-{
-    "Ice Gale Cape",
-    @"
+        },
+        {
+            "Ice Gale Cape",
+            @"
 case ""Ice Gale Cape"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30340,10 +30330,10 @@ case ""Ice Gale Cape"":
                     );
                     break;
     "
-},
-{
-    "Ice Gale Cloak",
-    @"
+        },
+        {
+            "Ice Gale Cloak",
+            @"
 case ""Ice Gale Cloak"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30364,10 +30354,10 @@ case ""Ice Gale Cloak"":
                     );
                     break;
     "
-},
-{
-    "Glacial Vestige Tail",
-    @"
+        },
+        {
+            "Glacial Vestige Tail",
+            @"
 case ""Glacial Vestige Tail"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30388,10 +30378,10 @@ case ""Glacial Vestige Tail"":
                     );
                     break;
     "
-},
-{
-    "Glacial Vestige Wings",
-    @"
+        },
+        {
+            "Glacial Vestige Wings",
+            @"
 case ""Glacial Vestige Wings"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30412,10 +30402,10 @@ case ""Glacial Vestige Wings"":
                     );
                     break;
     "
-},
-{
-    "Glacial Vestige Wings and Tail",
-    @"
+        },
+        {
+            "Glacial Vestige Wings and Tail",
+            @"
 case ""Glacial Vestige Wings and Tail"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30436,10 +30426,10 @@ case ""Glacial Vestige Wings and Tail"":
                     );
                     break;
     "
-},
-{
-    "Non-Melt Ice",
-    @"
+        },
+        {
+            "Non-Melt Ice",
+            @"
 case ""Non-Melt Ice"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30470,10 +30460,10 @@ case ""Non-Melt Ice"":
                     }
                     break;
     "
-},
-{
-    "Azureblood Blade",
-    @"
+        },
+        {
+            "Azureblood Blade",
+            @"
 case ""Azureblood Blade"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30494,10 +30484,10 @@ case ""Azureblood Blade"":
                     );
                     break;
     "
-},
-{
-    "Azureblood Great Axe",
-    @"
+        },
+        {
+            "Azureblood Great Axe",
+            @"
 case ""Azureblood Great Axe"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30518,10 +30508,10 @@ case ""Azureblood Great Axe"":
                     );
                     break;
     "
-},
-{
-    "Azureblood Great Axes",
-    @"
+        },
+        {
+            "Azureblood Great Axes",
+            @"
 case ""Azureblood Great Axes"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30542,10 +30532,10 @@ case ""Azureblood Great Axes"":
                     );
                     break;
     "
-},
-{
-    "Azureblood Battleaxe",
-    @"
+        },
+        {
+            "Azureblood Battleaxe",
+            @"
 case ""Azureblood Battleaxe"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30566,10 +30556,10 @@ case ""Azureblood Battleaxe"":
                     );
                     break;
     "
-},
-{
-    "Azureblood Battleaxes",
-    @"
+        },
+        {
+            "Azureblood Battleaxes",
+            @"
 case ""Azureblood Battleaxes"":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -30590,8 +30580,35 @@ case ""Azureblood Battleaxes"":
                     );
                     break;
     "
-},
-};
+        },
+        {
+            "Uncut Ruby",
+            @"
+case ""Uncut Ruby"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    if (Core.isSeasonalMapActive(""wentira""))
+                        Core.HuntMonster(
+                            ""wentira"",
+                            ""Pesugihan Boar"",
+                            req.Name,
+                            quant,
+                            false,
+                            false
+                        );
+                    else
+                        Core.HuntMonster(
+                            ""frostvalgala"",
+                            ""Vaughn Knight"",
+                            req.Name,
+                            quant,
+                            false,
+                            false
+                        );
+                    break;
+    "
+        },
+    };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);
