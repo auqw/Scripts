@@ -211,22 +211,22 @@ public class CoreArmyLite
         void PopulateAggroMonMapIDs()
         {
             foreach (string cell in _AggroMonCells)
-            foreach (int id in Bot.Monsters.GetMonstersByCell(cell).Select(m => m.MapID))
-                AggroMonMapIDs.Add(id);
+                foreach (int id in Bot.Monsters.GetMonstersByCell(cell).Select(m => m.MapID))
+                    AggroMonMapIDs.Add(id);
 
             foreach (string name in _AggroMonNames)
-            foreach (
-                int id in Bot.Monsters.MapMonsters.Where(m => m.Name == name).Select(m => m.MapID)
-            )
-                AggroMonMapIDs.Add(id);
+                foreach (
+                    int id in Bot.Monsters.MapMonsters.Where(m => m.Name == name).Select(m => m.MapID)
+                )
+                    AggroMonMapIDs.Add(id);
 
             foreach (int id in _AggroMonIDs)
-            foreach (
-                int mapId in Bot
-                    .Monsters.MapMonsters.Where(m => m.ID == id || m.MapID == id)
-                    .Select(m => m.MapID)
-            )
-                AggroMonMapIDs.Add(mapId);
+                foreach (
+                    int mapId in Bot
+                        .Monsters.MapMonsters.Where(m => m.ID == id || m.MapID == id)
+                        .Select(m => m.MapID)
+                )
+                    AggroMonMapIDs.Add(mapId);
 
             foreach (int mapID in _AggroMonMIDs)
                 AggroMonMapIDs.Add(mapID);
@@ -264,7 +264,7 @@ public class CoreArmyLite
     /// </summary>
     public void AggroMonStop(bool clear = false)
     {
-        Retry:
+    Retry:
         Bot.Options.AttackWithoutTarget = false;
         aggroCTS?.Cancel();
         aggroCTS?.Dispose();
@@ -1248,6 +1248,7 @@ public class CoreArmyLite
 
     public bool SellToSyncOn = false;
     #endregion
+
     #region OneClient
 
     public bool doForAll()
@@ -1350,45 +1351,10 @@ public class CoreArmyLite
                     return Array.Empty<(string, string)>();
                 }
 
-                string json = File.ReadAllText(settingsPath);
-                var settings = JsonConvert.DeserializeObject<dynamic>(json);
-
-                IEnumerable<dynamic> managedAccounts =
-                    (settings?.manager?.ManagedAccounts as IEnumerable<dynamic>)
-                    ?? Enumerable.Empty<dynamic>();
-                if (!managedAccounts.Any())
-                {
-                    Core.Logger(
-                        "No managed accounts found in skua.settings.json. Add accounts using The `Skua Manager` app.",
-                        "AccountManager",
-                        true
-                    );
-                    Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
-                    Bot.Stop(true);
-                    return Array.Empty<(string, string)>();
-                }
-
-                foreach (var account in managedAccounts)
-                {
-                    try
-                    {
-                        string accountStr = account.ToString();
-                        string[] parts = accountStr.Split(new[] { "{=}" }, StringSplitOptions.None);
-
-                        if (parts.Length >= 3)
-                        {
-                            string username = parts[1].Trim();
-                            string password = parts[2].Trim();
-
-                            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-                                toReturn.Add((username, password));
-                        }
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-                }
+                List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
+                foreach (var acc in accounts)
+                    if (!string.IsNullOrEmpty(acc?.Username) && !string.IsNullOrEmpty(acc?.Password))
+                        toReturn.Add((acc.Username, acc.Password));
             }
             catch (Exception ex)
             {
@@ -1429,6 +1395,7 @@ public class CoreArmyLite
     };
     #endregion
 
+    
     #region Butler
     public void Butler(
         string playerName,
