@@ -1,7 +1,7 @@
 /*
 name: Snowview Race Merge
-description: This will get all or selected items on this merge shop.
-tags: snowview-race-merge, seasonal, frostvale
+description: This bot will farm the items belonging to the selected mode for the Snowview Race Merge [2196] in /snowviewrace
+tags: snowview, race, merge, snowviewrace, frigid, festive, wear, morph, paperboy, cap, papergirl, ice, halation, bell, flail
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -59,11 +59,11 @@ public class SnowviewRaceMerge
         Core.SetOptions(false);
     }
 
-    public void BuyAllMerge()
+    public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
         FV.SnowviewRace();
         //Only edit the map and shopID here
-        Adv.StartBuyAllMerge("snowviewrace", 2196, findIngredients);
+        Adv.StartBuyAllMerge("snowviewrace", 2196, findIngredients, buyOnlyThis, buyMode: buyMode);
 
         #region Dont edit this part
         void findIngredients()
