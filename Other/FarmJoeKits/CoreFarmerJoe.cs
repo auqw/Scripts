@@ -1221,59 +1221,49 @@ public class CoreFarmerJoe
     /// </summary>
     public void SetClass()
     {
-        var available = Bot
-            .Inventory.Items.Concat(Bot.Bank.Items)
-            .Where(x => x?.Category == ItemCategory.Class)
-            .ToList();
+        // *If* Core class isnt apart of the soloClasses/farmClasses, use CBO of the same type,
+        // otherwise use the first in the list / if it returns null use players currentclass
+        if (soloClasses.Contains(Core.SoloClass))
+            Core.SoloClass = soloClasses.FirstOrDefault(x => Core.CheckInventory(x)) ?? Core.SoloClass ?? Bot.Player.CurrentClass.Name;
 
-        var newSolo =
-            soloClasses.FirstOrDefault(c => available.Any(i => i.Name == c)) ?? Core.SoloClass;
-        var newFarm =
-            farmClasses.FirstOrDefault(c => available.Any(i => i.Name == c)) ?? Core.FarmClass;
+        if (farmClasses.Contains(Core.FarmClass))
+            Core.FarmClass = farmClasses.FirstOrDefault(x => Core.CheckInventory(x)) ?? Core.FarmClass ?? Bot.Player.CurrentClass.Name;
 
-        Core.SoloClass = newSolo;
-        Core.FarmClass = newFarm;
+        if (Core.CheckClassRank(false, Core.SoloClass) < 10)
+            Adv.RankUpClass(Core.SoloClass);
 
-        foreach (var className in new[] { newSolo, newFarm })
-            if (
-                className != "Generic"
-                && (available.FirstOrDefault(i => i.Name == className)?.Quantity ?? 0)
-                    < RANK_10_CLASS_POINTS
-            )
-            {
-                var item = available.First(i => i.Name == className);
-                Core.Unbank(item.ID);
-                Adv.RankUpClass(className);
-            }
+        if (Core.CheckClassRank(false, Core.FarmClass) < 10)
+            Adv.RankUpClass(Core.FarmClass);  // Fixed: was Core.SoloClass
 
         if (Bot.Config!.Get<bool>("EquipBoostingGear"))
         {
             var dmg = new[]
             {
-                "dmgAll",
-                "gold",
-                "cp",
-                "rep",
-                "Undead",
-                "Chaos",
-                "Elemental",
-                "Dragonkin",
-                "Human",
-            };
+            "dmgAll",
+            "gold",
+            "cp",
+            "rep",
+            "Undead",
+            "Chaos",
+            "Elemental",
+            "Dragonkin",
+            "Human",
+        };
             var arm = Core.CheckInventory("Polly Roger") ? new[] { "gold", "cp", "rep" } : dmg;
             Core.EquipBestItemsForMeta(
                 new()
                 {
-                    { "Cape", dmg },
-                    { "Helm", dmg },
-                    { "Armor", arm },
-                    { "Weapon", new[] { "dmgAll", "gold", "cp", "rep" } },
-                    { "Pet", dmg },
+                { "Cape", dmg },
+                { "Helm", dmg },
+                { "Armor", arm },
+                { "Weapon", new[] { "dmgAll", "gold", "cp", "rep" } },
+                { "Pet", dmg },
                 }
             );
         }
 
-        Core.Logger($"Setting SoloClass to: {newSolo}.\nSetting FarmClass to: {newFarm}.");
+        Core.Logger($"SoloClass {Core.SoloClass}");
+        Core.Logger($"FarmClass {Core.FarmClass}");
     }
 
     /// <summary>
