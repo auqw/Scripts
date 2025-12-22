@@ -2340,7 +2340,7 @@ public class CoreBots
         int retryCount = 0;
         int sell_count = all ? Bot.Inventory.GetQuantity(itemName) : quant;
         int QuantAfterSale = Bot.Inventory.GetQuantity(itemName) - sell_count;
-        Retry:
+    Retry:
 
         JumpWait();
 
@@ -7587,8 +7587,11 @@ public class CoreBots
         Bot.Stop(true);
     }
 
-    public void ByPassCheck()
+    public void ByPassCheck((string, string) CellPad)
     {
+        if (!Bot.Player.Alive || (Bot.Player.Cell == null || Bot.Player.Pad == null))
+            return;
+
         // Wait until the player is alive
         while (!Bot.ShouldExit && !Bot.Player.Alive)
         {
@@ -7647,6 +7650,9 @@ public class CoreBots
         );
 
         // Sleep after sending the packet to give time for processing
+        Sleep();
+
+        Bot.Map.Jump(cell, pad);
         Sleep();
     }
 
@@ -9218,7 +9224,7 @@ public class CoreBots
         bool ignoreCheck = false
     )
     {
-        retry:
+    retry:
         // Attempt to join the map and load SWF
         Join(map, cell, pad, ignoreCheck: ignoreCheck, publicRoom: false);
         Bot.Wait.ForMapLoad(map);
@@ -9404,7 +9410,7 @@ public class CoreBots
     /// <param name="moveY">Y position of the door</param>
     public void PvPMove(int mtcid, string cell, int moveX = 0, int moveY = 0)
     {
-        retry:
+    retry:
         // Different maps = differnt walk speeds for pvp appearenty
         Bot.Send.Packet(
             $"%xt%zm%mv%{Bot.Map.RoomID}%{moveX}%{moveY}%{(Bot.Map.Name == "dagepvp" ? "10%" : "8%")}"
