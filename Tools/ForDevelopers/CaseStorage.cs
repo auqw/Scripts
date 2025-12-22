@@ -20724,7 +20724,7 @@ case ""Ectoplasmic Token"":
             @"
 case ""Aurum Wings Blade"":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
+                    Core.HuntMonsterMapID(""caroltown"", 4, req.Name, quant, false);
                     break;
     "
         },
@@ -20733,7 +20733,7 @@ case ""Aurum Wings Blade"":
             @"
 case ""Brunswick Leo Scion"":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonsterMapID(""caroltown"", 6, req.Name, quant, false);
+                    Core.HuntMonsterMapID(""caroltown"", 4, req.Name, quant, false);
                     break;
     "
         },

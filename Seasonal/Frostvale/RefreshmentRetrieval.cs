@@ -33,7 +33,6 @@ public class RefreshmentRetrieval
     private void RandomReward(int questID, int quant)
     {
         QuestPreReq();
-        int i = 0;
 
         List<ItemBase> RewardOptions = Core.EnsureLoad(questID).Rewards;
 
@@ -50,19 +49,8 @@ public class RefreshmentRetrieval
                 Core.Logger($"{Reward.Name} Found.");
             else
             {
-                Core.FarmingLogger(Reward.Name, 1);
-                while (!Bot.ShouldExit && !Core.CheckInventory(Reward.Name, toInv: false))
-                {
-                    Core.HuntMonster("caroltown", "Frostval Deer", "Frostval Refreshments", 10);
+                Core.HuntMonster("caroltown", "Frostval Deer", Reward.Name);
 
-                    i++;
-
-                    if (i % 5 == 0)
-                    {
-                        Core.JumpWait();
-                        Core.ToBank(QuestRewards);
-                    }
-                }
             }
         }
     }
@@ -78,17 +66,8 @@ public class RefreshmentRetrieval
         Core.EnsureAccept(9028);
         while (!Bot.ShouldExit && !Bot.Quests.CanComplete(9028))
         {
-            Core.Join("caroltown");
+            Core.HuntMonster("caroltown", "Frostval Tree");
 
-            for (int killCount = 0; killCount < 3 && !Bot.ShouldExit; killCount++)
-            {
-                Bot.Kill.Monster(1);
-
-                Core.Logger(
-                    $"Kill: {killCount + 1}/3, {(killCount < 2 ? "Swapping Map at 3" : "Swapping map to respawn mob")}"
-                );
-                Bot.Wait.ForMonsterSpawn(1);
-            }
         }
         Core.EnsureComplete(9028);
     }
