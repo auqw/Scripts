@@ -1224,40 +1224,46 @@ public class CoreFarmerJoe
         // *If* Core class isnt apart of the soloClasses/farmClasses, use CBO of the same type,
         // otherwise use the first in the list / if it returns null use players currentclass
         if (soloClasses.Contains(Core.SoloClass))
-            Core.SoloClass = soloClasses.FirstOrDefault(x => Core.CheckInventory(x)) ?? Core.SoloClass ?? Bot.Player.CurrentClass.Name;
+            Core.SoloClass =
+                soloClasses.FirstOrDefault(x => Core.CheckInventory(x))
+                ?? Core.SoloClass
+                ?? Bot.Player.CurrentClass!.Name;
 
         if (farmClasses.Contains(Core.FarmClass))
-            Core.FarmClass = farmClasses.FirstOrDefault(x => Core.CheckInventory(x)) ?? Core.FarmClass ?? Bot.Player.CurrentClass.Name;
+            Core.FarmClass =
+                farmClasses.FirstOrDefault(x => Core.CheckInventory(x))
+                ?? Core.FarmClass
+                ?? Bot.Player.CurrentClass!.Name;
 
         if (Core.CheckClassRank(false, Core.SoloClass) < 10)
             Adv.RankUpClass(Core.SoloClass);
 
         if (Core.CheckClassRank(false, Core.FarmClass) < 10)
-            Adv.RankUpClass(Core.FarmClass);  // Fixed: was Core.SoloClass
+            Adv.RankUpClass(Core.FarmClass); // Fixed: was Core.SoloClass
 
         if (Bot.Config!.Get<bool>("EquipBoostingGear"))
         {
             var dmg = new[]
             {
-            "dmgAll",
-            "gold",
-            "cp",
-            "rep",
-            "Undead",
-            "Chaos",
-            "Elemental",
-            "Dragonkin",
-            "Human",
-        };
+                "dmgAll",
+                "gold",
+                "cp",
+                "rep",
+                "Undead",
+                "Chaos",
+                "Elemental",
+                "Dragonkin",
+                "Human",
+            };
             var arm = Core.CheckInventory("Polly Roger") ? new[] { "gold", "cp", "rep" } : dmg;
             Core.EquipBestItemsForMeta(
                 new()
                 {
-                { "Cape", dmg },
-                { "Helm", dmg },
-                { "Armor", arm },
-                { "Weapon", new[] { "dmgAll", "gold", "cp", "rep" } },
-                { "Pet", dmg },
+                    { "Cape", dmg },
+                    { "Helm", dmg },
+                    { "Armor", arm },
+                    { "Weapon", new[] { "dmgAll", "gold", "cp", "rep" } },
+                    { "Pet", dmg },
                 }
             );
         }
