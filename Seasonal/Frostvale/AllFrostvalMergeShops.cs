@@ -42,12 +42,7 @@ public class AllFrostvalMergeShops
     public List<IOption> Options = new()
     {
         CoreBots.Instance.SkipOptions,
-        new Option<mergeOptionsEnum>(
-            "mergeOptions",
-            "Select Merge Options",
-            "Choose which merge mode to complete (all / acOnly).",
-            mergeOptionsEnum.all
-        ),
+        new Option<bool>("acOnly", "AC Only Mode", "True = AC only, False = All items", false),
     };
 
     private readonly (string Name, Action<mergeOptionsEnum> Run)[] _merges =
@@ -72,16 +67,10 @@ public class AllFrostvalMergeShops
     {
         Core.SetOptions();
 
-        DoAllMerges((mergeOptionsEnum)Bot.Config!.Get<mergeOptionsEnum>("mergeOptions"));
-        mergeOptionsEnum option = (mergeOptionsEnum)
-            Bot.Config!.Get<mergeOptionsEnum>("mergeOptions");
-        if (option is not mergeOptionsEnum.all and not mergeOptionsEnum.acOnly)
-        {
-            Core.Logger("mergeOptions restricted to all or acOnly; defaulting to all.");
-            option = mergeOptionsEnum.all;
-        }
+        bool acOnly = Bot.Config!.Get<bool>("acOnly");
+        mergeOptionsEnum mode = acOnly ? mergeOptionsEnum.acOnly : mergeOptionsEnum.all;
 
-        DoAllMerges(option);
+        DoAllMerges(mode);
 
         Core.SetOptions(false);
     }
