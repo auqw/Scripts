@@ -555,7 +555,7 @@ public class CoreFarmerJoe
     #region Leve30 to 75
     /// <summary>
     /// Progresses the character from level 30 to 75 by acquiring essential items and enhancing classes. This includes:
-    /// - **Item Acquisition:** Obtaining items like "Awethur's Accoutrements," "Master Ranger," "Burning Blade," "Scarlet Sorceress," "Blaze Binder," "DragonSoul Shinobi," "ArchPaladin," and "ArchFiend DeathLord."
+    /// - **Item Acquisition:** Obtaining items like "Awethur's Accoutrements," "Master Ranger," "Burning Blade", "Scarlet Sorceress," "Blaze Binder," "DragonSoul Shinobi," "ArchPaladin," and "ArchFiend DeathLord."
     /// - **Class Enhancements:** Ensuring classes are ranked up and equipped as needed.
     /// - **Experience Farming:** Efficiently farming experience for each level milestone (30, 50, 55, 60, 65, 70, and 75).
     /// </summary>
