@@ -19984,8 +19984,8 @@
       "greataxes"
     ],
     "path": "Seasonal/Frostvale/CarolingMerge.cs",
-    "size": 13644,
-    "sha256": "a6a6aed2ed401a75b6680197ef1be4afa4dd6a1124331b8dc5a7587af17fd723",
+    "size": 13552,
+    "sha256": "deea2e2c0a97040c12d54d75ca68419cfdcc7b816fecdacdbb4a3178fd618dd4",
     "fileName": "CarolingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/CarolingMerge.cs"
   },
@@ -20105,8 +20105,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/RefreshmentRetrieval.cs",
-    "size": 2712,
-    "sha256": "74a85c69f5bade315f2bec09c0402857716afb97a9df2d7e2bde8177ca1eecb7",
+    "size": 2678,
+    "sha256": "443fb164470cccae3b5603a67eda01ff28bfdb41acbd95c89beef30dcccf9a0b",
     "fileName": "RefreshmentRetrieval.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/RefreshmentRetrieval.cs"
   },
@@ -24519,8 +24519,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1107894,
-    "sha256": "5b83cd4dc168ba89ec8e07ce998cb6ce35751c6d5e483ff59e45847e13d89cbb",
+    "size": 1107702,
+    "sha256": "60bca080283c1af61746177ca6ce04dac64ba8d4d7b2fd8fa8f400e569e98655",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
