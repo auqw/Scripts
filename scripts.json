@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 168304,
-    "sha256": "c3649bad051333e22cb8cdb3ca0964fb97d29e4e1c1049bdd2431c29d0660631",
+    "size": 167026,
+    "sha256": "d2c25b3822440c05ea27024601b4e3a69f3c0db0bdd2e476b9766b83240104b8",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 417355,
-    "sha256": "200b25938afd29fada801d5321cec79a30ec08000cbdf013c94e8fbd45d5c308",
+    "size": 417525,
+    "sha256": "fdcf2a9fa8ab7582d3b1f7d54247f9f78108fc1e438c2c6deba1eeb788e54729",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -13301,8 +13301,8 @@
       "null"
     ],
     "path": "Other/Classes/ScarletSorceress.cs",
-    "size": 3029,
-    "sha256": "78449ffc852d2978c6147a7bf937170dc62d7d7c3e7df0f1954b53ea86e8f2cf",
+    "size": 3173,
+    "sha256": "7c52c780bda6a0d89c9759a61f61dda22e81098125ce3f9c73cbc98337a17e4e",
     "fileName": "ScarletSorceress.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ScarletSorceress.cs"
   },
