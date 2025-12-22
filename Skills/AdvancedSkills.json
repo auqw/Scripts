@@ -6308,26 +6308,47 @@
   },
   "Ninja": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Vanish",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "MultiAura",
+              "value": 1,
+              "comparison": "greater",
+              "auraName": "Vanish",
+              "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 0,
+              "comparison": "greater",
+              "auraName": "Reappear",
+              "auraTarget": "self"
+            }
+          ],
+          "isMultiAura": true,
+          "multiAuraOperator": "AND"
+        },
+        {
+          "skillId": 1
         },
         {
           "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 1
         }
       ]
     }
