@@ -890,7 +890,7 @@ public class CoreFarms
         if (Bot.Player.Level < 100)
             ToggleBoost(BoostType.Experience);
 
-        Core.ByPassCheck();
+        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 1-5
         Bot.Log($"rankUpClass: {rankUpClass}, CurrentClassRank: {Bot.Player.CurrentClassRank}");
         while (
@@ -907,10 +907,7 @@ public class CoreFarms
             {
                 if (Bot.Player.Alive)
                 {
-                    Bot.Send.ClientPacket(
-                        "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                        type: "json"
-                    );
+                    Core.ByPassCheck(("r4", "Bottom"));
                     Bot.Sleep(1000);
                     Core.Jump("r4", "Bottom");
                     Bot.Wait.ForCellChange("r4");
@@ -938,7 +935,8 @@ public class CoreFarms
 
         if (Bot.Player.Level >= level && !rankUpClass)
             goto Cleanup;
-        Core.ByPassCheck();
+        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+
         // Farming between levels 5-10
         while (
             !Bot.ShouldExit
@@ -954,10 +952,7 @@ public class CoreFarms
             {
                 if (Bot.Player.Alive)
                 {
-                    Bot.Send.ClientPacket(
-                        "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                        type: "json"
-                    );
+                    Core.ByPassCheck(("r5", "Left"));
                     Bot.Sleep(1000);
                     Core.Jump("r5", "Left");
                     Bot.Wait.ForCellChange("r5");
@@ -986,7 +981,7 @@ public class CoreFarms
 
         if (Bot.Player.Level >= level && !rankUpClass)
             goto Cleanup;
-        Core.ByPassCheck();
+        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 10-20
         while (
             !Bot.ShouldExit
@@ -1002,10 +997,7 @@ public class CoreFarms
             {
                 if (Bot.Player.Alive)
                 {
-                    Bot.Send.ClientPacket(
-                        "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                        type: "json"
-                    );
+                    Core.ByPassCheck(("r6", "Left"));
                     Bot.Sleep(1000);
                     Core.Jump("r6", "Left");
                     Bot.Wait.ForCellChange("r6");
@@ -1033,7 +1025,7 @@ public class CoreFarms
 
         if (Bot.Player.Level >= level && !rankUpClass)
             goto Cleanup;
-        Core.ByPassCheck();
+        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 20-25
         if (Bot.Player.Level < 25)
         {
@@ -1052,10 +1044,7 @@ public class CoreFarms
                 {
                     if (Bot.Player.Alive)
                     {
-                        Bot.Send.ClientPacket(
-                            "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                            type: "json"
-                        );
+                        Core.ByPassCheck(("r7", "Left"));
                         Bot.Sleep(1000);
                         Core.Jump("r7", "Left");
                         Bot.Wait.ForCellChange("r7");
@@ -1086,7 +1075,7 @@ public class CoreFarms
 
         if (Bot.Player.Level >= level && !rankUpClass)
             goto Cleanup;
-        Core.ByPassCheck();
+        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 25-30
         while (
             !Bot.ShouldExit
@@ -1102,10 +1091,7 @@ public class CoreFarms
             {
                 if (Bot.Player.Alive)
                 {
-                    Bot.Send.ClientPacket(
-                        "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                        type: "json"
-                    );
+                    Core.ByPassCheck(("r10", "Left"));
                     Bot.Sleep(1000);
                     Core.Jump("r10", "Left");
                     Bot.Wait.ForCellChange("r10");
@@ -1133,7 +1119,7 @@ public class CoreFarms
 
         if (Bot.Player.Level >= level && !rankUpClass)
             goto Cleanup;
-        Core.ByPassCheck();
+        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 30-35 (and switching to solo class if needed)
         if (Bot.Player.Level >= 30 && Bot.Player.Level < 35)
         {
@@ -1154,10 +1140,7 @@ public class CoreFarms
                 {
                     if (Bot.Player.Alive)
                     {
-                        Bot.Send.ClientPacket(
-                            "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                            type: "json"
-                        );
+                        Core.ByPassCheck(("r11", "Left"));
                         Bot.Sleep(1000);
                         Core.Jump("r11", "Left");
                         Bot.Wait.ForCellChange("r11");
@@ -1192,7 +1175,7 @@ public class CoreFarms
         if (!rankUpClass)
             Core.EquipClass(ClassType.Farm);
 
-        Core.ByPassCheck();
+        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 35-50
         Core.RegisterQuests(6629);
         while (
@@ -1211,10 +1194,7 @@ public class CoreFarms
                     break;
                 if (Bot.Player.Alive)
                 {
-                    Bot.Send.ClientPacket(
-                        "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                        type: "json"
-                    );
+                    Core.ByPassCheck(("r14", "Left"));
                     Bot.Sleep(1000);
                     Core.Jump("r14", "Left");
                     Bot.Wait.ForCellChange("r14");
@@ -1244,7 +1224,7 @@ public class CoreFarms
 
         if (Bot.Player.Level >= level && !rankUpClass)
             goto Cleanup;
-        Core.ByPassCheck();
+        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 50-61
         while (
             !Bot.ShouldExit
@@ -1260,10 +1240,7 @@ public class CoreFarms
             {
                 if (Bot.Player.Alive)
                 {
-                    Bot.Send.ClientPacket(
-                        "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                        type: "json"
-                    );
+                    Core.ByPassCheck(("r16", "Left"));
                     Bot.Sleep(1000);
                     Core.Jump("r16", "Left");
                     Bot.Wait.ForCellChange("r16");
@@ -1291,7 +1268,7 @@ public class CoreFarms
 
         if (Bot.Player.Level >= level && !rankUpClass)
             goto Cleanup;
-        Core.ByPassCheck();
+        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 61-75 with BattleGroundE for non-rank-up class
         if (Bot.Player.Level >= 61 && Bot.Player.Level < 75)
         {
@@ -1311,10 +1288,7 @@ public class CoreFarms
                     {
                         if (Bot.Player.Alive)
                         {
-                            Bot.Send.ClientPacket(
-                                "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"cmd\":\"levelUp\",\"intExpToLevel\":\"0\",\"intLevel\":100}}}",
-                                type: "json"
-                            );
+                            Core.ByPassCheck(("r17", "Left"));
                             Bot.Sleep(1000);
                             if (Bot.Player.Cell != "r17")
                                 Core.Jump("r17", "Left");
@@ -1347,7 +1321,7 @@ public class CoreFarms
                     if (!Bot.Player.Alive)
                     {
                         Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                        Core.ByPassCheck();
+                        Core.ByPassCheck(("r2", "center"));
                         continue;
                     }
                     if (Bot.Map.Name != "battlegrounde")
@@ -1368,7 +1342,7 @@ public class CoreFarms
 
         if (Bot.Player.Level >= level && !rankUpClass)
             goto Cleanup;
-        Core.ByPassCheck();
+        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 75-100
         while (
             !Bot.ShouldExit
@@ -1385,7 +1359,7 @@ public class CoreFarms
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 Bot.Sleep(1000);
-                Core.ByPassCheck();
+                Core.ByPassCheck(("r2", "Top"));
                 continue;
             }
 
@@ -1410,7 +1384,7 @@ public class CoreFarms
         }
         #endregion level checks
 
-        Cleanup:
+    Cleanup:
         Bot.Options.AttackWithoutTarget = false;
         Core.ToggleAggro(false);
         Core.Jump();
@@ -1607,7 +1581,7 @@ public class CoreFarms
             Core.Equip(amulet);
         }
 
-        Start:
+    Start:
         int ExitAttempt = 1;
         int Death = 0;
         Random random = new();
@@ -1685,7 +1659,7 @@ public class CoreFarms
             Core.Sleep(1500);
             goto Exit;
 
-            Exit:
+        Exit:
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
                 Bot.Combat.CancelTarget();
@@ -1698,7 +1672,7 @@ public class CoreFarms
                     goto Start;
             }
 
-            RestartOnDeath:
+        RestartOnDeath:
             Core.Logger($"Death: {Death++}, resetting");
             while (!Bot.ShouldExit)
             {
@@ -3535,7 +3509,7 @@ public class CoreFarms
 
         int RunCount = 1;
 
-        Start:
+    Start:
 
         // -------------------------
         // 1) Faction Rank farming
@@ -3643,7 +3617,7 @@ public class CoreFarms
 
             return;
 
-            RestartOnDeath:
+        RestartOnDeath:
             while (!Bot.ShouldExit)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
