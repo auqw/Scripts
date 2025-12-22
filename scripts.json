@@ -12908,7 +12908,7 @@
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
     "size": 50116,
-    "sha256": "c9372b909bfa2f2afd8f9c7ed0e5ecf4f9adad1b891609fa4dc9dc02d4fc97d1",
+    "sha256": "1b6b92d26b5b7972b90640337fc158b4135e2de9958ac0a63098edef66e1da3b",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -19765,15 +19765,27 @@
   },
   {
     "name": "Snowview Race Merge",
-    "description": "This will get all or selected items on this merge shop.",
+    "description": "This bot will farm the items belonging to the selected mode for the Snowview Race Merge [2196] in /snowviewrace",
     "tags": [
-      "snowview-race-merge",
-      "seasonal",
-      "frostvale"
+      "snowview",
+      "race",
+      "merge",
+      "snowviewrace",
+      "frigid",
+      "festive",
+      "wear",
+      "morph",
+      "paperboy",
+      "cap",
+      "papergirl",
+      "ice",
+      "halation",
+      "bell",
+      "flail"
     ],
     "path": "Seasonal/Frostvale/SnowviewRaceMerge.cs",
-    "size": 6119,
-    "sha256": "b1b7157cd9a5438698ee835e0d141b7699f786a90c2978ef2daf04614e73f1c1",
+    "size": 6345,
+    "sha256": "e329d0fa1a44a84819f5bbb594ef2a79662c767c67736c4e55ae3d938ae48641",
     "fileName": "SnowviewRaceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/SnowviewRaceMerge.cs"
   },
@@ -20147,6 +20159,24 @@
     "sha256": "6b34296655086edf9563289da829c01432e3bac95759fb2111b3c43df7887c7a",
     "fileName": "NorthlandsMonk.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/NorthlandsMonk.cs"
+  },
+  {
+    "name": "All Frostval Merge Shops",
+    "description": "This script will get all items from all Frostval merge shops.",
+    "tags": [
+      "frostval",
+      "frostvale",
+      "merge",
+      "all",
+      "shops",
+      "shop",
+      "seasonal"
+    ],
+    "path": "Seasonal/Frostvale/AllFrostvalMergeShops.cs",
+    "size": 4167,
+    "sha256": "127726bada731781eefe42fd31330a67e9ec65896ed72a47bc8083ca019b7a89",
+    "fileName": "AllFrostvalMergeShops.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/AllFrostvalMergeShops.cs"
   },
   {
     "name": "SkadePass Merge",
