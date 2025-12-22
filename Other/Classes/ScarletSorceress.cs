@@ -77,6 +77,7 @@ public class ScarletSorceress
             TOD.TowerofMirrors();
             BS.GetBSorc();
             Bot.Wait.ForPickup("Blood Sorceress");
+            Adv.EnhanceItem("Blood Sorceress", EnhancementType.Lucky);
         }
 
         BloodSorceress = Bot
@@ -99,6 +100,7 @@ public class ScarletSorceress
 
             Core.ChainComplete(6236);
             Bot.Wait.ForPickup("Scarlet Sorceress");
+            Adv.EnhanceItem("Scarlet Sorceress", EnhancementType.Lucky);
 
             if (rankUpClass)
             {
