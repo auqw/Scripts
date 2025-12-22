@@ -62,7 +62,7 @@ public class CoreDageTheEvilIsland
         Core.AddDrop("Ultra Dark Mystery Stone Of Evil Animosity");
 
         //Test 1: Proving Ground 4084
-        Story.KillQuest(4084, "DarkFortress", new[] { "Cloaked Fiend", "Dark Makai" });
+        Story.KillQuest(4084, "DarkFortress", new[] { "Dark Makai", "Cloaked Fiend" });
 
         //Test 2: Nulgath's Disdain 4085
         if (!Story.QuestProgression(4085))
