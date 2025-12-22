@@ -7652,7 +7652,7 @@ public class CoreBots
         // Sleep after sending the packet to give time for processing
         Sleep();
 
-        Bot.Map.Jump(cell, pad);
+        Bot.Map.Jump(CellPad.Item1, CellPad.Item2);
         Sleep();
     }
 
