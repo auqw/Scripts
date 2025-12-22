@@ -113,8 +113,7 @@ public class CarolingMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.Join("whitemap");
-                        Core.Join("caroling");
+                        Core.Join("caroltown");
 
                         for (int killCount = 0; killCount < 3 && !Bot.ShouldExit; killCount++)
                         {
@@ -126,8 +125,7 @@ public class CarolingMerge
                             Bot.Wait.ForMonsterSpawn(1);
                         }
 
-                        Core.Join("whitemap");
-                        Core.Join("caroling");
+                        Core.Join("caroltown");
                     }
 
                     break;

@@ -78,8 +78,7 @@ public class RefreshmentRetrieval
         Core.EnsureAccept(9028);
         while (!Bot.ShouldExit && !Bot.Quests.CanComplete(9028))
         {
-            Core.Join("whitemap");
-            Core.Join("caroling");
+            Core.Join("caroltown");
 
             for (int killCount = 0; killCount < 3 && !Bot.ShouldExit; killCount++)
             {
