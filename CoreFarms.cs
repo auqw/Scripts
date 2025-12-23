@@ -183,12 +183,13 @@ public class CoreFarms
         Core.RegisterQuests(3992, 3993);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("honorhall", "r1", "Center", "Ice Demon");
         }
         Core.CancelRegisteredQuests();
         Core.SavedState(false);
     }
-
     /// <summary>
     /// Farms Gold in Battle Ground E with quests Level 46-60 and 61-75
     /// </summary>
@@ -205,6 +206,8 @@ public class CoreFarms
         Core.RegisterQuests(3991, 3992);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
@@ -243,6 +246,8 @@ public class CoreFarms
         Core.RegisterQuests(236);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("greenguardwest", "West12", "Up", "*");
             Core.SellItem("Berserker Bunny", all: true);
         }
@@ -266,7 +271,11 @@ public class CoreFarms
 
         Core.RegisterQuests(8584, 8585);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("darkwarlegion", "r2", "Left", "*", "Nation Badge", 5, log: false);
+        }
         Core.CancelRegisteredQuests();
         Core.SavedState(false);
         ToggleBoost(BoostType.Gold, false);
@@ -386,6 +395,8 @@ public class CoreFarms
                 Bot.Wait.ForCellChange("r4");
             }
 
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.CanWeAggro();
             Bot.Combat.Attack("*");
             Core.Sleep(200);
@@ -433,6 +444,8 @@ public class CoreFarms
 
             Core.CanWeAggro();
 
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Bot.Combat.Attack("*");
             Core.Sleep(200);
         }
@@ -477,6 +490,8 @@ public class CoreFarms
             }
 
             Core.CanWeAggro();
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Bot.Combat.Attack("*");
             Core.Sleep(200);
         }
@@ -571,6 +586,8 @@ public class CoreFarms
             }
 
             Core.CanWeAggro();
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Bot.Combat.Attack("*");
             Core.Sleep(200);
         }
@@ -620,6 +637,8 @@ public class CoreFarms
                 }
                 Core.CanWeAggro();
 
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 Bot.Combat.Attack("*");
                 Core.Sleep(200);
             }
@@ -674,6 +693,8 @@ public class CoreFarms
             }
 
             Core.CanWeAggro();
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Bot.Combat.Attack("*");
             Core.Sleep(200);
         }
@@ -720,6 +741,8 @@ public class CoreFarms
                 Bot.Wait.ForCellChange("r16");
             }
 
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Bot.Combat.Attack("*");
             Core.Sleep(200);
         }
@@ -762,6 +785,8 @@ public class CoreFarms
                         Core.Jump("r17", "Left");
 
                     Core.CanWeAggro();
+                    if (Core.CheckSaveState())
+                        Core.ExecuteSaveState();
                     Bot.Combat.Attack("*");
                     Core.Sleep(200);
                 }
@@ -788,6 +813,8 @@ public class CoreFarms
                         Core.Jump("r2", "center");
 
                     Core.CanWeAggro();
+                    if (Core.CheckSaveState())
+                        Core.ExecuteSaveState();
                     if (!Bot.Player.HasTarget)
                         Bot.Combat.Attack("*");
                     Core.Sleep();
@@ -837,6 +864,8 @@ public class CoreFarms
             }
 
             Core.CanWeAggro();
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Bot.Combat.Attack("*");
             Bot.Sleep(200);
         }
@@ -895,8 +924,11 @@ public class CoreFarms
                     : (Bot.Player.Level < level && Bot.Player.Gold < gold)
             )
         )
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("sevencircleswar", "Enter", "Right", "*", log: false);
-
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Experience, false);
         ToggleBoost(BoostType.Gold, false);
@@ -919,7 +951,11 @@ public class CoreFarms
 
         Core.RegisterQuests(6294, 6295);
         while (!Bot.ShouldExit && Bot.Player.Level < level)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("Firewar", "r2", "Right", "*", log: false);
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Experience, false);
         Core.SavedState(false);
@@ -1329,6 +1365,8 @@ public class CoreFarms
         Core.RegisterQuests(4900, 4910, 4914); //Kick Some Can 4900, The Best You Can Buy 4910, Testing My Metal 4914
         while (!Bot.ShouldExit && FactionRank("Aegis") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster(
                 "skytower",
                 "Seraphic Assassin",
@@ -1706,6 +1744,8 @@ public class CoreFarms
         Core.RegisterQuests(794, 795, 796, 797, 798, 799, 800, 801);
         while (!Bot.ShouldExit && FactionRank("Arcangrove") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             for (int i = 0; i < 10; i++)
                 Core.KillMonster("arcangrove", "LeftBack", "Left", "*", log: false); // Gorillaphant
             for (int i = 0; i < 10; i++)
@@ -1737,7 +1777,11 @@ public class CoreFarms
 
         Core.RegisterQuests(5112, 5120);
         while (!Bot.ShouldExit && FactionRank("BaconCat") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("baconcatlair", "Ice Cream Shark", log: false);
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -1797,6 +1841,8 @@ public class CoreFarms
         Core.SavedState(true, "pyramid");
         while (!Bot.ShouldExit && FactionRank("BeastMaster") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAccept(3757);
             Core.HuntMonster(
                 "pyramid",
@@ -1837,6 +1883,8 @@ public class CoreFarms
             Core.SavedState(true, "alchemyacademy");
             while (!Bot.ShouldExit && FactionRank("Blacksmithing") < rank)
             {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 Core.EnsureAccept(8737);
 
                 // Get remaining reputation XP needed to reach next rank
@@ -1891,6 +1939,8 @@ public class CoreFarms
         Core.SavedState(true, "greenguardeast");
         while (!Bot.ShouldExit && FactionRank("Blacksmithing") < 4 && !UseGold)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             // Core.EnsureAccept(2777);
             Core.HuntMonster("greenguardeast", "Wolf", "Furry Lost Sock", 2, log: false);
             Core.HuntMonster("greenguardwest", "Slime", "Slimy Lost Sock", 5, log: false);
@@ -1906,6 +1956,8 @@ public class CoreFarms
         Core.SavedState(true, "hydrachallenge");
         while (!Bot.ShouldExit && FactionRank("Blacksmithing") < rank && !UseGold)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             // Core.EnsureAccept(8736);
             Core.HuntMonster(
                 "hydrachallenge",
@@ -1976,7 +2028,11 @@ public class CoreFarms
                     || (farmBoA && FactionRank("Blade of Awe") < targetRank)
                 )
             )
+            {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 Core.KillMonster("castleundead", "Enter", "Left", "Skeletal Viking");
+            }
             Core.CancelRegisteredQuests();
             Core.SavedState(false);
         }
@@ -2079,7 +2135,11 @@ public class CoreFarms
 
         Core.RegisterQuests(8989);
         while (!Bot.ShouldExit && FactionRank("Brethwren") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("birdswithharms", "Turkonian", log: false);
+        }
 
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -2105,6 +2165,8 @@ public class CoreFarms
 
         while (!Bot.ShouldExit && FactionRank("Brightoak") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             if (Bot.Map.Name != "elfhame")
             {
                 Core.Join("elfhame");
@@ -2145,7 +2207,11 @@ public class CoreFarms
         Core.EquipClass(ClassType.Farm);
         Core.RegisterQuests(5775); //Expect the Inquisitors 5775
         while (!Bot.ShouldExit && FactionRank("Chaos Militia") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("citadel", "Inquisitor Guard", log: false);
+        }
         Bot.Wait.ForQuestComplete(5775);
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -2164,7 +2230,11 @@ public class CoreFarms
 
         Core.RegisterQuests(3594); //Embrace Your Chaos 3594
         while (!Bot.ShouldExit && FactionRank("Chaos") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("mountdoomskull", "b1", "Left", "*", log: false);
+        }
         Bot.Wait.ForQuestComplete(3594);
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -2184,6 +2254,8 @@ public class CoreFarms
         Core.RegisterQuests(2204); //Do the 'do 2204
         while (!Bot.ShouldExit && FactionRank("ChronoSpan") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             // Core.EnsureAccept(2204); //Do the 'do 2204
             Core.KillMonster(
                 "thespan",
@@ -2226,6 +2298,8 @@ public class CoreFarms
         Core.Join("wanders");
         while (!Bot.ShouldExit && FactionRank("CraggleRock") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             foreach (Monster mob in Bot.Monsters.MapMonsters.Where(x => x.ID == 560))
             {
                 while (Bot.Player.Cell != mob.Cell)
@@ -2266,6 +2340,8 @@ public class CoreFarms
 
         while (!Bot.ShouldExit && FactionRank("Death Pit Arena") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAccept(5153);
             Core.HuntMonster("deathpit", "General Hun'Gar", "General Hun'Gar Defeated", log: false);
             Core.EnsureComplete(5153);
@@ -2299,6 +2375,8 @@ public class CoreFarms
 
         while (!Bot.ShouldExit && FactionRank("Diabolical") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAccept(7877);
             Core.HuntMonster("mudluk", "Tiger Leech", "Swamped Leech Tooth", log: false);
             Core.EnsureComplete(7877);
@@ -2328,7 +2406,11 @@ public class CoreFarms
         Core.Logger($"Farming rank {rank}");
         Core.RegisterQuests(9709, 9710, 9711, 9717);
         while (!Bot.ShouldExit && FactionRank("Skye") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("balemorale", "r10", "Bottom", "*", log: false);
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -2346,7 +2428,11 @@ public class CoreFarms
 
         Core.RegisterQuests(1151, 1152, 1153); //Minion Morale 1151, Shadowfall is DOOMed 1152, Grave-lyn Danger, 1153
         while (!Bot.ShouldExit && FactionRank("DoomWood") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("shadowfallwar", "Garden1", "Left", "*", log: false);
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -2364,7 +2450,11 @@ public class CoreFarms
 
         Core.RegisterQuests(5697); //Gather Crystals 5697
         while (!Bot.ShouldExit && FactionRank("Dreadfire") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("dreadfire", "r13", "Bottom", "Arcane Crystal", log: false);
+        }
         Bot.Wait.ForQuestComplete(5697);
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -2384,7 +2474,11 @@ public class CoreFarms
 
         Core.RegisterQuests(4863, 4862, 4865, 4868); //Endurance Tesssssst 4863, Supply Run 4862, Ghastly Blades 4865, Glub, Glub, Glub 4868
         while (!Bot.ShouldExit && FactionRank("Dreadrock") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("dreadrock", "r3", "Bottom", "*", log: false);
+        }
         Bot.Wait.ForQuestComplete(4868);
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -2403,7 +2497,11 @@ public class CoreFarms
 
         Core.RegisterQuests(3049); //Help Professor Maedoc 3049
         while (!Bot.ShouldExit && FactionRank("Druid Grove") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("bloodtusk", "Crystal-Rock", log: false);
+        }
         Bot.Wait.ForQuestComplete(3049);
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -2431,6 +2529,8 @@ public class CoreFarms
         // Core.RegisterQuests(320, 321); //Warm and Furry 320, Shell Shock 321
         while (!Bot.ShouldExit && FactionRank("Dwarfhold") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAcceptmultiple(new[] { 320, 321 }); //Warm and Furry 320, Shell Shock 321
             Core.KillMonster("pines", "Enter", "Right", "Pine Grizzly", "Bear Skin", 5, log: false);
             Core.KillMonster(
@@ -2455,7 +2555,6 @@ public class CoreFarms
             return;
 
         Core.EquipClass(ClassType.Farm);
-        Core.SavedState(true, "dragonrune");
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank}");
 
@@ -2497,8 +2596,11 @@ public class CoreFarms
             !Core.IsMember ? "Daily is mem only, Onto the Farm" : "Daily complete, onto the farm."
         );
 
+        Core.SavedState(true, "gilead");
         while (!Bot.ShouldExit && FactionRank("Elemental Master") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAcceptmultiple(new[] { 3050, 3298 });
             Core.EquipClass(ClassType.Farm);
             foreach (var element in elementalItems)
@@ -2542,7 +2644,11 @@ public class CoreFarms
         //  Slay the Blazebinders (500rep - 5 kills)
         Core.RegisterQuests(4228);
         while (!Bot.ShouldExit && FactionRank("Embersea") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("fireforge", "Blazebinder", log: false);
+        }
 
         ToggleBoost(BoostType.Reputation, false);
         Core.CancelRegisteredQuests();
@@ -2571,6 +2677,8 @@ public class CoreFarms
         // Core.RegisterQuests(5198);
         while (!Bot.ShouldExit && FactionRank("Eternal") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAccept(5198);
             Core.HuntMonsterMapID("fourdpyramid", 19, "White Gem", 2, log: false);
             Core.HuntMonsterMapID("fourdpyramid", 20, "Black Gem", 2, log: false);
@@ -2594,6 +2702,8 @@ public class CoreFarms
         // Core.RegisterQuests(1721); //Defend Your Master! 1721
         while (!Bot.ShouldExit && FactionRank("Etherstorm") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAccept(1721);
             Core.HuntMonster(
                 "etherwardes",
@@ -2643,7 +2753,11 @@ public class CoreFarms
         Core.SavedState(true, "swordhavenbridge");
         Core.RegisterQuests(364); //Youthanize 364
         while (!Bot.ShouldExit && FactionRank("Evil") < 4)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("swordhavenbridge", "Slime", "Youthanize", log: false);
+        }
         Core.CancelRegisteredQuests();
         Core.SavedState(false);
 
@@ -2654,6 +2768,8 @@ public class CoreFarms
             Core.RegisterQuests(367); //Youthanize 364
         while (!Bot.ShouldExit && FactionRank("Evil") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             if (Core.IsMember)
             {
                 Core.EnsureAccept(366);
@@ -2714,6 +2830,8 @@ public class CoreFarms
         Bot.Events.ExtensionPacketReceived += FishingWaiter;
         while (!Bot.ShouldExit && FactionRank("Fishing") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             GetBaitandDynamite(0, 50); // Always get dynamite since we're above rank 2
 
             Core.Join("fishing");
@@ -3139,6 +3257,8 @@ public class CoreFarms
         Core.RegisterQuests(6775, 6779);
         while (!Bot.ShouldExit && FactionRank("Faerie Court") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             if (FactionRank("Faerie Court") < 8)
             {
                 Core.EquipClass(ClassType.Solo);
@@ -3179,7 +3299,11 @@ public class CoreFarms
 
         Core.RegisterQuests(5597, 5598, 5599, 5600);
         while (!Bot.ShouldExit && FactionRank("Glacera") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("icewindwar", "r5", "Left", "*", log: false);
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -3198,12 +3322,18 @@ public class CoreFarms
 
         Core.RegisterQuests(369); //That Hero Who Chases Slimes 369
         while (!Bot.ShouldExit && FactionRank("Good") < 4)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("swordhavenbridge", "Bridge", "Left", "*");
+        }
         Core.CancelRegisteredQuests();
 
         Core.RegisterQuests(Core.IsMember ? 371 : 372); //Rumble with Grumble 371, Tomb with a View 372
         while (!Bot.ShouldExit && FactionRank("Good") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             if (!Core.IsMember)
                 Core.KillMonster("castleundead", "Enter", "Spawn", "*");
             else
@@ -3230,6 +3360,8 @@ public class CoreFarms
 
         while (!Bot.ShouldExit && FactionRank("Hollowborn") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
             Core.KillMonster(
                 "shadowrealm",
@@ -3259,6 +3391,8 @@ public class CoreFarms
         // Core.RegisterQuests(1265);
         while (!Bot.ShouldExit && FactionRank("Horc") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAccept(1265);
             Core.HuntMonster(
                 "bloodtuskwar",
@@ -3304,6 +3438,8 @@ public class CoreFarms
             Core.SavedState(true, "wardwarf");
             if (FactionRank("Loremaster") < 3)
             {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 Core.Logger("Geting r3 Loremaster rep for the member quests");
                 Core.RegisterQuests(7505);
                 while (!Bot.ShouldExit && FactionRank("Loremaster") < 3)
@@ -3349,6 +3485,8 @@ public class CoreFarms
             Core.RegisterQuests(3032);
             while (!Bot.ShouldExit && FactionRank("Loremaster") < rank)
             {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 Core.KillMonster("druids", "r5", "Left", "Young Void Giant", log: false);
                 Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
                 Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
@@ -3362,6 +3500,8 @@ public class CoreFarms
             Core.SavedState(true, "druids");
             while (!Bot.ShouldExit && FactionRank("Loremaster") < rank)
             {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 Core.HuntMonster("wardwarf", "Drow Assassin", "Poisoned Dagger", 4, log: false);
                 Core.HuntMonster(
                     "wardwarf",
@@ -3398,7 +3538,11 @@ public class CoreFarms
 
         Core.RegisterQuests(537); //Sanguine 537
         while (!Bot.ShouldExit && FactionRank("Lycan") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("lycan", "Sanguine", "Sanguine Mask", log: false);
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -3416,6 +3560,9 @@ public class CoreFarms
 
         Core.RegisterQuests(5707); // Practice Time 5707
         while (!Bot.ShouldExit && FactionRank("Infernal Army") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster(
                 "dreadfire",
                 "r10",
@@ -3424,6 +3571,7 @@ public class CoreFarms
                 "Living Brimstone Defeated",
                 log: false
             );
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -3465,6 +3613,8 @@ public class CoreFarms
         Core.SavedState(true, "pilgrimage");
         while (!Bot.ShouldExit && FactionRank("Monster Hunter") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster(
                 "pilgrimage",
                 "r5",
@@ -3518,7 +3668,11 @@ public class CoreFarms
         Core.SavedState(true, "cursedshop");
         Core.RegisterQuests(5429); //Lamps, Paintings and Chairs, oh my! 5429
         while (!Bot.ShouldExit && FactionRank("Mysterious Dungeon") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("cursedshop", "Antique Chair", "Antique Chair Defeated", log: false);
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -3542,7 +3696,11 @@ public class CoreFarms
 
         Core.RegisterQuests(4829); //Sugar, Sugar 4829
         while (!Bot.ShouldExit && FactionRank("Mythsong") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("beehive", "Stinger", "Honey Gathered", 10, log: false);
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -3560,7 +3718,11 @@ public class CoreFarms
 
         Core.RegisterQuests(3048); //Help Professor Mueran 3048
         while (!Bot.ShouldExit && FactionRank("Necro Crypt") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("castleundead", "Skeletal Viking", "Old Bone", 25, log: false);
+        }
         Bot.Wait.ForQuestComplete(3048);
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -3579,7 +3741,11 @@ public class CoreFarms
 
         Core.RegisterQuests(4027); //Sage Advice 4027
         while (!Bot.ShouldExit && FactionRank("Northpointe") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("northpointe", "Grim Stalker", "Bunch of Sage", 10, log: false);
+        }
         Bot.Wait.ForQuestComplete(4027);
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -3598,6 +3764,9 @@ public class CoreFarms
 
         Core.RegisterQuests(5261);
         while (!Bot.ShouldExit && FactionRank("Pet Tamer") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.KillMonster(
                 "greenguardwest",
                 "West7",
@@ -3606,6 +3775,7 @@ public class CoreFarms
                 "Mogzard Captured",
                 log: false
             );
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -3628,6 +3798,9 @@ public class CoreFarms
 
         Core.RegisterQuests(3445); //Slay the Spiderkin 3445
         while (!Bot.ShouldExit && FactionRank("Ravenloss") < rank)
+        {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster(
                 "twilightedge",
                 "ChaosWeaver Mage",
@@ -3635,6 +3808,7 @@ public class CoreFarms
                 10,
                 log: false
             );
+        }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
         Core.SavedState(false);
@@ -3653,6 +3827,8 @@ public class CoreFarms
         // Core.RegisterQuests(916, 917, 919, 921, 922); //Dissertations Bupers Camel 916, Crafty Creepers: A Favorite of Mine 917, Parched Pets 919, Oasis Ornaments 921, The Power of Pomade 922
         while (!Bot.ShouldExit && FactionRank("Sandsea") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAcceptmultiple(new[] { 916, 917, 919, 921, 922 });
             Core.HuntMonster("sandsea", "Bupers Camel", "Bupers Camel Document", 10, log: false);
             Core.HuntMonster("sandsea", "Bupers Camel", "Barrel of Desert Water", 10, log: false);
@@ -3697,6 +3873,8 @@ public class CoreFarms
         // Core.RegisterQuests(7665, 7666, 7669);
         while (!Bot.ShouldExit && FactionRank("Somnia") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAcceptmultiple(new[] { 7665, 7666, 7669 });
             Core.HuntMonster("somnia", "Nightspore", "Dream Truffle", 8, log: false);
             Core.HuntMonster("somnia", "Orpheum Elemental", "Orphium Ore", 8, log: false);
@@ -3715,12 +3893,13 @@ public class CoreFarms
 
         Core.AddDrop("Mystic Quills", "Mystic Parchment");
         Core.EquipClass(ClassType.Farm);
-        Core.SavedState(true, "castleundead");
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank}");
 
         if (FactionRank("SpellCrafting") == 0)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAccept(2260);
             Core.GetMapItem(1920, 1, "dragonrune");
             Core.HuntMonster(
@@ -3745,8 +3924,12 @@ public class CoreFarms
             )
                 Core.ChainComplete(2299);
         }
+
+        Core.SavedState(true, "underworld");
         while (!Bot.ShouldExit && FactionRank("SpellCrafting") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("underworld", "Skull Warrior", "Mystic Parchment", 10, false);
             Core.BuyItem("dragonrune", 549, "Hallow Ink", 50);
             while (
@@ -3776,6 +3959,8 @@ public class CoreFarms
         // Core.RegisterQuests(3065, 3066, 3067, 3070, 3085, 3086, 3087);
         while (!Bot.ShouldExit && FactionRank("Swordhaven") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAcceptmultiple(new[] { 3065, 3066, 3067, 3070, 3085, 3086, 3087 });
             Core.HuntMonster("castle", "Castle Spider", "Eradicated Arachnid", 10, log: false);
             Core.HuntMonster("castle", "Castle Spider", "Castle Spider Silk", 8, log: false);
@@ -3815,14 +4000,22 @@ public class CoreFarms
             Core.EquipClass(ClassType.Solo);
             Core.RegisterQuests(2733, 2734);
             while (!Bot.ShouldExit && FactionRank("ThunderForge") < rank)
+            {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 Core.HuntMonster("deathpits", "Wrathful Vestis", "Vestis's Chaos Eye", log: false);
+            }
         }
         else
         {
             Core.EquipClass(ClassType.Farm);
             Core.RegisterQuests(2734, 2735, 2736, 2737);
             while (!Bot.ShouldExit && FactionRank("ThunderForge") < rank)
+            {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 Core.HuntMonster("deathpits", "Rotting Darkblood", log: false);
+            }
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -3842,6 +4035,8 @@ public class CoreFarms
         Core.RegisterQuests(6593);
         while (!Bot.ShouldExit && FactionRank("TreasureHunter") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("stalagbite", "Balboa", "Super Specific Rock", log: false);
             Bot.Wait.ForQuestComplete(6593);
         }
@@ -3863,6 +4058,8 @@ public class CoreFarms
         // Core.RegisterQuests(1263);
         while (!Bot.ShouldExit && FactionRank("Troll") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.EnsureAccept(1263);
             Core.HuntMonster(
                 "bloodtuskwar",
@@ -3911,6 +4108,8 @@ public class CoreFarms
         Core.RemoveDrop("Old Moon");
         while (!Bot.ShouldExit && FactionRank("Vampire") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("safiria", "Twisted Paw", "Twisted Paw's Head", log: false);
             Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
         }
@@ -3975,6 +4174,8 @@ public class CoreFarms
         Core.RegisterQuests(383);
         while (!Bot.ShouldExit && FactionRank("Yokai") < rank)
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             Core.HuntMonster("dragonkoiz", "Pockey Chew", "Piece of Pockey", 3, log: false);
             Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
         }
@@ -4004,6 +4205,8 @@ public class CoreFarms
         #region Token farm and check for Token A only
         while (!Bot.ShouldExit && !Core.CheckInventory("Super-Fan Swag Token A", quant))
         {
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             // Refresh token quantities
             int dQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token D");
             int cQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token C");

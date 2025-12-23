@@ -35,7 +35,7 @@ using Skua.Core.Models.Shops;
 using Skua.Core.Models.Skills;
 using Skua.Core.Options;
 using Skua.Core.Utils;
-using Timer = System.Threading.Timer;
+using System.Timers;
 
 public class CoreBots
 {
@@ -7390,11 +7390,10 @@ public class CoreBots
         }
     }
 
-
-    private Timer? SavestateTimer;
-    private Random _randomInterval = new Random();
+    private Random _randomInterval = new();
     private bool _savedStateEnabled = false;
     private string _previousMap = "";
+    private DateTime _nextSaveStateTime = DateTime.MinValue;
 
     /// <summary>
     /// Sets the saved state to the specified status.
@@ -7415,15 +7414,12 @@ public class CoreBots
             // Store the previous map for returning later
             _previousMap = previousMap;
 
-            // Start the timer with initial random interval
-            int randomInterval = GetRandomInterval();
-            SavestateTimer = new Timer(ExecuteSaveState, null, randomInterval, Timeout.Infinite);
+            // Initialize next save state time
+            _nextSaveStateTime = DateTime.Now.AddMilliseconds(GetRandomInterval());
         }
         else
         {
-            // Stop and dispose the timer
-            SavestateTimer?.Dispose();
-            SavestateTimer = null;
+            _savedStateEnabled = false;
         }
     }
 
@@ -7441,76 +7437,86 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Executes the save state action: calls JumpWait and navigates to the player's house.
+    /// Checks if it's time to execute a save state during farming.
+    /// Call this periodically within your farm method.
     /// </summary>
-    private void ExecuteSaveState(object? state)
+    public bool CheckSaveState()
     {
-        if (_savedStateEnabled)
+        if (!_savedStateEnabled)
+            return false;
+
+        // Check if enough time has passed
+        if (DateTime.Now >= _nextSaveStateTime)
         {
-            try
-            {
-                // Call the jump wait function
-                Bot.Map.Jump("Enter", "Spawn", false);
-                Bot.Wait.ForCellChange("Enter");
-                Bot.Sleep(1500);
-
-                // Navigate to player's house or whitemap if player doesnt have a house
-                if (Bot.House.Items.Any(h => h.Equipped))
-                {
-                    string? toSend = null;
-                    Bot.Events.ExtensionPacketReceived += modifyPacket;
-                    Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
-                    Bot.Wait.ForMapLoad("house");
-                    Task.Run(() =>
-                    {
-                        Bot.Wait.ForMapLoad("house");
-                        if (Bot.Wait.ForTrue(() => toSend != null, 20))
-                            Bot.Send.ClientPacket(toSend!, "json");
-                        Bot.Events.ExtensionPacketReceived -= modifyPacket;
-                        for (int i = 0; i < 7; i++)
-                            Bot.Send.ClientServer(" ", "");
-                    });
-
-                    void modifyPacket(dynamic packet)
-                    {
-                        string type = packet["params"].type;
-                        dynamic data = packet["params"].dataObj;
-                        if ((type is not null and "json") && (data.houseData is not null))
-                        {
-                            toSend =
-                                $"{{\"t\":\"xt\",\"b\":{{\"r\":-1,\"o\":{{\"cmd\":\"moveToArea\",\"areaName\":\"house\",\"uoBranch\":{JsonConvert.SerializeObject(data.uoBranch)},\"strMapFileName\":\"{data.strMapFileName}\",\"intType\":\"1\",\"monBranch\":[],\"houseData\":{Regex.Replace(JsonConvert.SerializeObject(data.houseData), Username(), "Skua user", RegexOptions.IgnoreCase)},\"sExtra\":\"\",\"areaId\":{data.areaId},\"strMapName\":\"house\"}}}}}}";
-                            Bot.Events.ExtensionPacketReceived -= modifyPacket;
-                        }
-                    }
-                }
-                else
-                    Join("whitemap-100000");
-
-                // Return to previous map if stored
-                if (!string.IsNullOrEmpty(_previousMap))
-                {
-                    Join(_previousMap);
-                }
-
-                // Reset the timer with a new random interval
-                int nextInterval = GetRandomInterval();
-                SavestateTimer.Change(nextInterval, Timeout.Infinite);
-            }
-            catch (Exception ex)
-            {
-                Logger($"SaveState error: {ex.Message}");
-            }
+            return true;
         }
+
+        return false;
     }
 
     /// <summary>
-    /// Public method to manually trigger a save state action.
+    /// Executes the save state action: calls JumpWait and navigates to the player's house.
     /// </summary>
-    public void TriggerSaveStateManually()
+    public void ExecuteSaveState()
     {
-        ExecuteSaveState(null);
+        if (string.IsNullOrEmpty(_previousMap) || !_savedStateEnabled)
+            return;
+
+        try
+        {
+            // Call the jump wait function
+            Bot.Map.Jump("Enter", "Spawn", false);
+            Bot.Wait.ForCellChange("Enter");
+            Bot.Sleep(1500);
+
+            // Navigate to player's house or whitemap if player doesn't have a house
+            if (Bot.House.Items.Any(h => h.Equipped))
+            {
+                string? toSend = null;
+                Bot.Events.ExtensionPacketReceived += modifyPacket;
+                Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
+                Bot.Wait.ForMapLoad("house");
+                Task.Run(() =>
+                {
+                    Bot.Wait.ForMapLoad("house");
+                    if (Bot.Wait.ForTrue(() => toSend != null, 20))
+                        Bot.Send.ClientPacket(toSend!, "json");
+                    Bot.Events.ExtensionPacketReceived -= modifyPacket;
+                    for (int i = 0; i < 7; i++)
+                        Bot.Send.ClientServer(" ", "");
+                });
+
+                void modifyPacket(dynamic packet)
+                {
+                    string type = packet["params"].type;
+                    dynamic data = packet["params"].dataObj;
+                    if ((type is not null and "json") && (data.houseData is not null))
+                    {
+                        toSend =
+                            $"{{\"t\":\"xt\",\"b\":{{\"r\":-1,\"o\":{{\"cmd\":\"moveToArea\",\"areaName\":\"house\",\"uoBranch\":{JsonConvert.SerializeObject(data.uoBranch)},\"strMapFileName\":\"{data.strMapFileName}\",\"intType\":\"1\",\"monBranch\":[],\"houseData\":{Regex.Replace(JsonConvert.SerializeObject(data.houseData), Username(), "Skua user", RegexOptions.IgnoreCase)},\"sExtra\":\"\",\"areaId\":{data.areaId},\"strMapName\":\"house\"}}}}}}";
+                        Bot.Events.ExtensionPacketReceived -= modifyPacket;
+                    }
+                }
+            }
+            else
+                Join("whitemap-100000");
+
+            // Return to previous map if stored
+            if (!string.IsNullOrEmpty(_previousMap))
+            {
+                Join(_previousMap);
+            }
+
+            // Reset the timer with a new random interval
+            _nextSaveStateTime = DateTime.Now.AddMilliseconds(GetRandomInterval());
+        }
+        catch (Exception ex)
+        {
+            Logger($"SaveState error: {ex.Message}");
+        }
     }
 
+    
     /// <summary>
     /// Generates an array of integers from a starting value to an ending value (inclusive).
     /// </summary>
