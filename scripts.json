@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 55802,
-    "sha256": "0f643b2c5f35cf423699a441f5c2b73d9c739084c9597a24c317e5ea4e66c92a",
+    "size": 55851,
+    "sha256": "9873192a43237e148fd56ee666832e52ad4208aba7efff38ef358dd17d98c034",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 420263,
-    "sha256": "b92df42fd9ad250e0f9e443262f3024e4b7b4633b905e3fab17a35edbd5a5f51",
+    "size": 422393,
+    "sha256": "5aea302077cc3996f17ca802fb12aefb3dc9eaeb1c0b467e0cfe55f3d95f62dd",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -10080,8 +10080,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 45406,
-    "sha256": "6f010666e44318d78717115e3cedbba4b735cf4aad54c6949fee22bbfcff1607",
+    "size": 45451,
+    "sha256": "6c6829e2ce9dc228231b1a979d14a411a1870a9c528662ea9cd2b66f19a31b03",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
