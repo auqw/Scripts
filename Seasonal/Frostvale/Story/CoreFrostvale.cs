@@ -256,7 +256,7 @@ public class CoreFrostvale
         Story.KillQuest(2529, "frostdeep", new[] { "Temple Prowler", "Polar Mole" });
 
         // Frozen Venom
-        Story.KillQuest(2530, "frostdeep", new[] { "Polarwyrm Rider", "Polar Spider" });
+        Story.KillQuest(2530, "frostdeep", new[] { "Polar Spider", "Polarwyrm Rider" });
 
         // Rune-ing His Plan
         Story.KillQuest(2531, "frostdeep", "Ancient Golem");
