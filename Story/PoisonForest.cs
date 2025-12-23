@@ -48,7 +48,7 @@ public class PoisonForest
         //Poison Creation 1948
         Story.MapItemQuest(1948, "PoisonForest", 964, 3);
         Story.MapItemQuest(1948, "PoisonForest", 965, 3);
-        Story.KillQuest(1948, "PoisonForest", new[] { "Traitor Knight", "Marsh Lurker" });
+        Story.KillQuest(1948, "PoisonForest", new[] { "Marsh Lurker", "Traitor Knight" });
 
         //Vegetal Decay 1949
         if (
