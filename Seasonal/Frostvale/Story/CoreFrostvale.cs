@@ -250,11 +250,7 @@ public class CoreFrostvale
         Story.KillQuest(2527, "frostdeep", new[] { "Polar Elemental", "Polar Golem" });
 
         // Absolute Zero Success
-        Story.KillQuest(
-            2528,
-            "frostdeep",
-            new[] { "Temple Prowler", "Polar Elemental", "Polar Golem" }
-        );
+        Story.KillQuest(2528, "frostdeep", new[] { "Polar Golem", "Temple Prowler", "Polar Elemental" });
 
         // Dirty Secret
         Story.KillQuest(2529, "frostdeep", new[] { "Temple Prowler", "Polar Mole" });
