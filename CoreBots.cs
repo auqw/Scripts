@@ -4331,11 +4331,14 @@ public class CoreBots
             count++;
             monsterCounts[key] = count;
 
-            if (count >= 3)
+            if (count >= 2)
             {
                 EquipClass(ClassType.Farm);
                 return;
             }
+            else
+                EquipClass(ClassType.Solo);
+
         }
     }
 
