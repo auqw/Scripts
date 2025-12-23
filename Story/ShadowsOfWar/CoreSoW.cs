@@ -553,12 +553,9 @@ public class CoreSoW
         Story.KillQuest(7343, "shadowsong", "Shattered Crystal");
 
         //Mega Shadow Medals (7345)
-        if (!Bot.Quests.IsUnlocked(7345))
-        {
-            Core.EnsureAccept(7344);
-            Core.HuntMonster("shadowsong", "Shadowflame Ur-Troll", "Mega Shadow Medal", 3);
-            Core.EnsureComplete(7344);
-        }
+        Core.EnsureAccept(7344);
+        Core.HuntMonster("shadowsong", "Shadowflame Ur-Troll", "Mega Shadow Medal", 3);
+        Core.EnsureComplete(7344);
 
         //New Music (7345)
         Story.KillQuest(7345, "shadowsong", "Mozard");
