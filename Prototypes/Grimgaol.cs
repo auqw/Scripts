@@ -528,8 +528,7 @@ public class Grimgaol
 
                     // Reinforced Shelleton (rng trash) - LR/AM
                     case "r5":
-                        // Rarchmage(Bot.Player.Cell);
-                        R5archmage();
+                        Rarchmage(Bot.Player.Cell);
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r5\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player?.Cell != "r6")
@@ -708,11 +707,10 @@ public class Grimgaol
                 Bot.Sleep(1000);
             }
 
-            if (Bot.Player!.HasTarget && Bot.Target?.HasActiveAura("Talon Twisting") == true)
+            if (Bot.Player!.HasTarget && Bot.Target?.Auras.Any(x => x.Name == "Talon Twisting") == true)
             {
-                Bot.Combat.CancelAutoAttack();
-                Bot.Combat.StopAttacking = true;
-
+                Bot.Combat.CancelTarget();
+                Bot.Skills.Pause();
                 Bot.Sleep(1000);
 
                 // Wait until the target has the "Retaliate" aura
@@ -724,15 +722,14 @@ public class Grimgaol
                 while (
                     !Bot.ShouldExit
                     && Bot.Player.HasTarget
-                    && Bot.Target?.HasActiveAura("Retaliate") == true
-                )
+                    && (Bot.Target?.Auras.Any(x => x.Name == "Retaliate") == true))
                 {
-                    Bot.Sleep(100);
+                    Bot.Sleep(200);
                 }
 
                 Bot.Combat.StopAttacking = false;
                 skillIndex = 0;
-                Bot.Skills.Start();
+                Bot.Skills.Resume();
                 Bot.Sleep(1000);
             }
 
@@ -748,7 +745,7 @@ public class Grimgaol
             if (
                 Bot.Player.HasTarget
                 && Bot.Player.Target?.HP > 0
-                && !Bot.Self.HasActiveAura("Shackled")
+                && !Bot.Self.Auras.Any(x => x.Name == "Shackled")
                 && skillIndex == 0
                 && Bot.Skills.CanUseSkill(skillList[skillIndex])
             )
@@ -844,7 +841,7 @@ public class Grimgaol
     //             if (Bot.Player.Health <= 2500 && Bot.Skills.CanUseSkill(2))
     //                 Bot.Skills.UseSkill(2);
 
-    //             else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && !Bot.Self.HasActiveAura("Shackled") && skillIndex == 0
+    //             else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && !Bot.Self.Auras.Any(x => x.Name == "Shackled") && skillIndex == 0
     //               && Bot.Skills.CanUseSkill(skillList[skillIndex]))
     //             {
     //                 Bot.Skills.UseSkill(skillList[skillIndex]);
@@ -863,151 +860,6 @@ public class Grimgaol
     //     }
 
     // }
-
-    private void R6()
-    {
-        if (Bot.Player?.Cell != "r6")
-        {
-            Core.Logger("Jumping to r6");
-            Bot.Map.Jump("r6", "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange("r6");
-        }
-
-        if (!monsterAvail())
-        {
-            runTimer.Stop();
-            return;
-        }
-
-        Bot.Player?.SetSpawnPoint();
-
-        bool usechaosAvenger = Core.CheckInventory("Chaos Avenger");
-        #region Equipment Setup
-        EquipIfAvailable(usechaosAvenger ? "Chaos Avenger" : voidhighlord);
-        EquipIfAvailable(Bot.Config!.Get<string>("Dauntless"));
-        EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm"));
-        EquipIfAvailable(Bot.Config!.Get<string>("Penitence"));
-        #endregion
-
-        runTimer.Start();
-
-        int[] skillList = usechaosAvenger ? new[] { 4, 1, 3 } : new[] { 2, 4 };
-        int skillIndex = 0;
-
-        while (!Bot.ShouldExit)
-        {
-            if (!monsterAvail())
-            {
-                runTimer.Stop();
-                return;
-            }
-
-            foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
-            {
-                if (m == null || m?.HP <= 0 || m?.State == 0)
-                    continue;
-
-                // Keep fighting the monster until dead or aura appears
-                while (!Bot.ShouldExit)
-                {
-                    if (!monsterAvail())
-                    {
-                        runTimer.Stop();
-                        return;
-                    }
-
-                    if (!Bot.Player!.Alive)
-                    {
-                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                        skillIndex = 0;
-                    }
-
-                    // Check if target is set, otherwise target this monster
-                    if (
-                        !Bot.Player.HasTarget
-                        || Bot.Player.HasTarget && Bot.Player.Target?.MapID != m!.MapID
-                    )
-                        Bot.Combat.Attack(m!.MapID);
-
-                    Bot.Sleep(500);
-
-                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                    {
-                        Bot.Combat.CancelAutoAttack();
-                        Bot.Combat.CancelTarget();
-                        break;
-                    }
-
-                    // Exit loop if target has "Crit Damage Amplified" aura
-                    if (
-                        Bot.Player.HasTarget
-                        && Bot.Player.Target?.HP > 0
-                        && Bot.Target.HasActiveAura("Crit Damage Amplified")
-                    )
-                    {
-                        Bot.Combat.CancelAutoAttack();
-                        Bot.Combat.StopAttacking = true;
-
-                        Bot.Wait.ForTrue(
-                            () =>
-                                Bot.Player.HasTarget
-                                && Bot.Player.Target?.HP > 0
-                                && Bot.Target?.HasActiveAura("Crit Damage Amplified") == false,
-                            20
-                        );
-
-                        Bot.Combat.CancelAutoAttack();
-                        Bot.Combat.CancelTarget();
-                        Bot.Combat.StopAttacking = false;
-                        continue;
-                    }
-
-                    if (
-                        Bot.Player.Health <= (usechaosAvenger ? 3500 : 2500)
-                        && Bot.Skills.CanUseSkill(usechaosAvenger ? 3 : 2)
-                    )
-                        Bot.Skills.UseSkill(2);
-
-                    if (usechaosAvenger)
-                    {
-                        if (
-                            Bot.Player.HasTarget
-                            && Bot.Player.Target?.HP > 0
-                            && Bot.Skills.CanUseSkill(skillList[skillIndex])
-                        )
-                        {
-                            Bot.Skills.UseSkill(skillList[skillIndex]);
-                        }
-                        // Keep this her so skills dont get hung up and you die.
-                        skillIndex = (skillIndex + 1) % skillList.Length;
-                    }
-                    else
-                    {
-                        if (
-                            Bot.Player.Health >= 2500
-                            && (skillIndex == 0 || skillIndex == 2)
-                            && Bot.Player.HasTarget
-                            && Bot.Skills.CanUseSkill(skillList[skillIndex])
-                        )
-                        {
-                            Bot.Skills.UseSkill(skillList[skillIndex]);
-                            skillIndex = (skillIndex + 1) % skillList.Length;
-                        }
-                        else if (
-                            skillIndex != 0
-                            && skillIndex != 2
-                            && Bot.Player.HasTarget
-                            && Bot.Skills.CanUseSkill(skillList[skillIndex])
-                        )
-                        {
-                            Bot.Skills.UseSkill(skillList[skillIndex]);
-                        }
-                        skillIndex = (skillIndex + 1) % skillList.Length;
-                    }
-                }
-            }
-        }
-    }
 
     private void R9()
     {
@@ -1189,7 +1041,7 @@ public class Grimgaol
 
 
         runTimer.Start();
-        Restart:
+    Restart:
         int skillIndex = 0;
         // 1 and 4 will be used conditionaly ( hopefully)
         int[] skillList = { 2, 3 };
@@ -1248,14 +1100,14 @@ public class Grimgaol
                     if (
                         Bot.Player.HasTarget
                         && Bot.Player.Target?.HP > 0
-                        && !Bot.Target!.HasActiveAura("Incinerating")
+                        && !Bot.Target!.Auras.Any(x => x.Name == "Incinerating")
                         && Bot.Skills.CanUseSkill(1)
                     )
                         Bot.Skills.UseSkill(1);
                     else if (
                         Bot.Player.HasTarget
                         && Bot.Player.Target?.HP > 0
-                        && !Bot.Self.HasActiveAura("Corporeal Ascension")
+                        && !Bot.Self.Auras.Any(x => x.Name == "Corporeal Ascension")
                         && Bot.Skills.CanUseSkill(4)
                     )
                         Bot.Skills.UseSkill(4);
@@ -1435,7 +1287,7 @@ public class Grimgaol
                 return;
             }
 
-            if (Bot.Player!.HasTarget && Bot.Target?.HasActiveAura("Talon Twisting") == true)
+            if (Bot.Player!.HasTarget && Bot.Target?.Auras.Any(x => x.Name == "Talon Twisting") == true)
             {
                 Bot.Combat.CancelAutoAttack();
                 Bot.Combat.StopAttacking = true;
@@ -1444,14 +1296,14 @@ public class Grimgaol
 
                 // Wait until the target has the "Retaliate" aura
                 Bot.Wait.ForTrue(
-                    () => Bot.Player.HasTarget && Bot.Target?.HasActiveAura("Retaliate") == true,
+                    () => Bot.Player.HasTarget && Bot.Target?.Auras.Any(x => x.Name == "Retaliate") == true,
                     20
                 );
 
                 while (
                     !Bot.ShouldExit
                     && Bot.Player.HasTarget
-                    && Bot.Target?.HasActiveAura("Retaliate") == true
+                    && Bot.Target?.Auras.Any(x => x.Name == "Retaliate") == true
                 )
                 {
                     Bot.Sleep(100);
@@ -1534,7 +1386,7 @@ public class Grimgaol
 
 
         runTimer.Start();
-        Restart:
+    Restart:
         int skillIndex = 0;
         int[] skillList = { 2, 3 };
 
@@ -1569,7 +1421,7 @@ public class Grimgaol
                 if (
                     !Bot.Player!.HasTarget
                     || !Bot.Player.InCombat
-                    || (Bot.Player.HasTarget && !Bot.Target.HasActiveAura("Crit Damage Amplified"))
+                    || (Bot.Player.HasTarget && !Bot.Target.Auras.Any(x => x.Name == "Crit Damage Amplified"))
                 )
                     Bot.Combat.Attack(m!.MapID);
 
@@ -1580,42 +1432,34 @@ public class Grimgaol
                     break;
                 }
 
-                // For Fell Statues; Whilst Fell Statue has "Crit Damage Amplified" aura, wait for it to end, reneable combat
-                // sort of like a retaliate or counter atk, except in this case the more u hit them during this, they do ++100 dmg.
-                if (
-                    Bot.Player.HasTarget
+                // Exit loop if target has "Crit Damage Amplified" aura
+                while (!Bot.ShouldExit
+                    && Bot.Player.HasTarget
                     && Bot.Player.Target?.HP > 0
-                    && Bot.Target.HasActiveAura("Crit Damage Amplified")
+                    && Bot.Target.Auras.Any(x => x.Name == "Crit Damage Amplified")
                 )
                 {
                     Bot.Combat.CancelAutoAttack();
-                    Bot.Combat.StopAttacking = true;
+                    Bot.Sleep(200);
+                    if (!Bot.Target.Auras.Any(x => x.Name == "Crit Damage Amplified"))
+                    {
+                        break;
+                    }
 
-                    Bot.Wait.ForTrue(
-                        () =>
-                            Bot.Player.HasTarget
-                            && (
-                                Bot.Player.Target?.HP <= 0
-                                || !Bot.Target.HasActiveAura("Crit Damage Amplified")
-                            ),
-                        20
-                    );
-
-                    Bot.Combat.StopAttacking = false;
                 }
 
                 // Conditional aura skills
                 if (
                     Bot.Player.HasTarget
                     && Bot.Player.Target?.HP > 0 == true
-                    && !Bot.Target!.HasActiveAura("Incinerating")
+                    && !Bot.Target!.Auras.Any(x => x.Name == "Incinerating")
                     && Bot.Skills.CanUseSkill(1)
                 )
                     Bot.Skills.UseSkill(1);
                 else if (
                     Bot.Player.HasTarget
                     && Bot.Player.Target?.HP > 0
-                    && !Bot.Self.HasActiveAura("Corporeal Ascension")
+                    && !Bot.Self.Auras.Any(x => x.Name == "Corporeal Ascension")
                     && Bot.Skills.CanUseSkill(4)
                 )
                     Bot.Skills.UseSkill(4);
@@ -1699,8 +1543,8 @@ public class Grimgaol
                 break;
             }
 
-            if (
-                Bot.Player.HasTarget
+            if (Bot.Player?.Cell == "r9" || Bot.Player?.Cell == "r3" 
+                && Bot.Player.HasTarget
                 && Bot.Player.Health < Bot.Player.MaxHealth * 0.9
                 && Bot.Skills?.CanUseSkill(2) == true
             )
@@ -1796,14 +1640,14 @@ public class Grimgaol
                 if (
                     Bot.Player.HasTarget
                     && Bot.Player.Target?.HP > 0
-                    && !Bot.Target!.HasActiveAura("Yami")
+                    && !Bot.Target!.Auras.Any(x => x.Name == "Yami")
                     && Bot.Skills.CanUseSkill(2)
                 )
                     Bot.Skills.UseSkill(2);
                 else if (
                     Bot.Player.HasTarget
                     && Bot.Player.Target?.HP > 0
-                    && Bot.Target!.HasActiveAura("Yami")
+                    && Bot.Target!.Auras.Any(x => x.Name == "Yami")
                     && Bot.Skills.CanUseSkill(4)
                 )
                     Bot.Skills.UseSkill(4);
@@ -1886,27 +1730,6 @@ public class Grimgaol
                         if (Bot.Player.InCombat)
                             Bot.Combat.CancelTarget();
                         break;
-                    }
-
-                    // Exit loop if target has "Crit Damage Amplified" aura
-                    if (
-                        Bot.Player.HasTarget
-                        && Bot.Player.Target?.HP > 0
-                        && Bot.Target.HasActiveAura("Crit Damage Amplified")
-                    )
-                    {
-                        Bot.Combat.CancelAutoAttack();
-                        Bot.Combat.StopAttacking = true;
-
-                        Bot.Wait.ForTrue(
-                            () => Bot.Target?.HasActiveAura("Crit Damage Amplified") == false,
-                            20
-                        );
-
-                        Bot.Combat.CancelAutoAttack();
-                        Bot.Combat.CancelTarget();
-                        Bot.Combat.StopAttacking = false;
-                        continue;
                     }
 
                     if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0)
