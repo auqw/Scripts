@@ -1543,7 +1543,7 @@ public class Grimgaol
                 break;
             }
 
-            if (Bot.Player?.Cell == "r9" || Bot.Player?.Cell == "r3" 
+            if (Bot.Player?.Cell == "r7" || Bot.Player?.Cell == "r3" 
                 && Bot.Player.HasTarget
                 && Bot.Player.Health < Bot.Player.MaxHealth * 0.9
                 && Bot.Skills?.CanUseSkill(2) == true
