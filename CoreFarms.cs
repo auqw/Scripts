@@ -2801,7 +2801,6 @@ public class CoreFarms
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
-        Core.SavedState(false);
     }
 
     public void FishingREP(
@@ -2831,7 +2830,6 @@ public class CoreFarms
         int currentRep = FactionRep("Fishing");
         Core.AddDrop("Fishing Bait", "Fishing Dynamite");
         Core.EquipClass(ClassType.Farm);
-        Core.SavedState(true, "fishing");
         Core.Logger($"Farming rank {rank}");
 
         Bot.Events.ExtensionPacketReceived += FishingWaiter;
@@ -2874,7 +2872,6 @@ public class CoreFarms
         waitTimer = 0;
         if (trashBait)
             Core.TrashCan(new[] { "Fishing Bait", "Fishing Dynamite" });
-        Core.SavedState(false);
 
         void FishingWaiter(dynamic packet)
         {
