@@ -1452,7 +1452,7 @@ public class Grimgaol
             }
 
             if (Bot.Player.HasTarget
-                && Bot.Player.Health < Bot.Player.MaxHealth * 0.75
+                && Bot.Player.Health < Bot.Player.MaxHealth * 0.9
                 && Bot.Skills?.CanUseSkill(2) == true
             )
                 Bot.Skills.UseSkill(2);
