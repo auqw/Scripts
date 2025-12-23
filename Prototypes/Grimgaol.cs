@@ -769,98 +769,6 @@ public class Grimgaol
         }
     }
 
-    // private void R2()
-    // {
-    //     if (Bot.Player?.Cell != "r2")
-    //     {
-    //         Core.Logger("jump to r2");
-    //         Bot.Map.Jump("r2", "Left", autoCorrect: false);
-    //         Bot.Wait.ForCellChange("r2");
-    //     }
-    //     Bot.Sleep(1000);
-
-    //     if (!monsterAvail())
-    //     {
-    //         runTimer.Stop();
-    //         return;
-    //     }
-    //     Bot.Player?.SetSpawnPoint();
-
-    //     #region Equipment Setup
-    //     EquipIfAvailable(voidhighlord);
-    //     EquipIfAvailable(Bot.Config!.Get<string>(Daunt ? "Dauntless" : "Valiance"));
-    //     EquipIfAvailable(Bot.Config!.Get<string>("AnimaHelm") ?? Bot.Config!.Get<string>("LuckHelm"));
-    //     EquipIfAvailable(Bot.Config!.Get<string>("Vainglory") ?? Bot.Config!.Get<string>("Penitence"));
-
-    //     #endregion
-    //     runTimer.Start();
-
-    //     int skillIndex = 0;
-    //     int[] skillList = { 1, 4, 2, 3 };
-
-    // Restart:
-    //     foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
-    //     {
-    //         if (m == null || m?.HP <= 0 || m?.State == 0)
-    //             continue;
-
-    //         while (!Bot.ShouldExit)
-    //         {
-    //             if (!Bot.Player!.Alive)
-    //             {
-    //                 Bot.Sleep(100);
-    //                 if (Bot.Player.Alive)
-    //                     skillIndex = 0;
-    //                 goto Restart;
-    //             }
-
-    //             // Ensure we're still in the right cell
-    //             if (Bot.Player?.Cell != "r2")
-    //             {
-    //                 Bot.Map.Jump("r2", "Left", autoCorrect: false);
-    //                 Bot.Wait.ForCellChange("r2");
-    //             }
-
-    //             if (!monsterAvail())
-    //             {
-    //                 runTimer.Stop();
-    //                 return;
-    //             }
-
-    //             // Start attack if no target
-    //             if (!Bot.Player!.HasTarget)
-    //                 Bot.Combat.Attack("*");
-
-    //             if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-    //             {
-    //                 Bot.Combat.CancelAutoAttack();
-    //                 Bot.Combat.CancelTarget();
-    //                 break;
-    //             }
-
-    //             if (Bot.Player.Health <= 2500 && Bot.Skills.CanUseSkill(2))
-    //                 Bot.Skills.UseSkill(2);
-
-    //             else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && !Bot.Self.Auras.Any(x => x.Name == "Shackled") && skillIndex == 0
-    //               && Bot.Skills.CanUseSkill(skillList[skillIndex]))
-    //             {
-    //                 Bot.Skills.UseSkill(skillList[skillIndex]);
-    //                 skillIndex = (skillIndex + 1) % skillList.Length;
-    //             }
-
-    //             else if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0
-    //               && Bot.Skills.CanUseSkill(skillList[skillIndex]))
-    //             {
-    //                 Bot.Skills.UseSkill(skillList[skillIndex]);
-    //             }
-    //             skillIndex = (skillIndex + 1) % skillList.Length;
-    //             Bot.Sleep(200);
-
-    //         }
-    //     }
-
-    // }
-
     private void R9()
     {
         if (Bot.Player?.Cell != "r9")
@@ -1543,9 +1451,8 @@ public class Grimgaol
                 break;
             }
 
-            if (Bot.Player?.Cell == "r7" || Bot.Player?.Cell == "r3" 
-                && Bot.Player.HasTarget
-                && Bot.Player.Health < Bot.Player.MaxHealth * 0.9
+            if (Bot.Player.HasTarget
+                && Bot.Player.Health < Bot.Player.MaxHealth * 0.75
                 && Bot.Skills?.CanUseSkill(2) == true
             )
                 Bot.Skills.UseSkill(2);
