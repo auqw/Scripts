@@ -35,6 +35,7 @@ using Skua.Core.Models.Shops;
 using Skua.Core.Models.Skills;
 using Skua.Core.Options;
 using Skua.Core.Utils;
+using Timer = System.Threading.Timer;
 
 public class CoreBots
 {
@@ -7389,14 +7390,125 @@ public class CoreBots
         }
     }
 
+
+    private Timer? SavestateTimer;
+    private Random _randomInterval = new Random();
+    private bool _savedStateEnabled = false;
+    private string _previousMap = "";
+
     /// <summary>
     /// Sets the saved state to the specified status.
+    /// Enables/disables automatic save state jumps to the player's house at random intervals (30 mins - 1 hour).
     /// </summary>
     /// <param name="on">True to turn on saved state; false to turn it off (default is true).</param>
-    public void SavedState(bool on = true)
+    /// <param name="previousMap">The map to return to after the save state (default is empty).</param>
+    public void SavedState(bool on = true, string previousMap = "")
     {
-        // Method implementation intentionally left blank as it is currently unused.
-        // GC.Collect();
+        if (string.IsNullOrEmpty(previousMap) || on is true && _savedStateEnabled)
+            return;
+
+        _savedStateEnabled = on;
+        Logger($"SaveState [{_savedStateEnabled}]" + (_savedStateEnabled ? "We'll randomly goto your house (or /whitemap) to save your progress every 30mns to an hour" : ""), "SaveStateHandler");
+
+        if (on)
+        {
+            // Store the previous map for returning later
+            _previousMap = previousMap;
+
+            // Start the timer with initial random interval
+            int randomInterval = GetRandomInterval();
+            SavestateTimer = new Timer(ExecuteSaveState, null, randomInterval, Timeout.Infinite);
+        }
+        else
+        {
+            // Stop and dispose the timer
+            SavestateTimer?.Dispose();
+            SavestateTimer = null;
+        }
+    }
+
+    /// <summary>
+    /// Generates a random interval between 30 minutes and 1 hour (in milliseconds).
+    /// </summary>
+    private int GetRandomInterval()
+    {
+        // 30 minutes = 1,800,000 ms
+        // 1 hour = 3,600,000 ms
+        int minMs = 30 * 60 * 1000;      // 30 minutes
+        int maxMs = 60 * 60 * 1000;      // 1 hour
+
+        return _randomInterval.Next(minMs, maxMs + 1);
+    }
+
+    /// <summary>
+    /// Executes the save state action: calls JumpWait and navigates to the player's house.
+    /// </summary>
+    private void ExecuteSaveState(object? state)
+    {
+        if (_savedStateEnabled)
+        {
+            try
+            {
+                // Call the jump wait function
+                Bot.Map.Jump("Enter", "Spawn", false);
+                Bot.Wait.ForCellChange("Enter");
+                Bot.Sleep(1500);
+
+                // Navigate to player's house or whitemap if player doesnt have a house
+                if (Bot.House.Items.Any(h => h.Equipped))
+                {
+                    string? toSend = null;
+                    Bot.Events.ExtensionPacketReceived += modifyPacket;
+                    Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
+                    Bot.Wait.ForMapLoad("house");
+                    Task.Run(() =>
+                    {
+                        Bot.Wait.ForMapLoad("house");
+                        if (Bot.Wait.ForTrue(() => toSend != null, 20))
+                            Bot.Send.ClientPacket(toSend!, "json");
+                        Bot.Events.ExtensionPacketReceived -= modifyPacket;
+                        for (int i = 0; i < 7; i++)
+                            Bot.Send.ClientServer(" ", "");
+                    });
+
+                    void modifyPacket(dynamic packet)
+                    {
+                        string type = packet["params"].type;
+                        dynamic data = packet["params"].dataObj;
+                        if ((type is not null and "json") && (data.houseData is not null))
+                        {
+                            toSend =
+                                $"{{\"t\":\"xt\",\"b\":{{\"r\":-1,\"o\":{{\"cmd\":\"moveToArea\",\"areaName\":\"house\",\"uoBranch\":{JsonConvert.SerializeObject(data.uoBranch)},\"strMapFileName\":\"{data.strMapFileName}\",\"intType\":\"1\",\"monBranch\":[],\"houseData\":{Regex.Replace(JsonConvert.SerializeObject(data.houseData), Username(), "Skua user", RegexOptions.IgnoreCase)},\"sExtra\":\"\",\"areaId\":{data.areaId},\"strMapName\":\"house\"}}}}}}";
+                            Bot.Events.ExtensionPacketReceived -= modifyPacket;
+                        }
+                    }
+                }
+                else
+                    Join("whitemap-100000");
+
+                // Return to previous map if stored
+                if (!string.IsNullOrEmpty(_previousMap))
+                {
+                    Join(_previousMap);
+                }
+
+                // Reset the timer with a new random interval
+                int nextInterval = GetRandomInterval();
+                SavestateTimer.Change(nextInterval, Timeout.Infinite);
+            }
+            catch (Exception ex)
+            {
+                Logger($"SaveState error: {ex.Message}");
+            }
+        }
+    }
+
+    /// <summary>
+    /// Public method to manually trigger a save state action.
+    /// </summary>
+    public void TriggerSaveStateManually()
+    {
+        ExecuteSaveState(null);
     }
 
     /// <summary>
