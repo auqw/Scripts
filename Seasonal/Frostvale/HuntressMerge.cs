@@ -110,14 +110,7 @@ public class HuntressMerge
                     Core.RegisterQuests(8446, 8447, 8448);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.KillMonster(
-                            "otziwar",
-                            "r6",
-                            "Left",
-                            "Sluagh Warrior",
-                            req.Name,
-                            quant
-                        );
+                        Core.KillMonster("otziwar", "r6", "Left", "Sluagh Warrior", "*");
                         Bot.Wait.ForPickup(req.ID);
                     }
                     Core.CancelRegisteredQuests();
@@ -127,7 +120,7 @@ public class HuntressMerge
                 case "Festive Punk Elf Stabber":
                 case "Wild Huntress' Sword":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonsterMapID("otziwar", 14, "req.Name", isTemp: false);
+                    Core.HuntMonsterMapID("otziwar", 14, req.Name, isTemp: false);
                     break;
             }
         }
