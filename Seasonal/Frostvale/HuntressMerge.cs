@@ -108,11 +108,8 @@ public class HuntressMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(8446, 8447, 8448);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
-                    {
-                        Core.KillMonster("otziwar", "r6", "Left", "Sluagh Warrior", "*");
-                        Bot.Wait.ForPickup(req.ID);
-                    }
+                    Core.KillMonster("otziwar", "r6", "Left", "Sluagh Warrior", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.ID);
                     Core.CancelRegisteredQuests();
                     break;
 
