@@ -4468,8 +4468,10 @@ public class CoreFarms
         Core.AddDrop("Fishing Dynamite", boostItem?.Name ?? boostName);
         Core.EquipClass(ClassType.Farm);
         if (FactionRank("Fishing") < 2)
+        {
+            Core.Logger("Fishing Rank 2 required for Boost farm quest.");
             FishingREP(2, false, false, false);
-
+        }
         if (!Core.isCompletedBefore(1615))
         {
             Core.EnsureAccept(1614);
