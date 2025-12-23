@@ -7407,7 +7407,8 @@ public class CoreBots
             return;
 
         _savedStateEnabled = on;
-        Logger($"SaveState [{_savedStateEnabled}] " + (_savedStateEnabled ? "We'll randomly goto your house (or /whitemap) to save your progress every 30mns to an hour" : ""), "SaveStateHandler");
+        Logger($"SaveState [{_savedStateEnabled}] " + 
+        (_savedStateEnabled ? "We'll randomly goto /whitemap to save your progress every 30mns to an hour" : ""), "SaveStateHandler");
 
         if (on)
         {
