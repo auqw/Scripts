@@ -417,7 +417,7 @@ public class CoreBLOD
         Core.FarmingLogger("Basic Wepon Kit", quant);
         Core.AddDrop("Basic Weapon Kit");
 
-        if (Core.isCompletedBefore(2136))
+        if (!Core.isCompletedBefore(2136))
         {
             // Define valid metals in enum form
             MineCraftingMetalsEnum[] validMetals = new[]
