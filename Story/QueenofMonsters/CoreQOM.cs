@@ -585,14 +585,7 @@ public class CoreQOM
         if (!Story.QuestProgression(5805))
         {
             Core.EnsureAccept(5805);
-            Core.KillMonster(
-                "charredpath",
-                "r3",
-                "Left",
-                "Noxious Fumes",
-                "Noxious Fumes Eradicated",
-                7
-            );
+            Core.KillMonster("charredpath", "r3", "Left", "Noxious Fumes", "Noxious Fumes Eradicated", 5);
             Core.KillMonster("charredpath", "r3", "Left", "Toxic Bile", "Toxic Bile Eradicated", 5);
             Core.EnsureComplete(5805);
         }
