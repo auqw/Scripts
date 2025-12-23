@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 422393,
-    "sha256": "5aea302077cc3996f17ca802fb12aefb3dc9eaeb1c0b467e0cfe55f3d95f62dd",
+    "size": 422455,
+    "sha256": "7b44250f3dc08735a30f049bb4f215662b4fd3ddbbb5c67774ad22904c7521f4",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -28906,7 +28906,7 @@
     ],
     "path": "Seasonal/Frostvale/Story/CoreFrostvale.cs",
     "size": 52057,
-    "sha256": "be9853e29d6b4000a726b733fc604ec0be34eee99b9e29cdd1b79892571276d4",
+    "sha256": "8f062223fee6ef39684f90d5f9f64e0b525f059c02a25ab324cf11079b92aa4f",
     "fileName": "CoreFrostvale.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/Story/CoreFrostvale.cs"
   },
