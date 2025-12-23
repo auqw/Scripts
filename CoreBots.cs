@@ -7390,7 +7390,7 @@ public class CoreBots
         }
     }
 
-    private Random _randomInterval = new();
+    private Random _randomInterval = new Random();
     private bool _savedStateEnabled = false;
     private string _previousMap = "";
     private DateTime _nextSaveStateTime = DateTime.MinValue;
@@ -7516,7 +7516,6 @@ public class CoreBots
         }
     }
 
-    
     /// <summary>
     /// Generates an array of integers from a starting value to an ending value (inclusive).
     /// </summary>
