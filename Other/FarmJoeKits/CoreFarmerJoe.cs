@@ -577,7 +577,7 @@ public class CoreFarmerJoe
         {
             Core.OneTimeMessage(
                 "GetBoosts Message",
-                "We'll occasionaly get rep/class/gold boosts throguh out the script to help speed things up a bit."
+                "We'll occasionaly get rep/class/gold boosts throughout the script to help speed things up a bit (the quest's droprate is low, but fast kills - you can disable this in scripts button > edit options ( when script is stopped).)"
             );
             // Always ensure we have 10 of each boost type
             Farm.GetBoost("REP", 10, true);
