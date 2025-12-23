@@ -122,9 +122,11 @@ public class ShorinzanMerge
                             15
                         );
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
+                        Core.KillMonster(
                             "necrodungeon",
-                            "5 Headed Dracolich",
+                            "r22",
+                            "Down",
+                            "*",
                             "Dracolich Soul Collected",
                             15
                         );
