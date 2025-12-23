@@ -35,7 +35,6 @@ using Skua.Core.Models.Shops;
 using Skua.Core.Models.Skills;
 using Skua.Core.Options;
 using Skua.Core.Utils;
-using Timer = System.Threading.Timer;
 
 public class CoreBots
 {
@@ -7391,7 +7390,7 @@ public class CoreBots
     }
 
 
-    private Timer? SavestateTimer;
+    private System.Threading.Timer? SavestateTimer;
     private Random _randomInterval = new Random();
     private bool _savedStateEnabled = false;
     private string _previousMap = "";
@@ -7417,7 +7416,7 @@ public class CoreBots
 
             // Start the timer with initial random interval
             int randomInterval = GetRandomInterval();
-            SavestateTimer = new Timer(ExecuteSaveState, null, randomInterval, Timeout.Infinite);
+            SavestateTimer = new System.Threading.Timer(ExecuteSaveState, null, randomInterval, Timeout.Infinite);
         }
         else
         {
