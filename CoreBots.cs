@@ -7465,41 +7465,10 @@ public class CoreBots
         try
         {
             // Call the jump wait function
-            Bot.Map.Jump("Enter", "Spawn", false);
-            Bot.Wait.ForCellChange("Enter");
-            Bot.Sleep(1500);
+            Jump("Enter", "Spawn", false);
 
-            // Navigate to player's house or whitemap if player doesn't have a house
-            if (Bot.House.Items.Any(h => h.Equipped))
-            {
-                string? toSend = null;
-                Bot.Events.ExtensionPacketReceived += modifyPacket;
-                Bot.Send.Packet($"%xt%zm%house%1%{Username()}%");
-                Bot.Wait.ForMapLoad("house");
-                Task.Run(() =>
-                {
-                    Bot.Wait.ForMapLoad("house");
-                    if (Bot.Wait.ForTrue(() => toSend != null, 20))
-                        Bot.Send.ClientPacket(toSend!, "json");
-                    Bot.Events.ExtensionPacketReceived -= modifyPacket;
-                    for (int i = 0; i < 7; i++)
-                        Bot.Send.ClientServer(" ", "");
-                });
-
-                void modifyPacket(dynamic packet)
-                {
-                    string type = packet["params"].type;
-                    dynamic data = packet["params"].dataObj;
-                    if ((type is not null and "json") && (data.houseData is not null))
-                    {
-                        toSend =
-                            $"{{\"t\":\"xt\",\"b\":{{\"r\":-1,\"o\":{{\"cmd\":\"moveToArea\",\"areaName\":\"house\",\"uoBranch\":{JsonConvert.SerializeObject(data.uoBranch)},\"strMapFileName\":\"{data.strMapFileName}\",\"intType\":\"1\",\"monBranch\":[],\"houseData\":{Regex.Replace(JsonConvert.SerializeObject(data.houseData), Username(), "Skua user", RegexOptions.IgnoreCase)},\"sExtra\":\"\",\"areaId\":{data.areaId},\"strMapName\":\"house\"}}}}}}";
-                        Bot.Events.ExtensionPacketReceived -= modifyPacket;
-                    }
-                }
-            }
-            else
-                Join("whitemap-100000");
+            // Navigate to whitemap
+            Join("whitemap-100000");
 
             // Return to previous map if stored
             if (!string.IsNullOrEmpty(_previousMap))

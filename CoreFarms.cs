@@ -749,12 +749,16 @@ public class CoreFarms
 
         if (Bot.Player.Level >= level && !rankUpClass)
             goto Cleanup;
+
+        Core.SavedState(false);
+
         Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 61-75 with BattleGroundE for non-rank-up class
         if (Bot.Player.Level >= 61 && Bot.Player.Level < 75)
         {
             if (rankUpClass)
             {
+                Core.SavedState(true, "icestormarena");
                 while (
                     !Bot.ShouldExit
                     && (
@@ -797,6 +801,7 @@ public class CoreFarms
                     ToggleBoost(BoostType.Gold);
 
                 Core.RegisterQuests(3991, 3992);
+                Core.SavedState(true, "battlegrounde");
                 while (!Bot.ShouldExit && Bot.Player.Level >= 61 && Bot.Player.Level < 75)
                 {
                     if (Bot.Player.Level >= level && !rankUpClass)
@@ -824,11 +829,13 @@ public class CoreFarms
                 ToggleBoost(BoostType.Gold, false);
             }
         }
+        Core.SavedState(false);
 
         if (Bot.Player.Level >= level && !rankUpClass)
             goto Cleanup;
         Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
         // Farming between levels 75-100
+        Core.SavedState(true, "icestormarena");
         while (
             !Bot.ShouldExit
             && (
