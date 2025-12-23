@@ -4212,6 +4212,8 @@ public class CoreBots
             return;
         }
 
+        EquipBestClassForTargets(targetMonsters.ToArray());
+
         if (item == null)
         {
             while (!Bot.ShouldExit)
@@ -4231,8 +4233,8 @@ public class CoreBots
                     Bot.Combat.Attack(monster); // ⚔️
 
                 Sleep(500); // 💤
-                // Check if player doenst have a target after the attacking
-                // if not then its dead and we can move on
+                            // Check if player doenst have a target after the attacking
+                            // if not then its dead and we can move on
                 if (!Bot.Player!.HasTarget)
                     return;
             }
@@ -4272,6 +4274,78 @@ public class CoreBots
         JumpWait(); // 🏃‍♂️
         Rest(); // 🛌
         Bot.Options.HidePlayers = false; // 👀
+    }
+
+    public void EquipBestClassForTargets(IEnumerable<Monster>? targets)
+    {
+        if (targets == null)
+            return;
+
+        bool hasHighHpTarget = false;
+        bool hasLowHpTarget = false;
+
+        // Scan targets for HP thresholds
+        foreach (Monster? monster in targets)
+        {
+            if (monster == null)
+                continue;
+
+            int hp = monster.MaxHP;
+
+            if (hp > 100_000)
+            {
+                hasHighHpTarget = true;
+                break; // Solo takes priority
+            }
+
+            if (hp < 10_000)
+                hasLowHpTarget = true;
+        }
+
+        // Solo priority
+        if (hasHighHpTarget)
+        {
+            EquipClass(ClassType.Solo);
+            return;
+        }
+
+        if (!hasLowHpTarget)
+            return; // Nothing to farm
+
+        // Count monsters by (Name + Cell) for farm decision
+        Dictionary<(string Name, string Cell), int> monsterCounts = new();
+
+        foreach (Monster monster in Bot.Monsters.MapMonsters)
+        {
+            if (monster == null || monster.HP <= 0)
+                continue;
+
+            string? name = monster.Name;
+            string? cell = monster.Cell;
+
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(cell))
+                continue;
+
+            var key = (name, cell);
+            monsterCounts.TryGetValue(key, out int count);
+            count++;
+            monsterCounts[key] = count;
+
+            if (count >= 3)
+            {
+                EquipClass(ClassType.Farm);
+                return;
+            }
+        }
+    }
+
+    // Overload for a single Monster
+    public void EquipBestClassForTargets(Monster? target)
+    {
+        if (target == null)
+            return;
+
+        EquipBestClassForTargets(new[] { target });
     }
 
     /// <summary>
@@ -4357,6 +4431,8 @@ public class CoreBots
                 Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
             return;
         }
+
+        EquipBestClassForTargets(targetMonsters.ToArray());
 
         // Handle the scenario where no item is specified
         if (item == null)
@@ -4499,13 +4575,16 @@ public class CoreBots
 
         // Try to find target monster by MapID
         Monster? target = Bot.Monsters.MapMonsters.FirstOrDefault(m =>
-            m != null && m.MapID == MonsterMapID
-        );
+                m != null && m.MapID == MonsterMapID
+            );
+
         if (target == null)
         {
             Logger($"⚠️ No monster with MapID {MonsterMapID} found in /{map} ({cell}, {pad})");
             return;
         }
+
+        EquipBestClassForTargets(target);
 
         if (ItemID == 0)
         {
@@ -4662,6 +4741,8 @@ public class CoreBots
         else
             Bot.Options.AggroMonsters = false;
 
+        EquipBestClassForTargets(targetMonster);
+
         if (item == null)
         {
             while (!Bot.ShouldExit)
@@ -4792,6 +4873,8 @@ public class CoreBots
         }
         else
             Bot.Options.AggroMonsters = false;
+
+        EquipBestClassForTargets(target);
 
         // If item is null -> just kill monster until dead
         if (item == null)
@@ -4978,7 +5061,7 @@ public class CoreBots
                 continue;
 
             // Equip the class before hunting
-            EquipClass(classType);
+            EquipClass((mapName, monsterName, classType).classType);
 
             if (!Bot.Quests.IsInProgress(questId))
                 EnsureAccept(questId);
@@ -7407,7 +7490,7 @@ public class CoreBots
             return;
 
         _savedStateEnabled = on;
-        Logger($"SaveState [{_savedStateEnabled}] " + 
+        Logger($"SaveState [{_savedStateEnabled}] " +
         (_savedStateEnabled ? "We'll randomly goto /whitemap to save your progress every 30mns to an hour" : ""), "SaveStateHandler");
 
         if (on)

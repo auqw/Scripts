@@ -494,7 +494,7 @@ public class CoreStory
             {
                 if (M == null || M.HP <= 0)
                     continue;
-
+                Core.EquipBestClassForTargets(M);
                 while (!Bot.ShouldExit && neededItems.Count > 0)
                 {
                     bool hasTarget = Bot.Player?.HasTarget ?? false;
