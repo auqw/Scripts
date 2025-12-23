@@ -4336,8 +4336,6 @@ public class CoreBots
                 EquipClass(ClassType.Farm);
                 return;
             }
-            else
-                EquipClass(ClassType.Solo);
 
         }
     }
