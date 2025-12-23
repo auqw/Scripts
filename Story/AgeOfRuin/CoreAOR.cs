@@ -883,6 +883,7 @@ public class CoreAOR
         // 10356 | Enatiodromia
         if (!Story.QuestProgression(10356))
         {
+            Core.EquipClass(ClassType.Solo);
             Core.HuntMonsterQuest(10356, ("thelimacity", UseableMonsters[5], ClassType.Solo));
         }
     }
