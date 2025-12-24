@@ -1943,24 +1943,19 @@ public class CoreFarms
         // Core.Logger($"If you can't Solo SlugButter, Either use the Gold method or Run the AP Script (Found in: Good-ArchPaladin) as it can Solo the boss 👍");
 
         Core.RegisterQuests(2777);
-        Core.SavedState(true, "greenguardeast");
         while (!Bot.ShouldExit && FactionRank("Blacksmithing") < 4 && !UseGold)
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
             // Core.EnsureAccept(2777);
             Core.HuntMonster("greenguardeast", "Wolf", "Furry Lost Sock", 2, log: false);
             Core.HuntMonster("greenguardwest", "Slime", "Slimy Lost Sock", 5, log: false);
             // Core.EnsureComplete(2777);
         }
         Core.CancelRegisteredQuests();
-        Core.SavedState(false);
 
         // Core.AbandonQuest(2777);
 
         Core.RegisterQuests(8736);
         Core.EquipClass(ClassType.Solo);
-        Core.SavedState(true, "hydrachallenge");
         while (!Bot.ShouldExit && FactionRank("Blacksmithing") < rank && !UseGold)
         {
             if (Core.CheckSaveState())
@@ -1993,7 +1988,6 @@ public class CoreFarms
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
-        Core.SavedState(false);
     }
     #endregion BlacksmithingREP
 
