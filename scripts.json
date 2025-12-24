@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 155500,
-    "sha256": "aec4ee5e5e306f244d38b17716dd5e46807c7c269c9f3525018fe5e1126eb22a",
+    "size": 155258,
+    "sha256": "ef26708c7794548cabe8b8643af5e68d044cfdd513e7257859db0741c2904cbd",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -9770,8 +9770,8 @@
       "null"
     ],
     "path": "Story/QueenofMonsters/CoreQOM.cs",
-    "size": 36202,
-    "sha256": "830f936ed31e2b45e1d2ac9b31f8cc03a1a9dd65d00cbc23b906f331b79fe440",
+    "size": 36200,
+    "sha256": "ecdf9deabfe63176803a1297be6ba2042cf55242229c70109f552ce162afdd50",
     "fileName": "CoreQOM.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/CoreQOM.cs"
   },
