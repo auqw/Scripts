@@ -684,14 +684,14 @@ public class CoreArchMage
                         "Right",
                         "Nulgath",
                         item,
-                        isTemp: false
+                        isTemp: false, EquipBestClassType: false
                     );
                     Adv.GearStore(true);
                     break;
 
                 case "The Divine Will":
                     Core.EquipClass(ClassType.Dodge);
-                    Item("celestialpast", "Azalith", item, quant);
+                    Item("celestialpast", "Azalith", item, quant, EquipBestClassType: false);
                     break;
 
                 case "Insatiable Hunger":
@@ -709,10 +709,10 @@ public class CoreArchMage
             }
         }
 
-        void Item(string map, string monster, string item, int quant)
+        void Item(string map, string monster, string item, int quant, bool EquipBestClassType = true)
         {
             if (army)
-                Core.HuntMonster(map, monster, item, quant, isTemp: false);
+                Core.HuntMonster(map, monster, item, quant, isTemp: false, EquipBestClassType);
             else
                 Core.Logger(
                     $"{item} x{quant} not found, it can be farmed (with an army) from \"{monster}\" in /{map.ToLower()}",

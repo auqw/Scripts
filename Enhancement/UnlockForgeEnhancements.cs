@@ -939,7 +939,7 @@ public class UnlockForgeEnhancements
 
         Adv.GearStore();
         Core.EquipClass(ClassType.Dodge);
-        Core.HuntMonster("tercessuinotlim", "Nulgath", "The Mortal Coil", isTemp: false);
+        Core.HuntMonster("tercessuinotlim", "Nulgath", "The Mortal Coil", isTemp: false, EquipBestClassType: false);
         Adv.GearStore(true);
         Core.EnsureComplete(8820);
         Core.Logger("Enhancement Unlocked: Acheron");
@@ -1296,8 +1296,8 @@ public class UnlockForgeEnhancements
             Core.EnsureComplete(3270);
         }
         Core.EquipClass(ClassType.Dodge);
-        Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 100, isTemp: false);
-        Core.HuntMonster("icewing", "Warlord Icewing", "Boreal Cavalier Bardiche", isTemp: false);
+        Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 100, isTemp: false, EquipBestClassType: false);
+        Core.HuntMonster("icewing", "Warlord Icewing", "Boreal Cavalier Bardiche", isTemp: false, EquipBestClassType: false);
 
         //why the fuck was the class buffed!?
         InventoryItem? usethis = Bot
@@ -1310,7 +1310,7 @@ public class UnlockForgeEnhancements
             Core.Equip(usethis.ID);
         else
             Core.EquipClass(ClassType.Dodge);
-        Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false);
+        Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false, EquipBestClassType: false);
 
         Core.EnsureComplete(8822);
         Core.Logger("Enhancement Unlocked: Penitence");

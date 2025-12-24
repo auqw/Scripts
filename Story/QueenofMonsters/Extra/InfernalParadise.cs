@@ -107,8 +107,7 @@ public class InfernalParadise
         // 10081 | Azalith the Disavowed
         if (!Story.QuestProgression(10081))
         {
-            Core.EquipClass(ClassType.Dodge);
-            Core.HuntMonsterQuest(10081, ("infernalparadise", UseableMonsters[5], ClassType.Solo));
+            Core.HuntMonsterQuest(10081, ("infernalparadise", UseableMonsters[5], ClassType.Dodge));
         }
     }
 }

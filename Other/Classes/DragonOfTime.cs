@@ -374,7 +374,7 @@ public class DragonOfTime
                     Core.Equip(usethis.ID);
                 else
                     Core.EquipClass(ClassType.Dodge);
-                Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false);
+                Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false, EquipBestClassType: false);
             }
             Core.JumpWait();
             Core.EquipClass(ClassType.Solo);
@@ -493,7 +493,7 @@ public class DragonOfTime
                 "Icewing's Laurel",
                 30,
                 false,
-                publicRoom: true
+                publicRoom: true, EquipBestClassType: false
             );
 
             Story.ChainQuest(7724);

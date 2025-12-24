@@ -124,7 +124,7 @@ public class CelestialOfMysteries
                 "Farming Azalith for The Divine Will. Azalith is tough, consider using an army to speed it up."
             );
             Core.EquipClass(ClassType.Dodge);
-            Core.HuntMonster("celestialpast", "Azalith", "The Divine Will", 1, false);
+            Core.HuntMonster("celestialpast", "Azalith", "The Divine Will", 1, false, EquipBestClassType: false);
         }
 
         Core.AddDrop(Core.QuestRewards(10096));

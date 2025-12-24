@@ -150,7 +150,7 @@ public class SinoftheSinoftheUndyingNoInsignia
                 "Beast Soul",
                 20,
                 isTemp: false,
-                publicRoom: true
+                publicRoom: true, EquipBestClassType: false
             );
         }
 

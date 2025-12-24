@@ -185,7 +185,7 @@ public class DarkHandMerge
                     Core.EquipClass(ClassType.Dodge);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(10052, "bosschallenge", "Colossal Primarch");
+                        Core.HuntMonsterQuest(10052, "bosschallenge", "Colossal Primarch", EquipBestClassType: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

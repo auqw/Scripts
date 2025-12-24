@@ -69,6 +69,6 @@ public class CelestialPast
 
         //Azalith Faced 7681    [Confront Quest]
         Core.EquipClass(ClassType.Dodge);
-        Story.KillQuest(7681, "CelestialPast", "Azalith");
+        Story.KillQuest(7681, "CelestialPast", "Azalith", EquipBestClassType: false);
     }
 }

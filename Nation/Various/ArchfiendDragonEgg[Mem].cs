@@ -66,7 +66,7 @@ public class ArchfiendDragonEgg
             Core.Equip(usethis.ID);
         else
             Core.EquipClass(ClassType.Dodge);
-        Core.HuntMonster("Underlair", "ArchFiend DragonLord", "Fiendish Brimstone", isTemp: false);
+        Core.HuntMonster("Underlair", "ArchFiend DragonLord", "Fiendish Brimstone", isTemp: false, EquipBestClassType: false);
         Core.BuyItem("Ariapet", 12, "ArchFiend Dragon Egg");
         Core.EnsureComplete(7296);
         Bot.Wait.ForPickup("ArchFiend Baby Dragon Pet");

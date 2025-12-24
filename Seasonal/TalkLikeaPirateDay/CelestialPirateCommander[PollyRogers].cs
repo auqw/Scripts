@@ -85,7 +85,7 @@ public class CelestialPirateCommander
                 "Sapphire Orb",
                 5,
                 false,
-                publicRoom: true
+                publicRoom: true, EquipBestClassType: false
             );
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster(
@@ -153,7 +153,7 @@ public class CelestialPirateCommander
                 "Coffer of the Stars",
                 1,
                 false,
-                publicRoom: true
+                publicRoom: true, EquipBestClassType: false
             );
             Core.EquipClass(ClassType.Solo);
 

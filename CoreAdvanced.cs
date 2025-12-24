@@ -1389,7 +1389,7 @@ public class CoreAdvanced
         int quant = 1,
         bool isTemp = true,
         bool log = true,
-        bool publicRoom = false
+        bool publicRoom = false, bool EquipBestClassType =  true
     )
     {
         if (item != "" && Core.CheckInventory(item, quant))
@@ -1398,7 +1398,7 @@ public class CoreAdvanced
         Core.Join(map, cell, pad, publicRoom: publicRoom);
 
         // _RaceGear(monster);
-        Core.KillMonster(map, cell, pad, monster, item, quant, isTemp, log, publicRoom);
+        Core.KillMonster(map, cell, pad, monster, item, quant, isTemp, log, publicRoom, EquipBestClassType: false);
 
         GearStore(true);
     }

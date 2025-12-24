@@ -894,15 +894,17 @@ public class CoreDailies
                 "Warlord Icewing",
                 "Glacial Pinion",
                 isTemp: false,
-                publicRoom: true
+                publicRoom: true, EquipBestClassType: false
             );
+            Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("hydrachallenge", "Hydra Head 90", "Hydra Eyeball", 3, isTemp: false);
+            Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster(
                 "voidflibbi",
                 "Flibbitiestgibbet",
                 "Flibbitigiblets",
                 isTemp: false,
-                publicRoom: true
+                publicRoom: true, EquipBestClassType: false
             );
             Core.EnsureComplete(8653);
             Bot.Wait.ForPickup("Void Aura");

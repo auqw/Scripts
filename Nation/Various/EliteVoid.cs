@@ -127,7 +127,7 @@ public class EliteVoid
                 else
                     Core.EquipClass(ClassType.Dodge);
 
-                Core.HuntMonster("underlair", "ArchFiend DragonLord", "Twisted Armor Piece", 3);
+                Core.HuntMonster("underlair", "ArchFiend DragonLord", "Twisted Armor Piece", 3, EquipBestClassType: false);
                 Core.EnsureComplete(6682);
             }
         }

@@ -104,7 +104,7 @@ public class AranxsAzalithRewardsMerge
                     Core.EquipClass(ClassType.Dodge);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(9888, ("champazalith", "Azalith", ClassType.Solo));
+                        Core.HuntMonsterQuest(9888, ("champazalith", "Azalith", ClassType.Dodge));
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;

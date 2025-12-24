@@ -214,7 +214,7 @@ public class ArchPaladin
                     "Colossal Primarch",
                     "Primarch's Hilt",
                     isTemp: false,
-                    publicRoom: true
+                    publicRoom: true, EquipBestClassType: false
                 );
                 Farm.Gold(500000);
                 Core.BuyItem("darkthronehub", 1308, "Exalted Paladin Seal");

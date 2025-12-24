@@ -203,7 +203,7 @@ public class CoreYnR
                 "Sapphire Orb",
                 26,
                 false,
-                publicRoom: true
+                publicRoom: true, EquipBestClassType: false
             );
             Core.EquipClass(ClassType.Solo);
             Core.KillMonster(
@@ -243,7 +243,7 @@ public class CoreYnR
                 "Sapphire Orb",
                 13,
                 false,
-                publicRoom: true
+                publicRoom: true, EquipBestClassType: false
             );
             Legion.FarmLegionToken(17500);
             Core.EquipClass(ClassType.Solo);

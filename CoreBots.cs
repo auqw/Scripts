@@ -4137,7 +4137,8 @@ public class CoreBots
         int quant = 1,
         bool isTemp = true,
         bool log = true,
-        bool publicRoom = false
+        bool publicRoom = false,
+        bool EquipBestClassType = true
     )
     {
         if (
@@ -4211,8 +4212,8 @@ public class CoreBots
             Logger($"⚠️ Monster {monster} not found in cell {cell}, pad {pad} in /{map}");
             return;
         }
-
-        EquipBestClassForTargets(targetMonsters.ToArray());
+        if (EquipBestClassType)
+            EquipBestClassForTargets(targetMonsters.ToArray());
 
         if (item == null)
         {
@@ -4370,7 +4371,8 @@ public class CoreBots
         int quant = 1,
         bool isTemp = true,
         bool log = true,
-        bool publicRoom = false
+        bool publicRoom = false,
+        bool EquipBestClassType = true
     )
     {
         pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower()); // 📝
@@ -4432,8 +4434,8 @@ public class CoreBots
                 Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
             return;
         }
-
-        EquipBestClassForTargets(targetMonsters.ToArray());
+        if (EquipBestClassType)
+            EquipBestClassForTargets(targetMonsters.ToArray());
 
         // Handle the scenario where no item is specified
         if (item == null)
@@ -4540,7 +4542,8 @@ public class CoreBots
         int quant = 1,
         bool isTemp = true,
         bool log = true,
-        bool publicRoom = false
+        bool publicRoom = false,
+        bool EquipBestClassType = true
     )
     {
         pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower()); // 📝
@@ -4584,8 +4587,8 @@ public class CoreBots
             Logger($"⚠️ No monster with MapID {MonsterMapID} found in /{map} ({cell}, {pad})");
             return;
         }
-
-        EquipBestClassForTargets(target);
+        if (EquipBestClassType)
+            EquipBestClassForTargets(target);
 
         if (ItemID == 0)
         {
@@ -4673,7 +4676,8 @@ public class CoreBots
         int quant = 1,
         bool isTemp = true,
         bool log = true,
-        bool publicRoom = false
+        bool publicRoom = false,
+        bool EquipBestClassType = true
     )
     {
         if (
@@ -4741,8 +4745,8 @@ public class CoreBots
         }
         else
             Bot.Options.AggroMonsters = false;
-
-        EquipBestClassForTargets(targetMonster);
+        if (EquipBestClassType)
+            EquipBestClassForTargets(targetMonster);
 
         if (item == null)
         {
@@ -4846,7 +4850,8 @@ public class CoreBots
         bool isTemp = true,
         bool log = true,
         bool publicRoom = false,
-        string pad = "Left"
+        string pad = "Left",
+        bool EquipBestClassType = true
     )
     {
         // Join map if needed
@@ -4874,8 +4879,8 @@ public class CoreBots
         }
         else
             Bot.Options.AggroMonsters = false;
-
-        EquipBestClassForTargets(target);
+        if (EquipBestClassType)
+            EquipBestClassForTargets(target);
 
         // If item is null -> just kill monster until dead
         if (item == null)
@@ -5092,7 +5097,7 @@ public class CoreBots
         int questId,
         string? mapName = null,
         string? monsterName = null,
-        bool log = false
+        bool log = false, bool EquipBestClassType =  true
     )
     {
         Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questId));
@@ -5135,7 +5140,8 @@ public class CoreBots
                 requirement.Name ?? "",
                 requirement.Quantity,
                 requirement.Temp,
-                log
+                log,
+                EquipBestClassType 
             ); // ⚔️🐲💎
         }
 

@@ -123,7 +123,7 @@ public class CitadelRuins
             Core.Equip(usethis.ID);
         else
             Core.EquipClass(ClassType.Dodge);
-        Story.KillQuest(6682, "underlair", "ArchFiend DragonLord");
+        Story.KillQuest(6682, "underlair", "ArchFiend DragonLord", EquipBestClassType: false);
     }
 
     public void CutieMakaisQuest()

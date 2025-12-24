@@ -132,7 +132,7 @@ public class FireChampionsArmor
             "Archfiend Dragonlord",
             "Void Scale",
             VoidScaleQuant,
-            isTemp: false
+            isTemp: false, EquipBestClassType: false
         );
     }
 }

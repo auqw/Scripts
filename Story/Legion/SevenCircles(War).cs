@@ -148,7 +148,7 @@ public class SevenCircles
         {
             Core.EquipClass(ClassType.Dodge);
             Core.EnsureAccept(7990);
-            Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "The Beast Defeated");
+            Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "The Beast Defeated", EquipBestClassType: false);
             Core.EnsureComplete(7990);
         }
     }

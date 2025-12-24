@@ -39,7 +39,7 @@ public class DefaultTemplate
     public void Example(bool TestMode = false)
     {
         // Test Area vv
-
+        Core.EquipClass(ClassType.Dodge);
         // Test Area ^^
 
         // Optional Test Mode
