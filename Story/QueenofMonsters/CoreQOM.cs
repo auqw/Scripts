@@ -581,10 +581,10 @@ public class CoreQOM
         Story.KillQuest(5804, "crashsite", "Dwakel Warrior");
 
         //The PTM is Ready!
-        Story.MapItemQuest(5805, "charredpath", 5256);
         if (!Story.QuestProgression(5805))
         {
             Core.EnsureAccept(5805);
+            Core.GetMapItem(5256, 1, "charredpath");
             Core.KillMonster("charredpath", "r3", "Left", "Noxious Fumes", "Noxious Fumes Eradicated", 5);
             Core.KillMonster("charredpath", "r3", "Left", "Toxic Bile", "Toxic Bile Eradicated", 5);
             Core.EnsureComplete(5805);
