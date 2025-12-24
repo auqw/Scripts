@@ -760,8 +760,8 @@ public class CoreBLOD
             Core.BuyItem("dwarfhold", 434, fullMetalName);
         }
 
-        // Unlocking "Basic Weapon Kit Construction" [Quest ID 2136]
-        if (!Core.isCompletedBefore(2136))
+        // Check if "Basic Weapon Kits [Quest ID 2136] is unlocked
+        if (!Bot.Quests.IsUnlocked(2136))
         {
             Bot.Log("Doing Quest to Unlock Basic Weapon Kit (hopefully...)");
             Core.AddDrop(fullMetalName);
