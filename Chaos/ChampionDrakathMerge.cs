@@ -1,7 +1,7 @@
 /*
 name: Champion Drakath Merge
 description: This bot will farm the items belonging to the selected mode for the Champion Drakath Merge [2055] in /championdrakath
-tags: champion, drakath, merge, championdrakath, empowered, original, chaos, avengers, greatsword, avenger, polished, dragon, control, supreme, arcane, colorful, rose, royal
+tags: champion, drakath, merge, championdrakath, parallel, chaos, amulet, fragments, lords, a, b, empowered, original, avengers, greatsword, avenger, polished, dragon, control, supreme, arcane, colorful, rose, royal, trace, kitsunes, chaotic, guilt, chaorrupter, locked
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
@@ -64,21 +64,7 @@ public class ChampionDrakathMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(
-            new[]
-            {
-                "Drakath Armor",
-                "Champion Drakath Insignia",
-                "Original Drakath Armor",
-                "Blade of Chaos",
-                "Chaos Avenger's Greatsword",
-                "Chaos Avenger Armor",
-                "Legendary Sword of Dragon Control",
-                "The Supreme Arcane Staff",
-                "Discordia Rose of Chaos",
-                "Chaos Rose",
-            }
-        );
+        Core.BankingBlackList.AddRange(new[] { "Champion Drakath Insignia", "Escherion's Robe", "Vath's Chaotic Dragonlord Armor", "Chaos Shogun Armor", "Wolfwing Armor", "Discordia Armor", "Ledgermayne", "Tibicenas", "Soul of Chaos Armor", "Iadoa", "Chaos Lionfang Armor", "Chaos Lord Alteon", "Xiang Chaos", "Drakath Armor", "Original Drakath Armor", "Blade of Chaos", "Chaos Avenger's Greatsword", "Chaos Avenger Armor", "Legendary Sword of Dragon Control", "The Supreme Arcane Staff", "Discordia Rose of Chaos", "Chaos Rose", "Kitsune's Chaos Mask" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -133,6 +119,134 @@ public class ChampionDrakathMerge
                     DAB.DrakathArmorQuest();
                     break;
 
+                case "Chaos Avenger Armor":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Adv.BuyItem("championdrakath", 2056, req.Name, quant, Log: false);
+                    break;
+
+                case "Kitsune's Chaos Mask":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(0000); // TODO: Replace with actual quest ID
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster("map", "MonsterName", "item", 1, isTemp: false);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+
+                case "Tibicenas":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("djinn", "Tibicenas", req.Name, quant, req.Temp, false);
+                    break;
+
+                case "Soul of Chaos Armor":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("dreamnexus", "Khasaanda", req.Name, quant, req.Temp, false);
+                    break;
+
+                case "Iadoa":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("mqlesson", "Dragonoid", "Dragonoid of Hours", isTemp: false);
+                    Core.HuntMonster("timespace", "Chaos Lord Iadoa", req.Name, quant, req.Temp, false);
+                    break;
+
+                case "Chaos Lionfang Armor":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Bot.Quests.UpdateQuest(2814);
+                    Core.HuntMonster(
+                        "stormtemple",
+                        "Chaos Lord Lionfang",
+                        req.Name, quant,
+                        req.Temp, false
+                    );
+                    break;
+
+                case "Chaos Shogun Armor":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.KillKitsune(req.Name, quant, log: false);
+                    break;
+
+                case "Wolfwing Armor":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("wolfwing", "Wolfwing", req.Name, quant, req.Temp, false);
+                    break;
+
+                case "Escherion's Robe":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.KillEscherion(req.Name, quant, log: false);
+                    break;
+
                 case "Champion Drakath Insignia":
                     Core.FarmingLogger(req.Name, quant);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
@@ -162,9 +276,37 @@ public class ChampionDrakathMerge
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
+                case "Xiang Chaos":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Adv.GearStore();
+                    Core.KillXiang("Xiang Chaos");
+                    Adv.GearStore(true);
+                    break;
+
                 case "Chaos Avenger's Greatsword":
                     Core.EquipClass(ClassType.Solo);
                     Adv.BuyItem("championdrakath", 2056, req.Name);
+                    break;
+
+                case "Vath's Chaotic Dragonlord Armor":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.KillVath(req.Name, quant, log: false);
                     break;
 
                 case "Legendary Sword of Dragon Control":
@@ -175,14 +317,15 @@ public class ChampionDrakathMerge
                     break;
 
                 case "The Supreme Arcane Staff":
+                case "Ledgermayne":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(
                         "ledgermayne",
                         "Ledgermayne",
-                        "The Supreme Arcane Staff",
-                        1,
-                        false,
+                        req.Name,
+                        quant,
+                        req.Temp,
                         false
                     );
                     Bot.Wait.ForPickup(req.Name);
@@ -200,6 +343,19 @@ public class ChampionDrakathMerge
                         false
                     );
                     Bot.Wait.ForPickup(req.Name);
+                    break;
+
+                case "Discordia Armor":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("palooza", "Discordia", req.Name, quant, req.Temp, false);
                     break;
 
                 case "Chaos Rose":
@@ -221,59 +377,22 @@ public class ChampionDrakathMerge
 
     public List<IOption> Select = new()
     {
-        new Option<bool>(
-            "64151",
-            "Empowered Drakath Armor",
-            "Mode: [select] only\nShould the bot buy \"Empowered Drakath Armor\" ?",
-            false
-        ),
-        new Option<bool>(
-            "64152",
-            "Empowered Original Drakath Armor",
-            "Mode: [select] only\nShould the bot buy \"Empowered Original Drakath Armor\" ?",
-            false
-        ),
-        new Option<bool>(
-            "64153",
-            "Empowered Blade of Chaos",
-            "Mode: [select] only\nShould the bot buy \"Empowered Blade of Chaos\" ?",
-            false
-        ),
-        new Option<bool>(
-            "64154",
-            "Empowered Chaos Avenger's Greatsword",
-            "Mode: [select] only\nShould the bot buy \"Empowered Chaos Avenger's Greatsword\" ?",
-            false
-        ),
-        new Option<bool>(
-            "64155",
-            "Empowered Chaos Avenger Armor",
-            "Mode: [select] only\nShould the bot buy \"Empowered Chaos Avenger Armor\" ?",
-            false
-        ),
-        new Option<bool>(
-            "60988",
-            "Polished Sword of Dragon Control",
-            "Mode: [select] only\nShould the bot buy \"Polished Sword of Dragon Control\" ?",
-            false
-        ),
-        new Option<bool>(
-            "60990",
-            "Polished Supreme Arcane Staff",
-            "Mode: [select] only\nShould the bot buy \"Polished Supreme Arcane Staff\" ?",
-            false
-        ),
-        new Option<bool>(
-            "60991",
-            "Colorful Chaos Rose",
-            "Mode: [select] only\nShould the bot buy \"Colorful Chaos Rose\" ?",
-            false
-        ),
-        new Option<bool>(
-            "60992",
-            "Royal Chaos Rose",
-            "Mode: [select] only\nShould the bot buy \"Royal Chaos Rose\" ?",
-            false
-        ),
-    };
+        new Option<bool>("63575", "Parallel Chaos Amulet", "Mode: [select] only\nShould the bot buy \"Parallel Chaos Amulet\" ?", false),
+        new Option<bool>("64105", "Fragments of the Lords A", "Mode: [select] only\nShould the bot buy \"Fragments of the Lords A\" ?", false),
+        new Option<bool>("64106", "Fragments of the Lords B", "Mode: [select] only\nShould the bot buy \"Fragments of the Lords B\" ?", false),
+        new Option<bool>("64151", "Empowered Drakath Armor", "Mode: [select] only\nShould the bot buy \"Empowered Drakath Armor\" ?", false),
+        new Option<bool>("64152", "Empowered Original Drakath Armor", "Mode: [select] only\nShould the bot buy \"Empowered Original Drakath Armor\" ?", false),
+        new Option<bool>("64153", "Empowered Blade of Chaos", "Mode: [select] only\nShould the bot buy \"Empowered Blade of Chaos\" ?", false),
+        new Option<bool>("64154", "Empowered Chaos Avenger's Greatsword", "Mode: [select] only\nShould the bot buy \"Empowered Chaos Avenger's Greatsword\" ?", false),
+        new Option<bool>("64155", "Empowered Chaos Avenger Armor", "Mode: [select] only\nShould the bot buy \"Empowered Chaos Avenger Armor\" ?", false),
+        new Option<bool>("60988", "Polished Sword of Dragon Control", "Mode: [select] only\nShould the bot buy \"Polished Sword of Dragon Control\" ?", false),
+        new Option<bool>("60990", "Polished Supreme Arcane Staff", "Mode: [select] only\nShould the bot buy \"Polished Supreme Arcane Staff\" ?", false),
+        new Option<bool>("60991", "Colorful Chaos Rose", "Mode: [select] only\nShould the bot buy \"Colorful Chaos Rose\" ?", false),
+        new Option<bool>("60992", "Royal Chaos Rose", "Mode: [select] only\nShould the bot buy \"Royal Chaos Rose\" ?", false),
+        new Option<bool>("74259", "Trace of Chaos", "Mode: [select] only\nShould the bot buy \"Trace of Chaos\" ?", false),
+        new Option<bool>("94406", "Empowered Kitsune's Chaos Mask", "Mode: [select] only\nShould the bot buy \"Empowered Kitsune's Chaos Mask\" ?", false),
+        new Option<bool>("94407", "Chaotic Guilt Blade", "Mode: [select] only\nShould the bot buy \"Chaotic Guilt Blade\" ?", false),
+        new Option<bool>("98032", "Chaorrupter Locked", "Mode: [select] only\nShould the bot buy \"Chaorrupter Locked\" ?", false),
+        new Option<bool>("98043", "Dual Chaorrupter Locked", "Mode: [select] only\nShould the bot buy \"Dual Chaorrupter Locked\" ?", false),
+   };
 }
