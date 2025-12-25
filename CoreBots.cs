@@ -6496,8 +6496,12 @@ public class CoreBots
         }
     }
 
+    List<string> TagsToAdd = new List<string>();
+
     public void AutoAddTags()
     {
+        TagsToAdd.Clear();
+
         List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
         ManagedAccount? acc = accounts.FirstOrDefault(x => x.Username.ToLower() == Bot.Player.Username.ToLower());
 
@@ -6509,20 +6513,19 @@ public class CoreBots
 
         foreach (var kvp in EndGameTags)
         {
-            if (!CheckInventory(kvp.Key, toInv: false) || CheckInventory(kvp.Key, toInv: false) && acc.Tags.Contains(kvp.Value))
-                continue;
+            bool hasInventoryItem = CheckInventory(kvp.Key, toInv: false);
+            bool tagAlreadyExists = acc.Tags.Contains(kvp.Value);
 
-            if (!acc.Tags.Contains(kvp.Value))
-            {
-                Logger($"Adding Account tag: {kvp.Value}", "AutoAddTags");
-                Bot.Accounts.AddTag($"{kvp.Value}");
-                Bot.Sleep(500);
-            }
+            if (hasInventoryItem && !tagAlreadyExists)
+                TagsToAdd.Add(kvp.Value);
         }
 
-        Logger(string.Join(", ", Bot.Accounts.GetTags()));
-
-
+        if (TagsToAdd.Count > 0)
+        {
+            string tagsToAddString = string.Join(", ", TagsToAdd);
+            Bot.Accounts.AddTags(tagsToAddString);  // Pass as string
+            Logger(tagsToAddString);
+        }
     }
 
     public Dictionary<string, string> EndGameTags = new()
