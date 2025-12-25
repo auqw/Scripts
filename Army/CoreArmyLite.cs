@@ -1300,8 +1300,8 @@ public class CoreArmyLite
             }
         }
 
-        Bot.Wait.ForMapLoad("battleon");
         Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
+        Bot.Wait.ForMapLoad("battleon");
         while (!Bot.ShouldExit && !Bot.Player.Loaded)
         {
             Bot.Sleep(5000);
