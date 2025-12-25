@@ -4300,13 +4300,13 @@ public class CoreBots
 
             int hp = monster.MaxHP;
 
-            if (hp > 100_000)
+            if (hp > 10000)
             {
                 hasHighHpTarget = true;
                 break; // Solo takes priority
             }
 
-            if (hp < 10_000)
+            if (hp < 10000)
                 hasLowHpTarget = true;
         }
 
