@@ -369,6 +369,10 @@ public class CoreBots
             Bot.Bank.Loaded = true;
 
             AutoAddTags();
+            DateTime now = DateTime.Now;
+            if (now >= new DateTime(now.Year, 12, 25) && now < new DateTime(now.Year, 12, 26, 12, 0, 0))
+                OneTimeMessage("Xmax2025", "Merry Christmas - Skua Team");
+
 
         }
 
