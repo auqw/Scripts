@@ -1911,32 +1911,32 @@ public class CoreAdvanced
     /// <param name="Monster">The Monster object of the monster</param>
     public void _RaceGear(string Monster)
     {
-        if (!Bot.Monsters.MapMonsters.Any(x => x.Name.ToLower() == Monster.ToLower()))
-        {
-            Core.Logger("Could not find any monster with the name " + Monster);
-            return;
-        }
-        GearStore();
-        string Map = Bot.Map.LastMap;
-        string MonsterRace = "";
-        if (Monster != "*")
-            MonsterRace =
-                Bot.Monsters.MapMonsters.First(x => x.Name.ToLower() == Monster.ToLower())?.Race
-                ?? "";
-        else
-        {
-            if (Bot.Monsters.CurrentMonsters.Count == 0)
-            {
-                Core.Logger(
-                    $"No monsters are present in cell \"{Bot.Player.Cell}\" in /{Bot.Map.Name}"
-                );
-                return;
-            }
-            MonsterRace = Bot.Monsters.CurrentMonsters.First().Race ?? "";
-        }
+        // if (!Bot.Monsters.MapMonsters.Any(x => x.Name.ToLower() == Monster.ToLower()))
+        // {
+        //     Core.Logger("Could not find any monster with the name " + Monster);
+        //     return;
+        // }
+        // GearStore();
+        // string Map = Bot.Map.LastMap;
+        // string MonsterRace = "";
+        // if (Monster != "*")
+        //     MonsterRace =
+        //         Bot.Monsters.MapMonsters.First(x => x.Name.ToLower() == Monster.ToLower())?.Race
+        //         ?? "";
+        // else
+        // {
+        //     if (Bot.Monsters.CurrentMonsters.Count == 0)
+        //     {
+        //         Core.Logger(
+        //             $"No monsters are present in cell \"{Bot.Player.Cell}\" in /{Bot.Map.Name}"
+        //         );
+        //         return;
+        //     }
+        //     MonsterRace = Bot.Monsters.CurrentMonsters.First().Race ?? "";
+        // }
 
-        if (MonsterRace == null || MonsterRace == "")
-            return;
+        // if (MonsterRace == null || MonsterRace == "")
+        //     return;
 
         // string[] _BestGear = BestGear((RacialGearBoost)Enum.Parse(typeof(RacialGearBoost), MonsterRace), false);
         // if (_BestGear.Length == 0)
@@ -1946,7 +1946,7 @@ public class CoreAdvanced
         Core.Logger("BestGear Disabled");
 
         //EnhanceEquipped(CurrentClassEnh(), CurrentCapeSpecial(), CurrentHelmSpecial(), CurrentWeaponSpecial());
-        Core.Join(Map);
+        // Core.Join(Map);
     }
 
     /// <summary>
@@ -1955,12 +1955,12 @@ public class CoreAdvanced
     /// <param name="MonsterID">The MonsterID of the monster</param>
     public void _RaceGear(int MonsterID)
     {
-        GearStore();
-        string Map = Bot.Map.LastMap;
-        string MonsterRace = Bot.Monsters.MapMonsters.First(x => x.ID == MonsterID).Race;
+        // GearStore();
+        // string Map = Bot.Map.LastMap;
+        // string MonsterRace = Bot.Monsters.MapMonsters.First(x => x.ID == MonsterID).Race;
 
-        if (MonsterRace == null || MonsterRace == "")
-            return;
+        // if (MonsterRace == null || MonsterRace == "")
+        //     return;
 
         // string[] _BestGear = BestGear((RacialGearBoost)Enum.Parse(typeof(RacialGearBoost), MonsterRace), false);
         // if (_BestGear.Length == 0)
@@ -1970,7 +1970,7 @@ public class CoreAdvanced
 
         Core.Logger("BestGear Disabled");
         //EnhanceEquipped(CurrentClassEnh(), CurrentCapeSpecial(), CurrentHelmSpecial(), CurrentWeaponSpecial());
-        Core.Join(Map);
+        // Core.Join(Map);
     }
 
     public bool HasMinimalBoost(GenericGearBoost boostType, int percentage) =>
