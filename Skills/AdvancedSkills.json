@@ -4851,42 +4851,7 @@
       ]
     }
   },
-  "King's Echo": {
-    "Base": {
-      "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 100,
-      "skills": [
-        {
-          "skillId": 3,
-          "rules": [
-            {
-              "type": "Aura",
-              "value": 0,
-              "comparison": "less",
-              "auraName": "Royal Resolve",
-              "auraTarget": "self"
-            }
-          ]
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 10,
-              "comparison": "less",
-              "isPercentage": true
-            }
-          ]
-        }
-      ]
-    },
+  "King\u0027s Echo": {
     "Def": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
