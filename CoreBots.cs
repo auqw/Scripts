@@ -235,7 +235,6 @@ public class CoreBots
         if (!Bot.Player.LoggedIn)
             Bot.Stop();
         ReadCBO();
-
         #region Social Privacy Options
 
         bool isStarting = changeTo;
@@ -368,7 +367,11 @@ public class CoreBots
                 Bot.Bank.Open();
             Bot.Bank.Load();
             Bot.Bank.Loaded = true;
+
+            AutoAddTags();
+
         }
+
 
         #endregion Required things that must be done before starting the Script
 
@@ -4745,6 +4748,7 @@ public class CoreBots
         }
         else
             Bot.Options.AggroMonsters = false;
+
         if (EquipBestClassType)
             EquipBestClassForTargets(targetMonster);
 
@@ -5097,7 +5101,7 @@ public class CoreBots
         int questId,
         string? mapName = null,
         string? monsterName = null,
-        bool log = false, bool EquipBestClassType =  true
+        bool log = false, bool EquipBestClassType = true
     )
     {
         Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questId));
@@ -5141,7 +5145,7 @@ public class CoreBots
                 requirement.Quantity,
                 requirement.Temp,
                 log,
-                EquipBestClassType 
+                EquipBestClassType
             ); // ⚔️🐲💎
         }
 
@@ -6443,6 +6447,112 @@ public class CoreBots
             }
         }
     }
+
+    public enum TagOperation
+    {
+        AddTag,
+        AddTags,
+        RemoveTag,
+        RemoveTags,
+        ClearTags
+    }
+
+    public void Tags(TagOperation operation, string[]? tags = null)
+    {
+        List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
+        ManagedAccount? acc = accounts.FirstOrDefault(x => x.Username == Bot.Player.Username);
+        if (acc == null) return;
+
+        if (tags == null || tags.Length == 0)
+            return;
+
+        switch (operation)
+        {
+            case TagOperation.AddTag:
+                if (!acc.Tags.Contains(tags[0]))
+                    Bot.Accounts.AddTag(tags[0]);
+                break;
+            case TagOperation.AddTags:
+                foreach (string tag in tags)
+                {
+                    if (!acc.Tags.Contains(tag))
+                        Bot.Accounts.AddTag(tag);
+                }
+                break;
+            case TagOperation.RemoveTag:
+                Bot.Accounts.RemoveTag(tags[0]);
+                break;
+            case TagOperation.RemoveTags:
+                foreach (string tag in tags)
+                    Bot.Accounts.RemoveTags(tags);
+                break;
+            case TagOperation.ClearTags:
+                Bot.Accounts.ClearTags();
+                break;
+        }
+    }
+
+    public void AutoAddTags()
+    {
+        List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
+        ManagedAccount? acc = accounts.FirstOrDefault(x => x.Username.ToLower() == Bot.Player.Username.ToLower());
+
+        if (acc == null)
+        {
+            Bot.Log("acc is null");
+            return;
+        }
+
+        foreach (var kvp in EndGameTags)
+        {
+            if (!CheckInventory(kvp.Key, toInv: false) || CheckInventory(kvp.Key, toInv: false) && acc.Tags.Contains(kvp.Value))
+                continue;
+
+            if (!acc.Tags.Contains(kvp.Value))
+            {
+                Logger($"Adding Account tag: {kvp.Value}", "AutoAddTags");
+                Bot.Accounts.AddTag($"{kvp.Value}");
+                Bot.Sleep(500);
+            }
+        }
+
+        Logger(string.Join(", ", Bot.Accounts.GetTags()));
+
+
+    }
+
+    public Dictionary<string, string> EndGameTags = new()
+    {
+        // Classes
+        { "Legion Revenant", "LR" },
+        { "Void Highlord", "VHL" },
+        { "Verus Doomknight", "VDK" },
+        { "Lich", "Lich" },
+        { "Hollowborn Vindicator", "HBV" },
+
+        { "Dragon of Time", "DoT" },
+        { "Chaos Avenger", "CA" },
+        { "ArchMage", "AM" },
+        { "LightCaster", "LC" },
+        { "ArchPaladin", "AP" },
+        { "Lord Of Order", "LoO" },
+        { "StoneCrusher", "SC" },
+        { "Yami no Ronin", "YnR" },
+        { "Frostval Barbarian", "FB" },
+
+        // Armor
+        { "Sepulchure's DoomKnight Armor", "SDKA" },
+        { "Radiant Goddess of War", "RGoW" },
+        { "Fire Champion's Armor", "FCA" },
+        { "Hollowborn DoomKnight", "HBDK" },
+
+        // Weapons
+        { "Necrotic Sword of Doom", "NSoD" },
+        { "Necrotic Blade of Doom", "NBoD" },
+
+    };
+
+
 
     public bool IsDungeonMonsterAlive(Monster? mon) =>
         mon != null && (mon.Alive || !KilledDungeonMonsters.Contains(mon.MapID));
@@ -11552,6 +11662,8 @@ public static class UtilExtensionsS
 
         return input;
     }
+
+
 }
 
 #nullable disable
