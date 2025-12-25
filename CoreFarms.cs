@@ -206,8 +206,6 @@ public class CoreFarms
         Core.RegisterQuests(3991, 3992);
         while (!Bot.ShouldExit && Bot.Player.Gold < goldQuant)
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
@@ -220,6 +218,9 @@ public class CoreFarms
                 Core.Jump("r2", "center");
 
             Core.CanWeAggro();
+
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
             if (!Bot.Player.HasTarget)
                 Bot.Combat.Attack("*");
             Core.Sleep();
@@ -1372,8 +1373,6 @@ public class CoreFarms
         Core.RegisterQuests(4900, 4910, 4914); //Kick Some Can 4900, The Best You Can Buy 4910, Testing My Metal 4914
         while (!Bot.ShouldExit && FactionRank("Aegis") < rank)
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
             Core.HuntMonster(
                 "skytower",
                 "Seraphic Assassin",
@@ -1751,12 +1750,12 @@ public class CoreFarms
         Core.RegisterQuests(794, 795, 796, 797, 798, 799, 800, 801);
         while (!Bot.ShouldExit && FactionRank("Arcangrove") < rank)
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
             for (int i = 0; i < 10; i++)
                 Core.KillMonster("arcangrove", "LeftBack", "Left", "*", log: false); // Gorillaphant
             for (int i = 0; i < 10; i++)
                 Core.KillMonster("arcangrove", "RightBack", "Left", "*", log: false); // Seed Spitter
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
@@ -1848,8 +1847,6 @@ public class CoreFarms
         Core.SavedState(true, "pyramid");
         while (!Bot.ShouldExit && FactionRank("BeastMaster") < rank)
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
             Core.EnsureAccept(3757);
             Core.HuntMonster(
                 "pyramid",
@@ -1890,8 +1887,6 @@ public class CoreFarms
             Core.SavedState(true, "alchemyacademy");
             while (!Bot.ShouldExit && FactionRank("Blacksmithing") < rank)
             {
-                if (Core.CheckSaveState())
-                    Core.ExecuteSaveState();
                 Core.EnsureAccept(8737);
 
                 // Get remaining reputation XP needed to reach next rank
@@ -1958,8 +1953,6 @@ public class CoreFarms
         Core.EquipClass(ClassType.Solo);
         while (!Bot.ShouldExit && FactionRank("Blacksmithing") < rank && !UseGold)
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
             // Core.EnsureAccept(8736);
             Core.HuntMonster(
                 "hydrachallenge",
@@ -2166,8 +2159,6 @@ public class CoreFarms
 
         while (!Bot.ShouldExit && FactionRank("Brightoak") < rank)
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
             if (Bot.Map.Name != "elfhame")
             {
                 Core.Join("elfhame");
@@ -2299,8 +2290,6 @@ public class CoreFarms
         Core.Join("wanders");
         while (!Bot.ShouldExit && FactionRank("CraggleRock") < rank)
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
             foreach (Monster mob in Bot.Monsters.MapMonsters.Where(x => x.ID == 560))
             {
                 while (Bot.Player.Cell != mob.Cell)
@@ -2309,6 +2298,8 @@ public class CoreFarms
                     Core.Sleep();
                 }
 
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
                 Bot.Kill.Monster(mob.MapID);
                 Core.Sleep();
 
@@ -4203,8 +4194,6 @@ public class CoreFarms
         #region Token farm and check for Token A only
         while (!Bot.ShouldExit && !Core.CheckInventory("Super-Fan Swag Token A", quant))
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
             // Refresh token quantities
             int dQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token D");
             int cQuantity = Bot.Inventory.GetQuantity("Super-Fan Swag Token C");
@@ -4213,6 +4202,8 @@ public class CoreFarms
 
             if (Core.IsMember)
             {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 Core.KillMonster(
                     "collectorlab",
                     "r2",
@@ -4226,6 +4217,8 @@ public class CoreFarms
             }
             else
             {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 // Farm Token D from Terrarium
                 Core.KillMonster(
                     "terrarium",
