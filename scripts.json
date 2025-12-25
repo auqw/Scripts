@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 426157,
-    "sha256": "0fb9ea43c5dba661c014fe187b199c8dcef07ce9c16dddcfe4d355d96924b57a",
+    "size": 426249,
+    "sha256": "da0cf7fd6000add83b04fddf767598ac70439c8087f999458bb7e63ae297bc04",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4522,6 +4522,20 @@
     "sha256": "d745d8495057abb36286563b30efb8944268b7f73b7231da0f945732f3305919",
     "fileName": "AllBankAllItems.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AllBankAllItems.cs"
+  },
+  {
+    "name": "Tag All",
+    "description": "use the AutoTag to tag all accounds in the manager.",
+    "tags": [
+      "tags",
+      "autotag",
+      "auto tag"
+    ],
+    "path": "Army/OneClient/TagAllAccounts.cs",
+    "size": 1298,
+    "sha256": "8e2de3157537b491be48e28dedd5cca0dd20907fea7cf0eae09b693cf9cb5a93",
+    "fileName": "TagAllAccounts.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/TagAllAccounts.cs"
   },
   {
     "name": "All accs bank all",
