@@ -59,16 +59,15 @@ public class UltraNulgath
     {
         new Option<string>(
             "a",
-            "First Taunter Class",
-            "Insert the name of the class that will taunt",
+            "Taunter 1 ClassName",
+            "",
             ""
         ),
         new Option<string>(
             "b",
-            "Second Taunter Class",
-            "Insert the name of the class that will taunt",
-            ""
+            "Taunter 2 ClassName", ""
         ),
+        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -110,6 +109,8 @@ public class UltraNulgath
             Ultra.BuyAlchemyPotion("Potent Honor Potion");
             Core.EquipConsumable("Potent Honor Potion");
         }
+        if (Bot.Config.Get<bool>("DoEnh"))
+            DoEnhs();
     }
 
     void Fight()
@@ -162,6 +163,106 @@ public class UltraNulgath
                     Bot.Skills.UseSkill(5);
             }
             Bot.Sleep(500);
+        }
+    }
+
+    void DoEnhs()
+    {
+        string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
+        if (string.IsNullOrEmpty(className))
+            return;
+
+        switch (className)
+        {
+            // Chrono ShadowSlayer
+            case "Chrono ShadowSlayer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Vim,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Verus Doomknight
+            case "Verus Doomknight":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Legion Revenant
+            case "Legion Revenant":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Lord Of Order
+            case "Lord Of Order":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Awe_Blast,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+
+            // Dragon of Time
+            case "Dragon of Time":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Elysium,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // King's Echo
+            case "King's Echo":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Arcana Invoker
+            case "Arcana Invoker":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Archfiend
+            case "Archfiend":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Lich
+            case "Lich":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
         }
     }
 }

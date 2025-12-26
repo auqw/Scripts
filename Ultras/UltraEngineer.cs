@@ -13,6 +13,130 @@ tags: Ultra
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
+#region Fast Comp
+
+/// <summary>
+/// Fast Composition - Maximum damage output for speed
+/// </summary>
+// Lich
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Ravenous
+// └─ Cape: Lament
+//
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Pneuma
+// ├─ Weapon: Valiance / Ravenous / Arcana
+// └─ Cape: Vainglory
+//
+// Arch Paladin
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Lucky Aweblast / Valiance
+// └─ Cape: Absolution
+
+#endregion
+
+#region Safe Comp
+
+/// <summary>
+/// Safe Composition - Balanced survivability and damage
+/// </summary>
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Pneuma
+// ├─ Weapon: Valiance / Ravenous / Arcana
+// └─ Cape: Vainglory
+//
+// StoneCrusher
+// ├─ Class: Fighter
+// ├─ Helm: Anima
+// ├─ Weapon: Valiance
+// └─ Cape: Absolution
+//
+// Arch Paladin
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Lucky Aweblast / Valiance
+// └─ Cape: Absolution
+
+#endregion
+
+#region F2P Fast (no Lich)
+
+/// <summary>
+/// F2P Fast Composition - Budget-friendly speed setup without Lich
+/// </summary>
+// Arcana Invoker
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Ravenous / Valiance
+// └─ Cape: Vainglory
+//
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Pneuma
+// ├─ Weapon: Valiance / Ravenous / Arcana
+// └─ Cape: Vainglory
+//
+// Arch Paladin
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Lucky Aweblast / Valiance
+// └─ Cape: Absolution
+
+#endregion
+
+#region Other DPS Options
+
+/// <summary>
+/// Other DPS Options - Alternative single-class configurations
+/// </summary>
+// Chrono ShadowSlayer
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Vainglory / Lament
+//
+// Verus Doomknight
+// ├─ Class: Lucky
+// ├─ Helm: Anima
+// ├─ Weapon: Ravenous / Valiance
+// └─ Cape: Vainglory
+//
+// Void Highlord
+// ├─ Class: Lucky
+// ├─ Helm: Anima
+// ├─ Weapon: Valiance / Ravenous
+// └─ Cape: Vainglory
+//
+// Chaos Avenger
+// ├─ Class: Lucky
+// ├─ Helm: Anima
+// ├─ Weapon: Valiance
+// └─ Cape: Vainglory
+
+#endregion
+
 public class UltraEngineer
 {
     private static CoreAdvanced Adv
@@ -26,11 +150,36 @@ public class UltraEngineer
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "UltraEngineer";
+    public List<IOption> Options = new()
+    {
+        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
+        CoreBots.Instance.SkipOptions,
+    };
+    
     public void ScriptMain(IScriptInterface bot)
     {
+        if (
+            Bot.Config != null
+            && Bot.Config.Options.Contains(C.SkipOptions)
+            && !Bot.Config.Get<bool>(C.SkipOptions)
+        )
+            Bot.Config.Configure();
+
         Core.Boot();
+        Prep();
         Fight();
         Bot.Stop();
+    }
+
+    void Prep()
+    {
+        if (Bot.Config.Get<bool>("DoEnh"))
+            DoEnhs();
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        Ultra.BuyAlchemyPotion("Potent Honor Potion");
+        Core.EquipConsumable("Potent Honor Potion");
     }
 
     void Fight()
@@ -42,10 +191,6 @@ public class UltraEngineer
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
-
-        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-        Ultra.BuyAlchemyPotion("Potent Honor Potion");
-        Core.EquipConsumable("Potent Honor Potion");
         C.EnsureAccept(8154);
         C.AddDrop("Engineer Insignia");
         Core.Join(map);
@@ -71,6 +216,116 @@ public class UltraEngineer
             }
             Ultra.KillWithPriority(boss, 3, priority1, 2, priority2, 1);
             Bot.Skills.UseSkill(5);
+        }
+    }
+
+    void DoEnhs()
+    {
+        string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
+        if (string.IsNullOrEmpty(className))
+            return;
+
+        switch (className)
+        {
+            // Lich
+            case "Lich":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            // Legion Revenant
+            case "Legion Revenant":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Arch Paladin
+            case "Arch Paladin":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            // Lord Of Order
+            case "Lord Of Order":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Awe_Blast,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+
+            // StoneCrusher
+            case "StoneCrusher":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Fighter,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+
+            // Arcana Invoker
+            case "Arcana Invoker":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Chrono ShadowSlayer
+            case "Chrono ShadowSlayer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Verus Doomknight
+            case "Verus Doomknight":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Void Highlord
+            case "Void Highlord":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Chaos Avenger
+            case "Chaos Avenger":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
         }
     }
 }

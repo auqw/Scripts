@@ -2331,13 +2331,14 @@ public class CoreEngine
             return false;
 
         C.DebugLogger(this);
+
         if (!Bot.Player.Alive)
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-        return Bot?.Player?.CurrentClass?.Name?.Equals(
-                className,
-                StringComparison.OrdinalIgnoreCase
-            ) == true;
+        return Bot.Player.CurrentClass?.Name?.Equals(
+            className,
+            StringComparison.OrdinalIgnoreCase
+        ) ?? false;
     }
 
     public bool IsCurrentClassMaxRank() => Bot.Player.CurrentClassRank >= 10;
