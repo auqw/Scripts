@@ -186,7 +186,7 @@ public class UltraEzrajal
 
     void Prep()
     {
-        if (Bot.Config.Get<bool>("DoEnh"))
+        if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Ultra.BuyAlchemyPotion("Potent Honor Potion");

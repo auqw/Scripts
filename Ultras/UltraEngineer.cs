@@ -157,7 +157,7 @@ public class UltraEngineer
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
-    
+
     public void ScriptMain(IScriptInterface bot)
     {
         if (
@@ -175,7 +175,7 @@ public class UltraEngineer
 
     void Prep()
     {
-        if (Bot.Config.Get<bool>("DoEnh"))
+        if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Ultra.BuyAlchemyPotion("Potent Honor Potion");
