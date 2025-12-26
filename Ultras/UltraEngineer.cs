@@ -157,13 +157,29 @@ public class UltraEngineer
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
+    
     public void ScriptMain(IScriptInterface bot)
     {
+        if (
+            Bot.Config != null
+            && Bot.Config.Options.Contains(C.SkipOptions)
+            && !Bot.Config.Get<bool>(C.SkipOptions)
+        )
+            Bot.Config.Configure();
+
         Core.Boot();
-        if (Bot.Config.Get<bool>("DoEnh"))
-            DoEnhs();
+        Prep();
         Fight();
         Bot.Stop();
+    }
+
+    void Prep()
+    {
+        if (Bot.Config.Get<bool>("DoEnh"))
+            DoEnhs();
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        Ultra.BuyAlchemyPotion("Potent Honor Potion");
+        Core.EquipConsumable("Potent Honor Potion");
     }
 
     void Fight()
@@ -175,10 +191,6 @@ public class UltraEngineer
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
-
-        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-        Ultra.BuyAlchemyPotion("Potent Honor Potion");
-        Core.EquipConsumable("Potent Honor Potion");
         C.EnsureAccept(8154);
         C.AddDrop("Engineer Insignia");
         Core.Join(map);

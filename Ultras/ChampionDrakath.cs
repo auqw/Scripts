@@ -147,6 +147,7 @@ public class ChampionDrakath
             && !Bot.Config.Get<bool>(C.SkipOptions)
         )
             Bot.Config.Configure();
+
         a = (Bot.Config!.Get<string>("a") ?? "").Trim();
         b = (Bot.Config.Get<string>("b") ?? "").Trim();
 
@@ -170,6 +171,9 @@ public class ChampionDrakath
 
     void Prep()
     {
+        if (Bot.Config.Get<bool>("DoEnh"))
+            DoEnhs();
+
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
         else
@@ -178,8 +182,6 @@ public class ChampionDrakath
             Ultra.BuyAlchemyPotion("Potent Honor Potion");
             Core.EquipConsumable("Potent Honor Potion");
         }
-        if (Bot.Config.Get<bool>("DoEnh"))
-            DoEnhs();
     }
 
     void Fight()
