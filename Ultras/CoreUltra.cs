@@ -208,7 +208,7 @@ public class CoreUltra
             while (go)
             {
                 bool alive = MonsterAlive(mob);
-                bool focused = Core.HasAura("Focus");
+                bool focused = Core.HasAura("Focus", true);
                 bool exit = Bot.ShouldExit;
 
                 if (!alive || focused || exit)
@@ -282,7 +282,7 @@ public class CoreUltra
             {
                 Bot.Combat.Attack("Champion Drakath");
                 UseTaunt();
-                if (Core.HasAura("Focus"))
+                if (Core.HasAura("Focus", true))
                     break;
                 Bot.Sleep(120);
             }
