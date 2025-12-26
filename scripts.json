@@ -4361,8 +4361,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 53790,
-    "sha256": "6ec73f152cb2b60f66fe34508ce89433de372735cd69b48adf176ae1821c10d2",
+    "size": 53657,
+    "sha256": "9ec3425dcd462341ac9d537468579d21c1f010242823e4485eca2abc9845086c",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -26478,8 +26478,8 @@
       "relic"
     ],
     "path": "Good/GearOfAwe/ArmorOfAwe.cs",
-    "size": 2836,
-    "sha256": "5ae47d87ee141ed6329b8fe701fe22e8861a77cdcc81134dfd97a69a0db50e25",
+    "size": 2706,
+    "sha256": "10f54eae5bee58dd9efc6c5827299807f0bec7e2007337c74347dcb66745e5fe",
     "fileName": "ArmorOfAwe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/GearOfAwe/ArmorOfAwe.cs"
   },
@@ -26532,8 +26532,8 @@
       "relic"
     ],
     "path": "Good/GearOfAwe/GearofAllwe.cs",
-    "size": 5433,
-    "sha256": "9a836ce1d2c6ee7d437547bb2b2a1883c0405f828271ffb4ae00c53d98d7b3ff",
+    "size": 5303,
+    "sha256": "31c8f14c0dbf3225baf393267c52b033154acf61b3ca21c2f06e7e42ca57c91b",
     "fileName": "GearofAllwe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/GearOfAwe/GearofAllwe.cs"
   },
