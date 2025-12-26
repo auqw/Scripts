@@ -17,14 +17,134 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 #nullable enable
-// Classes and Enhancements (safe-mode):
-// ==============================
-//  Arcana Invoker ( Helm: Healer , Class: Lucky, Weapon: Elysium, Cape: Absolution)
-//  Legion Revenant ( Helm: Wizard, Class: Wizard, Weapon: Ravenous/Valiance/Arcana Concerto, Cape: Vainglory)
-//  ArchPaladin ( Helm: Forge, Class: Lucky, Weapon: Valiance, Cape: Lament)
-//  Lord of Order ( Helm: Forge, Class: Lucky, Weapon: Lucky AweBlast/Valiance, Cape: Absolution)
-// ==============================
+/// <summary>
+/// Champion Drakath Enhancement Configurations
+/// Organized by composition type: Fast, Safe, F2P Fastest, and Solo Options
+/// </summary>
 
+#region Fast Comp
+
+/// <summary>
+/// Fast Composition - Optimized for speed and burst damage
+/// </summary>
+// Chrono ShadowSlayer
+// ├─ Class: Lucky
+// ├─ Helm: Lucky
+// ├─ Weapon: Valiance
+// └─ Cape: Vainglory / Lament
+//
+// Verus Doomknight
+// ├─ Class: Lucky
+// ├─ Helm: Anima
+// ├─ Weapon: Ravenous / Valiance
+// └─ Cape: Vainglory
+//
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Wizard
+// ├─ Weapon: Ravenous / Valiance / Arcana
+// └─ Cape: Vainglory
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Lucky Aweblast / Valiance
+// └─ Cape: Absolution
+
+#endregion
+
+#region Safe Comp
+
+/// <summary>
+/// Safe Composition - Balanced approach for consistent performance
+/// </summary>
+// Arcana Invoker
+// ├─ Class: Lucky
+// ├─ Helm: Healer
+// ├─ Weapon: Elysium
+// └─ Cape: Absolution
+//
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Wizard
+// ├─ Weapon: Ravenous / Valiance / Arcana
+// └─ Cape: Vainglory
+//
+// Arch Paladin
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Lucky Aweblast / Valiance
+// └─ Cape: Absolution
+
+#endregion
+
+#region F2P Fastest
+
+/// <summary>
+/// F2P Fastest Composition - Cost-optimized for free-to-play players
+/// </summary>
+// Arcana Invoker
+// ├─ Class: Lucky
+// ├─ Helm: Healer
+// ├─ Weapon: Elysium
+// └─ Cape: Absolution
+//
+// Verus Doomknight
+// ├─ Class: Lucky
+// ├─ Helm: Anima
+// ├─ Weapon: Ravenous / Valiance
+// └─ Cape: Vainglory
+//
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Wizard
+// ├─ Weapon: Ravenous / Valiance / Arcana
+// └─ Cape: Vainglory
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Lucky Aweblast / Valiance
+// └─ Cape: Absolution
+
+#endregion
+
+#region Solo Options
+
+/// <summary>
+/// Solo Options - Individual class configurations for solo play
+/// </summary>
+// Arcana Invoker
+// ├─ Class: Lucky
+// ├─ Helm: Healer
+// ├─ Weapon: Elysium
+// └─ Cape: Absolution
+//
+// Dragon of Time
+// ├─ Class: Healer
+// ├─ Helm: Healer
+// ├─ Weapon: Elysium
+// └─ Cape: Absolution
+//
+// Void Highlord
+// ├─ Class: Lucky
+// ├─ Helm: Forge / Anima
+// ├─ Weapon: Valiance / Ravenous
+// └─ Cape: Vainglory
+//
+// Chaos Avenger
+// ├─ Class: Lucky
+// ├─ Helm: Anima
+// ├─ Weapon: Valiance
+// └─ Cape: Vainglory
+
+#endregion
 public class UltraEzrajal
 {
     private static CoreAdvanced Adv
