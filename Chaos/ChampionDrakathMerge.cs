@@ -136,17 +136,7 @@ public class ChampionDrakathMerge
                         Core.Logger($"{req.Name} requires membership to farm, skipping.");
                         return;
                     }
-
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
-                    Core.AddDrop(req.ID);
-                    Core.RegisterQuests(0000); // TODO: Replace with actual quest ID
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
-                    {
-                        Core.HuntMonster("map", "MonsterName", "item", 1, isTemp: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
-                    Core.CancelRegisteredQuests();
+                    FarmKitsunesMask(req.Name);
                     break;
 
                 case "Tibicenas":
@@ -395,4 +385,109 @@ public class ChampionDrakathMerge
         new Option<bool>("98032", "Chaorrupter Locked", "Mode: [select] only\nShould the bot buy \"Chaorrupter Locked\" ?", false),
         new Option<bool>("98043", "Dual Chaorrupter Locked", "Mode: [select] only\nShould the bot buy \"Dual Chaorrupter Locked\" ?", false),
    };
+
+
+    public void FarmKitsunesMask(string? item = null)
+    {
+        // Farm both if null, otherwise farm specific item
+        string[] masks = item == null
+            ? new[] { "Kitsune's Chaos Mask", "Kitsune's Mask" }
+            : new[] { item };
+
+        if ((item == null && Core.CheckInventory(masks)) || (item != null && Core.CheckInventory(item)))
+            return;
+
+        Core.BankingBlackList.AddRange(new[]
+        {
+        "Lock Spell 1", "Lock Spell 2", "Mystical Chaos Runes",
+        "Spy's Disclosure", "Bandit's Map", "Unusual Rocks",
+        "Chaotic Talking Gem", "Kitsune's Mask", "Kitsune's Chaos Mask"
+    });
+
+        Core.AddDrop(new[]
+        {
+        "Lock Spell 1", "Lock Spell 2", "Mystical Chaos Runes",
+        "Spy's Disclosure", "Bandit's Map", "Unusual Rocks",
+        "Chaotic Talking Gem", "Kitsune's Mask", "Kitsune's Chaos Mask"
+    });
+
+        Core.EquipClass(ClassType.Farm);
+
+        foreach (string mask in masks)
+        {
+            if (Core.CheckInventory(mask))
+                continue;
+
+            Core.FarmingLogger(mask, 1);
+            EnsureLockSpell2();
+            EnsureLockSpell1();
+
+            Adv.BuyItem("chaosmarsh", 2365, mask);
+            Bot.Wait.ForPickup(mask);
+        }
+    }
+
+    void EnsureLockSpell1()
+    {
+        if (Core.CheckInventory("Lock Spell 1"))
+            return;
+
+        BuyMysticalChaosRunes();
+        Core.GetMapItem(12330, 1, "warundead");
+    }
+
+    void EnsureLockSpell2()
+    {
+        if (Core.CheckInventory("Lock Spell 2"))
+            return;
+
+        EnsureLockSpell1();
+        Core.GetMapItem(12331, 1, "ravenloss");
+    }
+
+    void BuyMysticalChaosRunes()
+    {
+        if (Core.CheckInventory("Mystical Chaos Runes"))
+            return;
+
+        EnsureChaoticTalkingGem();
+        EnsureUnusualRocks();
+        EnsureBanditsMap();
+        EnsureSpysDisclosure();
+
+        Adv.BuyItem("relativity", 2344, "Mystical Chaos Runes");
+        Bot.Wait.ForPickup("Mystical Chaos Runes");
+    }
+
+    void EnsureSpysDisclosure()
+    {
+        if (Core.CheckInventory("Spy's Disclosure"))
+            return;
+
+        Core.GetMapItem(12221, 1, "museum");
+    }
+
+    void EnsureBanditsMap()
+    {
+        if (Core.CheckInventory("Bandit's Map"))
+            return;
+
+        Core.HuntMonster("poisonforest", "Bandit", "Bandit's Map", isTemp: false);
+    }
+
+    void EnsureUnusualRocks()
+    {
+        if (Core.CheckInventory("Unusual Rocks"))
+            return;
+
+        Core.GetMapItem(12222, 1, "wargrounds");
+    }
+
+    void EnsureChaoticTalkingGem()
+    {
+        if (Core.CheckInventory("Chaotic Talking Gem"))
+            return;
+
+        Core.GetMapItem(12223, 1, "mountainpath");
+    }
 }
