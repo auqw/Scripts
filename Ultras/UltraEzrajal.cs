@@ -42,26 +42,7 @@ public class UltraEzrajal
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<string>(
-            "ArcanaInvokerPlayer",
-            "Arcana Invoker Player",
-            "Player name assigned to Arcana Invoker role."
-        ),
-        new Option<string>(
-            "LegionRevenantPlayer",
-            "Legion Revenant Player",
-            "Player name assigned to Legion Revenant role."
-        ),
-        new Option<string>(
-            "ArchPaladinPlayer",
-            "ArchPaladin Player",
-            "Player name assigned to ArchPaladin role."
-        ),
-        new Option<string>(
-            "LordOfOrderPlayer",
-            "Lord Of Order Player",
-            "Player name assigned to Lord Of Order role."
-        ),
+        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -93,7 +74,8 @@ public class UltraEzrajal
         // ---------------------------
         // ENHANCEMENTS
         // ---------------------------
-        Enhancements(); // new version with auto-role detection
+        if (Bot.Config.Get<bool>("DoEnh"))
+            DoEnhs();
 
         // ---------------------------
         // POTIONS
@@ -123,6 +105,7 @@ public class UltraEzrajal
             {
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8152);
+                Bot.UltraBossHelper.DisableCounterAttack();
                 break;
             }
             // Dead → wait for respawn
@@ -152,130 +135,102 @@ public class UltraEzrajal
             Bot.Sleep(180); // slightly lower, smoother attacks
         }
     }
-
-    public static string GetDescription(Enum value)
+    void DoEnhs()
     {
-        FieldInfo? field = value.GetType().GetField(value.ToString());
-        DescriptionAttribute? attribute =
-            field?.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault()
-            as DescriptionAttribute;
-
-        return attribute?.Description ?? value.ToString();
-    }
-
-    string GetRoleForPlayer(string playerName)
-    {
-        string ai = Bot.Config?.Get<string>("ArcanaInvokerPlayer") ?? "";
-        if (playerName.Equals(ai, StringComparison.OrdinalIgnoreCase))
-            return "ArcanaInvoker";
-
-        string lr = Bot.Config?.Get<string>("LegionRevenantPlayer") ?? "";
-        if (playerName.Equals(lr, StringComparison.OrdinalIgnoreCase))
-            return "LegionRevenant";
-
-        string ap = Bot.Config?.Get<string>("ArchPaladinPlayer") ?? "";
-        if (playerName.Equals(ap, StringComparison.OrdinalIgnoreCase))
-            return "ArchPaladin";
-
-        string loo = Bot.Config?.Get<string>("LordOfOrderPlayer") ?? "";
-        if (playerName.Equals(loo, StringComparison.OrdinalIgnoreCase))
-            return "LordOfOrder";
-
-        return "";
-    }
-
-    void Enhancements()
-    {
-        string? playerName = Bot.Player?.Username;
-        if (string.IsNullOrWhiteSpace(playerName))
-        {
-            C.Logger("[ERROR] Unable to determine player name.", stopBot: true);
+        string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
+        if (string.IsNullOrEmpty(className))
             return;
-        }
 
-        string role = GetRoleForPlayer(playerName);
-        if (string.IsNullOrWhiteSpace(role))
+        switch (className)
         {
-            C.Logger($"[ERROR] No role assigned for player '{playerName}'", stopBot: true);
-            return;
-        }
-
-        // Required class based on role
-        string requiredClass = role switch
-        {
-            "ArcanaInvoker" => "Arcana Invoker",
-            "LegionRevenant" => "Legion Revenant",
-            "ArchPaladin" => "ArchPaladin",
-            "LordOfOrder" => "Lord of Order",
-            _ => "",
-        };
-
-        if (!C.CheckInventory(requiredClass))
-        {
-            C.Logger(
-                $"[ERROR] You do not own the class required for your role: {requiredClass}",
-                stopBot: true
-            );
-            return;
-        }
-
-        // Equip correct class
-        C.Equip(requiredClass);
-
-        // Cache currently equipped items
-        InventoryItem? weaponItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
-            x?.Equipped == true && Adv.WeaponCatagories.Contains(x.Category)
-        );
-        InventoryItem? helmItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
-            x?.Equipped == true && x.Category == ItemCategory.Helm
-        );
-        InventoryItem? capeItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
-            x?.Equipped == true && x.Category == ItemCategory.Cape
-        );
-
-        string weapon = weaponItem?.Name ?? "";
-        string helm = helmItem?.Name ?? "";
-        string cape = capeItem?.Name ?? "";
-        string className = Bot.Player?.CurrentClass?.Name ?? "";
-
-        C.Logger(
-            $"[Enhancement]\nClass: {className}\nWeapon: {weapon}\nHelm: {helm}\nCape: {cape}",
-            "info"
-        );
-
-        // Apply enhancement rules per role
-        switch (role)
-        {
-            case "ArcanaInvoker":
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Elysium);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(helm, EnhancementType.Healer);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Absolution);
-                break;
-
-            case "LegionRevenant":
-                Adv.EnhanceItem(
-                    weapon,
-                    EnhancementType.Wizard,
-                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance
+            // Chrono ShadowSlayer
+            case "Chrono ShadowSlayer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
                 );
-                Adv.EnhanceItem(className, EnhancementType.Wizard);
-                Adv.EnhanceItem(helm, EnhancementType.Wizard);
-                Adv.EnhanceItem(cape, EnhancementType.Wizard, CapeSpecial.Vainglory);
                 break;
 
-            case "ArchPaladin":
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Valiance);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+            // Verus Doomknight
+            case "Verus Doomknight":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
                 break;
 
-            case "LordOfOrder":
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Awe_Blast);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Absolution);
+            // Legion Revenant
+            case "Legion Revenant":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Lord Of Order
+            case "Lord Of Order":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Awe_Blast,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+
+            // Arcana Invoker
+            case "Arcana Invoker":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: WeaponSpecial.Elysium,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+
+            // Arch Paladin
+            case "Arch Paladin":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            // Dragon of Time
+            case "Dragon of Time":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Healer,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: WeaponSpecial.Elysium,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+
+            // Void Highlord
+            case "Void Highlord":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Chaos Avenger
+            case "Chaos Avenger":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
                 break;
         }
     }
