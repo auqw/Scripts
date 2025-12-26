@@ -40,8 +40,7 @@ public class MysteriousEgg
                     + "It's a lot quicker to use AQW's BuyBack function for the \"Mysterious Egg\". Please do so now\n"
                     + "https://www.aq.com > Account > Manage Account > left hand side, \"Buy Back\"\n"
                     + "Relogin and restart the script after hitting ok.",
-                messageBox: true,
-                stopBot: true
+                messageBox: true
             );
         }
 
