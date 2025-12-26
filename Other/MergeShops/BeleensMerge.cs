@@ -400,8 +400,7 @@ public class BeleensMerge
                             Core.HuntMonster(
                                 "GreenguardWest",
                                 "Black Knight",
-                                "Black Metal Armor",
-                                4
+                                "Black Metal Armor"
                             );
                             Core.EnsureComplete(2951, req.ID);
                         }
