@@ -171,7 +171,7 @@ public class ChampionDrakath
 
     void Prep()
     {
-        if (Bot.Config.Get<bool>("DoEnh"))
+        if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
 
         if (IsTaunter())

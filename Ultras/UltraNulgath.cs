@@ -109,7 +109,7 @@ public class UltraNulgath
             Ultra.BuyAlchemyPotion("Potent Honor Potion");
             Core.EquipConsumable("Potent Honor Potion");
         }
-        if (Bot.Config.Get<bool>("DoEnh"))
+        if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
     }
 

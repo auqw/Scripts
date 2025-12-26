@@ -652,8 +652,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 10320,
-    "sha256": "89eeec5fa23277e9410ac8a8733b39d6780bb680788924ba56e8e49a55ad1a6f",
+    "size": 10164,
+    "sha256": "e952e28c55f0c439053cab6a2a82cbebd70226b5380d9eb45765edb7de8d0168",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
@@ -681,8 +681,8 @@
       "ultra"
     ],
     "path": "Ultras/ChampionDrakath.cs",
-    "size": 12191,
-    "sha256": "5708a3016809ac51ccf9bbe458d6e2ac8d06a2813c65436a4bb38e7cd984815c",
+    "size": 12196,
+    "sha256": "6683babcdf3ab8824f33dc005a867afc39421196380a63b04afe5ce49f1f06e3",
     "fileName": "ChampionDrakath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/ChampionDrakath.cs"
   },
@@ -717,8 +717,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEngineer.cs",
-    "size": 9221,
-    "sha256": "5a00f05db0a096191f8242bebe45bddcd5e11cb9bf43a8e1fe2476940dc22bd5",
+    "size": 9480,
+    "sha256": "f9f76f4d73ac0fb1492a59bd280c89210e12b47c311ab480aa254ffb86864e87",
     "fileName": "UltraEngineer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEngineer.cs"
   },
@@ -801,8 +801,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 4953,
-    "sha256": "6ba20d8877c32d5f9bb6205f8a275046159da695a2a4dbeda7ca0eb6a2636add",
+    "size": 8451,
+    "sha256": "665882f0c7d34f03f40e564969319859ada6fa4ab57da89e8d80309be9dfb79f",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
@@ -3555,8 +3555,8 @@
       "locked"
     ],
     "path": "Chaos/ChampionDrakathMerge.cs",
-    "size": 17173,
-    "sha256": "f9f0337efcb9d0f9f38b0e1f98826e25e8ad8c8fc81a4644e99678e61b521947",
+    "size": 19361,
+    "sha256": "5518cec0d45f01acc11cfe018762c1cf88ed28504696a86536d4182eb593cab4",
     "fileName": "ChampionDrakathMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Chaos/ChampionDrakathMerge.cs"
   },
@@ -24545,8 +24545,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1107784,
-    "sha256": "9a8576e4cf523a33fee793e78d407eaf99670e4138fbf4ad3467c379c357efa8",
+    "size": 1115106,
+    "sha256": "5f56e443799e3ad365414fffc27c34dc0563d68f44906646ee0eb782aabe0fe1",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },

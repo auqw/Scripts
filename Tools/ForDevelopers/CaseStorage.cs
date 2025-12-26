@@ -30603,7 +30603,232 @@ case ""Uncut Ruby"":
                     break;
     "
         },
-    };
+    {
+    "Chaos Avenger Armor",
+    @"
+case ""Chaos Avenger Armor"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Adv.BuyItem(""championdrakath"", 2056, req.Name, quant, Log: false);
+                    break;
+    "
+},
+{
+    "Kitsune's Chaos Mask",
+    @"
+case ""Kitsune's Chaos Mask"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+                    FarmKitsunesMask(req.Name);
+                    break;
+    "
+},
+{
+    "Tibicenas",
+    @"
+case ""Tibicenas"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""djinn"", ""Tibicenas"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Soul of Chaos Armor",
+    @"
+case ""Soul of Chaos Armor"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""dreamnexus"", ""Khasaanda"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Iadoa",
+    @"
+case ""Iadoa"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""mqlesson"", ""Dragonoid"", ""Dragonoid of Hours"", isTemp: false);
+                    Core.HuntMonster(""timespace"", ""Chaos Lord Iadoa"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Chaos Lionfang Armor",
+    @"
+case ""Chaos Lionfang Armor"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Bot.Quests.UpdateQuest(2814);
+                    Core.HuntMonster(
+                        ""stormtemple"",
+                        ""Chaos Lord Lionfang"",
+                        req.Name, quant,
+                        req.Temp, false
+                    );
+                    break;
+    "
+},
+{
+    "Chaos Shogun Armor",
+    @"
+case ""Chaos Shogun Armor"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.KillKitsune(req.Name, quant, log: false);
+                    break;
+    "
+},
+{
+    "Wolfwing Armor",
+    @"
+case ""Wolfwing Armor"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""wolfwing"", ""Wolfwing"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Escherion's Robe",
+    @"
+case ""Escherion's Robe"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.KillEscherion(req.Name, quant, log: false);
+                    break;
+    "
+},
+{
+    "Xiang Chaos",
+    @"
+case ""Xiang Chaos"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Adv.GearStore();
+                    Core.KillXiang(""Xiang Chaos"");
+                    Adv.GearStore(true);
+                    break;
+    "
+},
+{
+    "Vath's Chaotic Dragonlord Armor",
+    @"
+case ""Vath's Chaotic Dragonlord Armor"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.KillVath(req.Name, quant, log: false);
+                    break;
+    "
+},
+{
+    "Ledgermayne",
+    @"
+case ""Ledgermayne"":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.HuntMonster(
+                        ""ledgermayne"",
+                        ""Ledgermayne"",
+                        req.Name,
+                        quant,
+                        req.Temp,
+                        false
+                    );
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Discordia Armor",
+    @"
+case ""Discordia Armor"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""palooza"", ""Discordia"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+};
 
     public static bool TryGetCase(string itemName, out string? logic) =>
         Cases.TryGetValue(itemName, out logic);
