@@ -24550,8 +24550,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1115106,
-    "sha256": "5f56e443799e3ad365414fffc27c34dc0563d68f44906646ee0eb782aabe0fe1",
+    "size": 1116915,
+    "sha256": "ecf408efc3dd25d85d6b614a8774108e167d65432819c7b469775b90eaf783d3",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
