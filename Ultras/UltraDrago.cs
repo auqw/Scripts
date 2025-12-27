@@ -18,6 +18,130 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
+#region Fast Comp
+
+/// <summary>
+/// Fast Composition - Maximum damage output for speed
+/// </summary>
+// Chrono ShadowSlayer
+// ├─ Class: Lucky
+// ├─ Helm: Vim / Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Vainglory / Lament
+//
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Pneuma
+// ├─ Weapon: Valiance / Ravenous / Arcana
+// └─ Cape: Vainglory
+//
+// Arch Paladin
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Awe Blast / Valiance
+// └─ Cape: Absolution
+
+#endregion
+
+#region Safe Comp
+
+/// <summary>
+/// Safe Composition - Balanced survivability and damage
+/// </summary>
+// Chaos Avenger
+// ├─ Class: Lucky
+// ├─ Helm: Anima
+// ├─ Weapon: Valiance
+// └─ Cape: Vainglory
+//
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Pneuma
+// ├─ Weapon: Valiance / Ravenous / Arcana
+// └─ Cape: Vainglory
+//
+// Arch Paladin
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Awe Blast / Valiance
+// └─ Cape: Absolution
+
+#endregion
+
+#region F2P Fast
+
+/// <summary>
+/// F2P Fast Composition - Budget-friendly speed setup
+/// </summary>
+// King's Echo
+// ├─ Class: Lucky
+// ├─ Helm: Examen
+// ├─ Weapon: Ravenous
+// └─ Cape: Vainglory
+//
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Pneuma
+// ├─ Weapon: Valiance / Ravenous / Arcana
+// └─ Cape: Vainglory
+//
+// Arch Paladin
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Awe Blast / Valiance
+// └─ Cape: Absolution
+
+#endregion
+
+#region Other DPS Options
+
+/// <summary>
+/// Other DPS Options - Alternative single-class configurations
+/// </summary>
+// Arcana Invoker
+// ├─ Class: Lucky
+// ├─ Helm: Examen / Forge
+// ├─ Weapon: Ravenous / Valiance
+// └─ Cape: Vainglory
+//
+// Archfiend
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Ravenous
+// └─ Cape: Vainglory
+//
+// Lich
+// ├─ Class: Lucky
+// ├─ Helm: Examen
+// ├─ Weapon: Ravenous
+// └─ Cape: Penitence
+//
+// Sentinel
+// ├─ Class: Lucky
+// ├─ Helm: Anima
+// ├─ Weapon: Ravenous
+// └─ Cape: Vainglory
+
+#endregion
+
 public class UltraDrago
 {
     private static CoreAdvanced Adv
@@ -43,18 +167,15 @@ public class UltraDrago
     // User options
     public List<IOption> Options = new()
     {
-        new Option<RoleSelection>(
-            "role",
-            "Role Selection",
-            "Select your role for Ultra King Drago fight. Make sure to equip the corresponding class before running the script.",
-            RoleSelection.ChaosAvenger
-        ),
+
+        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
 
-    // Filled at runtime
-    private RoleSelection role;
-
+    List<string> TaunterGroup1 = new[] { "ArchPaladin", "Lich" }.ToList();
+    bool isTaunterGroup1 = false;
+    List<string> TaunterGroup2 = new[] { "Lord Of Order", "Lich", "Sentinel" }.ToList();
+    bool isTaunterGroup2 = false;
     public void ScriptMain(IScriptInterface bot)
     {
         C.OneTimeMessage(
@@ -73,75 +194,33 @@ public class UltraDrago
         )
             Bot.Config.Configure();
 
-        // Determine role from user selection or equipped class
-        role = Bot.Config?.Get<RoleSelection>("role") ?? GetEquippedRole();
+        if (TaunterGroup1.Contains(Bot.Player?.CurrentClass?.Name!))
+            isTaunterGroup1 = true;
+        if (TaunterGroup2.Contains(Bot.Player?.CurrentClass?.Name!))
+            isTaunterGroup2 = true;
 
-        C.Join("whitemap");
-
-        Astravia.AstraviaJudgement();
-
-        // All conditions satisfied → START script
         Core.Boot();
-        C.AddDrop("King Drago Insignia");
-        Adv.GearStore();
-        Bot.Quests.UpdateQuest(8395);
         Prep();
-        C.EnsureAccept(8397);
-        Fight();
         C.EnsureComplete(8397);
-        Bot.Wait.ForPickup("King Drago Insignia");
-        C.JumpWait();
-        Adv.GearStore(true);
+        Fight();
     }
 
-    RoleSelection GetEquippedRole()
-    {
-        string currentClass = Bot.Player?.CurrentClass?.Name ?? "";
-
-        foreach (var roleEnum in Enum.GetValues(typeof(RoleSelection)).Cast<RoleSelection>())
-        {
-            string roleDesc = GetDescription(roleEnum);
-
-            // Match CurrentClass role
-            if (roleEnum == RoleSelection.CurrentClass)
-                continue;
-
-            if (roleDesc == currentClass)
-            {
-                return roleEnum;
-            }
-        }
-
-        C.Logger("Setup", "No valid role class equipped.");
-        Bot.Stop();
-        return RoleSelection.CurrentClass; // Fallback
-    }
-
-    bool IsTaunter() => role == RoleSelection.ArchPaladin || role == RoleSelection.LordOfOrder;
-
-    bool IsCurrentClass() => role == RoleSelection.CurrentClass;
 
     void Prep()
     {
-        // CurrentClass and non-taunters don't need special prep
-        if (IsCurrentClass())
-        {
-            return;
-        }
+        C.Join("whitemap");
+        Astravia.AstraviaJudgement();
 
-        C.Equip(GetDescription(role));
+        Adv.GearStore();
+        if (Bot.Config.Get<bool>("DoEnh"))
+            DoEnhs();
 
-        // Taunters (ArchPaladin & LordOfOrder) prep with Scroll of Enrage
-        if (IsTaunter())
-        {
-            Ultra.GetScrollOfEnrage();
-            return;
-        }
-
-        // Non-taunters prep with alchemy boosts
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Ultra.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");
+
+        if (isTaunterGroup1 || isTaunterGroup2)
+            Ultra.GetScrollOfEnrage();
     }
 
     void Fight()
@@ -153,6 +232,9 @@ public class UltraDrago
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+
+        Bot.Quests.UpdateQuest(8397);
+        C.AddDrop("King Drago Insignia");
 
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_drago.sync");
@@ -170,21 +252,26 @@ public class UltraDrago
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
-                C.EnsureComplete(8547);
+                C.EnsureComplete(8397);
+                Bot.Wait.ForPickup("King Drago Insignia");
+                Adv.GearStore(true);
                 break;
             }
-            if (role == RoleSelection.ArchPaladin)
+
+            if (isTaunterGroup1 && Ultra.MonsterAlive(rightSummon))
             {
                 // ArchPaladin taunts the left summon (Axe)
-                while (!Bot.ShouldExit && Ultra.MonsterAlive(rightSummon))
+                while (!Bot.ShouldExit)
                 {
                     Ultra.Taunt(
-                        GetDescription(RoleSelection.ArchPaladin),
+                        Bot.Player?.CurrentClass?.Name!,
                         rightSummon,
                         "aura",
                         250,
                         "Focus"
                     );
+                    if (!Ultra.MonsterAlive(rightSummon))
+                        break;
                 }
                 continue;
             }
@@ -193,18 +280,19 @@ public class UltraDrago
             //              LORD OF ORDER TAUNTER LOGIC
             // ======================================================
 
-            if (role == RoleSelection.LordOfOrder)
+            if (isTaunterGroup2 && Ultra.MonsterAlive(rightSummon))
             {
                 // LordOfOrder loops taunt with ArchPaladin (left summon)
-                while (!Bot.ShouldExit && Ultra.MonsterAlive(rightSummon))
+                while (!Bot.ShouldExit)
                 {
-                    Ultra.Taunt(
-                        GetDescription(RoleSelection.LordOfOrder),
+                    Ultra.Taunt(Bot.Player?.CurrentClass?.Name!,
                         rightSummon,
                         "aura",
                         700,
                         "Focus"
                     );
+                    if (!Ultra.MonsterAlive(rightSummon))
+                        break;
                 }
                 continue;
             }
@@ -219,144 +307,114 @@ public class UltraDrago
         }
     }
 
-#nullable enable
 
-    void Enhancements(RoleSelection selectedRole)
+    void DoEnhs()
     {
-        // CurrentClass doesn't need enhancements
-        if (selectedRole == RoleSelection.CurrentClass)
-        {
+        string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
+        if (string.IsNullOrEmpty(className))
             return;
-        }
 
-        // Resolve class name via enum description.
-        string className = GetDescription(selectedRole);
-
-        // Ensure user owns the class.
-        if (!C.CheckInventory(className))
+        switch (className)
         {
-            C.Logger($"[ERROR] Missing required class: {className}", stopBot: true);
-            return;
-        }
-
-        // Equip class before scanning gear.
-        C.Equip(className);
-
-        // Cache equipped gear once (avoids allocations & repeated scans).
-        InventoryItem? weaponItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
-            x?.Equipped == true && Adv.WeaponCatagories.Contains(x.Category)
-        );
-
-        InventoryItem? helmItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
-            x?.Equipped == true && x.Category == ItemCategory.Helm
-        );
-
-        InventoryItem? capeItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
-            x?.Equipped == true && x.Category == ItemCategory.Cape
-        );
-
-        string weapon = weaponItem?.Name ?? "";
-        string helm = helmItem?.Name ?? "";
-        string cape = capeItem?.Name ?? "";
-
-        // Debug snapshot
-        C.Logger(
-            $"[Enhancements]\n"
-                + $"  Class: {className}\n"
-                + $"  Weapon: {weapon}\n"
-                + $"  Helm:   {helm}\n"
-                + $"  Cape:   {cape}",
-            "info"
-        );
-
-        // ===============================
-        //  Enhancement Table
-        // ===============================
-        switch (selectedRole)
-        {
-            // -----------------------------------------------------------
-            // Chaos Avenger: anima, lucky, valiance, vainglory
-            // -----------------------------------------------------------
-            case RoleSelection.ChaosAvenger:
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Anima);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Valiance);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Vainglory);
-                break;
-
-            // -----------------------------------------------------------
-            // Legion Revenant: pneuma, wizard, ravenous/valiance, vainglory
-            //
-            // uRavenous() determines priority:
-            // if (uRavenous()) → Ravenous
-            // else → Valiance
-            // -----------------------------------------------------------
-            case RoleSelection.LegionRevenant:
-                Adv.EnhanceItem(helm, EnhancementType.Wizard, hSpecial: HelmSpecial.Pneuma);
-                Adv.EnhanceItem(className, EnhancementType.Wizard);
-                Adv.EnhanceItem(
-                    weapon,
-                    EnhancementType.Wizard,
-                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance
+            // Chrono ShadowSlayer
+            case "Chrono ShadowSlayer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Vim,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
                 );
-                Adv.EnhanceItem(cape, EnhancementType.Wizard, CapeSpecial.Vainglory);
                 break;
 
-            // -----------------------------------------------------------
-            // ArchPaladin: forge, lucky, valiance, lament
-            // -----------------------------------------------------------
-            case RoleSelection.ArchPaladin:
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Valiance);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
-                break;
-
-            // -----------------------------------------------------------
-            // Lord of Order: forge, lucky, valiance / AweBlast, absolution
-            //
-            // Uses same dual-weapon logic as LR:
-            // if (uRavenous()) → Awe_Blast
-            // else → Valiance
-            // -----------------------------------------------------------
-            case RoleSelection.LordOfOrder:
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(
-                    weapon,
-                    EnhancementType.Lucky,
-                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Awe_Blast : WeaponSpecial.Valiance
+            // Legion Revenant
+            case "Legion Revenant":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
                 );
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Absolution);
+                break;
+
+            // Arch Paladin
+            case "Arch Paladin":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            // Lord Of Order
+            case "Lord Of Order":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Awe_Blast,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+
+            // Chaos Avenger
+            case "Chaos Avenger":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // King's Echo
+            case "King's Echo":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Arcana Invoker
+            case "Arcana Invoker":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Archfiend
+            case "Archfiend":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            // Lich
+            case "Lich":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                break;
+
+            // Sentinel
+            case "Sentinel":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
                 break;
         }
-    }
-
-    public static string GetDescription(Enum value)
-    {
-        FieldInfo? field = value.GetType().GetField(value.ToString());
-        DescriptionAttribute? attribute =
-            field?.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault()
-            as DescriptionAttribute;
-
-        return attribute?.Description ?? value.ToString();
-    }
-
-    public enum RoleSelection
-    {
-        [Description("Current Class")]
-        CurrentClass,
-
-        [Description("Chaos Avenger")]
-        ChaosAvenger,
-
-        [Description("Legion Revenant")]
-        LegionRevenant,
-
-        [Description("ArchPaladin")]
-        ArchPaladin,
-
-        [Description("Lord of Order")]
-        LordOfOrder,
     }
 }
