@@ -30828,6 +30828,57 @@ case ""Discordia Armor"":
                     break;
     "
 },
+{
+    "Fishy Cream Candy Cane Guest",
+    @"
+case ""Fishy Cream Candy Cane Guest"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""caroltown"", ""Gift Delivery"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Blue Cheese Candy Cane Guest",
+    @"
+case ""Blue Cheese Candy Cane Guest"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""caroltown"", ""Gift Delivery"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Moglinberry Candy Cane Guest",
+    @"
+case ""Moglinberry Candy Cane Guest"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""caroltown"", ""Gift Delivery"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic) =>

@@ -20007,11 +20007,16 @@
       "iona",
       "greataxe",
       "castillonnais",
-      "greataxes"
+      "greataxes",
+      "sweet",
+      "amp",
+      "savory",
+      "guest",
+      "trio"
     ],
     "path": "Seasonal/Frostvale/CarolingMerge.cs",
-    "size": 12968,
-    "sha256": "7cdaef99c125bb126709807b0c0eb08c65a280722170ef4a5b07f7d2539ff000",
+    "size": 11408,
+    "sha256": "afcb7e321bc823be5320400326fb8c9fcc272b45b00ff8dbad3e64bf127bc484",
     "fileName": "CarolingMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/CarolingMerge.cs"
   },
@@ -24545,8 +24550,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1115106,
-    "sha256": "5f56e443799e3ad365414fffc27c34dc0563d68f44906646ee0eb782aabe0fe1",
+    "size": 1116915,
+    "sha256": "ecf408efc3dd25d85d6b614a8774108e167d65432819c7b469775b90eaf783d3",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
