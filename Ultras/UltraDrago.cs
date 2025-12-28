@@ -212,7 +212,7 @@ public class UltraDrago
         Astravia.AstraviaJudgement();
 
         Adv.GearStore();
-        if (Bot.Config.Get<bool>("DoEnh"))
+        if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
 
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
