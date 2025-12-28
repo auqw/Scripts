@@ -48,6 +48,25 @@ public class ArmyPristmas
     }
     private static CoreArmyLite _Army;
 
+    public string OptionsStorage = "ArmyPristmas";
+    public bool DontPreconfigure = true;
+    public List<IOption> Options = new()
+    {
+        new Option<bool>(
+            "SellEvery100",
+            "Sell Every 100",
+            "Enable to sell Elemental Binding every 100. Disable to keep them.",
+            true
+        ),
+        new Option<bool>(
+            "StopAtMaxGold",
+            "Stop at Max Gold",
+            "Enable to stop when reaching 100M gold. Disable to continue farming.",
+            true
+        ),
+        CoreBots.Instance.SkipOptions,
+    };
+
     public void ScriptMain(IScriptInterface Bot)
     {
         C.BankingBlackList.AddRange(new[] { "Elemental Binding" });
@@ -69,9 +88,11 @@ public class ArmyPristmas
         C.Jump("r2", "Left");
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(1500);
+        bool sellEvery100 = Bot.Config!.Get<bool>("SellEvery100");
+        bool stopAtMaxGold = Bot.Config!.Get<bool>("StopAtMaxGold");
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => Bot.Player.Gold >= 100000000, syncPath))
+            if (stopAtMaxGold && Ultra.CheckArmyProgressBool(() => Bot.Player.Gold >= 100000000, syncPath))
             {
                 Bot.Options.AggroMonsters = false;
                 C.Jump("Enter", "Spawn");
@@ -96,7 +117,7 @@ public class ArmyPristmas
                     .FirstOrDefault(m => m.MapID == 1)?.HP > 0 ? 1 : 2
             );
 
-            if (C.CheckInventory("Elemental Binding", 100))
+            if (sellEvery100 && C.CheckInventory("Elemental Binding", 100))
             {
                 C.SellItem("Elemental Binding", all: true);
             }
