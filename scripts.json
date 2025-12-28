@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 426674,
-    "sha256": "02fa7f2b32062502a4c0d1874a039e2ce4536b375d27fe13a75322c787280b29",
+    "size": 426665,
+    "sha256": "82cfc6640072df19fb35b64ef00c45f0d4492a125b54cde47c17185cb8079814",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4437,8 +4437,8 @@
       "null"
     ],
     "path": "Army/Farm/ArmyLeveling.cs",
-    "size": 3333,
-    "sha256": "df142aedb31d92b2c9bf39f3326b3ce28538a87c745770230886685a6c864bba",
+    "size": 3955,
+    "sha256": "1a5279847b4835dffb4321d9cd03bd6937d4af23fef9b6dbc7ae1ebd38ab2653",
     "fileName": "ArmyLeveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLeveling.cs"
   },
