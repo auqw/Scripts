@@ -10813,7 +10813,7 @@ public class CoreBots
 
         if (CBOString("DodgeClassSelect", out string _DodgeClassSelect))
             DodgeClass = string.IsNullOrEmpty(_DodgeClassSelect)
-                ? "GenericDodge"
+                ? "Generic"
                 : _DodgeClassSelect;
         if (CBOBool("DodgeEquipCheck", out bool _DodgeGearOn))
             DodgeGearOn = _DodgeGearOn;
@@ -10825,7 +10825,7 @@ public class CoreBots
                 );
 
         if (CBOString("BossClassSelect", out string _BossClassSelect))
-            BossClass = string.IsNullOrEmpty(_BossClassSelect) ? "GenericBoss" : _BossClassSelect;
+            BossClass = string.IsNullOrEmpty(_BossClassSelect) ? "Generic" : _BossClassSelect;
         if (CBOBool("BossEquipCheck", out bool _BossGearOn))
             BossGearOn = _BossGearOn;
         if (CBOString("BossModeSelect", out string _BossModeSelect))

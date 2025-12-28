@@ -47,6 +47,12 @@ public class ArmyLeveling
         set => _Army = value;
     }
     private static CoreArmyLite _Army;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public string OptionsStorage = "ArmyLeveling2";
     public bool DontPreconfigure = true;
@@ -67,7 +73,8 @@ public class ArmyLeveling
     {
         C.BankingBlackList.AddRange(new[] { "Spirit Orb", "Bone Dust" });
         C.SetOptions(disableClassSwap: true);
-
+        
+        Prereqs();
         GetSO();
 
         C.SetOptions(false);
@@ -113,5 +120,21 @@ public class ArmyLeveling
             Bot.Combat.Attack("*");
             Bot.Sleep(500);
         }
+    }
+
+
+    void Prereqs()
+    {
+        // Mega Shadow Hunt Medal 9422
+        Story.KillQuest(9422, "shadowbattleon", "Doomed Beast");
+
+        // Early Autopsy 9423
+        Story.KillQuest(9423, "shadowbattleon", "Doomed Beast");
+
+        // Given Life and Purpose 9424
+        Story.KillQuest(9424, "shadowbattleon", "Possessed Armor");
+
+        // Adult Hatchling 9425
+        Story.KillQuest(9425, "shadowbattleon", "Ouro Spawn");
     }
 }
