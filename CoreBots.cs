@@ -109,7 +109,7 @@ public class CoreBots
     public string[] FarmGear { get; set; } = Array.Empty<string>();
 
     // [Can Change] Name of your dodge class
-    public string DodgeClass { get; set; } = "GenericDodge";
+    public string DodgeClass { get; set; } = "Generic";
 
     // [Can Change] Mode of dodge class, if it has multiple.
     public ClassUseMode DodgeUseMode { get; set; } = ClassUseMode.Base;
@@ -121,7 +121,7 @@ public class CoreBots
     public string[] DodgeGear { get; set; } = Array.Empty<string>();
 
     // [Can Change] Name of your bossing class
-    public string BossClass { get; set; } = "GenericBoss";
+    public string BossClass { get; set; } = "Generic";
 
     // [Can Change] Mode of boss class, if it has multiple.
     public ClassUseMode BossUseMode { get; set; } = ClassUseMode.Base;
@@ -6501,29 +6501,24 @@ public class CoreBots
     public void AutoAddTags()
     {
         TagsToAdd.Clear();
-
         List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
         ManagedAccount? acc = accounts.FirstOrDefault(x => x.Username.ToLower() == Bot.Player.Username.ToLower());
-
         if (acc == null)
         {
             Bot.Log("acc is null");
             return;
         }
-
         foreach (var kvp in EndGameTags)
         {
             bool hasInventoryItem = CheckInventory(kvp.Key, toInv: false);
             bool tagAlreadyExists = acc.Tags.Contains(kvp.Value);
-
             if (hasInventoryItem && !tagAlreadyExists)
                 TagsToAdd.Add(kvp.Value);
         }
-
         if (TagsToAdd.Count > 0)
         {
+            acc.Tags.AddRange(TagsToAdd);  // Pass the List<string> directly
             string tagsToAddString = string.Join(", ", TagsToAdd);
-            Bot.Accounts.AddTags(tagsToAddString);  // Pass as string
             Logger(tagsToAddString);
         }
     }
@@ -7262,25 +7257,27 @@ public class CoreBots
         switch (classToUse)
         {
             case ClassType.Farm:
-                if (_equipClass(usingFarmGeneric, FarmClass, FarmUseMode, FarmGearOn, FarmGear))
-                    return;
+                if (FarmClass != "Generic" || (!string.IsNullOrEmpty(FarmClass) && CheckInventory(FarmClass)))
+                    if (_equipClass(usingFarmGeneric, FarmClass, FarmUseMode, FarmGearOn, FarmGear))
+                        return;
                 break;
 
             case ClassType.Solo:
-                if (_equipClass(usingSoloGeneric, SoloClass, SoloUseMode, SoloGearOn, SoloGear))
-                    return;
+                if (SoloClass != "Generic" || (!string.IsNullOrEmpty(SoloClass) && CheckInventory(SoloClass)))
+                    if (_equipClass(usingSoloGeneric, SoloClass, SoloUseMode, SoloGearOn, SoloGear))
+                        return;
                 break;
 
             case ClassType.Dodge:
-                if (
-                    _equipClass(usingDodgeGeneric, DodgeClass, DodgeUseMode, DodgeGearOn, DodgeGear)
-                )
-                    return;
+                if (DodgeClass != "Generic" || (!string.IsNullOrEmpty(DodgeClass) && CheckInventory(DodgeClass)))
+                    if (_equipClass(usingDodgeGeneric, DodgeClass, DodgeUseMode, DodgeGearOn, DodgeGear))
+                        return;
                 break;
 
             case ClassType.Boss:
-                if (_equipClass(usingBossGeneric, BossClass, BossUseMode, BossGearOn, BossGear))
-                    return;
+                if (BossClass != "Generic" || (!string.IsNullOrEmpty(BossClass) && CheckInventory(BossClass)))
+                    if (_equipClass(usingBossGeneric, BossClass, BossUseMode, BossGearOn, BossGear))
+                        return;
                 break;
         }
 
