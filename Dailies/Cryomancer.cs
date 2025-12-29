@@ -59,8 +59,7 @@ public class Cryomancer
         }
 
         // Enable Cryomancer bool to return early
-        if (!Core.isCompletedBefore(3937))
-            Glac.DoAll(true);
+        Glac.DoAll(true);
 
         Daily.Cryomancer();
 
