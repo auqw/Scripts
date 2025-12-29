@@ -517,10 +517,25 @@ public class ArmyLR
     void RevenantMapHandler()
     {
         string[] players = Army.Players();
-        string[] revenant1 = new string[] { players[0], players[1] };
-        string[] revenant2 = new string[] { players[2], players[3] };
-        if (revenant2.Contains(Bot.Player.Username))
-            C.PrivateRoomNumber = C.PrivateRoomNumber + 1;
+
+        if (players == null || players.Length == 0)
+            return;
+
+        // Find current player's index
+        string currentPlayer = Bot.Player.Username;
+        int playerIndex = Array.IndexOf(players, currentPlayer);
+
+        if (playerIndex == -1)
+            return; // Player not found in array
+
+        // Calculate room offset based on 3-player cap
+        // Index 0-2: room +0
+        // Index 3-5: room +1
+        // Index 6-8: room +2
+        // etc.
+        int roomOffset = playerIndex / 3;
+
+        C.PrivateRoomNumber = C.PrivateRoomNumber + roomOffset;
     }
 
     enum CheckType
