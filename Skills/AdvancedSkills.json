@@ -35,7 +35,7 @@
               "type": "Aura",
               "value": 0,
               "comparison": "less",
-              "auraName": "Corporeal Ascenion",
+              "auraName": "Corporeal Ascension",
               "auraTarget": "self"
             }
           ]
@@ -67,7 +67,7 @@
               "type": "Aura",
               "value": 0,
               "comparison": "less",
-              "auraName": "Corporeal Ascenion",
+              "auraName": "Corporeal Ascension",
               "auraTarget": "self"
             }
           ]
