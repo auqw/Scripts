@@ -280,9 +280,12 @@ public class CoreUltra
 
             while (DateTime.UtcNow < giveUp && !Bot.ShouldExit)
             {
-                Bot.Combat.Attack("Champion Drakath");
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack("Champion Drakath");
                 UseTaunt();
-                if (Core.HasAura("Focus", true))
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack("Champion Drakath");
+                if (Bot.Self.Auras.Any(a => a.Name == "Focus"))
                     break;
                 Bot.Sleep(120);
             }
@@ -519,27 +522,29 @@ public class CoreUltra
     // private bool startNewRun = false;
 
     public bool CheckArmyProgress(
-        string itemName,
-        int targetQuantity,
-        bool isTemp,
-        string syncFilePath = "army_sync.sync"
-    )
+       string itemName,
+       int targetQuantity,
+       bool isTemp,
+       string syncFilePath = "army_sync.sync"
+   )
     {
+        // Expected format: KEY:current:target:TYPE:timestamp
+        // Example: Player1|ArchPaladin:50:100:TEMP:1735574400
+
         if (!Bot.Player.Alive)
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-        C.DebugLogger(this);
 
+        C.DebugLogger(this);
         string syncFile = ResolveSyncPath(syncFilePath);
-        string myKey =
-            $"{Bot.Player.Username}|{Bot.Player.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
+        string myKey = $"{Bot.Player.Username}|{Bot.Player.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
         int myQty = isTemp
             ? (Bot?.TempInv?.GetQuantity(itemName) ?? 0)
             : (Bot?.Inventory?.GetQuantity(itemName) ?? 0);
 
-        // --- Update my progress, now including TEMP/INV tag ---
+        // Update my progress
         UpdateEntry(syncFile, myKey, $"{myQty}:{targetQuantity}:{(isTemp ? "TEMP" : "INV")}");
 
-        // --- Read file and check all members ---
+        // Read file and check all members
         string[] lines = ReadLines(syncFile);
         long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         const int staleThreshold = 600; // 10 min
@@ -550,6 +555,7 @@ public class CoreUltra
         foreach (string line in lines)
         {
             string[] parts = line.Split(':');
+            // Format: KEY:current:target:TYPE:timestamp (5 parts minimum)
             if (parts.Length < 5)
                 continue;
 
@@ -563,6 +569,7 @@ public class CoreUltra
             if (!long.TryParse(parts[4], out long ts))
                 continue;
 
+            // Skip stale entries
             if (now - ts > staleThreshold)
                 continue;
 
@@ -576,41 +583,54 @@ public class CoreUltra
 
     public bool CheckArmyProgressBool(Func<bool> condition, string syncFilePath = "army_sync.sync")
     {
+        // Expected format: KEY:status:timestamp
+        // Example: Player1|ArchPaladin:1:1735574400
+
         if (!Bot.Player.Alive)
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
         C.DebugLogger(this);
         string syncFile = ResolveSyncPath(syncFilePath);
-        string myKey =
-            $"{Bot.Player.Username}|{Bot.Player.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
+        string myKey = $"{Bot.Player.Username}|{Bot.Player.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
         bool myCondition = condition();
-        // --- Update my progress with bool status ---
+
+        // Update my progress with bool status
         UpdateEntry(syncFile, myKey, $"{(myCondition ? "1" : "0")}");
-        // --- Read file and check all members ---
+
+        // Read file and check all members
         string[] lines = ReadLines(syncFile);
         long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
         const int staleThreshold = 600; // 10 min
+
         int activeMembers = 0;
         int completedMembers = 0;
+
         foreach (string line in lines)
         {
             string[] parts = line.Split(':');
-            if (parts.Length < 2)
+            // Format: KEY:status:timestamp (3 parts minimum)
+            if (parts.Length < 3)
                 continue;
-            // Parse bool status (first part after key)
+
+            // Parse bool status
             if (!int.TryParse(parts[1], out int status))
                 continue;
+
             // Parse timestamp (last part)
-            if (!long.TryParse(parts[parts.Length - 1], out long ts))
+            if (!long.TryParse(parts[2], out long ts))
                 continue;
+
+            // Skip stale entries
             if (now - ts > staleThreshold)
                 continue;
+
             activeMembers++;
             if (status == 1)
                 completedMembers++;
         }
+
         return activeMembers > 0 && completedMembers == activeMembers;
     }
-
     public void ClearSyncFile(string filePath)
     {
         try
