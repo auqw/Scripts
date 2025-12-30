@@ -223,7 +223,7 @@ public class CoreUltra
     public void DrakathTaunter()
     {
         Bot.Combat.Attack("*");
-        var dummy = Bot.Player.Target;
+        var dummy = Bot.Player.Target ?? Bot.Monsters.MapMonsters.FirstOrDefault(x => x.Name == "Champion Drakath");
         if (dummy == null || dummy.HP <= 0)
             return;
 
