@@ -34,6 +34,7 @@ public class UltraWarden
     {
         new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", ""),
         new Option<string>("b", "Taunter Class (Backup)", "Backup taunter class", ""),
+        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -68,14 +69,10 @@ public class UltraWarden
 
     void Prep()
     {
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
-        else
-        {
-            Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-            Ultra.BuyAlchemyPotion("Potent Honor Potion");
-            Core.EquipConsumable("Potent Honor Potion");
-        }
+
     }
 
     void Fight()
@@ -110,18 +107,11 @@ public class UltraWarden
                 continue;
             }
 
-            if (Core.HasClassEquipped(a))
-            {
+            if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
                 Ultra.UltraWardenTaunter();
-            }
-            else if (Core.HasClassEquipped(b))
-            {
-                Ultra.UltraWardenTaunter();
-            }
-            else
-            {
-                Core.Kill(boss);
-            }
+
+            Bot.Combat.Attack("*");
+            Bot.Sleep(250);
         }
     }
 }
