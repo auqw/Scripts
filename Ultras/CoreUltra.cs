@@ -209,8 +209,8 @@ public class CoreUltra
 
     public void DrakathTaunter()
     {
-        Bot.Combat.Attack("*");
-        var dummy = Bot.Player.Target ?? Bot.Monsters.MapMonsters.FirstOrDefault(x => x.Name == "Champion Drakath") ?? Bot.Monsters.MapMonsters.First();
+        Bot.Combat.Attack("Champion Drakath");
+        var dummy = Bot.Player.Target;
         if (dummy == null || dummy.HP <= 0)
             return;
 
@@ -267,10 +267,10 @@ public class CoreUltra
             while (!Bot.ShouldExit && DateTime.UtcNow < giveUp)
             {
                 if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack("*");
+                    Bot.Combat.Attack("Champion Drakath");
                 UseTaunt();
                 if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack("*");
+                    Bot.Combat.Attack("Champion Drakath");
                 if (Bot.Self.Auras.Any(a => a.Name == "Focus"))
                     break;
                 Bot.Sleep(120);
@@ -807,7 +807,7 @@ public class CoreUltra
 
         Core.DisableSkills();
 
-        while (!Bot.ShouldExit && !Bot.Self.Auras.Any(a => a.Name == "Focus"))
+        while (!Bot.Self.Auras.Any(a => a != null && a.Name == "Focus"))
         {
             Bot.Skills.UseSkill(5);
             Bot.Sleep(200);
