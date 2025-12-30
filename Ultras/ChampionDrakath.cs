@@ -191,6 +191,7 @@ public class ChampionDrakath
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
 
         C.EnsureAccept(8300);
         C.AddDrop("Champion Drakath Insignia");
@@ -209,7 +210,8 @@ public class ChampionDrakath
                 Bot.Sleep(2500);
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
-                C.EnsureComplete(8300);
+                if (!Bot.Quests.IsDailyComplete(8300))
+                    C.EnsureComplete(8300);
                 break;
             }
 
@@ -226,10 +228,12 @@ public class ChampionDrakath
                     Bot.Combat.Attack(boss);
                 Ultra.DrakathTaunter();
                 Bot.Sleep(500);
+                continue;
             }
 
             if (!Bot.Player.HasTarget)
                 Bot.Combat.Attack(boss);
+
             Bot.Sleep(250);
             if (Bot.Player?.Target?.HP < Bot.Player?.Target?.MaxHP * 0.1
             && (Core.HasClassEquipped(a) || Core.HasClassEquipped(b)))
