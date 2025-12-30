@@ -127,14 +127,12 @@ public class ChampionDrakath
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
-    string a,
-        b;
+    string a;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ChampionDrakath";
     public List<IOption> Options = new()
     {
-        new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", ""),
-        new Option<string>("b", "Taunter Class (Backup)", "Backup taunter class", ""),
+        new Option<string>("a", "Taunter Class", "Class name that will taunt", "ArchPaladin"),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -149,9 +147,8 @@ public class ChampionDrakath
             Bot.Config.Configure();
 
         a = (Bot.Config!.Get<string>("a") ?? "").Trim();
-        b = (Bot.Config.Get<string>("b") ?? "").Trim();
 
-        if (string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
+        if (string.IsNullOrEmpty(a))
         {
             Core.Log(
                 "Setup",
@@ -167,37 +164,28 @@ public class ChampionDrakath
         Bot.Stop();
     }
 
-    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
+    bool IsTaunter() => Core.HasClassEquipped(a);
 
     void Prep()
     {
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
-
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
-        else
-        {
-            Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-            Ultra.BuyAlchemyPotion("Potent Honor Potion");
-            Core.EquipConsumable("Potent Honor Potion");
-        }
     }
 
     void Fight()
     {
-        const string map = "championdrakath";
-        const string boss = "Champion Drakath";
-
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
 
         C.EnsureAccept(8300);
         C.AddDrop("Champion Drakath Insignia");
 
-        Core.Join(map);
+        Core.Join("championdrakath");
         Ultra.WaitForArmy(3, "champion_drakath.sync");
-        Core.ChooseBestCell(boss);
+        Core.ChooseBestCell("Champion Drakath");
         Bot.Player.SetSpawnPoint();
 
         Core.EnableSkills();
@@ -215,28 +203,25 @@ public class ChampionDrakath
 
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
-            {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                continue;
-            }
 
-            if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
-            {
-                if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(boss);
-                Ultra.DrakathTaunter();
-                Bot.Sleep(500);
-            }
-
-            if (!Bot.Player.HasTarget)
-                Bot.Combat.Attack(boss);
+            Bot.Combat.Attack("*");
             Bot.Sleep(250);
-            if (Bot.Player?.Target?.HP < Bot.Player?.Target?.MaxHP * 0.1
-            && (Core.HasClassEquipped(a) || Core.HasClassEquipped(b)))
+
+            if (IsTaunter() && Bot.Player.HasTarget)
             {
-                Bot.Skills.UseSkill(5);
-                Bot.Sleep(250);
+                if (Bot.Player.Target.HP < 2_000_000)
+                {
+                    Bot.Sleep(250);
+                    Bot.Skills.UseSkill(5);
+                }
+                else
+                {
+                    Ultra.DrakathTaunter();
+                    Bot.Sleep(500);
+                }
             }
+
         }
     }
 
