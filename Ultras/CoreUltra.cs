@@ -207,7 +207,7 @@ public class CoreUltra
             while (go)
             {
                 bool alive = MonsterAlive(mob);
-                bool focused = Core.HasAura("Focus", true);
+                bool focused = Bot.Self.Auras.Any(a => a.Name == "Focus");
                 bool exit = Bot.ShouldExit;
 
                 if (!alive || focused || exit)
@@ -925,7 +925,7 @@ public class CoreUltra
                     long t0 = Environment.TickCount64;
                     while (
                         !Bot.ShouldExit
-                        && !Core.HasAura(aura, true)
+                        && !Bot.Self.Auras.Any(a => a.Name == aura)
                         && Environment.TickCount64 - t0 < 1500
                     )
                         Bot.Sleep(50);
@@ -934,7 +934,7 @@ public class CoreUltra
                     Bot.Sleep(200);
             }
 
-            if (Bot.Self.Auras.Any(a => a != null && a.Name == aura))
+            if (Bot.Self.Auras.Any(a => a.Name == aura))
                 Core.Log("POTION", $"✅ Applied: {aura}");
             else
                 Core.Log("POTION", $"❌ Nope: {raw} ({aura})");
