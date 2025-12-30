@@ -4879,7 +4879,7 @@
           "rules": [
             {
               "type": "Mana",
-              "value": 10,
+              "value": 20,
               "comparison": "less",
               "isPercentage": true
             }
