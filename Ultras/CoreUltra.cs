@@ -64,8 +64,9 @@ public class CoreUltra
         switch (mode)
         {
             case "aura":
-                if (!string.IsNullOrWhiteSpace(aura) && Bot.Self.Auras.FirstOrDefault(x => x.Name == "Focus").RemainingTime <= 0)
+                if (!string.IsNullOrWhiteSpace(aura) && Core.GetAuraSecondsRemaining(aura) < 1)
                 {
+                    Bot.Log("UseTaunt");
                     UseTaunt();
                 }
                 break;
