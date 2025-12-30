@@ -22,6 +22,7 @@ tags: member, kit, expire, legend
 //cs_include Scripts/Dailies/MineCrafting.cs
 //cs_include Scripts/Enhancement/UnlockForgeEnhancements.cs
 //cs_include Scripts/Nation/AssistingCragAndBamboozle[Mem].cs
+//cs_include Scripts/Nation/AFDL/EnoughDOOMforanArchfiend.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/VHL/CoreVHL.cs
 //cs_include Scripts/Other/Classes/DragonShinobi.cs

@@ -26,6 +26,7 @@ tags: joe, ultra, boss, preparation, farm
 //cs_include Scripts/Story/AriaGreenhouse.cs
 //cs_include Scripts/Evil/SepulchuresOriginalHelm.cs
 //cs_include Scripts/Farm/BuyScrolls.cs
+//cs_include Scripts/Nation/AFDL/EnoughDOOMforanArchfiend.cs
 //cs_include Scripts/Good/ArchPaladin.cs
 //cs_include Scripts/Good/BLoD/CoreBLOD.cs
 //cs_include Scripts/Good/GearOfAwe/ArmorOfAwe.cs
