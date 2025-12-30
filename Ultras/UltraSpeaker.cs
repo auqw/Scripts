@@ -39,7 +39,7 @@ using Skua.Core.Options;
 // "Cape: Penitence"
 // "Scroll: Enrage"
 
-// VDK/Other dps:
+// VDK/Other dps
 // "Weapon: Valiance"
 // "Class: Luck"
 // "Helm: Anima"
@@ -60,6 +60,15 @@ public class UltraSpeaker
     public CoreUltra Ultra = new();
     string? className = null;
 
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "UltraSpeaker";
+    public List<IOption> Options = new()
+    {
+        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
+        CoreBots.Instance.SkipOptions,
+    };
+
+
     public void ScriptMain(IScriptInterface bot)
     {
         C.Logger("This script uses the `corner spam taunt method.. and works ^_^");
@@ -73,15 +82,20 @@ public class UltraSpeaker
 
     void Prep()
     {
-        Ultra.GetScrollOfEnrage();
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            DoEnh();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-        Core.EquipEnrage();
+        Ultra.GetScrollOfEnrage();
     }
+
+    static bool IsInBox(int x, int y) =>
+    x >= 0 && x <= 100
+    && y >= 485 && y <= 500;
 
     void Kill()
     {
-        if (!C.isCompletedBefore(9173))
-            C.Logger("Quest 9173 not unlocked.");
+        if (Bot.Quests.IsDailyComplete(9173))
+            C.Logger("Weekly already complete try again Friday morning");
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
@@ -95,7 +109,7 @@ public class UltraSpeaker
 
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgress("The First Speaker Silenced", 1, false, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("The First Speaker Silenced", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
@@ -105,45 +119,133 @@ public class UltraSpeaker
 
             // Dead → wait for respawn
             if (Bot.Player?.Alive == false)
-            {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                continue;
-            }
 
-            // Put the player in a random spot within ((x=0,y=0), (x=101, y=101)) -- in the corner.
+
+            // Put the player in a random spot within ((x=0,y=0), (x=101,y=101)) — corner box
             if (Bot.Player?.Cell == "Boss")
             {
-                // Define box boundaries (0,0 to 101,101)
-                int minX = 0;
-                int maxX = 100;
-                int minY = 485;
-                int maxY = 500;
+                int randomX = Random.Shared.Next(0, 101); // 0–100 inclusive
+                int randomY = Random.Shared.Next(485, 501); // 485–500 inclusive
 
-                // Check if player is within the box
-                bool isInBox =
-                    Bot.Player.Position.X >= minX
-                    && Bot.Player.Position.X <= maxX
-                    && Bot.Player.Position.Y >= minY
-                    && Bot.Player.Position.Y <= maxY;
-
-                // If not in box, move to random location within box
-                if (!isInBox)
-                {
-                    Random rand = new();
-                    int randomX = rand.Next(minX, maxX + 1);
-                    int randomY = rand.Next(minY, maxY + 1);
+                if (!IsInBox(randomX, randomY))
                     Bot.Player.WalkTo(randomX, randomY);
-                }
             }
 
             if (!Bot.Player!.HasTarget)
+            {
                 Bot.Combat.Attack("*");
-            Bot.Sleep(200);
-            if (
-                !Bot.Self.Auras.Any(x => x != null && x.Name == "Focus")
-                && Bot.Skills.CanUseSkill(5)
-            )
-                Bot.Skills.UseSkill(5);
+                Bot.Sleep(500);
+            }
+
+            if (!Bot.Self.Auras.Any(x => x.Name == "Focus"))
+            {
+                if (Bot.Skills.CanUseSkill(5))
+                {
+                    Bot.Sleep(Random.Shared.Next(500, 1001));
+                    Bot.Skills.UseSkill(5);
+                }
+            }
         }
     }
+
+    void DoEnh()
+    {
+        string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
+        if (string.IsNullOrEmpty(className))
+            return;
+
+        switch (className.ToLower())
+        {
+            case "chrono shadowslayer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                break;
+
+            case "legion revenant":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    wSpecial: WeaponSpecial.Arcanas_Concerto,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "archpaladin":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            case "lord of order":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                break;
+
+            case "quantum chronomancer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Praxis,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                break;
+
+            case "verus doomknight":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "sentinel":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                break;
+
+            case "archfiend":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                break;
+
+            case "king's echo":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "void highlord":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+        }
+    }
+
 }
