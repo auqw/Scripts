@@ -693,8 +693,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 104666,
-    "sha256": "2f6b69aaff29a3b9fdaf3b0da395f40032929448da9a9dae4474b6509ef1a411",
+    "size": 104327,
+    "sha256": "5ae99c5cc02de955afb3208fd688cad31d182b1c67456face2993a02205af1b9",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -729,8 +729,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 7562,
-    "sha256": "db205ca58d3204bf00f7310cf427a3c2d13f9f7721e7decf356b2961ed56134e",
+    "size": 8036,
+    "sha256": "e699e91a464edbed791af876fd43012bbfc0f61774cbec0ccfc3b37b1dd8bf58",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
@@ -777,8 +777,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 44139,
-    "sha256": "c40ea7d2d744ace6b7576924852126926419bdcabad3bcb25bf69ea9d70badaf",
+    "size": 44156,
+    "sha256": "a2882bdd97ccafc032685262b65865fd713bc4e8c5465051e74fe3637fecebcf",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -789,8 +789,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraWarden.cs",
-    "size": 3737,
-    "sha256": "73236eb7ba8a7654917ff230cf953e9eb2932e612ff03b6aec6d3bf6f40898eb",
+    "size": 3548,
+    "sha256": "37c59f32e9af45858225ae0f1a442ed28e40aa068d24b52c30c9ac5186542e76",
     "fileName": "UltraWarden.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraWarden.cs"
   },
