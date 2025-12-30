@@ -101,16 +101,11 @@ public class UltraNulgath
 
     void Prep()
     {
-        if (Bot.Inventory.Items.Any(x => x != null && x.Equipped && (x.Name == a || x.Name == b)))
-            Ultra.GetScrollOfEnrage();
-        else
-        {
-            Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-            Ultra.BuyAlchemyPotion("Potent Honor Potion");
-            Core.EquipConsumable("Potent Honor Potion");
-        }
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        if (Bot.Inventory.Items.Any(x => x != null && x.Equipped && (x.Name == a || x.Name == b)))
+            Ultra.GetScrollOfEnrage();
     }
 
     void Fight()
