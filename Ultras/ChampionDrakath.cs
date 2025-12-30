@@ -55,13 +55,13 @@ using Skua.Core.Options;
 /// <summary>
 /// Fast Composition - Optimized for speed and burst damage
 /// </summary>
-// Chrono ShadowSlayer
+// Chrono ShadowSlayer (Taunter)
 // ├─ Helm: Forge
 // ├─ Class: Lucky
 // ├─ Weapon: Valiance
 // └─ Cape: Vainglory / Lament
 //
-// Legion Revenant
+// Legion Revenant (Taunter)
 // ├─ Helm: Wizard / Healer
 // ├─ Class: Wizard / Healer
 // ├─ Weapon: Valiance / Ravenous / Arcana
@@ -86,17 +86,17 @@ using Skua.Core.Options;
 /// <summary>
 /// Cheapest Composition - Cost-effective setup with minimal investment
 /// </summary>
-// Chaos Slayer
+// Chaos Slayer Berserker/Cleric/Mystic/Thief (taunt)
 // ├─ Helm: Forge
 // ├─ Class: Lucky
-// ├─ Weapon: Ravenous / Valiance
+// ├─ Weapon: Valiance
 // └─ Cape: Lament
 //
-// Archpaladin
-// ├─ Helm: [TBD]
-// ├─ Class: [TBD]
-// ├─ Weapon: [TBD]
-// └─ Cape: [TBD]
+// ArchPaladin (Taunter)
+// ├─ Helm: Forge
+// ├─ Class: Lucky
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
 //
 // StoneCrusher
 // ├─ Helm: Anima
@@ -204,8 +204,9 @@ public class ChampionDrakath
 
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgress("Champion Drakath Defeated", 1, true, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Champion Drakath Defeated", 1), syncPath))
             {
+                Bot.Sleep(2500);
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8300);
@@ -221,15 +222,21 @@ public class ChampionDrakath
 
             if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
             {
+                if (!Bot.Player.HasTarget)
+                    Bot.Combat.Attack(boss);
                 Ultra.DrakathTaunter();
                 Bot.Sleep(500);
             }
 
-            Bot.Combat.Attack(boss);
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack(boss);
             Bot.Sleep(250);
-            if (Core.GetTargetHealthPercentage() < 10)
+            if (Bot.Player?.Target?.HP < Bot.Player?.Target?.MaxHP * 0.1
+            && (Core.HasClassEquipped(a) || Core.HasClassEquipped(b)))
+            {
                 Bot.Skills.UseSkill(5);
-            Bot.Sleep(250);
+                Bot.Sleep(250);
+            }
         }
     }
 
@@ -241,6 +248,15 @@ public class ChampionDrakath
 
         switch (className)
         {
+            case "ArchPaladin":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,                 // Class
+                    hSpecial: HelmSpecial.Forge,              // Helm
+                    wSpecial: WeaponSpecial.Valiance,               // Weapon
+                    cSpecial: CapeSpecial.Lament                 // Cape
+                );
+                break;
+
             // Light Caster
             case "LightCaster":
                 Adv.EnhanceEquipped(
@@ -355,6 +371,10 @@ public class ChampionDrakath
 
             // Chaos Slayer
             case "Chaos Slayer":
+            case "Chaos Slayer Berserker":
+            case "Chaos Slayer Cleric":
+            case "Chaos Slayer Mystic":
+            case "Chaos Slayer Thief":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,                 // Class
                     hSpecial: HelmSpecial.Forge,                 // Helm
