@@ -1742,135 +1742,63 @@ public class CoreEngine
 
     #region Auras
 
-    public Aura? GetAuraByName(string auraName, bool self)
-    {
-        if (string.IsNullOrWhiteSpace(auraName))
-            return null;
+    public Aura? GetAuraByName(string auraName, bool self) =>
+        string.IsNullOrWhiteSpace(auraName)
+            ? null
+            : (self ? Bot?.Self?.Auras : Bot?.Target?.Auras)?
+                .FirstOrDefault(a => !string.IsNullOrWhiteSpace(a?.Name) &&
+                                     string.Equals(a.Name, auraName, StringComparison.OrdinalIgnoreCase));
 
-        if ((self ? Bot?.Self?.Auras : Bot?.Target?.Auras)?.Count > 0)
-            foreach (Aura aura in self ? Bot!.Self.Auras : Bot!.Target.Auras)
-                if (
-                    aura?.Name != null
-                    && auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase)
-                )
-                    return aura;
+    public bool HasAura(string auraName, bool self = false) =>
+        !string.IsNullOrWhiteSpace(auraName) &&
+        (self ? Bot.Self?.Auras : Bot.Target?.Auras)?.Any(a => a.Name == auraName) == true;
 
-        return null; // only return null after checking all auras
-    }
+    public bool HasAnyAura(IEnumerable<string>? auraNames, bool self = false) =>
+        auraNames?.Any(aura => !string.IsNullOrWhiteSpace(aura) &&
+                               (self ? Bot.Self?.Auras : Bot.Target?.Auras)?.Any(a => a.Name == aura) == true) == true;
 
-    public bool HasAura(string auraName, bool self = false)
-    {
-        return GetAuraByName(auraName, self) != null;
-    }
+    public bool HasAnyAuraOtherThan(string auraName, bool self = false) =>
+        !string.IsNullOrWhiteSpace(auraName) &&
+        (self ? Bot.Self?.Auras : Bot.Target?.Auras)?.Any(a => !string.Equals(a.Name, auraName, StringComparison.OrdinalIgnoreCase)) == true;
 
-    public bool HasAnyAura(List<string> auraNames, bool self = false)
-    {
-        if (auraNames == null || auraNames.Count == 0)
-            return false;
-        foreach (string aura in auraNames)
-        {
-            if (!string.IsNullOrWhiteSpace(aura) && HasAura(aura, self))
-                return true;
-        }
-        return false;
-    }
-
-    // Returns true if the player/target has any aura other than the specified one.
-    public bool HasAnyAuraOtherThan(string auraName, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(auraName))
-            return false;
-
-        if ((self ? Bot?.Self?.Auras : Bot?.Target?.Auras)?.Count > 0)
-            foreach (Aura aura in self ? Bot!.Self.Auras : Bot!.Target.Auras)
-                if (
-                    aura?.Name != null
-                    && !auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase)
-                )
-                    return true;
-
-        return false;
-    }
-
-    // Returns the number of stacks of a specific aura; returns 0 if missing.
     public int GetAuraStacks(string auraName, bool self = false)
     {
-        if (string.IsNullOrWhiteSpace(auraName))
-            return 0;
+        if (string.IsNullOrWhiteSpace(auraName)) return 0;
 
         try
         {
-            object? value = self
-                ? Bot?.Self?.GetAuraValue(auraName)
-                : Bot?.Target?.GetAuraValue(auraName);
-
-            if (value == null)
-                return 0;
-
-            int rawValue = value switch
+            object? value = self ? Bot?.Self?.GetAuraValue(auraName) : Bot?.Target?.GetAuraValue(auraName);
+            return value switch
             {
-                int i => i,
-                long l => (int)l,
-                double d => (int)Math.Round(d),
-                float f => (int)Math.Round(f),
-                _ => int.TryParse(
-                    value.ToString(),
-                    NumberStyles.Any,
-                    CultureInfo.InvariantCulture,
-                    out int n
-                )
-                    ? n
-                    : 0,
+                int i => i + 1,
+                long l => (int)l + 1,
+                double d => (int)Math.Round(d) + 1,
+                float f => (int)Math.Round(f) + 1,
+                _ => int.TryParse(value?.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out int n) ? n + 1 : 0
             };
-
-            return rawValue + 1; // as per original logic
         }
-        catch
-        {
-            return 0;
-        }
+        catch { return 0; }
     }
 
-    // Returns remaining seconds of an aura; 0 if missing or expired.
     public int GetAuraSecondsRemaining(string auraName, bool self = false)
     {
-        if (string.IsNullOrWhiteSpace(auraName))
-            return 0;
-
         var aura = GetAuraByName(auraName, self);
-        if (aura == null || aura.UnixTimeStamp <= 0 || aura.Duration <= 0)
-            return 0;
+        if (aura == null || aura.UnixTimeStamp <= 0 || aura.Duration <= 0) return 0;
 
         try
         {
-            DateTimeOffset applied = DateTimeOffset.FromUnixTimeMilliseconds(aura.UnixTimeStamp);
-            DateTimeOffset expires = applied.AddSeconds(aura.Duration);
-            int remaining = (int)(expires - DateTimeOffset.Now).TotalSeconds;
-            return Math.Max(0, remaining);
+            var applied = DateTimeOffset.FromUnixTimeMilliseconds(aura.UnixTimeStamp);
+            var expires = applied.AddSeconds(aura.Duration);
+            return Math.Max(0, (int)(expires - DateTimeOffset.Now).TotalSeconds);
         }
-        catch
-        {
-            return 0;
-        }
+        catch { return 0; }
     }
 
-    // Returns true if the aura has at least `quantity` stacks.
-    public bool Stacks(string name, int quantity, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(name) || quantity <= 0)
-            return false;
+    public bool Stacks(string name, int quantity, bool self = false) =>
+        !string.IsNullOrWhiteSpace(name) && quantity > 0 && GetAuraStacks(name, self) >= quantity;
 
-        return GetAuraStacks(name, self) >= quantity;
-    }
-
-    // Returns true if the aura has less than or equal to `duration` seconds left.
-    public bool Left(string name, int duration, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(name) || duration < 0)
-            return false;
-
-        return GetAuraSecondsRemaining(name, self) <= duration;
-    }
+    public bool Left(string name, int duration, bool self = false) =>
+        !string.IsNullOrWhiteSpace(name) && duration >= 0 && GetAuraSecondsRemaining(name, self) <= duration;
 
     #endregion
 
@@ -2954,7 +2882,7 @@ public class CoreEngine
 
         if (mode == "Ultra")
         {
-            if (IsHealthLow(80) || IsArmyHealthLow(80) && HasAura("Magnitude", true))
+            if (IsHealthLow(80) || IsArmyHealthLow(80) && Bot.Self.Auras.Any(a => a.Name == "Magnitude"))
                 if (Cast(3))
                     return;
             if (Left("Dissonance", 1, true))
@@ -2970,7 +2898,7 @@ public class CoreEngine
             if (IsHealthLow(80) || IsArmyHealthLow(80))
                 if (Cast(3))
                     return;
-            if (HasAura("Magnitude", true))
+            if (Bot.Self.Auras.Any(a => a.Name == "Magnitude"))
                 if (Cast(4))
                     return;
             if (Left("Dissonance", 1, true))
@@ -2987,7 +2915,7 @@ public class CoreEngine
 
         if (mode == "Ultra")
         {
-            if (IsHealthLow(80) || IsArmyHealthLow(80) && HasAura("Anima", true))
+            if (IsHealthLow(80) || IsArmyHealthLow(80) && Bot.Self.Auras.Any(a => a.Name == "Anima"))
                 if (Cast(3))
                     return;
             if (Left("Universal Power", 1, true))
@@ -3003,7 +2931,7 @@ public class CoreEngine
             if (IsHealthLow(80) || IsArmyHealthLow(80))
                 if (Cast(3))
                     return;
-            if (HasAura("Anima", true))
+            if (Bot.Self.Auras.Any(a => a.Name == "Anima"))
                 if (Cast(4))
                     return;
             if (Left("Universal Power", 1, true))
@@ -3019,7 +2947,7 @@ public class CoreEngine
         if ((IsHealthLow(70) || IsArmyHealthLow(70)) && NotUltraDage())
             if (Cast(2))
                 return;
-        if (!HasAura("Righteous Seal"))
+        if (!Bot.Self.Auras.Any(a => a.Name == "Righteous Seal"))
             if (Cast(4))
                 return;
         if (Cast(3))
@@ -3030,7 +2958,7 @@ public class CoreEngine
 
     void VoidHighlordClass()
     {
-        if (HasAura("Unshackled", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "Unshackled"))
             if (Cast(4))
                 return;
         if (IsHealthHigh(60))
@@ -3085,7 +3013,7 @@ public class CoreEngine
         if (IsHealthLow(95))
             if (Cast(2))
                 return;
-        if (HasAura("Convergence", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "Convergence"))
             if (Cast(3))
                 return;
         if (IsHealthHigh(60))
@@ -3101,13 +3029,13 @@ public class CoreEngine
             if (Cast(2))
                 return;
         if (
-            HasAura("Arcane Flux", true)
-            && !HasAura("Corporeal Ascension", true)
-            && !HasAura("Astral Ascension", true)
+            Bot.Self.Auras.Any(a => a.Name == "Arcane Flux")
+            && !Bot.Self.Auras.Any(a => a.Name == "Corporeal Ascension")
+            && !Bot.Self.Auras.Any(a => a.Name == "Astral Ascension")
         )
             if (Cast(4))
                 return;
-        if (HasAura("Corporeal Ascension", true) && !HasAura("Astral Ascension", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "Corporeal Ascension") && !Bot.Self.Auras.Any(a => a.Name == "Astral Ascension"))
             if (Cast(4))
                 return;
         if (Cast(1))
@@ -3144,7 +3072,7 @@ public class CoreEngine
                 return;
         }
 
-        if (HasAura("XXI - The World", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "XXI - The World"))
         {
             if (Left("XXI - The World", 8, true))
                 if (Cast(1))
@@ -3154,8 +3082,8 @@ public class CoreEngine
         }
         else
         {
-            bool hasJudgement = HasAura("XX - Judgement", true);
-            bool hasFool = HasAura("0 - The Fool", true);
+            bool hasJudgement = Bot.Self.Auras.Any(a => a.Name == "XX - Judgement");
+            bool hasFool = Bot.Self.Auras.Any(a => a.Name == "0 - The Fool");
             bool needsFool = !hasFool || !HasAnyAuraOtherThan("0 - The Fool", true);
 
             if ((hasJudgement && hasFool) || needsFool)
@@ -3203,7 +3131,7 @@ public class CoreEngine
         if (Stacks("Temporal Rift", 4, true))
             if (Cast(3))
                 return;
-        if (HasAura("Quantum Restructure", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "Quantum Restructure"))
             if (Cast(4))
                 return;
         if (Cast(2))
@@ -3243,19 +3171,19 @@ public class CoreEngine
 
     void ChronoShadowSlayerClass()
     {
-        if (HasAura("Rounds Empty", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "Rounds Empty"))
             if (Cast(1))
                 return;
-        if (HasAura("Gunslinger Stance", true))
+        if (Bot.Target.Auras.Any(a => a.Name == "Gunslinger Stance"))
             if (Cast(0))
                 return;
         if (Stacks("Temporal Rift", 4, true))
             if (Cast(1))
                 return;
-        if (HasAura("Chaos Rift", true) && !HasAura("Gunslinger Stance", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "Chaos Rift") && !Bot.Self.Auras.Any(a => a.Name == "Gunslinger Stance"))
             if (Cast(4))
                 return;
-        if (!HasAura("FMJ Rounds", true) && !HasAura("Tracer Rounds", true))
+        if (!Bot.Self.Auras.Any(a => a.Name == "FMJ Rounds") && !Bot.Self.Auras.Any(a => a.Name == "Tracer Rounds"))
             if (Cast(3))
                 return;
     }
@@ -3264,7 +3192,7 @@ public class CoreEngine
 
     void MasterRangerClass()
     {
-        if (HasAura("Vampiric Shot", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "Vampiric Shot"))
             if (Cast(3))
                 return;
         if (Stacks("Marks", 6, true))
@@ -3279,10 +3207,10 @@ public class CoreEngine
 
     void DragonslayerGeneralClass()
     {
-        if (HasAura("General's Dragonbane"))
+        if (Bot.Self.Auras.Any(a => a.Name == "General's Dragonbane"))
             if (Cast(2))
                 return;
-        if (HasAura("General's Dragonbane"))
+        if (Bot.Self.Auras.Any(a => a.Name == "General's Dragonbane"))
             if (Cast(3))
                 return;
         if (Cast(4))
@@ -3293,10 +3221,10 @@ public class CoreEngine
 
     void CryomancerClass()
     {
-        if (IsHealthLow(60) && HasAura("Polar Vortex", true))
+        if (IsHealthLow(60) && Bot.Self.Auras.Any(a => a.Name == "Polar Vortex"))
             if (Cast(3))
                 return;
-        if (HasAura("Frozen") && HasAura("Polar Vortex", true))
+        if (Bot.Target.Auras.Any(a => a.Name == "Frozen") && Bot.Self.Auras.Any(a => a.Name == "Polar Vortex"))
             if (Cast(2))
                 return;
         if (Cast(1))
@@ -3307,10 +3235,10 @@ public class CoreEngine
 
     void DragonslayerClass()
     {
-        if (HasAura("Dragonbane") && !HasAura("Infected Wound"))
+        if (Bot.Self.Auras.Any(a => a.Name == "Dragonbane") && !Bot.Self.Auras.Any(a => a.Name == "Infected Wound"))
             if (Cast(2))
                 return;
-        if (HasAura("Dragonbane") && !HasAura("Weakened"))
+        if (Bot.Self.Auras.Any(a => a.Name == "Dragonbane") && !Bot.Self.Auras.Any(a => a.Name == "Weakened"))
             if (Cast(3))
                 return;
         if (Cast(4))
@@ -3323,12 +3251,12 @@ public class CoreEngine
     {
         if (Cast(1))
             return;
-        if (HasAura("Flammable"))
+        if (Bot.Self.Auras.Any(a => a.Name == "Flammable"))
             if (Cast(4))
                 return;
         if (Cast(2))
             return;
-        if (HasAura("Dumbfounded"))
+        if (Bot.Self.Auras.Any(a => a.Name == "Dumbfounded"))
             if (Cast(3))
                 return;
     }
@@ -3338,10 +3266,10 @@ public class CoreEngine
         if (Left("Elemental Embrace", 5))
             if (Cast(4))
                 return;
-        if (HasAura("Elemental Embrace"))
+        if (Bot.Self.Auras.Any(a => a.Name == "Elemental Embrace"))
             if (Cast(3))
                 return;
-        if (HasAura("Scorched Spirit"))
+        if (Bot.Self.Auras.Any(a => a.Name == "Scorched Spirit"))
             if (Cast(2))
                 return;
         if (Cast(1))
@@ -3377,16 +3305,16 @@ public class CoreEngine
 
     void NecromancerClass()
     {
-        if (IsManaLow(90) && IsHealthHigh(80) && !HasAura("Deadly Frenzy", true))
+        if (IsManaLow(90) && IsHealthHigh(80) && !Bot.Self.Auras.Any(a => a.Name == "Deadly Frenzy"))
             if (Cast(3))
                 return;
-        if (IsManaLow(30) && IsHealthHigh(80) && HasAura("Deadly Frenzy", true))
+        if (IsManaLow(30) && IsHealthHigh(80) && Bot.Self.Auras.Any(a => a.Name == "Deadly Frenzy"))
             if (Cast(3))
                 return;
         if (IsManaHigh(80) && IsHealthHigh(80))
             if (Cast(4))
                 return;
-        if (HasAura("Deadly Frenzy", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "Deadly Frenzy"))
             if (Cast(1))
                 return;
         if (Cast(2))
@@ -3395,7 +3323,7 @@ public class CoreEngine
 
     void ChronoAssassinClass()
     {
-        if (HasAura("Reverse Time", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "Reverse Time"))
         {
             if (Cast(4))
                 return;
@@ -3414,7 +3342,7 @@ public class CoreEngine
     void GuardianClass()
     {
         if (
-            (HasAura("Hypercritical", true) || HasAura("Void Imbue", true))
+            (Bot.Self.Auras.Any(a => a.Name == "Hypercritical") || Bot.Self.Auras.Any(a => a.Name == "Void Imbue"))
             && Stacks("Guardian Spirit", 15, true)
         )
             if (Cast(4))
@@ -3430,7 +3358,7 @@ public class CoreEngine
 
     void GreatThiefClass()
     {
-        if (HasAura("Hidden Blade", true))
+        if (Bot.Self.Auras.Any(a => a.Name == "Hidden Blade"))
             if (Cast(4))
                 return;
         if (Cast(3))
@@ -3444,8 +3372,8 @@ public class CoreEngine
     void ChaosSlayerClass()
     {
         if (
-            (HasAura("Impasse") || HasAura("Delusion") || HasAura("Angustied"))
-            && !HasAura("Corageous", true)
+            (Bot.Target.Auras.Any(a => a.Name == "Impasse") || Bot.Target.Auras.Any(a => a.Name == "Delusion") || Bot.Target.Auras.Any(a => a.Name == "Angustied"))
+            && !Bot.Self.Auras.Any(a => a.Name == "Corageous")
         )
             if (Cast(4))
                 return;
@@ -3464,10 +3392,10 @@ public class CoreEngine
         if (Left("Arcane Shield", 1, true))
             if (Cast(4))
                 return;
-        if (HasAura("Frozen Blood"))
+        if (Bot.Self.Auras.Any(a => a.Name == "Frozen Blood"))
             if (Cast(1))
                 return;
-        if (HasAura("Scorched"))
+        if (Bot.Self.Auras.Any(a => a.Name == "Scorched"))
             if (Cast(3))
                 return;
         if (Cast(2))
