@@ -821,6 +821,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
   },
   {
+    "name": "DarkCarnax",
+    "description": "Farming script for Nightmare Dark Carnax with movement zone automation.",
+    "tags": [
+      "ultra",
+      "carnax",
+      "dark carnax",
+      "synthetic viscera"
+    ],
+    "path": "Ultras/DarkCarnax.cs",
+    "size": 11619,
+    "sha256": "b56f95bb28fc8f011541a4998a1b1b372dade5ee777b579874b9c42b9dccbd88",
+    "fileName": "DarkCarnax.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/DarkCarnax.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
