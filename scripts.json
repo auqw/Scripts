@@ -729,8 +729,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 4222,
-    "sha256": "5baa30012e0c7544ad5f1417001163312ef2f96c3cc1735acc0c795d748dda5a",
+    "size": 7562,
+    "sha256": "db205ca58d3204bf00f7310cf427a3c2d13f9f7721e7decf356b2961ed56134e",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
@@ -741,8 +741,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDage.cs",
-    "size": 13204,
-    "sha256": "5e5322e608ae4cd5a5a3afc4c26fe4d81ebe7fc5356915a549eba91d7ae3e906",
+    "size": 11071,
+    "sha256": "0a2ab42c38700b8b5f38d7b3cb926059309587085c311b15544f52af97cc8be0",
     "fileName": "UltraDage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDage.cs"
   },
@@ -801,8 +801,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 8451,
-    "sha256": "665882f0c7d34f03f40e564969319859ada6fa4ab57da89e8d80309be9dfb79f",
+    "size": 8293,
+    "sha256": "9ec721ce3de1d103018799da6cb7d66478e796dc21c5aa57d1b1e40744c226c4",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
@@ -12933,8 +12933,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 50296,
-    "sha256": "61c169e7d98c479ca274b3ed8d784cd9b05489299800345cec6e59818b649cd9",
+    "size": 50596,
+    "sha256": "999a79c74229d8c2d3a82d0c957e5c00dcd6c092f5864ed4990ac5c82e996979",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
