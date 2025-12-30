@@ -133,8 +133,8 @@ public class ChampionDrakath
     public string OptionsStorage = "ChampionDrakath";
     public List<IOption> Options = new()
     {
-        new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", ""),
-        new Option<string>("b", "Taunter Class (Backup)", "Backup taunter class", ""),
+        new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", "ArchPaladin"),
+        new Option<string>("b", "Taunter Class (Backup)", "Backup taunter class", "Chaos Slayer"),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -167,7 +167,7 @@ public class ChampionDrakath
         Bot.Stop();
     }
 
-    bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
+    bool IsTaunter() => Bot.Player.CurrentClass.Name.Contains(a) || Bot.Player.CurrentClass.Name.Contains(b);
 
     void Prep()
     {
