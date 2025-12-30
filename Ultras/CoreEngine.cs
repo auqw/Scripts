@@ -914,26 +914,15 @@ public class CoreEngine
         {
             if (string.IsNullOrWhiteSpace(g))
                 return g;
-            switch (g.Trim().ToLowerInvariant())
+            return g.Trim().ToLowerInvariant() switch
             {
-                case "weapon":
-                    return "Weapon";
-                case "helm":
-                case "he":
-                    return "he";
-                case "back":
-                case "ba":
-                case "cape":
-                    return "ba";
-                case "class":
-                case "co":
-                    return "co";
-                case "pet":
-                case "pe":
-                    return "pe";
-                default:
-                    return g;
-            }
+                "weapon" => "Weapon",
+                "helm" or "he" => "he",
+                "back" or "ba" or "cape" => "ba",
+                "class" or "co" => "co",
+                "pet" or "pe" => "pe",
+                _ => g,
+            };
         }
 
         int N(int? v, int d = -1) => v ?? d;
@@ -2881,6 +2870,7 @@ public class CoreEngine
             case "chaos slayer cleric":
             case "chaos slayer mystic":
             case "chaos slayer thief":
+            case "chaos slayer":
                 ChaosSlayerClass();
                 break;
             #endregion
