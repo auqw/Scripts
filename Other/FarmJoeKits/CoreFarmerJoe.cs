@@ -32,6 +32,7 @@ tags: null
 //cs_include Scripts/Legion/HeadOfTheLegionBeast.cs
 //cs_include Scripts/Legion/SwordMaster.cs
 //cs_include Scripts/Legion/YamiNoRonin/CoreYnR.cs
+//cs_include Scripts/Nation/AFDL/EnoughDOOMforanArchfiend.cs
 //cs_include Scripts/Nation/AFDL/NulgathDemandsWork.cs
 //cs_include Scripts/Nation/AFDL/WillpowerExtraction.cs
 //cs_include Scripts/Nation/AssistingCragAndBamboozle[Mem].cs
@@ -179,6 +180,14 @@ public class CoreFarmerJoe
         set => _ExaltedApotheosisPreReqs = value;
     }
     private static ExaltedApotheosisPreReqs _ExaltedApotheosisPreReqs;
+
+    private static EnoughDOOMforanArchfiend EnoughDOOMforanArchfiend
+    {
+        get => _EnoughDOOMforanArchfiend ??= new EnoughDOOMforanArchfiend();
+        set => _EnoughDOOMforanArchfiend = value;
+    }
+    private static EnoughDOOMforanArchfiend _EnoughDOOMforanArchfiend;
+
 
     //Cores
     public static CoreBots Core => CoreBots.Instance;
@@ -778,7 +787,7 @@ public class CoreFarmerJoe
         {
             Core.Logger("Level 75: Acquiring Archfiend DeathLord for +30 dmgAll");
             SetClass();
-            AFDeath.GetArm(true, ArchfiendDeathLord.RewardChoice.Archfiend_DeathLord);
+            EnoughDOOMforanArchfiend.AFDL();
         }
 
         // Archfiend
