@@ -88,9 +88,6 @@ public class UltraSpeaker
         Ultra.GetScrollOfEnrage();
     }
 
-    static bool IsInBox(int x, int y) =>
-    x >= 0 && x <= 100
-    && y >= 485 && y <= 500;
 
     void Kill()
     {
@@ -125,11 +122,27 @@ public class UltraSpeaker
             // Put the player in a random spot within ((x=0,y=0), (x=101,y=101)) — corner box
             if (Bot.Player?.Cell == "Boss")
             {
-                int randomX = Random.Shared.Next(0, 101); // 0–100 inclusive
-                int randomY = Random.Shared.Next(485, 501); // 485–500 inclusive
+                // Define box boundaries (0,0 to 101,101)
+                int minX = 0;
+                int maxX = 100;
+                int minY = 485;
+                int maxY = 500;
 
-                if (!IsInBox(randomX, randomY))
+                // Check if player is within the box
+                bool isInBox =
+                    Bot.Player.Position.X >= minX
+                    && Bot.Player.Position.X <= maxX
+                    && Bot.Player.Position.Y >= minY
+                    && Bot.Player.Position.Y <= maxY;
+
+                // If not in box, move to random location within box
+                if (!isInBox)
+                {
+                    Random rand = new();
+                    int randomX = rand.Next(minX, maxX + 1);
+                    int randomY = rand.Next(minY, maxY + 1);
                     Bot.Player.WalkTo(randomX, randomY);
+                }
             }
 
             if (!Bot.Player!.HasTarget)
