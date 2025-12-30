@@ -617,6 +617,7 @@ public class CoreUltra
 
         return activeMembers > 0 && completedMembers == activeMembers;
     }
+    
     public void ClearSyncFile(string filePath)
     {
         try
@@ -630,7 +631,7 @@ public class CoreUltra
             }
 
             // If file exists but is already empty → do nothing.
-            FileInfo fi = new FileInfo(filePath);
+            FileInfo fi = new(filePath);
             if (fi.Length == 0)
             {
                 Bot?.Log("[ArmySync] Sync file already empty — no action needed.");
