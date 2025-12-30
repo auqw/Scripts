@@ -111,6 +111,7 @@ public class UltraAvatarTyndarius
             "Select which class should focus Tyndarius.",
             DebuffTyndarius.LordOfOrder
         ),
+        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -128,16 +129,16 @@ public class UltraAvatarTyndarius
         playerClass = Bot.Player.CurrentClass?.Name ?? string.Empty;
         isBall1Taunter =
             Bot.Player.CurrentClass?.Name
-            == GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter"));
+            == GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")) || GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")) == "Current Class | Ball1Taunter";
         isBall2killer =
             Bot.Player.CurrentClass?.Name
-            == GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer"));
+            == GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer")) || GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")) == "Current Class | Ball2killer";
         isMustTauntTyn =
             Bot.Player.CurrentClass?.Name
-            == GetDescription(Bot.Config!.Get<MustTauntTyndarius>("MustTauntTyndarius"));
+            == GetDescription(Bot.Config!.Get<MustTauntTyndarius>("MustTauntTyndarius")) || GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")) == "Current Class | MustTauntTyndarius";
         isFocusTyn =
             Bot.Player.CurrentClass?.Name
-            == GetDescription(Bot.Config!.Get<DebuffTyndarius>("DebuffTyndarius"));
+            == GetDescription(Bot.Config!.Get<DebuffTyndarius>("DebuffTyndarius")) || GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")) == "Current Class | DebuffTyndarius";
 
         Core.Boot();
         Prep();
@@ -147,19 +148,12 @@ public class UltraAvatarTyndarius
 
     void Prep()
     {
+        Bot.Log($"Are we taunting: {isBall1Taunter || isMustTauntTyn}");
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            DoEnh();
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (isBall1Taunter || isMustTauntTyn)
-        {
-            Bot.Log("isTaunter = true");
             Ultra.GetScrollOfEnrage();
-        }
-        else
-        {
-            Bot.Log("isTaunter = false");
-            Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-            Ultra.BuyAlchemyPotion("Potent Honor Potion");
-            Core.EquipConsumable("Potent Honor Potion");
-        }
-        // Ultra.Enhancements();
     }
 
     void Fight()
@@ -213,7 +207,8 @@ public class UltraAvatarTyndarius
                     : 2
                 );
                 Bot.Sleep(500);
-                Bot.Skills.UseSkill(5);
+                if (Bot.Skills.CanUseSkill(5))
+                    Bot.Skills.UseSkill(5);
             }
 
             if (isBall2killer)
@@ -222,14 +217,13 @@ public class UltraAvatarTyndarius
                 {
                     Bot.Combat.Attack(3);
                     Bot.Sleep(500);
-                    Bot.Skills.UseSkill(5);
+                    if (Bot.Skills.CanUseSkill(5))
+                        Bot.Skills.UseSkill(5);
                     Bot.Sleep(500);
                 }
                 else if (Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 1 && x.HP > 0))
                 {
                     Bot.Combat.Attack(1);
-                    Bot.Sleep(500);
-                    Bot.Skills.UseSkill(5);
                     Bot.Sleep(500);
                 }
                 else
@@ -245,7 +239,8 @@ public class UltraAvatarTyndarius
             if (isMustTauntTyn)
             {
                 Bot.Combat.Attack(2);
-                Bot.Skills.UseSkill(5);
+                if (Bot.Skills.CanUseSkill(5))
+                    Bot.Skills.UseSkill(5);
                 Bot.Sleep(500);
             }
 
@@ -255,7 +250,8 @@ public class UltraAvatarTyndarius
             if (isFocusTyn)
             {
                 Bot.Combat.Attack(2);
-                Bot.Skills.UseSkill(5);
+                if (Bot.Skills.CanUseSkill(5))
+                    Bot.Skills.UseSkill(5);
                 Bot.Sleep(500);
             }
         }
@@ -269,6 +265,100 @@ public class UltraAvatarTyndarius
             as DescriptionAttribute;
 
         return attribute?.Description ?? value.ToString();
+    }
+
+    void DoEnh()
+    {
+        string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
+        if (string.IsNullOrEmpty(className))
+            return;
+        switch (className.ToLower())
+        {
+            case "chrono shadowslayer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Vim,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+            case "legion revenant":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+            case "archpaladin":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+            case "lord of order":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+            case "chaos avenger":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+            case "king's echo":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+            case "arcana invoker":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+            case "lich":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                break;
+            case "verus doomknight":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+            case "dragon of time":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Elysium,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            default:
+                Adv.SmartEnhance(Bot.Player.CurrentClass?.Name);
+                break;
+        }
     }
 
     public enum Ball2killer
@@ -289,8 +379,8 @@ public class UltraAvatarTyndarius
         [Description("Arcana Invoker")]
         ArcanaInvoker,
 
-        [Description("Current Class")]
-        CurrentClass,
+        [Description("Current Class | Ball2killer")]
+        Ball2killer_CurrentClass,
     }
 
     public enum Ball1Taunter
@@ -302,8 +392,8 @@ public class UltraAvatarTyndarius
         [Description("Lich")]
         Lich,
 
-        [Description("Current Class")]
-        CurrentClass,
+        [Description("Current Class | Ball1Taunter")]
+        Ball1Taunter_Current,
     }
 
     public enum DebuffTyndarius
@@ -315,8 +405,8 @@ public class UltraAvatarTyndarius
         [Description("Dragon of Time")]
         DragonofTime,
 
-        [Description("Current Class")]
-        CurrentClass,
+        [Description("Current Class | DebuffTyndarius")]
+        DebuffTyndarius_Current,
     }
 
     public enum MustTauntTyndarius
@@ -325,10 +415,10 @@ public class UltraAvatarTyndarius
         [Description("ArchPaladin")]
         ArchPaladin,
 
-        [Description("Verus DoomKnight")]
+        [Description("Verus Doomknight")]
         VerusDoomknight,
 
-        [Description("Current Class")]
-        CurrentClass,
+        [Description("Current Class | MustTauntTyndarius")]
+        MustTauntTyndarius_Current,
     }
 }

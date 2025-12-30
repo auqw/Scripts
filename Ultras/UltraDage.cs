@@ -27,7 +27,7 @@ DPS classes:
     Hollowborn Vindicator
     Arachnomancer
     Infinity Knight
-    Verus DoomKnight
+    Verus Doomknight
     King's Echo
     Phantom Chronomancer / Phantasm Chronomancer
     Great Thief

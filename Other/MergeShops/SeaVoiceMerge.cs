@@ -231,7 +231,7 @@ public class SeaVoiceMerge
         string[] PossibleSoloClasses = new[]
         {
             "Chaos Avenger",
-            "Verus DoomKnight",
+            "Verus Doomknight",
             "Hollowborn Vindicator",
             "Lich",
             "ArchPaladin",

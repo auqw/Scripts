@@ -33,7 +33,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Vainglory / Lament
 //
-// Verus DoomKnight
+// Verus Doomknight
 // ├─ Class: Lucky
 // ├─ Helm: Anima
 // ├─ Weapon: Ravenous / Valiance
@@ -95,7 +95,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Elysium
 // └─ Cape: Absolution
 //
-// Verus DoomKnight
+// Verus Doomknight
 // ├─ Class: Lucky
 // ├─ Helm: Anima
 // ├─ Weapon: Ravenous / Valiance
@@ -271,8 +271,8 @@ public class UltraEzrajal
                 );
                 break;
 
-            // Verus DoomKnight
-            case "Verus DoomKnight":
+            // Verus Doomknight
+            case "Verus Doomknight":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Anima,

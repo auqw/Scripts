@@ -327,7 +327,7 @@ public class VerusDoomKnightClass
         string[] PossibleSoloClasses = new[]
         {
             "Chaos Avenger",
-            "Verus DoomKnight",
+            "Verus Doomknight",
             "Hollowborn Vindicator",
             "Lich",
             "ArchPaladin",

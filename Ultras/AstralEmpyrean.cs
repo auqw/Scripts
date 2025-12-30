@@ -39,7 +39,7 @@ tags: Ultra, AstralEmpyrean, Astral Empyrean
    - Weapon: Ravenous (Wizard)
    - Cape: Lament (Wizard)
 
-5. Verus DoomKnight
+5. Verus Doomknight
    - Helm: Anima (Lucky)
    - Class: Lucky
    - Weapon: Ravenous (Lucky)
@@ -86,7 +86,7 @@ tags: Ultra, AstralEmpyrean, Astral Empyrean
    - Weapon: Ravenous (Wizard)
    - Cape: Lament (Wizard)
 
-5. Verus DoomKnight
+5. Verus Doomknight
    - Helm: Anima (Lucky)
    - Class: Lucky
    - Weapon: Ravenous (Lucky)
