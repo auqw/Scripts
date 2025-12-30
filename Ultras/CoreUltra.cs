@@ -160,19 +160,10 @@ public class CoreUltra
         }
     }
 
-    public bool MonsterAlive(string name)
-    {
-        if (!Bot.Player.Alive)
-            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-        if (string.IsNullOrWhiteSpace(name))
-            return false;
-        if (Bot.Monsters?.MapMonsters == null)
-            return false;
-
-        return Bot.Monsters.MapMonsters.Any(m =>
-            m != null && m.Name.ToLower().Equals(name.ToLower()) && m.HP > 0
-        );
-    }
+    public bool MonsterAlive(string name) =>
+     (Bot.Player.Alive || Bot.Wait.ForTrue(() => Bot.Player.Alive, 20))
+     && !string.IsNullOrWhiteSpace(name)
+     && Bot.Monsters?.MapMonsters?.Any(m => m?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) == true && m.HP > 0) == true;
 
     public void UltraWardenTaunter()
     {
@@ -203,18 +194,13 @@ public class CoreUltra
             seen.Add(band5);
             AppDomain.CurrentDomain.SetData(key, seen);
 
-            bool go = true;
-            while (go)
+            while (!Bot.ShouldExit
+            && MonsterAlive(mob)
+            && !Bot.Self.Auras.Any(a => a.Name == "Focus"))
             {
-                bool alive = MonsterAlive(mob);
-                bool focused = Bot.Self.Auras.Any(a => a.Name == "Focus");
-                bool exit = Bot.ShouldExit;
-
-                if (!alive || focused || exit)
-                    go = false;
-                else
-                    Core.UsePotion();
+                Core.UsePotion();
             }
+
         }
 
         Bot.Sleep(150);
@@ -223,7 +209,7 @@ public class CoreUltra
     public void DrakathTaunter()
     {
         Bot.Combat.Attack("*");
-        var dummy = Bot.Player.Target ?? Bot.Monsters.MapMonsters.FirstOrDefault(x => x.Name == "Champion Drakath");
+        var dummy = Bot.Player.Target ?? Bot.Monsters.MapMonsters.FirstOrDefault(x => x.Name == "Champion Drakath") ?? Bot.Monsters.MapMonsters.First();
         if (dummy == null || dummy.HP <= 0)
             return;
 
@@ -277,7 +263,7 @@ public class CoreUltra
 
             DateTime giveUp = DateTime.UtcNow.AddMilliseconds(3000);
 
-            while (DateTime.UtcNow < giveUp && !Bot.ShouldExit)
+            while (!Bot.ShouldExit && DateTime.UtcNow < giveUp)
             {
                 if (!Bot.Player.HasTarget)
                     Bot.Combat.Attack("*");
@@ -460,7 +446,7 @@ public class CoreUltra
         int lastReady = -1;
 
         // --- Wait for army readiness ---
-        while (!Bot?.ShouldExit == true)
+        while (!Bot.ShouldExit)
         {
             int ready = HowMany(syncFile);
             if (ready != lastReady)
@@ -498,7 +484,7 @@ public class CoreUltra
 
         // --- Warmup spam to keep clients responsive ---
         DateTime spam = DateTime.UtcNow.AddMilliseconds(2000);
-        while (DateTime.UtcNow < spam && !Bot?.ShouldExit == true)
+        while (!Bot.ShouldExit && DateTime.UtcNow < spam)
         {
             Bot?.Skills.UseSkill(3);
             Bot?.Sleep(300);
@@ -814,12 +800,15 @@ public class CoreUltra
 
     public void UseTaunt()
     {
+        // Dead → wait for respawn
+        if (!Bot.Player.Alive)
+            Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
         Core.DisableSkills();
 
         while (!Bot.ShouldExit && !Bot.Self.Auras.Any(a => a.Name == "Focus"))
         {
-            if (Bot.Skills.CanUseSkill(5))
-                Bot.Skills.UseSkill(5);
+            Bot.Skills.UseSkill(5);
             Bot.Sleep(200);
         }
 
@@ -834,7 +823,7 @@ public class CoreUltra
 
         // Then apply taunt
         Core.DisableSkills();
-        while (!Bot.Self.Auras.Any(a => a != null && a.Name == "Focus"))
+        while (!Bot.ShouldExit && !Bot.Self.Auras.Any(a => a.Name == "Focus"))
         {
             if (Bot.Skills.CanUseSkill(5))
                 Bot.Skills.UseSkill(5);
