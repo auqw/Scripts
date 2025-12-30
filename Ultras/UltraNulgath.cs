@@ -179,8 +179,8 @@ public class UltraNulgath
                 );
                 break;
 
-            // Verus Doomknight
-            case "Verus Doomknight":
+            // Verus DoomKnight
+            case "Verus DoomKnight":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Anima,

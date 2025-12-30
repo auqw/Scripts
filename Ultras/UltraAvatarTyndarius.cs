@@ -325,7 +325,7 @@ public class UltraAvatarTyndarius
         [Description("ArchPaladin")]
         ArchPaladin,
 
-        [Description("Verus Doomknight")]
+        [Description("Verus DoomKnight")]
         VerusDoomknight,
 
         [Description("Current Class")]
