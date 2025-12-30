@@ -12893,8 +12893,8 @@
       "legend"
     ],
     "path": "Other/FarmJoeKits/1MemberFarmsKit.cs",
-    "size": 33144,
-    "sha256": "29b0e64ec28694b700db837e2af338c93ebe1f99d369fa5f350ba96667367586",
+    "size": 33205,
+    "sha256": "a3d40efd51d6ceca2f93cbecc9be692bd0fdc27e40c5d7249553b3ea8c8b1547",
     "fileName": "1MemberFarmsKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/1MemberFarmsKit.cs"
   },
@@ -12909,8 +12909,8 @@
       "farm"
     ],
     "path": "Other/FarmJoeKits/JoePrepsForUltras.cs",
-    "size": 27307,
-    "sha256": "fb3b0f79fd0c4a6f1f418b0d4566cc236ce0f5086b8603d6f36f8a9495c55f3e",
+    "size": 27368,
+    "sha256": "e839efdb54e5aec8816ddaaa1ab74f78e7dd2a262072579ca8248e071578fb4d",
     "fileName": "JoePrepsForUltras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/JoePrepsForUltras.cs"
   },
@@ -12921,8 +12921,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/0FarmerJoeDoAll.cs",
-    "size": 8605,
-    "sha256": "0ecaccacc6ff2c9ee27e014ca408d4a19e18f7c14bc6377ae7686a4f32fafaf0",
+    "size": 8666,
+    "sha256": "af3e9180f8f99d7fc9f8a8c1f51cf89ce2019a4dec7d1c7b312cf4a75c380c34",
     "fileName": "0FarmerJoeDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/0FarmerJoeDoAll.cs"
   },
