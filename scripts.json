@@ -24852,8 +24852,8 @@
       "fragment"
     ],
     "path": "Nation/AFDL/NulgathDemandsWork.cs",
-    "size": 5918,
-    "sha256": "6c03ef439dc0940e83cfd89bd62d7c82aee2f412e69503efbfe39bfc04e8107d",
+    "size": 6427,
+    "sha256": "a01598908b08040ce456645b528525aef16d62e827a6d2d9a9d177203a58a53a",
     "fileName": "NulgathDemandsWork.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/AFDL/NulgathDemandsWork.cs"
   },
@@ -26285,8 +26285,8 @@
       "null"
     ],
     "path": "Evil/NSoD/CoreNSOD.cs",
-    "size": 24197,
-    "sha256": "aed565cd8841a35338c3246632edd6d2e44854d9ac8396074588001d9d99c6f2",
+    "size": 24213,
+    "sha256": "5f1ca61b445c21e8492bc2b5032caf1b5c4f8d500a089f109a32618245c87078",
     "fileName": "CoreNSOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/NSoD/CoreNSOD.cs"
   },
