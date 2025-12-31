@@ -80,7 +80,7 @@ public class UltraAvatarTyndarius
     bool isFocusTyn;
 
     public bool DontPreconfigure = true;
-    public string OptionsStorage = "UltraAvatarTyndarius2";
+    public string OptionsStorage = "UltraAvatarTyndarius3";
     public List<IOption> Options = new()
     {
         // Ball 1 Taunter selection
