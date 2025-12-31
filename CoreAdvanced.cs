@@ -1389,7 +1389,7 @@ public class CoreAdvanced
         int quant = 1,
         bool isTemp = true,
         bool log = true,
-        bool publicRoom = false, bool EquipBestClassType =  true
+        bool publicRoom = false, bool EquipBestClassType = true
     )
     {
         if (item != "" && Core.CheckInventory(item, quant))
@@ -1730,6 +1730,11 @@ public class CoreAdvanced
     /// <param name="itemid"></param>
     public void RankUpClass(string className, bool gearRestore = true, int itemid = 0)
     {
+        if (className == "(Current)")
+        {
+            className = Bot.Player.CurrentClass.Name;
+        }
+        
         // Determine search condition based on itemid
         bool classMatch(InventoryItem i) =>
             (
