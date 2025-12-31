@@ -12,6 +12,7 @@ tags: archfiend, doomlord, ADFL, nulgath, demands, work, unidentified, uni, 35, 
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Quests;
+using Skua.Core.Models.Shops;
 
 public class NulgathDemandsWork
 {
@@ -117,14 +118,22 @@ public class NulgathDemandsWork
                 if (item.Name == "Unidentified 35")
                 {
                     // Buy U35 if fragments exist
+
                     while (
-                        !Bot.ShouldExit
-                        && Core.CheckInventory("Archfiend Essence Fragment", 9)
-                        && !Core.CheckInventory("Unidentified 35", quant)
-                    )
+                      !Bot.ShouldExit
+                      && Core.CheckInventory("Archfiend Essence Fragment", 9)
+                      && !Core.CheckInventory("Unidentified 35", quant)
+                  )
                     {
-                        Adv.BuyItem("tercessuinotlim", 1951, item.ID, shopItemID: 7912);
+                        ShopItem? Uni35 = Core.GetShopItems("tercessuinotlim", 1951).FirstOrDefault(x => x != null && x.ShopItemID == 7912);
+                        if (Uni35 == null)
+                            continue;
+                        int BuyMaxQuant = Core.MaxBuyQuant("tercessuinotlim", 1951, Uni35);
+                        if (BuyMaxQuant >= 1)
+                            Adv.BuyItem("tercessuinotlim", 1951, item.ID, BuyMaxQuant, shopItemID: 7912);
                     }
+                    Core.EnsureComplete(5259, Rewards.FirstOrDefault(x => x.Name == "Unidentified 35").ID);
+
                 }
                 else
                 { // Pick ONE NDW reward that isn't maxed
