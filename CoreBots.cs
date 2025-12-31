@@ -7251,31 +7251,31 @@ public class CoreBots
     {
         if (currentClass == classToUse && Bot.Skills.TimerRunning)
             return;
-
+            
         currentClass = classToUse;
 
         switch (classToUse)
         {
             case ClassType.Farm:
-                if (FarmClass != "Generic" && (!string.IsNullOrEmpty(FarmClass) && CheckInventory(FarmClass)))
+                if ((FarmClass != "Generic" || FarmClass != "(Current)") && !string.IsNullOrEmpty(FarmClass) && CheckInventory(FarmClass))
                     if (_equipClass(usingFarmGeneric, FarmClass, FarmUseMode, FarmGearOn, FarmGear))
                         return;
                 break;
 
             case ClassType.Solo:
-                if (SoloClass != "Generic" && !string.IsNullOrEmpty(SoloClass) && CheckInventory(SoloClass))
+                if ((SoloClass != "Generic" || FarmClass != "(Current)") && !string.IsNullOrEmpty(SoloClass) && CheckInventory(SoloClass))
                     if (_equipClass(usingSoloGeneric, SoloClass, SoloUseMode, SoloGearOn, SoloGear))
                         return;
                 break;
 
             case ClassType.Dodge:
-                if (DodgeClass != "Generic" && !string.IsNullOrEmpty(DodgeClass) && CheckInventory(DodgeClass))
+                if ((DodgeClass != "Generic" || FarmClass != "(Current)") && !string.IsNullOrEmpty(DodgeClass) && CheckInventory(DodgeClass))
                     if (_equipClass(usingDodgeGeneric, DodgeClass, DodgeUseMode, DodgeGearOn, DodgeGear))
                         return;
                 break;
 
             case ClassType.Boss:
-                if (BossClass != "Generic" && !string.IsNullOrEmpty(BossClass) && CheckInventory(BossClass))
+                if ((BossClass != "Generic" || FarmClass != "(Current)") && !string.IsNullOrEmpty(BossClass) && CheckInventory(BossClass))
                     if (_equipClass(usingBossGeneric, BossClass, BossUseMode, BossGearOn, BossGear))
                         return;
                 break;
