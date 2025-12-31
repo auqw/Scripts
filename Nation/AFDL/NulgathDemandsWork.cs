@@ -126,25 +126,25 @@ public class NulgathDemandsWork
                         Adv.BuyItem("tercessuinotlim", 1951, item.ID, shopItemID: 7912);
                     }
                 }
-
-                // Pick ONE NDW reward that isn't maxed
-                ItemBase? rewardToPick = NDW
-                    ?.Rewards.Where(x =>
-                        x != null
-                        && NDWItems.Contains(x.Name)
-                        && !Core.CheckInventory(x.Name, x.MaxStack)
-                    )
-                    .FirstOrDefault();
-
-                if (rewardToPick != null)
-                    Core.EnsureCompleteChoose(5259, new[] { rewardToPick.Name });
                 else
-                {
-                    Core.Logger(
-                        "All NDW items are at MaxStack. Completing quest without selecting a reward.\n"
-                            + "(You will still receive Archfiend Essence Fragment and Unidentified 35.)"
-                    );
-                    Core.EnsureComplete(5259);
+                { // Pick ONE NDW reward that isn't maxed
+                    ItemBase? rewardToPick = NDW
+                        ?.Rewards.FirstOrDefault(x =>
+                            x != null
+                            && NDWItems.Contains(x.Name)
+                            && !Core.CheckInventory(x.Name, x.MaxStack)
+                        );
+
+                    if (rewardToPick != null)
+                        Core.EnsureComplete(5259, rewardToPick.ID);
+                    else
+                    {
+                        Core.Logger(
+                            "All NDW items are at MaxStack. Completing quest without selecting a reward.\n"
+                                + "(You will still receive Archfiend Essence Fragment and Unidentified 35.)"
+                        );
+                        Core.EnsureComplete(5259);
+                    }
                 }
             }
         }
