@@ -148,7 +148,7 @@ public class ArmyLR
             Bot.Quests.UpdateQuest(2060);
             ArmyHandler(
                 map: "judgement",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "judgement_items",
                 AggroCell: "r10a",
                 checkType: CheckType.Item,
@@ -159,7 +159,7 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "revenant",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF1_revenant",
                 AggroCell: "r2",
                 checkType: CheckType.Item,
@@ -170,18 +170,18 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "shadowrealmpast",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF1_shadowrealmpast",
                 AggroCell: "Enter",
                 checkType: CheckType.Item,
                 Itemname: "Darkened Essence",
-                quant: 400,
+                quant: 500,
                 UseBool: false
             );
 
             ArmyHandler(
                 map: "necrodungeon",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF1_necrodungeon",
                 AggroCell: "r22",
                 checkType: CheckType.Item,
@@ -209,7 +209,7 @@ public class ArmyLR
             C.EnsureAccept(6898);
             ArmyHandler(
                 map: "doomvault",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF2_doomvault",
                 AggroCell: "r1",
                 checkType: CheckType.Item,
@@ -220,7 +220,7 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "mummies",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF2_mummies",
                 AggroCell: "Enter",
                 checkType: CheckType.Item,
@@ -231,7 +231,7 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "wrath",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF2_wrath",
                 AggroCell: "r2",
                 checkType: CheckType.Item,
@@ -242,7 +242,7 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "doomwar",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF2_doomwar",
                 AggroCell: "r6",
                 checkType: CheckType.Item,
@@ -253,7 +253,7 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "overworld",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF2_overworld",
                 AggroCell: "Enter",
                 checkType: CheckType.Item,
@@ -264,7 +264,7 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "deathpits",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF2_deathpits",
                 AggroCell: "r1",
                 checkType: CheckType.Item,
@@ -275,7 +275,7 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "maxius",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF2_maxius",
                 AggroCell: "r4",
                 checkType: CheckType.Item,
@@ -286,7 +286,7 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "curseshore",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF2_curseshore",
                 AggroCell: "Enter",
                 checkType: CheckType.Item,
@@ -297,7 +297,7 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "dragonbone",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF2_dragonbone",
                 AggroCell: "r2",
                 checkType: CheckType.Item,
@@ -308,7 +308,7 @@ public class ArmyLR
 
             ArmyHandler(
                 map: "doomwood",
-                QuestIDs: new int[] { },
+                QuestIDs: Array.Empty<int>(),
                 WaitForArmysyncPath: "LF2_doomwood",
                 AggroCell: "r3",
                 checkType: CheckType.Item,
@@ -364,7 +364,7 @@ public class ArmyLR
     {
         ArmyHandler(
             map: "evilwarnul",
-            QuestIDs: new int[] { },
+            QuestIDs: Array.Empty<int>(),
             WaitForArmysyncPath: "LF4_dagefavor",
             AggroCell: "r2",
             checkType: CheckType.Item,
