@@ -472,32 +472,22 @@ public class CoreNation
         Core.FarmingLogger("Archfiend's Favor", quantFavor);
 
         Core.EquipClass(ClassType.Farm);
-        while (
-            !Bot.ShouldExit
-            && (
-                !Core.CheckInventory("Nulgath's Approval", quantApproval)
-                || !Core.CheckInventory("Archfiend's Favor", quantFavor)
-            )
-        )
+        while (!Bot.ShouldExit
+            && Bot.Inventory.GetQuantity("Nulgath's Approval") < quantApproval
+                && Bot.Inventory.GetQuantity("Archfiend's Favor") < quantFavor)
         {
             if (Bot.Map.Name != "evilwarnul")
-                Core.Join("evilwarnul");
-            if (Bot.Player.Cell != "r12")
-                Core.Jump("r12", "Left");
-
-            foreach (
-                Monster Mob in Bot.Monsters.CurrentAvailableMonsters.Where(m => m.Cell == "r12")
-            )
             {
-                Bot.Kill.Monster(Mob.MapID);
-                Core.Sleep();
-
-                if (
-                    Core.CheckInventory("Nulgath's Approval", quantApproval)
-                    && Core.CheckInventory("Archfiend's Favor", quantFavor)
-                )
-                    break;
+                Core.Join("evilwarnul");
+                Bot.Wait.ForMapLoad("evilwarnul");
             }
+            if (Bot.Player.Cell != "r12")
+            {
+                Bot.Map.Jump("r12", "Left", false);
+                Bot.Wait.ForCellChange("r12");
+            }
+            Bot.Combat.Attack("*");
+            Core.Sleep();
         }
     }
 
@@ -1480,7 +1470,7 @@ public class CoreNation
         if (item != null && Core.CheckInventory(item, quant))
             return;
 
-        Retry7551:
+    Retry7551:
         Quest? Swindles = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
         if (Swindles == null)
         {
@@ -1489,7 +1479,7 @@ public class CoreNation
             goto Retry7551;
         }
 
-        Retry2859:
+    Retry2859:
         Quest? Assistant = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2859));
         if (Assistant == null)
         {
@@ -1829,7 +1819,7 @@ public class CoreNation
             // 7551 - Swindle's Return Policy
             DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
-            Retry:
+        Retry:
             //reduce spam
             Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
             if (quest != null)
