@@ -276,7 +276,7 @@ public class VerusDoomKnightClass
         }
 
         // Necrotic Blade (9414)
-        if (!Story.QuestProgression(9414))
+        if (!Core.isCompletedBefore(9419))
         {
             Core.EnsureAccept(9414);
             SRoD.ShadowReaperOfDoom();
