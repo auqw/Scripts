@@ -243,8 +243,8 @@ public class CoreNSOD
 
         if (Bot.Player.IsMember)
             GatheringUnstableEssences(quant);
-
-        RetrieveVoidAuras(quant);
+        else
+            RetrieveVoidAuras(quant);
     }
 
     public void CommandingShadowEssences(int quant = 7500)
