@@ -173,15 +173,9 @@ public class ChampionDrakath
     {
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
-
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
-        else
-        {
-            Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-            Ultra.BuyAlchemyPotion("Potent Honor Potion");
-            Core.EquipConsumable("Potent Honor Potion");
-        }
     }
 
     void Fight()
