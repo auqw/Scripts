@@ -523,10 +523,10 @@ public class EtherStormWastes
             "dragonheart",
             new[]
             {
-                "Tempest Dracolich",
                 "Deluge Dracolich",
-                "Granite Dracolich",
                 "Inferno Dracolich",
+                "Granite Dracolich",
+                "Tempest Dracolich",
             }
         );
 
