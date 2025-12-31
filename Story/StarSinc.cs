@@ -161,7 +161,8 @@ public class StarSinc
                 case 4412: // Retrieve the Core
                     Core.Logger("SuperNova Badge");
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("starsinc", "Final", "Final Defeated");
+                    Core.KillMonster("starsinc", "r15", "Left", "Final", "Final Defeated");
+                    Core.Join("whitemap");
                     break;
             }
         }
