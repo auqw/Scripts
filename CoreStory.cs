@@ -855,6 +855,9 @@ public class CoreStory
         bool Log = true
     )
     {
+        if (QuestID <= 0)
+            return false;
+
         if (QuestID != 0 && PreviousQuestID == QuestID)
             return PreviousQuestState;
         PreviousQuestID = QuestID;
