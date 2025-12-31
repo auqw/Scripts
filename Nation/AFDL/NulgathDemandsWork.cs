@@ -79,7 +79,6 @@ public class NulgathDemandsWork
         itemNames ??= NDWItems.Select(item => item).ToArray();
         if (itemNames.Length == 0 || Core.CheckInventory(itemNames, quant))
             return;
-
         ItemBase[] Rewards = Core.EnsureLoad(5259).Rewards.ToArray();
         Quest? NDW = Core.InitializeWithRetries(() => Core.EnsureLoad(5259));
         Core.AddDrop(Nation.bagDrops);
@@ -93,7 +92,6 @@ public class NulgathDemandsWork
                 Core.Logger($"Item '{itemName}' not found in quest rewards, skipping.");
                 continue;
             }
-
             if (Core.CheckInventory(item.Name, quant))
             {
                 Core.Logger($"{item.Name}, x[{quant}] owned, continuing.");
@@ -101,6 +99,7 @@ public class NulgathDemandsWork
             }
 
             Core.FarmingLogger(item.Name, quant);
+
             while (!Bot.ShouldExit && !Core.CheckInventory(item.Name, quant))
             {
                 Core.EnsureAccept(5259);
@@ -115,41 +114,42 @@ public class NulgathDemandsWork
                 GHV.GetGHV();
                 Nation.FarmVoucher(true);
 
-                if (item.Name == "Unidentified 35")
+                // Try to buy U35 with fragments BEFORE completing quest
+                if (item.Name == "Unidentified 35"
+                    && Core.CheckInventory("Archfiend Essence Fragment", 9))
                 {
-                    // Buy U35 if fragments exist
-                    while (
-                        !Bot.ShouldExit
-                        && Core.CheckInventory("Archfiend Essence Fragment", 9)
-                        && !Core.CheckInventory("Unidentified 35", quant)
-                    )
-                    {
-                        int currentUni35 = Bot.Inventory.GetQuantity("Unidentified 35");
-                        int needed = quant - currentUni35;
-                        int canBuy = Bot.Inventory.GetQuantity("Archfiend Essence Fragment") / 9;
-                        int toBuy = Math.Min(needed, canBuy);
+                    int currentUni35 = Bot.Inventory.GetQuantity("Unidentified 35");
+                    int needed = quant - currentUni35;
+                    int canBuy = Bot.Inventory.GetQuantity("Archfiend Essence Fragment") / 9;
+                    int toBuy = Math.Min(needed, canBuy);
 
-                        if (toBuy > 0)
+                    if (toBuy > 0)
+                    {
+                        Core.BuyItem("tercessuinotlim", 1951, item.ID, toBuy, shopItemID: 7912);
+
+                        // Check if we've reached the target after buying
+                        if (Core.CheckInventory("Unidentified 35", quant))
                         {
-                            Core.BuyItem("tercessuinotlim", 1951, item.ID, toBuy, shopItemID: 7912);
-                        }
-                        else
-                        {
-                            break;
+                            Core.Logger($"Reached target quantity of {quant} Unidentified 35 by purchasing with fragments.");
+                            break; // Exit the while loop, continue to next item in foreach
                         }
                     }
-                    if (Bot.Quests.CanCompleteFullCheck(5259))
-                        Core.EnsureComplete(5259, Rewards.FirstOrDefault(x => x.Name == "Unidentified 35").ID);
+                }
 
+                // Complete quest with appropriate reward
+                if (item.Name == "Unidentified 35")
+                {
+                    if (Bot.Quests.CanCompleteFullCheck(5259))
+                        Core.EnsureComplete(5259, item.ID);
                 }
                 else
-                { // Pick ONE NDW reward that isn't maxed
-                    ItemBase? rewardToPick = NDW
-                        ?.Rewards.FirstOrDefault(x =>
-                            x != null
-                            && NDWItems.Contains(x.Name)
-                            && !Core.CheckInventory(x.Name, x.MaxStack)
-                        );
+                {
+                    // Pick ONE NDW reward that isn't maxed
+                    ItemBase? rewardToPick = NDW?.Rewards.FirstOrDefault(x =>
+                        x != null
+                        && NDWItems.Contains(x.Name)
+                        && !Core.CheckInventory(x.Name, x.MaxStack)
+                    );
 
                     if (rewardToPick != null)
                         Core.EnsureComplete(5259, rewardToPick.ID);
@@ -157,7 +157,7 @@ public class NulgathDemandsWork
                     {
                         Core.Logger(
                             "All NDW items are at MaxStack. Completing quest without selecting a reward.\n"
-                                + "(You will still receive Archfiend Essence Fragment and Unidentified 35.)"
+                            + "(You will still receive Archfiend Essence Fragment and Unidentified 35.)"
                         );
                         Core.EnsureComplete(5259);
                     }
@@ -165,7 +165,6 @@ public class NulgathDemandsWork
             }
         }
     }
-
     public void Uni27()
     {
         if (Core.CheckInventory("Unidentified 27"))
