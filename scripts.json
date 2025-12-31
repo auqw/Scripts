@@ -681,8 +681,8 @@
       "ultra"
     ],
     "path": "Ultras/ChampionDrakath.cs",
-    "size": 13323,
-    "sha256": "648a20d966cfb92998fa3d94353f34fa2f9b8c3e9d4bacd8734853f9305c7848",
+    "size": 13163,
+    "sha256": "78d0bba292174a65f08f95066299edf9c3b267019729f38bbb97077f6e90c813",
     "fileName": "ChampionDrakath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/ChampionDrakath.cs"
   },
@@ -706,7 +706,7 @@
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
     "size": 14663,
-    "sha256": "5e9705a00271237dfeda2459c488a3fac50bd560c987b15e612ba37e550f007c",
+    "sha256": "93f036fc39ebb53814983431135afe057e762290b23f116bd386cb2228a7813f",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
