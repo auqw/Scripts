@@ -1232,19 +1232,21 @@ public class CoreFarmerJoe
     /// </summary>
     public void SetClass()
     {
-        // *If* Core class isnt apart of the soloClasses/farmClasses, use CBO of the same type,
-        // otherwise use the first in the list / if it returns null use players currentclass
-        if (soloClasses.Contains(Core.SoloClass))
+        // Handle SoloClass
+        if (Core.SoloClass == "Generic" || !soloClasses.Contains(Core.SoloClass))
+        {
             Core.SoloClass =
                 soloClasses.FirstOrDefault(x => Core.CheckInventory(x))
-                ?? Core.SoloClass
                 ?? Bot.Player.CurrentClass!.Name;
+        }
 
-        if (farmClasses.Contains(Core.FarmClass))
+        // Handle FarmClass
+        if (Core.FarmClass == "Generic" || !farmClasses.Contains(Core.FarmClass))
+        {
             Core.FarmClass =
                 farmClasses.FirstOrDefault(x => Core.CheckInventory(x))
-                ?? Core.FarmClass
                 ?? Bot.Player.CurrentClass!.Name;
+        }
 
         if (Core.CheckClassRank(false, Core.SoloClass) < 10)
             Adv.RankUpClass(Core.SoloClass);
