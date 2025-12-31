@@ -156,7 +156,7 @@ public class UltraDarkCarnax
             // Rejoin if needed
             if (Bot.Map.Name != map)
                 Core.Join(map, "Boss", "Left");
-            if (Bot.Player.Cell != "Boss")
+            if (Bot.Player!.Cell != "Boss")
                 C.Jump("Boss", "Left");
 
             if (!Bot.Player.HasTarget)

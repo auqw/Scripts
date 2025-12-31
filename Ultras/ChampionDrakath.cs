@@ -11,6 +11,7 @@ tags: Ultra
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
 
@@ -167,7 +168,13 @@ public class ChampionDrakath
         Bot.Stop();
     }
 
-    bool IsTaunter() => Bot.Player.CurrentClass.Name.Contains(a) || Bot.Player.CurrentClass.Name.Contains(b);
+    bool IsTaunter()
+    {
+        InventoryItem? currentClass = Bot.Player.CurrentClass;
+        if (currentClass == null || string.IsNullOrEmpty(currentClass.Name))
+            return false;
+        return currentClass.Name.Contains(a) || currentClass.Name.Contains(b);
+    }
 
     void Prep()
     {
@@ -210,7 +217,7 @@ public class ChampionDrakath
             }
 
             // Dead → wait for respawn
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
