@@ -11,7 +11,6 @@ tags: Ultra
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
-using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
 
@@ -128,59 +127,75 @@ public class ChampionDrakath
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
-    string a,
-        b;
+    string a, b;
+
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ChampionDrakath";
+
     public List<IOption> Options = new()
-    {
-        new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", "ArchPaladin"),
-        new Option<string>("b", "Taunter Class (Backup)", "Backup taunter class", "Chaos Slayer"),
-        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
-        CoreBots.Instance.SkipOptions,
-    };
+{
+    new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", "ArchPaladin"),
+    new Option<string>("b", "Taunter Class (Backup)", "Backup taunter class", "Chaos Slayer"),
+    new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
+    new Option<bool>("SoloTaunt", "Only 1 Taunter", "Only use a single Taunter", false),
+    CoreBots.Instance.SkipOptions,
+};
+
+    bool SoloTaunt;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (
-            Bot.Config != null
+        if (Bot.Config != null
             && Bot.Config.Options.Contains(C.SkipOptions)
-            && !Bot.Config.Get<bool>(C.SkipOptions)
-        )
+            && !Bot.Config.Get<bool>(C.SkipOptions))
             Bot.Config.Configure();
 
-        a = (Bot.Config!.Get<string>("a") ?? "").Trim();
-        b = (Bot.Config.Get<string>("b") ?? "").Trim();
+        a = (Bot.Config!.Get<string>("a") ?? string.Empty).Trim();
+        b = (Bot.Config.Get<string>("b") ?? string.Empty).Trim();
+        SoloTaunt = Bot.Config.Get<bool>("SoloTaunt");
 
-        if (string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b))
+        // FIXED VALIDATION
+        if ((SoloTaunt && string.IsNullOrEmpty(a))
+            || (!SoloTaunt && string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b)))
         {
             Core.Log(
                 "Setup",
-                "Fill at least one taunter class (Primary or Backup) in Script Options."
+                "Primary taunter is required. Backup is optional unless Solo Taunt is disabled."
             );
             Bot.Stop();
             return;
         }
 
+        // Ignore backup completely when solo
+        if (SoloTaunt)
+            b = string.Empty;
+
         Core.Boot();
+        C.Join("whitemap-100000");
         Prep();
         Fight();
-        Bot.Stop();
+        C.JumpWait();
+        C.SetOptions(false);
     }
 
     bool IsTaunter()
     {
-        InventoryItem? currentClass = Bot.Player.CurrentClass;
-        if (currentClass == null || string.IsNullOrEmpty(currentClass.Name))
-            return false;
-        return currentClass.Name.Contains(a) || currentClass.Name.Contains(b);
+        return SoloTaunt
+            ? Bot.Player.CurrentClass.Name.Contains(a)
+            : (!string.IsNullOrEmpty(a) && Bot.Player.CurrentClass.Name.Contains(a))
+              || (!string.IsNullOrEmpty(b) && Bot.Player.CurrentClass.Name.Contains(b));
     }
 
     void Prep()
     {
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
-        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+
+        Ultra.UseAlchemyPotions(
+            Ultra.GetBestTonicPotion(),
+            Ultra.GetBestElixirPotion()
+        );
+
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
     }
@@ -201,48 +216,138 @@ public class ChampionDrakath
         Ultra.WaitForArmy(3, "champion_drakath.sync");
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
-
         Core.EnableSkills();
+
+        bool[] tauntFired = new bool[8]; // 18–2M chunks
 
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Champion Drakath Defeated", 1), syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Champion Drakath Defeated"), syncPath))
             {
                 Bot.Sleep(2500);
                 C.Jump("Enter", "Spawn");
-                C.Logger("All players finished farm.");
                 if (!Bot.Quests.IsDailyComplete(8300))
                     C.EnsureComplete(8300);
                 break;
             }
 
-            // Dead → wait for respawn
-            if (!Bot.Player!.Alive)
-            {
+            if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                continue;
-            }
-
-            if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
-            {
-                if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(boss);
-                Ultra.DrakathTaunter();
-                Bot.Sleep(500);
-                continue;
-            }
 
             if (!Bot.Player.HasTarget)
                 Bot.Combat.Attack(boss);
 
-            Bot.Sleep(250);
-            if (Bot.Player?.Target?.HP < Bot.Player?.Target?.MaxHP * 0.1
-            && (Core.HasClassEquipped(a) || Core.HasClassEquipped(b)))
+            Bot.Sleep(500);
+
+            if ((Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
+                && !Bot.Self.Auras.Any(x => x.Name == "Focus")
+                && Bot.Player.Target?.HP > 0)
             {
-                Bot.Skills.UseSkill(5);
-                Bot.Sleep(250);
+                int hp = Bot.Player.Target.HP;
+
+                // Normal chunks
+                if (!tauntFired[0] && hp <= 18_000_000)
+                {
+                    Bot.Log($"Taunting at HP {hp:n0}"); while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    {
+                        Bot.Skills.UseSkill(5);
+                        Bot.Sleep(500);
+                    }
+                    tauntFired[0] = true; Bot.Sleep(300);
+                }
+                else if (!tauntFired[1] && hp <= 16_000_000)
+                {
+                    Bot.Log($"Taunting at HP {hp:n0}");
+                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    {
+                        Bot.Skills.UseSkill(5);
+                        Bot.Sleep(500);
+                    }
+                    tauntFired[1] = true;
+                    Bot.Sleep(300);
+                }
+                else if (!tauntFired[2] && hp <= 14_000_000)
+                {
+                    Bot.Log($"Taunting at HP {hp:n0}");
+                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    {
+                        Bot.Skills.UseSkill(5);
+                        Bot.Sleep(500);
+                    }
+                    tauntFired[2] = true;
+                    Bot.Sleep(300);
+                }
+                else if (!tauntFired[3] && hp <= 12_000_000)
+                {
+                    Bot.Log($"Taunting at HP {hp:n0}");
+                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    {
+                        Bot.Skills.UseSkill(5);
+                        Bot.Sleep(500);
+                    }
+                    tauntFired[3] = true;
+                    Bot.Sleep(300);
+                }
+                else if (!tauntFired[4] && hp <= 10_000_000)
+                {
+                    Bot.Log($"Taunting at HP {hp:n0}");
+                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    {
+                        Bot.Skills.UseSkill(5);
+                        Bot.Sleep(500);
+                    }
+                    tauntFired[4] = true;
+                    Bot.Sleep(300);
+                }
+                else if (!tauntFired[5] && hp <= 8_000_000)
+                {
+                    Bot.Log($"Taunting at HP {hp:n0}");
+                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    {
+                        Bot.Skills.UseSkill(5);
+                        Bot.Sleep(500);
+                    }
+                    tauntFired[5] = true;
+                    Bot.Sleep(300);
+                }
+                else if (!tauntFired[6] && hp <= 6_000_000)
+                {
+                    Bot.Log($"Taunting at HP {hp:n0}");
+                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    {
+                        Bot.Skills.UseSkill(5);
+                        Bot.Sleep(500);
+                    }
+                    tauntFired[6] = true;
+                    Bot.Sleep(300);
+                }
+                else if (!tauntFired[7] && hp <= 4_000_000)
+                {
+                    Bot.Log($"Taunting at HP {hp:n0}");
+                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    {
+                        Bot.Skills.UseSkill(5);
+                        Bot.Sleep(500);
+                    }
+                    tauntFired[7] = true;
+                    Bot.Sleep(300);
+                }
+                // After 2M → always taunt
+                else if (hp <= 2_000_000 && Bot.Skills.CanUseSkill(5))
+                {
+                    Bot.Log($"Taunting at HP {hp:n0}");
+                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    {
+                        Bot.Skills.UseSkill(5);
+                        Bot.Sleep(500);
+                    }
+                    Bot.Sleep(300);
+
+                }
             }
         }
+
+        C.JumpWait();
     }
 
     void DoEnhs()
@@ -275,8 +380,8 @@ public class ChampionDrakath
             // Legion Revenant
             case "Legion Revenant":
                 Adv.EnhanceEquipped(
-                    type: EnhancementType.Wizard,                // Class // Healer
-                    hSpecial: HelmSpecial.Pneuma,                // Helm
+                    type: EnhancementType.Healer,                // Class // Healer
+                    hSpecial: HelmSpecial.None,                // Helm
                     wSpecial: WeaponSpecial.Valiance,            // Weapon // Ravenous / Arcanas_Concerto
                     cSpecial: CapeSpecial.Vainglory              // Cape // Penitence
                 );
