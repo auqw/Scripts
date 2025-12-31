@@ -1732,6 +1732,11 @@ public class CoreAdvanced
     {
         if (className == "(Current)")
         {
+            if (Bot.Player.CurrentClass == null || string.IsNullOrEmpty(Bot.Player.CurrentClass.Name))
+            {
+                Core.Logger("CurrentClass is null or has no name. Cannot rank up.");
+                return;
+            }
             className = Bot.Player.CurrentClass.Name;
         }
         
