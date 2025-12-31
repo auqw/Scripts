@@ -3932,8 +3932,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 120898,
-    "sha256": "edce9115a20b6889c2b6e00adf9ec9c4edcaae49ce8a9844a7e57ac5d1b3e669",
+    "size": 120613,
+    "sha256": "5b1428965afd916888f0613a0416b7e32d83931ad864ce38b73b75a6b9f86a9b",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -4468,8 +4468,8 @@
       "army"
     ],
     "path": "Army/Classes/ArmyLR.cs",
-    "size": 16165,
-    "sha256": "7a51f12cff9d4ba06848e797f34870c27efca01f186d4c957d6eb013776f8125",
+    "size": 16240,
+    "sha256": "f51f1504ee19e633a84befcd619d9e94384c00549693a564dff961f5efa6b019",
     "fileName": "ArmyLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyLR.cs"
   },
