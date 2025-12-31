@@ -163,7 +163,7 @@ public class UltraAvatarTyndarius
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
-        Bot.Sleep(1500);
+        Bot.Sleep(2500);
 
         C.AddDrop("Avatar Tyndarius Insignia");
         C.EnsureAccept(8245);
