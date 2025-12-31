@@ -65,7 +65,7 @@ public class NulgathDemandsWork
 
     public void DoNulgathDemandsWork()
     {
-        NDWQuest(NDWItems);
+        // NDWQuest(NDWItems);
         NDWQuest(new[] { "Unidentified 35" }, 300);
     }
 
@@ -118,21 +118,28 @@ public class NulgathDemandsWork
                 if (item.Name == "Unidentified 35")
                 {
                     // Buy U35 if fragments exist
-
                     while (
-                      !Bot.ShouldExit
-                      && Core.CheckInventory("Archfiend Essence Fragment", 9)
-                      && !Core.CheckInventory("Unidentified 35", quant)
-                  )
+                        !Bot.ShouldExit
+                        && Core.CheckInventory("Archfiend Essence Fragment", 9)
+                        && !Core.CheckInventory("Unidentified 35", quant)
+                    )
                     {
-                        ShopItem? Uni35 = Core.GetShopItems("tercessuinotlim", 1951).FirstOrDefault(x => x != null && x.ShopItemID == 7912);
-                        if (Uni35 == null)
-                            continue;
-                        int BuyMaxQuant = Core.MaxBuyQuant("tercessuinotlim", 1951, Uni35);
-                        if (BuyMaxQuant >= 1)
-                            Adv.BuyItem("tercessuinotlim", 1951, item.ID, BuyMaxQuant, shopItemID: 7912);
+                        int currentUni35 = Bot.Inventory.GetQuantity("Unidentified 35");
+                        int needed = quant - currentUni35;
+                        int canBuy = Bot.Inventory.GetQuantity("Archfiend Essence Fragment") / 9;
+                        int toBuy = Math.Min(needed, canBuy);
+
+                        if (toBuy > 0)
+                        {
+                            Core.BuyItem("tercessuinotlim", 1951, item.ID, toBuy, shopItemID: 7912);
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
-                    Core.EnsureComplete(5259, Rewards.FirstOrDefault(x => x.Name == "Unidentified 35").ID);
+                    if (Bot.Quests.CanCompleteFullCheck(5259))
+                        Core.EnsureComplete(5259, Rewards.FirstOrDefault(x => x.Name == "Unidentified 35").ID);
 
                 }
                 else
