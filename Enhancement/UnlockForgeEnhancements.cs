@@ -1395,8 +1395,8 @@ public class UnlockForgeEnhancements
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster(
             "Towerofdoom10",
-            "Enter",
-            "Spawn",
+            "r8",
+            "Left",
             "*",
             "Ethereal Essence",
             250,
@@ -1426,8 +1426,8 @@ public class UnlockForgeEnhancements
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster(
             "Towerofdoom10",
-            "Enter",
-            "Spawn",
+            "r8",
+            "Left",
             "*",
             "Ethereal Essence",
             250,
@@ -1458,8 +1458,8 @@ public class UnlockForgeEnhancements
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster(
             "Towerofdoom10",
-            "Enter",
-            "Spawn",
+            "r8",
+            "Left",
             "*",
             "Ethereal Essence",
             650,
@@ -1490,8 +1490,8 @@ public class UnlockForgeEnhancements
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster(
             "Towerofdoom10",
-            "Enter",
-            "Spawn",
+            "r8",
+            "Left",
             "*",
             "Ethereal Essence",
             650,
