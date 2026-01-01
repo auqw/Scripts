@@ -197,7 +197,7 @@ public class CoreUltra
 
             while (!Bot.ShouldExit
             && MonsterAlive(mob)
-            && !Bot.Self.Auras.Any(a => a.Name == "Focus"))
+            && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
             {
                 Core.UsePotion();
             }
@@ -271,7 +271,7 @@ public class CoreUltra
                 UseTaunt();
                 if (!Bot.Player.HasTarget)
                     Bot.Combat.Attack("Champion Drakath");
-                if (Bot.Self.Auras.Any(a => a.Name == "Focus"))
+                if (Bot.Target.Auras.Any(a => a.Name == "Focus"))
                     break;
                 Bot.Sleep(120);
             }
@@ -825,7 +825,7 @@ public class CoreUltra
 
         // Then apply taunt
         Core.DisableSkills();
-        while (!Bot.ShouldExit && !Bot.Self.Auras.Any(a => a.Name == "Focus"))
+        while (!Bot.ShouldExit && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
         {
             if (Bot.Skills.CanUseSkill(5))
                 Bot.Skills.UseSkill(5);
