@@ -143,7 +143,7 @@ public class ChampionDrakath
 };
 
     bool SoloTaunt;
-    private static int[] hpThresholds = { 18000000, 16000000, 14000000, 12000000, 10000000, 8000000, 6000000, 4000000 };
+    private static int[] hpThresholds = { 18100000, 16100000, 14100000, 12100000, 10100000, 8100000, 6100000, 4100000 };
     private static int previousHP = 0;
 
     public void ScriptMain(IScriptInterface bot)
@@ -301,7 +301,7 @@ public class ChampionDrakath
                 }
 
                 // After 2M → always taunt
-                if (Bot.Player.Target.HP <= 2000000 && Bot.Skills.CanUseSkill(5))
+                if (Bot.Player.Target.HP <= 2100000 && Bot.Skills.CanUseSkill(5))
                 {
                     C.Logger($"HP is < 2mil, Taunting at HP {Bot.Player.Target.HP:n0}");
 
