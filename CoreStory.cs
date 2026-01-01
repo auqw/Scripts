@@ -439,7 +439,7 @@ public class CoreStory
                 )
                 .ToList();
 
-            if (neededItems.Count == 0)
+            if (neededItems.Count == 0 || QuestProgression(Qid))
                 break;
 
             var targetCellGroup = Bot
@@ -497,7 +497,7 @@ public class CoreStory
                     continue;
                 if (EquipBestClassType)
                     Core.EquipBestClassForTargets(M);
-                while (!Bot.ShouldExit && neededItems.Count > 0)
+                while (!Bot.ShouldExit && (neededItems.Count > 0 || !QuestProgression(Qid)))
                 {
                     bool hasTarget = Bot.Player?.HasTarget ?? false;
                     int targetHP = Bot.Player?.Target?.HP ?? 0;
