@@ -474,7 +474,7 @@ public class CoreNation
         Core.EquipClass(ClassType.Farm);
         while (!Bot.ShouldExit
             && Bot.Inventory.GetQuantity("Nulgath's Approval") < quantApproval
-                && Bot.Inventory.GetQuantity("Archfiend's Favor") < quantFavor)
+                || Bot.Inventory.GetQuantity("Archfiend's Favor") < quantFavor)
         {
             if (Bot.Map.Name != "evilwarnul")
             {
