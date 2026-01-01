@@ -669,8 +669,8 @@
       "ultra darkon"
     ],
     "path": "Ultras/UltraDarkon.cs",
-    "size": 8577,
-    "sha256": "efeb05812bdcb717ee7c5d6ae424d42c26384d1b342868ab3f2689eb35643bea",
+    "size": 8579,
+    "sha256": "3e2a3c747c25d4e6a82f5b5e8217709ed590c72fa7441b3c6a4e76410658e1a6",
     "fileName": "UltraDarkon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDarkon.cs"
   },
@@ -729,8 +729,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 8036,
-    "sha256": "e699e91a464edbed791af876fd43012bbfc0f61774cbec0ccfc3b37b1dd8bf58",
+    "size": 8070,
+    "sha256": "07edf5eba875a39128b181d4b2bc1bf686ffa15baa940146eed5631b238e2085",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
@@ -777,8 +777,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 43902,
-    "sha256": "97d9d7d9537987007018ccb0fbbe6a02087df7c70186946b6284c31c1e94211e",
+    "size": 43906,
+    "sha256": "3cd6d0de7e99b3c551c5fcd5138acb0c002ed4575c1107140b3e16023e7cf4bb",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -801,8 +801,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 8293,
-    "sha256": "9ec721ce3de1d103018799da6cb7d66478e796dc21c5aa57d1b1e40744c226c4",
+    "size": 8295,
+    "sha256": "2dc6db77dfe70d03475402d83fbc7a2dd4fa7f7593f746d52946460f9e85ff67",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
@@ -815,8 +815,8 @@
       "astral empyrean"
     ],
     "path": "Ultras/AstralEmpyrean.cs",
-    "size": 13058,
-    "sha256": "0c6e0c2cf796ce619c9bcafef98b108b9285d32962ded2d69c95127da838cef7",
+    "size": 13030,
+    "sha256": "11f24a042d160b565d90faa37ba8b5101022019e1bd7f1d862dc88835cb03d96",
     "fileName": "AstralEmpyrean.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
   },
