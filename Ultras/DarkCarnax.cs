@@ -143,7 +143,7 @@ public class UltraDarkCarnax
 
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Synthetic Viscera", 1000), syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains("Synthetic Viscera", 1000), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");

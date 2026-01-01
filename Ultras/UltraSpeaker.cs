@@ -96,6 +96,7 @@ public class UltraSpeaker
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
         C.EnsureAccept(9173);
         C.AddDrop("The First Speaker Silenced");
         Bot.Quests.UpdateQuest(9125);

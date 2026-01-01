@@ -115,6 +115,7 @@ public class UltraNulgath
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
         C.EnsureAccept(8692);
         C.AddDrop("Nulgath Insignia");
         Core.Join(map);
@@ -131,7 +132,7 @@ public class UltraNulgath
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
             // Check if the whole army has finished
-            if (Ultra.CheckArmyProgress("Nulgath the Archfiend Defeated?", 1, true, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Nulgath the Archfiend Defeated?", 1), syncPath))
             {
                 C.Logger("All players finished farm.");
                 C.Join("whitemap");

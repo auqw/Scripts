@@ -174,7 +174,7 @@ public class UltraAvatarTyndarius
 
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgress("Ultra Avatar Tyndarius Defeated", 1, true, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Ultra Avatar Tyndarius Defeated", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");

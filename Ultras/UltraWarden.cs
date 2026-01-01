@@ -82,6 +82,7 @@ public class UltraWarden
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
         C.EnsureAccept(8153);
         C.AddDrop("Warden Insignia");
         Core.Join(map);
@@ -92,7 +93,7 @@ public class UltraWarden
 
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgress("Ultra Warden Defeated", 1, true, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Warden Defeated", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");

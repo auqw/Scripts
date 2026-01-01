@@ -232,6 +232,7 @@ public class UltraDrago
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
 
         Bot.Quests.UpdateQuest(8397);
         C.AddDrop("King Drago Insignia");
@@ -248,7 +249,7 @@ public class UltraDrago
             // ======================================================
             //              ARCHPALADIN TAUNTER LOGIC
             // ======================================================
-            if (Ultra.CheckArmyProgress("Drago Dethroned", 1, true, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Drago Dethroned", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");

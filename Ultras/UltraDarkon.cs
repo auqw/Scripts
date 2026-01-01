@@ -94,6 +94,7 @@ public class UltraDarkon
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
         C.EnsureAccept(8746);
         C.AddDrop("Darkon Insignia");
         Bot.Quests.UpdateQuest(8746);
@@ -103,7 +104,7 @@ public class UltraDarkon
 
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgress("Darkon the Conductor Defeated", 1, true, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Darkon the Conductor Defeated", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");

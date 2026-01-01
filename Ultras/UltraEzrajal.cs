@@ -200,7 +200,7 @@ public class UltraEzrajal
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
-
+        Bot.Sleep(2500);
 
         // ---------------------------
         // MAP SETUP
@@ -219,7 +219,7 @@ public class UltraEzrajal
         while (!Bot.ShouldExit)
         {
             // Check if the whole army has finished
-            if (Ultra.CheckArmyProgress("Ultra Ezrajal Defeated", 1, true, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Ezrajal Defeated", 1), syncPath))
             {
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8152);
@@ -250,7 +250,7 @@ public class UltraEzrajal
                 Bot.Combat.Attack(boss);
             }
 
-            Bot.Sleep(180); // slightly lower, smoother attacks
+            Bot.Sleep(500); // slightly lower, smoother attacks
         }
     }
     void DoEnhs()

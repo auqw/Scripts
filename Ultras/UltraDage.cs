@@ -134,6 +134,7 @@ public class UltraDage
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
         C.AddDrop("Dage the Evil Insignia");
         C.EnsureAccept(8547);
 

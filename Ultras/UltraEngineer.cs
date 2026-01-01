@@ -191,6 +191,7 @@ public class UltraEngineer
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
         C.EnsureAccept(8154);
         C.AddDrop("Engineer Insignia");
         Core.Join(map);
@@ -202,7 +203,7 @@ public class UltraEngineer
         while (!Bot.ShouldExit)
         {
             // Check if the whole army has finished
-            if (Ultra.CheckArmyProgress("Ultra Engineer Defeated", 1, true, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Engineer Defeated", 1), syncPath))
             {
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8154);

@@ -177,7 +177,7 @@ public class AstralEmpyrean
 
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgress("Astral's Supernova", 1, true, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Astral's Supernova", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
