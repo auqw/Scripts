@@ -681,8 +681,8 @@
       "ultra"
     ],
     "path": "Ultras/ChampionDrakath.cs",
-    "size": 16400,
-    "sha256": "9793f2c5e0426236c5801c5af849b670d776b59bef430c1883068b3821add9c7",
+    "size": 16475,
+    "sha256": "87d9e176aab502782f053155d280e5ae42ebb94c8816901d90937dbde2916cad",
     "fileName": "ChampionDrakath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/ChampionDrakath.cs"
   },
@@ -777,8 +777,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 43900,
-    "sha256": "ac6d2fc688528cf2e8f9c66268ce6d2ec54de11948a03678206b937f536c6995",
+    "size": 43902,
+    "sha256": "97d9d7d9537987007018ccb0fbbe6a02087df7c70186946b6284c31c1e94211e",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -2344,7 +2344,7 @@
     ],
     "path": "Story/FrozenNorthlands.cs",
     "size": 1844,
-    "sha256": "c3c35388d95783d82f8dd6a0a09b077d10b37c13fbf0e248aa03112a0febb408",
+    "sha256": "417b95936fb4b49a258cb788b4a0e62ba9663b0a4b6dc2e9ed23c2830d8d01b6",
     "fileName": "FrozenNorthlands.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/FrozenNorthlands.cs"
   },
