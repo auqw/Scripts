@@ -11,8 +11,8 @@ tags: Ultra
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Auras;
 using Skua.Core.Options;
-using Skua.Core.Models.Items;
 
 
 #region Class & Enhancement Setup
@@ -143,6 +143,8 @@ public class ChampionDrakath
 };
 
     bool SoloTaunt;
+    private static int[] hpThresholds = { 18000000, 16000000, 14000000, 12000000, 10000000, 8000000, 6000000, 4000000 };
+    private static int previousHP = 0;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -181,13 +183,10 @@ public class ChampionDrakath
 
     bool IsTaunter()
     {
-        InventoryItem? currentClass = Bot.Player.CurrentClass;
-        if (currentClass == null || string.IsNullOrEmpty(currentClass.Name))
-            return false;
         return SoloTaunt
-            ? currentClass.Name.Contains(a)
-            : (!string.IsNullOrEmpty(a) && currentClass.Name.Contains(a))
-              || (!string.IsNullOrEmpty(b) && currentClass.Name.Contains(b));
+            ? Bot.Player.CurrentClass.Name.Contains(a)
+            : (!string.IsNullOrEmpty(a) && Bot.Player.CurrentClass.Name.Contains(a))
+              || (!string.IsNullOrEmpty(b) && Bot.Player.CurrentClass.Name.Contains(b));
     }
 
     void Prep()
@@ -243,111 +242,82 @@ public class ChampionDrakath
 
             Bot.Sleep(500);
 
+            // Define HP thresholds at the top of your method/class
+
+            // In your main logic:
             if ((Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
-                && !Bot.Self.Auras.Any(x => x.Name == "Focus")
+                && !Bot.Target.Auras.Any(x => x.Name == "Focus")
                 && Bot.Player.Target?.HP > 0)
             {
-                int hp = Bot.Player.Target.HP;
+                Core.DisableSkills();
+                Bot.Sleep(500);
 
-                // Normal chunks
-                if (!tauntFired[0] && hp <= 18_000_000)
+                // Detect HP reset (boss respawned/wiped)
+                if (Bot.Player.Target.HP > previousHP + 1000000) // HP increased significantly
                 {
-                    Bot.Log($"Taunting at HP {hp:n0}"); while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    C.Logger("Boss HP reset detected - clearing taunt flags");
+                    for (int j = 0; j < tauntFired.Length; j++)
                     {
-                        Bot.Skills.UseSkill(5);
-                        Bot.Sleep(500);
+                        tauntFired[j] = false;
                     }
-                    tauntFired[0] = true; Bot.Sleep(300);
                 }
-                else if (!tauntFired[1] && hp <= 16_000_000)
+                previousHP = Bot.Player.Target.HP;
+
+                // Check thresholds
+                for (int i = 0; i < hpThresholds.Length; i++)
                 {
-                    Bot.Log($"Taunting at HP {hp:n0}");
-                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    if (!tauntFired[i] && Bot.Player.Target.HP <= hpThresholds[i])
                     {
-                        Bot.Skills.UseSkill(5);
-                        Bot.Sleep(500);
+                        C.Logger($"{hpThresholds[i] / 1000000}m - Taunting at HP {Bot.Player.Target.HP:n0}");
+
+                        while (!Bot.ShouldExit)
+                        {
+                            if (!Bot.Player.Alive)
+                            {
+                                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                                // Reset tauntFired from current threshold onwards
+                                for (int j = i; j < tauntFired.Length; j++)
+                                {
+                                    tauntFired[j] = false;
+                                }
+                                break;
+                            }
+
+                            Bot.Skills.UseSkill(5);
+                            Bot.Sleep(500);
+
+                            if (Bot.Target.Auras.Any(x => x.Name == "Focus"))
+                            {
+                                tauntFired[i] = true;
+                                Bot.Sleep(500);
+                                break;
+                            }
+                        }
+
+                        Bot.Sleep(300);
+                        break; // Exit after firing one taunt
                     }
-                    tauntFired[1] = true;
-                    Bot.Sleep(300);
                 }
-                else if (!tauntFired[2] && hp <= 14_000_000)
-                {
-                    Bot.Log($"Taunting at HP {hp:n0}");
-                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
-                    {
-                        Bot.Skills.UseSkill(5);
-                        Bot.Sleep(500);
-                    }
-                    tauntFired[2] = true;
-                    Bot.Sleep(300);
-                }
-                else if (!tauntFired[3] && hp <= 12_000_000)
-                {
-                    Bot.Log($"Taunting at HP {hp:n0}");
-                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
-                    {
-                        Bot.Skills.UseSkill(5);
-                        Bot.Sleep(500);
-                    }
-                    tauntFired[3] = true;
-                    Bot.Sleep(300);
-                }
-                else if (!tauntFired[4] && hp <= 10_000_000)
-                {
-                    Bot.Log($"Taunting at HP {hp:n0}");
-                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
-                    {
-                        Bot.Skills.UseSkill(5);
-                        Bot.Sleep(500);
-                    }
-                    tauntFired[4] = true;
-                    Bot.Sleep(300);
-                }
-                else if (!tauntFired[5] && hp <= 8_000_000)
-                {
-                    Bot.Log($"Taunting at HP {hp:n0}");
-                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
-                    {
-                        Bot.Skills.UseSkill(5);
-                        Bot.Sleep(500);
-                    }
-                    tauntFired[5] = true;
-                    Bot.Sleep(300);
-                }
-                else if (!tauntFired[6] && hp <= 6_000_000)
-                {
-                    Bot.Log($"Taunting at HP {hp:n0}");
-                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
-                    {
-                        Bot.Skills.UseSkill(5);
-                        Bot.Sleep(500);
-                    }
-                    tauntFired[6] = true;
-                    Bot.Sleep(300);
-                }
-                else if (!tauntFired[7] && hp <= 4_000_000)
-                {
-                    Bot.Log($"Taunting at HP {hp:n0}");
-                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
-                    {
-                        Bot.Skills.UseSkill(5);
-                        Bot.Sleep(500);
-                    }
-                    tauntFired[7] = true;
-                    Bot.Sleep(300);
-                }
+
                 // After 2M → always taunt
-                else if (hp <= 2_000_000 && Bot.Skills.CanUseSkill(5))
+                if (Bot.Player.Target.HP <= 2000000 && Bot.Skills.CanUseSkill(5))
                 {
-                    Bot.Log($"Taunting at HP {hp:n0}");
-                    while (!Bot.ShouldExit && !Bot.Self.Auras.Any(x => x.Name == "Focus"))
+                    C.Logger($"HP is < 2mil, Taunting at HP {Bot.Player.Target.HP:n0}");
+
+                    while (!Bot.ShouldExit)
                     {
                         Bot.Skills.UseSkill(5);
                         Bot.Sleep(500);
-                    }
-                    Bot.Sleep(300);
 
+                        if (Bot.Target.Auras.Any(x => x.Name == "Focus"))
+                            break;
+                    }
+
+                    Bot.Sleep(300);
                 }
+
+                Core.EnableSkills();
             }
         }
 
