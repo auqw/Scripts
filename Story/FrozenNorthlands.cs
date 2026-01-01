@@ -62,7 +62,7 @@ public class FrozenNorthlands
         Story.KillQuest(
             3637,
             "chaosnorth",
-            new[] { "Chaorrupted Imp", "Chaorrupted Mage", "Chaorruption", "Chaos Sp-Eye" }
+            new[] { "Chaorruption", "Chaos Sp-Eye", "Chaorrupted Imp", "Chaorrupted Mage" }
         );
 
         // Defeat Chaorrupted Xan Illusion 3638
