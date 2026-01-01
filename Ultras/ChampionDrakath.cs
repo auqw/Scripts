@@ -183,6 +183,9 @@ public class ChampionDrakath
 
     bool IsTaunter()
     {
+        if (Bot.Player.CurrentClass == null)
+            return false;
+
         return SoloTaunt
             ? Bot.Player.CurrentClass.Name.Contains(a)
             : (!string.IsNullOrEmpty(a) && Bot.Player.CurrentClass.Name.Contains(a))
