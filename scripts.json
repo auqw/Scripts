@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 56020,
-    "sha256": "9c6cc7ab31c3b102667b1d6d0235f2a515fa67ae866ee6e25d6c8c45410a3206",
+    "size": 56073,
+    "sha256": "7a6827fc941b5c67e7a9d4708f072f99123611bad8d0d57b82edf5489ba069e2",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -681,8 +681,8 @@
       "ultra"
     ],
     "path": "Ultras/ChampionDrakath.cs",
-    "size": 17802,
-    "sha256": "bc306df27791f9a34dd421b6016fb52550fd1aa160ef55f6ca542c3b2d125e0d",
+    "size": 16400,
+    "sha256": "e24e8357c2f0e6c07fdd3f9a28fd872df256a3cfb88cc925fd58c2a74a42bb43",
     "fileName": "ChampionDrakath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/ChampionDrakath.cs"
   },
@@ -693,8 +693,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 104666,
-    "sha256": "2f6b69aaff29a3b9fdaf3b0da395f40032929448da9a9dae4474b6509ef1a411",
+    "size": 104412,
+    "sha256": "43005ccac8a00b262f43c623060c9485fc23ba82e68577703d773e5f2312c16e",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -777,8 +777,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 43896,
-    "sha256": "116f76cce439be38fedb363ef664508659cead6f75b9bdbf57959487b2a9feb3",
+    "size": 43902,
+    "sha256": "97d9d7d9537987007018ccb0fbbe6a02087df7c70186946b6284c31c1e94211e",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
