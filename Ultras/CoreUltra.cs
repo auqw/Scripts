@@ -447,7 +447,7 @@ public class CoreUltra
         int lastReady = -1;
 
         // --- Wait for army readiness ---
-        while (!Bot!.ShouldExit)
+        while (!Bot.ShouldExit)
         {
             int ready = HowMany(syncFile);
             if (ready != lastReady)
@@ -485,7 +485,7 @@ public class CoreUltra
 
         // --- Warmup spam to keep clients responsive ---
         DateTime spam = DateTime.UtcNow.AddMilliseconds(2000);
-        while (!Bot!.ShouldExit && DateTime.UtcNow < spam)
+        while (!Bot.ShouldExit && DateTime.UtcNow < spam)
         {
             Bot?.Skills.UseSkill(3);
             Bot?.Sleep(300);
