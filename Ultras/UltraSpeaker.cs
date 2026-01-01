@@ -161,8 +161,7 @@ public class UltraSpeaker
             }
         }
     }
-bool P1Taunted;
-bool P2Taunted;
+
 
     void DoEnh()
     {

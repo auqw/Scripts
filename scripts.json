@@ -729,8 +729,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 8070,
-    "sha256": "07edf5eba875a39128b181d4b2bc1bf686ffa15baa940146eed5631b238e2085",
+    "size": 8039,
+    "sha256": "2effa6f2551a5753b28e58e6324317fcdfbe2ed647a41dc58a79029d498c771d",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
@@ -2603,7 +2603,7 @@
     ],
     "path": "Story/Shinkansen.cs",
     "size": 2357,
-    "sha256": "37adac9c475f7ab131c38c35e7784881b9be0a916819f0d00c09b23114904ee5",
+    "sha256": "7a3123faf0a1543fbbb5d617588f46d56010994436254cea2d3c1c0046996381",
     "fileName": "Shinkansen.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Shinkansen.cs"
   },
