@@ -72,7 +72,7 @@ public class CoreUltra
                 break;
 
             case "charge":
-                if (_chargeDetected && !Bot.Self.Auras.Any(x => x != null && x.Name == "Focus"))
+                if (_chargeDetected && !Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
                     UseTaunt();
                 break;
         }
@@ -105,7 +105,7 @@ public class CoreUltra
                 }
                 break;
             case "charge":
-                if (_chargeDetected && !Bot.Self.Auras.Any(x => x != null && x.Name == "Focus"))
+                if (_chargeDetected && !Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
                     UseTaunt();
                 break;
         }

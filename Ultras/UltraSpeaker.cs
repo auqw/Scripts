@@ -151,7 +151,7 @@ public class UltraSpeaker
                 Bot.Sleep(500);
             }
 
-            if (!Bot.Self.Auras.Any(x => x.Name == "Focus"))
+            if (!Bot.Target.Auras.Any(x => x.Name == "Focus"))
             {
                 if (Bot.Skills.CanUseSkill(5))
                 {
@@ -161,6 +161,8 @@ public class UltraSpeaker
             }
         }
     }
+bool P1Taunted;
+bool P2Taunted;
 
     void DoEnh()
     {

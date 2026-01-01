@@ -217,10 +217,8 @@ public class AstralEmpyrean
             if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
             Bot.Sleep(200);
-            if (
-                !Bot.Self.Auras.Any(x => x != null && x.Name == "Focus")
-                && Bot.Skills.CanUseSkill(5)
-            )
+            if (!Bot.Target.Auras.Any(x => x != null && x.Name == "Focus")
+                && Bot.Skills.CanUseSkill(5))
                 Bot.Skills.UseSkill(5);
         }
     }

@@ -133,7 +133,7 @@ public class UltraDarkon
 
             // Spam Taunt here
             if (
-                !Bot.Self.Auras.Any(x => x != null && x.Name == "Focus")
+                !Bot.Target.Auras.Any(x => x != null && x.Name == "Focus")
                 && Bot.Skills.CanUseSkill(5)
             )
                 Bot.Skills.UseSkill(5);
