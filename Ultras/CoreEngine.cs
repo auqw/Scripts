@@ -2940,12 +2940,10 @@ public class CoreEngine
                 return;
         if (Cast(4))
             return;
-        if (Left("Empowerment", 1, true))
-            if (Cast(1))
-                return;
-        if (Left("Clarity", 1, true))
-            if (Cast(3))
-                return;
+        if (Cast(1))
+            return;
+        if (Cast(3))
+            return;
     }
 
     void StoneCrusherClass()
@@ -2957,9 +2955,8 @@ public class CoreEngine
             if (IsHealthLow(80) || IsArmyHealthLow(80) && HasAura("Magnitude", true))
                 if (Cast(3))
                     return;
-            if (Left("Dissonance", 1, true))
-                if (Cast(2))
-                    return;
+            if (Cast(2))
+                return;
             if (Cast(4))
                 return;
             if (Cast(1))
@@ -2970,12 +2967,10 @@ public class CoreEngine
             if (IsHealthLow(80) || IsArmyHealthLow(80))
                 if (Cast(3))
                     return;
-            if (HasAura("Magnitude", true))
-                if (Cast(4))
-                    return;
-            if (Left("Dissonance", 1, true))
-                if (Cast(2))
-                    return;
+            if (Cast(4))
+                return;
+            if (Cast(2))
+                return;
             if (Cast(1))
                 return;
         }
