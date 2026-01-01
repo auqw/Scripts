@@ -38,7 +38,7 @@ public class DreamPalace
         Story.KillQuest(7869, "dreampalace", new[] { "Flaming Harpy", "Golmoth" });
 
         // Mystic Sapphire 7870
-        Story.KillQuest(7870, "dreampalace", new[] { "Lotus Spider", "Zelkur" });
+        Story.KillQuest(7870, "dreampalace", new[] { "Zelkur", "Lotus Spider" });
 
         // Living Emerald 7871
         Story.KillQuest(7871, "dreampalace", new[] { "Palace Hound", "Gazeroth" });
