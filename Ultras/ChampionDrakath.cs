@@ -12,6 +12,7 @@ tags: Ultra
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
+using Skua.Core.Models.Items;
 
 
 #region Class & Enhancement Setup
@@ -180,10 +181,13 @@ public class ChampionDrakath
 
     bool IsTaunter()
     {
+        InventoryItem? currentClass = Bot.Player.CurrentClass;
+        if (currentClass == null || string.IsNullOrEmpty(currentClass.Name))
+            return false;
         return SoloTaunt
-            ? Bot.Player.CurrentClass.Name.Contains(a)
-            : (!string.IsNullOrEmpty(a) && Bot.Player.CurrentClass.Name.Contains(a))
-              || (!string.IsNullOrEmpty(b) && Bot.Player.CurrentClass.Name.Contains(b));
+            ? currentClass.Name.Contains(a)
+            : (!string.IsNullOrEmpty(a) && currentClass.Name.Contains(a))
+              || (!string.IsNullOrEmpty(b) && currentClass.Name.Contains(b));
     }
 
     void Prep()
