@@ -98,6 +98,7 @@ public class UltraWarden
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8153);
+                Adv.GearStore(true, true);
                 break;
             }
 

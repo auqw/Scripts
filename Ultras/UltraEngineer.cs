@@ -207,6 +207,7 @@ public class UltraEngineer
             {
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8154);
+                Adv.GearStore(true, true);
                 break;
             }
             // Dead → wait for respawn
@@ -225,6 +226,7 @@ public class UltraEngineer
         string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
         if (string.IsNullOrEmpty(className))
             return;
+        Adv.GearStore();
 
         switch (className)
         {

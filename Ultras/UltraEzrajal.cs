@@ -224,6 +224,7 @@ public class UltraEzrajal
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8152);
                 Bot.UltraBossHelper.DisableCounterAttack();
+                Adv.GearStore(true, true);
                 break;
             }
             // Dead → wait for respawn

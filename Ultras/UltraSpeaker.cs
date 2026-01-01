@@ -112,6 +112,7 @@ public class UltraSpeaker
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(9173);
+                Adv.GearStore(true, true);
                 break;
             }
 

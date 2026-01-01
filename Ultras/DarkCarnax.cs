@@ -147,6 +147,7 @@ public class UltraDarkCarnax
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
+                Adv.GearStore(true, true);
                 break;
             }
             // Dead → wait for respawn

@@ -70,18 +70,14 @@ public class Xyfrag
 
     void Prep()
     {
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (IsTaunter())
         {
             Bot.Events.ExtensionPacketReceived += Ultra.GenericChargeListener;
             Ultra.GetScrollOfEnrage();
         }
-        else
-        {
-            Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-            Ultra.BuyAlchemyPotion("Potent Honor Potion");
-            Core.EquipConsumable("Potent Honor Potion");
-        }
     }
+
 
     void Fight()
     {
@@ -90,6 +86,7 @@ public class Xyfrag
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
 
         // 'Wrong Turn at Voidbuquerque' && 'Doom Spikes'
         C.EnsureAcceptmultiple(9091, 9418);
@@ -102,11 +99,12 @@ public class Xyfrag
         Core.EnableSkills();
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgress("Xyfrag's Slimy Tooth", 5, true, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Xyfrag's Slimy Tooth", 5), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8547);
+                Adv.GearStore(true, true);
                 break;
             }
             // Dead → wait for respawn

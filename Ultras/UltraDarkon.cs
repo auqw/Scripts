@@ -61,6 +61,17 @@ public class UltraDarkon
     public CoreUltra Ultra = new();
     string? className = null;
 
+
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "UltraDarkon";
+    // User options
+    public List<IOption> Options = new()
+    {
+        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
+        CoreBots.Instance.SkipOptions,
+    };
+
+
     public void ScriptMain(IScriptInterface bot)
     {
         C.Logger("This script uses the `spam taunt method.. and works..maybe ^_^");
@@ -74,7 +85,19 @@ public class UltraDarkon
 
     void Prep()
     {
-        if (Bot.Player.CurrentClass != null && Bot.Player.CurrentClass.Name == "Stonecrusher")
+        if (
+            Bot.Config != null
+            && Bot.Config.Options.Contains(C.SkipOptions)
+            && !Bot.Config.Get<bool>(C.SkipOptions)
+        )
+            Bot.Config.Configure();
+
+
+        Adv.GearStore();
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            DoEnhs();
+
+        if (Bot.Player.CurrentClass.Name == "Stonecrusher")
         {
             C.HuntMonster("poisonforest", "Xavier Lionfang", "Divine Elixir", 10, isTemp: false);
             Ultra.UseAlchemyPotions("Divine Elixir");
@@ -83,8 +106,6 @@ public class UltraDarkon
             Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Ultra.GetScrollOfEnrage();
         Bot.Sleep(2500);
-        Core.EquipEnrage();
-        DoEnhs();
     }
 
     void Kill()

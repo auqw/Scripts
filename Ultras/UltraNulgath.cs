@@ -137,6 +137,7 @@ public class UltraNulgath
                 C.Logger("All players finished farm.");
                 C.Join("whitemap");
                 C.EnsureComplete(8692);
+                Adv.GearStore(true, true);
                 break;
             }
 

@@ -151,6 +151,7 @@ public class UltraDage
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8547);
+                Adv.GearStore(true, true);
                 break;
             }
             // Dead → wait for respawn

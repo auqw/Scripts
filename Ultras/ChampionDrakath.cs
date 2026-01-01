@@ -234,6 +234,7 @@ public class ChampionDrakath
                 C.Jump("Enter", "Spawn");
                 if (!Bot.Quests.IsDailyComplete(8300))
                     C.EnsureComplete(8300);
+                Adv.GearStore(true, true);
                 break;
             }
 

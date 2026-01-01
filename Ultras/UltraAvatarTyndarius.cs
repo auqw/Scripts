@@ -179,7 +179,7 @@ public class UltraAvatarTyndarius
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8245);
-                Ultra.ClearSyncFile(syncPath);
+                Adv.GearStore(true, true);
                 break;
             }
 

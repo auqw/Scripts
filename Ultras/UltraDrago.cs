@@ -255,7 +255,7 @@ public class UltraDrago
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8397);
                 Bot.Wait.ForPickup("King Drago Insignia");
-                Adv.GearStore(true);
+                Adv.GearStore(true, true);
                 break;
             }
 
@@ -418,4 +418,5 @@ public class UltraDrago
                 break;
         }
     }
+
 }
