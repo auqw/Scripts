@@ -116,7 +116,7 @@ public class CoreNewYear
         Story.MapItemQuest(2593, "darksun", 1597);
 
         //Escape to Freedom 2594
-        Story.KillQuest(2594, "darkoviaforest", new[] { "Dire Wolf", "Blood Maggot" });
+        Story.KillQuest(2594, "darkoviaforest", new[] { "Blood Maggot", "Dire Wolf" });
 
         //Shine a Light on Truth 2595
         Story.MapItemQuest(2595, "darksun", 1598);
