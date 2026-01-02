@@ -82,7 +82,7 @@ public class UltraDage
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (!Bot.Quests.IsAvailable(8547))
+        if (C.isCompletedBefore(793))
             C.Logger(
                 @"Quest not complete: ""Power of the Undead Legion"", go run ""Story\Legion\DageChallengeStory.cs"" first",
                 messageBox: true,
@@ -238,137 +238,137 @@ public class UltraDage
         if (string.IsNullOrEmpty(className))
             return;
 
-   switch (className.ToLower())
-{
-    case "chaos avenger":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Anima,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Vainglory
-        );
-        break;
+        switch (className.ToLower())
+        {
+            case "chaos avenger":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
 
-    case "archpaladin":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Forge,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Lament
-        );
-        break;
+            case "archpaladin":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
 
-    case "legion revenant":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Wizard,
-            hSpecial: HelmSpecial.Pneuma,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Vainglory
-        );
-        break;
+            case "legion revenant":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
 
-    case "archfiend":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Forge,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Vainglory
-        );
-        break;
+            case "archfiend":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
 
-    case "arachnomancer":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Anima,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Vainglory
-        );
-        break;
+            case "arachnomancer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
 
-    case "king's echo":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Pneuma,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Lament
-        );
-        break;
+            case "king's echo":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
 
-    case "chrono shadowslayer":
-    case "chrono shadowhunter":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Vim,
-            wSpecial: WeaponSpecial.Health_Vamp,
-            cSpecial: CapeSpecial.Lament
-        );
-        break;
+            case "chrono shadowslayer":
+            case "chrono shadowhunter":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Vim,
+                    wSpecial: WeaponSpecial.Health_Vamp,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
 
-    case "quantum chronomancer":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Anima,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Vainglory
-        );
-        break;
+            case "quantum chronomancer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
 
-    case "phantom chronomancer":
-    case "phantasm chronomancer":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Wizard,
-            hSpecial: HelmSpecial.Pneuma,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Vainglory
-        );
-        break;
+            case "phantom chronomancer":
+            case "phantasm chronomancer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
 
-    case "infinity knight":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Wizard,
-            hSpecial: HelmSpecial.Pneuma,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Vainglory
-        );
-        break;
+            case "infinity knight":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
 
-    case "lich":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Examen,
-            wSpecial: WeaponSpecial.Ravenous,
-            cSpecial: CapeSpecial.Penitence
-        );
-        break;
+            case "lich":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                break;
 
-    case "verus doomknight":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Anima,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Vainglory
-        );
-        break;
+            case "verus doomknight":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
 
-    case "hollowborn vindicator":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Forge,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Penitence
-        );
-        break;
+            case "hollowborn vindicator":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Penitence
+                );
+                break;
 
-    case "great thief":
-        Adv.EnhanceEquipped(
-            type: EnhancementType.Lucky,
-            hSpecial: HelmSpecial.Forge,
-            wSpecial: WeaponSpecial.Dauntless,
-            cSpecial: CapeSpecial.Vainglory
-        );
-        break;
-}
-}
+            case "great thief":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Dauntless,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+        }
+    }
 
 
 }
