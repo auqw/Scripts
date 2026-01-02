@@ -148,7 +148,7 @@ public class UltraNulgath
             )
             {
                 Bot.Combat.Attack(2);
-                if (Bot.Skills.CanUseSkill(5) && !Bot.Target.Auras.Any(x => x.Name == "Focus"))
+                if (Bot.Skills.CanUseSkill(5) && !Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
                     Bot.Skills.UseSkill(5);
             }
             else

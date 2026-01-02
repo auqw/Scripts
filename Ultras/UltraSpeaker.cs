@@ -153,14 +153,7 @@ public class UltraSpeaker
                 Bot.Sleep(500);
             }
 
-            if (!Bot.Target.Auras.Any(x => x.Name == "Focus"))
-            {
-                if (Bot.Skills.CanUseSkill(5))
-                {
-                    Bot.Sleep(Random.Shared.Next(500, 1001));
-                    Bot.Skills.UseSkill(5);
-                }
-            }
+            Ultra.Taunt(Bot.Player.CurrentClass?.Name!, Bot.Player.Target.Name ?? "*", "aura", 250, "Focus");
         }
     }
 

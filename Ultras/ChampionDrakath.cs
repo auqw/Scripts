@@ -250,7 +250,7 @@ public class ChampionDrakath
 
             // In your main logic:
             if ((Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
-                && !Bot.Target.Auras.Any(x => x.Name == "Focus")
+                && !Bot.Target.Auras.Any(x => x != null && x.Name == "Focus")
                 && Bot.Player.Target?.HP > 0)
             {
                 Core.DisableSkills();
@@ -291,7 +291,7 @@ public class ChampionDrakath
                             Bot.Skills.UseSkill(5);
                             Bot.Sleep(500);
 
-                            if (Bot.Target.Auras.Any(x => x.Name == "Focus"))
+                            if (Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
                             {
                                 tauntFired[i] = true;
                                 Bot.Sleep(500);
@@ -311,10 +311,11 @@ public class ChampionDrakath
 
                     while (!Bot.ShouldExit)
                     {
-                        Bot.Skills.UseSkill(5);
+                        if (Bot.Skills.CanUseSkill(5))
+                            Bot.Skills.UseSkill(5);
                         Bot.Sleep(500);
 
-                        if (Bot.Target.Auras.Any(x => x.Name == "Focus"))
+                        if (Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
                             break;
                     }
 
