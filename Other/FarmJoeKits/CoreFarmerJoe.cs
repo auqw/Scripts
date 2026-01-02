@@ -1233,7 +1233,7 @@ public class CoreFarmerJoe
     public void SetClass()
     {
         // Handle SoloClass
-        if (Core.SoloClass == "Generic" || !soloClasses.Contains(Core.SoloClass))
+        if (Core.SoloClass == "Generic" || soloClasses.Contains(Core.SoloClass))
         {
             Core.SoloClass =
                 soloClasses.FirstOrDefault(x => Core.CheckInventory(x))
@@ -1241,7 +1241,7 @@ public class CoreFarmerJoe
         }
 
         // Handle FarmClass
-        if (Core.FarmClass == "Generic" || !farmClasses.Contains(Core.FarmClass))
+        if (Core.FarmClass == "Generic" || farmClasses.Contains(Core.FarmClass))
         {
             Core.FarmClass =
                 farmClasses.FirstOrDefault(x => Core.CheckInventory(x))
