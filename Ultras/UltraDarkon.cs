@@ -97,7 +97,7 @@ public class UltraDarkon
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
 
-        if (Bot.Player.CurrentClass.Name == "Stonecrusher")
+        if (Bot.Player.CurrentClass!.Name == "Stonecrusher")
         {
             C.HuntMonster("poisonforest", "Xavier Lionfang", "Divine Elixir", 10, isTemp: false);
             Ultra.UseAlchemyPotions("Divine Elixir");
