@@ -70,7 +70,7 @@ public class LostVilla
         Story.KillQuest(9564, "lostvilla", "Diabolical Hoard");
 
         // Uninvited Guests (9565)
-        Story.KillQuest(9565, "lostvilla", new[] { "Eldritch Parasite", "Gorewyrm" });
+        Story.KillQuest(9565, "lostvilla", new[] { "Gorewyrm", "Eldritch Parasite" });
 
         // Key of Life (9566)
         Story.MapItemQuest(9566, "lostvilla", 12653);
