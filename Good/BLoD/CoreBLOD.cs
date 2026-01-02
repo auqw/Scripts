@@ -613,14 +613,16 @@ public class CoreBLOD
         string weaponName = weapon + " of Destiny";
         if (Core.CheckInventory(weaponName))
             return;
+
         List<ItemBase> weaponReqs = (LightMergeShopItems ??= Core.GetShopItems("necropolis", 422))
             .First(item => item.Name == weaponName)
             .Requirements;
         ItemBase metal = weaponReqs.First(req => req.Name.EndsWith("of Destiny"));
         UpgradeMetal(
             (MineCraftingMetalsEnum)
-                Enum.Parse(typeof(MineCraftingMetalsEnum), metal.Name.Split(' ')[0])  // Changed from [1] to [0]
+                Enum.Parse(typeof(MineCraftingMetalsEnum), metal.Name.Split(' ')[1])
         );
+
         GetMergeRequirements(weaponReqs, metal.ID);
         LightMerge(weaponName);
     }
