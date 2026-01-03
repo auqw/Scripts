@@ -242,7 +242,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Anima,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
@@ -251,7 +251,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Lament
                 );
                 break;
@@ -260,7 +260,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Wizard,
                     hSpecial: HelmSpecial.Pneuma,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
@@ -269,7 +269,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
@@ -278,7 +278,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Anima,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
@@ -287,7 +287,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Pneuma,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Lament
                 );
                 break;
@@ -306,7 +306,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Anima,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
@@ -316,7 +316,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Wizard,
                     hSpecial: HelmSpecial.Pneuma,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
@@ -325,7 +325,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Wizard,
                     hSpecial: HelmSpecial.Pneuma,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
@@ -343,7 +343,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Anima,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
@@ -352,7 +352,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Penitence
                 );
                 break;
@@ -361,7 +361,7 @@ public class UltraDage
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,
-                    wSpecial: WeaponSpecial.Dauntless,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
