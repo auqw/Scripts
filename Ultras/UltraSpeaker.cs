@@ -153,7 +153,7 @@ public class UltraSpeaker
                 Bot.Sleep(500);
             }
 
-            Ultra.Taunt(Bot.Player.CurrentClass?.Name!, Bot.Player.Target.Name ?? "*", "aura", 250, "Focus");
+            Ultra.Taunt(Bot.Player.CurrentClass?.Name!, Bot.Player.Target?.Name ?? "*", "aura", 250, "Focus");
         }
     }
 
