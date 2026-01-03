@@ -84,7 +84,7 @@ public class UltraDage
     {
         if (C.isCompletedBefore(793))
             C.Logger(
-                @"player is not part of the legion, you will not be able to turn the quest in. though u cna prolly do the kill.",
+                @"player is not part of the legion, you will not be able to turn the quest in. though u cna prolly do the kill."
             );
 
         C.Join("whitemap");
