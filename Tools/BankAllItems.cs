@@ -41,89 +41,100 @@ public class BankAllItems
             Bot.Config!.Get<bool>("BanknonAc"),
             Bot.Config!.Get<string>("BlackList") ?? string.Empty
         );
+
         Core.SetOptions(false);
     }
 
     public void BankAll(bool inventory, bool house, bool bankNonAc, string blackList)
     {
-        bool logged = false;
+        bool bankFullLogged = false;
 
-        var itemsToBank = new List<(IEnumerable<InventoryItem> Items, bool IsForHouse)>();
+        HashSet<string> blackListedItems = BuildBlackList(blackList);
+
+        Core.Logger(
+            $"[{blackListedItems.Count(name => Bot.Inventory.Contains(name))}x Bag Spaces used] BlackList: {string.Join(", ", blackListedItems)}"
+        );
 
         if (inventory)
-            itemsToBank.Add((Bot.Inventory.Items, false));
+            ProcessItems(Bot.Inventory.Items, false);
 
         if (house)
-            itemsToBank.Add((Bot.House.Items, true));
+            ProcessItems(Bot.House.Items, true);
 
-        var blackListedItems = new HashSet<string>();
-
-        if (!string.IsNullOrEmpty(blackList))
-            blackListedItems = new HashSet<string>(
-                blackList.Split(',').Select(item => item.Trim())
-            );
-
-        blackListedItems.Add(Core.SoloClass);
-        blackListedItems.UnionWith(Core.SoloGear);
-        blackListedItems.Add(Core.FarmClass);
-        blackListedItems.Add("Treasure Potion");
-        blackListedItems.UnionWith(Core.FarmGear);
-        blackListedItems.UnionWith(Core.BankingBlackList);
-
-        int BlackListCount = blackListedItems.Count;
-        Core.Logger(
-            $"[{blackListedItems.Where(x => Bot.Inventory.Contains(x)).Count()}x Bag Spaces used] BlackList: {string.Join(", ", blackListedItems.Where(item => !string.IsNullOrEmpty(item)))}"
-        );
-        foreach (var (items, isForHouse) in itemsToBank)
+        void ProcessItems(IEnumerable<InventoryItem> items, bool isHouse)
         {
-            var filter = items.Where(item =>
-                !blackListedItems.Contains(item.Name) && (bankNonAc || item.Coins) && !item.Equipped
-            );
-            foreach (var item in filter)
-            {
-                if (Bot.Inventory.Contains(item.ID))
-                    BlackListCount--;
+            bool movedAny = false;
 
-                if (bankNonAc && Bot.Bank.FreeSlots == 0 && !item.Coins)
+            foreach (InventoryItem item in items)
+            {
+                if (blackListedItems.Contains(item.Name)
+                    || item.Equipped
+                    || item.Wearing
+                    || (!bankNonAc && !item.Coins))
+                    continue;
+
+                if (!item.Coins && Bot.Bank.FreeSlots == 0)
                 {
-                    if (!logged)
+                    if (!bankFullLogged)
                     {
                         Core.Logger($"{Core.Username()}'s Bank is full");
-                        logged = true;
+                        bankFullLogged = true;
                     }
-                    continue;
+                    break;
                 }
 
-                // Bank item based on its type (house or inventory)
-                if (isForHouse)
-                {
-                    if (item.Coins && bankNonAc)
-                    {
-                        Bot.House.EnsureToBank(item.ID);
-                        Bot.Wait.ForTrue(() => Bot.House.EnsureToBank(item.ID), 20);
-                    }
-                    else
-                    {
-                        Core.ToHouseBank(item.ID);
-                    }
-                }
-                else
-                {
-                    if (item.Coins && bankNonAc)
-                    {
-                        Bot.Inventory.EnsureToBank(item.ID);
-                        Bot.Wait.ForTrue(() => Bot.Inventory.EnsureToBank(item.ID), 20);
-                    }
-                    else
-                    {
-                        Core.ToBank(item.ID);
-                    }
-                }
+                BankItem(item, isHouse, bankNonAc);
+                movedAny = true;
             }
 
-            Core.Logger(
-                $"{(isForHouse ? "House" : "Inventory")} Items: {(filter.Any() ? "✅" : "No items blacklisted")}"
-            );
+            Core.Logger($"{(isHouse ? "House" : "Inventory")} Items: {(movedAny ? "✅" : "Nothing to bank")}");
         }
     }
+
+    private void BankItem(InventoryItem item, bool isHouse, bool bankNonAc)
+    {
+        if (item.Coins && bankNonAc)
+        {
+            if (isHouse)
+                Bot.House.EnsureToBank(item.ID);
+            else
+                Bot.Inventory.EnsureToBank(item.ID);
+
+            Bot.Wait.ForPickup(item.Name);
+            return;
+        }
+
+        if (isHouse)
+            Core.ToHouseBank(item.ID);
+        else
+            Core.ToBank(item.ID);
+    }
+
+    private HashSet<string> BuildBlackList(string blackList)
+    {
+        HashSet<string> set = new(StringComparer.OrdinalIgnoreCase);
+
+        if (!string.IsNullOrWhiteSpace(blackList))
+            foreach (string item in blackList.Split(','))
+                set.Add(item.Trim());
+
+        foreach (string name in new[]
+        {
+        Core.SoloClass,
+        Core.FarmClass,
+        Core.DodgeClass,
+        Core.BossClass,
+        "Treasure Potion"
+    })
+            set.Add(name);
+
+        set.UnionWith(Core.FarmGear);
+        set.UnionWith(Core.SoloGear);
+        set.UnionWith(Core.DodgeGear);
+        set.UnionWith(Core.BossGear);
+        set.UnionWith(Core.BankingBlackList);
+
+        return set;
+    }
+
 }
