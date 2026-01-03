@@ -84,9 +84,7 @@ public class UltraDage
     {
         if (C.isCompletedBefore(793))
             C.Logger(
-                @"Quest not complete: ""Power of the Undead Legion"", go run ""Story\Legion\DageChallengeStory.cs"" first",
-                messageBox: true,
-                stopBot: true
+                @"player is not part of the legion, you will not be able to turn the quest in. though u cna prolly do the kill."
             );
 
         C.Join("whitemap");
@@ -119,7 +117,7 @@ public class UltraDage
     void Prep()
     {
         Bot.Events.ExtensionPacketReceived += UltraDageListener;
-        Bot.Quests.UpdateQuest(793);
+        Bot.Quests.UpdateQuest(8547);
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnh();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
