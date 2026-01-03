@@ -3051,7 +3051,7 @@ public class CoreAdvanced
 
         bool ForgeEnhancementLibrary()
         {
-            switch (className)
+            switch (className.ToLower())
             {
                 #region Lucky Region
 
@@ -3659,7 +3659,7 @@ public class CoreAdvanced
                 #endregion
 
                 #region Luck - Vim - Lam - Rav
-                case "Chrono ShadowSlayer":
+                case "chrono shadowslayer":
                 case "chrono shadowhunter":
                     type = EnhancementType.Lucky;
                     cSpecial = uLament()
