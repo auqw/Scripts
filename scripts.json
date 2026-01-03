@@ -21549,6 +21549,33 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/NewYear/ChronoGemMerge.cs"
   },
   {
+    "name": "Cysero Squared Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Cysero Squared Merge [2653] in /cyseroparadox",
+    "tags": [
+      "cysero",
+      "squared",
+      "merge",
+      "cyseroparadox",
+      "ducky",
+      "earmuffs",
+      "morph",
+      "mad",
+      "chronosmith",
+      "chronosmiths",
+      "tophat",
+      "paradox",
+      "enigma",
+      "distorqueo",
+      "hammer",
+      "pieradox"
+    ],
+    "path": "Seasonal/NewYear/CyseroSquaredMerge.cs",
+    "size": 6263,
+    "sha256": "ce20b99d40528008df9db0845c25284791b67ff6bdeec85ba70354e62a6f4744",
+    "fileName": "CyseroSquaredMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/NewYear/CyseroSquaredMerge.cs"
+  },
+  {
     "name": "Faerie Court REP",
     "description": "This will farm Faerie Court REP.",
     "tags": [
