@@ -180,7 +180,7 @@ public class UltraEzrajal
         C.AddDrop("Ezrajal Insignia");
         Prep();
         Fight();
-        Adv.GearStore(true);
+        Adv.GearStore(true, true);
         Bot.Stop();
     }
 
@@ -224,7 +224,6 @@ public class UltraEzrajal
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8152);
                 Bot.UltraBossHelper.DisableCounterAttack();
-                Adv.GearStore(true, true);
                 break;
             }
             // Dead → wait for respawn
