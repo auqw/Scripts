@@ -6747,7 +6747,7 @@ public class CoreBots
         }
         if (TagsToAdd.Count > 0)
         {
-            acc.Tags.AddRange(TagsToAdd);  // Pass the List<string> directly
+            Bot.Accounts.AddTags(Bot.Player.Username, TagsToAdd.ToArray());
             string tagsToAddString = string.Join(", ", TagsToAdd);
             Logger(tagsToAddString);
         }
