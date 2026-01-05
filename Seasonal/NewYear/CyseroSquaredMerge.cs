@@ -77,8 +77,9 @@ public class CyseroSquaredMerge
                     Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonster("cyseroparadox", "Sys-Zero's Mech", log: false);
-                        Core.HuntMonsterQuest(Core.CheckInventory("Star Captain") ? 10543 : Core.IsMember ? 10542 : 10541, "cyseroparadox", "Sys-Zero");
+                        Core.EnsureAccept(Core.CheckInventory("Star Captain") ? 10543 : Core.IsMember ? 10542 : 10541);
+                        Core.KillMonster("cyseroparadox", "r2", "Bottom", 2, 1, req.Name, quant, req.Temp, false);
+                        Core.EnsureComplete(Core.CheckInventory("Star Captain") ? 10543 : Core.IsMember ? 10542 : 10541);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
