@@ -1265,12 +1265,12 @@ public class CoreDailies
         #region Local methods
         void handleFriendship(string npc, params frGift[] gifts)
         {
-            if (!friends.Any(f => f.NPC.ToLower() == npc.ToLower()))
+            FriendshipInfo friend = friends.First(f => f.NPC.ToLower() == npc.ToLower());
+            if (friend == null)
             {
                 Core.Logger($"NPC \"{npc}\" not found. Check for typos");
                 return;
             }
-            FriendshipInfo friend = friends.First(f => f.NPC.ToLower() == npc.ToLower());
 
             if ((!friend.CanTalk || friend.NPC == "Linus") && !friend.CanGift)
             {
@@ -1496,6 +1496,8 @@ public class CoreDailies
                     $"%xt%zm%friendshipGift%{Bot.Map.RoomID}%{selectedGift.ID}%{selectedGift.CharItemID}%"
                 );
                 InformLogger($"Gifted {selectedGift.Name} to {friend.NPC}.", ref friend);
+                if (Bot.Inventory.Contains(selectedGift.ID))
+                    Core.ToBank(selectedGift.ID);
             }
         }
 
