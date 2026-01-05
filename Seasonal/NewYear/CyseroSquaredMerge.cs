@@ -75,13 +75,9 @@ public class CyseroSquaredMerge
                     Core.EquipClass(ClassType.Solo);
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(req.ID);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
-                    {
-                        Core.EnsureAccept(Core.CheckInventory("Star Captain") ? 10543 : Core.IsMember ? 10542 : 10541);
-                        Core.KillMonster("cyseroparadox", "r2", "Bottom", 2, 1, req.Name, quant, req.Temp, false);
-                        Core.EnsureComplete(Core.CheckInventory("Star Captain") ? 10543 : Core.IsMember ? 10542 : 10541);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.RegisterQuests(Core.CheckInventory("Star Captain") ? 10543 : Core.IsMember ? 10542 : 10541);
+                    Core.KillBossWithSecondary("cyseroparadox", "r2", "Bottom", 1, 2, req.Name, quant, req.Temp, false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
 
@@ -97,7 +93,8 @@ public class CyseroSquaredMerge
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
 
-                    Core.KillMonster("cyseroparadox", "r2", "Bottom", 2, 1, req.Name, quant, req.Temp, false);
+                    Core.KillBossWithSecondary("cyseroparadox", "r2", "Bottom", 1, 2, req.Name, quant, req.Temp, false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
                 #endregion
 
