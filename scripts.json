@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 426794,
-    "sha256": "e722f31a2b081d984e3f1b4240ef7f4a5a792cf1708f302e8d8685f6c899561d",
+    "size": 435923,
+    "sha256": "f9ab546854d5fe3f1c9f64158d5e6526aab86d7acb1e5dc0e5620221b1a91a98",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -21570,8 +21570,8 @@
       "pieradox"
     ],
     "path": "Seasonal/NewYear/CyseroSquaredMerge.cs",
-    "size": 6263,
-    "sha256": "ce20b99d40528008df9db0845c25284791b67ff6bdeec85ba70354e62a6f4744",
+    "size": 6188,
+    "sha256": "396ad679fe467785f2003dbbac5e5fdb71bea519cfce224ccc500e6dd3495545",
     "fileName": "CyseroSquaredMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/NewYear/CyseroSquaredMerge.cs"
   },
