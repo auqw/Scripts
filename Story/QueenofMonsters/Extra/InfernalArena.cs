@@ -57,55 +57,55 @@ public class InfernalArena
         Core.EquipClass(ClassType.Solo);
 
         // Maligned Magus 9356
-        Story.KillQuest(9356, "infernalarena", "Infernal Mage");
+        Story.KillQuest(9356, "infernalarena", "Infernal Mage", EquipBestClassType: false);
 
         // Reverent Revenger 9357
-        Story.KillQuest(9357, "infernalarena", "Infernal Revenger");
+        Story.KillQuest(9357, "infernalarena", "Infernal Revenger", EquipBestClassType: false);
 
         // Infernal Harbinger 9358
-        Story.KillQuest(9358, "infernalarena", "Infernal Harbinger");
+        Story.KillQuest(9358, "infernalarena", "Infernal Harbinger", EquipBestClassType: false);
 
         // First of the Fallen 9359
-        Story.KillQuest(9359, "infernalarena", "First Fallen");
+        Story.KillQuest(9359, "infernalarena", "First Fallen", EquipBestClassType: false);
 
         // Infernal Warlord 9360
-        Story.KillQuest(9360, "infernalarena", "Fallen Warlord");
+        Story.KillQuest(9360, "infernalarena", "Fallen Warlord", EquipBestClassType: false);
 
         // Abhorrent Aperitif 9361
-        Story.KillQuest(9361, "infernalarena", "Malicious Maw");
+        Story.KillQuest(9361, "infernalarena", "Malicious Maw", EquipBestClassType: false);
 
         // Touch of Death 9362
-        Story.KillQuest(9362, "infernalarena", "Wicked Rotfinger");
+        Story.KillQuest(9362, "infernalarena", "Wicked Rotfinger", EquipBestClassType: false);
 
         // Dire Dreams 9363
-        Story.KillQuest(9363, "infernalarena", "Dark Devourax");
+        Story.KillQuest(9363, "infernalarena", "Dark Devourax", EquipBestClassType: false);
 
         // Festering Forest 9364
-        Story.KillQuest(9364, "infernalarena", "Corrupt Terror");
+        Story.KillQuest(9364, "infernalarena", "Corrupt Terror", EquipBestClassType: false);
 
         // Abominable Butchery 9365
-        Story.KillQuest(9365, "infernalarena", "Infernal Abominator");
+        Story.KillQuest(9365, "infernalarena", "Infernal Abominator", EquipBestClassType: false);
 
         // Infernal Screech 9366
-        Story.KillQuest(9366, "infernalarena", "Twisted Harpy");
+        Story.KillQuest(9366, "infernalarena", "Twisted Harpy", EquipBestClassType: false);
 
         // Frosty Burns 9367
-        Story.KillQuest(9367, "infernalarena", "Infernal Izotz");
+        Story.KillQuest(9367, "infernalarena", "Infernal Izotz", EquipBestClassType: false);
 
         // Kramping Your Style 9368
-        Story.KillQuest(9368, "infernalarena", "Infernal Krampus");
+        Story.KillQuest(9368, "infernalarena", "Infernal Krampus", EquipBestClassType: false);
 
         // Defiled Destiny 9369
-        Story.KillQuest(9369, "infernalarena", "Destructive Defiler");
+        Story.KillQuest(9369, "infernalarena", "Destructive Defiler", EquipBestClassType: false);
 
         // Searing Snake Oil 9370
-        Story.KillQuest(9370, "infernalarena", "Infernal Naga");
+        Story.KillQuest(9370, "infernalarena", "Infernal Naga", EquipBestClassType: false);
 
         // Ambivalent Affection 9371
-        Story.KillQuest(9371, "infernalarena", "Accursed Agape");
+        Story.KillQuest(9371, "infernalarena", "Accursed Agape", EquipBestClassType: false);
 
         // From the Crux of Shadows 9372
-        Story.KillQuest(9372, "infernalarena", "Accursed Apephyrx");
+        Story.KillQuest(9372, "infernalarena", "Accursed Apephyrx", EquipBestClassType: false);
 
         #region Fuck these guys
         //Rest below require potions or aloooota luck and fuck that
@@ -135,36 +135,36 @@ public class InfernalArena
         // Reviled Returner 9373
         //this ones barely soloable so gl
         Core.JumpWait();
-        Core.UseBossClass(
+        Core.Equip(
             Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord"
         );
         Core.Logger("Boss: [Deadly Duo]");
-        Story.KillQuest(9373, "infernalarena", "Deadly Duo");
+        Story.KillQuest(9373, "infernalarena", "Deadly Duo", EquipBestClassType: false);
 
         // Reign of the Deer 9374
         Core.JumpWait();
-        Core.UseBossClass(
+        Core.Equip(
             Core.CheckInventory("Legion DoomKnight")
                 ? "Legion DoomKnight"
                 : "Classic Legion DoomKnight"
         );
         Core.Logger("Boss: [Cervus Malus]");
-        Story.KillQuest(9374, "infernalarena", "Cervus Malus");
+        Story.KillQuest(9374, "infernalarena", "Cervus Malus", EquipBestClassType: false);
 
         // Ars Infernum 9375
         Core.JumpWait();
-        Core.UseBossClass("Dragon of Time");
+        Core.Equip("Dragon of Time");
         Core.Logger("Boss: [Key of Sholemoh]");
-        Story.KillQuest(9375, "infernalarena", "Key of Sholemoh");
+        Story.KillQuest(9375, "infernalarena", "Key of Sholemoh", EquipBestClassType: false);
 
         // Unrepentant Culler 9376
         Core.JumpWait();
-        Core.UseDodgeClass(
+        Core.Equip(
             Core.CheckInventory("Yami no Ronin") ? "Yami no Ronin" : "Lord of Order"
         );
         Core.Logger("Boss: [Azalith's Scythe]");
         Bot.Options.AttackWithoutTarget = true;
-        Story.KillQuest(9376, "infernalarena", "Azalith's Scythe");
+        Story.KillQuest(9376, "infernalarena", "Azalith's Scythe", EquipBestClassType: false);
         Bot.Options.AttackWithoutTarget = false;
 
         if (!ReturnEarly)
@@ -172,7 +172,7 @@ public class InfernalArena
             // Lord of the Scarred Barrens  9377
             Core.JumpWait();
             //  Core.UseDodgeClass();
-            Core.UseBossClass(
+            Core.Equip(
                 Core.CheckInventory("Chaos Avenger") ? "Chaos Avenger"
                 : Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)"
                 : "Void Highlord"
@@ -184,7 +184,7 @@ public class InfernalArena
                     + "so its confirmd able to be done...)"
             );
             Core.EnsureAccept(9377);
-            Story.KillQuest(9377, "infernalarena", "Na'al");
+            Story.KillQuest(9377, "infernalarena", "Na'al", EquipBestClassType: false);
             Core.EnsureComplete(9377);
         }
         #endregion Fuck these guysa
