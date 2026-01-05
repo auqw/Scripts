@@ -115,7 +115,7 @@ public class InfernalArenaMerge
                 case "Champion's Seal":
                 case "Tainted Dagger of Na'al":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.UseBossClass(
+                    Core.Equip(
                         Core.CheckInventory("Chaos Avenger") ? "Chaos Avenger"
                         : Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)"
                         : "Void Highlord"
@@ -131,7 +131,7 @@ public class InfernalArenaMerge
                             any: true
                         )
                     )
-                        Core.UseBossClass(
+                        Core.Equip(
                             Core.CheckInventory("Legion DoomKnight")
                                 ? "Legion DoomKnight"
                                 : "Classic Legion DoomKnight"
