@@ -95,8 +95,8 @@ public class CyseroSquaredMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster("cyseroparadox", "Sys-Zero's Mech", log: false);
-                    Core.HuntMonster("cyseroparadox", "Sys-Zero", req.Name, quant, req.Temp, false);
+
+                    Core.KillMonster("cyseroparadox", "r2", "Bottom", 2, 1, req.Name, quant, req.Temp, false);
                     break;
                 #endregion
 
