@@ -4666,109 +4666,29 @@ public class CoreBots
         Bot.Options.AggroMonsters = false;
     }
 
-
-    /// <summary>
-    /// Kills monsters by MapID or name with priority/fallback system.
-    /// Used for when one mob becomes invulnerable until a secondary mob dies (like boss mechanics).
-    /// Optionally farms for an item until the desired quantity is reached.
-    /// <para>Examples:</para>
-    /// <code>
-    /// // Using MapIDs with item name
-    /// Core.KillMonster("mapName", "cellName", "padName", 1, 2, "Item Name", 999, isTemp: false);
-    /// 
-    /// // Using monster names with ItemID
-    /// Core.KillMonster("mapName", "cellName", "padName", "Primary Monster", "Secondary Monster", 12345, 999, isTemp: false);
-    /// 
-    /// // Mixed: MapID primary, name secondary, with item name
-    /// Core.KillMonster("mapName", "cellName", "padName", 1, "Secondary Monster", item: "Item Name", quant: 999);
-    /// 
-    /// // Single monster (no fallback)
-    /// Core.KillMonster("mapName", "cellName", "padName", "Monster Name", item: "Item Name", quant: 999);
-    /// 
-    /// // Just kill once (no item farming)
-    /// Core.KillMonster("mapName", "cellName", "padName", 1, 2);
-    /// </code>
-    /// </summary>
-    public void KillMonster(
-        string map,
-        string cell,
-        string pad,
-        object primaryMonster,
-        object? secondaryMonster = null,
-        object? item = null,
+    public void KillBossWithSecondary(
+        string map, string cell, string pad,
+        int primaryMapID,
+        int secondaryMapID,
+        string? item = null,
         int quant = 1,
-        bool isTemp = true,
-        bool log = true,
-        bool publicRoom = false,
-        bool EquipBestClassType = true
-    )
+        bool isTemp = false,
+        bool log = true)
     {
-        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
-        cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
-
-        // Parse item parameter
-        int ItemID = 0;
-        string? itemName = null;
-        if (item != null)
-        {
-            if (item is int itemIdInt)
-            {
-                ItemID = itemIdInt;
-                itemName = Bot.Inventory.GetItem(itemIdInt)?.Name ?? itemIdInt.ToString();
-            }
-            else if (item is string itemStr)
-            {
-                itemName = itemStr;
-                ItemID = Bot.Inventory.GetItem(itemStr)?.ID ?? 0;
-            }
-        }
-
-        // Skip if item already obtained
-        if (ItemID != 0 && (isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant)))
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-        if (log && ItemID != 0)
-            FarmingLogger(itemName ?? ItemID.ToString(), quant);
+        if (item != null && log)
+            FarmingLogger($"⚔️ {item}", quant);
 
-        // Register item drop
-        if (ItemID != 0 && !isTemp)
-            AddDrop(ItemID);
+        if (item != null && !isTemp)
+            AddDrop(item);
 
-        // Parse monster parameters
-        int? primaryMapID = primaryMonster is int pMapID ? pMapID : (int?)null;
-        string? primaryName = primaryMonster is string pName ? pName : null;
+        _Kill(primaryMapID, secondaryMapID, item, quant, isTemp);
 
-        int? secondaryMapID = secondaryMonster is int sMapID ? sMapID : (int?)null;
-        string? secondaryName = secondaryMonster is string sName ? sName : null;
-
-        if (ItemID == 0)
-        {
-            if (log)
-                Logger($"💀 Killing {primaryName ?? primaryMapID.ToString()}");
-            _KillMonster();
-        }
-        else
-        {
-            _KillMonster(ItemID, quant, isTemp);
-            Rest();
-        }
-
-        void _KillMonster(int itemID = 0, int itemQuant = 1, bool itemIsTemp = false)
+        void _Kill(int primaryID, int secondaryID, string? drop, int quantity, bool temp)
         {
             Bot.Options.AggroMonsters = true;
-            Bot.Options.AggroAllMonsters = false;
-
-            if (itemID != 0 && (itemIsTemp ? Bot.TempInv.Contains(itemID, itemQuant) : CheckInventory(itemID, itemQuant)))
-                return;
-
-            CheckMapAndCell();
-
-            if (EquipBestClassType)
-            {
-                Monster? target = GetMonster(primaryMapID, primaryName);
-                if (target != null)
-                    EquipBestClassForTargets(target);
-            }
 
             bool done = false;
             while (!Bot.ShouldExit && !done)
@@ -4776,112 +4696,52 @@ public class CoreBots
                 if (!(Bot.Player?.Alive ?? false))
                     Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
 
-                CheckMapAndCell();
+                if (Bot.Map.Name != map)
+                    Join(map, cell, pad);
 
-                // Get current monsters
-                Monster? primary = GetMonster(primaryMapID, primaryName);
-                Monster? secondary = secondaryMonster != null ? GetMonster(secondaryMapID, secondaryName) : null;
-
-                if (!Bot.Player!.HasTarget)
+                if (Bot.Player.Cell != cell)
                 {
-                    // Default to primary monster
-                    if (primary != null)
-                        Bot.Combat.Attack(primary.MapID);
+                    Bot.Map.Jump(cell, pad, autoCorrect: false);
+                    Bot.Wait.ForCellChange(cell);
                 }
-                else if (Bot.Player?.Target != null)
-                {
-                    // Check if primary is invulnerable (State == 2) and secondary is alive
-                    bool primaryInvuln = IsPrimaryMonster(Bot.Player.Target.MapID) && Bot.Player.Target.State == 2;
-                    bool secondaryAlive = secondary?.Alive == true;
 
-                    if (primaryInvuln && secondaryAlive)
-                    {
-                        // Primary is invulnerable → attack secondary
-                        Bot.Combat.Attack(secondary!.MapID);
-                    }
-                    else if (IsSecondaryMonster(Bot.Player.Target.MapID) && Bot.Player.Target.HP > 0)
-                    {
-                        // Secondary still alive → keep attacking it
-                        Bot.Combat.Attack(Bot.Player.Target.MapID);
-                    }
-                    else
-                    {
-                        // Otherwise, attack primary
-                        if (primary != null)
-                            Bot.Combat.Attack(primary.MapID);
-                    }
+                Monster? primary = Bot.Monsters.MapMonsters
+                    .FirstOrDefault(m => m != null && m.MapID == primaryID);
+
+                Monster? secondary = Bot.Monsters.MapMonsters
+                    .FirstOrDefault(m => m != null && m.MapID == secondaryID);
+
+                if (secondary != null && secondary.Alive)
+                {
+                    Bot.Combat.Attack(secondaryID);
+                }
+                else if (primary != null && primary.Alive)
+                {
+                    Bot.Combat.Attack(primaryID);
                 }
 
                 Sleep();
 
-                if (itemID == 0 && !Bot.Player!.HasTarget)
+                if (drop == null && (primary == null || !primary.Alive))
                 {
                     if (log)
-                        Logger($"💀 Killed {primaryName ?? primaryMapID.ToString()} once");
+                        Logger("💀 Boss killed once");
                     done = true;
-                    break;
                 }
-                else if (itemID != 0 && (itemIsTemp ? Bot.TempInv.Contains(itemID, itemQuant) : CheckInventory(itemID, itemQuant)))
+                else if (
+                    drop != null &&
+                    (temp ? Bot.TempInv.Contains(drop, quantity) : CheckInventory(drop, quantity))
+                )
                 {
                     done = true;
-                    break;
                 }
             }
 
-            if (!itemIsTemp && itemID != 0)
-                Bot.Wait.ForPickup(itemID);
-
-            Bot.Options.AggroMonsters = false;
-            Bot.Options.AggroAllMonsters = false;
-        }
-
-        void CheckMapAndCell()
-        {
-            if (Bot.Map.Name != map)
-            {
-                Join(map, cell, pad, publicRoom: publicRoom);
-                Bot.Wait.ForMapLoad(map);
-            }
-            if (Bot.Player?.Cell != cell)
-            {
-                Bot.Map.Jump(cell, pad, autoCorrect: false);
-                Bot.Wait.ForCellChange(cell);
-            }
-        }
-
-        Monster? GetMonster(int? mapID, string? name)
-        {
-            if (mapID.HasValue)
-                return Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && x.MapID == mapID.Value);
-            else if (name != null)
-                return Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x != null && x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-            return null;
-        }
-
-        bool IsPrimaryMonster(int mapID)
-        {
-            if (primaryMapID.HasValue)
-                return mapID == primaryMapID.Value;
-            if (primaryName != null)
-            {
-                Monster? monster = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x?.MapID == mapID);
-                return monster?.Name.Equals(primaryName, StringComparison.OrdinalIgnoreCase) ?? false;
-            }
-            return false;
-        }
-
-        bool IsSecondaryMonster(int mapID)
-        {
-            if (secondaryMapID.HasValue)
-                return mapID == secondaryMapID.Value;
-            if (secondaryName != null)
-            {
-                Monster? monster = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x => x?.MapID == mapID);
-                return monster?.Name.Equals(secondaryName, StringComparison.OrdinalIgnoreCase) ?? false;
-            }
-            return false;
+            if (!temp && drop != null)
+                Bot.Wait.ForPickup(drop);
         }
     }
+
 
     /// <summary>
     /// Joins a map and hunts for the monster.
