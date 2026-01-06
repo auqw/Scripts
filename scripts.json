@@ -705,8 +705,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 14449,
-    "sha256": "464ebe1552676fe5cbfb5e9e63f6338e850891096b79ae21a880e75cc859faa2",
+    "size": 14426,
+    "sha256": "9bc1d440a188cba37e70136ca4b5d344c8e018be29ccb64282fafe39df72320f",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -729,8 +729,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 8635,
-    "sha256": "7c5c95ea170e0dda4a0395bd1e69ce248b53c48b196deac64a8370c96376f124",
+    "size": 8636,
+    "sha256": "5bffdc8f9071085633fc123ae51a4e36135567587d813b50b07dc4e394b27685",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
