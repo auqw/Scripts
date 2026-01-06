@@ -2686,6 +2686,11 @@ public class CoreEngine
         if (string.IsNullOrWhiteSpace(category) || string.IsNullOrWhiteSpace(message))
             return;
         C.Logger(message, category);
+        try
+        {
+            OnSignal?.Invoke(category, message);
+        }
+        catch { }
     }
 
     #endregion
