@@ -6585,6 +6585,7 @@ public class CoreBots
             Bot.Log("acc is null");
             return;
         }
+        FilterTags(Bot.Player.Username, EndGameTags);
         foreach (var kvp in EndGameTags)
         {
             bool hasInventoryItem = CheckInventory(kvp.Key, toInv: false);
@@ -6597,6 +6598,26 @@ public class CoreBots
             Bot.Accounts.AddTags(Bot.Player.Username, TagsToAdd.ToArray());
             string tagsToAddString = string.Join(", ", TagsToAdd);
             Logger(tagsToAddString);
+        }
+    }
+
+    public void FilterTags(string username, Dictionary<string, string> tags)
+    {
+        List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
+        ManagedAccount? acc = accounts.FirstOrDefault(x => x.Username.ToLower() == username.ToLower());
+        if (acc == null) return;
+        string[] tagsToRemove = new string[] { };
+        foreach (var kvp in tags)
+        {
+            bool tagAlreadyExists = acc.Tags.Contains(kvp.Value);
+            if (!tagAlreadyExists)
+                tagsToRemove.Append(kvp.Value);
+        }
+        if (tagsToRemove.Length > 0)
+        {
+            Bot.Accounts.RemoveTags(username, tagsToRemove);
+            string tagsToRemoveString = string.Join(", ", tagsToRemove);
+            Logger($"Removed: {tagsToRemoveString}");
         }
     }
 
