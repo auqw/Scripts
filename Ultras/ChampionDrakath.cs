@@ -272,7 +272,7 @@ public class ChampionDrakath
                 {
                     if (!tauntFired[i] && Bot.Player.Target.HP <= hpThresholds[i])
                     {
-                        C.Logger($"{hpThresholds[i] / 1000000}m - Taunting at HP {Bot.Player.Target.HP:n0}");
+                        C.Logger($"{(hpThresholds[i] - 100000) / 1000000}m - Taunting at HP {Bot.Player.Target.HP:n0}");
 
                         while (!Bot.ShouldExit)
                         {
