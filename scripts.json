@@ -55,7 +55,7 @@
     ],
     "path": "CoreBots.cs",
     "size": 429675,
-    "sha256": "51a5e12608856dc3e31a9769877459aacc301842137265ab99a944d38e20adad",
+    "sha256": "6581deaada776af787bc43a58f4fa8c97a9f263e2589cf2b594680e7a0fc47c6",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -652,8 +652,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 10220,
-    "sha256": "dcebdf9b722d0e77ecbadd4bd913cf6928188f3274fa581fecff51c8fe5addb4",
+    "size": 10222,
+    "sha256": "629616ef95f5351df7971ed8bbe814d8f43ac15d26eba8de00d8d6e3a2b1ae16",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
@@ -694,7 +694,7 @@
     ],
     "path": "Ultras/CoreEngine.cs",
     "size": 105017,
-    "sha256": "d1b697794ce430fa32eba07c40b31641ccbc3147a553a158ee4f82688b9a9326",
+    "sha256": "7521a47a3ea5b440f281bf396a6ff4ce93274f1439a0a60b41517d4f499a0190",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -706,7 +706,7 @@
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
     "size": 14449,
-    "sha256": "2c33dbed19d73fd71942efcfbe0ea4c471d133f2a69812318e6b06b69fad5c5b",
+    "sha256": "464ebe1552676fe5cbfb5e9e63f6338e850891096b79ae21a880e75cc859faa2",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -718,7 +718,7 @@
     ],
     "path": "Ultras/UltraEngineer.cs",
     "size": 9602,
-    "sha256": "e5005de1a6263ac50d93a196a5a808a9fc40fd7edfa4c2a7c60131d8a681a66f",
+    "sha256": "c238063783320d2a28a38cdb385551c6e13ea1d3a26cd9a8279aabde7652db07",
     "fileName": "UltraEngineer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEngineer.cs"
   },
@@ -742,7 +742,7 @@
     ],
     "path": "Ultras/UltraDage.cs",
     "size": 11721,
-    "sha256": "95c9e5a7620ce4bc8c81ae5c4f302f8928ba0f682c36bdedf46d0358fb53a47c",
+    "sha256": "d5db078e9e600959f52e9daf6638acd11c09f92b99fcc9e54f2b6f940e10486d",
     "fileName": "UltraDage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDage.cs"
   },
@@ -778,7 +778,7 @@
     ],
     "path": "Ultras/CoreUltra.cs",
     "size": 43918,
-    "sha256": "0fd9b23ec36671f6e79849e1b99f0ff9afdc7922a73ddb008fd9c88e0c44f41f",
+    "sha256": "fed378011278ddec1ae806c0c07b9afc23e30d0171e6ba73b5f42ff685f7d76e",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -802,7 +802,7 @@
     ],
     "path": "Ultras/UltraNulgath.cs",
     "size": 8404,
-    "sha256": "5c8abba5665f6a65da2247aa92742ca077db69f796ae4254bdd26309debd56e2",
+    "sha256": "b98571598c5dbb44008710337b64864286438e1dda3df99167f811a99ae81066",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
@@ -816,7 +816,7 @@
     ],
     "path": "Ultras/AstralEmpyrean.cs",
     "size": 13056,
-    "sha256": "24d2280d85b9f2b043303c54bd651d6c76ab8625eefb3aca28052b34b8b13a74",
+    "sha256": "1cb07ca22f5faea4d61ba51d38565ba0643c47bb0b08c0ca0aaeb8f2b7e004ae",
     "fileName": "AstralEmpyrean.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
   },
@@ -831,7 +831,7 @@
     ],
     "path": "Ultras/DarkCarnax.cs",
     "size": 11669,
-    "sha256": "bbd853bd3aa23601c947220f6ef4ee4c77c30582d44b940b60cbc9a3608f07cb",
+    "sha256": "0025c894c412cd86194f409ecfb314af524ea398a9330f1e70b071077c863f48",
     "fileName": "DarkCarnax.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/DarkCarnax.cs"
   },
@@ -10122,7 +10122,7 @@
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
     "size": 45451,
-    "sha256": "6c6829e2ce9dc228231b1a979d14a411a1870a9c528662ea9cd2b66f19a31b03",
+    "sha256": "2ebac5776eae760f4919f8ec2ee58ee3076328f63c043ad0e99547da6165c945",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -13104,7 +13104,7 @@
     ],
     "path": "Other/Classes/VerusDoomKnight.cs",
     "size": 16191,
-    "sha256": "bd3d4bd5a8ba822846b5442f714747de58fb060f7befca66ec168c80b2256e7c",
+    "sha256": "c47bf7a5aa4e41defa138a8608f6784cfe41eed998ec2820bc4a522acc5e4f88",
     "fileName": "VerusDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/VerusDoomKnight.cs"
   },
@@ -18151,7 +18151,7 @@
     ],
     "path": "Other/MergeShops/SeaVoiceMerge.cs",
     "size": 15466,
-    "sha256": "92af0bb2546949dd14d5b2231c3071065fbfa035c36bc04273d34e711910db13",
+    "sha256": "6d8219796ef6c4019866c687145f2e70dc129ff08a197a32d407838b571e20f3",
     "fileName": "SeaVoiceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SeaVoiceMerge.cs"
   },
