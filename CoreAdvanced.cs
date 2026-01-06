@@ -1739,7 +1739,7 @@ public class CoreAdvanced
             }
             className = Bot.Player.CurrentClass.Name;
         }
-        
+
         // Determine search condition based on itemid
         bool classMatch(InventoryItem i) =>
             (
@@ -1750,26 +1750,14 @@ public class CoreAdvanced
             && i.Category == ItemCategory.Class;
 
         // Find the class item in inventory and bank
-        InventoryItem? itemInv = Bot
+        ItemBase? itemInv = Bot
             .Inventory.Items.Concat(Bot.Bank.Items)
-            .FirstOrDefault(classMatch);
+            .FirstOrDefault(c => c != null && classMatch(c));
 
         if (itemInv == null)
         {
             Core.Logger(
                 $"Can't level up {(itemid > 0 ? $"item ID {itemid}" : $"\"{className}\"")} because you don't own it."
-            );
-            return;
-        }
-
-        // Check if the class is already Rank 10 or unavailable due to membership requirement
-        if (
-            (itemInv.Upgrade && !Bot.Player.IsMember)
-            || (Bot.Inventory.Contains(itemInv.ID) && itemInv.Quantity >= 302500)
-        )
-        {
-            Core.Logger(
-                $"\"{itemInv.Name}\" is already Rank 10 or you are not a member and the item is members."
             );
             return;
         }
@@ -1781,7 +1769,7 @@ public class CoreAdvanced
             Core.Sleep();
 
             // Recheck the item in inventory after unbanking
-            itemInv = Bot.Inventory.Items.FirstOrDefault(classMatch);
+            itemInv = Bot.Inventory.Items.FirstOrDefault(c => c != null && classMatch(c));
             if (itemInv == null)
             {
                 Core.Logger(
@@ -1791,8 +1779,15 @@ public class CoreAdvanced
             }
         }
 
+        // Check if the class is already Rank 10 or unavailable due to membership requirement
+        if (itemInv.Upgrade && !Bot.Player.IsMember)
+        {
+            Core.Logger($"\"{itemInv.Name}\" requires membership to rank up.");
+            return;
+        }
+
         // Check if the class is already Rank 10
-        if (itemInv.Quantity == 302500)
+        if (itemInv.Quantity >= 302500)
         {
             Core.Logger($"\"{itemInv.Name}\" is already Rank 10");
             return;
@@ -1819,7 +1814,7 @@ public class CoreAdvanced
         SmartEnhance(className);
 
         // Find the class item in inventory after enhancement
-        InventoryItem? classItem = Bot.Inventory.Items.FirstOrDefault(classMatch);
+        InventoryItem? classItem = Bot.Inventory.Items.FirstOrDefault(c => c != null && classMatch(c));
         if (classItem == null)
         {
             Core.Logger(
@@ -1851,7 +1846,7 @@ public class CoreAdvanced
         Bot.Options.AggroMonsters = false;
 
         // Recheck the class item after jumping
-        classItem = Bot.Inventory.Items.FirstOrDefault(classMatch);
+        classItem = Bot.Inventory.Items.FirstOrDefault(c => c != null && classMatch(c));
         if (classItem == null)
         {
             Core.Logger(
@@ -1861,7 +1856,7 @@ public class CoreAdvanced
         }
 
         // Check if the class reached Rank 10
-        if (classItem.Quantity == 302500)
+        if (classItem.Quantity >= 302500)
             Core.Logger($"\"{classItem.Name}\" is now Rank 10");
         else
             Core.Logger($"\"{classItem.Name}\" is somehow... not rank 10??");
@@ -1874,6 +1869,7 @@ public class CoreAdvanced
             GearStore(true);
     }
 
+    
     /// <summary>
     /// Stores the gear a player has so that it can later restore these
     /// </summary>
