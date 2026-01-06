@@ -2909,16 +2909,21 @@ public class CoreEngine
 
     void KingsEcho()
     {
-        if (IsHealthLow(90) && Bot.Self.Auras?.Any(x => x.Name == "Royal Resolve") == false)
+        if (GetAuraStacks("Royal Resolve", true) <= 0)
             if (Cast(3))
                 return;
-        if (IsManaLow(25))
-            if (Cast(4))
-                return;
+        if (Cast(0))
+            return;
         if (Cast(1))
             return;
         if (Cast(2))
             return;
+        if (IsManaLow(10))
+            if (Cast(4))
+                return;
+        if (GetAuraStacks("Royal Resolve", true) >= 1)
+            if (Cast(4))
+                return;
     }
 
     void LegionRevenantClass()
