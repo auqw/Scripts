@@ -875,7 +875,7 @@ public class CoreUltra
         if (names.Length == 0)
             return;
 
-        string Aura(string x) =>
+        static string Aura(string x) =>
             x switch
             {
                 "Might Tonic" => "Might",
