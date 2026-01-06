@@ -253,6 +253,7 @@ public class UltraEzrajal
             Bot.Sleep(500); // slightly lower, smoother attacks
         }
     }
+
     void DoEnhs()
     {
         string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
@@ -272,7 +273,7 @@ public class UltraEzrajal
                 break;
 
             // Verus Doomknight
-            case "Verus Doomknight":
+            case "Verus DoomKnight":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Anima,
