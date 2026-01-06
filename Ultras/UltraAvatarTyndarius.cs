@@ -126,13 +126,6 @@ public class UltraAvatarTyndarius
         )
             Bot.Config.Configure();
 
-        Bot.Sleep(2500);
-        string ball2killerConfig = GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer"));
-
-        C.Logger($"Player Class: '{Bot.Player.CurrentClass.Name}'");
-        C.Logger($"Ball2killer Config: '{ball2killerConfig}'");
-        C.Logger($"Are they equal? {Bot.Player.CurrentClass.Name == ball2killerConfig}");
-
         isBall1Taunter =
      NormalizeString(Bot.Player.CurrentClass.Name)
      == NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")));
@@ -146,11 +139,6 @@ public class UltraAvatarTyndarius
             NormalizeString(Bot.Player.CurrentClass.Name)
             == NormalizeString(GetDescription(Bot.Config!.Get<DebuffTyndarius>("DebuffTyndarius")));
 
-        C.Logger($"Are we Ball1Taunter? {isBall1Taunter}");
-        C.Logger($"Are we Ball2killer? {isBall2killer}");
-        C.Logger($"Are we MustTauntTyn? {isMustTauntTyn}");
-        C.Logger($"Are we FocusTyn? {isFocusTyn}");
-
         Core.Boot();
         Prep();
         Fight();
@@ -159,7 +147,6 @@ public class UltraAvatarTyndarius
 
     void Prep()
     {
-        Bot.Log($"Are we taunting: {isBall1Taunter || isMustTauntTyn || isFocusTyn}");
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnh();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
@@ -223,12 +210,10 @@ public class UltraAvatarTyndarius
             {
                 if (BothDead)
                 {
-                    C.Logger("Ball1Taunter: Attacking Tyndarius (MapID 2)");
                     Bot.Combat.Attack(2);
                 }
                 else if (Ball1alive)
                 {
-                    C.Logger("Ball1Taunter: Attacking Ball1 (MapID 1)");
                     Bot.Combat.Attack(1);
                 }
                 if (Bot.Skills.CanUseSkill(5) && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
@@ -239,17 +224,14 @@ public class UltraAvatarTyndarius
             {
                 if (Ball2alive)
                 {
-                    C.Logger("Ball2killer: Attacking Ball2 (MapID 3)");
                     Bot.Combat.Attack(3);
                 }
                 else if (Ball1alive)
                 {
-                    C.Logger("Ball2killer: Attacking Ball1 (MapID 1)");
                     Bot.Combat.Attack(1);
                 }
                 else
                 {
-                    C.Logger("Ball2killer: Attacking Tyndarius (MapID 2)");
                     Bot.Combat.Attack(2);
                 }
                 Bot.Sleep(500);
@@ -259,7 +241,6 @@ public class UltraAvatarTyndarius
             // ======================================================
             if (isMustTauntTyn)
             {
-                C.Logger("MustTauntTyn: Attacking Tyndarius (MapID 2)");
                 Bot.Combat.Attack(2);
                 Bot.Sleep(500);
                 if (Bot.Skills.CanUseSkill(5) && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
@@ -270,7 +251,6 @@ public class UltraAvatarTyndarius
             // ======================================================
             if (isFocusTyn)
             {
-                C.Logger("FocusTyn: Attacking Tyndarius (MapID 2)");
                 Bot.Combat.Attack(2);
                 Bot.Sleep(500);
             }
