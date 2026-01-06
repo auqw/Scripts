@@ -4699,7 +4699,7 @@ public class CoreBots
                 if (Bot.Map.Name != map)
                     Join(map, cell, pad);
 
-                if (Bot.Player.Cell != cell)
+                if (Bot.Player!.Cell != cell)
                 {
                     Bot.Map.Jump(cell, pad, autoCorrect: false);
                     Bot.Wait.ForCellChange(cell);
