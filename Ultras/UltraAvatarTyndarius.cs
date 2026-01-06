@@ -185,20 +185,23 @@ public class UltraAvatarTyndarius
 
         while (!Bot.ShouldExit)
         {
-            // if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Ultra Avatar Tyndarius Defeated", 1), syncPath))
-            // {
-            //     C.Jump("Enter", "Spawn");
-            //     C.Logger("All players finished farm.");
-            //     C.EnsureComplete(8245);
-            //     Adv.GearStore(true, true);
-            //     break;
-            // }
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Avatar Tyndarius Defeated", 1), syncPath))
+            {
+                C.Jump("Enter", "Spawn");
+                C.Logger("All players finished farm.");
+                C.EnsureComplete(8245);
+                Adv.GearStore(true, true);
+                break;
+            }
+
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
             if (Bot.Map.Name != map)
             {
                 Core.Join(map);
             }
+
             if (Bot.Player.Cell != "Boss")
             {
                 Bot.Map.Jump("Boss", "Left", autoCorrect: false);
