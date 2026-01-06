@@ -74,7 +74,6 @@ public class UltraAvatarTyndarius
 
     private string NormalizeString(string input) => (input ?? "").Trim().ToLower();
 
-    string playerClass;
     bool isBall2killer;
     bool isBall1Taunter;
     bool isMustTauntTyn;
@@ -127,7 +126,7 @@ public class UltraAvatarTyndarius
             Bot.Config.Configure();
 
         isBall1Taunter =
-     NormalizeString(Bot.Player.CurrentClass.Name)
+     NormalizeString(Bot.Player.CurrentClass!.Name)
      == NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")));
         isBall2killer =
             NormalizeString(Bot.Player.CurrentClass.Name)
@@ -358,7 +357,7 @@ public class UltraAvatarTyndarius
                 break;
 
             default:
-                Adv.SmartEnhance(Bot.Player.CurrentClass.Name);
+                Adv.SmartEnhance(Bot.Player.CurrentClass!.Name);
                 break;
         }
     }

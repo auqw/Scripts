@@ -136,7 +136,7 @@ public class UltraSpeaker
             }
 
             // Dead → wait for respawn (FIXED)
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
