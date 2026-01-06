@@ -94,6 +94,7 @@ public class CoreEngine
         Bot.Options.InfiniteRange = true;
         Bot.Options.SkipCutscenes = true;
         Bot.Lite.HidePlayers = true;
+        C.Join("whitemap-100000");
     }
 
     bool OnScriptStopping(Exception? e)
@@ -2680,26 +2681,11 @@ public class CoreEngine
         return true;
     }
 
-    public bool Log(string category, string message)
+    public void Log(string category, string message)
     {
         if (string.IsNullOrWhiteSpace(category) || string.IsNullOrWhiteSpace(message))
-            return false;
-
-        category = category.Trim();
-        message = message.Trim();
-
-        if (!HasChanged(category, message))
-            return false;
-
-        var key = $"{category}:{message}";
-        var now = DateTime.UtcNow;
-
-        if (_throttle.TryGetValue(key, out var last) && now - last < ThrottleDuration)
-            return false;
-
-        _throttle[key] = now;
-        OnSignal?.Invoke(category, message);
-        return true;
+            return;
+        C.Logger(message, category);
     }
 
     #endregion
@@ -2829,6 +2815,11 @@ public class CoreEngine
             case "chrono shadowhunter":
                 ChronoShadowSlayerClass();
                 break;
+            case "Phantom Chronmancer":
+            case "Phantasm Chronmancer":
+                PhantomPhantasmChronomancer();
+                break;
+
             #endregion
 
             #region  Common classes
@@ -2951,6 +2942,24 @@ public class CoreEngine
         if (Left("Clarity", 1, true))
             if (Cast(3))
                 return;
+    }
+
+    void PhantomPhantasmChronomancer()
+    {
+        if (Cast(3)) return;
+        if (Cast(2)) return;
+        if (Cast(1)) return;
+        if (Cast(2)) return;
+        if (Cast(1)) return;
+        if (Cast(2)) return;
+        if (Cast(1)) return;
+        if (Cast(2)) return;
+        if (Cast(1)) return;
+        if (Cast(3)) return;
+        if (Cast(1)) return;
+        if (Cast(3)) return;
+        if (Cast(2)) return;
+        if (Cast(4)) return;
     }
 
     void StoneCrusherClass()
