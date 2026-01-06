@@ -33,7 +33,7 @@ DPS classes:
     Hollowborn Vindicator
     Quantum Chronomancer
     Phantom Chronomancer / Phantasm Chronomancer 
-    Verus Doomknight 
+    Verus DoomKnight 
     Void Highlord
     King's Echo 
 ==================

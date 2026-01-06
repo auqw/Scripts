@@ -3508,7 +3508,7 @@ public class CoreEngine
             "Hollowborn Vindicator",
             "Arachnomancer",
             "Infinity Knight",
-            "Verus Doomknight",
+            "Verus DoomKnight",
             "King's Echo",
             "Phantom Chronomancer",
             "Great Thief",

@@ -117,7 +117,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Vainglory / Lament
 //
-// Verus Doomknight
+// Verus DoomKnight
 // ├─ Class: Lucky
 // ├─ Helm: Anima
 // ├─ Weapon: Ravenous / Valiance
@@ -300,8 +300,8 @@ public class UltraEngineer
                 );
                 break;
 
-            // Verus Doomknight
-            case "Verus Doomknight":
+            // Verus DoomKnight
+            case "Verus DoomKnight":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Anima,

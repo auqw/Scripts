@@ -6624,7 +6624,7 @@ public class CoreBots
         // Classes
         { "Legion Revenant", "LR" },
         { "Void Highlord", "VHL" },
-        { "Verus Doomknight", "VDK" },
+        { "Verus DoomKnight", "VDK" },
         { "Lich", "Lich" },
         { "Hollowborn Vindicator", "HBV" },
 

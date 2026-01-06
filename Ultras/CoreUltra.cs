@@ -1092,7 +1092,7 @@ public class CoreUltra
             "Hollowborn Vindicator",
             "Arachnomancer",
             "Infinity Knight",
-            "Verus Doomknight",
+            "Verus DoomKnight",
             "King's Echo",
             "Phantom Chronomancer",
             "Great Thief",

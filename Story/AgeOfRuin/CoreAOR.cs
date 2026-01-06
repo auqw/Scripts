@@ -448,7 +448,7 @@ public class CoreAOR
             string[] PossibleSoloClasses = new[]
             {
                 "Chaos Avenger",
-                "Verus Doomknight",
+                "Verus DoomKnight",
                 "Hollowborn Vindicator",
                 "Lich",
                 "ArchPaladin",
