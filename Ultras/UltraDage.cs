@@ -12,25 +12,30 @@ tags: Ultra
 //cs_include Scripts/CoreAdvanced.cs
 
 /*
-Required classes:
+Required Taunters:
 ==================
     Chaos Avenger
     ArchPaladin
 ==================
+
 DPS classes:
 ==================
-    Legion Revenant
-    Chrono ShadowSlayer
-    Lich
-    Archfiend
-    Quantum Chronomancer
-    Hollowborn Vindicator
+// Works with deaths
     Arachnomancer
+    Archfiend
     Infinity Knight
-    Verus Doomknight
-    King's Echo
-    Phantom Chronomancer / Phantasm Chronomancer
+    StoneCrusher
+
+// Tested working without deaths:
+    Lich
+    Legion Revenant
     Great Thief
+    Hollowborn Vindicator
+    Quantum Chronomancer
+    Phantom Chronomancer / Phantasm Chronomancer 
+    Verus Doomknight 
+    Void Highlord
+    King's Echo 
 ==================
 */
 
@@ -66,13 +71,13 @@ public class UltraDage
             "a",
             "First Taunter Class",
             "Insert the name of the class that will taunt ( examples: AP, Cav, LR, KE(?))",
-            ""
+            "Chaos Avenger"
         ),
         new Option<string>(
             "b",
             "Second Taunter Class",
             "Insert the name of the class that will taunt ( examples: AP, Cav, LR, KE(?))",
-            ""
+            "ArchPaladin"
         ),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
@@ -82,7 +87,7 @@ public class UltraDage
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (C.isCompletedBefore(793))
+        if (!C.isCompletedBefore(793))
             C.Logger(
                 @"player is not part of the legion, you will not be able to turn the quest in. though u cna prolly do the kill."
             );
@@ -104,8 +109,10 @@ public class UltraDage
             return;
         }
         Core.Boot();
+
         Adv.GearStore();
         Prep();
+        Bot.Events.ExtensionPacketReceived += UltraDageListener;
         Fight();
         Bot.Events.ExtensionPacketReceived -= UltraDageListener;
         Adv.GearStore(true);
@@ -116,8 +123,8 @@ public class UltraDage
 
     void Prep()
     {
-        Bot.Events.ExtensionPacketReceived += UltraDageListener;
-        Bot.Quests.UpdateQuest(8547);
+        // UpdateQuest to `Fail to the king` to unlock ultra dage
+        Bot.Quests.UpdateQuest(793);
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnh();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
@@ -148,60 +155,27 @@ public class UltraDage
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
-                C.EnsureComplete(8547);
-                Adv.GearStore(true, true);
+                if (!Bot.Quests.IsDailyComplete(8547))
+                    C.EnsureComplete(8547);
+                // Adv.GearStore(true, true);
                 break;
             }
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-            if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
+            if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b) && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
             {
                 if (Bot.Skills.CanUseSkill(5))
                     Bot.Skills.UseSkill(5);
             }
 
+            Bot.Sleep(500);
+
             if (!Bot.Player.HasTarget)
                 Bot.Combat.Attack(boss);
         }
     }
-
-    // public async void UltraDageListener(dynamic packet)
-    // {
-    //     if (packet?["params"]?.type?.ToString() != "json")
-    //         return;
-    //     if (!Bot.Player.Alive)
-    //         return;
-    //     dynamic data = packet["params"].dataObj;
-    //     if (data?.cmd?.ToString() != "event")
-    //         return;
-
-    //     if (
-    //         !string.IsNullOrEmpty(data?.args?.zoneSet?.ToString())
-    //         && string.Equals(
-    //             data?.args?.zoneSet?.ToString(),
-    //             "A",
-    //             StringComparison.OrdinalIgnoreCase
-    //         )
-    //     )
-    //     {
-    //         await Task.Run(() => Bot.Player.WalkTo(122, 420));
-    //         return;
-    //     }
-    //     if (
-    //         !string.IsNullOrEmpty(data?.args?.zoneSet?.ToString())
-    //         && string.Equals(
-    //             data?.args?.zoneSet?.ToString(),
-    //             "B",
-    //             StringComparison.OrdinalIgnoreCase
-    //         )
-    //     )
-    //     {
-    //         await Task.Run(() => Bot.Player.WalkTo(856, 420));
-    //         return;
-    //     }
-    // }
 
     public async void UltraDageListener(dynamic packet)
     {
