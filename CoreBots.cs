@@ -6610,11 +6610,11 @@ public class CoreBots
         { "Hollowborn Vindicator", "HBV" },
 
         { "Dragon of Time", "DoT" },
-        { "Chaos Avenger", "CA" },
+        { "Chaos Avenger", "CAV" },
         { "ArchMage", "AM" },
         { "LightCaster", "LC" },
         { "ArchPaladin", "AP" },
-        { "Lord Of Order", "LoO" },
+        { "Lord Of Order", "LOO" },
         { "StoneCrusher", "SC" },
         { "Yami no Ronin", "YnR" },
         { "Frostval Barbarian", "FB" },
