@@ -6606,16 +6606,16 @@ public class CoreBots
         List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
         ManagedAccount? acc = accounts.FirstOrDefault(x => x.Username.ToLower() == username.ToLower());
         if (acc == null) return;
-        string[] tagsToRemove = new string[] { };
+        List<string> tagsToRemove = [];
         foreach (var kvp in tags)
         {
             bool tagAlreadyExists = acc.Tags.Contains(kvp.Value);
             if (!tagAlreadyExists)
-                tagsToRemove.Append(kvp.Value);
+                tagsToRemove.Add(kvp.Value);
         }
-        if (tagsToRemove.Length > 0)
+        if (tagsToRemove.Count > 0)
         {
-            Bot.Accounts.RemoveTags(username, tagsToRemove);
+            Bot.Accounts.RemoveTags(username, tagsToRemove.ToArray());
             string tagsToRemoveString = string.Join(", ", tagsToRemove);
             Logger($"Removed: {tagsToRemoveString}");
         }
