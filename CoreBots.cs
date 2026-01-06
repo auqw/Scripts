@@ -3,6 +3,21 @@ name: null
 description: null
 tags: null
 */
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Skua.Core.Interfaces;
+using Skua.Core.Models;
+using Skua.Core.Models.Auras;
+using Skua.Core.Models.Items;
+using Skua.Core.Models.Monsters;
+using Skua.Core.Models.Players;
+using Skua.Core.Models.Quests;
+using Skua.Core.Models.Servers;
+using Skua.Core.Models.Shops;
+using Skua.Core.Models.Skills;
+using Skua.Core.Options;
+using Skua.Core.Utils;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,23 +34,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Skua.Core.Interfaces;
-using Skua.Core.Models;
-using Skua.Core.Models.Auras;
-using Skua.Core.Models.Items;
-using Skua.Core.Models.Monsters;
-using Skua.Core.Models.Players;
-using Skua.Core.Models.Quests;
-using Skua.Core.Models.Servers;
-using Skua.Core.Models.Shops;
-using Skua.Core.Models.Skills;
-using Skua.Core.Options;
-using Skua.Core.Utils;
 using System.Timers;
+using System.Windows.Forms;
 
 public class CoreBots
 {
@@ -6573,23 +6573,16 @@ public class CoreBots
         }
     }
 
-    List<string> TagsToAdd = new List<string>();
+    List<string> TagsToAdd = new();
 
     public void AutoAddTags()
     {
         TagsToAdd.Clear();
-        List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
-        ManagedAccount? acc = accounts.FirstOrDefault(x => x.Username.ToLower() == Bot.Player.Username.ToLower());
-        if (acc == null)
-        {
-            Bot.Log("acc is null");
-            return;
-        }
         FilterTags(Bot.Player.Username, EndGameTags);
         foreach (var kvp in EndGameTags)
         {
             bool hasInventoryItem = CheckInventory(kvp.Key, toInv: false);
-            bool tagAlreadyExists = acc.Tags.Contains(kvp.Value);
+            bool tagAlreadyExists = Bot.Accounts.HasTag(kvp.Value);
             if (hasInventoryItem && !tagAlreadyExists)
                 TagsToAdd.Add(kvp.Value);
         }
@@ -6601,22 +6594,27 @@ public class CoreBots
         }
     }
 
+    List<string> TagsToRemove = new();
+
     public void FilterTags(string username, Dictionary<string, string> tags)
     {
-        List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
-        ManagedAccount? acc = accounts.FirstOrDefault(x => x.Username.ToLower() == username.ToLower());
-        if (acc == null) return;
-        List<string> tagsToRemove = [];
+        TagsToRemove.Clear();
+        List<string> baseTags = new();
         foreach (var kvp in tags)
         {
-            bool tagAlreadyExists = acc.Tags.Contains(kvp.Value);
-            if (!tagAlreadyExists)
-                tagsToRemove.Add(kvp.Value);
+            baseTags.Add(kvp.Value);
         }
-        if (tagsToRemove.Count > 0)
+
+        foreach (string tag in Bot.Accounts.GetTags(username))
         {
-            Bot.Accounts.RemoveTags(username, tagsToRemove.ToArray());
-            string tagsToRemoveString = string.Join(", ", tagsToRemove);
+            if (!baseTags.Contains(tag))
+                TagsToRemove.Add(tag);
+        }
+
+        if (TagsToRemove.Count > 0)
+        {
+            Bot.Accounts.RemoveTags(username, TagsToRemove.ToArray());
+            string tagsToRemoveString = string.Join(", ", TagsToRemove);
             Logger($"Removed: {tagsToRemoveString}");
         }
     }
