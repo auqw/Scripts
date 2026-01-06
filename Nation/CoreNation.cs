@@ -1190,7 +1190,7 @@ public class CoreNation
 
                 if (rewardItem != null)
                 {
-                    if (Core.CheckInventory(CragName))
+                    if (Core.CheckInventory(CragName) || hasOBoNPet)
                         BambloozevsDrudgen(
                             rewardItem.Name,
                             rewardItem.MaxStack,
@@ -1723,6 +1723,8 @@ public class CoreNation
         }
     }
 
+    public bool hasOBoNPet =>
+         Bot.Player.IsMember && Core.CheckInventory(new[] { 4809, 5373 }, any: true);
     /// <summary>
     /// Performs the "Bamblooze vs. Drudgen" quest for the desired item.
     /// </summary>
@@ -1746,8 +1748,6 @@ public class CoreNation
 
         Core.AddDrop("Relic of Chaos", "Tainted Core");
         Core.AddDrop(string.IsNullOrEmpty(item) ? bagDrops : new string[] { item });
-        bool hasOBoNPet =
-            Bot.Player.IsMember && Core.CheckInventory(new[] { 4809, 5373 }, any: true);
 
         if (hasOBoNPet)
             Core.AddDrop("Tainted Soul");
