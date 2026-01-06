@@ -779,7 +779,7 @@ public class CoreUltra
         const string ink = "Zealous Ink";
         const string scroll = "Scroll of Enrage";
 
-        if (!C.CheckInventory(scroll, 10))
+        if (!C.CheckInventory(scroll, 100))
         {
             // Mats
             Core.ForItem("Undead Infantry", "underworld", parchment, 2);
@@ -796,8 +796,7 @@ public class CoreUltra
             Core.Pickup(scroll);
         }
 
-        Core.EquipConsumable(scroll);
-        // Core.EquipRandomClassAndReequip();
+        Core.EquipEnrage();
     }
 
     public void UseTaunt()
