@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading.Tasks;
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Auras;
 using Skua.Core.Options;
 
 // LR:
@@ -74,7 +75,6 @@ public class UltraSpeaker
         C.Logger("This script uses the `corner spam taunt method.. and works ^_^");
         className = Bot.Player.CurrentClass?.Name?.ToLower();
         Core.Boot();
-        Core.EnableSkills();
         Prep();
         Kill();
         C.SetOptions(false);
@@ -91,72 +91,93 @@ public class UltraSpeaker
 
     void Kill()
     {
-        if (Bot.Quests.IsDailyComplete(9173))
-            C.Logger("Weekly already complete try again Friday morning");
-
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
+        Bot.Options.DisableCollisions = true;
         C.EnsureAccept(9173);
         C.AddDrop("The First Speaker Silenced");
         Bot.Quests.UpdateQuest(9125);
         Core.Join("ultraspeaker");
         Ultra.WaitForArmy(3, "ultra_speaker.sync");
         Core.ChooseBestCell("The First Speaker");
-        Bot.Options.DisableCollisions = true;
+        Core.EnableSkills();
 
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("The First Speaker Silenced", 1), syncPath))
+            // Check if all players are done
+            bool allComplete = Ultra.CheckArmyProgressBool(
+                () => Bot.Inventory.Contains("The First Speaker Silenced", 1),
+                syncPath
+            );
+
+            if (allComplete)
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
-                C.EnsureComplete(9173);
+                if (Bot.Quests.IsDailyComplete(9173))
+                {
+                    C.Logger("Weekly already complete, try again Friday morning");
+                    Adv.GearStore(true, true);
+                    return;
+                }
+                else C.EnsureComplete(9173);
                 Adv.GearStore(true, true);
                 break;
             }
 
-            // Dead → wait for respawn
-            if (Bot.Player?.Alive == false)
+            // If we're petrified, wait
+            if (Bot.Self.Auras.Any(a => a.Name == "Stasis"))
+            {
+                Core.DisableSkills();
+                Bot.Wait.ForTrue(() => Bot.Self.Auras.Any(a => a.Name == "Stasis"), 20);
+                Core.EnableSkills();
+                continue;
+            }
+
+            // Dead → wait for respawn (FIXED)
+            if (!Bot.Player.Alive)
+            {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
 
-
-            // Put the player in a random spot within ((x=0,y=0), (x=101,y=101)) — corner box
+            // Position management in Boss cell
             if (Bot.Player?.Cell == "Boss")
             {
-                // Define box boundaries (0,0 to 101,101)
-                int minX = 0;
-                int maxX = 100;
-                int minY = 485;
-                int maxY = 500;
+                int minX = 0, maxX = 100;
+                int minY = 485, maxY = 500;
 
-                // Check if player is within the box
                 bool isInBox =
-                    Bot.Player.Position.X >= minX
-                    && Bot.Player.Position.X <= maxX
-                    && Bot.Player.Position.Y >= minY
-                    && Bot.Player.Position.Y <= maxY;
+                    Bot.Player.Position.X >= minX &&
+                    Bot.Player.Position.X <= maxX &&
+                    Bot.Player.Position.Y >= minY &&
+                    Bot.Player.Position.Y <= maxY;
 
-                // If not in box, move to random location within box
                 if (!isInBox)
                 {
                     Random rand = new();
                     int randomX = rand.Next(minX, maxX + 1);
                     int randomY = rand.Next(minY, maxY + 1);
                     Bot.Player.WalkTo(randomX, randomY);
+                    Bot.Sleep(500);
                 }
             }
 
-            if (!Bot.Player!.HasTarget)
+            // Combat logic - only attack if monster exists
+            if (Bot.Monsters.CurrentMonsters.Any(m => m.Name == "The First Speaker" && m.Alive))
             {
-                Bot.Combat.Attack("*");
-                Bot.Sleep(500);
-            }
+                Bot.Combat.Attack("The First Speaker");
 
-            Ultra.Taunt(Bot.Player.CurrentClass?.Name!, Bot.Player.Target?.Name ?? "*", "aura", 250, "Focus");
+                // Use skill 5 if Focus aura is not present
+                if (!Bot.Target.Auras.Any(a => a.Name == "Focus") && Bot.Skills.CanUseSkill(5))
+                {
+                    Bot.Skills.UseSkill(5);
+                }
+            }
+            Bot.Sleep(500);
         }
     }
-
 
     void DoEnh()
     {
