@@ -693,8 +693,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 104773,
-    "sha256": "c013572532a74e350be0c3500a1db4780b0c4c5dfe0ebeae023408a61c39eaf5",
+    "size": 105017,
+    "sha256": "d1b697794ce430fa32eba07c40b31641ccbc3147a553a158ee4f82688b9a9326",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -777,8 +777,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 43966,
-    "sha256": "a1fd6614e111889e44a1e78c679e7da35711cfc9d20e28d8358bb730688dade8",
+    "size": 43973,
+    "sha256": "28ee79bce18d35010dea72424fb3613b1f9b1abb0805fef65167d6ef2a2e7d06",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
