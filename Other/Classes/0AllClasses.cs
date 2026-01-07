@@ -85,6 +85,7 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Legion/MergeShops/AtlasFallsGearMerge.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/PirateClass.cs
 //cs_include Scripts/Story/Legion/SevenCircles(War).cs
+//cs_include Scripts/Story/DarkCarnax.cs
 
 //cs_include Scripts/Evil/VordredsArmor.cs
 //cs_include Scripts/Other/Concerts/BattleConcert2023.cs
