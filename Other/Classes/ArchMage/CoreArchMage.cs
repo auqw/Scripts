@@ -17,6 +17,7 @@ tags: null
 //cs_include Scripts/Evil/NSoD/CoreNSOD.cs
 //cs_include Scripts/Evil/SDKA/CoreSDKA.cs
 //cs_include Scripts/Other/Classes/Necromancer.cs
+//cs_include Scripts/Story/DarkCarnax.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Skills;
@@ -68,12 +69,20 @@ public class CoreArchMage
         set => _SOWM = value;
     }
     private static CoreSoWMats _SOWM;
+
     private static CoreNSOD NSOD
     {
         get => _NSOD ??= new CoreNSOD();
         set => _NSOD = value;
     }
     private static CoreNSOD _NSOD;
+
+    private static DarkCarnaxStory DCS
+    {
+        get => _DCS ??= new DarkCarnaxStory();
+        set => _DCS = value;
+    }
+    private static DarkCarnaxStory _DCS;
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "ArchMage";
@@ -772,6 +781,8 @@ public class CoreArchMage
     {
         if (Core.CheckInventory("Calamitous Ruin"))
             return;
+
+        DCS.Storyline();
 
         Core.AddDrop("Synthetic Viscera");
         Core.Jump("Boss", "Left");
