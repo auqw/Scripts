@@ -204,7 +204,8 @@ public class Lich
 
     public void Example(bool rankUpClass = true)
     {
-        if (Core.CheckInventory("Lich"))
+        // Lich class
+        if (Core.CheckInventory(94824))
         {
             if (rankUpClass)
                 Adv.RankUpClass("Lich");
@@ -258,14 +259,14 @@ public class Lich
             Bot.Wait.ForPickup("Klaatu's Necronomicon");
         }
 
-        // Lich Class
-        if (!Core.CheckInventory("Lich Class"))
+        // Lich class
+        if (Core.CheckInventory(94824))
         {
             Core.AddDrop(
                 94824 /* Lich class item ID */
             );
             Core.ChainComplete(10339);
-            Bot.Wait.ForPickup("Lich");
+            Bot.Wait.ForPickup(94824);
         }
 
         if (rankUpClass)
@@ -319,7 +320,8 @@ public class Lich
 
     public void LichClass(bool rankup = true)
     {
-        if (Core.CheckInventory("Lich"))
+        // Lich class
+        if (Core.CheckInventory(94824))
         {
             if (rankup && Core.CheckClassRank(false, "Lich") < 10)
             {
@@ -351,7 +353,7 @@ public class Lich
                 94824 /* Lich class item ID */
             );
             Core.ChainComplete(10339);
-            Bot.Wait.ForPickup("Lich");
+            Bot.Wait.ForPickup(94824);
 
             if (rankup && Core.CheckClassRank(false, "Lich") < 10)
             {
