@@ -4240,6 +4240,7 @@ public class CoreBots
                 )
                     Bot.Combat.Attack(monster); // ⚔️
 
+                Bot.Wait.ForMonsterDeath();
                 Sleep(500); // 💤
                             // Check if player doenst have a target after the attacking
                             // if not then its dead and we can move on
