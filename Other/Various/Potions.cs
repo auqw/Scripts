@@ -496,8 +496,8 @@ public class PotionBuyer
                     GetIngredient(reagent1);
                     GetIngredient(reagent2);
 
-                    int VoucherQuant = PotionQuant - Bot.Inventory.GetQuantity(62749);
-                    int DStoneQuant = PotionQuant - Bot.Inventory.GetQuantity("Dragon Runestone");
+                    int VoucherQuant = Math.Min(PotionQuant - Bot.Inventory.GetQuantity(62749), 100);
+                    int DStoneQuant = Math.Min(PotionQuant - Bot.Inventory.GetQuantity("Dragon Runestone"), 100);
                     if (VoucherQuant > 0)
                         Adv.BuyItem("alchemyacademy", 395, "Gold Voucher 100k", VoucherQuant, 1, 8777);
                     if (DStoneQuant > 0)
