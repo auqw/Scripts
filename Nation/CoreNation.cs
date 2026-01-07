@@ -1812,13 +1812,16 @@ public class CoreNation
             // Sell Voucher of Nulgath if allowed
             SellVoucherOfNulgath(sellMemVoucher, item);
 
+            Bot.Sleep(500);
             // Spend gold if AssistantDuring
             AssistantDuringSupplies(AssistantDuring);
 
+            Bot.Sleep(500);
             // Do Swindles Return Policy if enabled
             // 7551 - Swindle's Return Policy
             DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
+            Bot.Sleep(500);
         Retry:
             //reduce spam
             Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
@@ -1834,6 +1837,7 @@ public class CoreNation
                     }
                 }
 
+                Bot.Sleep(500);
                 if (
                     returnPolicyDuringSupplies
                     && (item == "Diamond of Nulgath" || item == null)
@@ -1841,6 +1845,7 @@ public class CoreNation
                 )
                     CragsThirst();
 
+                Bot.Sleep(500);
                 if (
                     Core.CheckInventory("Voucher of Nulgath (non-mem)")
                     && Core.CheckInventory("Essence of Nulgath", 60)
@@ -1879,6 +1884,7 @@ public class CoreNation
                 Core.Sleep();
                 goto Retry;
             }
+            Bot.Sleep(500);
         }
         HasLogged = false;
     }
