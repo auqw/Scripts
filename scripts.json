@@ -12980,8 +12980,8 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 45847,
-    "sha256": "e85a0915d89d267114c1f0747a75d27b6df48afdf2e63e56848558a4cb17671b",
+    "size": 45888,
+    "sha256": "bc6479304971046e1402c629064143a14f927f393063c5d00500ed06da5a1fcd",
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -27724,8 +27724,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/LuminaElementi.cs",
-    "size": 1188,
-    "sha256": "10d6030509e91755e9da003f8b02ebba2119bc960a696836b0e3059f5b7c2039",
+    "size": 1229,
+    "sha256": "f5b87817f085a3782b209e4c0b3246a0c22859c8773f59b6e2b90683c737437d",
     "fileName": "LuminaElementi.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/LuminaElementi.cs"
   },
@@ -27736,8 +27736,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/0ArchMage.cs",
-    "size": 1307,
-    "sha256": "b23dc5ed099798c2588fea374be01539d89c4990bc2b385aac6cc3d9808753f6",
+    "size": 1348,
+    "sha256": "d417a54725feb79a4733ab2781b1bdf26c821fa5275d287432a0baf9a9d01f4a",
     "fileName": "0ArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/0ArchMage.cs"
   },
