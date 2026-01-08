@@ -85,6 +85,7 @@ public class ArmySpiritOrbs
         const string map = "necroproject";
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
         C.Logger($"Players in Curreny Army: {sArmy.Players().Length}");
         Bot.Quests.UpdateQuest(9901);
         C.AddDrop("Spirit Orb", "Bone Dust");

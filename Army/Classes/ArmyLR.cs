@@ -431,6 +431,7 @@ public class ArmyLR
         // Sync file used to keep track of what accs are done.
         string syncPath = Ultra.ResolveSyncPath(WaitForArmysyncPath);
         Ultra.ClearSyncFile(WaitForArmysyncPath);
+        Bot.Sleep(2500);
 
         // Log Players in current army.
         C.Logger($"Players in Curreny Army: {sArmy.Players().Length}");

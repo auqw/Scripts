@@ -115,7 +115,7 @@ public class TouchMass
         C.EquipClass(ClassType.Farm);
         const string map = "starfield";
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
-        Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
         C.Logger($"Players in Army: {sArmy.Players().Length}");
 
         C.PrivateRooms = true;
