@@ -276,7 +276,7 @@ public class CoreFireIsland
         Story.KillQuest(
             4204,
             "phoenixrise",
-            new[] { "Firestorm Tiger", "Lava Troll", "Infernal Goblin" }
+            new[] { "Lava Troll", "Firestorm Tiger", "Infernal Goblin" }
         );
 
         //Hunt for the Stolen
