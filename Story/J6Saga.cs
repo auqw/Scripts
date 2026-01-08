@@ -78,19 +78,11 @@ public class J6Saga
         //A Gate and Terrible Monster
         Story.KillQuest(1171, "moonyard", "Junkyard Wall");
 
-        if (!Core.isCompletedBefore(1172))
-            Core.Sleep(5000);
-
         //I'm on the Hunt, I'm after 58-Sr3
         Story.MapItemQuest(1172, "moonyard", 495);
 
         //Intruder Alert! Intruder Alert!
-        if (!Story.QuestProgression(1173, GetReward: false))
-        {
-            Core.Jump("MoonCut", "Left");
-            Core.Join("moonyardb");
-            Story.KillQuest(1173, "moonyardb", "Robo Guard", GetReward: false);
-        }
+        Story.KillQuest(1173, "moonyardb", "Robo Guard", GetReward: false);
 
         //Mission 3
         Story.KillQuest(1177, "marsh2", "Lesser Shadow Serpent");
