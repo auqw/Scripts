@@ -111,14 +111,8 @@ public class J6Saga
             Core.EnsureAccept(2830);
             Core.KillMonster("xantown", "Enter", "Spawn", "*", "Flare Artifact");
             Core.EnsureComplete(2830);
-            Bot.Combat.CancelTarget();
-            Core.JumpWait();
-            Bot.Wait.ForCombatExit();
-            Core.Logger(
-                "Joining Whitemap to amke sure your outa xantown as the mobs\n"
-                    + "are aggressive.. and you amy potentialy be stuck there"
-            );
-            Core.Join("whitemap");
+            if (Bot.Map.Name == "xantown")
+                Core.Jump("r12", "Left"); // map is aggro af this is a safe cell.
             Core.SellItem("Auxiliary Clue 3");
         }
 

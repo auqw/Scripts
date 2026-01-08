@@ -80,6 +80,8 @@ public class DragonRoad
             Core.Join("XanTown");
             Core.Jump("r12");
             Core.GetMapItem(3756, 1, "XanTown");
+            if (Bot.Map.Name == "xantown")
+                Core.Jump("r12", "Left"); // map is aggro af this is a safe cell. aggro af this is a safe cell.
             Core.GetMapItem(3763, 1, "DragonRoad");
             Core.EnsureComplete(4537);
         }

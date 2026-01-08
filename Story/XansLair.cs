@@ -135,6 +135,8 @@ public class XansLair
 
         // Signed, Seared, Delivered 1739
         Story.MapItemQuest(1739, "xantown", 925);
+        if (Bot.Map.Name == "xantown")
+            Core.Jump("r12", "Left"); // map is aggro af this is a safe cell.
     }
 
     public void ScoriasQuestsQuests()
@@ -146,6 +148,8 @@ public class XansLair
 
         // The Xan With The Plan 1740
         Story.KillQuest(1740, "xantown", "Xan");
+        if (Bot.Map.Name == "xantown")
+            Core.Jump("r12", "Left"); // map is aggro af this is a safe cell.
     }
 
     public void WarlicsQuests()
