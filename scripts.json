@@ -4455,8 +4455,8 @@
       "farm"
     ],
     "path": "Army/Farm/ArmyPrismatas.cs",
-    "size": 3832,
-    "sha256": "c093418d1c49f4ab6b606ac8fb5789031776465787009203c4e26eaaac79a212",
+    "size": 3857,
+    "sha256": "4f29c42b593fc04b00bc76febd626bab1e496bbb1982a8493a499b5ed116bbe4",
     "fileName": "ArmyPrismatas.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyPrismatas.cs"
   },
@@ -4467,8 +4467,8 @@
       "null"
     ],
     "path": "Army/Farm/ArmyLeveling.cs",
-    "size": 3955,
-    "sha256": "1a5279847b4835dffb4321d9cd03bd6937d4af23fef9b6dbc7ae1ebd38ab2653",
+    "size": 3908,
+    "sha256": "cd195d5ac929326d3d3348ee61ddf5648afb3ad4ba495f558ffc85f9957cd7dc",
     "fileName": "ArmyLeveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLeveling.cs"
   },
