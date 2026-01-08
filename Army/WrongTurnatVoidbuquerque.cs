@@ -63,7 +63,7 @@ public class VADaily
             "taunter",
             "Taunter Class",
             "Insert the name of the class that will taunt",
-            ""
+            "ArchPaladin"
         ),
         sArmy.player1,
         sArmy.player2,
@@ -213,7 +213,7 @@ public class VADaily
         Bot.Sleep(2500);
 
         // 'Wrong Turn at Voidbuquerque' && 'Doom Spikes'
-        C.EnsureAcceptmultiple(9091, 9418);
+        C.EnsureAcceptmultiple(9091, 9418, 8547);
         C.AddDrop("Xyfrag's ??? Essence", "Xyfrag's Slimy Tooth", "Void Energy");
 
         Core.Join(map);
@@ -224,7 +224,7 @@ public class VADaily
         Core.EnableSkills();
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains("Xyfrag's ??? Essence"), syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains($"Xyfrag's ??? Essence"), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
@@ -242,12 +242,8 @@ public class VADaily
 
 
             if (Core.HasClassEquipped(taunter))
-                Ultra.Taunt(taunter, boss, "charge", 250);
-            else
-            {
-                Core.Kill(boss);
-                Bot.Skills.UseSkill(5);
-            }
+                Ultra.Taunt(taunter, boss, "charge", 250, "Focus");
+            Bot.Combat.Attack(boss);
             Bot.Sleep(500);
         }
         Bot.Events.ExtensionPacketReceived -= Ultra.GenericChargeListener;
