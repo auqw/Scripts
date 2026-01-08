@@ -4784,7 +4784,7 @@ public class CoreBots
 
         Monster? FindMonster() =>
             Bot.Monsters.MapMonsters.Find(x =>
-                x != null && x.Name.FormatForCompare() == monster.FormatForCompare()
+                x != null && x.Name.FormatForCompare() == monster.FormatForCompare() && x.Alive
             );
 
         Monster? targetMonster = FindMonster();
@@ -4878,6 +4878,10 @@ public class CoreBots
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
+                targetMonster = FindMonster();
+                if (targetMonster == null)
+                    continue;
+
                 if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
                 {
                     string cellToJump = targetMonster?.Cell ?? "Enter";
@@ -4886,9 +4890,9 @@ public class CoreBots
                 }
 
                 if (!Bot.Player.HasTarget && targetMonster != null)
-                    Bot.Combat.Attack(targetMonster.MapID);
+                    Bot.Combat.Attack(targetMonster);
 
-                Sleep();
+                Bot.Sleep(200);
 
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
