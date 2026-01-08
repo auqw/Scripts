@@ -83,6 +83,7 @@ public class ArmyPristmas
         const string map = "archmage";
         string syncPath = Ultra.ResolveSyncPath("ArmyBool.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
         Core.Join(map);
         C.AddDrop("Elemental Binding");
         C.Jump("r2", "Left");
