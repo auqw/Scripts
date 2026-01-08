@@ -1257,8 +1257,8 @@
       "j6-saga"
     ],
     "path": "Story/J6Saga.cs",
-    "size": 6936,
-    "sha256": "8d6ed124bade473f7b6b1eec0891c30dcabd7ca422990acc2557753b290e4cfa",
+    "size": 6484,
+    "sha256": "b83ed055bd6afeb06297bf7f9f569f09b243109b2acfc8895917e124cef6e93b",
     "fileName": "J6Saga.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/J6Saga.cs"
   },
@@ -1572,8 +1572,8 @@
       "lair"
     ],
     "path": "Story/XansLair.cs",
-    "size": 4677,
-    "sha256": "92209dab33784ed1b2a11a00390e35cd8b560d9697fd3e665c7403b67927fcfd",
+    "size": 4911,
+    "sha256": "3941d28dbe4e3e2cfc1459a39ab7bdbce0f22994d9a3d10a851e959b1c1c092a",
     "fileName": "XansLair.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/XansLair.cs"
   },
@@ -2168,8 +2168,8 @@
       "dragon-road"
     ],
     "path": "Story/DragonRoad[Upholder].cs",
-    "size": 4027,
-    "sha256": "7dfc1940dbfa112d030dad4b228f1d094226690b97e2a489f68a90f4f8b86453",
+    "size": 4182,
+    "sha256": "f7409de9c3bd6fd10ca97cd52bdaf1d16b1f756f14df28e37605377fb7a87106",
     "fileName": "DragonRoad[Upholder].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/DragonRoad[Upholder].cs"
   },
