@@ -124,6 +124,7 @@ public class VADaily
         NightBane();
 
         C.EnsureComplete(9091);
+        C.Logger("All players finished farm.");
 
     }
 
@@ -147,9 +148,8 @@ public class VADaily
         {
             if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains("Flibbitiestgibbet's ??? Essence"), syncPath))
             {
-                Bot.Options.AggroMonsters = false;
-                C.Jump("Enter", "Spawn");
-                C.Logger("All players finished farm.");
+                C.JumpWait();
+                C.Logger("All players finished farming \"Flibbitiestgibbet's ??? Essence\".");
                 break;
             }
 
@@ -185,9 +185,8 @@ public class VADaily
         {
             if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains("Nightbane's ??? Essence"), syncPath))
             {
-                Bot.Options.AggroMonsters = false;
-                C.Jump("Enter", "Spawn");
-                C.Logger("All players finished farm.");
+                C.JumpWait();
+                C.Logger("All players finished farming \"Nightbane's ??? Essence\".");
                 break;
             }
 
@@ -226,11 +225,9 @@ public class VADaily
         {
             if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains($"Xyfrag's ??? Essence"), syncPath))
             {
-                C.Jump("Enter", "Spawn");
-                C.Logger("All players finished farm.");
-                C.EnsureComplete(8547);
-                Adv.GearStore(true, true);
                 Bot.Events.ExtensionPacketReceived -= Ultra.GenericChargeListener;
+                C.JumpWait();
+                C.Logger("All players finished farming \"Xyfrag's ??? Essence\".");
                 break;
             }
             // Dead → wait for respawn
