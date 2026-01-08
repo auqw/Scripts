@@ -94,7 +94,7 @@ public class KillerCatacombs
         Story.KillQuest(
             3675,
             "killercatacombs",
-            new[] { "Starved Maw ", "Ravenous Maw", "Living Armor " }
+            new[] { "Ravenous Maw", "Starved Maw", "Living Armor " }
         );
 
         // The Moment of Silence
