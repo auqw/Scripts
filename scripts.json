@@ -792,8 +792,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 43935,
-    "sha256": "1cdb38832dad2b67329f8f575e193daffde85bbe6bb016974ad58c3c6900aa79",
+    "size": 43882,
+    "sha256": "2f0eea10a30a1cd42b3d69e30b0ff6e1649a372b2fdfcebdf42a198464141966",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -4467,8 +4467,8 @@
       "null"
     ],
     "path": "Army/Farm/ArmyLeveling.cs",
-    "size": 3908,
-    "sha256": "cd195d5ac929326d3d3348ee61ddf5648afb3ad4ba495f558ffc85f9957cd7dc",
+    "size": 3989,
+    "sha256": "8066bec77dac50d790aa05f099de909e5be475856d2a56382741bbf10f528c73",
     "fileName": "ArmyLeveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLeveling.cs"
   },
