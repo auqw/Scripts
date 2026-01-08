@@ -71,16 +71,15 @@ public class ArmyLeveling
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        C.BankingBlackList.AddRange(new[] { "Spirit Orb", "Bone Dust" });
         C.SetOptions(disableClassSwap: true);
         
         Prereqs();
-        GetSO();
+        Leveling();
 
         C.SetOptions(false);
     }
 
-    void GetSO(int quant = 10000)
+    void Leveling()
     {
         if (sArmy.Players().Length <= 0)
         {
@@ -92,6 +91,7 @@ public class ArmyLeveling
         const string map = "shadowbattleon";
         string syncPath = Ultra.ResolveSyncPath("ArmyBool.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
         C.Logger($"Players in Curreny Army: {sArmy.Players().Length}");
         C.RegisterQuests(9421, 9422, 9426);
         Core.Join(map);
@@ -103,13 +103,14 @@ public class ArmyLeveling
         Bot.Options.AggroMonsters = true;
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => Bot.Player.Level >= 100, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.Player.Level == 100, syncPath))
             {
                 Bot.Options.AggroMonsters = false;
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 break;
             }
+            
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
             {
