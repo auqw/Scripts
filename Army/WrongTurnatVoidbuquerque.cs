@@ -54,10 +54,17 @@ public class VADaily
     }
     private static CoreStory _Story;
 
+    string taunter;
     public string OptionsStorage = "voidbuquerque";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
+        new Option<string>(
+            "taunter",
+            "Taunter Class",
+            "Insert the name of the class that will taunt",
+            ""
+        ),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -69,6 +76,7 @@ public class VADaily
         CoreBots.Instance.SkipOptions,
     };
 
+    bool IsTaunter() => Core.HasClassEquipped(taunter);
     public void ScriptMain(IScriptInterface Bot)
     {
         C.BankingBlackList.AddRange(new[] { "Flibbitiestgibbet's ??? Essence", "Nightbane's ??? Essence", "Xyfrag's ??? Essence" });
@@ -88,6 +96,7 @@ public class VADaily
             return;
         }
 
+        taunter = (Bot.Config!.Get<string>("taunter") ?? "").Trim();
         Core.Boot();
 
         DoVoidbuquerque();
@@ -101,6 +110,11 @@ public class VADaily
         C.EnsureAccept(9091);
 
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        if (IsTaunter())
+        {
+            Bot.Events.ExtensionPacketReceived += Ultra.GenericChargeListener;
+            Ultra.GetScrollOfEnrage();
+        }
         Xyfrag();
 
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
@@ -216,6 +230,7 @@ public class VADaily
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8547);
                 Adv.GearStore(true, true);
+                Bot.Events.ExtensionPacketReceived -= Ultra.GenericChargeListener;
                 break;
             }
             // Dead → wait for respawn
@@ -225,10 +240,18 @@ public class VADaily
                 continue;
             }
 
-            if (!Bot.Player.HasTarget)
-                Bot.Combat.Attack(boss);
+
+            if (Core.HasClassEquipped(taunter))
+                Ultra.Taunt(taunter, boss, "charge", 250);
+            else
+            {
+                Core.Kill(boss);
+                Bot.Skills.UseSkill(5);
+            }
             Bot.Sleep(500);
         }
+        Bot.Events.ExtensionPacketReceived -= Ultra.GenericChargeListener;
     }
+
 
 }
