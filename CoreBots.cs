@@ -4795,7 +4795,7 @@ public class CoreBots
 
             // Fallback to first partial name match (case-insensitive)
             Monster? fallback = Bot.Monsters.MapMonsters.FirstOrDefault(x =>
-                x != null && x?.Name?.Contains(monster, StringComparison.OrdinalIgnoreCase) == true
+                x != null && x?.Name?.Contains(monster, StringComparison.OrdinalIgnoreCase) == true && x.Alive
             );
 
             if (fallback != null)
