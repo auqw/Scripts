@@ -81,8 +81,8 @@
       "voidaura"
     ],
     "path": "Army/WrongTurnatVoidbuquerque.cs",
-    "size": 7720,
-    "sha256": "8109803891aff6ab6cd76eadb8e257e965c612e2d5ed6c774b341aa7fca44cc7",
+    "size": 7666,
+    "sha256": "e7dc17a40248252e20a48788119a3da36c615c45100aba38acd66abf9866085f",
     "fileName": "WrongTurnatVoidbuquerque.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/WrongTurnatVoidbuquerque.cs"
   },
@@ -792,8 +792,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 43918,
-    "sha256": "fed378011278ddec1ae806c0c07b9afc23e30d0171e6ba73b5f42ff685f7d76e",
+    "size": 43935,
+    "sha256": "1cdb38832dad2b67329f8f575e193daffde85bbe6bb016974ad58c3c6900aa79",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
