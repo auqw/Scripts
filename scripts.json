@@ -72,6 +72,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/CoreArmyLite.cs"
   },
   {
+    "name": "VADaily",
+    "description": "`wrong turn at voidbuquerque` quest with an army.",
+    "tags": [
+      "wrong turn at voidbuquerque",
+      "void",
+      "aura",
+      "voidaura"
+    ],
+    "path": "Army/WrongTurnatVoidbuquerque.cs",
+    "size": 6941,
+    "sha256": "5ee2842d350e6db277e493c12dd228bd97acc404d78feb3d7ac13f1d38125662",
+    "fileName": "WrongTurnatVoidbuquerque.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/WrongTurnatVoidbuquerque.cs"
+  },
+  {
     "name": "Army Spirit Orbs",
     "description": "null",
     "tags": [
