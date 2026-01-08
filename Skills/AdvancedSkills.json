@@ -301,7 +301,7 @@
       ]
     }
   },
-  "Abyssal Angel's Shadow": {
+  "Abyssal Angel\u0027s Shadow": {
     "Base": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
@@ -1890,7 +1890,7 @@
           "skillId": 3
         },
         {
-          "skillId": 2
+          "skillId": 1
         },
         {
           "skillId": 0
@@ -2015,7 +2015,7 @@
           "skillId": 3
         },
         {
-          "skillId": 2
+          "skillId": 1
         },
         {
           "skillId": 0
