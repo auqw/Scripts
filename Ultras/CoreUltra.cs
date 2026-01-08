@@ -520,7 +520,6 @@ public class CoreUltra
         if (!Bot.Player.Alive)
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-        C.DebugLogger(this);
         string syncFile = ResolveSyncPath(syncFilePath);
         string myKey = $"{Bot.Player.Username}|{Bot.Player.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
         int myQty = isTemp
@@ -569,24 +568,31 @@ public class CoreUltra
 
     public bool CheckArmyProgressBool(Func<bool> condition, string syncFilePath = "army_sync.sync")
     {
-        // Expected format: KEY:status:timestamp
-        // Example: Player1|ArchPaladin:1:1735574400
-
         if (!Bot.Player.Alive)
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-        C.DebugLogger(this);
+        if (string.IsNullOrWhiteSpace(Bot.Player.Username))
+        {
+            Bot.Wait.ForTrue(() => !string.IsNullOrWhiteSpace(Bot.Player.Username), 20);
+        }
+
+
         string syncFile = ResolveSyncPath(syncFilePath);
-        string myKey = $"{Bot.Player.Username}|{Bot.Player.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
+        string username = Bot.Player.Username ?? "Unknown";
+        string className = Bot.Player.CurrentClass?.Name ?? "Peasant";
+        string myKey = $"{username}|{className}".Replace(":", "-");
+
+        if (string.IsNullOrWhiteSpace(username) || username == "Unknown")
+        {
+            return false;
+        }
+
         bool myCondition = condition();
+        UpdateEntry(syncFile, myKey, myCondition ? "1" : "0");
 
-        // Update my progress with bool status
-        UpdateEntry(syncFile, myKey, $"{(myCondition ? "1" : "0")}");
-
-        // Read file and check all members
         string[] lines = ReadLines(syncFile);
         long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-        const int staleThreshold = 600; // 10 min
+        const int staleThreshold = 600;
 
         int activeMembers = 0;
         int completedMembers = 0;
@@ -594,19 +600,20 @@ public class CoreUltra
         foreach (string line in lines)
         {
             string[] parts = line.Split(':');
-            // Format: KEY:status:timestamp (3 parts minimum)
+
             if (parts.Length < 3)
                 continue;
 
-            // Parse bool status
+            string[] keyParts = parts[0].Split('|');
+            if (keyParts.Length == 0 || string.IsNullOrWhiteSpace(keyParts[0]))
+                continue;
+
             if (!int.TryParse(parts[1], out int status))
                 continue;
 
-            // Parse timestamp (last part)
             if (!long.TryParse(parts[2], out long ts))
                 continue;
 
-            // Skip stale entries
             if (now - ts > staleThreshold)
                 continue;
 
@@ -614,6 +621,7 @@ public class CoreUltra
             if (status == 1)
                 completedMembers++;
         }
+
 
         return activeMembers > 0 && completedMembers == activeMembers;
     }
@@ -727,24 +735,23 @@ public class CoreUltra
     // -------------------------------------------------------
     public void UpdateEntry(string path, string key, string payload)
     {
-        // Extract just the player name
-        string playerName = key.Split('|')[0];
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            return;
+        }
 
         List<string> lines = ReadLines(path).ToList();
         string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-
-        // Preserve class in the file, but key matching should be only by playername
         string entry = $"{key}:{payload}:{stamp}";
 
+        // Match by FULL key (username|class)
         int idx = lines.FindIndex(l =>
         {
             string[] parts = l.Split(':');
             if (parts.Length < 1)
                 return false;
 
-            // parts[0] is "Player|Class"
-            string existingName = parts[0].Split('|')[0];
-            return existingName.Equals(playerName, StringComparison.OrdinalIgnoreCase);
+            return parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
         });
 
         if (idx >= 0)

@@ -72,8 +72,9 @@ public class ArmyLeveling
     public void ScriptMain(IScriptInterface Bot)
     {
         C.SetOptions(disableClassSwap: true);
-        
+
         Prereqs();
+        C.DL_Enable();
         Leveling();
 
         C.SetOptions(false);
@@ -103,14 +104,14 @@ public class ArmyLeveling
         Bot.Options.AggroMonsters = true;
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => Bot.Player.Level == 100, syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.Player.Level >= 100, syncPath))
             {
                 Bot.Options.AggroMonsters = false;
-                C.Jump("Enter", "Spawn");
+                C.JumpWait();
                 C.Logger("All players finished farm.");
                 break;
             }
-            
+
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
             {
@@ -126,6 +127,11 @@ public class ArmyLeveling
 
     void Prereqs()
     {
+        if (C.isCompletedBefore(9425))
+            return;
+
+        Story.PreLoad(this);
+
         // Mega Shadow Hunt Medal 9422
         Story.KillQuest(9422, "shadowbattleon", "Doomed Beast");
 
