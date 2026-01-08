@@ -93,8 +93,8 @@
       "null"
     ],
     "path": "Army/ArmySpiritOrbs.cs",
-    "size": 3353,
-    "sha256": "6c72b8014cc5ebd4248718099f7a60b524d5b59ea9438da5b8549676c7348e43",
+    "size": 3378,
+    "sha256": "a1093ca1bb9eb3e2a29ad0127e10c4810ddb2c93bb39814d95f1cd48b009ac2d",
     "fileName": "ArmySpiritOrbs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmySpiritOrbs.cs"
   },
@@ -4483,8 +4483,8 @@
       "army"
     ],
     "path": "Army/Classes/ArmyLR.cs",
-    "size": 16240,
-    "sha256": "f51f1504ee19e633a84befcd619d9e94384c00549693a564dff961f5efa6b019",
+    "size": 16265,
+    "sha256": "4ab336d34ee24a86d9e3ff089adce3c9e86bd4e7676c8d1dfc6e97a8eb612dbc",
     "fileName": "ArmyLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyLR.cs"
   },
@@ -4636,8 +4636,8 @@
       "badge"
     ],
     "path": "Army/Badges/TouchMass.cs",
-    "size": 5795,
-    "sha256": "c071787eec321460c24190913fae76e010d7a10c75886b688886da9020bb9050",
+    "size": 5781,
+    "sha256": "acc7e80c407d4a51a63210be1ed1b3d577d246c50390b168a12899bdd9d977c1",
     "fileName": "TouchMass.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Badges/TouchMass.cs"
   },
