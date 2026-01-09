@@ -2298,8 +2298,8 @@ public class CoreFarms
                     Core.Sleep();
                 }
 
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
                 Bot.Kill.Monster(mob.MapID);
                 Core.Sleep();
 
@@ -2639,7 +2639,7 @@ public class CoreFarms
         {
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
-            Core.HuntMonster("fireforge", "Blazebinder", log: false);
+            Core.HuntMonsterMapID("fireforge", 4, log: false);
         }
 
         ToggleBoost(BoostType.Reputation, false);
