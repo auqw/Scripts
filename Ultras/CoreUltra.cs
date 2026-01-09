@@ -72,7 +72,7 @@ public class CoreUltra
                 break;
 
             case "charge":
-                if (_chargeDetected && !Bot.Target.Auras.Any(x => x != null && x.Name.ToLower() == aura.ToLower()))
+                if (!string.IsNullOrWhiteSpace(aura) && _chargeDetected && !Bot.Target.Auras.Any(x => x != null && x.Name.ToLower() == aura.ToLower()))
                     UseTaunt();
                 break;
         }
