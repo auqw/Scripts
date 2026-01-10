@@ -87,6 +87,13 @@ public class NinthQueensTreasureMerge
                     Farm.Voucher(req.Name, quant);
                     break;
 
+                case "Scorpion Pontiff Headdress":
+                case "Scorpion Pontiff Hair":
+                case "Scorpion Priestess Veil":
+                case "Scorpion Priestess Locks":
+                case "Eye of Serket":
+                case "Saccara Lapis Sabres":
+                case "Saccara Lapis Sabre":
                 case "Meresankh's Forbidden Gem":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -95,32 +102,7 @@ public class NinthQueensTreasureMerge
                     }
 
                     int questID = Core.IsMember ? 10545 : 10544;
-
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(questID);
-
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("meresankhchambers", "Queen Meresankh", req.Name, quant, isTemp: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
-
-                    Core.CancelRegisteredQuests();
-                    break;
-
-                case "Scorpion Pontiff Headdress":
-                case "Scorpion Pontiff Hair":
-                case "Scorpion Priestess Veil":
-                case "Scorpion Priestess Locks":
-                case "Eye of Serket":
-                case "Saccara Lapis Sabres":
-                case "Saccara Lapis Sabre":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
 
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
@@ -134,7 +116,6 @@ public class NinthQueensTreasureMerge
             }
         }
     }
-
     public List<IOption> Select = new()
     {
         new Option<bool>("98378", "Warden of Serket", "Mode: [select] only\nShould the bot buy \"Warden of Serket\" ?", false),
