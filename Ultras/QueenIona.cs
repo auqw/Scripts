@@ -67,10 +67,10 @@ public class QueenIona
     void Prep()
     {
         if (Bot.Player.Alive && Bot.Player.CurrentClass?.Name == "Void Highlord"
-                    || Bot.Player.CurrentClass.Name == "Void Highlord (IoDA)")
+                    || Bot.Player.CurrentClass?.Name == "Void Highlord (IoDA)")
             IsVHL = true;
         if (Bot.Config!.Get<bool>("DoEnh"))
-            Adv.SmartEnhance(Bot.Player.CurrentClass.Name);
+            Adv.SmartEnhance(Bot.Player.CurrentClass!.Name);
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
     }
 
