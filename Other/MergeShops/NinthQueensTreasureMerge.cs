@@ -107,11 +107,8 @@ public class NinthQueensTreasureMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
 
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("meresankhchambers", "Queen Meresankh", req.Name, quant, isTemp: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.HuntMonster("meresankhchambers", "Queen Meresankh", req.Name, quant, isTemp: false);
+                    Bot.Wait.ForPickup(req.Name);
                     break;
             }
         }
