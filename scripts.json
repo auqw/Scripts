@@ -819,8 +819,8 @@
       "queen iona"
     ],
     "path": "Ultras/QueenIona.cs",
-    "size": 6232,
-    "sha256": "853608ad258232e719571ac35a79c15aa7527afc39f4ddcfba06dcf8eab230fc",
+    "size": 7065,
+    "sha256": "1bbfc81bc715282427676feba1efcf19a94e12d9992cdc1e0592b411d8bba15e",
     "fileName": "QueenIona.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/QueenIona.cs"
   },
@@ -13010,8 +13010,8 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 45888,
-    "sha256": "bc6479304971046e1402c629064143a14f927f393063c5d00500ed06da5a1fcd",
+    "size": 45929,
+    "sha256": "1e3b4691176ce0f58ec8c75576cfbcd1fac19c493f8a92837b0196dba39ebcb5",
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -13088,8 +13088,8 @@
       "class"
     ],
     "path": "Other/Classes/SovereignOfStorms.cs",
-    "size": 1783,
-    "sha256": "4cbd351a52213a4dcf573080469d11f9554006f37df198d8faefa9218c3ef533",
+    "size": 1907,
+    "sha256": "57c374e3ee8681782fb18190ffcf9d9576d6560f88b15d8b12142bf3b9644103",
     "fileName": "SovereignOfStorms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/SovereignOfStorms.cs"
   },
@@ -17121,8 +17121,8 @@
       "storms"
     ],
     "path": "Other/MergeShops/LothianTreasuryMerge.cs",
-    "size": 7831,
-    "sha256": "08e891a0477a9fd0d7369786d204080b252a74d30b2419d009c0f86f5bec484c",
+    "size": 7972,
+    "sha256": "3db90648756238d94931a2ec2184124a3c84fb814061f4a87705af858670fc29",
     "fileName": "LothianTreasuryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/LothianTreasuryMerge.cs"
   },
