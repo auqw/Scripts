@@ -102,7 +102,7 @@ public class UltraDarkCarnax
     void Fight()
     {
         const string map = "darkcarnax";
-        const string boss = "Nightmare Dark Carnax";
+        const string boss = "Nightmare Carnax";
         bool attemptSolo = Bot.Config!.Get<bool>("AttemptSolo");
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
