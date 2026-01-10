@@ -93,11 +93,13 @@ public class QueenIona
         if (!Bot.Quests.IsDailyComplete(9852))
             C.EnsureAccept(9852);
 
-        Bot.Sleep(2500);
+        if (item != null)
+            C.AddDrop(item);
         C.AddDrop("Lothian's Lightning");
-        C.RegisterQuests(C.IsMember ? 9853 : 9854);
-
-        C.Join(map + -100000);
+        if (HasQuestItem)
+            C.RegisterQuests(C.IsMember ? 9853 : 9854);
+        // Always private
+        C.Join(map + -100000, "r2", "Left");
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
 
@@ -114,8 +116,14 @@ public class QueenIona
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
+            
+            if (Bot.Player.Cell != "r2")
+            {
+                Bot.Map.Jump("r2", "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange("r2");
+            }
 
-            if ((!HasQuestItem && !Bot.Quests.IsDailyComplete(9852) && Bot.TempInv.Contains(87681, 1)) || !Bot.Quests.IsDailyComplete(9852))
+            if (item == "Lothian's Lightning" && !HasQuestItem && !Bot.Quests.IsDailyComplete(9852) && Bot.TempInv.Contains(87681))
             {
                 C.Jump("Enter", "Spawn");
                 C.EnsureComplete(9852);
@@ -123,7 +131,8 @@ public class QueenIona
                     continue;
 
                 C.Logger("Daily complete come back tomarrow");
-                break;
+                Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
+                return;
             }
 
             if (!Bot.Player.HasTarget)
