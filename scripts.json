@@ -14330,6 +14330,42 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FishingGearMerge.cs"
   },
   {
+    "name": "Ninth Queens Treasure Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Ninth Queens Treasure Merge [2666] in /meresankhchambers",
+    "tags": [
+      "ninth",
+      "queens",
+      "treasure",
+      "merge",
+      "meresankhchambers",
+      "warden",
+      "serket",
+      "scorpion",
+      "priestess",
+      "veil",
+      "pontiffs",
+      "cloak",
+      "pontiff",
+      "morph",
+      "headdress",
+      "hand",
+      "hands",
+      "saccara",
+      "lapis",
+      "sabre",
+      "shield",
+      "gem",
+      "selkis",
+      "eye",
+      "golden"
+    ],
+    "path": "Other/MergeShops/NinthQueensTreasureMerge.cs",
+    "size": 7018,
+    "sha256": "770817fbedb7da5208c3da44a792456ee0b5acae4545dad4308ff90c04e1cdfd",
+    "fileName": "NinthQueensTreasureMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/NinthQueensTreasureMerge.cs"
+  },
+  {
     "name": "NaoiseGrave Loot Merge",
     "description": "This bot will farm the items belonging to the selected mode for the NaoiseGrave Loot Merge [2453] in /naoisegrave",
     "tags": [
