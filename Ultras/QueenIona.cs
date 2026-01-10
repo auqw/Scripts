@@ -39,11 +39,13 @@ public class QueenIona
     public string OptionsStorage = "UltraDage";
     public List<IOption> Options = new()
     {
+        new Option<bool>("ZoneDebuglog", "Zone Logs",  "En/Disable the Logging of zones in chat/logs.", true),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
 
     bool IsVHL = false;
+    bool HasQuestItem;
 
 
     public void ScriptMain(IScriptInterface bot)
@@ -61,13 +63,11 @@ public class QueenIona
             Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
             C.SetOptions(false);
         }
+        else HasQuestItem = true;
 
         Core.Boot();
         Adv.GearStore();
-        Prep();
-        Bot.Events.ExtensionPacketReceived += QueenIonaListener;
         Fight();
-        Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
         Adv.GearStore(true, true);
         C.SetOptions(false);
     }
@@ -82,12 +82,16 @@ public class QueenIona
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
     }
 
-
-
-    void Fight()
+    public void Fight(string? item = null, int quant = 100)
     {
+        Bot.Events.ExtensionPacketReceived += QueenIonaListener;
+        Prep();
+
         const string map = "queeniona";
         const string boss = "Queen Iona";
+
+        if (!Bot.Quests.IsDailyComplete(9852))
+            C.EnsureAccept(9852);
 
         Bot.Sleep(2500);
         C.AddDrop("Lothian's Lightning");
@@ -103,12 +107,23 @@ public class QueenIona
         int skillIndex = 0;
         int[] skillList = { 1, 4, 2 };
 
-        while (!Bot.ShouldExit)
+        while (!Bot.ShouldExit && !C.CheckInventory(item, quant))
         {
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
+            }
+
+            if ((!HasQuestItem && !Bot.Quests.IsDailyComplete(9852) && Bot.TempInv.Contains(87681, 1)) || !Bot.Quests.IsDailyComplete(9852))
+            {
+                C.Jump("Enter", "Spawn");
+                C.EnsureComplete(9852);
+                if (HasQuestItem)
+                    continue;
+
+                C.Logger("Daily complete come back tomarrow");
+                break;
             }
 
             if (!Bot.Player.HasTarget)
@@ -132,12 +147,14 @@ public class QueenIona
 
             Bot.Sleep(100);
         }
+        Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
     }
 
-    public async void QueenIonaListener(dynamic packet)
+    async void QueenIonaListener(dynamic packet)
     {
         if (packet?["params"]?.type?.ToString() != "json")
             return;
+
         if (!Bot.Player.Alive)
             return;
 
@@ -200,21 +217,14 @@ public class QueenIona
         }
         catch (Exception ex)
         {
-            C.Logger($"[Iona] WalkTo failed: {ex.Message}", "Listener");
+            if (Bot.Config!.Get<bool>("ZoneDebuglog"))
+                C.Logger($"[Iona] WalkTo failed: {ex.Message}", "Listener");
         }
 
-        C.Logger(
-            $"[Iona] Charge={chargeAura} | Zone={zoneSet} | Moving to {(target == zoneA ? "A" : "B")} | Inverted={inverted}",
-            "Listener"
-        );
+        if (Bot.Config!.Get<bool>("ZoneDebuglog"))
+            C.Logger(
+                $"Charge={chargeAura} | Zone={zoneSet} | Moving to {(target == zoneA ? "A" : "B")} | Inverted={inverted}",
+                "Listener"
+            );
     }
-
-
-
-
-
-
-
-
-
 }

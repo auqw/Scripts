@@ -13,6 +13,9 @@ tags: lothian, treasury, merge, queeniona, dark, thunder, master, long, lightnin
 //cs_include Scripts/Other/MergeShops/LoughshineLootMerge.cs
 //cs_include Scripts/Other/MergeShops/LiaTaraHillLootMerge.cs
 //cs_include Scripts/Other/MergeShops/ColdThunderMerge.cs
+//cs_include Scripts/Ultras/QueenIona.cs
+//cs_include Scripts/Ultras/CoreEngine.cs
+//cs_include Scripts/Ultras/CoreUltra.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -64,12 +67,21 @@ public class LothianTreasuryMerge
         set => _LTHLM = value;
     }
     private static LiaTaraHillLootMerge _LTHLM;
+
     private static ColdThunderMerge CTM
     {
         get => _CTM ??= new ColdThunderMerge();
         set => _CTM = value;
     }
     private static ColdThunderMerge _CTM;
+
+    private static QueenIona QI
+    {
+        get => _QI ??= new QueenIona();
+        set => _QI = value;
+    }
+    private static QueenIona _QI;
+
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -141,10 +153,7 @@ public class LothianTreasuryMerge
                 case "Dark Lightning Gloria":
                 case "Skye Nobility Sash":
                     Core.FarmingLogger(req.Name, quant);
-                    Core.Logger(
-                        $"{req.Name} requires an ultra boss, you need to farm it manually.",
-                        stopBot: true
-                    );
+                    _QI.Fight(req.Name, req.Quantity);
                     break;
 
                 case "Skye's Lightning":
