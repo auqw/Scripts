@@ -84,9 +84,6 @@ public class QueenIona
 
 
 
-    private bool ionShiftSeen;
-    private string? lastZoneSet;
-
     void Fight()
     {
         const string map = "queeniona";
@@ -116,13 +113,6 @@ public class QueenIona
 
             if (!Bot.Player.HasTarget)
                 Bot.Combat.Attack("*");
-
-            // Track Ion Shift globally (fight-wide)
-            if (!ionShiftSeen && Bot.Self.Auras.Any(a => a?.Name == "Ion Shift"))
-            {
-                C.Logger("ionShiftSeen = True", "Fight");
-                ionShiftSeen = true;
-            }
 
             // VHL skill usage
             if (IsVHL)
@@ -156,78 +146,69 @@ public class QueenIona
             return;
 
         string? zoneSet = data?.args?.zoneSet?.ToString();
-
-        // Skip packets where there’s no zone set (happens after charge disappears)
         if (string.IsNullOrEmpty(zoneSet))
-            return;
+            return; // ignore empty packets
 
-        lastZoneSet = zoneSet;
-
-        // Wait until a charge appears
-        bool hasPositive = false;
-        bool hasNegative = false;
-
+        // Wait until a charge appears (normal or inverted)
+        string? chargeAura = null;
         while (!Bot.ShouldExit)
         {
             if (!Bot.Player.Alive)
                 return;
 
-            hasPositive = Bot.Self.Auras.Any(a => a?.Name == "Positive Charge");
-            hasNegative = Bot.Self.Auras.Any(a => a?.Name == "Negative Charge");
+            chargeAura = Bot.Self.Auras.FirstOrDefault(a => a != null &&
+                          (a.Name == "Positive Charge" || a.Name == "Negative Charge" ||
+                           a.Name == "Positive Charge?" || a.Name == "Negative Charge?"))?.Name;
 
-            // Only move if a charge exists
-            if (hasPositive || hasNegative)
+            if (!string.IsNullOrEmpty(chargeAura))
                 break;
 
             await Task.Delay(80);
         }
 
-        // If somehow no charge is present, skip this packet
-        if (!hasPositive && !hasNegative)
+        if (string.IsNullOrEmpty(chargeAura))
             return;
 
         // Zone coordinates
         (int x, int y) zoneA = (373, 447);
         (int x, int y) zoneB = (569, 442);
 
-        // Determine target based on charge + IonShiftSeen flag
+        // Determine if the aura is inverted
+        bool inverted = chargeAura!.EndsWith("?");
+
+        // Decide target
         (int x, int y) target;
 
-        if (ionShiftSeen)
+        if (!inverted)
         {
-            // Inverted logic: Positive → same zone, Negative → opposite
-            target = hasPositive
-                ? (zoneSet.Equals("A", StringComparison.OrdinalIgnoreCase) ? zoneA : zoneB)
-                : (zoneSet.Equals("A", StringComparison.OrdinalIgnoreCase) ? zoneB : zoneA);
+            // Normal charges
+            target = chargeAura == "Positive Charge"
+                ? (zoneSet.Equals("A", StringComparison.OrdinalIgnoreCase) ? zoneB : zoneA)
+                : (zoneSet.Equals("A", StringComparison.OrdinalIgnoreCase) ? zoneA : zoneB);
         }
         else
         {
-            // Normal logic: Positive → opposite, Negative → same
-            target = hasPositive
-                ? (zoneSet.Equals("A", StringComparison.OrdinalIgnoreCase) ? zoneB : zoneA)
-                : (zoneSet.Equals("A", StringComparison.OrdinalIgnoreCase) ? zoneA : zoneB);
+            // Inverted charges (with ?)
+            target = chargeAura == "Positive Charge?"
+                ? (zoneSet.Equals("A", StringComparison.OrdinalIgnoreCase) ? zoneA : zoneB)
+                : (zoneSet.Equals("A", StringComparison.OrdinalIgnoreCase) ? zoneB : zoneA);
         }
 
         try
         {
             await Task.Run(() => Bot.Player.WalkTo(target.x, target.y));
-
-            // Reset after movement
-            ionShiftSeen = false;
-            lastZoneSet = null;
         }
         catch (Exception ex)
         {
             C.Logger($"[Iona] WalkTo failed: {ex.Message}", "Listener");
-            ionShiftSeen = false;
-            lastZoneSet = null;
         }
 
         C.Logger(
-            $"[Iona] Charge={(hasPositive ? "Positive" : "Negative")} | Zone={zoneSet} | Moving to {(target == zoneA ? "A" : "B")} | IonShift={ionShiftSeen}",
+            $"[Iona] Charge={chargeAura} | Zone={zoneSet} | Moving to {(target == zoneA ? "A" : "B")} | Inverted={inverted}",
             "Listener"
         );
     }
+
 
 
 
