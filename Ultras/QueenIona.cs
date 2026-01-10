@@ -45,7 +45,7 @@ public class QueenIona
     };
 
     bool IsVHL = false;
-    bool HasQuestItem;
+    bool HasQuestItem => C.CheckInventory("Queen Iona Bank Companion");
 
 
     public void ScriptMain(IScriptInterface bot)
@@ -56,14 +56,6 @@ public class QueenIona
             && !Bot.Config.Get<bool>(C.SkipOptions)
         )
             Bot.Config.Configure();
-
-        if (C.CheckInventory("Queen Iona Bank Companion"))
-        {
-            C.Logger("Missing \"Queen Iona Bank Companion\" cannot continue");
-            Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
-            C.SetOptions(false);
-        }
-        else HasQuestItem = true;
 
         Core.Boot();
         Adv.GearStore();
@@ -116,7 +108,7 @@ public class QueenIona
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            
+
             if (Bot.Player.Cell != "r2")
             {
                 Bot.Map.Jump("r2", "Left", autoCorrect: false);
