@@ -74,7 +74,7 @@ public class QueenIona
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
     }
 
-    public void Fight(string? item = null, int quant = 100)
+    public void Fight(string item = "Lothian's Lightning", int quant = 100)
     {
         Bot.Events.ExtensionPacketReceived += QueenIonaListener;
         Prep();
@@ -85,9 +85,8 @@ public class QueenIona
         if (!Bot.Quests.IsDailyComplete(9852))
             C.EnsureAccept(9852);
 
-        if (item != null)
-            C.AddDrop(item);
-        C.AddDrop("Lothian's Lightning");
+        C.AddDrop(item);
+
         if (HasQuestItem)
             C.RegisterQuests(C.IsMember ? 9853 : 9854);
         // Always private
