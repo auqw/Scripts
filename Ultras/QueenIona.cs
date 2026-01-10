@@ -55,15 +55,16 @@ public class QueenIona
         )
             Bot.Config.Configure();
 
-        // if (!C.IsMember && C.CheckInventory("Queen Iona Bank Companion"))
-        // {
-        //     C.Logger("Missing \"Queen Iona Bank Companion\" cannot continue");
-        //     Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
-        //     C.SetOptions(false);
-        // }
+        if (C.CheckInventory("Queen Iona Bank Companion"))
+        {
+            C.Logger("Missing \"Queen Iona Bank Companion\" cannot continue");
+            Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
+            C.SetOptions(false);
+        }
+
         Core.Boot();
         Adv.GearStore();
-        // Prep();
+        Prep();
         Bot.Events.ExtensionPacketReceived += QueenIonaListener;
         Fight();
         Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
@@ -93,7 +94,7 @@ public class QueenIona
 
         Bot.Sleep(2500);
         C.AddDrop("Lothian's Lightning");
-        // C.RegisterQuests(C.IsMember ? 9853 : 9854);
+        C.RegisterQuests(C.IsMember ? 9853 : 9854);
 
         C.Join(map + -100000);
         Core.ChooseBestCell(boss);
