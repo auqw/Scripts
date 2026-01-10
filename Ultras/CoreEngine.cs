@@ -94,12 +94,12 @@ public class CoreEngine
         Bot.Options.InfiniteRange = true;
         Bot.Options.SkipCutscenes = true;
         Bot.Lite.HidePlayers = true;
-        C.Join("whitemap-100000");
+        // C.Join("whitemap-100000");
     }
 
     bool OnScriptStopping(Exception? e)
     {
-        Log("SKUA", "System offline");
+        C.Logger("System offline");
 
         Bot.Lite.HidePlayers = false;
 
@@ -2685,7 +2685,6 @@ public class CoreEngine
     {
         if (string.IsNullOrWhiteSpace(category) || string.IsNullOrWhiteSpace(message))
             return;
-        C.Logger(message, category);
         try
         {
             OnSignal?.Invoke(category, message);
@@ -2743,7 +2742,7 @@ public class CoreEngine
         if (!Bot.Player.HasTarget)
             return;
 
-        string? className = Bot.Player.CurrentClass?.Name?.ToLower();
+        string? className = Bot.Player.CurrentClass?.Name?.ToLower() ?? default;
         if (string.IsNullOrWhiteSpace(className))
             return;
 
