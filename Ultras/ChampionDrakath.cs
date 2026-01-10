@@ -25,10 +25,10 @@ using Skua.Core.Options;
 /// <summary>
 /// Safe Composition - Balanced approach for consistent performance
 /// </summary>
-// King's Echo
-// ├─ Helm: Examen
+// ArchPaladin (Taunter)
+// ├─ Helm: Forge
 // ├─ Class: Lucky
-// ├─ Weapon: Ravenous
+// ├─ Weapon: Valiance
 // └─ Cape: Lament
 //
 // Legion Revenant
