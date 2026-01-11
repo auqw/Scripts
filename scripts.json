@@ -17354,8 +17354,8 @@
       "lord"
     ],
     "path": "Other/MergeShops/BonecastleMerge.cs",
-    "size": 11886,
-    "sha256": "bc53c0382858f50af3da24d92eeb650ef14674986db2fd3b58e5ed8a465a063a",
+    "size": 11853,
+    "sha256": "9f1cf575017027e118ec9e7514880a136bb2e7abc134a8b38f1816cc41278abe",
     "fileName": "BonecastleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BonecastleMerge.cs"
   },
@@ -18248,8 +18248,8 @@
       "golden"
     ],
     "path": "Other/MergeShops/BonecastleTowerMerge.cs",
-    "size": 11107,
-    "sha256": "ffc2dfedadfeda8b9f716a14d6006ca981ac90fa59d4be6a486f4671ae8c3db0",
+    "size": 11423,
+    "sha256": "82cd896a4d56f7e9d1b8856154aa8671af31c52423afce314a4d28defc9389ea",
     "fileName": "BonecastleTowerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BonecastleTowerMerge.cs"
   },
