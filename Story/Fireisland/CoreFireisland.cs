@@ -267,7 +267,7 @@ public class CoreFireIsland
         Story.KillQuest(4201, "phoenixrise", new[] { "Lava Troll", "Infernal Goblin" });
 
         //Preying for a Good Offense
-        Story.KillQuest(4202, "phoenixrise", new[] { "Gargrowl", "Infernal Goblin", "Lava Troll" });
+        Story.KillQuest(4202, "phoenixrise", new[] { "Infernal Goblin", "Lava Troll","Gargrowl" });
 
         //Red Alert
         Story.MapItemQuest(4203, "phoenixrise", 3283, 4);
