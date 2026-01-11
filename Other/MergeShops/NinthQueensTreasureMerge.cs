@@ -109,6 +109,7 @@ public class NinthQueensTreasureMerge
 
                     Core.HuntMonster("meresankhchambers", "Queen Meresankh", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
                     break;
             }
         }
