@@ -104,14 +104,13 @@ public class BonecastleMerge
                     break;
 
                 case "Shadow Skull":
+                    if (!Core.CheckInventory("Silver DeathKnight Lord"))
+                        Core.BuyItem("towersilver", 1243, "Silver DeathKnight Lord");
+                    if (!Core.CheckInventory("Golden DeathKnight Lord"))
+                        Core.BuyItem("towergold", 1243, "Golden DeathKnight Lord");
                     Core.RegisterQuests(4993);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
                     {
-                        if (!Core.CheckInventory("Silver DeathKnight Lord"))
-                            Core.BuyItem("towersilver", 1243, "Silver DeathKnight Lord");
-                        if (!Core.CheckInventory("Golden DeathKnight Lord"))
-                            Core.BuyItem("towergold", 1243, "Golden DeathKnight Lord");
-
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("bonecastle", "Green Rat", "Gamey Rat Meat", 3);
                         Core.HuntMonster("bonecastle", "Undead Waiter", "Waiter's Notepad", 1);
@@ -143,15 +142,15 @@ public class BonecastleMerge
                     foreach (string item in RequiredItems)
                         Core.HuntMonster("bonecastle", "Vaden", item, isTemp: false);
 
+                    if (!Core.CheckInventory("Silver DeathKnight Lord"))
+                        Core.BuyItem("towersilver", 1243, "Silver DeathKnight Lord");
+                    if (!Core.CheckInventory("Golden DeathKnight Lord"))
+                        Core.BuyItem("towergold", 1243, "Golden DeathKnight Lord");
+
                     // BoneCastle Amulet
                     Core.RegisterQuests(4993);
                     while (!Bot.ShouldExit && !Core.CheckInventory("Bonecastle Amulet", 30))
                     {
-                        if (!Core.CheckInventory("Silver DeathKnight Lord"))
-                            Core.BuyItem("towersilver", 1243, "Silver DeathKnight Lord");
-                        if (!Core.CheckInventory("Golden DeathKnight Lord"))
-                            Core.BuyItem("towergold", 1243, "Golden DeathKnight Lord");
-
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("bonecastle", "Green Rat", "Gamey Rat Meat", 3);
                         Core.HuntMonster("bonecastle", "Undead Waiter", "Waiter's Notepad", 1);
