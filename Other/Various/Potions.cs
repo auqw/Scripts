@@ -499,7 +499,7 @@ public class PotionBuyer
                     int VoucherQuant = Math.Min(PotionQuant - Bot.Inventory.GetQuantity(62749), 100);
                     int DStoneQuant = Math.Min(PotionQuant - Bot.Inventory.GetQuantity("Dragon Runestone"), 100);
                     if (VoucherQuant > 0)
-                        Adv.BuyItem("alchemyacademy", 395, "Gold Voucher 100k", VoucherQuant, 1, 8777);
+                        Adv.BuyItem("alchemyacademy", 395, "Gold Voucher 100k", VoucherQuant, 8777);
                     if (DStoneQuant > 0)
                         Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", DStoneQuant, 8844);
                     // }
