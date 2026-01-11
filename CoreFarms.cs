@@ -1549,40 +1549,50 @@ public class CoreFarms
         if (Core.CheckInventory(Voucher, quant))
             return;
 
-        string map = "";
-        int shopID = 0;
-
         Core.FarmingLogger(Voucher, quant);
 
+        string map = "";
+        int shopID = 0;
+        int VoucherID;
         switch (Voucher)
         {
             case "Gold Voucher 500k":
-            case "Gold Voucher 100k":
-            case "Gold Voucher 200k":
+                VoucherID = 61043;
                 map = "alchemyacademy";
                 shopID = 2036;
                 shopName = "Gebo Shop";
                 break;
-
+            case "Gold Voucher 100k":
+                VoucherID = 62749;
+                map = "alchemyacademy";
+                shopID = 2036;
+                shopName = "Gebo Shop";
+                break;
+            case "Gold Voucher 200k":
+                VoucherID = 62748;
+                map = "titanattack";
+                shopID = 2129;
+                shopName = "Titan Attack Gear";
+                break;
             case "Gold Voucher 25k":
+                VoucherID = 62747;
                 map = "hydrachallenge";
                 shopID = 1597;
                 shopName = "Hydra Merge";
                 break;
-
-            case "Gold Voucher 7k":
+            case "Gold Voucher 7.5k":
+                VoucherID = 62747;
                 map = "alchemyacademy";
                 shopID = 2116;
                 shopName = "Fehu Shop";
                 break;
-
             default:
                 Core.Logger($"Invalid Gold Voucher: {Voucher}");
                 return;
         }
-
         // Load shop safely
         int retry = 0;
+    Retry:
         while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
         {
             if (Bot.Map.Name != map)
@@ -1599,9 +1609,14 @@ public class CoreFarms
                 break;
         }
 
-        ShopItem? item = Bot.Shops.Items.FirstOrDefault(x => x?.Name == Voucher);
+        ShopItem? item = Bot.Shops.Items.FirstOrDefault(x => x != null && x?.ID == VoucherID);
         if (item == null)
         {
+            if (retry < 5)
+            {
+                retry++;
+                goto Retry;
+            }
             Core.Logger($"Item \"{Voucher}\" not found in the shop.");
             return;
         }
@@ -1637,10 +1652,10 @@ public class CoreFarms
         if (Core.CheckInventory("Dragon Runestone", quant))
             return;
 
+        Core.FarmingLogger("Dragon Runestone", quant);
+
         if (Bot.Map.Name != "alchemyacademy")
             Core.Join("alchemyacademy");
-
-        Core.FarmingLogger("Dragon Runestone", quant);
 
         Voucher("Gold Voucher 100k", quant);
         int amountToBuy = Math.Min(quant, 100);
