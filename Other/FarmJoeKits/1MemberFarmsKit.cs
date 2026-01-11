@@ -433,12 +433,12 @@ public class MemberFarm
 
         Core.AddDrop("Darkwave Khopesh");
         Core.EquipClass(ClassType.Solo);
-        Core.FarmingLogger("Darkwave Khopesh", 1);
+        Core.FarmingLogger("Darkwave Khopesh");
 
         Core.RegisterQuests(4618);
         while (!Bot.ShouldExit && (!Core.CheckInventory("Darkwave Khopesh")))
         {
-            Core.HuntMonster("cruxship", "Apephryx", "Khopesh Shard", 1, isTemp: false);
+            Core.KillMonster("cruxship", "r12", "Left", "Apephryx");
             Bot.Wait.ForPickup("Darkwave Khopesh");
         }
         Core.CancelRegisteredQuests();
