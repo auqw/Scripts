@@ -6604,11 +6604,11 @@ case ""Shadow Skull"":
                     Core.RegisterQuests(4993);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
                     {
-                        if (!Core.CheckInventory(""Silver DeathKnight Lord""))
-                            Core.BuyItem(""towersilver"", 1243, ""Silver DeathKnight Lord"");
-                        if (!Core.CheckInventory(""Golden DeathKnight Lord""))
-                            Core.BuyItem(""towergold"", 1243, ""Golden DeathKnight Lord"");
-
+                      
+                    if (!Core.CheckInventory(""Silver DeathKnight Lord""))
+                        BuyAllMerge(""Silver DeathKnight Lord"");
+                    if (!Core.CheckInventory(""Golden DeathKnight Lord""))
+                        BuyAllMerge(""Golden DeathKnight Lord"");
 
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster(""bonecastle"", ""Green Rat"", ""Gamey Rat Meat"", 3);
@@ -6650,11 +6650,11 @@ case ""DeathKnight Lord Armor"":
                     Core.RegisterQuests(4993);
                     while (!Bot.ShouldExit && !Core.CheckInventory(""Bonecastle Amulet"", 30))
                     {
-                        if (!Core.CheckInventory(""Silver DeathKnight Lord""))
-                            Core.BuyItem(""towersilver"", 1243, ""Silver DeathKnight Lord"");
-                        if (!Core.CheckInventory(""Golden DeathKnight Lord""))
-                            Core.BuyItem(""towergold"", 1243, ""Golden DeathKnight Lord"");
-
+                       
+                    if (!Core.CheckInventory(""Silver DeathKnight Lord""))
+                        BuyAllMerge(""Silver DeathKnight Lord"");
+                    if (!Core.CheckInventory(""Golden DeathKnight Lord""))
+                        BuyAllMerge(""Golden DeathKnight Lord"");
 
                         Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster(""bonecastle"", ""Green Rat"", ""Gamey Rat Meat"", 3);
@@ -6783,6 +6783,11 @@ case ""Space Flotsam"":
             @"
 case ""Bonecastle Amulet"":
                     Core.FarmingLogger(req.Name, quant);
+                    
+                    if (!Core.CheckInventory(""Silver DeathKnight Lord""))
+                        BuyAllMerge(""Silver DeathKnight Lord"");
+                    if (!Core.CheckInventory(""Golden DeathKnight Lord""))
+                        BuyAllMerge(""Golden DeathKnight Lord"");
                     Core.RegisterQuests(4993);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {

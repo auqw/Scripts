@@ -104,10 +104,11 @@ public class BonecastleMerge
                     break;
 
                 case "Shadow Skull":
+
                     if (!Core.CheckInventory("Silver DeathKnight Lord"))
-                        Core.BuyItem("towersilver", 1243, "Silver DeathKnight Lord");
+                        BuyAllMerge("Silver DeathKnight Lord");
                     if (!Core.CheckInventory("Golden DeathKnight Lord"))
-                        Core.BuyItem("towergold", 1243, "Golden DeathKnight Lord");
+                        BuyAllMerge("Golden DeathKnight Lord");
                     Core.RegisterQuests(4993);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, req.Quantity))
                     {

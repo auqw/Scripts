@@ -119,9 +119,9 @@ public class BonecastleTowerMerge
                 case "Shadow Skull":
                     Core.FarmingLogger(req.Name, quant);
                     if (!Core.CheckInventory("Silver DeathKnight Lord"))
-                        Core.BuyItem("towersilver", 1243, "Silver DeathKnight Lord");
+                        BuyAllMerge("Silver DeathKnight Lord");
                     if (!Core.CheckInventory("Golden DeathKnight Lord"))
-                        Core.BuyItem("towergold", 1243, "Golden DeathKnight Lord");
+                        BuyAllMerge("Golden DeathKnight Lord");
                     Core.RegisterQuests(4993);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
@@ -137,6 +137,7 @@ public class BonecastleTowerMerge
                     }
                     Core.CancelRegisteredQuests();
                     break;
+                    
                 case "GoldSkull Amulet":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
