@@ -1209,74 +1209,81 @@ public class CoreDailies
     public void Friendships()
     {
         bool waitForPacket = false;
+        List<FriendshipInfo> friends; // ← Declare here
         string? _friendshipInfo = null;
         Bot.Events.ExtensionPacketReceived += friendshipPacketReader;
 
-        if (!RefreshFriendshipData(out var friends))
-            return;
-        if (friends.All(f => !f.CanGift && (!f.CanTalk || f.NPC == "Linus")))
+        try
         {
-            Core.Logger($"All the friendship dailies have already been completed today.");
-            return;
-        }
-
-        Bot.Drops.Add(frGiftIDs);
-        Core.AddDrop(frRewards);
-
-        // Battleodium
-        if (Core.isCompletedBefore(793))
-            handleFriendship("Dage the Evil", frGift.Cracked_Opal);
-        if (Bot.Player.Level >= 80)
-            handleFriendship("Gravelyn", frGift.Blood_Roseberry);
-        handleFriendship("Nulgath", frGift.Apples);
-        handleFriendship("Twig", frGift.Melons);
-        handleFriendship("Twilly", frGift.Apples, frGift.Orchids);
-        handleFriendship("Maya", frGift.Chrysanthemums, frGift.Apples);
-        handleFriendship("Yulgar", frGift.Turqoise, frGift.Orchids, frGift.Melons);
-        handleFriendship("Mi", frGift.Sapphires, frGift.Lilies);
-        handleFriendship("Lord Brentan", frGift.Oranges, frGift.Rubies);
-        handleFriendship("Warlic", frGift.Sapphires, frGift.Sunflowers);
-        handleFriendship("Zorbak", frGift.Apples);
-        handleFriendship("Smoglin", frGift.Turqoise, frGift.Apples);
-
-        // Greyguard
-        if (Bot.Player.Level >= 80)
-            handleFriendship("Drakath", frGift.Chaos_Diemond);
-        handleFriendship("Xang", frGift.Emeralds, frGift.Grapes);
-        handleFriendship("Linus", frGift.A_Fish);
-        handleFriendship("Sally", frGift.Rubies, frGift.Tulips);
-        handleFriendship("Xing", frGift.Opals, frGift.Bananas);
-
-        Bot.Events.ExtensionPacketReceived -= friendshipPacketReader;
-        Core.ToBank(frGiftIDs);
-        Core.ToBank(frRewards[3..]);
-
-        if (!Core.HasWebBadge("Penguin BFF"))
-        {
-            if (Core.CheckInventory("Happy Penguin"))
+            if (!RefreshFriendshipData(out friends))
+                return;
+            if (friends.All(f => !f.CanGift && (!f.CanTalk || f.NPC == "Linus")))
             {
-                Core.ChainComplete(9108);
-                Core.ToBank("Happy Penguin");
+                Core.Logger($"All the friendship dailies have already been completed today.");
+                return;
             }
-            else
-                Core.Logger("🥺 we don't have the cute little penguin so no badge for you...");
+
+            Bot.Drops.Add(frGiftIDs);
+            Core.AddDrop(frRewards);
+
+            // Battleodium
+            if (Core.isCompletedBefore(793))
+                handleFriendship("Dage the Evil", frGift.Cracked_Opal);
+            if (Bot.Player.Level >= 80)
+                handleFriendship("Gravelyn", frGift.Blood_Roseberry);
+            handleFriendship("Nulgath", frGift.Apples);
+            handleFriendship("Twig", frGift.Melons);
+            handleFriendship("Twilly", frGift.Apples, frGift.Orchids);
+            handleFriendship("Maya", frGift.Chrysanthemums, frGift.Apples);
+            handleFriendship("Yulgar", frGift.Turqoise, frGift.Orchids, frGift.Melons);
+            handleFriendship("Mi", frGift.Sapphires, frGift.Lilies);
+            handleFriendship("Lord Brentan", frGift.Oranges, frGift.Rubies);
+            handleFriendship("Warlic", frGift.Sapphires, frGift.Sunflowers);
+            handleFriendship("Zorbak", frGift.Apples);
+            handleFriendship("Smoglin", frGift.Turqoise, frGift.Apples);
+
+            // Greyguard
+            if (Bot.Player.Level >= 80)
+                handleFriendship("Drakath", frGift.Chaos_Diemond);
+            handleFriendship("Xang", frGift.Emeralds, frGift.Grapes);
+            handleFriendship("Linus", frGift.A_Fish);
+            handleFriendship("Sally", frGift.Rubies, frGift.Tulips);
+            handleFriendship("Xing", frGift.Opals, frGift.Bananas);
+
+            if (!Core.HasWebBadge("Penguin BFF"))
+            {
+                if (Core.CheckInventory("Happy Penguin"))
+                {
+                    Core.ChainComplete(9108);
+                    Core.ToBank("Happy Penguin");
+                }
+                else
+                    Core.Logger("🥺 we don't have the cute little penguin so no badge for you...");
+            }
+
         }
+        finally
+        {
+            Bot.Events.ExtensionPacketReceived -= friendshipPacketReader;
+            Core.ToBank(frGiftIDs);
+            Core.ToBank(frRewards[3..]);
+        }
+
 
         #region Local methods
         void handleFriendship(string npc, params frGift[] gifts)
         {
-            FriendshipInfo friend = friends.First(f => f.NPC.ToLower() == npc.ToLower());
+            FriendshipInfo? friend = friends.FirstOrDefault(f => f.NPC.ToLower() == npc.ToLower());
             if (friend == null)
             {
                 Core.Logger($"NPC \"{npc}\" not found. Check for typos");
                 return;
             }
 
-            if ((!friend.CanTalk || friend.NPC == "Linus") && !friend.CanGift)
+            bool canDoDaily = friend.CanGift || (friend.CanTalk && friend.NPC != "Linus");
+            if (!canDoDaily)
             {
-                Core.Logger(
-                    $"Friendship dail{(friend.NPC == "Linus" ? "y" : "ies")} unavailable: {friend.NPC}"
-                );
+                Core.Logger($"Friendship dailies unavailable: {friend.NPC}");
                 return;
             }
             else
@@ -1469,15 +1476,7 @@ public class CoreDailies
                 }
 
                 Core.JumpWait();
-                InventoryItem? selectedGift = null;
-                Bot.Wait.ForTrue(
-                    () =>
-                    {
-                        selectedGift = Bot.Inventory.Items.Find(x => _gifts.Contains(x.ID));
-                        return selectedGift != null;
-                    },
-                    30
-                );
+                InventoryItem? selectedGift = Bot.Inventory.Items.Find(x => _gifts.Contains(x.ID));
                 if (selectedGift == null)
                 {
                     if (gifts.Length > 1)
@@ -1523,45 +1522,70 @@ public class CoreDailies
             }
         }
 
-        bool RefreshFriendshipData(out List<FriendshipInfo> friends)
+        bool RefreshFriendshipData(out List<FriendshipInfo> friends, int retries = 2)
         {
-            _friendshipInfo = null;
-            Bot.Send.Packet($"%xt%zm%friendshipStats%{Bot.Map.RoomID}%");
-            Bot.Wait.ForTrue(() => _friendshipInfo != null, 30);
-            if (_friendshipInfo == null)
+            for (int i = 0; i <= retries; i++)
             {
-                Core.Logger("Something went wrong, friendshipInfo is null");
-                friends = new();
-                return false;
+                _friendshipInfo = null;
+                Bot.Send.Packet($"%xt%zm%friendshipStats%{Bot.Map.RoomID}%");
+                Bot.Wait.ForTrue(() => _friendshipInfo != null, 30);
+
+                if (_friendshipInfo != null)
+                {
+                    try
+                    {
+                        friends = JsonConvert.DeserializeObject<List<FriendshipInfo>>(_friendshipInfo)!;
+                        if (friends != null && friends.Count > 0)
+                            return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        Core.Logger($"Failed to parse friendship data: {ex.Message}");
+                    }
+                }
+
+                if (i < retries)
+                    Core.Logger($"Retrying friendship data refresh... ({i + 1}/{retries})");
             }
-            friends = JsonConvert.DeserializeObject<List<FriendshipInfo>>(_friendshipInfo)!;
-            return friends.Count > 0;
+
+            Core.Logger("Something went wrong, friendshipInfo is null");
+            friends = new();
+            return false;
         }
 
         void InformLogger(string text, ref FriendshipInfo info)
         {
             float oldNum = info.DisplayHearts;
             bool refreshed = RefreshFriendshipData(out friends);
-            string npc = info.NPC;
-            if (refreshed)
-                info = friends.First(f => f.NPC == npc);
-            float addNum = info.DisplayHearts - oldNum;
 
-            Core.Logger(
-                text
-                    + (
-                        refreshed
-                            ? $" You gained {addNum} heart{(addNum > 1 ? "s" : string.Empty)}"
-                            : string.Empty
-                    )
-            );
+            if (!refreshed || friends.Count == 0)
+            {
+                Core.Logger(text + " (Unable to verify hearts gained)");
+                return;
+            }
+
+            string npc = info.NPC;
+            var updatedInfo = friends.FirstOrDefault(f => f.NPC == npc);
+            if (updatedInfo == null)
+            {
+                Core.Logger(text + " (NPC not found in refresh)");
+                return;
+            }
+
+            info = updatedInfo;
+            float addNum = info.DisplayHearts - oldNum;
+            Core.Logger(text + $" You gained {addNum} heart{(addNum > 1 ? "s" : string.Empty)}");
         }
 
         void SendWaitedPacket(string packet)
         {
             waitForPacket = false;
             Bot.Send.Packet(packet);
-            Bot.Wait.ForTrue(() => waitForPacket, 30);
+            if (!Bot.Wait.ForTrue(() => waitForPacket, 30))
+            {
+                string packetType = packet.Split('%').Length > 3 ? packet.Split('%')[3] : "unknown";
+                Core.Logger($"Warning: Packet timeout - {packetType}");
+            }
         }
         #endregion
     }
@@ -1654,6 +1678,7 @@ public class CoreDailies
         }
     }
     #endregion
+
 }
 
 public enum MineCraftingMetalsEnum
