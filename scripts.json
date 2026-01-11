@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 154948,
-    "sha256": "4f5c274c4f9e8510af794fa245aebea55a08f15f9e2a11bfd936b909c0d5a405",
+    "size": 155548,
+    "sha256": "97f218a5dda550d4134864279c551b06f06005269ff8a4e48b117c42877947b4",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -14170,8 +14170,8 @@
       "null"
     ],
     "path": "Other/Various/Potions.cs",
-    "size": 28600,
-    "sha256": "c920bc7db39a0464b8f90e09bbd8fb025c6b2c4653028cea62ffa425a7bdb75d",
+    "size": 28597,
+    "sha256": "1be80bc155179d3a6bbacc528628fdcb6339957a47fbd3bedcc198ae970f583e",
     "fileName": "Potions.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/Potions.cs"
   },
