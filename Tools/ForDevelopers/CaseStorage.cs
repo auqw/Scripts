@@ -30879,6 +30879,238 @@ case ""Moglinberry Candy Cane Guest"":
                     break;
     "
 },
+{
+    "Scorpion Pontiff Headdress",
+    @"
+case ""Scorpion Pontiff Headdress"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    int questID = Core.IsMember ? 10545 : 10544;
+                    Core.RegisterQuests(questID);
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+
+                    Core.HuntMonster(""meresankhchambers"", ""Queen Meresankh"", req.Name, quant, isTemp: false);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Scorpion Pontiff Hair",
+    @"
+case ""Scorpion Pontiff Hair"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    int questID = Core.IsMember ? 10545 : 10544;
+                    Core.RegisterQuests(questID);
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+
+                    Core.HuntMonster(""meresankhchambers"", ""Queen Meresankh"", req.Name, quant, isTemp: false);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Scorpion Priestess Veil",
+    @"
+case ""Scorpion Priestess Veil"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    int questID = Core.IsMember ? 10545 : 10544;
+                    Core.RegisterQuests(questID);
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+
+                    Core.HuntMonster(""meresankhchambers"", ""Queen Meresankh"", req.Name, quant, isTemp: false);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Scorpion Priestess Locks",
+    @"
+case ""Scorpion Priestess Locks"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    int questID = Core.IsMember ? 10545 : 10544;
+                    Core.RegisterQuests(questID);
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+
+                    Core.HuntMonster(""meresankhchambers"", ""Queen Meresankh"", req.Name, quant, isTemp: false);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Eye of Serket",
+    @"
+case ""Eye of Serket"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    int questID = Core.IsMember ? 10545 : 10544;
+                    Core.RegisterQuests(questID);
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+
+                    Core.HuntMonster(""meresankhchambers"", ""Queen Meresankh"", req.Name, quant, isTemp: false);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Saccara Lapis Sabres",
+    @"
+case ""Saccara Lapis Sabres"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    int questID = Core.IsMember ? 10545 : 10544;
+                    Core.RegisterQuests(questID);
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+
+                    Core.HuntMonster(""meresankhchambers"", ""Queen Meresankh"", req.Name, quant, isTemp: false);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Saccara Lapis Sabre",
+    @"
+case ""Saccara Lapis Sabre"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    int questID = Core.IsMember ? 10545 : 10544;
+                    Core.RegisterQuests(questID);
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+
+                    Core.HuntMonster(""meresankhchambers"", ""Queen Meresankh"", req.Name, quant, isTemp: false);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Meresankh's Forbidden Gem",
+    @"
+case ""Meresankh's Forbidden Gem"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    int questID = Core.IsMember ? 10545 : 10544;
+                    Core.RegisterQuests(questID);
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+
+                    Core.HuntMonster(""meresankhchambers"", ""Queen Meresankh"", req.Name, quant, isTemp: false);
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Temporal Sock Fiber",
+    @"
+case ""Temporal Sock Fiber"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+                    Core.EquipClass(ClassType.Solo);
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(Core.CheckInventory(""Star Captain"") ? 10543 : Core.IsMember ? 10542 : 10541);
+                    Core.KillBossWithSecondary(""cyseroparadox"", ""r2"", ""Bottom"", 1, 2, req.Name, quant, req.Temp, false);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Slice of Time Pie-radox",
+    @"
+case ""Slice of Time Pie-radox"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+
+                    Core.KillBossWithSecondary(""cyseroparadox"", ""r2"", ""Bottom"", 1, 2, req.Name, quant, req.Temp, false);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Pair of Pie-radox Slices",
+    @"
+case ""Pair of Pie-radox Slices"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+
+                    Core.KillBossWithSecondary(""cyseroparadox"", ""r2"", ""Bottom"", 1, 2, req.Name, quant, req.Temp, false);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
