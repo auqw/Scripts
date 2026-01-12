@@ -129,6 +129,15 @@ public class AstralEmpyrean
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
+    public bool DontPreconfigure = true;
+    public string OptionsStorage = "AstralEmpyrean";
+    public List<IOption> Options = new()
+    {
+        new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
+        new Option<bool>("DoZoning", "Actualy use Zones", "To actually use the proper zoning technique, or sit outside the zone (works either way)", false),
+        CoreBots.Instance.SkipOptions,
+    };
+
     private string NormalizeString(string input) => (input ?? "").Trim().ToLower();
 
     public void ScriptMain(IScriptInterface bot)
@@ -151,21 +160,25 @@ public class AstralEmpyrean
 
     void Prep()
     {
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            DoEnhs();
         Bot.Quests.UpdateQuest(9802);
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Ultra.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");
         Ultra.GetScrollOfEnrage();
-        Enhancements();
     }
+    bool DoZoning => Bot.Config!.Get<bool>("DoZoning");
 
     void Fight()
     {
         const string map = "astralshrine";
         const string boss = "Astral Empyrean";
-
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
+        Bot.Sleep(2500);
+        if (DoZoning)
+            Bot.Events.ExtensionPacketReceived += AstralZoneListener;
         C.AddDrop("Star of the Empyrean");
         C.EnsureAccept(8547);
 
@@ -191,29 +204,30 @@ public class AstralEmpyrean
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-
-            // Define box boundaries (0,0 to 101,101)
-            int minX = 374;
-            int maxX = 454;
-            int minY = 398;
-            int maxY = 419;
-
-            // Check if player is within the box
-            bool isInBox =
-                Bot.Player.Position.X >= minX
-                && Bot.Player.Position.X <= maxX
-                && Bot.Player.Position.Y >= minY
-                && Bot.Player.Position.Y <= maxY;
-
-            // If not in box, move to random location within box
-            if (!isInBox)
+            if (DoZoning)
             {
-                Random rand = new();
-                int randomX = rand.Next(minX, maxX + 1);
-                int randomY = rand.Next(minY, maxY + 1);
-                Bot.Player.WalkTo(randomX, randomY);
-            }
+                // Define box boundaries (0,0 to 101,101)
+                int minX = 374;
+                int maxX = 454;
+                int minY = 398;
+                int maxY = 419;
 
+                // Check if player is within the box
+                bool isInBox =
+                    Bot.Player.Position.X >= minX
+                    && Bot.Player.Position.X <= maxX
+                    && Bot.Player.Position.Y >= minY
+                    && Bot.Player.Position.Y <= maxY;
+
+                // If not in box, move to random location within box
+                if (!isInBox)
+                {
+                    Random rand = new();
+                    int randomX = rand.Next(minX, maxX + 1);
+                    int randomY = rand.Next(minY, maxY + 1);
+                    Bot.Player.WalkTo(randomX, randomY);
+                }
+            }
             if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
             Bot.Sleep(200);
@@ -221,143 +235,209 @@ public class AstralEmpyrean
                 && Bot.Skills.CanUseSkill(5))
                 Bot.Skills.UseSkill(5);
         }
+        if (DoZoning)
+            Bot.Events.ExtensionPacketReceived -= AstralZoneListener;
     }
 
 
-    void Enhancements()
+    void DoEnhs()
     {
-        string? playerName = Bot.Player?.Username;
-        if (string.IsNullOrWhiteSpace(playerName))
-        {
-            C.Logger("[ERROR] Unable to determine player name.", stopBot: true);
+        string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
+        if (string.IsNullOrEmpty(className))
             return;
-        }
 
         C.Logger("Starting Ultra Enhancing -- Beep Boop");
 
-        // Cache currently equipped items
-        InventoryItem? weaponItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
-            x?.Equipped == true && Adv.WeaponCatagories.Contains(x.Category)
-        );
-        InventoryItem? helmItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
-            x?.Equipped == true && x.Category == ItemCategory.Helm
-        );
-        InventoryItem? capeItem = Bot.Inventory?.Items?.FirstOrDefault(x =>
-            x?.Equipped == true && x.Category == ItemCategory.Cape
-        );
-        string weapon = weaponItem?.Name ?? "";
-        string helm = helmItem?.Name ?? "";
-        string cape = capeItem?.Name ?? "";
-        string className = Bot.Player?.CurrentClass?.Name ?? "";
-
-        // Apply enhancement rules per role
-        switch (Bot.Player?.CurrentClass?.Name.ToLower())
+        switch (className)
         {
-            case "chrono shadowslayer":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Vim);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Valiance);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+            // Chrono ShadowSlayer
+            case "Chrono ShadowSlayer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Vim,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Lament
+                );
                 break;
 
-            case "archfiend":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+            // Archfiend
+            case "Archfiend":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
                 break;
 
-            case "arachnomancer":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Vim);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+            // Arachnomancer
+            case "Arachnomancer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Vim,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
                 break;
 
-            case "legion revenant":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Pneuma);
-                Adv.EnhanceItem(className, EnhancementType.Wizard);
-                Adv.EnhanceItem(weapon, EnhancementType.Wizard, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Wizard, CapeSpecial.Lament);
+            // Legion Revenant
+            case "Legion Revenant":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
                 break;
 
-            case "verus doomknight":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Anima);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Penitence);
+            // Verus DoomKnight
+            case "Verus DoomKnight":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Penitence
+                );
                 break;
 
-            case "legendary hero":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Anima);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Valiance);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+            // Legendary Hero
+            case "Legendary Hero":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Lament
+                );
                 break;
 
-            case "lord of order":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Examen);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Valiance);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Absolution);
+            // Lord Of Order
+            case "Lord Of Order":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Absolution
+                );
                 break;
 
-            case "arcana invoker":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Examen);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Penitence);
+            // Arcana Invoker
+            case "Arcana Invoker":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Penitence
+                );
                 break;
 
-            case "lich":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Examen);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Penitence);
+            // Lich
+            case "Lich":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Penitence
+                );
                 break;
 
-            case "king's echo":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Examen);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+            // King's Echo
+            case "King's Echo":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
                 break;
 
-            case "sentinel":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Anima);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+            // Sentinel
+            case "Sentinel":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Anima,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
                 break;
 
-            case "great thief":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Arcanas_Concerto);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+            // Great Thief
+            case "Great Thief":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Arcanas_Concerto,
+                    cSpecial: CapeSpecial.Lament
+                );
                 break;
 
-            case "guardian":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Forge);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Penitence);
+            // Guardian
+            case "Guardian":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Penitence
+                );
                 break;
 
-            case "phantom chronomancer":
-                Adv.EnhanceItem(helm, EnhancementType.Wizard, hSpecial: HelmSpecial.Examen);
-                Adv.EnhanceItem(className, EnhancementType.Wizard);
-                Adv.EnhanceItem(weapon, EnhancementType.Wizard, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Wizard, CapeSpecial.Lament);
+            // Phantom Chronomancer
+            case "Phantom Chronomancer":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Examen,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
                 break;
 
-            case "light caster":
-                Adv.EnhanceItem(helm, EnhancementType.Lucky, hSpecial: HelmSpecial.Pneuma);
-                Adv.EnhanceItem(className, EnhancementType.Lucky);
-                Adv.EnhanceItem(weapon, EnhancementType.Lucky, wSpecial: WeaponSpecial.Ravenous);
-                Adv.EnhanceItem(cape, EnhancementType.Lucky, CapeSpecial.Lament);
+            // Light Caster
+            case "Light Caster":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
                 break;
         }
     }
 
+    public async void AstralZoneListener(dynamic packet)
+    {
+        if (!DoZoning)
+        {
+            Bot.Events.ExtensionPacketReceived -= AstralZoneListener;
+            return;
+        }
+        if (packet?["params"]?.type?.ToString() != "json")
+            return;
+        if (!Bot.Player.Alive)
+            return;
+        dynamic data = packet["params"].dataObj;
+        if (data?.cmd?.ToString() != "event")
+            return;
+        string? zoneSet = data?.args?.zoneSet?.ToString();
+        if (string.IsNullOrEmpty(zoneSet))
+            return;
+
+        Random rnd = new Random();
+        int x = 0, y = 0;
+
+        switch (zoneSet.ToUpper())
+        {
+            case "A":
+                x = 122 + rnd.Next(-15, 16);
+                y = 420 + rnd.Next(-15, 16);
+                break;
+            case "B":
+                x = 856 + rnd.Next(-15, 16);
+                y = 420 + rnd.Next(-15, 16);
+                break;
+            default:
+                return;
+        }
+
+        _ = Task.Run(() => Bot.Player.WalkTo(x, y));
+    }
 }
+
