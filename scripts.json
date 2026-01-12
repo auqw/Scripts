@@ -4442,8 +4442,8 @@
       "undead"
     ],
     "path": "Good/ArchPaladin.cs",
-    "size": 13397,
-    "sha256": "f97b2c7f78384676aa8deff23926af24a80aa23994a368b67ddfc60171e9cc53",
+    "size": 13403,
+    "sha256": "0f68371e556ec6b4bffbcaa9bdf205d134d72d5fe41ecd645fac987c985927be",
     "fileName": "ArchPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/ArchPaladin.cs"
   },
@@ -13292,8 +13292,8 @@
       "class"
     ],
     "path": "Other/Classes/MartialArtist.cs",
-    "size": 4972,
-    "sha256": "2a490b1681dc7150f993bd29d1a70a1e5e996aedc8c9f8cd0508b1aef020fdc6",
+    "size": 4984,
+    "sha256": "8553477dfb8fae7e6a469a66e6070cd1367e5b1732b413b7adbb29689287a7ff",
     "fileName": "MartialArtist.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/MartialArtist.cs"
   },
