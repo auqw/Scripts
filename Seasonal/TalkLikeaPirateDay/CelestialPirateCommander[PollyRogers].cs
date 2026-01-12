@@ -21,13 +21,19 @@ public class CelestialPirateCommander
 
     public CoreBots Core => CoreBots.Instance;
     public bool DontPreconfigure = true;
-    public string OptionsStorage = "Pet only or All";
+    public string OptionsStorage = "Pet/Armor only or All";
     public List<IOption> Options = new()
     {
         new Option<bool>(
             "PetOnly",
             "Do you want to get the pet only?",
             "Whether to farm only the pet or everthing",
+            false
+        ),
+        new Option<bool>(
+            "ArmorOnly",
+            "Do you want to get the armor only?",
+            "Whether to farm only the armor or everthing",
             false
         ),
         CoreBots.Instance.SkipOptions,
@@ -38,6 +44,7 @@ public class CelestialPirateCommander
         Core.SetOptions();
 
         GetCPC(Bot.Config!.Get<bool>("PetOnly"));
+        GetCPC(Bot.Config!.Get<bool>("ArmorOnly"));
 
         Core.SetOptions(false);
     }
@@ -160,6 +167,11 @@ public class CelestialPirateCommander
             if (Bot.Config!.Get<bool>("PetOnly"))
             {
                 Core.EnsureCompleteChoose(7713, new[] { "Polly Roger" });
+                return;
+            }
+            if (Bot.Config!.Get<bool>("ArmorOnly"))
+            {
+                Core.EnsureCompleteChoose(7713, new[] { "Celestial Pirate Commander" });
                 return;
             }
             else
