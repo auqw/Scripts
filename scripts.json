@@ -3646,8 +3646,8 @@
       "all"
     ],
     "path": "Seasonal/AllSeasonal.cs",
-    "size": 14072,
-    "sha256": "7917b784ee0ae661857d8ea2ca20a720c6a25c66fb2ee8ed98ca323bcee79caf",
+    "size": 14140,
+    "sha256": "3d2131e40c13d42315ec37cd4dfad4e5055847d5f5ba65217ccccf85c441df23",
     "fileName": "AllSeasonal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AllSeasonal.cs"
   },
@@ -23090,8 +23090,8 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs",
-    "size": 5222,
-    "sha256": "ad42e70ee5226b2d07b51766e39eec67492f37d390611b046f566224e1837d14",
+    "size": 6184,
+    "sha256": "9ae5c005c0c880e8a9eecc588a9a7b1278ad7037a5fd24e727536ff9707e5d27",
     "fileName": "CelestialPirateCommander[PollyRogers].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs"
   },
