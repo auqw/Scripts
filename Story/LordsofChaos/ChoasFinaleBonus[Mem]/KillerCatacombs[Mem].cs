@@ -105,7 +105,7 @@ public class KillerCatacombs
         Story.KillQuest(
             3677,
             "killercatacombs",
-            new[] { "Living Armor ", "Sundered Darkblood ", "Unstable Spirit Orb " }
+            new[] { "Unstable Spirit Orb", "Living Armor ", "Sundered Darkblood " }
         );
 
         // A Reanimated Dragon
