@@ -266,7 +266,7 @@ public class AllSeasonal
             default:
                 DageRecruit.CompleteDageRecruit();
                 if (Bot.Quests.IsAvailable(7713))
-                    CelestialPirateCommander.GetCPC(true);
+                    CelestialPirateCommander.GetCPC(CelestialPirateCommander.CPCReward.All);
                 break;
 
             case 1:
@@ -351,7 +351,7 @@ public class AllSeasonal
             case 9:
                 Core.Logger("Starting Scripts for September");
                 //insert script voids here
-                CelestialPirateCommander.GetCPC(true);
+                CelestialPirateCommander.GetCPC(CelestialPirateCommander.CPCReward.All);
                 KaijuWar.KaijuItems();
                 HeartOfTheSeaStory.HeartOfTheSea();
                 CetoleonWarStory.CetoleonWar();
