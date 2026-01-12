@@ -108,7 +108,7 @@ public class ArchPaladin
                     "Desterrat Moya Tentacle",
                     publicRoom: true
                 );
-                Core.HuntMonster("dreadhaven", "Dreadhaven General", "Dreadhaven Helm");
+                Core.HuntMonster("dreadhaven", "SUPER Dreadhaven General", "Dreadhaven Helm");
                 Adv.GearStore();
                 Core.KillDoomKitten("DoomKitten Claw", isTemp: true);
                 Adv.GearStore(true);

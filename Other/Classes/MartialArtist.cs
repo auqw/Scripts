@@ -81,7 +81,7 @@ public class MartialArtist
             Core.EnsureAccept(Core.IsMember ? 9911 : 9902);
             Core.HuntMonster(
                 "dreadfight",
-                "Dreadhaven General",
+                "SUPER Dreadhaven General",
                 "Dreadhaven General's Soul Fragment",
                 Core.IsMember ? 200 : 400,
                 isTemp: false
@@ -142,7 +142,7 @@ public class MartialArtist
         {
             Core.HuntMonsterQuest(
                 9933,
-                ("dreadfight", "Dreadhaven General", ClassType.Solo), // Dreadhaven General's Soul Fragment (10): Join dreadfight, kill Dreadhaven General
+                ("dreadfight", "SUPER Dreadhaven General", ClassType.Solo), // Dreadhaven General's Soul Fragment (10): Join dreadfight, kill Dreadhaven General
                 ("hakuwar", "Zakhvatchik", ClassType.Solo), // Zakhvatchik's Soul Fragment (10): Join hakuwar, kill Zakhvatchik (last room)
                 ("towerofdoom5", "Creel", ClassType.Solo) // Creel's Soul Fragment (10): Join towerofdoom5, kill Creel (last room)
             );
