@@ -65,7 +65,7 @@ public class NulgathDemandsWork
 
     public void DoNulgathDemandsWork()
     {
-        // NDWQuest(NDWItems);
+        NDWQuest(NDWItems);
         NDWQuest(new[] { "Unidentified 35" }, 300);
     }
 
