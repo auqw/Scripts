@@ -128,23 +128,25 @@ public class ChampionDrakath
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
-    string a, b;
 
     public bool DontPreconfigure = true;
-    public string OptionsStorage = "ChampionDrakath";
+    public string OptionsStorage = "ChampionDrakathTauntSelect";
+    string a, b, c, d;
+    int previousHP = 0;
+    private static int[] hpThresholds = { 18100000, 16100000, 14100000, 12100000, 10100000, 8100000, 6100000, 4100000 };
 
     public List<IOption> Options = new()
-{
-    new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", "ArchPaladin"),
-    new Option<string>("b", "Taunter Class (Backup)", "Backup taunter class", "Chaos Slayer"),
-    new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
-    new Option<bool>("SoloTaunt", "Only 1 Taunter", "Only use a single Taunter", false),
-    CoreBots.Instance.SkipOptions,
-};
+    {
+        new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first (name must be exact, inclduing punctuation and spaces)", "ArchPaladin"),
+        new Option<string>("b", "Taunter Class (Secondary)", "Backup taunter class (name must be exact, inclduing punctuation and spaces)", "Legion Revenant"),
+        new Option<string>("c", "Taunter Class (Tertiary)", "Third taunter class (name must be exact, inclduing punctuation and spaces)", "StoneCrusher"),
+        new Option<string>("d", "Taunter Class (Quaternary)", "Fourth taunter class (name must be exact, inclduing punctuation and spaces)", "Lord Of Order"),
+        new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
+        new Option<HowManyTaunts>("HowManyTaunts", "How many taunters", "How many of the accounts are going to taunt", HowManyTaunts.Two),
+        CoreBots.Instance.SkipOptions,
+    };
 
     bool SoloTaunt;
-    private static int[] hpThresholds = { 18100000, 16100000, 14100000, 12100000, 10100000, 8100000, 6100000, 4100000 };
-    private static int previousHP = 0;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -186,10 +188,21 @@ public class ChampionDrakath
         if (Bot.Player.CurrentClass == null)
             return false;
 
-        return SoloTaunt
-            ? Bot.Player.CurrentClass.Name.Contains(a)
-            : (!string.IsNullOrEmpty(a) && Bot.Player.CurrentClass.Name.Contains(a))
-              || (!string.IsNullOrEmpty(b) && Bot.Player.CurrentClass.Name.Contains(b));
+        string currentClass = Bot.Player.CurrentClass.Name;
+
+        // Check based on HowManyTaunts setting
+        int taunterCount = (int)Bot.Config.Get<HowManyTaunts>("HowManyTaunts");
+
+        if (taunterCount >= 1 && !string.IsNullOrEmpty(a) && currentClass.Contains(a))
+            return true;
+        if (taunterCount >= 2 && !string.IsNullOrEmpty(b) && currentClass.Contains(b))
+            return true;
+        if (taunterCount >= 3 && !string.IsNullOrEmpty(c) && currentClass.Contains(c))
+            return true;
+        if (taunterCount >= 4 && !string.IsNullOrEmpty(d) && currentClass.Contains(d))
+            return true;
+
+        return false;
     }
 
     void Prep()
@@ -224,7 +237,8 @@ public class ChampionDrakath
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
-        bool[] tauntFired = new bool[8]; // 18–2M chunks
+        bool[] tauntFired = new bool[8]; // 18M-4M in 2M chunks
+        previousHP = 0; // Reset at fight start
 
         while (!Bot.ShouldExit)
         {
@@ -246,10 +260,8 @@ public class ChampionDrakath
 
             Bot.Sleep(500);
 
-            // Define HP thresholds at the top of your method/class
-
-            // In your main logic:
-            if ((Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
+            // Only execute taunt logic if this account is a taunter
+            if (IsTaunter()
                 && !Bot.Target.Auras.Any(x => x != null && x.Name == "Focus")
                 && Bot.Player.Target?.HP > 0)
             {
@@ -267,12 +279,12 @@ public class ChampionDrakath
                 }
                 previousHP = Bot.Player.Target.HP;
 
-                // Check thresholds
+                // Check thresholds (18M down to 4M)
                 for (int i = 0; i < hpThresholds.Length; i++)
                 {
                     if (!tauntFired[i] && Bot.Player.Target.HP <= hpThresholds[i])
                     {
-                        C.Logger($"{(hpThresholds[i] - 100000) / 1000000}m - Taunting at HP {Bot.Player.Target.HP:n0}");
+                        C.Logger($"{hpThresholds[i] / 1000000}M - Taunting at HP {Bot.Player.Target.HP:n0}");
 
                         while (!Bot.ShouldExit)
                         {
@@ -307,7 +319,7 @@ public class ChampionDrakath
                 // After 2M → always taunt
                 if (Bot.Player.Target.HP <= 2100000 && Bot.Skills.CanUseSkill(5))
                 {
-                    C.Logger($"HP is < 2mil, Taunting at HP {Bot.Player.Target.HP:n0}");
+                    C.Logger($"HP is < 2M, Taunting at HP {Bot.Player.Target.HP:n0}");
 
                     while (!Bot.ShouldExit)
                     {
@@ -472,5 +484,14 @@ public class ChampionDrakath
                 );
                 break;
         }
+    }
+
+
+    enum HowManyTaunts
+    {
+        One = 1,
+        Two = 2,
+        Three = 3,
+        Four = 4
     }
 }
