@@ -135,7 +135,8 @@ public class TachyonMerge
                         Core.HuntMonster(
                             "tachyon",
                             "Svelgr the Devourer",
-                            "Svelgr the Devourer Defeated"
+                            "Svelgr the Devourer Defeated",
+                            log: false
                         );
                         Bot.Wait.ForPickup(req.Name);
                     }
@@ -155,7 +156,8 @@ public class TachyonMerge
                         Core.HuntMonster(
                             "tachyon",
                             "Svelgr the Devourer",
-                            "Svelgr the Devourer Defeated"
+                            "Svelgr the Devourer Defeated",
+                            log: false
                         );
                         Bot.Wait.ForPickup(req.Name);
                     }

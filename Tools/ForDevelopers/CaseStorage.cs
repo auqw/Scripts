@@ -15498,7 +15498,7 @@ case ""Blue Overdrive"":
                     Core.RegisterQuests(5084);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"");
+                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"", Log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -15516,7 +15516,7 @@ case ""Blue Powercell"":
                     Core.RegisterQuests(5084);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"");
+                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"", Log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -15534,7 +15534,7 @@ case ""Blue Tachyon Trigger"":
                     Core.RegisterQuests(5084);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"");
+                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"", Log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -15552,7 +15552,7 @@ case ""Blue Tachyon Grip"":
                     Core.RegisterQuests(5084);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"");
+                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"", Log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -15568,7 +15568,7 @@ case ""Tachyon Core Piece"":
                     Core.RegisterQuests(5083);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"");
+                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"", Log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -15584,7 +15584,7 @@ case ""Orange Overdrive"":
                     Core.RegisterQuests(5083);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"");
+                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"", Log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -15600,7 +15600,7 @@ case ""Orange Tachyon Grip"":
                     Core.RegisterQuests(5083);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"");
+                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"", Log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -15616,7 +15616,7 @@ case ""Orange Tachyon Trigger"":
                     Core.RegisterQuests(5083);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"");
+                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"", Log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -15632,7 +15632,7 @@ case ""Orange Powercell"":
                     Core.RegisterQuests(5083);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"");
+                        Core.HuntMonster(""tachyon"", ""Svelgr the Devourer"", ""Svelgr the Devourer Defeated"", Log: false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
