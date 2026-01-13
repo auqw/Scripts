@@ -13,31 +13,44 @@ tags: Ultra
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-/* "Safe" Comp: (Enhancements go in order of `Helm | Class | Weapon | Cape`)
-====================
-            ===Taunters===
+/* 
+# Composition Guide
+---
 
-ArchPaladin
-- Forge | Lucky | Valiance | Lament -
+## ⚡ Fast
+1. Chrono ShadowSlayer — **Vim | Lucky | Valiance | Vainglory**
+2. Verus DoomKnight — **Anima | Lucky | Ravenous | Vainglory**
+3. Legion Revenant — **Pneuma | Wizard | Valiance / Ravenous / Arcana | Vainglory**
+4. Lord of Order — **Forge | Lucky | Awe Blast / Valiance | Absolution**
 
-Lord Of Order:
-- Forge | Lucky | Lucky aweblast / Valiance | Absolution -
+---
 
-            ===Taunters===
-====================
+## ⚡ F2P Fast
+1. Dragon of Time — **Pneuma | Wizard | Elysium | Vainglory**
+2. Dragon of Time — **Pneuma | Wizard | Elysium | Vainglory**
+3. Legion Revenant — **Pneuma | Wizard | Valiance / Ravenous / Arcana | Vainglory**
+4. Lord of Order — **Forge | Lucky | Awe Blast / Valiance | Absolution**
 
-====================
-            ===DPSers===
+---
 
-King's Echo
-- Examen | Lucky | Ravenous | Vainglory -
+## ⚖️ Common
+1. King’s Echo — **Examen | Lucky | Ravenous | Vainglory**
+2. Legion Revenant — **Pneuma | Wizard | Valiance / Ravenous / Arcana | Vainglory**
+3. ArchPaladin — **Forge | Lucky | Valiance | Lament**
+4. Lord of Order — **Forge | Lucky | Awe Blast / Valiance | Absolution**
 
-Legion Revenant
-- Pneuma | Wizard | Valiance / Ravenous / Arcana | Vainglory -
+---
 
-            ===DPSers===
-====================
+## 🧪 Other DPS (Slot-ins)
+- Arcana Invoker — **Examen | Lucky | Ravenous | Vainglory**
+- Archfiend — **Forge | Lucky | Ravenous | Vainglory**
+- Lich — **Examen | Lucky | Ravenous | Vainglory**
+- Verus — **DoomKnight — **Anima | Lucky | Ravenous | Vainglory**
+
 */
+
+
+
 public class UltraNulgath
 {
     private static CoreAdvanced Adv
