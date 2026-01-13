@@ -67,7 +67,7 @@ public class Concert
             return;
 
         //No Matter How Dark the Night 1025
-        Story.KillQuest(1025, "darkness", new[] { "Banished Banshee", "Fear Muncher" });
+        Story.KillQuest(1025, "darkness", new[] { "Fear Muncher", "Banished Banshee" });
 
         //The Dark (K)Nights 1026
         Story.KillQuest(1026, "darkness", "Cloaked Fiend");
