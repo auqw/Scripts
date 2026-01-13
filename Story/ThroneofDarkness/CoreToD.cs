@@ -137,7 +137,7 @@ public class CoreToD
         {
             Core.EnsureAccept(4980);
             Core.GetMapItems(new[] { (4354, 1), (4355, 1) }, "bonecastle");
-            Core.HuntMonster("bonecastle", "Grateful Undead", "Song Requested Ticked", 5);
+            Core.HuntMonster("bonecastle", "Grateful Undead", "Song Request Ticket", 5);
             Core.HuntMonster("bonecastle", "That 70's Zombie", "Sweet Dancing Shoes", 2);
             Core.EnsureComplete(4980);
         }
