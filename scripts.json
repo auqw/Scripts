@@ -831,8 +831,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 8404,
-    "sha256": "b98571598c5dbb44008710337b64864286438e1dda3df99167f811a99ae81066",
+    "size": 9118,
+    "sha256": "b753575eb6c0cc6c5d3af1bc6147ff9d9577fe027359121d00f000d4f6905b0b",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
@@ -8711,8 +8711,8 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 48966,
-    "sha256": "ae677ab536386f32ae87ce2878a2d85b38f153de1750c46290271f92644ce8b5",
+    "size": 48964,
+    "sha256": "4c20041a366df286767e351b6c0df2caa513ddbe69847820dd5166488ab54462",
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
