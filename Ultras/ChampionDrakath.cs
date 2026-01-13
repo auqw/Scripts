@@ -255,8 +255,7 @@ public class ChampionDrakath
             if (!Bot.Player.Alive)
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-            if (!Bot.Player.HasTarget)
-                Bot.Combat.Attack(boss);
+            Bot.Combat.Attack(boss);
 
             Bot.Sleep(500);
 
