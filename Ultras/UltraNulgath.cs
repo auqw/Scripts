@@ -110,7 +110,10 @@ public class UltraNulgath
             DoEnhs();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (Bot.Inventory.Items.Any(x => x != null && x.Equipped && (x.Name == a || x.Name == b)))
+        {
             Ultra.GetScrollOfEnrage();
+            Core.EquipEnrage();
+        }
     }
 
     void Fight()
@@ -132,15 +135,12 @@ public class UltraNulgath
 
         while (!Bot.ShouldExit)
         {
-            // Dead → wait for respawn
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
 
-
-            // Check if the whole army has finished
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Nulgath the Archfiend Defeated?", 1), syncPath))
             {
                 C.Logger("All players finished farm.");
@@ -150,24 +150,41 @@ public class UltraNulgath
                 break;
             }
 
-            if (
-                Bot.Inventory.Items.Any(x =>
-                    x != null && x.Equipped && (x.Name == a || x.Name == b)
-                )
-            )
+            // Taunter logic
+            if (Bot.Inventory.Items.Any(x => x?.Equipped == true && (x.Name == a || x.Name == b)))
             {
-                Bot.Combat.Attack(2);
-                if (Bot.Skills.CanUseSkill(5) && !Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
-                    Bot.Skills.UseSkill(5);
+                Bot.Combat.Attack(Bot.Monsters.MapMonsters.Any(x => x?.MapID == 2 && x.HP > 0) ? 2 : 1);
+
+                Core.DisableSkills();
+                while (!Bot.ShouldExit)
+                {
+                    if (!Bot.Player.Alive)
+                    {
+                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                        break;
+                    }
+
+                    if (Bot.Monsters.MapMonsters.Any(x => x?.MapID == 2 && x.HP > 0) && Bot.Player.Target?.MapID == 1)
+                        break; // Sword respawned while attacking Nulgath → retarget Sword
+
+                    if (!Bot.Target.Auras.Any(x => x?.Name == "Focus"))
+                        Bot.Skills.UseSkill(5);
+                    else
+                    {
+                        Core.EnableSkills();
+                        break;
+                    }
+
+                    Bot.Sleep(500);
+                }
+                Core.EnableSkills();
             }
-            else
+            // Non-taunters attack Nulgath only
+            else if (Bot.Monsters.MapMonsters.Any(x => x?.MapID == 1 && x.HP > 0))
             {
-                Bot.Combat.Attack(
-                    Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 1 && x.HP > 0) ? 1 : 2
-                );
-                if (Bot.Skills.CanUseSkill(5))
-                    Bot.Skills.UseSkill(5);
+                Bot.Combat.Attack(1);
             }
+
             Bot.Sleep(500);
         }
     }
