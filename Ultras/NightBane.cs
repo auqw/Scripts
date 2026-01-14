@@ -27,7 +27,7 @@ public class NightBane
     public CoreUltra Ultra = new();
 
     public bool DontPreconfigure = true;
-    public string OptionsStorage = "Xyfrag";
+    public string OptionsStorage = "NightBane";
     public List<IOption> Options = new()
     {
         new Option<PlayerCount>("PlayerCount", "How many accounts", "Number of accounts (between 4-7) we'll be using", PlayerCount.Four),
