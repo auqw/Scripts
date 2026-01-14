@@ -45,7 +45,7 @@ using Skua.Core.Options;
 - Arcana Invoker — **Examen | Lucky | Ravenous | Vainglory**
 - Archfiend — **Forge | Lucky | Ravenous | Vainglory**
 - Lich — **Examen | Lucky | Ravenous | Vainglory**
-- Verus — **DoomKnight — **Anima | Lucky | Ravenous | Vainglory**
+- Verus DoomKnight — **Anima | Lucky | Ravenous | Vainglory**
 
 */
 
