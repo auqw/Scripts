@@ -303,6 +303,14 @@ public class NightBane
 
         switch (className)
         {
+            case "ArchPaladin":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
             case "great thief":
                 Adv.EnhanceEquipped(
                     hSpecial: Adv.uVim() ? HelmSpecial.Vim : HelmSpecial.Forge,
