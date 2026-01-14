@@ -70,16 +70,8 @@ public class UltraNulgath
     public string OptionsStorage = "UltraNulgath";
     public List<IOption> Options = new()
     {
-        new Option<string>(
-            "a",
-            "Taunter 1 ClassName",
-            "",
-            ""
-        ),
-        new Option<string>(
-            "b",
-            "Taunter 2 ClassName", ""
-        ),
+        new Option<string>( "a", "Taunter 1 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "TAUNTCLASS1"),
+        new Option<string>( "b", "Taunter 2 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "TAUNTCLASS2"),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -146,7 +138,7 @@ public class UltraNulgath
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            
+
 
             // Check if the whole army has finished
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Nulgath the Archfiend Defeated?", 1), syncPath))
