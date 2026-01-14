@@ -1,7 +1,7 @@
 /*
-name: null
-description: null
-tags: null
+name: NightBane
+description: Using 4-7 accounts to kill NightBane
+tags: NightBane, ultra, Night Bane, voidNightBane
 */
 
 //cs_include Scripts/Ultras/CoreEngine.cs
