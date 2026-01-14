@@ -1875,97 +1875,361 @@
       "skillTimeout": 200,
       "skills": [
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+
+        {
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 1
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 1
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
+
+        { "skillId": 4 },
+
         {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         }
       ]
     },
+
     "Def": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 200,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 2
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 2
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 2
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
-        {
-          "skillId": 4
-        }
+        { "skillId": 4 }
       ]
     },
+
     "Farm": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 200,
@@ -1975,18 +2239,23 @@
           "rules": [
             {
               "type": "Aura",
-              "value": 1,
-              "comparison": "greater",
+              "value": 0,
+              "comparison": "less",
               "auraName": "Rounds Empty",
               "auraTarget": "self"
             }
-          ]
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 3,
           "rules": [
             {
-              "type": "None"
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
             }
           ],
           "skipOnMatch": true
@@ -2000,97 +2269,361 @@
       "skillTimeout": 200,
       "skills": [
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+
+        {
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 1
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 0,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+
+        {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 0
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 1
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
+
+        { "skillId": 4 },
+
         {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         }
       ]
     },
+
     "Def": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 200,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 2
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 2
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 2
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
-        {
-          "skillId": 4
-        }
+        { "skillId": 4 }
       ]
     },
+
     "Farm": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 200,
@@ -2100,18 +2633,23 @@
           "rules": [
             {
               "type": "Aura",
-              "value": 1,
-              "comparison": "greater",
+              "value": 0,
+              "comparison": "less",
               "auraName": "Rounds Empty",
               "auraTarget": "self"
             }
-          ]
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 3,
           "rules": [
             {
-              "type": "None"
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
             }
           ],
           "skipOnMatch": true
