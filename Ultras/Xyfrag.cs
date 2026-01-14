@@ -99,6 +99,13 @@ public class Xyfrag
         Core.EnableSkills();
         while (!Bot.ShouldExit)
         {
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+            
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Xyfrag's Slimy Tooth", 5), syncPath))
             {
                 C.Jump("Enter", "Spawn");
@@ -106,13 +113,7 @@ public class Xyfrag
                 C.EnsureComplete(8547);
                 Adv.GearStore(true, true);
                 break;
-            }
-            // Dead → wait for respawn
-            if (!Bot.Player.Alive)
-            {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                continue;
-            }
+            } 
 
             if (Core.HasClassEquipped(taunter))
                 Ultra.Taunt(taunter, boss, "charge", 250);

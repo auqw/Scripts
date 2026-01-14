@@ -105,6 +105,13 @@ public class UltraSpeaker
 
         while (!Bot.ShouldExit)
         {
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+            
             // Check if all players are done
             bool allComplete = Ultra.CheckArmyProgressBool(
                 () => Bot.Inventory.Contains("The First Speaker Silenced", 1),
@@ -133,14 +140,7 @@ public class UltraSpeaker
                 Bot.Wait.ForTrue(() => Bot.Self.Auras.Any(a => a.Name == "Stasis"), 20);
                 Core.EnableSkills();
                 continue;
-            }
-
-            // Dead → wait for respawn (FIXED)
-            if (!Bot.Player!.Alive)
-            {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                continue;
-            }
+            } 
 
             // Position management in Boss cell
             if (Bot.Player?.Cell == "Boss")

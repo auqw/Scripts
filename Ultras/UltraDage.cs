@@ -151,6 +151,13 @@ public class UltraDage
 
         while (!Bot.ShouldExit)
         {
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+            
             if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Dage the Dark Lord Defeated", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
@@ -159,11 +166,7 @@ public class UltraDage
                     C.EnsureComplete(8547);
                 // Adv.GearStore(true, true);
                 break;
-            }
-            // Dead → wait for respawn
-            if (!Bot.Player.Alive)
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
+            } 
             if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b) && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
             {
                 if (Bot.Skills.CanUseSkill(5))

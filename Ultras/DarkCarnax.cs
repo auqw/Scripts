@@ -143,16 +143,20 @@ public class UltraDarkCarnax
 
         while (!Bot.ShouldExit)
         {
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+            
             if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains("Synthetic Viscera", 1000), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 Adv.GearStore(true, true);
                 break;
-            }
-            // Dead → wait for respawn
-            if (Bot.Player?.Alive == false)
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+            } 
 
             // Rejoin if needed
             if (Bot.Map.Name != map)

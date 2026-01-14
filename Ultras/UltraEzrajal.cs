@@ -218,6 +218,13 @@ public class UltraEzrajal
         // ---------------------------
         while (!Bot.ShouldExit)
         {
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+            
             // Check if the whole army has finished
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Ezrajal Defeated", 1), syncPath))
             {
@@ -225,13 +232,7 @@ public class UltraEzrajal
                 C.EnsureComplete(8152);
                 Bot.UltraBossHelper.DisableCounterAttack();
                 break;
-            }
-            // Dead → wait for respawn
-            if (!Bot.Player.Alive)
-            {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                continue;
-            }
+            } 
 
             // ---------------------------
             // COUNTER ATTACK HANDLER

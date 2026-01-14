@@ -178,7 +178,6 @@ public class ChampionDrakath
         }
 
         Core.Boot();
-        C.Join("whitemap-100000");
         Prep();
         Fight();
         C.JumpWait();
@@ -244,6 +243,13 @@ public class ChampionDrakath
 
         while (!Bot.ShouldExit)
         {
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+            
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Champion Drakath Defeated"), syncPath))
             {
                 Bot.Sleep(2500);
@@ -254,9 +260,6 @@ public class ChampionDrakath
                 Adv.GearStore(true, true);
                 break;
             }
-
-            if (!Bot.Player.Alive)
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
             Bot.Combat.Attack(boss);
 

@@ -171,6 +171,13 @@ public class UltraAvatarTyndarius
 
         while (!Bot.ShouldExit)
         {
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+            
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Avatar Tyndarius Defeated", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
@@ -178,11 +185,7 @@ public class UltraAvatarTyndarius
                 C.EnsureComplete(8245);
                 Adv.GearStore(true, true);
                 break;
-            }
-
-            if (!Bot.Player.Alive)
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
+            } 
             if (Bot.Map.Name != map)
             {
                 Core.Join(map);

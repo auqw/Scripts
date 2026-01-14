@@ -190,6 +190,12 @@ public class AstralEmpyrean
 
         while (!Bot.ShouldExit)
         {
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Astral's Supernova", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
@@ -198,12 +204,7 @@ public class AstralEmpyrean
                     C.EnsureComplete(9803);
                 break;
             }
-            // Dead → wait for respawn
-            if (!Bot.Player.Alive)
-            {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                continue;
-            }
+
             if (DoZoning)
             {
                 // Define box boundaries (0,0 to 101,101)

@@ -94,7 +94,7 @@ public class CoreEngine
         Bot.Options.InfiniteRange = true;
         Bot.Options.SkipCutscenes = true;
         Bot.Lite.HidePlayers = true;
-        // C.Join("whitemap-100000");
+        C.Join("whitemap-100000");
     }
 
     bool OnScriptStopping(Exception? e)

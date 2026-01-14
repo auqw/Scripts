@@ -142,7 +142,11 @@ public class UltraNulgath
         {
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
+            {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+            
 
             // Check if the whole army has finished
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Nulgath the Archfiend Defeated?", 1), syncPath))

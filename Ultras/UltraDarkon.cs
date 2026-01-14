@@ -77,7 +77,6 @@ public class UltraDarkon
         C.Logger("This script uses the `spam taunt method.. and works..maybe ^_^");
         className = Bot.Player.CurrentClass?.Name?.ToLower();
         Core.Boot();
-        Core.EnableSkills();
         Prep();
         Kill();
         C.SetOptions(false);
@@ -128,6 +127,7 @@ public class UltraDarkon
         Core.Join("ultradarkon");
         Ultra.WaitForArmy(3, "Ultra_Darkon.sync");
         Core.ChooseBestCell("Darkon the Conductor");
+        Core.EnableSkills();
         while (!Bot.ShouldExit)
         {
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Darkon the Conductor Defeated", 1), syncPath))

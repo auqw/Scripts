@@ -102,12 +102,13 @@ public class QueenIona
 
         while (!Bot.ShouldExit && !C.CheckInventory(item, quant))
         {
+            // Dead → wait for respawn
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-
+            
             if (Bot.Player.Cell != "r2")
             {
                 Bot.Map.Jump("r2", "Left", autoCorrect: false);

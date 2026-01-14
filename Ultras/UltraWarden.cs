@@ -93,6 +93,13 @@ public class UltraWarden
 
         while (!Bot.ShouldExit)
         {
+            // Dead → wait for respawn
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                continue;
+            }
+            
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Warden Defeated", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
@@ -100,14 +107,7 @@ public class UltraWarden
                 C.EnsureComplete(8153);
                 Adv.GearStore(true, true);
                 break;
-            }
-
-            // Dead → wait for respawn
-            if (!Bot.Player.Alive)
-            {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                continue;
-            }
+            } 
 
             if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
                 Ultra.UltraWardenTaunter();
