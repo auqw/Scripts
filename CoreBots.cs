@@ -3547,37 +3547,57 @@ public class CoreBots
 
     private async Task<List<Quest>?> EnsureLoadFromFile(params int[] questIDs)
     {
-        List<Quest>? toReturn;
-        //First try local Quest.txt file(if its not too old)
+        List<Quest>? toReturn = null;
+
+        // First try local Quest.txt file (if it's not too old)
         if (
-            File.GetLastWriteTime(ClientFileSources.SkuaQuestsFile).Subtract(DateTime.Now).TotalDays
-                < 14
+            File.Exists(ClientFileSources.SkuaQuestsFile) &&
+            DateTime.Now.Subtract(File.GetLastWriteTime(ClientFileSources.SkuaQuestsFile)).TotalDays < 14
             && LoadLocal()
         )
-            return toReturn!;
-
-        // Otherwise try file on Github
-        toReturn = (
-            OnlineQuestsFile ??= JsonConvert.DeserializeObject<List<QuestData>?>(
-                GetRequest(
-                    "https://raw.githubusercontent.com/BrenoHenrike/Scripts/Skua/QuestData.json"
-                )
-            )
-        )
-            ?.Where(q => questIDs.Contains(q.ID))
-            .Select(q => toQuest(q))
-            .ToList();
-        if (toReturn != null && toReturn.Any() && questIDs.All(q => toReturn.Any(x => x.ID == q)))
             return toReturn;
 
-        // If Github failed, manually update the quest file
-        await UpdateQuestFile();
-        if (LoadLocal())
-            return toReturn!;
+        // Otherwise try file on Github with timeout protection
+        try
+        {
+            toReturn = await LoadFromGithubWithTimeout();
+            if (toReturn != null && toReturn.Any() && questIDs.All(q => toReturn.Any(x => x.ID == q)))
+                return toReturn;
+        }
+        catch (Exception ex)
+        {
+            Logger($"Failed to load from GitHub: {ex.Message}", "EnsureLoad", messageBox: false);
+        }
 
-        // Failure
+        // If Github failed, try loading from local file even if it's old (better than nothing)
+        if (File.Exists(ClientFileSources.SkuaQuestsFile) && LoadLocal())
+        {
+            Logger("Using outdated local quest file as fallback", "EnsureLoad", messageBox: false);
+            return toReturn;
+        }
+
+        // If no local file exists, manually update the quest file
+        try
+        {
+            await UpdateQuestFile();
+            if (LoadLocal())
+                return toReturn;
+        }
+        catch (Exception ex)
+        {
+            Logger($"Failed to update quest file: {ex.Message}", "EnsureLoad", messageBox: false);
+        }
+
+        // Last resort: try loading local file one more time (in case UpdateQuestFile created it)
+        if (File.Exists(ClientFileSources.SkuaQuestsFile) && LoadLocal())
+        {
+            return toReturn;
+        }
+
+        // Complete failure
         Logger(
-            $"Failed to get the Quest Object for questIDs {string.Join(" | ", questIDs)}",
+            $"Failed to get the Quest Object for questIDs {string.Join(" | ", questIDs)}. " +
+            $"GitHub is unreachable and no local quest data is available.",
             "EnsureLoad C.0",
             messageBox: true,
             stopBot: true
@@ -3586,19 +3606,73 @@ public class CoreBots
 
         bool LoadLocal()
         {
-            toReturn = (
-                LocalQuestsFile ??= JsonConvert.DeserializeObject<List<QuestData>?>(
-                    File.ReadAllText(ClientFileSources.SkuaQuestsFile)
+            try
+            {
+                toReturn = (
+                    LocalQuestsFile ??= JsonConvert.DeserializeObject<List<QuestData>?>(
+                        File.ReadAllText(ClientFileSources.SkuaQuestsFile)
+                    )
                 )
-            )
-                ?.Where(q => questIDs.Contains(q.ID))
-                .Select(q => toQuest(q))
-                .ToList();
-            return (
-                toReturn != null
-                && toReturn.Any()
-                && questIDs.All(q => toReturn.Any(x => x.ID == q))
-            );
+                    ?.Where(q => questIDs.Contains(q.ID))
+                    .Select(q => toQuest(q))
+                    .ToList();
+                return (
+                    toReturn != null
+                    && toReturn.Any()
+                    && questIDs.All(q => toReturn.Any(x => x.ID == q))
+                );
+            }
+            catch (Exception ex)
+            {
+                Logger($"Failed to load local quest file: {ex.Message}", "LoadLocal", messageBox: false);
+                return false;
+            }
+        }
+
+        async Task<List<Quest>?> LoadFromGithubWithTimeout()
+        {
+            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            HttpClient client = new HttpClient();
+
+            try
+            {
+                string response = await client.GetStringAsync(
+                    "https://raw.githubusercontent.com/auqw/Scripts/Skua/QuestData.json",
+                    cts.Token
+                );
+
+                OnlineQuestsFile = JsonConvert.DeserializeObject<List<QuestData>?>(response);
+
+                return OnlineQuestsFile
+                    ?.Where(q => questIDs.Contains(q.ID))
+                    .Select(q => toQuest(q))
+                    .ToList();
+            }
+            catch (TaskCanceledException)
+            {
+                Logger("GitHub request timed out after 30 seconds", "EnsureLoad", messageBox: false);
+                return null;
+            }
+            catch (OperationCanceledException)
+            {
+                Logger("GitHub request was cancelled", "EnsureLoad", messageBox: false);
+                return null;
+            }
+            catch (HttpRequestException ex)
+            {
+                Logger($"HTTP request failed (GitHub may be down): {ex.Message}", "EnsureLoad", messageBox: false);
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Logger($"Unexpected error loading from GitHub: {ex.Message}", "EnsureLoad", messageBox: false);
+                return null;
+            }
+            finally
+            {
+                cts.Dispose();
+                client.Dispose();
+            }
         }
 
         Quest toQuest(QuestData data)
@@ -3609,8 +3683,8 @@ public class CoreBots
                 Slot = data.Slot,
                 Value = data.Value,
                 Name = data.Name,
-                Description = string.Empty, // Not found in QuestData
-                EndText = string.Empty, // Not found in QuestData
+                Description = string.Empty,
+                EndText = string.Empty,
                 Once = data.Once,
                 Field = data.Field,
                 Index = data.Index,
@@ -3622,30 +3696,31 @@ public class CoreBots
                 RequiredFactionRep = data.RequiredFactionRep,
                 Gold = data.Gold,
                 XP = data.XP,
-                Status = null!, // Not found in QuestData
-                //Active is based on Status being NULL or not
-                //Requirements cant be writen to
+                Status = null!,
                 Rewards = data.Rewards,
                 SimpleRewards = data.SimpleRewards,
             };
         }
+
         async Task UpdateQuestFile()
         {
-            CancellationTokenSource? _loaderCTS;
-            _loaderCTS = new();
-            List<QuestData> questData = await (
-                LoaderService ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>()
-            ).UpdateAsync("Quests.txt", false, null, _loaderCTS.Token);
-            _loaderCTS.Cancel();
-            _loaderCTS.Dispose();
-            _loaderCTS = null;
+            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromMinutes(2));
+            try
+            {
+                List<QuestData> questData = await (
+                    LoaderService ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>()
+                ).UpdateAsync("Quests.txt", false, null, cts.Token);
+            }
+            finally
+            {
+                cts.Dispose();
+            }
         }
     }
 
     private List<QuestData>? LocalQuestsFile;
     private List<QuestData>? OnlineQuestsFile;
     private IQuestDataLoaderService? LoaderService;
-
     public void AbandonQuest(params int[] questIDs)
     {
         if (questIDs == null || questIDs.Length == 0)
