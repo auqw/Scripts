@@ -110,19 +110,24 @@ public class UltraDarkon
 
     void Kill()
     {
-        if (!C.isCompletedBefore(8746))
-            C.Logger("Quest 8746 not unlocked.");
+        if (!C.isCompletedBefore(8733))
+        {
+            C.Logger("Quest 8733 (\"The World\") not completed. Run: `\"Story\\ElegyofMadness(Darkon)\\0CompleteAll.cs` to be able to complete the quest, or just let this run to help get the kill.");
+
+            Bot.Quests.UpdateQuest(8733);
+        }
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
+
         C.EnsureAccept(8746);
+
         C.AddDrop("Darkon Insignia");
-        Bot.Quests.UpdateQuest(8746);
+
         Core.Join("ultradarkon");
         Ultra.WaitForArmy(3, "Ultra_Darkon.sync");
         Core.ChooseBestCell("Darkon the Conductor");
-
         while (!Bot.ShouldExit)
         {
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Darkon the Conductor Defeated", 1), syncPath))
