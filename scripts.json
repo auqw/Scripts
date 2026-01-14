@@ -774,6 +774,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Xyfrag.cs"
   },
   {
+    "name": "NightBane",
+    "description": "Using 4-7 accounts to kill NightBane",
+    "tags": [
+      "nightbane",
+      "ultra",
+      "night bane",
+      "voidnightbane"
+    ],
+    "path": "Ultras/NightBane.cs",
+    "size": 4165,
+    "sha256": "d7cd103c75cdaafa016c68b562248affbb5414ce0886322de22366c42055b787",
+    "fileName": "NightBane.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/NightBane.cs"
+  },
+  {
     "name": "UltraDrago",
     "description": "Ultra King Drago helper with taunter classes and priority adds.",
     "tags": [
