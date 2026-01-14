@@ -2795,7 +2795,7 @@ public class CoreEngine
 
             #region Chrono Classes
             // Chrono classes
-            case "archiveoftime":
+            case "archivist of time":
                 ArchiveofTime();
                 break;
             case "chrono dragonknight":
