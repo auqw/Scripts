@@ -534,78 +534,52 @@ public class CoreLegion
             return;
         }
 
-        // PetID → MainQuestID (Time for Spring Cleaning) → SideQuestID (Clear a Path)
         (int PetID, int MainQuestID, int SideQuestID)[] questData = new[]
         {
-            (84900, 9649, 9648), // Hollowborn Paragon Quest Pet
-            (84899, 9646, 9645), // Hollowborn Paragon Quest Pet
-            (84965, 9663, 9662), // Hollowborn Paragon Quest Pet
-            (49926, 7073, 7072), // Paragon Ringbearer
-            (47578, 6750, 6749), // Paragon Fiend Quest Pet
-            (47614, 6756, 6754), // Paragon Fiend Quest Pet
-            (38792, 5756, 5754), // Shogun Dage Pet
-            (38621, 5755, 5753), // Shogun Paragon Pet
-        };
+        (84900, 9649, 9648), (84899, 9646, 9645), (84965, 9663, 9662),
+        (49926, 7073, 7072), (47578, 6750, 6749), (47614, 6756, 6754),
+        (38792, 5756, 5754), (38621, 5755, 5753)
+    };
 
-
-        // Cache inventory once
-        HashSet<int> ownedItemIds = Bot.Inventory.Items.Concat(Bot.Bank.Items)
-            .Select(item => item.ID)
-            .ToHashSet();
-
-        (int PetID, int MainQuestID, int SideQuestID)? selected =
-            questData.FirstOrDefault(q => ownedItemIds.Contains(q.PetID));
-
-
-        if (selected == null)
+        HashSet<int> ownedItemIds = new HashSet<int>(Bot.Inventory.Items.Concat(Bot.Bank.Items).Select(i => i.ID));
+        (int PetID, int MainQuestID, int SideQuestID) selected = questData.FirstOrDefault(q => ownedItemIds.Contains(q.PetID));
+        if (selected.PetID == 0)
         {
-            Core.Logger(
-                "No Pet owned for \"Time for Some Spring Cleaning\" *or* the Pet is missing from our list"
-            );
+            Core.Logger("No Pet owned for 'Time for Some Spring Cleaning' or pet missing from our list");
             return;
         }
 
-        List<Quest> questList = new();
+        List<Quest> questList = new List<Quest>();
 
-        Quest mainQuest = Core.EnsureLoad(selected.Value.MainQuestID);
+        Quest mainQuest = Core.EnsureLoad(selected.MainQuestID);
+        if (mainQuest.ID == 0)
+        {
+            Core.Logger($"MainQuestID {selected.MainQuestID} missing from QuestData.json!", messageBox: true);
+            return;
+        }
         questList.Add(mainQuest);
 
         if (DoClearaPath)
         {
-            Quest sideQuest = Core.EnsureLoad(selected.Value.SideQuestID);
+            Quest sideQuest = Core.EnsureLoad(selected.SideQuestID);
+            if (sideQuest.ID == 0)
+            {
+                Core.Logger($"SideQuestID {selected.SideQuestID} missing from QuestData.json!", messageBox: true);
+                return;
+            }
             questList.Add(sideQuest);
         }
 
         foreach (Quest quest in questList)
-        {
-            Core.AddDrop(
-                quest.Rewards
-                    .Where(r => r != null && r.Quantity < r.MaxStack)
-                    .Select(r => r.Name)
-                    .Distinct()
-                    .ToArray()
-            );
-        }
+            Core.AddDrop(quest.Rewards.Where(r => r != null && r.Quantity < r.MaxStack).Select(r => r.Name).Distinct().ToArray());
 
-        Bot.Log(
-            $"✔️ Quest Pet Owned\n" +
-            $"PetID: [{selected.Value.PetID}]\n" +
-            $"QuestID(s): [{string.Join(", ", questList.Select(q => q.ID))}]"
-        );
+        Bot.Log($"✔️ Quest Pet Owned\nPetID: [{selected.PetID}]\nQuestID(s): [{string.Join(", ", questList.Select(q => q.ID))}]");
 
-        // Collect unique quest requirements once
-        Dictionary<int, (ItemBase Item, int Quantity)> requirements = new();
-
+        Dictionary<int, (ItemBase Item, int Quantity)> requirements = new Dictionary<int, (ItemBase Item, int Quantity)>();
         foreach (Quest quest in questList)
-        {
             foreach (ItemBase req in quest.Requirements)
-            {
-                if (req == null || requirements.ContainsKey(req.ID))
-                    continue;
-
-                requirements[req.ID] = (req, req.Quantity);
-            }
-        }
+                if (req != null && req.ID != 0 && !requirements.ContainsKey(req.ID))
+                    requirements[req.ID] = (req, req.Quantity);
 
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger("Legion Token", quant);
@@ -621,15 +595,7 @@ public class CoreLegion
 
                 bool femmeSoul = questItem.Name == "Femme Cult Worshipper's Soul";
 
-                Core.KillMonster(
-                    "fotia",
-                    femmeSoul ? "r5" : "Enter",
-                    femmeSoul ? "Left" : "Spawn",
-                    femmeSoul ? "Femme Cult Worshiper" : "*",
-                    questItem.Name,
-                    itemQuant,
-                    log: Logger
-                );
+                Core.KillMonster("fotia", femmeSoul ? "r5" : "Enter", femmeSoul ? "Left" : "Spawn", femmeSoul ? "Femme Cult Worshiper" : "*", questItem.Name, itemQuant, log: Logger);
 
                 if (Core.CheckInventory("Legion Token", quant))
                 {
