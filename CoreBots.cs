@@ -3709,7 +3709,7 @@ public class CoreBots
             {
                 List<QuestData> questData = await (
                     LoaderService ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>()
-                ).UpdateAsync("Quests.txt", false, null, cts.Token);
+                ).UpdateAsync("QuestData.json", false, null, cts.Token);
             }
             finally
             {
@@ -3721,6 +3721,7 @@ public class CoreBots
     private List<QuestData>? LocalQuestsFile;
     private List<QuestData>? OnlineQuestsFile;
     private IQuestDataLoaderService? LoaderService;
+
     public void AbandonQuest(params int[] questIDs)
     {
         if (questIDs == null || questIDs.Length == 0)
