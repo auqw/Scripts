@@ -269,7 +269,7 @@ public class UltraDarkon
                 break;
 
             // Hollowborn VIndicator
-            case "Hollowborn VIndicator":
+            case "Hollowborn Vindicator":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky, // Class
                     hSpecial: HelmSpecial.Forge, // Helm
