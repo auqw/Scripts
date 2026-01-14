@@ -197,80 +197,9 @@ public class Lich
     {
         Core.SetOptions(disableClassSwap: true);
 
-        Example();
+        LichClass();
 
         Core.SetOptions(false);
-    }
-
-    public void Example(bool rankUpClass = true)
-    {
-        // Lich class
-        if (Core.CheckInventory(94824))
-        {
-            if (rankUpClass)
-                Adv.RankUpClass("Lich");
-            return;
-        }
-        // Verata's Necronomicon
-        // Ensure you have the required items for Grimskull Trolling Rep
-        if (!Core.CheckInventory("Verata's Necronomicon"))
-        {
-            GrimskullTrollingRep.DoGrimskullTrollingRep();
-            Core.BuyItem("gaolcell", 2362, "Verata's Necronomicon");
-            Bot.Wait.ForPickup("Verata's Necronomicon");
-        }
-
-        // Nictos Necronomicon
-        if (!Core.CheckInventory("Nicto's Necronomicon"))
-        {
-            if (Core.isSeasonalMapActive("moreskulls"))
-            {
-                ColossalWaresMerge.BuyAllMerge("Nicto's Necronomicon");
-                Bot.Wait.ForPickup("Nicto's Necronomicon");
-            }
-            else
-            {
-                Core.Logger(
-                    "Cannot get Nicto's Necronomicon: 'moreskulls' not active and not a member."
-                );
-            }
-        }
-
-        // Klaatu's Necronomicon
-        Core.AddDrop("Klaatu's Necronomicon");
-        if (!Core.CheckInventory("Klaatu's Necronomicon"))
-        {
-            Core.EnsureAccept(10338);
-            Core.EquipClass(ClassType.Farm);
-            Farm.BattleUnderB(quant: 6666);
-            Farm.EvilREP();
-            Adv.BuyItem("Shadowfall", 89, "Shadow Lich");
-            Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "DarkoviaForest",
-                "Lich of the Stone",
-                "Lich Of The Stone",
-                isTemp: false
-            );
-            Core.EquipClass(ClassType.Dodge);
-            Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 113, isTemp: false, EquipBestClassType: false);
-            Core.GetMapItem(14740, 1, "necroproject");
-            Core.EnsureComplete(10338);
-            Bot.Wait.ForPickup("Klaatu's Necronomicon");
-        }
-
-        // Lich class
-        if (Core.CheckInventory(94824))
-        {
-            Core.AddDrop(
-                94824 /* Lich class item ID */
-            );
-            Core.ChainComplete(10339);
-            Bot.Wait.ForPickup(94824);
-        }
-
-        if (rankUpClass)
-            Adv.RankUpClass("Lich");
     }
 
     // Create a void for each necropnomicon:
