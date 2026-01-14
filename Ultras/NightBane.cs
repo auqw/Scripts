@@ -13,6 +13,177 @@ tags: NightBane, ultra, Night Bane, voidNightBane
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
+
+#region Composition Setup
+
+#region 4-Player Comp (for 5-6 just add a support or another VDK)
+
+// Legion Revenant (VDK)
+// ├─ Helm: Pneuma
+// ├─ Class: Wizard
+// ├─ Weapon: Ravenous
+// └─ Cape: Vainglory
+
+// Lord of Order (LOO)
+// ├─ Helm: Examen
+// ├─ Class: Lucky
+// ├─ Weapon: Elysium / Lucky Aweblast
+// └─ Cape: Absolution
+
+// StoneCrusher (SC)
+// ├─ Helm: Anima
+// ├─ Class: Fighter
+// ├─ Weapon: Valiance
+// └─ Cape: Absolution
+
+// ArchPaladin (AP)
+// ├─ Helm: Forge
+// ├─ Class: Lucky
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+
+#endregion
+
+#region Fast Comp
+
+// Great Thief
+// ├─ Helm: Forge / Vim
+// ├─ Class: Lucky
+// ├─ Weapon: Ravenous
+// └─ Cape: Lament
+
+// Great Thief (2nd instance for comp)
+// ├─ Helm: Forge / Vim
+// ├─ Class: Lucky
+// ├─ Weapon: Ravenous
+// └─ Cape: Lament
+
+// Verus Doomknight
+// ├─ Helm: Anima
+// ├─ Class: Lucky
+// ├─ Weapon: Ravenous
+// └─ Cape: Vainglory
+
+// Legendary Hero
+// ├─ Helm: Anima
+// ├─ Class: Lucky
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+
+// Legion Revenant
+// ├─ Helm: Pneuma
+// ├─ Class: Wizard
+// ├─ Weapon: Ravenous
+// └─ Cape: Vainglory
+
+// Archfiend
+// ├─ Helm: Forge
+// ├─ Class: Lucky
+// ├─ Weapon: Ravenous
+// └─ Cape: Lament
+
+// Lord of Order
+// ├─ Helm: Examen
+// ├─ Class: Lucky
+// ├─ Weapon: Elysium / Lucky Aweblast
+// └─ Cape: Absolution
+
+#endregion
+
+#region F2P Comp
+
+// Arcana Invoker
+// ├─ Helm: Examen
+// ├─ Class: Lucky
+// ├─ Weapon: Elysium
+// └─ Cape: Absolution
+
+// Arcana Invoker (2nd instance)
+// ├─ Helm: Examen
+// ├─ Class: Lucky
+// ├─ Weapon: Elysium
+// └─ Cape: Absolution
+
+// Verus Doomknight
+// ├─ Helm: Anima
+// ├─ Class: Lucky
+// ├─ Weapon: Ravenous
+// └─ Cape: Vainglory
+
+// StoneCrusher
+// ├─ Helm: Anima
+// ├─ Class: Fighter
+// ├─ Weapon: Valiance
+// └─ Cape: Absolution
+
+// Legion Revenant
+// ├─ Helm: Pneuma
+// ├─ Class: Wizard
+// ├─ Weapon: Ravenous
+// └─ Cape: Vainglory
+
+// Archfiend
+// ├─ Helm: Forge
+// ├─ Class: Lucky
+// ├─ Weapon: Ravenous
+// └─ Cape: Lament
+
+// Lord of Order
+// ├─ Helm: Examen
+// ├─ Class: Lucky
+// ├─ Weapon: Elysium / Lucky Aweblast
+// └─ Cape: Absolution
+
+#endregion
+
+#region Other DPS 
+
+// Chaos Slayer (CSS)
+// ├─ Helm: Forge
+// ├─ Class: Lucky
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+
+// Light Caster (LC)
+// ├─ Helm: Pneuma
+// ├─ Class: Lucky
+// ├─ Weapon: Ravenous / Praxis
+// └─ Cape: Vainglory
+
+// King's Echo (KE)
+// ├─ Helm: Examen
+// ├─ Class: Lucky
+// ├─ Weapon: Ravenous
+// └─ Cape: Vainglory
+
+// Shaman
+// ├─ Helm: Examen
+// ├─ Class: Lucky
+// ├─ Weapon: Ravenous
+// └─ Cape: Lament
+
+// Dragon of Time (DoT)
+// ├─ Helm: Pneuma
+// ├─ Class: Wizard
+// ├─ Weapon: Elysium
+// └─ Cape: Vainglory
+
+// Sentinel
+// ├─ Helm: Anima
+// ├─ Class: Lucky
+// ├─ Weapon: Ravenous
+// └─ Cape: Vainglory
+
+// Master Ranger (MR)
+// ├─ Helm: Anima
+// ├─ Class: Lucky
+// ├─ Weapon: Arcana / Praxis
+// └─ Cape: Vainglory
+
+#endregion
+
+#endregion
+
 public class NightBane
 {
     private static CoreAdvanced Adv
