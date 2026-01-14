@@ -400,7 +400,10 @@ public class CoreBLOD
 
     private void FarmUltimateWK(string item, int quant)
     {
-        if (!Core.CheckInventory(item, quant) && Bot.Quests.IsUnlocked(2163))
+        if (!Bot.Quests.IsUnlocked(2163))
+            AdvancedWK();
+
+        if (!Core.CheckInventory(item, quant))
             UltimateWK(item, quant);
     }
 
@@ -466,6 +469,9 @@ public class CoreBLOD
     {
         if (Core.CheckInventory("Advanced Weapon Kit", quant))
             return;
+
+        if (!Bot.Quests.IsUnlocked(2162))
+            BasicWK();
 
         Core.FarmingLogger("Advanced Weapon Kit", quant);
         Core.AddDrop("Advanced Weapon Kit");
