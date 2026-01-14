@@ -38,48 +38,7 @@ public class DefaultTemplate
 
     void Example()
     {
-        HuntMonsterBatch(
-                 500,
-                 false,
-                 false,
-                 true,
-                 ("necrocavern", 5, "Chaos Vordred Essence"),
-                 ("citadel", 21, "Belrot the Fiend Essence"),
-                 ("greenguardwest", 22, "Black Knight Essence"),
-                 ("mudluk", 18, "Tiger Leech Essence"),
-                 ("aqlesson", 17, "Carnax Essence"),
-                 ("hachiko", 10, "Dai Tengu Essence"),
-                 ("timevoid", 12, "Unending Avatar Essence"),
-                 ("dragonchallenge", 4, "Void Dragon Essence"),
-                 ("maul", 17, "Creature Creation Essence")
-             );
-    }
-
-
-    private void HuntMonsterBatch(
-           int quant,
-           bool isTemp,
-           bool publicRoom,
-           bool log,
-           params (string map, int monster, string essence)[] monsters
-       )
-    {
-        Core.AddDrop(monsters.Select(x => x.essence).ToArray());
-        Core.EquipClass(ClassType.Solo);
-        foreach (
-            var monster in monsters.Where(x =>
-                x.essence != null && x.monster > 0 && !Core.CheckInventory(x.essence, quant)
-            )
-        )
-            Core.HuntMonsterMapID(
-                monster.map,
-                monster.monster,
-                monster.essence,
-                quant,
-                isTemp,
-                log,
-                publicRoom
-            );
+        
     }
 
 
