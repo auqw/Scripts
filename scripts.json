@@ -1093,8 +1093,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 42050,
-    "sha256": "76e94947b96540e33b1eacf0cf254412616b24b1e6a0bd0124a3cd4ffefb21b5",
+    "size": 39936,
+    "sha256": "2b92ba0ea9d14fff02193886f569dc43470a1789b611e3bc1472278f2a8b19ec",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -15715,8 +15715,8 @@
       "katanas"
     ],
     "path": "Other/MergeShops/YulgarsDualWieldMerge.cs",
-    "size": 57195,
-    "sha256": "8262a11f82bf1b8126c188b3f8b5dacced6ecb3d54fd93c5b01969314c2a921b",
+    "size": 57353,
+    "sha256": "29bc9793f16b20635ce9b6a8ad483631b9037776b82687d6c237c6d909d95cb6",
     "fileName": "YulgarsDualWieldMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/YulgarsDualWieldMerge.cs"
   },
