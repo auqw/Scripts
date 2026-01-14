@@ -33,6 +33,7 @@ public class NightBane
         new Option<PlayerCount>("PlayerCount", "How many accounts", "Number of accounts (between 4-7) we'll be using", PlayerCount.Four),
         new Option<ItemToFarm>("Item", "Item to Farm", "Which item to farm (choose 'All' for all items)", ItemToFarm.Insatiable_Hunger),
         new Option<int>("Quantity", "Quantity", "Number of items to check/farm", 1),
+        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -60,7 +61,8 @@ public class NightBane
     {
         const string map = "voidNightBane";
         const string boss = "NightBane";
-
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            DoEnh();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
@@ -115,6 +117,160 @@ public class NightBane
             return Bot.Inventory.Contains((int)selectedItem, GetQuantity(selectedItem));
         }
     }
+
+    void DoEnh()
+    {
+        string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
+        if (string.IsNullOrEmpty(className))
+            return;
+
+        className = className.ToLower();
+
+        // Helper for conditional weapon choice
+        static WeaponSpecial WeaponChoice(WeaponSpecial primary, WeaponSpecial secondary)
+            => Adv.uDauntless() ? primary : secondary;
+
+        switch (className)
+        {
+            case "great thief":
+                Adv.EnhanceEquipped(
+                    hSpecial: Adv.uVim() ? HelmSpecial.Vim : HelmSpecial.Forge,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            case "verus doomknight":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Anima,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "legendary hero":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Anima,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            case "legion revenant":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Pneuma,
+                    type: EnhancementType.Wizard,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "archfiend":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Forge,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            case "lord of order":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Examen,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Elysium,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+
+            case "arcana invoker":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Examen,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Elysium,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+
+            case "stonecrusher":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Anima,
+                    type: EnhancementType.Fighter,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Absolution
+                );
+                break;
+
+            case "chrono shadowslayer":
+            case "chrono shadowhunter":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Vim,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "light caster":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Pneuma,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponChoice(WeaponSpecial.Ravenous, WeaponSpecial.Praxis),
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "king's echo":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Examen,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "shaman":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Examen,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            case "dragon of time":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Pneuma,
+                    type: EnhancementType.Wizard,
+                    wSpecial: WeaponSpecial.Elysium,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "sentinel":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Anima,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponSpecial.Ravenous,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+
+            case "master ranger":
+                Adv.EnhanceEquipped(
+                    hSpecial: HelmSpecial.Anima,
+                    type: EnhancementType.Lucky,
+                    wSpecial: WeaponChoice(WeaponSpecial.Arcanas_Concerto, WeaponSpecial.Praxis),
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
+        }
+    }
+
+
 }
 
 enum PlayerCount
