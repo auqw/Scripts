@@ -56,7 +56,7 @@ using Skua.Core.Options;
 /// <summary>
 /// Fast Composition - Optimized for speed and burst damage
 /// </summary>
-// Chrono ShadowSlayer (Taunter)
+// Chrono ShadowSlayer/ShadowHunter (Taunter)
 // ├─ Helm: Forge
 // ├─ Class: Lucky
 // ├─ Weapon: Valiance
@@ -68,7 +68,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance / Ravenous / Arcana
 // └─ Cape: Vainglory
 //
-// Paladin Chronomancer
+// Paladin Chronomancer / Obsidian Paladin Chronomancer
 // ├─ Helm: Healer / Wizard / Pneuma
 // ├─ Class: Healer / Wizard
 // ├─ Weapon: Healer / Wizard Mana Vamp
@@ -137,12 +137,13 @@ public class ChampionDrakath
 
     public List<IOption> Options = new()
     {
-        new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first (name must be exact, inclduing punctuation and spaces)", "ArchPaladin"),
-        new Option<string>("b", "Taunter Class (Secondary)", "Backup taunter class (name must be exact, inclduing punctuation and spaces)", "Legion Revenant"),
-        new Option<string>("c", "Taunter Class (Tertiary)", "Third taunter class (name must be exact, inclduing punctuation and spaces)", "StoneCrusher"),
-        new Option<string>("d", "Taunter Class (Quaternary)", "Fourth taunter class (name must be exact, inclduing punctuation and spaces)", "Lord Of Order"),
-        new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
-        new Option<HowManyTaunts>("HowManyTaunts", "How many taunters", "How many of the accounts are going to taunt", HowManyTaunts.Two),
+        new Option<string>("a", "Taunter Class (Primary)", "", "ArchPaladin"),
+        new Option<string>("b", "Taunter Class (Secondary)", "", "Legion Revenant"),
+        new Option<string>("c", "Taunter Class (Tertiary)", "", "StoneCrusher"),
+        new Option<string>("d", "Taunter Class (Quaternary)", "", "Lord Of Order"),
+        new Option<bool>("SoloTaunt", "Solo Taunt", "Only primary taunter", false),
+        new Option<bool>("DoEnh", "Do Enhancements", "", true),
+        new Option<HowManyTaunts>("HowManyTaunts", "How many taunters", "", HowManyTaunts.Two),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -155,25 +156,26 @@ public class ChampionDrakath
             && !Bot.Config.Get<bool>(C.SkipOptions))
             Bot.Config.Configure();
 
-        a = (Bot.Config!.Get<string>("a") ?? string.Empty).Trim();
+        a = (Bot.Config.Get<string>("a") ?? string.Empty).Trim();
         b = (Bot.Config.Get<string>("b") ?? string.Empty).Trim();
+        c = (Bot.Config.Get<string>("c") ?? string.Empty).Trim();
+        d = (Bot.Config.Get<string>("d") ?? string.Empty).Trim();
         SoloTaunt = Bot.Config.Get<bool>("SoloTaunt");
 
-        // FIXED VALIDATION
         if ((SoloTaunt && string.IsNullOrEmpty(a))
             || (!SoloTaunt && string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b)))
         {
-            Core.Log(
-                "Setup",
-                "Primary taunter is required. Backup is optional unless Solo Taunt is disabled."
-            );
+            Core.Log("Setup", "Primary taunter required.");
             Bot.Stop();
             return;
         }
 
-        // Ignore backup completely when solo
         if (SoloTaunt)
+        {
             b = string.Empty;
+            c = string.Empty;
+            d = string.Empty;
+        }
 
         Core.Boot();
         C.Join("whitemap-100000");
@@ -248,6 +250,7 @@ public class ChampionDrakath
                 C.Jump("Enter", "Spawn");
                 if (!Bot.Quests.IsDailyComplete(8300))
                     C.EnsureComplete(8300);
+                else Bot.Log("Daily already Complete");
                 Adv.GearStore(true, true);
                 break;
             }
@@ -410,6 +413,7 @@ public class ChampionDrakath
 
             // Paladin Chronomancer
             case "Paladin Chronomancer":
+            case "Obsidian Paladin Chronomancer":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Healer,                // Class // Wizard
                     hSpecial: HelmSpecial.Pneuma,                // Helm // Wizard

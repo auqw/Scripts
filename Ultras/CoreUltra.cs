@@ -371,19 +371,45 @@ public class CoreUltra
             }
         }
 
-        // Each line: key:ready:timestamp
+        // Each line: username|class:ready:timestamp
         void Poke(string path, string key, bool ready)
         {
+            if (string.IsNullOrWhiteSpace(key))
+                return;
+
+            string[] keyParts = key.Split('|');
+            if (keyParts.Length < 2 || string.IsNullOrWhiteSpace(keyParts[0]))
+                return;
+
+            string username = keyParts[0];
+            string className = keyParts[1];
+
             List<string> lines = Slurp(path).ToList();
-            string entry =
-                $"{key}:{(ready ? "1" : "0")}:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}";
-            int idx = lines.FindIndex(l => l.StartsWith(key + ":"));
+
+            // purge broken historical entries (|Peasant etc.)
+            lines.RemoveAll(l => l.StartsWith("|", StringComparison.Ordinal));
+
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            string entry = $"{username}|{className}:{(ready ? 1 : 0)}:{now}";
+
+            int idx = lines.FindIndex(l =>
+            {
+                string[] parts = l.Split(':');
+                if (parts.Length < 1)
+                    return false;
+
+                string[] existingKey = parts[0].Split('|');
+                return existingKey.Length >= 1 && existingKey[0] == username;
+            });
+
             if (idx >= 0)
                 lines[idx] = entry;
             else
                 lines.Add(entry);
+
             Yeet(path, lines.ToArray());
         }
+
 
         int HowMany(string path)
         {
@@ -572,20 +598,16 @@ public class CoreUltra
             Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
         if (string.IsNullOrWhiteSpace(Bot.Player.Username))
-        {
             Bot.Wait.ForTrue(() => !string.IsNullOrWhiteSpace(Bot.Player.Username), 20);
-        }
 
+        string? username = Bot.Player.Username;
+        string? className = Bot.Player.CurrentClass?.Name;
+
+        if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(className))
+            return false;
 
         string syncFile = ResolveSyncPath(syncFilePath);
-        string username = Bot.Player.Username ?? "Unknown";
-        string className = Bot.Player.CurrentClass?.Name ?? "Peasant";
         string myKey = $"{username}|{className}".Replace(":", "-");
-
-        if (string.IsNullOrWhiteSpace(username) || username == "Unknown")
-        {
-            return false;
-        }
 
         bool myCondition = condition();
         UpdateEntry(syncFile, myKey, myCondition ? "1" : "0");
@@ -600,12 +622,11 @@ public class CoreUltra
         foreach (string line in lines)
         {
             string[] parts = line.Split(':');
-
             if (parts.Length < 3)
                 continue;
 
             string[] keyParts = parts[0].Split('|');
-            if (keyParts.Length == 0 || string.IsNullOrWhiteSpace(keyParts[0]))
+            if (keyParts.Length < 1 || string.IsNullOrWhiteSpace(keyParts[0]))
                 continue;
 
             if (!int.TryParse(parts[1], out int status))
@@ -621,7 +642,6 @@ public class CoreUltra
             if (status == 1)
                 completedMembers++;
         }
-
 
         return activeMembers > 0 && completedMembers == activeMembers;
     }
