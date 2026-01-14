@@ -2783,7 +2783,7 @@ public class CoreBots
         Dictionary<Quest, int> chooseQuests = new();
         Dictionary<Quest, int> nonChooseQuests = new();
 
-        foreach (int questID in questIDs)
+        foreach (int questID in questIDs.Distinct())
         {
             Quest? q = InitializeWithRetries(() => EnsureLoad(questID));
             if (q == null)
@@ -3545,6 +3545,7 @@ public class CoreBots
         return toReturn;
     }
 
+    private static readonly HttpClient GitHubClient = new();
     private async Task<List<Quest>?> EnsureLoadFromFile(params int[] questIDs)
     {
         List<Quest>? toReturn = null;
@@ -3561,7 +3562,7 @@ public class CoreBots
         try
         {
             toReturn = await LoadFromGithubWithTimeout();
-            if (toReturn != null && toReturn.Any() && questIDs.All(q => toReturn.Any(x => x.ID == q)))
+            if (toReturn != null)
                 return toReturn;
         }
         catch (Exception ex)
@@ -3608,19 +3609,37 @@ public class CoreBots
         {
             try
             {
-                toReturn = (
-                    LocalQuestsFile ??= JsonConvert.DeserializeObject<List<QuestData>?>(
-                        File.ReadAllText(ClientFileSources.SkuaQuestsFile)
-                    )
-                )
-                    ?.Where(q => questIDs.Contains(q.ID))
-                    .Select(q => toQuest(q))
-                    .ToList();
-                return (
-                    toReturn != null
-                    && toReturn.Any()
-                    && questIDs.All(q => toReturn.Any(x => x.ID == q))
+                LocalQuestsFile ??= JsonConvert.DeserializeObject<List<QuestData>?>(
+                    File.ReadAllText(ClientFileSources.SkuaQuestsFile)
                 );
+
+                if (LocalQuestsFile == null || LocalQuestsFile.Count == 0)
+                {
+                    LocalQuestsFile = null;
+                    return false;
+                }
+
+                Dictionary<int, QuestData> questMap = LocalQuestsFile
+                    .GroupBy(q => q.ID)
+                    .Select(g => g.First())
+                    .ToDictionary(q => q.ID);
+
+                List<Quest> result = new();
+
+                foreach (int questID in questIDs.Distinct())
+                {
+                    if (!questMap.TryGetValue(questID, out QuestData? data))
+                    {
+                        Logger($"Quest ID {questID} missing from local quest file", "LoadLocal", messageBox: false);
+                        return false;
+                    }
+
+
+                    result.Add(toQuest(data));
+                }
+
+                toReturn = result;
+                return true;
             }
             catch (Exception ex)
             {
@@ -3629,10 +3648,11 @@ public class CoreBots
             }
         }
 
+
         async Task<List<Quest>?> LoadFromGithubWithTimeout()
         {
-            CancellationTokenSource cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            HttpClient client = new HttpClient();
+            using CancellationTokenSource cts = new(TimeSpan.FromSeconds(30));
+            HttpClient client = GitHubClient;
 
             try
             {
@@ -3642,38 +3662,38 @@ public class CoreBots
                 );
 
                 OnlineQuestsFile = JsonConvert.DeserializeObject<List<QuestData>?>(response);
+                if (OnlineQuestsFile == null || OnlineQuestsFile.Count == 0)
+                    return null;
 
-                return OnlineQuestsFile
-                    ?.Where(q => questIDs.Contains(q.ID))
-                    .Select(q => toQuest(q))
-                    .ToList();
+                Dictionary<int, QuestData> questMap = OnlineQuestsFile
+                    .GroupBy(q => q.ID)
+                    .Select(g => g.First())
+                    .ToDictionary(q => q.ID);
+
+                List<Quest> result = new();
+
+                foreach (int questID in questIDs)
+                {
+                    if (!questMap.TryGetValue(questID, out QuestData? data))
+                        return null;
+
+                    result.Add(toQuest(data));
+                }
+
+                return result;
             }
             catch (TaskCanceledException)
             {
                 Logger("GitHub request timed out after 30 seconds", "EnsureLoad", messageBox: false);
                 return null;
             }
-            catch (OperationCanceledException)
-            {
-                Logger("GitHub request was cancelled", "EnsureLoad", messageBox: false);
-                return null;
-            }
-            catch (HttpRequestException ex)
-            {
-                Logger($"HTTP request failed (GitHub may be down): {ex.Message}", "EnsureLoad", messageBox: false);
-                return null;
-            }
             catch (Exception ex)
             {
-                Logger($"Unexpected error loading from GitHub: {ex.Message}", "EnsureLoad", messageBox: false);
+                Logger($"GitHub load failed: {ex.Message}", "EnsureLoad", messageBox: false);
                 return null;
             }
-            finally
-            {
-                cts.Dispose();
-                client.Dispose();
-            }
         }
+
 
         Quest toQuest(QuestData data)
         {
@@ -3682,7 +3702,7 @@ public class CoreBots
                 ID = data.ID,
                 Slot = data.Slot,
                 Value = data.Value,
-                Name = data.Name,
+                Name = data.Name ?? $"Quest {data.ID}",
                 Description = string.Empty,
                 EndText = string.Empty,
                 Once = data.Once,
@@ -3697,10 +3717,11 @@ public class CoreBots
                 Gold = data.Gold,
                 XP = data.XP,
                 Status = null!,
-                Rewards = data.Rewards,
-                SimpleRewards = data.SimpleRewards,
+                Rewards = data.Rewards ?? new(),
+                SimpleRewards = data.SimpleRewards ?? new(),
             };
         }
+
 
         async Task UpdateQuestFile()
         {
@@ -3708,8 +3729,11 @@ public class CoreBots
             try
             {
                 List<QuestData> questData = await (
-                    LoaderService ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>()
-                ).UpdateAsync("QuestData.json", false, null, cts.Token);
+                LoaderService ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>()
+            ).UpdateAsync("QuestData.json", false, null, cts.Token);
+
+                LocalQuestsFile = questData;
+
             }
             finally
             {
