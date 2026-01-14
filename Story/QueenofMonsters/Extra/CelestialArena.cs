@@ -44,11 +44,11 @@ public class CelestialArenaQuests
 
     public void DoAll()
     {
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Arena1to10();
         Arena11to20();
         Arena21to29();
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
     }
 
     public void Arena1to10()

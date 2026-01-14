@@ -211,7 +211,7 @@ public class UltraDrago
         C.Join("whitemap");
         Astravia.AstraviaJudgement();
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
 

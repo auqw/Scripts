@@ -658,14 +658,14 @@ public class CoreArchMage
                     break;
 
                 case "Vital Exanima":
-                    Adv.GearStore();
+                    Adv.GearStore(EnhAfter: true);
                     Core.UseBossClass();
                     Core.KillMonster("dage", "Boss", "Right", "Dage the Evil", item, isTemp: false);
-                    Adv.GearStore(true);
+                    Adv.GearStore(true, EnhAfter: true);
                     break;
 
                 case "Everlight Flame":
-                    Adv.GearStore();
+                    Adv.GearStore(EnhAfter: true);
                     Core.UseBossClass();
                     Core.KillMonster(
                         "fireavatar",
@@ -675,7 +675,7 @@ public class CoreArchMage
                         item,
                         isTemp: false
                     );
-                    Adv.GearStore(true);
+                    Adv.GearStore(true, EnhAfter: true);
                     break;
 
                 case "Calamitous Ruin":
@@ -685,7 +685,7 @@ public class CoreArchMage
                     break;
 
                 case "The Mortal Coil":
-                    Adv.GearStore();
+                    Adv.GearStore(EnhAfter: true);
                     Core.EquipClass(ClassType.Dodge);
                     Core.KillMonster(
                         "tercessuinotlim",
@@ -695,7 +695,7 @@ public class CoreArchMage
                         item,
                         isTemp: false, EquipBestClassType: false
                     );
-                    Adv.GearStore(true);
+                    Adv.GearStore(true, EnhAfter: true);
                     break;
 
                 case "The Divine Will":
@@ -809,7 +809,7 @@ public class CoreArchMage
             else
                 Core.EquipClass(ClassType.Solo);
 
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             Adv.EnhanceEquipped(EnhancementType.Healer, wSpecial: WeaponSpecial.Elysium);
         }
 
@@ -834,7 +834,7 @@ public class CoreArchMage
 
         Core.CancelRegisteredQuests();
         Bot.Options.AttackWithoutTarget = false;
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         Bot.Events.RunToArea -= MoveNightmareCarnax;
 

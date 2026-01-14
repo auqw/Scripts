@@ -937,10 +937,10 @@ public class UnlockForgeEnhancements
         }
         Core.CancelRegisteredQuests();
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Core.EquipClass(ClassType.Dodge);
         Core.HuntMonster("tercessuinotlim", "Nulgath", "The Mortal Coil", isTemp: false, EquipBestClassType: false);
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
         Core.EnsureComplete(8820);
         Core.Logger("Enhancement Unlocked: Acheron");
     }
@@ -1014,10 +1014,10 @@ public class UnlockForgeEnhancements
             #region  [Prep] Malgor's ShadowFlame Blade
             if (!Core.CheckInventory("Malgor's ShadowFlame Blade"))
             {
-                Adv.GearStore();
+                Adv.GearStore(EnhAfter: true);
                 Core.UseBossClass();
                 SOWM.ElementalCore(20);
-                Adv.GearStore(true);
+                Adv.GearStore(true, EnhAfter: true);
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster(
                     "shadowgrove",
@@ -1335,10 +1335,10 @@ public class UnlockForgeEnhancements
             TSS.StoryLine(true); //sun heart thing
         Core.HuntMonster("ashfallcamp", "Smoldur", "Flame Heart", 10, isTemp: false);
         DD.Sloth();
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         DD.HazMatSuit();
         Core.HuntMonster("sloth", "Mutated Plague", "Bloodless Heart", 3, isTemp: false);
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         Core.EnsureComplete(8823);
         Core.Logger("Enhancement Unlocked: Lament");
@@ -1385,12 +1385,12 @@ public class UnlockForgeEnhancements
             Bot.Config!.Get<bool>("UseGold"),
             Bot.Config!.Get<bool>("UseGold")
         );
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Core.EnsureAccept(8824);
 
         Core.BuyItem("Classhalla", 172, "Rogue");
         Adv.RankUpClass("Rogue");
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster(
@@ -1417,11 +1417,11 @@ public class UnlockForgeEnhancements
         Vim();
         Core.Logger("Unlocking Enhancement: Examen");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Core.EnsureAccept(8825);
         Core.BuyItem("Classhalla", 176, "Healer");
         Adv.RankUpClass("Healer");
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster(
@@ -1448,12 +1448,12 @@ public class UnlockForgeEnhancements
         Examen();
         Core.Logger("Unlocking Enhancement: Anima");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Core.EnsureAccept(8826);
 
         Core.BuyItem("Classhalla", 170, "Warrior");
         Adv.RankUpClass("Warrior");
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster(
@@ -1480,12 +1480,12 @@ public class UnlockForgeEnhancements
         Anima();
         Core.Logger("Unlocking Enhancement: Pneuma");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Core.EnsureAccept(8827);
 
         Core.BuyItem("Classhalla", 174, "Mage");
         Adv.RankUpClass("Mage");
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         Core.EquipClass(ClassType.Farm);
         Core.KillMonster(

@@ -41,9 +41,9 @@ public class CursedWazikashi
             Core.GetMapItem(12046, 1, "museum");
 
         // Crescent's Confession[DoomKitten]
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Core.KillDoomKitten("Crescent's Confession");
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         //Steel Amulet
         Core.EquipClass(ClassType.Farm);

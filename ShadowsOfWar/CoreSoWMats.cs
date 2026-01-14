@@ -92,7 +92,7 @@ public class CoreSoWMats
         Core.FarmingLogger("Elemental Core", Quantity);
         Core.AddDrop("Elemental Core");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
 
         Core.UseBossClass();
         Core.RegisterQuests(9126);
@@ -104,7 +104,7 @@ public class CoreSoWMats
         }
         Bot.Wait.ForPickup("Elemental Core");
         Core.CancelRegisteredQuests();
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
     }
 
     public void GarishRemnant(int Quantity = 1000)

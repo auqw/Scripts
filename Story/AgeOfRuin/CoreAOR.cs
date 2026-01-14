@@ -445,15 +445,22 @@ public class CoreAOR
         {
             Core.EnsureAccept(9348);
 
-            string[] PossibleSoloClasses = new[]
-            {
-                "Chaos Avenger",
-                "Verus DoomKnight",
-                "Hollowborn Vindicator",
-                "Lich",
-                "ArchPaladin",
-                "Unundead Goat",
-            };
+      
+        // Define the possible solo classes
+        string[] PossibleSoloClasses = new[]
+        {
+            "Chrono ShadowHunter",
+            "Chrono ShadowSlayer",
+            "Chaos Avenger",
+            "Verus DoomKnight",
+            "Hollowborn Vindicator",
+            "Lich",
+            "ArchPaladin",
+            "Lord Of Order",
+            "StoneCrusher",
+            "Dragon of Time",
+            "Unundead Goat",
+        };
 
             if (!Core.CheckInventory(PossibleSoloClasses, any: true))
                 Core.Logger(
@@ -475,7 +482,7 @@ public class CoreAOR
 
             Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
 
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             Adv.SmartEnhance(selectedClass);
 
             KillThing(
@@ -488,7 +495,7 @@ public class CoreAOR
                 isTemp: true
             );
 
-            Adv.GearStore(true);
+            Adv.GearStore(true, EnhAfter: true);
             Core.EnsureComplete(9348);
             Core.SellItem("Vigil", all: true);
         }
@@ -1218,7 +1225,7 @@ public class CoreAOR
         potionApplied = false;
 
         Core.JumpWait();
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         void Listener(dynamic packet)
         {

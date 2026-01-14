@@ -139,7 +139,7 @@ public class BestGearAttemptX
 
         // Store gear if config allows
         if (Bot.Config!.Get<bool>("Restore Equipment After"))
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
 
         if (Bot.House.Items.Any(h => h.Equipped))
         {
@@ -208,6 +208,6 @@ public class BestGearAttemptX
 
         // Restore original gear if the config option is enabled
         if (Bot.Config.Get<bool>("Restore Equipment After"))
-            Adv.GearStore(true);
+            Adv.GearStore(true, EnhAfter: true);
     }
 }

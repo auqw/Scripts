@@ -103,7 +103,7 @@ public class DarkCarnaxStory
         else
             Core.EquipClass(ClassType.Solo);
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Adv.EnhanceEquipped(EnhancementType.Healer, wSpecial: WeaponSpecial.Elysium);
 
         Core.RegisterQuests(8872);
@@ -112,7 +112,7 @@ public class DarkCarnaxStory
 
         Core.CancelRegisteredQuests();
         Bot.Options.AttackWithoutTarget = false;
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         Bot.Events.RunToArea -= DarkCarnaxMove;
 

@@ -125,10 +125,10 @@ public class CoreSoW
             Core.JumpWait();
             Bot.Options.AttackWithoutTarget = true;
             Core.EnsureAccept(6852);
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             Core.UseBossClass();
             Core.HuntMonster("malgor", "Malgor", "Defeat Malgor", log: false);
-            Adv.GearStore(true);
+            Adv.GearStore(true, EnhAfter: true);
             Bot.Options.AttackWithoutTarget = false;
             Core.EnsureComplete(6852);
             Bot.Wait.ForMapLoad("shadowwar"); //game will force you bac to shadowar-1 ._. so you're welcome.
@@ -1221,7 +1221,7 @@ public class CoreSoW
         };
         if (Core.CheckInventory(DodgeClasses, any: true))
         {
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             foreach (string CLASS in DodgeClasses)
             {
                 if (!Core.CheckInventory(CLASS))
@@ -1251,6 +1251,6 @@ public class CoreSoW
         // Once Upon Another Time 9126
         // Build Malgor's Armor Set 9127
         #endregion
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
     }
 }

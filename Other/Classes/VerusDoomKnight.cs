@@ -218,13 +218,13 @@ public class VerusDoomKnightClass
         {
             Farm.Experience(80);
             Core.EnsureAccept(9418);
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             Core.KillDoomKitten("Doomkitten's Molar", 20, false);
             Adv.GearStore(true, true);
             if (!Core.CheckInventory("Deadly Duo's Decayed Denture", 10))
             {
                 Core.Logger("InfernalArena is a **SOLO ONLY** map!");
-                Adv.GearStore();
+                Adv.GearStore(EnhAfter: true);
                 Core.UseBossClass(
                     Core.CheckInventory(
                         new[] { "Void Highlord", "Void Highlord (IoDA)" },
@@ -323,14 +323,20 @@ public class VerusDoomKnightClass
 
     void VoTSSolo()
     {
+
         // Define the possible solo classes
         string[] PossibleSoloClasses = new[]
         {
+            "Chrono ShadowHunter",
+            "Chrono ShadowSlayer",
             "Chaos Avenger",
             "Verus DoomKnight",
             "Hollowborn Vindicator",
             "Lich",
             "ArchPaladin",
+            "Lord Of Order",
+            "StoneCrusher",
+            "Dragon of Time",
             "Unundead Goat",
         };
 
@@ -362,7 +368,7 @@ public class VerusDoomKnightClass
             Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
         }
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Adv.SmartEnhance(selectedClass);
 
         // Call the KillThing method with the specified parameters
@@ -469,4 +475,5 @@ public class VerusDoomKnightClass
 
         Core.Logger($"KillThing completed for {item} ({quant}).");
     }
+
 }

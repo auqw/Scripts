@@ -151,10 +151,10 @@ public class AstralEmpyrean
 
         C.Join("whitemap");
         Core.Boot();
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Prep();
         Fight();
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
         Bot.Stop();
     }
 

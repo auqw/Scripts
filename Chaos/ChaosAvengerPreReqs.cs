@@ -227,9 +227,9 @@ public class ChaosAvengerClass
         );
 
         //Xiang Chaos
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Core.KillXiang("Xiang Chaos");
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         Core.BuyItem("championdrakath", 2055, "Fragments of the Lords B");
     }

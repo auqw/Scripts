@@ -28827,10 +28827,10 @@ case ""Elemental Core"":
 case ""Mainyu Rune"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
-                    Adv.GearStore();
+                    Adv.GearStore(EnhAfter: true);
                     Core.UseBossClass();
                     Core.HuntMonster(""manacradle"", ""The Mainyu"", req.Name, isTemp: false);
-                    Adv.GearStore(true);
+                    Adv.GearStore(true, EnhAfter: true);
                     break;
 
     "
@@ -28841,10 +28841,10 @@ case ""Mainyu Rune"":
 case ""Mainyu Wings"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
-                    Adv.GearStore();
+                    Adv.GearStore(EnhAfter: true);
                     Core.UseBossClass();
                     Core.HuntMonster(""manacradle"", ""The Mainyu"", req.Name, isTemp: false);
-                    Adv.GearStore(true);
+                    Adv.GearStore(true, EnhAfter: true);
                     break;
 
     "
@@ -28855,10 +28855,10 @@ case ""Mainyu Wings"":
 case ""Mainyu Tail"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
-                    Adv.GearStore();
+                    Adv.GearStore(EnhAfter: true);
                     Core.UseBossClass();
                     Core.HuntMonster(""manacradle"", ""The Mainyu"", req.Name, isTemp: false);
-                    Adv.GearStore(true);
+                    Adv.GearStore(true, EnhAfter: true);
                     break;
 
     "
@@ -30775,9 +30775,9 @@ case ""Xiang Chaos"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Adv.GearStore();
+                    Adv.GearStore(EnhAfter: true);
                     Core.KillXiang(""Xiang Chaos"");
-                    Adv.GearStore(true);
+                    Adv.GearStore(true, EnhAfter: true);
                     break;
     "
 },

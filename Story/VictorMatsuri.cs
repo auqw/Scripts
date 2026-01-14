@@ -159,7 +159,7 @@ public class VictorMatsuri
             return;
         }
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Core.Equip("Legion Revenant");
         Adv.EnhanceEquipped(
             EnhancementType.Wizard,
@@ -253,7 +253,7 @@ public class VictorMatsuri
         }
 
         Bot.Events.ExtensionPacketReceived -= AuraListener;
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         void AuraListener(dynamic packet)
         {

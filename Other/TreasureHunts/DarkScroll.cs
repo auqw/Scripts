@@ -52,7 +52,7 @@ public class DarkScroll
                     Core.BuyItem("zazul", 336, "Libro dell'Inferno");
 
                 Core.EquipClass(ClassType.Solo);
-                Adv.GearStore();
+                Adv.GearStore(EnhAfter: true);
                 Core.Logger($"Step 3 Amethyst Gem");
                 Core.HuntMonster(
                     "onslaughttower",
@@ -61,7 +61,7 @@ public class DarkScroll
                     isTemp: false,
                     log: false
                 );
-                Adv.GearStore(true);
+                Adv.GearStore(true, EnhAfter: true);
 
                 //Amethyst Inferno Tome
                 Core.Logger($"Step 4 Amethyst Inferno Tome");

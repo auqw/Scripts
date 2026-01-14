@@ -892,7 +892,7 @@ public class AllClasses
         Core.Logger(
             "=== Buying `beginner` classes start (will help with forge enhancements later)==="
         );
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Core.BuyItem("trainers", 170, "Warrior");
         Core.BuyItem("trainers", 174, "Mage");
         Core.BuyItem("trainers", 176, "Healer");
@@ -926,7 +926,7 @@ public class AllClasses
     {
         Core.Logger("=== Doing Daily Classes ===");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         CheckAndExecute("Blaze Binder", () => BB.GetClass(rankUpClass));
         CheckAndExecute("The Collector", Daily.CollectorClass);
         CheckAndExecute("Cryomancer", () => Cryo.DoCryomancer(rankUpClass));
@@ -950,7 +950,7 @@ public class AllClasses
     {
         Core.Logger("=== Doing Reputation Classes ===");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         CheckAndExecute("Arachnomancer", () => Arach.GetArach(rankUpClass));
         CheckAndExecute("Darkblood StormKing", () => DBSK.GetDSK(rankUpClass));
         CheckAndExecute("Elemental Dracomancer", () => ED.GetED(rankUpClass));
@@ -1010,7 +1010,7 @@ public class AllClasses
 
         Core.Logger("=== Doing Member Classes ===");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         CheckAndExecute("Alpha Omega", () => AO.GetAlphaOmega(rankUpClass));
         CheckAndExecute("Acolyte", () => Acolyte.GetAcolyte(rankUpClass));
         CheckAndExecute("Bard", () => Bard.GetBard(rankUpClass));
@@ -1054,7 +1054,7 @@ public class AllClasses
     {
         Core.Logger("=== Doing Seasonal Classes ===");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         CheckAndExecute("Alpha Pirate", () => APir.GetAlphaPirate(rankUpClass));
         CheckAndExecute("Dark Lord", () => DL.GetDL(rankUpClass));
         CheckAndExecute("Evolved Leprechaun", () => EL.GetClass(rankUpClass));
@@ -1093,7 +1093,7 @@ public class AllClasses
     {
         Core.Logger("=== Doing Various Classes ===");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         CheckAndExecute("Abyssal Angel Shadow", () => AAS.GetAbyssal(rankUpClass));
         CheckAndExecute("Archfiend", () => AF.GetArchfiend(rankUpClass));
         CheckAndExecute("Blood Sorceress", () => BS.GetBSorc(rankUpClass));
@@ -1145,7 +1145,7 @@ public class AllClasses
     {
         Core.Logger("=== Doing End Game Classes ===");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         CheckAndExecute("ArchPaladin", () => AP.GetAP(rankUpClass));
         CheckAndExecute("Dragon of Time", () => DOT.GetDoT(rankUpClass, doExtra: false));
         CheckAndExecute("Void Highlord", () => VHL.GetVHL(rankUpClass));
@@ -1160,7 +1160,7 @@ public class AllClasses
     {
         Core.Logger("=== AC / Special Requirement / Army Classes ===");
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         // Why do you own these classes?
         CheckAndExecute("Grim Necromancer", () => GN.GetGN(rankUpClass)); // 600k ac purchased
 

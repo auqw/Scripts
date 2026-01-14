@@ -145,10 +145,10 @@ public class ManaCradleMerge
                 case "Mainyu Tail":
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
-                    Adv.GearStore();
+                    Adv.GearStore(EnhAfter: true);
                     Core.UseBossClass();
                     Core.HuntMonster("manacradle", "The Mainyu", req.Name, isTemp: false);
-                    Adv.GearStore(true);
+                    Adv.GearStore(true, EnhAfter: true);
                     break;
             }
         }

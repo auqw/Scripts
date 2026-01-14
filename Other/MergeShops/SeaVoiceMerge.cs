@@ -228,13 +228,20 @@ public class SeaVoiceMerge
 
     public void AttackVoiceInTheSea(string itemName, int quant)
     {
+
+        // Define the possible solo classes
         string[] PossibleSoloClasses = new[]
         {
+            "Chrono ShadowHunter",
+            "Chrono ShadowSlayer",
             "Chaos Avenger",
             "Verus DoomKnight",
             "Hollowborn Vindicator",
             "Lich",
             "ArchPaladin",
+            "Lord Of Order",
+            "StoneCrusher",
+            "Dragon of Time",
             "Unundead Goat",
         };
 
@@ -248,7 +255,7 @@ public class SeaVoiceMerge
         Core.EquipClass(ClassType.Solo);
         Core.AddDrop("Algal Bloom");
         Core.Unbank("Algal Bloom");
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
 
         while (!Bot.ShouldExit && !Core.CheckInventory(itemName, quant))
         {
@@ -267,7 +274,7 @@ public class SeaVoiceMerge
 
             Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
 
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             Adv.SmartEnhance(selectedClass);
 
             KillThing(
@@ -281,7 +288,7 @@ public class SeaVoiceMerge
             );
         }
 
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
         Core.CancelRegisteredQuests();
     }
 

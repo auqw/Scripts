@@ -534,7 +534,7 @@ public class CoreFarmerJoe
     /// </summary>
     public void DoAll()
     {
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Level1to30();
         Level30to75();
         Level75to100();
@@ -542,7 +542,7 @@ public class CoreFarmerJoe
         Outfit();
         Pets(PetChoice.HotMama);
         Pets(PetChoice.Akriloth);
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
     }
 
     /// <summary>

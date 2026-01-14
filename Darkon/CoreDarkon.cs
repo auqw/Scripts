@@ -150,7 +150,7 @@ public class CoreDarkon
         Core.RegisterQuests(7326);
         while (!Bot.ShouldExit && !Core.CheckInventory("Darkon's Receipt", Quantity))
         {
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             Core.HuntMonster(
                 "tercessuinotlim",
                 "Nulgath",
@@ -161,7 +161,7 @@ public class CoreDarkon
             );
             Bot.Wait.ForPickup("Darkon's Receipt");
         }
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
         Core.CancelRegisteredQuests();
     }
 

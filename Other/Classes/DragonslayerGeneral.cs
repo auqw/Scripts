@@ -37,7 +37,7 @@ public class DragonslayerGeneral
 
     public void GetDSGeneral(bool rankUpClass = true)
     {
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         if (Core.CheckInventory(35996))
         {
             if (rankUpClass)

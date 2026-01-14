@@ -520,9 +520,9 @@ public class CoreNSOD
         }
 
         Core.AddDrop("Unenhanced Aura");
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Necro.GetNecromancer(true);
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
 
         Core.AddDrop("Unenhanced Aura");
         Core.EnsureAccept(Core.CheckInventory(8012) ? 4435 : 4436);

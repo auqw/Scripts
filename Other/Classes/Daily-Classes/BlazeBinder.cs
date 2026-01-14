@@ -67,12 +67,12 @@ public class BlazeBinder
             );
             if (itemInv.Quantity < 1)
             {
-                Adv.GearStore();
+                Adv.GearStore(EnhAfter: true);
                 Core.Equip("Pyromancer");
                 Core.Logger("Getting *1* point in Pyro for Blaze Binder");
                 Core.Join("Noobshire");
                 Bot.Kill.Monster("*");
-                Adv.GearStore(true);
+                Adv.GearStore(true, EnhAfter: true);
             }
             Adv.BuyItem("fireforge", 1142, "Darkness Sigil");
             Adv.BuyItem("fireforge", 1142, "Flame Sigil");

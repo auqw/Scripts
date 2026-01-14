@@ -58,10 +58,10 @@ public class EternalInversionist
         Adv.BuyItem("fourdpyramid", 1275, "Eternal Inversionist", shopItemID: 21138);
         if (rankUpClass)
         {
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             Core.Equip("Eternal Inversionist");
             Adv.RankUpClass("Eternal Inversionist");
-            Adv.GearStore(true);
+            Adv.GearStore(true, EnhAfter: true);
         }
     }
 }

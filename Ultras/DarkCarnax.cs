@@ -83,11 +83,11 @@ public class UltraDarkCarnax
             Bot.Config.Configure();
 
         Core.Boot();
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Prep();
         Fight();
         Bot.Events.ExtensionPacketReceived -= DarkCarnaxListener;
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
         Bot.Stop();
     }
 

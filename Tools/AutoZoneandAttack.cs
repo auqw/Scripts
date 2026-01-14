@@ -103,7 +103,7 @@ public class AAWithMove
             else
                 Core.EquipClass(ClassType.Solo);
 
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             Adv.EnhanceEquipped(EnhancementType.Healer, wSpecial: WeaponSpecial.Elysium);
         }
 
@@ -132,7 +132,7 @@ public class AAWithMove
         Bot.Events.RunToArea -= MoveNightmareCarnax;
         Core.CancelRegisteredQuests();
         Bot.Options.AttackWithoutTarget = false;
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
     }
 
     private Task? moveTask;

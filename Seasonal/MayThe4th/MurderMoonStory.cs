@@ -69,7 +69,7 @@ public class MurderMoon
         // Liberty's Ghost (9224)
         if (!Story.QuestProgression(9224))
         {
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             if (!Core.CheckInventory(new[] { "Dark Lord", "Darkside" }, any: true))
                 GetDL();
             else
@@ -97,7 +97,7 @@ public class MurderMoon
             }
 
             Story.KillQuest(9224, "murdermoon", "Fourth Lynaria");
-            Adv.GearStore(true);
+            Adv.GearStore(true, EnhAfter: true);
         }
     }
 

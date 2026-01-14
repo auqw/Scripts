@@ -92,7 +92,7 @@ public class UltraDarkon
             Bot.Config.Configure();
 
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
 

@@ -58,7 +58,7 @@ public class QueenIona
             Bot.Config.Configure();
 
         Core.Boot();
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Fight();
         Adv.GearStore(true, true);
         C.SetOptions(false);

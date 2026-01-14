@@ -227,7 +227,7 @@ public class UltraEngineer
         string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
         if (string.IsNullOrEmpty(className))
             return;
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
 
         switch (className)
         {

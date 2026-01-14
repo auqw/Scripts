@@ -120,7 +120,7 @@ public class MalgorsArmorSet
         }
 
         // Prepare the store for buying/upgrading gear
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
 
         // Keep attempting to get items until Bot exits or inventory is complete
         while (!Bot.ShouldExit && !Core.CheckInventory(items))
@@ -140,7 +140,7 @@ public class MalgorsArmorSet
         }
 
         // Return to GearStore and bank quest drops
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
         Core.ToBank(SoW.MalgorDrops.Concat(SoW.MainyuDrops).ToArray());
     }
 }

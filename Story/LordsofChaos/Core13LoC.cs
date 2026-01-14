@@ -2170,11 +2170,11 @@ public class Core13LoC
         //Good, Evil and Chaos Battle!
         if (!Story.QuestProgression(3189))
         {
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             Core.EnsureAccept(3189);
             Core.KillXiang("Chaos Lord Xiang Defeated", isTemp: true);
             Core.EnsureComplete(3189);
-            Adv.GearStore(true);
+            Adv.GearStore(true, EnhAfter: true);
         }
     }
 

@@ -109,9 +109,9 @@ public class ArchPaladin
                     publicRoom: true
                 );
                 Core.HuntMonster("dreadhaven", "SUPER Dreadhaven General", "Dreadhaven Helm");
-                Adv.GearStore();
+                Adv.GearStore(EnhAfter: true);
                 Core.KillDoomKitten("DoomKitten Claw", isTemp: true);
-                Adv.GearStore(true);
+                Adv.GearStore(true, EnhAfter: true);
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster(
                     "vordredboss",
@@ -353,10 +353,10 @@ public class ArchPaladin
         Core.BuyItem("darkthronehub", 1303, 36920, shopItemID: 21833);
         if (rankUpClass)
         {
-            Adv.GearStore();
+            Adv.GearStore(EnhAfter: true);
             Core.Equip("ArchPaladin");
             Adv.RankUpClass("ArchPaladin");
-            Adv.GearStore(true);
+            Adv.GearStore(true, EnhAfter: true);
         }
     }
 }

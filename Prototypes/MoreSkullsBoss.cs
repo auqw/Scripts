@@ -245,7 +245,7 @@ public class MoreSkullsWorldBoss
         if (Core.isCompletedBefore(10287))
             return;
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Core.EquipClass(ClassType.Farm);
 
         // Grimskull War Medal
@@ -273,7 +273,7 @@ public class MoreSkullsWorldBoss
         Core.HuntMonster("lichwar", "Rax-goreless", "Rax-goreless Defeated");
         Core.HuntMonster("lichwar", "Armadeddon", "Armadeddon Defeated");
         Core.EnsureComplete(10281);
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
     }
 
     private int GetMonsterHP(string monMapID)

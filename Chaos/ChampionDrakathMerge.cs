@@ -276,9 +276,9 @@ public class ChampionDrakathMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Adv.GearStore();
+                    Adv.GearStore(EnhAfter: true);
                     Core.KillXiang("Xiang Chaos");
-                    Adv.GearStore(true);
+                    Adv.GearStore(true, EnhAfter: true);
                     break;
 
                 case "Chaos Avenger's Greatsword":

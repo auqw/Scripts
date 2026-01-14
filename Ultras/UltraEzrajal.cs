@@ -176,7 +176,7 @@ public class UltraEzrajal
             Bot.Config.Configure();
         Core.Boot();
         Bot.UltraBossHelper.EnableCounterAttack();
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         C.AddDrop("Ezrajal Insignia");
         Prep();
         Fight();

@@ -255,10 +255,10 @@ public class Lich
             if (rankup && Core.CheckClassRank(false, "Lich") < 10)
             {
                 Core.Logger("You have the Lich Class, but not at max rank. Rank up to 10.");
-                Adv.GearStore();
+                Adv.GearStore(EnhAfter: true);
                 Adv.SmartEnhance("Lich");
                 Farm.Experience(rankUpClass: true);
-                Adv.GearStore(true);
+                Adv.GearStore(true, EnhAfter: true);
             }
             return;
         }
@@ -287,10 +287,10 @@ public class Lich
             if (rankup && Core.CheckClassRank(false, "Lich") < 10)
             {
                 Core.Logger("Ranking up Lich Class.");
-                Adv.GearStore();
+                Adv.GearStore(EnhAfter: true);
                 Adv.SmartEnhance("Lich");
                 Farm.Experience(rankUpClass: true);
-                Adv.GearStore(true);
+                Adv.GearStore(true, EnhAfter: true);
             }
         }
     }

@@ -1219,9 +1219,9 @@ public class AllStories
 
         #region In folders
         #region 13LOC
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         LOC.Complete13LOC(true);
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
         Core.Logger($"Saga: The 13 Lords of Chaos - Complete");
         if (Core.IsMember)
         {

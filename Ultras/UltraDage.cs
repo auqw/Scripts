@@ -110,12 +110,12 @@ public class UltraDage
         }
         Core.Boot();
 
-        Adv.GearStore();
+        Adv.GearStore(EnhAfter: true);
         Prep();
         Bot.Events.ExtensionPacketReceived += UltraDageListener;
         Fight();
         Bot.Events.ExtensionPacketReceived -= UltraDageListener;
-        Adv.GearStore(true);
+        Adv.GearStore(true, EnhAfter: true);
         Bot.Stop();
     }
 
