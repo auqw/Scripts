@@ -238,7 +238,8 @@ public class YulgarsDualWieldMerge
         );
         Core.SetOptions();
 
-        BuyAllMerge();
+        // BuyAllMerge();
+        BuyAllMerge("Dual Frostbite");
 
         Core.SetOptions(false);
     }
@@ -515,6 +516,10 @@ public class YulgarsDualWieldMerge
                         Core.Logger($"You don't own {req.Name} (Rare)");
                         return;
                     }
+                    break;
+
+                case "Legion Token":
+                    Legion.FarmLegionToken(quant);
                     break;
 
                 case "Dragon Saw":
