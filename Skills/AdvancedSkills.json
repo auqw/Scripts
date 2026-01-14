@@ -2571,13 +2571,12 @@
           "rules": [
             {
               "type": "Aura",
-              "value": 0,
-              "comparison": "less",
+              "value": 1,
+              "comparison": "greater",
               "auraName": "Rounds Empty",
               "auraTarget": "self"
             }
-          ],
-          "skipOnMatch": true
+          ]
         },
         {
           "skillId": 3,
@@ -2589,8 +2588,7 @@
               "auraName": "Rounds Empty",
               "auraTarget": "self"
             }
-          ],
-          "skipOnMatch": true
+          ]
         }
       ]
     }
