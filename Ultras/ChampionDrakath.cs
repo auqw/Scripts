@@ -186,10 +186,10 @@ public class ChampionDrakath
 
     bool IsTaunter()
     {
-        if (Bot.Player.CurrentClass == null)
-            return false;
+        string currentClass = Bot.Player.CurrentClass.Name ?? string.Empty;
 
-        string currentClass = Bot.Player.CurrentClass.Name;
+        if (string.IsNullOrEmpty(currentClass))
+            return false;
 
         // Check based on HowManyTaunts setting
         int taunterCount = (int)Bot.Config.Get<HowManyTaunts>("HowManyTaunts");
@@ -249,7 +249,7 @@ public class ChampionDrakath
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            
+
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Champion Drakath Defeated"), syncPath))
             {
                 Bot.Sleep(2500);
@@ -261,12 +261,13 @@ public class ChampionDrakath
                 break;
             }
 
-            Bot.Combat.Attack(boss);
+            Bot.Combat.Attack("*");
 
             Bot.Sleep(500);
 
             // Only execute taunt logic if this account is a taunter
             if (IsTaunter()
+                && Bot.Player.HasTarget
                 && !Bot.Target.Auras.Any(x => x != null && x.Name == "Focus")
                 && Bot.Player.Target?.HP > 0)
             {
@@ -274,7 +275,7 @@ public class ChampionDrakath
                 Bot.Sleep(500);
 
                 // Detect HP reset (boss respawned/wiped)
-                if (Bot.Player.Target.HP > previousHP + 1000000) // HP increased significantly
+                if (Bot.Player.Target?.HP > previousHP + 1000000) // HP increased significantly
                 {
                     C.Logger("Boss HP reset detected - clearing taunt flags");
                     for (int j = 0; j < tauntFired.Length; j++)
@@ -282,14 +283,15 @@ public class ChampionDrakath
                         tauntFired[j] = false;
                     }
                 }
-                previousHP = Bot.Player.Target.HP;
+
+                previousHP = Bot.Player.Target?.HP ?? 0;
 
                 // Check thresholds (18M down to 4M)
                 for (int i = 0; i < hpThresholds.Length; i++)
                 {
-                    if (!tauntFired[i] && Bot.Player.Target.HP <= hpThresholds[i])
+                    if (!tauntFired[i] && Bot.Player.HasTarget && Bot.Player.Target?.HP <= hpThresholds[i])
                     {
-                        C.Logger($"{hpThresholds[i] / 1000000}M - Taunting at HP {Bot.Player.Target.HP:n0}");
+                        C.Logger($"{hpThresholds[i] / 1000000}M - Taunting at HP {Bot.Player.Target?.HP:n0}");
 
                         while (!Bot.ShouldExit)
                         {
@@ -305,10 +307,15 @@ public class ChampionDrakath
                                 break;
                             }
 
-                            Bot.Skills.UseSkill(5);
+                            if (!Bot.Player.HasTarget)
+                                break;
+
+                            if (Bot.Skills.CanUseSkill(5))
+                                Bot.Skills.UseSkill(5);
+
                             Bot.Sleep(500);
 
-                            if (Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
+                            if (Bot.Player.HasTarget && Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
                             {
                                 tauntFired[i] = true;
                                 Bot.Sleep(500);
@@ -322,9 +329,9 @@ public class ChampionDrakath
                 }
 
                 // After 2M → always taunt
-                if (Bot.Player.Target.HP <= 2100000 && Bot.Skills.CanUseSkill(5))
+                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 2100000 && Bot.Skills.CanUseSkill(5))
                 {
-                    C.Logger($"HP is < 2M, Taunting at HP {Bot.Player.Target.HP:n0}");
+                    C.Logger($"HP is < 2M, Taunting at HP {Bot.Player.Target?.HP:n0}");
 
                     while (!Bot.ShouldExit)
                     {
@@ -332,14 +339,16 @@ public class ChampionDrakath
                             Bot.Skills.UseSkill(5);
                         Bot.Sleep(500);
 
-                        if (Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
+                        if (Bot.Player.HasTarget && Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
+                        {
+                            Core.EnableSkills();
                             break;
+                        }
                     }
 
                     Bot.Sleep(300);
                 }
 
-                Core.EnableSkills();
             }
         }
 
