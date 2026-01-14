@@ -4672,6 +4672,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Badges/TouchMass.cs"
   },
   {
+    "name": "EmpoweredOverfiendBlade",
+    "description": "if you have 25 nulgath insigs, itll pick the proper sword to get",
+    "tags": [
+      "empoweredoverfiendblade",
+      "empowered over fiend blade",
+      "empowered",
+      "overfiend",
+      "blade"
+    ],
+    "path": "Ultras/Weapons/EmpoweredOverfiendBlade.cs",
+    "size": 5873,
+    "sha256": "27c36c4673261aba8cf4d02cd7f1563adceb0918038bd589ffb4ec8384f4be9f",
+    "fileName": "EmpoweredOverfiendBlade.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Weapons/EmpoweredOverfiendBlade.cs"
+  },
+  {
     "name": "HBDK - A Dark Knight",
     "description": "does the 'a dark knight' part of hollowborn doomKnight",
     "tags": [
