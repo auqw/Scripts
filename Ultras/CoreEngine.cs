@@ -2795,12 +2795,16 @@ public class CoreEngine
 
             #region Chrono Classes
             // Chrono classes
+            case "archiveoftime":
+                ArchiveofTime();
+                break;
             case "chrono dragonknight":
             case "chrono dataknight":
                 ChronoDataKnightClass();
                 break;
             case "shadowstalker of time":
             case "shadowweaver of time":
+            case "shadowwalker of time":
                 ShadowWeaverOfTimeClass();
                 break;
             case "continuum chronomancer":
@@ -3188,6 +3192,32 @@ public class CoreEngine
     }
 
     // --- chrono classes ---------------------------------------------------------------
+
+    void ArchiveofTime()
+    {
+        if (Cast(0)) return;
+        if (Cast(2)) return;
+        if (Cast(2)) return;
+        if (Cast(0)) return;
+        if (Cast(2)) return;
+        if (Cast(3)) return;
+        if (Cast(0)) return;
+        if (Cast(1)) return;
+        if (Cast(1)) return;
+        if (Cast(0)) return;
+        if (Cast(1)) return;
+        if (Cast(1)) return;
+        if (Cast(0)) return;
+        if (Cast(1)) return;
+        if (Cast(1)) return;
+        if (Cast(0)) return;
+        if (Cast(1)) return;
+        if (Cast(1)) return;
+        if (Cast(0)) return;
+        if (Cast(1)) return;
+        if (Cast(1)) return;
+    }
+
 
     void ChronoDataKnightClass()
     {
