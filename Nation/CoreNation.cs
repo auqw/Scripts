@@ -1399,58 +1399,57 @@ public class CoreNation
             Core.EnsureCompleteMulti(2859, quantityToBuy);
         }
     }
-
     /// <summary>
-    /// Completes the "Swindle's Return Area" quest (ID 7551) by prioritizing a specified item or any non-maxed reward.
+    /// Completes the "Swindle's Return Area" quest (ID 7551),
+    /// prioritizing a specific reward or the first non-maxed one.
     /// </summary>
-    /// <param name="returnPolicyActive">Indicates if the return policy is active.</param>
-    /// <param name="item">The name of the specific reward item to prioritize.</param>
     void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
     {
-        // Exit if policy inactive or required items missing
-        if (
-            !returnPolicyActive
-            || !Core.CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) })
-        )
+        if (!returnPolicyActive)
             return;
+
+        if (!Core.CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
+            return;
+
+        Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
+        if (quest?.Rewards == null)
+        {
+            Core.Logger("Failed to load quest 7551.");
+            return;
+        }
+
+        // Early exit: all rewards already maxed (or preferred item maxed)
+        if (item != null)
+        {
+            ItemBase? preferred = quest.Rewards.FirstOrDefault(r => r.Name == item);
+            if (preferred == null || Core.CheckInventory(preferred.ID, preferred.MaxStack))
+                return;
+        }
+        else if (quest.Rewards.All(r => Core.CheckInventory(r.ID, r.MaxStack)))
+        {
+            return;
+        }
 
         Core.EnsureAccept(7551);
         Core.ResetQuest(7551);
         Core.DarkMakaiItem("Dark Makai Rune");
 
-        // Load quest with retry
-        Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
-        if (quest == null)
+        ItemBase? reward = item != null
+            ? quest.Rewards.FirstOrDefault(r => r.Name == item)
+            : quest.Rewards.FirstOrDefault(r => !Core.CheckInventory(r.ID, r.MaxStack));
+
+        if (!Bot.Quests.CanCompleteFullCheck(7551))
+            return;
+
+        if (reward != null)
         {
-            Core.Logger("Failed to load quest 7551, retrying...");
-            Core.Sleep(500);
+            Core.EnsureComplete(7551, reward.ID);
+            Bot.Wait.ForQuestComplete(7551);
+            Bot.Wait.ForPickup(reward.ID);
             return;
         }
 
-        // Determine reward: prefer 'item' if provided, else first non-maxed, else fallback
-        ItemBase? reward =
-            item != null
-                ? quest.Rewards?.FirstOrDefault(r => r.Name == item)
-                : quest.Rewards?.FirstOrDefault(r => !Core.CheckInventory(r.ID, r.MaxStack));
-
-        // Fallback if all rewards maxed
-        int rewardID = reward?.ID ?? -1;
-        // Core.Logger($"Completing with reward ID: {rewardID}");
-
-        if (Bot.Quests.CanCompleteFullCheck(7551))
-        {
-            if (!string.IsNullOrEmpty(item))
-            {
-                Core.EnsureComplete(7551, rewardID);
-                Bot.Wait.ForQuestComplete(7551);
-                if (reward != null)
-                    Bot.Wait.ForPickup(reward.ID);
-            }
-            else
-            {
-                Core.EnsureComplete(7551);
-            }
-        }
+        Core.EnsureComplete(7551);
     }
 
     /// <summary>
@@ -1819,7 +1818,8 @@ public class CoreNation
             Bot.Sleep(500);
             // Do Swindles Return Policy if enabled
             // 7551 - Swindle's Return Policy
-            DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
+            if (ReturnItem != null)
+                DoSwindlesReturnArea(returnPolicyDuringSupplies, ReturnItem);
 
             Bot.Sleep(500);
         Retry:
