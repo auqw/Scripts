@@ -24707,8 +24707,8 @@
       "data"
     ],
     "path": "Tools/ForDevelopers/GenerateQuestFiles.cs",
-    "size": 3896,
-    "sha256": "051384c2c45a34d973c4019e733edbad4ce24328b6883eea4f90cd9e1e8ca0ad",
+    "size": 2774,
+    "sha256": "4c0eca5a495ac9b2b6085c0f5816af99513287707b221d1df91e796df19bb772",
     "fileName": "GenerateQuestFiles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFiles.cs"
   },
