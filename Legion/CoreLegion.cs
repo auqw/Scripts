@@ -541,30 +541,30 @@ public class CoreLegion
         (38792, 5756, 5754), (38621, 5755, 5753)
     };
 
-        HashSet<int> ownedItemIds = new HashSet<int>(Bot.Inventory.Items.Concat(Bot.Bank.Items).Select(i => i.ID));
-        (int PetID, int MainQuestID, int SideQuestID) selected = questData.FirstOrDefault(q => ownedItemIds.Contains(q.PetID));
-        if (selected.PetID == 0)
+        HashSet<int> ownedItemIds = new(Bot.Inventory.Items.Concat(Bot.Bank.Items).Select(i => i.ID));
+        (int PetID, int MainQuestID, int SideQuestID) = questData.FirstOrDefault(q => ownedItemIds.Contains(q.PetID));
+        if (PetID == 0)
         {
             Core.Logger("No Pet owned for 'Time for Some Spring Cleaning' or pet missing from our list");
             return;
         }
 
-        List<Quest> questList = new List<Quest>();
+        List<Quest> questList = new();
 
-        Quest mainQuest = Core.EnsureLoad(selected.MainQuestID);
+        Quest mainQuest = Core.EnsureLoad(MainQuestID);
         if (mainQuest.ID == 0)
         {
-            Core.Logger($"MainQuestID {selected.MainQuestID} missing from QuestData.json!", messageBox: true);
+            Core.Logger($"MainQuestID {MainQuestID} missing from QuestData.json!", messageBox: true);
             return;
         }
         questList.Add(mainQuest);
 
         if (DoClearaPath)
         {
-            Quest sideQuest = Core.EnsureLoad(selected.SideQuestID);
+            Quest sideQuest = Core.EnsureLoad(SideQuestID);
             if (sideQuest.ID == 0)
             {
-                Core.Logger($"SideQuestID {selected.SideQuestID} missing from QuestData.json!", messageBox: true);
+                Core.Logger($"SideQuestID {SideQuestID} missing from QuestData.json!", messageBox: true);
                 return;
             }
             questList.Add(sideQuest);
@@ -573,7 +573,7 @@ public class CoreLegion
         foreach (Quest quest in questList)
             Core.AddDrop(quest.Rewards.Where(r => r != null && r.Quantity < r.MaxStack).Select(r => r.Name).Distinct().ToArray());
 
-        Bot.Log($"✔️ Quest Pet Owned\nPetID: [{selected.PetID}]\nQuestID(s): [{string.Join(", ", questList.Select(q => q.ID))}]");
+        Bot.Log($"✔️ Quest Pet Owned\nPetID: [{PetID}]\nQuestID(s): [{string.Join(", ", questList.Select(q => q.ID))}]");
 
         Dictionary<int, (ItemBase Item, int Quantity)> requirements = new Dictionary<int, (ItemBase Item, int Quantity)>();
         foreach (Quest quest in questList)
