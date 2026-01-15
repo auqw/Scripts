@@ -3896,7 +3896,7 @@ public class CoreBots
     /// </summary>
     /// <param name="QuestID">The ID of the quest to check.</param>
     /// <returns>True if the quest is completed, otherwise false.</returns>
-    public bool isCompletedBefore(int QuestID = 0, bool log = true)
+    public bool isCompletedBefore(int QuestID, bool log = true)
     {
         if (QuestID <= 0)
             return false;
