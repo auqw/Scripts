@@ -62,26 +62,28 @@ public class QueenIona
         C.SetOptions(false);
     }
 
-    void Prep()
+    void Prep(bool AnotherScript = false)
     {
+        Bot.Skills.Stop();
         if (Bot.Player!.Alive && Bot.Player!.CurrentClass?.Name == "Void Highlord"
                     || Bot.Player!.CurrentClass?.Name == "Void Highlord (IoDA)")
             IsVHL = true;
 
-        Bot.Config.Configure();
-        Adv.GearStore(EnhAfter: true);
-        if (Bot.Config!.Get<bool>("DoEnh"))
+        if (!AnotherScript || Bot.Config!.Get<bool>("DoEnh"))
+        {
+            Adv.GearStore(EnhAfter: true);
             Adv.SmartEnhance(Bot.Player!.CurrentClass!.Name);
+        }
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
     }
 
-    public void Fight(string item = "Lothian's Lightning", int quant = 100)
+    public void Fight(string item = "Lothian's Lightning", int quant = 100, bool AnotherScript = false)
     {
         if (item == null || C.CheckInventory(item, quant))
             return;
 
+        Prep(AnotherScript);
         Bot.Events.ExtensionPacketReceived += QueenIonaListener;
-        Prep();
 
         string map = "queeniona";
         string boss = "Queen Iona";
@@ -89,8 +91,9 @@ public class QueenIona
         if (!Bot.Quests.IsDailyComplete(9852))
             C.EnsureAccept(9852);
 
-        if (item != null)
-            C.AddDrop(item);
+        C.AddDrop(item);
+
+        C.FarmingLogger(item, quant);
 
         if (HasQuestItem)
             C.RegisterQuests(C.IsMember ? 9853 : 9854);
@@ -154,6 +157,8 @@ public class QueenIona
             Bot.Sleep(200);
         }
         Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
+        //turn all the stuffs back on from main scripts
+        C.SetOptions(true);
         Adv.GearStore(true, true);
     }
 
@@ -180,14 +185,14 @@ public class QueenIona
             if (!Bot.Player!.Alive)
                 return;
 
-            chargeAura = Bot.Self.Auras.FirstOrDefault(a => a != null &&
+            chargeAura = Bot.Self?.Auras?.FirstOrDefault(a => a != null &&
                           (a?.Name == "Positive Charge" || a?.Name == "Negative Charge" ||
                            a?.Name == "Positive Charge?" || a?.Name == "Negative Charge?"))?.Name;
 
-            if (!string.IsNullOrEmpty(chargeAura))
+            if (!string.IsNullOrEmpty(chargeAura!))
                 break;
 
-            await Task.Delay(80);
+            await Task.Delay(100);
         }
 
         if (string.IsNullOrEmpty(chargeAura))
