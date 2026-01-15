@@ -21,62 +21,94 @@ public class GetQuests
     {
         GenerateQuestFiles();
     }
-
     private async void GenerateQuestFiles()
     {
-        //if (Bot.ShowMessageBox("Did you update the Quest.txt file by clicking the update button in [Tools] -> [Loader]", "Quests up to date?", true) == false)
-        //    return;
+        Core.Logger("Starting quest update process...");
 
-        Core.Logger("Updating Quest.txt");
-        await UpdateQuests();
-
-        Core.Logger("Reading Quest.txt");
-        var v = JsonConvert.DeserializeObject<dynamic[]>(
-            File.ReadAllText(ClientFileSources.SkuaQuestsFile)
-        )!;
-
-        List<string> r = new();
-        List<string> d = new();
-        d.Add("ID|Name|Once|Slot|Value|Upgrade|Gold|XP");
-        Core.Logger("Placing the Quest Data in the lists.");
-
-        foreach (var q in v)
+        // Step 1: Update the source Quest.txt file using the loader service
+        Core.Logger("Step 1: Updating Quests.txt via loader service...");
+        try
         {
-            int ID = q.ID;
-            string spaces = "            ";
-            foreach (var c in ID.ToString())
-                spaces = spaces[..^2];
-
-            r.Add($"`[{ID}]`{spaces}{q.Name}");
-            d.Add($"{ID}|{q.Name}|{q.Once}|{q.Slot}|{q.Value}|{q.Upgrade}|{q.Gold}|{q.XP}");
+            await UpdateQuests();
+            Core.Logger("Step 1: Quests.txt update completed successfully.");
+        }
+        catch (Exception ex)
+        {
+            Core.Logger($"❌ Step 1: Failed to update Quests.txt: {ex.Message}");
+            return;
         }
 
-        Core.Logger("Writing files.");
-        Core.WriteFile(Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP", "QuestIds.txt"), r);
-        Core.WriteFile(Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP", "QuestData.csv"), d);
-        File.Copy(
-            ClientFileSources.SkuaQuestsFile,
-            Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json"),
-            true
-        );
+        // Step 2: Verify the updated file exists
+        if (!File.Exists(ClientFileSources.SkuaQuestsFile))
+        {
+            Core.Logger($"❌ Step 2: Quests.txt not found at {ClientFileSources.SkuaQuestsFile}");
+            return;
+        }
+        Core.Logger($"Step 2: Quests.txt verified at {ClientFileSources.SkuaQuestsFile}");
 
-        Core.Logger("Files made:");
-        Core.Logger(" - \"Scripts/WIP/QuestIds.txt\"");
-        Core.Logger(" - \"Scripts/WIP/QuestData.csv\"");
-        Core.Logger(" - \"Scripts/QuestData.json\"");
+        // Step 3: Copy the updated Quest.txt to QuestData.json
+        string questDataJsonPath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json");
+        try
+        {
+            Core.Logger($"Step 3: Copying Quests.txt to {questDataJsonPath}...");
+            File.Copy(ClientFileSources.SkuaQuestsFile, questDataJsonPath, true);
+            Core.Logger($"Step 3: QuestData.json updated successfully at {questDataJsonPath}");
+        }
+        catch (Exception ex)
+        {
+            Core.Logger($"❌ Step 3: Failed to copy QuestData.json: {ex.Message}");
+            return;
+        }
+
+        // Step 4: Optional sanity check by counting quests in the JSON
+        try
+        {
+            var quests = JsonConvert.DeserializeObject<dynamic[]>(
+                File.ReadAllText(questDataJsonPath)
+            );
+            Core.Logger($"Step 4: Loaded {quests?.Length ?? 0} quests from QuestData.json");
+        }
+        catch (Exception ex)
+        {
+            Core.Logger($"❌ Step 4: Failed to read QuestData.json: {ex.Message}");
+        }
+
+        Core.Logger("Quest update process completed successfully.");
     }
 
     private async Task UpdateQuests()
     {
-        _loaderCTS = new();
-        List<QuestData> questData = await (
-            service ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>()
-        ).UpdateAsync("Quests.txt", false, null, _loaderCTS.Token);
-        _loaderCTS.Cancel();
-        _loaderCTS.Dispose();
-        _loaderCTS = null;
+        Core.Logger("UpdateQuests: Initializing loader service...");
+        _loaderCTS = new CancellationTokenSource();
+        service ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>();
+
+        try
+        {
+            Core.Logger("UpdateQuests: Starting async update of Quests.txt...");
+            // Force full overwrite to ensure no partial or cached data
+            List<QuestData> questData = await service.UpdateAsync(
+                "Quests.txt",
+                true,  // force overwrite
+                null,
+                _loaderCTS.Token
+            );
+
+            Core.Logger($"UpdateQuests: Loader returned {questData?.Count ?? 0} quests.");
+        }
+        catch (Exception ex)
+        {
+            Core.Logger($"❌ UpdateQuests: Exception during update: {ex.Message}");
+            throw;
+        }
+        finally
+        {
+            Core.Logger("UpdateQuests: Cleaning up loader token...");
+            _loaderCTS.Dispose();
+            _loaderCTS = null;
+        }
     }
 
     private CancellationTokenSource? _loaderCTS;
     private IQuestDataLoaderService? service;
+
 }
