@@ -132,10 +132,8 @@ public class CoreLR
     //Legion Fealty 1
     public void RevenantSpellscroll(int quant = 20, bool forquest = false)
     {
-        if (
-            forquest && Core.isCompletedBefore(6897)
-            || !forquest && Core.CheckInventory("Revenant's Spellscroll", quant)
-        )
+        if (forquest && Core.isCompletedBefore(6897)
+            || !forquest && Core.CheckInventory("Revenant's Spellscroll", quant))
             return;
 
         Legion.JoinLegion();
@@ -196,14 +194,15 @@ public class CoreLR
     //Legion Fealty 2
     public void ConquestWreath(int quant = 6, bool forquest = false)
     {
-        if (!Core.isCompletedBefore(6898))
-            RevenantSpellscroll(1, true);
-
         if (
             (forquest && Core.isCompletedBefore(6898))
             || !forquest && Core.CheckInventory("Conquest Wreath", quant)
         )
             return;
+
+        if (!Core.isCompletedBefore(6898))
+            RevenantSpellscroll(1, true);
+
 
         Legion.JoinLegion();
 
@@ -297,14 +296,14 @@ public class CoreLR
     //Legion Fealty 3
     public void ExaltedCrown(int quant = 10, bool forquest = false)
     {
-        if (!Core.isCompletedBefore(6899))
-            ConquestWreath(1, true);
-
         if (
             (forquest && Core.isCompletedBefore(6899))
             || !forquest && Core.CheckInventory("Exalted Crown", quant)
         )
             return;
+
+        if (!Core.isCompletedBefore(6899))
+            ConquestWreath(1, true);
 
         Legion.JoinLegion();
         Seraph.SeraphicWar_Questline();
@@ -315,9 +314,7 @@ public class CoreLR
 
         int i = 1;
         Core.FarmingLogger("Exalted Crown", quant);
-        while (
-            !Bot.ShouldExit
-            && (
+        while (!Bot.ShouldExit && (
                 (forquest && !Core.isCompletedBefore(6899))
                 || !Core.CheckInventory("Exalted Crown", quant)
             )
