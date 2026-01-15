@@ -4457,8 +4457,8 @@
       "undead"
     ],
     "path": "Good/ArchPaladin.cs",
-    "size": 13463,
-    "sha256": "60cc20d39d178fb63f21dd987e5e8dfed7f7b59c7e8d2f3c39d6606985875df4",
+    "size": 13085,
+    "sha256": "a4826385152b73f8b031e311c03b50f043a2abe84bfba65769897b76581a38ec",
     "fileName": "ArchPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/ArchPaladin.cs"
   },
@@ -14004,8 +14004,8 @@
       "pseudo-rare"
     ],
     "path": "Other/Various/BetaBerserkerQuest.cs",
-    "size": 3874,
-    "sha256": "802d7e3c713f08db8add84ff1b0386ff9ee86b2d95187e5540bb7f43aef1e6ec",
+    "size": 3503,
+    "sha256": "9ffea6a7aa77593c693fb5f427e41772370ccaf5ce8fab06a34f9a2ad858d362",
     "fileName": "BetaBerserkerQuest.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/BetaBerserkerQuest.cs"
   },
