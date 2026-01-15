@@ -6,6 +6,8 @@ tags: beta berserker armor, dark berserker, beta berserker, secret map, rare, ps
 //cs_include Scripts/CoreBots.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 public class SecretMapQuest
@@ -16,6 +18,13 @@ public class SecretMapQuest
     private const int CandleShopId = 1317;
     private const string CandleName = "Golden 8th Birthday Candle";
     private const string DarkBerserkerName = "Dark Berserker";
+
+    private readonly Dictionary<string, int> Months = new()
+    {
+        { "Jan", 1 }, { "Feb", 2 }, { "Mar", 3 }, { "Apr", 4 },
+        { "May", 5 }, { "Jun", 6 }, { "Jul", 7 }, { "Aug", 8 },
+        { "Sep", 9 }, { "Oct", 10 }, { "Nov", 11 }, { "Dec", 12 }
+    };
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -28,7 +37,6 @@ public class SecretMapQuest
 
     public void DoQuest()
     {
-        // 🚫 Stop immediately if Dark Berserker is already owned
         if (OwnsDarkBerserker())
         {
             Core.Logger("You already own Dark Berserker.");
@@ -36,16 +44,18 @@ public class SecretMapQuest
         }
 
         InventoryItem? BetaBerserker = Bot.Inventory.Items.Find(i =>
-            i.Name.Equals("Beta Berserker", System.StringComparison.OrdinalIgnoreCase)
-            && i.Category == ItemCategory.Class
+            i.Name.Equals("Beta Berserker", StringComparison.OrdinalIgnoreCase) &&
+            i.Category == ItemCategory.Class
         );
 
         if (BetaBerserker == null || Core.CheckInventory(Core.QuestRewards(5516)))
             return;
 
-        // Ensure Candle before proceeding
         if (!EnsureGolden8thBirthdayCandle())
+        {
+            Bot.Stop(true);
             return;
+        }
 
         Core.Unbank("Beta Berserker");
         Core.AddDrop(Core.QuestRewards(5516));
@@ -59,7 +69,7 @@ public class SecretMapQuest
                 return;
             }
 
-            while (BetaBerserker != null && BetaBerserker.Quantity < 1)
+            while (BetaBerserker.Quantity < 1)
                 Core.KillMonster("battleontown", "Enter", "Spawn", "*", log: false);
 
             Core.EnsureAccept(5516);
@@ -70,44 +80,53 @@ public class SecretMapQuest
 
     private bool OwnsDarkBerserker()
     {
-        bool inInventory = Bot.Inventory.Items
-            .Any(i => i.Name.Equals(DarkBerserkerName, System.StringComparison.OrdinalIgnoreCase));
-
-        bool inBank = Bot.Bank.Items
-            .Any(i => i.Name.Equals(DarkBerserkerName, System.StringComparison.OrdinalIgnoreCase));
-
-        return inInventory || inBank;
+        return Bot.Inventory.Items.Any(i => i.Name.Equals(DarkBerserkerName, StringComparison.OrdinalIgnoreCase)) ||
+               Bot.Bank.Items.Any(i => i.Name.Equals(DarkBerserkerName, StringComparison.OrdinalIgnoreCase));
     }
 
     private bool EnsureGolden8thBirthdayCandle()
     {
-        // Try unbank first (safe even if not banked)
         Core.Unbank(CandleName);
-
         if (Core.CheckInventory(CandleName))
             return true;
 
-        Bot.Shops.Load(CandleShopId);
+        Core.Logger("Checking if Your Acc is 8 Years Old");
 
-        bool inShop = Bot.Shops.Items != null &&
-                      Bot.Shops.Items.Any(i =>
-                          i.Name.Equals(CandleName, System.StringComparison.OrdinalIgnoreCase));
-
-        if (!inShop)
+        if (!IsAccountAtLeast8YearsOld())
         {
-            Core.Logger("Your account needs to be at least 8 years old to complete this quest.");
+            Core.Logger("your acc isn't old enough.");
             return false;
         }
 
-        Bot.Shops.BuyItem(CandleName, CandleShopId);
+        Core.BuyItem(Bot.Map.Name, CandleShopId, CandleName);
         Bot.Wait.ForPickup(CandleName);
 
-        if (!Core.CheckInventory(CandleName))
+        return Core.CheckInventory(CandleName);
+    }
+
+    private bool IsAccountAtLeast8YearsOld()
+    {
+        try
         {
-            Core.Logger("Your account needs to be at least 8 years old to complete this quest.");
+            string raw = Bot.Flash.GetGameObject("world.myAvatar.objData.dCreated")!;
+            string[] parts = raw[1..^1].Split(' ');
+            string[] time = parts[3].Split(':');
+
+            DateTime creationDate = new DateTime(
+                int.Parse(parts[5]),
+                Months[parts[1]],
+                int.Parse(parts[2]),
+                int.Parse(time[0]),
+                int.Parse(time[1]),
+                int.Parse(time[2]),
+                DateTimeKind.Unspecified
+            );
+
+            return creationDate.AddYears(8) <= DateTime.Now;
+        }
+        catch
+        {
             return false;
         }
-
-        return true;
     }
 }
