@@ -247,12 +247,12 @@ public class UltraDrago
         while (!Bot.ShouldExit)
         {
             // Dead → wait for respawn
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            
+
             // ======================================================
             //              ARCHPALADIN TAUNTER LOGIC
             // ======================================================
