@@ -206,6 +206,8 @@ public class CoreBLOD
         FarmFindingFrag(WeaponOfDestiny.Blade, "Loyal Spirit Orb", quant);
         FarmFindingFrag(WeaponOfDestiny.Daggers, "Loyal Spirit Orb", quant);
         FarmFindingFrag(WeaponOfDestiny.Scythe, "Loyal Spirit Orb", quant);
+
+
         FarmUltimateWK("Loyal Spirit Orb", quant);
 
         // Default
@@ -400,6 +402,10 @@ public class CoreBLOD
 
     private void FarmUltimateWK(string item, int quant)
     {
+        // We'll be able to use this later once we unlock UWK
+        if (!Core.isCompletedBefore(2163))
+            return;
+
         if (!Core.CheckInventory(item, quant))
             UltimateWK(item, quant);
     }
@@ -467,7 +473,7 @@ public class CoreBLOD
         if (Core.CheckInventory("Advanced Weapon Kit", quant))
             return;
 
-        if (!Bot.Quests.IsUnlocked(2162))
+        if (!Core.isCompletedBefore(2162))
             BasicWK();
 
         Core.FarmingLogger("Advanced Weapon Kit", quant);
@@ -498,7 +504,7 @@ public class CoreBLOD
         if (Core.CheckInventory(item, quant))
             return;
 
-        if (!Bot.Quests.IsUnlocked(2163))
+        if (!Core.isCompletedBefore(2163))
             AdvancedWK();
 
         Core.AddDrop(
