@@ -153,7 +153,7 @@ public class LothianTreasuryMerge
                 case "Dark Lightning Gloria":
                 case "Skye Nobility Sash":
                     Core.FarmingLogger(req.Name, quant);
-                    _QI.Fight(req.Name, req.Quantity);
+                    QI.Fight(req.Name, req.Quantity);
                     break;
 
                 case "Skye's Lightning":
