@@ -1108,8 +1108,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 39319,
-    "sha256": "6369ae1d8514457a80cfaf40dad83270e4aef87e5632917c8d0c4fede79b039e",
+    "size": 39209,
+    "sha256": "eb95911e75080e7ab7df58caf5c32523e8ccae441671350b357762eb0194da3f",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -31754,8 +31754,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Materials/UnboundTome.cs",
-    "size": 1175,
-    "sha256": "d78938b8ff19c136d289f83fa9310a37ee3b06c36c18ad327d58d98d4c2706fe",
+    "size": 1216,
+    "sha256": "7bb9e2535d939d0c3b09ffffc924983e55b0ae1aa386e97f8a1e074be67e3872",
     "fileName": "UnboundTome.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/Materials/UnboundTome.cs"
   },
@@ -31766,8 +31766,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Materials/MysticScribingKit.cs",
-    "size": 1195,
-    "sha256": "ca6f150dfcffe2482fd3718d26274ae32ffb635fe0506188e182d7fbd05bd100",
+    "size": 1236,
+    "sha256": "00e2c0b2db9dd27ae426def47115760e5724c81dc4fda7f1dcd026099c4b1bef",
     "fileName": "MysticScribingKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/Materials/MysticScribingKit.cs"
   },
@@ -31778,8 +31778,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Materials/ArcaneLocus.cs",
-    "size": 1177,
-    "sha256": "2edd694de836bb0653c34687ae8c77032269b584f582ae7978a22ffc2b8801e6",
+    "size": 1218,
+    "sha256": "514949d12baccdfff20069c6aff6d9848b74257f239c4882e0ef93f052e6bf87",
     "fileName": "ArcaneLocus.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/Materials/ArcaneLocus.cs"
   },
@@ -31790,8 +31790,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Materials/PrismaticEther.cs",
-    "size": 1186,
-    "sha256": "5f8c7072d005206c07ff8297fbf2dc9a8d513ff3b856822ba4992de052577adb",
+    "size": 1227,
+    "sha256": "896e078786075823cb7ab42f0fdcce13178a892dadcd6fe4e421a5ddf2d711f4",
     "fileName": "PrismaticEther.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/Materials/PrismaticEther.cs"
   },
