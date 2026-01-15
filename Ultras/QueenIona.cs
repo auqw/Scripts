@@ -58,38 +58,30 @@ public class QueenIona
             Bot.Config.Configure();
 
         Core.Boot();
-        Adv.GearStore(EnhAfter: true);
         Fight();
-        Adv.GearStore(true, true);
         C.SetOptions(false);
     }
 
-    void Prep(bool CommingFromDifferentScript = false)
+    void Prep()
     {
-        if (CommingFromDifferentScript)
-        {
-            if (Bot.Config != null
-                && Bot.Config.Options.Contains(C.SkipOptions)
-                && !Bot.Config.Get<bool>(C.SkipOptions))
-            {
-                Bot.Config.Configure();
-            }
-        }
-
         if (Bot.Player!.Alive && Bot.Player!.CurrentClass?.Name == "Void Highlord"
                     || Bot.Player!.CurrentClass?.Name == "Void Highlord (IoDA)")
             IsVHL = true;
 
         Bot.Config.Configure();
+        Adv.GearStore(EnhAfter: true);
         if (Bot.Config!.Get<bool>("DoEnh"))
             Adv.SmartEnhance(Bot.Player!.CurrentClass!.Name);
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
     }
 
-    public void Fight(string item = "Lothian's Lightning", int quant = 100, bool CommingFromDifferentScript = false)
+    public void Fight(string item = "Lothian's Lightning", int quant = 100)
     {
+        if (item == null || C.CheckInventory(item, quant))
+            return;
+
         Bot.Events.ExtensionPacketReceived += QueenIonaListener;
-        Prep(CommingFromDifferentScript);
+        Prep();
 
         string map = "queeniona";
         string boss = "Queen Iona";
@@ -97,7 +89,8 @@ public class QueenIona
         if (!Bot.Quests.IsDailyComplete(9852))
             C.EnsureAccept(9852);
 
-        C.AddDrop(item);
+        if (item != null)
+            C.AddDrop(item);
 
         if (HasQuestItem)
             C.RegisterQuests(C.IsMember ? 9853 : 9854);
@@ -158,9 +151,10 @@ public class QueenIona
                 }
             }
 
-            Bot.Sleep(100);
+            Bot.Sleep(200);
         }
         Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
+        Adv.GearStore(true, true);
     }
 
     async void QueenIonaListener(dynamic packet)
