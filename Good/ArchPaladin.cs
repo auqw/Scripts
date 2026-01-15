@@ -93,33 +93,14 @@ public class ArchPaladin
                 BLOD.UnlockMineCrafting();
                 Farm.BattleUnderB("Undead Energy", 1000);
                 Core.EquipClass(ClassType.Solo);
-                Core.KillMonster(
-                    "doomvault",
-                    "r5",
-                    "Left",
-                    "Binky",
-                    "Binky's Uni-horn",
-                    isTemp: false,
-                    publicRoom: true
-                );
-                Core.HuntMonster(
-                    "banished",
-                    "Desterrat Moya",
-                    "Desterrat Moya Tentacle",
-                    publicRoom: true
-                );
-                Core.HuntMonster("dreadhaven", "SUPER Dreadhaven General", "Dreadhaven Helm");
+                Core.KillMonster("doomvault", "r5", "Left", "Binky", "Binky's Uni-horn", isTemp: false, publicRoom: true);
+                Core.HuntMonster("banished", "Desterrat Moya", "Desterrat Moya Tentacle", publicRoom: true);
+                Core.HuntMonster("dreadhaven", "SUPER Dreadhaven General", "Dreadhaven Helm", isTemp: false);
                 Adv.GearStore(EnhAfter: true);
                 Core.KillDoomKitten("DoomKitten Claw", isTemp: true);
                 Adv.GearStore(true, EnhAfter: true);
                 Core.EquipClass(ClassType.Solo);
-                Core.HuntMonster(
-                    "vordredboss",
-                    "Vordred",
-                    "Vordred's Skull",
-                    isTemp: false,
-                    publicRoom: true
-                );
+                Core.HuntMonster("vordredboss", "Vordred", "Vordred's Skull", isTemp: false, publicRoom: true);
                 Core.EnsureComplete(5464);
             }
 
