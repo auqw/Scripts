@@ -37,18 +37,13 @@ public class SecretMapQuest
 
     public void DoQuest()
     {
-        if (OwnsDarkBerserker())
+        if (Core.CheckInventory(DarkBerserkerName))
         {
             Core.Logger("You already own Dark Berserker.");
             return;
         }
 
-        InventoryItem? BetaBerserker = Bot.Inventory.Items.Find(i =>
-            i.Name.Equals("Beta Berserker", StringComparison.OrdinalIgnoreCase) &&
-            i.Category == ItemCategory.Class
-        );
-
-        if (BetaBerserker == null || Core.CheckInventory(Core.QuestRewards(5516)))
+        if (Core.CheckInventory("Beta Berserker") || Core.CheckInventory(Core.QuestRewards(5516)))
             return;
 
         if (!EnsureGolden8thBirthdayCandle())
@@ -60,28 +55,22 @@ public class SecretMapQuest
         Core.Unbank("Beta Berserker");
         Core.AddDrop(Core.QuestRewards(5516));
 
-        while (!Core.CheckInventory(Core.QuestRewards(5516)))
+        while (!Bot.ShouldExit && !Core.CheckInventory(Core.QuestRewards(5516)))
         {
-            if (OwnsDarkBerserker())
+            if (Core.CheckInventory(DarkBerserkerName))
             {
                 Core.Logger("You already own Dark Berserker.");
                 Bot.Stop(true);
                 return;
             }
 
-            while (BetaBerserker.Quantity < 1)
+            while (!Bot.ShouldExit && Core.CheckClassRank(false, "Beta Berserker") < 10)
                 Core.KillMonster("battleontown", "Enter", "Spawn", "*", log: false);
 
             Core.EnsureAccept(5516);
             Core.HuntMonster("nostalgiaquest", "Boss Zardman", "Secret Map");
             Core.EnsureComplete(5516);
         }
-    }
-
-    private bool OwnsDarkBerserker()
-    {
-        return Bot.Inventory.Items.Any(i => i.Name.Equals(DarkBerserkerName, StringComparison.OrdinalIgnoreCase)) ||
-               Bot.Bank.Items.Any(i => i.Name.Equals(DarkBerserkerName, StringComparison.OrdinalIgnoreCase));
     }
 
     private bool EnsureGolden8thBirthdayCandle()
