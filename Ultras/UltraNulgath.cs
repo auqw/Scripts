@@ -64,14 +64,12 @@ public class UltraNulgath
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
-    string a,
-        b;
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraNulgath";
     public List<IOption> Options = new()
     {
-        new Option<string>( "a", "Taunter 1 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "TAUNTCLASS1"),
-        new Option<string>( "b", "Taunter 2 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "TAUNTCLASS2"),
+        new Option<string>( "a", "Taunter 1 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "ArchPaladin"),
+        new Option<string>( "b", "Taunter 2 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "Lord Of Order"),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -104,23 +102,14 @@ public class UltraNulgath
         C.SetOptions(false);
     }
 
-    void Prep()
-    {
-        if (Bot.Config!.Get<bool>("DoEnh"))
-            DoEnhs();
-        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-        if (Bot.Inventory.Items.Any(x => x != null && x.Equipped && (x.Name == a || x.Name == b)))
-        {
-            Ultra.GetScrollOfEnrage();
-            Core.EquipEnrage();
-        }
-    }
-
+    string a, b;
+    // Overfiend Blade = 1
+    // Nulgath = 2
     void Fight()
     {
+        #region ignore this
         const string map = "ultranulgath";
         const string boss = "Nulgath the Archfiend";
-
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
@@ -132,7 +121,7 @@ public class UltraNulgath
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
-
+        #endregion
         while (!Bot.ShouldExit)
         {
             if (!Bot.Player.Alive)
@@ -144,51 +133,71 @@ public class UltraNulgath
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Nulgath the Archfiend Defeated?", 1), syncPath))
             {
                 C.Logger("All players finished farm.");
+                Core.DisableSkills();
+                Bot.Sleep(200);
+                C.Jump("Enter", "Spawn");
                 C.Join("whitemap");
-                C.EnsureComplete(8692);
+                if (!Bot.Quests.IsDailyComplete(8692))
+                    C.EnsureComplete(8692);
                 Adv.GearStore(true, true);
                 break;
             }
 
-            // Taunter logic
-            if (Bot.Inventory.Items.Any(x => x?.Equipped == true && (x.Name == a || x.Name == b)))
+            // Taunters focus nulgath
+            if (Bot.Player.CurrentClass?.Name == a || Bot.Player.CurrentClass?.Name == b)
             {
-                Bot.Combat.Attack(Bot.Monsters.MapMonsters.Any(x => x?.MapID == 2 && x.HP > 0) ? 2 : 1);
+                //taunters focus Nulgath (MID 2)
+                Bot.Combat.Attack(2);
+                Bot.Sleep(200);
+            }
+            else
+            {
+                //DPSers attack the Overfiend Blade(1) and when it dies, swap to nulgath(2), (refocusing "Overfiend Blade" when it respawns)
+                if (Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 1 && x.HP > 0))
+                    Bot.Combat.Attack(1); // Overfiend Blade
+                else
+                    Bot.Combat.Attack(2); // Nulgath
+                Bot.Sleep(200);
+            }
 
+            // Taunter logic
+            if (Bot.Player.Alive && (Bot.Player.CurrentClass?.Name == a || Bot.Player.CurrentClass?.Name == b) && !Bot.Target.Auras.Any(x => x?.Name == "Focus")
+            && Bot.Monsters.MapMonsters.Any(x => (x?.MapID == 2 || x?.MapID == 1) && x.HP > 0))
+            {
                 Core.DisableSkills();
-                while (!Bot.ShouldExit)
+                while (!Bot.ShouldExit && !Bot.Target.Auras.Any(x => x?.Name == "Focus"))
                 {
                     if (!Bot.Player.Alive)
                     {
                         Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                        break;
+                        continue;
                     }
 
-                    if (Bot.Monsters.MapMonsters.Any(x => x?.MapID == 2 && x.HP > 0) && Bot.Player.Target?.MapID == 1)
-                        break; // Sword respawned while attacking Nulgath → retarget Sword
-
-                    if (!Bot.Target.Auras.Any(x => x?.Name == "Focus"))
+                    if (!Bot.Target.Auras.Any(x => x != null && x?.Name == "Focus"))
                         Bot.Skills.UseSkill(5);
                     else
-                    {
-                        Core.EnableSkills();
                         break;
-                    }
 
                     Bot.Sleep(500);
                 }
                 Core.EnableSkills();
             }
-            // Non-taunters attack Nulgath only
-            else if (Bot.Monsters.MapMonsters.Any(x => x?.MapID == 1 && x.HP > 0))
-            {
-                Bot.Combat.Attack(1);
-            }
 
-            Bot.Sleep(500);
         }
     }
 
+
+    void Prep()
+    {
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            DoEnhs();
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        if (Bot.Inventory.Items.Any(x => x != null && x.Equipped && (x.Name == a || x.Name == b)))
+        {
+            Ultra.GetScrollOfEnrage();
+            Core.EquipEnrage();
+        }
+    }
     void DoEnhs()
     {
         string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
