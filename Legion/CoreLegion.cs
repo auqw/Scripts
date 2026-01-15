@@ -174,14 +174,7 @@ public class CoreLegion
             Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Defeated Makai", 25, false);
 
             Core.EquipClass(ClassType.Solo);
-            Core.KillMonster(
-                "aqlesson",
-                "Frame9",
-                "Right",
-                "Carnax",
-                "Carnax Eye",
-                publicRoom: true
-            );
+            Core.KillMonster("aqlesson", "Frame9", "Right", "Carnax", "Carnax Eye", publicRoom: true);
             Core.HuntMonster("deepchaos", "Kathool", "Kathool Tentacle", publicRoom: true);
             Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang");
             Core.HuntMonster("bloodtitan", "Blood Titan", "Blood Titan's Blade", publicRoom: true);
