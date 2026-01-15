@@ -696,8 +696,8 @@
       "ultra"
     ],
     "path": "Ultras/ChampionDrakath.cs",
-    "size": 17958,
-    "sha256": "88a8d12b3f9b8f291e5e96fe4ad41b80734c7e543d0423ff2064dea48157f1ff",
+    "size": 17961,
+    "sha256": "ec12b58b00fb63c17a6b4d55ec7bd0a721ba6b9986369922c9899b75c13ca824",
     "fileName": "ChampionDrakath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/ChampionDrakath.cs"
   },
@@ -744,8 +744,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 8640,
-    "sha256": "e40ce58119fb0d77c3141d35ce2a9a3acfcc68fa8e68025c5dc81b2a321acfe6",
+    "size": 8628,
+    "sha256": "979e9ce46728a00cf65f9b0ba0f29105bb28daf4c82d28f5ca1b5ea4d5e2de15",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
@@ -795,8 +795,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDrago.cs",
-    "size": 12972,
-    "sha256": "582392f1329c4ce8fef21a66f7a18da3ee1c157b63817e1b644205e6475417d7",
+    "size": 12961,
+    "sha256": "143c6939df3f256b203020807bd08a1ba18002d617ad9e90c98c6def61a11275",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },

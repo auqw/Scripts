@@ -156,7 +156,7 @@ public class ChampionDrakath
             && !Bot.Config.Get<bool>(C.SkipOptions))
             Bot.Config.Configure();
 
-        a = (Bot.Config.Get<string>("a") ?? string.Empty).Trim();
+        a = (Bot.Config!.Get<string>("a") ?? string.Empty).Trim();
         b = (Bot.Config.Get<string>("b") ?? string.Empty).Trim();
         c = (Bot.Config.Get<string>("c") ?? string.Empty).Trim();
         d = (Bot.Config.Get<string>("d") ?? string.Empty).Trim();
@@ -186,13 +186,13 @@ public class ChampionDrakath
 
     bool IsTaunter()
     {
-        string currentClass = Bot.Player.CurrentClass.Name ?? string.Empty;
+        string currentClass = Bot.Player.CurrentClass?.Name ?? string.Empty;
 
         if (string.IsNullOrEmpty(currentClass))
             return false;
 
         // Check based on HowManyTaunts setting
-        int taunterCount = (int)Bot.Config.Get<HowManyTaunts>("HowManyTaunts");
+        int taunterCount = (int)Bot.Config!.Get<HowManyTaunts>("HowManyTaunts");
 
         if (taunterCount >= 1 && !string.IsNullOrEmpty(a) && currentClass.Contains(a))
             return true;
