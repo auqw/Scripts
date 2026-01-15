@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 432945,
-    "sha256": "b2e183eed02a8cfd885a0a973c19717e45629d2907885ed0cd541f5a1b999bcf",
+    "size": 432941,
+    "sha256": "bf3b2f70325f212dd8a41fcdb70ab57a9759b833276406e77997325c2ae9e110",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -5943,8 +5943,8 @@
       "null"
     ],
     "path": "Legion/Revenant/CoreLR.cs",
-    "size": 9602,
-    "sha256": "914b36a70bb59e3d39bef2432b188b23cc87d03a3e00b3e76e5621598b5df6e8",
+    "size": 9556,
+    "sha256": "6619781d43342d078e62221d71df74936e22c3c3c64d6ab3da2cb6aa77d543f2",
     "fileName": "CoreLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Revenant/CoreLR.cs"
   },
