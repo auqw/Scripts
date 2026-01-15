@@ -95,7 +95,7 @@ public class ArchPaladin
                 Core.EquipClass(ClassType.Solo);
                 Core.KillMonster("doomvault", "r5", "Left", "Binky", "Binky's Uni-horn", isTemp: false, publicRoom: true);
                 Core.HuntMonster("banished", "Desterrat Moya", "Desterrat Moya Tentacle", publicRoom: true);
-                Core.HuntMonster("dreadhaven", "SUPER Dreadhaven General", "Dreadhaven Helm", isTemp: false);
+                Core.HuntMonster("dreadfight", "SUPER Dreadhaven General", "Dreadhaven Helm");
                 Adv.GearStore(EnhAfter: true);
                 Core.KillDoomKitten("DoomKitten Claw", isTemp: true);
                 Adv.GearStore(true, EnhAfter: true);
