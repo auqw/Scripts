@@ -36,7 +36,7 @@ public class QueenIona
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
     public bool DontPreconfigure = true;
-    public string OptionsStorage = "UltraDage";
+    public string OptionsStorage = "QueenIona";
     public List<IOption> Options = new()
     {
         new Option<bool>("ZoneDebuglog", "Zone Logs",  "En/Disable the Logging of zones in chat/logs.", true),
@@ -64,23 +64,35 @@ public class QueenIona
         C.SetOptions(false);
     }
 
-    void Prep()
+    void Prep(bool CommingFromDifferentScript = false)
     {
-        if (Bot.Player.Alive && Bot.Player.CurrentClass?.Name == "Void Highlord"
-                    || Bot.Player.CurrentClass?.Name == "Void Highlord (IoDA)")
+        if (CommingFromDifferentScript)
+        {
+            if (Bot.Config != null
+                && Bot.Config.Options.Contains(C.SkipOptions)
+                && !Bot.Config.Get<bool>(C.SkipOptions))
+            {
+                Bot.Config.Configure();
+            }
+        }
+
+        if (Bot.Player!.Alive && Bot.Player!.CurrentClass?.Name == "Void Highlord"
+                    || Bot.Player!.CurrentClass?.Name == "Void Highlord (IoDA)")
             IsVHL = true;
+
+        Bot.Config.Configure();
         if (Bot.Config!.Get<bool>("DoEnh"))
-            Adv.SmartEnhance(Bot.Player.CurrentClass!.Name);
+            Adv.SmartEnhance(Bot.Player!.CurrentClass!.Name);
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
     }
 
-    public void Fight(string item = "Lothian's Lightning", int quant = 100)
+    public void Fight(string item = "Lothian's Lightning", int quant = 100, bool CommingFromDifferentScript = false)
     {
         Bot.Events.ExtensionPacketReceived += QueenIonaListener;
         Prep();
 
-        const string map = "queeniona";
-        const string boss = "Queen Iona";
+        string map = "queeniona";
+        string boss = "Queen Iona";
 
         if (!Bot.Quests.IsDailyComplete(9852))
             C.EnsureAccept(9852);
@@ -92,7 +104,7 @@ public class QueenIona
         // Always private
         C.Join(map + -100000, "r2", "Left");
         Core.ChooseBestCell(boss);
-        Bot.Player.SetSpawnPoint();
+        Bot.Player!.SetSpawnPoint();
 
         if (!IsVHL)
             Core.EnableSkills();
@@ -103,13 +115,13 @@ public class QueenIona
         while (!Bot.ShouldExit && !C.CheckInventory(item, quant))
         {
             // Dead → wait for respawn
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
             {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                Bot.Wait.ForTrue(() => Bot.Player!.Alive, 20);
                 continue;
             }
-            
-            if (Bot.Player.Cell != "r2")
+
+            if (Bot.Player!.Cell != "r2")
             {
                 Bot.Map.Jump("r2", "Left", autoCorrect: false);
                 Bot.Wait.ForCellChange("r2");
@@ -127,17 +139,17 @@ public class QueenIona
                 return;
             }
 
-            if (!Bot.Player.HasTarget)
+            if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
 
             // VHL skill usage
             if (IsVHL)
             {
-                if (Bot.Player.Health <= 2500 && Bot.Skills.CanUseSkill(2))
+                if (Bot.Player!.Health <= 2500 && Bot.Skills.CanUseSkill(2))
                     Bot.Skills.UseSkill(2);
 
-                if (Bot.Player.HasTarget
-                    && Bot.Player.Target?.HP > 0
+                if (Bot.Player!.HasTarget
+                    && Bot.Player!.Target?.HP > 0
                     && !Bot.Self.Auras.Any(a => a?.Name == "Shackled")
                     && Bot.Skills.CanUseSkill(skillList[skillIndex]))
                 {
@@ -156,7 +168,7 @@ public class QueenIona
         if (packet?["params"]?.type?.ToString() != "json")
             return;
 
-        if (!Bot.Player.Alive)
+        if (!Bot.Player!.Alive)
             return;
 
         dynamic data = packet["params"].dataObj;
@@ -171,12 +183,12 @@ public class QueenIona
         string? chargeAura = null;
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player.Alive)
+            if (!Bot.Player!.Alive)
                 return;
 
             chargeAura = Bot.Self.Auras.FirstOrDefault(a => a != null &&
-                          (a.Name == "Positive Charge" || a.Name == "Negative Charge" ||
-                           a.Name == "Positive Charge?" || a.Name == "Negative Charge?"))?.Name;
+                          (a?.Name == "Positive Charge" || a?.Name == "Negative Charge" ||
+                           a?.Name == "Positive Charge?" || a?.Name == "Negative Charge?"))?.Name;
 
             if (!string.IsNullOrEmpty(chargeAura))
                 break;
@@ -214,7 +226,7 @@ public class QueenIona
 
         try
         {
-            await Task.Run(() => Bot.Player.WalkTo(target.x, target.y));
+            await Task.Run(() => Bot.Player!.WalkTo(target.x, target.y));
         }
         catch (Exception ex)
         {
