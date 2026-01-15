@@ -89,7 +89,7 @@ public class QueenIona
     public void Fight(string item = "Lothian's Lightning", int quant = 100, bool CommingFromDifferentScript = false)
     {
         Bot.Events.ExtensionPacketReceived += QueenIonaListener;
-        Prep();
+        Prep(CommingFromDifferentScript);
 
         string map = "queeniona";
         string boss = "Queen Iona";
