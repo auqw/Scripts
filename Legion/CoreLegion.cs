@@ -171,7 +171,7 @@ public class CoreLegion
         while (!Bot.ShouldExit && !Core.CheckInventory("Diamond Token of Dage", quant))
         {
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Defeated Makai", 25, false);
+            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Defeated Makai", 25, isTemp: false);
 
             Core.EquipClass(ClassType.Solo);
             Core.KillMonster("aqlesson", "Frame9", "Right", "Carnax", "Carnax Eye", publicRoom: true);

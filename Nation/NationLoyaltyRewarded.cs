@@ -155,22 +155,14 @@ public class NationLoyaltyRewarded
         {
             Core.EnsureAccept(4749);
 
-            Core.KillMonster("dflesson", "r12", "Right", 29, 33257, isTemp: true, publicRoom: true);
-            Core.HuntMonster("aqlesson", "Carnax", "Carnax Eye", log: false);
-            Core.HuntMonster("deepchaos", "Kathool", "Kathool Tentacle", log: false);
-            Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang", log: false);
-            Core.HuntMonster("bloodtitan", "Blood Titan", "Blood Titan's Blade", log: false);
+            Core.KillMonster("dflesson", "r12", "Right", 29, 33257);
+            Core.HuntMonster("aqlesson", "Carnax", "Carnax Eye");
+            Core.HuntMonster("deepchaos", "Kathool", "Kathool Tentacle");
+            Core.HuntMonster("lair", "Red Dragon", "Red Dragon's Fang");
+            Core.HuntMonster("bloodtitan", "Blood Titan", "Blood Titan's Blade");
 
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "tercessuinotlim",
-                "m2",
-                "Left",
-                "*",
-                "Defeated Makai",
-                25,
-                log: false
-            );
+            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Defeated Makai", 25, isTemp: false);
 
             foreach (var item in items.Where(x => !string.IsNullOrWhiteSpace(x)))
                 Bot.Wait.ForPickup(item!);
