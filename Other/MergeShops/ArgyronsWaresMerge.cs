@@ -6,6 +6,7 @@ tags: argyrons, wares, merge, abaddoncave, arachnosapien, abaddon, hybrid, spine
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -32,6 +33,13 @@ public class ArgyronsWaresMerge
         set => _sAdv = value;
     }
     private static CoreAdvanced _sAdv;
+
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -105,7 +113,7 @@ public class ArgyronsWaresMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("abaddoncave", "Spineback Abbadon", "Abaddon Carapace");
+                        Core.HuntMonster("abaddoncave", "Spineback Abaddon", "Abaddon Carapace");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -119,7 +127,7 @@ public class ArgyronsWaresMerge
                     Core.EquipClass(ClassType.Solo);
                     Core.HuntMonster(
                         "abaddoncave",
-                        "Spineback Abbadon",
+                        "Spineback Abaddon",
                         req.Name,
                         quant,
                         isTemp: false
@@ -143,6 +151,15 @@ public class ArgyronsWaresMerge
             }
         }
         #endregion
+    }
+
+    void PreFarm()
+    {
+        if (Core.isCompletedBefore(10427))
+            return;
+
+        Story.KillQuest(10426, "abaddoncave", "Cursed Dreadspider");
+        Story.KillQuest(10427, "abaddoncave", "Spineback Abaddon");
     }
 
     public List<IOption> Select = new()
@@ -233,8 +250,8 @@ public class ArgyronsWaresMerge
         ),
         new Option<bool>(
             "91196",
-            "XL Spineback Abbadon Guard",
-            "Mode: [select] only\nShould the bot buy \"XL Spineback Abbadon Guard\" ?",
+            "XL Spineback Abaddon Guard",
+            "Mode: [select] only\nShould the bot buy \"XL Spineback Abaddon Guard\" ?",
             false
         ),
     };

@@ -5360,7 +5360,7 @@ case ""Abaddon Vertebrae"":
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", ""Abaddon Carapace"");
+                        Core.HuntMonster(""abaddoncave"", ""Spineback Abaddon"", ""Abaddon Carapace"");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -5372,7 +5372,7 @@ case ""Abaddon Vertebrae"":
             @"
 case ""Spineback Abaddon Guard"":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", req.Name, quant, isTemp: false);
+                    Core.HuntMonster(""abaddoncave"", ""Spineback Abaddon"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
@@ -5382,7 +5382,7 @@ case ""Spineback Abaddon Guard"":
             @"
 case ""Spineback Abaddon Guest"":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", req.Name, quant, isTemp: false);
+                    Core.HuntMonster(""abaddoncave"", ""Spineback Abaddon"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
@@ -5392,7 +5392,7 @@ case ""Spineback Abaddon Guest"":
             @"
 case ""Spineback Abaddon Carapace"":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", req.Name, quant, isTemp: false);
+                    Core.HuntMonster(""abaddoncave"", ""Spineback Abaddon"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
@@ -5402,7 +5402,7 @@ case ""Spineback Abaddon Carapace"":
             @"
 case ""Arachnosapien Locks"":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", req.Name, quant, isTemp: false);
+                    Core.HuntMonster(""abaddoncave"", ""Spineback Abaddon"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
@@ -5412,7 +5412,7 @@ case ""Arachnosapien Locks"":
             @"
 case ""Arachnosapien Visage"":
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster(""abaddoncave"", ""Spineback Abbadon"", req.Name, quant, isTemp: false);
+                    Core.HuntMonster(""abaddoncave"", ""Spineback Abaddon"", req.Name, quant, isTemp: false);
                     Bot.Wait.ForPickup(req.Name);
                     break;
     "
