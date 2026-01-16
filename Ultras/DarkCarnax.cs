@@ -87,7 +87,8 @@ public class UltraDarkCarnax
         Prep();
         Fight();
         Bot.Events.ExtensionPacketReceived -= DarkCarnaxListener;
-        Adv.GearStore(true, EnhAfter: true);
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            Adv.GearStore(true, true);
         Bot.Stop();
     }
 
@@ -149,14 +150,15 @@ public class UltraDarkCarnax
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            
+
             if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains("Synthetic Viscera", 1000), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
-                Adv.GearStore(true, true);
+                if (Bot.Config!.Get<bool>("DoEnh"))
+                    Adv.GearStore(true, true);
                 break;
-            } 
+            }
 
             // Rejoin if needed
             if (Bot.Map.Name != map)

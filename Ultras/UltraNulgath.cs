@@ -139,7 +139,8 @@ public class UltraNulgath
                 C.Join("whitemap");
                 if (!Bot.Quests.IsDailyComplete(8692))
                     C.EnsureComplete(8692);
-                Adv.GearStore(true, true);
+                if (Bot.Config!.Get<bool>("DoEnh"))
+                    Adv.GearStore(true, true);
                 break;
             }
 

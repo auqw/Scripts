@@ -238,6 +238,8 @@ public class AstralEmpyrean
         }
         if (DoZoning)
             Bot.Events.ExtensionPacketReceived -= AstralZoneListener;
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            Adv.GearStore(true, true);
     }
 
 

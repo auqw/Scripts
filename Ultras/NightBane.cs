@@ -262,7 +262,9 @@ public class NightBane
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8547);
-                Adv.GearStore(true, true);
+
+                if (Bot.Config!.Get<bool>("DoEnh"))
+                    Adv.GearStore(true, true);
                 break;
             }
 

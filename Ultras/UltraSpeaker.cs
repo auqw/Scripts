@@ -125,11 +125,12 @@ public class UltraSpeaker
                 if (Bot.Quests.IsDailyComplete(9173))
                 {
                     C.Logger("Weekly already complete, try again Friday morning");
-                    Adv.GearStore(true, true);
-                    return;
+                    if (Bot.Config!.Get<bool>("DoEnh"))
+                        return;
                 }
                 else C.EnsureComplete(9173);
-                Adv.GearStore(true, true);
+                if (Bot.Config!.Get<bool>("DoEnh"))
+                    Adv.GearStore(true, true);
                 break;
             }
 

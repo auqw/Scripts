@@ -69,7 +69,7 @@ public class QueenIona
                     || Bot.Player!.CurrentClass?.Name == "Void Highlord (IoDA)")
             IsVHL = true;
 
-        if (!AnotherScript || Bot.Config!.Get<bool>("DoEnh"))
+        if (AnotherScript || Bot.Config!.Get<bool>("DoEnh"))
         {
             Adv.GearStore(EnhAfter: true);
             Adv.SmartEnhance(Bot.Player!.CurrentClass!.Name);
@@ -127,7 +127,7 @@ public class QueenIona
             {
                 C.Jump("Enter", "Spawn");
                 C.EnsureComplete(9852);
-                if (HasQuestItem)
+                if (HasQuestItem) 
                     continue;
 
                 C.Logger("Daily complete come back tomarrow");
@@ -159,7 +159,9 @@ public class QueenIona
         Bot.Events.ExtensionPacketReceived -= QueenIonaListener;
         //turn all the stuffs back on from main scripts
         C.SetOptions(true);
-        Adv.GearStore(true, true);
+
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            Adv.GearStore(true, true);
     }
 
     async void QueenIonaListener(dynamic packet)

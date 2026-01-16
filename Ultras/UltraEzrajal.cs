@@ -180,7 +180,8 @@ public class UltraEzrajal
         C.AddDrop("Ezrajal Insignia");
         Prep();
         Fight();
-        Adv.GearStore(true, true);
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            Adv.GearStore(true, true);
         Bot.Stop();
     }
 
@@ -224,7 +225,7 @@ public class UltraEzrajal
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            
+
             // Check if the whole army has finished
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Ezrajal Defeated", 1), syncPath))
             {
@@ -232,7 +233,7 @@ public class UltraEzrajal
                 C.EnsureComplete(8152);
                 Bot.UltraBossHelper.DisableCounterAttack();
                 break;
-            } 
+            }
 
             // ---------------------------
             // COUNTER ATTACK HANDLER

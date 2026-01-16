@@ -99,15 +99,16 @@ public class UltraWarden
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            
+
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Warden Defeated", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8153);
-                Adv.GearStore(true, true);
+                if (Bot.Config!.Get<bool>("DoEnh"))
+                    Adv.GearStore(true, true);
                 break;
-            } 
+            }
 
             if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b))
                 Ultra.UltraWardenTaunter();

@@ -257,7 +257,8 @@ public class ChampionDrakath
                 if (!Bot.Quests.IsDailyComplete(8300))
                     C.EnsureComplete(8300);
                 else Bot.Log("Daily already Complete");
-                Adv.GearStore(true, true);
+                if (Bot.Config!.Get<bool>("DoEnh"))
+                    Adv.GearStore(true, true);
                 break;
             }
 

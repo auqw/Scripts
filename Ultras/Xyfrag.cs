@@ -105,15 +105,16 @@ public class Xyfrag
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            
+
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Xyfrag's Slimy Tooth", 5), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8547);
-                Adv.GearStore(true, true);
+                if (Bot.Config!.Get<bool>("DoEnh"))
+                    Adv.GearStore(true, true);
                 break;
-            } 
+            }
 
             if (Core.HasClassEquipped(taunter))
                 Ultra.Taunt(taunter, boss, "charge", 250);

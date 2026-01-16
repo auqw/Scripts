@@ -253,16 +253,14 @@ public class UltraDrago
                 continue;
             }
 
-            // ======================================================
-            //              ARCHPALADIN TAUNTER LOGIC
-            // ======================================================
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Drago Dethroned", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8397);
                 Bot.Wait.ForPickup("King Drago Insignia");
-                Adv.GearStore(true, true);
+                if (Bot.Config!.Get<bool>("DoEnh"))
+                    Adv.GearStore(true, true);
                 break;
             }
 
@@ -284,10 +282,6 @@ public class UltraDrago
                 continue;
             }
 
-            // ======================================================
-            //              LORD OF ORDER TAUNTER LOGIC
-            // ======================================================
-
             if (isTaunterGroup2 && Ultra.MonsterAlive(rightSummon))
             {
                 // LordOfOrder loops taunt with ArchPaladin (left summon)
@@ -305,11 +299,6 @@ public class UltraDrago
                 continue;
             }
 
-            // ======================================================
-            //              NON-TAUNTER BEHAVIOR AREA (LR / DPS / CurrentClass)
-            // ======================================================
-
-            // LegionRevenant and other DPS focus on right summon (Bow)
             Core.KillWithPriority(boss, leftSummon, rightSummon);
             Bot.Skills.UseSkill(5);
         }

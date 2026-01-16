@@ -115,7 +115,9 @@ public class UltraDage
         Bot.Events.ExtensionPacketReceived += UltraDageListener;
         Fight();
         Bot.Events.ExtensionPacketReceived -= UltraDageListener;
-        Adv.GearStore(true, EnhAfter: true);
+
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            Adv.GearStore(true, true);
         Bot.Stop();
     }
 
@@ -157,16 +159,15 @@ public class UltraDage
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            
+
             if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Dage the Dark Lord Defeated", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 if (!Bot.Quests.IsDailyComplete(8547))
                     C.EnsureComplete(8547);
-                // Adv.GearStore(true, true);
                 break;
-            } 
+            }
             if (Core.HasClassEquipped(a) || Core.HasClassEquipped(b) && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
             {
                 if (Bot.Skills.CanUseSkill(5))

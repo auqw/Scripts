@@ -137,7 +137,9 @@ public class UltraDarkon
                 C.EnsureComplete(8746);
                 Bot.Wait.ForPickup("Darkon Insignia");
                 C.Logger("Restoring enhancements!");
-                Adv.GearStore(true, true);
+
+                if (Bot.Config!.Get<bool>("DoEnh"))
+                    Adv.GearStore(true, true);
                 break;
             }
 

@@ -208,15 +208,16 @@ public class UltraEngineer
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            
+
             // Check if the whole army has finished
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Engineer Defeated", 1), syncPath))
             {
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8154);
-                Adv.GearStore(true, true);
+                if (Bot.Config!.Get<bool>("DoEnh"))
+                    Adv.GearStore(true, true);
                 break;
-            } 
+            }
             Ultra.KillWithPriority(boss, 3, priority1, 2, priority2, 1);
             Bot.Skills.UseSkill(5);
         }
