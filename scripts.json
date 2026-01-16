@@ -1108,8 +1108,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 39209,
-    "sha256": "eb95911e75080e7ab7df58caf5c32523e8ccae441671350b357762eb0194da3f",
+    "size": 39217,
+    "sha256": "b67f6dd54666ea52249f78232bda914949e837f6d004e5eccbf71af3cdc15850",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -4159,8 +4159,8 @@
       "diamond badge of nulgath"
     ],
     "path": "Nation/NationLoyaltyRewarded.cs",
-    "size": 5930,
-    "sha256": "73041dffb76b16cdc0fac69c15318f755632538834fb1550df218f37619edd40",
+    "size": 5727,
+    "sha256": "401abafd5803a7effd1a8e071c1005905cc7dcaf33215358fc16616e3b609066",
     "fileName": "NationLoyaltyRewarded.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/NationLoyaltyRewarded.cs"
   },
