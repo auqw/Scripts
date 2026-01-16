@@ -31802,8 +31802,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Books/2BookOfFire.cs",
-    "size": 1629,
-    "sha256": "8c21a8eccdc9e43a26c02a70ff209326dafac6b085d8aa2f18a4369512f0b78b",
+    "size": 1670,
+    "sha256": "c5e8e4fee4dd60fcb4f89311e70d30cc749b0dfee9b9d6117589b018f5651265",
     "fileName": "2BookOfFire.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/Books/2BookOfFire.cs"
   },
@@ -31814,8 +31814,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Books/3BookOfIce.cs",
-    "size": 1626,
-    "sha256": "f2e7aa15cd1eec873c7ae688aa06817023940c016581987083c02056b35d25b1",
+    "size": 1667,
+    "sha256": "082e0dc7af4a0dcd96d53b080bcc04e5b35417d2d0701d0c7e41ebb02215834f",
     "fileName": "3BookOfIce.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/Books/3BookOfIce.cs"
   },
@@ -31826,8 +31826,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Books/5BookOfArcana.cs",
-    "size": 1635,
-    "sha256": "8a5f59dbb2818e96aa5180736cd3fd0708f552d8d3d3f24a947a4c0cecbd0263",
+    "size": 1676,
+    "sha256": "17babf5d1e18a77ebf6ae6741f521dcdc6fd27cec0d260f7003464dc4b953505",
     "fileName": "5BookOfArcana.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/Books/5BookOfArcana.cs"
   },
@@ -31838,8 +31838,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Books/4BookOfAether.cs",
-    "size": 1635,
-    "sha256": "70673b60b87ea42ee5a7f69b11906de773f14e6d0c090d174d20ea92cf3a1340",
+    "size": 1676,
+    "sha256": "28941d5631d14f3498ab2d80c268acd14bc97820f3de4cf50e7b75bb5cdb3d76",
     "fileName": "4BookOfAether.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/Books/4BookOfAether.cs"
   },
@@ -31850,8 +31850,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/Books/1BookOfMagus.cs",
-    "size": 1632,
-    "sha256": "3f80b4e7e33ef0a300b3997f53e75c478378620a3b5c1e4180ff9e6a9420f741",
+    "size": 1673,
+    "sha256": "81165bbab75a246b369ea1129acff89124398bbc9133f886ef75401a634d545e",
     "fileName": "1BookOfMagus.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/Books/1BookOfMagus.cs"
   }
