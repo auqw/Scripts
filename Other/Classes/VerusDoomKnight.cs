@@ -36,6 +36,7 @@ using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Shops;
 using Skua.Core.Models.Skills;
+using System.Linq; // <-- needed for FirstOrDefault/Any
 
 public class VerusDoomKnightClass
 {
@@ -276,7 +277,8 @@ public class VerusDoomKnightClass
         }
 
         // Necrotic Blade (9414)
-        if (!Core.isCompletedBefore(9419))
+        // FIX: previously checked 9419 which caused this to rerun whenever Unleash Doom wasn't done.
+        if (!Story.QuestProgression(9414))
         {
             Core.EnsureAccept(9414);
             SRoD.ShadowReaperOfDoom();
@@ -302,7 +304,10 @@ public class VerusDoomKnightClass
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(9419);
             Core.HuntMonster("citadelruins", "Inquisitor Hobo", "Inquisitor Bones", 1000000, false);
-            Core.HuntMonster("deltavlab", "Pistol Guard", "Refined Metal", 1000000, false);
+
+            // FIX: deltavlab -> deltavcore (Refined Metal)
+            Core.HuntMonster("deltavcore", "Pistol Guard", "Refined Metal", 1000000, false);
+
             Core.HuntMonster("etherwardes", "Earth Dragon Warrior", "Dragon Skin", 1000000, false);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster(
@@ -368,6 +373,9 @@ public class VerusDoomKnightClass
             Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
         }
 
+        // FIX: if class is in bank, unbank it before trying to use it
+        Core.Unbank(selectedClass);
+
         Adv.GearStore(EnhAfter: true);
         Adv.SmartEnhance(selectedClass);
 
@@ -416,6 +424,9 @@ public class VerusDoomKnightClass
             Core.Logger("KillThing aborted: no class specified and player has no current class.");
             return;
         }
+
+        // FIX: actually equip the class you selected
+        Core.Equip(classNameToUse);
 
         Core.Join(map);
         Adv.BuyItem("seavoice", 2320, "Vigil", 1000, 12023);
