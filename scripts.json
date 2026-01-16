@@ -17193,8 +17193,8 @@
       "guard"
     ],
     "path": "Other/MergeShops/ArgyronsWaresMerge.cs",
-    "size": 8156,
-    "sha256": "7ee30877fb6bfc80a18f6c97a640ae15b1557c490626bb0aa1ed2fd4b32069a3",
+    "size": 8582,
+    "sha256": "980bffb1e71e1b4d70f5c47c5927b63f6dbb0cbff2b728c64a2113289a9ecfec",
     "fileName": "ArgyronsWaresMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ArgyronsWaresMerge.cs"
   },
@@ -24690,7 +24690,7 @@
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
     "size": 1125664,
-    "sha256": "83e8b83a22fda858138073e70c607d88601fdd0894365e28b15f7e5bc39d4a83",
+    "sha256": "571a054e705dc9c7885d3011f2dcdf482c8829e398456ac3aff970754c2f42f9",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
