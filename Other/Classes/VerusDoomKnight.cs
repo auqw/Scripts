@@ -36,7 +36,7 @@ using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Shops;
 using Skua.Core.Models.Skills;
-using System.Linq; // <-- needed for FirstOrDefault/Any
+using System.Linq;
 
 public class VerusDoomKnightClass
 {
