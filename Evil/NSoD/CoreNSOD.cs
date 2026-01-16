@@ -624,7 +624,7 @@ public class CoreNSOD
             "Primarch's Hilt",
             quant,
             false,
-            publicRoom: true
+            publicRoom: true, EquipBestClassType: false
         );
         Bot.Wait.ForPickup("Primarch's Hilt");
     }
