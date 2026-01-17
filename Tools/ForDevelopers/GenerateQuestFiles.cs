@@ -47,33 +47,52 @@ public class GetQuests
     {
         token.ThrowIfCancellationRequested();
 
-        Core.Logger("Updating Quest.txt");
-        UpdateQuests(token); // blocks but can be cancelled
+        Core.Logger("Updating Quest.txt...");
+        UpdateQuests(token); // blocks but cancelable
 
         token.ThrowIfCancellationRequested();
 
-        Core.Logger("Reading Quest.txt");
-        dynamic[] quests = JsonConvert.DeserializeObject<dynamic[]>(
-            File.ReadAllText(ClientFileSources.SkuaQuestsFile)
-        )!;
+        // 1️⃣ The authoritative TXT (updated by UpdateQuests)
+        string questsTxtPath = Path.Combine(ClientFileSources.SkuaDIR, "Quests.txt");
 
+        // 2️⃣ The JSON outputs
+        string clientJsonPath = Path.Combine(ClientFileSources.SkuaDIR, "QuestData.json");         // client copy
+        string scriptsJsonPath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json"); // scripts folder copy
+
+        dynamic[] quests;
+
+        try
+        {
+            Core.Logger("Reading updated QuestData.txt...");
+            string jsonText = File.ReadAllText(questsTxtPath);
+            quests = JsonConvert.DeserializeObject<dynamic[]>(jsonText)!;
+            Core.Logger($"Loaded {quests.Length} quests."); // should show 10559
+        }
+        catch (Exception ex)
+        {
+            Core.Logger("Failed to read or parse QuestData: " + ex.Message);
+            return;
+        }
+
+        token.ThrowIfCancellationRequested();
+
+        // Build pipe-delimited data if needed
         List<string> d = new() { "ID|Name|Once|Slot|Value|Upgrade|Gold|XP" };
-
         foreach (dynamic q in quests)
         {
             token.ThrowIfCancellationRequested();
             d.Add($"{q.ID}|{q.Name}|{q.Once}|{q.Slot}|{q.Value}|{q.Upgrade}|{q.Gold}|{q.XP}");
         }
 
-        token.ThrowIfCancellationRequested();
+        // 1️⃣ Write JSON to client-side folder
+        File.WriteAllText(clientJsonPath, JsonConvert.SerializeObject(quests, Formatting.Indented));
 
-        File.Copy(
-            ClientFileSources.SkuaQuestsFile,
-            Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json"),
-            true
-        );
+        // 2️⃣ Write JSON to scripts folder
+        File.WriteAllText(scriptsJsonPath, JsonConvert.SerializeObject(quests, Formatting.Indented));
 
-        Core.Logger("Files Updated: Scripts/QuestData.json");
+        Core.Logger("Files Updated: ");
+        Core.Logger($" - Client: {clientJsonPath}");
+        Core.Logger($" - Scripts: {scriptsJsonPath}");
     }
 
     private void UpdateQuests(CancellationToken token)
