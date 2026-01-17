@@ -1059,6 +1059,7 @@ public class CoreNation
         bool VoucherItemDuring = false
     )
     {
+        #region Ignore this
         // Case 1: item specified and already in inventory
         if (item != null && Core.CheckInventory(item, quant))
             return;
@@ -1180,7 +1181,7 @@ public class CoreNation
         );
 
         Core.EquipClass(ClassType.Solo);
-
+#endregion
         if (item == null)
         {
             foreach (string Thing in SuppliesRewards)
@@ -1279,7 +1280,7 @@ public class CoreNation
         }
         else
         {
-            if (Core.CheckInventory(CragName))
+            if (Core.CheckInventory(CragName) || hasOBoNPet)
                 BambloozevsDrudgen(item, quant, KeepVoucher, AssistantDuring, ReturnItem, true);
             else
             {
