@@ -4,10 +4,19 @@ description: This bot will farm the items belonging to the selected mode for the
 tags: terces, archive, merge, tercesarchive, void, kittarian, morph, fiendish, feline, claws, fiend, voracity, overfiend, pet, battle, crimson, scolex, bane, ascension, fury
 */
 //cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/Nation/CoreNation.cs
+//cs_include Scripts/Nation/NationLoyaltyRewarded.cs
+//cs_include Scripts/Good/BLOD/CoreBLOD.cs
+//cs_include Scripts/Evil/SDKA/CoreSDKA.cs
+//cs_include Scripts/Story/BattleUnder.cs
+//cs_include Scripts/Other/Classes/Necromancer.cs
+//cs_include Scripts/Evil/NSoD/CoreNSOD.cs
 //cs_include Scripts/Nation/Various/JuggernautItems.cs
+//cs_include Scripts/Nation/MergeShops\NationMerge.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -28,12 +37,19 @@ public class TercesArchiveMerge
         set => _Nation = value;
     }
     private static CoreNation _Nation;
-    private static JuggernautItemsofNulgath Jugger
+    private static JuggernautItemsofNulgath juggernaut
     {
-        get => _Jugger ??= new JuggernautItemsofNulgath();
-        set => _Jugger = value;
+        get => _juggernaut ??= new JuggernautItemsofNulgath();
+        set => _juggernaut = value;
     }
-    private static JuggernautItemsofNulgath _Jugger;
+    private static JuggernautItemsofNulgath _juggernaut;
+
+    private static NationMerge NM
+    {
+        get => _NM ??= new NationMerge();
+        set => _NM = value;
+    }
+    private static NationMerge _NM;
 
 
     public bool DontPreconfigure = true;
@@ -80,8 +96,12 @@ public class TercesArchiveMerge
 
                 #region Items not setup
                 case "Nulgath Horns":
-                case "Battlefiend Blade of Nulgath":
+                    Nation.NulgathsRouletteofMisfortune(req.Name, req.Quantity);
+                    break;
+                #endregion
+
                 case "Blood Star of the Archfiend":
+
                     if (req.Upgrade && !Core.IsMember)
                     {
                         Core.Logger($"{req.Name} requires membership to farm, skipping.");
@@ -90,14 +110,8 @@ public class TercesArchiveMerge
 
                     Core.FarmingLogger(req.Name, quant);
                     Core.AddDrop(req.ID);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
-                    {
-                        Core.HuntMonster("tercesarchive", "Fiend of Voracity", req.Name, req.Quantity, req.Temp);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
-                    Core.CancelRegisteredQuests();
+                    NM.BuyAllMerge(req.Name);
                     break;
-                #endregion
 
                 case "Abyssal Fang":
                     if (req.Upgrade && !Core.IsMember)
@@ -156,15 +170,21 @@ public class TercesArchiveMerge
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
+                case "Battlefiend Blade of Nulgath":
+                    Core.FarmingLogger(req.Name, quant);
+                    juggernaut.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Battlefiend_Blade_of_Nulgath);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+
                 case "Nulgath Armor":
                     Core.FarmingLogger(req.Name, quant);
-                    Jugger.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Nulgath_Armor);
+                    juggernaut.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Nulgath_Armor);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Overfiend Blade of Nulgath":
                     Core.FarmingLogger(req.Name, quant);
-                    Jugger.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Overfiend_Blade_of_Nulgath);
+                    juggernaut.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Overfiend_Blade_of_Nulgath);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
