@@ -1744,10 +1744,7 @@ public class CoreNation
     )
     {
         if (Core.CheckInventory(item, quant))
-        {
-            Bot.Log("item - quant owned");
             return;
-        }
 
         Core.AddDrop("Relic of Chaos", "Tainted Core");
         Core.AddDrop(string.IsNullOrEmpty(item) ? bagDrops : new string[] { item });
