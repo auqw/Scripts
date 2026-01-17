@@ -161,15 +161,7 @@ public class ArchPaladin
                 Core.BuyItem("castle", 88, "Holy Hand Grenade");
                 Core.EquipClass(ClassType.Farm);
                 Core.HuntMonster("manor", "Bird of Paradise", "Feather of Paradise", 20, false);
-                Core.KillMonster(
-                    "doomwood",
-                    "r6",
-                    "Right",
-                    "*",
-                    "Shoelace of a Fallen Paladin",
-                    77,
-                    false
-                );
+                Core.KillMonster("doomwood", "r6", "Right", "*", "Shoelace of a Fallen Paladin", 77, false); 
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("fotia", "Amia the Cult Leader", "Eternity Flame", isTemp: false);
                 Core.EnsureComplete(5466);
