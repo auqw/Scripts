@@ -1752,9 +1752,6 @@ public class CoreNation
         Core.AddDrop("Relic of Chaos", "Tainted Core");
         Core.AddDrop(string.IsNullOrEmpty(item) ? bagDrops : new string[] { item });
 
-        if (hasOBoNPet)
-            Core.AddDrop("Tainted Soul");
-
         bool returnPolicyDuringSupplies =
             Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies)
             && _returnSupplies == true;
@@ -1802,8 +1799,11 @@ public class CoreNation
             QuestToRegister.AddRange(new[] { 609 });
 
         if (hasOBoNPet)
-        // The Dark Deal | The Dark Deal (rare)
+        {
+            Core.AddDrop("Tainted Soul");
+            // The Dark Deal | The Dark Deal (rare)
             QuestToRegister.Add(Core.CheckInventory(4809) ? 599 : 2561);
+        }
 
         // 9542 - Swindle's Bonus Deal - Swindle Bilk's To Go Hut
         if (Core.CheckInventory(38261))
@@ -2087,7 +2087,8 @@ public class CoreNation
         // Core.DebugLogger(this);
 
         if (farmDiamond)
-            BambloozevsDrudgen("Diamond of Nulgath", 15);
+            if (hasOBoNPet || Core.CheckInventory(CragName))
+                BambloozevsDrudgen("Diamond of Nulgath", 15);
         // Core.DebugLogger(this);
 
         Core.EquipClass(ClassType.Farm);
@@ -2241,8 +2242,8 @@ public class CoreNation
             return;
 
         Core.AddDrop("Unidentified 10");
-
-        BambloozevsDrudgen("Unidentified 10", quant);
+        if (hasOBoNPet || Core.CheckInventory(CragName))
+            BambloozevsDrudgen("Unidentified 10", quant);
         DirtyDeedsDoneDirtCheap(quant);
     }
 
@@ -3282,11 +3283,11 @@ public class CoreNation
 
         Core.AddDrop(member ? "Voucher of Nulgath" : "Voucher of Nulgath (non-mem)");
         Core.Logger($"KeepVoucher set to {KeepVoucher}");
-
-        BambloozevsDrudgen(
-            member ? "Voucher of Nulgath" : "Voucher of Nulgath (non-mem)",
-            KeepVoucher: KeepVoucher
-        );
+        if (hasOBoNPet || Core.CheckInventory(CragName))
+            BambloozevsDrudgen(
+                member ? "Voucher of Nulgath" : "Voucher of Nulgath (non-mem)",
+                KeepVoucher: KeepVoucher
+            );
         NewWorldsNewOpportunities(member ? "Voucher of Nulgath" : "Voucher of Nulgath (non-mem)");
         VoidKnightSwordQuest(member ? "Voucher of Nulgath" : "Voucher of Nulgath (non-mem)");
         Supplies(
