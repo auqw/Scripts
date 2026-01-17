@@ -3994,8 +3994,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 120710,
-    "sha256": "f270c4e67fb030b2a756b6a48ee7b23f5a5593bf5ff9deb96c614ce43e9747cc",
+    "size": 120701,
+    "sha256": "b391d2831b67f81a2990f282f07a0e93c39e825eb98365a8f1fc291513cf70df",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
