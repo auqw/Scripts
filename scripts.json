@@ -1108,8 +1108,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 39217,
-    "sha256": "b67f6dd54666ea52249f78232bda914949e837f6d004e5eccbf71af3cdc15850",
+    "size": 38319,
+    "sha256": "d801540a5329e757b860457a65996b44692af32aaaa0eba404329fe05edfb728",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -3994,8 +3994,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 120638,
-    "sha256": "f91f360e4e3a6620cacd434295f8a1ab5fcbbea53c9b114ae2c137cfaf6c4756",
+    "size": 120797,
+    "sha256": "773a4d4e75a259f593afb69b0782c2864b5c9daa8250b1755267ed17d9788fbf",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
