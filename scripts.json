@@ -3698,6 +3698,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/AutoZoneandAttack.cs"
   },
   {
+    "name": "KillandItemTracker",
+    "description": "keeps track of kills & items ever [interval] with optional multi-quest input, but only a single mob & item.",
+    "tags": [
+      "tools",
+      "kph"
+    ],
+    "path": "Tools/KPHandItemCounter.cs",
+    "size": 10596,
+    "sha256": "1a4494eb1e80e209999aea75176afce09d8a9c68035792265cbbc57e6bee0f21",
+    "fileName": "KPHandItemCounter.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/KPHandItemCounter.cs"
+  },
+  {
     "name": "Auto Attack Substitute",
     "description": "as per the name, this is a substitute for the currently ~wack~ auto-atk/hunt button in teh menu-bar.",
     "tags": [
