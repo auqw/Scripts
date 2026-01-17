@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using Skua.Core.Interfaces;
 using Skua.Core.Models;
 using Skua.Core.Models.Quests;
+using Skua.Core.Scripts;
 
 public class GetQuests
 {
@@ -25,9 +26,10 @@ public class GetQuests
 
         try
         {
-            // Run GenerateQuestFiles and wait for completion
-            // blocking call to async UpdateAsync
-            GenerateQuestFiles(_cts.Token);
+            if (Bot.Version <= new Version(1, 3, 3, 2))
+                GenerateQuestFiles1332(_cts.Token);
+            else
+                GenerateQuestFiles1400(_cts.Token);
         }
         catch (OperationCanceledException)
         {
@@ -43,7 +45,7 @@ public class GetQuests
     }
 
 
-    private void GenerateQuestFiles(CancellationToken token)
+    private void GenerateQuestFiles1332(CancellationToken token)
     {
         token.ThrowIfCancellationRequested();
 
@@ -94,6 +96,49 @@ public class GetQuests
         Core.Logger($" - Client: {clientJsonPath}");
         Core.Logger($" - Scripts: {scriptsJsonPath}");
     }
+    private void GenerateQuestFiles1400(CancellationToken token)
+    {
+        token.ThrowIfCancellationRequested();
+
+        Core.Logger("Updating Quests.txt (client)...");
+        UpdateQuests(token); // blocks but cancelable
+
+        token.ThrowIfCancellationRequested();
+
+        // Read the authoritative client JSON
+        string clientJsonPath = Path.Combine(ClientFileSources.SkuaDIR, "QuestData.json");
+        dynamic[] quests;
+
+        try
+        {
+            Core.Logger("Reading updated client QuestData.json...");
+            string jsonText = File.ReadAllText(clientJsonPath);
+            quests = JsonConvert.DeserializeObject<dynamic[]>(jsonText)!;
+            Core.Logger($"Loaded {quests.Length} quests."); // should show 10559
+        }
+        catch (Exception ex)
+        {
+            Core.Logger("Failed to read or parse client QuestData.json: " + ex.Message);
+            return;
+        }
+
+        token.ThrowIfCancellationRequested();
+
+        // Build pipe-delimited data if needed (optional)
+        List<string> d = new() { "ID|Name|Once|Slot|Value|Upgrade|Gold|XP" };
+        foreach (dynamic q in quests)
+        {
+            token.ThrowIfCancellationRequested();
+            d.Add($"{q.ID}|{q.Name}|{q.Once}|{q.Slot}|{q.Value}|{q.Upgrade}|{q.Gold}|{q.XP}");
+        }
+
+        // Write the fully updated JSON to scripts folder (overwrite)
+        string scriptsJsonPath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json");
+        File.WriteAllText(scriptsJsonPath, JsonConvert.SerializeObject(quests, Formatting.Indented));
+
+        Core.Logger("Scripts JSON fully updated:");
+        Core.Logger($" - {scriptsJsonPath}");
+    }
 
     private void UpdateQuests(CancellationToken token)
     {
@@ -109,8 +154,6 @@ public class GetQuests
         _loaderCTS.Dispose();
         _loaderCTS = null;
     }
-
-
 
     private CancellationTokenSource? _loaderCTS;
     private IQuestDataLoaderService? service;
