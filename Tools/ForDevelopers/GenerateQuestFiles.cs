@@ -26,10 +26,7 @@ public class GetQuests
 
         try
         {
-            if (Bot.Version <= new Version(1, 3, 3, 2))
-                GenerateQuestFiles1332(_cts.Token);
-            else
-                GenerateQuestFiles1400(_cts.Token);
+            GenerateQuestFiles(_cts.Token);
         }
         catch (OperationCanceledException)
         {
@@ -44,63 +41,11 @@ public class GetQuests
         Core.Logger("Update Complete.");
     }
 
-
-    private void GenerateQuestFiles1332(CancellationToken token)
+    private void GenerateQuestFiles(CancellationToken token)
     {
         token.ThrowIfCancellationRequested();
 
-        Core.Logger("Updating Quest.txt...");
-        UpdateQuests(token); // blocks but cancelable
-
-        token.ThrowIfCancellationRequested();
-
-        // 1️⃣ The authoritative TXT (updated by UpdateQuests)
-        string questsTxtPath = Path.Combine(ClientFileSources.SkuaDIR, "Quests.txt");
-
-        // 2️⃣ The JSON outputs
-        string clientJsonPath = Path.Combine(ClientFileSources.SkuaDIR, "QuestData.json");         // client copy
-        string scriptsJsonPath = Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json"); // scripts folder copy
-
-        dynamic[] quests;
-
-        try
-        {
-            Core.Logger("Reading updated QuestData.txt...");
-            string jsonText = File.ReadAllText(questsTxtPath);
-            quests = JsonConvert.DeserializeObject<dynamic[]>(jsonText)!;
-            Core.Logger($"Loaded {quests.Length} quests."); // should show 10559
-        }
-        catch (Exception ex)
-        {
-            Core.Logger("Failed to read or parse QuestData: " + ex.Message);
-            return;
-        }
-
-        token.ThrowIfCancellationRequested();
-
-        // Build pipe-delimited data if needed
-        List<string> d = new() { "ID|Name|Once|Slot|Value|Upgrade|Gold|XP" };
-        foreach (dynamic q in quests)
-        {
-            token.ThrowIfCancellationRequested();
-            d.Add($"{q.ID}|{q.Name}|{q.Once}|{q.Slot}|{q.Value}|{q.Upgrade}|{q.Gold}|{q.XP}");
-        }
-
-        // 1️⃣ Write JSON to client-side folder
-        File.WriteAllText(clientJsonPath, JsonConvert.SerializeObject(quests, Formatting.Indented));
-
-        // 2️⃣ Write JSON to scripts folder
-        File.WriteAllText(scriptsJsonPath, JsonConvert.SerializeObject(quests, Formatting.Indented));
-
-        Core.Logger("Files Updated: ");
-        Core.Logger($" - Client: {clientJsonPath}");
-        Core.Logger($" - Scripts: {scriptsJsonPath}");
-    }
-    private void GenerateQuestFiles1400(CancellationToken token)
-    {
-        token.ThrowIfCancellationRequested();
-
-        Core.Logger("Updating Quests.txt (client)...");
+        Core.Logger("Updating Quests.json (client)...");
         UpdateQuests(token); // blocks but cancelable
 
         token.ThrowIfCancellationRequested();
@@ -148,8 +93,15 @@ public class GetQuests
             service ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>();
 
         // Block until async update finishes, but still cancelable
-        loader.UpdateAsync("Quests.txt", false, null, _loaderCTS.Token)
-              .GetAwaiter().GetResult();
+        loader.UpdateAsync("QuestData.json", false, null, token)
+       .GetAwaiter().GetResult();
+
+        File.Copy(
+            Path.Combine(ClientFileSources.SkuaDIR, "QuestData.json"),
+            Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json"),
+            true
+        );
+
 
         _loaderCTS.Dispose();
         _loaderCTS = null;
@@ -157,5 +109,6 @@ public class GetQuests
 
     private CancellationTokenSource? _loaderCTS;
     private IQuestDataLoaderService? service;
+
 }
 
