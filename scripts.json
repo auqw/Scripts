@@ -14686,6 +14686,37 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BloodAncientMerge.cs"
   },
   {
+    "name": "Terces Archive Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Terces Archive Merge [2668] in /tercesarchive",
+    "tags": [
+      "terces",
+      "archive",
+      "merge",
+      "tercesarchive",
+      "void",
+      "kittarian",
+      "morph",
+      "fiendish",
+      "feline",
+      "claws",
+      "fiend",
+      "voracity",
+      "overfiend",
+      "pet",
+      "battle",
+      "crimson",
+      "scolex",
+      "bane",
+      "ascension",
+      "fury"
+    ],
+    "path": "Other/MergeShops/TercesArchiveMerge.cs",
+    "size": 9741,
+    "sha256": "6915ad6f17ecf576c5a0e59a4e2c21aa0d53086e41b39a0b480cc67a89ce2705",
+    "fileName": "TercesArchiveMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TercesArchiveMerge.cs"
+  },
+  {
     "name": "Seraphic War Chest Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Seraphic War Chest Merge [1573] in /seraphicwardage",
     "tags": [
