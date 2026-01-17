@@ -195,76 +195,45 @@ public class CoreLegion
             return;
 
         Core.AddDrop(legionMedals);
-        Core.Logger("Farming Legion Round 4 Medal");
-        Core.Join("shadowblast");
-        while (!Bot.ShouldExit && !Core.CheckInventory("Legion Round 4 Medal"))
+        Core.Logger("Aquiring \"Legion Round 4 Medal\"");
+
+        if (!Core.CheckInventory("Legion Round 1 Medal"))
         {
-            if (
-                !Core.CheckInventory("Legion Round 1 Medal")
-                && !Core.CheckInventory("Legion Round 2 Medal")
-                && !Core.CheckInventory("Legion Round 3 Medal")
-            )
-            {
-                Core.EnsureAccept(4738);
-                Core.HuntMonster(
-                    "shadowblast",
-                    "Caesaristhedark",
-                    "Nation Rookie Defeated",
-                    5,
-                    true
-                );
-                Core.HuntMonster(
-                    "shadowblast",
-                    "Shadowrise Guard",
-                    "Shadowscythe Rookie Defeated",
-                    5,
-                    true
-                );
-                Core.EnsureComplete(4738);
-                Bot.Wait.ForDrop("Legion Round 1 Medal");
-                Core.Logger("Medal 1 acquired");
-            }
+            Core.EnsureAccept(4738);
+            Core.HuntMonster("shadowblast", "Caesaristhedark", "Nation Rookie Defeated", 5, true);
+            Core.HuntMonster("shadowblast", "Shadowrise Guard", "Shadowscythe Rookie Defeated", 5, true);
+            Core.EnsureComplete(4738);
+            Bot.Wait.ForDrop("Legion Round 1 Medal");
+            Core.Logger("Medal 1 acquired");
+        }
 
-            if (Core.CheckInventory("Legion Round 1 Medal"))
-            {
-                Core.EnsureAccept(4739);
-                Core.HuntMonster("shadowblast", "Carnage", "Nation Veteran Defeated", 7, true);
-                Core.HuntMonster(
-                    "shadowblast",
-                    "Doombringer",
-                    "Shadowscythe Veteran Defeated",
-                    7,
-                    true
-                );
-                Core.EnsureComplete(4739);
-                Bot.Wait.ForDrop("Legion Round 2 Medal");
-                Core.Logger("Medal 2 acquired");
-            }
+        if (Core.CheckInventory("Legion Round 2 Medal"))
+        {
+            Core.EnsureAccept(4739);
+            Core.HuntMonster("shadowblast", "Carnage", "Nation Veteran Defeated", 7, true);
+            Core.HuntMonster("shadowblast", "Doombringer", "Shadowscythe Veteran Defeated", 7, true);
+            Core.EnsureComplete(4739);
+            Bot.Wait.ForDrop("Legion Round 2 Medal");
+            Core.Logger("Medal 2 acquired");
+        }
 
-            if (Core.CheckInventory("Legion Round 2 Medal"))
-            {
-                Core.EnsureAccept(4740);
-                Core.HuntMonster("shadowblast", "Minotaurofwar", "Nation Elite Defeated", 10, true);
-                Core.HuntMonster(
-                    "shadowblast",
-                    "Draconic Doomknight",
-                    "Shadowscythe Elite Defeated",
-                    10,
-                    true
-                );
-                Core.EnsureComplete(4740);
-                Bot.Wait.ForDrop("Legion Round 3 Medal");
-                Core.Logger("Medal 3 acquired");
-            }
+        if (Core.CheckInventory("Legion Round 3 Medal"))
+        {
+            Core.EnsureAccept(4740);
+            Core.HuntMonster("shadowblast", "Minotaurofwar", "Nation Elite Defeated", 10, true);
+            Core.HuntMonster("shadowblast", "Draconic Doomknight", "Shadowscythe Elite Defeated", 10, true);
+            Core.EnsureComplete(4740);
+            Bot.Wait.ForDrop("Legion Round 3 Medal");
+            Core.Logger("Medal 3 acquired");
+        }
 
-            if (Core.CheckInventory("Legion Round 3 Medal"))
-            {
-                Core.EnsureAccept(4741);
-                Core.HuntMonster("shadowblast", "Thanatos", "Thanatos Vanquished", 1, true);
-                Core.EnsureComplete(4741);
-                Bot.Wait.ForDrop("Legion Round 4 Medal");
-                Core.Logger("Medal 4 acquired");
-            }
+        if (Core.CheckInventory("Legion Round 4 Medal"))
+        {
+            Core.EnsureAccept(4741);
+            Core.HuntMonster("shadowblast", "Thanatos", "Thanatos Vanquished", 1, true);
+            Core.EnsureComplete(4741);
+            Bot.Wait.ForDrop("Legion Round 4 Medal");
+            Core.Logger("Medal 4 acquired");
         }
     }
 
