@@ -78,29 +78,8 @@ public class TercesArchiveMerge
                     break;
         #endregion
 
-                    #region Items not setup
-
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
-                    Core.AddDrop(req.ID);
-                    Core.RegisterQuests(0000); // TODO: Replace with actual quest ID
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
-                    {
-                        Core.HuntMonster("map", "MonsterName", "item", 1, isTemp: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
-                    Core.CancelRegisteredQuests();
-                    break;
-
-
+                #region Items not setup
                 case "Nulgath Horns":
-                case "Nulgath Armor":
                 case "Battlefiend Blade of Nulgath":
                 case "Blood Star of the Archfiend":
                     if (req.Upgrade && !Core.IsMember)
@@ -174,6 +153,12 @@ public class TercesArchiveMerge
 
                 case "Voucher of Nulgath":
                     Nation.FarmVoucher(true, true);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+
+                case "Nulgath Armor":
+                    Core.FarmingLogger(req.Name, quant);
+                    Jugger.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Nulgath_Armor);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
