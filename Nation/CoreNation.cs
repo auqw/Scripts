@@ -1742,7 +1742,7 @@ public class CoreNation
         bool CamefromSupplies = false
     )
     {
-        if (!Core.CheckInventory(CragName) || Core.CheckInventory(item, quant))
+        if ((!Core.CheckInventory(CragName) || !hasOBoNPet) || Core.CheckInventory(item, quant))
             return;
 
         Core.AddDrop("Relic of Chaos", "Tainted Core");
