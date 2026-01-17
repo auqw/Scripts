@@ -1744,8 +1744,11 @@ public class CoreNation
     )
     {
         if (Core.CheckInventory(item, quant))
+        {
+            Core.Logger($"{item} x{quant} already owned.");
             return;
-
+        }
+        
         Core.AddDrop("Relic of Chaos", "Tainted Core");
         Core.AddDrop(string.IsNullOrEmpty(item) ? bagDrops : new string[] { item });
 
@@ -1782,8 +1785,8 @@ public class CoreNation
             { "Unidentified 10", 202 },
         };
 
-        List<ItemBase> rewards = Core.EnsureLoad(2857).Rewards;
-        ItemBase? itemBase = rewards.Find(x => x.Name == item);
+        List<ItemBase> rewards = Core.InitializeWithRetries(() => Core.EnsureLoad(2857).Rewards) ?? new List<ItemBase>();
+        ItemBase? itemBase = rewards.Find(x => x != null && x.Name == item);
 
         if (!string.IsNullOrEmpty(item))
             Core.FarmingLogger(item, quant);
