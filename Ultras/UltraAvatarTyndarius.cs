@@ -381,6 +381,9 @@ public class UltraAvatarTyndarius
 
         [Description("King's Echo")]
         KingsEcho,
+        
+        [Description("StoneCrusher")]
+        StoneCrusher,
 
         [Description("Arcana Invoker")]
         ArcanaInvoker,
