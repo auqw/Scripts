@@ -720,8 +720,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 14582,
-    "sha256": "b0d338f4ddec342526a1fbc9741d6153492b330a6081d58985753dbc47a13f12",
+    "size": 14654,
+    "sha256": "335fc93897513e863ffe398c9790bea36f65ee0cfc06611ab56036140577a4da",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -3994,8 +3994,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 121178,
-    "sha256": "eebb935f039b6791a2c72cdb66b6f4b5dc7c464e5993e7b4c1a34690189c13a6",
+    "size": 122427,
+    "sha256": "a38e3b24afb8156dbe0880790d8a8519737610e03dac7157b9e4225477c05e72",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -4438,8 +4438,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 53851,
-    "sha256": "f4a2d2e554f5230b15b51a81b7bbcc43806bba110bee1b6dede5593c64aba44e",
+    "size": 53636,
+    "sha256": "dbfba15dc389ca749467aa260bc5dc2cc9f4266ecf58b54b0f7b12e404dc5420",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -13041,8 +13041,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 50527,
-    "sha256": "d897cd455b377ddcb3984064955eea6d0f789e8ff2916962cdc1cd5fcca044cc",
+    "size": 50657,
+    "sha256": "eba1b43a68e3267c362ae58aa96c5bcb7a496f500fbab5ca6f9d6841193a6f24",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -14711,8 +14711,8 @@
       "fury"
     ],
     "path": "Other/MergeShops/TercesArchiveMerge.cs",
-    "size": 9155,
-    "sha256": "8db14b88592ee6764485d4ad40fb2261f039a02a80ecebcb000eaf2e648ebe33",
+    "size": 9789,
+    "sha256": "6e81a240aa112edc5b01ab3941f81334a5b140c7746df4933d2efee6c193a397",
     "fileName": "TercesArchiveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TercesArchiveMerge.cs"
   },
