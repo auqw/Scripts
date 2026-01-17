@@ -1181,7 +1181,7 @@ public class CoreNation
         );
 
         Core.EquipClass(ClassType.Solo);
-#endregion
+        #endregion
         if (item == null)
         {
             foreach (string Thing in SuppliesRewards)
@@ -1744,10 +1744,10 @@ public class CoreNation
     )
     {
         if (Core.CheckInventory(item, quant))
+        {
+            Bot.Log("item - quant owned");
             return;
-
-        if (!Core.CheckInventory(CragName) || !hasOBoNPet)
-            return;
+        }
 
         Core.AddDrop("Relic of Chaos", "Tainted Core");
         Core.AddDrop(string.IsNullOrEmpty(item) ? bagDrops : new string[] { item });
