@@ -1748,7 +1748,7 @@ public class CoreNation
             Core.Logger($"{item} x{quant} already owned.");
             return;
         }
-        
+
         Core.AddDrop("Relic of Chaos", "Tainted Core");
         Core.AddDrop(string.IsNullOrEmpty(item) ? bagDrops : new string[] { item });
 
@@ -1794,19 +1794,25 @@ public class CoreNation
         // Choose the appropriate quest based on pet availability
         List<int> QuestToRegister = new();
 
-        // 609 - Bamboozle vs Drudgen
         // 2857 - Supplies to Spin The Wheel of Chance
-        QuestToRegister.AddRange(new[] { 2857, 609 });
+        QuestToRegister.AddRange(new[] { 2857 });
+
+        // 609 - Bamboozle vs Drudgen
+        if (Core.CheckInventory(CragName))
+            QuestToRegister.AddRange(new[] { 609 });
 
         if (hasOBoNPet)
+        // The Dark Deal | The Dark Deal (rare)
             QuestToRegister.Add(Core.CheckInventory(4809) ? 599 : 2561);
 
         // 9542 - Swindle's Bonus Deal - Swindle Bilk's To Go Hut
         if (Core.CheckInventory(38261))
             QuestToRegister.Add(9542);
 
+        QuestToRegister = QuestToRegister.Distinct().ToList();
+
         // Register unique quests only
-        Core.RegisterQuests(QuestToRegister.Distinct().ToArray());
+        Core.RegisterQuests(QuestToRegister.ToArray());
         Core.EquipClass(ClassType.Solo);
         while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
         {
