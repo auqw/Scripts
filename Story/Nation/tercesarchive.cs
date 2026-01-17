@@ -29,7 +29,7 @@ public class tercesarchive
 
     public void StoryLine()
     {
-        if (Core.isCompletedBefore(10556))
+        if (Core.isCompletedBefore(10557))
             return;
 
         Story.PreLoad(this);
@@ -108,6 +108,12 @@ public class tercesarchive
         {
             Core.HuntMonsterQuest(10556,
                 ("tercesarchive", UseableMonsters[4], ClassType.Solo));
+        }
+
+        // 10557 | Adimonde's Invitation
+        if (!Story.QuestProgression(10557))
+        {
+            Story.MapItemQuest(10557, "tercesarchive", 15395);
         }
     }
 
