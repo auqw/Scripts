@@ -1256,11 +1256,12 @@
     "tags": [
       "story",
       "quest",
-      "doom-vault-a"
+      "doom-vault-a",
+      "binky"
     ],
     "path": "Story/DoomVault.cs",
-    "size": 6147,
-    "sha256": "c4311a2716dcd695ad10a92e62813a2c0634cd773bbdbe91b78d1566ee5878e7",
+    "size": 6154,
+    "sha256": "bb9b66ae9d2eb3970b373c0725f8369b1e9b2dc10704a8375a929cdf985ba335",
     "fileName": "DoomVault.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/DoomVault.cs"
   },
@@ -2158,11 +2159,14 @@
     "tags": [
       "story",
       "quest",
-      "doom-vault-b"
+      "doom-vault-b",
+      "undead",
+      "raxgore",
+      "undead raxgore"
     ],
     "path": "Story/DoomVaultB.cs",
-    "size": 4963,
-    "sha256": "3e88ccf46fc78561fa6031557561dc5597e3a2c40fdeeb08aedd79e7562d2ccb",
+    "size": 4996,
+    "sha256": "739d5b26d9c235003aeedbed928df94f815e45bfa0aedb22d9011f66afa7cea8",
     "fileName": "DoomVaultB.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/DoomVaultB.cs"
   },
