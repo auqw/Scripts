@@ -9681,6 +9681,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/FiendPast.cs"
   },
   {
+    "name": "tercesarchive",
+    "description": "This will finish the tercesarchive quest.",
+    "tags": [
+      "story",
+      "quest",
+      "tercesarchive",
+      "nation"
+    ],
+    "path": "Story/Nation/tercesarchive.cs",
+    "size": 3070,
+    "sha256": "1440d089872f7381084bd1128b351f7b5d4775673c80056451bd482e8d105b9a",
+    "fileName": "tercesarchive.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/tercesarchive.cs"
+  },
+  {
     "name": "Tercessuinotlim",
     "description": "This will finish the Tercessuinotlim quest.",
     "tags": [
