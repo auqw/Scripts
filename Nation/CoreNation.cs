@@ -1722,8 +1722,8 @@ public class CoreNation
         }
     }
 
-    public bool hasOBoNPet =>
-         Bot.Player.IsMember && Core.CheckInventory(new[] { 4809, 5373 }, any: true);
+    public bool hasOBoNPet => Bot.Player.IsMember && Core.CheckInventory(new[] { 4809, 5373 }, any: true);
+
     /// <summary>
     /// Performs the "Bamblooze vs. Drudgen" quest for the desired item.
     /// </summary>
@@ -1742,7 +1742,10 @@ public class CoreNation
         bool CamefromSupplies = false
     )
     {
-        if ((!Core.CheckInventory(CragName) || !hasOBoNPet) || Core.CheckInventory(item, quant))
+        if (Core.CheckInventory(item, quant))
+            return;
+
+        if (!Core.CheckInventory(CragName) || !hasOBoNPet)
             return;
 
         Core.AddDrop("Relic of Chaos", "Tainted Core");
