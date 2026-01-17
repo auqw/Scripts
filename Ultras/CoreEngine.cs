@@ -1744,134 +1744,66 @@ public class CoreEngine
     #region Auras
 
     public Aura? GetAuraByName(string auraName, bool self)
-    {
-        if (string.IsNullOrWhiteSpace(auraName))
-            return null;
-
-        if ((self ? Bot?.Self?.Auras : Bot?.Target?.Auras)?.Count > 0)
-            foreach (Aura aura in self ? Bot!.Self.Auras : Bot!.Target.Auras)
-                if (
-                    aura?.Name != null
-                    && auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase)
-                )
-                    return aura;
-
-        return null; // only return null after checking all auras
-    }
+        => string.IsNullOrWhiteSpace(auraName)
+           ? null
+           : (self ? Bot?.Self?.Auras : Bot?.Target?.Auras)
+             ?.FirstOrDefault(a => a?.Name != null && auraName.Equals(a.Name, StringComparison.OrdinalIgnoreCase));
 
     public bool HasAura(string auraName, bool self = false)
-    {
-        return GetAuraByName(auraName, self) != null;
-    }
+        => GetAuraByName(auraName, self) != null;
 
-    public bool HasAnyAura(List<string> auraNames, bool self = false)
-    {
-        if (auraNames == null || auraNames.Count == 0)
-            return false;
-        foreach (string aura in auraNames)
-        {
-            if (!string.IsNullOrWhiteSpace(aura) && HasAura(aura, self))
-                return true;
-        }
-        return false;
-    }
+    public bool HasAnyAura(IEnumerable<string> auraNames, bool self = false)
+        => auraNames != null && auraNames.Any(name => !string.IsNullOrWhiteSpace(name) && HasAura(name, self));
 
-    // Returns true if the player/target has any aura other than the specified one.
     public bool HasAnyAuraOtherThan(string auraName, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(auraName))
-            return false;
+        => !string.IsNullOrWhiteSpace(auraName)
+           && (self ? Bot?.Self?.Auras : Bot?.Target?.Auras)
+              ?.Any(a => a?.Name != null && !auraName.Equals(a.Name, StringComparison.OrdinalIgnoreCase)) == true;
 
-        if ((self ? Bot?.Self?.Auras : Bot?.Target?.Auras)?.Count > 0)
-            foreach (Aura aura in self ? Bot!.Self.Auras : Bot!.Target.Auras)
-                if (
-                    aura?.Name != null
-                    && !auraName.Equals(aura.Name, StringComparison.OrdinalIgnoreCase)
-                )
-                    return true;
+    /// <summary>
+    /// Returns stacks as a float (preserves fractional stacks); 0 if missing.
+    /// </summary>
+    public float GetAuraStacksFloat(string auraName, bool self = false)
+        => (self
+            ? Bot.Self.Auras.FirstOrDefault(a => a?.Name == auraName)?.Value
+            : Bot.Target.Auras.FirstOrDefault(a => a?.Name == auraName)?.Value) ?? 0f;
 
-        return false;
-    }
-
-    // Returns the number of stacks of a specific aura; returns 0 if missing.
+    /// <summary>
+    /// Returns stacks as int (rounded), +1, for legacy code compatibility.
+    /// </summary>
     public int GetAuraStacks(string auraName, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(auraName))
-            return 0;
+        => (int)Math.Round(GetAuraStacksFloat(auraName, self)) + 1;
 
-        try
-        {
-            object? value = self
-                ? Bot?.Self?.GetAuraValue(auraName)
-                : Bot?.Target?.GetAuraValue(auraName);
 
-            if (value == null)
-                return 0;
-
-            int rawValue = value switch
-            {
-                int i => i,
-                long l => (int)l,
-                double d => (int)Math.Round(d),
-                float f => (int)Math.Round(f),
-                _ => int.TryParse(
-                    value.ToString(),
-                    NumberStyles.Any,
-                    CultureInfo.InvariantCulture,
-                    out int n
-                )
-                    ? n
-                    : 0,
-            };
-
-            return rawValue + 1; // as per original logic
-        }
-        catch
-        {
-            return 0;
-        }
-    }
-
-    // Returns remaining seconds of an aura; 0 if missing or expired.
+    /// <summary>
+    /// Returns remaining seconds of an aura; 0 if missing or expired.
+    /// </summary>
     public int GetAuraSecondsRemaining(string auraName, bool self = false)
     {
-        if (string.IsNullOrWhiteSpace(auraName))
-            return 0;
-
         var aura = GetAuraByName(auraName, self);
-        if (aura == null || aura.UnixTimeStamp <= 0 || aura.Duration <= 0)
-            return 0;
-
-        try
-        {
-            DateTimeOffset applied = DateTimeOffset.FromUnixTimeMilliseconds(aura.UnixTimeStamp);
-            DateTimeOffset expires = applied.AddSeconds(aura.Duration);
-            int remaining = (int)(expires - DateTimeOffset.Now).TotalSeconds;
-            return Math.Max(0, remaining);
-        }
-        catch
-        {
-            return 0;
-        }
+        return aura != null && aura.UnixTimeStamp > 0 && aura.Duration > 0
+            ? Math.Max(0, (int)(DateTimeOffset.FromUnixTimeMilliseconds(aura.UnixTimeStamp)
+                                 .AddSeconds(aura.Duration) - DateTimeOffset.UtcNow).TotalSeconds)
+            : 0;
     }
 
-    // Returns true if the aura has at least `quantity` stacks.
-    public bool Stacks(string name, int quantity, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(name) || quantity <= 0)
-            return false;
+    /// <summary>
+    /// Checks if the aura has at least the specified quantity of stacks (int or float).
+    /// Returns false if aura is missing.
+    /// </summary>
+    public bool Stacks(string auraName, float quantity, bool self = false)
+        => !string.IsNullOrWhiteSpace(auraName)
+           && quantity > 0f
+           && ((self
+                ? Bot.Self.Auras.FirstOrDefault(a => a?.Name == auraName)?.Value
+                : Bot.Target.Auras.FirstOrDefault(a => a?.Name == auraName)?.Value) ?? 0f) >= quantity;
 
-        return GetAuraStacks(name, self) >= quantity;
-    }
-
-    // Returns true if the aura has less than or equal to `duration` seconds left.
-    public bool Left(string name, int duration, bool self = false)
-    {
-        if (string.IsNullOrWhiteSpace(name) || duration < 0)
-            return false;
-
-        return GetAuraSecondsRemaining(name, self) <= duration;
-    }
+    /// <summary>
+    /// Returns true if the aura has less than or equal to the specified duration in seconds remaining.
+    /// </summary>
+    public bool Left(string auraName, int duration, bool self = false)
+        => !string.IsNullOrWhiteSpace(auraName) && duration >= 0
+           && GetAuraSecondsRemaining(auraName, self) <= duration;
 
     #endregion
 
@@ -3291,21 +3223,20 @@ public class CoreEngine
 
     void ChronoShadowSlayerClass()
     {
-        if (HasAura("Rounds Empty", true))
-            if (Cast(1))
-                return;
-        if (HasAura("Gunslinger Stance", true))
-            if (Cast(0))
-                return;
-        if (Stacks("Temporal Rift", 4, true))
-            if (Cast(1))
-                return;
-        if (HasAura("Chaos Rift", true) && !HasAura("Gunslinger Stance", true))
-            if (Cast(4))
-                return;
-        if (!HasAura("FMJ Rounds", true) && !HasAura("Tracer Rounds", true))
-            if (Cast(3))
-                return;
+        if (Stacks("Rounds Empty", 1, true))
+            return;
+
+        // Skill cast priority sequence
+        int[] skills = new[] { 2, 3, 2, 3, 2, 3, 4 };
+
+        foreach (int skill in skills)
+        {
+            if (!Stacks("Rounds Empty", 1, true))
+                if (Cast(skill))
+                    return;
+                else if (Cast(1)) // fallback to skill 1 if the main skill fails
+                    return;
+        }
     }
 
     // --- common classes ---------------------------------------------------------------
@@ -3688,25 +3619,15 @@ public class CoreEngine
         }
     }
 
-    public bool Cast(int index)
+    public bool Cast(int index) =>
+    index >= 1 && index <= 4 && Bot?.Skills != null && Bot.Skills.CanUseSkill(index)
+        ? TryUseSkill(index)
+        : false;
+
+    private bool TryUseSkill(int index)
     {
-        if (index < 1 || index > 4)
-            return false;
-        if (Bot?.Skills == null)
-            return false;
-
-        if (!Bot.Skills.CanUseSkill(index))
-            return false;
-
-        try
-        {
-            Bot.Skills.UseSkill(index);
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
+        try { Bot.Skills.UseSkill(index); return true; }
+        catch { return false; }
     }
 
     public void DisableSkills()
