@@ -1130,21 +1130,12 @@ public class UnlockForgeEnhancements
 
         Farm.Experience(30);
         LOC.Kitsune();
-        Farm.BlacksmithingREP(
-            4,
-            Bot.Config!.Get<bool>("UseGold"),
-            Bot.Config!.Get<bool>("UseGold")
-        );
+        Farm.BlacksmithingREP(4, Bot.Config!.Get<bool>("UseGold"), Bot.Config!.Get<bool>("UseGold"));
 
         Core.EquipClass(ClassType.Solo);
         Core.EnsureAccept(8758);
 
-        Core.HuntMonster(
-            "lostruinswar",
-            "Diabolical Warlord",
-            "Prismatic Celestial Wings",
-            isTemp: false
-        );
+        Core.HuntMonster("lostruinswar", "Diabolical Warlord", "Prismatic Celestial Wings", isTemp: false);
         Core.HuntMonster("lostruins", "Infernal Warlord", "Broken Wings", isTemp: false);
         Core.HuntMonster("infernalspire", "Azkorath", "Shadow's Wings", isTemp: false);
         Core.HuntMonster("infernalspire", "Malxas", "Wings Of Destruction", isTemp: false);
@@ -1182,15 +1173,7 @@ public class UnlockForgeEnhancements
 
         Core.EquipClass(ClassType.Farm);
         Bot.Quests.UpdateQuest(5807);
-        Core.KillMonster(
-            "charredpath",
-            "r5",
-            "Left",
-            "Plague Spreader",
-            "Slimed Sigil",
-            SlimeSigil,
-            isTemp: false
-        );
+        Core.KillMonster("charredpath", "r5", "Left", "Plague Spreader", "Slimed Sigil", SlimeSigil, isTemp: false);
 
         // Purchase items
         Adv.BuyItem("therift", 1399, "Ascended Paladin");
