@@ -1014,13 +1014,7 @@ public class CoreNation
                 )
                 {
                     Core.EnsureAccept(2566);
-                    Core.HuntMonster(
-                        "elemental",
-                        "Mana Falcon",
-                        "Charged Mana Energy for Nulgath",
-                        5,
-                        log: false
-                    );
+                    Core.HuntMonster("elemental", "Mana Falcon", "Charged Mana Energy for Nulgath", 5, log: false);
                     Core.EnsureComplete(2566);
                     Bot.Wait.ForPickup(item ?? string.Empty);
                     if (
@@ -1037,6 +1031,41 @@ public class CoreNation
             }
         }
     }
+
+    /// <summary>
+    /// Automates Nulgath’s Roulette of Misfortune quest to farm a specified item and quantity.
+    /// Repeatedly gathers Mana Energy, converts it into Charged Mana Energy, and completes the quest
+    /// until the desired item is obtained or the script is stopped.
+    /// </summary>
+    /// <param name="item">Target item name to acquire.</param>
+    /// <param name="quant">Required quantity of the target item.</param>
+    public void NulgathsRouletteofMisfortune(string? item, int quant)
+    {
+        if (item == null)
+            return;
+
+        if (Core.CheckInventory(item, quant))
+            return;
+
+        Core.FarmingLogger(item, quant);
+        Core.AddDrop(item);
+
+        while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
+        {
+            Core.EnsureAccept(2566);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("elemental", "Mana Golem", "Mana Energy for Nulgath", 10, isTemp: false, log: false);
+            Core.EquipClass(ClassType.Farm);
+
+            while (!Bot.ShouldExit && !Core.CheckInventory(item, quant) && Core.CheckInventory("Mana Energy for Nulgath"))
+            {
+                Core.EnsureAccept(2566);
+                Core.HuntMonster("elemental", "Mana Falcon", "Charged Mana Energy for Nulgath", 5, log: false);
+                Core.EnsureComplete(2566);
+            }
+        }
+    }
+
 
     /// <summary>
     /// Performs the necessary actions to obtain the desired item with the best available method.
