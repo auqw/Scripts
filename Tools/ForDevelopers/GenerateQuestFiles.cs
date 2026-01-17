@@ -16,67 +16,84 @@ public class GetQuests
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
+    private CancellationTokenSource? _cts;
 
     public void ScriptMain(IScriptInterface bot)
     {
-        GenerateQuestFiles();
+        Core.Logger("Starting quest generation...");
+        _cts = new();
+
+        try
+        {
+            // Run GenerateQuestFiles and wait for completion
+            // blocking call to async UpdateAsync
+            GenerateQuestFiles(_cts.Token);
+        }
+        catch (OperationCanceledException)
+        {
+            Core.Logger("Script stopped by user.");
+        }
+        finally
+        {
+            _cts.Dispose();
+            _cts = null;
+        }
+
+        Core.Logger("Update Complete.");
     }
 
-    private async void GenerateQuestFiles()
+
+    private void GenerateQuestFiles(CancellationToken token)
     {
-        //if (Bot.ShowMessageBox("Did you update the Quest.txt file by clicking the update button in [Tools] -> [Loader]", "Quests up to date?", true) == false)
-        //    return;
+        token.ThrowIfCancellationRequested();
 
         Core.Logger("Updating Quest.txt");
-        await UpdateQuests();
+        UpdateQuests(token); // blocks but can be cancelled
+
+        token.ThrowIfCancellationRequested();
 
         Core.Logger("Reading Quest.txt");
-        var v = JsonConvert.DeserializeObject<dynamic[]>(
+        dynamic[] quests = JsonConvert.DeserializeObject<dynamic[]>(
             File.ReadAllText(ClientFileSources.SkuaQuestsFile)
         )!;
 
-        List<string> r = new();
-        List<string> d = new();
-        d.Add("ID|Name|Once|Slot|Value|Upgrade|Gold|XP");
-        Core.Logger("Placing the Quest Data in the lists.");
+        List<string> d = new() { "ID|Name|Once|Slot|Value|Upgrade|Gold|XP" };
 
-        foreach (var q in v)
+        foreach (dynamic q in quests)
         {
-            int ID = q.ID;
-            string spaces = "            ";
-            foreach (var c in ID.ToString())
-                spaces = spaces[..^2];
-
-            r.Add($"`[{ID}]`{spaces}{q.Name}");
-            d.Add($"{ID}|{q.Name}|{q.Once}|{q.Slot}|{q.Value}|{q.Upgrade}|{q.Gold}|{q.XP}");
+            token.ThrowIfCancellationRequested();
+            d.Add($"{q.ID}|{q.Name}|{q.Once}|{q.Slot}|{q.Value}|{q.Upgrade}|{q.Gold}|{q.XP}");
         }
 
-        Core.Logger("Writing files.");
-        Core.WriteFile(Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP", "QuestIds.txt"), r);
-        Core.WriteFile(Path.Combine(ClientFileSources.SkuaScriptsDIR, "WIP", "QuestData.csv"), d);
+        token.ThrowIfCancellationRequested();
+
         File.Copy(
             ClientFileSources.SkuaQuestsFile,
             Path.Combine(ClientFileSources.SkuaScriptsDIR, "QuestData.json"),
             true
         );
 
-        Core.Logger("Files made:");
-        Core.Logger(" - \"Scripts/WIP/QuestIds.txt\"");
-        Core.Logger(" - \"Scripts/WIP/QuestData.csv\"");
-        Core.Logger(" - \"Scripts/QuestData.json\"");
+        Core.Logger("Files Updated: Scripts/QuestData.json");
     }
 
-    private async Task UpdateQuests()
+    private void UpdateQuests(CancellationToken token)
     {
-        _loaderCTS = new();
-        List<QuestData> questData = await (
-            service ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>()
-        ).UpdateAsync("Quests.txt", false, null, _loaderCTS.Token);
-        _loaderCTS.Cancel();
+        _loaderCTS = CancellationTokenSource.CreateLinkedTokenSource(token);
+
+        IQuestDataLoaderService loader =
+            service ??= Ioc.Default.GetRequiredService<IQuestDataLoaderService>();
+
+        // Block until async update finishes, but still cancelable
+        loader.UpdateAsync("Quests.txt", false, null, _loaderCTS.Token)
+              .GetAwaiter().GetResult();
+
         _loaderCTS.Dispose();
         _loaderCTS = null;
     }
 
+
+
     private CancellationTokenSource? _loaderCTS;
     private IQuestDataLoaderService? service;
 }
+
