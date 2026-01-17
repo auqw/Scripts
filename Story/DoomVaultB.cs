@@ -1,7 +1,7 @@
 /*
 name: Doom Vault (B) Story
 description: This will finish the Doom Vault (B) Story.
-tags: story, quest, doom-vault-b
+tags: story, quest, doom-vault-b, undead, raxgore, undead raxgore
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
