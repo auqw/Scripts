@@ -14711,8 +14711,8 @@
       "fury"
     ],
     "path": "Other/MergeShops/TercesArchiveMerge.cs",
-    "size": 9741,
-    "sha256": "6915ad6f17ecf576c5a0e59a4e2c21aa0d53086e41b39a0b480cc67a89ce2705",
+    "size": 9155,
+    "sha256": "8db14b88592ee6764485d4ad40fb2261f039a02a80ecebcb000eaf2e648ebe33",
     "fileName": "TercesArchiveMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TercesArchiveMerge.cs"
   },
@@ -24770,8 +24770,8 @@
       "data"
     ],
     "path": "Tools/ForDevelopers/GenerateQuestFiles.cs",
-    "size": 2774,
-    "sha256": "4c0eca5a495ac9b2b6085c0f5816af99513287707b221d1df91e796df19bb772",
+    "size": 3828,
+    "sha256": "9e14590934c49bf36a5c13e974c7eb564720a04c0414e9c4066b492d4ae40f9b",
     "fileName": "GenerateQuestFiles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/GenerateQuestFiles.cs"
   },
