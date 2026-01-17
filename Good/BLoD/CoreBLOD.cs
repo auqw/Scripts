@@ -403,9 +403,6 @@ public class CoreBLOD
     private void FarmUltimateWK(string item, int quant)
     {
         // We'll be able to use this later once we unlock UWK
-        if (!Core.isCompletedBefore(2163))
-            return;
-
         if (!Core.CheckInventory(item, quant))
             UltimateWK(item, quant);
     }
@@ -423,8 +420,9 @@ public class CoreBLOD
         Core.FarmingLogger("Basic Wepon Kit", quant);
         Core.AddDrop("Basic Weapon Kit");
 
-        if (!Core.isCompletedBefore(2136))
+        if (!Bot.Quests.IsUnlocked(2136))
         {
+            Core.Logger("Unlocking \"Basic Weapon Kit\" Quest!");
             // Define valid metals in enum form
             MineCraftingMetalsEnum[] validMetals = new[]
             {
@@ -456,8 +454,8 @@ public class CoreBLOD
             Core.KillMonster("forest", "Forest3", "Left", "*", "Zardman's StoneHammer", 1, false);
             Core.KillMonster("noobshire", "North", "Left", "Horc Noob", "Noob Blade Oil");
             Core.KillMonster("farm", "Crop1", "Right", "Scarecrow", "Burlap Cloth", 4);
-
-            Bot.Quests.UpdateQuest(4614);
+            if (!Bot.Quests.IsUnlocked(4614))
+                Bot.Quests.UpdateQuest(4614);
             Core.HuntMonster("pyramid", "Mummy", "Triple Ply Mummy Wrap", 7);
             Core.HuntMonster("pyramid", "Golden Scarab", "Golden Lacquer Finish");
             Core.HuntMonster("lair", "Bronze Draconian", "Bronze Brush");
@@ -473,8 +471,11 @@ public class CoreBLOD
         if (Core.CheckInventory("Advanced Weapon Kit", quant))
             return;
 
-        if (!Core.isCompletedBefore(2162))
+        if (!Bot.Quests.IsUnlocked(2162))
+        {
+            Core.Logger("Unlocking \"Advanced Weapon Kit\" Quest!");
             BasicWK();
+        }
 
         Core.FarmingLogger("Advanced Weapon Kit", quant);
         Core.AddDrop("Advanced Weapon Kit");
@@ -504,8 +505,11 @@ public class CoreBLOD
         if (Core.CheckInventory(item, quant))
             return;
 
-        if (!Core.isCompletedBefore(2163))
+        if (!Bot.Quests.IsUnlocked(2163))
+        {
+            Core.Logger("Unlocking \"Ultimate Weapon Kit\" Quest!");
             AdvancedWK();
+        }
 
         Core.AddDrop(
             "Ultimate Weapon Kit",
