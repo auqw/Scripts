@@ -643,8 +643,8 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 65600,
-    "sha256": "26823388f944b04030b3eacb16b8ee8535bbe1e221edcf8c3e9afd85678873b6",
+    "size": 62775,
+    "sha256": "3d1466fcff065e5da08e4a560060914e4eaafb3d95801dfbaf1bbd78f2b963f4",
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
@@ -1096,8 +1096,8 @@
       "luxuria"
     ],
     "path": "Legion/HeadOfTheLegionBeast.cs",
-    "size": 14609,
-    "sha256": "47aa5f16a1080e1e80f3a589b3588b557f705d0d6f818871749a659a05227a0d",
+    "size": 12656,
+    "sha256": "039ada99759c57fb51f1a8840ee1f58a5bc06c4a4f39250cde83f6275ce01598",
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
   },
@@ -13074,7 +13074,7 @@
     ],
     "path": "Other/Classes/0AllClasses.cs",
     "size": 46041,
-    "sha256": "d56ef0e2b4876b0da00494d151fd5cb8cd843348cca65b9b4022dc2d6568c2ce",
+    "sha256": "cdc1d1d33b08e27a9471e7fef3e7b23eec4e62933a9c6b2a4f8c6cac72e17ba1",
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -27873,7 +27873,7 @@
     ],
     "path": "Other/Classes/Members-CLasses/BloodTitan[Mem].cs",
     "size": 1483,
-    "sha256": "2097c4d189f7d791b5178344f45025563f3c6b72309502ca06ddc96b18d918a7",
+    "sha256": "9bf2c7ff2bd686148c508119ef659f863c3dc77d4cef3973c546b78f6ca2906f",
     "fileName": "BloodTitan[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/Members-CLasses/BloodTitan[Mem].cs"
   },
