@@ -4,7 +4,7 @@ description: Not for everyday use
 tags: do, not, find, me
 */
 
-#region
+#region Includes
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
