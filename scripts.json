@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 433137,
-    "sha256": "d63b9790cc83eadfef7304ba2acba59cf435d2542ec64a802d31586bdaaadc95",
+    "size": 433088,
+    "sha256": "735048943e60532632bbb863e3c5e2e57c5379efdee4b983b8468b98cb4e0933",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -3868,8 +3868,8 @@
       "me"
     ],
     "path": "Tools/InsertNameHeresUltraPrep.cs",
-    "size": 23262,
-    "sha256": "86312c00c808a64e347fad9227eb01f43f24a8fbb9897504ec6711203776c79a",
+    "size": 23271,
+    "sha256": "e115cbfb81573297261e933dbf1a4f02f77e8a1e97d4b7c5d992aa150d7eb756",
     "fileName": "InsertNameHeresUltraPrep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/InsertNameHeresUltraPrep.cs"
   },
@@ -13073,8 +13073,8 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 46041,
-    "sha256": "cdc1d1d33b08e27a9471e7fef3e7b23eec4e62933a9c6b2a4f8c6cac72e17ba1",
+    "size": 46032,
+    "sha256": "928b5dabe0683c5480c603c5a9d8809711223e32c3bef3d30f62be454ee91003",
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -13462,8 +13462,8 @@
       "neo metal necro"
     ],
     "path": "Other/Concerts/BattleConcert2023.cs",
-    "size": 3791,
-    "sha256": "fffdb46a442d2b2b65cd13b0975c7090ae16ce3b1333006a7949b0fcf0623001",
+    "size": 3738,
+    "sha256": "e5c91e554bc943b1628cd861eed93af1f44faf4e938cc5a08b768e576dd5d123",
     "fileName": "BattleConcert2023.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Concerts/BattleConcert2023.cs"
   },
