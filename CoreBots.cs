@@ -402,15 +402,16 @@ public class CoreBots
             usingDodgeGeneric = DodgeClass.ToLower() == "generic";
             usingBossGeneric = BossClass.ToLower() == "generic";
 
+
             Bot.Skills.StartAdvanced(
                 currentClassName,
                 false,
-                currentClassName.ToLower() switch
+                currentClassName switch
                 {
-                    var n when n == SoloClass.ToLower() => SoloUseMode,
-                    var n when n == FarmClass.ToLower() => FarmUseMode,
-                    var n when n == BossClass.ToLower() => BossUseMode,
-                    var n when n == DodgeClass.ToLower() => DodgeUseMode,
+                    var n when n == SoloClass => SoloUseMode,
+                    var n when n == FarmClass => FarmUseMode,
+                    var n when n == BossClass => BossUseMode,
+                    var n when n == DodgeClass => DodgeUseMode,
                     _ => ClassUseMode.Base,
                 }
             );
@@ -7414,7 +7415,7 @@ public class CoreBots
     /// Checks, and prompts for the latest Skua Version
     /// <param name="targetVersion">Current Skua Version to Check against</param>
     /// </summary>
-    private void SkuaVersionChecker(string targetVersion = "1.3.3.2")
+    private void SkuaVersionChecker(string targetVersion = "1.4.0.1")
     {
         if (Bot.Version == null || Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
             return;
