@@ -92,6 +92,8 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Other/Concerts/BattleConcert2023.cs
 //cs_include Scripts/Other/Concerts/NeoMetalNecro.cs
 //cs_include Scripts/Other/Concerts/DoomMetalNecro.cs
+//cs_include Scripts/Other/Classes/DeathKnightLord[mem].cs
+//cs_include Scripts/Other/Classes/KingsEcho.cs
 //cs_include Scripts/Legion/LegionExcercise/LegionExercise3.cs
 //cs_include Scripts/Legion/LegionExcercise/LegionExercise4.cs
 //cs_include Scripts/Legion/MergeShops/UndeadLegionMerge.cs
@@ -274,13 +276,11 @@ tags: all classes, class, farm, complete, all
 //cs_include Scripts/Prototypes/Grimgaol.cs
 //cs_include Scripts/Story/7DeadlyDragons/Extra/HatchTheEgg.cs
 //cs_include Scripts/Other/MergeShops/InfernalArenaMerge.cs
-//cs_include Scripts/Other/Classes/DeathKnightLord[mem].cs
 //cs_include Scripts/Other/MergeShops/BocklinTreasuryMerge.cs
 //cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
 //cs_include Scripts/Story/Lynaria/CoreLynaria.cs
 //cs_include Scripts/Other/MergeShops/BocklinGroveMerge.cs
-//cs_include Scripts/Other/Classes/KingsEcho.cs
-#endregion includes
+#endregion
 
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
