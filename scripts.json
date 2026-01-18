@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 56073,
-    "sha256": "7a6827fc941b5c67e7a9d4708f072f99123611bad8d0d57b82edf5489ba069e2",
+    "size": 56722,
+    "sha256": "436034ba56a739e77c32d90243a1356dcd188488f4e9a33c81991cc71044de22",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -26612,8 +26612,8 @@
       "gear"
     ],
     "path": "Good/GearOfAwe/Awescended.cs",
-    "size": 12769,
-    "sha256": "d83201d746df4b786d1d3895f6bad165a158c036248c3a9563c8bb92e59d2da9",
+    "size": 13569,
+    "sha256": "514217b9db97cb014acfe44579ee36905cf231d54a3f845c5de8d44d583eeda9",
     "fileName": "Awescended.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/GearOfAwe/Awescended.cs"
   },
