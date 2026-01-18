@@ -8,7 +8,6 @@ tags: concert, metal necro, doom metal necro, neo metal necro
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/CoreAdvanced.cs
-//cs_include Scripts/Other/Concerts/NeoMetalNecro.cs
 //cs_include Scripts/Story/LordsofChaos/Core13LoC.cs
 //cs_include Scripts/Evil/ADK.cs
 //cs_include Scripts/Evil/VordredsArmor.cs
