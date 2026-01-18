@@ -4851,7 +4851,6 @@ public class CoreBots
     /// <param name="isTemp">Whether the item is temporary.</param>
     /// <param name="log">Whether to log the hunt process.</param>
     /// <param name="publicRoom">Whether to use a public room.</param>
-    /// <param name="EquipBestClassType">Whether to equip the best class for the target.</param>
     public void HuntMonster(
         string map,
         string monster,
@@ -4863,9 +4862,13 @@ public class CoreBots
         bool EquipBestClassType = true
     )
     {
-        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+        if (
+            item != null
+            && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+        )
             return;
 
+        // Join the specified map
         if (Bot.Map.Name != map)
         {
             Join(map, publicRoom: publicRoom);
@@ -4874,45 +4877,82 @@ public class CoreBots
 
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
-
         if (item != null && !isTemp)
             AddDrop(item);
 
-        // Use the helper to get the target monster
-        Monster? targetMonster = GetTargetMonster(monster, map);
+        Monster? FindMonster() =>
+            Bot.Monsters.MapMonsters.Find(x =>
+                x != null && x.Name.FormatForCompare() == monster.FormatForCompare() && x.Alive
+            );
+
+        Monster? targetMonster = FindMonster();
+
         if (targetMonster == null)
-            return; // exit if nothing found
+        {
+            Logger($"⚠️ Monster \"{monster}\" not found in /{map}.");
+
+            // Fallback to first partial name match (case-insensitive)
+            Monster? fallback = Bot.Monsters.MapMonsters.FirstOrDefault(x =>
+                x != null && x?.Name?.Contains(monster, StringComparison.OrdinalIgnoreCase) == true && x.Alive
+            );
+
+            if (fallback != null)
+            {
+                Logger(
+                    $"⚠️ Map [{map}] | Monster name may have been updated to \"{fallback.Name}\". "
+                        + $"This mob will be used instead of \"{monster}\". "
+                        + $"If this is incorrect, please ping Tato2 or Bogalj on the discord."
+                );
+                targetMonster = fallback;
+            }
+            else
+            {
+                string[] visible = Bot
+                    .Monsters.MapMonsters.Where(x => !string.IsNullOrWhiteSpace(x?.Name))
+                    .Select(x => $"\"{x!.Name}\"")
+                    .Distinct()
+                    .ToArray();
+
+                Logger(
+                    $"❌ No approximate match found for {monster}. Visible monsters in /{map}: {string.Join(", ", visible)}"
+                );
+                return;
+            }
+        }
 
         if (Bot.Map.PlayerNames?.Any(x => x != Bot.Player.Username) == true)
         {
             Bot.Options.AggroMonsters = true;
-            Bot.Options.HidePlayers = true; // reduces lag
+            Bot.Options.HidePlayers = true; // Trust Tato — reduces lag
         }
+        else
+            Bot.Options.AggroMonsters = false;
 
         if (EquipBestClassType)
             EquipBestClassForTargets(targetMonster);
 
         if (item == null)
         {
-            // Hunt monster once
             while (!Bot.ShouldExit)
             {
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-                if (Bot.Player.Cell != targetMonster.Cell)
+                if (Bot.Player?.Cell != targetMonster?.Cell)
                 {
-                    Jump(targetMonster.Cell ?? "Enter");
-                    Bot.Wait.ForCellChange(targetMonster.Cell ?? "Enter");
-                    Bot.Player.SetSpawnPoint();
+                    Jump(targetMonster?.Cell ?? "Enter");
+                    Bot.Wait.ForCellChange(targetMonster?.Cell ?? "Enter");
+                    Bot.Player!.SetSpawnPoint();
                 }
-
-                if (!Bot.Player.HasTarget)
+                if (!Bot.Player!.HasTarget && targetMonster != null)
                     Bot.Combat.Attack(targetMonster.Name);
 
                 Sleep();
 
-                if (!Bot.Player.HasTarget || (Bot.Player.Target != null && Bot.Player.Target.HP <= 0))
+                if (
+                    !Bot.Player.HasTarget
+                    || (Bot.Player.Target != null && Bot.Player.Target.HP <= 0)
+                )
                 {
                     Bot.Options.AttackWithoutTarget = false;
                     Bot.Options.AggroMonsters = false;
@@ -4920,36 +4960,40 @@ public class CoreBots
                     return;
                 }
             }
-
             JumpWait();
             Rest();
         }
         else
         {
             if (log)
-                FarmingLogger($"💎 {item}", quant);
+                FarmingLogger($"💎 {item}", quant); // 💎 logger emote
 
-            while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+            while (
+                !Bot.ShouldExit
+                && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+            )
             {
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-                // Refresh target each loop
-                targetMonster = GetTargetMonster(monster, map);
+                targetMonster = FindMonster();
                 if (targetMonster == null)
                     continue;
 
-                if (Bot.Player.Cell != targetMonster.Cell)
+                if (Bot.Player.Cell != null && Bot.Player.Cell != targetMonster?.Cell)
                 {
-                    string cellToJump = targetMonster.Cell ?? "Enter";
+                    string cellToJump = targetMonster?.Cell ?? "Enter";
                     Jump(cellToJump, "Left");
                     Bot.Wait.ForCellChange(cellToJump);
                 }
 
-                if (!Bot.Player.HasTarget)
+                if (!Bot.Player.HasTarget && targetMonster != null)
                     Bot.Combat.Attack(targetMonster);
 
                 Bot.Sleep(200);
+
+                if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+                    break;
             }
 
             Bot.Options.AttackWithoutTarget = false;
@@ -4957,92 +5001,21 @@ public class CoreBots
             Bot.Options.HidePlayers = false;
             ToggleAggro(false);
 
-            // Attempt to jump back to a safe cell
+            // Attempt to jump back to an 'Enter' or usable cell
             Bot.Map.Jump(
                 Bot.Map.Cells.FirstOrDefault(c => c.ToLower().Contains("enter"))
-                ?? Bot.Map.Cells.FirstOrDefault(c => !c.ToLower().Contains("wait") && !c.ToLower().Contains("blank") && !c.ToLower().Contains("enter"))
-                ?? "Enter",
+                ?? Bot.Map.Cells.FirstOrDefault(c =>
+                        !c.ToLower().Contains("wait")
+                        && !c.ToLower().Contains("blank")
+                        && !c.ToLower().Contains("enter")
+                    )
+                    ?? "Enter",
                 "Spawn"
             );
 
             JumpWait();
             Rest();
         }
-    }
-
-    Monster? GetTargetMonster(string monster, string map)
-    {
-        // Normalize string: trim, collapse spaces/newlines, lowercase
-        static string NormalizeName(string? name) =>
-            string.IsNullOrWhiteSpace(name) ? string.Empty :
-            Regex.Replace(name.Trim(), @"\s+", " ").ToLowerInvariant();
-
-        // Levenshtein distance for typo-tolerant matching
-        static int Levenshtein(string s, string t)
-        {
-            if (string.IsNullOrEmpty(s)) return t?.Length ?? 0;
-            if (string.IsNullOrEmpty(t)) return s.Length;
-
-            int[,] d = new int[s.Length + 1, t.Length + 1];
-            for (int i = 0; i <= s.Length; i++) d[i, 0] = i;
-            for (int j = 0; j <= t.Length; j++) d[0, j] = j;
-
-            for (int i = 1; i <= s.Length; i++)
-                for (int j = 1; j <= t.Length; j++)
-                {
-                    int cost = s[i - 1] == t[j - 1] ? 0 : 1;
-                    d[i, j] = Math.Min(
-                        Math.Min(d[i - 1, j] + 1, d[i, j - 1] + 1),
-                        d[i - 1, j - 1] + cost
-                    );
-                }
-            return d[s.Length, t.Length];
-        }
-
-        // Try exact normalized match
-        Monster? target = Bot.Monsters.MapMonsters.Find(x =>
-            x != null && NormalizeName(x.Name) == NormalizeName(monster) && x.Alive
-        );
-
-        if (target != null)
-            return target;
-
-        Logger($"⚠️ Monster \"{monster}\" not found in /{map}.");
-
-        // Fallback 1: normalized contains match
-        target = Bot.Monsters.MapMonsters.FirstOrDefault(x =>
-            x != null && NormalizeName(x.Name).Contains(NormalizeName(monster)) && x.Alive
-        );
-
-        // Fallback 2: typo-tolerant Levenshtein match (distance <= 2)
-        if (target == null)
-        {
-            target = Bot.Monsters.MapMonsters
-                .Where(x => x != null && x.Alive)
-                .OrderBy(x => Levenshtein(NormalizeName(x.Name), NormalizeName(monster)))
-                .FirstOrDefault(x => Levenshtein(NormalizeName(x.Name), NormalizeName(monster)) <= 2);
-        }
-
-        if (target != null)
-            Logger(
-                $"⚠️ Map [{map}] | Monster name may have been updated to \"{target.Name}\". "
-                + $"This mob will be used instead of \"{monster}\". "
-                + $"If this is incorrect, please ping Tato2 or Bogalj on the discord."
-            );
-        else
-        {
-            string[] visible = Bot.Monsters.MapMonsters
-                .Where(x => !string.IsNullOrWhiteSpace(x?.Name))
-                .Select(x => $"\"{x!.Name}\"")
-                .Distinct()
-                .ToArray();
-
-            Logger(
-                $"❌ No approximate match found for {monster}. Visible monsters in /{map}: {string.Join(", ", visible)}"
-            );
-        }
-
-        return target;
     }
 
     /// <summary>
