@@ -1072,7 +1072,7 @@ public class CoreNation
     /// </summary>
     /// <param name="item">Desired item name.</param>
     /// <param name="quant">Desired item quantity.</param>
-    /// <param name="UltraAlteon">Flag indicating if Ultra Alteon should be used.</param>
+    /// <param name="UltraAlteon">Flag indicating if ULTRA Alteon should be used.</param>
     /// <param name="KeepVoucher">Flag indicating if the voucher should be kept.</param>
     /// <param name="AssistantDuring">Flag indicating if the assistant should be active during the process.</param>
     /// <param name="returnPolicyDuringSupplies"></param>
@@ -1242,7 +1242,7 @@ public class CoreNation
                                     "ultraalteon",
                                     "r10",
                                     "Left",
-                                    "Ultra Alteon",
+                                    "ULTRA Alteon",
                                     "Relic of Chaos",
                                     isTemp: false,
                                     log: false
@@ -1962,7 +1962,7 @@ public class CoreNation
             if (Bot.Quests.IsAvailable(3826) && !Core.CheckInventory(25026))
             {
                 Core.EnsureAccept(3826);
-                Core.HuntMonster("alteonbattle", "Ultra Alteon", "Seal of Light");
+                Core.HuntMonster("alteonbattle", "ULTRA Alteon", "Seal of Light");
                 Core.EnsureComplete(3826);
             }
             Core.EnsureComplete(5816);
