@@ -1192,12 +1192,14 @@ public class CoreStory
     public void LegacyQuestStop() => _LegacyQuestStop = true;
 
     /// <summary>
-    /// Put this at the start of your story script so that the bot will load all quests that are used in the bot. This will speed up any progression checks tremendiously.
+    /// Put this at the start of your story script so that the bot will load all quests that are used in the bot.
+    /// This will speed up any progression checks tremendiously.
     /// </summary>
     public void PreLoad(object _this, [CallerMemberName] string caller = "")
     {
         List<int> QuestIDs = new();
         string[] ScriptSlice = Core.CompiledScript();
+
         if (ScriptSlice.Length == 0)
         {
             Core.Logger(
@@ -1207,9 +1209,16 @@ public class CoreStory
         }
 
         int classStartIndex = Array.IndexOf(ScriptSlice, $"public class {_this}");
+        if (classStartIndex < 0)
+        {
+            Core.Logger("Failed to parse classStartIndex, no quests will be pre-loaded");
+            return;
+        }
+
         int classEndIndex =
-            Array.IndexOf(ScriptSlice[(classStartIndex)..], "}") + classStartIndex + 1;
-        ScriptSlice = ScriptSlice[(classStartIndex)..classEndIndex];
+            Array.IndexOf(ScriptSlice[classStartIndex..], "}") + classStartIndex + 1;
+
+        ScriptSlice = ScriptSlice[classStartIndex..classEndIndex];
 
         int methodStartIndex = -1;
         foreach (string p in new[] { "public", "private" })
@@ -1226,31 +1235,48 @@ public class CoreStory
             if (methodStartIndex > -1)
                 break;
         }
+
         if (methodStartIndex == -1)
         {
             Core.Logger("Failed to parse methodStartIndex, no quests will be pre-loaded");
             return;
         }
 
+        // ===== FIX: prevent negative indent =====
         int methodIndentCount = ScriptSlice[methodStartIndex + 1].IndexOf('{');
+
+        if (methodIndentCount < 0)
+            methodIndentCount = ScriptSlice[methodStartIndex].IndexOf('{');
+
+        if (methodIndentCount < 0)
+            methodIndentCount = 0;
+
         string indent = new string(' ', methodIndentCount);
+        // =======================================
+
         int methodEndIndex =
             Array.FindIndex(ScriptSlice, methodStartIndex, l => l == indent + "}") + 1;
+
+        if (methodEndIndex <= methodStartIndex)
+        {
+            Core.Logger("Failed to parse methodEndIndex, no quests will be pre-loaded");
+            return;
+        }
 
         ScriptSlice = ScriptSlice[methodStartIndex..methodEndIndex];
 
         string[] SearchParam =
         {
-            "Story.KillQuest",
-            "Story.MapItemQuest",
-            "Story.BuyQuest",
-            "Story.ChainQuest",
-            "Story.QuestProgression",
-            "Core.EnsureAccept",
-            "Core.EnsureComplete",
-            "Core.EnsureCompleteChoose",
-            "Core.ChainComplete",
-        };
+        "Story.KillQuest",
+        "Story.MapItemQuest",
+        "Story.BuyQuest",
+        "Story.ChainQuest",
+        "Story.QuestProgression",
+        "Core.EnsureAccept",
+        "Core.EnsureComplete",
+        "Core.EnsureCompleteChoose",
+        "Core.ChainComplete",
+    };
 
         foreach (string Line in ScriptSlice)
         {
@@ -1266,7 +1292,11 @@ public class CoreStory
             if (!SearchParam.Any(x => EdittedLine.StartsWith(x)))
                 continue;
 
-            char[] digits = Line.SkipWhile(c => !char.IsDigit(c)).TakeWhile(char.IsDigit).ToArray();
+            char[] digits = Line
+                .SkipWhile(c => !char.IsDigit(c))
+                .TakeWhile(char.IsDigit)
+                .ToArray();
+
             int QuestID = int.Parse(new string(digits));
 
             if (!QuestIDs.Contains(QuestID) && !Bot.Quests.Tree.Exists(x => x.ID == QuestID))
