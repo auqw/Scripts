@@ -302,39 +302,50 @@ public class HeadoftheLegionBeast
             int remainingPenance = quant - penanceOwned;
             if (remainingPenance <= 0) break;
 
-            // Calculate batch size based on SOH stack
             int sohNeeded = remainingPenance * 15;
             int batchSoh = Math.Min(sohNeeded, 300);
             int batchPenance = batchSoh / 15;
 
-            // Dynamic amounts for each Essence
+            // Calculate how much we still need per item
             int wrathNeeded = Math.Max(batchPenance - Bot.Inventory.GetQuantity("Essence of Wrath"), 0);
             int violenceNeeded = Math.Max(batchPenance - Bot.Inventory.GetQuantity("Essence of Violence"), 0);
             int treacheryNeeded = Math.Max(batchPenance - Bot.Inventory.GetQuantity("Essence of Treachery"), 0);
             int sohStillNeeded = Math.Max(batchSoh - Bot.Inventory.GetQuantity("Souls of Heresy"), 0);
 
-            void FarmDynamic(string name, int amount, Action<int> farmMethod)
-            {
-                while (amount > 0 && !Bot.ShouldExit)
-                {
-                    int owned = Bot.Inventory.GetQuantity(name);
-                    int toFarm = amount; // farm remaining needed
-                    farmMethod(toFarm);
-                    int newOwned = Bot.Inventory.GetQuantity(name);
-                    int farmed = newOwned - owned;
-                    amount -= farmed;
+            // Track previous log line to avoid duplicate logs
+            string prevLine = "";
 
-                    Core.Logger($"[Penance Batch] 💎 {name}: {newOwned - farmed}/{newOwned - farmed + amount} → {newOwned}/{newOwned + amount}");
+            void FarmItem(string name, ref int remaining, Action<int> farmMethod)
+            {
+                while (remaining > 0 && !Bot.ShouldExit)
+                {
+                    int ownedBefore = Bot.Inventory.GetQuantity(name);
+                    farmMethod(remaining);
+                    int ownedAfter = Bot.Inventory.GetQuantity(name);
+                    int farmed = ownedAfter - ownedBefore;
+                    remaining -= farmed;
+
+                    // Build log line dynamically
+                    string line =
+                        $"[Penance Batch] 💎 Penance: {Bot.Inventory.GetQuantity("Penance")}/{quant} | " +
+                        $"Wrath: {Bot.Inventory.GetQuantity("Essence of Wrath")}/{Bot.Inventory.GetQuantity("Essence of Wrath") + wrathNeeded} | " +
+                        $"Violence: {Bot.Inventory.GetQuantity("Essence of Violence")}/{Bot.Inventory.GetQuantity("Essence of Violence") + violenceNeeded} | " +
+                        $"Treachery: {Bot.Inventory.GetQuantity("Essence of Treachery")}/{Bot.Inventory.GetQuantity("Essence of Treachery") + treacheryNeeded} | " +
+                        $"Souls of Heresy: {Bot.Inventory.GetQuantity("Souls of Heresy")}/{Bot.Inventory.GetQuantity("Souls of Heresy") + sohStillNeeded}";
+
+                    if (line != prevLine)
+                    {
+                        prevLine = line;
+                        Core.Logger(line); // Only log if something changed
+                    }
                 }
             }
 
-            // Farm Essences with live logging
-            if (wrathNeeded > 0) FarmDynamic("Essence of Wrath", wrathNeeded, EssenceWrath);
-            if (violenceNeeded > 0) FarmDynamic("Essence of Violence", violenceNeeded, EssenceViolence);
-            if (treacheryNeeded > 0) FarmDynamic("Essence of Treachery", treacheryNeeded, EssenceTreachery);
-            if (sohStillNeeded > 0) FarmDynamic("Souls of Heresy", sohStillNeeded, SoulsHeresy);
+            if (wrathNeeded > 0) FarmItem("Essence of Wrath", ref wrathNeeded, EssenceWrath);
+            if (violenceNeeded > 0) FarmItem("Essence of Violence", ref violenceNeeded, EssenceViolence);
+            if (treacheryNeeded > 0) FarmItem("Essence of Treachery", ref treacheryNeeded, EssenceTreachery);
+            if (sohStillNeeded > 0) FarmItem("Souls of Heresy", ref sohStillNeeded, SoulsHeresy);
 
-            // Buy Penance from shop
             Core.BuyItem("sevencircleswar", 1984, "Penance", batchPenance);
             Bot.Wait.ForPickup("Penance");
         }
@@ -342,6 +353,7 @@ public class HeadoftheLegionBeast
         Core.FarmingLogger("Penance", quant);
         Core.Logger("✅ Finished farming Penance.");
     }
+
 
     /// <summary>
     /// Farms the specified quantity of "Indulgence" items.
