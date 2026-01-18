@@ -294,36 +294,53 @@ public class HeadoftheLegionBeast
         }
 
         Core.AddDrop(HeadLegionBeast);
-        Core.FarmingLogger("Penance", quant);
         Core.EquipClass(ClassType.Farm);
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Penance", quant))
         {
-            // Farm required materials
-            var requiredItems = new Dictionary<string, Action<int>>
+            int penanceOwned = Bot.Inventory.GetQuantity("Penance");
+            int remainingPenance = quant - penanceOwned;
+            if (remainingPenance <= 0) break;
+
+            // Calculate batch size based on SOH stack
+            int sohNeeded = remainingPenance * 15;
+            int batchSoh = Math.Min(sohNeeded, 300);
+            int batchPenance = batchSoh / 15;
+
+            // Dynamic amounts for each Essence
+            int wrathNeeded = Math.Max(batchPenance - Bot.Inventory.GetQuantity("Essence of Wrath"), 0);
+            int violenceNeeded = Math.Max(batchPenance - Bot.Inventory.GetQuantity("Essence of Violence"), 0);
+            int treacheryNeeded = Math.Max(batchPenance - Bot.Inventory.GetQuantity("Essence of Treachery"), 0);
+            int sohStillNeeded = Math.Max(batchSoh - Bot.Inventory.GetQuantity("Souls of Heresy"), 0);
+
+            void FarmDynamic(string name, int amount, Action<int> farmMethod)
             {
-                { "Essence of Wrath", EssenceWrath },
-                { "Essence of Violence", EssenceViolence },
-                { "Essence of Treachery", EssenceTreachery },
-                { "Souls of Heresy", amount => SoulsHeresy(Math.Min(300, amount * 15)) },
-            };
+                while (amount > 0 && !Bot.ShouldExit)
+                {
+                    int owned = Bot.Inventory.GetQuantity(name);
+                    int toFarm = amount; // farm remaining needed
+                    farmMethod(toFarm);
+                    int newOwned = Bot.Inventory.GetQuantity(name);
+                    int farmed = newOwned - owned;
+                    amount -= farmed;
 
-            foreach (var (item, farmAction) in requiredItems)
-                farmAction(Math.Min(quant, 300));
+                    Core.Logger($"[Penance Batch] 💎 {name}: {newOwned - farmed}/{newOwned - farmed + amount} → {newOwned}/{newOwned + amount}");
+                }
+            }
 
-            // Check if SohCount (quant * 15) is greater then 300 (max stack of souls of heresy), if so then do sohcount / 15 (300 [soh max stack] / 15 = 20), else do quant
-            Core.BuyItem(
-                "sevencircleswar",
-                1984,
-                "Penance",
-                quant * 15 > 300 ? Bot.Inventory.GetQuantity("Souls of Heresy") / 15 : quant
-            );
+            // Farm Essences with live logging
+            if (wrathNeeded > 0) FarmDynamic("Essence of Wrath", wrathNeeded, EssenceWrath);
+            if (violenceNeeded > 0) FarmDynamic("Essence of Violence", violenceNeeded, EssenceViolence);
+            if (treacheryNeeded > 0) FarmDynamic("Essence of Treachery", treacheryNeeded, EssenceTreachery);
+            if (sohStillNeeded > 0) FarmDynamic("Souls of Heresy", sohStillNeeded, SoulsHeresy);
+
+            // Buy Penance from shop
+            Core.BuyItem("sevencircleswar", 1984, "Penance", batchPenance);
             Bot.Wait.ForPickup("Penance");
-            if (Core.CheckInventory("Penance", quant))
-                break;
-
-            Core.Sleep(1000);
         }
+
+        Core.FarmingLogger("Penance", quant);
+        Core.Logger("✅ Finished farming Penance.");
     }
 
     /// <summary>
