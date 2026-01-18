@@ -5,6 +5,10 @@ tags: story, quest, tercesarchive, nation
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Story/Nation/DeleuzeTundra.cs
+//cs_include Scripts/Story/Nation/VoidRefuge.cs
+//cs_include Scripts/Story/Nation/VoidChasm.cs
+//cs_include Scripts/Story/Nation/OblivionTundra.cs
 using Skua.Core.Interfaces;
 
 public class tercesarchive
@@ -17,6 +21,12 @@ public class tercesarchive
         set => _Story = value;
     }
     private static CoreStory _Story;
+    private static OblivionTundra OblivionTundra
+    {
+        get => _OblivionTundra ??= new OblivionTundra();
+        set => _OblivionTundra = value;
+    }
+    private static OblivionTundra _OblivionTundra;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -32,6 +42,8 @@ public class tercesarchive
         if (Core.isCompletedBefore(10557))
             return;
 
+        OblivionTundra.Storyline();
+        
         Story.PreLoad(this);
 
         #region Useable Monsters
