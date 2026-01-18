@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 433137,
-    "sha256": "d63b9790cc83eadfef7304ba2acba59cf435d2542ec64a802d31586bdaaadc95",
+    "size": 434273,
+    "sha256": "8b5ae59917030358c8ec273135c425e67a344cea6179558cad5168b8bb6f135c",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -1096,8 +1096,8 @@
       "luxuria"
     ],
     "path": "Legion/HeadOfTheLegionBeast.cs",
-    "size": 12655,
-    "sha256": "c29739ef34db3db926c9ab226045c8cc6372cf3184869f75f3b10cf068682d92",
+    "size": 13795,
+    "sha256": "ca0e77f4b4a10cd6aecd7e1308e948a48b9932835477c24655d1ed30c31c805b",
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
   },
@@ -3995,7 +3995,7 @@
     ],
     "path": "Nation/CoreNation.cs",
     "size": 122427,
-    "sha256": "a38e3b24afb8156dbe0880790d8a8519737610e03dac7157b9e4225477c05e72",
+    "sha256": "76441bcb222f99b0facef5ed5b005dd6819835c4c9c6567509209172c2f60a70",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -4066,7 +4066,7 @@
     ],
     "path": "Nation/SuppliesToSpinTheWheelofChance.cs",
     "size": 9225,
-    "sha256": "d20357e427f55bf5858e630439926f82209525cbeb2888f47ee3f56a21b2595a",
+    "sha256": "1fea5cbeb4bc92a459057656b70efae7d658baf27e6692525fb667c8a3e8967c",
     "fileName": "SuppliesToSpinTheWheelofChance.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/SuppliesToSpinTheWheelofChance.cs"
   },
