@@ -139,7 +139,7 @@ public class AstralEmpyrean
     };
 
     private string NormalizeString(string input) => (input ?? "").Trim().ToLower();
-
+    bool DoZoning;
     public void ScriptMain(IScriptInterface bot)
     {
         if (!Bot.Quests.IsUnlocked(9803))
@@ -168,10 +168,10 @@ public class AstralEmpyrean
         Core.EquipConsumable("Potent Honor Potion");
         Ultra.GetScrollOfEnrage();
     }
-    bool DoZoning => Bot.Config!.Get<bool>("DoZoning");
 
     void Fight()
     {
+        bool DoZoning = Bot.Config!.Get<bool>("DoZoning");
         const string map = "astralshrine";
         const string boss = "Astral Empyrean";
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
@@ -205,7 +205,7 @@ public class AstralEmpyrean
                 break;
             }
 
-            if (DoZoning)
+            if (!DoZoning)
             {
                 // Define box boundaries (0,0 to 101,101)
                 int minX = 374;
@@ -229,6 +229,7 @@ public class AstralEmpyrean
                     Bot.Player.WalkTo(randomX, randomY);
                 }
             }
+            
             if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
             Bot.Sleep(200);
