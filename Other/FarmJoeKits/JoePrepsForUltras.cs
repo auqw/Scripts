@@ -145,6 +145,7 @@ tags: joe, ultra, boss, preparation, farm
 //cs_include Scripts/Story/Nation/OblivionTundra.cs
 //cs_include Scripts/Story/Nation/Originul.cs
 //cs_include Scripts/Story/Nation/ShadowBlastArena.cs
+//cs_include Scripts/Story/Nation/tercesarchive.cs
 //cs_include Scripts/Story/Nation/Tercessuinotlim.cs
 //cs_include Scripts/Story/Nation/VoidChasm.cs
 //cs_include Scripts/Story/Nation/VoidRefuge.cs
