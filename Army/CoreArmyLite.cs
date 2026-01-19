@@ -1258,56 +1258,44 @@ public class CoreArmyLite
 
         Bot.Options.AutoRelogin = false;
 
-        string name = doForAllAccountDetails[_doForAllIndex].Item1;
-        string pass = doForAllAccountDetails[_doForAllIndex++].Item2;
-
-        Server[] ServerList = Bot
-            .Servers.CachedServers.Where(x =>
-                !BlacklistedServers.Contains(x.Name.ToLower())
-                && (Core.IsMember || !x.Upgrade)
-                && x.Online
-            )
-            .ToArray();
+        (string name, string pass) = doForAllAccountDetails[_doForAllIndex++];
 
         if (Core.Username() != name)
         {
             if (Bot.Player.LoggedIn)
             {
                 Bot.Servers.Logout();
-                while (!Bot.ShouldExit && Bot.Player.LoggedIn)
-                    Core.Sleep();
+                Bot.Wait.ForTrue(() => !Bot.Player.LoggedIn, 20);
             }
 
             Bot.Servers.Login(name, pass);
-            Core.Sleep(3000);
-
-            Server[] availableServers = ServerList
-                .Where(x =>
-                    !BlacklistedServers.Contains(x.Name.ToLower())
-                    && !x.Upgrade
-                    && x.Online
-                    && x.PlayerCount < x.MaxPlayers
-                )
-                .ToArray();
-
-            if (availableServers.Length > 0)
-            {
-                Server? targetServer = availableServers.First(x =>
-                    x.Name == Bot.Options.ReloginServer
-                );
-
-                Bot.Servers.Connect(targetServer);
-            }
+            Bot.Wait.ForTrue(() => Bot.Player.LoggedIn, 20);
+            Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
         }
 
-        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
+        // Membership is ONLY valid AFTER login
+        Core.IsMember = Bot.Player.IsMember;
+
+        Server[] serverPool = Bot.Servers.CachedServers
+            .Where(s =>
+                s.Online
+                && s.PlayerCount < s.MaxPlayers
+                && (Core.IsMember || !s.Upgrade)
+                && !BlacklistedServers.Contains(s.Name.ToLower())
+            )
+            .ToArray();
+
+        if (serverPool.Length == 0)
+            return false;
+
+        Server? targetServer = serverPool.FirstOrDefault(s =>
+            s.Name == Bot.Options.ReloginServer
+        ) ?? serverPool[0];
+
+        Bot.Servers.Connect(targetServer);
+        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 15);
+
         Bot.Wait.ForMapLoad("battleon");
-        while (!Bot.ShouldExit && !Bot.Player.Loaded)
-        {
-            Bot.Sleep(5000);
-            if (Bot.Player.Loaded)
-                break;
-        }
 
         if (Bot.House.Items.Any(i => i.Equipped))
         {
@@ -1323,64 +1311,62 @@ public class CoreArmyLite
 
         Bot.Bank.Load();
         Core.ReadCBO();
-        Core.IsMember = Bot.Player.IsMember;
 
         return true;
+    }
 
-        (string, string)[] readManager()
+    private (string, string)[] readManager()
+    {
+        List<(string, string)> toReturn = new();
+
+        try
         {
-            List<(string, string)> toReturn = new();
+            string settingsPath = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "Skua",
+                "skua.settings.json"
+            );
 
-            try
-            {
-                string settingsPath = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                    "Skua",
-                    "skua.settings.json"
-                );
-
-                if (!File.Exists(settingsPath))
-                {
-                    Core.Logger(
-                        "No skua.settings.json file found. Add accounts using The `Skua Manager` app.",
-                        "AccountManager",
-                        true
-                    );
-                    Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
-                    Bot.Stop(true);
-                    return Array.Empty<(string, string)>();
-                }
-
-                List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
-                foreach (var acc in accounts)
-                    if (!string.IsNullOrEmpty(acc?.Username) && !string.IsNullOrEmpty(acc?.Password))
-                        toReturn.Add((acc.Username, acc.Password));
-            }
-            catch (Exception ex)
+            if (!File.Exists(settingsPath))
             {
                 Core.Logger(
-                    $"Failed to read accounts from skua.settings.json: {ex.Message}",
-                    "AccountManager",
-                    true,
-                    true
-                );
-            }
-
-            if (toReturn.Count <= 0)
-            {
-                Core.Logger(
-                    "No valid accounts found. Add accounts using The `Skua Manager` app.",
+                    "No skua.settings.json file found. Add accounts using The `Skua Manager` app.",
                     "AccountManager",
                     true
                 );
                 Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
                 Bot.Stop(true);
+                return Array.Empty<(string, string)>();
             }
 
-            return toReturn.ToArray();
+            List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
+            foreach (var acc in accounts)
+                if (!string.IsNullOrEmpty(acc?.Username) && !string.IsNullOrEmpty(acc?.Password))
+                    toReturn.Add((acc.Username, acc.Password));
         }
-    }
+        catch (Exception ex)
+        {
+            Core.Logger(
+                $"Failed to read accounts from skua.settings.json: {ex.Message}",
+                "AccountManager",
+                true,
+                true
+            );
+        }
 
+        if (toReturn.Count <= 0)
+        {
+            Core.Logger(
+                "No valid accounts found. Add accounts using The `Skua Manager` app.",
+                "AccountManager",
+                true
+            );
+            Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
+            Bot.Stop(true);
+        }
+
+        return toReturn.ToArray();
+    }
     private int _doForAllIndex = 0;
     public (string, string)[]? doForAllAccountDetails;
     private readonly string[] BlacklistedServers =
@@ -1395,7 +1381,7 @@ public class CoreArmyLite
     };
     #endregion
 
-    
+
     #region Butler
     public void Butler(
         string playerName,
