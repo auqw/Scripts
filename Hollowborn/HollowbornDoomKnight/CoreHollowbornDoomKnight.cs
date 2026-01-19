@@ -9,7 +9,6 @@ tags: null
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Hollowborn/CoreHollowborn.cs
 //cs_include Scripts/Hollowborn/HollowbornPaladin/CoreHollowbornPaladin.cs
-//cs_include Scripts/Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs
 //cs_include Scripts/Good/BLoD/CoreBLOD.cs
 //cs_include Scripts/Evil/SDKA/CoreSDKA.cs
 //cs_include Scripts/Evil/NSoD/CoreNSOD.cs
