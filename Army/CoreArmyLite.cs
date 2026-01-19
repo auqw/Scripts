@@ -1281,9 +1281,9 @@ public class CoreArmyLite
         Core.IsMember = Bot.Player.IsMember;
         // Filter servers: remove blacklisted and full servers
         Server[] serverPool = Bot.Servers.CachedServers?
+            .OfType<Server>()
             .Where(s =>
-                s != null
-                && s.Online
+                s.Online
                 && s.PlayerCount < s.MaxPlayers
                 && (Core.IsMember || !s.Upgrade)
                 && !BlacklistedServers.Contains(s.Name?.ToLower() ?? "")
