@@ -149,7 +149,6 @@ public class AstralEmpyrean
                 stopBot: true
             );
 
-        C.Join("whitemap");
         Core.Boot();
         Adv.GearStore(EnhAfter: true);
         Prep();
@@ -229,7 +228,7 @@ public class AstralEmpyrean
                     Bot.Player.WalkTo(randomX, randomY);
                 }
             }
-            
+
             if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
             Bot.Sleep(200);
