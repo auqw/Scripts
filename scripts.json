@@ -4769,8 +4769,8 @@
       "null"
     ],
     "path": "Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs",
-    "size": 10063,
-    "sha256": "8e48c1af4957f7951be5ae4ac624563359acf7243c49aa3616202c7d03aa550e",
+    "size": 9982,
+    "sha256": "6341e28f02a7f4ded4b7d9435fa34e54199f633a39305d53f09e5ed24705ba86",
     "fileName": "CoreHollowbornDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs"
   },
@@ -5068,8 +5068,8 @@
       "inserthere"
     ],
     "path": "Hollowborn/HollowbornPaladin/CoreHollowbornPaladin.cs",
-    "size": 8735,
-    "sha256": "3f07f3d17380c04cb31f878b30eb24d9ac75b9c0bb798be76de51b5c82f0a880",
+    "size": 8660,
+    "sha256": "49ae8eaa2c3f9c1c437adad59823d50a9e5b83f035b22d4d1bbeeec8f39bb53d",
     "fileName": "CoreHollowbornPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornPaladin/CoreHollowbornPaladin.cs"
   },
