@@ -2235,8 +2235,8 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 52465,
-    "sha256": "a6b653c6dd32b77e41f74784c769340167f361c4e6ac26cb6cb15b2fb9f63594",
+    "size": 52812,
+    "sha256": "0ad9ea5283b45c3c783b514e3f551f1523800ac15e98de80c118771305bb3a2d",
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -13017,8 +13017,8 @@
       "farm"
     ],
     "path": "Other/FarmJoeKits/JoePrepsForUltras.cs",
-    "size": 27368,
-    "sha256": "e839efdb54e5aec8816ddaaa1ab74f78e7dd2a262072579ca8248e071578fb4d",
+    "size": 27419,
+    "sha256": "aa098c3f1147e21c01d2ea3af255b77dc124965acf7cde10f7b448734e60ce34",
     "fileName": "JoePrepsForUltras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/JoePrepsForUltras.cs"
   },
