@@ -459,12 +459,12 @@ public class AllStories
         set => _ShadowBlastArena = value;
     }
     private static ShadowBlastArena _ShadowBlastArena;
-    private static tercesarchive tercesarchive
+    private static TercesArchive tercesarchive
     {
-        get => _tercesarchive ??= new tercesarchive();
+        get => _tercesarchive ??= new TercesArchive();
         set => _tercesarchive = value;
     }
-    private static tercesarchive _tercesarchive;
+    private static TercesArchive _tercesarchive;
     private static Tercessuinotlim Tercessuinotlim
     {
         get => _Tercessuinotlim ??= new Tercessuinotlim();

@@ -11,7 +11,7 @@ tags: story, quest, tercesarchive, nation
 //cs_include Scripts/Story/Nation/OblivionTundra.cs
 using Skua.Core.Interfaces;
 
-public class tercesarchive
+public class TercesArchive
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
@@ -43,7 +43,7 @@ public class tercesarchive
             return;
 
         OblivionTundra.Storyline();
-        
+
         Story.PreLoad(this);
 
         #region Useable Monsters
