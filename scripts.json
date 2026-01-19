@@ -55,7 +55,7 @@
     ],
     "path": "CoreBots.cs",
     "size": 433088,
-    "sha256": "72d2f9daaf99c838fef2e62b11105907184b09177a05423dbfac6dbf02c3630e",
+    "sha256": "6025622f8ca39880f214fee7635b85cee34f0eb37fdecce95ef80ae501571798",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -67,7 +67,7 @@
     ],
     "path": "Army/CoreArmyLite.cs",
     "size": 78942,
-    "sha256": "c534cb5b2120237e2d154e95ead45b970b75caffc8d8d3f0fee2d7679a252e8f",
+    "sha256": "7192e63dc90158ac5c41a9518f54d8164e0b1727ed4dead4f5f66bba2c9a916c",
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/CoreArmyLite.cs"
   },
