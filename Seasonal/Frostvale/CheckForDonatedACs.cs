@@ -58,7 +58,6 @@ public class CheckForDonatedACs
         get => _Farm ??= new CoreFarms();
         set => _Farm = value;
     }
-    string PreviousReloginServer;
 
     public void CheckACs()
     {
@@ -67,7 +66,9 @@ public class CheckForDonatedACs
             "*Warning* this will (wether started from the manager, or from an already logged in account ingame), 100% miss the first acc. as from the manager it will log you into the game, before it compiles and starts the script (non-changeable), or from an already logged in account, well that parts obvious.\n\n"
                 + "TLDR: First Acc's checked acs will 99% of the time be missed and theres nothing we can do about it."
         );
-        PreviousReloginServer = Bot.Options.ReloginServer ?? "Twilly";
+        Bot.Options.ReloginServer =
+            (Bot.Options.ReloginServer ?? "Twilly") ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
+
         Bot.Options.ReloginServer = "Twilly";
 
         // Ensure log file path is set to %appdata%/skua/options
@@ -256,7 +257,7 @@ public class CheckForDonatedACs
     {
         Core.SetOptions();
         Bot.Options.ReloginServer =
-            PreviousReloginServer ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
+             (Bot.Options.ReloginServer ?? "Twilly") ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
 
         CheckACs();
 

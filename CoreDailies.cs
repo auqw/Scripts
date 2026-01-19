@@ -800,7 +800,7 @@ public class CoreDailies
             .ToList();
 
         // Complete Daily Quest (3075) if eligible
-        if (Core.IsMember && CheckDailyv2(3075))
+        if (Bot.Player.IsMember && CheckDailyv2(3075))
             Core.ChainComplete(3075);
 
         // Complete Weekly Quest (3076) if eligible

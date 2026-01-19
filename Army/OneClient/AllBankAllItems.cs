@@ -39,6 +39,9 @@ public class ArmyBankAllItems
 
     public void AllBankAll()
     {
+        Bot.Options.ReloginServer =
+            (Bot.Options.ReloginServer ?? "Twilly") ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
+
         while (!Bot.ShouldExit && Army.doForAll())
         {
             BAI.BankAll(true, true, false, string.Empty);

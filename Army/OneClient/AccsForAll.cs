@@ -57,6 +57,8 @@ public class ArmyFreeAcs
             "Only for army",
             "This is intended for use with an army, not for solo players."
         );
+        Bot.Options.ReloginServer =
+                   (Bot.Options.ReloginServer ?? "Twilly") ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
 
         while (!Bot.ShouldExit && Army.doForAll())
         {

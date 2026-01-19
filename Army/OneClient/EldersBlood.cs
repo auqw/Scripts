@@ -38,6 +38,9 @@ public class ArmyEldersBlood
 
     public void EldersBlood()
     {
+        Bot.Options.ReloginServer =
+            (Bot.Options.ReloginServer ?? "Twilly") ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
+
         while (!Bot.ShouldExit && Army.doForAll())
         {
             if (Bot.Inventory.FreeSlots <= 0)

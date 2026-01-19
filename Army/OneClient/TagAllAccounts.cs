@@ -33,6 +33,9 @@ public class TagAll
 
     public void DoTheThing()
     {
+        Bot.Options.ReloginServer =
+            (Bot.Options.ReloginServer ?? "Twilly") ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
+
         List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
         int AccCount = accounts.Count;
         int i = 1;
