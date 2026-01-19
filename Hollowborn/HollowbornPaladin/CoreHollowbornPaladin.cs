@@ -8,7 +8,6 @@ tags: hollowborn paladin, hollowborn, inserthere
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/Hollowborn/CoreHollowborn.cs
-//cs_include Scripts/Hollowborn/HollowbornPaladin/CoreHollowbornPaladin.cs
 //cs_include Scripts/Good/BLoD/CoreBLOD.cs
 //cs_include Scripts/Chaos/DrakathsArmor.cs
 //cs_include Scripts/CoreStory.cs

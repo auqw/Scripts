@@ -66,8 +66,8 @@
       "null"
     ],
     "path": "Army/CoreArmyLite.cs",
-    "size": 78942,
-    "sha256": "7192e63dc90158ac5c41a9518f54d8164e0b1727ed4dead4f5f66bba2c9a916c",
+    "size": 78943,
+    "sha256": "86dc1dbfbf48548de6a33b8e6c9744af9b8afcfc9c026bd5cac3d056fa0f41e6",
     "fileName": "CoreArmyLite.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/CoreArmyLite.cs"
   },
@@ -2235,8 +2235,8 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 52465,
-    "sha256": "a6b653c6dd32b77e41f74784c769340167f361c4e6ac26cb6cb15b2fb9f63594",
+    "size": 52812,
+    "sha256": "ae278fdb453ce2a3ac3501961eca979149369a127446dc1a6fdb6a7dfb1b85ab",
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -4769,8 +4769,8 @@
       "null"
     ],
     "path": "Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs",
-    "size": 10063,
-    "sha256": "8e48c1af4957f7951be5ae4ac624563359acf7243c49aa3616202c7d03aa550e",
+    "size": 9982,
+    "sha256": "6341e28f02a7f4ded4b7d9435fa34e54199f633a39305d53f09e5ed24705ba86",
     "fileName": "CoreHollowbornDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs"
   },
@@ -5068,8 +5068,8 @@
       "inserthere"
     ],
     "path": "Hollowborn/HollowbornPaladin/CoreHollowbornPaladin.cs",
-    "size": 8735,
-    "sha256": "3f07f3d17380c04cb31f878b30eb24d9ac75b9c0bb798be76de51b5c82f0a880",
+    "size": 8660,
+    "sha256": "49ae8eaa2c3f9c1c437adad59823d50a9e5b83f035b22d4d1bbeeec8f39bb53d",
     "fileName": "CoreHollowbornPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornPaladin/CoreHollowbornPaladin.cs"
   },
@@ -9690,8 +9690,8 @@
       "nation"
     ],
     "path": "Story/Nation/tercesarchive.cs",
-    "size": 3691,
-    "sha256": "c46408e6d49c66e43a7ebc08d692afe2aef253bc378e18a2633aa74ddb74462a",
+    "size": 3683,
+    "sha256": "ce71bfc2bc9dcf725d35a8995e425cf404d83e4cb78398b15ad3d6eef2a68518",
     "fileName": "tercesarchive.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/tercesarchive.cs"
   },
@@ -13017,8 +13017,8 @@
       "farm"
     ],
     "path": "Other/FarmJoeKits/JoePrepsForUltras.cs",
-    "size": 27368,
-    "sha256": "e839efdb54e5aec8816ddaaa1ab74f78e7dd2a262072579ca8248e071578fb4d",
+    "size": 27419,
+    "sha256": "aa098c3f1147e21c01d2ea3af255b77dc124965acf7cde10f7b448734e60ce34",
     "fileName": "JoePrepsForUltras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/JoePrepsForUltras.cs"
   },

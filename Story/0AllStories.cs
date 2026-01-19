@@ -61,6 +61,7 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/Nation/OblivionTundra.cs
 //cs_include Scripts/Story/Nation/Originul.cs
 //cs_include Scripts/Story/Nation/ShadowBlastArena.cs
+//cs_include Scripts/Story/Nation/tercesarchive.cs
 //cs_include Scripts/Story/Nation/Tercessuinotlim.cs
 //cs_include Scripts/Story/Nation/VoidRefuge.cs
 //cs_include Scripts/Story/Nation/VoidChasm.cs
@@ -458,6 +459,12 @@ public class AllStories
         set => _ShadowBlastArena = value;
     }
     private static ShadowBlastArena _ShadowBlastArena;
+    private static TercesArchive tercesarchive
+    {
+        get => _tercesarchive ??= new TercesArchive();
+        set => _tercesarchive = value;
+    }
+    private static TercesArchive _tercesarchive;
     private static Tercessuinotlim Tercessuinotlim
     {
         get => _Tercessuinotlim ??= new Tercessuinotlim();
@@ -1349,6 +1356,9 @@ public class AllStories
 
         ShadowBlastArena.Doall();
         Core.Logger($"Story: ShadowBlast Arena - Complete");
+
+        tercesarchive.StoryLine();
+        Core.Logger($"Story: Terces Archive - Complete");
 
         Tercessuinotlim.JadziaQuests();
         Core.Logger($"Story: Tercessuinotlim - Complete");
