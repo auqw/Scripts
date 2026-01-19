@@ -207,8 +207,8 @@ public class CoreBLOD
         FarmFindingFrag(WeaponOfDestiny.Daggers, "Loyal Spirit Orb", quant);
         FarmFindingFrag(WeaponOfDestiny.Scythe, "Loyal Spirit Orb", quant);
 
-
-        FarmUltimateWK("Loyal Spirit Orb", quant);
+        if (Bot.Quests.IsUnlocked(2163))
+            FarmUltimateWK("Loyal Spirit Orb", quant);
 
         // Default
         while (!Bot.ShouldExit && !Core.CheckInventory("Loyal Spirit Orb", quant))
@@ -227,7 +227,8 @@ public class CoreBLOD
         FarmFindingFrag(WeaponOfDestiny.Bow, "Bright Aura", quant);
         FarmFindingFrag(WeaponOfDestiny.Broadsword, "Bright Aura", quant);
         FarmFindingFrag(WeaponOfDestiny.Scythe, "Bright Aura", quant);
-        FarmUltimateWK("Bright Aura", quant);
+        if (Bot.Quests.IsUnlocked(2163))
+            FarmUltimateWK("Bright Aura", quant);
 
         // Default
         while (!Bot.ShouldExit && !Core.CheckInventory("Bright Aura", quant))
