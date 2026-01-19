@@ -1253,14 +1253,19 @@ public class CoreArmyLite
 
     public bool doForAll()
     {
-        if (Bot.ShouldExit || _doForAllIndex >= (doForAllAccountDetails ??= readManager()).Length)
+        if (Bot.ShouldExit || _doForAllIndex >= (doForAllAccountDetails ??= readManager())?.Length)
             return false;
 
         Bot.Options.AutoRelogin = false;
 
+        // Pick current account safely
+        if (doForAllAccountDetails == null || _doForAllIndex >= doForAllAccountDetails.Length)
+            return false;
+
         (string name, string pass) = doForAllAccountDetails[_doForAllIndex++];
 
-        if (Core.Username() != name)
+        // Login if necessary
+        if (!string.Equals(Core.Username(), name, StringComparison.OrdinalIgnoreCase))
         {
             if (Bot.Player.LoggedIn)
             {
@@ -1273,43 +1278,47 @@ public class CoreArmyLite
             Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
         }
 
-        // Membership is ONLY valid AFTER login
         Core.IsMember = Bot.Player.IsMember;
 
-        Server[] serverPool = Bot.Servers.CachedServers
+        // Filter servers: remove blacklisted and full servers
+        Server[] serverPool = Bot.Servers.GetServers()?
             .Where(s =>
-                s.Online
+                s != null
+                && s.Online
                 && s.PlayerCount < s.MaxPlayers
                 && (Core.IsMember || !s.Upgrade)
-                && !BlacklistedServers.Contains(s.Name.ToLower())
+                && !BlacklistedServers.Contains(s.Name?.ToLower() ?? "")
             )
-            .ToArray();
+            .ToArray() ?? Array.Empty<Server>();
 
         if (serverPool.Length == 0)
             return false;
 
-        Server? targetServer = serverPool.FirstOrDefault(s =>
-            s.Name == Bot.Options.ReloginServer
-        ) ?? serverPool[0];
+        // Pick a random safe server from the pool — ignore any saved ReloginServer
+        Server targetServer = serverPool[new Random().Next(serverPool.Length)];
 
+        // Connect
         Bot.Servers.Connect(targetServer);
-        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 15);
-
+        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 30);
         Bot.Wait.ForMapLoad("battleon");
 
-        if (Bot.House.Items.Any(i => i.Equipped))
+        // Enter house or whitemap
+        if (Bot.House?.Items?.Any(i => i?.Equipped == true) == true)
         {
             Bot.Send.Packet($"%xt%zm%house%1%{Bot.Player.Username}%");
             Bot.Wait.ForMapLoad("house");
             Core.Sleep();
         }
         else
+        {
             Core.Join("whitemap");
+        }
 
-        if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
-            Bot.Bank.Open();
+        // Open bank if not already
+        if (Bot.Flash?.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
+            Bot.Bank?.Open();
 
-        Bot.Bank.Load();
+        Bot.Bank?.Load();
         Core.ReadCBO();
 
         return true;
