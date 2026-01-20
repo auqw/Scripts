@@ -111,7 +111,7 @@ public class UltraDarkCarnax
 
         C.AddDrop("Synthetic Viscera");
         C.RegisterQuests(8872);
-        Ultra.WaitForArmy(attemptSolo ? 0 : 4, "darkcarnax.sync");
+        Ultra.WaitForArmy(attemptSolo ? 0 : 3, "darkcarnax.sync");
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
 
