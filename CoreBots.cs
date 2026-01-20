@@ -7417,7 +7417,7 @@ public class CoreBots
     /// </summary>
     private void SkuaVersionChecker(string targetVersion = "1.4.0.3")
     {
-        if (Bot.Version == null || Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
+        if (Bot.Version == null || Bot.Version == (1,3,3,2) || Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
             return;
 
         if (
