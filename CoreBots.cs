@@ -3199,7 +3199,7 @@ public class CoreBots
         if (!Bot.Drops.ToPickupIDs.Contains(itemID) && itemID > 0)
             Bot.Drops.Add(itemID);
 
-        if (!Bot.Quests.EnsureAccept(questID))
+        if (!Bot.Quests.IsInProgress(questID))
             EnsureAccept(questID);
 
         // Bot.Wait.ForTrue(() => questData != null, 20);
@@ -3257,9 +3257,6 @@ public class CoreBots
             if (questData == null)
                 EnsureLoad(questID.ID);
 
-            if (!Bot.Quests.EnsureAccept(questID))
-                EnsureAccept(questID.ID);
-
             if (
                 questData != null
                 && questID.Requirements != null
@@ -3291,9 +3288,6 @@ public class CoreBots
             Logger($"Failed to load quest [{questID}] after multiple attempts.");
             return false;
         }
-
-        if (!Bot.Quests.EnsureAccept(questID))
-            EnsureAccept(questID);
 
         // Check turnin requirements
         if (!quest.Requirements.All(req => req != null && CheckInventory(req.ID, req.Quantity)))
@@ -3417,7 +3411,7 @@ public class CoreBots
             return 0;
         }
 
-        if (quest != null && !Bot.Quests.EnsureAccept(questID))
+        if (quest != null && !Bot.Quests.IsInProgress(questID))
             EnsureAccept(questID);
         Bot.Wait.ForTrue(() => Bot.Quests.IsInProgress(questID), 20);
 
@@ -7423,7 +7417,7 @@ public class CoreBots
     /// </summary>
     private void SkuaVersionChecker(string targetVersion = "1.4.0.3")
     {
-        if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2" || Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
+        if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2"|| Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
             return;
 
         if (
