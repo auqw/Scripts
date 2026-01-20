@@ -860,8 +860,8 @@
       "astral empyrean"
     ],
     "path": "Ultras/AstralEmpyrean.cs",
-    "size": 12219,
-    "sha256": "c4b12d94ae3f904bddd3a0a7f75e7af00a8be8cb7f4d8e5bad381e6d330c69d6",
+    "size": 12205,
+    "sha256": "173e0e38b9eef3fab299a306df4c649cc22bdbc53ba2199ce6e343d8dda715f4",
     "fileName": "AstralEmpyrean.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
   },
@@ -9691,7 +9691,7 @@
     ],
     "path": "Story/Nation/tercesarchive.cs",
     "size": 3683,
-    "sha256": "ce71bfc2bc9dcf725d35a8995e425cf404d83e4cb78398b15ad3d6eef2a68518",
+    "sha256": "b627dab81bd9bb41561f8b7e77a92343743188da9dc35b9cebd1d2953e2127d8",
     "fileName": "tercesarchive.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/tercesarchive.cs"
   },
