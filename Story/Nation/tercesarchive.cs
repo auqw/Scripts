@@ -77,8 +77,8 @@ public class TercesArchive
         if (!Story.QuestProgression(10551))
         {
             Core.HuntMonsterQuest(10551,
-                ("tercesarchive", UseableMonsters[0], ClassType.Farm),
-                ("tercesarchive", UseableMonsters[1], ClassType.Farm));
+                ("tercesarchive", UseableMonsters[1], ClassType.Farm),
+                ("tercesarchive", UseableMonsters[0], ClassType.Farm));
         }
 
 
