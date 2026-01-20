@@ -233,11 +233,12 @@ public class UltraDrago
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
-
-        Bot.Quests.UpdateQuest(8397);
+        if (!Bot.Quests.IsUnlocked)
+            Bot.Quests.UpdateQuest(8397);
         C.AddDrop("King Drago Insignia");
 
         Core.Join(map);
+        C.EnsureAccept(8397);
         Ultra.WaitForArmy(3, "ultra_drago.sync");
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
@@ -257,7 +258,8 @@ public class UltraDrago
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
-                C.EnsureComplete(8397);
+                if (Bot.Quests.IsUnlocked)
+                    C.EnsureComplete(8397);
                 Bot.Wait.ForPickup("King Drago Insignia");
                 if (Bot.Config!.Get<bool>("DoEnh"))
                     Adv.GearStore(true, true);
