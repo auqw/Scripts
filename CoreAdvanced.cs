@@ -1869,11 +1869,22 @@ public class CoreAdvanced
     //         GearStore(true);
     // }
 
+    // New public API
     public void RankUpClass(string className, bool gearRestore = true)
         => RankUpClassInternal(className, null, gearRestore);
 
     public void RankUpClass(int itemId, bool gearRestore = true)
         => RankUpClassInternal(null, itemId, gearRestore);
+
+    // Legacy reflection entry point
+    public void RankUpClass(string className, bool gearRestore, int itemid)
+    {
+        if (itemid > 0)
+            RankUpClass(itemid, gearRestore);
+        else
+            RankUpClass(className, gearRestore);
+    }
+
 
     private void RankUpClassInternal(string? className, int? itemId, bool gearRestore)
     {
