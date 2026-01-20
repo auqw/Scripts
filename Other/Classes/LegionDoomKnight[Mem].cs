@@ -45,7 +45,7 @@ public class LegionDoomKnight
 
     public void GetLDK(bool rankUpClass = true)
     {
-        if (Core.CheckInventory("Legion DoomKnight"))
+        if (Core.CheckInventory(38742))
             return;
 
         if (!Core.CheckInventory("Sepulchure's DoomKnight Armor"))
@@ -61,7 +61,7 @@ public class LegionDoomKnight
         );
         Core.CancelRegisteredQuests();
 
-        Core.BuyItem("battleon", 1106, "Legion DoomKnight");
+        Core.BuyItem("battleon", 1106, 38742);
 
         if (rankUpClass)
             Adv.RankUpClass("Legion DoomKnight");
