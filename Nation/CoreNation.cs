@@ -1436,29 +1436,45 @@ public class CoreNation
     void DoSwindlesReturnArea(bool returnPolicyActive, string? item = null)
     {
         if (!returnPolicyActive)
+        {
             return;
+        }
 
         if (!Core.CheckInventory(new[] { Uni(1), Uni(6), Uni(9), Uni(16), Uni(20) }))
+        {
             return;
+        }
 
         Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
         if (quest?.Rewards == null)
         {
-            Core.Logger("Failed to load quest 7551.");
+            Core.Logger("Failed to load quest 7551 - quest or rewards are null");
             return;
         }
 
-        // Early exit: all rewards already maxed (or preferred item maxed)
+        // Early exit: check if preferred item is already maxed
         if (item != null)
         {
             ItemBase? preferred = quest.Rewards.FirstOrDefault(r => r.Name == item);
-            if (preferred == null || Core.CheckInventory(preferred.ID, preferred.MaxStack))
+            if (preferred == null)
+            {
+                Core.Logger($"Preferred item '{item}' not found in quest rewards");
                 return;
+            }
+
+            if (Core.CheckInventory(preferred.ID, preferred.MaxStack))
+            {
+                Core.Logger($"Preferred item '{item}' is already maxed ({Bot.Inventory.GetQuantity(preferred.Name)}{preferred.MaxStack}) - skipping quest");
+                return;
+            }
         }
+        // Early exit: check if all rewards are already maxed
         else if (quest.Rewards.All(r => Core.CheckInventory(r.ID, r.MaxStack)))
         {
+            Core.Logger("All quest rewards are already maxed - skipping quest");
             return;
         }
+
 
         Core.EnsureAccept(7551);
         Core.ResetQuest(7551);
@@ -1469,10 +1485,14 @@ public class CoreNation
             : quest.Rewards.FirstOrDefault(r => !Core.CheckInventory(r.ID, r.MaxStack));
 
         if (!Bot.Quests.CanCompleteFullCheck(7551))
+        {
+            Core.Logger("Quest 7551 cannot be completed - missing requirements");
             return;
+        }
 
         if (reward != null)
         {
+            Core.Logger($"Completing quest with specific reward: {reward.Name} (ID: {reward.ID})");
             Core.EnsureComplete(7551, reward.ID);
             Bot.Wait.ForQuestComplete(7551);
             Bot.Wait.ForPickup(reward.ID);

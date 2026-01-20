@@ -72,155 +72,176 @@ public class SuppliesToSpinTheWheelofChance
     }
 
     public void DoSupplies()
-    { // Set Config Options & Convert Enum into string for display
-        string? SwindlesReturnItem = Bot.Config!.Get<SwindlesReturnItem>("SwindlesReturnItem")
-            .ToString()
-            ?.Replace('_', ' ');
-        string? SuppliesItem = Bot.Config!.Get<SuppliesReward>("SuppliesReward")
-            .ToString()
-            ?.Replace('_', ' ');
+    {
+        // Get and normalize config options
+        string? swindlesReturnItem = GetNormalizedConfigItem<SwindlesReturnItem>("SwindlesReturnItem");
+        string? suppliesItem = GetNormalizedConfigItem<SuppliesReward>("SuppliesReward");
 
-        // Normalize "All" into null to mean "max everything"
-        SuppliesItem = SuppliesItem == "All" ? null : SuppliesItem;
-        SwindlesReturnItem = SwindlesReturnItem == "All" ? null : SwindlesReturnItem;
+        // Load required quests
+        Quest supplies = LoadQuestWithRetry(2857, "Supplies");
+        Quest swindlesReturn = LoadQuestWithRetry(7551, "Swindle's Return");
 
-        Retry2857:
-        // Load quest 2857 (Supplies)
-        Quest? Supplies = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(2857));
-        if (Supplies == null)
+        // Build combined rewards list
+        List<ItemBase> combinedRewards = BuildCombinedRewardsList(supplies, swindlesReturn, suppliesItem);
+
+        // Log configuration
+        LogSuppliesConfiguration(combinedRewards, suppliesItem, swindlesReturnItem);
+
+        // Process each reward
+        ProcessRewards(combinedRewards, supplies, swindlesReturn, ref suppliesItem, ref swindlesReturnItem);
+    }
+
+    private string? GetNormalizedConfigItem<T>(string configKey) where T : Enum
+    {
+        string? item = Bot.Config!.Get<T>(configKey).ToString()?.Replace('_', ' ');
+        return item == "All" ? null : item;
+    }
+
+    private Quest LoadQuestWithRetry(int questId, string questName)
+    {
+        while (true)
         {
-            Core.Logger("Failed to load quest 2857.");
-            Core.Sleep();
-            goto Retry2857;
-        }
+            Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(questId));
+            if (quest != null)
+                return quest;
 
-        Retry7551:
-        // Load quest 7551 (Swindle’s Return)
-        Quest? SwindlesReturn = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
-        if (SwindlesReturn == null)
-        {
-            Core.Logger("Failed to load quest 7551.");
+            Core.Logger($"Failed to load quest {questId} ({questName}). Retrying...");
             Core.Sleep();
-            goto Retry7551;
         }
+    }
 
-        // --- Build combined rewards list ---
+    private List<ItemBase> BuildCombinedRewardsList(Quest supplies, Quest swindlesReturn, string? suppliesItem)
+    {
         List<ItemBase> combinedRewards = new();
 
         // Add unique Supplies rewards
         combinedRewards.AddRange(
-            Supplies
-                .Rewards.Where(r => r != null && Nation.SuppliesRewards.Contains(r.Name))
+            supplies.Rewards
+                .Where(r => r != null && Nation.SuppliesRewards.Contains(r.Name))
                 .DistinctBy(r => r.ID)
         );
 
-        // Add unique SwindlesReturn rewards
+        // Add unique Swindle's Return rewards
         combinedRewards.AddRange(
-            SwindlesReturn
-                .Rewards.Where(r => r != null && Nation.SwindlesReturnRewards.Contains(r.Name))
+            swindlesReturn.Rewards
+                .Where(r => r != null && Nation.SwindlesReturnRewards.Contains(r.Name))
                 .DistinctBy(r => r.ID)
         );
 
-        // If a specific Supplies reward was chosen, filter down to it
-        if (SuppliesItem != null)
+        // Filter to specific item if chosen
+        if (suppliesItem != null)
         {
-            var chosen = Supplies.Rewards?.FirstOrDefault(r => r.Name == SuppliesItem);
+            ItemBase? chosen = supplies.Rewards?.FirstOrDefault(r => r.Name == suppliesItem);
             if (chosen != null)
-                combinedRewards = new List<ItemBase> { chosen };
-        }
-        else
-        {
-            // Otherwise, ensure no duplicates remain
-            combinedRewards = combinedRewards.DistinctBy(r => r.ID).ToList();
+                return new List<ItemBase> { chosen };
         }
 
-        // Log what we’re working on
+        return combinedRewards.DistinctBy(r => r.ID).ToList();
+    }
+
+    private void LogSuppliesConfiguration(List<ItemBase> rewards, string? suppliesItem, string? swindlesReturnItem)
+    {
+        string rewardNames = string.Join("\", \"", rewards.Select(r => r.Name));
         Core.Logger(
-            $"Rewards Selected: \"{string.Join("\", \"", combinedRewards.Select(r => r.Name))}\"\n\n"
-                + $"Maxing Supplies? {(SuppliesItem == null ? "Yes" : "No")}\n"
-                + $"Maxing Swindles? {(SwindlesReturnItem == null ? "Yes" : "No")}\n",
+            $"Rewards Selected: \"{rewardNames}\"\n\n" +
+            $"Maxing Supplies? {(suppliesItem == null ? "Yes" : "No")}\n" +
+            $"Maxing Swindles? {(swindlesReturnItem == null ? "Yes" : "No")}\n",
             "STStW Config"
         );
+    }
 
-        // Process rewards
+    private void ProcessRewards(
+     List<ItemBase> combinedRewards,
+     Quest supplies,
+     Quest swindlesReturn,
+     ref string? suppliesItem,
+     ref string? swindlesReturnItem)
+    {
         foreach (ItemBase item in combinedRewards)
         {
-            // Skip if the item is already in the inventory and we have the max stack
             if (Core.CheckInventory(item.ID, item.MaxStack))
+            {
+                Core.Logger($"Skipping {item.Name} - already at max stack ({item.MaxStack})");
                 continue;
+            }
 
             Core.FarmingLogger(item.Name, item.MaxStack);
 
-            // Determine the SwindlesReturnItem if it's null
-            if (SwindlesReturn == null || SwindlesReturn.Rewards == null)
+            // Determine items dynamically if set to "All"
+            swindlesReturnItem ??= GetNextNonMaxedReward(swindlesReturn, Nation.SwindlesReturnRewards);
+            suppliesItem ??= GetNextNonMaxedReward(supplies, Nation.SuppliesRewards);
+
+            if (swindlesReturnItem == null)
+                Core.Logger("All Swindle's Return items are maxed - Return Policy will be disabled");
+
+            if (suppliesItem == null && !Nation.SuppliesRewards.Contains(item.Name))
             {
-                Core.Logger("SwindlesReturn or SwindlesReturn.Rewards is null");
-                return;
+                Core.Logger($"No valid Supplies item found for {item.Name} - skipping");
+                continue;
             }
+            // ✅ FIX: Only use item.Name as fallback if it's actually valid for that quest
+            string currentSuppliesItem = suppliesItem ??
+                (Nation.SuppliesRewards.Contains(item.Name) ? item.Name : suppliesItem);
 
-            SwindlesReturnItem ??= SwindlesReturn
-                .Rewards.Where(r =>
-                    r != null
-                    && !Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i.ID == r.ID)
-                    && r.Quantity < r.MaxStack
-                    && Nation.SwindlesReturnRewards.Contains(r.Name)
-                )
-                .Select(r => r.Name)
-                .FirstOrDefault();
+            string? currentSwindlesItem = swindlesReturnItem ??
+                (Nation.SwindlesReturnRewards.Contains(item.Name) ? item.Name : null);
 
-            Core.Logger($"SwindlesReturnItem: {SwindlesReturnItem}");
+            Core.Logger($"Target - Supplies: {currentSuppliesItem ?? "None"}, Swindle's Return: {currentSwindlesItem ?? "None"}");
 
-            // Determine the SuppliesItem if it's null
-            if (Supplies == null || Supplies.Rewards == null)
-            {
-                Core.Logger("Supplies or Supplies.Rewards is null");
-                return;
-            }
+            // Get max stacks only for valid items
+            int suppliesMaxStack = currentSuppliesItem != null
+                ? GetRewardMaxStack(supplies, currentSuppliesItem)
+                : 0;
 
-            SuppliesItem ??= Supplies
-                .Rewards.Where(r =>
-                    r != null
-                    && !Bot.Inventory.Items.Concat(Bot.Bank.Items).Any(i => i.ID == r.ID)
-                    && r.Quantity < r.MaxStack
-                    && Nation.SuppliesRewards.Contains(r.Name)
-                )
-                .Select(r => r.Name)
-                .FirstOrDefault();
+            int swindlesMaxStack = currentSwindlesItem != null
+                ? GetRewardMaxStack(swindlesReturn, currentSwindlesItem)
+                : 0;
 
-            Core.Logger($"SuppliesItem: {SuppliesItem}");
+            Core.Logger($"Max Stacks - Supplies: {suppliesMaxStack}, Swindle's Return: {swindlesMaxStack}");
 
-            // Determine the max stack values directly without null checks
-            ItemBase? suppliesReward =
-                SuppliesItem == null
-                    ? Supplies.Rewards.FirstOrDefault(x => x != null && x.Name == item.Name)
-                    : Supplies.Rewards.FirstOrDefault(x => x != null && x.Name == SuppliesItem);
+            bool returnPolicyActive = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool returnSupplies)
+                && returnSupplies
+                && currentSwindlesItem != null; // ✅ Only activate if we have a valid Swindle's item
 
-            int suppliesMaxStack = suppliesReward != null ? suppliesReward.MaxStack : 0;
-            Core.Logger($"suppliesMaxStack: {suppliesMaxStack}");
-
-            ItemBase? swindlesReward =
-                SwindlesReturnItem == null
-                    ? SwindlesReturn.Rewards.FirstOrDefault(x => x != null && x.Name == item.Name)
-                    : SwindlesReturn.Rewards.FirstOrDefault(x =>
-                        x != null && x.Name == SwindlesReturnItem
-                    );
-
-            int swindlesMaxStack = swindlesReward != null ? swindlesReward.MaxStack : 0;
-            Core.Logger($"swindlesMaxStack: {swindlesMaxStack}");
-
-            // Call the Nation.Supplies method with the correct parameters
             Nation.Supplies(
-                SuppliesItem ?? item.Name, // Coalesce SuppliesItem to item.Name if it's null
-                suppliesMaxStack, // Use determined max stack for Supplies
+                currentSuppliesItem,
+                suppliesMaxStack,
                 Bot.Config!.Get<bool>("UltraAlteon"),
                 Bot.Config!.Get<bool>("KeepVoucher"),
                 Bot.Config!.Get<bool>("AssistantDuring"),
-                SwindlesReturnItem ?? item.Name, // Use SwindlesReturnItem if set, otherwise use item.Name
-                Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool _returnSupplies)
-                    && _returnSupplies,
+                currentSwindlesItem, // Can be null now
+                returnPolicyActive,
                 Bot.Config.Get<bool>("VoucherItemQuestDuring")
             );
         }
+    }
+    private string? GetNextNonMaxedReward(Quest quest, string[] validRewards)
+    {
+        if (quest?.Rewards == null)
+        {
+            Core.Logger($"Quest rewards are null for quest {quest?.ID ?? 0}");
+            return null;
+        }
+
+        var allItems = Bot.Inventory.Items.Concat(Bot.Bank.Items);
+
+        return quest.Rewards
+            .Where(r => r != null &&
+                        validRewards.Contains(r.Name) &&
+                        !allItems.Any(i => i.ID == r.ID && i.Quantity >= r.MaxStack))
+            .Select(r => r.Name)
+            .FirstOrDefault();
+    }
+
+    private int GetRewardMaxStack(Quest quest, string itemName)
+    {
+        ItemBase? reward = quest.Rewards?.FirstOrDefault(x => x != null && x.Name == itemName);
+        int maxStack = reward?.MaxStack ?? 0;
+
+        if (maxStack == 0)
+            Core.Logger($"Warning: Could not find max stack for '{itemName}' in quest {quest.ID}");
+
+        return maxStack;
     }
 
     public enum SwindlesReturnItem
@@ -246,4 +267,5 @@ public class SuppliesToSpinTheWheelofChance
         Unidentified_10,
         Essence_of_Nulgath,
     }
+
 }
