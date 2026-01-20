@@ -30,17 +30,17 @@ public class FindingFragments_Any
     }
     private static CoreStory _Story;
 
-    public string OptionStorage = "Finding_FragmentsV2";
+    public string OptionStorage = "FindingFragmentsV2";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        CoreBots.Instance.SkipOptions,
         new Option<WeaponOfDestiny>(
             "questID",
             "Weapon Type",
             "Select which quest variant you want to do",
             WeaponOfDestiny.Blade
         ),
+        CoreBots.Instance.SkipOptions
     };
 
     public void ScriptMain(IScriptInterface Bot)
