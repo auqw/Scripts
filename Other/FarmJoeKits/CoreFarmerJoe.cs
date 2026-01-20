@@ -1223,67 +1223,38 @@ public class CoreFarmerJoe
 
     #region BTS
 
-    /// <summary>
-    /// Configures the character's solo and farm classes based on available inventory items. This includes:
-    /// - **Class Selection:** Chooses appropriate classes for solo and farm activities from predefined lists
-    ///  based on availability in inventory or bank.
-    /// - **Class Ranking:** Ranks up selected classes to Rank 10 if they are not already at that level.
-    /// - **Boosting Gear:** Equips boosting gear if the configuration option is enabled, prioritizing items based on specified meta priorities.
-    /// </summary>
     public void SetClass()
     {
-        // Handle SoloClass
-        if (Core.FarmClass == "Generic" || string.IsNullOrEmpty(Core.SoloClass) || farmClasses.Any(a => a.ToLower() == Core.SoloClass.ToLower()))
+        if (string.IsNullOrEmpty(Core.SoloClass)
+            || Core.SoloClass == "Generic"
+            || !soloClasses.Any(x => x.Equals(Core.SoloClass, StringComparison.OrdinalIgnoreCase)))
         {
-            Core.SoloClass =
-                soloClasses.FirstOrDefault(x => Core.CheckInventory(x))
-                ?? Bot.Player.CurrentClass!.Name;
+            string? solo =
+                soloClasses.FirstOrDefault(x => Core.CheckInventory(x));
+
+            Core.SoloClass = solo ?? Bot.Player.CurrentClass!.Name;
         }
 
-        // Handle FarmClass
-        if (Core.FarmClass == "Generic" || string.IsNullOrEmpty(Core.FarmClass) || farmClasses.Any(a => a.ToLower() == Core.FarmClass.ToLower()))
+        if (string.IsNullOrEmpty(Core.FarmClass)
+            || Core.FarmClass == "Generic"
+            || !farmClasses.Any(x => x.Equals(Core.FarmClass, StringComparison.OrdinalIgnoreCase)))
         {
-            Core.FarmClass =
-                farmClasses.FirstOrDefault(x => Core.CheckInventory(x))
-                ?? Bot.Player.CurrentClass!.Name;
+            string? farm =
+                farmClasses.FirstOrDefault(x => Core.CheckInventory(x));
+
+            Core.FarmClass = farm ?? Bot.Player.CurrentClass!.Name;
         }
 
         if (Core.CheckClassRank(false, Core.SoloClass) < 10)
             Adv.RankUpClass(Core.SoloClass);
 
         if (Core.CheckClassRank(false, Core.FarmClass) < 10)
-            Adv.RankUpClass(Core.FarmClass); // Fixed: was Core.SoloClass
+            Adv.RankUpClass(Core.FarmClass);
 
-        if (Bot.Config!.Get<bool>("EquipBoostingGear"))
-        {
-            var dmg = new[]
-            {
-                "dmgAll",
-                "gold",
-                "cp",
-                "rep",
-                "Undead",
-                "Chaos",
-                "Elemental",
-                "Dragonkin",
-                "Human",
-            };
-            var arm = Core.CheckInventory("Polly Roger") ? new[] { "gold", "cp", "rep" } : dmg;
-            Core.EquipBestItemsForMeta(
-                new()
-                {
-                    { "Cape", dmg },
-                    { "Helm", dmg },
-                    { "Armor", arm },
-                    { "Weapon", new[] { "dmgAll", "gold", "cp", "rep" } },
-                    { "Pet", dmg },
-                }
-            );
-        }
-
-        Core.Logger($"SoloClass {Core.SoloClass}");
-        Core.Logger($"FarmClass {Core.FarmClass}");
+        Core.Logger($"SoloClass resolved -> {Core.SoloClass}");
+        Core.Logger($"FarmClass resolved -> {Core.FarmClass}");
     }
+
 
     /// <summary>
     /// Enhances the first item from the given list of items in the player's inventory, if found.
