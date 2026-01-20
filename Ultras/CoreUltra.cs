@@ -465,7 +465,7 @@ public class CoreUltra
                 ":",
                 "-"
             );
-        int need = Math.Max(1, quantity) + 1;
+        int need = quantity == 0 ? 1 : Math.Max(1, quantity) + 1;
 
         Poke(syncFile, me, false);
 
