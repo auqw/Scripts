@@ -860,8 +860,8 @@
       "astral empyrean"
     ],
     "path": "Ultras/AstralEmpyrean.cs",
-    "size": 12205,
-    "sha256": "173e0e38b9eef3fab299a306df4c649cc22bdbc53ba2199ce6e343d8dda715f4",
+    "size": 12501,
+    "sha256": "7f69a351bdef023bc291c14e2907b6ec23b52eb952d35800e9ae094a52d2485f",
     "fileName": "AstralEmpyrean.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
   },
@@ -4621,8 +4621,8 @@
       "auto tag"
     ],
     "path": "Army/OneClient/TagAllAccounts.cs",
-    "size": 1440,
-    "sha256": "39f804729379837b27fb1b8e39b42727472900872d8503530fd4291870859df9",
+    "size": 1545,
+    "sha256": "1ac7f367c066dce14ed89ebe4469549e26c974ec08972ff606c0b13f05511586",
     "fileName": "TagAllAccounts.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/TagAllAccounts.cs"
   },
@@ -20283,8 +20283,8 @@
       "frostvale"
     ],
     "path": "Seasonal/Frostvale/CheckForDonatedACs.cs",
-    "size": 10520,
-    "sha256": "413612f800360cecf31417e4580d12c668e20a776ba61cafdc5a31883bb5cf71",
+    "size": 10237,
+    "sha256": "fb617594c9bbe2919d116354958408b50247106332fb048c2171047e64bdd9c0",
     "fileName": "CheckForDonatedACs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Frostvale/CheckForDonatedACs.cs"
   },
