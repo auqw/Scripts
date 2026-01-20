@@ -807,8 +807,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 44625,
-    "sha256": "03259e0f4701a630409199608b3f9e2af200416ccddf330880dcd8ac8f195a5b",
+    "size": 44645,
+    "sha256": "2027c0057cf4dc26ed31a3bf653cf46f527b47d09e6161707815f924b05d01b5",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -875,8 +875,8 @@
       "synthetic viscera"
     ],
     "path": "Ultras/DarkCarnax.cs",
-    "size": 11834,
-    "sha256": "6a9f1c81927f55d212b213b38775e9bbbdab9caa8f6c9d440755db4dabe2475b",
+    "size": 11849,
+    "sha256": "3a03bc8ab4a7095ea75f5c1514d3d28325fc6105852dec6e40d935135ce30cc0",
     "fileName": "DarkCarnax.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/DarkCarnax.cs"
   },
