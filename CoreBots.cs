@@ -85,7 +85,7 @@ public class CoreBots
     public bool AntiLag { get; set; } = true;
 
     // [Can Change] Name of your soloing class
-    public string SoloClass { get; set; } = "Generic";
+    public string SoloClass { get; set; } = string.Empty;
 
     // [Can Change] Mode of soloing class, if it has multiple.
     public ClassUseMode SoloUseMode { get; set; } = ClassUseMode.Base;
@@ -97,7 +97,7 @@ public class CoreBots
     public string[] SoloGear { get; set; } = Array.Empty<string>();
 
     // [Can Change] Name of your farming class
-    public string FarmClass { get; set; } = "Generic";
+    public string FarmClass { get; set; } = string.Empty;
 
     // [Can Change] Mode of farming class, if it has multiple.
     public ClassUseMode FarmUseMode { get; set; } = ClassUseMode.Base;
@@ -109,7 +109,7 @@ public class CoreBots
     public string[] FarmGear { get; set; } = Array.Empty<string>();
 
     // [Can Change] Name of your dodge class
-    public string DodgeClass { get; set; } = "Generic";
+    public string DodgeClass { get; set; } = string.Empty;
 
     // [Can Change] Mode of dodge class, if it has multiple.
     public ClassUseMode DodgeUseMode { get; set; } = ClassUseMode.Base;
@@ -121,7 +121,7 @@ public class CoreBots
     public string[] DodgeGear { get; set; } = Array.Empty<string>();
 
     // [Can Change] Name of your bossing class
-    public string BossClass { get; set; } = "Generic";
+    public string BossClass { get; set; } = string.Empty;
 
     // [Can Change] Mode of boss class, if it has multiple.
     public ClassUseMode BossUseMode { get; set; } = ClassUseMode.Base;
@@ -7417,7 +7417,7 @@ public class CoreBots
     /// </summary>
     private void SkuaVersionChecker(string targetVersion = "1.4.0.3")
     {
-        if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2"|| Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
+        if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2" || Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
             return;
 
         if (
@@ -7443,11 +7443,12 @@ public class CoreBots
     bool usingBossGeneric = false;
 
     /// <summary>
-    /// Equips either the FarmClass or SoloClass from the CanChange section at the top of CoreBots
+    /// Equips either the FarmClass or SoloClass (or Dodge/Boss) from CoreBots
     /// </summary>
-    /// <param name="classToUse">Type "ClassType." and then either Farm or Solo in order to select which type it should swap too</param>
+    /// <param name="classToUse">Type "ClassType." and then either Farm, Solo, Dodge, or Boss</param>
     public void EquipClass(ClassType classToUse)
     {
+        // Already equipped? Skip if timer is running
         if (currentClass == classToUse && Bot.Skills.TimerRunning)
             return;
 
@@ -7456,32 +7457,42 @@ public class CoreBots
         switch (classToUse)
         {
             case ClassType.Farm:
-                if ((FarmClass != "Generic" || FarmClass != "(Current)") && !string.IsNullOrEmpty(FarmClass) && CheckInventory(FarmClass))
+                if (FarmClass != "Generic" && FarmClass != "(Current)"
+                    && !string.IsNullOrEmpty(FarmClass)
+                    && CheckInventory(FarmClass))
                     if (_equipClass(usingFarmGeneric, FarmClass, FarmUseMode, FarmGearOn, FarmGear))
                         return;
                 break;
 
             case ClassType.Solo:
-                if ((SoloClass != "Generic" || FarmClass != "(Current)") && !string.IsNullOrEmpty(SoloClass) && CheckInventory(SoloClass))
+                if (SoloClass != "Generic" && SoloClass != "(Current)"
+                    && !string.IsNullOrEmpty(SoloClass)
+                    && CheckInventory(SoloClass))
                     if (_equipClass(usingSoloGeneric, SoloClass, SoloUseMode, SoloGearOn, SoloGear))
                         return;
                 break;
 
             case ClassType.Dodge:
-                if ((DodgeClass != "Generic" || FarmClass != "(Current)") && !string.IsNullOrEmpty(DodgeClass) && CheckInventory(DodgeClass))
+                if (DodgeClass != "Generic" && DodgeClass != "(Current)"
+                    && !string.IsNullOrEmpty(DodgeClass)
+                    && CheckInventory(DodgeClass))
                     if (_equipClass(usingDodgeGeneric, DodgeClass, DodgeUseMode, DodgeGearOn, DodgeGear))
                         return;
                 break;
 
             case ClassType.Boss:
-                if ((BossClass != "Generic" || FarmClass != "(Current)") && !string.IsNullOrEmpty(BossClass) && CheckInventory(BossClass))
+                if (BossClass != "Generic" && BossClass != "(Current)"
+                    && !string.IsNullOrEmpty(BossClass)
+                    && CheckInventory(BossClass))
                     if (_equipClass(usingBossGeneric, BossClass, BossUseMode, BossGearOn, BossGear))
                         return;
                 break;
         }
 
+        // Fallback: start skills for current class if equip didn't run
         Bot.Skills.StartAdvanced(Bot.Player.CurrentClass?.Name ?? "generic", false);
 
+        // --- Local helper ---
         bool _equipClass(
             bool usingGeneric,
             string className,
@@ -7491,7 +7502,10 @@ public class CoreBots
         )
         {
             if (usingGeneric)
+            {
+                Bot.Log("Using generic");
                 return false;
+            }
 
             if (!CheckInventory(className))
             {
@@ -7499,18 +7513,15 @@ public class CoreBots
                 return false;
             }
 
-            if (
-                !Bot
-                    .Inventory.Items.Concat(Bot.Bank.Items)
-                    .Any(x =>
-                        x.Name.ToLower().Trim() == className.ToLower().Trim()
-                        && x.Category == ItemCategory.Class
-                    )
-            )
+            // Get class ID once
+            InventoryItem classItem = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+                .FirstOrDefault(x =>
+                    x.Name.Equals(className, StringComparison.OrdinalIgnoreCase)
+                    && x.Category == ItemCategory.Class);
+
+            if (classItem == null)
             {
-                Logger(
-                    $"Class \"{className}\" found but not categorized as Class item - may be incorrect name"
-                );
+                Logger($"Class \"{className}\" found but not categorized as Class item");
                 return false;
             }
 
@@ -7520,33 +7531,21 @@ public class CoreBots
                 Equip(equipment);
             }
 
-            string? equipedClass = Bot.Player.CurrentClass?.Name.Trim().ToLower();
-            className = className.Trim().ToLower();
-            // Logger($"Equiped Class: [{equipedClass}], Equiping: [{className}].", "Class Equiper");
+            string classNameLower = className.Trim().ToLower();
+            string? equippedClass = Bot.Player.CurrentClass?.Name.Trim().ToLower();
+            int classID = classItem.ID;
 
-            while (!Bot.ShouldExit && equipedClass != className)
+            // Equip loop
+            while (!Bot.ShouldExit && equippedClass != classNameLower)
             {
                 JumpWait();
-
-                Equip(
-                    Bot.Inventory.Items.Concat(Bot.Bank.Items)
-                        .First(x =>
-                            x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class
-                        )
-                        .ID
-                );
-                Bot.Wait.ForItemEquip(
-                    Bot.Inventory.Items.Concat(Bot.Bank.Items)
-                        .First(x =>
-                            x.Name.ToLower().Trim() == className && x.Category == ItemCategory.Class
-                        )
-                        .ID
-                );
-                equipedClass = Bot.Player.CurrentClass?.Name.Trim().ToLower();
+                Equip(className);
+                Bot.Wait.ForItemEquip(className);
+                Sleep(100); // small buffer to let server sync
+                equippedClass = Bot.Player.CurrentClass?.Name.Trim().ToLower();
             }
 
-            // Logger($"Equiped Class: [{equipedClass}]", "Class Equiper");
-
+            // Start skills for the actual equipped class
             Bot.Skills.StartAdvanced(className, false, classMode);
             return true;
         }
