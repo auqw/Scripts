@@ -1256,6 +1256,7 @@ public class CoreArmyLite
         if (Bot.ShouldExit || _doForAllIndex >= (doForAllAccountDetails ??= readManager())?.Length)
             return false;
         Bot.Options.AutoRelogin = false;
+        Bot.Options.AutoReloginAny = false;
         // Pick current account safely
         if (doForAllAccountDetails == null || _doForAllIndex >= doForAllAccountDetails.Length)
             return false;
