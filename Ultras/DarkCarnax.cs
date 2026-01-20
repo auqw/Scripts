@@ -95,7 +95,7 @@ public class UltraDarkCarnax
     void Prep()
     {
         Bot.Events.ExtensionPacketReceived += DarkCarnaxListener;
-        // Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnh();
     }
@@ -111,7 +111,7 @@ public class UltraDarkCarnax
 
         C.AddDrop("Synthetic Viscera");
         C.RegisterQuests(8872);
-        Ultra.WaitForArmy(3, "darkcarnax.sync");
+        Ultra.WaitForArmy(attemptSolo ? 0 : 4, "darkcarnax.sync");
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
 
