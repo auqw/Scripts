@@ -1255,15 +1255,11 @@ public class CoreArmyLite
     {
         if (Bot.ShouldExit || _doForAllIndex >= (doForAllAccountDetails ??= readManager())?.Length)
             return false;
-
         Bot.Options.AutoRelogin = false;
-
         // Pick current account safely
         if (doForAllAccountDetails == null || _doForAllIndex >= doForAllAccountDetails.Length)
             return false;
-
         (string name, string pass) = doForAllAccountDetails[_doForAllIndex++];
-
         // Login if necessary
         if (!string.Equals(Core.Username(), name, StringComparison.OrdinalIgnoreCase))
         {
@@ -1272,31 +1268,14 @@ public class CoreArmyLite
                 Bot.Servers.Logout();
                 Bot.Wait.ForTrue(() => !Bot.Player.LoggedIn, 20);
             }
-
             Bot.Servers.Login(name, pass);
             Bot.Wait.ForTrue(() => Bot.Player.LoggedIn, 20);
             Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
         }
-
         Core.IsMember = Bot.Player.IsMember;
-        // Filter servers: remove blacklisted and full servers
-        Server[] serverPool = Bot.Servers.CachedServers?
-            .OfType<Server>()
-            .Where(s =>
-                s.Online
-                && s.PlayerCount < s.MaxPlayers
-                && (Core.IsMember || !s.Upgrade)
-                && !BlacklistedServers.Contains(s.Name?.ToLower() ?? "")
-            )
-            .ToArray() ?? Array.Empty<Server>();
 
-        if (serverPool.Length == 0)
-            return false;
-
-        // Pick a random safe server from the pool — ignore any saved ReloginServer
-        Server targetServer = serverPool[new Random().Next(serverPool.Length)];
-
-        // Connect
+        // Connect to Twilly or Twig
+        string targetServer = new Random().Next(2) == 0 ? "Twilly" : "Twig";
         Bot.Servers.Connect(targetServer);
         Bot.Wait.ForTrue(() => Bot.Player.Loaded, 30);
         Bot.Wait.ForMapLoad("battleon");
@@ -1312,17 +1291,13 @@ public class CoreArmyLite
         {
             Core.Join("whitemap");
         }
-
         // Open bank if not already
         if (Bot.Flash?.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
             Bot.Bank?.Open();
-
         Bot.Bank?.Load();
         Core.ReadCBO();
-
         return true;
     }
-
     private (string, string)[] readManager()
     {
         List<(string, string)> toReturn = new();
