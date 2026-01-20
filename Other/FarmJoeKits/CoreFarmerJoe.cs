@@ -1225,24 +1225,30 @@ public class CoreFarmerJoe
 
     public void SetClass()
     {
+        // SoloClass
         if (string.IsNullOrEmpty(Core.SoloClass)
             || Core.SoloClass == "Generic"
-            || !soloClasses.Any(x => x.Equals(Core.SoloClass, StringComparison.OrdinalIgnoreCase)))
+            || !soloClasses.Any(x => x.Equals(Core.SoloClass, StringComparison.OrdinalIgnoreCase))
+            || !Core.CheckInventory(Core.SoloClass))
         {
             string? solo =
                 soloClasses.FirstOrDefault(x => Core.CheckInventory(x));
 
-            Core.SoloClass = solo ?? Bot.Player.CurrentClass!.Name;
+            if (!string.IsNullOrEmpty(solo))
+                Core.SoloClass = solo;
         }
 
+        // FarmClass
         if (string.IsNullOrEmpty(Core.FarmClass)
             || Core.FarmClass == "Generic"
-            || !farmClasses.Any(x => x.Equals(Core.FarmClass, StringComparison.OrdinalIgnoreCase)))
+            || !farmClasses.Any(x => x.Equals(Core.FarmClass, StringComparison.OrdinalIgnoreCase))
+            || !Core.CheckInventory(Core.FarmClass))
         {
             string? farm =
                 farmClasses.FirstOrDefault(x => Core.CheckInventory(x));
 
-            Core.FarmClass = farm ?? Bot.Player.CurrentClass!.Name;
+            if (!string.IsNullOrEmpty(farm))
+                Core.FarmClass = farm;
         }
 
         if (Core.CheckClassRank(false, Core.SoloClass) < 10)
@@ -1254,6 +1260,7 @@ public class CoreFarmerJoe
         Core.Logger($"SoloClass resolved -> {Core.SoloClass}");
         Core.Logger($"FarmClass resolved -> {Core.FarmClass}");
     }
+
 
 
     /// <summary>
