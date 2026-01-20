@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 433126,
-    "sha256": "38674f47f28787687201043ee622aa6bc85fc2e66b074a5b5acaa0d9e9175429",
+    "size": 433304,
+    "sha256": "f0c4cfefe574f955878120b41f1d0a9f3570b4a953f0cf5aec353f927bef9607",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -795,8 +795,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDrago.cs",
-    "size": 12322,
-    "sha256": "1af8e85a2a17531d7d420e6c85440befe1443a2dadd80a9f62638c5b6773b0cc",
+    "size": 12440,
+    "sha256": "d9c265071d12ac3c238137a0db7950d03840913c64d08c168c32befc93d73a9c",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },
