@@ -141,12 +141,10 @@ public class AstralEmpyrean
     public void ScriptMain(IScriptInterface bot)
     {
         if (!Bot.Quests.IsUnlocked(9803))
-            C.Logger(
-                "Quest not unlocked: Asterism's Toll,",
-                messageBox: true,
-                stopBot: true
-            );
-
+        {
+            C.Logger("Quest not unlocked: Asterism's Toll, we'll continue anyway");
+            Bot.Quests.UpdateQuest(9803);
+        }
         Core.Boot();
         Adv.GearStore(EnhAfter: true);
         Prep();
@@ -199,8 +197,6 @@ public class AstralEmpyrean
                     C.EnsureComplete(9803);
                 break;
             }
-
-
 
             if (!Bot.Player!.HasTarget)
                 Bot.Combat.Attack("*");
