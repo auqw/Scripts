@@ -132,10 +132,11 @@ public class AstralEmpyrean
     public bool DontPreconfigure = true;
     public string OptionsStorage = "AstralEmpyrean";
     public List<IOption> Options = new()
-    {
-      new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
-        CoreBots.Instance.SkipOptions,
-    };
+{
+    new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
+    new Option<Players>("PlayerCount", "Player Count", "Number of players to wait for (waits for count - 1)", Players.Four_Players),
+    CoreBots.Instance.SkipOptions,
+};
 
     private string NormalizeString(string input) => (input ?? "").Trim().ToLower();
     public void ScriptMain(IScriptInterface bot)
@@ -176,7 +177,7 @@ public class AstralEmpyrean
         C.EnsureAccept(8547);
 
         Core.Join(map);
-        Ultra.WaitForArmy(3, "AstralEmpyrean.sync");
+        Ultra.WaitForArmy((int)Bot.Config!.Get<Players>("PlayerCount") - 1, "AstralEmpyrean.sync");
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
@@ -189,7 +190,7 @@ public class AstralEmpyrean
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
             }
-            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Astral's Supernova", 1), syncPath))
+            if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Astral's Supernova"), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
@@ -407,5 +408,13 @@ public class AstralEmpyrean
         _ = Task.Run(() => Bot.Player.WalkTo(x, y));
     }
 
+
+    enum Players
+    {
+        Four_Players = 4,
+        Five_Players = 5,
+        Six_Players = 6,
+        Seven_Players = 7
+    }
 }
 
