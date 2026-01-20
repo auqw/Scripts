@@ -33,8 +33,7 @@ public class TagAll
 
     public void DoTheThing()
     {
-        Bot.Options.ReloginServer =
-            (Bot.Options.ReloginServer ?? "Twilly") ?? new[] { "Twilly", "Twig" }[new Random().Next(2)];
+        Bot.Options.ReloginServer = "Twilly";
 
         List<ManagedAccount> accounts = Bot.Accounts.GetAllAccounts();
         int AccCount = accounts.Count;
@@ -42,6 +41,12 @@ public class TagAll
 
         while (!Bot.ShouldExit && Army.doForAll())
         {
+            while (!Bot.ShouldExit && !Bot.Player.Loaded)
+            {
+                Core.Sleep(1000);
+                if (Bot.Wait.ForMapLoad("battleon"))
+                    break;
+            }
             Core.Logger($"Adding Tags to {Bot.Player.Username} [Account {i}/{AccCount}], please be patient", "Tag All");
             Core.AutoAddTags();
             Core.Logger($"Tags for {Bot.Player.Username}, finished!", "Tag All");
