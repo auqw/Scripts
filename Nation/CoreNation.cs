@@ -1448,7 +1448,7 @@ public class CoreNation
         Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(7551));
         if (quest?.Rewards == null)
         {
-            Core.Logger("Failed to load quest 7551 - quest or rewards are null");
+            Core.DebugLogger(this, "Failed to load quest 7551 - quest or rewards are null");
             return;
         }
 
@@ -1458,20 +1458,20 @@ public class CoreNation
             ItemBase? preferred = quest.Rewards.FirstOrDefault(r => r.Name == item);
             if (preferred == null)
             {
-                Core.Logger($"Preferred item '{item}' not found in quest rewards");
+                Core.DebugLogger(this, $"Preferred item '{item}' not found in quest rewards");
                 return;
             }
 
             if (Core.CheckInventory(preferred.ID, preferred.MaxStack))
             {
-                Core.Logger($"Preferred item '{item}' is already maxed ({Bot.Inventory.GetQuantity(preferred.Name)}{preferred.MaxStack}) - skipping quest");
+                Core.DebugLogger(this, $"Preferred item '{item}' is already maxed ({Bot.Inventory.GetQuantity(preferred.Name)}{preferred.MaxStack}) - skipping quest");
                 return;
             }
         }
         // Early exit: check if all rewards are already maxed
         else if (quest.Rewards.All(r => Core.CheckInventory(r.ID, r.MaxStack)))
         {
-            Core.Logger("All quest rewards are already maxed - skipping quest");
+            Core.DebugLogger(this, "All quest rewards are already maxed - skipping quest");
             return;
         }
 
@@ -1486,13 +1486,13 @@ public class CoreNation
 
         if (!Bot.Quests.CanCompleteFullCheck(7551))
         {
-            Core.Logger("Quest 7551 cannot be completed - missing requirements");
+            Core.DebugLogger(this, "Quest 7551 cannot be completed - missing requirements");
             return;
         }
 
         if (reward != null)
         {
-            Core.Logger($"Completing quest with specific reward: {reward.Name} (ID: {reward.ID})");
+            Core.DebugLogger(this, "Completing quest with specific reward: {reward.Name} (ID: {reward.ID})");
             Core.EnsureComplete(7551, reward.ID);
             Bot.Wait.ForQuestComplete(7551);
             Bot.Wait.ForPickup(reward.ID);
