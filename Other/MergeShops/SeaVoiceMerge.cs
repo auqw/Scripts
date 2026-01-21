@@ -292,6 +292,7 @@ public class SeaVoiceMerge
         Core.CancelRegisteredQuests();
     }
 
+
     public void KillThing(
         string map,
         int mobMapID,
@@ -310,12 +311,12 @@ public class SeaVoiceMerge
             )
             ?.Name;
 
-        if (itemToEnhance != null)
-            Adv.EnhanceItem(
-                itemToEnhance,
-                EnhancementType.Lucky,
-                wSpecial: WeaponSpecial.Awe_Blast
-            );
+        // if (itemToEnhance != null)
+        //     Adv.EnhanceItem(
+        //         itemToEnhance,
+        //         EnhancementType.Lucky,
+        //         wSpecial: WeaponSpecial.Awe_Blast
+        //     );
 
         string? classNameToUse = Class ?? classFromPlayer;
         if (string.IsNullOrWhiteSpace(classNameToUse))
@@ -324,24 +325,17 @@ public class SeaVoiceMerge
             return;
         }
 
+        // FIX: actually equip the class you selected
+        Core.Equip(classNameToUse);
+
         Core.Join(map);
+        Bot.Wait.ForMapLoad(map);
         Adv.BuyItem("seavoice", 2320, "Vigil", 1000, 12023);
         Core.Equip(itemUsed);
         Core.Logger($"{itemUsed} [Vigil] Equiped? {Bot.Inventory?.IsEquipped("Vigil")}");
-        Bot.Wait.ForMapLoad(map);
-        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
-
-        // Locate mob by MapID
-        Monster? mob = Bot.Monsters.MapMonsters.FirstOrDefault(m => m?.MapID == mobMapID);
-        if (mob == null)
-        {
-            Core.Logger($"KillThing aborted: No mob found with MapID {mobMapID} in {map}.");
-            return;
-        }
-
         // Move to mob cell and set respawn
-        if (Bot.Player.Cell != mob.Cell)
-            Core.Jump(mob.Cell);
+        if (Bot.Player.Cell != "r2")
+            Core.Jump("r2", "Left");
         Bot.Player.SetSpawnPoint();
 
         while (
@@ -355,29 +349,22 @@ public class SeaVoiceMerge
                 continue;
             }
 
-            if (Bot.Player.Cell != mob.Cell)
-                Core.Jump(mob.Cell);
+            if (Bot.Player.Cell != "r2")
+                Core.Jump("r2", "Left");
 
-            // === Handle Oxidize aura (use potion to cleanse) ===
-            if (Bot.Self?.Auras?.Any(a => a?.Name == "Oxidize") == true)
+            // === Handle Oxidize aura (use Vigil to cleanse) ===
+            while (!Bot.ShouldExit && Bot.Self.Auras.Any(a => a.Name == "Oxidize") && !Bot.Self.Auras.Any(a => a.Name == "Vigil"))
             {
-                Bot.Skills.Pause();
-                while (!Bot.ShouldExit)
-                {
-                    if (Bot.Skills.CanUseSkill(5))
-                        Bot.Skills.UseSkill(5);
-                    Core.Sleep(500);
-                    if (Bot.Self?.Auras?.Any(a => a?.Name == "Oxidize") == false)
-                    {
-                        Bot.Skills.Resume();
-                        break;
-                    }
-                }
+                if (Bot.Skills.CanUseSkill(5))
+                    Bot.Skills.UseSkill(5);
+                Core.Sleep(500);
+                if (Bot.Self.Auras.Any(a => a.Name == "Vigil"))
+                    break;
             }
 
             // === Attack phase ===
-            Bot.Combat.Attack(mob);
-            Core.Sleep(250);
+            Bot.Combat.Attack("*");
+            Core.Sleep(500);
         }
 
         Core.Logger($"KillThing completed for {item} ({quant}).");
