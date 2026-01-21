@@ -1876,14 +1876,15 @@ public class CoreAdvanced
     public void RankUpClass(int itemId, bool gearRestore = true)
         => RankUpClassInternal(null, itemId, gearRestore);
 
-    // Legacy reflection entry point
-    public void RankUpClass(string className, bool gearRestore, int itemid)
+    // Exact old signature, with default for gearRestore
+    public void RankUpClass(string className, int itemid, bool gearRestore = true)
     {
         if (itemid > 0)
-            RankUpClass(itemid, gearRestore);
+            RankUpClass(itemid, gearRestore);   // call int overload
         else
-            RankUpClass(className, gearRestore);
+            RankUpClass(className, gearRestore); // call string overload
     }
+
 
 
     private void RankUpClassInternal(string? className, int? itemId, bool gearRestore)
