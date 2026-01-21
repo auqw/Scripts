@@ -181,7 +181,7 @@ public class SuppliesToSpinTheWheelofChance
             }
             // ✅ FIX: Only use item.Name as fallback if it's actually valid for that quest
             string? currentSuppliesItem = suppliesItem ??
-                (Nation.SuppliesRewards.Contains(item.Name) ? item.Name : null);
+                (Nation.SuppliesRewards.Contains(item.Name) ? item.Name : suppliesItem);
 
             string? currentSwindlesItem = swindlesReturnItem ??
                 (Nation.SwindlesReturnRewards.Contains(item.Name) ? item.Name : null);
