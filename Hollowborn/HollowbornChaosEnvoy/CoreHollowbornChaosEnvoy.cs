@@ -161,72 +161,78 @@ public class CoreHollowbornChaosEnvoy
                 "Stirring Discord",
                 (
                     8998,
-                    () =>
+                    new Action(() =>
                         StirringDiscord(
                             getAllDrops
                                 ? StirringDiscordRewards.All
                                 : Bot.Config!.Get<StirringDiscordRewards>("Stirring Discord")
                         )
+                    )
                 )
             },
             {
                 "In The Beasts Shadow",
                 (
                     8999,
-                    () =>
+                    new Action(() =>
                         InTheBeastsShadow(
                             getAllDrops
                                 ? InTheBeastsShadowRewards.All
                                 : Bot.Config!.Get<InTheBeastsShadowRewards>("In The Beasts Shadow")
                         )
+                    )
                 )
             },
             {
                 "Unique Quarry",
                 (
                     9000,
-                    () =>
+                    new Action(() =>
                         UniqueQuarry(
                             getAllDrops
                                 ? UniqueQuarryRewards.All
                                 : Bot.Config!.Get<UniqueQuarryRewards>("Unique Quarry")
                         )
+                    )
                 )
             },
             {
                 "Wavering Illusions",
                 (
                     9001,
-                    () =>
+                    new Action(() =>
                         WaveringIllusions(
                             getAllDrops
                                 ? WaveringIllusionsRewards.All
                                 : Bot.Config!.Get<WaveringIllusionsRewards>("Wavering Illusions")
                         )
+                    )
                 )
             },
             {
                 "Shadows Of Disdain",
                 (
                     9002,
-                    () =>
+                    new Action(() =>
                         ShadowsOfDisdain(
                             getAllDrops
                                 ? ShadowsOfDisdainRewards.All
                                 : Bot.Config!.Get<ShadowsOfDisdainRewards>("Shadows Of Disdain")
                         )
+                    )
                 )
             },
             {
                 "Persisting Mayhem",
                 (
                     9003,
-                    () =>
+                    new Action(() =>
                         PersistingMayhem(
                             getAllDrops
                                 ? PersistingMayhemRewards.All
                                 : Bot.Config!.Get<PersistingMayhemRewards>("Persisting Mayhem")
                         )
+                    )
                 )
             },
         };
