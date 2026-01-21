@@ -121,7 +121,7 @@ public class TreasureChestSpam
                     }
                 }
                 else
-                    Bot.Stop(false);
+                    Bot.StopSync(false);
             }
         }
         else if (goForbroke.Text == "GO FOR BROKE!")

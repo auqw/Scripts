@@ -63,7 +63,7 @@ public class SunsetTreasuresMerge
             )
             is not true
         )
-            Bot.Stop();
+            Bot.StopSync();
 
         Core.SetOptions();
 

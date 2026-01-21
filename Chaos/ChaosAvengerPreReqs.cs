@@ -110,7 +110,7 @@ public class ChaosAvengerClass
         else
         {
             Core.Logger("not enough insigs");
-            Bot.Stop();
+            Bot.StopSync();
         }
     }
 

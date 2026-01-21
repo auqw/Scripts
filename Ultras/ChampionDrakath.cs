@@ -166,7 +166,7 @@ public class ChampionDrakath
             || (!SoloTaunt && string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b)))
         {
             Core.Log("Setup", "Primary taunter required.");
-            Bot.Stop();
+            Bot.StopSync();
             return;
         }
 

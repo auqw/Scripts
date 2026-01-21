@@ -22,7 +22,7 @@ public class TestZone
 
         Test();
 
-        Bot.Stop();
+        Bot.StopSync();
     }
 
     void Test()

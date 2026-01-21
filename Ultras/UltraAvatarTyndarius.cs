@@ -141,7 +141,7 @@ public class UltraAvatarTyndarius
         Core.Boot();
         Prep();
         Fight();
-        Bot.Stop();
+        Bot.StopSync();
     }
 
     void Prep()
@@ -381,7 +381,7 @@ public class UltraAvatarTyndarius
 
         [Description("King's Echo")]
         KingsEcho,
-        
+
         [Description("StoneCrusher")]
         StoneCrusher,
 

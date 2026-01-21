@@ -233,7 +233,7 @@ public class CoreBots
         }
 
         if (!Bot.Player.LoggedIn)
-            Bot.Stop();
+            Bot.StopSync();
         ReadCBO();
         #region Social Privacy Options
 
@@ -532,7 +532,7 @@ public class CoreBots
                                     "Oh fuck!"
                                 );
                                 Bot.Events.MapChanged -= PrisonDetector;
-                                Bot.Stop(true);
+                                Bot.StopSync(true);
                             }
                             Bot.Events.MapChanged -= PrisonDetector;
                         }
@@ -2232,7 +2232,7 @@ public class CoreBots
                 $"Requested {requestedAmount}, but max stack for {item.Name} is {item.MaxStack}. Fix the calling script.",
                 "BuyItem"
             );
-            Bot.Stop(true);
+            Bot.StopSync(true);
         }
 
         // Unbank the item if it's in bank but not in inventory
@@ -6827,7 +6827,7 @@ public class CoreBots
     {
         if (Bot.ShouldExit)
         {
-            Bot.Stop(true);
+            Bot.StopSync(true);
             return;
         }
 
@@ -6888,7 +6888,7 @@ public class CoreBots
         if (stopBot)
         {
             scriptFinished = false;
-            Bot.Stop(true);
+            Bot.StopSync(true);
         }
     }
 
@@ -7384,7 +7384,7 @@ public class CoreBots
             }
 
             Bot.Log($"❌ Relogin failed after all attempts. 🛑");
-            Bot.Stop();
+            Bot.StopSync();
         }
         finally
         {
@@ -7514,7 +7514,7 @@ public class CoreBots
             }
 
             // Get class ID once
-            InventoryItem classItem = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+            InventoryItem? classItem = Bot.Inventory.Items.Concat(Bot.Bank.Items)
                 .FirstOrDefault(x =>
                     x.Name.Equals(className, StringComparison.OrdinalIgnoreCase)
                     && x.Category == ItemCategory.Class);
@@ -7530,6 +7530,7 @@ public class CoreBots
                 Sleep((int)(ActionDelay * 1.5));
                 Equip(equipment);
             }
+
 
             string classNameLower = className.Trim().ToLower();
             string? equippedClass = Bot.Player.CurrentClass?.Name.Trim().ToLower();
@@ -8073,7 +8074,7 @@ public class CoreBots
             "Files that start with the word \"Core\" are not meant to be run, these are for storage. Please select the correct script.",
             "Core File Info"
         );
-        Bot.Stop(true);
+        Bot.StopSync(true);
     }
 
     public void ByPassCheck((string, string) CellPad)
@@ -10373,7 +10374,7 @@ public class CoreBots
                 "https://discord.com/channels/1090693457586176013/1090741396970938399"
             );
 
-        Bot.Stop(type == AutoReportType.LockedQuest);
+        Bot.StopSync(type == AutoReportType.LockedQuest);
     }
 
     // public bool IdentityControl(ref string identity)
@@ -11949,4 +11950,13 @@ public enum AutoReportType
 {
     LockedQuest,
     ScriptCrash,
+}
+
+public static class StopExtensions
+{
+    /// <summary>
+    /// Synchronous helper over StopAsync to keep legacy call sites without async signatures.
+    /// </summary>
+    public static void StopSync(this IScriptInterface bot, bool crashed = false) =>
+        bot.StopAsync(crashed).GetAwaiter().GetResult();
 }

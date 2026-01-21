@@ -962,7 +962,7 @@ public class CoreStory
                         );
                     }
 
-                    Bot.Stop(true);
+                    Bot.StopSync(true);
                 }
             }
         }

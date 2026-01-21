@@ -89,7 +89,7 @@ public class UltraDarkCarnax
         Bot.Events.ExtensionPacketReceived -= DarkCarnaxListener;
         if (Bot.Config!.Get<bool>("DoEnh"))
             Adv.GearStore(true, true);
-        Bot.Stop();
+        Bot.StopSync();
     }
 
     void Prep()

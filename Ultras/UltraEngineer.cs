@@ -170,7 +170,7 @@ public class UltraEngineer
         Core.Boot();
         Prep();
         Fight();
-        Bot.Stop();
+        Bot.StopSync();
     }
 
     void Prep()

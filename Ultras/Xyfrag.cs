@@ -55,7 +55,7 @@ public class Xyfrag
         if (string.IsNullOrEmpty(taunter))
         {
             Core.Log("Setup", "Fill the taunter class in Script Options.");
-            Bot.Stop();
+            Bot.StopSync();
             return;
         }
 
@@ -63,7 +63,7 @@ public class Xyfrag
         Prep();
         Fight();
         Bot.Events.ExtensionPacketReceived -= Ultra.GenericChargeListener;
-        Bot.Stop();
+        Bot.StopSync();
     }
 
     bool IsTaunter() => Core.HasClassEquipped(taunter);

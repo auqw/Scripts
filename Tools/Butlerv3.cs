@@ -276,7 +276,7 @@ public class Butler3
                     Core.Logger($"{playerName} is ignoring goto requests, Stopping script!");
 
                     Bot.Events.ExtensionPacketReceived -= ChatListener;
-                    Bot.Stop(true);
+                    Bot.StopSync(true);
                     return;
                 }
             }
@@ -311,7 +311,7 @@ public class Butler3
                     );
 
                     Bot.Events.ExtensionPacketReceived -= ChatListener;
-                    Bot.Stop(true);
+                    Bot.StopSync(true);
                 }
             }
         }

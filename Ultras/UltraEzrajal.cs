@@ -182,7 +182,7 @@ public class UltraEzrajal
         Fight();
         if (Bot.Config!.Get<bool>("DoEnh"))
             Adv.GearStore(true, true);
-        Bot.Stop();
+        Bot.StopSync();
     }
 
     void Prep()

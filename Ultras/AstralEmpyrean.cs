@@ -151,7 +151,7 @@ public class AstralEmpyrean
         Prep();
         Fight();
         Adv.GearStore(true, EnhAfter: true);
-        Bot.Stop();
+        Bot.StopSync();
     }
 
     void Prep()

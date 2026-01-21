@@ -48,7 +48,7 @@ public class SecretMapQuest
 
         if (!EnsureGolden8thBirthdayCandle())
         {
-            Bot.Stop(true);
+            Bot.StopSync(true);
             return;
         }
 
@@ -60,7 +60,7 @@ public class SecretMapQuest
             if (Core.CheckInventory(DarkBerserkerName))
             {
                 Core.Logger("You already own Dark Berserker.");
-                Bot.Stop(true);
+                Bot.StopSync(true);
                 return;
             }
 

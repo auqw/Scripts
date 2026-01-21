@@ -621,7 +621,7 @@ public class CoreArmyLite
                     {
                         stopping = true;
                         Core.Logger($"A member has left the party, stopping the bot");
-                        Bot.Stop(true);
+                        Bot.StopSync(true);
                     }
                     break;
             }
@@ -1319,7 +1319,7 @@ public class CoreArmyLite
                     true
                 );
                 Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
-                Bot.Stop(true);
+                Bot.StopSync(true);
                 return Array.Empty<(string, string)>();
             }
 
@@ -1346,7 +1346,7 @@ public class CoreArmyLite
                 true
             );
             Process.Start(Path.Combine(AppContext.BaseDirectory, "Skua.Manager.exe"));
-            Bot.Stop(true);
+            Bot.StopSync(true);
         }
 
         return toReturn.ToArray();

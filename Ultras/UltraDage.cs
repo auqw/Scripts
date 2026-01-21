@@ -105,7 +105,7 @@ public class UltraDage
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
             Core.Log("Setup", "Fill both taunter classes in Script Options.");
-            Bot.Stop();
+            Bot.StopSync();
             return;
         }
         Core.Boot();
@@ -118,7 +118,7 @@ public class UltraDage
 
         if (Bot.Config!.Get<bool>("DoEnh"))
             Adv.GearStore(true, true);
-        Bot.Stop();
+        Bot.StopSync();
     }
 
     bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);

@@ -93,7 +93,7 @@ public class SuppliesToSpinTheWheelofChance
 
     private string? GetNormalizedConfigItem<T>(string configKey) where T : Enum
     {
-        string? item = Bot.Config!.Get<T>(configKey).ToString()?.Replace('_', ' ');
+        string? item = Bot.Config!.Get<T>(configKey)?.ToString()?.Replace('_', ' ');
         return item == "All" ? null : item;
     }
 
@@ -180,8 +180,8 @@ public class SuppliesToSpinTheWheelofChance
                 continue;
             }
             // ✅ FIX: Only use item.Name as fallback if it's actually valid for that quest
-            string currentSuppliesItem = suppliesItem ??
-                (Nation.SuppliesRewards.Contains(item.Name) ? item.Name : suppliesItem);
+            string? currentSuppliesItem = suppliesItem ??
+                (Nation.SuppliesRewards.Contains(item.Name) ? item.Name : null);
 
             string? currentSwindlesItem = swindlesReturnItem ??
                 (Nation.SwindlesReturnRewards.Contains(item.Name) ? item.Name : null);

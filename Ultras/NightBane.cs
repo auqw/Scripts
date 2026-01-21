@@ -225,7 +225,7 @@ public class NightBane
 
         Core.Boot();
         Fight();
-        Bot.Stop();
+        Bot.StopSync();
     }
 
     void Fight()

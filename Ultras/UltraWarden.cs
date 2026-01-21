@@ -55,14 +55,14 @@ public class UltraWarden
                 "Setup",
                 "Fill at least one taunter class (Primary or Backup) in Script Options."
             );
-            Bot.Stop();
+            Bot.StopSync();
             return;
         }
 
         Core.Boot();
         Prep();
         Fight();
-        Bot.Stop();
+        Bot.StopSync();
     }
 
     bool IsTaunter() => Core.HasClassEquipped(a) || Core.HasClassEquipped(b);
