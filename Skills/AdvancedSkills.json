@@ -4858,40 +4858,21 @@
     }
   },
   "King\u0027s Echo": {
-    "Base": {
+    "Atk": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 500,
       "skills": [
         {
-          "skillId": 3,
-          "rules": [
-            {
-              "type": "None"
-            }
-          ],
-          "skipOnMatch": true
+          "skillId": 1
         },
         {
           "skillId": 2,
           "rules": [
             {
-              "type": "Aura",
-              "value": 1,
+              "type": "Mana",
+              "value": 25,
               "comparison": "greater",
-              "auraName": "Royal Resolve",
-              "auraTarget": "self"
-            }
-          ]
-        },
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Aura",
-              "value": 1,
-              "comparison": "greater",
-              "auraName": "Royal Resolve",
-              "auraTarget": "self"
+              "isPercentage": true
             }
           ]
         },
@@ -4899,10 +4880,62 @@
           "skillId": 4,
           "rules": [
             {
-              "type": "None"
+              "type": "Mana",
+              "value": 25,
+              "comparison": "less",
+              "isPercentage": true
             }
-          ],
-          "skipOnMatch": true
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 50,
+              "comparison": "less",
+              "isPercentage": true
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Royal Resolve",
+              "auraTarget": "self"
+            }
+          ]
+        }
+      ]
+    },
+    "Dodge": {
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 500,
+      "skills": [
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Invulnerable",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 50,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ]
         }
       ]
     }
