@@ -317,6 +317,9 @@ public class CoreBots
 
         CollectData(changeTo);
 
+        if (!Bot.Drops.Enabled)
+            Bot.Drops.Start();
+
         #region Required things that must be done before starting the Script
 
         if (changeTo)
@@ -422,7 +425,6 @@ public class CoreBots
             Bot.Events.MonsterKilled += KilledMonsterListener;
             Bot.Events.ExtensionPacketReceived += RespawnListener;
 
-            Bot.Drops.Start();
             Logger("Bot Configured");
 
             // Bunch of things that are done in the background and you dont need the bot to wait for
@@ -614,7 +616,8 @@ public class CoreBots
     /// </summary>
     private bool StopBot(bool crashed)
     {
-        DeleteCompiledScript();
+        if (Bot.Drops.Enabled)
+            Bot.Drops.StopAsync();
         StopBotAsync();
         Bot.Handlers.Clear();
 
@@ -2723,6 +2726,8 @@ public class CoreBots
         if (items == null || items.Length == 0)
             return;
         Unbank(items);
+        if (!Bot.Drops.Enabled)
+            Bot.Drops.Start();
         Bot.Drops.Add(items);
     }
 
@@ -2735,6 +2740,8 @@ public class CoreBots
         if (items == null || items.Length == 0)
             return;
         Unbank(items);
+        if (!Bot.Drops.Enabled)
+            Bot.Drops.Start();
         Bot.Drops.Add(items);
     }
 
@@ -3196,6 +3203,9 @@ public class CoreBots
             return false;
         }
 
+        if (itemID > 0)
+            Bot.Drops.Add(itemID);
+
         if (!Bot.Drops.ToPickupIDs.Contains(itemID) && itemID > 0)
             Bot.Drops.Add(itemID);
 
@@ -3288,6 +3298,9 @@ public class CoreBots
             Logger($"Failed to load quest [{questID}] after multiple attempts.");
             return false;
         }
+
+        if (itemList?.Length > 0)
+            Bot.Drops.Add(itemList);
 
         // Check turnin requirements
         if (!quest.Requirements.All(req => req != null && CheckInventory(req.ID, req.Quantity)))
@@ -3410,6 +3423,8 @@ public class CoreBots
             Logger($"Quest {questID} not loaded after 5 attempts.");
             return 0;
         }
+        if (itemID > 0)
+            Bot.Drops.Add(itemID);
 
         if (quest != null && !Bot.Quests.IsInProgress(questID))
             EnsureAccept(questID);
