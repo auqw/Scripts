@@ -118,7 +118,7 @@ public class ArmyPristmas
                     .FirstOrDefault(m => m.MapID == 1)?.HP > 0 ? 1 : 2
             );
 
-            if (sellEvery100 && C.CheckInventory("Elemental Binding", 100))
+            if (!C.GoldMaxed && sellEvery100 && C.CheckInventory("Elemental Binding", 100))
             {
                 C.SellItem("Elemental Binding", all: true);
             }
