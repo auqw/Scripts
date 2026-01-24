@@ -930,7 +930,7 @@ public class UnlockForgeEnhancements
         Core.RegisterQuests(5710);
         while (!Bot.ShouldExit && !Core.CheckInventory("Dark Potion", 20))
         {
-            if (Core.IsMember)
+            if (!Core.IsMember)
                 Core.HuntMonster("darkfortress", "Dark Elemental", "Dark Gem", isTemp: false);
             else
                 Core.HuntMonster("ruins", "Dark Elemental", "Dark Gem", isTemp: false);
