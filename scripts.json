@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 433677,
-    "sha256": "c93e2b5cfe7c42e23200b27da23236471a89894717e291c84100390c8624d0f6",
+    "size": 423024,
+    "sha256": "0f403cae4c2e12c7c7d615381d5160c98db9d0f748540d87cb69e608269eec55",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -21703,8 +21703,8 @@
       "shield"
     ],
     "path": "Seasonal/NewYear/ChronoGemMerge.cs",
-    "size": 6841,
-    "sha256": "f0f265484b57395df0537cee19be3665cef54581c005f331180d510ca4c784d8",
+    "size": 6736,
+    "sha256": "519c9923f0c7d20d412458f0fc74147f09ebd56d5148749e67741bd5c784961b",
     "fileName": "ChronoGemMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/NewYear/ChronoGemMerge.cs"
   },
