@@ -167,12 +167,11 @@ public class UltraDrago
     // User options
     public List<IOption> Options = new()
     {
-
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
 
-    List<string> TaunterGroup1 = new[] { "ArchPaladin", "Lich" }.ToList();
+    List<string> TaunterGroup1 = new[] { "ArchPaladin" }.ToList();
     bool isTaunterGroup1 = false;
     List<string> TaunterGroup2 = new[] { "Lord Of Order", "Lich", "Sentinel" }.ToList();
     bool isTaunterGroup2 = false;
@@ -194,9 +193,9 @@ public class UltraDrago
         )
             Bot.Config.Configure();
 
-        if (TaunterGroup1.Contains(Bot.Player?.CurrentClass?.Name!))
+        if (TaunterGroup1.Contains(Bot.Player.CurrentClass.Name))
             isTaunterGroup1 = true;
-        if (TaunterGroup2.Contains(Bot.Player?.CurrentClass?.Name!))
+        if (TaunterGroup2.Contains(Bot.Player.CurrentClass.Name))
             isTaunterGroup2 = true;
 
         Core.Boot();
