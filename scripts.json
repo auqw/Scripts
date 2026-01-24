@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 423024,
-    "sha256": "0f403cae4c2e12c7c7d615381d5160c98db9d0f748540d87cb69e608269eec55",
+    "size": 423085,
+    "sha256": "18c50aca72e8286d1faed4615213224f1884b80caf9dc4ac0cea1def579e7702",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4502,8 +4502,8 @@
       "farm"
     ],
     "path": "Army/Farm/ArmyPrismatas.cs",
-    "size": 3857,
-    "sha256": "4f29c42b593fc04b00bc76febd626bab1e496bbb1982a8493a499b5ed116bbe4",
+    "size": 3873,
+    "sha256": "44cbb393d173b6c6133aa56ce997b7a685014e0420e9e84512a0f49741b7f287",
     "fileName": "ArmyPrismatas.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyPrismatas.cs"
   },
