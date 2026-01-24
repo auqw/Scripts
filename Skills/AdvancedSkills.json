@@ -1964,27 +1964,24 @@
           "skillId": 3
         },
         {
-          "skillId": 1
-        },
-        {
-          "skillId": 0,
+          "skillId": 2,
           "rules": [
             {
               "type": "Mana",
-              "value": 15,
+              "value": 5,
               "comparison": "greater",
-              "isPercentage": true
+              "isPercentage": false
             }
           ]
         },
         {
-          "skillId": 0,
+          "skillId": 3,
           "rules": [
             {
               "type": "Mana",
-              "value": 15,
+              "value": 5,
               "comparison": "greater",
-              "isPercentage": true
+              "isPercentage": false
             }
           ]
         },
@@ -2092,27 +2089,24 @@
           "skillId": 3
         },
         {
-          "skillId": 1
-        },
-        {
-          "skillId": 0,
+          "skillId": 2,
           "rules": [
             {
               "type": "Mana",
-              "value": 15,
+              "value": 5,
               "comparison": "greater",
-              "isPercentage": true
+              "isPercentage": false
             }
           ]
         },
         {
-          "skillId": 0,
+          "skillId": 3,
           "rules": [
             {
               "type": "Mana",
-              "value": 15,
+              "value": 5,
               "comparison": "greater",
-              "isPercentage": true
+              "isPercentage": false
             }
           ]
         },
