@@ -6198,12 +6198,9 @@ public class CoreBots
         Bot.Wait.ForPickup(item);
     }
 
-    /// <summary>
-    /// Kills a monster by name until a specified item ID is obtained.
-    /// </summary>
     public void _KillForItem(
         string name,
-        int itemID = 0,
+        int itemID,
         int quantity = 1,
         bool isTemp = false,
         bool rejectElse = false,
@@ -6222,36 +6219,43 @@ public class CoreBots
         if (log)
             FarmingLogger(itemID.ToString(), quantity);
 
-        Monster? target = FindMonster(Bot.Map.Name, trimmedName);
-        if (target == null)
-        {
-            Logger($"⚠️ Monster \"{name}\" not found in /{Bot.Map.Name}.");
-            return;
-        }
-
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity)))
         {
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
             if (cell != null && Bot.Player.Cell != cell)
             {
-                Bot.Map.Jump(cell, "Left", false);
+                Bot.Map.Jump(cell, "Left", autoCorrect: false);
                 Bot.Wait.ForCellChange(cell);
             }
 
-            if (!Bot.Player.HasTarget)
-                Bot.Combat.Attack(target.MapID);
+            CanWeAggro();
 
-            Sleep(500);
+            // Re-find the monster every loop
+            Monster? target = FindMonster(Bot.Map.Name, trimmedName);
+
+            if (target != null && target.HP > 0)
+            {
+                // Only attack if no target or current target is dead
+                if (!Bot.Player.HasTarget || Bot.Player.Target != target)
+                    Bot.Combat.Attack(target.Name);
+            }
+            else
+            {
+                Sleep(500); // Monster not found or dead, wait and retry
+                continue;
+            }
 
             if (rejectElse)
                 Bot.Drops.RejectExcept(itemID);
+
+            Sleep(250); // small loop delay
         }
 
         Bot.Wait.ForPickup(itemID);
     }
 
-    /// <summary>
-    /// Kills a monster by name until the specified item is obtained (item by name).
-    /// </summary>
     public void _KillForItem(
         string name,
         string? item = null,
@@ -6273,8 +6277,6 @@ public class CoreBots
         if (log)
             FarmingLogger(item, quantity);
 
-        Monster? target = name == "*" ? null : FindMonster(Bot.Map.Name, trimmedName);
-
         while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
         {
             if (!Bot.Player.Alive)
@@ -6282,18 +6284,34 @@ public class CoreBots
 
             if (cell != null && Bot.Player.Cell != cell)
             {
-                Bot.Map.Jump(cell, "Left", false);
+                Bot.Map.Jump(cell, "Left", autoCorrect: false);
                 Bot.Wait.ForCellChange(cell);
             }
 
             CanWeAggro();
 
-            if (name == "*")
-                Bot.Combat.Attack("*");
-            else if (target != null && !Bot.Player.HasTarget)
-                Bot.Combat.Attack(target.MapID);
+            // Re-find monster every loop for reliability
+            Monster? target = name == "*"
+                ? null
+                : FindMonster(Bot.Map.Name, trimmedName);
 
-            Sleep(500);
+            if (name == "*")
+            {
+                Bot.Combat.Attack("*");
+            }
+            else if (target != null && target.HP > 0)
+            {
+                // Only attack if we don't have a target or our target is dead
+                if (!Bot.Player.HasTarget || Bot.Player.Target != target)
+                    Bot.Combat.Attack(target.Name);
+            }
+            else
+            {
+                Sleep(500);
+                continue; // Monster not found yet, loop again
+            }
+
+            Sleep(250); // Small delay to prevent spam
         }
 
         Bot.Wait.ForPickup(item);
