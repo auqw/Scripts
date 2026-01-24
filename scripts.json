@@ -4438,8 +4438,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 53636,
-    "sha256": "dbfba15dc389ca749467aa260bc5dc2cc9f4266ecf58b54b0f7b12e404dc5420",
+    "size": 53637,
+    "sha256": "96f5cdd57e02c860989a156202cd78c01635d713e243edeb0e2726e19b151882",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -24753,7 +24753,7 @@
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
     "size": 1125664,
-    "sha256": "571a054e705dc9c7885d3011f2dcdf482c8829e398456ac3aff970754c2f42f9",
+    "sha256": "87b25ec416744cf3740f2ffc3603fee5c8bc70bd6a3debf1bad11c92785d01bc",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
