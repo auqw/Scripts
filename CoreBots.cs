@@ -4250,18 +4250,7 @@ public class CoreBots
     /// <param name="isTemp">Whether the item is temporary</param>
     /// <param name="log">Whether it will log that it is killing the monster</param>
     /// <param name="publicRoom"></param>
-    public void KillMonster(
-        string map,
-        string cell,
-        string pad,
-        string monster,
-        string? item = null,
-        int quant = 1,
-        bool isTemp = true,
-        bool log = true,
-        bool publicRoom = false,
-        bool EquipBestClassType = true
-    )
+    public void KillMonster(string map, string cell, string pad, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false, bool EquipBestClassType = true)
     {
         if (
             item != null
@@ -4298,44 +4287,16 @@ public class CoreBots
 
         Bot.Options.AggroAllMonsters = false; // ⚔️
 
-        List<Monster> FindMonsters()
-        {
-            if (!Bot.Player.Alive)
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20); // 💀➡️💖
+        Monster? targetMonster = FindMonster(map: map, monster: monster); // 🕵️
 
-            while (!Bot.ShouldExit && Bot.Player.Loaded && Bot.Player.Cell != cell)
-            {
-                Bot.Map.Jump(cell, pad, autoCorrect: false); // ➡️
-                Bot.Wait.ForCellChange(cell); // ⏳
-            }
-
-            IEnumerable<Monster> monsters = Bot.Monsters.MapMonsters.Where(x => x?.Cell == cell); // 👀
-
-            if (monster == "*")
-                return monsters.ToList(); // 🐺
-
-            List<Monster> matched = monsters
-                .Where(x => x?.Name.FormatForCompare() == monster.FormatForCompare())
-                .ToList(); // 🎯
-
-            if (matched.Count > 0)
-                return matched;
-
-            matched = Bot.Monsters.MapMonsters.Where(x => x?.Cell == Bot.Player.Cell).ToList(); // 🔄
-
-            return matched.Count > 0
-                ? matched
-                : Bot.Monsters.MapMonsters.Where(x => x?.Name == monster).ToList(); // 🏹
-        }
-        List<Monster> targetMonsters = FindMonsters(); // 🕵️
-
-        if (targetMonsters == null || !targetMonsters.Any())
+        if (targetMonster == null)
         {
             Logger($"⚠️ Monster {monster} not found in cell {cell}, pad {pad} in /{map}");
             return;
         }
+
         if (EquipBestClassType)
-            EquipBestClassForTargets(targetMonsters.ToArray());
+            EquipBestClassForTargets(targetMonster);
 
         if (item == null)
         {
@@ -4497,158 +4458,91 @@ public class CoreBots
         bool EquipBestClassType = true
     )
     {
-        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower()); // 📝
-        cell =
-            Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase))
-            ?? cell; // 🔀
+        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
+        cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
 
-        // Check if the item is already in inventory
-        if (
-            item != null
-            && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-        )
-            return; // 💎✅
+        // Already has item? Exit early
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+            return;
 
-        if (log)
-            FarmingLogger(item, quant); // 📝💎
+        if (log && item != null)
+            FarmingLogger(item, quant);
 
-        // Add item to drop list if it's not a temporary item
         if (item != null && !isTemp)
-            AddDrop(item); // 💎🛒
+            AddDrop(item);
 
-        ItemBase? Item = Bot
-            .Inventory.Items.Concat(Bot.Bank.Items)
-            .Concat(Bot.House.Items)
-            .FirstOrDefault(x => x != null && x.Name == item); // 📦
-
-        // Join the specified map, cell, and pad
+        // Ensure player is in the map and cell
         if (Bot.Map.Name != map)
-            Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
+            Join(map, cell, pad, publicRoom: publicRoom);
 
-        // Ensure the player is in the correct cell
         if (Bot.Player.Cell != cell)
         {
-            Bot.Map.Jump(cell, pad, autoCorrect: false); // ➡️
-            Bot.Wait.ForCellChange(cell); // ⏳
+            Bot.Map.Jump(cell, pad, autoCorrect: false);
+            Bot.Wait.ForCellChange(cell);
         }
 
-        // Set bot options for monster aggression
-        Bot.Options.AggroAllMonsters = false; // ⚔️❌
-        Bot.Options.AggroMonsters = false; // 👹❌
+        // Disable aggro while positioning
+        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroMonsters = false;
 
-        // Define method to find all target monsters by ID
-        List<Monster> FindMonsters()
-        {
-            return Bot
-                .Monsters.MapMonsters.Where(m =>
-                    m != null && m.Cell == cell && (m.MapID == MonsterMapID || m.ID == MonsterMapID)
-                )
-                .ToList(); // 🐲
-        }
+        // Get all target monsters by ID
+        List<Monster> targetMonsters = FindMonstersList(monsterMapID: MonsterMapID, map: map, monster: "*");
 
-        // Find all target monsters by ID
-        List<Monster> targetMonsters = FindMonsters(); // 🕵️
-
-        // Log and exit if no monsters are found
-        if (!targetMonsters.Any())
+        if (targetMonsters.Count == 0)
         {
             if (log)
-                Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
+                Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}.");
             return;
         }
+
         if (EquipBestClassType)
-            EquipBestClassForTargets(targetMonsters.ToArray());
+            EquipBestClassForTargets(targetMonsters);
 
-        // Handle the scenario where no item is specified
-        if (item == null)
+        // Main kill loop
+        while (!Bot.ShouldExit && (item == null || !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))))
         {
+            // Respawn check
             while (!Bot.ShouldExit && !Bot.Player.Alive)
-                Sleep(); // 💀➡️💖
+                Sleep(500);
 
+            // Ensure correct position
             if (Bot.Map.Name != map)
-                Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
+                Join(map, cell, pad, publicRoom: publicRoom);
 
             if (Bot.Player.Cell != cell)
-                Jump(cell, pad); // ➡️
-
-            Monster? monsterToAttack = targetMonsters.FirstOrDefault(x => x != null);
-            if (monsterToAttack != null)
             {
-                while (!Bot.ShouldExit)
-                {
-                    if (!Bot.Player.Alive)
-                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20); // 💀➡️💖
-
-                    if (cell != null && Bot.Player.Cell != cell)
-                    {
-                        Bot.Map.Jump(cell, pad, autoCorrect: false); // ➡️
-                        Bot.Wait.ForCellChange(cell); // ⏳
-                    }
-
-                    if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack(MonsterMapID); // ⚔️
-
-                    Sleep(500); // 💤
-
-                    // Check if player doenst havea  target after the attacking
-                    // if not then its dead and we can move on
-                    if (!Bot.Player.HasTarget)
-                        return;
-                }
+                Bot.Map.Jump(cell, pad, autoCorrect: false);
+                Bot.Wait.ForCellChange(cell);
             }
-            else
+
+            // Attack monsters
+            foreach (Monster monster in targetMonsters.ToArray())
             {
-                Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
+                if (monster == null)
+                    continue;
+
+                if (!Bot.Player.Alive)
+                    continue;
+
+                Bot.Combat.Attack(monster);
+                Sleep(500);
+
+                // Stop if we collected enough
+                if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+                    break;
             }
         }
-        else
-        {
-            // Handle the item drop scenario
-            if (Bot.Map.Name != map)
-                Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
 
-            if (Bot.Player.Cell != cell)
-                Jump(cell, pad); // ➡️
-
-            while (
-                !Bot.ShouldExit
-                && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-            ) // 💎🔄
-            {
-                foreach (Monster targetMonster in targetMonsters)
-                {
-                    while (!Bot.ShouldExit && !Bot.Player.Alive)
-                        Sleep(); // 💀➡️💖
-
-                    if (Bot.Map.Name != map)
-                        Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
-
-                    if (Bot.Player.Cell != cell)
-                        Jump(cell, pad); // ➡️
-
-                    Monster? monsterToAttack = targetMonsters.FirstOrDefault(x => x != null);
-                    if (monsterToAttack != null)
-                    {
-                        Bot.Combat.Attack(monsterToAttack); // ⚔️
-                        Sleep(); // 💤
-                    }
-                    else
-                    {
-                        Logger($"⚠️ No monsters with ID {MonsterMapID} found in cell {cell}."); // ⚠️🐲
-                    }
-
-                    if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)) // 💎✅
-                        break;
-                }
-            }
-            Rest(); // 🛌
-        }
-
+        // Pickup item if needed
         if (item != null)
-            Bot.Wait.ForPickup(item); // 💎📥
+            Bot.Wait.ForPickup(item);
 
-        // Reset attack option
-        Bot.Options.AttackWithoutTarget = false; // ⚔️❌
+        Rest(); // Recover if necessary
+
+        // Reset options
+        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.AggroAllMonsters = true;
+        Bot.Options.AggroMonsters = true;
     }
 
     /// <summary>
@@ -4668,117 +4562,97 @@ public class CoreBots
         bool EquipBestClassType = true
     )
     {
-        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower()); // 📝
-        cell =
-            Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase))
-            ?? cell; // 🔀
+        pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
+        cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
 
-        // Skip if item already obtained
-        if (
-            ItemID != 0
-            && (isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant))
-        )
-            return; // 💎✅
+        // Exit if item already collected
+        if (ItemID != 0 && (isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant)))
+            return;
 
         if (log && ItemID != 0)
-            FarmingLogger(Bot.Inventory.GetItem(ItemID)?.Name ?? ItemID.ToString(), quant); // 🪓
+            FarmingLogger(Bot.Inventory.GetItem(ItemID)?.Name ?? ItemID.ToString(), quant);
 
-        // Register item drop
         if (ItemID != 0 && !isTemp)
-            AddDrop(ItemID); // 💎🛒
+            AddDrop(ItemID);
 
-        // Ensure map and position
+        // Join map and cell if needed
         if (Bot.Map.Name != map)
-            Join(map, cell, pad, publicRoom: publicRoom); // 🗺️➡️
+            Join(map, cell, pad, publicRoom: publicRoom);
+
         if (Bot.Player.Cell != cell)
         {
             Bot.Map.Jump(cell, pad, autoCorrect: false);
-            Bot.Wait.ForCellChange(cell); // ⏳
+            Bot.Wait.ForCellChange(cell);
         }
 
+        // Store original combat settings
+        bool prevAggroAll = Bot.Options.AggroAllMonsters;
+        bool prevAggro = Bot.Options.AggroMonsters;
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
 
-        // Try to find target monster by MapID
-        Monster? target = Bot.Monsters.MapMonsters.FirstOrDefault(m =>
-                m != null && m.MapID == MonsterMapID
-            );
+        // Get all monsters with the MapID
+        List<Monster> targetMonsters = Bot.Monsters.MapMonsters
+            .Where(m => m != null && m.MapID == MonsterMapID && m.Alive)
+            .ToList();
 
-        if (target == null)
+        if (targetMonsters.Count == 0)
         {
-            Logger($"⚠️ No monster with MapID {MonsterMapID} found in /{map} ({cell}, {pad})");
+            Logger($"⚠️ No monsters with MapID {MonsterMapID} found in /{map} ({cell}, {pad})");
+            // Restore settings
+            Bot.Options.AggroAllMonsters = prevAggroAll;
+            Bot.Options.AggroMonsters = prevAggro;
             return;
         }
+
         if (EquipBestClassType)
-            EquipBestClassForTargets(target);
+            EquipBestClassForTargets(targetMonsters);
 
-        if (ItemID == 0)
+        // Kill until item obtained (or once if no item)
+        while (!Bot.ShouldExit && (ItemID == 0 || !(isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant))))
         {
-            // Just kill once
-            while (!Bot.ShouldExit)
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+            if (Bot.Map.Name != map)
+                Join(map, cell, pad, publicRoom: publicRoom);
+
+            if (Bot.Player.Cell != cell)
             {
-                if (!Bot.Player.Alive)
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20); // 💀➡️💖
-
-                if (Bot.Player.Cell != cell)
-                {
-                    Bot.Map.Jump(cell, pad, autoCorrect: false);
-                    Bot.Wait.ForCellChange(cell);
-                }
-
-                if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(target.MapID); // ⚔️
-                Sleep(500);
-
-                if (!Bot.Player.HasTarget)
-                    return; // Monster likely dead
+                Bot.Map.Jump(cell, pad, autoCorrect: false);
+                Bot.Wait.ForCellChange(cell);
             }
-        }
-        else
-        {
-            // Kill until item obtained
-            while (
-                !Bot.ShouldExit
-                && !(isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant))
-            )
+
+            // Refresh alive targets
+            targetMonsters = targetMonsters.Where(m => m.Alive).ToList();
+            if (targetMonsters.Count == 0)
+            {
+                Logger($"⚠️ No alive monsters with MapID {MonsterMapID} left in /{map}");
+                break;
+            }
+
+            foreach (Monster monster in targetMonsters.ToArray())
             {
                 if (!Bot.Player.Alive)
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-                if (Bot.Map.Name != map)
-                {
-                    Join(map, cell, pad, publicRoom: publicRoom);
-                    Bot.Wait.ForMapLoad(map);
-                }
-                if (Bot.Player.Cell != cell)
-                {
-                    Bot.Map.Jump(cell, pad, autoCorrect: false);
-                    Bot.Wait.ForCellChange(cell);
-                }
-
-                if (target == null || target.MapID == 0)
-                    target = Bot.Monsters.MapMonsters.FirstOrDefault(m => m?.MapID == MonsterMapID);
-
-                if (target == null)
-                {
-                    Logger($"⚠️ Target with MapID {MonsterMapID} no longer exists in {map}");
                     break;
-                }
 
-                Bot.Combat.Attack(target.MapID);
+                Bot.Combat.Attack(monster.MapID);
                 Sleep(500);
+
+                if (ItemID != 0 && (isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant)))
+                    break;
             }
-
-            if (ItemID != 0)
-                Bot.Wait.ForPickup(ItemID); // 💎📥
-
-            Rest(); // 🛌
         }
 
-        // Reset combat settings
+        if (ItemID != 0)
+            Bot.Wait.ForPickup(ItemID);
+
+        Rest();
+
+        // Restore original combat settings
         Bot.Options.AttackWithoutTarget = false;
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
+        Bot.Options.AggroAllMonsters = prevAggroAll;
+        Bot.Options.AggroMonsters = prevAggro;
     }
 
     public void KillBossWithSecondary(
@@ -4897,44 +4771,11 @@ public class CoreBots
         if (item != null && !isTemp)
             AddDrop(item);
 
-        Monster? FindMonster() =>
-            Bot.Monsters.MapMonsters.Find(x =>
-                x != null && x.Name.FormatForCompare() == monster.FormatForCompare() && x.Alive
-            );
-
-        Monster? targetMonster = FindMonster();
-
+        Monster? targetMonster = FindMonster(map, monster);
         if (targetMonster == null)
         {
             Logger($"⚠️ Monster \"{monster}\" not found in /{map}.");
-
-            // Fallback to first partial name match (case-insensitive)
-            Monster? fallback = Bot.Monsters.MapMonsters.FirstOrDefault(x =>
-                x != null && x?.Name?.Contains(monster, StringComparison.OrdinalIgnoreCase) == true && x.Alive
-            );
-
-            if (fallback != null)
-            {
-                Logger(
-                    $"⚠️ Map [{map}] | Monster name may have been updated to \"{fallback.Name}\". "
-                        + $"This mob will be used instead of \"{monster}\". "
-                        + $"If this is incorrect, please ping Tato2 or Bogalj on the discord."
-                );
-                targetMonster = fallback;
-            }
-            else
-            {
-                string[] visible = Bot
-                    .Monsters.MapMonsters.Where(x => !string.IsNullOrWhiteSpace(x?.Name))
-                    .Select(x => $"\"{x!.Name}\"")
-                    .Distinct()
-                    .ToArray();
-
-                Logger(
-                    $"❌ No approximate match found for {monster}. Visible monsters in /{map}: {string.Join(", ", visible)}"
-                );
-                return;
-            }
+            return;
         }
 
         if (Bot.Map.PlayerNames?.Any(x => x != Bot.Player.Username) == true)
@@ -4993,7 +4834,6 @@ public class CoreBots
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
-                targetMonster = FindMonster();
                 if (targetMonster == null)
                     continue;
 
@@ -5035,17 +4875,11 @@ public class CoreBots
         }
     }
 
+
+
     /// <summary>
-    /// Kills a monster using it's MapID
+    /// Kills a monster using its MapID
     /// </summary>
-    /// <param name="map">Map to join</param>
-    /// <param name="monsterMapID"></param>
-    /// <param name="pad">Pad to jump to</param>
-    /// <param name="item">Item to kill the monster for, if null will just kill the monster 1 time</param>
-    /// <param name="quant">Desired quantity of the item</param>
-    /// <param name="isTemp">Whether the item is temporary</param>
-    /// <param name="log">Whether it will log that it is killing the monster</param>
-    /// <param name="publicRoom"></param>
     public void HuntMonsterMapID(
         string map,
         int monsterMapID,
@@ -5066,144 +4900,90 @@ public class CoreBots
         }
 
         if (log && item != null)
-            FarmingLogger($"💎 {item}", quant); // 💎 logger emote
+            FarmingLogger($"💎 {item}", quant);
 
-        // Get the target monster
-        Monster? target = Bot.Monsters.MapMonsters.FirstOrDefault(m =>
-            m != null && m.MapID == monsterMapID
-        );
+        if (item != null && !isTemp)
+            AddDrop(item);
 
-        if (target == null)
+        // Find target monster(s) alive
+        List<Monster> targets = Bot.Monsters.MapMonsters
+            .Where(m => m != null && m.MapID == monsterMapID && m.Alive)
+            .ToList();
+
+        if (!targets.Any())
             return;
 
         if (Bot.Map.PlayerNames?.Any(x => x != Bot.Player.Username) == true)
         {
             Bot.Options.AggroMonsters = true;
-            Bot.Options.HidePlayers = true; // Trust Tato — reduces lag
+            Bot.Options.HidePlayers = true;
         }
         else
+        {
             Bot.Options.AggroMonsters = false;
+        }
+
         if (EquipBestClassType)
-            EquipBestClassForTargets(target);
+            EquipBestClassForTargets(targets);
 
-        // If item is null -> just kill monster until dead
-        if (item == null)
+        // Main attack loop
+        while (!Bot.ShouldExit && (item == null || !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))))
         {
-            while (!Bot.ShouldExit)
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+            if (!string.Equals(Bot.Map.Name, map, StringComparison.OrdinalIgnoreCase))
             {
-                if (!Bot.Player.Alive)
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-                if (!string.Equals(Bot.Map.Name, map, StringComparison.OrdinalIgnoreCase))
-                {
-                    Join(map, publicRoom: publicRoom);
-                    Bot.Wait.ForMapLoad(map);
-                }
-
-                if (
-                    !string.Equals(
-                        Bot.Player?.Cell,
-                        target?.Cell,
-                        StringComparison.OrdinalIgnoreCase
-                    )
-                )
-                {
-                    Bot.Map.Jump(target!.Cell, pad);
-                    Bot.Wait.ForCellChange(target!.Cell);
-                }
-
-                if (
-                    !Bot.Player!.HasTarget
-                    || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID
-                )
-                    Bot.Combat.Attack(target!.MapID);
-
-                if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                    return;
-
-                Sleep();
+                Join(map, publicRoom: publicRoom);
+                Bot.Wait.ForMapLoad(map);
             }
+
+            // Refresh alive targets
+            targets = targets.Where(t => t.Alive).ToList();
+            if (!targets.Any())
+                break;
+
+            Monster target = targets.First();
+
+            if (!string.Equals(Bot.Player.Cell, target.Cell, StringComparison.OrdinalIgnoreCase))
+            {
+                Bot.Map.Jump(target.Cell, pad);
+                Bot.Wait.ForCellChange(target.Cell);
+            }
+
+            if (!Bot.Player.HasTarget || Bot.Player.Target?.MapID != monsterMapID)
+                Bot.Combat.Attack(target.MapID);
+
+            Sleep(200);
+
+            if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+                break;
         }
-        else
+
+        if (item != null)
         {
-            // If item is specified -> attack until item is collected or monster is dead
-            if (!isTemp)
-                AddDrop(item);
-
-            while (
-                !Bot.ShouldExit
-                && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-            )
-            {
-                if (!Bot.Player.Alive)
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-                if (!string.Equals(Bot.Map.Name, map, StringComparison.OrdinalIgnoreCase))
-                {
-                    Join(map, publicRoom: publicRoom);
-                    Bot.Wait.ForMapLoad(map);
-                }
-
-                if (
-                    !string.Equals(
-                        Bot.Player?.Cell,
-                        target?.Cell,
-                        StringComparison.OrdinalIgnoreCase
-                    )
-                )
-                {
-                    Bot.Map.Jump(target!.Cell, pad);
-                    Bot.Wait.ForCellChange(target!.Cell);
-                }
-
-                if (
-                    !Bot.Player!.HasTarget
-                    || Bot.Player.HasTarget && Bot.Player.Target?.MapID != monsterMapID
-                )
-                    Bot.Combat.Attack(target!.MapID);
-
-                Sleep();
-
-                if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-                    break;
-            }
-
             Bot.Wait.ForDrop(item);
-            Bot.Wait.ForPickup(item); // 💎📥
+            Bot.Wait.ForPickup(item);
         }
 
-        #region exit aggro
-
-        Bot.Options.AttackWithoutTarget = false; // ⚔️❌
-        Bot.Options.AggroAllMonsters = false; // 👹❌
-        Bot.Options.AggroMonsters = false; // 👹❌
-
-        // Filter out blacklisted cells, cells with monsters, and prioritize based on conditions
-        string? targetCell =
-            Bot.Map.Cells.Where(c =>
-                    c != null
-                    && !BlackListedJumptoCells.Contains(c)
-                    && !Bot.Monsters.MapMonsters.Any(monster =>
-                        monster != null && monster.Cell == c
-                    )
-                )
-                .FirstOrDefault(c =>
-                    c != null
-                    && (
-                        Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1
-                        || !c.Contains("Enter")
-                    )
-                )
-            ?? "Enter";
-
-        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left"); // ➡️
-        Bot.Wait.ForCellChange(targetCell); // ⏳
-        Sleep(); // 💤
-        JumpWait();
-        Rest(); // 🛌
+        // Reset combat options safely
+        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroMonsters = false;
         Bot.Options.HidePlayers = false;
 
-        #endregion exit aggro
+        // Jump to safe cell after hunt
+        string safeCell = Bot.Map.Cells
+            .FirstOrDefault(c => !BlackListedJumptoCells.Contains(c)
+                                 && !Bot.Monsters.MapMonsters.Any(m => m?.Cell == c)
+                                 && (Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1 || !c.Contains("Enter")))
+            ?? "Enter";
+
+        Bot.Map.Jump(safeCell, safeCell == "Enter" ? "Spawn" : "Left");
+        Bot.Wait.ForCellChange(safeCell);
+        Sleep();
+        JumpWait();
+        Rest();
     }
 
     /// <summary>
@@ -5355,6 +5135,7 @@ public class CoreBots
             EnsureCompleteMulti(questId); // 🏁📜
         }
     }
+
 
     //Choose Variants - String
 
@@ -5768,6 +5549,77 @@ public class CoreBots
         HuntMonsterQuestChoose (with rewardId, mapName, monsterName, and log):
             HuntMonsterQuestChoose(106, 202, mapName: "Map5", monsterName: "MonsterE", log: true);
     */
+
+    /// <summary>
+    /// Finds monsters on the map, optionally filtering by MapID or monster name.<br/>
+    /// Supports wildcards ("*") to return all monsters.<br/>
+    /// <para>Usage examples:</para>
+    /// 1️⃣ Hunt by MapID + monster name:<br/>
+    ///    Monster? TargetMonster = FindMonsters(144, "chronogem", "Gem Forgemaster");<br/>
+    /// 2️⃣ Hunt by MapID only → returns all monsters in that MapID:<br/>
+    ///    Monster? TargetMonster = FindMonsters(144, "chronogem");<br/>
+    /// 3️⃣ Hunt by name only (MapID ignored):<br/>
+    ///    Monster? TargetMonster = FindMonsters(0, "chronogem", "Gem Forgemaster");<br/>
+    /// 4️⃣ Hunt all monsters in map (MapID optional):<br/>
+    ///    Monster? TargetMonster = FindMonsters(0, "chronogem", "*");
+    /// </summary>
+    public List<Monster> FindMonstersList(int monsterMapID = 0, string map = "", string monster = "*")
+    {
+        IEnumerable<Monster> candidates = Bot.Monsters.MapMonsters
+            .Where(x => x != null && !string.IsNullOrWhiteSpace(x.Name));
+
+        if (monsterMapID > 0)
+            candidates = candidates.Where(x => x.MapID == monsterMapID);
+
+        if (!string.IsNullOrWhiteSpace(monster) && monster != "*")
+        {
+            string wanted = monster.FormatForCompare();
+            List<Monster> matches = candidates
+                .Where(x => x.Name.FormatForCompare().Contains(wanted))
+                .ToList();
+
+            if (matches.Count > 0)
+                return matches;
+
+            Logger($"⚠️ Monster \"{monster}\" not found in /{map}.");
+
+            matches = Bot.Monsters.MapMonsters
+                .Where(x => !string.IsNullOrWhiteSpace(x?.Name)
+                            && x.Name.FormatForCompare().Contains(wanted))
+                .ToList();
+
+            if (matches.Count > 0)
+            {
+                Logger(
+                    $"⚠️ Map [{map}] | Monster name may have been updated. "
+                    + $"Using \"{matches[0].Name}\" instead of \"{monster}\"."
+                );
+                return matches;
+            }
+
+            string[] visible = candidates
+                .Select(x => $"\"{x!.Name}\" [{(x.Alive ? "Alive" : "Dead")}]")
+                .Distinct()
+                .ToArray();
+
+            Logger(
+                $"❌ No approximate match found for {monster}. "
+                + $"Visible monsters in /{map}: {string.Join(", ", visible)}"
+            );
+
+            return new();
+        }
+
+        return candidates.ToList(); // "*" → all candidates
+    }
+
+
+    public Monster? FindMonster(string map, string monster, int monsterMapID = 0)
+    {
+        List<Monster> matches = FindMonstersList(monsterMapID, map, monster);
+        return matches.FirstOrDefault(); // null if nothing found
+    }
+
 
     /// <summary>
     /// Kill Escherion for the desired item
@@ -6293,6 +6145,10 @@ public class CoreBots
         return;
     }
 
+
+    /// <summary>
+    /// Kills a Monster object until the specified item is obtained.
+    /// </summary>
     public void _KillForItem(
         Monster name,
         string? item,
@@ -6308,43 +6164,12 @@ public class CoreBots
 
         string trimmedName = name.Name.Trim().FormatForCompare();
 
-        if (
-            !Bot.Monsters.CurrentAvailableMonsters.Any(x =>
-                x != null && x.Name.FormatForCompare() == trimmedName
-            )
-        )
+        // Attempt to find the monster in the current cell using the new helper
+        Monster? target = FindMonster(Bot.Map.Name, trimmedName);
+        if (target == null)
         {
             Logger($"⚠️ Monster \"{name.Name}\" not found in current cell.");
-
-            Monster? fallback = Bot.Monsters.CurrentAvailableMonsters.FirstOrDefault(x =>
-                x?.Cell == cell
-                && x?.Name?.Contains(trimmedName, StringComparison.OrdinalIgnoreCase) == true
-            );
-
-            if (fallback != null)
-            {
-                Logger(
-                    $"✅ Cell [{cell}] | Monster name may have changed to \"{fallback.Name}\". Using fallback."
-                );
-                name = fallback;
-                trimmedName = fallback.Name.Trim().FormatForCompare();
-                cell = fallback.Cell;
-            }
-            else
-            {
-                string[] visible = Bot
-                    .Monsters.CurrentAvailableMonsters.Where(x =>
-                        x?.Cell == cell && !string.IsNullOrWhiteSpace(x?.Name)
-                    )
-                    .Select(x => $"\"{x!.Name}\"")
-                    .Distinct()
-                    .ToArray();
-
-                Logger(
-                    $"❌ No match found for \"{name.Name}\". Visible monsters in cell {cell}: {string.Join(", ", visible)}"
-                );
-                return;
-            }
+            return;
         }
 
         if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
@@ -6353,58 +6178,29 @@ public class CoreBots
         if (log)
             FarmingLogger(item, quantity);
 
-        List<Monster> monsters = Bot
-            .Monsters.MapMonsters.Where(x =>
-                x != null
-                && x.Cell == cell
-                && x.Name.FormatForCompare() == name.Name.FormatForCompare()
-            )
-            .ToList();
-
-        while (
-            !Bot.ShouldExit
-            && !(isTemp ? Bot.TempInv.Contains(item!, quantity) : CheckInventory(item, quantity))
-        )
+        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
         {
-            if (Bot.Player.Cell != name?.Cell)
+            if (Bot.Player.Cell != target.Cell)
             {
-                Bot.Map.Jump(name!.Cell, "Left", autoCorrect: false);
-                Bot.Wait.ForCellChange(name!.Cell);
+                Bot.Map.Jump(target.Cell, "Left", autoCorrect: false);
+                Bot.Wait.ForCellChange(target.Cell);
             }
-
-            if (name == null || !monsters.Any())
-            {
-                continue;
-            }
-
-            if (isTemp ? Bot.TempInv.Contains(item!, quantity) : CheckInventory(item, quantity))
-                break;
 
             if (!Bot.Player.HasTarget)
-                Bot.Combat.Attack(name.MapID);
+                Bot.Combat.Attack(target.MapID);
 
-            Sleep();
+            Sleep(500);
 
-            if (rejectElse && item != null)
+            if (rejectElse)
                 Bot.Drops.RejectExcept(item);
         }
 
-        Sleep();
-
-        if (item != null)
-            Bot.Wait.ForPickup(item);
+        Bot.Wait.ForPickup(item);
     }
 
     /// <summary>
-    /// Kills a monster until the specified item ID is obtained.
+    /// Kills a monster by name until a specified item ID is obtained.
     /// </summary>
-    /// <param name="name">The monster's name.</param>
-    /// <param name="itemID">The item ID to obtain.</param>
-    /// <param name="quantity">The quantity of the item to obtain (default: 1).</param>
-    /// <param name="isTemp">Whether the item is temporary (default: false).</param>
-    /// <param name="rejectElse">Whether to reject all drops except the specified item (default: false).</param>
-    /// <param name="log">Whether to log farming activity (default: true).</param>
-    /// <param name="cell">The cell where the monster is located (optional).</param>
     public void _KillForItem(
         string name,
         int itemID = 0,
@@ -6415,119 +6211,47 @@ public class CoreBots
         string? cell = null
     )
     {
+        if (itemID == 0)
+            throw new ArgumentNullException(nameof(itemID));
+
         string trimmedName = name.Trim().FormatForCompare();
 
-        if (
-            itemID != 0
-            && (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity))
-        )
+        if (isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity))
             return;
 
         if (log)
             FarmingLogger(itemID.ToString(), quantity);
 
-        if (
-            !Bot.Monsters.MapMonsters.Any(x =>
-                x != null && x.Name.FormatForCompare() == trimmedName
-            )
-        )
+        Monster? target = FindMonster(Bot.Map.Name, trimmedName);
+        if (target == null)
         {
             Logger($"⚠️ Monster \"{name}\" not found in /{Bot.Map.Name}.");
-
-            Monster? fallback = Bot.Monsters.MapMonsters.FirstOrDefault(x =>
-                x?.Cell == cell
-                && x?.Name?.Contains(trimmedName, StringComparison.OrdinalIgnoreCase) == true
-            );
-
-            if (fallback != null)
-            {
-                Logger(
-                    $"✅ Map [{Bot.Map.Name}] | Monster name may have been updated to \"{fallback.Name}\". Using fallback."
-                );
-                name = fallback.Name;
-                trimmedName = name.Trim().FormatForCompare();
-                cell = fallback.Cell;
-            }
-            else
-            {
-                string[] visible = Bot
-                    .Monsters.MapMonsters.Where(x => !string.IsNullOrWhiteSpace(x?.Name))
-                    .Select(x => $"\"{x!.Name}\"")
-                    .Distinct()
-                    .ToArray();
-
-                Logger(
-                    $"❌ No approximate match found for \"{name}\". Visible monsters in /{Bot.Map.Name}: {string.Join(", ", visible)}"
-                );
-                return;
-            }
+            return;
         }
 
-        while (
-            !Bot.ShouldExit
-            && !(isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity))
-        )
+        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(itemID, quantity) : CheckInventory(itemID, quantity)))
         {
-            IEnumerable<Monster> candidates = Bot.Monsters.MapMonsters.Where(x =>
-                x != null && x.Cell == cell && x.Name.FormatForCompare() == trimmedName
-            );
-
-            if (!candidates.Any())
+            if (cell != null && Bot.Player.Cell != cell)
             {
-                Sleep(); // Retry cycle if no targets found
-                continue;
+                Bot.Map.Jump(cell, "Left", false);
+                Bot.Wait.ForCellChange(cell);
             }
 
-            foreach (Monster monster in candidates)
-            {
-                while (!Bot.ShouldExit)
-                {
-                    while (!Bot.ShouldExit && !Bot.Player.Alive)
-                    {
-                        Sleep();
-                    }
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack(target.MapID);
 
-                    if (cell != null && Bot.Player.Cell != cell)
-                    {
-                        Jump(cell, "Left");
-                        Bot.Wait.ForCellChange(cell);
-                    }
+            Sleep(500);
 
-                    if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack(monster.MapID);
-
-                    if (
-                        isTemp
-                            ? Bot.TempInv.Contains(itemID, quantity)
-                            : CheckInventory(itemID, quantity)
-                    )
-                        break;
-
-                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                        break;
-                }
-
-                if (rejectElse && itemID > 0)
-                    Bot.Drops.RejectExcept(itemID);
-
-                Sleep();
-            }
+            if (rejectElse)
+                Bot.Drops.RejectExcept(itemID);
         }
 
-        if (itemID > 0)
-            Bot.Wait.ForPickup(itemID);
+        Bot.Wait.ForPickup(itemID);
     }
 
     /// <summary>
-    /// Kills the specified monster until the item is obtained.
+    /// Kills a monster by name until the specified item is obtained (item by name).
     /// </summary>
-    /// <param name="name">The monster's name or "*" for all monsters in cell.</param>
-    /// <param name="item">The name of the item to obtain.</param>
-    /// <param name="quantity">The quantity of the item to obtain (default: 1).</param>
-    /// <param name="isTemp">Whether the item is temporary (default: false).</param>
-    /// <param name="rejectElse">Whether to reject all drops except the item (default: false).</param>
-    /// <param name="log">Whether to log farming progress (default: true).</param>
-    /// <param name="cell">Optional cell to filter monsters by location.</param>
     public void _KillForItem(
         string name,
         string? item = null,
@@ -6549,62 +6273,27 @@ public class CoreBots
         if (log)
             FarmingLogger(item, quantity);
 
-        if (name == "*")
+        Monster? target = name == "*" ? null : FindMonster(Bot.Map.Name, trimmedName);
+
+        while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity)))
         {
-            while (
-                !Bot.ShouldExit
-                && !(isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
-            )
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+            if (cell != null && Bot.Player.Cell != cell)
             {
-                if (!Bot.Player!.Alive)
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                Bot.Map.Jump(cell, "Left", false);
+                Bot.Wait.ForCellChange(cell);
+            }
 
-                if (cell != null && Bot.Player.Cell != cell)
-                {
-                    Bot.Map.Jump(cell, "Left", false);
-                    Bot.Wait.ForCellChange(cell);
-                }
+            CanWeAggro();
 
-                CanWeAggro();
-
+            if (name == "*")
                 Bot.Combat.Attack("*");
+            else if (target != null && !Bot.Player.HasTarget)
+                Bot.Combat.Attack(target.MapID);
 
-                Sleep(500);
-
-                if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
-                {
-                    Bot.Wait.ForPickup(item);
-                    return;
-                }
-            }
-        }
-        else
-        {
-            while (!Bot.ShouldExit && !CheckInventory(item, quantity))
-            {
-                // Make sure player is alive
-                if (!Bot.Player!.Alive)
-                    Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-
-                // Move to the correct cell
-                if (cell != null && Bot.Player.Cell != cell)
-                {
-                    Bot.Map.Jump(cell, "Left", false);
-                    Bot.Wait.ForCellChange(cell);
-                }
-
-                CanWeAggro();
-
-                Bot.Combat.Attack(name);
-
-                Sleep(500); // short pacing
-
-                if (isTemp ? Bot.TempInv.Contains(item, quantity) : CheckInventory(item, quantity))
-                {
-                    Bot.Wait.ForPickup(item);
-                    return;
-                }
-            }
+            Sleep(500);
         }
 
         Bot.Wait.ForPickup(item);
@@ -11772,41 +11461,53 @@ public static class UtilExtensionsS
     /// <param name="caseSensitive">If set to true, the comparison will be case-sensitive; otherwise, it will be case-insensitive.</param>
     /// <returns>A normalized string formatted for comparison.</returns>
     public static string FormatForCompare(
-        this string? input,
-        bool DebugLog = false,
-        bool caseSensitive = false
-    )
+       this string? input,
+       bool DebugLog = false,
+       bool caseSensitive = false
+   )
     {
-        if (input == null)
+        if (string.IsNullOrEmpty(input))
         {
-            if (DebugLog)
-                Console.WriteLine("Input is null, returning an empty string.");
+            if (DebugLog) Console.WriteLine("Input is null/empty, returning empty string.");
             return string.Empty;
         }
 
-        if (DebugLog)
-            Console.WriteLine($"Original input: '{input}'");
+        if (DebugLog) Console.WriteLine($"Original input: '{input}'");
 
-        // Normalize, trim, and convert to lower case if case-sensitive is false
-        string result = input.Trim().Normalize(NormalizationForm.FormD); // Decomposes characters
+        string result = input.Normalize(NormalizationForm.FormD).Trim();
 
         // Remove diacritics
         result = RemoveDiacritics(result);
 
-        // Handle case sensitivity
-        if (!caseSensitive)
-        {
-            result = result.ToLowerInvariant();
-        }
+        // Normalize all apostrophes/single quotes
+        result = Regex.Replace(result, @"[\u2018\u2019\u201A\u201B`‘’‛]", "'");
 
-        // Replace multiple spaces with a single space
+        // Normalize all double quotes
+        result = Regex.Replace(result, @"[\u201C\u201D\u201E\u201F“”„]", "\"");
+
+        // Normalize dashes to -
+        result = Regex.Replace(result, @"[\u2010\u2011\u2012\u2013\u2014\u2015‐‑‒–—―]", "-");
+
+        // Remove invisible/zero-width characters
+        result = Regex.Replace(result, @"[\u200B-\u200D\uFEFF\u00A0\u2060\u180E\u202F\u205F]", " ");
+
+        // Remove control characters except \r, \n, \t
+        result = Regex.Replace(result, @"[\p{C}&&[^\r\n\t]]+", "");
+
+        // Collapse multiple spaces into one
         result = Regex.Replace(result, @"\s+", " ");
 
-        if (DebugLog)
-            Console.WriteLine($"Formatted result for comparison: '{result}'");
+        // Trim again
+        result = result.Trim();
+
+        if (!caseSensitive)
+            result = result.ToLowerInvariant();
+
+        if (DebugLog) Console.WriteLine($"Ultra-safe formatted result: '{result}'");
 
         return result;
     }
+
 
     /// <summary>
     /// Removes diacritics from a given string, retaining only the base characters.

@@ -97,11 +97,8 @@ public class ChronoGemMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(9536);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("chronogem", "Gem Forgemaster");
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.HuntMonster("chronogem", "Gem Forgemaster", req.ID, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
             }
