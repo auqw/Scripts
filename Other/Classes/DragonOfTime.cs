@@ -272,15 +272,7 @@ public class DragonOfTime
                 publicRoom: true
             );
 
-            Adv.BoostKillMonster(
-                "hydrachallenge",
-                "h90",
-                "Left",
-                3778,
-                "Epic Hydra Fang",
-                125,
-                false
-            );
+            Core.KillMonster("hydrachallenge", "h90", "Left", "*", "Epic Hydra Fang", 125, false);
 
             Story.ChainQuest(7720);
             Bot.Wait.ForPickup("*");
@@ -397,7 +389,7 @@ public class DragonOfTime
                 20,
                 false,
                 publicRoom: true, EquipBestClassType: false
-                
+
             );
 
             Core.HuntMonster(
