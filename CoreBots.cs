@@ -5575,7 +5575,7 @@ public class CoreBots
         {
             string wanted = monster.FormatForCompare();
             List<Monster> matches = candidates
-                .Where(x => x.Name.FormatForCompare().Contains(wanted))
+                .Where(x => x.Name.FormatForCompare() == wanted)
                 .ToList();
 
             if (matches.Count > 0)
@@ -5585,7 +5585,7 @@ public class CoreBots
 
             matches = Bot.Monsters.MapMonsters
                 .Where(x => !string.IsNullOrWhiteSpace(x?.Name)
-                            && x.Name.FormatForCompare().Contains(wanted))
+                            && x!.Name.FormatForCompare() == wanted)
                 .ToList();
 
             if (matches.Count > 0)
