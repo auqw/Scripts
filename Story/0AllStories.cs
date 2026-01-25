@@ -58,6 +58,7 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/Nation/DeleuzeTundra.cs
 //cs_include Scripts/Story/Nation/Fiendshard.cs
 //cs_include Scripts/Story/Nation/FiendPast.cs
+//cs_include Scripts/Story/Nation/FiendVoid.cs
 //cs_include Scripts/Story/Nation/OblivionTundra.cs
 //cs_include Scripts/Story/Nation/Originul.cs
 //cs_include Scripts/Story/Nation/ShadowBlastArena.cs
@@ -441,6 +442,12 @@ public class AllStories
         set => _Fiendshard_Story = value;
     }
     private static Fiendshard_Story _Fiendshard_Story;
+    private static FiendVoid FiendVoid
+    {
+        get => _FiendVoid ??= new FiendVoid();
+        set => _FiendVoid = value;
+    }
+    private static FiendVoid _FiendVoid;
     private static OblivionTundra OblivionTundra
     {
         get => _OblivionTundra ??= new OblivionTundra();
@@ -1347,6 +1354,9 @@ public class AllStories
 
         FiendPast.DoAll();
         Core.Logger($"Story: Fiend Past - Complete");
+
+        FiendVoid.FiendVoid_Questline();
+        Core.Logger($"Story: Fiend Void - Complete");
 
         OblivionTundra.Storyline();
         Core.Logger($"Story: Oblivion Tundra - Complete");
