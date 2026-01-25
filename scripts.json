@@ -2235,8 +2235,8 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 52812,
-    "sha256": "ae278fdb453ce2a3ac3501961eca979149369a127446dc1a6fdb6a7dfb1b85ab",
+    "size": 53129,
+    "sha256": "c4f6b2dc0e6b85d6c5110826417c34358a15d74d188251d5aef8a128559036e5",
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -9613,7 +9613,7 @@
     ],
     "path": "Story/Nation/FiendVoid.cs",
     "size": 3418,
-    "sha256": "f3a34ef84667734e2b903223531661d373be733fd369dfcd406b0c4aacad2de7",
+    "sha256": "29ed983a7b0f111864cfa5f85e24e758446d708006bb830fbd8f24b7c1e4a924",
     "fileName": "FiendVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/FiendVoid.cs"
   },
