@@ -100,8 +100,7 @@ public class FiendVoid
         if (!Story.QuestProgression(10566))
         {
             Story.MapItemQuest(10566, "fiendvoid", 15414);
-            Core.HuntMonsterQuest(10566,
-                ("fiendvoid", UseableMonsters[4], ClassType.Farm));
+            Story.KillQuest(10566, "fiendvoid", UseableMonsters[4]);
         }
 
 
