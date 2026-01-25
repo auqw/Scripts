@@ -4460,7 +4460,6 @@ public class CoreBots
     {
         pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
         cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
-
         // Already has item? Exit early
         if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
@@ -4486,7 +4485,7 @@ public class CoreBots
         Bot.Options.AggroMonsters = false;
 
         // Get all target monsters by ID
-        List<Monster> targetMonsters = FindMonstersList(monsterMapID: MonsterMapID, map: map, monster: "*");
+        List<Monster> targetMonsters = FindMonstersList(map, "*", MonsterMapID);
 
         if (targetMonsters.Count == 0)
         {
@@ -5555,20 +5554,20 @@ public class CoreBots
     /// Supports wildcards ("*") to return all monsters.<br/>
     /// <para>Usage examples:</para>
     /// 1️⃣ Hunt by MapID + monster name:<br/>
-    ///    Monster? TargetMonster = FindMonsters(144, "chronogem", "Gem Forgemaster");<br/>
+    ///    Monster? TargetMonster = FindMonsters("chronogem", "Gem Forgemaster", 144);<br/>
     /// 2️⃣ Hunt by MapID only → returns all monsters in that MapID:<br/>
-    ///    Monster? TargetMonster = FindMonsters(144, "chronogem");<br/>
+    ///    Monster? TargetMonster = FindMonsters("chronogem", monsterMapID: 144);<br/>
     /// 3️⃣ Hunt by name only (MapID ignored):<br/>
-    ///    Monster? TargetMonster = FindMonsters(0, "chronogem", "Gem Forgemaster");<br/>
+    ///    Monster? TargetMonster = FindMonsters("chronogem", "Gem Forgemaster");<br/>
     /// 4️⃣ Hunt all monsters in map (MapID optional):<br/>
-    ///    Monster? TargetMonster = FindMonsters(0, "chronogem", "*");
+    ///    Monster? TargetMonster = FindMonsters("chronogem", "*");
     /// </summary>
-    public List<Monster> FindMonstersList(int monsterMapID = 0, string map = "", string monster = "*")
+    public List<Monster> FindMonstersList(string map = "", string monster = "*", int monsterMapID = -1)
     {
         IEnumerable<Monster> candidates = Bot.Monsters.MapMonsters
             .Where(x => x != null && !string.IsNullOrWhiteSpace(x.Name));
 
-        if (monsterMapID > 0)
+        if (monsterMapID >= 0)
             candidates = candidates.Where(x => x.MapID == monsterMapID);
 
         if (!string.IsNullOrWhiteSpace(monster) && monster != "*")
@@ -5616,7 +5615,7 @@ public class CoreBots
 
     public Monster? FindMonster(string map, string monster, int monsterMapID = 0)
     {
-        List<Monster> matches = FindMonstersList(monsterMapID, map, monster);
+        List<Monster> matches = FindMonstersList(map, monster, monsterMapID);
         return matches.FirstOrDefault(); // null if nothing found
     }
 
