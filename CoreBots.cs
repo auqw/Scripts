@@ -5607,8 +5607,12 @@ public class CoreBots
 
     public Monster? FindMonster(string map, string monster, int monsterMapID = -1)
     {
-        return FindMonstersList(map, monster, monsterMapID).FirstOrDefault();
+        List<Monster> matches = FindMonstersList(map, monster, monsterMapID);
+
+        return matches.FirstOrDefault(x => x.Alive)
+            ?? matches.FirstOrDefault();
     }
+
 
 
 
