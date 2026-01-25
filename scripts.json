@@ -9603,6 +9603,21 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/ShadowBlastArena.cs"
   },
   {
+    "name": "FiendVoid",
+    "description": "This will finish the FiendVoid quest.",
+    "tags": [
+      "story",
+      "quest",
+      "fiendvoid",
+      "nation"
+    ],
+    "path": "Story/Nation/FiendVoid.cs",
+    "size": 3458,
+    "sha256": "daed6d2523985d7c63029c7636d7ee732d916041da9f159c99138ef72f06a46c",
+    "fileName": "FiendVoid.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/FiendVoid.cs"
+  },
+  {
     "name": "Citadel Ruins",
     "description": "This will finish the Citadel Ruins quest.",
     "tags": [
@@ -14950,6 +14965,43 @@
     "sha256": "b1eed06b31312c41a9ecddcd0d25bb8d17325e1c9474f60985ab04875fbfc850",
     "fileName": "VictorsRewardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/VictorsRewardMerge.cs"
+  },
+  {
+    "name": "FiendVoid Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the FiendVoid Merge [2669] in /fiendvoid",
+    "tags": [
+      "fiendvoid",
+      "merge",
+      "fiendvoid",
+      "baleful",
+      "scolex",
+      "void",
+      "fiendish",
+      "frenzy",
+      "ascension",
+      "bonebound",
+      "nulgath",
+      "ivory",
+      "fiend",
+      "skull",
+      "shell",
+      "voids",
+      "death",
+      "drive",
+      "covenant",
+      "bone",
+      "covenants",
+      "nation",
+      "boneforged",
+      "spines",
+      "todestrieb",
+      "undying"
+    ],
+    "path": "Other/MergeShops/FiendVoidMerge.cs",
+    "size": 9635,
+    "sha256": "e9a42cea760656305ca512ec54185ef6472cc49f4105c4827a80d31e8307dd91",
+    "fileName": "FiendVoidMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FiendVoidMerge.cs"
   },
   {
     "name": "Dreampalace Merge",
