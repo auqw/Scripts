@@ -5564,60 +5564,52 @@ public class CoreBots
     /// </summary>
     public List<Monster> FindMonstersList(string map = "", string monster = "*", int monsterMapID = -1)
     {
+        if (!Bot.Player.Loaded)
+            Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
+
         IEnumerable<Monster> candidates = Bot.Monsters.MapMonsters
             .Where(x => x != null && !string.IsNullOrWhiteSpace(x.Name));
 
+        // 1️⃣ MapID is authoritative
         if (monsterMapID >= 0)
-            candidates = candidates.Where(x => x.MapID == monsterMapID);
-
-        if (!string.IsNullOrWhiteSpace(monster) && monster != "*")
-        {
-            string wanted = monster.FormatForCompare();
-            List<Monster> matches = candidates
-                .Where(x => x.Name.FormatForCompare() == wanted)
+            return Bot.Monsters.MapMonsters
+                .Where(x => x != null && x.MapID == monsterMapID)
                 .ToList();
 
-            if (matches.Count > 0)
-                return matches;
+        // "*" → everything valid
+        if (string.IsNullOrWhiteSpace(monster) || monster == "*")
+            return candidates.ToList();
 
-            Logger($"⚠️ Monster \"{monster}\" not found in /{map}.");
+        string target = monster.FormatForCompare();
 
-            matches = Bot.Monsters.MapMonsters
-                .Where(x => !string.IsNullOrWhiteSpace(x?.Name)
-                            && x!.Name.FormatForCompare() == wanted)
-                .ToList();
+        // 2️⃣ Exact name match ONLY
+        List<Monster> matches = candidates
+            .Where(x => x.Name.FormatForCompare() == target)
+            .ToList();
 
-            if (matches.Count > 0)
-            {
-                Logger(
-                    $"⚠️ Map [{map}] | Monster name may have been updated. "
-                    + $"Using \"{matches[0].Name}\" instead of \"{monster}\"."
-                );
-                return matches;
-            }
+        if (matches.Count > 0)
+            return matches;
 
-            string[] visible = candidates
-                .Select(x => $"\"{x!.Name}\" [{(x.Alive ? "Alive" : "Dead")}]")
-                .Distinct()
-                .ToArray();
+        // 3️⃣ Fail once, loudly, and stop
+        string[] visible = candidates
+            .Select(x => $"\"{x.Name}\" [{(x.Alive ? "Alive" : "Dead")}]")
+            .Distinct()
+            .ToArray();
 
-            Logger(
-                $"❌ No approximate match found for {monster}. "
-                + $"Visible monsters in /{map}: {string.Join(", ", visible)}"
-            );
+        Logger(
+            $"❌ Monster \"{monster}\" not found in /{map}. "
+            + $"Visible monsters: {string.Join(", ", visible)}"
+        );
 
-            return new();
-        }
-
-        return candidates.ToList(); // "*" → all candidates
+        return new();
     }
 
 
-    public Monster? FindMonster(string map, string monster, int monsterMapID = 0)
+    public Monster? FindMonster(string map, string monster, int monsterMapID = -1)
     {
-        List<Monster> matches = FindMonstersList(map, monster, monsterMapID);
-        return matches.FirstOrDefault(); // null if nothing found
+        return FindMonstersList(map, monster, monsterMapID).FirstOrDefault();
     }
+
 
 
     /// <summary>
