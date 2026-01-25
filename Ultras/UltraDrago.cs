@@ -193,7 +193,7 @@ public class UltraDrago
         )
             Bot.Config.Configure();
 
-        if (TaunterGroup1.Contains(Bot.Player.CurrentClass.Name))
+        if (TaunterGroup1.Contains(Bot.Player.CurrentClass!.Name))
             isTaunterGroup1 = true;
         if (TaunterGroup2.Contains(Bot.Player.CurrentClass.Name))
             isTaunterGroup2 = true;
