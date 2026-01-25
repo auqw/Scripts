@@ -163,7 +163,7 @@ public class SepulchuresOriginalHelm
             if (!Core.CheckInventory("Painful Memory Bubble"))
             {
                 Core.EnsureAccept(5458);
-                Core.KillMonster("swordhavenfalls", "r10", "Left", 1295, "Doomed Memories");
+                Core.KillMonster("swordhavenfalls", "r10", "Left", 1, "Doomed Memories");
                 Core.EnsureComplete(5458);
                 Bot.Wait.ForPickup("Painful Memory Bubble");
             }
