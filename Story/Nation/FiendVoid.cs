@@ -5,6 +5,11 @@ tags: story, quest, FiendVoid, nation
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Story/Nation/DeleuzeTundra.cs
+//cs_include Scripts/Story/Nation/VoidRefuge.cs
+//cs_include Scripts/Story/Nation/VoidChasm.cs
+//cs_include Scripts/Story/Nation/OblivionTundra.cs
+//cs_include Scripts/Story/Nation/tercesarchive.cs
 using Skua.Core.Interfaces;
 
 public class FiendVoid
@@ -17,6 +22,12 @@ public class FiendVoid
         set => _Story = value;
     }
     private static CoreStory _Story;
+    private static TercesArchive TA
+    {
+        get => _TA ??= new TercesArchive();
+        set => _TA = value;
+    }
+    private static TercesArchive _TA;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -31,6 +42,8 @@ public class FiendVoid
     {
         if (Core.isCompletedBefore(10569))
             return;
+
+        TA.StoryLine();
 
         Story.PreLoad(this);
 
