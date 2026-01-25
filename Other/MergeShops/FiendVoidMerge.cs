@@ -13,6 +13,7 @@ tags: fiendvoid, merge, fiendvoid, baleful, scolex, void, fiendish, frenzy, asce
 //cs_include Scripts/Story/BattleUnder.cs
 //cs_include Scripts/Other/Classes/Necromancer.cs
 //cs_include Scripts/Evil/NSoD/CoreNSOD.cs
+//cs_include Scripts/Story/Nation/FiendVoid.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -39,6 +40,12 @@ public class FiendVoidMerge
         set => _NSoD = value;
     }
     private static CoreNSOD _NSoD;
+    private static FiendVoid FiendVoid
+    {
+        get => _FiendVoid ??= new FiendVoid();
+        set => _FiendVoid = value;
+    }
+    private static FiendVoid _FiendVoid;
 
 
     public bool DontPreconfigure = true;
@@ -92,6 +99,8 @@ public class FiendVoidMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        FiendVoid.FiendVoid_Questline();
+        
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("fiendvoid", 2669, findIngredients, buyOnlyThis, buyMode: buyMode);
 
