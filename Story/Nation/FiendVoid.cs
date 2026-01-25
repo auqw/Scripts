@@ -75,8 +75,8 @@ public class FiendVoid
         if (!Story.QuestProgression(10563))
         {
             Core.HuntMonsterQuest(10563,
-                ("fiendvoid", UseableMonsters[0], ClassType.Farm),
-                ("fiendvoid", UseableMonsters[1], ClassType.Farm));
+                ("fiendvoid", UseableMonsters[1], ClassType.Farm),
+                ("fiendvoid", UseableMonsters[0], ClassType.Farm));
         }
 
 
