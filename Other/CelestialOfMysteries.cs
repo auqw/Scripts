@@ -89,22 +89,22 @@ public class CelestialOfMysteries
         // Duo's Dinner
         if (!Core.CheckInventory("Duo's Dinner", 35))
             Core.UseBossClass();
-        Core.HuntMonster("infernalarena", "Deadly Duo", "Duo's Dinner", 35, false);
+        Core.HuntMonster("infernalarena", "Deadly Duo", "Duo's Dinner", 35, false, EquipBestClassType: false);
 
         // Cervus Dente
         if (!Core.CheckInventory("Cervus Dente", 35))
             Core.UseBossClass();
-        Core.HuntMonster("infernalarena", "Cervus Malus", "Cervus Dente", 35, false);
+        Core.HuntMonster("infernalarena", "Cervus Malus", "Cervus Dente", 35, false, EquipBestClassType: false);
 
         // Infernal Incantation
         if (!Core.CheckInventory("Infernal Incantation", 35))
             Core.UseBossClass("Dragon of Time");
-        Core.HuntMonster("infernalarena", "Key of Sholemoh", "Infernal Incantation", 35, false);
+        Core.HuntMonster("infernalarena", "Key of Sholemoh", "Infernal Incantation", 35, false, EquipBestClassType: false);
 
         // Scythe Shard
         if (!Core.CheckInventory("Scythe Shard", 35))
             Core.UseDodgeClass("Lord Of Order");
-        Core.HuntMonster("infernalarena", "Azalith's Scythe", "Scythe Shard", 35, false);
+        Core.HuntMonster("infernalarena", "Azalith's Scythe", "Scythe Shard", 35, false, EquipBestClassType: false);
 
         // Champion's Seal
         if (!Core.CheckInventory("Champion's Seal", 20))
@@ -113,7 +113,7 @@ public class CelestialOfMysteries
                     ? "Void HighLord (IoDA)"
                     : "Void Highlord"
             );
-        Core.HuntMonster("infernalarena", "Na'al", "Champion's Seal", 20, false, false);
+        Core.HuntMonster("infernalarena", "Na'al", "Champion's Seal", 20, false, false, EquipBestClassType: false);
 
         // Infernal Down
         ICFM.InfernalDown(50);
