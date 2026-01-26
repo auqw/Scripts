@@ -3157,9 +3157,7 @@ public class CoreNation
         // Check if the player is a member and has the desired items or item.
         if (!Core.IsMember)
         {
-            Core.Logger(
-                "This quest requires you to have Gemstone of Nulgath and membership to be able to accept it"
-            );
+            Core.Logger("This quest requires you to have Gemstone of Nulgath and membership to be able to accept it");
             return;
         }
 
