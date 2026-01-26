@@ -114,6 +114,12 @@ public class ChampionDrakathMerge
                     );
                     break;
         #endregion
+                case "Chaos Lord Alteon":
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(20671);
+                    Core.HuntMonster("swordhavenfalls", "Chaos Lord Alteon", req.Name, quant, req.Temp, false);
+                    break;
 
                 case "Drakath Armor":
                     DAB.DrakathArmorQuest();

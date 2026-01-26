@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 423345,
-    "sha256": "23c37393626439bb49fe1f8e4235b62730a94411105eb36200599b74b9c0dfad",
+    "size": 423602,
+    "sha256": "2c967b57e4cc2b21ee2598786bb3f8c60cbf3afcb962af7f9515f66862e5027d",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -3619,8 +3619,8 @@
       "locked"
     ],
     "path": "Chaos/ChampionDrakathMerge.cs",
-    "size": 19391,
-    "sha256": "99ea113450345069a4ab3cb8695bc0effc6b9fb05e968c11bbe72b006be1cc94",
+    "size": 19723,
+    "sha256": "26f9c0d6eee64a35ab44ef79f976deb525fb2e5bbdfadba48c18f7de799a2f09",
     "fileName": "ChampionDrakathMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Chaos/ChampionDrakathMerge.cs"
   },
@@ -4320,8 +4320,8 @@
       "blade"
     ],
     "path": "Evil/SepulchuresOriginalHelm.cs",
-    "size": 6820,
-    "sha256": "05820bf39c32b01c9e3a9e3ea374dc8a94723d1daeee4b38c9e0e3a829ac3d9c",
+    "size": 6817,
+    "sha256": "26d908134ca4fe1c3cb52876b7b57bdb177345f72595524eb1c120f842a04794",
     "fileName": "SepulchuresOriginalHelm.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SepulchuresOriginalHelm.cs"
   },
@@ -4337,8 +4337,8 @@
       "evil"
     ],
     "path": "Evil/GravelynDoomFire.cs",
-    "size": 4772,
-    "sha256": "ca7977e7ae5791cfcc5fcc712945f7992622c2e101ea2ccf73beef48572a79f9",
+    "size": 4769,
+    "sha256": "757edb0ef3b519ebb06de9b6c71bfe1e5eaca87e5266e9179fb16cc5c84aded0",
     "fileName": "GravelynDoomFire.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/GravelynDoomFire.cs"
   },
@@ -13148,8 +13148,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 18263,
-    "sha256": "d83760a8b81a2b00aab406b81bbaf905c4e7e218ec75ef4d091f89da5aeea5e9",
+    "size": 18116,
+    "sha256": "2fffb0d57cd308db5d3f77a15b25380dcd0e043b3cce5da1e0c93d809606290f",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },

@@ -5572,9 +5572,19 @@ public class CoreBots
 
         // 1️⃣ MapID is authoritative
         if (monsterMapID >= 0)
-            return Bot.Monsters.MapMonsters
-                .Where(x => x != null && x.MapID == monsterMapID)
+        {
+            List<Monster> byMapId = candidates
+                .Where(x => x.MapID == monsterMapID)
                 .ToList();
+
+            if (byMapId.Count > 0)
+                return byMapId;
+
+            // 2️⃣ Fallback: some monsters use ID instead of MapID
+            return candidates
+                .Where(x => x.ID == monsterMapID)
+                .ToList();
+        }
 
         // "*" → everything valid
         if (string.IsNullOrWhiteSpace(monster) || monster == "*")
@@ -5582,7 +5592,7 @@ public class CoreBots
 
         string target = monster.FormatForCompare();
 
-        // 2️⃣ Exact name match ONLY
+        // 3️⃣ Exact name match ONLY
         List<Monster> matches = candidates
             .Where(x => x.Name.FormatForCompare() == target)
             .ToList();
@@ -5590,7 +5600,7 @@ public class CoreBots
         if (matches.Count > 0)
             return matches;
 
-        // 3️⃣ Fail once, loudly, and stop
+        // 4️⃣ Fail once, loudly, and stop
         string[] visible = candidates
             .Select(x => $"\"{x.Name}\" [{(x.Alive ? "Alive" : "Dead")}]")
             .Distinct()
