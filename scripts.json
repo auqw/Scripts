@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 423602,
-    "sha256": "2c967b57e4cc2b21ee2598786bb3f8c60cbf3afcb962af7f9515f66862e5027d",
+    "size": 424684,
+    "sha256": "a5368ed5ed3b2ae2a352287f910ddb6dbf7f81e4460ae909cecff13ba66602c4",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4530,8 +4530,8 @@
       "army"
     ],
     "path": "Army/Classes/ArmyLR.cs",
-    "size": 16265,
-    "sha256": "4ab336d34ee24a86d9e3ff089adce3c9e86bd4e7676c8d1dfc6e97a8eb612dbc",
+    "size": 16200,
+    "sha256": "ef2c7b5d0e57eb5e73e0df8440ce7fd237eca3385d7cca3bb3f54a25c3ffad0a",
     "fileName": "ArmyLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyLR.cs"
   },
@@ -13148,8 +13148,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 18116,
-    "sha256": "2fffb0d57cd308db5d3f77a15b25380dcd0e043b3cce5da1e0c93d809606290f",
+    "size": 18336,
+    "sha256": "b5ec9ae4134002120e8260576509fa3436198ed7793ace7848aab9b2123dcaf9",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
@@ -25512,8 +25512,8 @@
       "null"
     ],
     "path": "Nation/Various/EliteVoid.cs",
-    "size": 4305,
-    "sha256": "9f8d7535e6061105cc1efc6352948dec216694936c34ff5b9191db16e5d62888",
+    "size": 4574,
+    "sha256": "558007139141aa52cfbfedbf08f5918a096be3b6e1e5f4f63968102816aa62b8",
     "fileName": "EliteVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/EliteVoid.cs"
   },
