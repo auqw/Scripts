@@ -31116,6 +31116,116 @@ case ""Pair of Pie-radox Slices"":
                     break;
     "
 },
+{
+    "Bones from the Void Realm",
+    @"
+case ""Bones from the Void Realm"":
+                    NSoD.BonesVoidRealm(1);
+
+                    break;
+    "
+},
+{
+    "ArchFiend Bone",
+    @"
+case ""ArchFiend Bone"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+                    HashSet<string> itemCache = BuildItemCache();
+
+                    Core.AddDrop(BossDrops.Where(drop => !itemCache.Contains(drop)).ToArray());
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(Core.IsMember ? 10571 : 10570);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""fiendvoid"", ""Void Fang"", ""Diluted Venom"", 6, isTemp: false);
+                        Core.HuntMonster(""fiendvoid"", ""Arachnid Seeker"", ""Seeker Thorax"", 6, isTemp: false);
+                        Core.HuntMonster(""fiendvoid"", ""Archfiend Casimir"", ""Covetous Hand"", 1, isTemp: false);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Nulgath Horns",
+    @"
+case ""Nulgath Horns"":
+                    Nation.NulgathsRouletteofMisfortune(req.Name, req.Quantity);
+                    break;
+    "
+},
+{
+    "Blood Star of the Archfiend",
+    @"
+case ""Blood Star of the Archfiend"":
+
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    NM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Abyssal Fang",
+    @"
+case ""Abyssal Fang"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.EnsureAccept(Core.IsMember ? 10559 : 10558);
+                        Core.KillMonster(""tercesarchive"", ""r7"", ""Bottom"", ""Fiend of Voracity"", ""Voracious Appetite"", 1);
+                        Core.KillMonster(""tercesarchive"", ""r6"", ""Center"", ""*"", ""Double Iris"", 6);
+                        Core.KillMonster(""tercesarchive"", ""r5"", ""Left"", ""*"", ""Twisted Vision"", 6);
+                        Core.EnsureComplete(Core.IsMember ? 10559 : 10558);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+
+
+                #region Known items
+    "
+},
+{
+    "Battlefiend Blade of Nulgath",
+    @"
+case ""Battlefiend Blade of Nulgath"":
+                    Core.FarmingLogger(req.Name, quant);
+                    juggernaut.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Battlefiend_Blade_of_Nulgath);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
+{
+    "Nulgath Armor",
+    @"
+case ""Nulgath Armor"":
+                    Core.FarmingLogger(req.Name, quant);
+                    juggernaut.JuggItems(JuggernautItemsofNulgath.RewardsSelection.Nulgath_Armor);
+                    Bot.Wait.ForPickup(req.Name);
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic) =>

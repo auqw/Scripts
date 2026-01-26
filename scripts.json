@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 423345,
-    "sha256": "23c37393626439bb49fe1f8e4235b62730a94411105eb36200599b74b9c0dfad",
+    "size": 423602,
+    "sha256": "2c967b57e4cc2b21ee2598786bb3f8c60cbf3afcb962af7f9515f66862e5027d",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -24804,8 +24804,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1125664,
-    "sha256": "87b25ec416744cf3740f2ffc3603fee5c8bc70bd6a3debf1bad11c92785d01bc",
+    "size": 1129577,
+    "sha256": "889a75574621e61ab46937ca4aae0d8e29a09e3a8ad99837edc7d296dcd0fa77",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
