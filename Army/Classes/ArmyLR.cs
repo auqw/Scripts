@@ -515,29 +515,27 @@ public class ArmyLR
         }
     }
 
+    int _revenantBaseRoom = -1;
+
     void RevenantMapHandler()
     {
         string[] players = Army.Players();
-
         if (players == null || players.Length == 0)
             return;
 
-        // Find current player's index
+        if (_revenantBaseRoom == -1)
+            _revenantBaseRoom = C.PrivateRoomNumber; // lock base room once
+
         string currentPlayer = Bot.Player.Username;
         int playerIndex = Array.IndexOf(players, currentPlayer);
+        if (playerIndex < 0)
+            return;
 
-        if (playerIndex == -1)
-            return; // Player not found in array
+        int roomOffset = playerIndex / 3; // 3 players per room
 
-        // Calculate room offset based on 3-player cap
-        // Index 0-2: room +0
-        // Index 3-5: room +1
-        // Index 6-8: room +2
-        // etc.
-        int roomOffset = playerIndex / 3;
-
-        C.PrivateRoomNumber = C.PrivateRoomNumber + roomOffset;
+        C.PrivateRoomNumber = _revenantBaseRoom + roomOffset;
     }
+
 
     enum CheckType
     {
