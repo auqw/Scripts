@@ -108,6 +108,7 @@ public class EliteVoid
             }
         }
 
+        string[] SoloClasses = new[] { "Yami no Ronin", "Chaos Slayer" };
         if (!Core.CheckInventory("Elite Void Sword Pet"))
         {
             Core.Logger($"Getting \"Elite Void Sword Pet\"");
@@ -116,14 +117,18 @@ public class EliteVoid
                 //Staying Humble 6682
                 Core.EnsureAccept(6682);
                 //why the fuck was the class buffed!?
+                //why the fuck was the class buffed!?
                 InventoryItem? usethis = Bot
                     .Inventory.Items.Concat(Bot.Bank.Items)
                     .FirstOrDefault(n =>
-                        n.Name.StartsWith("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
-                    );
+                        SoloClasses.Contains(n));
 
                 if (usethis != null)
+                {
                     Core.Equip(usethis.ID);
+                    if (usethis.Name == "Yami no Ronin")
+                        Bot.Skills.StartAdvanced("Yami no Ronin", false, Skua.Core.Models.Skills.ClassUseMode.Solo);
+                }
                 else
                     Core.EquipClass(ClassType.Dodge);
 

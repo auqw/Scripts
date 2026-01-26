@@ -354,17 +354,22 @@ public class DragonOfTime
                 publicRoom: true,
                 EquipBestClassType: false
             );
+
+            string[] SoloClasses = new[] { "Yami no Ronin", "Chaos Slayer" };
             if (!Core.CheckInventory("Dragon's Plasma", 20))
             {
                 //why the fuck was the class buffed!?
                 InventoryItem? usethis = Bot
                     .Inventory.Items.Concat(Bot.Bank.Items)
                     .FirstOrDefault(n =>
-                        n.Name.StartsWith("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
-                    );
+                        SoloClasses.Contains(n));
 
                 if (usethis != null)
+                {
                     Core.Equip(usethis.ID);
+                    if (usethis.Name == "Yami no Ronin")
+                        Bot.Skills.StartAdvanced("Yami no Ronin", false, Skua.Core.Models.Skills.ClassUseMode.Solo);
+                }
                 else
                     Core.EquipClass(ClassType.Dodge);
                 Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false, EquipBestClassType: false);
