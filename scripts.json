@@ -13148,8 +13148,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 18357,
-    "sha256": "d099d562da6fe912606d3947caeecd87ec7cfd77a2efa2b227ad8f18545a5a22",
+    "size": 18341,
+    "sha256": "486d47ab579f2a5acdd6c3032157718610a36e7d11dcf699e985497aab635d0f",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
@@ -25512,8 +25512,8 @@
       "null"
     ],
     "path": "Nation/Various/EliteVoid.cs",
-    "size": 4603,
-    "sha256": "e9f15e8b940e6f1b2a7111775b029e4da512aa7d0a8174897cc0f2defa8bac77",
+    "size": 4584,
+    "sha256": "93823c6d1cbbe43118055894f0283754aafbb2cd7700464ba472033ca10d4404",
     "fileName": "EliteVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/EliteVoid.cs"
   },
