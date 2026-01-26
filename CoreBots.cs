@@ -4885,7 +4885,7 @@ public class CoreBots
                 }
 
                 if (!Bot.Player.HasTarget && targetMonster != null)
-                    Bot.Combat.Attack(targetMonster);
+                    Bot.Combat.Attack(targetMonster.Name);
 
                 Bot.Sleep(200);
 
