@@ -355,15 +355,13 @@ public class DragonOfTime
                 EquipBestClassType: false
             );
 
-            string[] SoloClasses = new[] { "Yami no Ronin", "Chaos Slayer" };
             if (!Core.CheckInventory("Dragon's Plasma", 20))
             {
                 //why the fuck was the class buffed!?
+                string[] SoloClasses = new[] { "Yami no Ronin", "Chaos Slayer" };
                 InventoryItem? usethis = Bot
                     .Inventory.Items.Concat(Bot.Bank.Items)
-                    .FirstOrDefault(n =>
-                        SoloClasses.Any(n => Core.CheckInventory(n)));
-
+                    .FirstOrDefault(n => SoloClasses.Any(className => className == n.Name));
                 if (usethis != null)
                 {
                     Core.Equip(usethis.ID);

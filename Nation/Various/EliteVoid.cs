@@ -120,8 +120,7 @@ public class EliteVoid
                 string[] SoloClasses = new[] { "Yami no Ronin", "Chaos Slayer" };
                 InventoryItem? usethis = Bot
                     .Inventory.Items.Concat(Bot.Bank.Items)
-                    .FirstOrDefault(n =>
-                        SoloClasses.Any(n => Core.CheckInventory(n)));
+                    .FirstOrDefault(n => SoloClasses.Any(className => className == n.Name));
 
                 if (usethis != null)
                 {
