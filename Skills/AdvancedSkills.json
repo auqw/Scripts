@@ -9505,9 +9505,9 @@
           "rules": [
             {
               "type": "Mana",
-              "value": 60,
+              "value": 20,
               "comparison": "greater",
-              "isPercentage": true
+              "isPercentage": false
             }
           ]
         },
