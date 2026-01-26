@@ -231,6 +231,7 @@ public class CoreBots
             }
 
             Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10);
+            Bot.Drops.Start();
         }
 
         if (!Bot.Player.LoggedIn)
@@ -318,8 +319,6 @@ public class CoreBots
 
         CollectData(changeTo);
 
-        if (!Bot.Drops.Enabled)
-            Bot.Drops.Start();
 
         #region Required things that must be done before starting the Script
 
@@ -575,6 +574,7 @@ public class CoreBots
         }
         if (!changeTo && _scriptStopwatch != null)
         {
+            Bot.Drops.StopAsync();
             _scriptStopwatch.Stop();
             Logger($"Script ran for {_scriptStopwatch.Elapsed:hh\\:mm\\:ss}");
             _scriptStopwatch = null;
@@ -617,8 +617,6 @@ public class CoreBots
     /// </summary>
     private bool StopBot(bool crashed)
     {
-        if (Bot.Drops.Enabled)
-            Bot.Drops.StopAsync();
         StopBotAsync();
         Bot.Handlers.Clear();
 
@@ -1306,8 +1304,8 @@ public class CoreBots
 
         foreach (string? item in items)
         {
-            if (
-                string.IsNullOrEmpty(item)
+            if (Bot.Bank.FreeSlots <= 0
+                || (string.IsNullOrEmpty(item)
                 || item == FarmClass
                 || item == SoloClass
                 || item == DodgeClass
@@ -1315,7 +1313,7 @@ public class CoreBots
                 || FarmGear.Contains(item)
                 || SoloGear.Contains(item)
                 || DodgeGear.Contains(item)
-                || BossGear.Contains(item)
+                || BossGear.Contains(item))
             )
                 continue;
 
@@ -1418,12 +1416,11 @@ public class CoreBots
 
         foreach (int itemID in items)
         {
-            if (
-                itemID <= 0
+            if (Bot.Bank.FreeSlots <= 0
+                || itemID <= 0
                 || Extras.Contains(itemID)
                 || Bot.Inventory.IsEquipped(itemID)
-                || (Bot.House != null && Bot.House.IsEquipped(itemID))
-            )
+                || (Bot.House != null && Bot.House.IsEquipped(itemID)))
                 continue;
 
             ItemBase? inventoryItem = Bot
@@ -2726,11 +2723,21 @@ public class CoreBots
     {
         if (items == null || items.Length == 0)
             return;
-        Unbank(items);
-        if (!Bot.Drops.Enabled)
-            Bot.Drops.Start();
-        Bot.Drops.Add(items);
+
+        string[] filteredItems = items
+            .Where(item => !string.IsNullOrWhiteSpace(item))
+            .Select(item => item.Trim())
+            .Distinct()
+            .Where(item => !Bot.Drops.ToPickup.Contains(item))
+            .ToArray();
+
+        if (filteredItems.Length == 0)
+            return;
+
+        Unbank(filteredItems);
+        Bot.Drops.Add(filteredItems);
     }
+
 
     /// <summary>
     /// Adds drops to the pickup list and un-banks the items.
@@ -2740,11 +2747,19 @@ public class CoreBots
     {
         if (items == null || items.Length == 0)
             return;
-        Unbank(items);
-        if (!Bot.Drops.Enabled)
-            Bot.Drops.Start();
-        Bot.Drops.Add(items);
+
+        int[] filteredItems = items
+            .Distinct()
+            .Where(id => !Bot.Drops.ToPickupIDs.Contains(id))
+            .ToArray();
+
+        if (filteredItems.Length == 0)
+            return;
+
+        Unbank(filteredItems);
+        Bot.Drops.Add(filteredItems);
     }
+
 
     /// <summary>
     /// Removes drops from the pickup list.
@@ -2752,8 +2767,22 @@ public class CoreBots
     /// <param name="items">Items to remove</param>
     public void RemoveDrop(params string[] items)
     {
-        Bot.Drops.Remove(items);
+        if (items == null || items.Length == 0)
+            return;
+
+        string[] filteredItems = items
+            .Where(item => !string.IsNullOrWhiteSpace(item))
+            .Select(item => item.Trim())
+            .Distinct()
+            .Where(item => Bot.Drops.ToPickup.Contains(item))
+            .ToArray();
+
+        if (filteredItems.Length == 0)
+            return;
+
+        Bot.Drops.Remove(filteredItems);
     }
+
 
     /// <summary>
     /// Removes drops from the pickup list.
@@ -2761,8 +2790,20 @@ public class CoreBots
     /// <param name="items">Items to remove</param>
     public void RemoveDrop(params int[] items)
     {
-        Bot.Drops.Remove(items);
+        if (items == null || items.Length == 0)
+            return;
+
+        int[] filteredItems = items
+            .Distinct()
+            .Where(id => Bot.Drops.ToPickupIDs.Contains(id))
+            .ToArray();
+
+        if (filteredItems.Length == 0)
+            return;
+
+        Bot.Drops.Remove(filteredItems);
     }
+
 
     #endregion Drops
 
