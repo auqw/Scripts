@@ -9855,8 +9855,8 @@ public class CoreBots
     {
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
-            
-        if (string.IsNullOrEmpty(additionalClass))
+
+        if (!string.IsNullOrEmpty(additionalClass))
             Equip(additionalClass!);
         else EquipClass(ClassType.Boss);
     }
@@ -9870,7 +9870,7 @@ public class CoreBots
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
             JumpWait();
 
-        if (string.IsNullOrEmpty(additionalClass))
+        if (!string.IsNullOrEmpty(additionalClass))
             Equip(additionalClass!);
         EquipClass(ClassType.Dodge);
     }
