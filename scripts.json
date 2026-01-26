@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 424689,
-    "sha256": "8b14567ab73924857359b122ca768944ded15e71cdea0b1449a34c225f2264e7",
+    "size": 424882,
+    "sha256": "c91dd72291c8a3d22d3a339f617095ce9133840852c2a1454784055d2d1a4db8",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -3286,8 +3286,8 @@
       "perpetuum"
     ],
     "path": "Other/CelestialOfMysteries.cs",
-    "size": 4489,
-    "sha256": "3f7aa06325cbddeff05a58761967ee0f61b003f3af1f43f27e99622c5e1fa25c",
+    "size": 4624,
+    "sha256": "567a07d5fc915b1ebc670e50821cd5b8acb78fd69736362a9b299dc2e14476c2",
     "fileName": "CelestialOfMysteries.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/CelestialOfMysteries.cs"
   },
