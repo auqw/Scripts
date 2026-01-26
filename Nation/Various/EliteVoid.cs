@@ -108,7 +108,6 @@ public class EliteVoid
             }
         }
 
-        string[] SoloClasses = new[] { "Yami no Ronin", "Chaos Slayer" };
         if (!Core.CheckInventory("Elite Void Sword Pet"))
         {
             Core.Logger($"Getting \"Elite Void Sword Pet\"");
@@ -118,10 +117,11 @@ public class EliteVoid
                 Core.EnsureAccept(6682);
                 //why the fuck was the class buffed!?
                 //why the fuck was the class buffed!?
+                string[] SoloClasses = new[] { "Yami no Ronin", "Chaos Slayer" };
                 InventoryItem? usethis = Bot
                     .Inventory.Items.Concat(Bot.Bank.Items)
                     .FirstOrDefault(n =>
-                        SoloClasses.Contains(n));
+                        SoloClasses.Any(n => Core.CheckInventory(n)));
 
                 if (usethis != null)
                 {

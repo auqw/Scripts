@@ -362,7 +362,7 @@ public class DragonOfTime
                 InventoryItem? usethis = Bot
                     .Inventory.Items.Concat(Bot.Bank.Items)
                     .FirstOrDefault(n =>
-                        SoloClasses.Contains(n));
+                        SoloClasses.Any(n => Core.CheckInventory(n)));
 
                 if (usethis != null)
                 {
