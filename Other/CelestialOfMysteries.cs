@@ -85,7 +85,7 @@ public class CelestialOfMysteries
 
         // Gold Voucher 500k
         Farm.Voucher("Gold Voucher 500k", 35);
-
+        Adv.GearStore(true);
         // Duo's Dinner
         if (!Core.CheckInventory("Duo's Dinner", 35))
         {
@@ -128,6 +128,7 @@ public class CelestialOfMysteries
             Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster("celestialpast", "Azalith", "The Divine Will", 1, false, EquipBestClassType: false);
         }
+        Adv.GearStore(true, true);
 
         Core.AddDrop(Core.QuestRewards(10096));
         Core.ChainComplete(10096);
