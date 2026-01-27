@@ -1317,14 +1317,14 @@ public class CoreBots
             )
                 continue;
 
-            if (Bot.Inventory.IsEquipped(item) || Bot.House.IsEquipped(item))
+            if (Bot.Inventory.IsEquipped(item) || (Bot.House?.IsEquipped(item) ?? false))
             {
                 Logger($"⚔️ Can't bank equipped item: {item}");
                 continue;
             }
 
             bool inBank = Bot.Bank.Contains(item);
-            bool inInventoryOrHouse = Bot.Inventory.Contains(item) || Bot.House.Contains(item);
+            bool inInventoryOrHouse = Bot.Inventory.Contains(item) || (Bot.House?.Contains(item) ?? false);
             if (inBank && !inInventoryOrHouse)
             {
                 Logger($"ℹ️ {item} is already in bank, skipping.");
@@ -1332,7 +1332,7 @@ public class CoreBots
             }
 
             ItemBase? inventoryItem = Bot
-                .Inventory.Items.Concat(Bot.House.Items)
+                .Inventory.Items.Concat(Bot.House?.Items ?? Enumerable.Empty<InventoryItem>())
                 .FirstOrDefault(x => x?.Name == item);
             if (inventoryItem == null)
             {
@@ -1340,8 +1340,10 @@ public class CoreBots
                 continue;
             }
 
+            InventoryItem? houseItem = null;
             bool itemIsForHouse =
-                Bot.House.TryGetItem(item, out InventoryItem? houseItem)
+                Bot.House != null
+                && Bot.House.TryGetItem(item, out houseItem)
                 && houseItem != null
                 && (
                     houseItem.CategoryString == "House"
@@ -1355,7 +1357,7 @@ public class CoreBots
                 && !Extras.Contains(inventoryItem.ID)
                 && (
                     Bot.Inventory.Contains(item)
-                    || (itemIsForHouse && Bot.House.Contains(item) && houseItem?.Equipped != true)
+                    || (itemIsForHouse && (Bot.House?.Contains(item) ?? false) && houseItem?.Equipped != true)
                 )
             )
             {
@@ -1380,9 +1382,9 @@ public class CoreBots
                         SendPackets(
                             $"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%"
                         );
-                        Bot.Wait.ForTrue(() => !Bot.House.Contains(item), 20);
+                        Bot.Wait.ForTrue(() => !(Bot.House?.Contains(item) ?? false), 20);
 
-                        if (Bot.House.Items.Any(x => x?.Name == item))
+                        if (Bot.House?.Items?.Any(x => x?.Name == item) ?? false)
                         {
                             Logger($"🚫 Failed to bank {item} in house bank, skipping it.");
                             continue;
@@ -1520,15 +1522,15 @@ public class CoreBots
             if ((Bot.House?.FreeSlots ?? 0) <= 0 || string.IsNullOrEmpty(item) || item == SoloClass || item == FarmClass)
                 continue;
 
-            bool itemExists = Bot.House.Items.Any(x =>
+            bool itemExists = Bot.House?.Items?.Any(x =>
                 x?.Name == item && (!x.Coins || !x.Equipped)
-            );
+            ) ?? false;
             if (!itemExists)
                 continue;
 
-            if (Bot.House.Contains(item))
+            if (Bot.House?.Contains(item) ?? false)
             {
-                if (!Bot.House.EnsureToBank(item))
+                if (!(Bot.House?.EnsureToBank(item) ?? false))
                 {
                     Logger($"🚫 Failed to bank {item}, skipping it.");
                     continue;
@@ -1556,13 +1558,13 @@ public class CoreBots
             if (itemID == 0 || (Bot.House?.FreeSlots ?? 0) <= 0)
                 continue;
 
-            bool itemExists = Bot.House.Items.Any(x => x?.ID == itemID && (!x.Equipped && x.Coins));
+            bool itemExists = Bot.House?.Items?.Any(x => x?.ID == itemID && (!x.Equipped && x.Coins)) ?? false;
             if (!itemExists)
                 continue;
 
-            if (Bot.House.Contains(itemID))
+            if (Bot.House?.Contains(itemID) ?? false)
             {
-                if (!Bot.House.EnsureToBank(itemID))
+                if (!(Bot.House?.EnsureToBank(itemID) ?? false))
                 {
                     Logger($"🚫 Failed to bank {itemID}, skipping it.");
                     continue;
