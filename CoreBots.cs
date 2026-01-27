@@ -6570,7 +6570,7 @@ public class CoreBots
     /// Checks whether the player is an Upholder
     /// </summary>
     public bool IsUpholder() => Badges.Any(badge => badge.Name.Contains("Upholder"));
-    public bool GoldMaxed => Bot.Player.Gold < 100_000_000;
+    public bool GoldMaxed => Bot.Player.Gold >= 100_000_000;
 
     /// <summary>
     /// Retrieves the username from a game object or falls back to the player's username.
