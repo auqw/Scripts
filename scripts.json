@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 424881,
-    "sha256": "9acb5b5067cb9de2e8f175682f2e2ead07571a0956ea0516bac58d4b1dff36e6",
+    "size": 425155,
+    "sha256": "7eaa45020bb87dd2b871b8678fd79c687d22b56a352f909ddafd739cfccb56e8",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -4491,6 +4491,22 @@
     "sha256": "f7d82550b678bda9a4e777bc4f837d1f30ffb51fe721e5184ad11ed3075fec1f",
     "fileName": "SilverExaltedPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/SilverExaltedPaladin.cs"
+  },
+  {
+    "name": "LichwarGoldXP",
+    "description": "Levels/farms gold using aggroing on cell",
+    "tags": [
+      "army",
+      "gold",
+      "exp",
+      "member",
+      "upgrade"
+    ],
+    "path": "Army/Farm/ArmyLichWarGoldXp[Mem].cs",
+    "size": 4099,
+    "sha256": "a1f94dca7f024fd33b966b8882526b157642d8521ecefd24db03f6486694fe56",
+    "fileName": "ArmyLichWarGoldXp[Mem].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLichWarGoldXp[Mem].cs"
   },
   {
     "name": "Army Pristmas",
