@@ -1374,6 +1374,9 @@ public class CoreBots
                 {
                     if (houseItem != null)
                     {
+                        if ((Bot.House?.FreeSlots ?? 0) <= 0)
+                            continue;
+
                         SendPackets(
                             $"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%"
                         );
@@ -1473,6 +1476,9 @@ public class CoreBots
                     );
                     if (houseItem != null)
                     {
+                        if ((Bot.House?.FreeSlots ?? 0) <= 0)
+                            continue;
+
                         SendPackets(
                             $"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%"
                         );
@@ -1511,7 +1517,7 @@ public class CoreBots
 
         foreach (string? item in items)
         {
-            if (string.IsNullOrEmpty(item) || item == SoloClass || item == FarmClass)
+            if ((Bot.House?.FreeSlots ?? 0) <= 0 || string.IsNullOrEmpty(item) || item == SoloClass || item == FarmClass)
                 continue;
 
             bool itemExists = Bot.House.Items.Any(x =>
@@ -1547,7 +1553,7 @@ public class CoreBots
 
         foreach (int itemID in items)
         {
-            if (itemID == 0)
+            if (itemID == 0 || (Bot.House?.FreeSlots ?? 0) <= 0)
                 continue;
 
             bool itemExists = Bot.House.Items.Any(x => x?.ID == itemID && (!x.Equipped && x.Coins));
