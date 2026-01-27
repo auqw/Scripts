@@ -1416,7 +1416,7 @@ public class CoreBots
 
         foreach (int itemID in items)
         {
-            if (Bot.Bank.FreeSlots <= 0
+            if ((Bot.Bank?.FreeSlots ?? 0) <= 0
                 || itemID <= 0
                 || Extras.Contains(itemID)
                 || Bot.Inventory.IsEquipped(itemID)

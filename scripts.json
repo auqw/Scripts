@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 424872,
-    "sha256": "99f266d6412d88c0d78977a78de6cebe881c7f018d615864f24d477ec7ba6e20",
+    "size": 424880,
+    "sha256": "0917c90f2af17ed7f6361fb87b73c12c3f2b67008e51581976fd09d0e98995f5",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -1533,8 +1533,8 @@
       "battleunder"
     ],
     "path": "Story/BattleUnder.cs",
-    "size": 5472,
-    "sha256": "48e252b212db22181e720de8c8c2c0dbdc48dba99afdb30f3c76730d0fe7cb3a",
+    "size": 5607,
+    "sha256": "c91d0cc92ce1ba6262a8162f846bfe88d6440ecad7783a0e282fd33a1fce3850",
     "fileName": "BattleUnder.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/BattleUnder.cs"
   },
@@ -3994,8 +3994,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 123230,
-    "sha256": "2eba88d923d2acc93a64cb349182f4db4052103fb86bc63a6f5664c861d6d8ba",
+    "size": 123200,
+    "sha256": "52a2b1b2ff276530c2c34f5c5203039113a958393d65a926e3313a2071be5ef3",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
