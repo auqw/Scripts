@@ -177,7 +177,7 @@ public class TechfortressWarMerge
                             "Right",
                             29,
                             33257,
-                            isTemp: true,
+                            isTemp: false,
                             publicRoom: true
                         );
                         Core.KillMonster(
