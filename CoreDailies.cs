@@ -12,7 +12,7 @@ using Skua.Core.Models.Quests;
 public class CoreDailies
 {
     // [Can Change] Default metals to be acquired by MineCrafting quest
-    public string[] MineCraftingMetalsArray = { "Barium", "Copper", "Silver" };
+    public string[] MineCraftingMetalsArray = { "Barium", "Copper", "Silver", "Platinum" };
 
     // [Can Change] Default metals to be acquired by Hard Core Metals quest
     public string[] HardCoreMetalsMetalsArray = { "Arsenic", "Chromium", "Rhodium" };
