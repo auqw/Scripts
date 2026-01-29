@@ -130,46 +130,34 @@ public class DreampalaceMerge
                 case "Token of Earth":
                 case "Token of Fire":
                     Core.EquipClass(ClassType.Farm);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster(
-                            "DreamPalace",
-                            "Mote of Power",
-                            req.Name,
-                            quant,
-                            isTemp: false,
-                            log: false
-                        );
+                    Core.HuntMonster("DreamPalace", "Mote of Power", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Zahad's Ancient Gem":
                     Core.EquipClass(ClassType.Solo);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster("DreamPalace", "Zahad", req.Name, quant, isTemp: false);
+                    Core.HuntMonster("DreamPalace", "Zahad", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Scythe of Gazeroth":
                 case "Souls of Gazeroth":
                     Core.EquipClass(ClassType.Solo);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster("DreamPalace", "Gazeroth", req.Name, quant, isTemp: false);
+                    Core.HuntMonster("DreamPalace", "Gazeroth", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Claws of Zelkur":
                 case "Bow of Zelkur":
                     Core.EquipClass(ClassType.Solo);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster("DreamPalace", "Zelkur", req.Name, isTemp: false);
+                    Core.HuntMonster("DreamPalace", "Zelkur", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Feathers of Zal":
                 case "Scimitar of Zal":
                     Core.EquipClass(ClassType.Solo);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                        Core.HuntMonster("DreamPalace", "Zal", req.Name, isTemp: false);
+                    Core.HuntMonster("DreamPalace", "Zal", req.Name, req.Quantity, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     break;
             }
