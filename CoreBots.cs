@@ -7700,12 +7700,9 @@ public class CoreBots
             ItemCategory.Note,
             ItemCategory.Item,
             ItemCategory.Resource,
-            ItemCategory.QuestItem,
-            ItemCategory.Helm,
-            ItemCategory.Cape,
-            ItemCategory.Armor,
-            ItemCategory.Pet,
+            ItemCategory.QuestItem
         };
+
         // Include ServerUse if boosts are not active
         if (
             !Bot.Boosts.Enabled
