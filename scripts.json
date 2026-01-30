@@ -667,8 +667,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 10291,
-    "sha256": "b7c9184d37eaea999d5dbeb53752226acf5c27f22b904e066b653b5702a7ec0c",
+    "size": 10322,
+    "sha256": "c296b82920178bb99f422f124b1f02bf54efd2bddce4de0c50b90269f6f18175",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
@@ -732,8 +732,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEngineer.cs",
-    "size": 9679,
-    "sha256": "ae47af6b526c5e6b35aafb03aebbe535f3c3a5e831a241d44f4744d0c19cae4b",
+    "size": 9704,
+    "sha256": "e0ec919163a3b4b509666b370a37217c6a39fac6d9a1dd37cf5506011c026218",
     "fileName": "UltraEngineer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEngineer.cs"
   },
@@ -744,8 +744,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 8697,
-    "sha256": "46fb7a2ba5b7a049be98fff542f3959b8185367ccc6a6644094236fbb34797a2",
+    "size": 8904,
+    "sha256": "480ffcde1498e01f7a2847da928d7f918b0e7d4731a856e0f71f2dca6e1b4e14",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
@@ -796,7 +796,7 @@
     ],
     "path": "Ultras/UltraDrago.cs",
     "size": 12437,
-    "sha256": "a07df2b138fa919d743630b8642b6ac0a9ea3809ab6eb600fc75c164b1c65c56",
+    "sha256": "e4f75e00dd8a74142efeb7a11439d942289e370214bbd8dea0b5a03557a00de7",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },
