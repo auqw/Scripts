@@ -233,7 +233,7 @@ public class UltraDrago
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
         if (!Bot.Quests.IsUnlocked(8397))
-            Bot.Quests.UpdateQuest(8397);
+            Bot.Quests.UpdateQuest(8395);
         C.AddDrop("King Drago Insignia");
 
         Core.Join(map);

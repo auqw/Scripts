@@ -12,7 +12,7 @@ tags: Ultra
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
-
+#region Comps
 #region Fast Comp
 
 /// <summary>
@@ -135,6 +135,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance
 // └─ Cape: Vainglory
 
+#endregion
 #endregion
 
 public class UltraEngineer

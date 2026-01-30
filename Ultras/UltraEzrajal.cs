@@ -17,6 +17,8 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 #nullable enable
+
+#region Comps
 /// <summary>
 /// Champion Drakath Enhancement Configurations
 /// Organized by composition type: Fast, Safe, F2P Fastest, and Solo Options
@@ -145,6 +147,8 @@ using Skua.Core.Options;
 // └─ Cape: Vainglory
 
 #endregion
+#endregion
+
 public class UltraEzrajal
 {
     private static CoreAdvanced Adv

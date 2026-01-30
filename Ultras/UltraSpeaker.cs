@@ -91,13 +91,17 @@ public class UltraSpeaker
 
     void Kill()
     {
+        if (!Bot.Quests.IsUnlocked(9173))
+            Bot.Log("Ultra Quest isn't unlocked, we'll fakeunlock it so you can atleast get the quest drop");
+        
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
         Bot.Options.DisableCollisions = true;
         C.EnsureAccept(9173);
         C.AddDrop("The First Speaker Silenced");
-        Bot.Quests.UpdateQuest(9125);
+        if (!Bot.Quests.IsUnlocked(9173))
+            Bot.Quests.UpdateQuest(9125);
         Core.Join("ultraspeaker");
         Ultra.WaitForArmy(3, "ultra_speaker.sync");
         Core.ChooseBestCell("The First Speaker");
