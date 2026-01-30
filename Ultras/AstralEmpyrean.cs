@@ -174,7 +174,7 @@ public class AstralEmpyrean
         Bot.Sleep(2500);
         Bot.Events.ExtensionPacketReceived += AstralZoneListener;
         C.AddDrop("Star of the Empyrean");
-        C.EnsureAccept(8547);
+        C.EnsureAccept(9803);
 
         Core.Join(map);
         Ultra.WaitForArmy((int)Bot.Config!.Get<Players>("PlayerCount") - 1, "AstralEmpyrean.sync");
