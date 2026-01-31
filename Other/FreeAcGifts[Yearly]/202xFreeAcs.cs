@@ -48,11 +48,9 @@ public class FreeAcs
             return;
         }
 
-        if (!Core.isCompletedBefore(10455))
-        {
-            Core.EnsureAccept(10584);
-            Core.HuntMonster("borgars", "Burglinster", "Cookie Dough");
-            Core.EnsureComplete(10584);
-        }
+
+        Core.EnsureAccept(10584);
+        Core.HuntMonster("borgars", "Burglinster", "Cookie Dough");
+        Core.EnsureComplete(10584);
     }
 }
