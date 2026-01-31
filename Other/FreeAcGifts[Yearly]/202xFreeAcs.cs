@@ -31,7 +31,7 @@ public class FreeAcs
 
     public void GetYourAcsHere()
     {
-        if (Core.isCompletedBefore(10455))
+        if (Core.isCompletedBefore(10584))
         {
             Core.Logger("Quest Already Complete");
             return;
@@ -50,9 +50,9 @@ public class FreeAcs
 
         if (!Core.isCompletedBefore(10455))
         {
-            Core.EnsureAccept(10455);
-            Core.HuntMonster("yulgar", "Agitated Orb", "Free ACs...");
-            Core.EnsureComplete(10455);
+            Core.EnsureAccept(10584);
+            Core.HuntMonster("borgars", "Burglinster", "Cookie Dough");
+            Core.EnsureComplete(10584);
         }
     }
 }
