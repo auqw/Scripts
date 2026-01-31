@@ -12597,22 +12597,10 @@
       "[comma-separated tags relevant to this script]"
     ],
     "path": "Other/FreeAcGifts[Yearly]/202xFreeAcs.cs",
-    "size": 1523,
-    "sha256": "28f3f2d3e7b6ee534731ff9fa0ab78bd548b2bf7beafcb1832264b1a556e798f",
+    "size": 1673,
+    "sha256": "0448a64699e22b46fac1952c6877ab9edcf8c23ad3bf3a8ec284f0f3dbb33e23",
     "fileName": "202xFreeAcs.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs.cs"
-  },
-  {
-    "name": "[Script Name Here]",
-    "description": "[Brief description of what this script does]",
-    "tags": [
-      "[comma-separated tags relevant to this script]"
-    ],
-    "path": "Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs",
-    "size": 1836,
-    "sha256": "de58c9e44f66b6ffdc059cc8e5afc99b4a852f17e7c7189b66bee74c2055862d",
-    "fileName": "202xFreeAcs[TBD].cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FreeAcGifts[Yearly]/202xFreeAcs[TBD].cs"
   },
   {
     "name": "DarknessShard",
