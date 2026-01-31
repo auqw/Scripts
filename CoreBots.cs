@@ -316,6 +316,14 @@ public class CoreBots
         Bot.Lite.SmoothBackground = true;
         Bot.Lite.ShowMonsterType = true;
         Bot.Lite.CustomDropsUI = true;
+        Bot.Lite.AurasUI = true;
+        Bot.Lite.DisableRedWarning = true;
+        Bot.Lite.QuantityWarnings = false;
+        Bot.Lite.VisualSkillCooldowns = true;
+        Bot.Lite.ChatUI = true;
+        Bot.Lite.QuestLogTurnIns = true;
+        Bot.Lite.DisableSoundFx = true;
+        Bot.Lite.DraggableDrops = false;
 
         CollectData(changeTo);
 
