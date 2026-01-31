@@ -6,12 +6,14 @@ tags: [comma-separated tags relevant to this script]
 
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/Story/Borgars.cs
 using Skua.Core.Interfaces;
 
 public class FreeAcs
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
+    private Borgars borgars => new();
     private static CoreFarms Farm
     {
         get => _Farm ??= new CoreFarms();
@@ -36,7 +38,6 @@ public class FreeAcs
             Core.Logger("Quest Already Complete");
             return;
         }
-
         Core.OneTimeMessage("WARNING", "This Quest is a ONE-TIME quest (per account).", true, true);
 
         if (
@@ -47,7 +48,8 @@ public class FreeAcs
             Core.Logger("You need to be level 20 and have a verified email!");
             return;
         }
-
+        if (!Core.isCompletedBefore(7522))
+            borgars.StoryLine();
 
         Core.EnsureAccept(10584);
         Core.HuntMonster("borgars", "Burglinster", "Cookie Dough");
