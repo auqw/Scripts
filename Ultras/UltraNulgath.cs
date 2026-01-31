@@ -70,6 +70,14 @@ public class UltraNulgath
     {
         new Option<string>( "a", "Taunter 1 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "ArchPaladin"),
         new Option<string>( "b", "Taunter 2 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "Lord Of Order"),
+        new Option<string>( "p1Name", "Player 1 Name", "Name of one of your accounts", ""),
+        new Option<string>( "p1Class", "Player 1 Class", "First player class name", "ArchPaladin"),
+        new Option<string>( "p2Name", "Player 2 Name", "Name of one of your accounts", ""),
+        new Option<string>( "p2Class", "Player 2 Class", "Second player class name", "Lord Of Order"),
+        new Option<string>( "p3Name", "Player 3 Name", "Name of one of your accounts", ""),
+        new Option<string>( "p3Class", "Player 3 Class", "Third player class name", "Legion Revenant"),
+        new Option<string>( "p4Name", "Player 4 Name", "Name of one of your accounts", ""),
+        new Option<string>( "p4Class", "Player 4 Class", "Fourth player class name", "King's Echo"),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -96,6 +104,7 @@ public class UltraNulgath
             C.SetOptions(false);
         }
 
+        ArmySetup();
         Core.Boot();
         Prep();
         Fight();
@@ -188,6 +197,30 @@ public class UltraNulgath
     }
 
 
+    void ArmySetup()
+    {
+        // Check if player name match one of the configured names and equip the corresponding class
+        var playerName = C.Username().ToLower();
+        var configNamesAndClasses = new Dictionary<string, string>
+        {
+            { (Bot.Config!.Get<string>("p1Name") ?? "").ToLower(), Bot.Config!.Get<string>("p1Class") ?? "" },
+            { (Bot.Config!.Get<string>("p2Name") ?? "").ToLower(), Bot.Config!.Get<string>("p2Class") ?? "" },
+            { (Bot.Config!.Get<string>("p3Name") ?? "").ToLower(), Bot.Config!.Get<string>("p3Class") ?? "" },
+            { (Bot.Config!.Get<string>("p4Name") ?? "").ToLower(), Bot.Config!.Get<string>("p4Class") ?? "" }
+        };
+
+        var className = configNamesAndClasses
+            .FirstOrDefault(kvp => !string.IsNullOrEmpty(kvp.Key) && kvp.Key == playerName)
+            .Value;
+
+        if (!string.IsNullOrEmpty(className) && C.CheckInventory(className, 1, true)) {
+            if (!Bot.Inventory.IsEquipped(className))
+            {
+                C.Equip(className);
+                Bot.Wait.ForTrue(() => Bot.Inventory.IsEquipped(className), 20);
+            }
+        }
+    }
     void Prep()
     {
         if (Bot.Config!.Get<bool>("DoEnh"))
