@@ -5,6 +5,7 @@ tags: tercesinvasion, Jadzia, Blood From the Void, Nulgath Saga, Nulgath Merge, 
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
+//cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Story/Nation/TercesInvasion.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
@@ -32,7 +33,7 @@ public class BloodFromTheVoid
 
         _TI.StoryLine();
         Nation.BloodFromTheVoid();
-        
+
         Core.SetOptions(false);
     }
 
