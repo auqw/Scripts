@@ -3368,6 +3368,31 @@ public class CoreNation
         Core.CancelRegisteredQuests();
     }
 
+    public void BloodFromTheVoid(int quant = 300)
+    {
+        if (Core.CheckInventory("Blood From the Void", quant, toInv: false))
+            return;
+
+        if (!Core.isCompletedBefore(10581))
+        {
+            Core.Logger("This farm requires the story in /tercesinvasion to be completed. if your geting this message please run the `Story\\Nation\\TercesInvasion.cs` script for the story, the rerun w/e is farming this item.");
+            return;
+        }
+
+        Core.AddDrop("Blood From the Void");
+        Core.EquipClass(ClassType.Solo);
+        Core.RegisterQuests(Bot.Player.IsMember ? 10583 : 10582);
+        Core.FarmingLogger("Blood From the Void", quant);
+        while (!Bot.ShouldExit && !Core.CheckInventory("Blood From the Void", quant))
+        {
+            Core.HuntMonster("tercesinvasion", "Archfiend Rodeleros", "Rodeleros' Blade Shard", log: false);
+            Core.HuntMonster("tercesinvasion", "Archfiend Vigneron", "Vigneron's Chalice", log: false);
+            Core.HuntMonster("tercesinvasion", "Archfiend Casimir", "Casimir's Pinky", log: false);
+        }
+        Core.CancelRegisteredQuests();
+    }
+
+
     // private int GetQuestRewardMaxStack(string itemName, int QuestID = 555) =>
     //     Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(QuestID), 20)
     //         .Rewards.FirstOrDefault(x => x != null && x.Name == itemName)?.MaxStack ?? 0;
