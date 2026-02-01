@@ -9589,6 +9589,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/Originul.cs"
   },
   {
+    "name": "Terces Invasion",
+    "description": "This will finish the Terces Invasion storyline.",
+    "tags": [
+      "story",
+      "quest",
+      "tercesinvasion",
+      "nation",
+      "nulgath",
+      "terces",
+      "invasion",
+      "jadzia"
+    ],
+    "path": "Story/Nation/TercesInvasion.cs",
+    "size": 4089,
+    "sha256": "6a8180c25fe3ca4c0b9bca6b5c404572c08c6e8cbd11e72488cd67397995e70f",
+    "fileName": "TercesInvasion.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/TercesInvasion.cs"
+  },
+  {
     "name": "Fiendshard",
     "description": "This will finish the Fiendshard quest.",
     "tags": [
