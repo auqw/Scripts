@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 155548,
-    "sha256": "97f218a5dda550d4134864279c551b06f06005269ff8a4e48b117c42877947b4",
+    "size": 155222,
+    "sha256": "81130800e7213e185a2fbe2d808211c90df702a214ffe52351ad828e7fce85ce",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -860,8 +860,8 @@
       "astral empyrean"
     ],
     "path": "Ultras/AstralEmpyrean.cs",
-    "size": 12505,
-    "sha256": "623e5ee545089391d5689f797886dab1cd8b913ad53da6707acc17f4a439eb0a",
+    "size": 12425,
+    "sha256": "b953ff680aea4c7f93feb26f39c0210503e31d03fde14fb0cc15794a9fc59c7d",
     "fileName": "AstralEmpyrean.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
   },
