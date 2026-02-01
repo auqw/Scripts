@@ -9912,7 +9912,6 @@ public class CoreBots
 
         Join(selectedMap.Item1, selectedMap.Item2, "Left");
 
-        EquipClass(ClassType.Farm);
         while (
             !Bot.ShouldExit && isTemp
                 ? !Bot.TempInv.Contains(item!, quantity)

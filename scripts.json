@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 425580,
-    "sha256": "6385546dad3b8fe743d756d23c72f4fc9e18c6f0948349a95ebcf409d16fc8dd",
+    "size": 425544,
+    "sha256": "7f009bff5fd9e8c705121fea8d46a838c84dbef1d8407f95694a05d56fcc646e",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -2235,8 +2235,8 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 53129,
-    "sha256": "c4f6b2dc0e6b85d6c5110826417c34358a15d74d188251d5aef8a128559036e5",
+    "size": 53487,
+    "sha256": "cad67098ce7d68e71357e80b63b5da3ed9dafa357453a38ff8f05b2f310eb7ed",
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -14229,6 +14229,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/KillYoshinoBoss.cs"
   },
   {
+    "name": "He Limed Me",
+    "description": "Farms The Random Rewards from `He Limed Me`",
+    "tags": [
+      "helimedme",
+      "he limed me",
+      "he",
+      "limed",
+      "me"
+    ],
+    "path": "Other/Various/HeLimedMe.cs",
+    "size": 1681,
+    "sha256": "56945b2bc8189ab13a549d788c2acbe48f7f1d28788eac4d4c29198290e5b7ad",
+    "fileName": "HeLimedMe.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/HeLimedMe.cs"
+  },
+  {
     "name": "UnderworldPirateCasterQuest",
     "description": "null",
     "tags": [
@@ -24880,6 +24896,23 @@
     "sha256": "f3af52bebf3e4175015436ce5744fbda24e5486c80ae27f8ca381b5928236ebd",
     "fileName": "UpdateTags.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/UpdateTags.cs"
+  },
+  {
+    "name": "Blood From the Void",
+    "description": "Farms Blood From the Void from `Obey Yourself, or be Commanded` in /tercesinvasion",
+    "tags": [
+      "tercesinvasion",
+      "jadzia",
+      "blood from the void",
+      "nulgath saga",
+      "nulgath merge",
+      "nulgath birthday"
+    ],
+    "path": "Nation/Materials/BloodFromtheVoid.cs",
+    "size": 2248,
+    "sha256": "d758292d164c8024219ca8a29da9b6fc3e6d71b014463264f284b4c8f808ccac",
+    "fileName": "BloodFromtheVoid.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Materials/BloodFromtheVoid.cs"
   },
   {
     "name": "TaintedGem",
