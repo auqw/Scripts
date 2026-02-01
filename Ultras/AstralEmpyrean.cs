@@ -160,9 +160,8 @@ public class AstralEmpyrean
             DoEnhs();
         Bot.Quests.UpdateQuest(9802);
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-        Ultra.BuyAlchemyPotion("Potent Honor Potion");
-        Core.EquipConsumable("Potent Honor Potion");
         Ultra.GetScrollOfEnrage();
+        Core.EquipEnrage();
     }
 
     void Fight()
