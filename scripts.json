@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 155548,
-    "sha256": "97f218a5dda550d4134864279c551b06f06005269ff8a4e48b117c42877947b4",
+    "size": 155222,
+    "sha256": "81130800e7213e185a2fbe2d808211c90df702a214ffe52351ad828e7fce85ce",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -860,8 +860,8 @@
       "astral empyrean"
     ],
     "path": "Ultras/AstralEmpyrean.cs",
-    "size": 12505,
-    "sha256": "623e5ee545089391d5689f797886dab1cd8b913ad53da6707acc17f4a439eb0a",
+    "size": 12425,
+    "sha256": "b953ff680aea4c7f93feb26f39c0210503e31d03fde14fb0cc15794a9fc59c7d",
     "fileName": "AstralEmpyrean.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/AstralEmpyrean.cs"
   },
@@ -2235,8 +2235,8 @@
       "all"
     ],
     "path": "Story/0AllStories.cs",
-    "size": 53129,
-    "sha256": "c4f6b2dc0e6b85d6c5110826417c34358a15d74d188251d5aef8a128559036e5",
+    "size": 53487,
+    "sha256": "cad67098ce7d68e71357e80b63b5da3ed9dafa357453a38ff8f05b2f310eb7ed",
     "fileName": "0AllStories.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/0AllStories.cs"
   },
@@ -9587,6 +9587,25 @@
     "sha256": "d55a87ad4a85dd2e841926980d8586f4cc5a13d50ac38ee718a65a9cc32f8363",
     "fileName": "Originul.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/Originul.cs"
+  },
+  {
+    "name": "Terces Invasion",
+    "description": "This will finish the Terces Invasion storyline.",
+    "tags": [
+      "story",
+      "quest",
+      "tercesinvasion",
+      "nation",
+      "nulgath",
+      "terces",
+      "invasion",
+      "jadzia"
+    ],
+    "path": "Story/Nation/TercesInvasion.cs",
+    "size": 4089,
+    "sha256": "6a8180c25fe3ca4c0b9bca6b5c404572c08c6e8cbd11e72488cd67397995e70f",
+    "fileName": "TercesInvasion.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/TercesInvasion.cs"
   },
   {
     "name": "Fiendshard",
