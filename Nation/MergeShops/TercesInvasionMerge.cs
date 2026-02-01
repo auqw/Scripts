@@ -14,7 +14,7 @@ tags: terces, invasion, merge, tercesinvasion, nulgaths, oathbreaker, wretched, 
 //cs_include Scripts/Story/Nation/VoidChasm.cs
 //cs_include Scripts/Story/Nation/OblivionTundra.cs
 //cs_include Scripts/Story/Nation/tercesarchive.cs
-//cs_include Scripts/Story\Nation\TercesInvasion.cs
+//cs_include Scripts/Story/Nation/TercesInvasion.cs
 //cs_include Scripts/Nation/CoreNation.cs
 //cs_include Scripts/Nation/NationLoyaltyRewarded.cs
 //cs_include Scripts/Good/BLOD/CoreBLOD.cs
@@ -23,11 +23,11 @@ tags: terces, invasion, merge, tercesinvasion, nulgaths, oathbreaker, wretched, 
 //cs_include Scripts/Other/Classes/Necromancer.cs
 //cs_include Scripts/Evil/NSoD/CoreNSOD.cs
 //cs_include Scripts/Nation/Various/JuggernautItems.cs
-//cs_include Scripts/Nation/MergeShops\NationMerge.cs
-//cs_include Scripts/Other\MergeShops\TercesArchiveMerge.cs
+//cs_include Scripts/Nation/MergeShops/NationMerge.cs
+//cs_include Scripts/Other/MergeShops/TercesArchiveMerge.cs
 //cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiege.cs
 //cs_include Scripts/Nation/Various/DragonBlade[mem].cs
-//cs_include Scripts/Seasonal\StaffBirthdays\Nulgath\TempleSiegeMerge.cs
+//cs_include Scripts/Seasonal/StaffBirthdays/Nulgath/TempleSiegeMerge.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;

@@ -16,7 +16,7 @@ tags: terces, archive, merge, tercesarchive, void, kittarian, morph, fiendish, f
 //cs_include Scripts/Other/Classes/Necromancer.cs
 //cs_include Scripts/Evil/NSoD/CoreNSOD.cs
 //cs_include Scripts/Nation/Various/JuggernautItems.cs
-//cs_include Scripts/Nation/MergeShops\NationMerge.cs
+//cs_include Scripts/Nation/MergeShops/NationMerge.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
