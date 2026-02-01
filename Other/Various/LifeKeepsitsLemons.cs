@@ -33,7 +33,7 @@ public class LifeKeepsitsLemons
 
         List<ItemBase> RewardOptions = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID).Rewards);
 
-        Core.AddDrop(Core.EnsureLoad(QuestID).Rewards.ToArray());
+        Core.AddDrop(Core.QuestRewards(QuestID));
 
         Core.EquipClass(ClassType.Solo);
 

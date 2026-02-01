@@ -1,8 +1,9 @@
 /*
 name: Blood From the Void
-description: Farms Blood From the Void from `Obey Yourself, or be Commanded` in /tercesinvasion
+description: Farms Blood From the Void from "Obey Yourself, or be Commande" in /tercesinvasion
 tags: tercesinvasion, Jadzia, Blood From the Void, Nulgath Saga, Nulgath Merge, Nulgath Birthday
 */
+
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/Nation/CoreNation.cs
@@ -20,6 +21,7 @@ public class BloodFromTheVoid
         set => _TI = value;
     }
     private static TercesInvasion _TI;
+
     private static CoreNation Nation
     {
         get => _Nation ??= new CoreNation();
@@ -31,11 +33,10 @@ public class BloodFromTheVoid
     {
         Core.SetOptions();
 
-        _TI.StoryLine();
-        Nation.BloodFromTheVoid();
+        TI.StoryLine();
+        Nation.BloodFromTheVoid(300);
 
         Core.SetOptions(false);
     }
-
 
 }

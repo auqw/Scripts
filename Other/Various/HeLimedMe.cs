@@ -14,7 +14,7 @@ public class HeLimedMe
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
-    private Extinction  extinction => new();
+    private Extinction extinction => new();
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -32,7 +32,7 @@ public class HeLimedMe
 
         List<ItemBase> RewardOptions = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID).Rewards);
 
-        Core.AddDrop(Core.EnsureLoad(QuestID).Rewards.ToArray());
+        Core.AddDrop(Core.QuestRewards(QuestID));
 
         Core.EquipClass(ClassType.Solo);
 
