@@ -50,6 +50,8 @@ public class TercesInvasionMerge
     private static TempleSiegeMerge _TSM;
     private static JuggernautItemsofNulgath Jugg { get => _Jugg ??= new JuggernautItemsofNulgath(); set => _Jugg = value; }
     private static JuggernautItemsofNulgath _Jugg;
+    private static TercesInvasion TI { get => _TI ??= new TercesInvasion(); set => _TI = value; }
+    private static TercesInvasion _TI;
 
 
     public bool DontPreconfigure = true;
@@ -71,6 +73,7 @@ public class TercesInvasionMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        TI.StoryLine();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("tercesinvasion", 2670, findIngredients, buyOnlyThis, buyMode: buyMode);
 
