@@ -27,6 +27,7 @@ public class HeLimedMe
 
     public void GetItems()
     {
+        extinction.StoryLine();
         int QuestID = 10585;
 
         List<ItemBase> RewardOptions = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID).Rewards);
