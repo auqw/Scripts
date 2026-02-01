@@ -2771,8 +2771,7 @@ public class CoreFarms
         // Core.RegisterQuests(Core.IsMember ? 366 : 367); //Dangerous Decor 366, Bone-afide 367
 
         Core.SavedState(true, Core.IsMember ? "sleuthhound" : "castleundead");
-        if (!Core.IsMember)
-            Core.RegisterQuests(367); //Youthanize 364
+        Core.RegisterQuests(367); //Youthanize 364
         while (!Bot.ShouldExit && FactionRank("Evil") < rank)
         {
             if (Core.CheckSaveState())
@@ -2787,16 +2786,7 @@ public class CoreFarms
             }
             else
             {
-                Core.KillMonster(
-                    "castleundead",
-                    "Enter",
-                    "Left",
-                    "*",
-                    "Replacement Tibia",
-                    6,
-                    log: false
-                );
-                Core.KillMonster("castleundead", "Enter", "Left", "*", "Phalanges", 3, log: false);
+                Core.KillMonster("castleundead", "Enter", "Left", "*");
             }
         }
         Core.CancelRegisteredQuests();
