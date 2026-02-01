@@ -16443,6 +16443,39 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/YulgarsUndineMerge.cs"
   },
   {
+    "name": "Dominiks Fruit Stand Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Dominiks Fruit Stand Merge [2557] in /extinction",
+    "tags": [
+      "dominiks",
+      "fruit",
+      "stand",
+      "merge",
+      "extinction",
+      "astro",
+      "seer",
+      "flame",
+      "morph",
+      "stellar",
+      "quasar",
+      "interstellar",
+      "riftbreaker",
+      "cosmic",
+      "traveler",
+      "chibi",
+      "fracture",
+      "companion",
+      "nebula",
+      "riftblade",
+      "singularity",
+      "guest"
+    ],
+    "path": "Other/MergeShops/DominiksFruitStandMerge.cs",
+    "size": 7375,
+    "sha256": "3145b4a24620c074285126571af3ee3433c2507496ac80be55a53eeedaa44e92",
+    "fileName": "DominiksFruitStandMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DominiksFruitStandMerge.cs"
+  },
+  {
     "name": "Hydra Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Hydra Merge [1597] in /hydrachallenge",
     "tags": [
