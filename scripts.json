@@ -3994,8 +3994,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 123200,
-    "sha256": "52a2b1b2ff276530c2c34f5c5203039113a958393d65a926e3313a2071be5ef3",
+    "size": 124344,
+    "sha256": "cd99f548b86ceb0fb3a43ed218d88ae92ad183653d3b9f7b9b234068ff47f5e3",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -24909,8 +24909,8 @@
       "nulgath birthday"
     ],
     "path": "Nation/Materials/BloodFromtheVoid.cs",
-    "size": 2248,
-    "sha256": "d758292d164c8024219ca8a29da9b6fc3e6d71b014463264f284b4c8f808ccac",
+    "size": 1067,
+    "sha256": "e0ad6a5679f6e9769c083aec3c0c62551caa7713de5bf445caabb363b8dfa1de",
     "fileName": "BloodFromtheVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Materials/BloodFromtheVoid.cs"
   },
@@ -26366,6 +26366,39 @@
     "sha256": "0c2fd12e132b9a979e74b82ce01065bc2fbc150d64fdda16b00ec64b244062b0",
     "fileName": "DeleuzeTundraMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/DeleuzeTundraMerge.cs"
+  },
+  {
+    "name": "Terces Invasion Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Terces Invasion Merge [2670] in /tercesinvasion",
+    "tags": [
+      "terces",
+      "invasion",
+      "merge",
+      "tercesinvasion",
+      "nulgaths",
+      "oathbreaker",
+      "wretched",
+      "scolex",
+      "void",
+      "archfiend",
+      "vigneron",
+      "morph",
+      "apex",
+      "bloodfiend",
+      "wings",
+      "scythe",
+      "recollection",
+      "solstice",
+      "blood",
+      "rodeleros",
+      "fiendish",
+      "wind"
+    ],
+    "path": "Nation/MergeShops/TercesInvasionMerge.cs",
+    "size": 11499,
+    "sha256": "8fdbb1d321dc9148f6ab51b4cbcf5c78e53bae73597482e5cd9bdf9a2abb9d93",
+    "fileName": "TercesInvasionMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/MergeShops/TercesInvasionMerge.cs"
   },
   {
     "name": "Fiendish LoreMaster Merge",
