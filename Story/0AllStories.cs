@@ -63,6 +63,7 @@ tags: story, quest, complete, all
 //cs_include Scripts/Story/Nation/Originul.cs
 //cs_include Scripts/Story/Nation/ShadowBlastArena.cs
 //cs_include Scripts/Story/Nation/tercesarchive.cs
+//cs_include Scripts/Story/Nation/TercesInvasion.cs
 //cs_include Scripts/Story/Nation/Tercessuinotlim.cs
 //cs_include Scripts/Story/Nation/VoidRefuge.cs
 //cs_include Scripts/Story/Nation/VoidChasm.cs
@@ -472,6 +473,13 @@ public class AllStories
         set => _tercesarchive = value;
     }
     private static TercesArchive _tercesarchive;
+
+    private static TercesInvasion TercesInvasion
+    {
+        get => _TercesInvasion ??= new TercesInvasion();
+        set => _TercesInvasion = value;
+    }
+    private static TercesInvasion _TercesInvasion;
     private static Tercessuinotlim Tercessuinotlim
     {
         get => _Tercessuinotlim ??= new Tercessuinotlim();
@@ -1369,6 +1377,9 @@ public class AllStories
 
         tercesarchive.StoryLine();
         Core.Logger($"Story: Terces Archive - Complete");
+
+        TercesInvasion.StoryLine();
+        Core.Logger($"Story: Terces Invasion - Complete");
 
         Tercessuinotlim.JadziaQuests();
         Core.Logger($"Story: Tercessuinotlim - Complete");
