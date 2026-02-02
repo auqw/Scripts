@@ -1870,6 +1870,52 @@
     }
   },
   "Chrono ShadowSlayer": {
+    "Dodge": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 200,
+      "skills": [
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 5,
+              "comparison": "greater",
+              "isPercentage": false
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 5,
+              "comparison": "greater",
+              "isPercentage": false
+            }
+          ]
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 1
+        }
+      ]
+    },
     "Farm": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 200,
@@ -1944,57 +1990,57 @@
               "auraTarget": "self"
             }
           ]
-        }
-      ]
-    },
-    "Dodge": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 200,
-      "skills": [
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 5,
-              "comparison": "greater",
-              "isPercentage": false
-            }
-          ]
-        },
-        {
-          "skillId": 3,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 5,
-              "comparison": "greater",
-              "isPercentage": false
-            }
-          ]
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
         }
       ]
     }
   },
   "Chrono ShadowHunter": {
+    "Dodge": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 200,
+      "skills": [
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 5,
+              "comparison": "greater",
+              "isPercentage": false
+            }
+          ]
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 5,
+              "comparison": "greater",
+              "isPercentage": false
+            }
+          ]
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 1
+        }
+      ]
+    },
     "Farm": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 200,
@@ -2069,52 +2115,6 @@
               "auraTarget": "self"
             }
           ]
-        }
-      ]
-    },
-    "Dodge": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 200,
-      "skills": [
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 5,
-              "comparison": "greater",
-              "isPercentage": false
-            }
-          ]
-        },
-        {
-          "skillId": 3,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 5,
-              "comparison": "greater",
-              "isPercentage": false
-            }
-          ]
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
         }
       ]
     }
