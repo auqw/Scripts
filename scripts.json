@@ -14152,6 +14152,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/SinoftheUnderworld(NoInsignia).cs"
   },
   {
+    "name": "Life Keeps Its Lemons",
+    "description": "Life Keeps Its Lemons",
+    "tags": [
+      "lifekeepsitslemons",
+      "life keeps its lemons",
+      "lemons"
+    ],
+    "path": "Other/Various/LifeKeepsitsLemons.cs",
+    "size": 1798,
+    "sha256": "cd3b60c6b1e1edbdf6355525b577f67eb8a64ea8e1855fca525085551c2a1b6a",
+    "fileName": "LifeKeepsitsLemons.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/LifeKeepsitsLemons.cs"
+  },
+  {
     "name": "Generosity Coin",
     "description": "Donates 250 Acs to get the Generosity Coin.",
     "tags": [
@@ -15000,8 +15014,8 @@
       "rottouched"
     ],
     "path": "Other/MergeShops/VictorsRewardMerge.cs",
-    "size": 21423,
-    "sha256": "b1eed06b31312c41a9ecddcd0d25bb8d17325e1c9474f60985ab04875fbfc850",
+    "size": 21426,
+    "sha256": "d4c99aa7c2ae2d61e6e00b3df740f421178367d2b03cee9b2d63a8fcaf930377",
     "fileName": "VictorsRewardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/VictorsRewardMerge.cs"
   },
