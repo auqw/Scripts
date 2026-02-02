@@ -1,4 +1,4 @@
-7900xtx/*
+/*
 name: Life Keeps Its Lemons
 description: Life Keeps Its Lemons
 tags: LifeKeepsItsLemons, Life Keeps Its Lemons, Lemons
