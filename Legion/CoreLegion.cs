@@ -642,10 +642,7 @@ public class CoreLegion
         Core.FarmingLogger("Legion Token", quant);
         Core.RegisterQuests(4849);
         Core.AddDrop("Legion Token");
-        Core.ConfigureAggro();
-        while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
-            Core.KillMonster("dreadrock", "r3", "Bottom", "*", "Dreadrock Enemy Recruited", 6);
-        Core.ConfigureAggro(false);
+        Core.KillMonster("dreadrock", "r3", "Bottom", "*", "Legion Token", quant, isTemp: false);
         Core.CancelRegisteredQuests();
     }
 
@@ -752,15 +749,7 @@ public class CoreLegion
         Core.FarmingLogger("Legion Token", quant);
         Core.AddDrop("Legion Token");
         Core.RegisterQuests(4100);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Legion Token", quant))
-            Core.KillMonster(
-                "dragonheart",
-                "r6",
-                "Right",
-                "Zombie Dragon",
-                "Elemental Dragon Soul",
-                20
-            );
+            Core.KillMonster("dragonheart", "r6", "Right", "Zombie Dragon", "Legion Token", quant, isTemp: false);
         Core.CancelRegisteredQuests();
     }
 
