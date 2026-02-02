@@ -14152,20 +14152,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/SinoftheUnderworld(NoInsignia).cs"
   },
   {
-    "name": "Life Keeps Its Lemons",
-    "description": "Life Keeps Its Lemons",
-    "tags": [
-      "lifekeepsitslemons",
-      "life keeps its lemons",
-      "lemons"
-    ],
-    "path": "Other/Various/LifeKeepsitsLemons.cs",
-    "size": 1782,
-    "sha256": "a264548f4e6440ed18a56eb68eb27d67af72227362306d2187182c392c1a5a19",
-    "fileName": "LifeKeepsitsLemons.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/LifeKeepsitsLemons.cs"
-  },
-  {
     "name": "Generosity Coin",
     "description": "Donates 250 Acs to get the Generosity Coin.",
     "tags": [

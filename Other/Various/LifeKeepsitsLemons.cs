@@ -1,4 +1,4 @@
-/*
+7900xtx/*
 name: Life Keeps Its Lemons
 description: Life Keeps Its Lemons
 tags: LifeKeepsItsLemons, Life Keeps Its Lemons, Lemons
@@ -49,7 +49,7 @@ public class LifeKeepsitsLemons
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.ID))
             {
                 Core.EnsureAccept(QuestID);
-                Core.HuntMonster("extinction", "SN.O.W.", "SN.O.W Ice", isTemp: false);
+                Core.HuntMonster("extinction", "SN.O.W.", "SN.O.W. Ice", isTemp: false);
                 Core.HuntMonster("extinction", "Lard", "Lemon Lard", 10);
                 Core.HuntMonster("extinction", "Gelatinous Slime", "Slime Gelatin", 10);
                 Core.EnsureComplete(QuestID);
