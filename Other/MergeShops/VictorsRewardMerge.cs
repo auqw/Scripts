@@ -109,7 +109,7 @@ public class VictorsRewardMerge
                         {
                             Core.HuntMonster(
                                 "coliseum",
-                                "Ebil Shadowscythe",
+                                "Devoted Cultist",
                                 "Level 25 Boss Defeated",
                                 log: false
                             );
@@ -117,7 +117,7 @@ public class VictorsRewardMerge
                         }
                         Core.CancelRegisteredQuests();
                     }
-                    Core.HuntMonster("coliseum", "Nethersea Shark", req.Name, quant, false, false);
+                    Core.HuntMonster("coliseum", "Devoted Cultist", req.Name, quant, false, false);
                     break;
 
                 case "Gold Victory Laurel":
@@ -142,7 +142,7 @@ public class VictorsRewardMerge
                         {
                             Core.HuntMonster(
                                 "coliseum",
-                                "Eurythane",
+                                "Incubus",
                                 "Level 50 Boss Defeated",
                                 log: false
                             );
@@ -150,7 +150,7 @@ public class VictorsRewardMerge
                         }
                         Core.CancelRegisteredQuests();
                     }
-                    Core.HuntMonster("coliseum", "Void Dragon", req.Name, quant, false, false);
+                    Core.HuntMonster("coliseum", "Incubus", req.Name, quant, false, false);
                     break;
 
                 case "Platinum Victory Laurel":
@@ -176,7 +176,7 @@ public class VictorsRewardMerge
                         {
                             Core.HuntMonster(
                                 "coliseum",
-                                "Undead Raxgore",
+                                "The HeartBreaker",
                                 "Level 75 Boss Defeated",
                                 log: false
                             );
@@ -184,7 +184,7 @@ public class VictorsRewardMerge
                         }
                         Core.CancelRegisteredQuests();
                     }
-                    Core.HuntMonster("coliseum", "Chimera", req.Name, quant, false, false);
+                    Core.HuntMonster("coliseum", "The HeartBreaker", req.Name, quant, false, false);
                     break;
                 #endregion
             }
