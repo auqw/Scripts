@@ -2039,7 +2039,7 @@
       ]
     },
     "Farm": {
-      "skillUseMode": "UseIfAvailable",
+      "skillUseMode": "WaitForCooldown",
       "skillTimeout": 200,
       "skills": [
         {
@@ -2093,20 +2093,12 @@
             },
             {
               "type": "MultiAura",
-              "value": 0,
-              "comparison": "less",
-              "auraName": "Rounds Empty",
-              "auraTarget": "self"
-            },
-            {
-              "type": "MultiAura",
               "value": 4,
               "comparison": "greater",
               "auraName": "Temporal Rift",
               "auraTarget": "self"
             }
           ],
-          "skipOnMatch": true,
           "isMultiAura": true,
           "multiAuraOperator": "AND"
         }
