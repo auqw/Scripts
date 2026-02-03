@@ -3215,21 +3215,21 @@ public class CoreEngine
 
     void ChronoShadowSlayerClass()
     {
-        if (Cast(2))
+        if (!HasAura("Round Empty") && Cast(2))
             return;
-        if (Cast(3))
+        if (!HasAura("Round Empty") && Cast(3))
             return;
-        if (Cast(2))
+        if (!HasAura("Round Empty") && Cast(2))
             return;
-        if (Cast(3))
+        if (!HasAura("Round Empty") && Cast(3))
             return;
-        if (Bot.Player.Mana > 5 && Cast(2))
+        if (Bot.Player.Mana > 5 && !HasAura("Round Empty") && Cast(2))
             return;
-        if (Bot.Player.Mana > 5 && Cast(3))
+        if (Bot.Player.Mana > 5 && HasAura("Round Empty") && Cast(3))
             return;
-        if (Cast(4))
+        if (GetAuraStacks("Tempotral Rift") > 4 && Cast(4))
             return;
-        if (Cast(1))
+        if (HasAura("Round Empty") && Cast(1))
             return;
 
     }
