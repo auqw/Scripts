@@ -91,7 +91,7 @@ public class UltraDarkon
         )
             Bot.Config.Configure();
 
-        if (Bot.Player.CurrentClass.Name == "Alpha Omega" || Bot.Player.CurrentClass.Name == "Alpha DOOMmega")
+        if (Bot.Player.CurrentClass?.Name == "Alpha Omega" || Bot.Player.CurrentClass?.Name == "Alpha DOOMmega")
             taunting = false;
 
         Adv.GearStore(EnhAfter: true);
