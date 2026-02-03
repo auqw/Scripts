@@ -3215,23 +3215,20 @@ public class CoreEngine
 
     void ChronoShadowSlayerClass()
     {
-        if (!HasAura("Round Empty") && Cast(2))
-            return;
-        if (!HasAura("Round Empty") && Cast(3))
-            return;
-        if (!HasAura("Round Empty") && Cast(2))
-            return;
-        if (!HasAura("Round Empty") && Cast(3))
-            return;
-        if (Bot.Player.Mana > 5 && !HasAura("Round Empty") && Cast(2))
-            return;
-        if (Bot.Player.Mana > 5 && HasAura("Round Empty") && Cast(3))
-            return;
-        if (GetAuraStacks("Tempotral Rift") > 4 && Cast(4))
-            return;
-        if (HasAura("Round Empty") && Cast(1))
+        if (Stacks("Rounds Empty", 1, true))
             return;
 
+        // Skill cast priority sequence
+        int[] skills = new[] { 2, 3, 2, 3, 2, 3, 4 };
+
+        foreach (int skill in skills)
+        {
+            if (!Stacks("Rounds Empty", 1, true))
+                if (Cast(skill))
+                    return;
+                else if (Cast(1)) // fallback to skill 1 if the main skill fails
+                    return;
+        }
     }
 
     // --- common classes ---------------------------------------------------------------
