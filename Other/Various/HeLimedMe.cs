@@ -30,7 +30,13 @@ public class HeLimedMe
         extinction.StoryLine();
         int QuestID = 10585;
 
-        List<ItemBase> RewardOptions = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID).Rewards);
+        List<ItemBase>? RewardOptions = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID).Rewards);
+
+        if (RewardOptions == null)
+        {
+            Core.Logger("Failed to load quest rewards.");
+            return;
+        }
 
         Core.AddDrop(Core.QuestRewards(QuestID));
 
