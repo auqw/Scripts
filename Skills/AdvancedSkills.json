@@ -1917,18 +1917,12 @@
       ]
     },
     "Farm": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 200,
       "skills": [
         {
           "skillId": 1,
           "rules": [
-            {
-              "type": "Mana",
-              "value": 4,
-              "comparison": "less",
-              "isPercentage": false
-            },
             {
               "type": "Aura",
               "value": 1,
@@ -1976,13 +1970,23 @@
               "isPercentage": false
             },
             {
-              "type": "Aura",
+              "type": "MultiAura",
               "value": 0,
               "comparison": "less",
               "auraName": "Rounds Empty",
               "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 4,
+              "comparison": "greater",
+              "auraName": "Temporal Rift",
+              "auraTarget": "self"
             }
-          ]
+          ],
+          "skipOnMatch": true,
+          "isMultiAura": true,
+          "multiAuraOperator": "AND"
         }
       ]
     }
@@ -2035,18 +2039,12 @@
       ]
     },
     "Farm": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 200,
       "skills": [
         {
           "skillId": 1,
           "rules": [
-            {
-              "type": "Mana",
-              "value": 4,
-              "comparison": "less",
-              "isPercentage": false
-            },
             {
               "type": "Aura",
               "value": 1,
@@ -2094,13 +2092,23 @@
               "isPercentage": false
             },
             {
-              "type": "Aura",
+              "type": "MultiAura",
               "value": 0,
               "comparison": "less",
               "auraName": "Rounds Empty",
               "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 4,
+              "comparison": "greater",
+              "auraName": "Temporal Rift",
+              "auraTarget": "self"
             }
-          ]
+          ],
+          "skipOnMatch": true,
+          "isMultiAura": true,
+          "multiAuraOperator": "AND"
         }
       ]
     }
