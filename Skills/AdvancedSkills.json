@@ -1921,6 +1921,41 @@
       "skillTimeout": 200,
       "skills": [
         {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 4,
+              "comparison": "less",
+              "isPercentage": false
+            },
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "greater",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 75,
+              "comparison": "less",
+              "isPercentage": true
+            },
+            {
+              "type": "Mana",
+              "value": 5,
+              "comparison": "greater",
+              "isPercentage": false
+            }
+          ]
+        },
+        {
           "skillId": 3,
           "rules": [
             {
@@ -1928,13 +1963,6 @@
               "value": 5,
               "comparison": "greater",
               "isPercentage": false
-            },
-            {
-              "type": "Aura",
-              "value": 0,
-              "comparison": "less",
-              "auraName": "Rounds Empty",
-              "auraTarget": "self"
             }
           ]
         },
@@ -1952,41 +1980,6 @@
               "value": 0,
               "comparison": "less",
               "auraName": "Rounds Empty",
-              "auraTarget": "self"
-            }
-          ]
-        },
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Aura",
-              "value": 1,
-              "comparison": "greater",
-              "auraName": "Rounds Empty",
-              "auraTarget": "self"
-            }
-          ]
-        },
-        {
-          "skillId": 2,
-          "rules": [
-            {
-              "type": "Health",
-              "value": 50,
-              "comparison": "less",
-              "isPercentage": true
-            }
-          ]
-        },
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Aura",
-              "value": 1,
-              "comparison": "greater",
-              "auraName": "SIphon",
               "auraTarget": "self"
             }
           ]
@@ -2046,6 +2039,41 @@
       "skillTimeout": 200,
       "skills": [
         {
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 4,
+              "comparison": "less",
+              "isPercentage": false
+            },
+            {
+              "type": "Aura",
+              "value": 1,
+              "comparison": "greater",
+              "auraName": "Rounds Empty",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 75,
+              "comparison": "less",
+              "isPercentage": true
+            },
+            {
+              "type": "Mana",
+              "value": 5,
+              "comparison": "greater",
+              "isPercentage": false
+            }
+          ]
+        },
+        {
           "skillId": 3,
           "rules": [
             {
@@ -2053,13 +2081,6 @@
               "value": 5,
               "comparison": "greater",
               "isPercentage": false
-            },
-            {
-              "type": "Aura",
-              "value": 0,
-              "comparison": "less",
-              "auraName": "Rounds Empty",
-              "auraTarget": "self"
             }
           ]
         },
@@ -2077,41 +2098,6 @@
               "value": 0,
               "comparison": "less",
               "auraName": "Rounds Empty",
-              "auraTarget": "self"
-            }
-          ]
-        },
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Aura",
-              "value": 1,
-              "comparison": "greater",
-              "auraName": "Rounds Empty",
-              "auraTarget": "self"
-            }
-          ]
-        },
-        {
-          "skillId": 2,
-          "rules": [
-            {
-              "type": "Health",
-              "value": 50,
-              "comparison": "less",
-              "isPercentage": true
-            }
-          ]
-        },
-        {
-          "skillId": 1,
-          "rules": [
-            {
-              "type": "Aura",
-              "value": 1,
-              "comparison": "greater",
-              "auraName": "SIphon",
               "auraTarget": "self"
             }
           ]
