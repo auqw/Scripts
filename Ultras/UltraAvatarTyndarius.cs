@@ -125,9 +125,15 @@ public class UltraAvatarTyndarius
         )
             Bot.Config.Configure();
 
-        isBall1Taunter =
-     NormalizeString(Bot.Player.CurrentClass!.Name)
-     == NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")));
+        if (
+            NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter"))) == "Dragon of Time"
+            && NormalizeString(GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer"))) == "Dragon of Time"
+        )
+        C.Logger("Ball1Taunter & Ball2Killer are set to Dragon of Time, choose something else", "Fix This", true, true);
+
+            isBall1Taunter =
+         NormalizeString(Bot.Player.CurrentClass!.Name)
+         == NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")));
         isBall2killer =
             NormalizeString(Bot.Player.CurrentClass.Name)
             == NormalizeString(GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer")));
@@ -387,6 +393,9 @@ public class UltraAvatarTyndarius
 
         [Description("Arcana Invoker")]
         ArcanaInvoker,
+
+        [Description("Dragon of Time")]
+        DragonofTime,
 
         [Description("Current Class | Ball2killer")]
         Ball2killer_CurrentClass,
