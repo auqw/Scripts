@@ -70,7 +70,7 @@ public class UltraDarkon
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
-
+    bool taunting = true;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -91,6 +91,8 @@ public class UltraDarkon
         )
             Bot.Config.Configure();
 
+        if (Bot.Player.CurrentClass.Name == "Alpha Omega" || Bot.Player.CurrentClass.Name == "Alpha DOOMmega")
+            taunting = false;
 
         Adv.GearStore(EnhAfter: true);
         if (Bot.Config!.Get<bool>("DoEnh"))
@@ -161,7 +163,7 @@ public class UltraDarkon
             Bot.Sleep(200);
 
             // Spam Taunt here
-            if (
+            if (taunting &&
                 !Bot.Target.Auras.Any(x => x != null && x.Name == "Focus")
                 && Bot.Skills.CanUseSkill(5)
             )
