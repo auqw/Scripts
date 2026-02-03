@@ -684,8 +684,8 @@
       "ultra darkon"
     ],
     "path": "Ultras/UltraDarkon.cs",
-    "size": 9581,
-    "sha256": "d9adbce8034ae6960605d5a5211d85b01277f765cca7edfdfa5c0ef7585daea5",
+    "size": 9583,
+    "sha256": "7625b955922cf8de7e743cbcfae3aa977779ab504ccbb39b9365fda1b6e8aca7",
     "fileName": "UltraDarkon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDarkon.cs"
   },
@@ -708,8 +708,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 104481,
-    "sha256": "eb50d9c3893162ea60f58d73ade4e6e5c23453479bd3e4bef53998ad0c70e44d",
+    "size": 104319,
+    "sha256": "519a980960efa81b0ef302ad901023d1b3b6f22415a9a55e55f3c200a1622d18",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
@@ -14160,8 +14160,8 @@
       "lemons"
     ],
     "path": "Other/Various/LifeKeepsitsLemons.cs",
-    "size": 1798,
-    "sha256": "cd3b60c6b1e1edbdf6355525b577f67eb8a64ea8e1855fca525085551c2a1b6a",
+    "size": 1933,
+    "sha256": "b6e7d1d1b2ccbeda8b297bdb2e26f4bd1dd0ae4e9f686d15f249ee37b46bed7b",
     "fileName": "LifeKeepsitsLemons.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/LifeKeepsitsLemons.cs"
   },
@@ -14253,8 +14253,8 @@
       "me"
     ],
     "path": "Other/Various/HeLimedMe.cs",
-    "size": 1696,
-    "sha256": "c348ef4482b1e963ba9645188e2afdc341955d0ced4edd61322e948df0300494",
+    "size": 1831,
+    "sha256": "6859f6fb971a66d7c89e3ae6e9039dc9992217c78ab2e7ab666a93621e828963",
     "fileName": "HeLimedMe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/HeLimedMe.cs"
   },
@@ -14941,9 +14941,6 @@
       "reward",
       "merge",
       "coliseum",
-      "gold",
-      "voucher",
-      "k",
       "floating",
       "sapphire",
       "orbs",
@@ -14994,6 +14991,7 @@
       "bounty",
       "hunter",
       "ornate",
+      "gold",
       "pistol",
       "pistols",
       "shotgun",
@@ -15011,11 +15009,31 @@
       "red",
       "dead",
       "dread",
-      "rottouched"
+      "rottouched",
+      "northern",
+      "bonebreaker",
+      "barbarian",
+      "wilds",
+      "bonebreakers",
+      "war",
+      "crest",
+      "woolly",
+      "fur",
+      "skullcrusher",
+      "totem",
+      "totems",
+      "barbaric",
+      "bonecrusher",
+      "bonecrushers",
+      "cleaver",
+      "cleavers",
+      "sturdy",
+      "wooden",
+      "shield"
     ],
     "path": "Other/MergeShops/VictorsRewardMerge.cs",
-    "size": 21426,
-    "sha256": "d4c99aa7c2ae2d61e6e00b3df740f421178367d2b03cee9b2d63a8fcaf930377",
+    "size": 19694,
+    "sha256": "a6c64cf58c623a2b9e212b083982b85197a8b40920a48b67a6a0413df57f8c52",
     "fileName": "VictorsRewardMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/VictorsRewardMerge.cs"
   },
@@ -24862,8 +24880,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelper.cs",
-    "size": 14943,
-    "sha256": "4f8287d62d6b99a58725388a73ccd5deace86936f5ac71bf580b30c9165b0394",
+    "size": 15012,
+    "sha256": "1d474326bd81bf193953e3ed1ef5b3511aee678af5eed629cd05de6fbfeb7646",
     "fileName": "MergeTemplateHelper.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper.cs"
   },
