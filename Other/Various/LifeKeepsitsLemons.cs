@@ -31,7 +31,13 @@ public class LifeKeepsitsLemons
         extinction.StoryLine();
         int QuestID = 10054;
 
-        List<ItemBase> RewardOptions = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID).Rewards);
+        List<ItemBase>? RewardOptions = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID).Rewards);
+
+        if (RewardOptions == null)
+        {
+            Core.Logger("Failed to load quest rewards.");
+            return;
+        }
 
         Core.AddDrop(Core.QuestRewards(QuestID));
 
