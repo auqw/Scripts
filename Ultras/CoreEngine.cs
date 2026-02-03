@@ -2840,21 +2840,13 @@ public class CoreEngine
 
     void KingsEcho()
     {
-        if (GetAuraStacks("Royal Resolve", true) <= 0)
+        if (!HasAura("Invulnerable"))
             if (Cast(3))
                 return;
-        if (Cast(0))
-            return;
         if (Cast(1))
             return;
-        if (Cast(2))
+        if (Bot.Player.Mana < 50 && Cast(4))
             return;
-        if (IsManaLow(10))
-            if (Cast(4))
-                return;
-        if (GetAuraStacks("Royal Resolve", true) >= 1)
-            if (Cast(4))
-                return;
     }
 
     void LegionRevenantClass()
