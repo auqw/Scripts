@@ -120,6 +120,9 @@ public class MergeTemplateHelper
     /// </summary>
     public void Helper()
     {
+        if (Bot.Config != null)
+            Bot.Config.Configure();
+
         string map = Bot.Config?.Get<string>("mapName")?.ToLower() ?? string.Empty;
         int shopID = Bot.Config?.Get<int>("shopID") ?? 0;
         bool genFile = Bot.Config?.Get<bool>("genFile") ?? false;
