@@ -2999,24 +2999,10 @@ public class CoreNation
 
             // get other 3 quest items
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("Twilight", "Abaddon", "Balor's Cruelty", isTemp: false);
+            Core.HuntMonster("Twilight", "Abaddon", "Abbadon's Abide", isTemp: false);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "ShadowfallWar",
-                "Garden1",
-                "Bottom",
-                "*",
-                "Ultimate Darkness Gem",
-                isTemp: false
-            );
-            Core.KillMonster(
-                "battleundera",
-                "r3",
-                "Left",
-                "*",
-                "Unidentified Weapon",
-                isTemp: false
-            );
+            Core.KillMonster("ShadowfallWar", "Garden1", "Bottom", "*", "Ultimate Darkness Gem", isTemp: false);
+            Core.KillMonster("battleundera", "r3", "Left", "*", "Unidentified Weapon", isTemp: false);
             Core.EnsureComplete(gemstonesForNulgathQuest);
         }
     }
