@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 155222,
-    "sha256": "81130800e7213e185a2fbe2d808211c90df702a214ffe52351ad828e7fce85ce",
+    "size": 154033,
+    "sha256": "22445785bed23ada09d6a636dfcfe93034c5aa28fb3665b851067e2acff28df1",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -13644,8 +13644,8 @@
       "all"
     ],
     "path": "Other/Badges/AllBadges.cs",
-    "size": 9231,
-    "sha256": "6aa754b6cc23a03b0b0471d376016119036d6459f734d71aa70c079f65231b68",
+    "size": 9241,
+    "sha256": "4d71d9ed8a0559b266b5add2b64aaf3c77be30d39825865e03df1fbe3824fea7",
     "fileName": "AllBadges.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/AllBadges.cs"
   },
@@ -13762,8 +13762,8 @@
       "badge"
     ],
     "path": "Other/Badges/YouMadBroBadge.cs",
-    "size": 3100,
-    "sha256": "759ceeb5faa74070114efaf494b8d73bcc96e952f0a9dbafc8df73403ddfbe52",
+    "size": 3606,
+    "sha256": "2981023e99e5ff1c9882f1c257a0afd4e0d5dc99f26df84681f89fa2895cacc3",
     "fileName": "YouMadBroBadge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/YouMadBroBadge.cs"
   },
