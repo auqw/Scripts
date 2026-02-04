@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 170204,
-    "sha256": "7bee1e7abc916c0fb6936f2ff421dbc7de36197dca5488a519141c3709e70d83",
+    "size": 171798,
+    "sha256": "8bb4ee2647d0b0763c53a6a0e6db1d4dc5dd6d45fdd0d33381411f20f3fab4ea",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -667,8 +667,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 10322,
-    "sha256": "c296b82920178bb99f422f124b1f02bf54efd2bddce4de0c50b90269f6f18175",
+    "size": 10270,
+    "sha256": "afcaa225c520e247e1aeab3d9eb073e99120f564378eb0b99c46fc50af03e441",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
@@ -732,8 +732,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEngineer.cs",
-    "size": 9704,
-    "sha256": "e0ec919163a3b4b509666b370a37217c6a39fac6d9a1dd37cf5506011c026218",
+    "size": 9777,
+    "sha256": "57885da4175accc15386f1c4c82b5e65a323461b1e2af0659534aa266b32cc7b",
     "fileName": "UltraEngineer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEngineer.cs"
   },
