@@ -74,7 +74,7 @@ public class CoreSoWMats
         Core.CancelRegisteredQuests();
     }
 
-    public void ElementalCore(int Quantity = 1000)
+    public void ElementalCore(int Quantity = 500)
     {
         if (Core.CheckInventory("Elemental Core", Quantity))
             return;
