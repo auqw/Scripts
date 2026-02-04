@@ -2008,29 +2008,74 @@ public class CoreAdvanced
     /// Stores the gear a player has so that it can later restore these
     /// </summary>
     /// <param name="Restore">Set true to restore previously stored gear</param>
-    /// <param name="EnhAfter"></param>
+    /// <param name="EnhAfter">Reapply enhancements after restore</param>
     public void GearStore(bool Restore = false, bool EnhAfter = false)
     {
         if (!Restore)
         {
-            foreach (InventoryItem Item in Bot.Inventory.Items.FindAll(i => i.Equipped == true))
-                ReEquippedItems.Add(Item.Name);
+            ReEquippedItems.Clear();
+
+            InventoryItem[] equippedItems =
+                Bot.Inventory.Items.Where(i => i.Equipped).ToArray();
+
+            foreach (InventoryItem item in equippedItems)
+                ReEquippedItems.Add(item.Name);
 
             ReEnhanceAfter = CurrentClassEnh();
-            if (Bot.Inventory.Items.Any(x => x.Category == ItemCategory.Cape && x.Equipped))
-                ReCEnhanceAfter = CurrentCapeSpecial();
-            if (Bot.Inventory.Items.Any(x => x.Category == ItemCategory.Helm && x.Equipped))
-                ReHEnhanceAfter = CurrentHelmSpecial();
             ReWEnhanceAfter = CurrentWeaponSpecial();
+
+            ReCEnhanceAfter = equippedItems.Any(i => i.Category == ItemCategory.Cape)
+                ? CurrentCapeSpecial()
+                : CapeSpecial.None;
+
+            ReHEnhanceAfter = equippedItems.Any(i => i.Category == ItemCategory.Helm)
+                ? CurrentHelmSpecial()
+                : HelmSpecial.None;
+
+            // ---- Store summary ----
+            Core.Logger("GearStore: Saved current equipment state");
+            Core.Logger($" - Items: {string.Join(", ", ReEquippedItems)}");
+            Core.Logger($" - Class Enh: {ReEnhanceAfter}");
+
+            if (ReCEnhanceAfter != CapeSpecial.None)
+                Core.Logger($" - Cape Special: {ReCEnhanceAfter}");
+
+            if (ReHEnhanceAfter != HelmSpecial.None)
+                Core.Logger($" - Helm Special: {ReHEnhanceAfter}");
+
+            if (ReWEnhanceAfter != WeaponSpecial.None)
+                Core.Logger($" - Weapon Special: {ReWEnhanceAfter}");
         }
         else if (ReEquippedItems.Count > 0)
         {
+            // ---- Restore summary ----
+            Core.Logger("GearStore: Restoring saved equipment state");
+            Core.Logger($" - Items: {string.Join(", ", ReEquippedItems)}");
+
+            if (EnhAfter)
+            {
+                Core.Logger(
+                    $" - Enhancements → Class: {ReEnhanceAfter}" +
+                    $"{(ReCEnhanceAfter != CapeSpecial.None ? $", Cape: {ReCEnhanceAfter}" : "")}" +
+                    $"{(ReHEnhanceAfter != HelmSpecial.None ? $", Helm: {ReHEnhanceAfter}" : "")}" +
+                    $"{(ReWEnhanceAfter != WeaponSpecial.None ? $", Weapon: {ReWEnhanceAfter}" : "")}",
+                    messageBox: false
+                );
+            }
+
             Core.JumpWait();
             Core.Equip(ReEquippedItems.ToArray());
+
             if (EnhAfter)
-                EnhanceEquipped(ReEnhanceAfter, ReCEnhanceAfter, ReHEnhanceAfter, ReWEnhanceAfter);
+                EnhanceEquipped(
+                    ReEnhanceAfter,
+                    ReCEnhanceAfter,
+                    ReHEnhanceAfter,
+                    ReWEnhanceAfter
+                );
         }
     }
+
 
     private readonly List<string> ReEquippedItems = new();
     private EnhancementType ReEnhanceAfter = EnhancementType.Lucky;

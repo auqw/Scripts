@@ -171,11 +171,13 @@ public class UltraEngineer
         Core.Boot();
         Prep();
         Fight();
+        Adv.GearStore(true, true);
         Bot.StopSync();
     }
 
     void Prep()
     {
+        Adv.GearStore(false, true);
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());

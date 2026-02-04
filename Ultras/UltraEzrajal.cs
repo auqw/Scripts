@@ -180,12 +180,11 @@ public class UltraEzrajal
             Bot.Config.Configure();
         Core.Boot();
         Bot.UltraBossHelper.EnableCounterAttack();
-        Adv.GearStore(EnhAfter: true);
+        Adv.GearStore(false, true);
         C.AddDrop("Ezrajal Insignia");
         Prep();
         Fight();
-        if (Bot.Config!.Get<bool>("DoEnh"))
-            Adv.GearStore(true, true);
+        Adv.GearStore(true, true);
         Bot.StopSync();
     }
 
