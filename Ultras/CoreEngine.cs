@@ -113,7 +113,7 @@ public class CoreEngine
 
         _cts?.Dispose();
         _runSkills?.Dispose();
-
+        Bot.Skills.Stop();
         return true;
     }
 
