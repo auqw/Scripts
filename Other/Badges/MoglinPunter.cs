@@ -46,7 +46,7 @@ public class MoglinPunter
         int Punt = 0;
 
         Core.Logger($"Doing quest for {badge} badge, Purely Rng based, good luck");
-        Core.Join("punt");
+        Core.Join("zorbakpunt");
         Bot.Events.ExtensionPacketReceived += puntingPacketReader;
         while (!Bot.ShouldExit && !Core.HasWebBadge(badge))
         {
