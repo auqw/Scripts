@@ -296,7 +296,7 @@ public class AllBadges
         UC.Badge();
         G.Badge();
         FV.Badges();
-        YMBB.Badge();
+        YMBB.Badge(true, true);
         VHL.Badge();
         YA.Badge();
         //add more as they are made.

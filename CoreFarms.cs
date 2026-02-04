@@ -1416,7 +1416,6 @@ public class CoreFarms
         bool loop = true,
         string modifier = "Moose",
         AlchemyTraits trait = AlchemyTraits.APw,
-        bool YMB = false,
         string? item = null,
         int quant = 1
     )
@@ -1456,10 +1455,6 @@ public class CoreFarms
         Core.Logger($"Reagents: [{reagent1}], [{reagent2}].");
         Core.Logger($"Rune: {rune}.");
         Core.Logger($"Modifier: {modifier}.");
-        if (YMB)
-            Core.Logger(
-                "\"YouMadBro\" Mode: Enabled (this will only buy 1 Dragon Runestone as it doesnt use it :D)"
-            );
         Core.Join("alchemy");
         int i = 1;
         if (loop)
@@ -1469,10 +1464,7 @@ public class CoreFarms
                 && Core.CheckInventory(new[] { reagent1, reagent2, "Dragon Runestone" })
             )
             {
-                if (
-                    !Core.CheckInventory(new[] { reagent1, reagent2 })
-                    || (item != null && Core.CheckInventory(item, quant))
-                )
+                if (!Core.CheckInventory(new[] { reagent1, reagent2, "Dragon Runestone" }) || (item != null && Core.CheckInventory(item, quant)))
                     break;
                 Packet();
                 Core.Logger($"Completed alchemy x{i++}");
@@ -1490,30 +1482,16 @@ public class CoreFarms
                 Potions Can be gotten from either but specific potions must use the non-YMB mode.
             */
 
-            if (Core.CheckInventory("Dragon Runestone"))
-                Core.SendPackets(
-                    YMB
-                        ? $"%xt%zm%crafting%1%getAlchWait%{reagentid1}%{reagentid2}%true%Ready to Mix%{reagent1}%{reagent2}%{rune}%{modifier}%"
-                        : $"%xt%zm%crafting%1%getAlchWait%{reagentid1}%{reagentid2}%true%Ready to Mix%{reagent1}%{reagent2}%{rune}%{trait}%"
-                );
+            Core.SendPackets($"%xt%zm%crafting%1%getAlchWait%{reagentid1}%{reagentid2}%true%Ready to Mix%{reagent1}%{reagent2}%{rune}%{trait}%");
 
-            Core.Sleep();
+            Core.Sleep(1500);
 
-            // This was the Required client packetfor alchemy (due to it not being here before.. and people spent billions of gold[sorry])
-            if (Core.CheckInventory("Dragon Runestone"))
-                Core.SendPackets(
-                    "{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"bVerified\":true,\"cmd\":\"alchOnStart\"}}}",
-                    toClient: true
-                );
+            // This was the Required client packet for alchemy
+            Core.SendPackets("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"bVerified\":true,\"cmd\":\"alchOnStart\"}}}", toClient: true);
 
             Core.Sleep(4000);
 
-            if (Core.CheckInventory("Dragon Runestone"))
-                Core.SendPackets(
-                    YMB
-                        ? $"%xt%zm%crafting%1%checkAlchComplete%{reagentid1}%{reagentid2}%false%Mix Complete%{reagent1}%{reagent2}%{rune}%{modifier}%"
-                        : $"%xt%zm%crafting%1%checkAlchComplete%{reagentid1}%{reagentid2}%true%Mix Complete%{reagent1}%{reagent2}%{rune}%{trait}%"
-                );
+            Core.SendPackets($"%xt%zm%crafting%1%checkAlchComplete%{reagentid1}%{reagentid2}%true%Mix Complete%{reagent1}%{reagent2}%{rune}%{trait}%");
         }
     }
 
@@ -1682,8 +1660,7 @@ public class CoreFarms
                     "Ice Vapor",
                     AlchemyRunes.Jera,
                     loop: false,
-                    trait: CoreFarms.AlchemyTraits.hOu,
-                    YMB: goldMethod
+                    trait: CoreFarms.AlchemyTraits.hOu
                 );
             }
         }
@@ -1722,16 +1699,7 @@ public class CoreFarms
                 Core.EquipClass(ClassType.Farm);
                 while (!Core.CheckInventory(11475, 30))
                     Core.KillMonster("lair", "Hole", "Center", "*", isTemp: false, log: false);
-                Core.KillMonster(
-                    "lair",
-                    "Enter",
-                    "Spawn",
-                    "*",
-                    "Ice Vapor",
-                    30,
-                    isTemp: false,
-                    log: false
-                );
+                Core.KillMonster("lair", "Enter", "Spawn", "*", "Ice Vapor", 30, isTemp: false, log: false);
 
                 AlchemyPacket(
                     "Dragon Scale",
