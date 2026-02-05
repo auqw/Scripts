@@ -5,6 +5,7 @@ tags: null
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Globalization;
@@ -2054,13 +2055,18 @@ public class CoreAdvanced
 
             if (EnhAfter)
             {
+                EnhancementType ReEnhanceAfter = CurrentClassEnh();
+                CapeSpecial ReCEnhanceAfter = CurrentCapeSpecial();
+                HelmSpecial ReHEnhanceAfter = CurrentHelmSpecial();
+                WeaponSpecial ReWEnhanceAfter = CurrentWeaponSpecial();
+
                 Core.Logger(
-                    $" - Enhancements → Class: {ReEnhanceAfter}" +
-                    $"{(ReCEnhanceAfter != CapeSpecial.None ? $", Cape: {ReCEnhanceAfter}" : "")}" +
-                    $"{(ReHEnhanceAfter != HelmSpecial.None ? $", Helm: {ReHEnhanceAfter}" : "")}" +
-                    $"{(ReWEnhanceAfter != WeaponSpecial.None ? $", Weapon: {ReWEnhanceAfter}" : "")}",
-                    messageBox: false
-                );
+                                $" - Enhancements → Class: {ReEnhanceAfter}" +
+                                $"{(ReCEnhanceAfter != CapeSpecial.None ? $", Cape: {ReCEnhanceAfter}" : "")}" +
+                                $"{(ReHEnhanceAfter != HelmSpecial.None ? $", Helm: {ReHEnhanceAfter}" : "")}" +
+                                $"{(ReWEnhanceAfter != WeaponSpecial.None ? $", Weapon: {ReWEnhanceAfter}" : "")}",
+                                messageBox: false
+                            );
             }
 
             Core.JumpWait();

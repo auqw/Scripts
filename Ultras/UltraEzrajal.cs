@@ -180,18 +180,21 @@ public class UltraEzrajal
             Bot.Config.Configure();
         Core.Boot();
         Bot.UltraBossHelper.EnableCounterAttack();
-        Adv.GearStore(false, true);
         C.AddDrop("Ezrajal Insignia");
         Prep();
         Fight();
-        Adv.GearStore(true, true);
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            Adv.GearStore(true, true);
         Bot.StopSync();
     }
 
     void Prep()
     {
         if (Bot.Config!.Get<bool>("DoEnh"))
+        {
+            Adv.GearStore(false, true);
             DoEnhs();
+        }
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Ultra.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");

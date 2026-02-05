@@ -191,7 +191,10 @@ public class UltraNulgath
     void Prep()
     {
         if (Bot.Config!.Get<bool>("DoEnh"))
+        {
+            Adv.GearStore(false, true);
             DoEnhs();
+        }
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (Bot.Inventory.Items.Any(x => x != null && x.Equipped && (x.Name == a || x.Name == b)))
         {

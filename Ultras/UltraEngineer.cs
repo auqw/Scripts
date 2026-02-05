@@ -171,15 +171,19 @@ public class UltraEngineer
         Core.Boot();
         Prep();
         Fight();
-        Adv.GearStore(true, true);
+        if (Bot.Config!.Get<bool>("DoEnh"))
+            Adv.GearStore(true, true);
+
         Bot.StopSync();
     }
 
     void Prep()
     {
-        Adv.GearStore(false, true);
         if (Bot.Config!.Get<bool>("DoEnh"))
+        {
+            Adv.GearStore(false, true);
             DoEnhs();
+        }
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Ultra.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");
