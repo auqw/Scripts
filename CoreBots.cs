@@ -2,7 +2,7 @@
 name: null
 description: null
 tags: null
-version: 1.4.0.5
+version: 1.4.1.1
 */
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Newtonsoft.Json;
@@ -2464,38 +2464,42 @@ public class CoreBots
     /// If multiple items are found and no ShopItemID is provided, logs an error indicating that the ShopItemID is needed.
     /// </remarks>
     public ShopItem? parseShopItem(
-        List<ShopItem> shopItem,
+        List<ShopItem> shopItems,
         int shopID,
         string itemNameID,
         int shopItemID = 0
     )
     {
-        if (shopItem.Count == 0)
+        if (shopItems.Count == 0)
+        {
+            Logger($"Shop {shopID} has no items loaded.");
+            return null;
+        }
+
+        List<ShopItem> matches = shopItems
+            .Where(x => x.Name.Equals(itemNameID, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        if (matches.Count == 0)
         {
             Logger($"Item {itemNameID} not found in shop {shopID}.");
             return null;
         }
-        else if (shopItem.Count > 1)
+
+        if (matches.Count > 1)
         {
             if (shopItemID > 0)
-            {
-                if (!shopItem.Any(x => x.ShopItemID == shopItemID))
-                {
-                    Logger(
-                        $"Item {itemNameID} with ShopItemID {shopItemID} was not in {shopID}. The developer needs to correct the Shop Item ID."
-                    );
-                    return null;
-                }
-                return shopItem.First(x => x.ShopItemID == shopItemID);
-            }
+                return matches.FirstOrDefault(x => x.ShopItemID == shopItemID);
+
             Logger(
-                $"Multiple items found with the name {itemNameID} in shop {shopID}. The developer needs to specify the Shop Item ID."
+                $"Multiple items found with the name {itemNameID} in shop {shopID}. Specify ShopItemID."
             );
             return null;
         }
 
-        return shopItem.First();
+        return matches[0];
     }
+
 
     /// <summary>
     /// Creates and adds a ghost item to the inventory or temporary inventory based on the specified parameters.
