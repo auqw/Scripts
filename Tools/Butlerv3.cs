@@ -232,6 +232,11 @@ public class Butler3
                 }
             }
             catch { }
+            finally
+            {
+                Bot.StopAsync(true);
+            }
+
         }
 
         Bot.Events.ExtensionPacketReceived -= ChatListener;
@@ -310,6 +315,7 @@ public class Butler3
                     );
 
                     Bot.StopSync(true);
+                    return;
                 }
             }
         }
