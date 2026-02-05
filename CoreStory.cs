@@ -915,16 +915,16 @@ public class CoreStory
                 prevQuestExplain ??=
                     prevQuest == null
                         ? string.Empty
-                        : $"Quest \"{prevQuest.Name}\" [{prevQuest.ID}] appears to have failed to turn in somehow.|"
+                        : $"Quest \"{prevQuest.Name}\" [{prevQuest.ID}] appears to have failed to turn in somehow.| "
                             + (
                                 prevQuestReq == null
                                     ? string.Empty
-                                    : $"Missing QuestItems: {prevQuestReq}|"
+                                    : $"Missing QuestItems: {prevQuestReq}| "
                             )
                             + (
                                 prevQuestAReq == null
                                     ? string.Empty
-                                    : $"Missing AcceptRequirements: {prevQuestAReq}|"
+                                    : $"Missing AcceptRequirements: {prevQuestAReq}| "
                             );
 
                 if (lastFailedQuestID != QuestData.ID)
