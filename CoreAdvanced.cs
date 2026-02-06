@@ -75,23 +75,42 @@ public class CoreAdvanced
         if (Core.CheckInventory(itemID, quant))
             return;
 
+        // Inventory space check
+        if (Bot.Inventory.FreeSlots <= 0 && !Bot.Inventory.Contains(itemID))
+        {
+            if (Log) Core.Logger("❌ Inventory full, cannot buy items.");
+            return;
+        }
+
         Core.Join(map);
         Bot.Wait.ForMapLoad(map);
         Core.JumpWait();
 
-        // Wait for combat to end if needed
+        // Wait for combat to end
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
         {
             Core.JumpWait();
             Bot.Wait.ForCombatExit();
         }
 
-        // Get full shop list; do not pre-filter
+        // Get full shop list
         List<ShopItem> shopItems = Core.GetShopItems(map, shopID);
-
         ShopItem? item = Core.parseShopItem(shopItems, shopID, itemID, shopItemID);
         if (item == null)
+        {
+            if (Log) Core.Logger($"❌ Item {itemID} not found in shop {shopID} on {map}");
             return;
+        }
+
+        // House space check if item is a house-storable category
+        if (!string.IsNullOrEmpty(item.CategoryString) && Core.CategoryStrings.Contains(item.CategoryString))
+        {
+            if (Bot.House.FreeSlots <= 0 && !Bot.House.Contains(itemID))
+            {
+                if (Log) Core.Logger("❌ House full, cannot store this item.");
+                return;
+            }
+        }
 
         int effectiveShopQuant = item.Quantity > 0 ? item.Quantity : shopQuant;
 

@@ -2410,7 +2410,6 @@ public class CoreBots
         return Bot.Shops.Items;
     }
 
-
     /// <summary>
     /// Parses and retrieves a shop item from a list based on the provided criteria.
     /// </summary>
@@ -2426,11 +2425,7 @@ public class CoreBots
     /// If multiple items are found and a specific ShopItemID is provided, retrieves the item with the matching ShopItemID, logging an error if it is not found.
     /// If multiple items are found and no ShopItemID is provided, logs an error indicating that the ShopItemID is needed.
     /// </remarks>
-    public ShopItem? parseShopItem(
-    List<ShopItem> shopItems,
-    int shopID,
-    string itemNameID,
-    int shopItemID = 0)
+    public ShopItem? parseShopItem(List<ShopItem> shopItems, int shopID, string itemNameID, int shopItemID = 0)
     {
         if (shopItems.Count == 0)
         {
@@ -2469,11 +2464,7 @@ public class CoreBots
         return matches[0];
     }
 
-    public ShopItem? parseShopItem(
-        List<ShopItem> shopItems,
-        int shopID,
-        int itemID,
-        int shopItemID = 0)
+    public ShopItem? parseShopItem(List<ShopItem> shopItems, int shopID, int itemID, int shopItemID = 0)
     {
         if (shopItems.Count == 0)
         {
@@ -2517,8 +2508,7 @@ public class CoreBots
     /// The ghost item created will have a default icon based on its category, and properties for enhancements are added if applicable.
     /// The method uses dynamic typing to create the item object and calls a game function to add it to the player's inventory or temporary inventory.
     /// </remarks>
-    public void GhostItem(
-        int ID,
+    public void GhostItem(int ID,
         string name = "Ghost Item",
         int quantity = 1,
         bool temp = false,
