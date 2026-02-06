@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 172176,
-    "sha256": "9ef986922aca2d4bb47733fc30d5714ff62adcd124d9057aee45095a84d336dc",
+    "size": 167571,
+    "sha256": "5e48f5d17d51ede2da45b29aebf13120d84a968b6cf3bfbbef04eb11d87bfb92",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 154033,
-    "sha256": "22445785bed23ada09d6a636dfcfe93034c5aa28fb3665b851067e2acff28df1",
+    "size": 154450,
+    "sha256": "4dd78a6e51efcf396540a330d167bb507467b3a145b807a270a234619fdca105",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 425447,
-    "sha256": "bd9e235081290ce2fc5618b08961406077a99adc5e1a0de842989e39823dfc74",
+    "size": 424739,
+    "sha256": "3af910cceaeb597f9865810154f67229b6a408b883bea5aadfce33ab5d51b507",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
