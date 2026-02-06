@@ -2,7 +2,7 @@
 name: null
 description: null
 tags: null
-version: 1.4.1.1
+version: 1.4.0.5
 */
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Newtonsoft.Json;
@@ -1594,42 +1594,34 @@ public class CoreBots
     /// <param name="quant">Desired quantity</param>
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will re-log you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
     /// <param name="Log"></param>
-    public void BuyItem(
-        string map,
-        int shopID,
-        string itemName,
-        int quant = 1,
-        int shopItemID = 0,
-        bool Log = true
-    )
+    public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, bool Log = true)
     {
         _CheckInventorySpace();
+
         ShopItem? item = parseShopItem(
-            GetShopItems(map, shopID)
-                .Where(x =>
-                    shopItemID == 0
-                        ? x.Name.ToLower() == itemName.ToLower()
-                        : x.ShopItemID == shopItemID
-                )
-                .ToList(),
+            GetShopItems(map, shopID),
             shopID,
             itemName,
             shopItemID
         );
+
         if (item == null)
         {
             Logger(
-                $"Failed to find the item with name {itemName} in the shop with ID {shopID}, skipping it"
+                $"Failed to find the item '{itemName}' in the shop with ID {shopID}, skipping it."
             );
             return;
         }
-        if (
-            !string.IsNullOrEmpty(item.CategoryString)
-            && CategoryStrings.Contains(item.CategoryString)
-        )
+
+        if (!string.IsNullOrEmpty(item.CategoryString)
+            && CategoryStrings.Contains(item.CategoryString))
+        {
             _CheckHouseSpace();
+        }
+
         _BuyItem(map, shopID, item, quant, Log);
     }
+
 
     /// <summary>
     /// Buys a item till it have the desired quantity
@@ -1640,48 +1632,20 @@ public class CoreBots
     /// <param name="quant">Desired quantity</param>
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will relog you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
     /// <param name="Log"></param>
-    public void BuyItem(
-        string map,
-        int shopID,
-        int itemID,
-        int quant = 1,
-        int shopItemID = 0,
-        bool Log = true
-    )
+    public void BuyItem(string map, int shopID, int itemID, int quant = 1, int shopItemID = 0, bool Log = true)
     {
         if (CheckInventory(itemID, quant))
             return;
+
         _CheckInventorySpace();
 
-        if (Bot.Map.Name != map)
-        {
-            Join(map);
-            Bot.Wait.ForMapLoad(map);
-        }
-
-        // Load shop data
-        int retry = 0;
-        while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
-        {
-            Bot.Shops.Load(shopID);
-            Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
-            Sleep(1000);
-            if (Bot.Shops.ID == shopID || retry == 20)
-                break;
-            else
-                retry++;
-        }
-        retry = 0;
-
         ShopItem? item = parseShopItem(
-            GetShopItems(map, shopID)
-                .Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID)
-                .ToList(),
+            GetShopItems(map, shopID),
             shopID,
-            itemID.ToString(),
+            itemID,
             shopItemID
         );
+
         if (item == null)
         {
             Logger(
@@ -1689,11 +1653,13 @@ public class CoreBots
             );
             return;
         }
-        if (
-            !string.IsNullOrEmpty(item.CategoryString)
-            && CategoryStrings.Contains(item.CategoryString)
-        )
+
+        if (!string.IsNullOrEmpty(item.CategoryString)
+            && CategoryStrings.Contains(item.CategoryString))
+        {
             _CheckHouseSpace();
+        }
+
         _BuyItem(map, shopID, item, quant, Log);
     }
 
@@ -2241,7 +2207,7 @@ public class CoreBots
         }
     }
 
-    private int _CalcBuyQuantity(ShopItem item, int requestedAmount)
+    public int _CalcBuyQuantity(ShopItem item, int requestedAmount)
     {
         if (requestedAmount > item.MaxStack)
         {
@@ -2252,53 +2218,45 @@ public class CoreBots
             Bot.StopSync(true);
         }
 
-        // Unbank the item if it's in bank but not in inventory
         if (Bot.Bank.Contains(item.ID) && !Bot.Inventory.Contains(item.ID))
             Unbank(item.ID);
 
-        int itemStackSize = item.Quantity == 302500 ? 1 : item.Quantity;
+        int itemStackSize = item.Quantity > 0 ? item.Quantity : 1;
 
-        // Aggregate all relevant inventories and get current quantity for the item
         int currentStock =
             Bot.Inventory.Items.Concat(Bot.Bank.Items)
                 .Concat(Bot.House.Items)
                 .Concat(Bot.TempInv.Items)
-                .FirstOrDefault(x => x.ID == item.ID)
-                ?.Quantity
-            ?? 0;
+                .Where(x => x.ID == item.ID)
+                .Sum(x => x.Quantity);
 
-        // Check requirements for the item before purchasing
+        int stacksNeeded =
+            (int)Math.Ceiling((double)requestedAmount / itemStackSize);
+
         foreach (var req in item.Requirements)
         {
-            int totalNeeded = requestedAmount / itemStackSize * req.Quantity;
+            int totalNeeded = stacksNeeded * req.Quantity;
 
             int reqCurrent =
                 Bot.Inventory.Items.Concat(Bot.Bank.Items)
                     .Concat(Bot.House.Items)
                     .Concat(Bot.TempInv.Items)
-                    .FirstOrDefault(x => x.ID == req.ID)
-                    ?.Quantity
-                ?? 0;
+                    .Where(x => x.ID == req.ID)
+                    .Sum(x => x.Quantity);
 
-            Logger($"Requirement {req.Name}: needed {totalNeeded}, current {reqCurrent}");
             if (reqCurrent < totalNeeded)
             {
                 Logger(
                     $"Missing {req.Name} ({reqCurrent}/{totalNeeded}). Cannot proceed with purchase."
                 );
-                return 0; // Requirements not met; abort purchase
+                return 0;
             }
         }
 
-        // Calculate how many items to buy in multiples of the stack size
-        int buyAmount = (int)Math.Ceiling((double)requestedAmount / itemStackSize) * itemStackSize;
+        int buyAmount = stacksNeeded * itemStackSize;
 
-        // Ensure buyAmount does not exceed remaining max stack capacity
         int maxCanBuy = item.MaxStack - currentStock;
-        buyAmount = Math.Min(buyAmount, maxCanBuy - (maxCanBuy % itemStackSize)); // Round down to valid stack multiple
-
-        if (buyAmount + currentStock > requestedAmount)
-            buyAmount = (int)Math.Ceiling((double)requestedAmount / itemStackSize) * itemStackSize;
+        buyAmount = Math.Min(buyAmount, maxCanBuy - (maxCanBuy % itemStackSize));
 
         if (buyAmount <= 0)
         {
@@ -2308,8 +2266,6 @@ public class CoreBots
             return 0;
         }
 
-        // Uncomment for debugging final buy amount
-        // Logger($"Final purchase amount for {item.Name}: {buyAmount}");
         return buyAmount;
     }
 
@@ -2423,30 +2379,37 @@ public class CoreBots
     public List<ShopItem> GetShopItems(string map, int shopID)
     {
         // Ensure player is in map
-        if (Bot.Map.Name != map)
+        if (!Bot.Map.Name.Equals(map, StringComparison.OrdinalIgnoreCase))
         {
             Join(map);
             Bot.Wait.ForMapLoad(map);
         }
 
-        // Load shop data
         int retry = 0;
-        while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
+        while (!Bot.ShouldExit && retry++ < 20)
         {
+            if (Bot.Shops.IsLoaded && Bot.Shops.ID == shopID)
+                break;
+
             Bot.Shops.Load(shopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-            Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
-            Sleep(1000);
-            if (Bot.Shops.ID == shopID || retry == 20)
-                break;
-            else
-                retry++;
-        }
-        retry = 0;
+            Bot.Wait.ForTrue(
+                () => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID,
+                20
+            );
 
-        // Return the shop items
+            Sleep(1000);
+        }
+
+        if (!Bot.Shops.IsLoaded || Bot.Shops.ID != shopID)
+        {
+            Logger($"Failed to load shop {shopID} in map {map}.");
+            return new();
+        }
+
         return Bot.Shops.Items;
     }
+
 
     /// <summary>
     /// Parses and retrieves a shop item from a list based on the provided criteria.
@@ -2464,15 +2427,24 @@ public class CoreBots
     /// If multiple items are found and no ShopItemID is provided, logs an error indicating that the ShopItemID is needed.
     /// </remarks>
     public ShopItem? parseShopItem(
-        List<ShopItem> shopItems,
-        int shopID,
-        string itemNameID,
-        int shopItemID = 0
-    )
+    List<ShopItem> shopItems,
+    int shopID,
+    string itemNameID,
+    int shopItemID = 0)
     {
         if (shopItems.Count == 0)
         {
             Logger($"Shop {shopID} has no items loaded.");
+            return null;
+        }
+
+        if (shopItemID > 0)
+        {
+            ShopItem? byId = shopItems.FirstOrDefault(x => x.ShopItemID == shopItemID);
+            if (byId != null)
+                return byId;
+
+            Logger($"Item with ShopItemID {shopItemID} not found in shop {shopID}.");
             return null;
         }
 
@@ -2482,17 +2454,14 @@ public class CoreBots
 
         if (matches.Count == 0)
         {
-            Logger($"Item {itemNameID} not found in shop {shopID}.");
+            Logger($"Item '{itemNameID}' not found in shop {shopID}.");
             return null;
         }
 
         if (matches.Count > 1)
         {
-            if (shopItemID > 0)
-                return matches.FirstOrDefault(x => x.ShopItemID == shopItemID);
-
             Logger(
-                $"Multiple items found with the name {itemNameID} in shop {shopID}. Specify ShopItemID."
+                $"Multiple items found with the name '{itemNameID}' in shop {shopID}. Specify ShopItemID."
             );
             return null;
         }
@@ -2500,6 +2469,38 @@ public class CoreBots
         return matches[0];
     }
 
+    public ShopItem? parseShopItem(
+        List<ShopItem> shopItems,
+        int shopID,
+        int itemID,
+        int shopItemID = 0)
+    {
+        if (shopItems.Count == 0)
+        {
+            Logger($"Shop {shopID} has no items loaded.");
+            return null;
+        }
+
+        if (shopItemID > 0)
+        {
+            ShopItem? byShopItemID =
+                shopItems.FirstOrDefault(x => x.ShopItemID == shopItemID);
+
+            if (byShopItemID != null)
+                return byShopItemID;
+
+            Logger($"ShopItemID {shopItemID} not found in shop {shopID}.");
+            return null;
+        }
+
+        ShopItem? byItemID =
+            shopItems.FirstOrDefault(x => x.ID == itemID);
+
+        if (byItemID == null)
+            Logger($"Item ID {itemID} not found in shop {shopID}.");
+
+        return byItemID;
+    }
 
     /// <summary>
     /// Creates and adds a ghost item to the inventory or temporary inventory based on the specified parameters.

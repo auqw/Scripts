@@ -42,24 +42,10 @@ public class CoreAdvanced
     #region Shop
 
     /// <summary>
-    /// Buys a item from a shop, but also try to obtain stuff like XP, Rep, Gold, and merge items (where possible)
+    /// Buys an item by name from a shop, handling requirements such as XP, Rep, Gold, and merge items.
+    /// Safely respects stack sizes, inventory, and optional merge index.
     /// </summary>
-    /// <param name="map">Map of the shop</param>
-    /// <param name="shopID">ID of the shop</param>
-    /// <param name="itemName">Name of the item</param>
-    /// <param name="quant">Desired quantity</param>
-    /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will re-log you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
-    /// <param name="index"></param>
-    /// <param name="Log"></param>
-    public void BuyItem(
-        string map,
-        int shopID,
-        string itemName,
-        int quant = 1,
-        int shopItemID = 0,
-        int index = 0,
-        bool Log = true
-    )
+    public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         if (Core.CheckInventory(itemName, quant))
             return;
@@ -68,44 +54,23 @@ public class CoreAdvanced
         Bot.Wait.ForMapLoad(map);
         Core.JumpWait();
 
-        ShopItem? item = Core.parseShopItem(
-            Core.GetShopItems(map, shopID)
-                .Where(x =>
-                    shopItemID == 0
-                        ? x.Name.ToLower() == itemName.ToLower()
-                        : x.ShopItemID == shopItemID
-                )
-                .ToList(),
-            shopID,
-            itemName
-        );
+        // Get full shop list; do not pre-filter
+        List<ShopItem> shopItems = Core.GetShopItems(map, shopID);
+
+        ShopItem? item = Core.parseShopItem(shopItems, shopID, itemName, shopItemID);
         if (item == null)
             return;
 
-        _BuyItem(map, shopID, item, quant, item.Quantity, shopItemID, index, Log);
+        int shopQuant = item.Quantity > 0 ? item.Quantity : 1;
+
+        _BuyItem(map, shopID, item, quant, shopQuant, shopItemID, index, Log);
     }
 
     /// <summary>
-    /// Buys a item from a shop, but also try to obtain stuff like XP, Rep, Gold, and merge items (where possible)
+    /// Buys an item by ID from a shop, handling requirements such as XP, Rep, Gold, and merge items.
+    /// Safely respects stack sizes, inventory, and optional merge index.
     /// </summary>
-    /// <param name="map">Map of the shop</param>
-    /// <param name="shopID">ID of the shop</param>
-    /// <param name="itemID">ID of the item</param>
-    /// <param name="quant">Desired quantity</param>
-    /// <param name="shopQuant">How many items you get for 1 buy</param>
-    /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will relog you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
-    /// <param name="index"></param>
-    /// <param name="Log"></param>
-    public void BuyItem(
-        string map,
-        int shopID,
-        int itemID,
-        int quant = 1,
-        int shopQuant = 1,
-        int shopItemID = 0,
-        int index = 0,
-        bool Log = true
-    )
+    public void BuyItem(string map, int shopID, int itemID, int quant = 1, int shopQuant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         if (Core.CheckInventory(itemID, quant))
             return;
@@ -114,196 +79,127 @@ public class CoreAdvanced
         Bot.Wait.ForMapLoad(map);
         Core.JumpWait();
 
+        // Wait for combat to end if needed
         if (Bot.Player.InCombat || Bot.Player.HasTarget)
         {
             Core.JumpWait();
             Bot.Wait.ForCombatExit();
         }
 
-        ShopItem? item = Core.parseShopItem(
-            Core.GetShopItems(map, shopID)
-                .Where(x => shopItemID == 0 ? x.ID == itemID : x.ShopItemID == shopItemID)
-                .ToList(),
-            shopID,
-            itemID.ToString()
-        );
+        // Get full shop list; do not pre-filter
+        List<ShopItem> shopItems = Core.GetShopItems(map, shopID);
+
+        ShopItem? item = Core.parseShopItem(shopItems, shopID, itemID, shopItemID);
         if (item == null)
             return;
 
-        _BuyItem(map, shopID, item, quant, shopQuant, shopItemID, index, Log);
+        int effectiveShopQuant = item.Quantity > 0 ? item.Quantity : shopQuant;
+
+        _BuyItem(map, shopID, item, quant, effectiveShopQuant, shopItemID, index, Log);
     }
 
-    private void _BuyItem(
-        string map,
-        int shopID,
-        ShopItem item,
-        int quant = 1,
-        int shopquant = 1,
-        int shopItemID = 1,
-        int index = 0,
-        bool Log = true
-    )
+    private void _BuyItem(string map, int shopID, ShopItem item, int quant = 1, int shopQuant = 1, int shopItemID = 1, int index = 0, bool Log = true)
     {
-        int shopQuant = item.Quantity; // Quantity per purchase from the shop
-        string shopName = Bot.Shops.Name; // Store the currently loaded shop name
+        // Quantity per purchase from shop
+        int itemStack = item.Quantity > 0 ? item.Quantity : 1;
+
+        // Handle requirements first
         if (item.Requirements != null)
         {
             foreach (ItemBase req in item.Requirements)
             {
-                // Determine how many total items are needed
-                int totalBundlesNeeded = (int)
-                    Math.Ceiling((double)req.Quantity * quant / shopQuant);
+                int stacksNeeded = (int)Math.Ceiling((double)quant / itemStack);
+                int totalNeeded = stacksNeeded * req.Quantity;
 
-                if (Core.CheckInventory(req.ID, totalBundlesNeeded))
-                {
+                if (Core.CheckInventory(req.ID, totalNeeded))
                     continue;
-                }
 
+                // Special farm cases
                 if (req.Name.Contains("Gold Voucher"))
                 {
-                    Farm.Voucher(req.Name, totalBundlesNeeded); // Will buy from shop if available
+                    Farm.Voucher(req.Name, totalNeeded);
                     continue;
                 }
 
                 if (req.Name == "Dragon Runestone")
                 {
-                    Farm.DragonRunestone(totalBundlesNeeded);
+                    Farm.DragonRunestone(totalNeeded);
                     continue;
                 }
 
-                while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, totalBundlesNeeded))
+                // Try to buy from shop if available
+                while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, totalNeeded))
                 {
                     if (Bot.Map.Name != map)
-                    {
                         Core.Join(map);
-                        Bot.Wait.ForMapLoad(map);
-                    }
 
-                    // Load shop data
-                    while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
-                    {
-                        Bot.Shops.Load(shopID);
-                        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
-                        Core.Sleep(1000);
-                        if (Bot.Shops.ID == shopID)
-                            break;
-                    }
+                    ShopItem? shopReqItem = Core.GetShopItems(map, shopID)
+                        .FirstOrDefault(x => x.ID == req.ID);
 
-                    // int bundlesToBuy = totalBundlesNeeded - (QuantOwned / req.Quantity);
-                    // Ensure we Reload the proper shop:
-                    // Load shop data
-                    while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
-                    {
-                        Bot.Shops.Load(shopID);
-                        Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                        Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
-                        Core.Sleep(1000);
-                        if (Bot.Shops.ID == shopID)
-                            break;
-                    }
-
-                    ShopItem? shopItem = Bot.Shops.Items.FirstOrDefault(x => x.ID == req.ID);
-                    if (shopItem != null)
-                    {
-                        BuyItem(map, shopID, req.ID, totalBundlesNeeded, shopItemID, Log: Log);
-                        Bot.Wait.ForPickup(req.ID);
-                    }
-                    // Else return and hope it hits the `findingredients` area. when the req.name isnt in the shop.
+                    if (shopReqItem != null)
+                        BuyItem(map, shopID, req.ID, totalNeeded, shopReqItem.ShopItemID, Log: Log);
                     else
                     {
                         Core.Logger(
-                            $"Failed to find shop item: \"{req.Name} [{req.ID}]\" in ({Bot.Shops.Name} [{Bot.Shops.ID}].)\n"
-                                + $"Its either a `mob drop` or a `daily`.\n"
-                                + $"Check the Wiki: http://aqwwiki.wikidot.com/search:main/fullname/{req.Name.Replace(" ", "-")}.\n"
-                                + $"Maybe the bot will just farm in a moment once it returns to the previous code..? if not then its probably from a daily or an mob we cannot kill with skua."
+                            $"Missing requirement: {req.Name} [{req.ID}] in shop {shopID} on map {map}. " +
+                            $"It may be a drop, daily, or special item."
                         );
                         return;
                     }
                 }
             }
+        }
 
-            // Ensure required items are available before purchasing the main item
-            GetItemReq(item, quant);
+        // Ensure requirements are satisfied before main purchase
+        GetItemReq(item, quant);
 
-            // Rejoin the map here incase getitemreq takes you elsewhere, to ensure that the shopitem is found (hopefully)
-            if (Bot.Map.Name != map)
-                Core.Join(map);
+        // Rejoin map & load shop safely
+        if (Bot.Map.Name != map)
+            Core.Join(map);
 
-            // Load shop data
-            while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
-            {
-                Bot.Shops.Load(shopID);
-                Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-                Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
-                Core.Sleep(1000);
-                if (Bot.Shops.ID == shopID)
-                    break;
-            }
+        List<ShopItem> shopItems = Core.GetShopItems(map, shopID)
+            .Where(x =>
+                x.ID == item.ID &&
+                !(x.Coins && x.Cost > 0) &&
+                item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity))
+            )
+            .ToList();
 
-            // Try to find the exact item match based on ID and ShopItemID
-            List<ShopItem> matchingItems = Bot
-                .Shops.Items.Where(x =>
-                    x.ID == item.ID
-                    && x.ShopItemID == (item.ShopItemID != 1 ? item.ShopItemID : shopItemID)
-                    && !(x.Coins && x.Cost > 0)
-                    && // Exclude AC/paid items
-                    item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity))
-                )
-                .ToList(); // Convert to list to allow index selection
+        ShopItem? mainItem = shopItems.Count > index ? shopItems[index] : shopItems.FirstOrDefault();
 
-            // If no exact match is found, fall back to matching only by ID
-            if (!matchingItems.Any())
-            {
-                matchingItems = Bot
-                    .Shops.Items.Where(x =>
-                        x.ID == item.ID
-                        && !(x.Coins && x.Cost > 0)
-                        && // Exclude AC/paid items
-                        item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity))
-                    )
-                    .ToList();
-            }
+        if (mainItem == null)
+        {
+            Core.Logger($"❌ Failed to find {item.Name} in shop {shopID} on map {map}");
+            return;
+        }
 
-            // Select the item by index if possible, otherwise default to the first available match
-            ShopItem? mainItem =
-                matchingItems.Count > index ? matchingItems[index] : matchingItems.FirstOrDefault();
+        // Calculate buy amount respecting stack size and max stack
+        int currentStock = Bot.Inventory.Items
+            .Concat(Bot.Bank.Items)
+            .Concat(Bot.House.Items)
+            .Concat(Bot.TempInv.Items)
+            .Where(x => x.ID == mainItem.ID)
+            .Sum(x => x.Quantity);
 
-            if (mainItem != null)
-            {
-                // Attempt to buy the item using the correct ShopItemID if applicable
-                Core.BuyItem(
-                    map,
-                    shopID,
-                    mainItem.ID,
-                    quant,
-                    mainItem.ShopItemID != 1 ? mainItem.ShopItemID : shopItemID,
-                    Log: Log
-                );
-                Core.Sleep();
+        int buyAmount = Core._CalcBuyQuantity(mainItem, quant);
 
-                // Verify if the item was successfully purchased
-                if (!Core.CheckInventory(mainItem.ID, quant))
-                {
-                    Core.Logger($"❌ Failed to buy {mainItem.Name} ({quant}x)");
+        if (buyAmount <= 0)
+        {
+            Core.Logger($"Cannot buy {mainItem.Name}, max stack reached ({currentStock}/{mainItem.MaxStack})");
+            return;
+        }
 
-                    // Log any missing requirements for debugging
-                    foreach (
-                        ItemBase req in mainItem.Requirements.Where(r =>
-                            r != null && !Core.CheckInventory(r.ID, r.Quantity)
-                        )
-                    )
-                    {
-                        Core.Logger($"⚠️ Missing: {req.Name} x{req.Quantity}");
-                    }
-                }
-            }
-            else
-            {
-                Core.Logger(
-                    $"❌ Failed to find the item: {item.Name} in shop {shopID} on map {map}"
-                );
-            }
+        Core.BuyItem(map, shopID, mainItem.ID, buyAmount, mainItem.ShopItemID != 1 ? mainItem.ShopItemID : shopItemID, Log: Log);
+
+        Core.Sleep();
+
+        // Verify purchase
+        if (!Core.CheckInventory(mainItem.ID, quant))
+        {
+            Core.Logger($"❌ Failed to buy {mainItem.Name} ({quant}x)");
+
+            foreach (var req in mainItem.Requirements.Where(r => r != null && !Core.CheckInventory(r.ID, r.Quantity)))
+                Core.Logger($"⚠️ Missing requirement: {req.Name} x{req.Quantity}");
         }
     }
 
