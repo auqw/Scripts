@@ -100,7 +100,7 @@ public class VictorsRewardMerge
                     List<int> svlQuests = new();
                     if (Core.IsMember && Bot.Quests.IsAvailable(10304))
                         svlQuests.Add(10304);
-                    if (Bot.Quests.IsAvailable(10303))
+                    else if (Bot.Quests.IsAvailable(10303))
                         svlQuests.Add(10303);
                     if (svlQuests.Count > 0)
                     {
@@ -133,7 +133,7 @@ public class VictorsRewardMerge
                     List<int> gvlQuests = new();
                     if (Core.IsMember && Bot.Quests.IsAvailable(10306))
                         gvlQuests.Add(10306);
-                    if (Bot.Quests.IsAvailable(10305))
+                    else if (Bot.Quests.IsAvailable(10305))
                         gvlQuests.Add(10305);
                     if (gvlQuests.Count > 0)
                     {
@@ -166,7 +166,7 @@ public class VictorsRewardMerge
                     List<int> pvlQuests = new();
                     if (Core.IsMember && Bot.Quests.IsAvailable(10308))
                         pvlQuests.Add(10308);
-                    if (Bot.Quests.IsAvailable(10307))
+                    else if (Bot.Quests.IsAvailable(10307))
                         pvlQuests.Add(10307);
                     if (pvlQuests.Count > 0)
                     {
