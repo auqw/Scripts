@@ -29,10 +29,12 @@ public class MoglinPunter
         Core.SetOptions(false);
     }
 
+    private double RequiredPuntScore = 13; // Default; can be changed per year or event
+
     public void Badge()
     {
         Bot.Options.LagKiller = false;
-        if (Core.HasWebBadge(badge) || !Core.isSeasonalMapActive("punt"))
+        if (Core.HasWebBadge(badge) || !Core.isSeasonalMapActive("zorbakpunt"))
         {
             Core.Logger($"Already have the {badge} badge, or the map is not available.");
             return;
@@ -46,7 +48,8 @@ public class MoglinPunter
         int Punt = 0;
 
         Core.Logger($"Doing quest for {badge} badge, Purely Rng based, good luck");
-        Core.Join("zorbakpunt");
+        // Always private
+        Core.Join("zorbakpunt-100000");
         Bot.Events.ExtensionPacketReceived += puntingPacketReader;
         while (!Bot.ShouldExit && !Core.HasWebBadge(badge))
         {
@@ -56,12 +59,12 @@ public class MoglinPunter
             Bot.Wait.ForCellChange("Punt");
             Bot.Wait.ForTrue(() => Datagood, 5);
 
-            if (Finished || Core.CheckInventory(68214))
+            if (Finished || Core.CheckInventory(53911))
             {
-                Bot.Wait.ForDrop(68214);
-                Bot.Wait.ForPickup(68214);
+                Bot.Wait.ForDrop(53911);
+                Bot.Wait.ForPickup(53911);
 
-                Core.ChainComplete(8532);
+                Core.ChainComplete(7429);
                 Core.Logger($"Punts to get the badge: {Punt}");
                 break;
             }
@@ -69,39 +72,37 @@ public class MoglinPunter
         }
         Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
 
+
         void puntingPacketReader(dynamic packet)
         {
+            const double EPSILON = 0.0001; // Tolerance for floating-point comparisons
+
             string type = packet["params"].type;
             dynamic data = packet["params"].dataObj;
             if (type is not null and "json")
             {
                 string cmd = data.cmd.ToString();
-                switch (cmd)
+                if (cmd == "ia"
+                    && data.oName.ToString() == "btnPuntting"
+                    && data.unm.ToString() == Core.Username())
                 {
-                    case "ia":
-                        if (
-                            data.oName.ToString() == "btnPuntting"
-                            && data.unm.ToString() == Core.Username()
-                        )
-                        {
-                            Datagood = true;
-                            double score = data.val;
-                            double RoundedScore = Math.Round(
-                                float.Parse($"{score.ToString()[..^2]}.{score.ToString()[^2..]}")
-                            );
+                    Datagood = true;
 
-                            Core.Logger(
-                                $"Punt [#{Punt++}] | Score [{score} (Rounded Score [{RoundedScore}])], \n"
-                                    + $"Win? ({(RoundedScore < 100 ? "❌" : "✅")})"
-                            );
+                    // Score comes as integer representing hundredths (e.g., 3489 = 34.89)
+                    double score = (double)data.val / 100.0;
 
-                            if (RoundedScore == 100)
-                            {
-                                Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
-                                Finished = true;
-                            }
-                        }
-                        break;
+                    bool win = Math.Abs(score - RequiredPuntScore) < EPSILON; // Compare to configurable score
+
+                    Core.Logger(
+                        $"Punt [#{Punt++}] | Score [{score:F2}], "
+                        + $"Win? ({(win ? "✅" : "❌")})"
+                    );
+
+                    if (win)
+                    {
+                        Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
+                        Finished = true;
+                    }
                 }
             }
         }
