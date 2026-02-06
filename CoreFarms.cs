@@ -1605,7 +1605,19 @@ public class CoreFarms
             return;
 
         // Extract voucher value in gold (e.g. "500k" => 500000)
-        int valuePerItem = int.Parse(item.Name.Split(' ')[2].Replace("k", "000"));
+        int lastSpace = item.Name.LastIndexOf(' ');
+        string valuePart = item.Name[(lastSpace + 1)..]
+            .Replace("k", "", StringComparison.OrdinalIgnoreCase)
+            .Replace(",", "");
+
+        if (!decimal.TryParse(valuePart, out decimal thousands) || thousands <= 0)
+        {
+            Core.Logger($"Failed to parse gold value from '{item.Name}'.");
+            return;
+        }
+
+        int valuePerItem = (int)Math.Round(thousands * 1000, MidpointRounding.AwayFromZero);
+
         const int goldCap = 100_000_000;
 
         while (!Bot.ShouldExit && needed > 0)
