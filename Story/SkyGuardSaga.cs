@@ -171,7 +171,7 @@ public class SkyGuardSaga
         Story.KillQuest(
             1290,
             "strategy",
-            new[] { "Dravir Pirate", "Dravir Pirate", "Dravir Pirate", "Dravir Pirate" }
+            new[] { "Dravir Pirate", "Dravir Pirate", "Dravir Pirate", "Dravir Pirate", "Dravir Pirate" }
         );
     }
 
