@@ -2698,8 +2698,8 @@
       "skyguard-saga"
     ],
     "path": "Story/SkyGuardSaga.cs",
-    "size": 10100,
-    "sha256": "39954c50765ef981cf1d1fe665ef20b11a1c6b0631c1ce421af637df540b5c7a",
+    "size": 10117,
+    "sha256": "a2756b3891f57bc194cf862bb3b96e737f0d4fdc1b47893c2f1a77a5bc1b2ef7",
     "fileName": "SkyGuardSaga.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/SkyGuardSaga.cs"
   },
