@@ -161,7 +161,7 @@ public class CoreAdvanced
             .Where(x =>
                 x.ID == item.ID &&
                 !(x.Coins && x.Cost > 0) &&
-                item.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity))
+                (item.Requirements?.All(r => Core.CheckInventory(r.ID, r.Quantity)) ?? true)
             )
             .ToList();
 
