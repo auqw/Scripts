@@ -95,8 +95,9 @@ public class QueenIona
 
         C.FarmingLogger(item, quant);
 
-        if (HasQuestItem)
-            C.RegisterQuests(C.IsMember ? 9853 : 9854);
+        if (!C.IsMember && HasQuestItem)
+            C.RegisterQuests((!C.IsMember && HasQuestItem) ? 9854 : 9853);
+        
         // Always private
         C.Join(map + -100000, "r2", "Left");
         Core.ChooseBestCell(boss);
@@ -127,7 +128,7 @@ public class QueenIona
             {
                 C.Jump("Enter", "Spawn");
                 C.EnsureComplete(9852);
-                if (HasQuestItem) 
+                if (HasQuestItem)
                     continue;
 
                 C.Logger("Daily complete come back tomarrow");
