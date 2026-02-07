@@ -23010,12 +23010,14 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/DescendantsDesignMerge.cs"
   },
   {
-    "name": "Yokai Hunt 2025 Merge",
-    "description": "This bot will farm the items belonging to the selected mode for the Yokai Hunt 2025 Merge [2559] in /yokaihunt",
+    "name": "Year of the Serpent Blessings Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Year of the Serpent Blessings Merge [2559] in /yokaihunt",
     "tags": [
-      "yokai",
-      "hunt",
-      "2025",
+      "year",
+      "of",
+      "the",
+      "serpent",
+      "blessings",
       "merge",
       "yokaihunt",
       "serpents",
@@ -23023,7 +23025,6 @@
       "fans",
       "fan",
       "silver",
-      "serpent",
       "qi",
       "pao",
       "favor",
@@ -23037,11 +23038,11 @@
       "streetwear",
       "royal"
     ],
-    "path": "Seasonal/AkibaNewYear/YokaiHunt2025Merge.cs",
-    "size": 7561,
-    "sha256": "0fc11752d20d961de05b222d51b86243d4c6dbc9e38fd3b79b129e099ecf5518",
-    "fileName": "YokaiHunt2025Merge.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/YokaiHunt2025Merge.cs"
+    "path": "Seasonal/AkibaNewYear/YearoftheSerpentBlessingsMerge.cs",
+    "size": 6710,
+    "sha256": "531dc2b9512453e13ebf04f92ae2627da92773af5c61d75368a551dfcde5ef21",
+    "fileName": "YearoftheSerpentBlessingsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/YearoftheSerpentBlessingsMerge.cs"
   },
   {
     "name": "Senlin-Mas's Quests",
