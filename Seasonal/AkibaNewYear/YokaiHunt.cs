@@ -32,6 +32,7 @@ public class YokaiHunt
         YueHuang();
         BaoyuLin();
         AiNoMiko2();
+        ShiWaLam();
     }
 
     public void AiNoMiko()
@@ -188,5 +189,56 @@ public class YokaiHunt
         {
             Core.HuntMonsterQuest(10060, ("yokaihunt", UseableMonsters[6], ClassType.Solo));
         }
+    }
+
+    public void ShiWaLam()
+    {
+        if (Core.isCompletedBefore(10590) || !Core.isSeasonalMapActive("yokaihunt"))
+            return;
+
+        AiNoMiko2();
+        Story.PreLoad(this);
+
+        // 10586 | Wartime Kaidan
+        if (!Story.QuestProgression(10586))
+        {
+            Core.HuntMonsterQuest(10586,
+                ("yokaiwar", "Samurai Nopperabo", ClassType.Farm));
+        }
+
+
+        // 10587 | Act of Loyalty
+        if (!Story.QuestProgression(10587))
+        {
+            Core.HuntMonsterQuest(10587,
+                ("shogunwar", "Shadow Samurai", ClassType.Farm));
+        }
+
+
+        // 10588 | Natural Betrayal
+        if (!Story.QuestProgression(10588))
+        {
+            Core.HuntMonsterQuest(10588,
+                ("hakuwar", "Dark Zmey", ClassType.Farm),
+                ("hakuwar", "Kitsune Spy", ClassType.Farm));
+        }
+
+
+        // 10589 | Coming Conflict
+        if (!Story.QuestProgression(10589))
+        {
+            Core.HuntMonsterQuest(10589,
+                ("shadowbattleon", "Ouro Spawn", ClassType.Farm));
+        }
+
+
+        // 10590 | Chi Tu
+        if (!Story.QuestProgression(10590))
+        {
+            Core.HuntMonsterQuest(10590,
+                ("yokaihunt", "Red Hare", ClassType.Solo));
+        }
+
+
     }
 }

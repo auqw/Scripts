@@ -1,7 +1,7 @@
 /*
-name: Yokai Hunt 2025 Merge
-description: This bot will farm the items belonging to the selected mode for the Yokai Hunt 2025 Merge [2559] in /yokaihunt
-tags: yokai, hunt, 2025, merge, yokaihunt, serpents, refinement, fans, fan, silver, serpent, qi, pao, favor, gold, rap, artist, urban, cap, morph, glasses, streetwear, royal
+name: Year of the Serpent Blessings Merge
+description: This bot will farm the items belonging to the selected mode for the Year of the Serpent Blessings Merge [2559] in /yokaihunt
+tags: year, of, the, serpent, blessings, merge, yokaihunt, serpents, refinement, fans, fan, silver, qi, pao, favor, gold, rap, artist, urban, cap, morph, glasses, streetwear, royal
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -12,7 +12,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
-public class YokaiHunt2025Merge
+public class YearoftheSerpentBlessingsMerge
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
@@ -53,17 +53,7 @@ public class YokaiHunt2025Merge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(
-            new[]
-            {
-                "Miko's Blessing",
-                "Pearlescent Scale",
-                "Urban Serpent Cap + Glasses",
-                "Urban Serpent Hat + Glasses",
-                "Urban Serpent Locks + Glasses",
-                "Urban Serpent Hair + Glasses",
-            }
-        );
+        Core.BankingBlackList.AddRange(new[] { "Miko's Blessing", "Pearlescent Scale", "Urban Serpent Cap + Glasses", "Urban Serpent Hat + Glasses", "Urban Serpent Locks + Glasses", "Urban Serpent Hair + Glasses" });
         Core.SetOptions();
 
         BuyAllMerge();
@@ -138,83 +128,18 @@ public class YokaiHunt2025Merge
 
     public List<IOption> Select = new()
     {
-        new Option<bool>(
-            "91791",
-            "Serpent's Refinement Fans",
-            "Mode: [select] only\nShould the bot buy \"Serpent's Refinement Fans\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91790",
-            "Serpent's Refinement Fan",
-            "Mode: [select] only\nShould the bot buy \"Serpent's Refinement Fan\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91789",
-            "Silver Serpent Qi Pao",
-            "Mode: [select] only\nShould the bot buy \"Silver Serpent Qi Pao\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91788",
-            "Serpent's Favor Fans",
-            "Mode: [select] only\nShould the bot buy \"Serpent's Favor Fans\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91787",
-            "Serpent's Favor Fan",
-            "Mode: [select] only\nShould the bot buy \"Serpent's Favor Fan\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91786",
-            "Gold Serpent Qi Pao",
-            "Mode: [select] only\nShould the bot buy \"Gold Serpent Qi Pao\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91738",
-            "Serpent Rap Artist",
-            "Mode: [select] only\nShould the bot buy \"Serpent Rap Artist\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91724",
-            "Urban Serpent Cap Visage",
-            "Mode: [select] only\nShould the bot buy \"Urban Serpent Cap Visage\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91723",
-            "Urban Serpent Hat Morph",
-            "Mode: [select] only\nShould the bot buy \"Urban Serpent Hat Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91722",
-            "Urban Serpent Glasses Visage",
-            "Mode: [select] only\nShould the bot buy \"Urban Serpent Glasses Visage\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91721",
-            "Urban Serpent Glasses Morph",
-            "Mode: [select] only\nShould the bot buy \"Urban Serpent Glasses Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91716",
-            "Urban Serpent Streetwear",
-            "Mode: [select] only\nShould the bot buy \"Urban Serpent Streetwear\" ?",
-            false
-        ),
-        new Option<bool>(
-            "91715",
-            "Urban Royal Streetwear",
-            "Mode: [select] only\nShould the bot buy \"Urban Royal Streetwear\" ?",
-            false
-        ),
-    };
+        new Option<bool>("91791", "Serpent's Refinement Fans", "Mode: [select] only\nShould the bot buy \"Serpent's Refinement Fans\" ?", false),
+        new Option<bool>("91790", "Serpent's Refinement Fan", "Mode: [select] only\nShould the bot buy \"Serpent's Refinement Fan\" ?", false),
+        new Option<bool>("91789", "Silver Serpent Qi Pao", "Mode: [select] only\nShould the bot buy \"Silver Serpent Qi Pao\" ?", false),
+        new Option<bool>("91788", "Serpent's Favor Fans", "Mode: [select] only\nShould the bot buy \"Serpent's Favor Fans\" ?", false),
+        new Option<bool>("91787", "Serpent's Favor Fan", "Mode: [select] only\nShould the bot buy \"Serpent's Favor Fan\" ?", false),
+        new Option<bool>("91786", "Gold Serpent Qi Pao", "Mode: [select] only\nShould the bot buy \"Gold Serpent Qi Pao\" ?", false),
+        new Option<bool>("91738", "Serpent Rap Artist", "Mode: [select] only\nShould the bot buy \"Serpent Rap Artist\" ?", false),
+        new Option<bool>("91724", "Urban Serpent Cap Visage", "Mode: [select] only\nShould the bot buy \"Urban Serpent Cap Visage\" ?", false),
+        new Option<bool>("91723", "Urban Serpent Hat Morph", "Mode: [select] only\nShould the bot buy \"Urban Serpent Hat Morph\" ?", false),
+        new Option<bool>("91722", "Urban Serpent Glasses Visage", "Mode: [select] only\nShould the bot buy \"Urban Serpent Glasses Visage\" ?", false),
+        new Option<bool>("91721", "Urban Serpent Glasses Morph", "Mode: [select] only\nShould the bot buy \"Urban Serpent Glasses Morph\" ?", false),
+        new Option<bool>("91716", "Urban Serpent Streetwear", "Mode: [select] only\nShould the bot buy \"Urban Serpent Streetwear\" ?", false),
+        new Option<bool>("91715", "Urban Royal Streetwear", "Mode: [select] only\nShould the bot buy \"Urban Royal Streetwear\" ?", false),
+   };
 }
