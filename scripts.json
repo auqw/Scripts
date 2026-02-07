@@ -22847,6 +22847,41 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AprilFools/DuplicationErrorBadgeMerge.cs"
   },
   {
+    "name": "Year of the Horse Blessings Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Year of the Horse Blessings Merge [2679] in /yokaihunt",
+    "tags": [
+      "year",
+      "of",
+      "the",
+      "horse",
+      "blessings",
+      "merge",
+      "yokaihunt",
+      "passionate",
+      "qipao",
+      "royal",
+      "equine",
+      "vanguard",
+      "ancestral",
+      "dao",
+      "stallions",
+      "passion",
+      "fan",
+      "propserity",
+      "bamboo",
+      "ink",
+      "painting",
+      "lady",
+      "suzhens",
+      "bridge"
+    ],
+    "path": "Seasonal/AkibaNewYear/YearoftheHorseBlessingsMerge.cs",
+    "size": 6512,
+    "sha256": "5ceb489eafd9c46de9f936836b01d46ca5eefe8bbceb05c0f27b107918cbf6c8",
+    "fileName": "YearoftheHorseBlessingsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/YearoftheHorseBlessingsMerge.cs"
+  },
+  {
     "name": "Bingwen's Quests",
     "description": "Completes Bingwen's Quests in akibacny.",
     "tags": [
@@ -22968,8 +23003,8 @@
       "yue huang"
     ],
     "path": "Seasonal/AkibaNewYear/YokaiHunt.cs",
-    "size": 5472,
-    "sha256": "fdd0825194cfe77b2d4a86ce643a39366f3d69c0137394838a6c4305d82f4692",
+    "size": 6769,
+    "sha256": "6d1f1ca97d6e2d0569aa18b5db31e5d72ac5bea6cfc5077f0db74cbc65ed4ad3",
     "fileName": "YokaiHunt.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/YokaiHunt.cs"
   },
