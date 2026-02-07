@@ -95,7 +95,6 @@ public class QueenIona
 
         C.FarmingLogger(item, quant);
 
-        if (!C.IsMember && HasQuestItem)
             C.RegisterQuests((!C.IsMember && HasQuestItem) ? 9854 : 9853);
         
         // Always private
