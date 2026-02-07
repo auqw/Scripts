@@ -33,44 +33,46 @@ public class MoglinPunter
 
     public void Badge()
     {
-        Bot.Options.LagKiller = false;
+        // Bot.Options.LagKiller = false;
         if (Core.HasWebBadge(badge) || !Core.isSeasonalMapActive("zorbakpunt"))
         {
             Core.Logger($"Already have the {badge} badge, or the map is not available.");
             return;
         }
-        Core.OneTimeMessage(
-            "Minigame Explanation",
-            "This minigame works off of a \"value\" system for ponts, so 9999 is 99, for the quest so youll need to get a value of 10000 points which may take a while.",
-            forcedMessageBox: true
-        );
+        // Core.OneTimeMessage(
+        //     "Minigame Explanation",
+        //     "This minigame works off of a \"value\" system for ponts, so 9999 is 99, for the quest so youll need to get a value of 10000 points which may take a while.",
+        //     forcedMessageBox: true
+        // );
 
         int Punt = 0;
 
         Core.Logger($"Doing quest for {badge} badge, Purely Rng based, good luck");
         // Always private
-        Core.Join("zorbakpunt-100000");
-        Bot.Events.ExtensionPacketReceived += puntingPacketReader;
+        // Core.Join("zorbakpunt-100000");
+        // Bot.Events.ExtensionPacketReceived += puntingPacketReader;
         while (!Bot.ShouldExit && !Core.HasWebBadge(badge))
         {
-            Datagood = false;
-            Core.Sleep();
-            Core.SendPackets("%xt%zm%ia%1%rval%btnPuntting%%");
-            Bot.Wait.ForCellChange("Punt");
-            Bot.Wait.ForTrue(() => Datagood, 5);
+            // Datagood = false;
+            // Core.Sleep();
+            // Core.SendPackets("%xt%zm%ia%1%rval%btnPuntting%%");
+            Core.GetMapItem(7184, 1, "zorbakpunt-100000");
+            Core.ChainComplete(7429);
+            // Bot.Wait.ForCellChange("Punt");
+            // Bot.Wait.ForTrue(() => Datagood, 5);
 
-            if (Finished || Core.CheckInventory(53911))
-            {
-                Bot.Wait.ForDrop(53911);
-                Bot.Wait.ForPickup(53911);
+            // if (Finished || Core.CheckInventory(53911))
+            // {
+            //     Bot.Wait.ForDrop(53911);
+            //     Bot.Wait.ForPickup(53911);
 
-                Core.ChainComplete(7429);
-                Core.Logger($"Punts to get the badge: {Punt}");
-                break;
-            }
-            Core.Jump("Enter", "Spawn");
+            //     Core.ChainComplete(7429);
+            //     Core.Logger($"Punts to get the badge: {Punt}");
+            //     break;
+            // }
+            // Core.Jump("Enter", "Spawn");
         }
-        Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
+        // Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
 
 
         void puntingPacketReader(dynamic packet)
