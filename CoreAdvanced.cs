@@ -972,7 +972,7 @@ public class CoreAdvanced
                 if (!Core.CheckInventory(item.ID, item.Quantity))
                 {
                     IEnumerable<string> missing = item
-                        .Requirements.Where(x => !Core.CheckInventory(x.ID, x.Quantity))
+                        .Requirements.Where(x => x != null && !Core.CheckInventory(x.ID, x.Quantity))
                         .Select(x => $"\"{x.Name} x{x.Quantity}\"");
 
                     Core.Logger(
