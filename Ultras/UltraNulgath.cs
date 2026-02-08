@@ -21,7 +21,7 @@ using Skua.Core.Options;
 1. Chrono ShadowSlayer — **Vim | Lucky | Valiance | Vainglory**
 2. Verus DoomKnight — **Anima | Lucky | Ravenous | Vainglory**
 3. Legion Revenant — **Pneuma | Wizard | Valiance / Ravenous / Arcana | Vainglory**
-4. Lord of Order — **Forge | Lucky | Awe Blast / Valiance | Absolution**
+4. Lord Of Order — **Forge | Lucky | Awe Blast / Valiance | Absolution**
 
 ---
 
