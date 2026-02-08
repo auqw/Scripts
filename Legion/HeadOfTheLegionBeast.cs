@@ -352,34 +352,10 @@ public class HeadoftheLegionBeast
         {
             Core.EnsureAccept(7978);
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "sevencircles",
-                "r2",
-                "Left",
-                "Limbo Guard",
-                "Souls of Limbo",
-                soulsTarget,
-                log: false
-            );
+            Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Souls of Limbo", soulsTarget, log: false);
             Core.EquipClass(ClassType.Solo);
-            Core.KillMonster(
-                "sevencircles",
-                "r4",
-                "Left",
-                "Luxuria",
-                "Essence of Luxuria",
-                essenceTarget,
-                log: false
-            );
-            Core.KillMonster(
-                "sevencircles",
-                "r6",
-                "Left",
-                "Gluttony",
-                "Essence of Gluttony",
-                essenceTarget,
-                log: false
-            );
+            Core.KillMonster("sevencircles", "r4", "Left", "Luxuria", "Essence of Luxuria", essenceTarget, log: false);
+            Core.KillMonster("sevencircles", "r6", "Left", "Gluttony", "Essence of Gluttony", essenceTarget, log: false); 
             Core.KillMonster(
                 "sevencircles",
                 "r8",
