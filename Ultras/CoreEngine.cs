@@ -99,13 +99,14 @@ public class CoreEngine
 
     bool OnScriptStopping(Exception? e)
     {
+        DisableSkills();
+        C.JumpWait();
         C.Logger("System offline");
 
         Bot.Lite.HidePlayers = false;
 
         _cts?.Cancel();
         _runSkills?.Wait(TimeSpan.FromSeconds(2));
-
         OnSignal = null;
 
         _cache.Clear();
@@ -3215,19 +3216,52 @@ public class CoreEngine
 
     void ChronoShadowSlayerClass()
     {
-        if (Stacks("Rounds Empty", 1, true))
-            return;
+        if (Bot.Self.GetAura("Rounds Empty")?.Value >= 1)
+        {
+            if (Cast(1))
+            {
+                Bot.Wait.ForTrue(() => !Bot.Self.HasActiveAura("Rounds Empty"), 20);
+                Bot.Sleep(100);
+                return;
+            }
+        }
 
         // Skill cast priority sequence
-        int[] skills = new[] { 2, 3, 2, 3, 2, 3, 4 };
-
-        foreach (int skill in skills)
+        if (Bot.Self.GetAura("Rounds Empty")?.Value == 0)
         {
-            if (!Stacks("Rounds Empty", 1, true))
-                if (Cast(skill))
+            if (Bot.Player.Mana >= 5)
+            {
+                if (Cast(2))
+                {
+                    Bot.Sleep(100);
                     return;
-                else if (Cast(1)) // fallback to skill 1 if the main skill fails
-                    return;
+                }
+            }
+        }
+
+        if (Bot.Self.GetAura("Rounds Empty")?.Value == 0)
+        {
+            if (Bot.Player.Mana >= 5)
+            {
+                if (Bot.Self.GetAura("Temporal Rift")?.Value <= 4)
+                {
+                    if (Cast(3))
+                    {
+                        Bot.Sleep(100);
+                        return;
+                    }
+                }
+            }
+        }
+
+        if (Bot.Self.GetAura("Temporal Rift")?.Value >= 4)
+        {
+            if (Cast(4))
+            {
+                Bot.Wait.ForTrue(() => Bot.Self.GetAura("Temporal Rift")?.Value == 0, 20);
+                Bot.Sleep(100);
+                return;
+            }
         }
     }
 
@@ -3612,13 +3646,15 @@ public class CoreEngine
     }
 
     public bool Cast(int index) =>
-    index >= 1 && index <= 4 && Bot?.Skills != null && Bot.Skills.CanUseSkill(index)
-        ? TryUseSkill(index)
-        : false;
+    index >= 1 && index <= 4 && Bot?.Skills != null && Bot.Skills.CanUseSkill(index) && TryUseSkill(index);
 
     private bool TryUseSkill(int index)
     {
-        try { Bot.Skills.UseSkill(index); return true; }
+        try
+        {
+            Bot.Skills.UseSkill(index);
+            return true;
+        }
         catch { return false; }
     }
 
