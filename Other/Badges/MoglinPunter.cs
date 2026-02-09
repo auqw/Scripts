@@ -29,7 +29,7 @@ public class MoglinPunter
         Core.SetOptions(false);
     }
 
-    private double RequiredPuntScore = 13; // Default; can be changed per year or event
+    // private double RequiredPuntScore = 13; // Default; can be changed per year or event
 
     public void Badge()
     {
