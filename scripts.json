@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 424777,
-    "sha256": "5ce30a2d50f7483b7d4190430ef3c496c046f13af00511eaebbd693be1b138b8",
+    "size": 424778,
+    "sha256": "9b8c882ad2ae5d980327ee954f515ce65f94239f3805fc98feda1dbfadadcf80",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -14011,8 +14011,8 @@
       "twillypunt"
     ],
     "path": "Other/Badges/MoglinPunter.cs",
-    "size": 3642,
-    "sha256": "9e1d02d73fd2678beb0205643bf32acdb72da8c91ba395b1fbca6992a5c5bd89",
+    "size": 3726,
+    "sha256": "13de0d50e86e1d8adbb2d25510923bac5b1895232bd9703e7495c35917f2d62b",
     "fileName": "MoglinPunter.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/MoglinPunter.cs"
   },
