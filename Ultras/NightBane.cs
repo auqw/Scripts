@@ -244,7 +244,7 @@ public class NightBane
         C.AddDrop("Nightbane's ??? Essence", "Insatiable Hunger", "Chest Plate", "Starlit Journal Page 3 Scraps");
 
         Core.Join(map);
-        Ultra.WaitForArmy(Players, "NightBane.sync");
+        Ultra.WaitForArmy(Players - 1, "NightBane.sync");
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
