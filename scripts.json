@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 424679,
-    "sha256": "eff9a56b8349b511757bc6fe00385af381c93ac5a73d460e1a26e1e5bea7fdc4",
+    "size": 424777,
+    "sha256": "5ce30a2d50f7483b7d4190430ef3c496c046f13af00511eaebbd693be1b138b8",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -783,8 +783,8 @@
       "voidnightbane"
     ],
     "path": "Ultras/NightBane.cs",
-    "size": 13332,
-    "sha256": "b323f63e11fdc6ba19b3f69720af15d250724ad19403bd5c4fe4bea1d1c55415",
+    "size": 13336,
+    "sha256": "59fa9839afac030f7bf29a2f9960d7c59003e6d967a822d3a2df78672d835a17",
     "fileName": "NightBane.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/NightBane.cs"
   },
@@ -1096,8 +1096,8 @@
       "luxuria"
     ],
     "path": "Legion/HeadOfTheLegionBeast.cs",
-    "size": 12656,
-    "sha256": "039ada99759c57fb51f1a8840ee1f58a5bc06c4a4f39250cde83f6275ce01598",
+    "size": 12279,
+    "sha256": "34dcbc372d67c0d63cdf0fa40ae053590a7ae0c7c1961d456e4910d9d086e2e2",
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
   },
@@ -13817,6 +13817,18 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/DerpMoosefishBadge.cs"
   },
   {
+    "name": "MoglinPunter",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Other/Badges/ZorbakPunter.cs",
+    "size": 3704,
+    "sha256": "17cbf25d8ea053d1f99593d2cb8796a44db7ee7f1e3e465c3ed6d016863370e9",
+    "fileName": "ZorbakPunter.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/ZorbakPunter.cs"
+  },
+  {
     "name": "HordeZombieSLAYER",
     "description": "null",
     "tags": [
@@ -13993,14 +14005,14 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/RavenlossWarAndChampion.cs"
   },
   {
-    "name": "MoglinPunter",
+    "name": "TwillyPunt",
     "description": "null",
     "tags": [
-      "null"
+      "twillypunt"
     ],
     "path": "Other/Badges/MoglinPunter.cs",
-    "size": 3706,
-    "sha256": "52b1e2f65472fcc30cc3a93ae25b0bb6a552549cf7398c27704b8dca8a4b1fc1",
+    "size": 3779,
+    "sha256": "73c1771e37b0dc4491076331d931f0ad9f51804639a61cc1942221fdd8467b16",
     "fileName": "MoglinPunter.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/MoglinPunter.cs"
   },
