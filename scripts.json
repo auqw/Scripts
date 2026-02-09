@@ -783,8 +783,8 @@
       "voidnightbane"
     ],
     "path": "Ultras/NightBane.cs",
-    "size": 13332,
-    "sha256": "b323f63e11fdc6ba19b3f69720af15d250724ad19403bd5c4fe4bea1d1c55415",
+    "size": 13336,
+    "sha256": "59fa9839afac030f7bf29a2f9960d7c59003e6d967a822d3a2df78672d835a17",
     "fileName": "NightBane.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/NightBane.cs"
   },
@@ -1096,8 +1096,8 @@
       "luxuria"
     ],
     "path": "Legion/HeadOfTheLegionBeast.cs",
-    "size": 12656,
-    "sha256": "039ada99759c57fb51f1a8840ee1f58a5bc06c4a4f39250cde83f6275ce01598",
+    "size": 12279,
+    "sha256": "34dcbc372d67c0d63cdf0fa40ae053590a7ae0c7c1961d456e4910d9d086e2e2",
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
   },
