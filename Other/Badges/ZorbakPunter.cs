@@ -1,13 +1,13 @@
 /*
-name: TwillyPunt
+name: MoglinPunter
 description: null
-tags: TwillyPunt
+tags: null
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 using Skua.Core.Interfaces;
 
-public class MoglinPunt
+public class ZorbakPunt
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
@@ -29,54 +29,50 @@ public class MoglinPunt
         Core.SetOptions(false);
     }
 
-    // 100 for /punt
-    // 13 for /zorbakpunt
-    private double RequiredPuntScore = 100; // Default; can be changed per year or event
+    private double RequiredPuntScore = 13; // Default; can be changed per year or event
 
     public void Badge()
     {
         // Bot.Options.LagKiller = false;
-        if (Core.HasWebBadge(badge) || !Core.isSeasonalMapActive("punt"))
+        if (Core.HasWebBadge(badge) || !Core.isSeasonalMapActive("zorbakpunt"))
         {
             Core.Logger($"Already have the {badge} badge, or the map is not available.");
             return;
         }
-
-        Core.OneTimeMessage(
-            "Minigame Explanation",
-            "This minigame works off of a \"value\" system for ponts, so 9999 is 99, for the quest so youll need to get a value of 10000 points which may take a while.",
-            forcedMessageBox: true
-        );
+        // Core.OneTimeMessage(
+        //     "Minigame Explanation",
+        //     "This minigame works off of a \"value\" system for ponts, so 9999 is 99, for the quest so youll need to get a value of 10000 points which may take a while.",
+        //     forcedMessageBox: true
+        // );
 
         int Punt = 0;
 
         Core.Logger($"Doing quest for {badge} badge, Purely Rng based, good luck");
         // Always private
-        Core.Join("punt-100000");
-        Core.EnsureAccept(8532);
-        Bot.Events.ExtensionPacketReceived += puntingPacketReader;
+        // Core.Join("zorbakpunt-100000");
+        // Bot.Events.ExtensionPacketReceived += puntingPacketReader;
         while (!Bot.ShouldExit && !Core.HasWebBadge(badge))
         {
-            Datagood = false;
-            Core.Sleep();
-            Core.SendPackets("%xt%zm%ia%1%rval%btnPuntting%%");
-            // Core.GetMapItem(7184, 1, "zorbakpunt-100000");
-            // Core.ChainComplete(7429);
-            Bot.Wait.ForCellChange("Punt");
-            Bot.Sleep(1500);
-            Bot.Wait.ForTrue(() => Datagood, 20);
-            if (Finished || Bot.TempInv.Contains(68214))
-            {
-                Bot.Wait.ForTrue(() => Bot.TempInv.Contains(68214), 20);
-                Bot.Wait.ForPickup(68214);
+            // Datagood = false;
+            // Core.Sleep();
+            // Core.SendPackets("%xt%zm%ia%1%rval%btnPuntting%%");
+            Core.GetMapItem(7184, 1, "zorbakpunt-100000");
+            Core.ChainComplete(7429);
+            // Bot.Wait.ForCellChange("Punt");
+            // Bot.Wait.ForTrue(() => Datagood, 5);
 
-                Core.ChainComplete(8532);
-                Core.Logger($"Punts to get the badge: {Punt}");
-                break;
-            }
-            Core.Jump("Enter", "Spawn");
+            // if (Finished || Core.CheckInventory(53911))
+            // {
+            //     Bot.Wait.ForDrop(53911);
+            //     Bot.Wait.ForPickup(53911);
+
+            //     Core.ChainComplete(7429);
+            //     Core.Logger($"Punts to get the badge: {Punt}");
+            //     break;
+            // }
+            // Core.Jump("Enter", "Spawn");
         }
-        Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
+        // Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
 
 
         void puntingPacketReader(dynamic packet)
@@ -101,7 +97,7 @@ public class MoglinPunt
 
                     Core.Logger(
                         $"Punt [#{Punt++}] | Score [{score:F2}], "
-                        + $"Win: [{(win ? "Yes" : "No")}]"
+                        + $"Win? ({(win ? "✅" : "❌")})"
                     );
 
                     if (win)
@@ -114,5 +110,5 @@ public class MoglinPunt
         }
     }
 
-    private string badge = "Moglin Punter";
+    private string badge = "Zorbak Punter";
 }
