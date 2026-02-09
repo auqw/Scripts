@@ -4954,7 +4954,7 @@ public class CoreBots
             FarmingLogger($"💎 {item}", quant);
 
         if ( !isTemp)
-            AddDrop(item);
+            AddDrop(item!);
 
         // Find target monster(s) alive
         List<Monster> targets = Bot.Monsters.MapMonsters
