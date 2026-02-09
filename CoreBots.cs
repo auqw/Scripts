@@ -4953,7 +4953,7 @@ public class CoreBots
         if (log && item != null)
             FarmingLogger($"💎 {item}", quant);
 
-        if (item != null && !isTemp)
+        if ( !isTemp)
             AddDrop(item);
 
         // Find target monster(s) alive
@@ -8340,6 +8340,11 @@ public class CoreBots
 
         switch (Bot.Map.Name)
         {
+
+            case "thevoid":
+                blackListedCells.UnionWith(new[] { "r4" });
+                break;
+
             case "hydra":
                 blackListedCells.UnionWith(new[] { "Boss" });
                 break;
