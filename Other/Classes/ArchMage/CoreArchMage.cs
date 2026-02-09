@@ -652,7 +652,11 @@ public class CoreArchMage
                 case "Void Essentia":
                     NSOD.VoidAuras(75);
                     Core.EquipClass(ClassType.Solo);
-                    Core.HuntMonster("thevoid", "Ninja", "Void Energy", 25, isTemp: false);
+                    if (!Core.CheckInventory("Void Essence", 25))
+                    {
+                        Core.Logger("This has been changed you need 25x `Void Essence` from \"Flibbitiestgibbet\"");
+                        return;
+                    }
                     // Purchase required items.
                     Adv.BuyItem("thevoid", 1406, item);
                     break;
