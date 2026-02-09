@@ -14011,8 +14011,8 @@
       "twillypunt"
     ],
     "path": "Other/Badges/MoglinPunter.cs",
-    "size": 3779,
-    "sha256": "73c1771e37b0dc4491076331d931f0ad9f51804639a61cc1942221fdd8467b16",
+    "size": 3642,
+    "sha256": "9e1d02d73fd2678beb0205643bf32acdb72da8c91ba395b1fbca6992a5c5bd89",
     "fileName": "MoglinPunter.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/MoglinPunter.cs"
   },
@@ -28162,8 +28162,8 @@
       "null"
     ],
     "path": "Other/Classes/ArchMage/CoreArchMage.cs",
-    "size": 28687,
-    "sha256": "1a30555fa9511a458aa36c5c0592f37677b7ce762809057f8cc567ef1e3162ec",
+    "size": 28854,
+    "sha256": "3bd61c1c1cc15934d1ae37e019ca7758d100cefa29b90f17db083913c50d6ef0",
     "fileName": "CoreArchMage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ArchMage/CoreArchMage.cs"
   },
