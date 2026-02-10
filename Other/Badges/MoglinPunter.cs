@@ -17,8 +17,8 @@ public class MoglinPunt
         set => _Farm = value;
     }
     private static CoreFarms _Farm;
-    bool Datagood = false;
-    bool Finished = false;
+    // bool Datagood = false;
+    // bool Finished = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -31,7 +31,7 @@ public class MoglinPunt
 
     // 100 for /punt
     // 13 for /zorbakpunt
-    private double RequiredPuntScore = 100; // Default; can be changed per year or event
+    // private double RequiredPuntScore = 100; // Default; can be changed per year or event
 
     public void Badge()
     {

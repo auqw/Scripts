@@ -17,8 +17,8 @@ public class ZorbakPunt
         set => _Farm = value;
     }
     private static CoreFarms _Farm;
-    bool Datagood = false;
-    bool Finished = false;
+    // bool Datagood = false;
+    // bool Finished = false;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -29,7 +29,7 @@ public class ZorbakPunt
         Core.SetOptions(false);
     }
 
-    private double RequiredPuntScore = 13; // Default; can be changed per year or event
+    // private double RequiredPuntScore = 13; // Default; can be changed per year or event
 
     public void Badge()
     {
@@ -45,7 +45,7 @@ public class ZorbakPunt
         //     forcedMessageBox: true
         // );
 
-        int Punt = 0;
+        // int Punt = 0;
 
         Core.Logger($"Doing quest for {badge} badge, Purely Rng based, good luck");
         // Always private
@@ -75,39 +75,39 @@ public class ZorbakPunt
         // Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
 
 
-        void puntingPacketReader(dynamic packet)
-        {
-            const double EPSILON = 0.0001; // Tolerance for floating-point comparisons
+        // void puntingPacketReader(dynamic packet)
+        // {
+        //     const double EPSILON = 0.0001; // Tolerance for floating-point comparisons
 
-            string type = packet["params"].type;
-            dynamic data = packet["params"].dataObj;
-            if (type is not null and "json")
-            {
-                string cmd = data.cmd.ToString();
-                if (cmd == "ia"
-                    && data.oName.ToString() == "btnPuntting"
-                    && data.unm.ToString() == Core.Username())
-                {
-                    Datagood = true;
+        //     string type = packet["params"].type;
+        //     dynamic data = packet["params"].dataObj;
+        //     if (type is not null and "json")
+        //     {
+        //         string cmd = data.cmd.ToString();
+        //         if (cmd == "ia"
+        //             && data.oName.ToString() == "btnPuntting"
+        //             && data.unm.ToString() == Core.Username())
+        //         {
+        //             Datagood = true;
 
-                    // Score comes as integer representing hundredths (e.g., 3489 = 34.89)
-                    double score = (double)data.val / 100.0;
+        //             // Score comes as integer representing hundredths (e.g., 3489 = 34.89)
+        //             double score = (double)data.val / 100.0;
 
-                    bool win = Math.Abs(score - RequiredPuntScore) < EPSILON; // Compare to configurable score
+        //             bool win = Math.Abs(score - RequiredPuntScore) < EPSILON; // Compare to configurable score
 
-                    Core.Logger(
-                        $"Punt [#{Punt++}] | Score [{score:F2}], "
-                        + $"Win? ({(win ? "✅" : "❌")})"
-                    );
+        //             Core.Logger(
+        //                 $"Punt [#{Punt++}] | Score [{score:F2}], "
+        //                 + $"Win? ({(win ? "✅" : "❌")})"
+        //             );
 
-                    if (win)
-                    {
-                        Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
-                        Finished = true;
-                    }
-                }
-            }
-        }
+        //             if (win)
+        //             {
+        //                 Bot.Events.ExtensionPacketReceived -= puntingPacketReader;
+        //                 Finished = true;
+        //             }
+        //         }
+        //     }
+        // }
     }
 
     private string badge = "Zorbak Punter";
