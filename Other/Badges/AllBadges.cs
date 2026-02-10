@@ -39,6 +39,7 @@ tags: badge, complete, all
 //cs_include Scripts/Other/Badges/HordeZombieSLAYER.cs
 //cs_include Scripts/Other/Badges/LordOfTheWeddingRing.cs
 //cs_include Scripts/Other/Badges/MoglinPunter.cs
+//cs_include Scripts/Other/Badges/ZorbakPunter.cs
 //cs_include Scripts/Other/Badges/MummySlayerAndCruxShadowsDefender.cs
 //cs_include Scripts/Other/Badges/RavenlossWarAndChampion.cs
 //cs_include Scripts/Other/Badges/ShadowVaultChampion.cs
@@ -94,12 +95,20 @@ public class AllBadges
         set => _YMBB = value;
     }
     private static YouMadBroBadge _YMBB;
-    private static MoglinPunter MPB
+    private static MoglinPunt MPB
     {
-        get => _MPB ??= new MoglinPunter();
+        get => _MPB ??= new MoglinPunt();
         set => _MPB = value;
     }
-    private static MoglinPunter _MPB;
+    private static MoglinPunt _MPB;
+
+    private static ZorbakPunt ZPB
+    {
+        get => _ZPB ??= new ZorbakPunt();
+        set => _ZPB = value;
+    }
+    private static ZorbakPunt _ZPB;
+
     private static CtrlAltDelMemberBadge CAD
     {
         get => _CAD ??= new CtrlAltDelMemberBadge();
@@ -271,6 +280,7 @@ public class AllBadges
         CRB.Badge();
         SPB.Badge();
         MPB.Badge();
+        ZPB.Badge();
         CAD.Badge();
         BS.Badge();
         BB.Badge();
