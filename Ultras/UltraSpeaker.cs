@@ -72,6 +72,13 @@ public class UltraSpeaker
 
     public void ScriptMain(IScriptInterface bot)
     {
+        if (
+            Bot.Config != null
+            && Bot.Config.Options.Contains(C.SkipOptions)
+            && !Bot.Config.Get<bool>(C.SkipOptions)
+        )
+            Bot.Config.Configure();
+
         C.Logger("This script uses the `corner spam taunt method.. and works ^_^");
         className = Bot.Player.CurrentClass?.Name?.ToLower();
         Core.Boot();
@@ -93,7 +100,7 @@ public class UltraSpeaker
     {
         if (!Bot.Quests.IsUnlocked(9173))
             Bot.Log("Ultra Quest isn't unlocked, we'll fakeunlock it so you can atleast get the quest drop");
-        
+
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
