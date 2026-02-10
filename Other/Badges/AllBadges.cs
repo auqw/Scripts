@@ -96,9 +96,7 @@ public class AllBadges
     }
     private static YouMadBroBadge _YMBB;
     private static MoglinPunt MPB
-    private static MoglinPunt MPB
     {
-        get => _MPB ??= new MoglinPunt();
         get => _MPB ??= new MoglinPunt();
         set => _MPB = value;
     }
