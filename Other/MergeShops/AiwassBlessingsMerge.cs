@@ -167,58 +167,8 @@ public class AiwassBlessingsMerge
                 case "Farblight Fur":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster(
-                            "sanctuaryaiwass",
-                            "Anima Animus Aiwass",
-                            "Adamas Tenebris Drow",
-                            1,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "sanctuaryaiwass",
-                            "Anima Animus Aiwass",
-                            "Adamas Tenebris Hair",
-                            1,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "sanctuaryaiwass",
-                            "Anima Animus Aiwass",
-                            "Adamas Tenebris Locks",
-                            1,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "sanctuaryaiwass",
-                            "Anima Animus Aiwass",
-                            "Enchanted Tenebris Drow",
-                            1,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "sanctuaryaiwass",
-                            "Anima Animus Aiwass",
-                            "Enchanted Tenebris Hair",
-                            1,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "sanctuaryaiwass",
-                            "Anima Animus Aiwass",
-                            "Enchanted Tenebris Locks",
-                            1,
-                            false
-                        );
-                        Core.HuntMonster(
-                            "sanctuaryaiwass",
-                            "Anima Animus Aiwass",
-                            "Farblight Fur",
-                            1,
-                            false
-                        );
-                    }
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("sanctuaryaiwass", "Anima Animus Aiwass", req.Name, req.Quantity, req.Temp);
                     break;
                 #endregion
 
