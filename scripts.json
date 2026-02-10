@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 424278,
-    "sha256": "328fb4bd6bb6d624719ef25096207b521ae3e4f6a218f9ec07c68b1cf8b89acf",
+    "size": 424302,
+    "sha256": "1f456b1043d499ba156383982a1af3a383e2223b498a5ea78b464cb43487793b",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -13644,8 +13644,8 @@
       "all"
     ],
     "path": "Other/Badges/AllBadges.cs",
-    "size": 9537,
-    "sha256": "e6e888ab1dd48bf2122a72614b75be25ff96fb2fd749ec7e58b6a8fe061c3336",
+    "size": 9461,
+    "sha256": "d6aeb71a98058c0c30c14d2b7c86977d6a0415e51d7704f6073ba6adde2ea1cf",
     "fileName": "AllBadges.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/AllBadges.cs"
   },
