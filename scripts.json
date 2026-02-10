@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 424778,
-    "sha256": "9b8c882ad2ae5d980327ee954f515ce65f94239f3805fc98feda1dbfadadcf80",
+    "size": 424278,
+    "sha256": "328fb4bd6bb6d624719ef25096207b521ae3e4f6a218f9ec07c68b1cf8b89acf",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -13644,8 +13644,8 @@
       "all"
     ],
     "path": "Other/Badges/AllBadges.cs",
-    "size": 9235,
-    "sha256": "fc79c98b70a8e0018b7e7eeafb4e82209bfe0179d7afb816f80c591631bc7d9a",
+    "size": 9537,
+    "sha256": "e6e888ab1dd48bf2122a72614b75be25ff96fb2fd749ec7e58b6a8fe061c3336",
     "fileName": "AllBadges.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/AllBadges.cs"
   },
@@ -16608,8 +16608,8 @@
       "enchanted"
     ],
     "path": "Other/MergeShops/AiwassBlessingsMerge.cs",
-    "size": 12290,
-    "sha256": "3ba0592898e3e6b4fc9437feb1577f514bd2a6f03b16232c8c8e719f7ee9cae7",
+    "size": 10325,
+    "sha256": "c8b016d9aecd707bdac414afaafa355e679fa1efc1b58b04f595d21570e79b04",
     "fileName": "AiwassBlessingsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/AiwassBlessingsMerge.cs"
   },
