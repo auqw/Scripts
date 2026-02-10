@@ -321,9 +321,8 @@ public class CoreBots
         Bot.Lite.DisableSoundFx = true;
 
         // Drop Options
-        if (Bot.Drops.Enabled)
-            Bot.Drops.Start();
         Bot.Drops.RejectElse = changeTo;
+        Bot.Drops.Start();
 
         CollectData(changeTo);
 
@@ -371,7 +370,6 @@ public class CoreBots
                         $"%xt%zm%cmd%1%tfer%{Username()}%whitemap-{PrivateRoomNumber}%"
                     );
             }
-
             // Open Bank on startup ensuring current window is `Bank`, then load the bank information.
             if (Bot.Flash.GetGameObject("ui.mcPopup.currentLabel") != "\"Bank\"")
                 Bot.Bank.Open();
@@ -582,8 +580,6 @@ public class CoreBots
 
         if (!changeTo && _scriptStopwatch != null)
         {
-            if (Bot.Drops.Enabled)
-                Bot.Drops.Stop();
             Bot.Drops.Clear();
             _scriptStopwatch.Stop();
             Logger($"Script ran for {_scriptStopwatch.Elapsed:hh\\:mm\\:ss}");
