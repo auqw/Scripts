@@ -94,12 +94,12 @@ public class AllBadges
         set => _YMBB = value;
     }
     private static YouMadBroBadge _YMBB;
-    private static MoglinPunter MPB
+    private static MoglinPunt MPB
     {
-        get => _MPB ??= new MoglinPunter();
+        get => _MPB ??= new MoglinPunt();
         set => _MPB = value;
     }
-    private static MoglinPunter _MPB;
+    private static MoglinPunt _MPB;
     private static CtrlAltDelMemberBadge CAD
     {
         get => _CAD ??= new CtrlAltDelMemberBadge();
