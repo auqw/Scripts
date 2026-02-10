@@ -231,7 +231,6 @@ public class CoreBots
             }
 
             Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10);
-            Bot.Drops.Start();
         }
 
         if (!Bot.Player.LoggedIn)
@@ -240,7 +239,6 @@ public class CoreBots
         #region Social Privacy Options
 
         bool isStarting = changeTo;
-
         CBOBool("IncognitoMode", out bool IncognitoModeOn);
         if (!IncognitoModeOn)
         {
@@ -299,34 +297,34 @@ public class CoreBots
         Bot.Options.RejectAllDrops = false;
         Bot.Options.PrivateRooms = false;
         Bot.Options.AttackWithoutTarget = false;
-        Bot.Lite.ReacceptQuest = false;
-        Bot.Lite.DisableRedWarning = true;
+        Bot.Options.QuestAcceptAndCompleteTries = AcceptandCompleteTries;
         Bot.Options.AutoRelogin = true;
-        Bot.Lite.CharacterSelectScreen = false;
         Bot.Options.SafeTimings = changeTo;
         Bot.Options.RestPackets = changeTo && ShouldRest;
         Bot.Options.InfiniteRange = changeTo;
         Bot.Options.SkipCutscenes = changeTo;
-        Bot.Options.QuestAcceptAndCompleteTries = AcceptandCompleteTries;
-        Bot.Drops.RejectElse = changeTo;
+
+        // Lite Options
+        Bot.Lite.ReacceptQuest = false;
+        Bot.Lite.DisableRedWarning = true;
+        Bot.Lite.CharacterSelectScreen = false;
         Bot.Lite.UntargetDead = changeTo;
         Bot.Lite.UntargetSelf = changeTo;
-
-        //adding sommore
         Bot.Lite.SmoothBackground = true;
         Bot.Lite.ShowMonsterType = true;
         Bot.Lite.CustomDropsUI = true;
         Bot.Lite.AurasUI = true;
-        Bot.Lite.DisableRedWarning = true;
         Bot.Lite.QuantityWarnings = false;
         Bot.Lite.VisualSkillCooldowns = true;
         Bot.Lite.ChatUI = true;
         Bot.Lite.QuestLogTurnIns = true;
         Bot.Lite.DisableSoundFx = true;
-        Bot.Lite.DraggableDrops = false;
+
+        // Drop Options
+        Bot.Drops.Enabled = changeTo;
+        Bot.Drops.RejectElse = changeTo;
 
         CollectData(changeTo);
-
 
         #region Required things that must be done before starting the Script
 
@@ -580,9 +578,12 @@ public class CoreBots
                 });
             }
         }
+
         if (!changeTo && _scriptStopwatch != null)
         {
-            Bot.Drops.StopAsync();
+            Bot.Drops.Enabled = false;
+            Bot.Drops.Stop();
+            Bot.Drops.Clear();
             _scriptStopwatch.Stop();
             Logger($"Script ran for {_scriptStopwatch.Elapsed:hh\\:mm\\:ss}");
             _scriptStopwatch = null;
@@ -2735,18 +2736,9 @@ public class CoreBots
         if (items == null || items.Length == 0)
             return;
 
-        string[] filteredItems = items
-            .Where(item => !string.IsNullOrWhiteSpace(item))
-            .Select(item => item.Trim())
-            .Distinct()
-            .Where(item => !Bot.Drops.ToPickup.Contains(item))
-            .ToArray();
-
-        if (filteredItems.Length == 0)
-            return;
-
-        Unbank(filteredItems);
-        Bot.Drops.Add(filteredItems);
+        Unbank(items);
+        foreach (string item in items)
+            Bot.Drops.Add(item);
     }
 
 
@@ -2759,16 +2751,8 @@ public class CoreBots
         if (items == null || items.Length == 0)
             return;
 
-        int[] filteredItems = items
-            .Distinct()
-            .Where(id => !Bot.Drops.ToPickupIDs.Contains(id))
-            .ToArray();
-
-        if (filteredItems.Length == 0)
-            return;
-
-        Unbank(filteredItems);
-        Bot.Drops.Add(filteredItems);
+        Unbank(items);
+        Bot.Drops.Add(items);
     }
 
 
@@ -4953,7 +4937,7 @@ public class CoreBots
         if (log && item != null)
             FarmingLogger($"💎 {item}", quant);
 
-        if ( !isTemp)
+        if (!isTemp)
             AddDrop(item!);
 
         // Find target monster(s) alive
