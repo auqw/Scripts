@@ -321,7 +321,8 @@ public class CoreBots
         Bot.Lite.DisableSoundFx = true;
 
         // Drop Options
-        Bot.Drops.Enabled = changeTo;
+        if (Bot.Drops.Enabled)
+            Bot.Drops.Start();
         Bot.Drops.RejectElse = changeTo;
 
         CollectData(changeTo);
@@ -581,8 +582,8 @@ public class CoreBots
 
         if (!changeTo && _scriptStopwatch != null)
         {
-            Bot.Drops.Enabled = false;
-            Bot.Drops.Stop();
+            if (Bot.Drops.Enabled)
+                Bot.Drops.Stop();
             Bot.Drops.Clear();
             _scriptStopwatch.Stop();
             Logger($"Script ran for {_scriptStopwatch.Elapsed:hh\\:mm\\:ss}");
