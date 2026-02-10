@@ -13823,8 +13823,8 @@
       "null"
     ],
     "path": "Other/Badges/ZorbakPunter.cs",
-    "size": 3704,
-    "sha256": "17cbf25d8ea053d1f99593d2cb8796a44db7ee7f1e3e465c3ed6d016863370e9",
+    "size": 3800,
+    "sha256": "6642cee7b1be65aef3544ea07fd5ae0412dfe729cdf726450546e38bb44a9acf",
     "fileName": "ZorbakPunter.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/ZorbakPunter.cs"
   },
@@ -14011,8 +14011,8 @@
       "twillypunt"
     ],
     "path": "Other/Badges/MoglinPunter.cs",
-    "size": 3726,
-    "sha256": "13de0d50e86e1d8adbb2d25510923bac5b1895232bd9703e7495c35917f2d62b",
+    "size": 3735,
+    "sha256": "e0e8709e76c5b33adc4461a77bbaa7110d62f10579e120ac11a3c47ff26fbbe5",
     "fileName": "MoglinPunter.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/MoglinPunter.cs"
   },
