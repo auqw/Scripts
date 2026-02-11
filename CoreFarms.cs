@@ -1411,7 +1411,7 @@ public class CoreFarms
         string reagent1,
         string reagent2,
         AlchemyRunes rune = AlchemyRunes.Gebo,
-        int rank = 0,
+        int rank = 10,
         bool loop = true,
         string modifier = "Moose",
         AlchemyTraits trait = AlchemyTraits.APw,
@@ -1705,6 +1705,13 @@ public class CoreFarms
     {
         if (FactionRank("Alchemy") >= rank)
             return;
+
+        Core.Logger("Start by Selling all items named dragon scale (iirc there are 3...) sorta fucsk it all up, if u have the wrong one");
+        Bot.Bank.Items.Concat(Bot.Inventory.Items)
+        .Where(x => x.Name == "Dragon Scale" && x.ID != 11475)
+        .ToList()
+        .ForEach(item => Core.SellItem(item.ID, all: true));
+
         Bot.Events.ExtensionPacketReceived += AlchemyPacketCheck;
         if (!Bot.Reputation.FactionList.Exists(f => f.Name == "Alchemy"))
         {
@@ -1719,6 +1726,7 @@ public class CoreFarms
                     "Dragon Scale",
                     "Ice Vapor",
                     AlchemyRunes.Jera,
+                    rank,
                     loop: false,
                     trait: CoreFarms.AlchemyTraits.hOu
                 );
@@ -1799,7 +1807,7 @@ public class CoreFarms
                     lock (_alchemyLock)
                     {
                         _alchemyCraftStarted = true;
-                        if (Core.DL_Enabled == true)
+                        // if (Core.DL_Enabled == true)
                             Core.Logger("Alchemy craft started (confirmed by server)");
                     }
                     break;
@@ -1810,7 +1818,7 @@ public class CoreFarms
                     lock (_alchemyLock)
                     {
                         _alchemyCraftCompleted = true;
-                        if (Core.DL_Enabled == true)
+                        // if (Core.DL_Enabled == true)
                             Core.Logger("Alchemy craft completed (confirmed by server)");
                     }
                     break;
@@ -1820,7 +1828,7 @@ public class CoreFarms
                     {
                         _alchemyCraftStarted = false;
                         _alchemyCraftCompleted = false;
-                        if (Core.DL_Enabled == true)
+                        // if (Core.DL_Enabled == true)
                             Core.Logger($"Alchemy error: {data.error ?? "Unknown error"}");
                     }
                     break;
