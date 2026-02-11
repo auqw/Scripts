@@ -2368,6 +2368,98 @@ public class CoreBots
         }
     }
 
+
+    /// <summary>
+    /// Sells an item by ID till you have the desired quantity
+    /// </summary>
+    /// <param name="itemID">ID of the item</param>
+    /// <param name="quant">Desired quantity</param>
+    /// <param name="all">Set to true if you wish to sell all the items</param>
+    public void SellItem(int itemID, int quant = 1, bool all = false)
+    {
+        InventoryItem? item = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(x => x != null && x.ID == itemID);
+
+        if (item == null)
+        {
+            Logger($"Item with ID {itemID} not found.");
+            return;
+        }
+
+        string itemName = item.Name;
+
+        if (
+            !(quant > 0 ? CheckInventory(itemName, quant) : CheckInventory(itemName))
+        )
+            return;
+
+        InventoryItem? Item = null;
+        for (int i = 0; i < 5; i++)
+        {
+            Item = Bot
+                .Inventory.Items.Concat(Bot.Bank.Items)
+                .FirstOrDefault(x => x != null && x.ID == itemID);
+            if (Item != null)
+                break;
+            Logger($"Attempt {i + 1}: Item ID {itemID} not found. Retrying...");
+            Sleep(1000);
+        }
+
+        if (Item == null)
+        {
+            Logger($"Item ID {itemID} not found after 5 attempts.");
+            return;
+        }
+
+        if (Bot.Bank.Contains(itemName) && !Bot.Inventory.Contains(itemName))
+            Unbank(itemName);
+
+        int retryCount = 0;
+        int sell_count = all ? Bot.Inventory.GetQuantity(itemName) : quant;
+        int QuantAfterSale = Bot.Inventory.GetQuantity(itemName) - sell_count;
+
+    Retry:
+        JumpWait();
+        Bot.Wait.ForActionCooldown(GameActions.SellItem);
+        Bot.Send.Packet(
+            $"%xt%zm%sellItem%{Bot.Map.RoomID}%{itemID}%{sell_count}%{Item.CharItemID}%"
+        );
+        Bot.Wait.ForItemSell();
+        Sleep();
+
+        if (
+            !all
+            && (
+                Bot.Inventory.Contains(itemName)
+                || Bot.Inventory.GetQuantity(itemName) == QuantAfterSale
+            )
+        )
+        {
+            if (Bot.Inventory.GetQuantity(itemName) == QuantAfterSale)
+                Logger($"Sold x{sell_count} \"{itemName}\" (ID: {itemID})");
+            return;
+        }
+        else if (all && !CheckInventory(itemName))
+        {
+            Logger($"Sold all of \"{itemName}\" (ID: {itemID})");
+            return;
+        }
+        else
+        {
+            if (retryCount < 5)
+            {
+                retryCount++;
+                Logger($"Item ID {itemID} failed to sell, retrying [Try x{retryCount}]");
+                goto Retry;
+            }
+            else
+            {
+                Logger($"Item ID {itemID} failed to sell, retrying x{retryCount} times did not succeed");
+                retryCount = 0;
+                return;
+            }
+        }
+    }
     /// <summary>
     /// Retrieves a list of shop items from the specified shop.
     /// </summary>
