@@ -6826,7 +6826,7 @@ public class CoreBots
         );
     }
 
-    private bool DL_Enabled { get; set; } = false;
+    public bool DL_Enabled { get; set; } = false;
     public string? DL_CallerFilter { get; set; } = null;
     public string? DL_MarkerFilter { get; set; } = null;
 
