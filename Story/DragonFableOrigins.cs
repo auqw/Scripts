@@ -83,6 +83,7 @@ public class DragonFableOrigins
                 Bot.Sleep(500);
             }
             Core.EnsureComplete(6299);
+            Core.JumpWait();
         }
 
         //Quest not required!
