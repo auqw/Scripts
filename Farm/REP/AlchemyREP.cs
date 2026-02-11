@@ -14,12 +14,13 @@ public class AlchemyREP
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public string OptionsStorage = "AlchemyREP";
+    public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         new Option<bool>(
             "goldMethod",
             "use Gold?",
-            "Using gold (cost 7.000.000 without boosts rank 1 to 10)",
+            "Using gold to buy material, we'll farm them otherwise. (cost 7.000.000 without boosts rank 1 to 10)",
             false
         ),
         CoreBots.Instance.SkipOptions,
@@ -48,6 +49,7 @@ public class AlchemyREP
 
     public void ScriptMain(IScriptInterface bot)
     {
+        Core.BankingBlackList.Add("Dragon Runestone");
         Core.SetOptions();
 
         Farm.AlchemyREP(10, Bot.Config!.Get<bool>("goldMethod"));

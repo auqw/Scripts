@@ -1396,16 +1396,15 @@ public class CoreFarms
     }
 
     /// <summary>
-    /// Uses the specified parameters to make an Alchemy misture
+    /// Uses the specified parameters to make an Alchemy mixture
     /// </summary>
     /// <param name="reagent1">The first reagent.</param>
     /// <param name="reagent2">The second reagent</param>
     /// <param name="rune">The rune to be used (AlchemyRunes.Gebo by default).</param>
-    /// <param name="rank">The minimum rank to make the misture, use 0 for any rank.</param>
+    /// <param name="rank">The minimum rank to make the mixture, use 0 for any rank.</param>
     /// <param name="loop">Whether loop till you run out of reagents</param>
-    /// <param name="modifier">Some mistures have specific packet modifiers, default is Moose but you can find Man, mRe and others.</param>
+    /// <param name="modifier">Some mixtures have specific packet modifiers, default is Moose but you can find Man, mRe and others.</param>
     /// <param name="trait"></param>
-    /// <param name="YMB"></param>
     /// <param name="item"></param>
     /// <param name="quant"></param>
     public void AlchemyPacket(
@@ -1426,7 +1425,6 @@ public class CoreFarms
         )
             AlchemyREP(rank);
 
-        // Core.Join("Alchemy");
         if (!Core.CheckInventory(reagent1) || !Bot.Inventory.TryGetItem(reagent1, out var reg1))
         {
             Core.Logger(
@@ -1436,6 +1434,7 @@ public class CoreFarms
             );
             return;
         }
+
         if (!Core.CheckInventory(reagent2) || !Bot.Inventory.TryGetItem(reagent2, out var reg2))
         {
             Core.Logger(
@@ -1456,43 +1455,92 @@ public class CoreFarms
         Core.Logger($"Rune: {rune}.");
         Core.Logger($"Modifier: {modifier}.");
         Core.Join("alchemy");
+
         int i = 1;
         if (loop)
         {
-            while (
-                !Bot.ShouldExit
-                && Core.CheckInventory(new[] { reagent1, reagent2, "Dragon Runestone" })
-            )
+            while (!Bot.ShouldExit && Core.CheckInventory(new[] { reagent1, reagent2, "Dragon Runestone" }))
             {
-                if (!Core.CheckInventory(new[] { reagent1, reagent2, "Dragon Runestone" }) || (item != null && Core.CheckInventory(item, quant)))
+                if (!Core.CheckInventory(new[] { reagent1, reagent2, "Dragon Runestone" })
+                    || (item != null && Core.CheckInventory(item, quant)))
                     break;
-                Packet();
+
+                if (!Packet())
+                {
+                    Core.Logger("Alchemy craft failed, stopping loop");
+                    break;
+                }
                 Core.Logger($"Completed alchemy x{i++}");
             }
         }
         else
             Packet();
 
-        void Packet()
+        bool Packet()
         {
-            /*
-                YMB Mode: only uses 1 Dragon Runestone
-                Non-YMB Mode: uses 1 of each reagent + 1 Dragon Runestone.
-                Both Methods Have Been Tested. in YMB Badge & Potions.
-                Potions Can be gotten from either but specific potions must use the non-YMB mode.
-            */
+            // Reset flags
+            lock (_alchemyLock)
+            {
+                _alchemyCraftStarted = false;
+                _alchemyCraftCompleted = false;
+            }
 
+            // Initiate Potion craft
             Core.SendPackets($"%xt%zm%crafting%1%getAlchWait%{reagentid1}%{reagentid2}%true%Ready to Mix%{reagent1}%{reagent2}%{rune}%{trait}%");
 
-            Core.Sleep(1500);
+            // Wait for SERVER to send alchOnStart (increased timeout for high ping)
+            if (!WaitForAlchemyFlag(() => _alchemyCraftStarted, 10000))
+            {
+                if (Core.DL_Enabled)
+                    Core.Logger("Failed to receive server craft start confirmation (10s timeout)");
+                return false;
+            }
 
-            // This was the Required client packet for alchemy
-            Core.SendPackets("{\"t\":\"xt\",\"b\":{\"r\":-1,\"o\":{\"bVerified\":true,\"cmd\":\"alchOnStart\"}}}", toClient: true);
+            if (Core.DL_Enabled)
+                Core.Logger("Server confirmed craft start, sending completion packet");
 
-            Core.Sleep(4000);
-
+            // Server confirmed start, now send completion
             Core.SendPackets($"%xt%zm%crafting%1%checkAlchComplete%{reagentid1}%{reagentid2}%true%Mix Complete%{reagent1}%{reagent2}%{rune}%{trait}%");
+
+            // Wait for server to confirm completion with dropItem (generous timeout)
+            if (!WaitForAlchemyFlag(() => _alchemyCraftCompleted, 10000))
+            {
+                if (Core.DL_Enabled)
+                    Core.Logger("Warning: Did not receive completion confirmation within 10s, continuing anyway");
+                Core.Sleep(1000);
+            }
+            else
+            {
+                if (Core.DL_Enabled)
+                    Core.Logger("Server confirmed craft completion");
+            }
+
+            Core.Sleep(500);
+            return true; // Always return true to handle edge cases gracefully
         }
+    }
+
+    /// <summary>
+    /// Waits for an alchemy flag to become true with timeout
+    /// </summary>
+    private bool WaitForAlchemyFlag(Func<bool> flagCheck, int timeoutMs)
+    {
+        int elapsed = 0;
+        int checkInterval = 100;
+
+        while (elapsed < timeoutMs && !Bot.ShouldExit)
+        {
+            lock (_alchemyLock)
+            {
+                if (flagCheck())
+                    return true;
+            }
+
+            Core.Sleep(checkInterval);
+            elapsed += checkInterval;
+        }
+
+        return false;
     }
 
     /// <summary>
@@ -1657,7 +1705,7 @@ public class CoreFarms
     {
         if (FactionRank("Alchemy") >= rank)
             return;
-
+        Bot.Events.ExtensionPacketReceived += AlchemyPacketCheck;
         if (!Bot.Reputation.FactionList.Exists(f => f.Name == "Alchemy"))
         {
             Core.Logger("Getting Pre-Ranking XP");
@@ -1729,7 +1777,57 @@ public class CoreFarms
             Core.Logger($"Iteration {i++} completed");
         }
         ToggleBoost(BoostType.Reputation, false);
+        Bot.Events.ExtensionPacketReceived -= AlchemyPacketCheck;
     }
+
+    // Add these class-level fields
+    private bool _alchemyCraftStarted = false;
+    private bool _alchemyCraftCompleted = false;
+    private readonly object _alchemyLock = new();
+    void AlchemyPacketCheck(dynamic packet)
+    {
+
+        string? type = packet["params"]?.type;
+        dynamic? data = packet["params"]?.dataObj;
+
+        if (type == "json" && data != null)
+        {
+            string cmd = data.cmd;
+            switch (cmd)
+            {
+                case "alchOnStart":
+                    lock (_alchemyLock)
+                    {
+                        _alchemyCraftStarted = true;
+                        if (Core.DL_Enabled == true)
+                            Core.Logger("Alchemy craft started (confirmed by server)");
+                    }
+                    break;
+
+                case "dropItem": // Completion comes with the item drop
+                case "alchComplete":
+                case "alchOnComplete":
+                    lock (_alchemyLock)
+                    {
+                        _alchemyCraftCompleted = true;
+                        if (Core.DL_Enabled == true)
+                            Core.Logger("Alchemy craft completed (confirmed by server)");
+                    }
+                    break;
+
+                case "alchError":
+                    lock (_alchemyLock)
+                    {
+                        _alchemyCraftStarted = false;
+                        _alchemyCraftCompleted = false;
+                        if (Core.DL_Enabled == true)
+                            Core.Logger($"Alchemy error: {data.error ?? "Unknown error"}");
+                    }
+                    break;
+            }
+        }
+    }
+
 
     public void ArcangroveREP(int rank = 10)
     {
