@@ -24,6 +24,7 @@ public class BloodGem
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
+        new Option<bool>("BloodyChaos", "Do Bloody Chaos", "Thiss will require either an army, or if you're retarded a public group.", false);
         new Option<HydraLevel>("HydraLevel", "Hydra Lvl to kill", "", HydraLevel.Head_85),
         CoreBots.Instance.SkipOptions,
     };
@@ -40,7 +41,10 @@ public class BloodGem
     void SetupHydras()
     {
         int HydraLevel = (int)Bot.Config!.Get<HydraLevel>("HydraLevel");
-        Nation.FarmBloodGem(100, HydraLevel);
+        if (Bot.Config!.Get<bool>("BloodyChaos"))
+            Nation.BloodyChaos(100, false, HydraLevel);
+        else
+            Nation.FarmBloodGem(100, HydraLevel);
     }
 
     private enum HydraLevel
