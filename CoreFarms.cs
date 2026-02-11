@@ -1792,7 +1792,7 @@ public class CoreFarms
 
         if (type == "json" && data != null)
         {
-            string cmd = data.cmd;
+            string cmd = data!.cmd;
             switch (cmd)
             {
                 case "alchOnStart":
