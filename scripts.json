@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 154450,
-    "sha256": "4dd78a6e51efcf396540a330d167bb507467b3a145b807a270a234619fdca105",
+    "size": 157669,
+    "sha256": "b7bbdfca3baaff1f32c3d9f65ebe1c0ba35a8f525f710798f9e543457f9beda7",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 424197,
-    "sha256": "ea6677fd9b2227ee998e67f9265168f3289d91119c8cdecbedfa455908811642",
+    "size": 424196,
+    "sha256": "09f75ffef3882a8c25f09bc373ad3aea0ad70587ba63220a26a89540bab9d9cb",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -11471,8 +11471,8 @@
       "farm"
     ],
     "path": "Farm/REP/AlchemyREP.cs",
-    "size": 1893,
-    "sha256": "3746b05f33452238e2eed8d5afae2d6e63d19b808b844e9e689900b3c94d35e4",
+    "size": 2035,
+    "sha256": "cd3f155e530161a5f6cf57c2c7f9a629d4542a77fab3ca87241c69235983a8f6",
     "fileName": "AlchemyREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/AlchemyREP.cs"
   },
