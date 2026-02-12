@@ -1411,7 +1411,7 @@ public class CoreFarms
         string reagent1,
         string reagent2,
         AlchemyRunes rune = AlchemyRunes.Gebo,
-        int rank = 10,
+        int rank = 0,
         bool loop = true,
         string modifier = "Moose",
         AlchemyTraits trait = AlchemyTraits.APw,
@@ -1716,24 +1716,24 @@ public class CoreFarms
         if (!Bot.Reputation.FactionList.Exists(f => f.Name == "Alchemy"))
         {
             Core.Logger("Getting Pre-Ranking XP");
+            // ice vapor, dragon scape, dragon runestone
             if (!Core.CheckInventory(new[] { 11478, 11475, 7132 }))
             {
-                DragonRunestone(2);
+                DragonRunestone(5);
                 Core.BuyItem("alchemy", 397, 11475, 2, 1232);
                 Core.BuyItem("alchemy", 397, 11478, 1, 1235);
-                Core.Join("alchemy");
-                AlchemyPacket(
-                    "Dragon Scale",
-                    "Ice Vapor",
-                    AlchemyRunes.Jera,
-                    rank,
-                    loop: false,
-                    trait: CoreFarms.AlchemyTraits.hOu
-                );
             }
+            Core.Join("alchemy");
+            AlchemyPacket(
+                "Dragon Scale",
+                "Ice Vapor",
+                AlchemyRunes.Jera,
+                loop: false,
+                trait: CoreFarms.AlchemyTraits.hOu
+            );
         }
-
-        Core.AddDrop("Dragon Scale", "Ice Vapor");
+        // ice vapor, dragon scape, dragon runestone
+        Core.AddDrop(11478, 11475, 7132);
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank} Alchemy");
 
@@ -1808,7 +1808,7 @@ public class CoreFarms
                     {
                         _alchemyCraftStarted = true;
                         // if (Core.DL_Enabled == true)
-                            Core.Logger("Alchemy craft started (confirmed by server)");
+                        Core.Logger("Alchemy craft started (confirmed by server)");
                     }
                     break;
 
@@ -1819,7 +1819,7 @@ public class CoreFarms
                     {
                         _alchemyCraftCompleted = true;
                         // if (Core.DL_Enabled == true)
-                            Core.Logger("Alchemy craft completed (confirmed by server)");
+                        Core.Logger("Alchemy craft completed (confirmed by server)");
                     }
                     break;
 
@@ -1829,7 +1829,7 @@ public class CoreFarms
                         _alchemyCraftStarted = false;
                         _alchemyCraftCompleted = false;
                         // if (Core.DL_Enabled == true)
-                            Core.Logger($"Alchemy error: {data.error ?? "Unknown error"}");
+                        Core.Logger($"Alchemy error: {data.error ?? "Unknown error"}");
                     }
                     break;
             }
