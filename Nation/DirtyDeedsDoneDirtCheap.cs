@@ -51,7 +51,6 @@ public class DirtyDeedsDoneDirtCheap
         );
 
 
-
         Core.SetOptions(false);
     }
 
