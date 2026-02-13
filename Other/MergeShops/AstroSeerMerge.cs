@@ -109,6 +109,28 @@ public class AstroSeerMerge
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
+
+                case "Lime":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
+                    {
+                        Core.EnsureAccept(10585);
+                        Core.EquipClass(ClassType.Solo);
+                        Core.HuntMonster("Ectocave", "Ektorax", "Regurgitated Key");
+                        Core.EquipClass(ClassType.Farm);
+                        Core.KillMonster("ectocave", "r1", "Left", "*", "Ecto Slime", 50);
+                        Core.EnsureComplete(10585);
+                    }
+                    Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
+                    break;
             }
         }
     }
