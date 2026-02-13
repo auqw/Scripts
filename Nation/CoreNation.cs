@@ -2202,23 +2202,11 @@ public class CoreNation
     /// </summary>
     /// <param name="quant">Target quantity of Unidentified 10</param>
     /// <param name="SRoE">Whether to buy from Swindle's Ripoff Emporium</param>
-    /// <param name="SRoEItem">Item to buy from SRoE, or "All" to buy all items</param>
-    public void DirtyDeedsDoneDirtCheap(int quant = 1000, bool SRoE = false, string? SRoEItem = null)
+    /// <param name="SRoEItems">Array of items to buy from SRoE, or ["All"] to buy all items</param>
+    public void DirtyDeedsDoneDirtCheap(int quant = 1000, bool SRoE = false, string[]? SRoEItems = null)
     {
         if (Core.CheckInventory("Unidentified 10", quant))
             return;
-
-        // Early SRoE validation
-        if (!SRoE || string.IsNullOrEmpty(SRoEItem))
-        {
-            if (SRoEItem == null)
-            {
-                SRoE = false;
-                Core.Logger("SRoE set to null, disabling");
-            }
-            else
-                Core.Logger("Swindle's Ripoff Emporium disabled");
-        }
 
         // Register all drops needed
         Core.AddDrop(
@@ -2241,17 +2229,18 @@ public class CoreNation
 
         Core.EquipClass(ClassType.Solo);
 
-        // Pre-cache SRoE shop items
-        List<ShopItem> shopItems = Core.GetShopItems("tercessuinotlim", 1951);
-        ShopItem? bloodGem = shopItems.Find(x => x?.Name == "Blood Gem of the Archfiend");
-        ShopItem? darkShard = shopItems.Find(x => x?.Name == "Dark Crystal Shard");
-        ShopItem? gemNulgath = shopItems.Find(x => x?.Name == "Gem of Nulgath");
-        ShopItem? taintedGem = shopItems.Find(x => x?.Name == "Tainted Gem");
-
-        ShopItem[] sroeItems = new[] { bloodGem, darkShard, gemNulgath, taintedGem }
-                                .Where(x => x != null)
-                                .Cast<ShopItem>()
-                                .ToArray();
+        // Pre-cache SRoE shop items if enabled
+        ShopItem[] sroeItems = Array.Empty<ShopItem>();
+        if (SRoE)
+        {
+            List<ShopItem> shopItems = Core.GetShopItems("tercessuinotlim", 1951);
+            sroeItems = new[] {
+            shopItems.Find(x => x?.Name == "Blood Gem of the Archfiend"),
+            shopItems.Find(x => x?.Name == "Dark Crystal Shard"),
+            shopItems.Find(x => x?.Name == "Gem of Nulgath"),
+            shopItems.Find(x => x?.Name == "Tainted Gem")
+        }.Where(x => x != null).Cast<ShopItem>().ToArray();
+        }
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Unidentified 10", quant))
         {
@@ -2267,20 +2256,22 @@ public class CoreNation
             int ui10Qty = Bot.Inventory.GetQuantity("Unidentified 10");
             int receiptQty = Bot.Inventory.GetQuantity("Receipt of Swindle");
 
-            // Skip SRoE logic if not ready
-            if (ui10Qty < 1000 || !SRoE)
+            if (!SRoE || SRoE && sroeItems.Length == 0 || sroeItems == null)
             {
-                if (ui10Qty < 1000)
-                    Core.FarmingLogger("Unidentified 10", quant);
+                // Only farm Unidentified 10
+                Core.FarmingLogger("Unidentified 10", quant);
                 continue;
             }
 
+            // SRoE buying logic
+            if (ui10Qty < 1000 || SRoEItems == null || SRoEItems.Length == 0)
+                continue;
+
             bool allMaxed = true;
 
-            // Determine which items to buy dynamically
-            ShopItem[] itemsToBuy = SRoEItem.Equals("All", StringComparison.OrdinalIgnoreCase)
+            ShopItem[] itemsToBuy = SRoEItems.Length == 1 && SRoEItems[0].Equals("All", StringComparison.OrdinalIgnoreCase)
                 ? sroeItems
-                : sroeItems.Where(x => x.Name == SRoEItem).ToArray();
+                : sroeItems.Where(x => SRoEItems.Contains(x.Name)).ToArray();
 
             foreach (ShopItem item in itemsToBuy)
             {
@@ -2307,7 +2298,7 @@ public class CoreNation
 
             if (allMaxed)
             {
-                Core.Logger("All SRoE items maxed. Disabling SRoE.");
+                Core.Logger("All selected SRoE items maxed. Disabling SRoE.");
                 SRoE = false;
             }
         }
