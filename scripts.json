@@ -4130,8 +4130,8 @@
       "null"
     ],
     "path": "Nation/DirtyDeedsDoneDirtCheap.cs",
-    "size": 621,
-    "sha256": "2bbf0ab9c6cf4d14aedbcbf5dfcd4d95745f516c92a34bac4311cfa28cd05ba4",
+    "size": 2460,
+    "sha256": "d8757ceb3ccd4b7ea40bf53b75e64961f30906c3bfa239a869d29e2fcbf155f8",
     "fileName": "DirtyDeedsDoneDirtCheap.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/DirtyDeedsDoneDirtCheap.cs"
   },
@@ -4154,8 +4154,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 124124,
-    "sha256": "c9432a6dd9124ad4ab356da264eff090ca5d6894e44ac7d9a740db78949c9d99",
+    "size": 126585,
+    "sha256": "4b450c451d329a3d82bc888b311d1f81de6c1bf303edbe472b4e85f0afb6bd1b",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
