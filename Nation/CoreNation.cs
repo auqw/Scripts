@@ -10,6 +10,7 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Models.Monsters;
 using Skua.Core.Models.Quests;
+using Skua.Core.Models.Shops;
 
 public class CoreNation
 {
@@ -2197,66 +2198,118 @@ public class CoreNation
     }
 
     /// <summary>
-    /// Does Swindles Dirt-y Deeds Done Dirt Cheap quest, only use if you have /TowerofDoom10 completed and a good solo class
+    /// Does Swindle's Dirt-y Deeds Done Dirt Cheap quest. Only use if /TowerofDoom10 completed and a good solo class.
     /// </summary>
-    /// <param name="quant"></param>
-    public void DirtyDeedsDoneDirtCheap(int quant = 1000)
+    /// <param name="quant">Target quantity of Unidentified 10</param>
+    /// <param name="SRoE">Whether to buy from Swindle's Ripoff Emporium</param>
+    /// <param name="SRoEItem">Item to buy from SRoE, or "All" to buy all items</param>
+    public void DirtyDeedsDoneDirtCheap(int quant = 1000, bool SRoE = false, string? SRoEItem = null)
     {
         if (Core.CheckInventory("Unidentified 10", quant))
             return;
 
+        // Early SRoE validation
+        if (!SRoE || string.IsNullOrEmpty(SRoEItem))
+        {
+            if (SRoEItem == null)
+            {
+                SRoE = false;
+                Core.Logger("SRoE set to null, disabling");
+            }
+            else
+                Core.Logger("Swindle's Ripoff Emporium disabled");
+        }
+
+        // Register all drops needed
         Core.AddDrop(
             "Emerald Pickaxe",
             "Seraphic Grave Digger Spade",
             "Unidentified 10",
             "Receipt of Swindle",
-            "Blood Gem of the Archfiend"
+            "Blood Gem of the Archfiend",
+            "Dark Crystal Shard",
+            "Gem of Nulgath",
+            "Tainted Gem"
         );
 
+        // Ensure starting quest items
         if (!Core.CheckInventory("Emerald Pickaxe"))
             Core.KillEscherion("Emerald Pickaxe");
 
         if (!Core.CheckInventory("Seraphic Grave Digger Spade"))
-            Core.KillMonster(
-                "legioncrypt",
-                "r1",
-                "Top",
-                "Gravedigger",
-                "Seraphic Grave Digger Spade",
-                isTemp: false
-            );
+            Core.KillMonster("legioncrypt", "r1", "Top", "Gravedigger", "Seraphic Grave Digger Spade", isTemp: false);
+
         Core.EquipClass(ClassType.Solo);
-        int i = 1;
+
+        // Pre-cache SRoE shop items
+        List<ShopItem> shopItems = Core.GetShopItems("tercessuinotlim", 1951);
+        ShopItem? bloodGem = shopItems.Find(x => x?.Name == "Blood Gem of the Archfiend");
+        ShopItem? darkShard = shopItems.Find(x => x?.Name == "Dark Crystal Shard");
+        ShopItem? gemNulgath = shopItems.Find(x => x?.Name == "Gem of Nulgath");
+        ShopItem? taintedGem = shopItems.Find(x => x?.Name == "Tainted Gem");
+
+        ShopItem[] sroeItems = new[] { bloodGem, darkShard, gemNulgath, taintedGem }
+                                .Where(x => x != null)
+                                .Cast<ShopItem>()
+                                .ToArray();
+
         while (!Bot.ShouldExit && !Core.CheckInventory("Unidentified 10", quant))
         {
             Core.EnsureAccept(7818);
-            Core.HuntMonster(
-                "towerofdoom10",
-                "Slugbutter",
-                "Slugbutter Digging Advice",
-                publicRoom: true,
-                log: false
-            );
-            Core.HuntMonster(
-                "crownsreach",
-                "Chaos Tunneler",
-                "Chaotic Tunneling Techniques",
-                2,
-                log: false
-            );
-            Core.HuntMonster(
-                "downward",
-                "Crystal Mana Construct",
-                "Crystalized Corporate Digging Secrets",
-                3,
-                log: false
-            );
+
+            // Farm quest drops
+            Core.HuntMonster("towerofdoom10", "Slugbutter", "Slugbutter Digging Advice", publicRoom: true, log: false);
+            Core.HuntMonster("crownsreach", "Chaos Tunneler", "Chaotic Tunneling Techniques", 2, log: false);
+            Core.HuntMonster("downward", "Crystal Mana Construct", "Crystalized Corporate Digging Secrets", 3, log: false);
+
             Core.EnsureComplete(7818);
-            Core.Logger($"Completed x{i++}");
-            if (Bot.Inventory.GetQuantity("Unidentified 10") >= 1000)
-                Core.Logger("Max Stack Hit.");
-            else
-                Core.FarmingLogger("Unidentified 10", quant);
+
+            int ui10Qty = Bot.Inventory.GetQuantity("Unidentified 10");
+            int receiptQty = Bot.Inventory.GetQuantity("Receipt of Swindle");
+
+            // Skip SRoE logic if not ready
+            if (ui10Qty < 1000 || !SRoE)
+            {
+                if (ui10Qty < 1000)
+                    Core.FarmingLogger("Unidentified 10", quant);
+                continue;
+            }
+
+            bool allMaxed = true;
+
+            // Determine which items to buy dynamically
+            ShopItem[] itemsToBuy = SRoEItem.Equals("All", StringComparison.OrdinalIgnoreCase)
+                ? sroeItems
+                : sroeItems.Where(x => x.Name == SRoEItem).ToArray();
+
+            foreach (ShopItem item in itemsToBuy)
+            {
+                int currentQty = Bot.Inventory.GetQuantity(item.Name);
+                if (currentQty >= item.MaxStack)
+                    continue;
+
+                allMaxed = false;
+
+                int maxByUi10 = ui10Qty / 50;
+                int maxByReceipt = receiptQty / 3;
+                int buyQty = Math.Min(maxByUi10, maxByReceipt);
+                buyQty = Math.Min(buyQty, item.MaxStack - currentQty);
+
+                if (buyQty <= 0)
+                    continue;
+
+                Core.Logger($"Buying {buyQty}x {item.Name}");
+                Core.BuyItem("tercessuinotlim", 1951, item.ID, buyQty);
+
+                ui10Qty -= buyQty * 50;
+                receiptQty -= buyQty * 3;
+            }
+
+            if (allMaxed)
+            {
+                Core.Logger("All SRoE items maxed. Disabling SRoE.");
+                SRoE = false;
+            }
         }
     }
 
