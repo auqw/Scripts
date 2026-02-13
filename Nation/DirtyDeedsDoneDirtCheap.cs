@@ -62,17 +62,10 @@ public class DirtyDeedsDoneDirtCheap
             Reward.DarkCrystalShard => new[] { "Dark Crystal Shard" },
             Reward.GemOfNulgath => new[] { "Gem of Nulgath" },
             Reward.TaintedGem => new[] { "Tainted Gem" },
-            Reward.All => new[]
-            {
-            "Blood Gem of the Archfiend",
-            "Dark Crystal Shard",
-            "Gem of Nulgath",
-            "Tainted Gem"
-        },
+            Reward.All => new[] { "All" },
             _ => throw new ArgumentOutOfRangeException(nameof(reward), reward, null)
         };
     }
-
 
     public enum Reward
     {

@@ -2208,7 +2208,6 @@ public class CoreNation
         if (Core.CheckInventory("Unidentified 10", quant))
             return;
 
-        // Register all drops needed
         Core.AddDrop(
             "Emerald Pickaxe",
             "Seraphic Grave Digger Spade",
@@ -2220,7 +2219,6 @@ public class CoreNation
             "Tainted Gem"
         );
 
-        // Ensure starting quest items
         if (!Core.CheckInventory("Emerald Pickaxe"))
             Core.KillEscherion("Emerald Pickaxe");
 
@@ -2231,7 +2229,7 @@ public class CoreNation
 
         // Pre-cache SRoE shop items if enabled
         ShopItem[] sroeItems = Array.Empty<ShopItem>();
-        if (SRoE)
+        if (SRoE && SRoEItems != null && SRoEItems.Length > 0)
         {
             List<ShopItem> shopItems = Core.GetShopItems("tercessuinotlim", 1951);
             sroeItems = new[] {
@@ -2252,26 +2250,25 @@ public class CoreNation
             Core.HuntMonster("downward", "Crystal Mana Construct", "Crystalized Corporate Digging Secrets", 3, log: false);
 
             Core.EnsureComplete(7818);
+            Core.FarmingLogger("Unidentified 10", quant);
+
+            // SRoE buying logic - only if enabled and items configured
+            if (!SRoE || sroeItems.Length == 0)
+                continue;
 
             int ui10Qty = Bot.Inventory.GetQuantity("Unidentified 10");
             int receiptQty = Bot.Inventory.GetQuantity("Receipt of Swindle");
 
-            if (!SRoE || SRoE && sroeItems.Length == 0 || sroeItems == null)
-            {
-                // Only farm Unidentified 10
-                Core.FarmingLogger("Unidentified 10", quant);
-                continue;
-            }
-
-            // SRoE buying logic
-            if (ui10Qty < 1000 || SRoEItems == null || SRoEItems.Length == 0)
+            // Need at least 1000 UI10 to buy
+            if (ui10Qty < 1000)
                 continue;
 
-            bool allMaxed = true;
-
+            // Determine which items to buy
             ShopItem[] itemsToBuy = SRoEItems.Length == 1 && SRoEItems[0].Equals("All", StringComparison.OrdinalIgnoreCase)
                 ? sroeItems
                 : sroeItems.Where(x => SRoEItems.Contains(x.Name)).ToArray();
+
+            bool allMaxed = true;
 
             foreach (ShopItem item in itemsToBuy)
             {
@@ -2303,6 +2300,7 @@ public class CoreNation
             }
         }
     }
+
 
     /// <summary>
     /// Farms Unidentified 13 with the best method available
