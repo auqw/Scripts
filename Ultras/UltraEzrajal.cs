@@ -305,7 +305,7 @@ public class UltraEzrajal
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,
-                    wSpecial: WeaponSpecial.Awe_Blast,
+                    wSpecial: WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Absolution
                 );
                 break;
