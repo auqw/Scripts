@@ -14418,6 +14418,48 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/LoveLockedMerge.cs"
   },
   {
+    "name": "Undead Snugglegrams Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Undead Snugglegrams Merge [2682] in /heartsdaygrave",
+    "tags": [
+      "undead",
+      "snugglegrams",
+      "merge",
+      "heartsdaygrave",
+      "swordhaven",
+      "pendragon",
+      "noble",
+      "saber",
+      "pure",
+      "nobility",
+      "emblem",
+      "shield",
+      "promised",
+      "victory",
+      "knighthood",
+      "conferment",
+      "shadowscythe",
+      "visionary",
+      "plume",
+      "tarnished",
+      "unwavering",
+      "spite",
+      "condemnation",
+      "doomknight",
+      "tyrant",
+      "plate",
+      "collar",
+      "oppression",
+      "darkness",
+      "doomed",
+      "tyrannical"
+    ],
+    "path": "Seasonal/HerosHeartDay/UndeadSnugglegramsMerge.cs",
+    "size": 8060,
+    "sha256": "08e5fa251ba1e4e64e70b330627fdea3aaa540cc48fb69c3bb5ac3d39e010fd1",
+    "fileName": "UndeadSnugglegramsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/UndeadSnugglegramsMerge.cs"
+  },
+  {
     "name": "Painted Butterfly (Arcadia Merge)",
     "description": "This will complete the Painted Butterfly quest.",
     "tags": [
@@ -14523,6 +14565,22 @@
     "sha256": "db127539052d3c47f341453fd7f175b5d75543b94dd4b9829b779b4104723416",
     "fileName": "BeleensGiftsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/BeleensGiftsMerge.cs"
+  },
+  {
+    "name": "heartsdaygrave",
+    "description": "This will complete the heartsdaygrave quest.",
+    "tags": [
+      "story",
+      "quest",
+      "seasonal",
+      "heartsdaygrave",
+      "heart"
+    ],
+    "path": "Seasonal/HerosHeartDay/heartsdaygrave.cs",
+    "size": 3489,
+    "sha256": "c12a2f1a5f01a68c0d6023efa6c97ba301bb52c8a0800939ae9bf7cfa104c7aa",
+    "fileName": "heartsdaygrave.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/heartsdaygrave.cs"
   },
   {
     "name": "Gems of Love Merge Shop",
