@@ -5554,8 +5554,8 @@
       "null"
     ],
     "path": "Evil/NSoD/CoreNSOD.cs",
-    "size": 24270,
-    "sha256": "6a170551673ca4ac3d779714462ec90c2835f116a8e4265c82ed13b146148639",
+    "size": 24314,
+    "sha256": "bbdfa651a85a2f96f0ea5e8dcb7ae0407dcea17c9a41928362d37016485b653d",
     "fileName": "CoreNSOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/NSoD/CoreNSOD.cs"
   },
