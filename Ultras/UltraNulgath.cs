@@ -13,43 +13,38 @@ tags: Ultra
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
-/* 
-# Composition Guide
----
+#region Fast Comp
+// Chrono ShadowSlayer: Lucky | Vim | Valiance | Vainglory
+// Verus DoomKnight: Lucky | Anima | Ravenous | Vainglory
+// Legion Revenant: Wizard | Pneuma | Valiance/Ravenous/Arcana | Vainglory
+// Lord Of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
+#endregion
 
-## ⚡ Fast
-1. Chrono ShadowSlayer — **Vim | Lucky | Valiance | Vainglory**
-2. Verus DoomKnight — **Anima | Lucky | Ravenous | Vainglory**
-3. Legion Revenant — **Pneuma | Wizard | Valiance / Ravenous / Arcana | Vainglory**
-4. Lord Of Order — **Forge | Lucky | Awe Blast / Valiance | Absolution**
+#region F2P Fast
+// Dragon of Time (x2): Wizard | Pneuma | Elysium | Vainglory
+// Legion Revenant: Wizard | Pneuma | Valiance/Ravenous/Arcana | Vainglory
+// Lord Of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
+#endregion
 
----
+#region Common Comp
+// King's Echo: Lucky | Examen | Ravenous | Vainglory
+// Legion Revenant: Wizard | Pneuma | Valiance/Ravenous/Arcana | Vainglory
+// ArchPaladin: Lucky | Forge | Valiance | Lament
+// Lord Of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
+#endregion
 
-## ⚡ F2P Fast
-1. Dragon of Time — **Pneuma | Wizard | Elysium | Vainglory**
-2. Dragon of Time — **Pneuma | Wizard | Elysium | Vainglory**
-3. Legion Revenant — **Pneuma | Wizard | Valiance / Ravenous / Arcana | Vainglory**
-4. Lord of Order — **Forge | Lucky | Awe Blast / Valiance | Absolution**
+#region Balanced Comp
+// Legion Revenant: Wizard | Pneuma | Valiance/Ravenous/Arcana | Vainglory
+// ArchPaladin: Lucky | Forge | Valiance | Lament
+// StoneCrusher: Wizard | Pneuma | Valiance | Vainglory
+// Lord Of Order: Lucky | Forge | Awe Blast/Valiance | Absolution
+#endregion
 
----
-
-## ⚖️ Common
-1. King’s Echo — **Examen | Lucky | Ravenous | Vainglory**
-2. Legion Revenant — **Pneuma | Wizard | Valiance / Ravenous / Arcana | Vainglory**
-3. ArchPaladin — **Forge | Lucky | Valiance | Lament**
-4. Lord of Order — **Forge | Lucky | Awe Blast / Valiance | Absolution**
-
----
-
-## 🧪 Other DPS (Slot-ins)
-- Arcana Invoker — **Examen | Lucky | Ravenous | Vainglory**
-- Archfiend — **Forge | Lucky | Ravenous | Vainglory**
-- Lich — **Examen | Lucky | Ravenous | Vainglory**
-- Verus DoomKnight — **Anima | Lucky | Ravenous | Vainglory**
-
-*/
-
-
+#region Other DPS Options
+// Arcana Invoker: Lucky | Examen | Ravenous | Vainglory
+// Archfiend: Lucky | Forge | Ravenous | Vainglory
+// Lich: Lucky | Examen | Ravenous | Vainglory
+#endregion
 
 public class UltraNulgath
 {
@@ -68,6 +63,17 @@ public class UltraNulgath
     public string OptionsStorage = "UltraNulgath";
     public List<IOption> Options = new()
     {
+        new Option<NulgathComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "Fast: CSS / VDK / LR / LOO\n"
+                + "F2PFast: DoT / DoT / LR / LOO\n"
+                + "Common: KE / LR / AP / LOO\n"
+                + "Balanced: LR / AP / SC / LOO\n"
+                + "Unselected = off (use whatever classes you already have equipped).",
+            NulgathComp.Unselected
+        ),
         new Option<string>( "a", "Taunter 1 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "ArchPaladin"),
         new Option<string>( "b", "Taunter 2 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "Lord Of Order"),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
@@ -190,6 +196,47 @@ public class UltraNulgath
 
     void Prep()
     {
+        // Sync-equip classes if a comp is selected
+        NulgathComp comp = Bot.Config!.Get<NulgathComp>("DoEquipClasses");
+        if (comp != NulgathComp.Unselected)
+        {
+            string[][] classes = comp switch
+            {
+                NulgathComp.Fast => new[] {
+                    new[] { "Chrono ShadowSlayer" },
+                    new[] { "Verus DoomKnight" },
+                    new[] { "Legion Revenant" },
+                    new[] { "Lord Of Order" }
+                },
+                NulgathComp.F2PFast => new[] {
+                    new[] { "Dragon of Time" },
+                    new[] { "Dragon of Time" },
+                    new[] { "Legion Revenant" },
+                    new[] { "Lord Of Order" }
+                },
+                NulgathComp.Common => new[] {
+                    new[] { "King's Echo" },
+                    new[] { "Legion Revenant" },
+                    new[] { "ArchPaladin" },
+                    new[] { "Lord Of Order" }
+                },
+                NulgathComp.Balanced => new[] {
+                    new[] { "Legion Revenant" },
+                    new[] { "ArchPaladin" },
+                    new[] { "StoneCrusher" },
+                    new[] { "Lord Of Order" }
+                },
+                _ => new[] {
+                    new[] { "ArchPaladin" },
+                    new[] { "Legion Revenant" },
+                    new[] { "Lord Of Order" },
+                    new[] { "Verus DoomKnight" }
+                },
+            };
+
+            Ultra.EquipClassSync(classes, 4, "nulgath_class.sync");
+        }
+
         if (Bot.Config!.Get<bool>("DoEnh"))
         {
             Adv.GearStore(false, true);
@@ -299,6 +346,35 @@ public class UltraNulgath
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
+
+            // ArchPaladin
+            case "ArchPaladin":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.Forge,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Lament
+                );
+                break;
+
+            // StoneCrusher
+            case "StoneCrusher":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: WeaponSpecial.Valiance,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
         }
+    }
+
+    public enum NulgathComp
+    {
+        Unselected,
+        Fast,
+        F2PFast,
+        Common,
+        Balanced,
     }
 }
