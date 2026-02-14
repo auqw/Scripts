@@ -14454,8 +14454,8 @@
       "tyrannical"
     ],
     "path": "Seasonal/HerosHeartDay/UndeadSnugglegramsMerge.cs",
-    "size": 8060,
-    "sha256": "08e5fa251ba1e4e64e70b330627fdea3aaa540cc48fb69c3bb5ac3d39e010fd1",
+    "size": 8341,
+    "sha256": "85dbcce6ac6a086e80790453079df0c018c9fa2c6d5f20be79979e176e980194",
     "fileName": "UndeadSnugglegramsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/UndeadSnugglegramsMerge.cs"
   },
@@ -14577,8 +14577,8 @@
       "heart"
     ],
     "path": "Seasonal/HerosHeartDay/heartsdaygrave.cs",
-    "size": 3489,
-    "sha256": "c12a2f1a5f01a68c0d6023efa6c97ba301bb52c8a0800939ae9bf7cfa104c7aa",
+    "size": 3560,
+    "sha256": "706f2c3d2b6e8566abcebd2ea8312893cddadb26974fe2c108492bfb32c01ea0",
     "fileName": "heartsdaygrave.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/heartsdaygrave.cs"
   },
