@@ -1646,9 +1646,23 @@ public class CoreFarms
             if (maxBuyable <= 0)
                 break;
 
+            // Farm enough gold to buy these vouchers
+            int lastSpace = item.Name.LastIndexOf(' ');
+            string valuePart = item.Name[(lastSpace + 1)..]
+                .Replace("k", "", StringComparison.OrdinalIgnoreCase)
+                .Replace(",", "");
+
+            if (!decimal.TryParse(valuePart, out decimal thousands) || thousands <= 0)
+                thousands = 100; // fallback
+
+            int valuePerItem = (int)Math.Round(thousands * 1000, MidpointRounding.AwayFromZero);
+
+            Gold(maxBuyable * valuePerItem);
+
             Core.BuyItem(map, shopID, item.Name, maxBuyable);
             needed -= maxBuyable;
         }
+
     }
 
     public void DragonRunestone(int quant = 100)
