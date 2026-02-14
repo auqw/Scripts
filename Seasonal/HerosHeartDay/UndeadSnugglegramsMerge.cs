@@ -6,6 +6,7 @@ tags: undead, snugglegrams, merge, heartsdaygrave, swordhaven, pendragon, noble,
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Seasonal/HerosHeartDay/heartsdaygrave.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -21,6 +22,8 @@ public class UndeadSnugglegramsMerge
     private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
 
+    private static heartsdaygrave heartsdaygrave { get => _heartsdaygrave ??= new heartsdaygrave(); set => _heartsdaygrave = value; }
+    private static heartsdaygrave _heartsdaygrave;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
@@ -41,6 +44,7 @@ public class UndeadSnugglegramsMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        heartsdaygrave.DoStory();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("heartsdaygrave", 2682, findIngredients, buyOnlyThis, buyMode: buyMode);
 

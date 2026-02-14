@@ -4,6 +4,7 @@ description: This will complete the heartsdaygrave quest.
 tags: story, quest, seasonal, heartsdaygrave, heart
 */
 //cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 
