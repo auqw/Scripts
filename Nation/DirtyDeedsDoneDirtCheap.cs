@@ -62,6 +62,7 @@ public class DirtyDeedsDoneDirtCheap
             Reward.DarkCrystalShard => new[] { "Dark Crystal Shard" },
             Reward.GemOfNulgath => new[] { "Gem of Nulgath" },
             Reward.TaintedGem => new[] { "Tainted Gem" },
+            Reward.TotemofNulgath => new[] { "Totem of Nulgath" },
             Reward.All => new[] { "All" },
             _ => throw new ArgumentOutOfRangeException(nameof(reward), reward, null)
         };
@@ -73,7 +74,8 @@ public class DirtyDeedsDoneDirtCheap
         BloodGemOfTheArchfiend = 1,
         DarkCrystalShard = 2,
         GemOfNulgath = 3,
-        TaintedGem = 4
+        TaintedGem = 4,
+        TotemofNulgath = 5
     }
 
 
