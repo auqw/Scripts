@@ -1467,7 +1467,7 @@ public class CoreFarms
 
                 if (!Packet())
                 {
-                    Core.Logger("Alchemy craft failed, stopping loop");
+                    Core.Logger("Alchemy craft failed (probably ran out of reagents...), stopping loop");
                     break;
                 }
                 Core.Logger($"Completed alchemy x{i++}");
@@ -1478,46 +1478,54 @@ public class CoreFarms
 
         bool Packet()
         {
-            // Reset flags
+            // Reset flags at the start of each craft
             lock (_alchemyLock)
             {
                 _alchemyCraftStarted = false;
                 _alchemyCraftCompleted = false;
             }
 
-            // Initiate Potion craft
+            // Initiate potion craft
             Core.SendPackets($"%xt%zm%crafting%1%getAlchWait%{reagentid1}%{reagentid2}%true%Ready to Mix%{reagent1}%{reagent2}%{rune}%{trait}%");
 
-            // Wait for SERVER to send alchOnStart (increased timeout for high ping)
+            // Wait for SERVER to send alchOnStart
             if (!WaitForAlchemyFlag(() => _alchemyCraftStarted, 10000))
             {
-                if (Core.DL_Enabled)
-                    Core.Logger("Failed to receive server craft start confirmation (10s timeout)");
+                Core.Logger("Failed to receive server craft start confirmation (10s timeout)");
                 return false;
             }
 
-            if (Core.DL_Enabled)
-                Core.Logger("Server confirmed craft start, sending completion packet");
+            Core.Logger("Server confirmed craft start, sending completion packet");
 
-            // Server confirmed start, now send completion
+            // Send completion packet
             Core.SendPackets($"%xt%zm%crafting%1%checkAlchComplete%{reagentid1}%{reagentid2}%true%Mix Complete%{reagent1}%{reagent2}%{rune}%{trait}%");
 
-            // Wait for server to confirm completion with dropItem (generous timeout)
-            if (!WaitForAlchemyFlag(() => _alchemyCraftCompleted, 10000))
+            // Wait for completion (single log)
+            bool completed = WaitForAlchemyFlag(() => _alchemyCraftCompleted, 10000);
+
+            lock (_alchemyLock)
             {
-                if (Core.DL_Enabled)
-                    Core.Logger("Warning: Did not receive completion confirmation within 10s, continuing anyway");
-                Core.Sleep(1000);
-            }
-            else
-            {
-                if (Core.DL_Enabled)
-                    Core.Logger("Server confirmed craft completion");
+                if (completed)
+                {
+                    // Only log once per craft
+                    if (_alchemyCraftCompleted)
+                        Core.Logger("Server confirmed craft completion");
+
+                    // Reset flags for the next craft
+                    _alchemyCraftStarted = false;
+                    _alchemyCraftCompleted = false;
+                }
+                else
+                {
+                    Core.Logger("Warning: Did not receive completion confirmation within 10s");
+                    return false;
+                }
             }
 
             Core.Sleep(500);
-            return true; // Always return true to handle edge cases gracefully
+            return true;
         }
+
     }
 
     /// <summary>
@@ -1570,63 +1578,48 @@ public class CoreFarms
         //more to be added by request
     };
 
+
     public void Voucher(string Voucher, int quant, string? shopName = null)
     {
-        if (Core.CheckInventory(Voucher, quant))
+        if (Bot.Bank.Contains(Voucher))
+            Core.Unbank(Voucher);
+
+        int current = Bot.Inventory.GetQuantity(Voucher);
+        int needed = quant - current;
+
+        if (needed <= 0)
             return;
 
-        Core.FarmingLogger(Voucher, quant);
+        Core.Logger($"{Voucher} [Current: {current}/{quant}] - Buying x{needed}");
 
         string map = "";
         int shopID = 0;
         int VoucherID;
+
         switch (Voucher)
         {
             case "Gold Voucher 500k":
-                VoucherID = 61043;
-                map = "alchemyacademy";
-                shopID = 2036;
-                shopName = "Gebo Shop";
-                break;
+                VoucherID = 61043; map = "alchemyacademy"; shopID = 2036; shopName = "Gebo Shop"; break;
             case "Gold Voucher 100k":
-                VoucherID = 62749;
-                map = "alchemyacademy";
-                shopID = 2036;
-                shopName = "Gebo Shop";
-                break;
+                VoucherID = 62749; map = "alchemyacademy"; shopID = 2036; shopName = "Gebo Shop"; break;
             case "Gold Voucher 200k":
-                VoucherID = 62748;
-                map = "titanattack";
-                shopID = 2129;
-                shopName = "Titan Attack Gear";
-                break;
+                VoucherID = 62748; map = "titanattack"; shopID = 2129; shopName = "Titan Attack Gear"; break;
             case "Gold Voucher 25k":
-                VoucherID = 62747;
-                map = "hydrachallenge";
-                shopID = 1597;
-                shopName = "Hydra Merge";
-                break;
+                VoucherID = 62747; map = "hydrachallenge"; shopID = 1597; shopName = "Hydra Merge"; break;
             case "Gold Voucher 7.5k":
-                VoucherID = 62747;
-                map = "alchemyacademy";
-                shopID = 2116;
-                shopName = "Fehu Shop";
-                break;
+                VoucherID = 62747; map = "alchemyacademy"; shopID = 2116; shopName = "Fehu Shop"; break;
             default:
                 Core.Logger($"Invalid Gold Voucher: {Voucher}");
                 return;
         }
-        // Load shop safely
+
+        if (Bot.Map.Name != map)
+            Core.Join(map);
+
         int retry = 0;
     Retry:
         while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
         {
-            if (Bot.Map.Name != map)
-            {
-                Core.Join(map);
-                Bot.Wait.ForMapLoad(map);
-            }
-
             Bot.Shops.Load(shopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID, 20);
@@ -1635,7 +1628,7 @@ public class CoreFarms
                 break;
         }
 
-        ShopItem? item = Bot.Shops.Items.FirstOrDefault(x => x != null && x?.ID == VoucherID);
+        ShopItem? item = Bot.Shops.Items.FirstOrDefault(x => x != null && x.ID == VoucherID);
         if (item == null)
         {
             if (retry < 5)
@@ -1647,40 +1640,13 @@ public class CoreFarms
             return;
         }
 
-        int current = Bot.Inventory.GetQuantity(Voucher);
-        int needed = Math.Min(item.MaxStack, quant - current);
-        if (needed <= 0)
-            return;
-
-        // Extract voucher value in gold (e.g. "500k" => 500000)
-        int lastSpace = item.Name.LastIndexOf(' ');
-        string valuePart = item.Name[(lastSpace + 1)..]
-            .Replace("k", "", StringComparison.OrdinalIgnoreCase)
-            .Replace(",", "");
-
-        if (!decimal.TryParse(valuePart, out decimal thousands) || thousands <= 0)
-        {
-            Core.Logger($"Failed to parse gold value from '{item.Name}'.");
-            return;
-        }
-
-        int valuePerItem = (int)Math.Round(thousands * 1000, MidpointRounding.AwayFromZero);
-
-        const int goldCap = 100_000_000;
-
         while (!Bot.ShouldExit && needed > 0)
         {
-            // Max amount that fits within the 100M cap
-            int maxBuyable = Math.Min(needed, goldCap / valuePerItem);
+            int maxBuyable = Math.Min(needed, item.MaxStack);
             if (maxBuyable <= 0)
-            {
-                Core.Logger($"Cannot buy any '{Voucher}' without exceeding the gold cap.");
-                return;
-            }
+                break;
 
-            Gold(maxBuyable * valuePerItem);
             Core.BuyItem(map, shopID, item.Name, maxBuyable);
-
             needed -= maxBuyable;
         }
     }
@@ -1696,21 +1662,25 @@ public class CoreFarms
             Core.Join("alchemyacademy");
 
         Voucher("Gold Voucher 100k", quant);
-        int amountToBuy = Math.Min(quant, 100);
-
-        Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", amountToBuy, 8844);
+        Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", quant, 8844);
     }
+
+
+
 
     public void AlchemyREP(int rank = 10, bool goldMethod = true)
     {
         if (FactionRank("Alchemy") >= rank)
             return;
 
-        Core.Logger("Start by Selling all items named dragon scale (iirc there are 3...) sorta fucsk it all up, if u have the wrong one");
-        Bot.Bank.Items.Concat(Bot.Inventory.Items)
-        .Where(x => x.Name == "Dragon Scale" && x.ID != 11475)
-        .ToList()
-        .ForEach(item => Core.SellItem(item.ID, all: true));
+        Core.Logger("Start by Selling all items named dragon scale (there are 2...) sorta fucks it all up, if u have the wrong one");
+        foreach (string item in new[] { "Dragon Scale", "Ice Vapor" })
+        {
+            if (!Core.CheckInventory(item))
+                continue;
+
+            Core.SellItem(item, all: true);
+        }
 
         Bot.Events.ExtensionPacketReceived += AlchemyPacketCheck;
         if (!Bot.Reputation.FactionList.Exists(f => f.Name == "Alchemy"))
@@ -1719,16 +1689,15 @@ public class CoreFarms
             // ice vapor, dragon scape, dragon runestone
             if (!Core.CheckInventory(new[] { 11478, 11475, 7132 }))
             {
-                DragonRunestone(5);
+                DragonRunestone(3);
                 Core.BuyItem("alchemy", 397, 11475, 2, 1232);
-                Core.BuyItem("alchemy", 397, 11478, 1, 1235);
+                Core.BuyItem("alchemy", 397, 11478, 2, 1235);
             }
             Core.Join("alchemy");
             AlchemyPacket(
                 "Dragon Scale",
                 "Ice Vapor",
                 AlchemyRunes.Jera,
-                loop: false,
                 trait: CoreFarms.AlchemyTraits.hOu
             );
         }
@@ -1742,12 +1711,15 @@ public class CoreFarms
         {
             if (goldMethod)
             {
-                if (!Core.CheckInventory(new[] { 11478, 11475, 7132 }))
+                if (!Core.CheckInventory(new[] { 11475, 11478, 7132 }))
                 {
-                    DragonRunestone(25);
-                    Core.BuyItem("alchemy", 397, 11475, 20, 1232);
-                    Core.BuyItem("alchemy", 397, 11478, 10, 1235);
+                    // 10 Dragonstones for alchemy itself + enough to buy 10 mats (1 Dstone → 2 mats)
+                    DragonRunestone(20);
+                    // each set of 10 should cost 5 Dstones
+                    Core.BuyItem("alchemy", 397, 11475, 10, 1232); // Dragon Scape
+                    Core.BuyItem("alchemy", 397, 11478, 10, 1235); // Ice Vapor
                 }
+
 
                 AlchemyPacket(
                     "Dragon Scale",
@@ -1765,9 +1737,10 @@ public class CoreFarms
             else
             {
                 Core.EquipClass(ClassType.Farm);
-                while (!Core.CheckInventory(11475, 30))
-                    Core.KillMonster("lair", "Hole", "Center", "*", isTemp: false, log: false);
+                while (!Bot.ShouldExit && !Core.CheckInventory(11475, 30))
+                    Core.KillMonster("lair", "Hole", "Center", "*", log: false);
                 Core.KillMonster("lair", "Enter", "Spawn", "*", "Ice Vapor", 30, isTemp: false, log: false);
+                DragonRunestone(30);
 
                 AlchemyPacket(
                     "Dragon Scale",
@@ -1817,11 +1790,14 @@ public class CoreFarms
                 case "alchOnComplete":
                     lock (_alchemyLock)
                     {
-                        _alchemyCraftCompleted = true;
-                        // if (Core.DL_Enabled == true)
-                        Core.Logger("Alchemy craft completed (confirmed by server)");
+                        if (!_alchemyCraftCompleted) // only log once
+                        {
+                            _alchemyCraftCompleted = true;
+                            Core.Logger("Alchemy craft completed (confirmed by server)");
+                        }
                     }
                     break;
+
 
                 case "alchError":
                     lock (_alchemyLock)
