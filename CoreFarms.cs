@@ -1419,6 +1419,7 @@ public class CoreFarms
         int quant = 1
     )
     {
+        Bot.Events.ExtensionPacketReceived += AlchemyPacketCheck;
         if (
             rank != 0 && FactionRank("Alchemy") < rank
             || (item != null && Core.CheckInventory(item, quant))
@@ -1467,7 +1468,9 @@ public class CoreFarms
 
                 if (!Packet())
                 {
-                    Core.Logger("Alchemy craft failed (probably ran out of reagents...), stopping loop");
+                    Core.Logger("Alchemy craft failed, stopping loop");
+                    if (!Core.CheckInventory(new[] { reagentid1, reagentid2 }))
+                        Core.Logger("We've ran out of reagents.");
                     break;
                 }
                 Core.Logger($"Completed alchemy x{i++}");
@@ -1525,6 +1528,7 @@ public class CoreFarms
             Core.Sleep(500);
             return true;
         }
+        Bot.Events.ExtensionPacketReceived -= AlchemyPacketCheck;
 
     }
 
@@ -1696,7 +1700,6 @@ public class CoreFarms
             Core.SellItem(item, all: true);
         }
 
-        Bot.Events.ExtensionPacketReceived += AlchemyPacketCheck;
         if (!Bot.Reputation.FactionList.Exists(f => f.Name == "Alchemy"))
         {
             Core.Logger("Getting Pre-Ranking XP");
@@ -1772,7 +1775,6 @@ public class CoreFarms
             Core.Logger($"Iteration {i++} completed");
         }
         ToggleBoost(BoostType.Reputation, false);
-        Bot.Events.ExtensionPacketReceived -= AlchemyPacketCheck;
     }
 
     // Add these class-level fields
