@@ -83,8 +83,8 @@ public class UndeadSnugglegramsMerge
                     Core.RegisterQuests(!Core.IsMember ? 10602 : 10603);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonster("heartsdaygrave", "Illusionist Zio", "Zio's Discount Chocolate", 1);
-                        Core.HuntMonster("heartsdaygrave", "Warlord Vaioh", "Vaioh's Snugglegram", 1);
+                        Core.HuntMonster("heartsdaygrave", "Illusionist Zio", "Vaioh's Snugglegram");
+                        Core.HuntMonster("heartsdaygrave", "Warlord Vaioh", "Zio's Discount Chocolate");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
