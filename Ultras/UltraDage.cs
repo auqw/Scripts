@@ -11,33 +11,28 @@ tags: Ultra
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 
-/*
-Required Taunters:
-==================
-    Chaos Avenger
-    ArchPaladin
-==================
+#region Required Taunters
+// Chaos Avenger: Lucky | Anima | Dauntless/HealthVamp | Vainglory
+// ArchPaladin: Lucky | Forge | Dauntless/HealthVamp | Lament
+#endregion
 
-DPS classes:
-==================
-// Works with deaths
-    Arachnomancer
-    Archfiend
-    Infinity Knight
-    StoneCrusher
+#region DPS (No Deaths)
+// Lich: Lucky | Examen | Ravenous | Penitence
+// Legion Revenant: Wizard | Pneuma | Dauntless/HealthVamp | Vainglory
+// Great Thief: Lucky | Forge | Dauntless/HealthVamp | Vainglory
+// Hollowborn Vindicator: Lucky | Forge | Dauntless/HealthVamp | Penitence
+// Quantum Chronomancer: Lucky | Anima | Dauntless/HealthVamp | Vainglory
+// Phantom Chronomancer: Wizard | Pneuma | Dauntless/HealthVamp | Vainglory
+// Verus DoomKnight: Lucky | Anima | Dauntless/HealthVamp | Vainglory
+// King's Echo: Lucky | Pneuma | Dauntless/HealthVamp | Lament
+#endregion
 
-// Tested working without deaths:
-    Lich
-    Legion Revenant
-    Great Thief
-    Hollowborn Vindicator
-    Quantum Chronomancer
-    Phantom Chronomancer / Phantasm Chronomancer 
-    Verus DoomKnight 
-    Void Highlord
-    King's Echo 
-==================
-*/
+#region DPS (Works with Deaths)
+// Arachnomancer: Lucky | Anima | Dauntless/HealthVamp | Vainglory
+// Archfiend: Lucky | Forge | Dauntless/HealthVamp | Vainglory
+// Infinity Knight: Wizard | Pneuma | Dauntless/HealthVamp | Vainglory
+// StoneCrusher: Wizard | Pneuma | Dauntless/HealthVamp | Vainglory
+#endregion
 
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
@@ -67,6 +62,14 @@ public class UltraDage
     public string OptionsStorage = "UltraDage";
     public List<IOption> Options = new()
     {
+        new Option<DageComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "BestAvailable: CAv / AP / Best DPS / Best DPS\n"
+                + "Unselected = off (use whatever classes you already have equipped).",
+            DageComp.Unselected
+        ),
         new Option<string>(
             "a",
             "First Taunter Class",
@@ -127,6 +130,37 @@ public class UltraDage
     {
         // UpdateQuest to `Fail to the king` to unlock ultra dage
         Bot.Quests.UpdateQuest(793);
+
+        // Sync-equip classes if a comp is selected
+        DageComp comp = Bot.Config!.Get<DageComp>("DoEquipClasses");
+        if (comp != DageComp.Unselected)
+        {
+            // DPS priority: no-death classes first, then death-tolerant as fallback
+            string[] dpsOptions = new[] {
+                "Lich",
+                "Legion Revenant",
+                "Great Thief",
+                "Hollowborn Vindicator",
+                "Quantum Chronomancer",
+                "Phantom Chronomancer",
+                "Verus DoomKnight",
+                "King's Echo",
+                "Arachnomancer",
+                "Archfiend",
+                "Infinity Knight",
+                "StoneCrusher"
+            };
+
+            string[][] classes = new[] {
+                new[] { "Chaos Avenger" },
+                new[] { "ArchPaladin" },
+                dpsOptions,
+                dpsOptions
+            };
+
+            Ultra.EquipClassSync(classes, 4, "dage_class.sync");
+        }
+
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnh();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
@@ -343,8 +377,21 @@ public class UltraDage
                     cSpecial: CapeSpecial.Vainglory
                 );
                 break;
+
+            case "stonecrusher":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.Pneuma,
+                    wSpecial: Adv.uDauntless() ? WeaponSpecial.Dauntless : WeaponSpecial.Health_Vamp,
+                    cSpecial: CapeSpecial.Vainglory
+                );
+                break;
         }
     }
 
-
+    public enum DageComp
+    {
+        Unselected,
+        BestAvailable,
+    }
 }

@@ -19,33 +19,71 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models.Auras;
 using Skua.Core.Options;
 
-// LR:
-// "Weapon: Arcana/Valiance"
-// "Class: Wizard"
-// "Helm: Wizard"
-// "Cape: Penitence"
-// "Scroll: Enrage"
+#region Fast Comp
 
-// AP:
-// "Weapon: Lacerate/Valiance"
-// "Class: Luck"
-// "Helm: Luck"
-// "Cape: Penitence"
-// "Scroll: Enrage"
+/// <summary>
+/// Fast Composition - Maximum damage output for speed
+/// </summary>
+// ArchPaladin
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Lament
+//
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Pneuma
+// ├─ Weapon: Arcana's Concerto
+// └─ Cape: Vainglory
+//
+// Quantum Chronomancer
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Praxis
+// └─ Cape: Penitence
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Forge
+// ├─ Weapon: Valiance
+// └─ Cape: Penitence
 
-// LOO:
-// "Weapon: Valiance"
-// "Class: Luck"
-// "Helm: Luck"
-// "Cape: Penitence"
-// "Scroll: Enrage"
+#endregion
 
-// VDK/Other dps
-// "Weapon: Valiance"
-// "Class: Luck"
-// "Helm: Anima"
-// "Cape: Penitence"
-// "Scroll: Enrage"
+#region Safe Comp
+
+/// <summary>
+/// Safe Composition - Original balanced setup
+/// </summary>
+// Legion Revenant
+// ├─ Class: Wizard
+// ├─ Helm: Wizard
+// ├─ Weapon: Arcana/Valiance
+// └─ Cape: Penitence
+// └─ Scroll: Enrage
+//
+// ArchPaladin
+// ├─ Class: Lucky
+// ├─ Helm: Luck
+// ├─ Weapon: Lacerate/Valiance
+// └─ Cape: Penitence
+// └─ Scroll: Enrage
+//
+// Lord Of Order
+// ├─ Class: Lucky
+// ├─ Helm: Luck
+// ├─ Weapon: Valiance
+// └─ Cape: Penitence
+// └─ Scroll: Enrage
+//
+// Verus DoomKnight (or other DPS)
+// ├─ Class: Lucky
+// ├─ Helm: Anima
+// ├─ Weapon: Valiance
+// └─ Cape: Penitence
+// └─ Scroll: Enrage
+
+#endregion
 
 public class UltraSpeaker
 {
@@ -65,6 +103,15 @@ public class UltraSpeaker
     public string OptionsStorage = "UltraSpeaker";
     public List<IOption> Options = new()
     {
+        new Option<SpeakerComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "Fast: AP / LR / QCM / LOO\n"
+                + "Safe: LR / AP / LOO / VDK\n"
+                + "Unselected = off (use whatever classes you already have equipped).",
+            SpeakerComp.Unselected
+        ),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -89,6 +136,20 @@ public class UltraSpeaker
 
     void Prep()
     {
+        // Sync-equip classes if a comp is selected
+        SpeakerComp comp = Bot.Config!.Get<SpeakerComp>("DoEquipClasses");
+        if (comp != SpeakerComp.Unselected)
+        {
+            string[] classes = comp switch
+            {
+                SpeakerComp.Fast => new[] { "ArchPaladin", "Legion Revenant", "Quantum Chronomancer", "Lord Of Order" },
+                SpeakerComp.Safe => new[] { "Legion Revenant", "ArchPaladin", "Lord Of Order", "Verus DoomKnight" },
+                _ => new[] { "ArchPaladin", "Legion Revenant", "Lord Of Order", "Verus DoomKnight" },
+            };
+
+            Ultra.EquipClassSync(classes, 4, "speaker_class.sync");
+        }
+
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnh();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
@@ -290,4 +351,10 @@ public class UltraSpeaker
         }
     }
 
+    public enum SpeakerComp
+    {
+        Unselected,
+        Fast,
+        Safe,
+    }
 }
