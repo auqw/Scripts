@@ -3135,8 +3135,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 9097,
-    "sha256": "4efb2b805137bfb9103c25c778aed97e5563e07c43a36a3fdb0ecb0280f53596",
+    "size": 11111,
+    "sha256": "c2e1dda22331b9eece2928c5eb4a50eb7422c5b26c4b90ded75d97668ee2f687",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
@@ -3161,8 +3161,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDage.cs",
-    "size": 11810,
-    "sha256": "ed15a6494c35596554903094c32e76b2146f9433e1650500354afac22325edce",
+    "size": 14234,
+    "sha256": "f2bec13b4aa87857aa6210e05df1a1426d68260e85f33db35dc6b53c55effaaa",
     "fileName": "UltraDage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDage.cs"
   },
@@ -3173,8 +3173,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 10552,
-    "sha256": "b5484601fdd37a1764690a484934ed8c281712275c21360dd2abf89a5a0cc229",
+    "size": 13576,
+    "sha256": "98b6657d5562e97970a18bcfc4c4819c4396e84a5866f8f49270c63e77a1150c",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
@@ -3212,8 +3212,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 44645,
-    "sha256": "2027c0057cf4dc26ed31a3bf653cf46f527b47d09e6161707815f924b05d01b5",
+    "size": 56528,
+    "sha256": "24bdc53356e9597d42786b59e33ca0e5827fc500fc01e174514a7bfa3df1d9c7",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -3292,8 +3292,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDrago.cs",
-    "size": 12432,
-    "sha256": "2b19aef254541eaab3bc9d261bc1150e09613d6e355b570efdaa668c277e6b13",
+    "size": 14038,
+    "sha256": "7cea8f1b706757d2d0b61967f60c7bb4aa36275322f12cba578b7c8bf20223df",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },
