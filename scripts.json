@@ -26829,6 +26829,27 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/HollowbornLabMerge.cs"
   },
   {
+    "name": "Aciels Gifts Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Aciels Gifts Merge [2680] in /shadowrealm",
+    "tags": [
+      "aciels",
+      "gifts",
+      "merge",
+      "shadowrealm",
+      "hollow",
+      "hail",
+      "next",
+      "week",
+      "ac",
+      "items"
+    ],
+    "path": "Hollowborn/MergeShops/AcielsGiftsMerge.cs",
+    "size": 3786,
+    "sha256": "b2673d3639975640e77b14d1226f2435cc35cf6f95ee0876813d9fb734f7595f",
+    "fileName": "AcielsGiftsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/AcielsGiftsMerge.cs"
+  },
+  {
     "name": "Dawn Fortress Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Dawn Fortress Merge [2300] in /neofortress",
     "tags": [
