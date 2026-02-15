@@ -374,7 +374,8 @@ public class CoreNSOD
                 quant,
                 isTemp,
                 log,
-                publicRoom
+                publicRoom,
+                EquipBestClassType: false
             );
     }
 

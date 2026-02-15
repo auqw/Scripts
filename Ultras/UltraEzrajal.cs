@@ -72,7 +72,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Ravenous / Valiance / Arcana
 // └─ Cape: Vainglory
 //
-// Arch Paladin
+// ArchPaladin
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Valiance
@@ -320,8 +320,8 @@ public class UltraEzrajal
                 );
                 break;
 
-            // Arch Paladin
-            case "Arch Paladin":
+            // ArchPaladin
+            case "ArchPaladin":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,

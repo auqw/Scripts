@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 158069,
-    "sha256": "ed1793158b884f167db3c65311f3aac5ac1dc26116b72915dff5dc8bc1e7c9f8",
+    "size": 157854,
+    "sha256": "cd5576f02c5491f83efcd0cc39a49792c36a1b59fe2a857bc6fcba2d569bc3ec",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -3084,8 +3084,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEngineer.cs",
-    "size": 9854,
-    "sha256": "4520743ab572540db74be0af33ac6a4e3b1919d658c0f480324602eedb5f3762",
+    "size": 9849,
+    "sha256": "4f4c85e07ee2b294bf6828b90155b821d757612291eb8b9b9c5174c549588fe4",
     "fileName": "UltraEngineer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEngineer.cs"
   },
@@ -3135,8 +3135,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraSpeaker.cs",
-    "size": 9097,
-    "sha256": "4efb2b805137bfb9103c25c778aed97e5563e07c43a36a3fdb0ecb0280f53596",
+    "size": 11111,
+    "sha256": "c2e1dda22331b9eece2928c5eb4a50eb7422c5b26c4b90ded75d97668ee2f687",
     "fileName": "UltraSpeaker.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraSpeaker.cs"
   },
@@ -3161,8 +3161,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDage.cs",
-    "size": 11810,
-    "sha256": "ed15a6494c35596554903094c32e76b2146f9433e1650500354afac22325edce",
+    "size": 14234,
+    "sha256": "f2bec13b4aa87857aa6210e05df1a1426d68260e85f33db35dc6b53c55effaaa",
     "fileName": "UltraDage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDage.cs"
   },
@@ -3173,8 +3173,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 10552,
-    "sha256": "b5484601fdd37a1764690a484934ed8c281712275c21360dd2abf89a5a0cc229",
+    "size": 13576,
+    "sha256": "98b6657d5562e97970a18bcfc4c4819c4396e84a5866f8f49270c63e77a1150c",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
@@ -3212,8 +3212,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 44645,
-    "sha256": "2027c0057cf4dc26ed31a3bf653cf46f527b47d09e6161707815f924b05d01b5",
+    "size": 56528,
+    "sha256": "24bdc53356e9597d42786b59e33ca0e5827fc500fc01e174514a7bfa3df1d9c7",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -3268,8 +3268,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 10344,
-    "sha256": "08f68a726e2282914023f497a5315acc2081eaddbd184f33ec1e4ee5c47859d0",
+    "size": 10341,
+    "sha256": "ad6849ef3629acb40c883409cebab907f0c2e444042393b168375d83107987e0",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
@@ -3292,8 +3292,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDrago.cs",
-    "size": 12437,
-    "sha256": "e4f75e00dd8a74142efeb7a11439d942289e370214bbd8dea0b5a03557a00de7",
+    "size": 14038,
+    "sha256": "7cea8f1b706757d2d0b61967f60c7bb4aa36275322f12cba578b7c8bf20223df",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },
@@ -4130,8 +4130,8 @@
       "null"
     ],
     "path": "Nation/DirtyDeedsDoneDirtCheap.cs",
-    "size": 2312,
-    "sha256": "e9ca20879dfef34df622af8afb36706bb0ec550bf0d464a3660307e2b06980bb",
+    "size": 2407,
+    "sha256": "de808c53e6c1543172269dbbc66c81ebefbfb757a3047e22ff1563a8fefb21ed",
     "fileName": "DirtyDeedsDoneDirtCheap.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/DirtyDeedsDoneDirtCheap.cs"
   },
@@ -4154,8 +4154,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 126222,
-    "sha256": "1e817439f7cb45972c8700fb2aa2065f694b1fe77480050755e30f87ba74173e",
+    "size": 125762,
+    "sha256": "94408f1ed65ef632f955cf0e0a572ec5cc91cc815ea5c320d9eee2a33ee39c53",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -4386,6 +4386,24 @@
     "sha256": "66eecad86db2fc2abc21157701a10467e4fdcafd0188846d4ca746e8a8438002",
     "fileName": "CoreHollowborn.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/CoreHollowborn.cs"
+  },
+  {
+    "name": "Hollow Hail Quest Rewards",
+    "description": "Farms quest rewards from \"With Every Wind\", \"Hail To The King\", and \"Cold, Cold, COLD!\" quests",
+    "tags": [
+      "hollow hail",
+      "hollow",
+      "hail",
+      "hollowborn",
+      "with every wind",
+      "hail to the king",
+      "cold cold cold"
+    ],
+    "path": "Hollowborn/HollowHailRewards.cs",
+    "size": 10036,
+    "sha256": "02ad0bcfd2b553e2a326083ba3866635b4e3644198b3b73833781f0a8e5256d3",
+    "fileName": "HollowHailRewards.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowHailRewards.cs"
   },
   {
     "name": "Gifts of the Cryomancer",
@@ -5554,8 +5572,8 @@
       "null"
     ],
     "path": "Evil/NSoD/CoreNSOD.cs",
-    "size": 24270,
-    "sha256": "6a170551673ca4ac3d779714462ec90c2835f116a8e4265c82ed13b146148639",
+    "size": 24314,
+    "sha256": "bbdfa651a85a2f96f0ea5e8dcb7ae0407dcea17c9a41928362d37016485b653d",
     "fileName": "CoreNSOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/NSoD/CoreNSOD.cs"
   },
@@ -5679,8 +5697,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelper.cs",
-    "size": 15012,
-    "sha256": "1d474326bd81bf193953e3ed1ef5b3511aee678af5eed629cd05de6fbfeb7646",
+    "size": 15052,
+    "sha256": "3408a966e3e37a8fa85c08cb5ea3b2deecda162657a3b637f20c1ad2c4d3317a",
     "fileName": "MergeTemplateHelper.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper.cs"
   },
@@ -14418,6 +14436,48 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/LoveLockedMerge.cs"
   },
   {
+    "name": "Undead Snugglegrams Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Undead Snugglegrams Merge [2682] in /heartsdaygrave",
+    "tags": [
+      "undead",
+      "snugglegrams",
+      "merge",
+      "heartsdaygrave",
+      "swordhaven",
+      "pendragon",
+      "noble",
+      "saber",
+      "pure",
+      "nobility",
+      "emblem",
+      "shield",
+      "promised",
+      "victory",
+      "knighthood",
+      "conferment",
+      "shadowscythe",
+      "visionary",
+      "plume",
+      "tarnished",
+      "unwavering",
+      "spite",
+      "condemnation",
+      "doomknight",
+      "tyrant",
+      "plate",
+      "collar",
+      "oppression",
+      "darkness",
+      "doomed",
+      "tyrannical"
+    ],
+    "path": "Seasonal/HerosHeartDay/UndeadSnugglegramsMerge.cs",
+    "size": 8336,
+    "sha256": "6ba51b04ef4076bd0b8bc54b2c733a04c0e1466a96776fe08847ba1626ca90f2",
+    "fileName": "UndeadSnugglegramsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/UndeadSnugglegramsMerge.cs"
+  },
+  {
     "name": "Painted Butterfly (Arcadia Merge)",
     "description": "This will complete the Painted Butterfly quest.",
     "tags": [
@@ -14523,6 +14583,22 @@
     "sha256": "db127539052d3c47f341453fd7f175b5d75543b94dd4b9829b779b4104723416",
     "fileName": "BeleensGiftsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/BeleensGiftsMerge.cs"
+  },
+  {
+    "name": "heartsdaygrave",
+    "description": "This will complete the heartsdaygrave quest.",
+    "tags": [
+      "story",
+      "quest",
+      "seasonal",
+      "heartsdaygrave",
+      "heart"
+    ],
+    "path": "Seasonal/HerosHeartDay/heartsdaygrave.cs",
+    "size": 3560,
+    "sha256": "706f2c3d2b6e8566abcebd2ea8312893cddadb26974fe2c108492bfb32c01ea0",
+    "fileName": "heartsdaygrave.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/HerosHeartDay/heartsdaygrave.cs"
   },
   {
     "name": "Gems of Love Merge Shop",
@@ -26769,6 +26845,27 @@
     "sha256": "d1cfd20ebd5ac99a67d8df698324d819d9cc931b0c903fb91230c28b4cfc5059",
     "fileName": "HollowbornLabMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/HollowbornLabMerge.cs"
+  },
+  {
+    "name": "Aciels Gifts Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Aciels Gifts Merge [2680] in /shadowrealm",
+    "tags": [
+      "aciels",
+      "gifts",
+      "merge",
+      "shadowrealm",
+      "hollow",
+      "hail",
+      "next",
+      "week",
+      "ac",
+      "items"
+    ],
+    "path": "Hollowborn/MergeShops/AcielsGiftsMerge.cs",
+    "size": 3786,
+    "sha256": "b2673d3639975640e77b14d1226f2435cc35cf6f95ee0876813d9fb734f7595f",
+    "fileName": "AcielsGiftsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/AcielsGiftsMerge.cs"
   },
   {
     "name": "Dawn Fortress Merge",

@@ -35,7 +35,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance / Ravenous / Arcana
 // └─ Cape: Vainglory
 //
-// Arch Paladin
+// ArchPaladin
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Valiance
@@ -66,7 +66,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance / Ravenous / Arcana
 // └─ Cape: Vainglory
 //
-// Arch Paladin
+// ArchPaladin
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Valiance
@@ -97,7 +97,7 @@ using Skua.Core.Options;
 // ├─ Weapon: Valiance / Ravenous / Arcana
 // └─ Cape: Vainglory
 //
-// Arch Paladin
+// ArchPaladin
 // ├─ Class: Lucky
 // ├─ Helm: Forge
 // ├─ Weapon: Valiance
@@ -167,6 +167,16 @@ public class UltraDrago
     // User options
     public List<IOption> Options = new()
     {
+        new Option<DragoComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "Fast: CSS / LR / AP / LOO\n"
+                + "Safe: CAv / LR / AP / LOO\n"
+                + "F2P Fast: KE / LR / AP / LOO\n"
+                + "Unselected = off (use whatever classes you already have equipped).",
+            DragoComp.Unselected
+        ),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -181,7 +191,7 @@ public class UltraDrago
             "WARNING",
             "Please use the classes in the options to ensure proper role functionality.\n"
                 + "We've allowed you to choose 'Current Class', but it's recommended to select a specific role for optimal (safe) performance.\n"
-                + "Curent CLass\" Will Focus Boss -> Left Summon -> Right Summon",
+                + "Current Class will Focus Boss -> Left Summon -> Right Summon",
             true,
             true
         );
@@ -193,13 +203,15 @@ public class UltraDrago
         )
             Bot.Config.Configure();
 
+        Core.Boot();
+        Prep();
+
+        // Detect taunter role AFTER sync-equip so the class is correct
         if (TaunterGroup1.Contains(Bot.Player.CurrentClass!.Name))
             isTaunterGroup1 = true;
         if (TaunterGroup2.Contains(Bot.Player.CurrentClass.Name))
             isTaunterGroup2 = true;
 
-        Core.Boot();
-        Prep();
         C.EnsureComplete(8397);
         Fight();
     }
@@ -210,6 +222,21 @@ public class UltraDrago
         C.Join("whitemap");
         Astravia.AstraviaJudgement();
 
+        // Sync-equip classes if a comp is selected
+        DragoComp comp = Bot.Config!.Get<DragoComp>("DoEquipClasses");
+        if (comp != DragoComp.Unselected)
+        {
+            string[] classes = comp switch
+            {
+                DragoComp.Fast => new[] { "Chrono ShadowSlayer", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                DragoComp.Safe => new[] { "Chaos Avenger", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                DragoComp.F2PFast => new[] { "King's Echo", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                _ => new[] { "ArchPaladin", "Legion Revenant", "Chaos Avenger", "Lord Of Order" },
+            };
+
+            Ultra.EquipClassSync(classes, 4, "drago_class.sync");
+        }
+
         Adv.GearStore(EnhAfter: true);
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnhs();
@@ -218,7 +245,9 @@ public class UltraDrago
         Ultra.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");
 
-        if (isTaunterGroup1 || isTaunterGroup2)
+        // Taunter check uses current (possibly sync-assigned) class
+        if (TaunterGroup1.Contains(Bot.Player.CurrentClass?.Name ?? string.Empty)
+            || TaunterGroup2.Contains(Bot.Player.CurrentClass?.Name ?? string.Empty))
             Ultra.GetScrollOfEnrage();
     }
 
@@ -334,8 +363,8 @@ public class UltraDrago
                 );
                 break;
 
-            // Arch Paladin
-            case "Arch Paladin":
+            // ArchPaladin
+            case "ArchPaladin":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,
@@ -416,4 +445,11 @@ public class UltraDrago
         }
     }
 
+    public enum DragoComp
+    {
+        Unselected,
+        Fast,
+        Safe,
+        F2PFast,
+    }
 }

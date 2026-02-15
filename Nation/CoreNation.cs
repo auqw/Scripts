@@ -2197,12 +2197,21 @@ public class CoreNation
         }
     }
 
+    private static readonly HashSet<string> _sroeValidSet =
+    [
+        "Blood Gem of the Archfiend",
+        "Dark Crystal Shard",
+        "Gem of Nulgath",
+        "Tainted Gem",
+        "Totem of Nulgath"
+    ];
+
+    ShopItem[]? sroeItems = null;
+
     /// <summary>
-    /// Does Swindle's Dirt-y Deeds Done Dirt Cheap quest. Only use if /TowerofDoom10 completed and a good solo class.
+    /// Does Swindle's Dirt-y Deeds Done Dirt Cheap quest.
+    /// Only use if /TowerofDoom10 completed and a good solo class.
     /// </summary>
-    /// <param name="quant">Target quantity of Unidentified 10</param>
-    /// <param name="SRoE">Whether to buy from Swindle's Ripoff Emporium</param>
-    /// <param name="SRoEItems">Array of items to buy from SRoE, or ["All"] to buy all items</param>
     public void DirtyDeedsDoneDirtCheap(int quant = 1000, bool SRoE = false, string[]? SRoEItems = null)
     {
         if (Core.CheckInventory("Unidentified 10", quant))
@@ -2216,35 +2225,53 @@ public class CoreNation
             "Blood Gem of the Archfiend",
             "Dark Crystal Shard",
             "Gem of Nulgath",
-            "Tainted Gem"
+            "Tainted Gem",
+            "Totem of Nulgath"
         );
 
-        if (!Core.CheckInventory("Emerald Pickaxe"))
-            Core.KillEscherion("Emerald Pickaxe");
-
-        if (!Core.CheckInventory("Seraphic Grave Digger Spade"))
-            Core.KillMonster("legioncrypt", "r1", "Top", "Gravedigger", "Seraphic Grave Digger Spade", isTemp: false);
-
         Core.EquipClass(ClassType.Solo);
+        Core.KillEscherion("Emerald Pickaxe");
+        Core.KillMonster("legioncrypt", "r1", "Top", "Gravedigger", "Seraphic Grave Digger Spade", isTemp: false);
 
-        // Pre-cache SRoE shop items if enabled
-        ShopItem[] sroeItems = Array.Empty<ShopItem>();
-        if (SRoE && SRoEItems != null && SRoEItems.Length > 0)
+        ShopItem[]? itemsToBuy = null;
+
+        if (SRoE)
         {
-            List<ShopItem> shopItems = Core.GetShopItems("tercessuinotlim", 1951);
-            sroeItems = new[] {
-            shopItems.Find(x => x?.Name == "Blood Gem of the Archfiend"),
-            shopItems.Find(x => x?.Name == "Dark Crystal Shard"),
-            shopItems.Find(x => x?.Name == "Gem of Nulgath"),
-            shopItems.Find(x => x?.Name == "Tainted Gem")
-        }.Where(x => x != null).Cast<ShopItem>().ToArray();
+            ShopItem[] shopItems = Core.GetShopItems("tercessuinotlim", 1951).ToArray();
+
+            bool buyAll = SRoEItems?.Length == 1 &&
+                          SRoEItems[0].Equals("All", StringComparison.OrdinalIgnoreCase);
+
+            HashSet<string>? selectedSet = null;
+
+            if (!buyAll && SRoEItems?.Length > 0)
+                selectedSet = [.. SRoEItems];
+
+            List<ShopItem> build = new();
+
+            foreach (ShopItem item in shopItems)
+            {
+                if (item == null)
+                    continue;
+
+                if (!_sroeValidSet.Contains(item.Name))
+                    continue;
+
+                if (!buyAll && (selectedSet == null || !selectedSet.Contains(item.Name)))
+                    continue;
+
+                build.Add(item);
+            }
+
+            if (build.Count > 0)
+                itemsToBuy = build.ToArray();
         }
+
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Unidentified 10", quant))
         {
             Core.EnsureAccept(7818);
 
-            // Farm quest drops
             Core.HuntMonster("towerofdoom10", "Slugbutter", "Slugbutter Digging Advice", publicRoom: true, log: false);
             Core.HuntMonster("crownsreach", "Chaos Tunneler", "Chaotic Tunneling Techniques", 2, log: false);
             Core.HuntMonster("downward", "Crystal Mana Construct", "Crystalized Corporate Digging Secrets", 3, log: false);
@@ -2252,45 +2279,28 @@ public class CoreNation
             Core.EnsureComplete(7818);
             Core.FarmingLogger("Unidentified 10", quant);
 
-            // SRoE buying logic - only if enabled and items configured
-            if (!SRoE || sroeItems.Length == 0)
+            if (!SRoE || itemsToBuy?.Length == 0)
                 continue;
 
-            int ui10Qty = Bot.Inventory.GetQuantity("Unidentified 10");
-            int receiptQty = Bot.Inventory.GetQuantity("Receipt of Swindle");
-
-            // Need at least 1000 UI10 to buy
-            if (ui10Qty < 1000)
+            if (Bot.Inventory.GetQuantity("Unidentified 10") < 1000)
                 continue;
-
-            // Determine which items to buy
-            ShopItem[] itemsToBuy = SRoEItems.Length == 1 && SRoEItems[0].Equals("All", StringComparison.OrdinalIgnoreCase)
-                ? sroeItems
-                : sroeItems.Where(x => SRoEItems.Contains(x.Name)).ToArray();
 
             bool allMaxed = true;
 
             foreach (ShopItem item in itemsToBuy)
             {
-                int currentQty = Bot.Inventory.GetQuantity(item.Name);
-                if (currentQty >= item.MaxStack)
-                    continue;
+                int buyQty = Core.MaxBuyQuant("tercessuinotlim", 1951, item);
+                int currentQty = Bot.Inventory.GetQuantity(item.ID);
+
+                // Cap by max stack
+                buyQty = Math.Min(buyQty, item.MaxStack - currentQty);
+                if (buyQty <= 0)
+                    continue; // Already maxed
 
                 allMaxed = false;
 
-                int maxByUi10 = ui10Qty / 50;
-                int maxByReceipt = receiptQty / 3;
-                int buyQty = Math.Min(maxByUi10, maxByReceipt);
-                buyQty = Math.Min(buyQty, item.MaxStack - currentQty);
-
-                if (buyQty <= 0)
-                    continue;
-
                 Core.Logger($"Buying {buyQty}x {item.Name}");
-                Core.BuyItem("tercessuinotlim", 1951, item.ID, buyQty);
-
-                ui10Qty -= buyQty * 50;
-                receiptQty -= buyQty * 3;
+                Core.BuyItem("tercessuinotlim", 1951, item.ID, buyQty, item.ShopItemID);
             }
 
             if (allMaxed)

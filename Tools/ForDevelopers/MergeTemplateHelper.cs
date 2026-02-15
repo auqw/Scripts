@@ -35,7 +35,7 @@ public class MergeTemplateHelper
     public static CoreAdvanced _sAdv;
 
     public string OptionsStorage = "MergeTemplateHelper";
-
+    public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
         new Option<string>(

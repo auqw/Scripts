@@ -756,72 +756,372 @@ public class CoreUltra
     public void UpdateEntry(string path, string key, string payload)
     {
         if (string.IsNullOrWhiteSpace(key))
-        {
             return;
-        }
 
-        for (int attempt = 0; attempt < 50; attempt++)
+        string lockFile = path + ".lock";
+        FileStream? lockStream = null;
+
+        try
         {
-            try
+            // Acquire exclusive lock file
+            for (int attempt = 0; attempt < 50; attempt++)
             {
-                // Phase 1: Read existing content (shared lock)
-                List<string> lines = new List<string>();
-                
-                if (File.Exists(path))
+                try
                 {
-                    using var fs = new FileStream(
-                        path,
-                        FileMode.Open,
-                        FileAccess.Read,
-                        FileShare.Read);
-                    using var reader = new StreamReader(fs);
-                    string? line;
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        if (!string.IsNullOrWhiteSpace(line))
-                            lines.Add(line);
-                    }
+                    lockStream = new FileStream(
+                        lockFile,
+                        FileMode.OpenOrCreate,
+                        FileAccess.ReadWrite,
+                        FileShare.None
+                    );
+                    break; // Got the lock
                 }
-
-                // Phase 2: Modify in memory
-                string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-                string entry = $"{key}:{payload}:{stamp}";
-
-                int idx = lines.FindIndex(l =>
+                catch (IOException)
                 {
-                    string[] parts = l.Split(':');
-                    return parts.Length > 0 && 
-                        parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
-                });
-
-                if (idx >= 0)
-                    lines[idx] = entry;
-                else
-                    lines.Add(entry);
-
-                // Phase 3: Write with exclusive lock
-                using (var fs = new FileStream(
-                    path,
-                    FileMode.Create, // Truncate and write
-                    FileAccess.Write,
-                    FileShare.None)) // EXCLUSIVE - blocks everyone
-                using (var writer = new StreamWriter(fs))
-                {
-                    foreach (var line in lines)
-                    {
-                        writer.WriteLine(line);
-                    }
+                    Bot?.Sleep(100 + (attempt * 20)); // Backoff
                 }
-                
-                return; // Success
             }
-            catch (IOException)
+
+            if (lockStream == null)
             {
-                Bot?.Sleep(100 + (attempt * 20));
+                Bot?.Log($"[UpdateEntry] Failed to acquire lock for {path}");
+                return;
+            }
+
+            // Now we have exclusive access - read, modify, write
+            List<string> lines = ReadLines(path).ToList();
+            string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+            string entry = $"{key}:{payload}:{stamp}";
+
+            int idx = lines.FindIndex(l =>
+            {
+                string[] parts = l.Split(':');
+                if (parts.Length < 1)
+                    return false;
+                return parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
+            });
+
+            if (idx >= 0)
+                lines[idx] = entry;
+            else
+                lines.Add(entry);
+
+            // Write back
+            string[] arr = lines.ToArray();
+            for (int i = 0; i < 10; i++)
+            {
+                try
+                {
+                    File.WriteAllLines(path, arr);
+                    break;
+                }
+                catch (IOException)
+                {
+                    Bot?.Sleep(50);
+                }
             }
         }
-        
-        Bot?.Log($"[ArmySync] Failed to update {path} after retries");
+        finally
+        {
+            // Release lock
+            lockStream?.Dispose();
+        }
+    }
+
+    // -------------------------------------------------------
+    // Sync-based class equipping for army comps
+    // -------------------------------------------------------
+    public string EquipClassSync(
+        string[][] classSlots,
+        int armySize,
+        string syncFilePath = "class_assign.sync",
+        bool allowDuplicates = false
+    )
+    {
+        if (classSlots == null || classSlots.Length == 0 || armySize < 1)
+            return string.Empty;
+
+        string syncFile = ResolveSyncPath(syncFilePath);
+
+        // Clear stale file (>15 min old)
+        try
+        {
+            if (
+                File.Exists(syncFile)
+                && (DateTime.UtcNow - File.GetLastWriteTimeUtc(syncFile)).TotalMinutes > 15
+            )
+                File.WriteAllText(syncFile, "");
+        }
+        catch { }
+
+        // Collect every unique class name across all slots
+        HashSet<string> allNeeded = new(StringComparer.OrdinalIgnoreCase);
+        foreach (string[] slot in classSlots)
+            foreach (string cls in slot)
+                allNeeded.Add(cls);
+
+        // Check which of those this client owns (inventory + bank)
+        List<string> myClasses = new();
+        foreach (string cls in allNeeded)
+        {
+            if (C.CheckInventory(cls, toInv: true))
+                myClasses.Add(cls);
+        }
+
+        string username = Bot.Player.Username;
+        string payload = string.Join(",", myClasses);
+        Bot?.Log(
+            $"[EquipClassSync] {username} owns: {(myClasses.Count > 0 ? payload : "NONE of the needed classes")}"
+        );
+
+        UpdateEntry(syncFile, username, payload);
+
+        // Wait for all members to register
+        const int staleThreshold = 600;
+        int lastCount = -1;
+
+        while (!Bot!.ShouldExit)
+        {
+            string[] lines = ReadLines(syncFile);
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            int validCount = 0;
+
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(':');
+                if (parts.Length < 3)
+                    continue;
+                if (!long.TryParse(parts[parts.Length - 1], out long ts))
+                    continue;
+                if (now - ts <= staleThreshold)
+                    validCount++;
+            }
+
+            if (validCount != lastCount)
+            {
+                lastCount = validCount;
+                Bot?.Log($"[EquipClassSync] Registered: {validCount}/{armySize}");
+            }
+
+            if (validCount >= armySize)
+                break;
+
+            // Re-poke to keep entry fresh
+            UpdateEntry(syncFile, username, payload);
+            Bot?.Sleep(500);
+        }
+
+        if (Bot?.ShouldExit == true)
+            return string.Empty;
+
+        // Phase 2: Mark self as READY with classes preserved
+        // Format: username:READY|class1,class2,...:timestamp
+        string readyPayload = $"READY|{string.Join(",", myClasses)}";
+        UpdateEntry(syncFile, username, readyPayload);
+        Bot?.Log($"[EquipClassSync] {username} marked READY, waiting for all...");
+
+        // Wait for all clients to be READY (ensures no more class-list writes)
+        while (!Bot!.ShouldExit)
+        {
+            string[] lines = ReadLines(syncFile);
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            int readyCount = 0;
+
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(':');
+                if (parts.Length < 3)
+                    continue;
+                // Check if payload starts with "READY|"
+                if (!parts[1].StartsWith("READY|", StringComparison.OrdinalIgnoreCase))
+                    continue;
+                if (!long.TryParse(parts[parts.Length - 1], out long ts))
+                    continue;
+                if (now - ts <= staleThreshold)
+                    readyCount++;
+            }
+
+            if (readyCount >= armySize)
+            {
+                Bot?.Log($"[EquipClassSync] All {readyCount} clients READY. Reading final state...");
+                break;
+            }
+
+            Bot?.Sleep(300);
+        }
+
+        if (Bot?.ShouldExit == true)
+            return string.Empty;
+
+        // Small buffer to ensure file system has flushed all writes
+        Bot?.Sleep(500);
+
+        // Parse entries: player - owned classes
+        Dictionary<string, List<string>> playerClasses =
+            new(StringComparer.OrdinalIgnoreCase);
+        {
+            string[] lines = ReadLines(syncFile);
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            foreach (string line in lines)
+            {
+                string[] parts = line.Split(':');
+                if (parts.Length < 3)
+                    continue;
+
+                string playerName = parts[0];
+                string payloadPart = parts[1];
+
+                if (!long.TryParse(parts[parts.Length - 1], out long ts))
+                    continue;
+                if (now - ts > staleThreshold)
+                    continue;
+
+                // Handle both formats: "READY|class1,class2" or "class1,class2"
+                string classListStr = payloadPart;
+                if (payloadPart.StartsWith("READY|", StringComparison.OrdinalIgnoreCase))
+                    classListStr = payloadPart.Substring(6); // Remove "READY|" prefix
+
+                playerClasses[playerName] = classListStr
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .ToList();
+            }
+        }
+
+        Bot?.Log($"[EquipClassSync] {playerClasses.Count} player(s) registered. Assigning classes...");
+
+        // Pre-count how many times each class appears across all slot definitions
+        // This determines the max allowed duplicates for each class
+        Dictionary<string, int> classMaxCount = new(StringComparer.OrdinalIgnoreCase);
+        if (allowDuplicates)
+        {
+            foreach (string[] slot in classSlots)
+            {
+                foreach (string cls in slot)
+                {
+                    if (!classMaxCount.ContainsKey(cls))
+                        classMaxCount[cls] = 0;
+                    classMaxCount[cls]++;
+                }
+            }
+        }
+
+        // Deterministic greedy assignment
+        // Alpha-sort players so every client computes the identical result.
+        List<string> sortedPlayers = playerClasses
+            .Keys.OrderBy(p => p, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        Dictionary<string, string> assignments = new(StringComparer.OrdinalIgnoreCase);
+        HashSet<string> assignedPlayers = new(StringComparer.OrdinalIgnoreCase);
+        Dictionary<string, int> classUsedCount = new(StringComparer.OrdinalIgnoreCase);
+        HashSet<int> filledSlots = new();
+
+        for (int s = 0; s < classSlots.Length; s++)
+        {
+            if (filledSlots.Contains(s))
+                continue;
+
+            bool filled = false;
+
+            // Try each accepted class in preference order
+            foreach (string acceptedClass in classSlots[s])
+            {
+                // Check if this class can still be used
+                int used = classUsedCount.GetValueOrDefault(acceptedClass, 0);
+                if (allowDuplicates)
+                {
+                    int max = classMaxCount.GetValueOrDefault(acceptedClass, 0);
+                    if (used >= max)
+                        continue;
+                }
+                else
+                {
+                    // No duplicates: each class used at most once
+                    if (used >= 1)
+                        continue;
+                }
+
+                List<string> candidates = sortedPlayers
+                    .Where(p =>
+                        !assignedPlayers.Contains(p)
+                        && playerClasses[p].Any(c =>
+                            c.Equals(acceptedClass, StringComparison.OrdinalIgnoreCase)
+                        )
+                    )
+                    .ToList();
+
+                if (candidates.Count == 0)
+                    continue;
+
+                // Most-constrained candidate first (fewest open slots it can fill),
+                // tiebreak alphabetical.
+                string best = candidates
+                    .OrderBy(p =>
+                    {
+                        int canFill = 0;
+                        for (int s2 = 0; s2 < classSlots.Length; s2++)
+                        {
+                            if (filledSlots.Contains(s2))
+                                continue;
+                            if (
+                                classSlots[s2].Any(c =>
+                                    playerClasses[p].Any(pc =>
+                                        pc.Equals(c, StringComparison.OrdinalIgnoreCase)
+                                    )
+                                )
+                            )
+                                canFill++;
+                        }
+                        return canFill;
+                    })
+                    .ThenBy(p => p, StringComparer.OrdinalIgnoreCase)
+                    .First();
+
+                assignments[best] = acceptedClass;
+                assignedPlayers.Add(best);
+                classUsedCount[acceptedClass] = used + 1;
+                filledSlots.Add(s);
+                Bot?.Log($"[EquipClassSync] Slot {s} > {best} ({acceptedClass})");
+                filled = true;
+                break;
+            }
+
+            if (!filled)
+                Bot?.Log($"[EquipClassSync] WARNING: No candidate for slot {s} ({string.Join("/", classSlots[s])})!");
+        }
+
+        // Find this client's assignment
+        if (!assignments.TryGetValue(username, out string? myClass) || string.IsNullOrEmpty(myClass))
+        {
+            C.Logger($"[EquipClassSync] {username} was not assigned any class! Check that all of your accounts own the required classes.", "EquipClassSync", true, true);
+            return string.Empty;
+        }
+
+        Bot?.Log($"[EquipClassSync] - Equipping: {myClass}");
+        C.Equip(myClass);
+        Bot?.Sleep(1000);
+
+        // Clear sync file for next run
+        try { File.WriteAllText(syncFile, ""); } catch { }
+
+        return myClass;
+    }
+
+    /// <summary>
+    /// one class per slot overload (no alternates).
+    /// </summary>
+    public string EquipClassSync(
+        string[] classes,
+        int armySize,
+        string syncFilePath = "class_assign.sync",
+        bool allowDuplicates = false
+    )
+    {
+        string[][] wrapped = new string[classes.Length][];
+        for (int i = 0; i < classes.Length; i++)
+            wrapped[i] = new[] { classes[i] };
+        return EquipClassSync(wrapped, armySize, syncFilePath, allowDuplicates);
     }
 
     // --- next set ---------------------------------------------------------------
