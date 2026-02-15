@@ -5697,8 +5697,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/MergeTemplateHelper.cs",
-    "size": 15012,
-    "sha256": "1d474326bd81bf193953e3ed1ef5b3511aee678af5eed629cd05de6fbfeb7646",
+    "size": 15052,
+    "sha256": "3408a966e3e37a8fa85c08cb5ea3b2deecda162657a3b637f20c1ad2c4d3317a",
     "fileName": "MergeTemplateHelper.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/MergeTemplateHelper.cs"
   },
