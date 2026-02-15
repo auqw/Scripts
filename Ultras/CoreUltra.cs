@@ -760,74 +760,68 @@ public class CoreUltra
             return;
         }
 
-        string lockFile = path + ".lock";
-        FileStream? lockStream = null;
-
-        try
+        for (int attempt = 0; attempt < 50; attempt++)
         {
-            // Acquire exclusive lock file
-            for (int attempt = 0; attempt < 50; attempt++)
+            try
             {
-                try
+                // Phase 1: Read existing content (shared lock)
+                List<string> lines = new List<string>();
+                
+                if (File.Exists(path))
                 {
-                    lockStream = new FileStream(
-                        lockFile,
-                        FileMode.OpenOrCreate,
-                        FileAccess.ReadWrite,
-                        FileShare.None
-                    );
-                    break; // Got the lock
+                    using var fs = new FileStream(
+                        path,
+                        FileMode.Open,
+                        FileAccess.Read,
+                        FileShare.Read);
+                    using var reader = new StreamReader(fs);
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(line))
+                            lines.Add(line);
+                    }
                 }
-                catch (IOException)
+
+                // Phase 2: Modify in memory
+                string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+                string entry = $"{key}:{payload}:{stamp}";
+
+                int idx = lines.FindIndex(l =>
                 {
-                    Bot?.Sleep(100 + (attempt * 20)); // Backoff
+                    string[] parts = l.Split(':');
+                    return parts.Length > 0 && 
+                        parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
+                });
+
+                if (idx >= 0)
+                    lines[idx] = entry;
+                else
+                    lines.Add(entry);
+
+                // Phase 3: Write with exclusive lock
+                using (var fs = new FileStream(
+                    path,
+                    FileMode.Create, // Truncate and write
+                    FileAccess.Write,
+                    FileShare.None)) // EXCLUSIVE - blocks everyone
+                using (var writer = new StreamWriter(fs))
+                {
+                    foreach (var line in lines)
+                    {
+                        writer.WriteLine(line);
+                    }
                 }
+                
+                return; // Success
             }
-
-            if (lockStream == null)
+            catch (IOException)
             {
-                Bot?.Log($"[UpdateEntry] Failed to acquire lock for {path}");
-                return;
-            }
-
-            // Now we have exclusive access - read, modify, write
-            List<string> lines = ReadLines(path).ToList();
-            string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-            string entry = $"{key}:{payload}:{stamp}";
-
-            int idx = lines.FindIndex(l =>
-            {
-                string[] parts = l.Split(':');
-                if (parts.Length < 1)
-                    return false;
-                return parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
-            });
-
-            if (idx >= 0)
-                lines[idx] = entry;
-            else
-                lines.Add(entry);
-
-            // Write back
-            string[] arr = lines.ToArray();
-            for (int i = 0; i < 10; i++)
-            {
-                try
-                {
-                    File.WriteAllLines(path, arr);
-                    break;
-                }
-                catch (IOException)
-                {
-                    Bot.Sleep(50);
-                }
+                Bot?.Sleep(100 + (attempt * 20));
             }
         }
-        finally
-        {
-            // Release lock
-            lockStream?.Dispose();
-        }
+        
+        Bot?.Log($"[ArmySync] Failed to update {path} after retries");
     }
 
     // --- next set ---------------------------------------------------------------
