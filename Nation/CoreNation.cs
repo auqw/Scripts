@@ -2214,10 +2214,7 @@ public class CoreNation
     /// </summary>
     public void DirtyDeedsDoneDirtCheap(int quant = 1000, bool SRoE = false, string[]? SRoEItems = null)
     {
-        if (Core.CheckInventory("Unidentified 10", quant))
-            return;
-
-        Core.AddDrop(
+       Core.AddDrop(
             "Emerald Pickaxe",
             "Seraphic Grave Digger Spade",
             "Unidentified 10",
