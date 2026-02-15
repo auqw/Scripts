@@ -3078,6 +3078,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/DarkonDebris2ReconstructedPrerequisites.cs"
   },
   {
+    "name": "UltraGramiel",
+    "description": "Ultra Gramiel - auto-assigns role by class",
+    "tags": [
+      "ultra",
+      "gramiel",
+      "ultra gramiel"
+    ],
+    "path": "Ultras/UltraGramiel.cs",
+    "size": 22173,
+    "sha256": "8d03265e2016e1c7805d52742d5d902361633e66af43d15c028734b769dbb859",
+    "fileName": "UltraGramiel.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraGramiel.cs"
+  },
+  {
     "name": "UltraEngineer",
     "description": "Ultra Engineer helper prioritizing drones with army synchronization and consumables.",
     "tags": [
