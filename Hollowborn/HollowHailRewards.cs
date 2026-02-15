@@ -83,7 +83,13 @@ public class HollowHailRewards
 
     public void WithEveryWindQuestRewards()
     {
-        Quest quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(WithEveryWindQuestID));
+        Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(WithEveryWindQuestID));
+
+        if (quest == null)
+        {
+            Core.Logger($"Failed to load quest with ID {WithEveryWindQuestID}. Cannot proceed with With Every Wind rewards.");
+            return;
+        }
 
         if (quest?.AcceptRequirements?.Count > 0)
         {
@@ -91,7 +97,7 @@ public class HollowHailRewards
                 Core.Unbank(req.Name);
         }
 
-        List<ItemBase> rewardOptions = quest?.Rewards;
+        List<ItemBase>? rewardOptions = quest?.Rewards;
         if (rewardOptions == null || rewardOptions.Count == 0)
         {
             Core.Logger("No With Every Wind quest rewards found.");
@@ -154,7 +160,13 @@ public class HollowHailRewards
 
     public void HailToTheKingQuestRewards()
     {
-        Quest quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(HailToTheKingQuestID));
+        Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(HailToTheKingQuestID));
+
+        if (quest == null)
+        {
+            Core.Logger($"Failed to load quest with ID {HailToTheKingQuestID}. Cannot proceed with Hail To The King rewards.");
+            return;
+        }
 
         if (quest?.AcceptRequirements?.Count > 0)
         {
@@ -162,7 +174,7 @@ public class HollowHailRewards
                 Core.Unbank(req.Name);
         }
 
-        List<ItemBase> rewardOptions = quest?.Rewards;
+        List<ItemBase>? rewardOptions = quest?.Rewards;
         if (rewardOptions == null || rewardOptions.Count == 0)
         {
             Core.Logger("No Hail to the King rewards found.");
@@ -228,7 +240,13 @@ public class HollowHailRewards
             return;
         }
 
-        Quest quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(ColdColdCOLDQuestID));
+        Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(ColdColdCOLDQuestID));
+
+        if (quest == null)
+        {
+            Core.Logger($"Failed to load quest with ID {ColdColdCOLDQuestID}. Cannot proceed with Cold, Cold, COLD! rewards.");
+            return;
+        }
 
         if (quest?.AcceptRequirements?.Count > 0)
         {
@@ -236,7 +254,7 @@ public class HollowHailRewards
                 Core.Unbank(req.Name);
         }
 
-        List<ItemBase> rewardOptions = quest?.Rewards;
+        List<ItemBase>? rewardOptions = quest?.Rewards;
         if (rewardOptions == null || rewardOptions.Count == 0)
         {
             Core.Logger("No Cold, Cold, COLD! rewards found.");
