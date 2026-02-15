@@ -108,7 +108,7 @@ public class ArmyLichWarMem
         C.Logger($"Players in Curreny Army: {sArmy.Players().Length}");
         C.RegisterQuests(10282, 10283);
         Core.Join(map);
-        C.Jump("r2", "Left");
+        C.Jump("r6", "Right");
         if (sArmy.Players().Length > 1)
             Ultra.WaitForArmy(sArmy.Players().Length - 1, "ArmyLeveling.sync");
         Bot.Player.SetSpawnPoint();
