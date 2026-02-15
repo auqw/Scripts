@@ -4388,6 +4388,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/CoreHollowborn.cs"
   },
   {
+    "name": "Hollow Hail Quest Rewards",
+    "description": "Farms quest rewards from \"With Every Wind\", \"Hail To The King\", and \"Cold, Cold, COLD!\" quests",
+    "tags": [
+      "hollow hail",
+      "hollow",
+      "hail",
+      "hollowborn",
+      "with every wind",
+      "hail to the king",
+      "cold cold cold"
+    ],
+    "path": "Hollowborn/HollowHailRewards.cs",
+    "size": 10036,
+    "sha256": "02ad0bcfd2b553e2a326083ba3866635b4e3644198b3b73833781f0a8e5256d3",
+    "fileName": "HollowHailRewards.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowHailRewards.cs"
+  },
+  {
     "name": "Gifts of the Cryomancer",
     "description": "This script will farm all the rewards from the quest \"Gifts of the Cryomancer\"",
     "tags": [
