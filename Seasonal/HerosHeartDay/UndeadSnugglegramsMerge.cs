@@ -22,8 +22,8 @@ public class UndeadSnugglegramsMerge
     private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
 
-    private static heartsdaygrave heartsdaygrave { get => _heartsdaygrave ??= new heartsdaygrave(); set => _heartsdaygrave = value; }
-    private static heartsdaygrave _heartsdaygrave;
+    private static HeartsDayGrave heartsdaygrave { get => _heartsdaygrave ??= new HeartsDayGrave(); set => _heartsdaygrave = value; }
+    private static HeartsDayGrave _heartsdaygrave;
 
     public bool DontPreconfigure = true;
     public List<IOption> Generic = sAdv.MergeOptions;
