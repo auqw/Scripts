@@ -760,38 +760,73 @@ public class CoreUltra
             return;
         }
 
-        List<string> lines = ReadLines(path).ToList();
-        string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-        string entry = $"{key}:{payload}:{stamp}";
+        string lockFile = path + ".lock";
+        FileStream? lockStream = null;
 
-        // Match by FULL key (username|class)
-        int idx = lines.FindIndex(l =>
+        try
         {
-            string[] parts = l.Split(':');
-            if (parts.Length < 1)
-                return false;
-
-            return parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
-        });
-
-        if (idx >= 0)
-            lines[idx] = entry;
-        else
-            lines.Add(entry);
-
-        // Write back with retry
-        string[] arr = lines.ToArray();
-        for (int i = 0; i < 20; i++)
-        {
-            try
+            // Acquire exclusive lock file
+            for (int attempt = 0; attempt < 50; attempt++)
             {
-                File.WriteAllLines(path, arr);
+                try
+                {
+                    lockStream = new FileStream(
+                        lockFile,
+                        FileMode.OpenOrCreate,
+                        FileAccess.ReadWrite,
+                        FileShare.None
+                    );
+                    break; // Got the lock
+                }
+                catch (IOException)
+                {
+                    Bot?.Sleep(100 + (attempt * 20)); // Backoff
+                }
+            }
+
+            if (lockStream == null)
+            {
+                Bot?.Log($"[UpdateEntry] Failed to acquire lock for {path}");
                 return;
             }
-            catch (IOException)
+
+            // Now we have exclusive access - read, modify, write
+            List<string> lines = ReadLines(path).ToList();
+            string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+            string entry = $"{key}:{payload}:{stamp}";
+
+            int idx = lines.FindIndex(l =>
             {
-                Bot?.Sleep(50);
+                string[] parts = l.Split(':');
+                if (parts.Length < 1)
+                    return false;
+                return parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
+            });
+
+            if (idx >= 0)
+                lines[idx] = entry;
+            else
+                lines.Add(entry);
+
+            // Write back
+            string[] arr = lines.ToArray();
+            for (int i = 0; i < 10; i++)
+            {
+                try
+                {
+                    File.WriteAllLines(path, arr);
+                    break;
+                }
+                catch (IOException)
+                {
+                    Bot.Sleep(50);
+                }
             }
+        }
+        finally
+        {
+            // Release lock
+            lockStream?.Dispose();
         }
     }
 
