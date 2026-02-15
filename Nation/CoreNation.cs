@@ -2206,7 +2206,6 @@ public class CoreNation
         "Totem of Nulgath"
     ];
 
-    ShopItem[]? sroeItems = null;
 
     /// <summary>
     /// Does Swindle's Dirt-y Deeds Done Dirt Cheap quest.
@@ -2214,17 +2213,17 @@ public class CoreNation
     /// </summary>
     public void DirtyDeedsDoneDirtCheap(int quant = 1000, bool SRoE = false, string[]? SRoEItems = null)
     {
-       Core.AddDrop(
-            "Emerald Pickaxe",
-            "Seraphic Grave Digger Spade",
-            "Unidentified 10",
-            "Receipt of Swindle",
-            "Blood Gem of the Archfiend",
-            "Dark Crystal Shard",
-            "Gem of Nulgath",
-            "Tainted Gem",
-            "Totem of Nulgath"
-        );
+        Core.AddDrop(
+             "Emerald Pickaxe",
+             "Seraphic Grave Digger Spade",
+             "Unidentified 10",
+             "Receipt of Swindle",
+             "Blood Gem of the Archfiend",
+             "Dark Crystal Shard",
+             "Gem of Nulgath",
+             "Tainted Gem",
+             "Totem of Nulgath"
+         );
 
         Core.EquipClass(ClassType.Solo);
         Core.KillEscherion("Emerald Pickaxe");
@@ -2276,7 +2275,7 @@ public class CoreNation
             Core.EnsureComplete(7818);
             Core.FarmingLogger("Unidentified 10", quant);
 
-            if (!SRoE || itemsToBuy?.Length == 0)
+            if (!SRoE || itemsToBuy == null || itemsToBuy.Length == 0)
                 continue;
 
             if (Bot.Inventory.GetQuantity("Unidentified 10") < 1000)
@@ -2286,6 +2285,9 @@ public class CoreNation
 
             foreach (ShopItem item in itemsToBuy)
             {
+                if (item == null)
+                    continue;
+
                 int buyQty = Core.MaxBuyQuant("tercessuinotlim", 1951, item);
                 int currentQty = Bot.Inventory.GetQuantity(item.ID);
 
