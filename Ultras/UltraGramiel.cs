@@ -102,6 +102,14 @@ public class UltraGramiel
 
     public void ScriptMain(IScriptInterface bot)
     {
+        C.OneTimeMessage("Ultra Gramiel", 
+            "This is a technical fight requiring optimal enhancements and classes (SC/IT, LC, LOO, VDK).\n"
+                + "The crystal phase is RNG and deaths will occur.\n"
+                + "If you are not prepared, please do not run this script.",
+            true,
+            true
+        );
+
         Bot.Options.LagKiller = true;
         if (
             Bot.Config != null
