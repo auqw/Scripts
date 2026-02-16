@@ -1225,6 +1225,7 @@ public class CoreFarmerJoe
 
     public void SetClass()
     {
+
         // SoloClass
         if (string.IsNullOrEmpty(Core.SoloClass)
             || Core.SoloClass == "Generic"

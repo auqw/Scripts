@@ -160,11 +160,11 @@ public class CelestialPirateCommander
                 EquipBestClassType: false
             );
 
-            // why the fuck was the class buffed!?
+            //why the fuck was the class buffed!?
             InventoryItem? usethis = Bot
                 .Inventory.Items.Concat(Bot.Bank.Items)
                 .FirstOrDefault(n =>
-                    n.Name.StartsWith("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
+                    n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
                 );
 
             if (usethis != null)

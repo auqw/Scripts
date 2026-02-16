@@ -115,21 +115,17 @@ public class EliteVoid
             {
                 //Staying Humble 6682
                 Core.EnsureAccept(6682);
-                //why the fuck was the class buffed!?
-                //why the fuck was the class buffed!?
-                string[] SoloClasses = new[] { "Yami no Ronin", "Chaos Slayer" };
-                InventoryItem? usethis = Bot
-                    .Inventory.Items.Concat(Bot.Bank.Items)
-                    .FirstOrDefault(n => SoloClasses.Any(className => className == n.Name));
+        //why the fuck was the class buffed!?
+        InventoryItem? usethis = Bot
+            .Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(n =>
+                n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
+            );
 
-                if (usethis != null)
-                {
-                    Core.Equip(usethis.ID);
-                    if (usethis.Name == "Yami no Ronin")
-                        Bot.Skills.StartAdvanced("Yami no Ronin", false, Skua.Core.Models.Skills.ClassUseMode.Solo);
-                }
-                else
-                    Core.EquipClass(ClassType.Dodge);
+        if (usethis != null)
+            Core.Equip(usethis.ID);
+        else
+            Core.EquipClass(ClassType.Dodge);
 
                 Core.HuntMonster("underlair", "ArchFiend DragonLord", "Twisted Armor Piece", 3, EquipBestClassType: false);
                 Core.EnsureComplete(6682);

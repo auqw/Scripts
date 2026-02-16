@@ -119,7 +119,7 @@ public class FireChampionsArmor
         InventoryItem? usethis = Bot
             .Inventory.Items.Concat(Bot.Bank.Items)
             .FirstOrDefault(n =>
-                n.Name.StartsWith("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
+                n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
             );
 
         if (usethis != null)
