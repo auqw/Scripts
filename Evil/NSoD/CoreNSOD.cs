@@ -261,15 +261,7 @@ public class CoreNSOD
             Core.HuntMonsterMapID("shadowrealmpast", 11, "Malignant Essence", 3, false);
 
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "shadowrealmpast",
-                "Enter",
-                "Spawn",
-                "*",
-                "Empowered Essence",
-                50,
-                false
-            );
+            Core.KillMonster("shadowrealmpast", "Enter", "Spawn", "*", "Empowered Essence", 50, false);
             Core.EnsureComplete(4439);
             Core.FarmingLogger("Void Aura", quant);
         }
