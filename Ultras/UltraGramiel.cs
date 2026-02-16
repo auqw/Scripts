@@ -404,7 +404,7 @@ public class UltraGramiel
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,
                     wSpecial: WeaponSpecial.Arcanas_Concerto,
-                    cSpecial: CapeSpecial.Absolution
+                    cSpecial: CapeSpecial.Penitence
                 );
                 break;
 
@@ -414,7 +414,7 @@ public class UltraGramiel
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Pneuma,
                     wSpecial: WeaponSpecial.Ravenous,
-                    cSpecial: CapeSpecial.Vainglory
+                    cSpecial: CapeSpecial.Penitence
                 );
                 break;
 
