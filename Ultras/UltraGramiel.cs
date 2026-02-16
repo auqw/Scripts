@@ -76,13 +76,13 @@ public class UltraGramiel
     private int tauntCounter = 0;
     private DateTime lastTauntWarningTime = DateTime.MinValue;
     private bool shouldExecuteTaunt = false;
-    
+
     // Gramiel boss taunt timer (4 rotation, 5 seconds per taunt)
     private DateTime gramielFightStartTime = DateTime.MinValue;
     private double tauntOffsetSeconds = 0;
     private const double TauntIntervalSeconds = 20.0; // Full 4-taunt cycle
     private const double TauntWindowSeconds = 4.0; // Window to execute taunt
-    
+
     // Player role assignment (determined once during prep)
     private int crystalMapId = 2;
     private bool isT1Taunter = false;
@@ -102,7 +102,7 @@ public class UltraGramiel
 
     public void ScriptMain(IScriptInterface bot)
     {
-        C.OneTimeMessage("Ultra Gramiel", 
+        C.OneTimeMessage("Ultra Gramiel",
             "This is a technical fight requiring optimal enhancements and classes (SC/IT, LC, LOO, VDK).\n"
                 + "The crystal phase is RNG and deaths will occur.\n"
                 + "If you are not prepared, please do not run this script.",
@@ -120,10 +120,10 @@ public class UltraGramiel
 
         Core.Boot();
         Adv.GearStore(EnhAfter: true);
-        
+
         // Register packet handler for Gramiel warnings
         Bot.Events.ExtensionPacketReceived += GramielMessageListener;
-        
+
         try
         {
             Prep();
@@ -134,7 +134,7 @@ public class UltraGramiel
             // Unregister packet handler
             Bot.Events.ExtensionPacketReceived -= GramielMessageListener;
         }
-        
+
         if (Bot.Config!.Get<bool>("DoEnh"))
             Adv.GearStore(true, true);
         Bot.StopSync();
@@ -242,7 +242,7 @@ public class UltraGramiel
         // ---------------------------
         Core.Join("whitemap");
         Bot.Wait.ForMapLoad("whitemap");
-        
+
         // Wait for army to gather
         Ultra.WaitForArmy(3, "UltraItemCheck.sync");
         Bot.Sleep(1500);
@@ -251,8 +251,8 @@ public class UltraGramiel
         // MAP SETUP
         // ---------------------------
         C.EnsureAccept(10301);
-        C.AddDrop("Gramiel the Graceful Defeated");
-        
+        C.AddDrop("Gramiel the Graceful Vanquished");
+
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_gramiel.sync");
         Core.ChooseBestCell("*");
@@ -266,7 +266,7 @@ public class UltraGramiel
         {
             bool anyCrystalAlive = Bot.Monsters.CurrentAvailableMonsters
                 .Any(x => x != null && x.Alive && (x.MapID == 2 || x.MapID == 3));
-            
+
             // player death during crystal phase
             if (!Bot.Player.Alive && anyCrystalAlive)
             {
@@ -275,20 +275,20 @@ public class UltraGramiel
                 while (!Bot.Player.Alive && !Bot.ShouldExit)
                     Bot.Sleep(500);
                 Bot.Sleep(250);
-                
+
                 // 1st death: respawn and continue fighting
                 if (crystalDeathCount < 2)
                 {
                     continue;
                 }
-                
+
                 // 2nd death: leave room and restart
                 Core.DisableSkills();
                 C.Logger("2nd crystal phase death — leaving room to restart and avoid desync.");
                 tauntCounter = 0;
                 crystalDeathCount = 0;
                 gramielFightStartTime = DateTime.MinValue;
-                
+
                 Core.Join("whitemap");
                 Bot.Wait.ForMapLoad("whitemap");
                 Prep(skipEnhancements: true);
@@ -302,7 +302,7 @@ public class UltraGramiel
                 Core.EnableSkills();
                 continue;
             }
-            
+
             // restart if any army member is missing -- catches deaths during crystal phase that would cause desync
             if (Bot.Map.PlayerCount < 3)
             {
@@ -311,12 +311,12 @@ public class UltraGramiel
                 tauntCounter = 0;
                 crystalDeathCount = 0;
                 gramielFightStartTime = DateTime.MinValue;
-                
+
                 Core.Join("whitemap");
                 Bot.Wait.ForMapLoad("whitemap");
                 Prep(skipEnhancements: true);
                 Ultra.WaitForArmy(3, "ultra_gramiel.sync");
-                
+
                 Core.Join(map);
                 Bot.Wait.ForMapLoad(map);
                 Core.ChooseBestCell("*");
@@ -324,7 +324,7 @@ public class UltraGramiel
                 Core.EnableSkills();
                 continue;
             }
-            
+
             // Dead during Gramiel phase → just respawn
             if (!Bot.Player.Alive)
             {
@@ -334,7 +334,7 @@ public class UltraGramiel
             }
 
             // Check if the whole army has finished
-            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Gramiel the Graceful Defeated", 1), syncPath))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Gramiel the Graceful Vanquished", 1), syncPath))
             {
                 Core.DisableSkills();
                 C.Jump("Enter", "Spawn");
@@ -355,7 +355,7 @@ public class UltraGramiel
     void DoEnhs()
     {
         string className = Bot.Player.CurrentClass?.Name.ToLower() ?? string.Empty;
-        
+
         if (string.IsNullOrEmpty(className))
             return;
 
@@ -413,32 +413,32 @@ public class UltraGramiel
     {
         string className = Bot.Player.CurrentClass?.Name ?? string.Empty;
         int gramielMapId = 1; // Gramiel MapID
-        
+
         // Execute taunt if flagged (synchronously, blocking other actions)
         if (shouldExecuteTaunt)
         {
             shouldExecuteTaunt = false;
             Core.DisableSkills();
             Bot.Sleep(500);
-            
+
             C.Logger($"{className} executing taunt #{tauntCounter}!");
-            
+
             int attempts = 0;
             bool tauntLanded = false;
             while (!Bot.ShouldExit && attempts < 15)
             {
                 if (!Bot.Player.Alive)
                     break;
-                
+
                 if (!Bot.Player.HasTarget)
                     Bot.Combat.Attack(crystalMapId); // Re-target crystal
-                
+
                 if (Bot.Skills.CanUseSkill(5))
                     Bot.Skills.UseSkill(5);
-                
+
                 Bot.Sleep(500);
                 attempts++;
-                
+
                 // Check if Focus aura appeared (taunt landed)
                 if (Bot.Player.HasTarget && Bot.Target?.Auras?.Any(a => a?.Name == "Focus") == true)
                 {
@@ -448,7 +448,7 @@ public class UltraGramiel
                     break;
                 }
             }
-            
+
             if (!tauntLanded)
             {
                 C.Logger($"WARNING: Taunt #{tauntCounter} FAILED after {attempts} attempts!");
@@ -458,7 +458,7 @@ public class UltraGramiel
                     C.Logger($"Target auras present: {auraNames}");
                 }
             }
-            
+
             Core.EnableSkills();
             Bot.Sleep(300);
             return;
@@ -467,7 +467,7 @@ public class UltraGramiel
         // Check if primary crystal is alive
         bool primaryCrystalAlive = Bot.Monsters.CurrentAvailableMonsters
             .Any(x => x != null && x.Alive && x.MapID == crystalMapId);
-        
+
         // If primary crystal is dead, switch to the other crystal
         int targetCrystalMapId = crystalMapId;
         if (!primaryCrystalAlive)
@@ -475,14 +475,14 @@ public class UltraGramiel
             int otherCrystalMapId = crystalMapId == 2 ? 3 : 2;
             bool otherCrystalAlive = Bot.Monsters.CurrentAvailableMonsters
                 .Any(x => x != null && x.Alive && x.MapID == otherCrystalMapId);
-            
+
             if (otherCrystalAlive)
             {
                 targetCrystalMapId = otherCrystalMapId;
                 C.Logger($"Primary crystal down! Switching to other crystal (MapID {otherCrystalMapId})");
             }
         }
-        
+
         bool anyCrystalAlive = Bot.Monsters.CurrentAvailableMonsters
             .Any(x => x != null && x.Alive && (x.MapID == 2 || x.MapID == 3));
 
@@ -501,39 +501,39 @@ public class UltraGramiel
 
             // No crystal - attack Gramiel with timer-based taunts
             Bot.Combat.Attack(gramielMapId);
-            
+
             // Timer-based taunt rotation (staggered 5-second intervals)
             TimeSpan timeSinceFightStart = DateTime.Now - gramielFightStartTime;
             double currentTime = timeSinceFightStart.TotalSeconds;
             double timeInCycle = (currentTime - tauntOffsetSeconds) % TauntIntervalSeconds;
-            
+
             // Check if we're in our taunt window (0-4 seconds into our slot)
             bool inTauntWindow = timeInCycle >= 0 && timeInCycle < TauntWindowSeconds;
-            bool noFocusAura = Bot.Player.HasTarget && 
+            bool noFocusAura = Bot.Player.HasTarget &&
                                (Bot.Target?.Auras?.Any(a => a?.Name == "Focus") != true);
-            
+
             if (inTauntWindow && noFocusAura)
             {
                 Core.DisableSkills();
                 Bot.Sleep(500);
-                
+
                 C.Logger($"Gramiel taunt window ({currentTime:F1}s into fight, offset {tauntOffsetSeconds}s)");
-                
+
                 int attempts = 0;
                 while (!Bot.ShouldExit && attempts < 15)
                 {
                     if (!Bot.Player.Alive)
                         break;
-                    
+
                     if (!Bot.Player.HasTarget)
                         Bot.Combat.Attack(gramielMapId);
-                    
+
                     if (Bot.Skills.CanUseSkill(5))
                         Bot.Skills.UseSkill(5);
-                    
+
                     Bot.Sleep(500);
                     attempts++;
-                    
+
                     if (Bot.Player.HasTarget && Bot.Target?.Auras?.Any(a => a?.Name == "Focus") == true)
                     {
                         C.Logger("Gramiel taunt landed - Focus aura detected!");
@@ -541,7 +541,7 @@ public class UltraGramiel
                         break;
                     }
                 }
-                
+
                 Core.EnableSkills();
                 Bot.Sleep(300);
             }
@@ -556,27 +556,27 @@ public class UltraGramiel
             string type = packet["params"].type;
             if (type is not "json")
                 return;
-            
+
             if (!Bot.Player.Alive)
                 return;
-            
+
             dynamic data = packet["params"].dataObj;
             string cmd = data.cmd.ToString();
-            
+
             if (cmd != "ct")
                 return;
-            
+
             // Check for messages in anims array (boss messages appear here)
             if (data.anims is null)
                 return;
-            
+
             foreach (dynamic anim in data.anims)
             {
                 if (anim is null || anim.msg is null)
                     continue;
-                
+
                 string message = (string)anim.msg;
-                
+
                 // Check for crystal defense shattering attack warning
                 if (message.Contains("The Grace Crystal prepares a defense shattering attack!", StringComparison.OrdinalIgnoreCase))
                 {
@@ -586,17 +586,17 @@ public class UltraGramiel
                     {
                         return;
                     }
-                    
+
                     lastTauntWarningTime = DateTime.Now;
                     tauntCounter++;
                     C.Logger($"Crystal attack warning detected! (Taunt #{tauntCounter})");
-                    
+
                     // Determine if this player should taunt
                     // T1 taunters taunt on odd counts (1, 3, 5...)
                     // T2 taunters taunt on even counts (2, 4, 6...)
-                    bool shouldTaunt = (isT1Taunter && tauntCounter % 2 == 1) || 
+                    bool shouldTaunt = (isT1Taunter && tauntCounter % 2 == 1) ||
                                        (!isT1Taunter && tauntCounter % 2 == 0);
-                    
+
                     if (shouldTaunt)
                     {
                         C.Logger($"Taunt #{tauntCounter} assigned to {(isT1Taunter ? "T1" : "T2")}");
