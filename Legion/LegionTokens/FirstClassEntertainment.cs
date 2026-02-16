@@ -31,7 +31,7 @@ public class FirstClassEntertainment
     {
         Core.SetOptions();
 
-        Legion.LTFirstClassEntertainment();
+        Legion.LTFirstClassEntertainment(ReturnIfNoPeople: false);
 
         Core.SetOptions(false);
     }
