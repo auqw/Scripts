@@ -7290,50 +7290,113 @@ public class CoreBots
     //     );
     // }
 
-    /// <summary>
-    /// Checks, and prompts for the latest Skua Version
-    /// <param name="targetVersion">Current Skua Version to Check against</param>
-    /// </summary>
-    private void SkuaVersionChecker(string targetVersion = "1.4.2.0")
+    private void SkuaVersionChecker()
     {
-        if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2" || Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
+        if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2")
             return;
-        var culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
-        bool isPtBr = culture == "pt";
-        string title = isPtBr ? "Skua desatualizado detectado" : "Outdated Skua detected";
-        string instructions = isPtBr
-            ? "\n1) Vá para a aba 'Updates'\n"
-                + "2) Clique no botão Refresh\n"
-                + "3) Clique no botão de download ao lado da versão mais recente\n"
-                + "4) Aguarde a conclusão da instalação"
-            : "\n1) Go to the 'Updates' tab\n"
-                + "2) Click the Refresh button\n"
-                + "3) Click the download button next to the latest version\n"
-                + "4) Wait for installation to complete";
-        string message = isPtBr
-            ? $"Este script requer Skua {targetVersion} ou superior.\n\n"
-                + "Clique em OK para abrir o Skua Manager onde você pode atualizar:\n"
-                + instructions
-            : $"This script requires Skua {targetVersion} or above.\n\n"
-                + "Click OK to open Skua Manager where you can update:\n"
-                + instructions;
-        string okButton = "OK";
-        string cancelButton = isPtBr ? "Cancelar" : "Cancel";
-        string logMessage = isPtBr
-            ? $"Este script requer Skua {targetVersion} ou superior. Parando o script"
-            : $"This script requires Skua {targetVersion} or above. Stopping the script";
 
-        // Log instructions for reference
-        Logger($"\n--- {title} ---");
-        Logger(isPtBr
-            ? $"Este script requer Skua {targetVersion} ou superior."
-            : $"This script requires Skua {targetVersion} or above.");
-        Logger((isPtBr ? "Instruções de atualização:" : "Update instructions:") + instructions);
-        Logger("---");
+        bool isPt = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "pt";
+        bool win10Plus = Environment.OSVersion.Version.Major >= 10;
 
-        if (Bot.ShowMessageBox(message, title, okButton, cancelButton).Text == okButton)
-            Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "skua", "skua.manager.exe"));
-        Logger(logMessage, messageBox: true, stopBot: true);
+        if (!win10Plus)
+        {
+            string msg = isPt
+                ? "Skua requer Windows 10 ou superior."
+                : "Skua requires Windows 10 or higher.";
+
+            Logger(msg);
+            Bot.ShowMessageBox(msg,
+                isPt ? "Windows não suportado" : "Unsupported Windows",
+                "OK");
+
+            Logger(msg, messageBox: true, stopBot: true);
+            return;
+        }
+
+        try
+        {
+            using System.Net.Http.HttpClient client = new();
+            client.DefaultRequestHeaders.UserAgent.ParseAdd("SkuaVersionChecker");
+
+            string json = client
+                .GetStringAsync("https://api.github.com/repos/auqw/Skua/releases/latest")
+                .Result;
+
+            using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(json);
+
+            string latestTag = doc.RootElement.GetProperty("tag_name").GetString() ?? "";
+            Version latestVersion = Version.Parse(latestTag);
+
+            if (latestVersion <= Bot.Version)
+                return;
+
+            bool is64 = Environment.Is64BitOperatingSystem;
+            string arch = is64 ? "x64" : "x86";
+
+            string assetUrl = doc.RootElement
+                .GetProperty("assets")
+                .EnumerateArray()
+                .First(a => a.GetProperty("name").GetString()?.Contains(arch) == true)
+                .GetProperty("browser_download_url")
+                .GetString() ?? "";
+
+            string releasePage = doc.RootElement.GetProperty("html_url").GetString() ?? "";
+            string fileName = $"Skua-{latestTag}-Release-{arch}.msi";
+            string installerPath = Path.Combine(Path.GetTempPath(), fileName);
+
+            string prompt = isPt
+                ? $"Nova versão detectada ({latestTag}).\n\nBaixar agora?"
+                : $"New version detected ({latestTag}).\n\nDownload now?";
+
+            if (Bot.ShowMessageBox(prompt,
+                    isPt ? "Atualização disponível" : "Update Available",
+                    "OK",
+                    isPt ? "Cancelar" : "Cancel").Text != "OK")
+            {
+                Logger("Update required.", messageBox: true, stopBot: true);
+                return;
+            }
+
+            Logger(isPt ? "Baixando instalador..." : "Downloading installer...");
+
+            using System.Net.Http.HttpResponseMessage response = client.GetAsync(assetUrl).Result;
+            response.EnsureSuccessStatusCode();
+
+            using FileStream fs = new(installerPath, FileMode.Create, FileAccess.Write, FileShare.None);
+            response.Content.CopyToAsync(fs).Wait();
+
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "msiexec",
+                Arguments = $"/i \"{installerPath}\"",
+                UseShellExecute = true
+            });
+
+            Logger(isPt
+                ? "Instalador iniciado."
+                : "Installer launched.");
+        }
+        catch (Exception ex)
+        {
+            Logger($"Update check failed: {ex.Message}");
+
+            if (Bot.ShowMessageBox(
+                    isPt
+                        ? "Falha ao verificar atualização.\nAbrir página manual?"
+                        : "Update check failed.\nOpen release page?",
+                    isPt ? "Erro" : "Error",
+                    "OK",
+                    isPt ? "Cancelar" : "Cancel").Text == "OK")
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = "https://github.com/auqw/Skua/releases/latest",
+                    UseShellExecute = true
+                });
+            }
+        }
+
+        Logger("Update required. Stopping script.", messageBox: true, stopBot: true);
     }
 
     ClassType currentClass = ClassType.None;
