@@ -308,20 +308,22 @@ public class CoreBots
         Bot.Lite.ReacceptQuest = false;
         Bot.Lite.DisableRedWarning = true;
         Bot.Lite.CharacterSelectScreen = false;
-        Bot.Lite.UntargetDead = changeTo;
-        Bot.Lite.UntargetSelf = changeTo;
-        Bot.Lite.SmoothBackground = true;
-        Bot.Lite.ShowMonsterType = true;
+        Bot.Lite.UntargetDead = true;
+        Bot.Lite.UntargetSelf = true;
+        Bot.Lite.SmoothBackground = changeTo;
+        Bot.Lite.ShowMonsterType = changeTo;
         Bot.Lite.CustomDropsUI = true;
-        Bot.Lite.AurasUI = true;
+        Bot.Lite.DraggableDrops = false;
+        Bot.Lite.AurasUI = changeTo;
         Bot.Lite.QuantityWarnings = false;
         Bot.Lite.VisualSkillCooldowns = true;
         Bot.Lite.ChatUI = true;
         Bot.Lite.QuestLogTurnIns = true;
-        Bot.Lite.DisableSoundFx = true;
+        Bot.Lite.DisableSoundFx = changeTo;
 
         // Drop Options
         Bot.Drops.RejectElse = changeTo;
+        Bot.Drops.Clear();
         Bot.Drops.Start();
 
         CollectData(changeTo);
@@ -559,6 +561,8 @@ public class CoreBots
                         Bot.Lite.DisableSelfAnimation = changeTo;
                         Bot.Lite.DisableWeaponAnimation = changeTo;
                         Bot.Lite.DisableSkillAnimation = changeTo;
+                        Bot.Lite.DisableAuraAnimations = changeTo;
+                        Bot.Lite.DisableDamageNumbers = changeTo;
 
                         Bot.Flash.SetGameObject("stage.frameRate", 10);
                         if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
@@ -3214,9 +3218,10 @@ public class CoreBots
                     )
                 )
                 {
+
                     // Add both ID and Name to the drop list if missing (ID is incase of duplicate names)
-                    AddDrop(item.ID);
                     AddDrop(item.Name);
+                    AddDrop(item.ID);
                 }
             });
 
