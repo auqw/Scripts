@@ -207,8 +207,8 @@ public class HollowHailRewards
 
             // Solo Phase
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("icedungeon", "Shade of Kyanos", "Required Solo Drop Here", isTemp: false);
-            Core.HuntMonster("yulgarparty", "Highborn Necromancer", "Required Solo Drop Here", isTemp: false);
+            Core.HuntMonster("icedungeon", "Shade of Kyanos", "Warrior of Kyanos", isTemp: false);
+            Core.HuntMonster("yulgarparty", "Treasure Pile", "Highborn Necromancer", isTemp: false);
 
             // Farm Phase
             Core.EquipClass(ClassType.Farm);
