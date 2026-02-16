@@ -4414,8 +4414,8 @@
       "cold cold cold"
     ],
     "path": "Hollowborn/HollowHailRewards.cs",
-    "size": 10629,
-    "sha256": "36cb946a0f42c70b79a0d51c0289b6bc093d969014497d78e8d61ba6fec3191a",
+    "size": 10613,
+    "sha256": "91ad056745e3187e49732094548fbfb6d54b77fbd928daa15f184a9abcdafd60",
     "fileName": "HollowHailRewards.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowHailRewards.cs"
   },
