@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 431254,
-    "sha256": "a076334994ea45a9ad62ddfeaac2325403d7426913812c5c1dbbddc9a302f240",
+    "size": 431464,
+    "sha256": "3a8f8b4bdb3f71ee6619b7bcf0051ed68e9caaa3643fe6d9434bae9ed5e5b0a9",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -5586,8 +5586,8 @@
       "null"
     ],
     "path": "Evil/NSoD/CoreNSOD.cs",
-    "size": 24314,
-    "sha256": "bbdfa651a85a2f96f0ea5e8dcb7ae0407dcea17c9a41928362d37016485b653d",
+    "size": 24180,
+    "sha256": "6fab0a8049bd33d60c7577e25ce51295a164817f1844f207634b44a73edc574d",
     "fileName": "CoreNSOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/NSoD/CoreNSOD.cs"
   },
