@@ -2819,8 +2819,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 53633,
-    "sha256": "39dddb53b966b6b44956d83355caf3296f2952f38b58584523d3dec017843f63",
+    "size": 53695,
+    "sha256": "d5071dff7fd9042a9dfee871cb70e6489a844e925fb61d54bb1dc0e0425a648e",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -9189,8 +9189,8 @@
       "citadel-ruins"
     ],
     "path": "Story/Nation/CitadelRuins.cs",
-    "size": 9487,
-    "sha256": "7bb5202152d90840bc5be7dbe410e02b515837877f1893c2d7be4e182e13bd41",
+    "size": 9545,
+    "sha256": "4bfe4c510a7c9fa9e05125fedb65a37a8cafcb4ecf5138d7aa77651869add249",
     "fileName": "CitadelRuins.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Nation/CitadelRuins.cs"
   },
@@ -12325,8 +12325,8 @@
       "pirate"
     ],
     "path": "Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs",
-    "size": 6179,
-    "sha256": "3067f0802342efc5e6ba8d293b2ab6eae078f77e64c239c9a83eb9323c6c1fd9",
+    "size": 6249,
+    "sha256": "69f12a60461085a2df7f9cc4e50bd3826b68be106972eead4b98a49482de16ef",
     "fileName": "CelestialPirateCommander[PollyRogers].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/TalkLikeaPirateDay/CelestialPirateCommander[PollyRogers].cs"
   },
@@ -17736,8 +17736,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 18033,
-    "sha256": "b90c38bc1897fd918cb8da215fbc82ccf2c537fbbe5b2bac060fedb8d665f651",
+    "size": 18195,
+    "sha256": "9ffec65149313eee2e49d59089685717350e2b9d43c72d37fd09823ca9c53baf",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
@@ -18333,8 +18333,8 @@
       "null"
     ],
     "path": "Other/Weapons/CyseroItemUpgradeQuests.cs",
-    "size": 12355,
-    "sha256": "d15269f6470b11f5e06a61f1929800679a497d11583e6e9e455c8a7be71dbf7f",
+    "size": 12465,
+    "sha256": "e3ea92ac6ac1d6ac0434c5eaf331e82f1059ddb4017dd877612370aba9d26767",
     "fileName": "CyseroItemUpgradeQuests.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/CyseroItemUpgradeQuests.cs"
   },
@@ -24558,8 +24558,8 @@
       "hero-s-valiance"
     ],
     "path": "Other/Armor/FireChampionsArmor.cs",
-    "size": 4111,
-    "sha256": "bc59b376cef6345a2a1b75d105260f40f0eaf625b74c804498a63ac325721861",
+    "size": 4169,
+    "sha256": "4399b3a92bd872533774670b17223e3596e23aceb2f27354d495f36b548a4c47",
     "fileName": "FireChampionsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Armor/FireChampionsArmor.cs"
   },
@@ -25559,8 +25559,8 @@
       "null"
     ],
     "path": "Nation/Various/ArchfiendDragonEgg[Mem].cs",
-    "size": 2096,
-    "sha256": "0aa0b2d1a18df499020690baa259ac1ef6764a5670cdfe2afd65c10a554f77e4",
+    "size": 2154,
+    "sha256": "c5eda8e8464d1886bdcdf3333ee9afc4369d3e703f8808e82bc23c46b0568868",
     "fileName": "ArchfiendDragonEgg[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/ArchfiendDragonEgg[Mem].cs"
   },
@@ -25653,8 +25653,8 @@
       "null"
     ],
     "path": "Nation/Various/EliteVoid.cs",
-    "size": 4221,
-    "sha256": "e1ce6177bf8d46ad23450afc0db72638832796bb1882ce48faa58f9a3b115e99",
+    "size": 4383,
+    "sha256": "b69b77fb5d5846226297a5e6a60bdd050ec6de0e1aa6e202527c2cf2c56bc7c4",
     "fileName": "EliteVoid.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/EliteVoid.cs"
   },
