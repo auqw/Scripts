@@ -118,9 +118,11 @@ public class CitadelRuins
             .FirstOrDefault(n =>
                 n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
             );
-
         if (usethis != null)
+        {
             Core.Equip(usethis.ID);
+            Core.Equip(Core.FarmGear);
+        }
         else
             Core.EquipClass(ClassType.Dodge);
         Story.KillQuest(6682, "underlair", "ArchFiend DragonLord", EquipBestClassType: false);

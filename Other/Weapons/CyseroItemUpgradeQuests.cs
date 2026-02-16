@@ -236,17 +236,19 @@ public class CyseroItemUpgrade
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("Lair", "Bronze Draconian", "Wisp of Dragonspirit", 12);
             Core.HuntMonster("Lair", "Dark Draconian", "Crystallized Flame");
-        //why the fuck was the class buffed!?
-        InventoryItem? usethis = Bot
-            .Inventory.Items.Concat(Bot.Bank.Items)
-            .FirstOrDefault(n =>
-                n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
-            );
-
-        if (usethis != null)
-            Core.Equip(usethis.ID);
-        else
-            Core.EquipClass(ClassType.Dodge);
+            //why the fuck was the class buffed!?
+            InventoryItem? usethis = Bot
+                .Inventory.Items.Concat(Bot.Bank.Items)
+                .FirstOrDefault(n =>
+                    n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
+                );
+            if (usethis != null)
+            {
+                Core.Equip(usethis.ID);
+                Core.Equip(Core.FarmGear);
+            }
+            else
+                Core.EquipClass(ClassType.Dodge);
             Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false, EquipBestClassType: false);
 
             Core.EnsureComplete(7065);

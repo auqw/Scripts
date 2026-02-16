@@ -357,17 +357,19 @@ public class DragonOfTime
 
             if (!Core.CheckInventory("Dragon's Plasma", 20))
             {
-        //why the fuck was the class buffed!?
-        InventoryItem? usethis = Bot
-            .Inventory.Items.Concat(Bot.Bank.Items)
-            .FirstOrDefault(n =>
-                n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
-            );
-
-        if (usethis != null)
-            Core.Equip(usethis.ID);
-        else
-            Core.EquipClass(ClassType.Dodge);
+                //why the fuck was the class buffed!?
+                InventoryItem? usethis = Bot
+                    .Inventory.Items.Concat(Bot.Bank.Items)
+                    .FirstOrDefault(n =>
+                        n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
+                    );
+                if (usethis != null)
+                {
+                    Core.Equip(usethis.ID);
+                    Core.Equip(Core.FarmGear);
+                }
+                else
+                    Core.EquipClass(ClassType.Dodge);
                 Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false, EquipBestClassType: false);
             }
             Core.JumpWait();

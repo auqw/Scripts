@@ -1287,7 +1287,10 @@ public class UnlockForgeEnhancements
             );
 
         if (usethis != null)
+        {
             Core.Equip(usethis.ID);
+            Core.Equip(Core.FarmGear);
+        }
         else
             Core.EquipClass(ClassType.Dodge);
         Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false, EquipBestClassType: false);
