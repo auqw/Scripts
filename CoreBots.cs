@@ -7294,65 +7294,55 @@ public class CoreBots
     //         stopBot: true
     //     );
     // }
-
     private void SkuaVersionChecker()
     {
         if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2")
             return;
-
         bool isPt = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "pt";
         bool win10Plus = Environment.OSVersion.Version.Major >= 10;
-
         if (!win10Plus)
         {
             string msg = isPt
                 ? "Skua requer Windows 10 ou superior."
                 : "Skua requires Windows 10 or higher.";
-
             Logger(msg);
             Bot.ShowMessageBox(msg,
                 isPt ? "Windows não suportado" : "Unsupported Windows",
                 "OK");
-
             Logger(msg, messageBox: true, stopBot: true);
             return;
         }
-
         try
         {
             using System.Net.Http.HttpClient client = new();
             client.DefaultRequestHeaders.UserAgent.ParseAdd("SkuaVersionChecker");
+            client.Timeout = TimeSpan.FromSeconds(10);
 
-            string json = client
-                .GetStringAsync("https://api.github.com/repos/auqw/Skua/releases/latest")
+            string atom = client
+                .GetStringAsync("https://github.com/auqw/Skua/releases.atom")
                 .Result;
 
-            using System.Text.Json.JsonDocument doc = System.Text.Json.JsonDocument.Parse(json);
+            string latestTag = ExtractLatestVersionFromAtom(atom);
 
-            string latestTag = doc.RootElement.GetProperty("tag_name").GetString() ?? "";
+            if (string.IsNullOrEmpty(latestTag))
+            {
+                Logger("Could not parse version from release feed.");
+                return;
+            }
+
             Version latestVersion = Version.Parse(latestTag);
-
             if (latestVersion <= Bot.Version)
                 return;
 
             bool is64 = Environment.Is64BitOperatingSystem;
             string arch = is64 ? "x64" : "x86";
-
-            string assetUrl = doc.RootElement
-                .GetProperty("assets")
-                .EnumerateArray()
-                .First(a => a.GetProperty("name").GetString()?.Contains(arch) == true)
-                .GetProperty("browser_download_url")
-                .GetString() ?? "";
-
-            string releasePage = doc.RootElement.GetProperty("html_url").GetString() ?? "";
             string fileName = $"Skua-{latestTag}-Release-{arch}.msi";
             string installerPath = Path.Combine(Path.GetTempPath(), fileName);
+            string downloadUrl = $"https://github.com/auqw/Skua/releases/download/{latestTag}/{fileName}";
 
             string prompt = isPt
                 ? $"Nova versão detectada ({latestTag}).\n\nBaixar agora?"
                 : $"New version detected ({latestTag}).\n\nDownload now?";
-
             if (Bot.ShowMessageBox(prompt,
                     isPt ? "Atualização disponível" : "Update Available",
                     "OK",
@@ -7363,10 +7353,8 @@ public class CoreBots
             }
 
             Logger(isPt ? "Baixando instalador..." : "Downloading installer...");
-
-            using System.Net.Http.HttpResponseMessage response = client.GetAsync(assetUrl).Result;
+            using System.Net.Http.HttpResponseMessage response = client.GetAsync(downloadUrl).Result;
             response.EnsureSuccessStatusCode();
-
             using FileStream fs = new(installerPath, FileMode.Create, FileAccess.Write, FileShare.None);
             response.Content.CopyToAsync(fs).Wait();
 
@@ -7376,32 +7364,45 @@ public class CoreBots
                 Arguments = $"/i \"{installerPath}\"",
                 UseShellExecute = true
             });
-
             Logger(isPt
                 ? "Instalador iniciado."
                 : "Installer launched.");
+            Logger("Update required. Stopping script.", messageBox: true, stopBot: true);
         }
         catch (Exception ex)
         {
             Logger($"Update check failed: {ex.Message}");
-
-            if (Bot.ShowMessageBox(
-                    isPt
-                        ? "Falha ao verificar atualização.\nAbrir página manual?"
-                        : "Update check failed.\nOpen release page?",
-                    isPt ? "Erro" : "Error",
-                    "OK",
-                    isPt ? "Cancelar" : "Cancel").Text == "OK")
-            {
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = "https://github.com/auqw/Skua/releases/latest",
-                    UseShellExecute = true
-                });
-            }
+            // Just log and continue - don't stop the bot
         }
+    }
 
-        Logger("Update required. Stopping script.", messageBox: true, stopBot: true);
+    private string ExtractLatestVersionFromAtom(string atomXml)
+    {
+        try
+        {
+            int titleStart = atomXml.IndexOf("<title>", atomXml.IndexOf("<entry>"));
+            if (titleStart == -1) return "";
+
+            titleStart += 7;
+            int titleEnd = atomXml.IndexOf("</title>", titleStart);
+            if (titleEnd == -1) return "";
+
+            string title = atomXml.Substring(titleStart, titleEnd - titleStart).Trim();
+
+            // Remove common prefixes
+            if (title.StartsWith("Skua ", StringComparison.OrdinalIgnoreCase))
+                title = title.Substring(5);
+            else if (title.StartsWith("Release ", StringComparison.OrdinalIgnoreCase))
+                title = title.Substring(8);
+            else if (title.StartsWith("v", StringComparison.OrdinalIgnoreCase))
+                title = title.Substring(1);
+
+            return title.Trim();
+        }
+        catch
+        {
+            return "";
+        }
     }
 
     ClassType currentClass = ClassType.None;
