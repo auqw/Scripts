@@ -139,7 +139,7 @@ public class CoreBots
     // [Can Change] Member Status
     public bool IsMember { get; set; }
     public bool AutoEnhance { get; set; } = true;
-    public bool BestGear { get; set; } = true;
+    public bool BestGear { get; set; } = false;
 
     private static CoreBots? _instance;
     public static CoreBots Instance => _instance ??= new CoreBots();
@@ -7265,29 +7265,75 @@ public class CoreBots
         }
     }
 
+    // /// <summary>
+    // /// Checks, and prompts for the latest Skua Version
+    // /// <param name="targetVersion">Current Skua Version to Check against</param>
+    // /// </summary>
+    // private void SkuaVersionChecker(string targetVersion = "1.4.2.0")
+    // {
+    //     if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2" || Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
+    //         return;
+
+    //     if (
+    //         Bot.ShowMessageBox(
+    //             $"This script requires Skua {targetVersion} or above, "
+    //                 + "click OK to open the download page of the latest release, or update yourself via the `Skua Manager > \"Update\" tab`",
+    //             "Outdated Skua detected",
+    //             "OK"
+    //         ).Text == "OK"
+    //     )
+    //         Process.Start("explorer", "https://github.com/auqw/Skua/releases/latest");
+    //     Logger(
+    //         $"This script requires Skua {targetVersion} or above. Stopping the script",
+    //         messageBox: true,
+    //         stopBot: true
+    //     );
+    // }
+
     /// <summary>
     /// Checks, and prompts for the latest Skua Version
     /// <param name="targetVersion">Current Skua Version to Check against</param>
     /// </summary>
-    private void SkuaVersionChecker(string targetVersion = "1.4.0.3")
+    private void SkuaVersionChecker(string targetVersion = "1.4.2.0")
     {
         if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2" || Version.Parse(targetVersion).CompareTo(Bot.Version) <= 0)
             return;
+        var culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        bool isPtBr = culture == "pt";
+        string title = isPtBr ? "Skua desatualizado detectado" : "Outdated Skua detected";
+        string instructions = isPtBr
+            ? "\n1) Vá para a aba 'Updates'\n"
+                + "2) Clique no botão Refresh\n"
+                + "3) Clique no botão de download ao lado da versão mais recente\n"
+                + "4) Aguarde a conclusão da instalação"
+            : "\n1) Go to the 'Updates' tab\n"
+                + "2) Click the Refresh button\n"
+                + "3) Click the download button next to the latest version\n"
+                + "4) Wait for installation to complete";
+        string message = isPtBr
+            ? $"Este script requer Skua {targetVersion} ou superior.\n\n"
+                + "Clique em OK para abrir o Skua Manager onde você pode atualizar:\n"
+                + instructions
+            : $"This script requires Skua {targetVersion} or above.\n\n"
+                + "Click OK to open Skua Manager where you can update:\n"
+                + instructions;
+        string okButton = "OK";
+        string cancelButton = isPtBr ? "Cancelar" : "Cancel";
+        string logMessage = isPtBr
+            ? $"Este script requer Skua {targetVersion} ou superior. Parando o script"
+            : $"This script requires Skua {targetVersion} or above. Stopping the script";
 
-        if (
-            Bot.ShowMessageBox(
-                $"This script requires Skua {targetVersion} or above, "
-                    + "click OK to open the download page of the latest release",
-                "Outdated Skua detected",
-                "OK"
-            ).Text == "OK"
-        )
-            Process.Start("explorer", "https://github.com/auqw/Skua/releases/latest");
-        Logger(
-            $"This script requires Skua {targetVersion} or above. Stopping the script",
-            messageBox: true,
-            stopBot: true
-        );
+        // Log instructions for reference
+        Logger($"\n--- {title} ---");
+        Logger(isPtBr
+            ? $"Este script requer Skua {targetVersion} ou superior."
+            : $"This script requires Skua {targetVersion} or above.");
+        Logger((isPtBr ? "Instruções de atualização:" : "Update instructions:") + instructions);
+        Logger("---");
+
+        if (Bot.ShowMessageBox(message, title, okButton, cancelButton).Text == okButton)
+            Process.Start(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "skua", "skua.manager.exe"));
+        Logger(logMessage, messageBox: true, stopBot: true);
     }
 
     ClassType currentClass = ClassType.None;
