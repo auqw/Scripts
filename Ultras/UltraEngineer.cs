@@ -155,6 +155,16 @@ public class UltraEngineer
     public string OptionsStorage = "UltraEngineer";
     public List<IOption> Options = new()
     {
+        new Option<EngineerComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "Fast: Lich / LR / AP / LOO\n"
+                + "Safe: LR / SC / AP / LOO\n"
+                + "F2PFast: AI / LR / AP / LOO\n"
+                + "Unselected = off (use whatever classes you already have equipped).",
+            EngineerComp.Unselected
+        ),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -179,6 +189,20 @@ public class UltraEngineer
 
     void Prep()
     {
+        // Sync-equip classes if a comp is selected
+        EngineerComp comp = Bot.Config!.Get<EngineerComp>("DoEquipClasses");
+        if (comp != EngineerComp.Unselected)
+        {
+            string[] classes = comp switch
+            {
+                EngineerComp.Fast => new[] { "Lich", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                EngineerComp.Safe => new[] { "Legion Revenant", "StoneCrusher", "ArchPaladin", "Lord Of Order" },
+                EngineerComp.F2PFast => new[] { "Arcana Invoker", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+            };
+
+            Ultra.EquipClassSync(classes, 4, "engineer_class.sync");
+        }
+
         if (Bot.Config!.Get<bool>("DoEnh"))
         {
             Adv.GearStore(false, true);
@@ -339,5 +363,13 @@ public class UltraEngineer
                 );
                 break;
         }
+    }
+
+    public enum EngineerComp
+    {
+        Unselected,
+        Fast,
+        Safe,
+        F2PFast,
     }
 }

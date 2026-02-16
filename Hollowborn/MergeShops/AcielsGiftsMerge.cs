@@ -6,6 +6,11 @@ tags: aciels, gifts, merge, shadowrealm, hollow, hail, next, week, ac, items
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
+//cs_include Scripts/Hollowborn/CoreHollowborn.cs
+//cs_include Scripts/Story/Hollowborn/CoreHollowbornStory.cs
+//cs_include Scripts/Nation/CoreNation.cs
+//cs_include Scripts/Hollowborn/Materials/HollowSoul.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -20,6 +25,8 @@ public class AcielsGiftsMerge
     private static CoreAdvanced _Adv;
     private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
+    private static HollowSoul HS { get => _HS ??= new HollowSoul(); set => _HS = value; }
+    private static HollowSoul _HS;
 
 
     public bool DontPreconfigure = true;
@@ -67,16 +74,7 @@ public class AcielsGiftsMerge
                 #region Known items
 
                 case "Hollow Soul":
-                    Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.EnsureAcceptmultiple(new[] { 7553, 7555 });
-                        Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
-                        Core.KillMonster("shadowrealm", "r2", "Left", "Shadow Guardian", "Shadow Medallion", 5, log: false);
-                        Core.EnsureComplete(new[] { 7553, 7555 });
-                    }
-                    Bot.Wait.ForPickup(req.Name);
+                    HS.GetYaSoulsHeeeere(quant);
                     break;
                 #endregion
 

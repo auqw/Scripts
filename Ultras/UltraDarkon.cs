@@ -67,6 +67,14 @@ public class UltraDarkon
     // User options
     public List<IOption> Options = new()
     {
+        new Option<DarkonComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "Recommended: LC / LR / LOO / SC\n"
+                + "Unselected = off (use whatever classes you already have equipped).",
+            DarkonComp.Unselected
+        ),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -90,6 +98,18 @@ public class UltraDarkon
             && !Bot.Config.Get<bool>(C.SkipOptions)
         )
             Bot.Config.Configure();
+
+        // Sync-equip classes if a comp is selected
+        DarkonComp comp = Bot.Config!.Get<DarkonComp>("DoEquipClasses");
+        if (comp != DarkonComp.Unselected)
+        {
+            string[] classes = comp switch
+            {
+                DarkonComp.Recommended => new[] { "LightCaster", "Legion Revenant", "Lord Of Order", "StoneCrusher" },
+            };
+
+            Ultra.EquipClassSync(classes, 4, "darkon_class.sync");
+        }
 
         if (Bot.Player.CurrentClass?.Name == "Alpha Omega" || Bot.Player.CurrentClass?.Name == "Alpha DOOMmega")
             taunting = false;
@@ -292,5 +312,11 @@ public class UltraDarkon
                 );
                 break;
         }
+    }
+
+    public enum DarkonComp
+    {
+        Unselected,
+        Recommended,
     }
 }

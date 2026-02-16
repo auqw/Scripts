@@ -32,6 +32,14 @@ public class UltraWarden
     public string OptionsStorage = "UltraWarden";
     public List<IOption> Options = new()
     {
+        new Option<WardenComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "Recommended: LR / AP / LOO / VDK\n"
+                + "Unselected = off (use whatever classes you already have equipped).",
+            WardenComp.Unselected
+        ),
         new Option<string>("a", "Taunter Class (Primary)", "Class name that will taunt first", ""),
         new Option<string>("b", "Taunter Class (Backup)", "Backup taunter class", ""),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
@@ -69,6 +77,18 @@ public class UltraWarden
 
     void Prep()
     {
+        // Sync-equip classes if a comp is selected
+        WardenComp comp = Bot.Config!.Get<WardenComp>("DoEquipClasses");
+        if (comp != WardenComp.Unselected)
+        {
+            string[] classes = comp switch
+            {
+                WardenComp.Recommended => new[] { "Legion Revenant", "ArchPaladin", "Lord Of Order", "Verus DoomKnight" },
+            };
+
+            Ultra.EquipClassSync(classes, 4, "warden_class.sync");
+        }
+
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
@@ -116,5 +136,11 @@ public class UltraWarden
             Bot.Combat.Attack("*");
             Bot.Sleep(250);
         }
+    }
+
+    public enum WardenComp
+    {
+        Unselected,
+        Recommended,
     }
 }

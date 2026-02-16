@@ -90,6 +90,14 @@ public class UltraGramiel
 
     public List<IOption> Options = new()
     {
+        new Option<GramielComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "Recommended: SC / LC / LOO / VDK\n"
+                + "Unselected = off (use whatever classes you already have equipped).",
+            GramielComp.Unselected
+        ),
         new Option<CustomRole>(
             "CustomRole",
             "Custom Role",
@@ -142,6 +150,23 @@ public class UltraGramiel
 
     void Prep(bool skipEnhancements = false)
     {
+        // Sync-equip classes if a comp is selected
+        GramielComp comp = Bot.Config!.Get<GramielComp>("DoEquipClasses");
+        if (comp != GramielComp.Unselected)
+        {
+            string[][] classes = comp switch
+            {
+                GramielComp.Recommended => new[] {
+                    new[] { "StoneCrusher", "Infinity Titan" },
+                    new[] { "LightCaster" },
+                    new[] { "Lord Of Order" },
+                    new[] { "Verus DoomKnight" }
+                },
+            };
+
+            Ultra.EquipClassSync(classes, 4, "gramiel_class.sync");
+        }
+
         if (Bot.Config!.Get<bool>("DoEnh") && !skipEnhancements)
             DoEnhs();
 
@@ -367,7 +392,7 @@ public class UltraGramiel
             case "infinity titan":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
-                    hSpecial: HelmSpecial.None,
+                    hSpecial: HelmSpecial.Anima,
                     wSpecial: WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Absolution
                 );
@@ -379,7 +404,7 @@ public class UltraGramiel
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Forge,
                     wSpecial: WeaponSpecial.Arcanas_Concerto,
-                    cSpecial: CapeSpecial.Penitence
+                    cSpecial: CapeSpecial.Absolution
                 );
                 break;
 
@@ -389,7 +414,7 @@ public class UltraGramiel
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Pneuma,
                     wSpecial: WeaponSpecial.Ravenous,
-                    cSpecial: CapeSpecial.Penitence
+                    cSpecial: CapeSpecial.Vainglory
                 );
                 break;
 
@@ -606,6 +631,12 @@ public class UltraGramiel
             }
         }
         catch { }
+    }
+
+    public enum GramielComp
+    {
+        Unselected,
+        Recommended,
     }
 
     public enum CustomRole
