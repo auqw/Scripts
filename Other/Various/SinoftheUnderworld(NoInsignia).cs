@@ -128,6 +128,7 @@ public class SinoftheSinoftheUnderworldNoInsignia
 
         if (!Core.CheckInventory("Undead Champion Blade"))
         {
+            Adv.BuyItem("underworld", 216, "Undead Champion");
             Core.FarmingLogger("Undead Champion Blade");
             Core.EquipClass(ClassType.Farm);
             while (!Bot.ShouldExit && !Core.CheckInventory("Undead Champion Blade"))
