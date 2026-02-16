@@ -115,31 +115,16 @@ public class TimeRetaliateMerge
         }
     }
 
+
     public List<IOption> Select = new()
     {
-        new Option<bool>(
-            "74950",
-            "Nascent ChronoWeaver",
-            "Mode: [select] only\nShould the bot buy \"Nascent ChronoWeaver\" ?",
-            false
-        ),
-        new Option<bool>(
-            "74951",
-            "Nascent ChronoWeaver's Helm",
-            "Mode: [select] only\nShould the bot buy \"Nascent ChronoWeaver's Helm\" ?",
-            false
-        ),
-        new Option<bool>(
-            "74953",
-            "Nascent ChronoWeaver's Halo",
-            "Mode: [select] only\nShould the bot buy \"Nascent ChronoWeaver's Halo\" ?",
-            false
-        ),
-        new Option<bool>(
-            "74957",
-            "Nascent ChronoWeaver's Gauntlet",
-            "Mode: [select] only\nShould the bot buy \"Nascent ChronoWeaver's Gauntlet\" ?",
-            false
-        ),
-    };
+        new Option<bool>("74950", "Nascent ChronoWeaver", "Mode: [select] only\nShould the bot buy \"Nascent ChronoWeaver\" ?", false),
+        new Option<bool>("74951", "Nascent ChronoWeaver's Helm", "Mode: [select] only\nShould the bot buy \"Nascent ChronoWeaver's Helm\" ?", false),
+        new Option<bool>("74953", "Nascent ChronoWeaver's Halo", "Mode: [select] only\nShould the bot buy \"Nascent ChronoWeaver's Halo\" ?", false),
+        new Option<bool>("74957", "Nascent ChronoWeaver's Gauntlet", "Mode: [select] only\nShould the bot buy \"Nascent ChronoWeaver's Gauntlet\" ?", false),
+        new Option<bool>("74958", "Astromancer", "Mode: [select] only\nShould the bot buy \"Astromancer\" ?", false),
+        new Option<bool>("74963", "Astromancer's Morph", "Mode: [select] only\nShould the bot buy \"Astromancer's Morph\" ?", false),
+        new Option<bool>("74964", "Astromancer's Morph + Locks", "Mode: [select] only\nShould the bot buy \"Astromancer's Morph + Locks\" ?", false),
+        new Option<bool>("74968", "Astral Navigation Staff", "Mode: [select] only\nShould the bot buy \"Astral Navigation Staff\" ?", false),
+   };
 }
