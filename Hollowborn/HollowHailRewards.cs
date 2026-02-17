@@ -174,62 +174,34 @@ public class HollowHailRewards
                 Core.Unbank(req.Name);
         }
 
-        List<ItemBase>? rewardOptions = quest?.Rewards;
-        if (rewardOptions == null || rewardOptions.Count == 0)
+        Core.AddDrop(quest?.Rewards?.Select(r => r.Name).ToArray() ?? []);
+
+        Core.Logger("╔═[ HAIL TO THE KING ]═╗");
+        Core.EnsureAccept(HailToTheKingQuestID);
+
+        // Solo Phase
+        Core.EquipClass(ClassType.Solo);
+        Core.HuntMonster("icedungeon", "Shade of Kyanos", "Warrior of Kyanos", isTemp: false);
+        Core.HuntMonster("yulgarparty", "Treasure Pile", "Highborn Necromancer", isTemp: false);
+
+        // Farm Phase
+        Core.EquipClass(ClassType.Farm);
+        Core.KillMonster("noxustower", "r13", "Left", "*", "Human Soul", 151, false);
+        BS.BuyScroll(Scrolls.Frostbite, 9, true);
+
+        Core.EnsureComplete(HailToTheKingQuestID);
+        Core.JumpWait();
+
+        string rewardName = quest?.Rewards?.FirstOrDefault()?.Name ?? "reward";
+        if (!RequiredForLater.Contains(rewardName))
         {
-            Core.Logger("No Hail to the King rewards found.");
-            return;
+            Core.ToBank(rewardName);
+            Core.Logger($"[📦 BANKED] {rewardName}");
         }
+        else
+            Core.Logger($"[🔒 KEPT] {rewardName} (needed for later quest)");
 
-        foreach (ItemBase item in rewardOptions)
-            Core.AddDrop(item.Name);
-
-        int rewardCount = rewardOptions.Count;
-
-        for (int i = 0; i < rewardCount; i++)
-        {
-            ItemBase reward = rewardOptions[i];
-
-            if (Core.CheckInventory(reward.Name, toInv: false))
-            {
-                Core.Logger($"[✓] {reward.Name} already owned — skipping ({i + 1}/{rewardCount})");
-                continue;
-            }
-
-            Core.Logger(
-                $"╔═[ HAIL TO THE KING :: {i + 1}/{rewardCount} ]═╗\n" +
-                $"║  Target : {reward.Name}\n" +
-                $"║  ID     : {reward.ID}\n" +
-                $"╚═══════════════════════════════════════════════╝"
-            );
-
-            Core.EnsureAccept(HailToTheKingQuestID);
-
-            // Solo Phase
-            Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster("icedungeon", "Shade of Kyanos", "Warrior of Kyanos", isTemp: false);
-            Core.HuntMonster("yulgarparty", "Treasure Pile", "Highborn Necromancer", isTemp: false);
-
-            // Farm Phase
-            Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("noxustower", "r13", "Left", "*", "Human Souls", 500, isTemp: false);
-            BS.BuyScroll(Scrolls.Frostbite, 9, true);
-
-            Core.EnsureComplete(HailToTheKingQuestID, reward.ID);
-            Core.JumpWait();
-
-            if (!RequiredForLater.Contains(reward.Name))
-            {
-                Core.ToBank(reward.Name);
-                Core.Logger($"[📦 BANKED] {reward.Name}");
-            }
-            else
-                Core.Logger($"[🔒 KEPT] {reward.Name} (needed for later quest)");
-
-            Core.Logger($"[✔ COMPLETED] {reward.Name} secured.");
-        }
-
-        Core.Logger("All Hail to the King rewards processed.");
+        Core.Logger("Hail to the King complete.");
     }
 
     public void ColdColdCOLDQuestRewards()
@@ -254,60 +226,35 @@ public class HollowHailRewards
                 Core.Unbank(req.Name);
         }
 
-        List<ItemBase>? rewardOptions = quest?.Rewards;
-        if (rewardOptions == null || rewardOptions.Count == 0)
+        Core.AddDrop(quest?.Rewards?.Select(r => r.Name).ToArray() ?? []);
+
+        Core.Logger("╔═[ COLD COLD COLD ]═╗");
+        Core.EnsureAccept(ColdColdCOLDQuestID);
+
+        // Solo/Pre-farm Phase
+        Core.EquipClass(ClassType.Solo);
+        HS.GetYaSoulsHeeeere(3000);
+        Farm.BattleUnderB("Bone Dust", 206);
+
+        // Farm Phase
+        // incase we didnt farm it in the last quest
+        Core.EquipClass(ClassType.Farm);
+        Core.KillMonster("noxustower", "r13", "Left", "*", "Human Soul", isTemp: false);
+
+
+        Core.EnsureComplete(ColdColdCOLDQuestID);
+        Core.JumpWait();
+
+        string rewardName = quest?.Rewards?.FirstOrDefault()?.Name ?? "reward";
+        if (!RequiredForLater.Contains(rewardName))
         {
-            Core.Logger("No Cold, Cold, COLD! rewards found.");
-            return;
+            Core.ToBank(rewardName);
+            Core.Logger($"[📦 BANKED] {rewardName}");
         }
+        else
+            Core.Logger($"[🔒 KEPT] {rewardName} (needed for later quest)");
 
-        foreach (ItemBase item in rewardOptions)
-            Core.AddDrop(item.Name);
-
-        int rewardCount = rewardOptions.Count;
-
-        for (int i = 0; i < rewardCount; i++)
-        {
-            ItemBase reward = rewardOptions[i];
-
-            if (Core.CheckInventory(reward.Name, toInv: false))
-            {
-                Core.Logger($"[✓] {reward.Name} already owned — skipping ({i + 1}/{rewardCount})");
-                continue;
-            }
-
-            Core.Logger(
-                $"╔═[ COLD COLD COLD :: {i + 1}/{rewardCount} ]═╗\n" +
-                $"║  Target : {reward.Name}\n" +
-                $"║  ID     : {reward.ID}\n" +
-                $"╚══════════════════════════════════════════════╝"
-            );
-
-            Core.EnsureAccept(ColdColdCOLDQuestID);
-
-            // Solo/Pre-farm Phase
-            Core.EquipClass(ClassType.Solo);
-            HS.GetYaSoulsHeeeere(3000);
-            Farm.BattleUnderB("Bone Dust", 206);
-
-            // Farm Phase
-            Core.EquipClass(ClassType.Farm);
-            Core.KillMonster("noxustower", "r13", "Left", "*", "Human Souls", 500, isTemp: false);
-
-            Core.EnsureComplete(ColdColdCOLDQuestID, reward.ID);
-            Core.JumpWait();
-
-            if (!RequiredForLater.Contains(reward.Name))
-            {
-                Core.ToBank(reward.Name);
-                Core.Logger($"[📦 BANKED] {reward.Name}");
-            }
-            else
-                Core.Logger($"[🔒 KEPT] {reward.Name} (needed for later quest)");
-
-            Core.Logger($"[✔ COMPLETED] {reward.Name} secured.");
-        }
-
-        Core.Logger("All Cold, Cold, COLD! rewards processed.");
+        Core.Logger("Cold, Cold, COLD! complete.");
     }
+
 }
