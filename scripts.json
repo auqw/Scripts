@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 431716,
-    "sha256": "14386560aa4005fe762e99650d58b0a038d25cace48b3d12fef3e149ea189785",
+    "size": 431700,
+    "sha256": "85e5cc6384e4d84c450b284fa336f4ecaefa40ec68553bfd8af22d77c4e51aea",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -3086,8 +3086,8 @@
       "ultra gramiel"
     ],
     "path": "Ultras/UltraGramiel.cs",
-    "size": 22582,
-    "sha256": "2ecf32e6318f22412aabb79cdc27e2e4fff31a3cc5b0e1b2b0adb9e562a326d0",
+    "size": 22640,
+    "sha256": "9aadf284bfe8579bf25a99cd3a8d5c9ffa3255d2d9cc17c5699690526b4d1d4b",
     "fileName": "UltraGramiel.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraGramiel.cs"
   },
