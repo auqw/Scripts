@@ -166,6 +166,16 @@ public class UltraEzrajal
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
+        new Option<EzrajalComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "Fast: CSS / VDK / LR / LOO\n"
+                + "Safe: AI / LR / AP / LOO\n"
+                + "F2PFastest: AI / VDK / LR / LOO\n"
+                + "Unselected = off (use whatever classes you already have equipped).",
+            EzrajalComp.Unselected
+        ),
         new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
@@ -190,6 +200,20 @@ public class UltraEzrajal
 
     void Prep()
     {
+        // Sync-equip classes if a comp is selected
+        EzrajalComp comp = Bot.Config!.Get<EzrajalComp>("DoEquipClasses");
+        if (comp != EzrajalComp.Unselected)
+        {
+            string[] classes = comp switch
+            {
+                EzrajalComp.Fast => new[] { "Chrono ShadowSlayer", "Verus DoomKnight", "Legion Revenant", "Lord Of Order" },
+                EzrajalComp.Safe => new[] { "Arcana Invoker", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                EzrajalComp.F2PFastest => new[] { "Arcana Invoker", "Verus DoomKnight", "Legion Revenant", "Lord Of Order" },
+            };
+
+            Ultra.EquipClassSync(classes, 4, "ezrajal_class.sync");
+        }
+
         if (Bot.Config!.Get<bool>("DoEnh"))
         {
             Adv.GearStore(false, true);
@@ -360,5 +384,13 @@ public class UltraEzrajal
                 );
                 break;
         }
+    }
+
+    public enum EzrajalComp
+    {
+        Unselected,
+        Fast,
+        Safe,
+        F2PFastest,
     }
 }

@@ -83,6 +83,16 @@ public class UltraAvatarTyndarius
     public string OptionsStorage = "UltraAvatarTyndarius3";
     public List<IOption> Options = new()
     {
+        new Option<TyndariusComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "Safe: CAv / LR / AP / LOO\n"
+                + "Fast: CSS / LR / AP / LOO\n"
+                + "F2PFast: KE / LR / AP / LOO\n"
+                + "Unselected = off (use whatever classes you already have equipped).",
+            TyndariusComp.Unselected
+        ),
         // Ball 1 Taunter selection
         new Option<Ball1Taunter>(
             "Ball1Taunter",
@@ -152,6 +162,20 @@ public class UltraAvatarTyndarius
 
     void Prep()
     {
+        // Sync-equip classes if a comp is selected
+        TyndariusComp comp = Bot.Config!.Get<TyndariusComp>("DoEquipClasses");
+        if (comp != TyndariusComp.Unselected)
+        {
+            string[] classes = comp switch
+            {
+                TyndariusComp.Safe => new[] { "Chaos Avenger", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                TyndariusComp.Fast => new[] { "Chrono ShadowSlayer", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                TyndariusComp.F2PFast => new[] { "King's Echo", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+            };
+
+            Ultra.EquipClassSync(classes, 4, "tyndarius_class.sync");
+        }
+
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnh();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
@@ -371,6 +395,14 @@ public class UltraAvatarTyndarius
                 Adv.SmartEnhance(Bot.Player.CurrentClass!.Name);
                 break;
         }
+    }
+
+    public enum TyndariusComp
+    {
+        Unselected,
+        Safe,
+        Fast,
+        F2PFast,
     }
 
     public enum Ball2killer
