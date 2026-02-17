@@ -310,16 +310,16 @@ public class CoreBots
         Bot.Lite.CharacterSelectScreen = false;
         Bot.Lite.UntargetDead = true;
         Bot.Lite.UntargetSelf = true;
-        Bot.Lite.SmoothBackground = changeTo;
-        Bot.Lite.ShowMonsterType = changeTo;
+        Bot.Lite.SmoothBackground = true;
+        Bot.Lite.ShowMonsterType = true;
         Bot.Lite.CustomDropsUI = true;
         Bot.Lite.DraggableDrops = false;
-        Bot.Lite.AurasUI = changeTo;
+        Bot.Lite.AurasUI = true;
         Bot.Lite.QuantityWarnings = false;
         Bot.Lite.VisualSkillCooldowns = true;
         Bot.Lite.ChatUI = true;
         Bot.Lite.QuestLogTurnIns = true;
-        Bot.Lite.DisableSoundFx = changeTo;
+        Bot.Lite.DisableSoundFx = true;
 
         // Drop Options
         Bot.Drops.RejectElse = changeTo;

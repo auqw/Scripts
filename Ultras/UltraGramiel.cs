@@ -162,6 +162,7 @@ public class UltraGramiel
                     new[] { "Lord Of Order" },
                     new[] { "Verus DoomKnight" }
                 },
+                _ => throw new NotImplementedException(),
             };
 
             Ultra.EquipClassSync(classes, 4, "gramiel_class.sync");
