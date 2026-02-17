@@ -3086,8 +3086,8 @@
       "ultra gramiel"
     ],
     "path": "Ultras/UltraGramiel.cs",
-    "size": 21538,
-    "sha256": "c815e8d172f507a15de79a94ab5801b9a59e04697f87e22e28ac2b321fb3ece0",
+    "size": 22582,
+    "sha256": "2ecf32e6318f22412aabb79cdc27e2e4fff31a3cc5b0e1b2b0adb9e562a326d0",
     "fileName": "UltraGramiel.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraGramiel.cs"
   },
@@ -3098,8 +3098,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEngineer.cs",
-    "size": 9849,
-    "sha256": "4f4c85e07ee2b294bf6828b90155b821d757612291eb8b9b9c5174c549588fe4",
+    "size": 11108,
+    "sha256": "c62520931894ccc1e978493ffed0a1210e0b726c42329781f06ac66c0f0e08e4",
     "fileName": "UltraEngineer.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEngineer.cs"
   },
@@ -3137,8 +3137,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraWarden.cs",
-    "size": 3709,
-    "sha256": "1f66097361a2ecf962d6135da46b385814be2d0bb0a532a5fd173ea1a0d76a09",
+    "size": 4617,
+    "sha256": "c1e0ea0a529e961390c527d7a4e57bef42f1b9f6491cc04dc679cfbd5f03dd9d",
     "fileName": "UltraWarden.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraWarden.cs"
   },
@@ -3226,8 +3226,8 @@
       "null"
     ],
     "path": "Ultras/CoreUltra.cs",
-    "size": 56528,
-    "sha256": "24bdc53356e9597d42786b59e33ca0e5827fc500fc01e174514a7bfa3df1d9c7",
+    "size": 56782,
+    "sha256": "9faa6942988360ec56fe61891729cbe9f6d4f56299eacf7cc7898b2d9566bb39",
     "fileName": "CoreUltra.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreUltra.cs"
   },
@@ -3258,8 +3258,8 @@
       "ultra darkon"
     ],
     "path": "Ultras/UltraDarkon.cs",
-    "size": 9583,
-    "sha256": "7625b955922cf8de7e743cbcfae3aa977779ab504ccbb39b9365fda1b6e8aca7",
+    "size": 10460,
+    "sha256": "a3f42edadb7d433afcae73c40698b505e8618008624f4e298fe18ab75e90b383",
     "fileName": "UltraDarkon.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDarkon.cs"
   },
@@ -3270,8 +3270,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 15102,
-    "sha256": "389639943e08d19ac11d599f35b43a33935eb598eede699a5039885c49a2df20",
+    "size": 16384,
+    "sha256": "d62ee8d3a7b53efa47d1ffa9e9014b3656158eec9bf7e3d9e6a70b0d88ce2107",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -3282,8 +3282,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 10341,
-    "sha256": "ad6849ef3629acb40c883409cebab907f0c2e444042393b168375d83107987e0",
+    "size": 11627,
+    "sha256": "253ecbd5c51dc41f7f451d7a6ba1c7882d423ea9e131050e00f76908edc910e2",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
@@ -26876,8 +26876,8 @@
       "items"
     ],
     "path": "Hollowborn/MergeShops/AcielsGiftsMerge.cs",
-    "size": 3786,
-    "sha256": "b2673d3639975640e77b14d1226f2435cc35cf6f95ee0876813d9fb734f7595f",
+    "size": 3539,
+    "sha256": "3280cd367aaaddf5fa503c92b0a47259334227be72b3a3cdf2e9354c25ba516c",
     "fileName": "AcielsGiftsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/MergeShops/AcielsGiftsMerge.cs"
   },
