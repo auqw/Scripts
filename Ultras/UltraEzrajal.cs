@@ -209,6 +209,7 @@ public class UltraEzrajal
                 EzrajalComp.Fast => new[] { "Chrono ShadowSlayer", "Verus DoomKnight", "Legion Revenant", "Lord Of Order" },
                 EzrajalComp.Safe => new[] { "Arcana Invoker", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
                 EzrajalComp.F2PFastest => new[] { "Arcana Invoker", "Verus DoomKnight", "Legion Revenant", "Lord Of Order" },
+                _ => throw new InvalidOperationException($"Unhandled EzrajalComp value: {comp}")
             };
 
             Ultra.EquipClassSync(classes, 4, "ezrajal_class.sync");
