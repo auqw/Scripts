@@ -3137,8 +3137,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraWarden.cs",
-    "size": 4617,
-    "sha256": "c1e0ea0a529e961390c527d7a4e57bef42f1b9f6491cc04dc679cfbd5f03dd9d",
+    "size": 4714,
+    "sha256": "7db7ea8076599dc1e3d9feddc5c991497d0d3892a833440f98437dfe845d47ab",
     "fileName": "UltraWarden.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraWarden.cs"
   },
@@ -3282,8 +3282,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 11627,
-    "sha256": "253ecbd5c51dc41f7f451d7a6ba1c7882d423ea9e131050e00f76908edc910e2",
+    "size": 11725,
+    "sha256": "89de11df903f4a3f2293dbc68d993750b7f1341a5f78cac909057ae50c5297ab",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
