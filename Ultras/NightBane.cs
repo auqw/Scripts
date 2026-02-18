@@ -452,21 +452,21 @@ public class NightBane
     }
 
 
-}
 
-enum PlayerCount
-{
-    Four = 4,
-    Five = 5,
-    Six = 6,
-    Seven = 7
-}
+    enum PlayerCount
+    {
+        Four = 4,
+        Five = 5,
+        Six = 6,
+        Seven = 7
+    }
 
-public enum ItemToFarm
-{
-    All = 0,                  // Special value for "all items"
-    Nightbanes_Essence = 73862,
-    Insatiable_Hunger = 73361,
-    Chest_Plate = 40066,
-    Starlit_Journal_Page_3 = 56682
+    public enum ItemToFarm
+    {
+        All = 0,                  // Special value for "all items"
+        Nightbanes_Essence = 73862,
+        Insatiable_Hunger = 73361,
+        Chest_Plate = 40066,
+        Starlit_Journal_Page_3 = 56682
+    }
 }
