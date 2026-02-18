@@ -84,6 +84,7 @@ public class UltraWarden
             string[] classes = comp switch
             {
                 WardenComp.Recommended => new[] { "Legion Revenant", "ArchPaladin", "Lord Of Order", "Verus DoomKnight" },
+                _ => throw new InvalidOperationException($"Unhandled WardenComp value: {comp}")
             };
 
             Ultra.EquipClassSync(classes, 4, "warden_class.sync");
