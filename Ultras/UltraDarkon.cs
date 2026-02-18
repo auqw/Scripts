@@ -106,6 +106,7 @@ public class UltraDarkon
             string[] classes = comp switch
             {
                 DarkonComp.Recommended => new[] { "LightCaster", "Legion Revenant", "Lord Of Order", "StoneCrusher" },
+                _ => throw new InvalidOperationException($"Unhandled DarkonComp value: {comp}")
             };
 
             Ultra.EquipClassSync(classes, 4, "darkon_class.sync");
