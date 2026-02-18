@@ -240,311 +240,219 @@ public class UltraSpeakerMergePreReqs
 
     public void GetPrereqs()
     {
-        // Initialize counters
         int AcquiescenceCount = 0;
         int ElementalCoreCount = 0;
         int InsigniasCount = 0;
 
-        // Complete Core SoW tasks
         SoW.CompleteCoreSoW();
 
-        #region GoddessofWar rewrote
-        // Armors
-        if (!Core.CheckInventory("Goddess Of War"))
-        {
-            Core.Logger("Getting prerequisites for 'Goddess Of War' armor...");
-            // Prerequisites for acquiring "Goddess Of War" armor
+        if (Core.CheckInventory("Radiant Goddess of War"))
+            return;
 
-            if (
-                Bot.Config!.Get<bool>("UseInsigsonEmpDrkArm")
+        GoW();
+
+        if (!Core.CheckInventory("Goddess Of War"))
+            return;
+
+        Core.AddDrop("Radiant Goddess of War");
+        Core.EnsureAccept(9184);
+
+        Farm.Experience();
+        FCA.GetFireChampsArmor();
+        BeetleQuests.WarlordRewards("Void Beetle Warlord");
+        Awescended.GetAwe();
+        CHBP.GetSpecific("Classic Hollowborn Paladin Armor");
+        MalgorsArmorSet.GetSet(false, new[] { "Malgor the ShadowLord" });
+
+        #region Radiant Goddess of War Item Check
+
+        string[] requiredItems =
+        {
+            "Empowered Drakath Armor",
+            "Fire Champion's Armor",
+            "Void Beetle Warlord",
+            "Malgor the ShadowLord",
+            "Classic Hollowborn Paladin Armor",
+            "Awescended"
+        };
+
+        if (Core.CheckInventory(requiredItems))
+        {
+            Core.EnsureComplete(9184);
+        }
+        else
+        {
+            foreach (string item in requiredItems)
+                if (!Core.CheckInventory(item))
+                    Core.Logger($"Missing {item}");
+
+            Bot.Wait.ForPickup("Radiant Goddess of War");
+
+            if (Core.CheckInventory("Radiant Goddess of War"))
+                Core.Logger("Congrats!!!!");
+            else
+                Core.Logger("Still missing Goddess Of War prereqs.");
+        }
+
+        #endregion
+
+        SOWM.Acquiescence(AcquiescenceCount);
+        SOWM.ElementalCore(ElementalCoreCount);
+
+        Core.BuyItem("ultraspeaker", 2248, 72921, shopItemID: 11443);
+
+        // ========================= LOCAL FUNCTIONS =========================
+
+        void GoddessOfWarBlades()
+        {
+            if (Core.CheckInventory("Goddess Of War Blades"))
+                return;
+
+            SoC.LagunaBeach();
+
+            foreach (string blade in new[]
+            {
+            "War Blade of Courage",
+            "War Blade of Power",
+            "War Blade of Speed",
+            "War Blade of Strength",
+            "War Blade of Wisdom"
+        })
+            {
+                if (Core.CheckInventory(blade))
+                    continue;
+
+                switch (blade)
+                {
+                    case "War Blade of Courage":
+                        BLOD.BrilliantAura(50);
+                        BLOD.BlindingAura(1);
+                        InsigniasCount += 7;
+                        AcquiescenceCount += 10;
+                        break;
+
+                    case "War Blade of Power":
+                        Core.AddDrop(11475);
+                        while (!Core.CheckInventory(11475, 30))
+                            Core.KillMonster("lair", "Hole", "Center", "*", isTemp: false, log: false);
+
+                        DSG.EnchantedScaleandClaw(250, 0);
+                        InsigniasCount += 7;
+                        AcquiescenceCount += 10;
+                        break;
+
+                    case "War Blade of Speed":
+                        Core.EquipClass(ClassType.Farm);
+                        Core.HuntMonster("shadowfallwar", "Skeletal Fire Mage", "Ultimate Darkness Gem", 75, false);
+
+                        Core.EquipClass(ClassType.Solo);
+                        Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Death's Oversight", 5, false);
+
+                        InsigniasCount += 7;
+                        AcquiescenceCount += 10;
+                        break;
+
+                    case "War Blade of Strength":
+                        SoW.Tyndarius();
+
+                        Core.AddDrop("Fire Avatar's Favor");
+                        Core.EquipClass(ClassType.Farm);
+                        Core.RegisterQuests(8244);
+
+                        while (!Bot.ShouldExit && !Core.CheckInventory("Fire Avatar's Favor", 25))
+                        {
+                            Core.KillMonster("fireavatar", "r4", "Right", "*", "Onslaught Defeated", 6);
+                            Core.KillMonster("fireavatar", "r6", "Left", "*", "Elemental Defeated", 6);
+                            Bot.Wait.ForPickup("Fire Avatar's Favor");
+                        }
+
+                        Core.CancelRegisteredQuests();
+
+                        InsigniasCount += 7;
+                        AcquiescenceCount += 10;
+                        ElementalCoreCount += 25;
+                        break;
+
+                    case "War Blade of Wisdom":
+                        Core.AddDrop("Fragment of the Queen", "ShadowChaos Mote");
+
+                        Core.EquipClass(ClassType.Solo);
+                        Bot.Quests.UpdateQuest(8094);
+                        Core.HuntMonster("transformation", "Queen of Monsters", "Fragment of the Queen", 13, false);
+
+                        Core.EquipClass(ClassType.Farm);
+                        Core.RegisterQuests(7700);
+                        Core.HuntMonster("lagunabeach", "Flying Fisheye", "ShadowChaos Mote", 250, false);
+                        Bot.Wait.ForPickup("ShadowChaos Mote");
+                        Core.CancelRegisteredQuests();
+
+                        InsigniasCount += 7;
+                        AcquiescenceCount += 10;
+                        break;
+                }
+            }
+        }
+
+        void GoddessOfWarCloak()
+        {
+            if (Core.CheckInventory("Goddess of War Cloak"))
+                return;
+
+            AcquiescenceCount += 10;
+            InsigniasCount += 10;
+        }
+
+        void GoW()
+        {
+            if (Core.CheckInventory("Goddess Of War"))
+                return;
+
+            if (Bot.Config!.Get<bool>("UseInsigsonEmpDrkArm")
                 && !Core.CheckInventory("Empowered Drakath Armor")
                 && Core.CheckInventory("Champion Drakath Insignia", 5)
-                && Core.CheckInventory(
-                    25779 /* Drakath Armor */
-                )
-            )
+                && Core.CheckInventory(25779))
             {
                 DAB.DrakathArmorQuest();
                 Core.Join("championdrakath");
                 Bot.Wait.ForMapLoad("championdrakath");
-                // Load shop data
+
                 while (!Bot.ShouldExit && Bot.Shops.ID != 2055)
                 {
                     Bot.Shops.Load(2055);
                     Bot.Wait.ForActionCooldown(GameActions.LoadShop);
                     Bot.Wait.ForTrue(() => Bot.Shops.IsLoaded && Bot.Shops.ID == 2055, 20);
                     Core.Sleep(1000);
-                    if (Bot.Shops.ID == 2055)
-                        break;
                 }
+
                 Bot.Shops.BuyItem("Empowered Drakath Armor");
                 Bot.Wait.ForItemBuy();
             }
 
             UBLOD.PurifiedUndeadDragonEssence(3);
-            // Ice Shard - 43712
+
             if (!Core.CheckInventory(43712, 50))
             {
                 Core.EquipClass(ClassType.Solo);
                 Core.AddDrop(43712);
                 Core.RegisterQuests(6311);
+
                 while (!Bot.ShouldExit && !Core.CheckInventory(43712, 50))
                     Core.KillMonster("northmountain", "r7", "Left", "Izotz");
+
                 Core.CancelRegisteredQuests();
             }
+
             SOWM.DragonsTear();
             ADG.AscendedGear("Ascended Blade of Awe");
             DFO.DragonFableOriginsAll();
             HDK.ADKFalls(true);
-            GoddessOfWarPrestigeCloak();
-            #region GoddessOfWarPrestigeCloak
-            void GoddessOfWarPrestigeCloak()
-            {
-                GoddessOfWarBlades();
-                GoddessofWarCloak();
-                if (Core.CheckInventory(new[] { "Goddess Of War Blades", "Goddess of War Cloak" }))
-                    Core.BuyItem("ultraspeaker", 2248, 72921, shopItemID: 11443);
-                else
-                    Core.Logger(
-                        "farmed all PreFarmable (non-insignia) items for \"GoddessOfWarPrestigeCloak\""
-                    );
-            }
 
-            if (
-                !Core.CheckInventory("Radiant Goddess of War")
-                && Core.CheckInventory("Goddess Of War")
-            )
-            {
-                Core.AddDrop("Radiant Goddess of War");
+            GoddessOfWarBlades();
+            GoddessOfWarCloak();
 
-                Core.EnsureAccept(9184);
-
-                Farm.Experience();
-                FCA.GetFireChampsArmor();
-                BeetleQuests.WarlordRewards("Void Beetle Warlord");
-                Awescended.GetAwe();
-                CHBP.GetSpecific("Classic Hollowborn Paladin Armor");
-                MalgorsArmorSet.GetSet(false, new[] { "Malgor the ShadowLord" });
-
-                if (
-                    Core.CheckInventory(
-                        new[]
-                        {
-                            "Empowered Drakath Armor",
-                            "Fire Champion's Armor",
-                            "Void Beetle Warlord",
-                            "Malgor the ShadowLord",
-                            "Classic Hollowborn Paladin Armor",
-                            "Awescended",
-                        }
-                    )
-                )
-                    Core.EnsureComplete(9184);
-                else
-                    foreach (
-                        string item in new[]
-                        {
-                            "Empowered Drakath Armor",
-                            "Fire Champion's Armor",
-                            "Void Beetle Warlord",
-                            "Malgor the ShadowLord",
-                            "Classic Hollowborn Paladin Armor",
-                            "Awescended",
-                        }
-                    )
-                        Core.Logger($"Missing {item} to complete the quest.");
-                Bot.Wait.ForPickup("Radiant Goddess of War");
-                if (Core.CheckInventory("Radiant Goddess of War"))
-                    Core.Logger("Congrats!!!!");
-            }
-            void GoddessOfWarBlades()
-            {
-                if (Core.CheckInventory("Goddess Of War Blades"))
-                {
-                    Core.Logger("\"Goddess Of War Blades\" owned.");
-                    return;
-                }
-
-                string[] WarBlades =
-                {
-                    "War Blade of Courage",
-                    "War Blade of Power",
-                    "War Blade of Speed",
-                    "War Blade of Strength",
-                    "War Blade of Wisdom",
-                };
-
-                //Story Requirements:
-                Core.Logger("Doing Story Req. for some items.");
-                Core.Logger("if more quests are locked, let tato know (for this script)");
-                SoC.LagunaBeach();
-
-                foreach (string Blade in WarBlades)
-                {
-                    if (Core.CheckInventory(Blade))
-                    {
-                        // If the blade is in the inventory, skip to the next iteration
-                        continue;
-                    }
-
-                    // Continue to next blade code here
-                    switch (Blade)
-                    {
-                        case "War Blade of Courage":
-                            BLOD.BrilliantAura(50);
-                            BLOD.BlindingAura(1);
-                            Core.Logger("Adding 7 to the Insignias Count");
-                            InsigniasCount += 7;
-                            Core.Logger("Adding 10 to the Acquiescence Count");
-                            AcquiescenceCount += 10;
-                            break;
-
-                        case "War Blade of Power":
-                            //Dragon Scale(1)
-                            Core.AddDrop(11475);
-                            while (!Core.CheckInventory(11475, 30))
-                                Core.KillMonster(
-                                    "lair",
-                                    "Hole",
-                                    "Center",
-                                    "*",
-                                    isTemp: false,
-                                    log: false
-                                );
-                            DSG.EnchantedScaleandClaw(250, 0);
-
-                            Core.Logger("Adding 7 to the Insignias Count");
-                            InsigniasCount += 7;
-                            Core.Logger("Adding 10 to the Acquiescence Count");
-                            AcquiescenceCount += 10;
-                            break;
-
-                        case "War Blade of Speed":
-                            Core.EquipClass(ClassType.Farm);
-                            Core.HuntMonster(
-                                "shadowfallwar",
-                                "Skeletal Fire Mage",
-                                "Ultimate Darkness Gem",
-                                75,
-                                isTemp: false
-                            );
-                            Core.EquipClass(ClassType.Solo);
-                            Core.KillMonster(
-                                "shadowattack",
-                                "Boss",
-                                "Left",
-                                "Death",
-                                "Death's Oversight",
-                                5,
-                                false
-                            );
-
-                            Core.Logger("Adding 7 to the Insignias Count");
-                            InsigniasCount += 7;
-                            Core.Logger("Adding 10 to the Acquiescence Count");
-                            AcquiescenceCount += 10;
-                            break;
-
-                        case "War Blade of Strength":
-                            SoW.Tyndarius();
-
-                            Core.AddDrop("Fire Avatar's Favor");
-                            Core.EquipClass(ClassType.Farm);
-
-                            Core.RegisterQuests(8244);
-                            while (
-                                !Bot.ShouldExit && !Core.CheckInventory("Fire Avatar's Favor", 25)
-                            )
-                            {
-                                Core.KillMonster(
-                                    "fireavatar",
-                                    "r4",
-                                    "Right",
-                                    "*",
-                                    "Onslaught Defeated",
-                                    6
-                                );
-                                Core.KillMonster(
-                                    "fireavatar",
-                                    "r6",
-                                    "Left",
-                                    "*",
-                                    "Elemental Defeated",
-                                    6
-                                );
-
-                                Bot.Wait.ForPickup("Fire Avatar's Favor");
-                            }
-                            Core.CancelRegisteredQuests();
-
-                            Core.Logger("Adding 7 to the Insignias Count");
-                            InsigniasCount += 7;
-                            Core.Logger("Adding 10 to the Acquiescence Count");
-                            AcquiescenceCount += 10;
-                            Core.Logger("Adding 25 to the ElementalCore Count");
-                            ElementalCoreCount += 25;
-                            break;
-
-                        case "War Blade of Wisdom":
-                            Core.AddDrop("Fragment of the Queen", "ShadowChaos Mote");
-                            Core.EquipClass(ClassType.Solo);
-                            Bot.Quests.UpdateQuest(8094);
-                            Core.HuntMonster(
-                                "transformation",
-                                "Queen of Monsters",
-                                "Fragment of the Queen",
-                                13,
-                                false
-                            );
-
-                            Core.EquipClass(ClassType.Farm);
-                            Core.RegisterQuests(7700);
-                            Core.HuntMonster(
-                                "lagunabeach",
-                                "Flying Fisheye",
-                                "ShadowChaos Mote",
-                                250,
-                                false
-                            );
-                            Bot.Wait.ForPickup("ShadowChaos Mote");
-                            Core.CancelRegisteredQuests();
-
-                            Core.Logger("Adding 7 to the Insignias Count");
-                            InsigniasCount += 7;
-                            Core.Logger("Adding 10 to the Acquiescence Count");
-                            AcquiescenceCount += 10;
-                            break;
-                    }
-                }
-            }
-            void GoddessofWarCloak()
-            {
-                if (Core.CheckInventory("Goddess of War Cloak"))
-                {
-                    Core.Logger("\"Goddess Of War Blades\" owned.");
-                    return;
-                }
-
-                Core.Logger("adding 10 to the Acquiescence Count");
-                AcquiescenceCount += 10;
-                Core.Logger("adding 10 to the Insignias Count");
-                InsigniasCount += 10;
-            }
-            #endregion GoddessOfWarPrestigeCloak
-        #endregion GoddessofWar rewrote
-
-            #region RGRoW item Check
-
-            SOWM.Acquiescence(AcquiescenceCount);
-            SOWM.ElementalCore(ElementalCoreCount);
-
-            // If all required items are owned, proceed to buy the specified item
-            // Goddess Of War Prestige Cloak
-            Core.BuyItem("ultraspeaker", 2248, 72921, shopItemID: 11443); //remove the else here <<
+            if (Core.CheckInventory(new[] { "Goddess Of War Blades", "Goddess of War Cloak" }))
+                Core.BuyItem("ultraspeaker", 2248, 72921, shopItemID: 11443);
         }
-            #endregion RGRoW item Check
-
-        // #region Radiant Goddess of War quest
-        // #endregion Radiant Goddess of War quest
     }
+
 }
