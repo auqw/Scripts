@@ -139,11 +139,11 @@ public class UltraAvatarTyndarius
             NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter"))) == "Dragon of Time"
             && NormalizeString(GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer"))) == "Dragon of Time"
         )
-        C.Logger("Ball1Taunter & Ball2Killer are set to Dragon of Time, choose something else", "Fix This", true, true);
+            C.Logger("Ball1Taunter & Ball2Killer are set to Dragon of Time, choose something else", "Fix This", true, true);
 
-            isBall1Taunter =
-         NormalizeString(Bot.Player.CurrentClass!.Name)
-         == NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")));
+        isBall1Taunter =
+     NormalizeString(Bot.Player.CurrentClass!.Name)
+     == NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")));
         isBall2killer =
             NormalizeString(Bot.Player.CurrentClass.Name)
             == NormalizeString(GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer")));
@@ -171,6 +171,7 @@ public class UltraAvatarTyndarius
                 TyndariusComp.Safe => new[] { "Chaos Avenger", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
                 TyndariusComp.Fast => new[] { "Chrono ShadowSlayer", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
                 TyndariusComp.F2PFast => new[] { "King's Echo", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                _ => throw new InvalidOperationException($"Unhandled TyndariusComp value: {comp}"),
             };
 
             Ultra.EquipClassSync(classes, 4, "tyndarius_class.sync");
