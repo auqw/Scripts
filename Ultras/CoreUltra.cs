@@ -762,65 +762,51 @@ public class CoreUltra
         {
             try
             {
-                // Phase 1: Read existing content (shared lock)
-                List<string> lines = new List<string>();
-                
-                if (File.Exists(path))
+                // Single exclusive lock for the entire read-modify-write cycle
+                using var fs = new FileStream(
+                    path,
+                    FileMode.OpenOrCreate,
+                    FileAccess.ReadWrite,
+                    FileShare.None);  // Exclusive for entire operation
+
+                // Read
+                var lines = new List<string>();
+                using (var reader = new StreamReader(fs, leaveOpen: true))
                 {
-                    using (var fs = new FileStream(
-                        path,
-                        FileMode.Open,
-                        FileAccess.Read,
-                        FileShare.Read))
-                    using (var reader = new StreamReader(fs))
+                    string? line;
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        string? line;
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            if (!string.IsNullOrWhiteSpace(line))
-                                lines.Add(line);
-                        }
+                        if (!string.IsNullOrWhiteSpace(line))
+                            lines.Add(line);
                     }
                 }
 
-                // Phase 2: Modify in memory
+                // Modify
                 string stamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
                 string entry = $"{key}:{payload}:{stamp}";
-
                 int idx = lines.FindIndex(l =>
                 {
                     string[] parts = l.Split(':');
-                    return parts.Length > 0 && 
+                    return parts.Length > 0 &&
                         parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
                 });
+                if (idx >= 0) lines[idx] = entry;
+                else lines.Add(entry);
 
-                if (idx >= 0)
-                    lines[idx] = entry;
-                else
-                    lines.Add(entry);
+                // Write (rewind + truncate + write)
+                fs.Seek(0, SeekOrigin.Begin);
+                fs.SetLength(0);
+                using var writer = new StreamWriter(fs);
+                foreach (var line in lines)
+                    writer.WriteLine(line);
 
-                // Phase 3: Write with exclusive lock
-                using (var fs = new FileStream(
-                    path,
-                    FileMode.Create, // Truncate and write
-                    FileAccess.Write,
-                    FileShare.None)) // EXCLUSIVE - blocks everyone
-                using (var writer = new StreamWriter(fs))
-                {
-                    foreach (var line in lines)
-                    {
-                        writer.WriteLine(line);
-                    }
-                }
-                
-                return; // Success
+                return;
             }
             catch (IOException)
             {
                 Bot?.Sleep(100 + (attempt * 20));
             }
         }
-        
         Bot?.Log($"[ArmySync] Failed to update {path} after retries");
     }
 
