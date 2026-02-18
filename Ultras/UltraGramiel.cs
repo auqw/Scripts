@@ -338,7 +338,7 @@ public class UltraGramiel
         {
             bool anyCrystalAlive = Bot.Monsters.CurrentAvailableMonsters
                 .Any(x => x != null && x.Alive && (x.MapID == 2 || x.MapID == 3));
-            
+
             // player death during crystal phase
             if (!Bot.Player.Alive && anyCrystalAlive)
             {
@@ -374,7 +374,7 @@ public class UltraGramiel
                 Core.EnableSkills();
                 continue;
             }
-            
+
             // restart if any army member is missing -- catches deaths during crystal phase that would cause desync
             if (Bot.Map.PlayerCount < 3)
             {
@@ -396,7 +396,7 @@ public class UltraGramiel
                 Core.EnableSkills();
                 continue;
             }
-            
+
             // Dead during Gramiel phase → just respawn
             if (!Bot.Player.Alive)
             {
@@ -517,16 +517,16 @@ public class UltraGramiel
             {
                 if (!Bot.Player.Alive)
                     break;
-                
+
                 if (!Bot.Player.HasTarget)
                     Bot.Combat.Attack(crystalMapId); // Re-target crystal
                 
                 if (Bot.Skills.CanUseSkill(5))
                     Bot.Skills.UseSkill(5);
-                
+
                 Bot.Sleep(500);
                 attempts++;
-                
+
                 // Check if Focus aura appeared (taunt landed)
                 if (Bot.Player.HasTarget && Bot.Target?.Auras?.Any(a => a?.Name == "Focus") == true)
                 {
@@ -536,7 +536,7 @@ public class UltraGramiel
                     break;
                 }
             }
-            
+
             if (!tauntLanded)
             {
                 C.Logger($"WARNING: Taunt #{tauntCounter} FAILED after {attempts} attempts!");
@@ -546,7 +546,7 @@ public class UltraGramiel
                     C.Logger($"Target auras present: {auraNames}");
                 }
             }
-            
+
             Core.EnableSkills();
             Bot.Sleep(300);
             return;
@@ -563,7 +563,7 @@ public class UltraGramiel
             int otherCrystalMapId = crystalMapId == 2 ? 3 : 2;
             bool otherCrystalAlive = Bot.Monsters.CurrentAvailableMonsters
                 .Any(x => x != null && x.Alive && x.MapID == otherCrystalMapId);
-            
+
             if (otherCrystalAlive)
             {
                 targetCrystalMapId = otherCrystalMapId;
@@ -629,7 +629,7 @@ public class UltraGramiel
                         break;
                     }
                 }
-                
+
                 Core.EnableSkills();
                 Bot.Sleep(300);
             }
