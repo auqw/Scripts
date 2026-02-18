@@ -135,7 +135,7 @@ public class UltraGramiel
         new Option<CustomRole>(
             "CustomRole",
             "Custom Role",
-            "Used if your are not using a pre-defined comp. Pick which slot you're filling.",
+            "Used if you are not using a pre-defined comp. Pick which slot you're filling.",
             CustomRole.Unselected
         ),
         new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
@@ -145,7 +145,9 @@ public class UltraGramiel
     public void ScriptMain(IScriptInterface bot)
     {
         C.OneTimeMessage("Ultra Gramiel", 
-            "This is a technical fight requiring optimal enhancements and classes (SC/IT, LC, LOO, VDK).\n"
+            "This is a technical fight requiring optimal enhancements and classes.\n"
+                + "Recommended comp: SC / IT, LoO, AP, VHL.\n"
+                + "Alternate comp: SC / IT, LC, LOO, VDK.\n"
                 + "The crystal phase is RNG and deaths will occur.\n"
                 + "If you are not prepared, please do not run this script.",
             true,
@@ -201,7 +203,8 @@ public class UltraGramiel
                     new[] { "LightCaster" },
                     new[] { "Lord Of Order" },
                     new[] { "Verus DoomKnight" }
-                }
+                },
+                _ => throw new NotImplementedException(),
             };
 
             Ultra.EquipClassSync(classes, 4, "gramiel_class.sync");
