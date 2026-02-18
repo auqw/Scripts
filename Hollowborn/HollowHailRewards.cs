@@ -168,6 +168,9 @@ public class HollowHailRewards
             return;
         }
 
+        if (Core.QuestRewardsInt(quest.ID).All(x => Core.CheckInventory(x)))
+            return;
+
         if (quest?.AcceptRequirements?.Count > 0)
         {
             foreach (ItemBase req in quest.AcceptRequirements)
@@ -214,6 +217,8 @@ public class HollowHailRewards
 
         Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(ColdColdCOLDQuestID));
 
+        if (Core.QuestRewardsInt(quest.ID).All(x => Core.CheckInventory(x)))
+            return;
         if (quest == null)
         {
             Core.Logger($"Failed to load quest with ID {ColdColdCOLDQuestID}. Cannot proceed with Cold, Cold, COLD! rewards.");
