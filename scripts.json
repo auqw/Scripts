@@ -3202,8 +3202,8 @@
       "voidnightbane"
     ],
     "path": "Ultras/NightBane.cs",
-    "size": 13336,
-    "sha256": "59fa9839afac030f7bf29a2f9960d7c59003e6d967a822d3a2df78672d835a17",
+    "size": 13396,
+    "sha256": "7d3a7e2adfe0efa87849ce4cae1ec138b9470bdbd0f424337620eafd388f3dff",
     "fileName": "NightBane.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/NightBane.cs"
   },
@@ -3310,6 +3310,20 @@
     "sha256": "7cea8f1b706757d2d0b61967f60c7bb4aa36275322f12cba578b7c8bf20223df",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
+  },
+  {
+    "name": "Flibbitiestgibbet",
+    "description": "Using 4-7 accounts to kill Flibbitiestgibbet",
+    "tags": [
+      "flibbitiestgibbet",
+      "ultra",
+      "voidflibbitiestgibbet"
+    ],
+    "path": "Ultras/Flibbitiestgibbet.cs",
+    "size": 13466,
+    "sha256": "df2ecc8492e21d33aea2afa62c9c19504523eaa55c1ab2cb43d0a6d1f39048b5",
+    "fileName": "Flibbitiestgibbet.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Flibbitiestgibbet.cs"
   },
   {
     "name": "Grimgoal",
