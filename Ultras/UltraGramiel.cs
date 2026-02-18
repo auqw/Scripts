@@ -363,6 +363,9 @@ public class UltraGramiel
                 
                 Core.Join("whitemap");
                 Bot.Wait.ForMapLoad("whitemap");
+                string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
+                Ultra.ClearSyncFile(syncPath);
+                Bot.Sleep(2500);
                 Prep(skipEnhancements: true);
                 Ultra.WaitForArmy(3, "UltraItemCheck.sync");
 

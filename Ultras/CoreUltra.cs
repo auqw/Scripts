@@ -323,53 +323,6 @@ public class CoreUltra
         }
 
         // --- File I/O Helpers ---
-        string[] Slurp(string path)
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                try
-                {
-                    using FileStream fs = new(
-                        path,
-                        FileMode.OpenOrCreate,
-                        FileAccess.Read,
-                        FileShare.ReadWrite
-                    );
-                    using StreamReader sr = new(fs);
-                    return sr.ReadToEnd()
-                        .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                }
-                catch (IOException)
-                {
-                    Bot?.Sleep(50);
-                }
-                catch
-                {
-                    break;
-                }
-            }
-            return Array.Empty<string>();
-        }
-
-        void Yeet(string path, string[] lines)
-        {
-            for (int i = 0; i < 15; i++)
-            {
-                try
-                {
-                    File.WriteAllLines(path, lines);
-                    return;
-                }
-                catch (IOException)
-                {
-                    Bot?.Sleep(50);
-                }
-                catch
-                {
-                    return;
-                }
-            }
-        }
 
         // Each line: username|class:ready:timestamp
         void Poke(string path, string key, bool ready)
@@ -384,60 +337,123 @@ public class CoreUltra
             string username = keyParts[0];
             string className = keyParts[1];
 
-            List<string> lines = Slurp(path).ToList();
-
-            // purge broken historical entries (|Peasant etc.)
-            lines.RemoveAll(l => l.StartsWith("|", StringComparison.Ordinal));
-
             long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             string entry = $"{username}|{className}:{(ready ? 1 : 0)}:{now}";
 
-            int idx = lines.FindIndex(l =>
+            // Atomic read-modify-write with exclusive lock
+            for (int attempt = 0; attempt < 50; attempt++)
             {
-                string[] parts = l.Split(':');
-                if (parts.Length < 1)
-                    return false;
+                try
+                {
+                    using var fs = new FileStream(
+                        path,
+                        FileMode.OpenOrCreate,
+                        FileAccess.ReadWrite,
+                        FileShare.None);
 
-                string[] existingKey = parts[0].Split('|');
-                return existingKey.Length >= 1 && existingKey[0] == username;
-            });
+                    // Read
+                    var lines = new List<string>();
+                    using (var reader = new StreamReader(fs, leaveOpen: true))
+                    {
+                        string? line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(line)
+                                && !line.StartsWith("|", StringComparison.Ordinal))
+                                lines.Add(line);
+                        }
+                    }
 
-            if (idx >= 0)
-                lines[idx] = entry;
-            else
-                lines.Add(entry);
+                    // Modify
+                    int idx = lines.FindIndex(l =>
+                    {
+                        string[] parts = l.Split(':');
+                        if (parts.Length < 1)
+                            return false;
+                        string[] existingKey = parts[0].Split('|');
+                        return existingKey.Length >= 1 && existingKey[0] == username;
+                    });
 
-            Yeet(path, lines.ToArray());
+                    if (idx >= 0)
+                        lines[idx] = entry;
+                    else
+                        lines.Add(entry);
+
+                    // Write (rewind + truncate + write)
+                    fs.Seek(0, SeekOrigin.Begin);
+                    fs.SetLength(0);
+                    using var writer = new StreamWriter(fs);
+                    foreach (var l in lines)
+                        writer.WriteLine(l);
+
+                    return;
+                }
+                catch (IOException)
+                {
+                    Bot?.Sleep(100 + (attempt * 20));
+                }
+            }
         }
 
 
         int HowMany(string path)
         {
-            string[] lines = Slurp(path);
             long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             const int staleThreshold = 600; // 10 minutes
-            List<string> valid = new();
 
-            foreach (string line in lines)
+            // Atomic read (+ optional stale cleanup) with exclusive lock
+            for (int attempt = 0; attempt < 50; attempt++)
             {
-                string[] parts = line.Split(':');
-                if (parts.Length < 3)
-                    continue;
+                try
+                {
+                    using var fs = new FileStream(
+                        path,
+                        FileMode.OpenOrCreate,
+                        FileAccess.ReadWrite,
+                        FileShare.None);
 
-                string key = parts[0];
-                string status = parts[1];
-                if (!long.TryParse(parts[2], out long ts))
-                    continue;
+                    var all = new List<string>();
+                    using (var reader = new StreamReader(fs, leaveOpen: true))
+                    {
+                        string? line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(line))
+                                all.Add(line);
+                        }
+                    }
 
-                if (now - ts <= staleThreshold)
-                    valid.Add(line);
+                    List<string> valid = new();
+                    foreach (string line in all)
+                    {
+                        string[] parts = line.Split(':');
+                        if (parts.Length < 3)
+                            continue;
+                        if (!long.TryParse(parts[2], out long ts))
+                            continue;
+                        if (now - ts <= staleThreshold)
+                            valid.Add(line);
+                    }
+
+                    // Rewrite file only if we cleaned something out
+                    if (valid.Count != all.Count)
+                    {
+                        fs.Seek(0, SeekOrigin.Begin);
+                        fs.SetLength(0);
+                        using var writer = new StreamWriter(fs);
+                        foreach (var l in valid)
+                            writer.WriteLine(l);
+                    }
+
+                    return valid.Count(l => l.Split(':')[1] == "1");
+                }
+                catch (IOException)
+                {
+                    Bot?.Sleep(100 + (attempt * 20));
+                }
             }
 
-            // Rewrite file only if we cleaned something out
-            if (valid.Count != lines.Length)
-                Yeet(path, valid.ToArray());
-
-            return valid.Count(l => l.Split(':')[1] == "1");
+            return 0;
         }
 
         // --- Initialize sync file ---
@@ -451,7 +467,7 @@ public class CoreUltra
             if (
                 !File.Exists(syncFile)
                 || (DateTime.UtcNow - File.GetLastWriteTimeUtc(syncFile)).TotalMinutes > 15
-                || Slurp(syncFile).All(l => l.EndsWith(":1"))
+                || ReadLines(syncFile).All(l => l.EndsWith(":1"))
             )
                 File.WriteAllText(syncFile, "");
         }
