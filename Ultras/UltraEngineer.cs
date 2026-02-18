@@ -198,6 +198,7 @@ public class UltraEngineer
                 EngineerComp.Fast => new[] { "Lich", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
                 EngineerComp.Safe => new[] { "Legion Revenant", "StoneCrusher", "ArchPaladin", "Lord Of Order" },
                 EngineerComp.F2PFast => new[] { "Arcana Invoker", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                => throw new InvalidOperationException($"Unhandled EngineerComp value: {comp}")
             };
 
             Ultra.EquipClassSync(classes, 4, "engineer_class.sync");
