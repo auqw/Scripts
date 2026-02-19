@@ -73,7 +73,7 @@ public class Butler3
         Core.Logger(
             "Joining whitemap, as starting on certain maps.. just breaks things? Not sure why :| "
         );
-        Core.Join("whitemap");
+        Core.Join("whitemap-100000");
         Bot.Events.ExtensionPacketReceived += ChatListener;
         LockedZoneWarning = false;
         // Null-safe config reads
@@ -84,7 +84,9 @@ public class Butler3
         playerName = Bot.Config!.Get<string>("playerName");
         classType = Bot.Config!.Get<ClassType>("classType");
 
-        RN = !string.IsNullOrEmpty(RN) ? RN : Core.PrivateRoomNumber.ToString();
+        RN = !string.IsNullOrEmpty(Bot.Config!.Get<string>("RoomNumber"))
+        ? Bot.Config!.Get<string>("RoomNumber")
+        : Core.PrivateRoomNumber.ToString();
 
         if (string.IsNullOrEmpty(playerName))
         {
@@ -113,12 +115,17 @@ public class Butler3
                 // If {playerName} isnt in current map, jumpwait(); & goto, then wait [ActionDelay]
                 if (!Bot.Map.PlayerExists(playerName))
                 {
+                    // Initial Goto
+                    Bot.Player!.Goto(playerName);
+                    Bot.Sleep(1000);
+
                     Core.DebugLogger(this, $"{playerName} isn't on the current map, following!");
 
                     if (LockedZoneWarning)
                     {
                         Bot.Events.ExtensionPacketReceived -= ChatListener;
                         Core.JumpWait();
+                        Core.Join("whitemap-100000");
                         LockedZoneWarning = false;
 
                         if (lockedMapList.Count > 0)
@@ -151,6 +158,7 @@ public class Butler3
                                 "LockedMap list is Empty, we'll Sleep incrimentaly",
                                 "lockedMapList <= 0"
                             );
+                            Core.Join("whitemap-100000");
                             Random random = new();
                             int sleepTimer = 500; // Start at 500ms
                             const int maxSleep = 5000; // 5 seconds max
