@@ -226,15 +226,10 @@ public class UltraNulgath
                     new[] { "StoneCrusher" },
                     new[] { "Lord Of Order" }
                 },
-                _ => new[] {
-                    new[] { "ArchPaladin" },
-                    new[] { "Legion Revenant" },
-                    new[] { "Lord Of Order" },
-                    new[] { "Verus DoomKnight" }
-                },
+                _ => throw new NotImplementedException(),
             };
 
-            Ultra.EquipClassSync(classes, 4, "nulgath_class.sync");
+            Ultra.EquipClassSync(classes, 4, "nulgath_class.sync", true);
         }
 
         if (Bot.Config!.Get<bool>("DoEnh"))
