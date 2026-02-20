@@ -57,36 +57,34 @@ public class Butler3
 
     // String? TargetCell;
     bool RoomFull;
+    bool GotoisOff;
 
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions(disableClassSwap: true);
         BasicAFButler();
-        Bot.Events.ExtensionPacketReceived -= ChatListener;
         Core.SetOptions(false);
     }
 
     public void BasicAFButler()
     {
-        #region Ignore
-        // Core.DL_Enable();
-        Core.Logger(
-            "Joining whitemap, as starting on certain maps.. just breaks things? Not sure why :| "
-        );
+        #region Setup
+        Core.Logger("Joining whitemap, as starting on certain maps.. just breaks things? Not sure why :| ");
         Core.Join("whitemap-100000");
+
+        // Subscribe once here, never touch it inside the loop
         Bot.Events.ExtensionPacketReceived += ChatListener;
         LockedZoneWarning = false;
-        // Null-safe config reads
+
         var lockedMapsConfig = Bot.Config!.Get<string>("lockedMapsList");
-        lockedMapList =
-            lockedMapsConfig?.Split(',').Select(m => m?.Trim()).ToList() ?? new List<string?>();
+        lockedMapList = lockedMapsConfig?.Split(',').Select(m => m?.Trim()).ToList() ?? new List<string?>();
 
         playerName = Bot.Config!.Get<string>("playerName");
         classType = Bot.Config!.Get<ClassType>("classType");
 
         RN = !string.IsNullOrEmpty(Bot.Config!.Get<string>("RoomNumber"))
-        ? Bot.Config!.Get<string>("RoomNumber")
-        : Core.PrivateRoomNumber.ToString();
+            ? Bot.Config!.Get<string>("RoomNumber")
+            : Core.PrivateRoomNumber.ToString();
 
         if (string.IsNullOrEmpty(playerName))
         {
@@ -100,137 +98,117 @@ public class Butler3
         #endregion
 
         if (playerName == Bot.Player.Username)
-        {
-            Core.Logger(
-                "THE FUCK ARE YOU FOLLOWING YOURSELF FOR RETARD?",
-                "Retard alert",
-                messageBox: true
-            );
-        }
+            Core.Logger("THE FUCK ARE YOU FOLLOWING YOURSELF FOR RETARD?", "Retard alert", messageBox: true);
 
         while (!Bot.ShouldExit)
         {
             try
             {
-                // If {playerName} isnt in current map, jumpwait(); & goto, then wait [ActionDelay]
                 if (!Bot.Map.PlayerExists(playerName))
                 {
-                    // Initial Goto
+                    // First attempt to goto before checking flags
                     Bot.Player!.Goto(playerName);
                     Bot.Sleep(1000);
+                    Core.Logger($"{playerName} isn't on the current map, following!");
 
-                    Core.DebugLogger(this, $"{playerName} isn't on the current map, following!");
-
-                    if (LockedZoneWarning)
+                    // Player is ignoring goto — stop everything
+                    if (GotoisOff)
                     {
-                        Bot.Events.ExtensionPacketReceived -= ChatListener;
+                        Core.Logger($"{playerName} is ignoring goto requests, Stopping script!");
                         Core.JumpWait();
                         Core.Join("whitemap-100000");
+                        break; // exits while loop, hits cleanup below
+                    }
+
+                    // Tried to follow into a locked zone
+                    if (LockedZoneWarning)
+                    {
                         LockedZoneWarning = false;
+                        Core.JumpWait();
+                        Core.Join("whitemap-100000");
 
                         if (lockedMapList.Count > 0)
                         {
+                            // Try each locked map to find the player
                             Core.Logger("LockedMaps handler Initiated.", "LockedMapList.Count > 0");
                             foreach (string? map in lockedMapList.Where(m => m != null))
                             {
                                 if (Bot.ShouldExit)
-                                {
-                                    Bot.Events.ExtensionPacketReceived -= ChatListener;
-                                    return;
-                                }
+                                    break;
 
                                 Core.Join($"{map}-{RN}");
                                 Bot.Wait.ForMapLoad(map!);
 
                                 if (Bot.Map.PlayerExists(playerName))
                                 {
-                                    Bot.Events.ExtensionPacketReceived += ChatListener;
                                     Bot.Player?.Goto(playerName);
                                     break;
                                 }
                             }
-                            Bot.Events.ExtensionPacketReceived += ChatListener;
-                            continue;
                         }
-                        else if (lockedMapList.Count <= 0)
+                        else
                         {
-                            Core.Logger(
-                                "LockedMap list is Empty, we'll Sleep incrimentaly",
-                                "lockedMapList <= 0"
-                            );
+                            // No locked maps configured — incrementally wait and retry goto
+                            Core.Logger("LockedMap list is Empty, we'll Sleep incrementally", "lockedMapList <= 0");
                             Core.Join("whitemap-100000");
+
                             Random random = new();
-                            int sleepTimer = 500; // Start at 500ms
-                            const int maxSleep = 5000; // 5 seconds max
-                            const int increment = 1000; // 500ms random increment
+                            int sleepTimer = 500;
+                            const int maxSleep = 5000;
+                            const int increment = 1000;
 
                             while (!Bot.ShouldExit && !Bot.Map.PlayerExists(playerName))
                             {
-                                Core.DebugLogger(this, $"Sleeping for: {sleepTimer}");
+                                Core.Logger($"Sleeping for: {sleepTimer}");
                                 Bot.Sleep(sleepTimer);
-
                                 Bot.Player!.Goto(playerName);
-                                // Increment sleep time if under 5 seconds
-                                if (sleepTimer < maxSleep)
-                                {
-                                    sleepTimer += random.Next(increment); // Add 0-500ms randomly
-                                    sleepTimer = Math.Min(sleepTimer, maxSleep); // Cap at 5 seconds
-                                }
 
-                                if (Bot.Map.PlayerExists(playerName))
-                                {
-                                    Bot.Events.ExtensionPacketReceived += ChatListener;
-                                    break;
-                                }
+                                if (sleepTimer < maxSleep)
+                                    sleepTimer = Math.Min(sleepTimer + random.Next(increment), maxSleep);
                             }
-                            Bot.Events.ExtensionPacketReceived += ChatListener;
-                            continue;
                         }
+
+                        continue; // re-evaluate from top of outer loop
                     }
+
+                    // Room is full — wait incrementally and retry
                     if (RoomFull)
                     {
-                        Bot.Events.ExtensionPacketReceived -= ChatListener;
                         Random random = new();
-                        int sleepTimer = 1000; // Start at 500ms
-                        const int maxSleep = 5000; // 10 seconds max
-                        const int increment = 1000; // 500ms random increment
+                        int sleepTimer = 1000;
+                        const int maxSleep = 5000;
+                        const int increment = 1000;
 
                         while (!Bot.ShouldExit && !Bot.Map.PlayerExists(playerName!))
                         {
                             Bot.Sleep(sleepTimer);
 
-                            // Increment sleep time if under 5 seconds
                             if (sleepTimer < maxSleep)
-                            {
-                                sleepTimer += random.Next(increment); // Add 0-500ms randomly
-                                sleepTimer = Math.Min(sleepTimer, maxSleep); // Cap at 5 seconds
-                            }
+                                sleepTimer = Math.Min(sleepTimer + random.Next(increment), maxSleep);
+
                             Bot.Player!.Goto(playerName!);
-                            if (Bot.Map.PlayerExists(playerName!))
-                            {
-                                Bot.Events.ExtensionPacketReceived += ChatListener;
-                                RoomFull = false;
-                                break;
-                            }
-                            if (RoomFull && sleepTimer >= maxSleep)
-                                Bot.Log(
-                                    "Room is still full, we'll continue waiting for the map to be accessable, or till we can goto the player."
-                                );
+
+                            if (sleepTimer >= maxSleep)
+                                Bot.Log("Room is still full, waiting for access or until we can goto the player.");
                         }
+
+                        // Room freed up
+                        RoomFull = false;
                         continue;
                     }
 
+                    // No flags set — player just isn't on map yet, jump and retry
                     Core.JumpWait();
-
-                    Bot.Player!.Goto(playerName);
-                    Bot.Sleep(1000);
+                    continue;
                 }
 
+                // Player is on the same map — follow and attack
                 while (!Bot.ShouldExit)
                 {
                     if (!Bot.Player!.Alive)
                         Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
 
+                    // Player left the map, break to outer loop to follow
                     if (!Bot.Map.PlayerExists(playerName))
                         break;
 
@@ -239,13 +217,95 @@ public class Butler3
                     Bot.Combat.Attack("*");
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Core.Logger($"Error in main loop: {ex.Message}");
+            }
         }
 
+        // Always clean up the listener on exit, regardless of how we got here
         Bot.Events.ExtensionPacketReceived -= ChatListener;
         Core.JumpWait();
     }
 
+    // void ChatListener(dynamic packet)
+    // {
+    //     try
+    //     {
+    //         if (packet == null)
+    //             return;
+
+    //         var paramsObj = packet["params"];
+    //         if (paramsObj == null)
+    //             return;
+
+    //         string? type = paramsObj.type;
+    //         if (type != "str")
+    //             return;
+
+    //         dynamic? dataObj = paramsObj.dataObj;
+    //         if (dataObj == null)
+    //             return;
+
+    //         string? cmd = dataObj[0];
+    //         if (string.IsNullOrEmpty(cmd))
+    //             return;
+
+    //         // ------------------------------
+    //         // SERVER MESSAGES (%xt%server ...)
+    //         // ------------------------------
+    //         if (cmd == "server")
+    //         {
+    //             string? text = dataObj[2]?.ToString();
+    //             if (string.IsNullOrWhiteSpace(text))
+    //                 return;
+
+    //             // Detect "is ignoring goto requests" on server channel
+    //             if (text.Contains("is ignoring goto requests", StringComparison.OrdinalIgnoreCase))
+    //             {
+    //                 GotoisOff = true;
+    //                 return;
+    //             }
+    //         }
+
+    //         // ------------------------------
+    //         // WARNING MESSAGES (existing)
+    //         // ------------------------------
+    //         if (cmd == "warning")
+    //         {
+    //             string chatPacket = Convert.ToString(packet) ?? string.Empty;
+
+    //             if (
+    //                 chatPacket.Contains("a Locked zone.", StringComparison.OrdinalIgnoreCase)
+    //                 || chatPacket.Contains("is not available.", StringComparison.OrdinalIgnoreCase)
+    //             )
+    //                 LockedZoneWarning = true;
+
+    //             if (chatPacket.Contains("is full", StringComparison.OrdinalIgnoreCase))
+    //             {
+    //                 Core.DebugLogger(
+    //                     this,
+    //                     $"Room is full, we'll wait incrementally, whilst trying to goto {playerName}"
+    //                 );
+    //                 RoomFull = true;
+    //             }
+
+    //             if (chatPacket.Contains("ignoring goto", StringComparison.OrdinalIgnoreCase))
+    //             {
+    //                 Core.DebugLogger(
+    //                     this,
+    //                     $"{playerName} is ignoring goto requests, Stopping script!"
+    //                 );
+
+    //                 Bot.StopSync(true);
+    //             }
+    //         }
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Core.Logger( $"Error in ChatListener: {ex.Message}");
+    //     }
+    // }
     void ChatListener(dynamic packet)
     {
         try
@@ -269,61 +329,48 @@ public class Butler3
             if (string.IsNullOrEmpty(cmd))
                 return;
 
-            // ------------------------------
             // SERVER MESSAGES (%xt%server ...)
-            // ------------------------------
             if (cmd == "server")
             {
                 string? text = dataObj[2]?.ToString();
                 if (string.IsNullOrWhiteSpace(text))
                     return;
 
-                // Detect "is ignoring goto requests" on server channel
                 if (text.Contains("is ignoring goto requests", StringComparison.OrdinalIgnoreCase))
                 {
-                    Core.Logger($"{playerName} is ignoring goto requests, Stopping script!");
-
-                    Bot.StopSync(true);
-                    return;
+                    Core.Logger($"{playerName} is ignoring goto requests (Disable `incognito` mode in CBO on the account your following), Stopping script!");
+                    GotoisOff = true;
                 }
             }
-
-            // ------------------------------
-            // WARNING MESSAGES (existing)
-            // ------------------------------
-            if (cmd == "warning")
+            // WARNING MESSAGES
+            else if (cmd == "warning")
             {
-                string chatPacket = Convert.ToString(packet) ?? string.Empty;
+                // Read the actual warning text instead of stringifying the whole packet
+                string? warningText = dataObj[1]?.ToString();
+                if (string.IsNullOrWhiteSpace(warningText))
+                    return;
 
-                if (
-                    chatPacket.Contains("a Locked zone.", StringComparison.OrdinalIgnoreCase)
-                    || chatPacket.Contains("is not available.", StringComparison.OrdinalIgnoreCase)
-                )
-                    LockedZoneWarning = true;
-
-                if (chatPacket.Contains("is full", StringComparison.OrdinalIgnoreCase))
+                if (warningText.Contains("a Locked zone.", StringComparison.OrdinalIgnoreCase)
+                    || warningText.Contains("is not available.", StringComparison.OrdinalIgnoreCase))
                 {
-                    Core.DebugLogger(
-                        this,
-                        $"Room is full, we'll wait incrementally, whilst trying to goto {playerName}"
-                    );
+                    Core.Logger("Zone is either Locked or unavailable. (maybe your missing an item, or the area requires membership?)");
+                    LockedZoneWarning = true;
+                }
+                else if (warningText.Contains("is full", StringComparison.OrdinalIgnoreCase))
+                {
+                    Core.Logger($"Room is full, we'll wait incrementally, whilst trying to goto {playerName}");
                     RoomFull = true;
                 }
-
-                if (chatPacket.Contains("ignoring goto", StringComparison.OrdinalIgnoreCase))
+                else if (warningText.Contains("ignoring goto", StringComparison.OrdinalIgnoreCase))
                 {
-                    Core.DebugLogger(
-                        this,
-                        $"{playerName} is ignoring goto requests, Stopping script!"
-                    );
-
-                    Bot.StopSync(true);
+                    Core.Logger($"{playerName} is ignoring goto requests (Disable `incognito` mode in CBO on the account your following), Stopping script!");
+                    GotoisOff = true;
                 }
             }
         }
         catch (Exception ex)
         {
-            Core.DebugLogger(this, $"Error in ChatListener: {ex.Message}");
+            Core.Logger($"Error in ChatListener: {ex.Message}");
         }
     }
 }
