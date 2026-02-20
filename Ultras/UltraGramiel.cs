@@ -14,7 +14,6 @@ tags: ultra, gramiel, Ultra Gramiel
 using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -108,9 +107,9 @@ public class UltraGramiel
     public string OptionsStorage = "UltraGramiel";
 
     // Gramiel warning tracking
-    private int tauntCounter = 0;
+    private volatile int tauntCounter = 0;
     private DateTime lastTauntWarningTime = DateTime.MinValue;
-    private bool shouldExecuteTaunt = false;
+    private volatile bool shouldExecuteTaunt = false;
     
     // Gramiel boss taunt timer (4 rotation, 5 seconds per taunt)
     private DateTime gramielFightStartTime = DateTime.MinValue;
@@ -569,7 +568,14 @@ public class UltraGramiel
             
             if (inTauntWindow && noFocusAura)
             {
+                // Stop all skill systems before taunting
+                Core.DisableSkills();
+                Bot.Skills.Stop();
+                Bot.Sleep(Core.D2); // Use standard delay (700ms)
+                
                 C.Logger($"Gramiel taunt window ({currentTime:F1}s into fight, offset {tauntOffsetSeconds}s)");
+                
+                // Use the proven UseTaunt pattern
                 Ultra.UseTaunt(gramielMapId);
                 C.Logger("Gramiel taunt landed!");
 
@@ -580,7 +586,7 @@ public class UltraGramiel
     }
 
     // Packet Handler for Gramiel Warning Messages
-    private async void GramielMessageListener(dynamic packet)
+    private void GramielMessageListener(dynamic packet)
     {
         try
         {
@@ -604,7 +610,7 @@ public class UltraGramiel
                     message.Contains("defense shattering attack", StringComparison.OrdinalIgnoreCase))
                 {
                     Bot.Log($"[GRAMIEL] Crystal warning packet received");
-                    await HandleCrystalWarning();
+                    HandleCrystalWarning();
                     return;
                 }
             }
@@ -615,7 +621,7 @@ public class UltraGramiel
         }
     }
 
-    private async Task HandleCrystalWarning()
+    private void HandleCrystalWarning()
     {
         try
         {
@@ -651,8 +657,6 @@ public class UltraGramiel
         {
             Bot.Log($"[GRAMIEL] HandleCrystalWarning exception: {ex.Message}");
         }
-        
-        await Task.CompletedTask;
     }
 
     public enum GramielComp
