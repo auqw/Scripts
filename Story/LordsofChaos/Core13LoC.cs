@@ -2460,6 +2460,7 @@ public class Core13LoC
         //Find your way to Death's lair
         if (!Story.QuestProgression(3798))
         {
+            ResetShadowAttack();
             Core.EnsureAccept(3798);
             Core.Join("shadowattack", "Boss", "Left");
             Core.GetMapItem(2896, 1, "shadowattack");
@@ -2470,15 +2471,28 @@ public class Core13LoC
         //Beat Death!
         // Get out of any cutscene cells
         // Maybe a map reset (white map> go back will fix it?)
-        Core.Logger("Resetting the map");
-        Core.Join("whitemap-100000");
-        Core.Join("shadowattack");
         Core.EquipClass(ClassType.Solo);
         if (!Story.QuestProgression(3799))
         {
+            ResetShadowAttack();
             Core.EnsureAccept(3799);
             Core.HuntMonster("shadowattack", "Death", "You Beat Death?!");
             Core.EnsureComplete(3799);
+        }
+
+        void ResetShadowAttack()
+        {
+            Core.Logger("Resetting shadowAttack Map");
+            Bot.Map.Jump("Enter", "Spawn", autoCorrect: false);
+            Bot.Wait.ForCellChange("Enter");
+            Core.Sleep(15000);
+            Bot.Map.Join("whitemap-100000");
+            Bot.Wait.ForMapLoad("whitemap");
+            Core.Sleep(15000);
+            Bot.Map.Join($"shadowattack-" + Core.PrivateRoomNumber);
+            Bot.Wait.ForMapLoad("shadowattack");
+            Core.Sleep(15000);
+
         }
 
         //Enter Confrontation
