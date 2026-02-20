@@ -26105,8 +26105,8 @@
       "void chasm"
     ],
     "path": "Nation/Various/PrimeFiendShard.cs",
-    "size": 13690,
-    "sha256": "7978802c6904c030f7992b0217ebd1cc775d415384e0f1505d35fc4a0b417971",
+    "size": 13566,
+    "sha256": "de6245fd2ace4f58af42c7ebb55489d8f0cbd2fbafa7ded74e1237e58f9939c8",
     "fileName": "PrimeFiendShard.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/PrimeFiendShard.cs"
   },
