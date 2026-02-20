@@ -13,6 +13,8 @@ tags: ultra, gramiel, Ultra Gramiel
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
 
@@ -207,6 +209,7 @@ public class UltraGramiel
                 _ => throw new NotImplementedException(),
             };
 
+            Core.EquipRandomClassAndReequip();
             Ultra.EquipClassSync(classes, 4, "gramiel_class.sync");
         }
 
@@ -508,49 +511,11 @@ public class UltraGramiel
         if (shouldExecuteTaunt)
         {
             shouldExecuteTaunt = false;
-            Core.DisableSkills();
-            Bot.Sleep(500);
             
-            C.Logger($"{className} executing taunt #{tauntCounter}!");
+            Bot.Log($"[GRAMIEL] {className} executing taunt #{tauntCounter}!");
+            Ultra.UseTaunt(crystalMapId);
+            Bot.Log($"[GRAMIEL] Taunt #{tauntCounter} landed!");
             
-            int attempts = 0;
-            bool tauntLanded = false;
-            while (!Bot.ShouldExit && attempts < 15)
-            {
-                if (!Bot.Player.Alive)
-                    break;
-
-                if (!Bot.Player.HasTarget)
-                    Bot.Combat.Attack(crystalMapId); // Re-target crystal
-                
-                if (Bot.Skills.CanUseSkill(5))
-                    Bot.Skills.UseSkill(5);
-
-                Bot.Sleep(500);
-                attempts++;
-
-                // Check if Focus aura appeared (taunt landed)
-                if (Bot.Player.HasTarget && Bot.Target?.Auras?.Any(a => a?.Name == "Focus") == true)
-                {
-                    C.Logger($"Taunt #{tauntCounter} landed after {attempts} attempts");
-                    tauntLanded = true;
-                    Bot.Sleep(500);
-                    break;
-                }
-            }
-
-            if (!tauntLanded)
-            {
-                C.Logger($"WARNING: Taunt #{tauntCounter} FAILED after {attempts} attempts!");
-                if (Bot.Player.HasTarget && Bot.Target?.Auras != null)
-                {
-                    string auraNames = string.Join(", ", Bot.Target.Auras.Select(a => a?.Name ?? "null"));
-                    C.Logger($"Target auras present: {auraNames}");
-                }
-            }
-
-            Core.EnableSkills();
-            Bot.Sleep(300);
             return;
         }
 
@@ -604,33 +569,9 @@ public class UltraGramiel
             
             if (inTauntWindow && noFocusAura)
             {
-                Core.DisableSkills();
-                Bot.Sleep(500);
-                
                 C.Logger($"Gramiel taunt window ({currentTime:F1}s into fight, offset {tauntOffsetSeconds}s)");
-                
-                int attempts = 0;
-                while (!Bot.ShouldExit && attempts < 15)
-                {
-                    if (!Bot.Player.Alive)
-                        break;
-                    
-                    if (!Bot.Player.HasTarget)
-                        Bot.Combat.Attack(gramielMapId);
-                    
-                    if (Bot.Skills.CanUseSkill(5))
-                        Bot.Skills.UseSkill(5);
-                    
-                    Bot.Sleep(500);
-                    attempts++;
-                    
-                    if (Bot.Player.HasTarget && Bot.Target?.Auras?.Any(a => a?.Name == "Focus") == true)
-                    {
-                        C.Logger("Gramiel taunt landed - Focus aura detected!");
-                        Bot.Sleep(500);
-                        break;
-                    }
-                }
+                Ultra.UseTaunt(gramielMapId);
+                C.Logger("Gramiel taunt landed!");
 
                 Core.EnableSkills();
                 Bot.Sleep(300);
@@ -639,63 +580,79 @@ public class UltraGramiel
     }
 
     // Packet Handler for Gramiel Warning Messages
-    private void GramielMessageListener(dynamic packet)
+    private async void GramielMessageListener(dynamic packet)
     {
         try
         {
-            string type = packet["params"].type;
-            if (type is not "json")
-                return;
-            
-            if (!Bot.Player.Alive)
+            if (packet?["params"]?.type?.ToString() != "json")
                 return;
             
             dynamic data = packet["params"].dataObj;
-            string cmd = data.cmd.ToString();
-            
-            if (cmd != "ct")
+            if (data?.cmd?.ToString() != "ct")
                 return;
             
-            // Check for messages in anims array (boss messages appear here)
-            if (data.anims is null)
+            if (data?.anims is null)
                 return;
             
             foreach (dynamic anim in data.anims)
             {
-                if (anim is null || anim.msg is null)
+                if (anim is null)
                     continue;
                 
-                string message = (string)anim.msg;
-                
-                // Check for crystal defense shattering attack warning
-                if (message.Contains("The Grace Crystal prepares a defense shattering attack!", StringComparison.OrdinalIgnoreCase))
+                string? message = anim?.msg?.ToString();
+                if (!string.IsNullOrEmpty(message) && 
+                    message.Contains("defense shattering attack", StringComparison.OrdinalIgnoreCase))
                 {
-                    // Debounce: Ignore if we received this message within the last 2 seconds -- avoid double taunts
-                    TimeSpan timeSinceLastWarning = DateTime.Now - lastTauntWarningTime;
-                    if (timeSinceLastWarning.TotalSeconds < 2)
-                    {
-                        return;
-                    }
-                    
-                    lastTauntWarningTime = DateTime.Now;
-                    tauntCounter++;
-                    C.Logger($"Crystal attack warning detected! (Taunt #{tauntCounter})");
-                    
-                    // Determine if this player should taunt
-                    // T1 taunters taunt on odd counts (1, 3, 5...)
-                    // T2 taunters taunt on even counts (2, 4, 6...)
-                    bool shouldTaunt = (isT1Taunter && tauntCounter % 2 == 1) || 
-                                       (!isT1Taunter && tauntCounter % 2 == 0);
-                    
-                    if (shouldTaunt)
-                    {
-                        C.Logger($"Taunt #{tauntCounter} assigned to {(isT1Taunter ? "T1" : "T2")}");
-                        shouldExecuteTaunt = true;
-                    }
+                    Bot.Log($"[GRAMIEL] Crystal warning packet received");
+                    await HandleCrystalWarning();
+                    return;
                 }
             }
         }
-        catch { }
+        catch (Exception ex)
+        {
+            Bot.Log($"[GRAMIEL] Listener exception: {ex.Message}");
+        }
+    }
+
+    private async Task HandleCrystalWarning()
+    {
+        try
+        {
+            // Debounce: Ignore if we received this message within the last 500ms -- avoid double taunts (AE sends dupes)
+            TimeSpan timeSinceLastWarning = DateTime.Now - lastTauntWarningTime;
+            if (timeSinceLastWarning.TotalMilliseconds < 500)
+            {
+                Bot.Log($"[GRAMIEL] Debounce: Ignoring duplicate ({timeSinceLastWarning.TotalMilliseconds:F0}ms ago)");
+                return;
+            }
+            
+            lastTauntWarningTime = DateTime.Now;
+            int currentCount = Interlocked.Increment(ref tauntCounter);
+            
+            Bot.Log($"[GRAMIEL] Warning #{currentCount} | Role: {(isT1Taunter ? "T1" : "T2")} | Crystal: {crystalMapId}");
+            
+            // T1 taunters taunt on odd counts (1, 3, 5...)
+            // T2 taunters taunt on even counts (2, 4, 6...)
+            bool shouldTaunt = (isT1Taunter && currentCount % 2 == 1) || 
+                               (!isT1Taunter && currentCount % 2 == 0);
+            
+            if (shouldTaunt)
+            {
+                Bot.Log($"[GRAMIEL] MY TURN - Setting shouldExecuteTaunt=true");
+                shouldExecuteTaunt = true;
+            }
+            else
+            {
+                Bot.Log($"[GRAMIEL] Not my turn (counter={currentCount}, isT1={isT1Taunter})");
+            }
+        }
+        catch (Exception ex)
+        {
+            Bot.Log($"[GRAMIEL] HandleCrystalWarning exception: {ex.Message}");
+        }
+        
+        await Task.CompletedTask;
     }
 
     public enum GramielComp
