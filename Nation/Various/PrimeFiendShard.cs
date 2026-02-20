@@ -236,19 +236,15 @@ public class PrimeFiendShard
                 Nation.FarmDarkCrystalShard(13);
                 Nation.FarmDiamondofNulgath(13);
                 Nation.Supplies(Nation.Uni(21));
-                Core.HuntMonster(
-                    "evilmarsh",
-                    "Tainted Elemental",
-                    "Tainted Rune of Evil",
-                    log: false
-                );
+                Core.HuntMonster("evilmarsh", "Tainted Elemental", "Tainted Rune of Evil", log: false);
                 Core.EnsureComplete(629);
             }
             // 9559 requires x13 uni 13
             Nation.FarmUni13(13);
             Nation.EssenceofNulgath(20);
             Nation.FarmDiamondofNulgath(20);
-            Adv.BuyItem("shadowblast", 1206, "Nation Soulstealer", shopItemID: 4175);
+            NationMerge.BuyAllMerge("Nation Soulstealer");
+
             TempleDelveMerge.BuyAllMerge("Void Nation Caster");
             DirtlickersMerge.BuyAllMerge("Iron Dreadsaw");
 
