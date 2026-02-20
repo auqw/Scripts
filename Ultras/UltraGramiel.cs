@@ -568,14 +568,7 @@ public class UltraGramiel
             
             if (inTauntWindow && noFocusAura)
             {
-                // Stop all skill systems before taunting
-                Core.DisableSkills();
-                Bot.Skills.Stop();
-                Bot.Sleep(Core.D2); // Use standard delay (700ms)
-                
                 C.Logger($"Gramiel taunt window ({currentTime:F1}s into fight, offset {tauntOffsetSeconds}s)");
-                
-                // Use the proven UseTaunt pattern
                 Ultra.UseTaunt(gramielMapId);
                 C.Logger("Gramiel taunt landed!");
 
