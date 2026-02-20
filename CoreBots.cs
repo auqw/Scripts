@@ -8608,6 +8608,10 @@ public class CoreBots
                 blackListedCells.UnionWith(new[] { "New6" });
                 break;
 
+            case "shadowattack":
+                blackListedCells.UnionWith(new[] { "Enter", "After", "noChoas", "noDrak", "Cut38", "Cut39" });
+                break;
+
             case "shadowrise":
                 blackListedCells.UnionWith(
                     new[] { "Enter", "After", "noDrak", "noChaos", "Cut1", "Cut37" }
