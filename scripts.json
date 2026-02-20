@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 431700,
-    "sha256": "85e5cc6384e4d84c450b284fa336f4ecaefa40ec68553bfd8af22d77c4e51aea",
+    "size": 431668,
+    "sha256": "8eab50f6c171fc740aaf381c36b360fc1e2c4da75884419a772c48a5f3d25be1",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -1089,8 +1089,8 @@
       "version 3"
     ],
     "path": "Tools/Butlerv3.cs",
-    "size": 20454,
-    "sha256": "5c749a62696c5a2c560d4a8f08f97a2178520bd8b8fa720d1b6c42069448e802",
+    "size": 20455,
+    "sha256": "b6920026379d438e1ff602bbd67f63fc954b8035ab6108ed24a0f113f93c32f6",
     "fileName": "Butlerv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv3.cs"
   },

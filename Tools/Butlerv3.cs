@@ -52,7 +52,7 @@ public class Butler3
     bool LockedZoneWarning;
     string? playerName;
     ClassType classType;
-    string RN;
+    string? RN;
     List<string?> lockedMapList;
 
     // String? TargetCell;
