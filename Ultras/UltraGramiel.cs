@@ -107,9 +107,9 @@ public class UltraGramiel
     public string OptionsStorage = "UltraGramiel";
 
     // Gramiel warning tracking
-    private volatile int tauntCounter = 0;
+    private int tauntCounter = 0;
     private DateTime lastTauntWarningTime = DateTime.MinValue;
-    private volatile bool shouldExecuteTaunt = false;
+    private bool shouldExecuteTaunt = false;
     
     // Gramiel boss taunt timer (4 rotation, 5 seconds per taunt)
     private DateTime gramielFightStartTime = DateTime.MinValue;
