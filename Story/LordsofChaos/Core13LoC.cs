@@ -295,7 +295,7 @@ public class Core13LoC
         Story.KillQuest(339, "dwarfhold", "Chaotic Draconian");
 
         //Talc to Me
-        Getkey:
+    Getkey:
         if (!Bot.TempInv.Contains("Upper City Key"))
         {
             Core.AddDrop("Upper City Key");
@@ -2469,8 +2469,10 @@ public class Core13LoC
 
         //Beat Death!
         // Get out of any cutscene cells
-        Core.JumpWait();
-        Core.Jump("Enter", "Spawn");
+        // Maybe a map reset (white map> go back will fix it?)
+        Core.Logger("Resetting the map");
+        Core.Join("whitemap-100000");
+        Core.Join("shadowattack");
         Core.EquipClass(ClassType.Solo);
         if (!Story.QuestProgression(3799))
         {
