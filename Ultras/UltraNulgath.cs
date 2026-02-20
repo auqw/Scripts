@@ -229,7 +229,7 @@ public class UltraNulgath
                 _ => throw new NotImplementedException(),
             };
 
-            Ultra.EquipClassSync(classes, 4, "nulgath_class.sync", true);
+            Ultra.EquipClassSync(classes, 4, "nulgath_class.sync", allowDuplicates: true);
         }
 
         if (Bot.Config!.Get<bool>("DoEnh"))
