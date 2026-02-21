@@ -1225,6 +1225,8 @@ public class CoreFarmerJoe
 
     public void SetClass()
     {
+        // Read CBO Data
+        Core.ReadCBO();
 
         // SoloClass
         if (string.IsNullOrEmpty(Core.SoloClass)
@@ -1251,6 +1253,9 @@ public class CoreFarmerJoe
             if (!string.IsNullOrEmpty(farm))
                 Core.FarmClass = farm;
         }
+
+        // Re-read CBO after setting
+        Core.ReadCBO();
 
         if (Core.CheckClassRank(false, Core.SoloClass) < 10)
             Adv.RankUpClass(Core.SoloClass);
