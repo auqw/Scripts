@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 56729,
-    "sha256": "9d03f1478c5af45238ac6543878372d612270f5be8f07a9865d7e819a43d4027",
+    "size": 56619,
+    "sha256": "74916449ca19cb856dbf02d833f0a9b12c54ba512b30dbebded53417b34ac39c",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -19654,8 +19654,8 @@
       "sambasflag"
     ],
     "path": "Seasonal/Carnaval/SambaFlag.cs",
-    "size": 1771,
-    "sha256": "ab06ab6a8ccdb825fadb8db34cf6b5bec66b89df8a745cddc955e5abf98195bc",
+    "size": 1652,
+    "sha256": "529c4e5148ad684358c7ef12240639c4c4d1c35ab2e91cdd97407de647ab857e",
     "fileName": "SambaFlag.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Carnaval/SambaFlag.cs"
   },
