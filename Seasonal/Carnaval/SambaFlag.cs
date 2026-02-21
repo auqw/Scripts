@@ -29,15 +29,10 @@ public class SambasFlag
 
     public void StoryLine()
     {
-        if (Core.isCompletedBefore(9115))
-            return;
-
-        if (!Core.isSeasonalMapActive("Sambaflag"))
+        if (Core.isCompletedBefore(9115) || !Core.isSeasonalMapActive("Sambaflag"))
             return;
 
         Story.PreLoad(this);
-
-        Core.EquipClass(ClassType.Farm);
 
         // Bald Spots 9110
         Story.KillQuest(9110, "bloodtusk", new[] { "Rhison", "Jungle Vulture" });
@@ -49,11 +44,7 @@ public class SambasFlag
         Story.KillQuest(9112, "fotia", new[] { "Femme Cult Worshiper", "Fotia Spirit" });
 
         // Calm Sea and Prosperous Voyage 9113
-        Story.KillQuest(
-            9113,
-            "shipwreck",
-            new[] { "Gilded Merdraconian", "Gilded Crystal Undead" }
-        );
+        Story.KillQuest(9113, "shipwreck", new[] { "Gilded Merdraconian", "Gilded Crystal Undead" });
 
         // Chaos Cleanse 9114
         Story.KillQuest(9114, "falguard", new[] { "Chaonslaught Caster", "Chaonslaught Cavalry" });
