@@ -36,22 +36,35 @@ public class FezziniStory
 
         Story.PreLoad(this);
 
-        Bot.Drops.Start();
-
         //The Dancing Dead
-        Story.KillQuest(7377, "fezzini", "Zombie Dancer");
+        if (!Story.QuestProgression(7377))
+        {
+            Core.EnsureAccept(7377);
+            Core.KillMonster("fezzini", "Enter", "Spawn", "Zombie Dancer", "Zombie Defeated", 10);
+            Core.EnsureComplete(7377);
+        }
 
         //Rats n' Goo
         Story.KillQuest(7378, "fezzini", new[] { "Street Rat", "Zombie Goo" });
 
         //Get a Clue
-        Story.KillQuest(7379, "fezzini", "Zombie Dancer");
+        if (!Story.QuestProgression(7379))
+        {
+            Core.EnsureAccept(7379);
+            Core.KillMonster("fezzini", "Enter", "Spawn", "Zombie Dancer", "A Clue?", 10);
+            Core.EnsureComplete(7379);
+        }
 
         //Find Lim
         Story.MapItemQuest(7380, "fezzini", 7100);
 
         //Bottle Time
-        Story.KillQuest(7381, "fezzini", "Zombie Dancer");
+        if (!Story.QuestProgression(7381))
+        {
+            Core.EnsureAccept(7381);
+            Core.KillMonster("fezzini", "Enter", "Spawn", "Zombie Dancer", "Little Bottle", 6);
+            Core.EnsureComplete(7381);
+        }
 
         //Get Some Fur
         Story.KillQuest(7382, "fezzini", new[] { "Zombie Goo", "Street Rat" });
