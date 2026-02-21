@@ -46,7 +46,7 @@ public class SambasFlag
         Story.KillQuest(9111, "dwarfhold", new[] { "Gemrald", "Glow Worm" });
 
         // Burned Forevermore 9112
-        Story.KillQuest(9112, "fotia", new[] { "Fotia Spirit", "Femme Cult Worshiper" });
+        Story.KillQuest(9112, "fotia", new[] { "Femme Cult Worshiper", "Fotia Spirit" });
 
         // Calm Sea and Prosperous Voyage 9113
         Story.KillQuest(
