@@ -40,7 +40,7 @@ public class SambasFlag
         Core.EquipClass(ClassType.Farm);
 
         // Bald Spots 9110
-        Story.KillQuest(9110, "bloodtusk", new[] { "Jungle Vulture", "Rhison" });
+        Story.KillQuest(9110, "bloodtusk", new[] { "Rhison", "Jungle Vulture" });
 
         // Work Out Glow 9111
         Story.KillQuest(9111, "dwarfhold", new[] { "Gemrald", "Glow Worm" });
