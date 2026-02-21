@@ -1210,10 +1210,7 @@ public class CoreStory
 
         int classStartIndex = Array.IndexOf(ScriptSlice, $"public class {_this}");
         if (classStartIndex < 0)
-        {
-            Core.Logger("Failed to parse classStartIndex, no quests will be pre-loaded");
             return;
-        }
 
         int classEndIndex =
             Array.IndexOf(ScriptSlice[classStartIndex..], "}") + classStartIndex + 1;
