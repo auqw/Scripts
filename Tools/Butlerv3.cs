@@ -26,14 +26,14 @@ public class Butler3
             "playerName",
             "Player Name",
             "Insert the name of the player to follow Capitals and punctuation are required.",
-            "PlayerNameGoesHere"
+            "InsertPlayerNamehere"
         ),
         CoreBots.Instance.SkipOptions,
         new Option<string>(
             "lockedMapsList",
             "Custom Locked Maps",
-            "Fill in the Maps that the bot will check (in order), if the player is not in the current map, split with a , (comma).",
-            "Locked,maps,seperated,by,a,comma"
+            "Fill in the Maps that the bot will check (in order), if the player is not in the current map, split with a , (comma) ( example: Locked,maps,seperated,by,a,comma).",
+            ""
         ),
         new Option<string>(
             "RoomNumber",
