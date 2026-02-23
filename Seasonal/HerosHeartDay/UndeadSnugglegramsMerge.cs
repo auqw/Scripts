@@ -1,11 +1,12 @@
 /*
 name: Undead Snugglegrams Merge
 description: This bot will farm the items belonging to the selected mode for the Undead Snugglegrams Merge [2682] in /heartsdaygrave
-tags: undead, snugglegrams, merge, heartsdaygrave, swordhaven, pendragon, noble, saber, pure, nobility, emblem, shield, promised, victory, knighthood, conferment, shadowscythe, visionary, plume, tarnished, unwavering, spite, condemnation, doomknight, tyrant, plate, collar, oppression, darkness, doomed, tyrannical
+tags: undead, snugglegrams, merge, heartsdaygrave, swordhaven, pendragon, noble, saber, pure, nobility, emblem, shield, promised, victory, knighthood, conferment, shadowscythe, visionary, plume, tarnished, unwavering, spite, condemnation, doomknight, tyrant, plate, collar, oppression, darkness, doomed, tyrannical, royal, valiant, guard, silver, ehangwen, forsaken, crimson, halberd, horns, barbute, tyrants, gaze, devastation, destruction
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Seasonal/HerosHeartDay/heartsdaygrave.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
