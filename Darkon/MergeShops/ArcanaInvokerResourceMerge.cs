@@ -48,6 +48,7 @@ tags: arcana, invoker, resource, merge, arcana, magicians, desire, high, prieste
 //cs_include Scripts/Story/SepulchureSaga/CoreSepulchure.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+using Skua.Core.Models.Monsters;
 using Skua.Core.Options;
 
 public class ArcanaInvokerResourceMerge
@@ -583,24 +584,42 @@ public class ArcanaInvokerResourceMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(9443);
-                    Core.Logger("Good luck with this \"ultra\"! --the maw");
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, 100))
+                    bool needBellona = !Core.CheckInventory("Bellona's Edict of War");
+                    bool needSleih = !Core.CheckInventory("Sleih's Changeling Records");
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                     {
-                        Core.HuntMonster(
-                            "camlan",
-                            "Sleih",
-                            "Sleih's Changeling Records",
-                            log: false
-                        );
-                        Core.HuntMonster("camlan", "Bellona", "Bellona's Edict of War", log: false);
-                        Core.HuntMonster(
-                            "camlan",
-                            "Metamorphosis Maw",
-                            "Alchemic Snake Scale",
-                            log: false
-                        );
-                        Bot.Wait.ForPickup(req.Name);
+                        while (!Bot.ShouldExit && needBellona && needSleih)
+                        {
+                            if (Bot.Map.Name != "camlan")
+                                Core.Join("camlan");
+
+                            if (Bot.Player.Cell != "r9")
+                                Core.Jump("r9", "Let");
+
+
+                            Monster bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
+                            Monster sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
+
+                            // Priority: missing drop
+                            if (needBellona && bellona != null)
+                                Bot.Combat.Attack(22);
+
+                            else if (needSleih && sleih != null)
+                                Bot.Combat.Attack(23);
+
+                            // If both drops owned OR priority mob dead → kill the other for respawn sync
+                            else if (bellona != null)
+                                Bot.Combat.Attack(22);
+
+                            else if (sleih != null)
+                                Bot.Combat.Attack(23);
+
+                            Bot.Sleep(200);
+                        }
+                        Core.Logger("Good luck with this \"ultra\"! --the maw");
+                        Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale", log: false);
                     }
+                    Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
 

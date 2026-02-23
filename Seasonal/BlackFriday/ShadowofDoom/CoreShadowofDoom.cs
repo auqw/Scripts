@@ -6,6 +6,7 @@ tags: null
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Monsters;
 
 public class CoreShadowofDoom
 {
@@ -132,8 +133,36 @@ public class CoreShadowofDoom
         if (!Story.QuestProgression(9443))
         {
             Core.EnsureAccept(9443);
-            Core.HuntMonster("camlan", "Sleih", "Sleih's Changeling Records");
-            Core.HuntMonster("camlan", "Bellona", "Bellona's Edict of War");
+
+            bool needBellona = !Core.CheckInventory("Bellona's Edict of War");
+            bool needSleih = !Core.CheckInventory("Sleih's Changeling Records");
+            while (!Bot.ShouldExit && needBellona && needSleih)
+            {
+                if (Bot.Map.Name != "camlan")
+                    Core.Join("camlan");
+
+                if (Bot.Player.Cell != "r9")
+                    Core.Jump("r9", "Let");
+
+                Monster bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
+                Monster sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
+
+                // Priority: missing drop
+                if (needBellona && bellona != null)
+                    Bot.Combat.Attack(22);
+
+                else if (needSleih && sleih != null)
+                    Bot.Combat.Attack(23);
+
+                // If both drops owned OR priority mob dead → kill the other for respawn sync
+                else if (bellona != null)
+                    Bot.Combat.Attack(22);
+
+                else if (sleih != null)
+                    Bot.Combat.Attack(23);
+
+                Bot.Sleep(200);
+            }
             Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale");
             Core.EnsureComplete(9443);
         }
