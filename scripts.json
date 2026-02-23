@@ -19654,8 +19654,8 @@
       "sambasflag"
     ],
     "path": "Seasonal/Carnaval/SambaFlag.cs",
-    "size": 1652,
-    "sha256": "529c4e5148ad684358c7ef12240639c4c4d1c35ab2e91cdd97407de647ab857e",
+    "size": 1577,
+    "sha256": "8e5781f609129b8cb3d84e59ec406c7f631ab073463947147b8bbfe31915123c",
     "fileName": "SambaFlag.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Carnaval/SambaFlag.cs"
   },
