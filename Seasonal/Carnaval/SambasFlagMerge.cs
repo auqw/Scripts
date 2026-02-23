@@ -1,7 +1,7 @@
 /*
-name: SambasFlagMerge
-description: Farms the requirements & buys the items from Sambaflag merge
-tags: sambaflag, merge
+name: Sambas Flag Merge
+description: This bot will farm the items belonging to the selected mode for the Sambas Flag Merge [2237] in /sambaflag
+tags: sambas, flag, merge, sambaflag, sambista, dorival, moglin, jorge, zeca, encanto, encantado, cavaquinho, pandeiro, tantan, dança, das, sombras, dançarina, circlet, diadem, de, ouro, escuro
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -52,9 +52,8 @@ public class SambasFlagMerge
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Core.BankingBlackList.AddRange(
-            new[] { "Costume Piece", "Ceremonial Standard", "Cavaquinho", "Pandeiro", "Tantan" }
-        );
+        Core.BankingBlackList.AddRange(new[] { "Costume Piece", "Ceremonial Standard", "Cavaquinho", "Pandeiro", "Tantan", "Dança das Sombras Hair", "Dança das Sombras Locks" });
+
         Core.SetOptions();
 
         BuyAllMerge();
@@ -77,9 +76,7 @@ public class SambasFlagMerge
         {
             ItemBase req = Adv.externalItem;
             int quant = Adv.externalQuant;
-            int currentQuant = req.Temp
-                ? Bot.TempInv.GetQuantity(req.Name)
-                : Bot.Inventory.GetQuantity(req.Name);
+            int currentQuant = req.Temp ? Bot.TempInv.GetQuantity(req.Name) : Bot.Inventory.GetQuantity(req.Name);
             if (req == null)
             {
                 Core.Logger("req is NULL");
@@ -90,14 +87,9 @@ public class SambasFlagMerge
             {
                 default:
                     bool shouldStop = !Adv.matsOnly || !dontStopMissingIng;
-                    Core.Logger(
-                        $"The bot hasn't been taught how to get {req.Name}."
-                            + (shouldStop ? " Please report the issue." : " Skipping"),
-                        messageBox: shouldStop,
-                        stopBot: shouldStop
-                    );
+                    Core.Logger($"The bot hasn't been taught how to get {req.Name}." + (shouldStop ? " Please report the issue." : " Skipping"), messageBox: shouldStop, stopBot: shouldStop);
                     break;
-        #endregion
+                #endregion
 
                 case "Ceremonial Standard":
                     Core.FarmingLogger(req.Name, quant);
@@ -135,71 +127,43 @@ public class SambasFlagMerge
                     Core.HuntMonster("sambaflag", "Master Of Ceremonies", req.Name, quant);
                     Bot.Wait.ForPickup(req.Name);
                     break;
+
+                case "Dança das Sombras Hair":
+                case "Dança das Sombras Locks":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster("sambaflag", "Flag Bearer", req.Name, quant, req.Temp, false);
+                    break;
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>(
-            "76366",
-            "Sambista Armor",
-            "Mode: [select] only\nShould the bot buy \"Sambista Armor\" ?",
-            false
-        ),
-        new Option<bool>(
-            "76367",
-            "Sambista Helm",
-            "Mode: [select] only\nShould the bot buy \"Sambista Helm\" ?",
-            false
-        ),
-        new Option<bool>(
-            "76371",
-            "Dorival The Moglin",
-            "Mode: [select] only\nShould the bot buy \"Dorival The Moglin\" ?",
-            false
-        ),
-        new Option<bool>(
-            "76372",
-            "Jorge The Moglin",
-            "Mode: [select] only\nShould the bot buy \"Jorge The Moglin\" ?",
-            false
-        ),
-        new Option<bool>(
-            "76373",
-            "Zeca The Moglin",
-            "Mode: [select] only\nShould the bot buy \"Zeca The Moglin\" ?",
-            false
-        ),
-        new Option<bool>(
-            "76375",
-            "Encanto Sambista Armor",
-            "Mode: [select] only\nShould the bot buy \"Encanto Sambista Armor\" ?",
-            false
-        ),
-        new Option<bool>(
-            "76376",
-            "Encanto Sambista Hat",
-            "Mode: [select] only\nShould the bot buy \"Encanto Sambista Hat\" ?",
-            false
-        ),
-        new Option<bool>(
-            "76377",
-            "Encanto Cavaquinho",
-            "Mode: [select] only\nShould the bot buy \"Encanto Cavaquinho\" ?",
-            false
-        ),
-        new Option<bool>(
-            "76378",
-            "Encanto Pandeiro",
-            "Mode: [select] only\nShould the bot buy \"Encanto Pandeiro\" ?",
-            false
-        ),
-        new Option<bool>(
-            "76379",
-            "Encanto Tantan",
-            "Mode: [select] only\nShould the bot buy \"Encanto Tantan\" ?",
-            false
-        ),
-    };
+        new Option<bool>("76366", "Sambista Armor", "Mode: [select] only\nShould the bot buy \"Sambista Armor\" ?", false),
+        new Option<bool>("76367", "Sambista Helm", "Mode: [select] only\nShould the bot buy \"Sambista Helm\" ?", false),
+        new Option<bool>("76371", "Dorival The Moglin", "Mode: [select] only\nShould the bot buy \"Dorival The Moglin\" ?", false),
+        new Option<bool>("76372", "Jorge The Moglin", "Mode: [select] only\nShould the bot buy \"Jorge The Moglin\" ?", false),
+        new Option<bool>("76373", "Zeca The Moglin", "Mode: [select] only\nShould the bot buy \"Zeca The Moglin\" ?", false),
+        new Option<bool>("76375", "Encanto Sambista Armor", "Mode: [select] only\nShould the bot buy \"Encanto Sambista Armor\" ?", false),
+        new Option<bool>("76376", "Encantado Sambista Hat", "Mode: [select] only\nShould the bot buy \"Encantado Sambista Hat\" ?", false),
+        new Option<bool>("76377", "Encantado Cavaquinho", "Mode: [select] only\nShould the bot buy \"Encantado Cavaquinho\" ?", false),
+        new Option<bool>("76378", "Encantado Pandeiro", "Mode: [select] only\nShould the bot buy \"Encantado Pandeiro\" ?", false),
+        new Option<bool>("76379", "Encantado Tantan", "Mode: [select] only\nShould the bot buy \"Encantado Tantan\" ?", false),
+        new Option<bool>("99284", "Dança das Sombras", "Mode: [select] only\nShould the bot buy \"Dança das Sombras\" ?", false),
+        new Option<bool>("99287", "Dança das Sombras Mask", "Mode: [select] only\nShould the bot buy \"Dança das Sombras Mask\" ?", false),
+        new Option<bool>("99288", "Dançarina das Sombras Mask", "Mode: [select] only\nShould the bot buy \"Dançarina das Sombras Mask\" ?", false),
+        new Option<bool>("99289", "Dança das Sombras Circlet", "Mode: [select] only\nShould the bot buy \"Dança das Sombras Circlet\" ?", false),
+        new Option<bool>("99290", "Dança das Sombras Diadem", "Mode: [select] only\nShould the bot buy \"Dança das Sombras Diadem\" ?", false),
+        new Option<bool>("99291", "Dança das Sombras Visage", "Mode: [select] only\nShould the bot buy \"Dança das Sombras Visage\" ?", false),
+        new Option<bool>("99389", "Tantan de Ouro Encantado", "Mode: [select] only\nShould the bot buy \"Tantan de Ouro Encantado\" ?", false),
+        new Option<bool>("99463", "Tantan Escuro", "Mode: [select] only\nShould the bot buy \"Tantan Escuro\" ?", false),
+   };
 }

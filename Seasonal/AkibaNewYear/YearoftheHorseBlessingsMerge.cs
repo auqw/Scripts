@@ -1,7 +1,7 @@
 /*
 name: Year of the Horse Blessings Merge
 description: This bot will farm the items belonging to the selected mode for the Year of the Horse Blessings Merge [2679] in /yokaihunt
-tags: year, of, the, horse, blessings, merge, yokaihunt, passionate, qipao, royal, equine, vanguard, ancestral, dao, stallions, passion, fan, propserity, bamboo, ink, painting, lady, suzhens, bridge
+tags: year, of, the, horse, blessings, merge, yokaihunt, passionate, qipao, royal, equine, vanguard, ancestral, dao, stallions, passion, fan, propserity, bamboo, ink, painting, lady, suzhens, bridge, prosperity
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -136,5 +136,6 @@ public class YearoftheHorseBlessingsMerge
         new Option<bool>("99178", "Stallion's Propserity Fan", "Mode: [select] only\nShould the bot buy \"Stallion's Propserity Fan\" ?", false),
         new Option<bool>("99185", "Bamboo Ink Painting", "Mode: [select] only\nShould the bot buy \"Bamboo Ink Painting\" ?", false),
         new Option<bool>("99186", "Lady Suzhen's Bridge", "Mode: [select] only\nShould the bot buy \"Lady Suzhen's Bridge\" ?", false),
+        new Option<bool>("99179", "Prosperity Qipao", "Mode: [select] only\nShould the bot buy \"Prosperity Qipao\" ?", false),
    };
 }
