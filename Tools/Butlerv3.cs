@@ -50,6 +50,7 @@ public class Butler3
     };
 
     bool LockedZoneWarning;
+    bool GotoIsOff;
     string? playerName;
     ClassType classType;
     string? RN;
@@ -119,7 +120,14 @@ public class Butler3
                     Bot.Player!.Goto(playerName);
                     Bot.Sleep(1000);
 
-                    Core.DebugLogger(this, $"{playerName} isn't on the current map, following!");
+                    if (GotoIsOff)
+                    {
+                        LockedZoneWarning = false;
+                        GotoIsOff = false;
+                        return;
+                    }
+
+                    Core.Logger($"{playerName} isn't on the current map, following!");
 
                     if (LockedZoneWarning)
                     {
@@ -166,7 +174,7 @@ public class Butler3
 
                             while (!Bot.ShouldExit && !Bot.Map.PlayerExists(playerName))
                             {
-                                Core.DebugLogger(this, $"Sleeping for: {sleepTimer}");
+                                Core.Logger($"Sleeping for: {sleepTimer}");
                                 Bot.Sleep(sleepTimer);
 
                                 Bot.Player!.Goto(playerName);
@@ -281,9 +289,9 @@ public class Butler3
                 // Detect "is ignoring goto requests" on server channel
                 if (text.Contains("is ignoring goto requests", StringComparison.OrdinalIgnoreCase))
                 {
-                    Core.Logger($"{playerName} is ignoring goto requests, Stopping script!");
+                    Core.Logger($"{playerName} is ignoring goto requests (disable `incognito mode` in the CBO for that account), Stopping script!", "Goto is follow for the person you're following");
+                    GotoIsOff = true;
 
-                    Bot.StopSync(true);
                     return;
                 }
             }
@@ -303,27 +311,20 @@ public class Butler3
 
                 if (chatPacket.Contains("is full", StringComparison.OrdinalIgnoreCase))
                 {
-                    Core.DebugLogger(
-                        this,
-                        $"Room is full, we'll wait incrementally, whilst trying to goto {playerName}"
-                    );
+                    Core.Logger($"Room is full, we'll wait incrementally, whilst trying to goto {playerName}");
                     RoomFull = true;
                 }
 
                 if (chatPacket.Contains("ignoring goto", StringComparison.OrdinalIgnoreCase))
                 {
-                    Core.DebugLogger(
-                        this,
-                        $"{playerName} is ignoring goto requests, Stopping script!"
-                    );
-
-                    Bot.StopSync(true);
+                    Core.Logger($"{playerName} is ignoring goto requests (disable `incognito mode` in the CBO for that account), Stopping script!", "Goto is follow for the person you're following");
+                    GotoIsOff = true;
                 }
             }
         }
         catch (Exception ex)
         {
-            Core.DebugLogger(this, $"Error in ChatListener: {ex.Message}");
+            Core.Logger($"Error in ChatListener: {ex.Message}");
         }
     }
 }
