@@ -22973,11 +22973,12 @@
       "painting",
       "lady",
       "suzhens",
-      "bridge"
+      "bridge",
+      "prosperity"
     ],
     "path": "Seasonal/AkibaNewYear/YearoftheHorseBlessingsMerge.cs",
-    "size": 6512,
-    "sha256": "5ceb489eafd9c46de9f936836b01d46ca5eefe8bbceb05c0f27b107918cbf6c8",
+    "size": 6652,
+    "sha256": "3c6c26f0983f70816ad41f41bdcc15d5ac47fc9e5ff1db6e4ce7d91ffca06cb0",
     "fileName": "YearoftheHorseBlessingsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/YearoftheHorseBlessingsMerge.cs"
   },
