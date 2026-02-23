@@ -47,11 +47,9 @@ public class SambasFlag
         Story.KillQuest(9113, "shipwreck", new[] { "Gilded Merdraconian", "Gilded Crystal Undead" });
 
         // Chaos Cleanse 9114
-        Story.KillQuest(9114, "falguard", new[] { "Chaonslaught Caster", "Chaonslaught Cavalry" });
+        Story.KillQuest(9114, "falguard", new[] { "Chaonslaught Cavalry", "Chaonslaught Caster" });
 
         // Fly the Standard 9115
-        Story.KillQuest(9115, "sambaflag", "Flag Bearer");
-        Core.EquipClass(ClassType.Solo);
-        Story.KillQuest(9115, "sambaflag", "Master Of Ceremonies");
+        Story.KillQuest(9115, "sambaflag", new[] { "Flag Bearer", "Master Of Ceremonies" });
     }
 }
