@@ -31468,6 +31468,118 @@ case ""Stallion's Vitality Fan"":
                     break;
     "
 },
+{
+    "Dança das Sombras Hair",
+    @"
+case ""Dança das Sombras Hair"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""sambaflag"", ""Flag Bearer"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Dança das Sombras Locks",
+    @"
+case ""Dança das Sombras Locks"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""sambaflag"", ""Flag Bearer"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Heart of Steel",
+    @"
+case ""Heart of Steel"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(!Core.IsMember ? 10602 : 10603);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""heartsdaygrave"", ""Illusionist Zio"", ""Zio's Discount Chocolates"");
+                        Core.HuntMonster(""heartsdaygrave"", ""Warlord Vaioh"", ""Vaioh's Snugglegram"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Doomknight Tyrant Skull",
+    @"
+case ""Doomknight Tyrant Skull"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""heartsdaygrave"", ""Warlord Vaioh"", req.Name, req.Quantity, req.Temp);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Doomknight Tyrant Helm",
+    @"
+case ""Doomknight Tyrant Helm"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""heartsdaygrave"", ""Warlord Vaioh"", req.Name, req.Quantity, req.Temp);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Ether of Darkness",
+    @"
+case ""Ether of Darkness"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""heartsdaygrave"", ""Warlord Vaioh"", req.Name, req.Quantity, req.Temp);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
