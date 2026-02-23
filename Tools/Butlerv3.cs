@@ -127,7 +127,6 @@ public class Butler3
                         return;
                     }
 
-                    Core.Logger($"{playerName} isn't on the current map, following!");
 
                     if (LockedZoneWarning)
                     {
@@ -169,7 +168,7 @@ public class Butler3
                             Core.Join("whitemap-100000");
                             Random random = new();
                             int sleepTimer = 500; // Start at 500ms
-                            const int maxSleep = 5000; // 5 seconds max
+                            const int maxSleep = 10000; // 10 seconds max
                             const int increment = 1000; // 500ms random increment
 
                             while (!Bot.ShouldExit && !Bot.Map.PlayerExists(playerName))
@@ -187,6 +186,7 @@ public class Butler3
 
                                 if (Bot.Map.PlayerExists(playerName))
                                 {
+                                    Bot.Log($"{playerName} Found!");
                                     Bot.Events.ExtensionPacketReceived += ChatListener;
                                     break;
                                 }
@@ -229,7 +229,7 @@ public class Butler3
                     }
 
                     Core.JumpWait();
-
+                    Core.Logger($"{playerName} isn't on the current map, following!");
                     Bot.Player!.Goto(playerName);
                     Bot.Sleep(1000);
                 }
@@ -237,7 +237,7 @@ public class Butler3
                 while (!Bot.ShouldExit)
                 {
                     if (!Bot.Player!.Alive)
-                        Bot.Wait.ForTrue(() => Bot.Player?.Alive ?? false, 20);
+                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
                     if (!Bot.Map.PlayerExists(playerName))
                         break;
@@ -247,7 +247,11 @@ public class Butler3
                     Bot.Combat.Attack("*");
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                // Log any exceptions
+                Bot.Log($"An error occurred: {ex.Message}");
+            }
         }
 
         Bot.Events.ExtensionPacketReceived -= ChatListener;
