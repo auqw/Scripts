@@ -39,7 +39,7 @@ public class Tournament
         Story.KillQuest(2708, "tournament", "Suspicious Spy Bot");
 
         //Stalkers and Mercenaries 2709
-        Story.KillQuest(2709, "tournament", new[] { "SandStalker", "Mercenary" });
+        Story.KillQuest(2709, "tournament", new[] {  "Mercenary","SandStalker" });
 
         //Brave the Bandits 2710
         Story.KillQuest(2710, "tournament", "Greenguard Bandit");
