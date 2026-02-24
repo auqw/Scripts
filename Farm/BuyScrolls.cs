@@ -72,26 +72,20 @@ public class BuyScrolls
             {
                 if (!Core.CheckInventory("Arcane Quill"))
                 {
-                    if (!Core.CheckInventory("Gold Voucher 500k"))
-                        Farm.Gold(500000);
-                    Core.BuyItem("spellcraft", 693, "Gold Voucher 500k", 2);
+                    if (!Core.CheckInventory("Gold Voucher 500k", 2))
+                    {
+                        Farm.Gold(1_000_000);
+                        Core.BuyItem("spellcraft", 693, "Gold Voucher 500k", 2);
+                    }
                     Core.BuyItem("spellcraft", 693, "Arcane Quill", 10, shopItemID: 8847);
+                    Core.BuyItem("spellcraft", 622, ink, 5);
                 }
-                Core.BuyItem("spellcraft", 622, ink, 5);
             }
-            : () =>
-            {
-                Core.KillMonster(
-                    "tercessuinotlim",
-                    "m2",
-                    "Left",
-                    "*",
-                    "Mystic Parchment",
-                    quant / 10,
-                    isTemp: false
-                );
-                Core.BuyItem("spellcraft", 549, ink, 5);
-            };
+        : () =>
+        {
+            Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Mystic Parchment", quant / 10, isTemp: false);
+            Core.BuyItem("spellcraft", 549, ink, 5);
+        };
 
         while (!Bot.ShouldExit && !Core.CheckInventory(scrollName, quant))
         {
