@@ -12331,8 +12331,8 @@
       "voyage"
     ],
     "path": "Darkon/MergeShops/ArcanaInvokerResourceMerge.cs",
-    "size": 45595,
-    "sha256": "eafce111f476e00f767b8fb01533d66f41c99f1f4b5a9f5a5e00ba1cfca49eea",
+    "size": 45597,
+    "sha256": "3901c4bf10f276d53da43eb6542fefbda3d1d8f42423c7f11381f04ef34cf42f",
     "fileName": "ArcanaInvokerResourceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/MergeShops/ArcanaInvokerResourceMerge.cs"
   },
@@ -22281,8 +22281,8 @@
       "cleaver"
     ],
     "path": "Seasonal/BlackFriday/CamlanMerge.cs",
-    "size": 8287,
-    "sha256": "16a172a07b1d96558779ca43c069ebae852f0215eb2752725ed643be83cc9ecf",
+    "size": 8289,
+    "sha256": "13edd968f2f6a9338c6defd440aa7a05b29b296edb3dcf1ec7b53884e5cb0d53",
     "fileName": "CamlanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/CamlanMerge.cs"
   },
@@ -23140,8 +23140,8 @@
       "fortune"
     ],
     "path": "Seasonal/AkibaNewYear/DescendantsDesignMerge.cs",
-    "size": 11718,
-    "sha256": "0b2dc530146f4f9e825815cc71b4f7be259649122fc16d0ef265ba4283000f4d",
+    "size": 11388,
+    "sha256": "8faf3393752a6cd4e5c78ba09fc855fc3674df466e248d4f07c6566ebdb1779a",
     "fileName": "DescendantsDesignMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/AkibaNewYear/DescendantsDesignMerge.cs"
   },
@@ -30287,8 +30287,8 @@
       "null"
     ],
     "path": "Seasonal/BlackFriday/ShadowofDoom/CoreShadowofDoom.cs",
-    "size": 11416,
-    "sha256": "caeef08bd6d0871a3a11867f27434b5d94caa9172a3afba2e8d30e1f652d14c5",
+    "size": 11418,
+    "sha256": "186f0d7112125e47578b9b6e6712e6900b19c08b7d16d1da4f06fef6705f444b",
     "fileName": "CoreShadowofDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/ShadowofDoom/CoreShadowofDoom.cs"
   },
