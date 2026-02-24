@@ -55,7 +55,8 @@ public class Butler3
     ClassType classType;
     string? RN;
     List<string?> lockedMapList;
-    bool HasLogged;
+    bool HasLoggedMissing;
+    bool HasLoggedFound;
 
     // String? TargetCell;
     bool RoomFull;
@@ -109,24 +110,29 @@ public class Butler3
             );
         }
         #endregion
-        HasLogged = false;
+        HasLoggedMissing = false;
+        HasLoggedFound = false;
+
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player!.Alive)
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+            if (!Bot.Player?.Alive ?? false)
+                Bot.Wait.ForTrue(() => Bot.Player!.Alive, 20);
 
-            Bot.Player!.Goto(playerName);
+            Bot.Player?.Goto(playerName);
 
             #region Server Warnings
+
             if (GotoIsOff)
             {
                 LockedZoneWarning = false;
                 GotoIsOff = false;
                 break;
             }
+
             if (LockedZoneWarning)
             {
                 Bot.Events.ExtensionPacketReceived -= ChatListener;
+
                 Core.JumpWait();
                 Core.Join("whitemap-100000");
                 LockedZoneWarning = false;
@@ -134,114 +140,105 @@ public class Butler3
                 if (lockedMapList.Count > 0)
                 {
                     Core.Logger("LockedMaps handler Initiated.", "LockedMapList.Count > 0");
-                    foreach (string? map in lockedMapList.Where(m => m != null))
+
+                    foreach (string map in lockedMapList.Where(m => !string.IsNullOrEmpty(m)))
                     {
                         if (Bot.ShouldExit)
-                        {
-                            Bot.Events.ExtensionPacketReceived -= ChatListener;
                             return;
-                        }
 
                         Core.Join($"{map}-{RN}");
-                        Bot.Wait.ForMapLoad(map!);
+                        Bot.Wait.ForMapLoad(map);
 
-                        if (Bot.Map.PlayerExists(playerName))
-                        {
-                            Bot.Events.ExtensionPacketReceived += ChatListener;
-                            Bot.Player?.Goto(playerName);
-                            break;
-                        }
+                        if (!Bot.Map.PlayerExists(playerName))
+                            continue;
+
+                        Bot.Player?.Goto(playerName);
+                        Bot.Events.ExtensionPacketReceived += ChatListener;
+                        break;
                     }
+
                     Bot.Events.ExtensionPacketReceived += ChatListener;
                     continue;
                 }
-                else if (lockedMapList.Count <= 0)
+
+                Core.Logger("LockedMap list empty, incremental sleep fallback.", "lockedMapList.Count == 0");
+
+                Random random = new();
+                int sleepTimer = 500;
+                const int maxSleep = 10000;
+
+                while (!Bot.ShouldExit && !Bot.Map.PlayerExists(playerName))
                 {
-                    Core.Logger(
-                        "LockedMap list is Empty, we'll Sleep incrimentaly",
-                        "lockedMapList <= 0"
-                    );
-                    Core.Join("whitemap-100000");
-                    Random random = new();
-                    int sleepTimer = 500; // Start at 500ms
-                    const int maxSleep = 10000; // 10 seconds max
-                    const int increment = 1000; // 500ms random increment
+                    Core.Logger($"Sleeping for: {sleepTimer}");
+                    Bot.Sleep(sleepTimer);
 
-                    while (!Bot.ShouldExit && !Bot.Map.PlayerExists(playerName))
-                    {
-                        Core.Logger($"Sleeping for: {sleepTimer}");
-                        Bot.Sleep(sleepTimer);
+                    Bot.Player?.Goto(playerName);
 
-                        Bot.Player!.Goto(playerName);
-                        // Increment sleep time if under 5 seconds
-                        if (sleepTimer < maxSleep)
-                        {
-                            sleepTimer += random.Next(increment); // Add 0-500ms randomly
-                            sleepTimer = Math.Min(sleepTimer, maxSleep); // Cap at 5 seconds
-                        }
-
-                        if (Bot.Map.PlayerExists(playerName))
-                        {
-                            Bot.Log($"{playerName} Found!");
-                            Bot.Events.ExtensionPacketReceived += ChatListener;
-                            break;
-                        }
-                    }
-                    Bot.Events.ExtensionPacketReceived += ChatListener;
-                    continue;
+                    sleepTimer = Math.Min(sleepTimer + random.Next(1000), maxSleep);
                 }
+
+                if (Bot.Map.PlayerExists(playerName))
+                    Bot.Log($"{playerName} Found!");
+
+                Bot.Events.ExtensionPacketReceived += ChatListener;
+                continue;
             }
+
             if (RoomFull)
             {
                 Bot.Events.ExtensionPacketReceived -= ChatListener;
-                Random random = new();
-                int sleepTimer = 1000; // Start at 500ms
-                const int maxSleep = 5000; // 10 seconds max
-                const int increment = 1000; // 500ms random increment
 
-                while (!Bot.ShouldExit && !Bot.Map.PlayerExists(playerName!))
+                Random random = new();
+                int sleepTimer = 1000;
+                const int maxSleep = 5000;
+
+                while (!Bot.ShouldExit && !Bot.Map.PlayerExists(playerName))
                 {
                     Bot.Sleep(sleepTimer);
+                    Bot.Player?.Goto(playerName);
 
-                    // Increment sleep time if under 5 seconds
-                    if (sleepTimer < maxSleep)
+                    if (Bot.Map.PlayerExists(playerName))
                     {
-                        sleepTimer += random.Next(increment); // Add 0-500ms randomly
-                        sleepTimer = Math.Min(sleepTimer, maxSleep); // Cap at 5 seconds
-                    }
-                    Bot.Player!.Goto(playerName!);
-                    if (Bot.Map.PlayerExists(playerName!))
-                    {
-                        Bot.Events.ExtensionPacketReceived += ChatListener;
                         RoomFull = false;
+                        Bot.Events.ExtensionPacketReceived += ChatListener;
                         break;
                     }
-                    if (RoomFull && sleepTimer >= maxSleep)
-                        Bot.Log(
-                            "Room is still full, we'll continue waiting for the map to be accessable, or till we can goto the player."
-                        );
+
+                    if (sleepTimer >= maxSleep)
+                        Bot.Log("Room still full, waiting for slot...");
+
+                    sleepTimer = Math.Min(sleepTimer + random.Next(1000), maxSleep);
                 }
+
                 continue;
             }
+
             #endregion
 
             if (!Bot.Map.PlayerExists(playerName))
             {
-                if (!HasLogged)
+                if (!HasLoggedMissing)
+                {
                     Core.Logger($"{playerName} isn't on the current map, following!");
-                HasLogged = true;
+                    HasLoggedMissing = true;
+                    HasLoggedFound = false;
+                }
+
                 Core.JumpWait();
                 continue;
             }
-            else
+
+            if (!HasLoggedFound)
             {
                 Bot.Log($"{playerName} Found!");
-                HasLogged = false;
+                HasLoggedFound = true;
+                HasLoggedMissing = false;
             }
-            
+
             Bot.Sleep(500);
             Bot.Combat.Attack("*");
         }
+
 
         Bot.Events.ExtensionPacketReceived -= ChatListener;
         Core.JumpWait();
