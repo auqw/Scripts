@@ -597,8 +597,8 @@ public class ArcanaInvokerResourceMerge
                                 Core.Jump("r9", "Let");
 
 
-                            Monster bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
-                            Monster sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
+                            Monster? bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
+                            Monster? sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
 
                             // Priority: missing drop
                             if (needBellona && bellona != null)
