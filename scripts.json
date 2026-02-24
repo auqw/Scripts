@@ -3989,8 +3989,8 @@
       "version 3"
     ],
     "path": "Tools/Butlerv3.cs",
-    "size": 19727,
-    "sha256": "f5a5d8112e736835bf7f2c45ae96ff0dfe8bd24d08f08a2fecc231b5bf0e153c",
+    "size": 18535,
+    "sha256": "4761d4cd7e1780662871e887816b30b714a794a821eb4819cfbcf64c3f8cf256",
     "fileName": "Butlerv3.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/Butlerv3.cs"
   },
