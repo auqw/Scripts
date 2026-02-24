@@ -113,21 +113,20 @@ public class Butler3
         {
             try
             {
-                // If {playerName} isnt in current map, jumpwait(); & goto, then wait [ActionDelay]
-                if (!Bot.Map.PlayerExists(playerName))
+                while (!Bot.ShouldExit)
                 {
-                    // Initial Goto
-                    Bot.Player!.Goto(playerName);
-                    Bot.Sleep(1000);
+                    if (!Bot.Player!.Alive)
+                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
+                    Bot.Player!.Goto(playerName);
+
+                    #region Server Warnings
                     if (GotoIsOff)
                     {
                         LockedZoneWarning = false;
                         GotoIsOff = false;
-                        return;
+                        break;
                     }
-
-
                     if (LockedZoneWarning)
                     {
                         Bot.Events.ExtensionPacketReceived -= ChatListener;
@@ -227,22 +226,15 @@ public class Butler3
                         }
                         continue;
                     }
-
-                    Core.JumpWait();
-                    Core.Logger($"{playerName} isn't on the current map, following!");
-                    Bot.Player!.Goto(playerName);
-                    Bot.Sleep(1000);
-                }
-
-                while (!Bot.ShouldExit)
-                {
-                    if (!Bot.Player!.Alive)
-                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                    #endregion
 
                     if (!Bot.Map.PlayerExists(playerName))
-                        break;
+                    {
+                        Core.Logger($"{playerName} isn't on the current map, following!");
+                        Core.JumpWait();
+                        continue;
+                    }
 
-                    Bot.Player.Goto(playerName);
                     Bot.Sleep(500);
                     Bot.Combat.Attack("*");
                 }
