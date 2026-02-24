@@ -168,11 +168,7 @@ public class DescendantsDesignMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(9574);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("ashfallcamp", "Smoldur", log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.HuntMonster("ashfallcamp", "Smoldur", req.Name, req.Quantity, req.Temp);
                     Core.CancelRegisteredQuests();
                     break;
 
@@ -180,11 +176,7 @@ public class DescendantsDesignMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.RegisterQuests(9575);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
-                    {
-                        Core.HuntMonster("yokaihunt", "Mutou Hong", log: false);
-                        Bot.Wait.ForPickup(req.Name);
-                    }
+                    Core.HuntMonster("yokaihunt", "Mutou Hong", req.Name, req.Quantity, req.Temp);
                     Core.CancelRegisteredQuests();
                     break;
             }
