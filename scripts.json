@@ -2823,8 +2823,8 @@
       "decay"
     ],
     "path": "Farm/BuyScrolls.cs",
-    "size": 4877,
-    "sha256": "7d4175f396e73cc8f9980d706fe5f679644fe0fb037535b31af14fad25fc370d",
+    "size": 5108,
+    "sha256": "423dc84c670c83e09c1f4e23a946aec2e7cac005ce84c5a488dec9003676c1e4",
     "fileName": "BuyScrolls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/BuyScrolls.cs"
   },
