@@ -109,42 +109,47 @@ public class HBVInsig
         string reqName = Core.QuestRewards(10300)[0];
         Core.AddDrop(reqName);
 
-        if (!Core.CheckInventory(reqName, 4))
+        int Owned = 4 - Bot.Inventory.GetQuantity(reqName);
+
+        if (!Core.CheckInventory(reqName, 4 / Owned))
         {
             Core.EnsureAccept(10300);
 
             // Vindicator Crest
-            VC.GetVindicatorCrest(5);
+            VC.GetVindicatorCrest(20 / Owned);
 
             // Gramiel's Emblem
-            GE.GetGramielsEmblem(15);
+            GE.GetGramielsEmblem(60 / Owned);
 
             // Grace Orb
-            GO.GetGraceOrb(20);
+            GO.GetGraceOrb(80 / Owned);
 
             // Vindicator Badge
-            VB.GetVindicatorBadge(10);
+            VB.GetVindicatorBadge(40 / Owned);
 
             // Hollow Soul
-            HS.GetYaSoulsHeeeere(75);
+            HS.GetYaSoulsHeeeere(300 / Owned);
 
             // Death's Power
-            DP.GetDP(1);
+            DP.GetDP(4 / Owned);
 
             if (!Core.CheckInventory("Gramiel the Graceful's Insignia", 5))
             {
-                Core.Logger($"You need 5x Gramiel the Graceful's Insignia to complete the quest.");
+                Core.Logger($"You need 5x Gramiel the Graceful's Insignia to complete the quest.)");
                 return;
             }
+
             if (!Bot.Quests.IsAvailable(10300))
             {
-                Core.Logger(
-                    "This is a weekly quest, you need to wait until next week to get the class."
-                );
+                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
+                Core.Logger($"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}");
                 return;
             }
-            Core.EnsureComplete(10300);
-            Bot.Wait.ForPickup(reqName);
+            else
+            {
+                Core.EnsureComplete(10300);
+                Bot.Wait.ForPickup(reqName);
+            }
         }
 
         if (!Core.CheckInventory(reqName, 4))
