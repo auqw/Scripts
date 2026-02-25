@@ -421,32 +421,12 @@ public class CoreFarmerJoe
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>(
-            "OutFit",
-            "Get a Pre-Made Outfit, Curtious of the Community",
-            "We are farmers, bum ba dum bum bum bum bum",
-            false
-        ),
-        new Option<bool>("EquipOutfit", "Equip outfit at the end?", "Yay or Nay", false),
+        new Option<bool>( "OutFit", "Get a Pre-Made Outfit, Curtious of the Community", "We are farmers, bum ba dum bum bum bum bum", false ),
+        new Option<bool>("EquipOutfit", "Equip our the FarmerJoe outfit at the end?", "Yay or Nay", false),
         new Option<bool>("SellStarterClasses", "SellStarterClasses", "Yay or Nay", false),
-        new Option<bool>(
-            "GetBoosts",
-            "GetBoosts",
-            "Do the \"Free Boosts\" quests to get some 10minute boosts (the droprate is < 1% so itll take awhile)",
-            false
-        ),
-        new Option<bool>(
-            "EquipBoostingGear",
-            "EquipBoostingGear",
-            "use a predetermined set of gear based on what you own, and certain paramiters set, otherwise use whats set for your solo/farm class gear in CBO",
-            true
-        ),
-        new Option<PetChoice>(
-            "PetChoice",
-            "Choose Your Pet",
-            "Extra stuff to choose, if you have any suggestions -form in disc, and put it under request. or dm Tato(the retarded one on disc)",
-            PetChoice.None
-        ),
+        new Option<bool>( "GetBoosts", "GetBoosts", "Do the \"Free Boosts\" quests to get some 10minute boosts (the droprate is < 1% so itll take awhile)", false ),
+        // new Option<bool>( "EquipBoostingGear", "EquipBoostingGear", "use a predetermined set of gear based on what you own, and certain paramiters set, otherwise use whats set for your solo/farm class gear in CBO", true ),
+        new Option<PetChoice>( "PetChoice", "Choose Your Pet", "Extra stuff to choose, if you have any suggestions -form in disc, and put it under request. or dm Tato(the retarded one on disc)", PetChoice.None ),
         CoreBots.Instance.SkipOptions,
     };
 
