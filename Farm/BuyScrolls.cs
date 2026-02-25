@@ -55,7 +55,7 @@ public class BuyScrolls
         }
         string scrollName = QuestData.Rewards.First().Name;
         int maxStack = QuestData.Rewards.First().MaxStack;
-        quant = quant == -1 ? maxStack : quant;
+        quant = quant == -1 || quant > maxStack ? maxStack : quant;
 
         if (Core.CheckInventory(scrollName, quant))
             return;
@@ -70,14 +70,17 @@ public class BuyScrolls
         Action gatherMaterials = !useMysticParchment
             ? () =>
             {
-                if (!Core.CheckInventory("Arcane Quill"))
+                if (!Core.CheckInventory(ink, 5))
                 {
-                    if (!Core.CheckInventory("Gold Voucher 500k", 2))
+                    if (!Core.CheckInventory("Arcane Quill", 1))
                     {
-                        Farm.Gold(1_000_000);
-                        Core.BuyItem("spellcraft", 693, "Gold Voucher 500k", 2);
+                        if (!Core.CheckInventory("Gold Voucher 500k", 2))
+                        {
+                            Farm.Gold(1_000_000);
+                            Core.BuyItem("spellcraft", 693, "Gold Voucher 500k", 2);
+                        }
+                        Core.BuyItem("spellcraft", 693, "Arcane Quill", 10, shopItemID: 8847);
                     }
-                    Core.BuyItem("spellcraft", 693, "Arcane Quill", 10, shopItemID: 8847);
                     Core.BuyItem("spellcraft", 622, ink, 5);
                 }
             }
@@ -92,8 +95,9 @@ public class BuyScrolls
             gatherMaterials();
             Core.EnsureAccept(QuestData.ID);
             Core.EnsureCompleteMulti(QuestData.ID);
+            Bot.Wait.ForDrop(scrollName);
             Bot.Wait.ForPickup(scrollName);
-            Core.FarmingLogger(scrollName, quant);
+            Core.Logger($"{scrollName} x{Bot.Inventory.GetQuantity(scrollName)}/{quant}");
         }
     }
 }
