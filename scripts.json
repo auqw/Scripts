@@ -6621,8 +6621,8 @@
       "null"
     ],
     "path": "Legion/YamiNoRonin/CoreYnR.cs",
-    "size": 9537,
-    "sha256": "4587f26ddbd0cdeae9a4a6d41c921194d40fe8e29f58620e17c0e997ef50e40b",
+    "size": 9253,
+    "sha256": "90909d0dcf6e6669c2071a4cc0991a613ed79848779e338ff3b4a99568eedd22",
     "fileName": "CoreYnR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/YamiNoRonin/CoreYnR.cs"
   },
@@ -13146,8 +13146,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 50007,
-    "sha256": "05c4eed064ae3814bf5ce5822585d3ab3b08442dcd897293e9cabfc44a4cbff6",
+    "size": 49804,
+    "sha256": "6de209e6ca3f21a9064e50eb83ec3b97095a554153733374e4a39f678232efbb",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
