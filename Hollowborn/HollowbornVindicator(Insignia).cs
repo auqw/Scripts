@@ -142,6 +142,7 @@ public class HBVInsig
             if (!Bot.Quests.IsAvailable(10300))
             {
                 Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
+                Core.Logger($"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}");
                 return;
             }
             else

@@ -118,44 +118,41 @@ public class HBVNonInsig
         string reqName = Core.QuestRewards(10299)[0];
         Core.AddDrop(reqName);
 
-        if (!Core.CheckInventory(reqName, merge ? quant : 4))
+        int Owned = 4 - Bot.Inventory.GetQuantity(reqName);
+
+        if (!Core.CheckInventory(reqName, 4 / Owned))
         {
-            Core.EnsureAccept(10299);
+            Core.EnsureAccept(10300);
 
             // Vindicator Crest
-            VC.GetVindicatorCrest(100);
+            VC.GetVindicatorCrest(20 / Owned);
 
             // Gramiel's Emblem
-            GE.GetGramielsEmblem(300);
+            GE.GetGramielsEmblem(60 / Owned);
 
             // Grace Orb
-            GO.GetGraceOrb(400);
+            GO.GetGraceOrb(80 / Owned);
 
             // Vindicator Badge
-            VB.GetVindicatorBadge(200);
+            VB.GetVindicatorBadge(40 / Owned);
 
             // Hollow Soul
-            HS.GetYaSoulsHeeeere(1500);
+            HS.GetYaSoulsHeeeere(300 / Owned);
 
             // Death's Power
-            DP.GetDP(1);
+            DP.GetDP(4 / Owned);
 
             if (!Bot.Quests.IsAvailable(10299))
             {
-                Core.Logger(
-                    "This is a weekly quest, you need to wait until next week to get the class."
-                );
-                if (FarmNextWeeks)
-                    this.FarmNextWeeks();
-                else
-                    Core.Logger(
-                        $"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}"
-                    );
+                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
+                Core.Logger($"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}");
                 return;
             }
             else
+            {
                 Core.EnsureComplete(10299);
-            Bot.Wait.ForPickup(reqName);
+                Bot.Wait.ForPickup(reqName);
+            }
         }
 
         if (!Core.CheckInventory(reqName, 4))
