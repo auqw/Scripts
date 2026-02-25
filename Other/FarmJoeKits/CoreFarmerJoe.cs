@@ -1222,7 +1222,8 @@ public class CoreFarmerJoe
     #endregion Extra:
 
     #region BTS
-
+    string? solo;
+    string? farm;
     public void SetClass()
     {
         // Read CBO Data
@@ -1234,8 +1235,7 @@ public class CoreFarmerJoe
             || !soloClasses.Any(x => x.Equals(Core.SoloClass, StringComparison.OrdinalIgnoreCase))
             || !Core.CheckInventory(Core.SoloClass))
         {
-            string? solo =
-                soloClasses.FirstOrDefault(x => Core.CheckInventory(x));
+            solo = soloClasses.FirstOrDefault(x => Core.CheckInventory(x));
 
             if (!string.IsNullOrEmpty(solo))
                 Core.SoloClass = solo;
@@ -1247,12 +1247,15 @@ public class CoreFarmerJoe
             || !farmClasses.Any(x => x.Equals(Core.FarmClass, StringComparison.OrdinalIgnoreCase))
             || !Core.CheckInventory(Core.FarmClass))
         {
-            string? farm =
-                farmClasses.FirstOrDefault(x => Core.CheckInventory(x));
+            farm = farmClasses.FirstOrDefault(x => Core.CheckInventory(x));
 
             if (!string.IsNullOrEmpty(farm))
                 Core.FarmClass = farm;
         }
+
+        // Bank all Joe classes that are below the current tier or arent apart of pre-set CBO
+        Core.ToBank(soloClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != farm || x != Core.FarmClass)).ToArray());
+        Core.ToBank(farmClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != solo || x != Core.SoloClass)).ToArray());
 
         // Re-read CBO after setting
         Core.ReadCBO();
