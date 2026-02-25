@@ -235,6 +235,20 @@ public class CoreBots
 
         if (!Bot.Player.LoggedIn)
             Bot.StopSync();
+        /* Test Server IPs:
+            Twilly ServerTest  
+            Artix ServerTest 
+                - Server IP - sockpuppet.aq.com
+       */
+        if (changeTo && Bot.Player.LoggedIn && !String.IsNullOrEmpty(Bot.Player.ServerIP))
+        {
+            if (Bot.Player.ServerIP.ToString() == "sockpuppet.aq.com")
+            {
+                Bot.Log("You're current on a test server!! This will cause issues with scripts\n" + "please logout and login to a non-test server manuall\n" + "*or* set your manager to a non-Test server");
+                changeTo = false;
+            }
+        }
+
         ReadCBO();
         #region Social Privacy Options
 
