@@ -141,9 +141,9 @@ public class Butler3
                 {
                     Core.Logger("LockedMaps handler Initiated.", "LockedMapList.Count > 0");
 
-                    foreach (string map in lockedMapList.Where(m => !string.IsNullOrEmpty(m)))
+                    foreach (string? map in lockedMapList.Where(m => !string.IsNullOrEmpty(m)))
                     {
-                        if (Bot.ShouldExit)
+                        if (Bot.ShouldExit || map == null)
                             return;
 
                         Core.Join($"{map}-{RN}");
