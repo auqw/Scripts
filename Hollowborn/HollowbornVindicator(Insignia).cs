@@ -111,7 +111,7 @@ public class HBVInsig
 
         int Owned = 4 - Bot.Inventory.GetQuantity(reqName);
 
-        if (!Core.CheckInventory(reqName, 4 / Owned))
+        if (!Core.CheckInventory(reqName, 4))
         {
             Core.EnsureAccept(10300);
 
@@ -139,9 +139,9 @@ public class HBVInsig
                 return;
             }
 
-            if (!Bot.Quests.IsAvailable(10300))
+            if (Bot.Quests.IsDailyComplete(10300))
             {
-                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
+                Core.Logger("Weekly already complete, Come back next week and rerun this.");
                 Core.Logger($"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}");
                 return;
             }
