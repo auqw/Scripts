@@ -115,23 +115,24 @@ public class HBVInsig
         {
             Core.EnsureAccept(10300);
 
-            // Vindicator Crest
-            VC.GetVindicatorCrest(20 / Owned);
+            // Death's Power (1 per weekly)
+            DP.GetDP(Owned);
 
-            // Gramiel's Emblem
-            GE.GetGramielsEmblem(60 / Owned);
+            // Hollow Soul (75 per weekly)
+            HS.GetYaSoulsHeeeere(75 * Owned);
 
-            // Grace Orb
-            GO.GetGraceOrb(80 / Owned);
+            // Vindicator Badge (10 per weekly)
+            VB.GetVindicatorBadge(10 * Owned);
 
-            // Vindicator Badge
-            VB.GetVindicatorBadge(40 / Owned);
+            // Grace Orb (20 per weekly)
+            GO.GetGraceOrb(20 * Owned);
 
-            // Hollow Soul
-            HS.GetYaSoulsHeeeere(300 / Owned);
+            // Gramiel's Emblem (15 per weekly)
+            GE.GetGramielsEmblem(15 * Owned);
 
-            // Death's Power
-            DP.GetDP(4 / Owned);
+            // Vindicator Crest (5 per weekly)
+            VC.GetVindicatorCrest(5 * Owned);
+
 
             if (!Core.CheckInventory("Gramiel the Graceful's Insignia", 5))
             {

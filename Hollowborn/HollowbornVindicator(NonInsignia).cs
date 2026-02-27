@@ -124,23 +124,24 @@ public class HBVNonInsig
         {
             Core.EnsureAccept(10300);
 
-            // Vindicator Crest
-            VC.GetVindicatorCrest(20 / Owned);
+            // Death's Power (1 per weekly)
+            DP.GetDP(Owned);
 
-            // Gramiel's Emblem
-            GE.GetGramielsEmblem(60 / Owned);
+            // Hollow Soul (1500 per weekly)
+            HS.GetYaSoulsHeeeere(1500 * Owned);
 
-            // Grace Orb
-            GO.GetGraceOrb(80 / Owned);
+            // Vindicator Badge (200 per weekly)
+            VB.GetVindicatorBadge(200 * Owned);
 
-            // Vindicator Badge
-            VB.GetVindicatorBadge(40 / Owned);
+            // Grace Orb (400 per weekly)
+            GO.GetGraceOrb(400 * Owned);
 
-            // Hollow Soul
-            HS.GetYaSoulsHeeeere(300 / Owned);
+            // Gramiel's Emblem (300 per weekly)
+            GE.GetGramielsEmblem(300 * Owned);
 
-            // Death's Power
-            DP.GetDP(4 / Owned);
+            // Vindicator Crest (100 per weekly)
+            VC.GetVindicatorCrest(100 * Owned);
+
 
             if (!Bot.Quests.IsAvailable(10299))
             {
