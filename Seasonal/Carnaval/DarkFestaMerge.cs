@@ -109,7 +109,7 @@ public class DarkFestaMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster("darkfesta", "Ultra Belo", req.Name, quant, false, false);
+                        Core.HuntMonster("firebird", "Ultra Belo", req.Name, quant, false, false);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -124,15 +124,7 @@ public class DarkFestaMerge
                     Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "darkfesta",
-                            "Dark Boitata",
-                            req.Name,
-                            quant,
-                            false,
-                            false
-                        );
-                        Bot.Wait.ForPickup(req.Name);
+                        Core.HuntMonster("darkfesta", "Dark Boitata", req.Name, quant, false, false); Bot.Wait.ForPickup(req.Name);
                     }
                     break;
             }
