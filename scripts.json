@@ -7080,6 +7080,24 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/15CastleGaheris.cs"
   },
   {
+    "name": "For tLuma",
+    "description": "Completes the For tLuma storyline.",
+    "tags": [
+      "forgealbedo",
+      "storyline",
+      "aor",
+      "age of ruin",
+      "albedo",
+      "aleister",
+      "jaania"
+    ],
+    "path": "Story/AgeOfRuin/21FortLuma.cs",
+    "size": 832,
+    "sha256": "f2ecbe06f856485a0b97625977c6a3378ca58c593d6eeebcaa4d37aa189d1e30",
+    "fileName": "21FortLuma.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/21FortLuma.cs"
+  },
+  {
     "name": "Abyssal Zone",
     "description": "This script completes the storyline in /abyssalzone.",
     "tags": [
@@ -7127,8 +7145,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 45271,
-    "sha256": "eff81ad77a6c40f2d068c9d34f71aee4c74ba8786cfbc25d780d17981768869a",
+    "size": 48808,
+    "sha256": "66fa1592b61ef67d2b3f6d9ed2b18c62ea0a3efeb6a95341a0930122f3f455c4",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -19238,6 +19256,44 @@
     "sha256": "cac676b059d9255df82d797060d41ff7728aad2dd4497f64663ae1e0b48d4f41",
     "fileName": "SkullbreakerKnightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SkullbreakerKnightMerge.cs"
+  },
+  {
+    "name": "Fort Luma Forge Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Fort Luma Forge Merge [2684] in /fortluma",
+    "tags": [
+      "fort",
+      "luma",
+      "forge",
+      "merge",
+      "fortluma",
+      "sol",
+      "gloria",
+      "proxima",
+      "imperator",
+      "nova",
+      "fomalhaut",
+      "luminary",
+      "white",
+      "knight",
+      "armet",
+      "lumiel",
+      "spinsaw",
+      "spinsaws",
+      "torch",
+      "celerity",
+      "gold",
+      "celeritas",
+      "statue",
+      "brasier",
+      "golden",
+      "geopetal",
+      "rubble"
+    ],
+    "path": "Other/MergeShops/FortLumaForgeMerge.cs",
+    "size": 7977,
+    "sha256": "a816c09953e832c09aeb15fa1e63b8ca7103ca433351da0ae12b036f904ae043",
+    "fileName": "FortLumaForgeMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FortLumaForgeMerge.cs"
   },
   {
     "name": "Aiwass Blessings Merge",
