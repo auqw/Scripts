@@ -4,8 +4,11 @@ description: This bot will farm the items belonging to the selected mode for the
 tags: fort, luma, forge, merge, fortluma, sol, gloria, proxima, imperator, nova, fomalhaut, luminary, white, knight, armet, lumiel, spinsaw, spinsaws, torch, celerity, gold, celeritas, statue, brasier, golden, geopetal, rubble
 */
 //cs_include Scripts/CoreBots.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
+//cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -20,6 +23,12 @@ public class FortLumaForgeMerge
     private static CoreAdvanced _Adv;
     private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
+    private static CoreAOR AOR
+    {
+        get => _AOR ??= new CoreAOR();
+        set => _AOR = value;
+    }
+    private static CoreAOR _AOR;
 
 
     public bool DontPreconfigure = true;
@@ -41,6 +50,7 @@ public class FortLumaForgeMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
+        AOR.DoAll();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("fortluma", 2684, findIngredients, buyOnlyThis, buyMode: buyMode);
 
