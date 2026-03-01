@@ -117,7 +117,7 @@ public class FortLumaForgeMerge
                     {
                         Core.HuntMonster("fortluma", "Flame of Citrinitas", "Citrinitas Flicker");
                         Core.HuntMonster("fortluma", "Luma Dragon Twins", "Draconic Contrasoul");
-                        Core.HuntMonster("fortluma", "Rigaud & Cassie", "King's Yellow");
+                        Core.HuntMonsterMapID("fortluma", 10, "King's Yellow");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
