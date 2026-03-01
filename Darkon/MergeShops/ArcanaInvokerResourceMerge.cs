@@ -583,11 +583,11 @@ public class ArcanaInvokerResourceMerge
                 case "Ouroboros Scale":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    Core.RegisterQuests(9443);
-                    bool needBellona = !Core.CheckInventory("Bellona's Edict of War");
-                    bool needSleih = !Core.CheckInventory("Sleih's Changeling Records");
+                    bool needBellona = !Bot.TempInv.Contains("Bellona's Edict of War");
+                    bool needSleih = !Bot.TempInv.Contains("Sleih's Changeling Records");
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                     {
+                        Core.EnsureAccept(9443);
                         while (!Bot.ShouldExit && needBellona && needSleih)
                         {
                             if (Bot.Map.Name != "camlan")
@@ -595,7 +595,6 @@ public class ArcanaInvokerResourceMerge
 
                             if (Bot.Player.Cell != "r9")
                                 Core.Jump("r9", "Let");
-
 
                             Monster? bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
                             Monster? sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
@@ -616,11 +615,10 @@ public class ArcanaInvokerResourceMerge
 
                             Bot.Sleep(200);
                         }
-                        Core.Logger("Good luck with this \"ultra\"! --the maw");
                         Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale", log: false);
+                        Core.EnsureComplete(9443);
+                        Bot.Wait.ForPickup(req.Name);
                     }
-                    Bot.Wait.ForPickup(req.Name);
-                    Core.CancelRegisteredQuests();
                     break;
 
                 case "Libran Scales":
