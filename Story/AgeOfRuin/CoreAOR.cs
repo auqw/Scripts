@@ -1116,6 +1116,117 @@ public class CoreAOR
         }
     }
 
+    public void FortLuma(bool seaVoice = false, bool coldThunder = false)
+    {
+        ForgeAlbedo(seaVoice, coldThunder);
+
+        if (Core.isCompletedBefore(10618))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Citrinitas Elemental", // UseableMonsters[0],
+            "Luma Lifeform", // UseableMonsters[1],
+            "Lightguard Elite", // UseableMonsters[2],
+            "Rigaud &amp; Cassie", // UseableMonsters[3],
+            // use monstermapid for this'n [10]
+            "Citrinitas Match", // UseableMonsters[4],
+            "Luma Dragon Twins", // UseableMonsters[5],
+            "Flame of Citrinitas", // UseableMonsters[6]
+        };
+        #endregion Useable Monsters
+
+        // 10609 | Xanthosis
+        if (!Story.QuestProgression(10609))
+        {
+            Story.MapItemQuest(10609, "fortluma", 15542);
+            Core.HuntMonsterQuest(10609,
+                ("fortluma", UseableMonsters[0], ClassType.Solo));
+        }
+
+
+        // 10610 | Golden Lead
+        if (!Story.QuestProgression(10610))
+        {
+            Story.MapItemQuest(10610, "fortluma", 15543);
+            Core.HuntMonsterQuest(10610,
+                ("fortluma", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 10611 | Luminary Vision
+        if (!Story.QuestProgression(10611))
+        {
+            Story.MapItemQuest(10611, "fortluma", new[] { 15544, 15545 });
+        }
+
+
+        // 10612 | Premature Sunrise
+        if (!Story.QuestProgression(10612))
+        {
+            Core.HuntMonsterQuest(10612,
+                ("fortluma", UseableMonsters[2], ClassType.Farm));
+        }
+
+
+        // 10613 | Blinded by the Light
+        if (!Story.QuestProgression(10613))
+        {
+            Core.EnsureAccept(10613);
+            Core.HuntMonsterMapID("fortluma", 10, "Astero's Aurum");
+            Core.EnsureComplete(10613);
+        }
+
+
+        // 10614 | Wayward Wisewoman
+        if (!Story.QuestProgression(10614))
+        {
+            Story.MapItemQuest(10614, "fortluma", 15546);
+            Core.HuntMonsterQuest(10614,
+                ("fortluma", UseableMonsters[2], ClassType.Solo),
+                ("fortluma", UseableMonsters[0], ClassType.Solo));
+        }
+
+        // 10615 | Incognizance
+        if (!Story.QuestProgression(10615))
+        {
+            Story.MapItemQuest(10615, "fortluma", 15547);
+            Core.HuntMonsterQuest(10615,
+                ("fortluma", UseableMonsters[4], ClassType.Farm));
+        }
+
+
+        // 10616 | Flowers of Luma
+        if (!Story.QuestProgression(10616))
+        {
+            Core.HuntMonsterQuest(10616,
+                ("fortluma", UseableMonsters[5], ClassType.Solo));
+        }
+
+
+        // 10617 | Quid Pro Quo
+        if (!Story.QuestProgression(10617))
+        {
+            Core.EnsureAccept(10617);
+            Core.KillMonster("fortluma", "r10", "Left", "*", "Dark Azoth", 6);
+            Story.MapItemQuest(10617, "fortluma", 15548);
+        }
+
+
+        // 10618 |Drowned King in Yellow
+        if (!Story.QuestProgression(10618))
+        {
+            Bot.Log("**Boss Gear Suggestion**\nSuggested Class and Enh for this boss if your stuck, swap your Solo class to: Dragon of time(or any decent HoT class)\n--With these enhancements--\n" + "Class: Healer\nHelm: Healer\nWeapon: Elysium/Healer\nCape: Absolution/Healer");
+            Core.HuntMonsterQuest(10618,
+                ("fortluma", UseableMonsters[6], ClassType.Solo));
+        }
+
+    }
+
+
     // Mostly for `Skye's Lightning` for the Merge
     public void ColdThunderBoss(string? item = null, int quant = 1, bool isTemp = true)
     {
