@@ -65,7 +65,8 @@ public class CoreAOR
         ThelimaCity(false, false);
         MountMaleno(false, false);
         SanctuaryAiwass(false, false);
-        ForgeAlbedo();
+        ForgeAlbedo(false, false);
+        FortLuma(false, false);
     }
 
     public void TerminaTemple(bool seaVoice = false, bool coldThunder = false)
