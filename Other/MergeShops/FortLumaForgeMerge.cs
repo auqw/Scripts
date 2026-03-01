@@ -115,9 +115,9 @@ public class FortLumaForgeMerge
                     Core.RegisterQuests(Core.IsMember ? 10620 : 10619); // TODO: Replace with actual quest ID
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonster("fortluma", "Citrinitas Flicker", "Flame of Citrinitas");
-                        Core.HuntMonster("fortluma", "Draconic Contrasoul", "Luma Dragon Twins");
-                        Core.HuntMonster("fortluma", "King's Yellow", "Rigaud & Cassie");
+                        Core.HuntMonster("fortluma", "Flame of Citrinitas", "Citrinitas Flicker");
+                        Core.HuntMonster("fortluma", "Luma Dragon Twins", "Draconic Contrasoul");
+                        Core.HuntMonster("fortluma", "Rigaud & Cassie", "King's Yellow");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
