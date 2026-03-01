@@ -12,6 +12,7 @@ tags: army, gold, exp, member, upgrade
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Army/CoreArmyLite.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
 public class ArmyLichWarMem
@@ -54,6 +55,13 @@ public class ArmyLichWarMem
     }
     private static CoreStory _Story;
 
+    private static CoreFarms Farm
+    {
+        get => _Farm ??= new CoreFarms();
+        set => _Farm = value;
+    }
+    private static CoreFarms _Farm;
+
     public string OptionsStorage = "ArmyLeveling2";
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
@@ -91,15 +99,22 @@ public class ArmyLichWarMem
 
         FarmType WTFweDOING = Bot.Config!.Get<FarmType>("Gold or EXP");
 
-        // concise assignment using a switch expression
         bool WeDoingThis = WTFweDOING switch
         {
             FarmType.Both => Bot.Player.Gold >= 100_000_000 && Bot.Player.Level >= 100,
             FarmType.Gold => Bot.Player.Gold >= 100_000_000,
             FarmType.Exp => Bot.Player.Level >= 100,
-            _ => false // safe fallback
+            _ => false
         };
 
+        if (!WeDoingThis)
+        {
+            if (WTFweDOING is FarmType.Both or FarmType.Exp)
+                Farm.ToggleBoost(BoostType.Experience);
+
+            if (WTFweDOING is FarmType.Both or FarmType.Gold)
+                Farm.ToggleBoost(BoostType.Gold);
+        }
 
         const string map = "lichwar";
         string syncPath = Ultra.ResolveSyncPath("ArmyBool.sync");
@@ -121,6 +136,8 @@ public class ArmyLichWarMem
                 Bot.Options.AggroMonsters = false;
                 C.JumpWait();
                 C.Logger("All players finished farm.");
+                Farm.ToggleBoost(BoostType.Gold, false);
+                Farm.ToggleBoost(BoostType.Experience, false);
                 break;
             }
 
