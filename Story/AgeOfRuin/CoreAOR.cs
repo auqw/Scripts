@@ -1187,8 +1187,8 @@ public class CoreAOR
         {
             Story.MapItemQuest(10614, "fortluma", 15546);
             Core.HuntMonsterQuest(10614,
-                ("fortluma", UseableMonsters[2], ClassType.Solo),
-                ("fortluma", UseableMonsters[0], ClassType.Solo));
+                ("fortluma", UseableMonsters[0], ClassType.Solo),
+                ("fortluma", UseableMonsters[2], ClassType.Solo));
         }
 
         // 10615 | Incognizance
