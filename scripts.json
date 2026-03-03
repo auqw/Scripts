@@ -17839,18 +17839,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/SkyChargedGrenadier[9yMem].cs"
   },
   {
-    "name": "LevelAllClasses",
-    "description": "null",
-    "tags": [
-      "null"
-    ],
-    "path": "Other/Classes/LevelAllClasses.cs",
-    "size": 1007,
-    "sha256": "4f9db5bd3a071742912e638bea38d99d96e602c3ff73053bc536883f60e9ea10",
-    "fileName": "LevelAllClasses.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/LevelAllClasses.cs"
-  },
-  {
     "name": "LegionDoomKnight[Mem]",
     "description": "null",
     "tags": [
