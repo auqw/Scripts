@@ -153,6 +153,25 @@ public class CoreBots
 
     #region Start/Stop
 
+    private static readonly System.Net.Http.HttpClient _client = CreateClient();
+
+    private static System.Net.Http.HttpClient CreateClient()
+    {
+        System.Net.Http.HttpClient client = new()
+        {
+            Timeout = TimeSpan.FromSeconds(15)
+        };
+
+        client.DefaultRequestHeaders.UserAgent.ParseAdd("SkuaVersionChecker");
+        return client;
+    }
+
+    public static void RunSync(Func<Task> asyncAction)
+    {
+        asyncAction().GetAwaiter().GetResult();
+    }
+
+
     /// <summary>
     /// Set common bot options to desired value
     /// </summary>
@@ -161,7 +180,9 @@ public class CoreBots
     public void SetOptions(bool changeTo = true, bool disableClassSwap = false)
     {
         EnforceInvariantCulture();
-        SkuaVersionChecker();
+
+        RunSync(() => SkuaVersionCheckerAsync());
+
         Bot.UltraBossHelper.EnableCounterAttack();
 
         if (changeTo)
@@ -7308,43 +7329,48 @@ public class CoreBots
     //         stopBot: true
     //     );
     // }
-    private void SkuaVersionChecker()
+    // 
+
+    private const int MaxRetries = 3;
+
+    private async Task SkuaVersionCheckerAsync()
     {
         if (Bot.Version == null || Bot.Version.ToString() == "1.3.3.2")
             return;
-        bool isPt = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "pt";
-        bool win10Plus = Environment.OSVersion.Version.Major >= 10;
-        if (!win10Plus)
+
+        bool isPt = System.Globalization.CultureInfo.CurrentUICulture
+            .TwoLetterISOLanguageName == "pt";
+
+        if (!OperatingSystem.IsWindowsVersionAtLeast(10))
         {
+            Version os = Environment.OSVersion.Version;
+            string winVer = $"{os.Major}.{os.Minor}.{os.Build}";
+
             string msg = isPt
-                ? "Skua requer Windows 10 ou superior."
-                : "Skua requires Windows 10 or higher.";
+                ? $"O Skua requer Windows 10 ou superior. Você está atualmente na versão do Windows: {winVer}"
+                : $"Skua requires Windows 10 or higher. You are currently on Windows version: {winVer}";
+
             Logger(msg);
             Bot.ShowMessageBox(msg,
                 isPt ? "Windows não suportado" : "Unsupported Windows",
                 "OK");
+
             Logger(msg, messageBox: true, stopBot: true);
             return;
         }
+
         try
         {
-            using System.Net.Http.HttpClient client = new();
-            client.DefaultRequestHeaders.UserAgent.ParseAdd("SkuaVersionChecker");
-            client.Timeout = TimeSpan.FromSeconds(10);
-
-            string atom = client
-                .GetStringAsync("https://github.com/auqw/Skua/releases.atom")
-                .Result;
+            string atom = await GetAtomFeedAsync();
 
             string latestTag = ExtractLatestVersionFromAtom(atom);
 
-            if (string.IsNullOrEmpty(latestTag))
+            if (!Version.TryParse(latestTag, out Version? latestVersion))
             {
-                Logger("Could not parse version from release feed.");
+                Logger("Failed to parse release version.");
                 return;
             }
 
-            Version latestVersion = Version.Parse(latestTag);
             if (latestVersion <= Bot.Version)
                 return;
 
@@ -7352,71 +7378,131 @@ public class CoreBots
             string arch = is64 ? "x64" : "x86";
             string fileName = $"Skua-{latestTag}-Release-{arch}.msi";
             string installerPath = Path.Combine(Path.GetTempPath(), fileName);
-            string downloadUrl = $"https://github.com/auqw/Skua/releases/download/{latestTag}/{fileName}";
+            string downloadUrl =
+                $"https://github.com/auqw/Skua/releases/download/{latestTag}/{fileName}";
 
             string prompt = isPt
                 ? $"Nova versão detectada ({latestTag}).\n\nBaixar agora?"
                 : $"New version detected ({latestTag}).\n\nDownload now?";
-            if (Bot.ShowMessageBox(prompt,
+
+            if (Bot.ShowMessageBox(
+                    prompt,
                     isPt ? "Atualização disponível" : "Update Available",
                     "OK",
                     isPt ? "Cancelar" : "Cancel").Text != "OK")
             {
-                Logger("Update required.", messageBox: true, stopBot: true);
+                Logger("Update declined.");
                 return;
             }
 
             Logger(isPt ? "Baixando instalador..." : "Downloading installer...");
-            using System.Net.Http.HttpResponseMessage response = client.GetAsync(downloadUrl).Result;
-            response.EnsureSuccessStatusCode();
-            using FileStream fs = new(installerPath, FileMode.Create, FileAccess.Write, FileShare.None);
-            response.Content.CopyToAsync(fs).Wait();
 
+            byte[] installerBytes = await ExecuteWithRetryAsync(
+                () => _client.GetByteArrayAsync(downloadUrl));
+
+            await File.WriteAllBytesAsync(installerPath, installerBytes);
+
+            // Compute SHA256 for verification/logging
+            string fileHash = ComputeSHA256(installerPath);
+            Logger($"Downloaded SHA256: {fileHash}");
+
+            // Launch installer
             Process.Start(new ProcessStartInfo
             {
                 FileName = "msiexec",
                 Arguments = $"/i \"{installerPath}\"",
                 UseShellExecute = true
             });
-            Logger(isPt
-                ? "Instalador iniciado."
-                : "Installer launched.");
-            Logger("Update required. Stopping script.", messageBox: true, stopBot: true);
+
+            Logger(isPt ? "Instalador iniciado." : "Installer launched.");
+
+            // Cleanup after small delay
+            _ = Task.Run(async () =>
+            {
+                await Task.Delay(TimeSpan.FromSeconds(30));
+                try
+                {
+                    if (File.Exists(installerPath))
+                        File.Delete(installerPath);
+                }
+                catch { }
+            });
+
+            Logger("Update required. Stopping script.",
+                messageBox: true,
+                stopBot: true);
         }
         catch (Exception ex)
         {
             Logger($"Update check failed: {ex.Message}");
-            // Just log and continue - don't stop the bot
         }
     }
 
+    // Dynamic User-Agent per request
+    private async Task<string> GetAtomFeedAsync()
+    {
+        using System.Net.Http.HttpRequestMessage request = new(
+            HttpMethod.Get,
+            "https://github.com/auqw/Skua/releases.atom");
+
+        string versionString = Bot.Version?.ToString() ?? "unknown";
+        request.Headers.UserAgent.ParseAdd($"SkuaVersionChecker/{versionString}");
+
+        using System.Net.Http.HttpResponseMessage response = await _client.SendAsync(request);
+
+        response.EnsureSuccessStatusCode();
+
+        return await response.Content.ReadAsStringAsync();
+    }
+
+    // Retry helper with exponential backoff
+    private async Task<T> ExecuteWithRetryAsync<T>(Func<Task<T>> action)
+    {
+        for (int attempt = 1; attempt <= MaxRetries; attempt++)
+        {
+            try
+            {
+                return await action();
+            }
+            catch when (attempt < MaxRetries)
+            {
+                int delay = (int)Math.Pow(2, attempt) * 1000;
+                await Task.Delay(delay);
+            }
+        }
+
+        throw new Exception("Max retry attempts reached.");
+    }
+
+    // SHA256 helper
+    private string ComputeSHA256(string filePath)
+    {
+        using System.Security.Cryptography.SHA256 sha = System.Security.Cryptography.SHA256.Create();
+        using FileStream fs = File.OpenRead(filePath);
+        byte[] hash = sha.ComputeHash(fs);
+        return Convert.ToHexString(hash);
+    }
+
+    // Atom parser (no changes)
     private string ExtractLatestVersionFromAtom(string atomXml)
     {
-        try
-        {
-            int titleStart = atomXml.IndexOf("<title>", atomXml.IndexOf("<entry>"));
-            if (titleStart == -1) return "";
+        int entryIndex = atomXml.IndexOf("<entry>", StringComparison.OrdinalIgnoreCase);
+        if (entryIndex == -1) return string.Empty;
 
-            titleStart += 7;
-            int titleEnd = atomXml.IndexOf("</title>", titleStart);
-            if (titleEnd == -1) return "";
+        int titleStart = atomXml.IndexOf("<title>", entryIndex, StringComparison.OrdinalIgnoreCase);
+        if (titleStart == -1) return string.Empty;
+        titleStart += 7;
 
-            string title = atomXml.Substring(titleStart, titleEnd - titleStart).Trim();
+        int titleEnd = atomXml.IndexOf("</title>", titleStart, StringComparison.OrdinalIgnoreCase);
+        if (titleEnd == -1) return string.Empty;
 
-            // Remove common prefixes
-            if (title.StartsWith("Skua ", StringComparison.OrdinalIgnoreCase))
-                title = title.Substring(5);
-            else if (title.StartsWith("Release ", StringComparison.OrdinalIgnoreCase))
-                title = title.Substring(8);
-            else if (title.StartsWith("v", StringComparison.OrdinalIgnoreCase))
-                title = title.Substring(1);
+        string title = atomXml.Substring(titleStart, titleEnd - titleStart).Trim();
 
-            return title.Trim();
-        }
-        catch
-        {
-            return "";
-        }
+        if (title.StartsWith("Skua ", StringComparison.OrdinalIgnoreCase)) title = title[5..];
+        else if (title.StartsWith("Release ", StringComparison.OrdinalIgnoreCase)) title = title[8..];
+        else if (title.StartsWith("v", StringComparison.OrdinalIgnoreCase)) title = title[1..];
+
+        return title.Trim();
     }
 
     ClassType currentClass = ClassType.None;
@@ -11287,22 +11373,19 @@ public class CoreBots
 
     private void AprilFools(int Case = -1)
     {
-        if (Case == -1 && DateTime.Now.Date != new DateTime(DateTime.Now.Year, 4, 1).Date)
+        // Only run on April 1st if no specific Case
+        if (Case == -1 && DateTime.Now.Month != 4 || DateTime.Now.Day != 1)
             return;
 
         Bot.Handlers.RegisterOnce(
             Bot.Random.Next(9000, 21000),
             Bot =>
             {
-                int rand;
-                if (Case == -1)
-                {
-                    rand = Bot.Random.Next(0, 8);
-                    if (OTM_Contains($"AprilFools{DateTime.Now.Year}-{Case}"))
-                        return;
-                }
-                else
-                    rand = Case;
+                int rand = Case != -1 ? Case : Bot.Random.Next(0, 9); // 0..8
+
+                // Prevent re-triggering the same event for today
+                if (Case == -1 && OTM_Contains($"AprilFools{DateTime.Now.Year}-{rand}"))
+                    return;
 
                 switch (rand)
                 {
@@ -11655,10 +11738,13 @@ public class CoreBots
                         }
                         break;
                 }
+
+
                 Bot.ShowMessageBox("April Fools!", "April Fools!");
-                if (Case != -1)
+                if (Case == -1)
                     OTM_Write($"AprilFools{DateTime.Now.Year}-{rand}");
 
+                // Local helper
                 void equipCosmetic(string sFile, string sLink, string sType, string itemGroup)
                 {
                     dynamic t = new ExpandoObject();
@@ -11681,14 +11767,13 @@ public class CoreBots
     #endregion Festivities
 
     // English only force:
-    private static void EnforceInvariantCulture()
-    {
-        CultureInfo english = CultureInfo.InvariantCulture;
-        CultureInfo.DefaultThreadCurrentCulture = english;
-        CultureInfo.DefaultThreadCurrentUICulture = english;
-        Thread.CurrentThread.CurrentCulture = english;
-        Thread.CurrentThread.CurrentUICulture = english;
-    }
+    private static void EnforceInvariantCulture() =>
+    (Thread.CurrentThread.CurrentCulture,
+     Thread.CurrentThread.CurrentUICulture,
+     CultureInfo.DefaultThreadCurrentCulture,
+     CultureInfo.DefaultThreadCurrentUICulture) =
+    (CultureInfo.InvariantCulture, CultureInfo.InvariantCulture, CultureInfo.InvariantCulture, CultureInfo.InvariantCulture);
+
 
     #region Messing with players
 
