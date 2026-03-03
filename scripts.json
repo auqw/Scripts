@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 435079,
-    "sha256": "0d372f80fe2a765bc945b59249dbca3286b0e7506b13cfb3d34502a0db3dc13e",
+    "size": 435087,
+    "sha256": "0ef15e440e54d9f104dbfdcdf7232f3c8c12297545fd16a2c748b3727ee0a758",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -6690,8 +6690,8 @@
       "null"
     ],
     "path": "Story/LordsofChaos/Core13LoC.cs",
-    "size": 85006,
-    "sha256": "2ac9520e05cc3306d23c1230f65bd6aade9c8c3b7248367ecf6664c17db420b1",
+    "size": 84921,
+    "sha256": "71bd50d0fc4b24af25d9db727dbf592e18e276707678ee5e12c8bf1340a233d5",
     "fileName": "Core13LoC.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/LordsofChaos/Core13LoC.cs"
   },
