@@ -10450,8 +10450,8 @@
       "voyage"
     ],
     "path": "Darkon/MergeShops/ArcanaInvokerResourceMerge.cs",
-    "size": 45523,
-    "sha256": "9eda9dee84fae3150c09b01a0f3cb717b33461abf0586f93c04490dce880eb84",
+    "size": 45736,
+    "sha256": "cf307234000e0a32b7a720053011b4d4f71ba6a577d283f73df37d76d2a0988e",
     "fileName": "ArcanaInvokerResourceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/MergeShops/ArcanaInvokerResourceMerge.cs"
   },
@@ -15170,8 +15170,8 @@
       "cleaver"
     ],
     "path": "Seasonal/BlackFriday/CamlanMerge.cs",
-    "size": 8289,
-    "sha256": "13edd968f2f6a9338c6defd440aa7a05b29b296edb3dcf1ec7b53884e5cb0d53",
+    "size": 8473,
+    "sha256": "fc04b19d942d6b77c1529d89344d0e61b4831470b5133753641de4f068864508",
     "fileName": "CamlanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/CamlanMerge.cs"
   },
@@ -30361,8 +30361,8 @@
       "null"
     ],
     "path": "Seasonal/BlackFriday/ShadowofDoom/CoreShadowofDoom.cs",
-    "size": 11418,
-    "sha256": "186f0d7112125e47578b9b6e6712e6900b19c08b7d16d1da4f06fef6705f444b",
+    "size": 11579,
+    "sha256": "9c56d61458a9970e7f9e39da02cddeb1b0de30f0d85ffde8732e03ed88273953",
     "fileName": "CoreShadowofDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/ShadowofDoom/CoreShadowofDoom.cs"
   },
