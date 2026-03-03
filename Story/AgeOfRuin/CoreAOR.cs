@@ -1229,6 +1229,10 @@ public class CoreAOR
             Bot.Log("**Boss Gear Suggestion**\nSuggested Class and Enh for this boss if your stuck, swap your Solo class to: Dragon of time(or any decent HoT class)\n--With these enhancements--\n" + "Class: Healer\nHelm: Healer\nWeapon: Elysium/Healer\nCape: Absolution/Healer");
             Core.HuntMonsterQuest(10618,
                 ("fortluma", UseableMonsters[6], ClassType.Solo));
+            Bot.Wait.ForQuestComplete(10618);
+            Bot.Sleep(2500);
+            Core.JumpWait();
+    
         }
 
     }
