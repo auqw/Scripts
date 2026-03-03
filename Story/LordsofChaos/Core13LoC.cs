@@ -2462,9 +2462,9 @@ public class Core13LoC
         {
             ResetShadowAttack();
             Core.EnsureAccept(3798);
-            Core.Join("shadowattack", "Boss", "Left");
             Core.GetMapItem(2896, 1, "shadowattack");
-            Bot.Wait.ForTrue(() => Bot.TempInv.Contains(25903), 20);
+            Bot.Wait.ForTrue(() => Bot.TempInv.Contains(25903) || Bot.TempInv.Contains("Hunt for Death"), 20);
+            Core.EnsureComplete(3798);
             Bot.Wait.ForQuestComplete(3798);
         }
 
@@ -2483,15 +2483,13 @@ public class Core13LoC
         void ResetShadowAttack()
         {
             Core.Logger("Resetting shadowAttack Map");
-            Bot.Map.Jump("Enter", "Spawn", autoCorrect: false);
-            Bot.Wait.ForCellChange("Enter");
-            Core.Sleep(15000);
-            Bot.Map.Join("whitemap-100000");
-            Bot.Wait.ForMapLoad("whitemap");
-            Core.Sleep(15000);
-            Bot.Map.Join($"shadowattack-" + Core.PrivateRoomNumber);
+            Core.JumpWait();
+            Core.Sleep(2500);
+            Core.Join("whitemap-100000");
+            Core.Sleep(2500);
+            Bot.Map.Join($"shadowattack-" + Core.PrivateRoomNumber, autoCorrect: false);
             Bot.Wait.ForMapLoad("shadowattack");
-            Core.Sleep(15000);
+            Core.Sleep(2500);
 
         }
 
