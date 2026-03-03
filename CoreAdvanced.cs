@@ -2400,7 +2400,8 @@ public class CoreAdvanced
         Bot.Handlers.RegisterOnce(1, Bot => Bot.ShowMessageBox(message, $"{caller} crashed"));
     }
 
-    /// <summary>
+    
+/// <summary>
     /// Determines what Enhancement Type the player has on their currently equipped class
     /// </summary>
     /// <returns>Returns the equipped Enhancement Type</returns>
@@ -2416,7 +2417,6 @@ public class CoreAdvanced
             : EnhancementType.Lucky;
     }
 
-
     /// <summary>
     /// Determines what Cape Special the player has on their currently equipped cape
     /// </summary>
@@ -2428,7 +2428,7 @@ public class CoreAdvanced
         );
         if (EquippedCape == null)
             return CapeSpecial.None;
-        int patternId = EquippedCape.EnhancementPatternID ?? 0;
+        int patternId = EquippedCape.EnhancementPatternID;
         if (Enum.IsDefined(typeof(EnhancementType), patternId))
             return CapeSpecial.None;
         return (CapeSpecial)patternId;
@@ -2445,7 +2445,7 @@ public class CoreAdvanced
         );
         if (EquippedHelm == null)
             return HelmSpecial.None;
-        int patternId = EquippedHelm.EnhancementPatternID ?? 0;
+        int patternId = EquippedHelm.EnhancementPatternID;
 
         if (Enum.IsDefined(typeof(EnhancementType), patternId))
             return HelmSpecial.None;
@@ -2463,7 +2463,7 @@ public class CoreAdvanced
         );
         if (EquippedWeapon == null)
             return WeaponSpecial.None;
-        int patternId = EquippedWeapon.EnhancementPatternID ?? 0;
+        int patternId = EquippedWeapon.EnhancementPatternID;
 
         if (Enum.IsDefined(typeof(EnhancementType), patternId))
             return WeaponSpecial.None;
