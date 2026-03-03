@@ -78,8 +78,16 @@ public class CoreDageBirthday
         Story.MapItemQuest(6225, "darkpath", 5665);
 
         //Open the Vault (6226)
-        Story.MapItemQuest(6226, "darkpath", 5666);
-        Story.KillQuest(6226, "darkpath", new[] { "Void Wyrm", "Void Makai" });
+        if (!Story.QuestProgression(6225))
+        {
+            Core.EnsureAccept(6225);
+            Core.KillMonster("darkpath", "r7", "Left", "Void Makai", "Void Makai Slain", 10);
+            Core.KillMonster("darkpath", "r8a", "Left", "Void Wyrm", "Key to the Vault");
+            Story.MapItemQuest(6225, "darkpath", 5666);
+            Bot.Wait.ForQuestComplete(6225);
+            Bot.Wait.ForTrue(() => Bot.Player.Cell.Contains("Cut"), 20);
+            Core.JumpWait();
+        }
 
         //Examine the Souls (6227)
         Story.KillQuest(6227, "darkpath", "Wandering Soul");
