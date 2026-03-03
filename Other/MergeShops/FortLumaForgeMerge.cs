@@ -50,7 +50,7 @@ public class FortLumaForgeMerge
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
     {
-        AOR.DoAll();
+        AOR.FortLuma();
         //Only edit the map and shopID here
         Adv.StartBuyAllMerge("fortluma", 2684, findIngredients, buyOnlyThis, buyMode: buyMode);
 

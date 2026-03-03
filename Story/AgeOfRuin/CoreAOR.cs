@@ -1185,10 +1185,11 @@ public class CoreAOR
         // 10614 | Wayward Wisewoman
         if (!Story.QuestProgression(10614))
         {
+            Core.EnsureAccept(10614);
+            Core.EquipClass(ClassType.Solo);
+            Core.HuntMonster("fortluma", UseableMonsters[2], "Elite Promotion Notice", 6);
+            Core.HuntMonster("fortluma", UseableMonsters[0], "Cloudy Citrine", 2);
             Story.MapItemQuest(10614, "fortluma", 15546);
-            Core.HuntMonsterQuest(10614,
-                ("fortluma", UseableMonsters[0], ClassType.Solo),
-                ("fortluma", UseableMonsters[2], ClassType.Solo));
         }
 
         // 10615 | Incognizance
