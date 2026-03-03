@@ -7404,29 +7404,33 @@ public class CoreBots
 
             // Compute SHA256 for verification/logging
             string fileHash = ComputeSHA256(installerPath);
-            Logger($"Downloaded SHA256: {fileHash}");
 
             // Launch installer
-            Process.Start(new ProcessStartInfo
+            Process? installerProc = Process.Start(new ProcessStartInfo
             {
                 FileName = "msiexec",
                 Arguments = $"/i \"{installerPath}\"",
                 UseShellExecute = true
             });
 
-            Logger(isPt ? "Instalador iniciado." : "Installer launched.");
-
-            // Cleanup after small delay
+            // Safe cleanup: wait a few seconds, then delete only if installer has started
             _ = Task.Run(async () =>
             {
-                await Task.Delay(TimeSpan.FromSeconds(30));
+                await Task.Delay(5000); // short initial wait
                 try
                 {
+                    if (installerProc != null && !installerProc.HasExited && File.Exists(installerPath))
+                    {
+                        // Wait a bit more to avoid deleting too early
+                        await Task.Delay(10000);
+                    }
+
                     if (File.Exists(installerPath))
                         File.Delete(installerPath);
                 }
                 catch { }
             });
+
 
             Logger("Update required. Stopping script.",
                 messageBox: true,
@@ -7480,7 +7484,9 @@ public class CoreBots
         using System.Security.Cryptography.SHA256 sha = System.Security.Cryptography.SHA256.Create();
         using FileStream fs = File.OpenRead(filePath);
         byte[] hash = sha.ComputeHash(fs);
-        return Convert.ToHexString(hash);
+        // Uppercase continuous
+        return string.Concat(hash.Select(b => b.ToString("X2")));
+
     }
 
     // Atom parser (no changes)
