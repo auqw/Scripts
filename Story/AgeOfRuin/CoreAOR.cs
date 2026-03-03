@@ -1190,14 +1190,19 @@ public class CoreAOR
             Core.HuntMonster("fortluma", UseableMonsters[2], "Elite Promotion Notice", 6);
             Core.HuntMonster("fortluma", UseableMonsters[0], "Cloudy Citrine", 2);
             Story.MapItemQuest(10614, "fortluma", 15546);
+            Bot.Wait.ForQuestComplete(10614);
         }
+
+        Bot.Sleep(2500);
+        if (Bot.Player.Cell.Contains("Cut"))
+            Core.JumpWait();
 
         // 10615 | Incognizance
         if (!Story.QuestProgression(10615))
         {
+            Core.EnsureAccept(10615);
+            Core.HuntMonster("fortluma", UseableMonsters[4], "Calcified Eyes", 18);
             Story.MapItemQuest(10615, "fortluma", 15547);
-            Core.HuntMonsterQuest(10615,
-                ("fortluma", UseableMonsters[4], ClassType.Farm));
         }
 
 
