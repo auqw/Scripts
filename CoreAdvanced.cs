@@ -1970,19 +1970,20 @@ public class CoreAdvanced
 
             if (EnhAfter)
             {
-                EnhancementType ReEnhanceAfter = CurrentClassEnh();
-                CapeSpecial ReCEnhanceAfter = CurrentCapeSpecial();
-                HelmSpecial ReHEnhanceAfter = CurrentHelmSpecial();
-                WeaponSpecial ReWEnhanceAfter = CurrentWeaponSpecial();
+                ReEnhanceAfter = CurrentClassEnh();
+                ReCEnhanceAfter = CurrentCapeSpecial();
+                ReHEnhanceAfter = CurrentHelmSpecial();
+                ReWEnhanceAfter = CurrentWeaponSpecial();
 
                 Core.Logger(
-                                $" - Enhancements → Class: {ReEnhanceAfter}" +
-                                $"{(ReCEnhanceAfter != CapeSpecial.None ? $", Cape: {ReCEnhanceAfter}" : "")}" +
-                                $"{(ReHEnhanceAfter != HelmSpecial.None ? $", Helm: {ReHEnhanceAfter}" : "")}" +
-                                $"{(ReWEnhanceAfter != WeaponSpecial.None ? $", Weapon: {ReWEnhanceAfter}" : "")}",
-                                messageBox: false
-                            );
+                    $" - Enhancements → Class: {ReEnhanceAfter}" +
+                    $"{(ReCEnhanceAfter != CapeSpecial.None ? $", Cape: {ReCEnhanceAfter}" : "")}" +
+                    $"{(ReHEnhanceAfter != HelmSpecial.None ? $", Helm: {ReHEnhanceAfter}" : "")}" +
+                    $"{(ReWEnhanceAfter != WeaponSpecial.None ? $", Weapon: {ReWEnhanceAfter}" : "")}",
+                    messageBox: false
+                );
             }
+
 
             Core.JumpWait();
             Core.Equip(ReEquippedItems.ToArray());
@@ -2405,11 +2406,16 @@ public class CoreAdvanced
     /// <returns>Returns the equipped Enhancement Type</returns>
     public EnhancementType CurrentClassEnh()
     {
-        int? EnhPatternID = Bot.Player.CurrentClass?.EnhancementPatternID;
-        if (EnhPatternID == 1 || EnhPatternID == 23 || EnhPatternID == null)
-            EnhPatternID = 9;
-        return (EnhancementType)EnhPatternID;
+        int patternId = Bot.Player.CurrentClass?.EnhancementPatternID ?? 9;
+
+        if (patternId == 1 || patternId == 23)
+            patternId = 9;
+
+        return Enum.IsDefined(typeof(EnhancementType), patternId)
+            ? (EnhancementType)patternId
+            : EnhancementType.Lucky;
     }
+
 
     /// <summary>
     /// Determines what Cape Special the player has on their currently equipped cape
@@ -2422,10 +2428,10 @@ public class CoreAdvanced
         );
         if (EquippedCape == null)
             return CapeSpecial.None;
-        int pattern_id = EquippedCape.EnhancementPatternID;
-        if (Enum.IsDefined(typeof(EnhancementType), pattern_id))
+        int patternId = EquippedCape.EnhancementPatternID ?? 0;
+        if (Enum.IsDefined(typeof(EnhancementType), patternId))
             return CapeSpecial.None;
-        return (CapeSpecial)pattern_id;
+        return (CapeSpecial)patternId;
     }
 
     /// <summary>
@@ -2439,10 +2445,11 @@ public class CoreAdvanced
         );
         if (EquippedHelm == null)
             return HelmSpecial.None;
-        int pattern_id = EquippedHelm.EnhancementPatternID;
-        if (Enum.IsDefined(typeof(EnhancementType), pattern_id))
+        int patternId = EquippedHelm.EnhancementPatternID ?? 0;
+
+        if (Enum.IsDefined(typeof(EnhancementType), patternId))
             return HelmSpecial.None;
-        return (HelmSpecial)pattern_id;
+        return (HelmSpecial)patternId;
     }
 
     /// <summary>
@@ -2456,10 +2463,11 @@ public class CoreAdvanced
         );
         if (EquippedWeapon == null)
             return WeaponSpecial.None;
-        int pattern_id = getProcID(EquippedWeapon);
-        if (Enum.IsDefined(typeof(EnhancementType), pattern_id))
+        int patternId = EquippedWeapon.EnhancementPatternID ?? 0;
+
+        if (Enum.IsDefined(typeof(EnhancementType), patternId))
             return WeaponSpecial.None;
-        return (WeaponSpecial)pattern_id;
+        return (WeaponSpecial)patternId;
     }
 
     private static readonly ItemCategory[] EnhanceableCatagories =
