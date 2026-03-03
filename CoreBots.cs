@@ -8715,7 +8715,7 @@ public class CoreBots
                 break;
 
             case "shadowattack":
-                blackListedCells.UnionWith(new[] { "Enter", "After", "noChoas", "noDrak", "Cut38", "Cut39" });
+                blackListedCells.UnionWith(new[] { "Enter", "After", "noChoas", "noDrak", "Cut38", "Cut39", "Cut1" });
                 break;
 
             case "shadowrise":
