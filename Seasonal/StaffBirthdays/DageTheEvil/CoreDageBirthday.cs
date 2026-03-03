@@ -79,7 +79,7 @@ public class CoreDageBirthday
 
         //Open the Vault (6226)
         Story.MapItemQuest(6226, "darkpath", 5666);
-        Story.KillQuest(6226, "darkpath", new[] { "Void Makai", "Void Wyrm" });
+        Story.KillQuest(6226, "darkpath", new[] { "Void Wyrm", "Void Makai" });
 
         //Examine the Souls (6227)
         Story.KillQuest(6227, "darkpath", "Wandering Soul");
