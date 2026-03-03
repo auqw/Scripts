@@ -119,9 +119,11 @@ public class CamlanMerge
                             if (Bot.Player.Cell != "r9")
                                 Core.Jump("r9", "Let");
 
-
                             Monster? bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
                             Monster? sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
+
+                            needBellona = !Bot.TempInv.Contains("Bellona's Edict of War");
+                            needSleih = !Bot.TempInv.Contains("Sleih's Changeling Records");
 
                             // Priority: missing drop
                             if (needBellona && bellona != null)
