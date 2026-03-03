@@ -7145,8 +7145,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 48852,
-    "sha256": "a703fcabecc18e47667d95ad1837c79b9a3eb879a39f36e94eab28dde3d9153d",
+    "size": 49095,
+    "sha256": "e36c3924a7397aabeb946b5ee58a2f56bbaaaad4fb13df3f0930fef33c7aca21",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -19290,8 +19290,8 @@
       "rubble"
     ],
     "path": "Other/MergeShops/FortLumaForgeMerge.cs",
-    "size": 8265,
-    "sha256": "d094615a751304369be893f1faa505494e80445d5a596a130a712ef91278422c",
+    "size": 8268,
+    "sha256": "d35369b20fefa932be0a1a7e21405fda00309f5c00eeffa6c17c99d3c5fe1c98",
     "fileName": "FortLumaForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FortLumaForgeMerge.cs"
   },
