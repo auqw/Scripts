@@ -2138,7 +2138,7 @@ public class CoreFarms
             Core.Logger($"Doing Quest: [2933] - \"Find the Stonewrit!\"");
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(2933);
-            Core.HuntMonster("j6", "Sketchy Dragon", "Stonewrit Found!", 1, false, log: false);
+            Core.HuntMonster("j6", "Sketchy Dragon", "Stonewrit Found!", isTemp: false);
             Core.EnsureComplete(2933);
             Core.Logger($"Completed Quest: [2933] - \"Find the Stonewrit!\"");
         }
@@ -2150,7 +2150,7 @@ public class CoreFarms
             Core.Logger($"Doing Quest: [2934] - \"Find the Handle!\"");
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(2934);
-            Core.HuntMonster("gilead", "Fire Elemental", "Handle Found!", 1, false, log: false);
+            Core.HuntMonster("gilead", "Fire Elemental", "Handle Found!", isTemp: false);
             Core.EnsureComplete(2934);
             Core.Logger($"Completed Quest: [2934] - \"Find the Handle!\"");
         }
@@ -2162,14 +2162,7 @@ public class CoreFarms
             Core.Logger($"Doing Quest: [2935] - \"Find the Hilt!\"");
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(2935);
-            Core.HuntMonster(
-                "castleundead",
-                "Skeletal Viking",
-                "Hilt Found!",
-                1,
-                false,
-                log: false
-            );
+            Core.HuntMonster("castleundead", "Skeletal Viking", "Hilt Found!", isTemp: false);
             Core.EnsureComplete(2935);
             Core.Logger($"Completed Quest: [2935] - \"Find the Hilt!\"");
         }
@@ -2181,7 +2174,7 @@ public class CoreFarms
             Core.Logger($"Doing Quest: [2936] - \"Find the Blade!\"");
             Core.EquipClass(ClassType.Farm);
             Core.EnsureAccept(2936);
-            Core.HuntMonster("hydra", "Hydra Head", "Blade Found!", 1, false, log: false);
+            Core.HuntMonster("hydra", "Hydra Head", "Blade Found!", isTemp: false);
             Core.EnsureComplete(2936);
             Core.Logger($"Completed Quest: [2936] - \"Find the Blade!\"");
         }
@@ -2194,7 +2187,7 @@ public class CoreFarms
             Core.Logger($"Doing Quest: [2937] - \"Find the Runes!\"");
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(2937);
-            Core.KillEscherion("Runes Found!", log: false);
+            Core.KillEscherion("Runes Found!");
             Core.EnsureComplete(2937);
             Core.Logger($"Completed Quest: [2937] - \"Find the Runes!\"");
         }
