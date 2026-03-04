@@ -10450,8 +10450,8 @@
       "voyage"
     ],
     "path": "Darkon/MergeShops/ArcanaInvokerResourceMerge.cs",
-    "size": 45589,
-    "sha256": "a2b471637b9436dd97a9ecfa457e9bee00fa759dbf5c08d23f716aa8c1c73d4e",
+    "size": 45599,
+    "sha256": "1f246747548b87ec9a43eee80c83f7f065de0787777a1fbfa85061d9dfa92b70",
     "fileName": "ArcanaInvokerResourceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/MergeShops/ArcanaInvokerResourceMerge.cs"
   },
@@ -15170,8 +15170,8 @@
       "cleaver"
     ],
     "path": "Seasonal/BlackFriday/CamlanMerge.cs",
-    "size": 8283,
-    "sha256": "a37036115376dd7b00de781625156e8986af7f49bfe1ca9e4dcd5ad4a9c4a8c4",
+    "size": 8292,
+    "sha256": "201aa4f2059f890bd2fff5144ddcf9a7cfae973e255b506dd382895fe19204a4",
     "fileName": "CamlanMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/BlackFriday/CamlanMerge.cs"
   },
