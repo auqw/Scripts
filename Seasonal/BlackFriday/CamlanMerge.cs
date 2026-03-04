@@ -103,50 +103,49 @@ public class CamlanMerge
                     break;
         #endregion
 
-                case "Ouroboros Scale":
+                  case "Ouroboros Scale":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
+                    bool needBellona = !Bot.TempInv.Contains("Bellona's Edict of War");
+                    bool needSleih = !Bot.TempInv.Contains("Sleih's Changeling Records");
                     Core.RegisterQuests(9443);
-                    bool needBellona = !Core.CheckInventory("Bellona's Edict of War");
-                    bool needSleih = !Core.CheckInventory("Sleih's Changeling Records");
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                     {
-                        while (!Bot.ShouldExit && needBellona && needSleih)
-                        {
-                            if (Bot.Map.Name != "camlan")
-                                Core.Join("camlan");
+                        if (Bot.Map.Name != "camlan")
+                            Core.Join("camlan");
 
-                            if (Bot.Player.Cell != "r9")
-                                Core.Jump("r9", "Let");
+                        if (Bot.Player.Cell != "r9")
+                            Core.Jump("r9", "Let");
 
-                            Monster? bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
-                            Monster? sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
+                        Monster? bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
+                        Monster? sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
 
-                            needBellona = !Bot.TempInv.Contains("Bellona's Edict of War");
-                            needSleih = !Bot.TempInv.Contains("Sleih's Changeling Records");
+                        // Priority: missing drop
+                        if (needBellona && bellona != null)
+                            Bot.Combat.Attack(22);
 
-                            // Priority: missing drop
-                            if (needBellona && bellona != null)
-                                Bot.Combat.Attack(22);
+                        else if (needSleih && sleih != null)
+                            Bot.Combat.Attack(23);
 
-                            else if (needSleih && sleih != null)
-                                Bot.Combat.Attack(23);
+                        // If both drops owned OR priority mob dead → kill the other for respawn sync
+                        else if (bellona != null)
+                            Bot.Combat.Attack(22);
 
-                            // If both drops owned OR priority mob dead → kill the other for respawn sync
-                            else if (bellona != null)
-                                Bot.Combat.Attack(22);
+                        else if (sleih != null)
+                            Bot.Combat.Attack(23);
 
-                            else if (sleih != null)
-                                Bot.Combat.Attack(23);
+                        Bot.Sleep(200);
 
-                            Bot.Sleep(200);
-                        }
-                        Core.Logger("Good luck with this \"ultra\"! --the maw");
-                        Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale", log: false);
+                        needBellona = !Bot.TempInv.Contains("Bellona's Edict of War");
+                        needSleih = !Bot.TempInv.Contains("Sleih's Changeling Records");
+
+                        // Hunt maw if the other 2 items are collected already.
+                        if (!needBellona && !needSleih)
+                            Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale", log: false);
                     }
                     Bot.Wait.ForPickup(req.Name);
-                    Core.CancelRegisteredQuests();
                     break;
+
 
                 case "Advent Darkness Axe":
                 case "Advent Darkness Blade":

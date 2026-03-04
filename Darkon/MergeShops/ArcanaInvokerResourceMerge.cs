@@ -580,48 +580,47 @@ public class ArcanaInvokerResourceMerge
                     );
                     break;
 
-                case "Ouroboros Scale":
+                 case "Ouroboros Scale":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     bool needBellona = !Bot.TempInv.Contains("Bellona's Edict of War");
                     bool needSleih = !Bot.TempInv.Contains("Sleih's Changeling Records");
+                    Core.RegisterQuests(9443);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                     {
-                        Core.EnsureAccept(9443);
-                        while (!Bot.ShouldExit && needBellona && needSleih)
-                        {
-                            if (Bot.Map.Name != "camlan")
-                                Core.Join("camlan");
+                        if (Bot.Map.Name != "camlan")
+                            Core.Join("camlan");
 
-                            if (Bot.Player.Cell != "r9")
-                                Core.Jump("r9", "Let");
+                        if (Bot.Player.Cell != "r9")
+                            Core.Jump("r9", "Let");
 
-                            Monster? bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
-                            Monster? sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
+                        Monster? bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
+                        Monster? sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
 
-                            needBellona = !Bot.TempInv.Contains("Bellona's Edict of War");
-                            needSleih = !Bot.TempInv.Contains("Sleih's Changeling Records");
-                            
-                            // Priority: missing drop
-                            if (needBellona && bellona != null)
-                                Bot.Combat.Attack(22);
+                        // Priority: missing drop
+                        if (needBellona && bellona != null)
+                            Bot.Combat.Attack(22);
 
-                            else if (needSleih && sleih != null)
-                                Bot.Combat.Attack(23);
+                        else if (needSleih && sleih != null)
+                            Bot.Combat.Attack(23);
 
-                            // If both drops owned OR priority mob dead → kill the other for respawn sync
-                            else if (bellona != null)
-                                Bot.Combat.Attack(22);
+                        // If both drops owned OR priority mob dead → kill the other for respawn sync
+                        else if (bellona != null)
+                            Bot.Combat.Attack(22);
 
-                            else if (sleih != null)
-                                Bot.Combat.Attack(23);
+                        else if (sleih != null)
+                            Bot.Combat.Attack(23);
 
-                            Bot.Sleep(200);
-                        }
-                        Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale", log: false);
-                        Core.EnsureComplete(9443);
-                        Bot.Wait.ForPickup(req.Name);
+                        Bot.Sleep(200);
+
+                        needBellona = !Bot.TempInv.Contains("Bellona's Edict of War");
+                        needSleih = !Bot.TempInv.Contains("Sleih's Changeling Records");
+
+                        // Hunt maw if the other 2 items are collected already.
+                        if (!needBellona && !needSleih)
+                            Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale", log: false);
                     }
+                    Bot.Wait.ForPickup(req.Name);
                     break;
 
                 case "Libran Scales":
