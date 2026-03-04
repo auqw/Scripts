@@ -24507,6 +24507,22 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/TwillySupportsYou.cs"
   },
   {
+    "name": "VoidLodestone",
+    "description": "pre-forgeenhancements if u don't have darkbox and dark key.",
+    "tags": [
+      "void",
+      "lode",
+      "stone",
+      "void lodestone",
+      "acheron"
+    ],
+    "path": "Other/Various/VoidLodeStone.cs",
+    "size": 3977,
+    "sha256": "05c861ce40cd1c289fbcba471d57157d8e3dc4098dc0147d23daa297e546f0d9",
+    "fileName": "VoidLodeStone.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/VoidLodeStone.cs"
+  },
+  {
     "name": "KillYoshinoBoss",
     "description": "null",
     "tags": [
