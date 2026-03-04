@@ -686,7 +686,7 @@ public class CoreQOM
         Story.MapItemQuest(5837, "underglade", 5271);
 
         //Into the Underglade
-        Story.KillQuest(5838, "underglade", new[] { "Forest Spirit", "Tree Nymph" });
+        Story.KillQuest(5838, "underglade", new[] { "Tree Nymph", "Forest Spirit" });
 
         //Clear the Spores
         Story.KillQuest(5839, "underglade", "Slime Spore");
