@@ -580,11 +580,11 @@ public class ArcanaInvokerResourceMerge
                     );
                     break;
 
-                 case "Ouroboros Scale":
+                case "Ouroboros Scale":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
-                    bool needBellona = !Bot.TempInv.Contains("Bellona's Edict of War");
-                    bool needSleih = !Bot.TempInv.Contains("Sleih's Changeling Records");
+                    Monster? bellona;
+                    Monster? sleih;
                     Core.RegisterQuests(9443);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                     {
@@ -594,14 +594,14 @@ public class ArcanaInvokerResourceMerge
                         if (Bot.Player.Cell != "r9")
                             Core.Jump("r9", "Let");
 
-                        Monster? bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
-                        Monster? sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
+                        bellona = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 22);
+                        sleih = Bot.Monsters.CurrentAvailableMonsters?.FirstOrDefault(m => m?.Alive == true && m.MapID == 23);
 
                         // Priority: missing drop
-                        if (needBellona && bellona != null)
+                        if (Bot.TempInv.Contains("Bellona's Edict of War") && bellona != null)
                             Bot.Combat.Attack(22);
 
-                        else if (needSleih && sleih != null)
+                        else if (Bot.TempInv.Contains("Sleih's Changeling Records") && sleih != null)
                             Bot.Combat.Attack(23);
 
                         // If both drops owned OR priority mob dead → kill the other for respawn sync
@@ -613,14 +613,14 @@ public class ArcanaInvokerResourceMerge
 
                         Bot.Sleep(200);
 
-                        needBellona = !Bot.TempInv.Contains("Bellona's Edict of War");
-                        needSleih = !Bot.TempInv.Contains("Sleih's Changeling Records");
-
                         // Hunt maw if the other 2 items are collected already.
-                        if (!needBellona && !needSleih)
+                        if (Bot.TempInv.Contains("Bellona's Edict of War") && Bot.TempInv.Contains("Sleih's Changeling Records"))
                             Core.HuntMonster("camlan", "Metamorphosis Maw", "Alchemic Snake Scale", log: false);
+                        Bot.Wait.ForQuestComplete(9443);
+                        Bot.Wait.ForPickup(req.ID);
                     }
                     Bot.Wait.ForPickup(req.Name);
+                    Core.CancelRegisteredQuests();
                     break;
 
                 case "Libran Scales":
