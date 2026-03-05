@@ -1154,7 +1154,8 @@ public class CoreFarms
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
-            Bot.Wait.ForDrop(item, 40);
+            Bot.Wait.ForTrue(() => Bot.Drops.CurrentDrops.Contains(item), 40);
+
             Core.Sleep(1500);
             Bot.Wait.ForPickup(item, 40);
             if (!string.IsNullOrEmpty(item))
