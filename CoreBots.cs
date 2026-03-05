@@ -2864,11 +2864,9 @@ public class CoreBots
         if (items == null || items.Length == 0)
             return;
 
-        if (!Bot.Drops.Enabled)
-            Bot.Drops.Start();
-
         Unbank(items);
-        Bot.Drops.Add(items);
+        foreach (string item in items)
+            Bot.Drops.Add(item);
     }
 
 
@@ -2880,9 +2878,6 @@ public class CoreBots
     {
         if (items == null || items.Length == 0)
             return;
-
-        if (!Bot.Drops.Enabled)
-            Bot.Drops.Start();
 
         Unbank(items);
         Bot.Drops.Add(items);
