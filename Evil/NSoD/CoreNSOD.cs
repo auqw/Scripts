@@ -148,14 +148,7 @@ public class CoreNSOD
             Core.Logger("NSoD: Step #12/16: NSAura.");
             NSAura();
             Core.Logger("NSoD: Step #13/16: ULTRA Sepulchure for \"Doom Heart\"");
-            Core.HuntMonster(
-                "sepulchurebattle",
-                "ULTRA Sepulchure",
-                "Doom Heart",
-                isTemp: false,
-                publicRoom: true
-            );
-            Core.Logger("NSoD: Step #14/16: Void Auras x800 to complete the merge");
+            Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true); Core.Logger("NSoD: Step #14/16: Void Auras x800 to complete the merge");
             VoidAuras(800);
 
             Core.Logger("NSoD: Step #15/16: NSoD purchase");
@@ -760,13 +753,7 @@ public class CoreNSOD
         ScrollDarkArts(4);
 
         Core.Logger("NSoD: PreFarm Step #9/9: ULTRA Sepulchure");
-        Core.HuntMonster(
-            "sepulchurebattle",
-            "ULTRA Sepulchure",
-            "Doom Heart",
-            isTemp: false,
-            publicRoom: true
-        );
+        Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false, publicRoom: true);
     }
 
     #endregion
