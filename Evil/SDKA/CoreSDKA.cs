@@ -579,12 +579,13 @@ public class CoreSDKA
                     Core.HuntMonster("bludrut4", "Shadow Serpent", "Dark Energy", 26, false);
                     Daily.HardCoreMetals(new[] { "Arsenic" });
                     if (!Core.CheckInventory("Arsenic"))
+                    {
                         Core.Logger(
                             "Can't complete Accursed Arsenic Hex (Missing Arsenic).\n"
-                                + "This requires a daily, please run the bot again after the daily reset has occurred.",
-                            messageBox: true,
-                            stopBot: true
+                                + "This requires a daily, please run the bot again after the daily reset has occurred."
                         );
+                        return;
+                    }
                     DSO(6);
                     Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
                     Core.EnsureComplete(2110);
@@ -651,12 +652,13 @@ public class CoreSDKA
                     Core.HuntMonster("bludrut4", "Shadow Serpent", "Dark Energy", 26, false);
                     Daily.HardCoreMetals(new[] { "Chromium" });
                     if (!Core.CheckInventory("Chromium"))
+                    {
                         Core.Logger(
-                            "Can't complete Calamitous Chromium Hex (Missing Chromium).\n"
-                                + "This requires a daily, please run the bot again after the daily reset has occurred.",
-                            messageBox: true,
-                            stopBot: true
-                        );
+                        "Can't complete Calamitous Chromium Hex (Missing Chromium).\n"
+                            + "This requires a daily, please run the bot again after the daily reset has occurred."
+                    );
+                        return;
+                    }
                     DSO(6);
                     Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
                     Core.EnsureComplete(2112);
@@ -728,12 +730,14 @@ public class CoreSDKA
                     Core.HuntMonster("bludrut4", "Shadow Serpent", "Dark Energy", 26, false);
                     Daily.HardCoreMetals(new[] { "Rhodium" });
                     if (!Core.CheckInventory("Rhodium"))
+                    {
                         Core.Logger(
-                            "Can't complete Reprehensible Rhodium Hex (Missing Rhodium).\n"
-                                + "This requires a daily, please run the bot again after the daily reset has occurred.",
-                            messageBox: true,
-                            stopBot: true
-                        );
+                        "Can't complete Reprehensible Rhodium Hex (Missing Rhodium).\n"
+                            + "This requires a daily, please run the bot again after the daily reset has occurred."
+
+                    );
+                        return;
+                    }
                     DSO(6);
                     Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
                     Core.EnsureComplete(2114);
@@ -1007,12 +1011,13 @@ public class CoreSDKA
                 if (!Core.CheckInventory((int)metal))
                     Daily.HardCoreMetals(new[] { metal.ToString() });
                 if (!Core.CheckInventory((int)metal))
+                {
                     Core.Logger(
-                        $"Can't complete {fullMetalName.Split(' ')[..2].Join(' ')} Enchantment (missing {metal}).\n"
-                            + "This requires a daily, please run the bot again after the daily reset has occurred.",
-                        messageBox: true,
-                        stopBot: true
-                    );
+                     $"Can't complete {fullMetalName.Split(' ')[..2].Join(' ')} Enchantment (missing {metal}).\n"
+                         + "This requires a daily, please run the bot again after the daily reset has occurred."
+                 );
+                    return;
+                }
 
                 DSO(6);
                 Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
