@@ -5572,8 +5572,8 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 37742,
-    "sha256": "b47011db7babbd8695651e22b7b5d8344c5a1020462eea2b57fb9eb69a6b91f2",
+    "size": 37659,
+    "sha256": "dca808c13f20a222e87d02ac70c4b687409b0c7e05bc07e851dc4e760402f118",
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
@@ -5600,8 +5600,8 @@
       "null"
     ],
     "path": "Evil/NSoD/CoreNSOD.cs",
-    "size": 24180,
-    "sha256": "6fab0a8049bd33d60c7577e25ce51295a164817f1844f207634b44a73edc574d",
+    "size": 23991,
+    "sha256": "9807d5b49d82231c8326456872a8efbb2a652875d4075a5016bf6f9985d2f066",
     "fileName": "CoreNSOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/NSoD/CoreNSOD.cs"
   },
