@@ -93,15 +93,7 @@ public class DarkWarLegionMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.RegisterQuests(8584, 8585);
-                    Core.KillMonster(
-                        "darkwarlegion",
-                        "r2",
-                        "Left",
-                        "Dreadfiend",
-                        req.Name,
-                        quant,
-                        req.Temp
-                    );
+                    Core.KillMonster("darkwarlegion", "r2", "Left", "Bloodfiend", req.Name, quant, req.Temp);
                     Bot.Wait.ForPickup(req.Name);
                     Core.CancelRegisteredQuests();
                     break;
