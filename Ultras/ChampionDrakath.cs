@@ -6,6 +6,7 @@ tags: Ultra
 
 //cs_include Scripts/Ultras/CoreEngine.cs
 //cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/CoreGearUtils.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
@@ -130,58 +131,96 @@ public class ChampionDrakath
 
 
     public bool DontPreconfigure = true;
-    public string OptionsStorage = "ChampionDrakathTauntSelect";
+    public string OptionsStorage = "ChampionDrakath";
+    public string[] MultiOptions = { "Main", "CoreSettings", "ClassOverrides" };
     string a, b, c, d;
+    string overrideA, overrideB, overrideC, overrideD;
     int previousHP = 0;
     private static int[] hpThresholds = { 18100000, 16100000, 14100000, 12100000, 10100000, 8100000, 6100000, 4100000 };
+    private const string LifeStealScroll = "Scroll of Life Steal";
+    private const string LifeStealShopMap = "terminatemple";
+    private const int LifeStealShopId = 2328;
+    private const int LifeStealMinStock = 10;
+    private const int LifeStealRestockTo = 50;
 
-    public List<IOption> Options = new()
+    public List<IOption> Main = new()
     {
-        new Option<string>("a", "Taunter Class (Primary)", "", "ArchPaladin"),
-        new Option<string>("b", "Taunter Class (Secondary)", "", "Legion Revenant"),
-        new Option<string>("c", "Taunter Class (Tertiary)", "", "StoneCrusher"),
-        new Option<string>("d", "Taunter Class (Quaternary)", "", "Lord Of Order"),
-        new Option<bool>("SoloTaunt", "Solo Taunt", "Only primary taunter", false),
-        new Option<bool>("DoEnh", "Do Enhancements", "", true),
-        new Option<HowManyTaunts>("HowManyTaunts", "How many taunters", "", HowManyTaunts.Two),
+        new Option<DrakathComp>(
+            "DoEquipClasses",
+            "Automatically Equip Classes",
+            "Auto-equip classes across all 4 clients\n"
+                + "Safe: AP / LR / SC / LOO\n"
+                + "Fast: CSS/CSH / LR / PCM/OPCM / LOO\n"
+                + "Cheapest: CS / AP / SC / LOO\n"
+                + "Unselected = off (use manual classes below).",
+            DrakathComp.Safe
+        ),
         CoreBots.Instance.SkipOptions,
     };
 
-    bool SoloTaunt;
+    public List<IOption> CoreSettings = new()
+    {
+        new Option<bool>("EquipBestGear", "Equip Best Gear", "Equip best gear for encounter", true),
+        new Option<bool>("DoEnh", "Do Enhancements", "", true),
+        new Option<bool>("UseLifeSteal", "Use LifeSteal", "Non-taunters equip/restock/use Scroll of Life Steal.", true),
+        new Option<HowManyTaunts>("HowManyTaunts", "How many taunters", "", HowManyTaunts.Two),
+    };
+
+    public List<IOption> ClassOverrides = new()
+    {
+        new Option<string>("a", "Primary Class Override", "Blank = use selected comp default for slot 1.", ""),
+        new Option<string>("b", "Secondary Class Override", "Blank = use selected comp default for slot 2.", ""),
+        new Option<string>("c", "Tertiary Class Override", "Blank = use selected comp default for slot 3.", ""),
+        new Option<string>("d", "Quaternary Class Override", "Blank = use selected comp default for slot 4.", ""),
+    };
+
+    bool UseLifeSteal;
 
     public void ScriptMain(IScriptInterface bot)
     {
         if (Bot.Config != null
-            && Bot.Config.Options.Contains(C.SkipOptions)
-            && !Bot.Config.Get<bool>(C.SkipOptions))
+            && !Bot.Config.Get<bool>("Main", "SkipOption"))
             Bot.Config.Configure();
 
-        a = (Bot.Config!.Get<string>("a") ?? string.Empty).Trim();
-        b = (Bot.Config.Get<string>("b") ?? string.Empty).Trim();
-        c = (Bot.Config.Get<string>("c") ?? string.Empty).Trim();
-        d = (Bot.Config.Get<string>("d") ?? string.Empty).Trim();
-        SoloTaunt = Bot.Config.Get<bool>("SoloTaunt");
+        DrakathComp comp = Bot.Config!.Get<DrakathComp>("Main", "DoEquipClasses");
+        overrideA = (Bot.Config.Get<string>("ClassOverrides", "a") ?? string.Empty).Trim();
+        overrideB = (Bot.Config.Get<string>("ClassOverrides", "b") ?? string.Empty).Trim();
+        overrideC = (Bot.Config.Get<string>("ClassOverrides", "c") ?? string.Empty).Trim();
+        overrideD = (Bot.Config.Get<string>("ClassOverrides", "d") ?? string.Empty).Trim();
+        a = overrideA;
+        b = overrideB;
+        c = overrideC;
+        d = overrideD;
+        UseLifeSteal = Bot.Config.Get<bool>("CoreSettings", "UseLifeSteal");
 
-        if ((SoloTaunt && string.IsNullOrEmpty(a))
-            || (!SoloTaunt && string.IsNullOrEmpty(a) && string.IsNullOrEmpty(b)))
+        bool usingComp = comp != DrakathComp.Unselected;
+        int taunterCount = (int)Bot.Config!.Get<HowManyTaunts>("CoreSettings", "HowManyTaunts");
+        if (!usingComp && (
+            string.IsNullOrEmpty(a)
+            || (taunterCount >= 2 && string.IsNullOrEmpty(b))
+            || (taunterCount >= 3 && string.IsNullOrEmpty(c))
+            || (taunterCount >= 4 && string.IsNullOrEmpty(d))
+        ))
         {
-            Core.Log("Setup", "Primary taunter required.");
+            Core.Log("Setup", "Fill taunter class overrides for all enabled taunter slots.");
             Bot.StopSync();
             return;
         }
 
-        if (SoloTaunt)
-        {
-            b = string.Empty;
-            c = string.Empty;
-            d = string.Empty;
-        }
+        EquipmentSnapshot equippedBefore = CoreGearUtils.CaptureEquipment(Bot);
 
-        Core.Boot();
-        Prep();
-        Fight();
-        C.JumpWait();
-        C.SetOptions(false);
+        try
+        {
+            Core.Boot();
+            Prep();
+            Fight();
+            C.JumpWait();
+        }
+        finally
+        {
+            CoreGearUtils.RestoreEquipment(Bot, C, equippedBefore);
+            C.SetOptions(false);
+        }
     }
 
     bool IsTaunter()
@@ -192,7 +231,7 @@ public class ChampionDrakath
             return false;
 
         // Check based on HowManyTaunts setting
-        int taunterCount = (int)Bot.Config!.Get<HowManyTaunts>("HowManyTaunts");
+        int taunterCount = (int)Bot.Config!.Get<HowManyTaunts>("CoreSettings", "HowManyTaunts");
 
         if (taunterCount >= 1 && !string.IsNullOrEmpty(a) && currentClass.Contains(a))
             return true;
@@ -208,7 +247,14 @@ public class ChampionDrakath
 
     void Prep()
     {
-        if (Bot.Config!.Get<bool>("DoEnh"))
+        DrakathComp comp = Bot.Config!.Get<DrakathComp>("Main", "DoEquipClasses");
+        if (comp != DrakathComp.Unselected)
+            ApplyCompAndEquip(comp, overrideA, overrideB, overrideC, overrideD);
+
+        if (Bot.Config!.Get<bool>("CoreSettings", "EquipBestGear"))
+            CoreGearUtils.EquipBestGear(Bot, C, GearProfilePreset.Chaos);
+
+        if (Bot.Config!.Get<bool>("CoreSettings", "DoEnh"))
             DoEnhs();
 
         Ultra.UseAlchemyPotions(
@@ -218,6 +264,82 @@ public class ChampionDrakath
 
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
+        else if (UseLifeSteal)
+            EnsureLifeStealScroll();
+    }
+
+    void EnsureLifeStealScroll()
+    {
+        C.Unbank(LifeStealScroll);
+        int qty = Bot.Inventory.GetQuantity(LifeStealScroll);
+        if (qty < LifeStealMinStock)
+        {
+            C.BuyItem(LifeStealShopMap, LifeStealShopId, LifeStealScroll, LifeStealRestockTo);
+            qty = Bot.Inventory.GetQuantity(LifeStealScroll);
+        }
+
+        if (qty > 0)
+            Core.EquipConsumable(LifeStealScroll);
+    }
+
+    void ApplyCompAndEquip(DrakathComp comp, string aOverride, string bOverride, string cOverride, string dOverride)
+    {
+        string[][] classes;
+        switch (comp)
+        {
+            case DrakathComp.Safe:
+                a = string.IsNullOrWhiteSpace(aOverride) ? "ArchPaladin" : aOverride;
+                b = string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride;
+                c = string.IsNullOrWhiteSpace(cOverride) ? (C.CheckInventory("Infinity Titan") ? "Infinity Titan" : "StoneCrusher") : cOverride;
+                d = string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride;
+                classes = new[]
+                {
+                    new[] { a },
+                    new[] { b },
+                    new[] { c },
+                    new[] { d }
+                };
+                break;
+
+            case DrakathComp.Fast:
+                a = string.IsNullOrWhiteSpace(aOverride) ? "Chrono Shadow" : aOverride;
+                b = string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride;
+                c = string.IsNullOrWhiteSpace(cOverride) ? "Paladin Chronomancer" : cOverride;
+                d = string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride;
+                classes = new[]
+                {
+                    string.IsNullOrWhiteSpace(aOverride)
+                        ? new[] { "Chrono ShadowSlayer", "Chrono ShadowHunter" }
+                        : new[] { aOverride },
+                    new[] { b },
+                    string.IsNullOrWhiteSpace(cOverride)
+                        ? new[] { "Paladin Chronomancer", "Obsidian Paladin Chronomancer" }
+                        : new[] { cOverride },
+                    new[] { d }
+                };
+                break;
+
+            case DrakathComp.Cheapest:
+                a = string.IsNullOrWhiteSpace(aOverride) ? "Chaos Slayer" : aOverride;
+                b = string.IsNullOrWhiteSpace(bOverride) ? "ArchPaladin" : bOverride;
+                c = string.IsNullOrWhiteSpace(cOverride) ? (C.CheckInventory("Infinity Titan") ? "Infinity Titan" : "StoneCrusher") : cOverride;
+                d = string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride;
+                classes = new[]
+                {
+                    string.IsNullOrWhiteSpace(aOverride)
+                        ? new[] { "Chaos Slayer", "Chaos Slayer Berserker", "Chaos Slayer Cleric", "Chaos Slayer Mystic", "Chaos Slayer Thief" }
+                        : new[] { aOverride },
+                    new[] { b },
+                    new[] { c },
+                    new[] { d }
+                };
+                break;
+
+            default:
+                throw new NotImplementedException();
+        }
+
+        Ultra.EquipClassSync(classes, 4, "champion_drakath_class.sync", allowDuplicates: true);
     }
 
     void Fight()
@@ -257,14 +379,15 @@ public class ChampionDrakath
                 if (!Bot.Quests.IsDailyComplete(8300))
                     C.EnsureComplete(8300);
                 else Bot.Log("Daily already Complete");
-                if (Bot.Config!.Get<bool>("DoEnh"))
-                    Adv.GearStore(true, true);
                 break;
             }
 
             Bot.Combat.Attack("*");
 
             Bot.Sleep(500);
+
+            if (UseLifeSteal && !IsTaunter() && Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && Bot.Skills.CanUseSkill(5))
+                Bot.Skills.UseSkill(5);
 
             // Only execute taunt logic if this account is a taunter
             if (IsTaunter()
@@ -509,5 +632,13 @@ public class ChampionDrakath
         Two = 2,
         Three = 3,
         Four = 4
+    }
+
+    enum DrakathComp
+    {
+        Unselected,
+        Safe,
+        Fast,
+        Cheapest
     }
 }
