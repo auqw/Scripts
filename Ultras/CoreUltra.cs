@@ -1151,6 +1151,25 @@ public class CoreUltra
         Core.EquipEnrage();
     }
 
+    public void GetScrollOfLifeSteal(int minStock = 10, int restockTo = 50)
+    {
+        const string scroll = "Scroll of Life Steal";
+        const string shopMap = "terminatemple";
+        const int shopId = 2328;
+
+        Core.Unbank(scroll);
+
+        int qty = Bot.Inventory.GetQuantity(scroll);
+        if (qty < minStock)
+        {
+            Core.BuyItem(shopMap, shopId, scroll, restockTo);
+            qty = Bot.Inventory.GetQuantity(scroll);
+        }
+
+        if (qty > 0)
+            Core.EquipConsumable(scroll);
+    }
+
     public void UseTaunt()
     {
         // Dead → wait for respawn

@@ -137,11 +137,6 @@ public class ChampionDrakath
     string overrideA, overrideB, overrideC, overrideD;
     int previousHP = 0;
     private static int[] hpThresholds = { 18100000, 16100000, 14100000, 12100000, 10100000, 8100000, 6100000, 4100000 };
-    private const string LifeStealScroll = "Scroll of Life Steal";
-    private const string LifeStealShopMap = "terminatemple";
-    private const int LifeStealShopId = 2328;
-    private const int LifeStealMinStock = 10;
-    private const int LifeStealRestockTo = 50;
 
     public List<IOption> Main = new()
     {
@@ -265,21 +260,7 @@ public class ChampionDrakath
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
         else if (UseLifeSteal)
-            EnsureLifeStealScroll();
-    }
-
-    void EnsureLifeStealScroll()
-    {
-        C.Unbank(LifeStealScroll);
-        int qty = Bot.Inventory.GetQuantity(LifeStealScroll);
-        if (qty < LifeStealMinStock)
-        {
-            C.BuyItem(LifeStealShopMap, LifeStealShopId, LifeStealScroll, LifeStealRestockTo);
-            qty = Bot.Inventory.GetQuantity(LifeStealScroll);
-        }
-
-        if (qty > 0)
-            Core.EquipConsumable(LifeStealScroll);
+            Ultra.GetScrollOfLifeSteal();
     }
 
     void ApplyCompAndEquip(DrakathComp comp, string aOverride, string bOverride, string cOverride, string dOverride)
@@ -386,6 +367,7 @@ public class ChampionDrakath
 
             Bot.Sleep(500);
 
+            // Non-taunter role: use Scroll of Life Steal
             if (UseLifeSteal && !IsTaunter() && Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && Bot.Skills.CanUseSkill(5))
                 Bot.Skills.UseSkill(5);
 
@@ -434,6 +416,7 @@ public class ChampionDrakath
                             if (!Bot.Player.HasTarget)
                                 break;
 
+                            // Taunter role: use Scroll of Enrage to apply Focus.
                             if (Bot.Skills.CanUseSkill(5))
                                 Bot.Skills.UseSkill(5);
 
@@ -459,6 +442,7 @@ public class ChampionDrakath
 
                     while (!Bot.ShouldExit)
                     {
+                        // Taunter role: keep using Scroll of Enrage below 2M.
                         if (Bot.Skills.CanUseSkill(5))
                             Bot.Skills.UseSkill(5);
                         Bot.Sleep(500);

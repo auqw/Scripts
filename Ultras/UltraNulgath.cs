@@ -73,12 +73,6 @@ public class UltraNulgath
     string overrideA, overrideB, overrideC, overrideD;
     bool UseLifeSteal;
 
-    private const string LifeStealScroll = "Scroll of Life Steal";
-    private const string LifeStealShopMap = "terminatemple";
-    private const int LifeStealShopId = 2328;
-    private const int LifeStealMinStock = 10;
-    private const int LifeStealRestockTo = 50;
-
     public List<IOption> Main = new()
     {
         new Option<NulgathComp>(
@@ -188,21 +182,7 @@ public class UltraNulgath
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
         else if (UseLifeSteal)
-            EnsureLifeStealScroll();
-    }
-
-    void EnsureLifeStealScroll()
-    {
-        C.Unbank(LifeStealScroll);
-        int qty = Bot.Inventory.GetQuantity(LifeStealScroll);
-        if (qty < LifeStealMinStock)
-        {
-            C.BuyItem(LifeStealShopMap, LifeStealShopId, LifeStealScroll, LifeStealRestockTo);
-            qty = Bot.Inventory.GetQuantity(LifeStealScroll);
-        }
-
-        if (qty > 0)
-            Core.EquipConsumable(LifeStealScroll);
+            Ultra.GetScrollOfLifeSteal();
     }
 
     void ApplyCompAndEquip(NulgathComp comp, string aOverride, string bOverride, string cOverride, string dOverride)
@@ -332,6 +312,7 @@ public class UltraNulgath
                 Bot.Sleep(200);
             }
 
+            // Non-taunter role: use Scroll of Life Steal
             if (UseLifeSteal && !IsTaunter() && Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && Bot.Skills.CanUseSkill(5))
                 Bot.Skills.UseSkill(5);
 
@@ -349,6 +330,7 @@ public class UltraNulgath
                         continue;
                     }
 
+                    // Taunter role: use Scroll of Enrage to apply Focus.
                     if (!Bot.Target.Auras.Any(x => x != null && x.Name == "Focus") && Bot.Skills.CanUseSkill(5))
                         Bot.Skills.UseSkill(5);
                     else
