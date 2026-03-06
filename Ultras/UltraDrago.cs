@@ -284,7 +284,7 @@ public class UltraDrago
 
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Drago Dethroned", 1), syncPath))
             {
-                C.Jump("Enter", "Spawn");
+                C.JumpWait();
                 C.Logger("All players finished farm.");
                 if (Bot.Quests.IsUnlocked(8397))
                     C.EnsureComplete(8397);
