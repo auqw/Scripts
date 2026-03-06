@@ -6,12 +6,18 @@ tags: Ultra
 
 //cs_include Scripts/Ultras/CoreEngine.cs
 //cs_include Scripts/Ultras/CoreUltra.cs
+//cs_include Scripts/CoreGearUtils.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Skua.Core.Interfaces;
 using Skua.Core.Options;
+
+// NOTE: In all compositions below, slot 1 and slot 2 are the taunter roles.
 
 #region Fast Comp
 // Chrono ShadowSlayer: Lucky | Vim | Valiance | Vainglory
@@ -61,73 +67,237 @@ public class UltraNulgath
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraNulgath";
-    public List<IOption> Options = new()
+    public string[] MultiOptions = { "Main", "CoreSettings", "ClassOverrides" };
+
+    string a, b, c, d;
+    string overrideA, overrideB, overrideC, overrideD;
+    bool UseLifeSteal;
+
+    private const string LifeStealScroll = "Scroll of Life Steal";
+    private const string LifeStealShopMap = "terminatemple";
+    private const int LifeStealShopId = 2328;
+    private const int LifeStealMinStock = 10;
+    private const int LifeStealRestockTo = 50;
+
+    public List<IOption> Main = new()
     {
         new Option<NulgathComp>(
             "DoEquipClasses",
             "Automatically Equip Classes",
             "Auto-equip classes across all 4 clients\n"
+                + "Slots 1 and 2 are always taunters.\n"
                 + "Fast: CSS / VDK / LR / LOO\n"
                 + "F2PFast: DoT / DoT / LR / LOO\n"
                 + "Common: KE / LR / AP / LOO\n"
                 + "Balanced: LR / AP / SC / LOO\n"
-                + "Unselected = off (use whatever classes you already have equipped).",
-            NulgathComp.Unselected
+                + "Unselected = off (use manual classes below).",
+            NulgathComp.Fast
         ),
-        new Option<string>( "a", "Taunter 1 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "ArchPaladin"),
-        new Option<string>( "b", "Taunter 2 ClassName", "Names must be exact including punctuation, spelling, and captitalization", "Lord Of Order"),
-        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
+    };
+
+    public List<IOption> CoreSettings = new()
+    {
+        new Option<bool>("EquipBestGear", "Equip Best Gear", "Equip best gear for encounter", true),
+        new Option<bool>("DoEnh", "Do Enhancements", "Auto-enhance for the currently equipped class", true),
+        new Option<bool>("UseLifeSteal", "Use LifeSteal", "Non-taunters equip/restock/use Scroll of Life Steal.", true),
+    };
+
+    public List<IOption> ClassOverrides = new()
+    {
+        new Option<string>("a", "Primary Class Override", "Blank = use selected comp default for slot 1 (taunter).", ""),
+        new Option<string>("b", "Secondary Class Override", "Blank = use selected comp default for slot 2 (taunter).", ""),
+        new Option<string>("c", "Tertiary Class Override", "Blank = use selected comp default for slot 3.", ""),
+        new Option<string>("d", "Quaternary Class Override", "Blank = use selected comp default for slot 4.", ""),
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
         C.OneTimeMessage(
             "Ultra Nulgath",
-            "Deaths more then likely will happen, Suggested class and thier enhs are in the script at the top"
+            "Deaths more then likely will happen, Suggested class and their enhs are in the script at the top"
         );
 
-        if (
-            Bot.Config != null
-            && Bot.Config.Options.Contains(C.SkipOptions)
-            && !Bot.Config.Get<bool>(C.SkipOptions)
-        )
+        if (Bot.Config != null && !Bot.Config.Get<bool>("Main", "SkipOption"))
             Bot.Config.Configure();
 
-        a = (Bot.Config!.Get<string>("a") ?? "").Trim();
-        b = (Bot.Config!.Get<string>("b") ?? "").Trim();
-        if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
+        NulgathComp comp = Bot.Config!.Get<NulgathComp>("Main", "DoEquipClasses");
+        overrideA = (Bot.Config.Get<string>("ClassOverrides", "a") ?? string.Empty).Trim();
+        overrideB = (Bot.Config.Get<string>("ClassOverrides", "b") ?? string.Empty).Trim();
+        overrideC = (Bot.Config.Get<string>("ClassOverrides", "c") ?? string.Empty).Trim();
+        overrideD = (Bot.Config.Get<string>("ClassOverrides", "d") ?? string.Empty).Trim();
+
+        a = overrideA;
+        b = overrideB;
+        c = overrideC;
+        d = overrideD;
+
+        UseLifeSteal = Bot.Config.Get<bool>("CoreSettings", "UseLifeSteal");
+
+        bool usingComp = comp != NulgathComp.Unselected;
+        if (!usingComp && (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b)))
         {
-            C.Logger("Setup", "Fill both taunter classes in Script Options.");
-            C.SetOptions(false);
+            C.Logger("Setup", "Fill taunter class overrides for slots 1 and 2.");
+            Bot.StopSync();
+            return;
         }
 
-        Core.Boot();
-        Prep();
-        Fight();
-        C.SetOptions(false);
+        EquipmentSnapshot equippedBefore = CoreGearUtils.CaptureEquipment(Bot);
+
+        try
+        {
+            Core.Boot();
+            Prep();
+            Fight();
+        }
+        finally
+        {
+            CoreGearUtils.RestoreEquipment(Bot, C, equippedBefore);
+            C.SetOptions(false);
+        }
     }
 
-    string a, b;
+    bool IsTaunter()
+    {
+        string currentClass = Bot.Player.CurrentClass?.Name ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(currentClass))
+            return false;
+
+        if (!string.IsNullOrWhiteSpace(a) && currentClass.Equals(a, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if (!string.IsNullOrWhiteSpace(b) && currentClass.Equals(b, StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        return false;
+    }
+
+    void Prep()
+    {
+        NulgathComp comp = Bot.Config!.Get<NulgathComp>("Main", "DoEquipClasses");
+        if (comp != NulgathComp.Unselected)
+            ApplyCompAndEquip(comp, overrideA, overrideB, overrideC, overrideD);
+
+        if (Bot.Config.Get<bool>("CoreSettings", "EquipBestGear"))
+            CoreGearUtils.EquipBestGear(Bot, C, GearProfilePreset.Damage);
+
+        if (Bot.Config.Get<bool>("CoreSettings", "DoEnh"))
+            DoEnhs();
+
+        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+
+        if (IsTaunter())
+            Ultra.GetScrollOfEnrage();
+        else if (UseLifeSteal)
+            EnsureLifeStealScroll();
+    }
+
+    void EnsureLifeStealScroll()
+    {
+        C.Unbank(LifeStealScroll);
+        int qty = Bot.Inventory.GetQuantity(LifeStealScroll);
+        if (qty < LifeStealMinStock)
+        {
+            C.BuyItem(LifeStealShopMap, LifeStealShopId, LifeStealScroll, LifeStealRestockTo);
+            qty = Bot.Inventory.GetQuantity(LifeStealScroll);
+        }
+
+        if (qty > 0)
+            Core.EquipConsumable(LifeStealScroll);
+    }
+
+    void ApplyCompAndEquip(NulgathComp comp, string aOverride, string bOverride, string cOverride, string dOverride)
+    {
+        string[][] classes;
+        switch (comp)
+        {
+            case NulgathComp.Fast:
+                a = string.IsNullOrWhiteSpace(aOverride)
+                    ? (C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter")
+                    : aOverride;
+                b = string.IsNullOrWhiteSpace(bOverride) ? "Verus DoomKnight" : bOverride;
+                c = string.IsNullOrWhiteSpace(cOverride) ? "Legion Revenant" : cOverride;
+                d = string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride;
+                classes = new[]
+                {
+                    string.IsNullOrWhiteSpace(aOverride)
+                        ? new[] { "Chrono ShadowSlayer", "Chrono ShadowHunter" }
+                        : new[] { aOverride },
+                    new[] { b },
+                    new[] { c },
+                    new[] { d }
+                };
+                break;
+
+            case NulgathComp.F2PFast:
+                a = string.IsNullOrWhiteSpace(aOverride) ? "Dragon of Time" : aOverride;
+                b = string.IsNullOrWhiteSpace(bOverride) ? "Dragon of Time" : bOverride;
+                c = string.IsNullOrWhiteSpace(cOverride) ? "Legion Revenant" : cOverride;
+                d = string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride;
+                classes = new[]
+                {
+                    new[] { a },
+                    new[] { b },
+                    new[] { c },
+                    new[] { d }
+                };
+                break;
+
+            case NulgathComp.Common:
+                a = string.IsNullOrWhiteSpace(aOverride) ? "King's Echo" : aOverride;
+                b = string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride;
+                c = string.IsNullOrWhiteSpace(cOverride) ? "ArchPaladin" : cOverride;
+                d = string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride;
+                classes = new[]
+                {
+                    new[] { a },
+                    new[] { b },
+                    new[] { c },
+                    new[] { d }
+                };
+                break;
+
+            case NulgathComp.Balanced:
+                a = string.IsNullOrWhiteSpace(aOverride) ? "Legion Revenant" : aOverride;
+                b = string.IsNullOrWhiteSpace(bOverride) ? "ArchPaladin" : bOverride;
+                c = string.IsNullOrWhiteSpace(cOverride) ? (C.CheckInventory("Infinity Titan") ? "Infinity Titan" : "StoneCrusher") : cOverride;
+                d = string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride;
+                classes = new[]
+                {
+                    new[] { a },
+                    new[] { b },
+                    new[] { c },
+                    new[] { d }
+                };
+                break;
+
+            default:
+                throw new NotImplementedException();
+        }
+
+        Ultra.EquipClassSync(classes, 4, "nulgath_class.sync", allowDuplicates: true);
+    }
+
     // Overfiend Blade = 1
     // Nulgath = 2
     void Fight()
     {
-        #region ignore this
         const string map = "ultranulgath";
         const string boss = "Nulgath the Archfiend";
+
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
+
         C.EnsureAccept(8692);
         C.AddDrop("Nulgath Insignia");
+
         Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_nulgath.sync");
 
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
-        #endregion
+
         while (!Bot.ShouldExit)
         {
             if (!Bot.Player.Alive)
@@ -145,31 +315,30 @@ public class UltraNulgath
                 C.Join("whitemap");
                 if (!Bot.Quests.IsDailyComplete(8692))
                     C.EnsureComplete(8692);
-                if (Bot.Config!.Get<bool>("DoEnh"))
-                    Adv.GearStore(true, true);
                 break;
             }
 
-            // Taunters focus nulgath
-            if (Bot.Player.CurrentClass?.Name == a || Bot.Player.CurrentClass?.Name == b)
+            if (IsTaunter())
             {
-                //taunters focus Nulgath (MID 2)
                 Bot.Combat.Attack(2);
                 Bot.Sleep(200);
             }
             else
             {
-                //DPSers attack the Overfiend Blade(1) and when it dies, swap to nulgath(2), (refocusing "Overfiend Blade" when it respawns)
                 if (Bot.Monsters.MapMonsters.Any(x => x != null && x.MapID == 1 && x.HP > 0))
-                    Bot.Combat.Attack(1); // Overfiend Blade
+                    Bot.Combat.Attack(1);
                 else
-                    Bot.Combat.Attack(2); // Nulgath
+                    Bot.Combat.Attack(2);
                 Bot.Sleep(200);
             }
 
-            // Taunter logic
-            if (Bot.Player.Alive && (Bot.Player.CurrentClass?.Name == a || Bot.Player.CurrentClass?.Name == b) && !Bot.Target.Auras.Any(x => x?.Name == "Focus")
-            && Bot.Monsters.MapMonsters.Any(x => (x?.MapID == 2 || x?.MapID == 1) && x.HP > 0))
+            if (UseLifeSteal && !IsTaunter() && Bot.Player.HasTarget && Bot.Player.Target?.HP > 0 && Bot.Skills.CanUseSkill(5))
+                Bot.Skills.UseSkill(5);
+
+            if (Bot.Player.Alive
+                && IsTaunter()
+                && !Bot.Target.Auras.Any(x => x?.Name == "Focus")
+                && Bot.Monsters.MapMonsters.Any(x => (x?.MapID == 2 || x?.MapID == 1) && x.HP > 0))
             {
                 Core.DisableSkills();
                 while (!Bot.ShouldExit && !Bot.Target.Auras.Any(x => x?.Name == "Focus"))
@@ -180,7 +349,7 @@ public class UltraNulgath
                         continue;
                     }
 
-                    if (!Bot.Target.Auras.Any(x => x != null && x?.Name == "Focus"))
+                    if (!Bot.Target.Auras.Any(x => x != null && x.Name == "Focus") && Bot.Skills.CanUseSkill(5))
                         Bot.Skills.UseSkill(5);
                     else
                         break;
@@ -189,61 +358,9 @@ public class UltraNulgath
                 }
                 Core.EnableSkills();
             }
-
         }
     }
 
-
-    void Prep()
-    {
-        // Sync-equip classes if a comp is selected
-        NulgathComp comp = Bot.Config!.Get<NulgathComp>("DoEquipClasses");
-        if (comp != NulgathComp.Unselected)
-        {
-            string[][] classes = comp switch
-            {
-                NulgathComp.Fast => new[] {
-                    new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter" },
-                    new[] { "Verus DoomKnight" },
-                    new[] { "Legion Revenant" },
-                    new[] { "Lord Of Order" }
-                },
-                NulgathComp.F2PFast => new[] {
-                    new[] { "Dragon of Time" },
-                    new[] { "Dragon of Time" },
-                    new[] { "Legion Revenant" },
-                    new[] { "Lord Of Order" }
-                },
-                NulgathComp.Common => new[] {
-                    new[] { "King's Echo" },
-                    new[] { "Legion Revenant" },
-                    new[] { "ArchPaladin" },
-                    new[] { "Lord Of Order" }
-                },
-                NulgathComp.Balanced => new[] {
-                    new[] { "Legion Revenant" },
-                    new[] { "ArchPaladin" },
-                    new[] {  C.CheckInventory("Infinity Titan") ? "Infinity Titan" : "StoneCrusher" },
-                    new[] { "Lord Of Order" }
-                },
-                _ => throw new NotImplementedException(),
-            };
-
-            Ultra.EquipClassSync(classes, 4, "nulgath_class.sync", allowDuplicates: true);
-        }
-
-        if (Bot.Config!.Get<bool>("DoEnh"))
-        {
-            Adv.GearStore(false, true);
-            DoEnhs();
-        }
-        Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
-        if (Bot.Inventory.Items.Any(x => x != null && x.Equipped && (x.Name == a || x.Name == b)))
-        {
-            Ultra.GetScrollOfEnrage();
-            Core.EquipEnrage();
-        }
-    }
     void DoEnhs()
     {
         string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
@@ -252,8 +369,8 @@ public class UltraNulgath
 
         switch (className)
         {
-            // Chrono ShadowSlayer
             case "Chrono ShadowSlayer":
+            case "Chrono ShadowHunter":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
                     hSpecial: HelmSpecial.Vim,
@@ -262,7 +379,6 @@ public class UltraNulgath
                 );
                 break;
 
-            // Verus DoomKnight
             case "Verus DoomKnight":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
@@ -272,7 +388,6 @@ public class UltraNulgath
                 );
                 break;
 
-            // Legion Revenant
             case "Legion Revenant":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Wizard,
@@ -282,7 +397,6 @@ public class UltraNulgath
                 );
                 break;
 
-            // Lord Of Order
             case "Lord Of Order":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
@@ -292,7 +406,6 @@ public class UltraNulgath
                 );
                 break;
 
-            // Dragon of Time
             case "Dragon of Time":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Wizard,
@@ -302,7 +415,6 @@ public class UltraNulgath
                 );
                 break;
 
-            // King's Echo
             case "King's Echo":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
@@ -312,7 +424,6 @@ public class UltraNulgath
                 );
                 break;
 
-            // Arcana Invoker
             case "Arcana Invoker":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
@@ -322,7 +433,6 @@ public class UltraNulgath
                 );
                 break;
 
-            // Archfiend
             case "Archfiend":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
@@ -332,7 +442,6 @@ public class UltraNulgath
                 );
                 break;
 
-            // Lich
             case "Lich":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
@@ -342,7 +451,6 @@ public class UltraNulgath
                 );
                 break;
 
-            // ArchPaladin
             case "ArchPaladin":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Lucky,
@@ -352,8 +460,8 @@ public class UltraNulgath
                 );
                 break;
 
-            // StoneCrusher
             case "StoneCrusher":
+            case "Infinity Titan":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Wizard,
                     hSpecial: HelmSpecial.Pneuma,
