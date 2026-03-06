@@ -1157,7 +1157,7 @@ public class CoreUltra
         const string shopMap = "terminatemple";
         const int shopId = 2328;
 
-        Core.Unbank(scroll);
+        C.Unbank(scroll);
 
         int qty = Bot.Inventory.GetQuantity(scroll);
         if (qty < minStock)
