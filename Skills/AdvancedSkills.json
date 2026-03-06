@@ -4473,9 +4473,30 @@
   },
   "Hollowborn Vindicator Member Preview": {
     "Base": {
-      "skillUseMode": "UseIfAvailable",
+      "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 3
+        },
         {
           "skillId": 1
         },
@@ -4483,19 +4504,40 @@
           "skillId": 2
         },
         {
-          "skillId": 3
+          "skillId": 4
         },
         {
-          "skillId": 4
+          "skillId": 1
         }
       ]
     }
   },
   "Hollowborn Vindicator": {
     "Base": {
-      "skillUseMode": "UseIfAvailable",
+      "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 4
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 3
+        },
         {
           "skillId": 1
         },
@@ -4503,10 +4545,10 @@
           "skillId": 2
         },
         {
-          "skillId": 3
+          "skillId": 4
         },
         {
-          "skillId": 4
+          "skillId": 1
         }
       ]
     }
