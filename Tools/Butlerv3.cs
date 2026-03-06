@@ -115,8 +115,7 @@ public class Butler3
 
         while (!Bot.ShouldExit)
         {
-            if (!Bot.Player?.Alive ?? false)
-                Bot.Wait.ForTrue(() => Bot.Player!.Alive, 20);
+            while (!Bot.ShouldExit && !Bot.Player.Alive) { Bot.Sleep(200); }
 
             Bot.Player?.Goto(playerName);
 
@@ -223,9 +222,11 @@ public class Butler3
                     HasLoggedMissing = true;
                     HasLoggedFound = false;
                 }
-
-                Core.JumpWait();
-                continue;
+                if (Bot.Player?.Cell != "Enter")
+                {
+                    Bot.Map.Jump("Enter", "Spawn", autoCorrect: false);
+                    Bot.Sleep(500);
+                }
             }
 
             if (!HasLoggedFound)
@@ -236,7 +237,9 @@ public class Butler3
             }
 
             Bot.Sleep(500);
-            Bot.Combat.Attack("*");
+
+            if (!Bot.Combat.StopAttacking)
+                Bot.Combat.Attack("*");
         }
 
 
