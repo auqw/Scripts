@@ -203,7 +203,7 @@ public class UltraNulgath
             string[][] classes = comp switch
             {
                 NulgathComp.Fast => new[] {
-                    new[] { "Chrono ShadowSlayer" },
+                    new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter" },
                     new[] { "Verus DoomKnight" },
                     new[] { "Legion Revenant" },
                     new[] { "Lord Of Order" }
@@ -223,7 +223,7 @@ public class UltraNulgath
                 NulgathComp.Balanced => new[] {
                     new[] { "Legion Revenant" },
                     new[] { "ArchPaladin" },
-                    new[] { "StoneCrusher" },
+                    new[] {  C.CheckInventory("Infinity Titan") ? "Infinity Titan" : "StoneCrusher" },
                     new[] { "Lord Of Order" }
                 },
                 _ => throw new NotImplementedException(),
