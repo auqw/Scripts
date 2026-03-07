@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 435087,
-    "sha256": "0ef15e440e54d9f104dbfdcdf7232f3c8c12297545fd16a2c748b3727ee0a758",
+    "size": 435238,
+    "sha256": "f68868210319f4c04aefb06d59b0a32a3341799cfa475c72ffc7e5c527c7ba9d",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -11264,6 +11264,24 @@
     "sha256": "3f8223b0ae11258d667dcead3a7acbd1e02adbaacda2c8800a0f640b02244c20",
     "fileName": "Pooka.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/LuckyDay/Pooka.cs"
+  },
+  {
+    "name": "MaxGoldenTicket",
+    "description": "Will max the Golden Ticket from lucky day.",
+    "tags": [
+      "lucky day",
+      "shamrock",
+      "golden",
+      "ticket",
+      "golden ticket",
+      "goldenticket",
+      "max"
+    ],
+    "path": "Seasonal/LuckyDay/GoldenTicket.cs",
+    "size": 2526,
+    "sha256": "1445550e377e67e46de3da85ba70161ec03676bb852fda607acc6070d98544ed",
+    "fileName": "GoldenTicket.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/LuckyDay/GoldenTicket.cs"
   },
   {
     "name": "Evolved Leprechaun (Seasonal) Class",
