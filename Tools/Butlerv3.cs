@@ -115,7 +115,7 @@ public class Butler3
 
         while (!Bot.ShouldExit)
         {
-            while (!Bot.ShouldExit && !Bot.Player.Alive) { Bot.Sleep(200); }
+            while (!Bot.ShouldExit && Bot.Player?.Alive != true) { Bot.Sleep(200); }
 
             Bot.Player?.Goto(playerName);
 
