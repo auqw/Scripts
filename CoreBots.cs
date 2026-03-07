@@ -8149,6 +8149,13 @@ public class CoreBots
         Bot.StopSync(true);
     }
 
+    public void PlayerAFK()
+    {
+        Bot.Log("Anti-AFK engaged");
+        Bot.Sleep(1500);
+        Bot.Send.Packet("%xt%zm%afk%1%false%");
+    }
+
     public void ByPassCheck((string, string) CellPad)
     {
         if (!Bot.Player.Alive || (Bot.Player.Cell == null || Bot.Player.Pad == null))
