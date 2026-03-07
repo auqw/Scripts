@@ -639,28 +639,28 @@ public class CoreNation
                 switch (Reward.Name)
                 {
                     case "Tainted Gem":
-                        Supplies("Diamond of Nulgath", 45);
+                        Supplies("Diamond of Nulgath", 45, ReturnItem: "Diamond of Nulgath");
                         ContractExchange(
                             ContractExchangeRewards.Tainted_Gem,
                             quant > 1 ? quant : Reward.MaxStack
                         );
                         break;
                     case "Dark Crystal Shard":
-                        Supplies("Diamond of Nulgath", 45);
+                        Supplies("Diamond of Nulgath", 45, ReturnItem: "Diamond of Nulgath");
                         ContractExchange(
                             ContractExchangeRewards.Dark_Crystal_Shard,
                             quant > 1 ? quant : Reward.MaxStack
                         );
                         break;
                     case "Gem of Nulgath":
-                        Supplies("Diamond of Nulgath", 45);
+                        Supplies("Diamond of Nulgath", 45, ReturnItem: "Diamond of Nulgath");
                         ContractExchange(
                             ContractExchangeRewards.Gem_of_Nulgath,
                             quant > 1 ? quant : Reward.MaxStack
                         );
                         break;
                     case "Blood Gem of the Archfiend":
-                        Supplies("Diamond of Nulgath", 45);
+                        Supplies("Diamond of Nulgath", 45, ReturnItem: "Diamond of Nulgath");
                         ContractExchange(
                             ContractExchangeRewards.Blood_Gem_of_the_Archfiend,
                             quant > 1 ? quant : Reward.MaxStack
@@ -685,28 +685,28 @@ public class CoreNation
                     switch (Reward.Name)
                     {
                         case "Tainted Gem":
-                            Supplies("Diamond of Nulgath", 45);
+                            Supplies("Diamond of Nulgath", 45, ReturnItem: "Tainted Gem");
                             ContractExchange(
                                 ContractExchangeRewards.Tainted_Gem,
                                 quant > 1 ? quant : Reward.MaxStack
                             );
                             break;
                         case "Dark Crystal Shard":
-                            Supplies("Diamond of Nulgath", 45);
+                            Supplies("Diamond of Nulgath", 45, ReturnItem: "Dark Crystal Shard");
                             ContractExchange(
                                 ContractExchangeRewards.Dark_Crystal_Shard,
                                 quant > 1 ? quant : Reward.MaxStack
                             );
                             break;
                         case "Gem of Nulgath":
-                            Supplies("Diamond of Nulgath", 45);
+                            Supplies("Diamond of Nulgath", 45, ReturnItem: "Gem of Nulgath");
                             ContractExchange(
                                 ContractExchangeRewards.Gem_of_Nulgath,
                                 quant > 1 ? quant : Reward.MaxStack
                             );
                             break;
                         case "Blood Gem of the Archfiend":
-                            Supplies("Diamond of Nulgath", 45);
+                            Supplies("Diamond of Nulgath", 45, ReturnItem: "Blood Gem of the Archfiend");
                             ContractExchange(
                                 ContractExchangeRewards.Blood_Gem_of_the_Archfiend,
                                 quant > 1 ? quant : Reward.MaxStack
@@ -2360,7 +2360,7 @@ public class CoreNation
         FarmContractExchage("Dark Crystal Shard", quant);
         NewWorldsNewOpportunities("Dark Crystal Shard", quant); //1minute turning  = 1x guaranteed
         VoidKnightSwordQuest("Dark Crystal Shard", quant);
-        Supplies("Dark Crystal Shard", quant); //xx:xx time turnin = 10% chance
+        Supplies("Dark Crystal Shard", quant, ReturnItem: "Dark Crystal Shard"); //xx:xx time turnin = 10% chance
         EssenceofDefeatReagent(quant);
     }
 
@@ -2385,7 +2385,7 @@ public class CoreNation
             CragsThirst(quant);
 
         VoidKnightSwordQuest("Diamond of Nulgath", quant);
-        Supplies("Diamond of Nulgath", quant);
+        Supplies("Diamond of Nulgath", quant, ReturnItem: "Diamond of Nulgath");
     }
 
     /// <summary>
@@ -2416,7 +2416,7 @@ public class CoreNation
         Core.AddDrop("Gem of Nulgath");
         FarmContractExchage("Gem of Nulgath", quant);
         VoidKnightSwordQuest("Gem of Nulgath", quant);
-        Supplies("Gem of Nulgath", quant);
+        Supplies("Gem of Nulgath", quant, ReturnItem: "Gem of Nulgath");
     }
 
     /// <summary>
@@ -2446,7 +2446,7 @@ public class CoreNation
         Core.AddDrop("Tainted Gem");
         FarmContractExchage("Tainted Gem", quant);
         ForgeTaintedGems(quant);
-        Supplies("Tainted Gem", quant);
+        Supplies("Tainted Gem", quant, ReturnItem: "Tainted Gem");
     }
 
     /// <summary>
