@@ -11278,8 +11278,8 @@
       "max"
     ],
     "path": "Seasonal/LuckyDay/GoldenTicket.cs",
-    "size": 2526,
-    "sha256": "1445550e377e67e46de3da85ba70161ec03676bb852fda607acc6070d98544ed",
+    "size": 2473,
+    "sha256": "6ecc1d3f2e4f823b83417a068230759c331995690e73888fedb2ca303f32f120",
     "fileName": "GoldenTicket.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/LuckyDay/GoldenTicket.cs"
   },
