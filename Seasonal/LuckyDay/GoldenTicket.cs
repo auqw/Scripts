@@ -47,7 +47,6 @@ public class GoldenTicket
         int UpdatedQuant;
         bool SendNextPacket = true;
 
-        Core.FarmingLogger("Golden Ticket", 65_000);
         Core.Join("luck");
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Golden Ticket", 65_000))
