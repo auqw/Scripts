@@ -5675,8 +5675,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1145992,
-    "sha256": "003b0e4bf798919bb3e1a9585b74fd18007cd390339303ab96caf3d87997ef47",
+    "size": 1146002,
+    "sha256": "8b30c9197f8c6e22ceb72b40c6735ea33d60383bf6f4637153630b4ae93c2ef9",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
@@ -19854,8 +19854,8 @@
       "quasar"
     ],
     "path": "Other/MergeShops/AstroSeerMerge.cs",
-    "size": 6057,
-    "sha256": "ab725a399767df502972a3913f40b18d72640f7095246545d15f8ceebebe5f3e",
+    "size": 6067,
+    "sha256": "4668682e3d7549b22dcf9be7812f419a02ce0354d495fb4aedd0232dd5a2c215",
     "fileName": "AstroSeerMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/AstroSeerMerge.cs"
   },
@@ -21633,8 +21633,8 @@
       "guest"
     ],
     "path": "Other/MergeShops/DominiksFruitStandMerge.cs",
-    "size": 7375,
-    "sha256": "3145b4a24620c074285126571af3ee3433c2507496ac80be55a53eeedaa44e92",
+    "size": 7385,
+    "sha256": "45ecc2ec9d416941fea0e1f08cf64a93958fb3bd306d437f0f908e40e9369a8f",
     "fileName": "DominiksFruitStandMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DominiksFruitStandMerge.cs"
   },
@@ -24390,8 +24390,8 @@
       "lemons"
     ],
     "path": "Other/Various/LifeKeepsitsLemons.cs",
-    "size": 1933,
-    "sha256": "b6e7d1d1b2ccbeda8b297bdb2e26f4bd1dd0ae4e9f686d15f249ee37b46bed7b",
+    "size": 1879,
+    "sha256": "0e053bbf0c104e9059b9029092bf9e80eafa81cedd0cffcb8685d3fd1b9b78c4",
     "fileName": "LifeKeepsitsLemons.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/LifeKeepsitsLemons.cs"
   },
