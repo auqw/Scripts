@@ -31580,6 +31580,110 @@ case ""Ether of Darkness"":
                     break;
     "
 },
+{
+    "Oizys' Forgotten Memory",
+    @"
+case ""Oizys' Forgotten Memory"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(10621, ""lethe"", ""Oizys"", false);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
+{
+    "Unholy Incantation",
+    @"
+case ""Unholy Incantation"":
+                    UnholyIncantation(quant);
+                    break;
+    "
+},
+{
+    "Silver Celeritas Statue",
+    @"
+case ""Silver Celeritas Statue"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonsterMapID(""fortluma"", 6, req.Name, req.Quantity, req.Temp);
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Luma Torch of Clarity",
+    @"
+case ""Luma Torch of Clarity"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonsterMapID(""fortluma"", 5, req.Name, req.Quantity, req.Temp);
+                    break;
+    "
+},
+{
+    "Yellow Flame of Citrinitas",
+    @"
+case ""Yellow Flame of Citrinitas"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(Core.IsMember ? 10620 : 10619); // TODO: Replace with actual quest ID
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonster(""fortluma"", ""Flame of Citrinitas"", ""Citrinitas Flicker"");
+                        Core.HuntMonster(""fortluma"", ""Luma Dragon Twins"", ""Draconic Contrasoul"");
+                        Core.HuntMonsterMapID(""fortluma"", 10, ""King's Yellow"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Geopetal Repair Glue",
+    @"
+case ""Geopetal Repair Glue"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""fortluma"", ""Luma Lifeform"", req.Name, req.Quantity, req.Temp);
+                    Bot.Wait.ForPickup(req.Name);
+
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
