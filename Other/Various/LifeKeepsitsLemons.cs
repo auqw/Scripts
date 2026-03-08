@@ -54,11 +54,11 @@ public class LifeKeepsitsLemons
             Core.FarmingLogger(Reward.Name);
             while (!Bot.ShouldExit && !Core.CheckInventory(Reward.ID))
             {
-                Core.EnsureAccept(QuestID);
-                Core.HuntMonster("extinction", "SN.O.W.", "SN.O.W. Ice", isTemp: false);
-                Core.HuntMonster("extinction", "Lard", "Lemon Lard", 10);
-                Core.HuntMonster("extinction", "Gelatinous Slime", "Slime Gelatin", 10);
-                Core.EnsureComplete(QuestID);
+                Core.HuntMonsterQuest(10054, new[] {
+                        ("extinction","Lard",ClassType.Farm),
+                        ("extinction","Gelatinous Slime",ClassType.Farm),
+                        ("extinction","SN.O.W. Challenge",ClassType.Solo),
+                    });
             }
 
             Core.JumpWait();

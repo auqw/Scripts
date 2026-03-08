@@ -98,7 +98,7 @@ public class DominiksFruitStandMerge
                         Core.HuntMonsterQuest(10054, new[] {
                         ("extinction","Lard",ClassType.Farm),
                         ("extinction","Gelatinous Slime",ClassType.Farm),
-                        ("extinction","SN.O.W.",ClassType.Solo),
+                        ("extinction","SN.O.W. Challenge",ClassType.Solo),
                     });
                         Bot.Wait.ForPickup(req.Name);
                     }
