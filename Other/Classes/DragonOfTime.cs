@@ -351,8 +351,7 @@ public class DragonOfTime
                 "Omnipotent Cells",
                 20,
                 false,
-                publicRoom: true,
-                EquipBestClassType: false
+                publicRoom: true
             );
 
             if (!Core.CheckInventory("Dragon's Plasma", 20))
@@ -370,7 +369,7 @@ public class DragonOfTime
                 }
                 else
                     Core.EquipClass(ClassType.Dodge);
-                Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false, EquipBestClassType: false);
+                Core.HuntMonster("underlair", "ArchFiend Dragonlord", "Dragon's Plasma", 20, false);
             }
             Core.JumpWait();
             Core.EquipClass(ClassType.Solo);
@@ -391,7 +390,7 @@ public class DragonOfTime
                 "Cryostatic Essence",
                 20,
                 false,
-                publicRoom: true, EquipBestClassType: false
+                publicRoom: true
 
             );
 
@@ -401,7 +400,7 @@ public class DragonOfTime
                 "Salvaged Chaos Dragon Biomass",
                 20,
                 false,
-                publicRoom: true, EquipBestClassType: false
+                publicRoom: true
             );
 
             Story.ChainQuest(7722);
@@ -425,7 +424,7 @@ public class DragonOfTime
                 "Akriloth's Flametongue",
                 100,
                 false,
-                publicRoom: true, EquipBestClassType: false
+                publicRoom: true
             );
 
             Core.HuntMonster(
@@ -434,7 +433,7 @@ public class DragonOfTime
                 "Immortal Embers",
                 50,
                 false,
-                publicRoom: true, EquipBestClassType: false
+                publicRoom: true
             );
 
             Core.HuntMonster(
@@ -443,7 +442,7 @@ public class DragonOfTime
                 "Ashes from the Void Realm",
                 50,
                 false,
-                publicRoom: true, EquipBestClassType: false
+                publicRoom: true
             );
 
             Story.ChainQuest(7723);
@@ -490,7 +489,7 @@ public class DragonOfTime
                 "Icewing's Laurel",
                 30,
                 false,
-                publicRoom: true, EquipBestClassType: false
+                publicRoom: true
             );
 
             Story.ChainQuest(7724);

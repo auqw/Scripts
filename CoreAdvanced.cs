@@ -1305,7 +1305,7 @@ public class CoreAdvanced
         int quant = 1,
         bool isTemp = true,
         bool log = true,
-        bool publicRoom = false, bool EquipBestClassType = true
+        bool publicRoom = false
     )
     {
         if (item != "" && Core.CheckInventory(item, quant))
@@ -1314,7 +1314,7 @@ public class CoreAdvanced
         Core.Join(map, cell, pad, publicRoom: publicRoom);
 
         // _RaceGear(monster);
-        Core.KillMonster(map, cell, pad, monster, item, quant, isTemp, log, publicRoom, EquipBestClassType: false);
+        Core.KillMonster(map, cell, pad, monster, item, quant, isTemp, log, publicRoom);
 
         GearStore(true);
     }
@@ -2400,8 +2400,8 @@ public class CoreAdvanced
         Bot.Handlers.RegisterOnce(1, Bot => Bot.ShowMessageBox(message, $"{caller} crashed"));
     }
 
-    
-/// <summary>
+
+    /// <summary>
     /// Determines what Enhancement Type the player has on their currently equipped class
     /// </summary>
     /// <returns>Returns the equipped Enhancement Type</returns>

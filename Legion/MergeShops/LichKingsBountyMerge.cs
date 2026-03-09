@@ -121,7 +121,7 @@ public class LichKingsBountyMerge
                         req.Name,
                         quant,
                         false,
-                        false, EquipBestClassType: false
+                        false
                     );
                     Core.EquipClass(ClassType.Solo);
                     break;

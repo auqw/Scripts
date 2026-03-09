@@ -48,8 +48,7 @@ public class CoreStory
         string MonsterName,
         bool GetReward = true,
         string Reward = "All",
-        bool AutoCompleteQuest = true,
-        bool EquipBestClassType = true
+        bool AutoCompleteQuest = true
     )
     {
         if (string.IsNullOrEmpty(MapName))
@@ -370,7 +369,7 @@ public class CoreStory
     /// or all items are obtained. Moves the player to the optimal cell, attacks available monsters, and picks up drops.
     /// Uses minimal logging for important events and avoids spamming logs during repeated attack cycles.
     /// </remarks>
-    private void _MonsterHuntBatch(string map, string monster, List<string> itemNames, int Qid, bool EquipBestClassType = true)
+    private void _MonsterHuntBatch(string map, string monster, List<string> itemNames, int Qid )
     {
         if (string.IsNullOrEmpty(map))
         {
@@ -495,8 +494,6 @@ public class CoreStory
             {
                 if (M == null || M.HP <= 0)
                     continue;
-                if (EquipBestClassType)
-                    Core.EquipBestClassForTargets(M);
                 while (!Bot.ShouldExit && (neededItems.Count > 0 || !QuestProgression(Qid)))
                 {
                     bool hasTarget = Bot.Player?.HasTarget ?? false;

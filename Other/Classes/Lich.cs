@@ -216,7 +216,7 @@ public class Lich
         Core.EquipClass(ClassType.Solo);
         Core.HuntMonster("DarkoviaForest", "Lich of the Stone", "Lich Of The Stone", isTemp: false);
         Core.EquipClass(ClassType.Dodge);
-        Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 113, isTemp: false, EquipBestClassType: false);
+        Core.HuntMonster("frozenlair", "Legion Lich Lord", "Sapphire Orb", 113, isTemp: false);
         Core.GetMapItem(14740, 1, "necroproject");
         Core.EnsureComplete(10338);
         Bot.Wait.ForPickup("Klaatu's Necronomicon");

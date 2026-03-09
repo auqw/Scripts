@@ -44,18 +44,18 @@ public class BattleUnder
         Story.PreLoad(this);
 
         Core.EquipClass(ClassType.Farm);
-        Story.KillQuest(374, "battleundera", "Skeletal Warrior", EquipBestClassType: false);
+        Story.KillQuest(374, "battleundera", "Skeletal Warrior");
         if (!Story.QuestProgression(375))
         {
             Core.EnsureAccept(375);
-            Core.HuntMonster("battleundera", "Skeletal Warrior", "Skeletal Claymore", 6, EquipBestClassType: false);
-            Core.HuntMonster("battleundera", "Skeletal Warrior", "Bony Chestplate", 3, EquipBestClassType: false);
+            Core.HuntMonster("battleundera", "Skeletal Warrior", "Skeletal Claymore", 6);
+            Core.HuntMonster("battleundera", "Skeletal Warrior", "Bony Chestplate", 3);
             Core.EnsureComplete(375);
         }
         Core.EquipClass(ClassType.Solo);
-        Story.KillQuest(376, "battleundera", "Bone Terror", EquipBestClassType: false);
+        Story.KillQuest(376, "battleundera", "Bone Terror");
         Core.EquipClass(ClassType.Farm);
-        Story.KillQuest(377, "battleundera", "Skeletal Warrior", EquipBestClassType: false);
+        Story.KillQuest(377, "battleundera", "Skeletal Warrior");
     }
 
     public void BattleUnderB()

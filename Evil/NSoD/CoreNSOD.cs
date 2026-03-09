@@ -359,8 +359,7 @@ public class CoreNSOD
                 quant,
                 isTemp,
                 log,
-                publicRoom,
-                EquipBestClassType: false
+                publicRoom
             );
     }
 
@@ -610,7 +609,7 @@ public class CoreNSOD
             "Primarch's Hilt",
             quant,
             false,
-            publicRoom: true, EquipBestClassType: false
+            publicRoom: true
         );
         Bot.Wait.ForPickup("Primarch's Hilt");
     }

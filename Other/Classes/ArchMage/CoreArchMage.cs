@@ -698,14 +698,14 @@ public class CoreArchMage
                         "Right",
                         "Nulgath",
                         item,
-                        isTemp: false, EquipBestClassType: false
+                        isTemp: false
                     );
                     Adv.GearStore(true, EnhAfter: true);
                     break;
 
                 case "The Divine Will":
                     Core.EquipClass(ClassType.Dodge);
-                    Item("celestialpast", "Azalith", item, quant, EquipBestClassType: false);
+                    Item("celestialpast", "Azalith", item, quant);
                     break;
 
                 case "Insatiable Hunger":

@@ -90,34 +90,34 @@ public class CelestialOfMysteries
         if (!Core.CheckInventory("Duo's Dinner", 35))
         {
             Core.UseBossClass();
-            Core.HuntMonster("infernalarena", "Deadly Duo", "Duo's Dinner", 35, false, EquipBestClassType: false);
+            Core.HuntMonster("infernalarena", "Deadly Duo", "Duo's Dinner", 35, false);
         }
         // Cervus Dente
         if (!Core.CheckInventory("Cervus Dente", 35))
         {
             Core.UseBossClass();
-            Core.HuntMonster("infernalarena", "Cervus Malus", "Cervus Dente", 35, false, EquipBestClassType: false);
+            Core.HuntMonster("infernalarena", "Cervus Malus", "Cervus Dente", 35, false);
         }
         // Infernal Incantation
         if (!Core.CheckInventory("Infernal Incantation", 35))
         {
             Core.UseBossClass("Dragon of Time");
             Adv.EnhanceEquipped(EnhancementType.Healer, wSpecial: WeaponSpecial.Elysium);
-            Core.HuntMonster("infernalarena", "Key of Sholemoh", "Infernal Incantation", 35, false, EquipBestClassType: false);
+            Core.HuntMonster("infernalarena", "Key of Sholemoh", "Infernal Incantation", 35, false);
         }
         // Scythe Shard
         if (!Core.CheckInventory("Scythe Shard", 35))
         {
             Adv.EnhanceEquipped(EnhancementType.Lucky, wSpecial: WeaponSpecial.Health_Vamp);
             Core.UseDodgeClass("Lord Of Order");
-            Core.HuntMonster("infernalarena", "Azalith's Scythe", "Scythe Shard", 35, false, EquipBestClassType: false);
+            Core.HuntMonster("infernalarena", "Azalith's Scythe", "Scythe Shard", 35, false);
         }
         // Champion's Seal
         if (!Core.CheckInventory("Champion's Seal", 20))
         {
             Core.UseBossClass(Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord");
             Adv.EnhanceEquipped(EnhancementType.Lucky, cSpecial: CapeSpecial.Penitence, hSpecial: HelmSpecial.Vim, wSpecial: WeaponSpecial.Valiance);
-            Core.HuntMonster("infernalarena", "Na'al", "Champion's Seal", 20, false, false, EquipBestClassType: false);
+            Core.HuntMonster("infernalarena", "Na'al", "Champion's Seal", 20, false, false);
         }
         // Infernal Down
         ICFM.InfernalDown(50);
@@ -126,7 +126,7 @@ public class CelestialOfMysteries
         {
             Core.Logger("Farming Azalith for The Divine Will. Azalith is tough, consider using an army to speed it up.");
             Core.EquipClass(ClassType.Dodge);
-            Core.HuntMonster("celestialpast", "Azalith", "The Divine Will", 1, false, EquipBestClassType: false);
+            Core.HuntMonster("celestialpast", "Azalith", "The Divine Will", 1, false);
         }
         Adv.GearStore(true, true);
 

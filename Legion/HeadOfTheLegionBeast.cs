@@ -122,7 +122,7 @@ public class HeadoftheLegionBeast
             15,
             isTemp: false,
             publicRoom: true,
-            log: false, EquipBestClassType: false
+            log: false
         );
 
         Adv.BuyItem("sevencircleswar", 1984, HeadName);

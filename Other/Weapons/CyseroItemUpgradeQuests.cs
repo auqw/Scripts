@@ -249,7 +249,7 @@ public class CyseroItemUpgrade
             }
             else
                 Core.EquipClass(ClassType.Dodge);
-            Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false, EquipBestClassType: false);
+            Core.HuntMonster("underlair", "ArchFiend DragonLord", "Void Scale", 13, isTemp: false);
 
             Core.EnsureComplete(7065);
             Bot.Wait.ForPickup("Burning Phoenix Blade");

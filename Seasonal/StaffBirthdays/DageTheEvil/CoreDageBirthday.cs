@@ -85,7 +85,7 @@ public class CoreDageBirthday
             Core.KillMonster("darkpath", "r8a", "Left", "Void Wyrm", "Key to the Vault");
             Story.MapItemQuest(6225, "darkpath", 5666);
             Bot.Wait.ForQuestComplete(6225);
-            Bot.Wait.ForTrue(() => Bot.Player.Cell.Contains("Cut"), 20);
+            Bot.Wait.ForTrue(() => Bot.Player.Cell.ToLower().Contains("cut"), 20);
             Core.JumpWait();
         }
 

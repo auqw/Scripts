@@ -2499,7 +2499,7 @@ case ""Sapphire Orb"":
 case ""Necrotic Orb"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Dodge);
-                    Core.HuntMonster(""frozenlair"", ""Lich Lord"", req.Name, quant, false, false, EquipBestClassType: false);
+                    Core.HuntMonster(""frozenlair"", ""Lich Lord"", req.Name, quant, false, false);
                     break;
 
     "
@@ -2809,7 +2809,7 @@ case ""Beast Soul"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Dodge);
                     Adv.SmartEnhance(Core.DodgeClass);
-                    Core.HuntMonster(""sevencircleswar"", ""The Beast"", req.Name, quant, isTemp: false, publicRoom: true, EquipBestClassType: false);
+                    Core.HuntMonster(""sevencircleswar"", ""The Beast"", req.Name, quant, isTemp: false, publicRoom: true);
                     break;
     "
         },
@@ -3032,7 +3032,7 @@ case ""Primarch's Trophy"":
                     Core.EquipClass(ClassType.Dodge);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonsterQuest(10052, ""bosschallenge"", ""Colossal Primarch"", EquipBestClassType: false);
+                        Core.HuntMonsterQuest(10052, ""bosschallenge"", ""Colossal Primarch"");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -4240,7 +4240,7 @@ case ""Abyssal Lore Scrap"":
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         //Room for Improvement 8475
-                        Core.KillMonster(""Tercessuinotlim"", ""Boss2"", ""Right"", ""Nulgath"", ""Archfiend Analysis"", EquipBestClassType: false);
+                        Core.KillMonster(""Tercessuinotlim"", ""Boss2"", ""Right"", ""Nulgath"", ""Archfiend Analysis"");
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
@@ -5121,7 +5121,7 @@ case ""Infernalis Penna"":
 case ""Infernalis Oculus"":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Dodge);
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant, EquipBestClassType: false))
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.HuntMonsterQuest(9888,
 (""champazalith"", ""Azalith"", ClassType.Solo)

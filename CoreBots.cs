@@ -4415,7 +4415,7 @@ public class CoreBots
     /// <param name="isTemp">Whether the item is temporary</param>
     /// <param name="log">Whether it will log that it is killing the monster</param>
     /// <param name="publicRoom"></param>
-    public void KillMonster(string map, string cell, string pad, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false, bool EquipBestClassType = true)
+    public void KillMonster(string map, string cell, string pad, string monster, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
         if (
             item != null
@@ -4459,9 +4459,6 @@ public class CoreBots
             Logger($"⚠️ Monster {monster} not found in cell {cell}, pad {pad} in /{map}");
             return;
         }
-
-        if (EquipBestClassType)
-            EquipBestClassForTargets(targetMonster);
 
         if (item == null)
         {
@@ -4619,8 +4616,7 @@ public class CoreBots
         int quant = 1,
         bool isTemp = true,
         bool log = true,
-        bool publicRoom = false,
-        bool EquipBestClassType = true
+        bool publicRoom = false
     )
     {
         pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
@@ -4659,8 +4655,7 @@ public class CoreBots
             return;
         }
 
-        if (EquipBestClassType)
-            EquipBestClassForTargets(targetMonsters);
+
 
         // Main kill loop
         while (!Bot.ShouldExit && (item == null || !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))))
@@ -4722,8 +4717,7 @@ public class CoreBots
         int quant = 1,
         bool isTemp = true,
         bool log = true,
-        bool publicRoom = false,
-        bool EquipBestClassType = true
+        bool publicRoom = false
     )
     {
         pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
@@ -4769,8 +4763,7 @@ public class CoreBots
             return;
         }
 
-        if (EquipBestClassType)
-            EquipBestClassForTargets(targetMonsters);
+
 
         // Kill until item obtained (or once if no item)
         while (!Bot.ShouldExit && (ItemID == 0 || !(isTemp ? Bot.TempInv.Contains(ItemID, quant) : CheckInventory(ItemID, quant))))
@@ -4913,8 +4906,7 @@ public class CoreBots
         int quant = 1,
         bool isTemp = true,
         bool log = true,
-        bool publicRoom = false,
-        bool EquipBestClassType = true
+        bool publicRoom = false
     )
     {
         if (
@@ -4950,8 +4942,6 @@ public class CoreBots
         else
             Bot.Options.AggroMonsters = false;
 
-        if (EquipBestClassType)
-            EquipBestClassForTargets(targetMonster);
 
         if (item == null)
         {
@@ -5052,8 +5042,7 @@ public class CoreBots
         bool isTemp = true,
         bool log = true,
         bool publicRoom = false,
-        string pad = "Left",
-        bool EquipBestClassType = true
+        string pad = "Left"
     )
     {
         // Join map if needed
@@ -5086,9 +5075,6 @@ public class CoreBots
         {
             Bot.Options.AggroMonsters = false;
         }
-
-        if (EquipBestClassType)
-            EquipBestClassForTargets(targets);
 
         // Main attack loop
         while (!Bot.ShouldExit && (item == null || !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))))
@@ -5244,8 +5230,7 @@ public class CoreBots
     public void HuntMonsterQuest(
         int questId,
         string? mapName = null,
-        string? monsterName = null,
-        bool log = false, bool EquipBestClassType = true
+        string? monsterName = null
     )
     {
         Quest? quest = InitializeWithRetries(() => Bot.Quests.EnsureLoad(questId));
@@ -5287,9 +5272,7 @@ public class CoreBots
                 huntMonsterName,
                 requirement.Name ?? "",
                 requirement.Quantity,
-                requirement.Temp,
-                log,
-                EquipBestClassType
+                requirement.Temp
             ); // ⚔️🐲💎
         }
 

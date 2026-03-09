@@ -176,7 +176,7 @@ public class SevenCirclesWarMerge
                         req.Name,
                         quant,
                         isTemp: false,
-                        publicRoom: true, EquipBestClassType: false
+                        publicRoom: true
                     );
                     break;
 

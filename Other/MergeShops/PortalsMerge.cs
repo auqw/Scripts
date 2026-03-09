@@ -235,7 +235,7 @@ public class PortalsMerge
                         req.Name,
                         quant,
                         isTemp: false,
-                        publicRoom: true, EquipBestClassType: false
+                        publicRoom: true
                     );
                     break;
 

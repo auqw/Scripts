@@ -121,7 +121,7 @@ public class FiendishLoreMasterMerge
                             "Boss2",
                             "Right",
                             "Nulgath",
-                            "Archfiend Analysis", EquipBestClassType: false
+                            "Archfiend Analysis"
                         );
                         Bot.Wait.ForPickup(req.Name);
                     }

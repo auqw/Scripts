@@ -894,7 +894,7 @@ public class CoreDailies
                 "Warlord Icewing",
                 "Glacial Pinion",
                 isTemp: false,
-                publicRoom: true, EquipBestClassType: false
+                publicRoom: true
             );
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("hydrachallenge", "Hydra Head 90", "Hydra Eyeball", 3, isTemp: false);
@@ -904,7 +904,7 @@ public class CoreDailies
                 "Flibbitiestgibbet",
                 "Flibbitigiblets",
                 isTemp: false,
-                publicRoom: true, EquipBestClassType: false
+                publicRoom: true
             );
             Core.EnsureComplete(8653);
             Bot.Wait.ForPickup("Void Aura");
@@ -1201,7 +1201,7 @@ public class CoreDailies
         if (!CheckDailyv2(2677, true, true, "Enchanted Dark Blood"))
             return;
         Core.EquipClass(ClassType.Farm);
-        Core.HuntMonsterQuest(2677, "falguard", "Chaonslaught Caster", true);
+        Core.HuntMonsterQuest(2677, "falguard", "Chaonslaught Caster");
     }
 
 #nullable enable

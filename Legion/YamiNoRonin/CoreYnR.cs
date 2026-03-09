@@ -203,7 +203,7 @@ public class CoreYnR
                 "Sapphire Orb",
                 26,
                 false,
-                publicRoom: true, EquipBestClassType: false
+                publicRoom: true
             );
             Core.EquipClass(ClassType.Solo);
             Core.KillMonster(
@@ -235,7 +235,7 @@ public class CoreYnR
             Core.Logger("Using Legion variant for the Blademaster Sword Scroll");
             Core.EnsureAccept(7443);
             Core.EquipClass(ClassType.Dodge);
-            Core.KillMonster("frozenlair", "r3", "Left", "Legion Lich Lord", "Sapphire Orb", 13, false, publicRoom: true, EquipBestClassType: false);
+            Core.KillMonster("frozenlair", "r3", "Left", "Legion Lich Lord", "Sapphire Orb", 13, false, publicRoom: true);
             Legion.FarmLegionToken(17500);
             Core.EquipClass(ClassType.Solo);
             Core.KillMonster("Judgement", "r10a", "Spawn", "Ultra Aeacus", "Aeacus Empowered", 50, false, publicRoom: true);

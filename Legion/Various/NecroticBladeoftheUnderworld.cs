@@ -141,7 +141,7 @@ public class NecroticBladeoftheUnderworld
             "Beast Soul",
             25,
             isTemp: false,
-            publicRoom: false, EquipBestClassType: false
+            publicRoom: false
         );
 
         //Soul Sand

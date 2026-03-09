@@ -157,7 +157,7 @@ public class CoreDarkon
                 "Nulgath's mask",
                 1,
                 false,
-                publicRoom: true, EquipBestClassType: false
+                publicRoom: true 
             );
             Bot.Wait.ForPickup("Darkon's Receipt");
         }

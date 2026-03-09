@@ -239,7 +239,7 @@ public class FrostSpiritReaver
                 "Necrotic Orb",
                 2,
                 isTemp: false,
-                log: false, EquipBestClassType: false
+                log: false
             );
 
             Core.EquipClass(ClassType.Farm);
