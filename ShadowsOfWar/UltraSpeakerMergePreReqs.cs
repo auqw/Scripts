@@ -202,6 +202,11 @@ public class UltraSpeakerMergePreReqs
         CoreBots.Instance.SkipOptions,
     };
 
+
+    int AcquiescenceCount;
+    int ElementalCoreCount;
+    int InsigniasCount;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.BankingBlackList.AddRange(
@@ -240,9 +245,6 @@ public class UltraSpeakerMergePreReqs
 
     public void GetPrereqs()
     {
-        int AcquiescenceCount = 0;
-        int ElementalCoreCount = 0;
-        int InsigniasCount = 0;
 
         SoW.CompleteCoreSoW();
 
@@ -296,9 +298,8 @@ public class UltraSpeakerMergePreReqs
 
         #endregion
 
-        SOWM.Acquiescence(AcquiescenceCount);
-        SOWM.ElementalCore(ElementalCoreCount);
-
+        // Goddess Of War Prestige Cloak
+        // Requires `Goddess Of War Blades` + `Goddess of War Cloak`
         Core.BuyItem("ultraspeaker", 2248, 72921, shopItemID: 11443);
 
         // ========================= LOCAL FUNCTIONS =========================
@@ -329,6 +330,7 @@ public class UltraSpeakerMergePreReqs
                         BLOD.BlindingAura(1);
                         InsigniasCount += 7;
                         AcquiescenceCount += 10;
+                        Core.Logger($"New totals: InsigniasCount: {InsigniasCount}, AcquiescenceCount: {AcquiescenceCount}, ElementalCoreCount: {ElementalCoreCount}", "Update Counts");
                         break;
 
                     case "War Blade of Power":
@@ -339,6 +341,7 @@ public class UltraSpeakerMergePreReqs
                         DSG.EnchantedScaleandClaw(250, 0);
                         InsigniasCount += 7;
                         AcquiescenceCount += 10;
+                        Core.Logger($"New totals: InsigniasCount: {InsigniasCount}, AcquiescenceCount: {AcquiescenceCount}, ElementalCoreCount: {ElementalCoreCount}", "Update Counts");
                         break;
 
                     case "War Blade of Speed":
@@ -350,6 +353,7 @@ public class UltraSpeakerMergePreReqs
 
                         InsigniasCount += 7;
                         AcquiescenceCount += 10;
+                        Core.Logger($"New totals: InsigniasCount: {InsigniasCount}, AcquiescenceCount: {AcquiescenceCount}, ElementalCoreCount: {ElementalCoreCount}", "Update Counts");
                         break;
 
                     case "War Blade of Strength":
@@ -371,6 +375,7 @@ public class UltraSpeakerMergePreReqs
                         InsigniasCount += 7;
                         AcquiescenceCount += 10;
                         ElementalCoreCount += 25;
+                        Core.Logger($"New totals: InsigniasCount: {InsigniasCount}, AcquiescenceCount: {AcquiescenceCount}, ElementalCoreCount: {ElementalCoreCount}", "Update Counts");
                         break;
 
                     case "War Blade of Wisdom":
@@ -388,6 +393,7 @@ public class UltraSpeakerMergePreReqs
 
                         InsigniasCount += 7;
                         AcquiescenceCount += 10;
+                        Core.Logger($"New totals: InsigniasCount: {InsigniasCount}, AcquiescenceCount: {AcquiescenceCount}, ElementalCoreCount: {ElementalCoreCount}", "Update Counts");
                         break;
                 }
             }
@@ -400,6 +406,7 @@ public class UltraSpeakerMergePreReqs
 
             AcquiescenceCount += 10;
             InsigniasCount += 10;
+            Core.Logger($"New totals: InsigniasCount: {InsigniasCount}, AcquiescenceCount: {AcquiescenceCount}, ElementalCoreCount: {ElementalCoreCount}", "Update Counts");
         }
 
         void GoW()
@@ -447,8 +454,17 @@ public class UltraSpeakerMergePreReqs
             DFO.DragonFableOriginsAll();
             HDK.ADKFalls(true);
 
-            GoddessOfWarBlades();
             GoddessOfWarCloak();
+            GoddessOfWarBlades();
+            Core.Logger($"Final totals: InsigniasCount: {InsigniasCount}, AcquiescenceCount: {AcquiescenceCount}, ElementalCoreCount: {ElementalCoreCount}", "Update Counts");
+
+
+            SOWM.Acquiescence(AcquiescenceCount);
+            SOWM.ElementalCore(ElementalCoreCount);
+
+            // Reset counts
+            AcquiescenceCount = 0;
+            ElementalCoreCount = 0;
 
             if (Core.CheckInventory(new[] { "Goddess Of War Blades", "Goddess of War Cloak" }))
                 Core.BuyItem("ultraspeaker", 2248, 72921, shopItemID: 11443);
