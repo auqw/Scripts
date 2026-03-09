@@ -87,7 +87,7 @@ public class ImageOfNulgath
 
             // Spoils of War
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonsterQuest(8582, "darkwarnation", "War", true);
+            Core.HuntMonsterQuest(8582, ("darkwarnation", "War", ClassType.Solo));
 
             // Doomed Extract
             TD.Storyline();

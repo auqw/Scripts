@@ -57,7 +57,7 @@ public class UltraMoglinPets
         Core.AddDrop(Core.QuestRewards(10199));
 
         // Ultra Twilly's Gift Quest [10199]
-        Core.HuntMonsterQuest(10199, "farm", "Treeant", true);
+        Core.HuntMonsterQuest(10199, ("farm", "Treeant", ClassType.Farm));
     }
 
     public void ZorbakPet()
@@ -71,6 +71,6 @@ public class UltraMoglinPets
         Core.AddDrop(Core.QuestRewards(10201));
 
         // Ultra Zorbak's Gift Quest [10201]
-        Core.HuntMonsterQuest(10201, "graveyard", "Skeletal Warrior", true);
+        Core.HuntMonsterQuest(10201, ("graveyard", "Skeletal Warrior", ClassType.Farm));
     }
 }

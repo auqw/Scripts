@@ -113,7 +113,7 @@ public class LibrarysLostandFoundMerge
                     Core.AddDrop(req.ID);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonsterQuest(10621, "lethe", "Oizys", false);
+                        Core.HuntMonsterQuest(10621, ("lethe", "Oizys", ClassType.Solo));
                         Bot.Wait.ForPickup(req.Name);
                     }
                     break;
@@ -182,7 +182,7 @@ public class LibrarysLostandFoundMerge
             Glowstone(1);
         while (!Bot.ShouldExit && !Core.CheckInventory("Unholy Incantation", quant))
         {
-            Core.HuntMonsterQuest(10622, "lethe", "Mourner", false);
+            Core.HuntMonsterQuest(10622, ("lethe", "Mourner", ClassType.Solo));
             Bot.Wait.ForPickup("Unholy Incantation");
         }
     }
