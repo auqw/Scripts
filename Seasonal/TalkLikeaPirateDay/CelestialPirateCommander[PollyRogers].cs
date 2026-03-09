@@ -95,8 +95,7 @@ public class CelestialPirateCommander
                 "Sapphire Orb",
                 5,
                 false,
-                publicRoom: true,
-                EquipBestClassType: false
+                publicRoom: true
             );
 
             Core.EquipClass(ClassType.Solo);
@@ -107,8 +106,7 @@ public class CelestialPirateCommander
                 "Rumors of the Celestial Commander",
                 5,
                 false,
-                publicRoom: true,
-                EquipBestClassType: false
+                publicRoom: true
             );
 
             Core.HuntMonster(
@@ -116,8 +114,7 @@ public class CelestialPirateCommander
                 "Animus of Ice",
                 "Starlit Journal Page 1 Scraps",
                 10,
-                false,
-                EquipBestClassType: false
+                false
             );
 
             Core.HuntMonster(
@@ -126,8 +123,7 @@ public class CelestialPirateCommander
                 "Starlit Journal Page 2 Scraps",
                 10,
                 false,
-                publicRoom: true,
-                EquipBestClassType: false
+                publicRoom: true
             );
 
             Core.HuntMonster(
@@ -136,8 +132,7 @@ public class CelestialPirateCommander
                 "Starlit Journal Page 3 Scraps",
                 10,
                 false,
-                publicRoom: true,
-                EquipBestClassType: false
+                publicRoom: true
             );
 
             Core.HuntMonster(
@@ -146,8 +141,7 @@ public class CelestialPirateCommander
                 "Starlit Journal Page 4 Scraps",
                 10,
                 false,
-                publicRoom: true,
-                EquipBestClassType: false
+                publicRoom: true
             );
 
             Core.HuntMonster(
@@ -156,8 +150,7 @@ public class CelestialPirateCommander
                 "Map of the Celestial Seas",
                 1,
                 false,
-                publicRoom: true,
-                EquipBestClassType: false
+                publicRoom: true
             );
 
             //why the fuck was the class buffed!?
@@ -180,8 +173,7 @@ public class CelestialPirateCommander
                 "Coffer of the Stars",
                 1,
                 false,
-                publicRoom: true,
-                EquipBestClassType: false
+                publicRoom: true
             );
 
             Core.EquipClass(ClassType.Solo);
