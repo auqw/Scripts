@@ -875,6 +875,8 @@ public class CoreUltra
         // Wait for all members to register
         const int staleThreshold = 600;
         int lastCount = -1;
+        Stopwatch registerTimer = Stopwatch.StartNew();
+        const int registerTimeoutMs = 120000;
 
         while (!Bot!.ShouldExit)
         {
@@ -902,6 +904,18 @@ public class CoreUltra
             if (validCount >= armySize)
                 break;
 
+            if (registerTimer.ElapsedMilliseconds >= registerTimeoutMs)
+            {
+                C.Logger(
+                    $"[EquipClassSync] Registration timeout ({validCount}/{armySize}). Stopping all clients.",
+                    "EquipClassSync",
+                    true,
+                    true
+                );
+                Bot.StopSync();
+                return string.Empty;
+            }
+
             // Re-poke to keep entry fresh
             UpdateEntry(syncFile, username, payload);
             Bot?.Sleep(500);
@@ -917,6 +931,8 @@ public class CoreUltra
         Bot?.Log($"[EquipClassSync] {username} marked READY, waiting for all...");
 
         // Wait for all clients to be READY (ensures no more class-list writes)
+        Stopwatch readyTimer = Stopwatch.StartNew();
+        const int readyTimeoutMs = 120000;
         while (!Bot!.ShouldExit)
         {
             string[] lines = ReadLines(syncFile);
@@ -941,6 +957,18 @@ public class CoreUltra
             {
                 Bot?.Log($"[EquipClassSync] All {readyCount} clients READY. Reading final state...");
                 break;
+            }
+
+            if (readyTimer.ElapsedMilliseconds >= readyTimeoutMs)
+            {
+                C.Logger(
+                    $"[EquipClassSync] READY timeout ({readyCount}/{armySize}). Stopping all clients.",
+                    "EquipClassSync",
+                    true,
+                    true
+                );
+                Bot.StopSync();
+                return string.Empty;
             }
 
             Bot?.Sleep(300);
@@ -986,8 +1014,7 @@ public class CoreUltra
 
         Bot?.Log($"[EquipClassSync] {playerClasses.Count} player(s) registered. Assigning classes...");
 
-        // Pre-count how many times each class appears across all slot definitions
-        // This determines the max allowed duplicates for each class
+        // Pre-count how many times each class appears across all slot definitions.
         Dictionary<string, int> classMaxCount = new(StringComparer.OrdinalIgnoreCase);
         if (allowDuplicates)
         {
@@ -1002,28 +1029,22 @@ public class CoreUltra
             }
         }
 
-        // Deterministic greedy assignment
-        // Alpha-sort players so every client computes the identical result.
+        // Alpha-sort players so every client computes the same assignment.
         List<string> sortedPlayers = playerClasses
             .Keys.OrderBy(p => p, StringComparer.OrdinalIgnoreCase)
             .ToList();
 
         Dictionary<string, string> assignments = new(StringComparer.OrdinalIgnoreCase);
-        HashSet<string> assignedPlayers = new(StringComparer.OrdinalIgnoreCase);
+        bool[] usedPlayers = new bool[sortedPlayers.Count];
         Dictionary<string, int> classUsedCount = new(StringComparer.OrdinalIgnoreCase);
-        HashSet<int> filledSlots = new();
 
-        for (int s = 0; s < classSlots.Length; s++)
+        bool CanAssignAllSlots(int slotIndex)
         {
-            if (filledSlots.Contains(s))
-                continue;
+            if (slotIndex >= classSlots.Length)
+                return true;
 
-            bool filled = false;
-
-            // Try each accepted class in preference order
-            foreach (string acceptedClass in classSlots[s])
+            foreach (string acceptedClass in classSlots[slotIndex])
             {
-                // Check if this class can still be used
                 int used = classUsedCount.GetValueOrDefault(acceptedClass, 0);
                 if (allowDuplicates)
                 {
@@ -1031,60 +1052,66 @@ public class CoreUltra
                     if (used >= max)
                         continue;
                 }
-                else
-                {
-                    // No duplicates: each class used at most once
-                    if (used >= 1)
-                        continue;
-                }
-
-                List<string> candidates = sortedPlayers
-                    .Where(p =>
-                        !assignedPlayers.Contains(p)
-                        && playerClasses[p].Any(c =>
-                            c.Equals(acceptedClass, StringComparison.OrdinalIgnoreCase)
-                        )
-                    )
-                    .ToList();
-
-                if (candidates.Count == 0)
+                else if (used >= 1)
                     continue;
 
-                // Most-constrained candidate first (fewest open slots it can fill),
-                // tiebreak alphabetical.
-                string best = candidates
-                    .OrderBy(p =>
-                    {
-                        int canFill = 0;
-                        for (int s2 = 0; s2 < classSlots.Length; s2++)
-                        {
-                            if (filledSlots.Contains(s2))
-                                continue;
-                            if (
-                                classSlots[s2].Any(c =>
-                                    playerClasses[p].Any(pc =>
-                                        pc.Equals(c, StringComparison.OrdinalIgnoreCase)
-                                    )
-                                )
-                            )
-                                canFill++;
-                        }
-                        return canFill;
-                    })
-                    .ThenBy(p => p, StringComparer.OrdinalIgnoreCase)
-                    .First();
+                for (int p = 0; p < sortedPlayers.Count; p++)
+                {
+                    if (usedPlayers[p])
+                        continue;
 
-                assignments[best] = acceptedClass;
-                assignedPlayers.Add(best);
-                classUsedCount[acceptedClass] = used + 1;
-                filledSlots.Add(s);
-                Bot?.Log($"[EquipClassSync] Slot {s} > {best} ({acceptedClass})");
-                filled = true;
-                break;
+                    string player = sortedPlayers[p];
+                    if (!playerClasses[player].Any(c => c.Equals(acceptedClass, StringComparison.OrdinalIgnoreCase)))
+                        continue;
+
+                    usedPlayers[p] = true;
+                    classUsedCount[acceptedClass] = used + 1;
+                    assignments[player] = acceptedClass;
+
+                    if (CanAssignAllSlots(slotIndex + 1))
+                        return true;
+
+                    assignments.Remove(player);
+                    if (used == 0)
+                        classUsedCount.Remove(acceptedClass);
+                    else
+                        classUsedCount[acceptedClass] = used;
+                    usedPlayers[p] = false;
+                }
             }
 
-            if (!filled)
-                Bot?.Log($"[EquipClassSync] WARNING: No candidate for slot {s} ({string.Join("/", classSlots[s])})!");
+            return false;
+        }
+
+        if (!CanAssignAllSlots(0))
+        {
+            string slotSummary = string.Join(
+                " | ",
+                classSlots.Select((slot, idx) => $"S{idx}:{string.Join("/", slot)}")
+            );
+            C.Logger(
+                $"[EquipClassSync] Composition impossible for current group. Needed slots: {slotSummary}. Stopping all clients.",
+                "EquipClassSync",
+                true,
+                true
+            );
+            Bot?.StopSync();
+            return string.Empty;
+        }
+
+        HashSet<string> loggedPlayers = new(StringComparer.OrdinalIgnoreCase);
+        for (int s = 0; s < classSlots.Length; s++)
+        {
+            string? assignedPlayer = sortedPlayers.FirstOrDefault(p =>
+                !loggedPlayers.Contains(p)
+                && assignments.TryGetValue(p, out string? cls)
+                && classSlots[s].Any(x => x.Equals(cls, StringComparison.OrdinalIgnoreCase))
+            );
+            if (!string.IsNullOrEmpty(assignedPlayer))
+            {
+                loggedPlayers.Add(assignedPlayer);
+                Bot?.Log($"[EquipClassSync] Slot {s} > {assignedPlayer} ({assignments[assignedPlayer]})");
+            }
         }
 
         // Find this client's assignment
@@ -1160,14 +1187,30 @@ public class CoreUltra
         C.Unbank(scroll);
 
         int qty = Bot.Inventory.GetQuantity(scroll);
+
         if (qty < minStock)
         {
-            Core.BuyItem(shopMap, shopId, scroll, restockTo);
+            C.Logger($"LifeSteal: restocking ({qty}/{minStock})...");
+            bool buySuccess = Core.BuyItem(
+                itemKey: scroll,
+                shopId: shopId,
+                map: shopMap,
+                quantity: restockTo
+            );
             qty = Bot.Inventory.GetQuantity(scroll);
+            if (!buySuccess && qty < minStock)
+                C.Logger("LifeSteal: restock failed.");
         }
 
         if (qty > 0)
+        {
             Core.EquipConsumable(scroll);
+            C.Logger($"LifeSteal: equipped ({qty}).");
+        }
+        else
+        {
+            C.Logger("LifeSteal: unavailable.");
+        }
     }
 
     public void UseTaunt()
@@ -1705,6 +1748,36 @@ public class CoreUltra
             }
             return;
         }
+    }
+
+    public bool ShouldRunQuest(int questId, string context = "boss", bool log = true)
+    {
+        if (questId <= 0)
+            return false;
+
+        if (Bot.Quests.IsDailyComplete(questId))
+        {
+            if (log)
+                C.Logger($"[{context}] quest {questId} is already complete today.");
+            return false;
+        }
+
+        try
+        {
+            if (Core.IsAvailable(questId))
+                return true;
+        }
+        catch (Exception ex)
+        {
+            if (log)
+                C.Logger($"[{context}] IsAvailable check failed for quest {questId}: {ex.Message}");
+        }
+
+        bool completed = C.isCompletedBefore(questId, log: false);
+        if (log)
+            C.Logger($"[{context}] Quest {questId} available check fell back to completion check => need={(!completed).ToString().ToLowerInvariant()}.");
+
+        return !completed;
     }
 
     public enum CheckType

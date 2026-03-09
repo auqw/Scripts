@@ -2429,7 +2429,7 @@ public class CoreAdvanced
         if (EquippedCape == null)
             return CapeSpecial.None;
         int patternId = EquippedCape.EnhancementPatternID;
-        if (Enum.IsDefined(typeof(EnhancementType), patternId))
+        if (!Enum.IsDefined(typeof(CapeSpecial), patternId))
             return CapeSpecial.None;
         return (CapeSpecial)patternId;
     }
@@ -2447,7 +2447,7 @@ public class CoreAdvanced
             return HelmSpecial.None;
         int patternId = EquippedHelm.EnhancementPatternID;
 
-        if (Enum.IsDefined(typeof(EnhancementType), patternId))
+        if (!Enum.IsDefined(typeof(HelmSpecial), patternId))
             return HelmSpecial.None;
         return (HelmSpecial)patternId;
     }
@@ -2465,7 +2465,7 @@ public class CoreAdvanced
             return WeaponSpecial.None;
         int patternId = EquippedWeapon.EnhancementPatternID;
 
-        if (Enum.IsDefined(typeof(EnhancementType), patternId))
+        if (!Enum.IsDefined(typeof(WeaponSpecial), patternId))
             return WeaponSpecial.None;
         return (WeaponSpecial)patternId;
     }
@@ -2829,7 +2829,19 @@ public class CoreAdvanced
             bool specialOnCape = item.Category == ItemCategory.Cape && cSpecial != CapeSpecial.None;
             bool specialOnHelm = item.Category == ItemCategory.Helm && hSpecial != HelmSpecial.None;
             bool specialOnWeapon = item.ItemGroup == "Weapon" && wSpecial.ToString() != "None";
-            string mapName = map ?? Bot.Map?.Name ?? "whitemap";
+            string sourceMap = map;
+            string mapName =
+                string.IsNullOrWhiteSpace(map)
+                    ? string.IsNullOrWhiteSpace(Bot.Map?.Name)
+                        ? "whitemap"
+                        : Bot.Map.Name
+                    : map;
+
+            if (string.IsNullOrWhiteSpace(sourceMap))
+                Core.Logger(
+                    $"Enhance: map input was blank for {item.Name}[{item.ID}], using fallback map '{mapName}'."
+                );
+
             List<ShopItem> shopItems = Core.GetShopItems(mapName, shopID);
 
             // Shopdata complete check

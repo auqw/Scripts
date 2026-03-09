@@ -6,7 +6,6 @@ tags: Ultra
 
 //cs_include Scripts/Ultras/CoreEngine.cs
 //cs_include Scripts/Ultras/CoreUltra.cs
-//cs_include Scripts/CoreGearUtils.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
@@ -72,6 +71,10 @@ public class UltraNulgath
     string a, b, c, d;
     string overrideA, overrideB, overrideC, overrideD;
     bool UseLifeSteal;
+    bool EquipBestGear;
+    bool DoEnhancements;
+    bool RestoreGear;
+    NulgathComp ActiveComp = NulgathComp.Fast;
 
     public List<IOption> Main = new()
     {
@@ -94,6 +97,7 @@ public class UltraNulgath
     {
         new Option<bool>("EquipBestGear", "Equip Best Gear", "Equip best gear for encounter", true),
         new Option<bool>("DoEnh", "Do Enhancements", "Auto-enhance for the currently equipped class", true),
+        new Option<bool>("RestoreGear", "Restore Gear", "Restore original gear after the script finishes", false),
         new Option<bool>("UseLifeSteal", "Use LifeSteal", "Non-taunters equip/restock/use Scroll of Life Steal.", true),
     };
 
@@ -115,20 +119,22 @@ public class UltraNulgath
         if (Bot.Config != null && !Bot.Config.Get<bool>("Main", "SkipOption"))
             Bot.Config.Configure();
 
-        NulgathComp comp = Bot.Config!.Get<NulgathComp>("Main", "DoEquipClasses");
-        overrideA = (Bot.Config.Get<string>("ClassOverrides", "a") ?? string.Empty).Trim();
-        overrideB = (Bot.Config.Get<string>("ClassOverrides", "b") ?? string.Empty).Trim();
-        overrideC = (Bot.Config.Get<string>("ClassOverrides", "c") ?? string.Empty).Trim();
-        overrideD = (Bot.Config.Get<string>("ClassOverrides", "d") ?? string.Empty).Trim();
+        ActiveComp = Bot.Config == null ? NulgathComp.Fast : Bot.Config.Get<NulgathComp>("Main", "DoEquipClasses");
+        overrideA = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "a") ?? string.Empty)).Trim();
+        overrideB = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "b") ?? string.Empty)).Trim();
+        overrideC = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "c") ?? string.Empty)).Trim();
+        overrideD = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "d") ?? string.Empty)).Trim();
+        EquipBestGear = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "EquipBestGear");
+        DoEnhancements = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "DoEnh");
+        UseLifeSteal = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "UseLifeSteal");
+        RestoreGear = Bot.Config == null ? false : Bot.Config.Get<bool>("CoreSettings", "RestoreGear");
 
         a = overrideA;
         b = overrideB;
         c = overrideC;
         d = overrideD;
 
-        UseLifeSteal = Bot.Config.Get<bool>("CoreSettings", "UseLifeSteal");
-
-        bool usingComp = comp != NulgathComp.Unselected;
+        bool usingComp = ActiveComp != NulgathComp.Unselected;
         if (!usingComp && (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b)))
         {
             C.Logger("Setup", "Fill taunter class overrides for slots 1 and 2.");
@@ -136,19 +142,48 @@ public class UltraNulgath
             return;
         }
 
-        EquipmentSnapshot equippedBefore = CoreGearUtils.CaptureEquipment(Bot);
+        Adv.GearStore();
 
         try
         {
-            Core.Boot();
-            Prep();
-            Fight();
+            Run(ActiveComp, EquipBestGear, DoEnhancements, UseLifeSteal, overrideA, overrideB, overrideC, overrideD);
         }
         finally
         {
-            CoreGearUtils.RestoreEquipment(Bot, C, equippedBefore);
+            if (RestoreGear)
+                Adv.GearStore(true, true);
             C.SetOptions(false);
+            Bot.StopSync();
         }
+    }
+
+    public void Run(
+        NulgathComp comp = NulgathComp.Fast,
+        bool equipBestGear = true,
+        bool doEnhancements = true,
+        bool useLifeSteal = true,
+        string? classAOverride = null,
+        string? classBOverride = null,
+        string? classCOverride = null,
+        string? classDOverride = null
+    )
+    {
+        ActiveComp = comp;
+        EquipBestGear = equipBestGear;
+        DoEnhancements = doEnhancements;
+        UseLifeSteal = useLifeSteal;
+        overrideA = classAOverride?.Trim() ?? string.Empty;
+        overrideB = classBOverride?.Trim() ?? string.Empty;
+        overrideC = classCOverride?.Trim() ?? string.Empty;
+        overrideD = classDOverride?.Trim() ?? string.Empty;
+        a = overrideA;
+        b = overrideB;
+        c = overrideC;
+        d = overrideD;
+
+        Core.Boot();
+        Prep();
+        Fight();
     }
 
     bool IsTaunter()
@@ -167,17 +202,18 @@ public class UltraNulgath
 
     void Prep()
     {
-        NulgathComp comp = Bot.Config!.Get<NulgathComp>("Main", "DoEquipClasses");
-        if (comp != NulgathComp.Unselected)
-            ApplyCompAndEquip(comp, overrideA, overrideB, overrideC, overrideD);
+        if (ActiveComp != NulgathComp.Unselected)
+            ApplyCompAndEquip(ActiveComp, overrideA, overrideB, overrideC, overrideD);
 
-        if (Bot.Config.Get<bool>("CoreSettings", "EquipBestGear"))
-            CoreGearUtils.EquipBestGear(Bot, C, GearProfilePreset.Damage);
+        if (EquipBestGear)
+            EquipBestDmgGear();
 
-        if (Bot.Config.Get<bool>("CoreSettings", "DoEnh"))
+        if (DoEnhancements)
             DoEnhs();
 
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        Ultra.BuyAlchemyPotion("Potent Honor Potion");
+        Core.EquipConsumable("Potent Honor Potion");
 
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
@@ -280,6 +316,13 @@ public class UltraNulgath
 
         while (!Bot.ShouldExit)
         {
+            if (Bot.Map?.Name != map)
+            {
+                Core.Join(map);
+                Core.ChooseBestCell(boss);
+                Bot.Player.SetSpawnPoint();
+            }
+
             if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
@@ -452,6 +495,20 @@ public class UltraNulgath
                 );
                 break;
         }
+    }
+
+    void EquipBestDmgGear()
+    {
+        C.EquipBestItemsForMeta(
+            new Dictionary<string, string[]>
+            {
+                { "Weapon", new[] { "dmgAll", "dmg", "damage" } },
+                { "Armor", new[] { "dmgAll", "dmg", "damage" } },
+                { "Helm", new[] { "dmgAll", "dmg", "damage" } },
+                { "Cape", new[] { "dmgAll", "dmg", "damage" } },
+                { "Pet", new[] { "dmgAll", "dmg", "damage" } },
+            }
+        );
     }
 
     public enum NulgathComp

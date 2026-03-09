@@ -2,6 +2,12 @@
 name: UltraEngineer
 description: Ultra Engineer helper prioritizing drones with army synchronization and consumables.
 tags: Ultra
+
+Fight notes:
+- Composition order is [slot 1-4]: Fast = Lich / LR / AP / LOO, Safe = LR / SC / AP / LOO, F2PFast = AI / LR / AP / LOO.
+- Default composition is set to Safe when selected.
+- Recommended fixed comp taunter classes are slot 1 = Lich and slot 2 = Legion Revenant.
+- No explicit script-level taunt-role logic is used; scripts rely on combat/party behavior.
 */
 
 //cs_include Scripts/Ultras/CoreEngine.cs
@@ -153,7 +159,24 @@ public class UltraEngineer
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraEngineer";
-    public List<IOption> Options = new()
+
+    string a,
+        b,
+        c,
+        d,
+        overrideA,
+        overrideB,
+        overrideC,
+        overrideD;
+    bool UseLifeSteal;
+    bool EquipBestGear;
+    bool DoEnhancements;
+    bool RestoreGear;
+    EngineerComp ActiveComp = EngineerComp.Safe;
+
+    public string[] MultiOptions = { "Main", "CoreSettings", "ClassOverrides" };
+
+    public List<IOption> Main = new()
     {
         new Option<EngineerComp>(
             "DoEquipClasses",
@@ -163,55 +186,154 @@ public class UltraEngineer
                 + "Safe: LR / SC / AP / LOO\n"
                 + "F2PFast: AI / LR / AP / LOO\n"
                 + "Unselected = off (use whatever classes you already have equipped).",
-            EngineerComp.Unselected
+            EngineerComp.Safe
         ),
-        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
+    };
+
+    public List<IOption> CoreSettings = new()
+    {
+        new Option<bool>("EquipBestGear", "Equip Best Gear", "Equip best gear for encounter", true),
+        new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
+        new Option<bool>("RestoreGear", "Restore Gear", "Restore original gear after the script finishes", false),
+        new Option<bool>("UseLifeSteal", "Use LifeSteal", "Equip/restock/use Scroll of Life Steal.", true),
+    };
+
+    public List<IOption> ClassOverrides = new()
+    {
+        new Option<string>("a", "Primary Class Override", "Blank = use selected comp default for slot 1.", ""),
+        new Option<string>("b", "Secondary Class Override", "Blank = use selected comp default for slot 2.", ""),
+        new Option<string>("c", "Tertiary Class Override", "Blank = use selected comp default for slot 3.", ""),
+        new Option<string>("d", "Quaternary Class Override", "Blank = use selected comp default for slot 4.", ""),
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
-        if (
-            Bot.Config != null
-            && Bot.Config.Options.Contains(C.SkipOptions)
-            && !Bot.Config.Get<bool>(C.SkipOptions)
-        )
+        if (Bot.Config != null && !Bot.Config.Get<bool>("Main", "SkipOption"))
             Bot.Config.Configure();
+
+        overrideA = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "a") ?? string.Empty)).Trim();
+        overrideB = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "b") ?? string.Empty)).Trim();
+        overrideC = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "c") ?? string.Empty)).Trim();
+        overrideD = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "d") ?? string.Empty)).Trim();
+        EquipBestGear = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "EquipBestGear");
+        DoEnhancements = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "DoEnh");
+        UseLifeSteal = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "UseLifeSteal");
+        RestoreGear = Bot.Config == null ? false : Bot.Config.Get<bool>("CoreSettings", "RestoreGear");
+        ActiveComp = Bot.Config == null ? EngineerComp.Safe : Bot.Config.Get<EngineerComp>("Main", "DoEquipClasses");
+
+        Adv.GearStore();
+
+        try
+        {
+            Run(ActiveComp, EquipBestGear, DoEnhancements, UseLifeSteal, overrideA, overrideB, overrideC, overrideD);
+        }
+        finally
+        {
+            if (RestoreGear)
+                Adv.GearStore(true, true);
+            C.SetOptions(false);
+            Bot.StopSync();
+        }
+    }
+
+    public void Run(
+        EngineerComp comp = EngineerComp.Safe,
+        bool equipBestGear = true,
+        bool doEnhancements = true,
+        bool useLifeSteal = true,
+        string? classAOverride = null,
+        string? classBOverride = null,
+        string? classCOverride = null,
+        string? classDOverride = null
+    )
+    {
+        ActiveComp = comp;
+        EquipBestGear = equipBestGear;
+        DoEnhancements = doEnhancements;
+        UseLifeSteal = useLifeSteal;
+        overrideA = classAOverride?.Trim() ?? string.Empty;
+        overrideB = classBOverride?.Trim() ?? string.Empty;
+        overrideC = classCOverride?.Trim() ?? string.Empty;
+        overrideD = classDOverride?.Trim() ?? string.Empty;
+        a = overrideA;
+        b = overrideB;
+        c = overrideC;
+        d = overrideD;
 
         Core.Boot();
         Prep();
         Fight();
-        if (Bot.Config!.Get<bool>("DoEnh"))
-            Adv.GearStore(true, true);
-
-        Bot.StopSync();
     }
 
     void Prep()
     {
-        // Sync-equip classes if a comp is selected
-        EngineerComp comp = Bot.Config!.Get<EngineerComp>("DoEquipClasses");
-        if (comp != EngineerComp.Unselected)
-        {
-            string[] classes = comp switch
-            {
-                EngineerComp.Fast => new[] { "Lich", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                EngineerComp.Safe => new[] { "Legion Revenant", "StoneCrusher", "ArchPaladin", "Lord Of Order" },
-                EngineerComp.F2PFast => new[] { "Arcana Invoker", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                _ => throw new InvalidOperationException($"Unhandled EngineerComp value: {comp}")
-            };
+        C.Logger($"UltraEngineer prep: {ActiveComp}");
+        ApplyCompAndEquip(ActiveComp, overrideA, overrideB, overrideC, overrideD);
 
-            Ultra.EquipClassSync(classes, 4, "engineer_class.sync");
-        }
+        if (EquipBestGear)
+            EquipBestDmgGear();
 
-        if (Bot.Config!.Get<bool>("DoEnh"))
-        {
-            Adv.GearStore(false, true);
+        if (DoEnhancements)
             DoEnhs();
-        }
+
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Ultra.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");
+        if (UseLifeSteal)
+            Ultra.GetScrollOfLifeSteal();
+        C.Logger("Potions/consumables prepared.");
+    }
+
+    void EquipBestDmgGear()
+    {
+        C.EquipBestItemsForMeta(
+            new Dictionary<string, string[]>
+            {
+                { "Weapon", new[] { "dmgAll", "dmg", "gold", "cp", "rep", "xp" } },
+                { "Armor", new[] { "dmgAll", "dmg", "gold", "cp", "rep", "xp" } },
+                { "Helm", new[] { "dmgAll", "dmg", "gold", "cp", "rep", "xp" } },
+                { "Cape", new[] { "dmgAll", "dmg", "gold", "cp", "rep", "xp" } },
+                { "Pet", new[] { "dmgAll", "dmg", "gold", "cp", "rep", "xp" } },
+            }
+        );
+    }
+
+    void ApplyCompAndEquip(EngineerComp comp, string aOverride, string bOverride, string cOverride, string dOverride)
+    {
+        if (comp == EngineerComp.Unselected)
+            return;
+
+        string[] classes = comp switch
+        {
+            EngineerComp.Fast => new[]
+            {
+                string.IsNullOrWhiteSpace(aOverride) ? "Lich" : aOverride,
+                string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride,
+                string.IsNullOrWhiteSpace(cOverride) ? "ArchPaladin" : cOverride,
+                string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride,
+            },
+            EngineerComp.Safe => new[]
+            {
+                string.IsNullOrWhiteSpace(aOverride) ? "Legion Revenant" : aOverride,
+                string.IsNullOrWhiteSpace(bOverride) ? "StoneCrusher" : bOverride,
+                string.IsNullOrWhiteSpace(cOverride) ? "ArchPaladin" : cOverride,
+                string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride,
+            },
+            EngineerComp.F2PFast => new[]
+            {
+                string.IsNullOrWhiteSpace(aOverride) ? "Arcana Invoker" : aOverride,
+                string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride,
+                string.IsNullOrWhiteSpace(cOverride) ? "ArchPaladin" : cOverride,
+                string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride,
+            },
+            _ => throw new InvalidOperationException($"Unhandled EngineerComp value: {comp}")
+        };
+
+        Ultra.EquipClassSync(classes, 4, "engineer_class.sync");
+        C.Logger(
+            $"Engineer classes selected => [1]={classes[0]}, [2]={classes[1]}, [3]={classes[2]}, [4]={classes[3]}"
+        );
     }
 
     void Fight()
@@ -220,6 +342,7 @@ public class UltraEngineer
         const string boss = "Ultra Engineer";
         const string priority1 = "Defense Drone";
         const string priority2 = "Attack Drone";
+        C.Logger("UltraEngineer fight start.");
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
@@ -227,6 +350,8 @@ public class UltraEngineer
         C.EnsureAccept(8154);
         C.AddDrop("Engineer Insignia");
         Core.Join(map);
+        if (Bot.Map.Name != map)
+            Core.Join(map);
         Ultra.WaitForArmy(3, "ultra_engineer.sync");
         Core.ChooseBestCell(boss);
         Bot.Player.SetSpawnPoint();
@@ -234,6 +359,9 @@ public class UltraEngineer
 
         while (!Bot.ShouldExit)
         {
+            if (Bot.Map.Name != map)
+                Core.Join(map);
+
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
             {
@@ -246,12 +374,11 @@ public class UltraEngineer
             {
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8154);
-                if (Bot.Config!.Get<bool>("DoEnh"))
-                    Adv.GearStore(true, true);
                 break;
             }
+            if (UseLifeSteal && Bot.Skills.CanUseSkill(5))
+                Bot.Skills.UseSkill(5);
             Ultra.KillWithPriority(boss, 3, priority1, 2, priority2, 1);
-            Bot.Skills.UseSkill(5);
         }
     }
 
@@ -260,7 +387,6 @@ public class UltraEngineer
         string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
         if (string.IsNullOrEmpty(className))
             return;
-        Adv.GearStore(EnhAfter: true);
 
         switch (className)
         {
@@ -362,6 +488,9 @@ public class UltraEngineer
                     wSpecial: WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Vainglory
                 );
+                break;
+
+            default:
                 break;
         }
     }

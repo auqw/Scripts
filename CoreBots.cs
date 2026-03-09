@@ -2507,6 +2507,12 @@ public class CoreBots
     /// <returns>A list of <see cref="ShopItem"/> objects from the specified shop, or an empty list if the shop data could not be loaded.</returns>
     public List<ShopItem> GetShopItems(string map, int shopID)
     {
+        string originalMap = map;
+        map = string.IsNullOrWhiteSpace(map) ? "whitemap" : map.Trim();
+
+        if (!string.Equals(originalMap, map, StringComparison.Ordinal))
+            Logger($"GetShopItems: map input '{originalMap}' normalized to '{map}'.");
+
         // Ensure player is in map
         if (!Bot.Map.Name.Equals(map, StringComparison.OrdinalIgnoreCase))
         {
@@ -8854,9 +8860,9 @@ public class CoreBots
         bool ignoreCheck = false
     )
     {
-        if (string.IsNullOrEmpty(map))
+        if (string.IsNullOrWhiteSpace(map))
         {
-            Logger("Map is null, cannot join.");
+            Logger("Map is null/blank, cannot join.");
             return;
         }
 
@@ -8865,7 +8871,16 @@ public class CoreBots
             PrivateRoomNumber = int.Parse(PrivateRoomNumber.ToString()[..6]);
         }
 
-        map = map!.Replace(" ", "").Replace('I', 'i');
+        string originalMap = map;
+        map = map!.Trim().Replace(" ", "").Replace('I', 'i');
+        if (!string.Equals(originalMap, map, StringComparison.Ordinal))
+            Logger($"Join(): sanitized map from '{originalMap}' to '{map}'.");
+
+        if (string.IsNullOrWhiteSpace(map))
+        {
+            Logger("Join(): map resolved to blank after sanitize, aborting join to avoid invalid /join input.");
+            return;
+        }
         map = map.ToLower() == "tercess" ? "tercessuinotlim" : map.ToLower();
         string strippedMap = map.Contains('-') ? map.Split('-').First() : map;
         cell =
@@ -8875,6 +8890,9 @@ public class CoreBots
 
         if (Bot.Map.Name != null && Bot.Map.Name.ToLower() == strippedMap && !ignoreCheck)
             return;
+
+        if (Bot.Map.Name != null && Bot.Map.Name != strippedMap)
+            Logger($"Join(): transitioning from '{Bot.Map.Name}' to '{strippedMap}'.");
 
         //if aggro/aggroall is enabled when joining a map, disable it [forced]
         Bot.Options.AggroMonsters = false;

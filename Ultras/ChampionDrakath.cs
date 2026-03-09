@@ -6,7 +6,6 @@ tags: Ultra
 
 //cs_include Scripts/Ultras/CoreEngine.cs
 //cs_include Scripts/Ultras/CoreUltra.cs
-//cs_include Scripts/CoreGearUtils.cs
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
@@ -14,6 +13,7 @@ tags: Ultra
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Auras;
 using Skua.Core.Options;
+using System.Collections.Generic;
 
 
 #region Class & Enhancement Setup
@@ -137,6 +137,11 @@ public class ChampionDrakath
     string overrideA, overrideB, overrideC, overrideD;
     int previousHP = 0;
     private static int[] hpThresholds = { 18100000, 16100000, 14100000, 12100000, 10100000, 8100000, 6100000, 4100000 };
+    bool EquipBestGear;
+    bool DoEnhancements;
+    bool RestoreGear;
+    int TaunterCount = 2;
+    DrakathComp ActiveComp = DrakathComp.Safe;
 
     public List<IOption> Main = new()
     {
@@ -157,6 +162,7 @@ public class ChampionDrakath
     {
         new Option<bool>("EquipBestGear", "Equip Best Gear", "Equip best gear for encounter", true),
         new Option<bool>("DoEnh", "Do Enhancements", "", true),
+        new Option<bool>("RestoreGear", "Restore Gear", "Restore original gear after the script finishes", false),
         new Option<bool>("UseLifeSteal", "Use LifeSteal", "Non-taunters equip/restock/use Scroll of Life Steal.", true),
         new Option<HowManyTaunts>("HowManyTaunts", "How many taunters", "", HowManyTaunts.Two),
     };
@@ -177,24 +183,27 @@ public class ChampionDrakath
             && !Bot.Config.Get<bool>("Main", "SkipOption"))
             Bot.Config.Configure();
 
-        DrakathComp comp = Bot.Config!.Get<DrakathComp>("Main", "DoEquipClasses");
-        overrideA = (Bot.Config.Get<string>("ClassOverrides", "a") ?? string.Empty).Trim();
-        overrideB = (Bot.Config.Get<string>("ClassOverrides", "b") ?? string.Empty).Trim();
-        overrideC = (Bot.Config.Get<string>("ClassOverrides", "c") ?? string.Empty).Trim();
-        overrideD = (Bot.Config.Get<string>("ClassOverrides", "d") ?? string.Empty).Trim();
+        ActiveComp = Bot.Config == null ? DrakathComp.Safe : Bot.Config.Get<DrakathComp>("Main", "DoEquipClasses");
+        overrideA = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "a") ?? string.Empty)).Trim();
+        overrideB = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "b") ?? string.Empty)).Trim();
+        overrideC = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "c") ?? string.Empty)).Trim();
+        overrideD = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "d") ?? string.Empty)).Trim();
         a = overrideA;
         b = overrideB;
         c = overrideC;
         d = overrideD;
-        UseLifeSteal = Bot.Config.Get<bool>("CoreSettings", "UseLifeSteal");
+        EquipBestGear = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "EquipBestGear");
+        DoEnhancements = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "DoEnh");
+        UseLifeSteal = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "UseLifeSteal");
+        RestoreGear = Bot.Config == null ? false : Bot.Config.Get<bool>("CoreSettings", "RestoreGear");
+        TaunterCount = Bot.Config == null ? 2 : (int)Bot.Config.Get<HowManyTaunts>("CoreSettings", "HowManyTaunts");
 
-        bool usingComp = comp != DrakathComp.Unselected;
-        int taunterCount = (int)Bot.Config!.Get<HowManyTaunts>("CoreSettings", "HowManyTaunts");
+        bool usingComp = ActiveComp != DrakathComp.Unselected;
         if (!usingComp && (
             string.IsNullOrEmpty(a)
-            || (taunterCount >= 2 && string.IsNullOrEmpty(b))
-            || (taunterCount >= 3 && string.IsNullOrEmpty(c))
-            || (taunterCount >= 4 && string.IsNullOrEmpty(d))
+            || (TaunterCount >= 2 && string.IsNullOrEmpty(b))
+            || (TaunterCount >= 3 && string.IsNullOrEmpty(c))
+            || (TaunterCount >= 4 && string.IsNullOrEmpty(d))
         ))
         {
             Core.Log("Setup", "Fill taunter class overrides for all enabled taunter slots.");
@@ -202,20 +211,51 @@ public class ChampionDrakath
             return;
         }
 
-        EquipmentSnapshot equippedBefore = CoreGearUtils.CaptureEquipment(Bot);
+        Adv.GearStore();
 
         try
         {
-            Core.Boot();
-            Prep();
-            Fight();
-            C.JumpWait();
+            Run(ActiveComp, EquipBestGear, DoEnhancements, UseLifeSteal, TaunterCount, overrideA, overrideB, overrideC, overrideD);
         }
         finally
         {
-            CoreGearUtils.RestoreEquipment(Bot, C, equippedBefore);
+            if (RestoreGear)
+                Adv.GearStore(true, true);
             C.SetOptions(false);
+            Bot.StopSync();
         }
+    }
+
+    public void Run(
+        DrakathComp comp = DrakathComp.Safe,
+        bool equipBestGear = true,
+        bool doEnhancements = true,
+        bool useLifeSteal = true,
+        int taunterCount = 2,
+        string? classAOverride = null,
+        string? classBOverride = null,
+        string? classCOverride = null,
+        string? classDOverride = null
+    )
+    {
+        ActiveComp = comp;
+        EquipBestGear = equipBestGear;
+        DoEnhancements = doEnhancements;
+        UseLifeSteal = useLifeSteal;
+        TaunterCount = Math.Max(1, Math.Min(4, taunterCount));
+        overrideA = classAOverride?.Trim() ?? string.Empty;
+        overrideB = classBOverride?.Trim() ?? string.Empty;
+        overrideC = classCOverride?.Trim() ?? string.Empty;
+        overrideD = classDOverride?.Trim() ?? string.Empty;
+        a = overrideA;
+        b = overrideB;
+        c = overrideC;
+        d = overrideD;
+
+        Core.Boot();
+        Prep();
+        Fight();
+        C.JumpWait();
     }
 
     bool IsTaunter()
@@ -226,15 +266,13 @@ public class ChampionDrakath
             return false;
 
         // Check based on HowManyTaunts setting
-        int taunterCount = (int)Bot.Config!.Get<HowManyTaunts>("CoreSettings", "HowManyTaunts");
-
-        if (taunterCount >= 1 && !string.IsNullOrEmpty(a) && currentClass.Contains(a))
+        if (TaunterCount >= 1 && !string.IsNullOrEmpty(a) && currentClass.Contains(a))
             return true;
-        if (taunterCount >= 2 && !string.IsNullOrEmpty(b) && currentClass.Contains(b))
+        if (TaunterCount >= 2 && !string.IsNullOrEmpty(b) && currentClass.Contains(b))
             return true;
-        if (taunterCount >= 3 && !string.IsNullOrEmpty(c) && currentClass.Contains(c))
+        if (TaunterCount >= 3 && !string.IsNullOrEmpty(c) && currentClass.Contains(c))
             return true;
-        if (taunterCount >= 4 && !string.IsNullOrEmpty(d) && currentClass.Contains(d))
+        if (TaunterCount >= 4 && !string.IsNullOrEmpty(d) && currentClass.Contains(d))
             return true;
 
         return false;
@@ -242,20 +280,21 @@ public class ChampionDrakath
 
     void Prep()
     {
-        DrakathComp comp = Bot.Config!.Get<DrakathComp>("Main", "DoEquipClasses");
-        if (comp != DrakathComp.Unselected)
-            ApplyCompAndEquip(comp, overrideA, overrideB, overrideC, overrideD);
+        if (ActiveComp != DrakathComp.Unselected)
+            ApplyCompAndEquip(ActiveComp, overrideA, overrideB, overrideC, overrideD);
 
-        if (Bot.Config!.Get<bool>("CoreSettings", "EquipBestGear"))
-            CoreGearUtils.EquipBestGear(Bot, C, GearProfilePreset.Chaos);
+        if (EquipBestGear)
+            EquipBestDmgGear();
 
-        if (Bot.Config!.Get<bool>("CoreSettings", "DoEnh"))
+        if (DoEnhancements)
             DoEnhs();
 
         Ultra.UseAlchemyPotions(
             Ultra.GetBestTonicPotion(),
             Ultra.GetBestElixirPotion()
         );
+        Ultra.BuyAlchemyPotion("Potent Honor Potion");
+        Core.EquipConsumable("Potent Honor Potion");
 
         if (IsTaunter())
             Ultra.GetScrollOfEnrage();
@@ -346,6 +385,12 @@ public class ChampionDrakath
 
         while (!Bot.ShouldExit)
         {
+            if (Bot.Map?.Name != map)
+            {
+                Core.Join(map);
+                Core.ChooseBestCell(boss);
+                Bot.Player.SetSpawnPoint();
+            }
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
             {
@@ -609,6 +654,20 @@ public class ChampionDrakath
         }
     }
 
+    void EquipBestDmgGear()
+    {
+        C.EquipBestItemsForMeta(
+            new Dictionary<string, string[]>
+            {
+                { "Weapon", new[] { "dmgAll", "dmg", "damage" } },
+                { "Armor", new[] { "dmgAll", "dmg", "damage" } },
+                { "Helm", new[] { "dmgAll", "dmg", "damage" } },
+                { "Cape", new[] { "dmgAll", "dmg", "damage" } },
+                { "Pet", new[] { "dmgAll", "dmg", "damage" } },
+            }
+        );
+    }
+
 
     enum HowManyTaunts
     {
@@ -618,7 +677,7 @@ public class ChampionDrakath
         Four = 4
     }
 
-    enum DrakathComp
+    public enum DrakathComp
     {
         Unselected,
         Safe,

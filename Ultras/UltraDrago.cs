@@ -2,6 +2,11 @@
 name: UltraDrago
 description: Ultra King Drago helper with taunter classes and priority adds.
 tags: Ultra
+
+Fight notes:
+- Composition order is [slot 1-4]: Fast = CSS / LR / AP / LOO, Safe = CAv / LR / AP / LOO, F2PFast = KE / LR / AP / LOO.
+- Fixed taunter slots are slot 3 and slot 4.
+- Slot 3 handles Group 1 taunt timing, slot 4 handles Group 2 taunt timing.
 */
 
 //cs_include Scripts/Ultras/CoreEngine.cs
@@ -12,135 +17,10 @@ tags: Ultra
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/ElegyofMadness(Darkon)/CoreAstravia.cs
 
-using System.ComponentModel;
-using System.Reflection;
+using System.Collections.Generic;
+using System.Linq;
 using Skua.Core.Interfaces;
-using Skua.Core.Models.Items;
 using Skua.Core.Options;
-
-#region Fast Comp
-
-/// <summary>
-/// Fast Composition - Maximum damage output for speed
-/// </summary>
-// Chrono ShadowSlayer
-// ├─ Class: Lucky
-// ├─ Helm: Vim / Forge
-// ├─ Weapon: Valiance
-// └─ Cape: Vainglory / Lament
-//
-// Legion Revenant
-// ├─ Class: Wizard
-// ├─ Helm: Pneuma
-// ├─ Weapon: Valiance / Ravenous / Arcana
-// └─ Cape: Vainglory
-//
-// ArchPaladin
-// ├─ Class: Lucky
-// ├─ Helm: Forge
-// ├─ Weapon: Valiance
-// └─ Cape: Lament
-//
-// Lord Of Order
-// ├─ Class: Lucky
-// ├─ Helm: Forge
-// ├─ Weapon: Awe Blast / Valiance
-// └─ Cape: Absolution
-
-#endregion
-
-#region Safe Comp
-
-/// <summary>
-/// Safe Composition - Balanced survivability and damage
-/// </summary>
-// Chaos Avenger
-// ├─ Class: Lucky
-// ├─ Helm: Anima
-// ├─ Weapon: Valiance
-// └─ Cape: Vainglory
-//
-// Legion Revenant
-// ├─ Class: Wizard
-// ├─ Helm: Pneuma
-// ├─ Weapon: Valiance / Ravenous / Arcana
-// └─ Cape: Vainglory
-//
-// ArchPaladin
-// ├─ Class: Lucky
-// ├─ Helm: Forge
-// ├─ Weapon: Valiance
-// └─ Cape: Lament
-//
-// Lord Of Order
-// ├─ Class: Lucky
-// ├─ Helm: Forge
-// ├─ Weapon: Awe Blast / Valiance
-// └─ Cape: Absolution
-
-#endregion
-
-#region F2P Fast
-
-/// <summary>
-/// F2P Fast Composition - Budget-friendly speed setup
-/// </summary>
-// King's Echo
-// ├─ Class: Lucky
-// ├─ Helm: Examen
-// ├─ Weapon: Ravenous
-// └─ Cape: Vainglory
-//
-// Legion Revenant
-// ├─ Class: Wizard
-// ├─ Helm: Pneuma
-// ├─ Weapon: Valiance / Ravenous / Arcana
-// └─ Cape: Vainglory
-//
-// ArchPaladin
-// ├─ Class: Lucky
-// ├─ Helm: Forge
-// ├─ Weapon: Valiance
-// └─ Cape: Lament
-//
-// Lord Of Order
-// ├─ Class: Lucky
-// ├─ Helm: Forge
-// ├─ Weapon: Awe Blast / Valiance
-// └─ Cape: Absolution
-
-#endregion
-
-#region Other DPS Options
-
-/// <summary>
-/// Other DPS Options - Alternative single-class configurations
-/// </summary>
-// Arcana Invoker
-// ├─ Class: Lucky
-// ├─ Helm: Examen / Forge
-// ├─ Weapon: Ravenous / Valiance
-// └─ Cape: Vainglory
-//
-// Archfiend
-// ├─ Class: Lucky
-// ├─ Helm: Forge
-// ├─ Weapon: Ravenous
-// └─ Cape: Vainglory
-//
-// Lich
-// ├─ Class: Lucky
-// ├─ Helm: Examen
-// ├─ Weapon: Ravenous
-// └─ Cape: Penitence
-//
-// Sentinel
-// ├─ Class: Lucky
-// ├─ Helm: Anima
-// ├─ Weapon: Ravenous
-// └─ Cape: Vainglory
-
-#endregion
 
 public class UltraDrago
 {
@@ -163,9 +43,9 @@ public class UltraDrago
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraDrago";
+    public string[] MultiOptions = { "Main", "CoreSettings", "ClassOverrides" };
 
-    // User options
-    public List<IOption> Options = new()
+    public List<IOption> Main = new()
     {
         new Option<DragoComp>(
             "DoEquipClasses",
@@ -173,90 +53,182 @@ public class UltraDrago
             "Auto-equip classes across all 4 clients\n"
                 + "Fast: CSS / LR / AP / LOO\n"
                 + "Safe: CAv / LR / AP / LOO\n"
-                + "F2P Fast: KE / LR / AP / LOO\n"
+                + "F2PFast: KE / LR / AP / LOO\n"
                 + "Unselected = off (use whatever classes you already have equipped).",
-            DragoComp.Unselected
+            DragoComp.Safe
         ),
-        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
     };
 
-    List<string> TaunterGroup1 = new[] { "ArchPaladin" }.ToList();
-    bool isTaunterGroup1 = false;
-    List<string> TaunterGroup2 = new[] { "Lord Of Order", "Lich", "Sentinel" }.ToList();
-    bool isTaunterGroup2 = false;
+    public List<IOption> CoreSettings = new()
+    {
+        new Option<bool>("EquipBestGear", "Equip Best Gear", "Equip best gear for encounter", true),
+        new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
+        new Option<bool>("RestoreGear", "Restore Gear", "Restore original gear after the script finishes", false),
+        new Option<bool>("UseLifeSteal", "Use LifeSteal", "Non-taunters equip/restock/use Scroll of Life Steal.", true),
+    };
+
+    public List<IOption> ClassOverrides = new()
+    {
+        new Option<string>("a", "Primary Class Override", "Blank = use selected comp default for slot 1.", ""),
+        new Option<string>("b", "Secondary Class Override", "Blank = use selected comp default for slot 2.", ""),
+        new Option<string>("c", "Tertiary Class Override (T)", "Blank = use selected comp default for slot 3 (taunter).", ""),
+        new Option<string>("d", "Quaternary Class Override (T)", "Blank = use selected comp default for slot 4 (taunter).", ""),
+    };
+
+    string overrideA = string.Empty;
+    string overrideB = string.Empty;
+    string overrideC = string.Empty;
+    string overrideD = string.Empty;
+    bool UseLifeSteal;
+    bool EquipBestGear;
+    bool DoEnhancements;
+    bool RestoreGear;
+    DragoComp ActiveComp = DragoComp.Safe;
+
+    string tauntSlot3 = "ArchPaladin";
+    string tauntSlot4 = "Lord Of Order";
+    bool isTaunterGroup1;
+    bool isTaunterGroup2;
+
     public void ScriptMain(IScriptInterface bot)
     {
-        C.OneTimeMessage(
-            "WARNING",
-            "Please use the classes in the options to ensure proper role functionality.\n"
-                + "We've allowed you to choose 'Current Class', but it's recommended to select a specific role for optimal (safe) performance.\n"
-                + "Current Class will Focus Boss -> Left Summon -> Right Summon",
-            true,
-            true
-        );
-
-        if (
-            Bot.Config != null
-            && Bot.Config.Options.Contains(C.SkipOptions)
-            && !Bot.Config.Get<bool>(C.SkipOptions)
-        )
+        if (Bot.Config != null && !Bot.Config.Get<bool>("Main", "SkipOption"))
             Bot.Config.Configure();
+
+        ActiveComp = Bot.Config == null ? DragoComp.Safe : Bot.Config.Get<DragoComp>("Main", "DoEquipClasses");
+        overrideA = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "a") ?? string.Empty)).Trim();
+        overrideB = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "b") ?? string.Empty)).Trim();
+        overrideC = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "c") ?? string.Empty)).Trim();
+        overrideD = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "d") ?? string.Empty)).Trim();
+        EquipBestGear = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "EquipBestGear");
+        DoEnhancements = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "DoEnh");
+        UseLifeSteal = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "UseLifeSteal");
+        RestoreGear = Bot.Config == null ? false : Bot.Config.Get<bool>("CoreSettings", "RestoreGear");
+
+        Adv.GearStore();
+        try
+        {
+            Run(ActiveComp, EquipBestGear, DoEnhancements, UseLifeSteal, overrideA, overrideB, overrideC, overrideD);
+        }
+        finally
+        {
+            if (RestoreGear)
+                Adv.GearStore(true, true);
+            C.SetOptions(false);
+            Bot.StopSync();
+        }
+    }
+
+    public void Run(
+        DragoComp comp = DragoComp.Safe,
+        bool equipBestGear = true,
+        bool doEnhancements = true,
+        bool useLifeSteal = true,
+        string? classAOverride = null,
+        string? classBOverride = null,
+        string? classCOverride = null,
+        string? classDOverride = null
+    )
+    {
+        ActiveComp = comp;
+        EquipBestGear = equipBestGear;
+        DoEnhancements = doEnhancements;
+        UseLifeSteal = useLifeSteal;
+        overrideA = classAOverride?.Trim() ?? string.Empty;
+        overrideB = classBOverride?.Trim() ?? string.Empty;
+        overrideC = classCOverride?.Trim() ?? string.Empty;
+        overrideD = classDOverride?.Trim() ?? string.Empty;
 
         Core.Boot();
         Prep();
 
-        // Detect taunter role AFTER sync-equip so the class is correct
-        if (TaunterGroup1.Contains(Bot.Player.CurrentClass!.Name))
-            isTaunterGroup1 = true;
-        if (TaunterGroup2.Contains(Bot.Player.CurrentClass.Name))
-            isTaunterGroup2 = true;
+        isTaunterGroup1 = Core.HasClassEquipped(tauntSlot3);
+        isTaunterGroup2 = Core.HasClassEquipped(tauntSlot4);
 
         C.EnsureComplete(8397);
         Fight();
     }
-
 
     void Prep()
     {
         C.Join("whitemap");
         Astravia.AstraviaJudgement();
 
-        // Sync-equip classes if a comp is selected
-        DragoComp comp = Bot.Config!.Get<DragoComp>("DoEquipClasses");
-        if (comp != DragoComp.Unselected)
-        {
-            string[] classes = comp switch
-            {
-                DragoComp.Fast => new[] { "Chrono ShadowSlayer", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                DragoComp.Safe => new[] { "Chaos Avenger", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                DragoComp.F2PFast => new[] { "King's Echo", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                _ => new[] { "ArchPaladin", "Legion Revenant", "Chaos Avenger", "Lord Of Order" },
-            };
+        ApplyCompAndEquip(ActiveComp, overrideA, overrideB, overrideC, overrideD);
 
-            Ultra.EquipClassSync(classes, 4, "drago_class.sync");
-        }
+        if (EquipBestGear)
+            EquipBestDmgGear();
 
-        Adv.GearStore(EnhAfter: true);
-        if (Bot.Config!.Get<bool>("DoEnh"))
+        if (DoEnhancements)
             DoEnhs();
 
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         Ultra.BuyAlchemyPotion("Potent Honor Potion");
         Core.EquipConsumable("Potent Honor Potion");
 
-        // Taunter check uses current (possibly sync-assigned) class
-        if (TaunterGroup1.Contains(Bot.Player.CurrentClass?.Name ?? string.Empty)
-            || TaunterGroup2.Contains(Bot.Player.CurrentClass?.Name ?? string.Empty))
+        if (Core.HasClassEquipped(tauntSlot3) || Core.HasClassEquipped(tauntSlot4))
             Ultra.GetScrollOfEnrage();
+        else if (UseLifeSteal)
+            Ultra.GetScrollOfLifeSteal();
+    }
+
+    void ApplyCompAndEquip(DragoComp comp, string aOverride, string bOverride, string cOverride, string dOverride)
+    {
+        if (comp == DragoComp.Unselected)
+            return;
+
+        string[] classes = comp switch
+        {
+            DragoComp.Fast => new[]
+            {
+                string.IsNullOrWhiteSpace(aOverride) ? "Chrono ShadowSlayer" : aOverride,
+                string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride,
+                string.IsNullOrWhiteSpace(cOverride) ? "ArchPaladin" : cOverride,
+                string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride,
+            },
+            DragoComp.Safe => new[]
+            {
+                string.IsNullOrWhiteSpace(aOverride) ? "Chaos Avenger" : aOverride,
+                string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride,
+                string.IsNullOrWhiteSpace(cOverride) ? "ArchPaladin" : cOverride,
+                string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride,
+            },
+            DragoComp.F2PFast => new[]
+            {
+                string.IsNullOrWhiteSpace(aOverride) ? "King's Echo" : aOverride,
+                string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride,
+                string.IsNullOrWhiteSpace(cOverride) ? "ArchPaladin" : cOverride,
+                string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride,
+            },
+            _ => throw new System.InvalidOperationException($"Unhandled DragoComp value: {comp}")
+        };
+
+        tauntSlot3 = classes[2];
+        tauntSlot4 = classes[3];
+        Ultra.EquipClassSync(classes, 4, "drago_class.sync");
+    }
+
+    void EquipBestDmgGear()
+    {
+        C.EquipBestItemsForMeta(
+            new Dictionary<string, string[]>
+            {
+                { "Weapon", new[] { "dmgAll", "dmg", "damage" } },
+                { "Armor", new[] { "dmgAll", "dmg", "damage" } },
+                { "Helm", new[] { "dmgAll", "dmg", "damage" } },
+                { "Cape", new[] { "dmgAll", "dmg", "damage" } },
+                { "Pet", new[] { "dmgAll", "dmg", "damage" } },
+            }
+        );
     }
 
     void Fight()
     {
         const string map = "ultradrago";
         const string boss = "King Drago";
-        const string leftSummon = "Bowmaster Algie"; // Right summon (Bow)
-        const string rightSummon = "Executioner Dene"; // Left summon (Axe)
+        const string leftSummon = "Bowmaster Algie";
+        const string rightSummon = "Executioner Dene";
 
         string syncPath = Ultra.ResolveSyncPath("UltraItemCheck.sync");
         Ultra.ClearSyncFile(syncPath);
@@ -272,11 +244,16 @@ public class UltraDrago
         Bot.Player.SetSpawnPoint();
         Core.EnableSkills();
 
-        // ===== MAIN LOOP =====
         while (!Bot.ShouldExit)
         {
-            // Dead → wait for respawn
-            if (!Bot.Player!.Alive)
+            if (Bot.Map?.Name != map)
+            {
+                Core.Join(map);
+                Core.ChooseBestCell(boss);
+                Bot.Player.SetSpawnPoint();
+            }
+
+            if (!Bot.Player.Alive)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
                 continue;
@@ -289,23 +266,17 @@ public class UltraDrago
                 if (Bot.Quests.IsUnlocked(8397))
                     C.EnsureComplete(8397);
                 Bot.Wait.ForPickup("King Drago Insignia");
-                if (Bot.Config!.Get<bool>("DoEnh"))
-                    Adv.GearStore(true, true);
                 break;
             }
 
+            if (UseLifeSteal && !isTaunterGroup1 && !isTaunterGroup2 && Bot.Skills.CanUseSkill(5))
+                Bot.Skills.UseSkill(5);
+
             if (isTaunterGroup1 && Ultra.MonsterAlive(rightSummon))
             {
-                // ArchPaladin taunts the left summon (Axe)
                 while (!Bot.ShouldExit)
                 {
-                    Ultra.Taunt(
-                        Bot.Player?.CurrentClass?.Name!,
-                        rightSummon,
-                        "aura",
-                        250,
-                        "Focus"
-                    );
+                    Ultra.Taunt(Bot.Player?.CurrentClass?.Name!, rightSummon, "aura", 250, "Focus");
                     if (!Ultra.MonsterAlive(rightSummon))
                         break;
                 }
@@ -314,15 +285,9 @@ public class UltraDrago
 
             if (isTaunterGroup2 && Ultra.MonsterAlive(rightSummon))
             {
-                // LordOfOrder loops taunt with ArchPaladin (left summon)
                 while (!Bot.ShouldExit)
                 {
-                    Ultra.Taunt(Bot.Player?.CurrentClass?.Name!,
-                        rightSummon,
-                        "aura",
-                        700,
-                        "Focus"
-                    );
+                    Ultra.Taunt(Bot.Player?.CurrentClass?.Name!, rightSummon, "aura", 700, "Focus");
                     if (!Ultra.MonsterAlive(rightSummon))
                         break;
                 }
@@ -334,7 +299,6 @@ public class UltraDrago
         }
     }
 
-
     void DoEnhs()
     {
         string className = Bot.Player!.CurrentClass?.Name ?? string.Empty;
@@ -343,104 +307,35 @@ public class UltraDrago
 
         switch (className)
         {
-            // Chrono ShadowSlayer
             case "Chrono ShadowSlayer":
-                Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Vim,
-                    wSpecial: WeaponSpecial.Valiance,
-                    cSpecial: CapeSpecial.Vainglory
-                );
+                Adv.EnhanceEquipped(type: EnhancementType.Lucky, hSpecial: HelmSpecial.Vim, wSpecial: WeaponSpecial.Valiance, cSpecial: CapeSpecial.Vainglory);
                 break;
-
-            // Legion Revenant
             case "Legion Revenant":
-                Adv.EnhanceEquipped(
-                    type: EnhancementType.Wizard,
-                    hSpecial: HelmSpecial.Pneuma,
-                    wSpecial: WeaponSpecial.Valiance,
-                    cSpecial: CapeSpecial.Vainglory
-                );
+                Adv.EnhanceEquipped(type: EnhancementType.Wizard, hSpecial: HelmSpecial.Pneuma, wSpecial: WeaponSpecial.Valiance, cSpecial: CapeSpecial.Vainglory);
                 break;
-
-            // ArchPaladin
             case "ArchPaladin":
-                Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Forge,
-                    wSpecial: WeaponSpecial.Valiance,
-                    cSpecial: CapeSpecial.Lament
-                );
+                Adv.EnhanceEquipped(type: EnhancementType.Lucky, hSpecial: HelmSpecial.Forge, wSpecial: WeaponSpecial.Valiance, cSpecial: CapeSpecial.Lament);
                 break;
-
-            // Lord Of Order
             case "Lord Of Order":
-                Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Forge,
-                    wSpecial: WeaponSpecial.Awe_Blast,
-                    cSpecial: CapeSpecial.Absolution
-                );
+                Adv.EnhanceEquipped(type: EnhancementType.Lucky, hSpecial: HelmSpecial.Forge, wSpecial: WeaponSpecial.Awe_Blast, cSpecial: CapeSpecial.Absolution);
                 break;
-
-            // Chaos Avenger
             case "Chaos Avenger":
-                Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Anima,
-                    wSpecial: WeaponSpecial.Valiance,
-                    cSpecial: CapeSpecial.Vainglory
-                );
+                Adv.EnhanceEquipped(type: EnhancementType.Lucky, hSpecial: HelmSpecial.Anima, wSpecial: WeaponSpecial.Valiance, cSpecial: CapeSpecial.Vainglory);
                 break;
-
-            // King's Echo
             case "King's Echo":
-                Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Examen,
-                    wSpecial: WeaponSpecial.Ravenous,
-                    cSpecial: CapeSpecial.Vainglory
-                );
+                Adv.EnhanceEquipped(type: EnhancementType.Lucky, hSpecial: HelmSpecial.Examen, wSpecial: WeaponSpecial.Ravenous, cSpecial: CapeSpecial.Vainglory);
                 break;
-
-            // Arcana Invoker
             case "Arcana Invoker":
-                Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Examen,
-                    wSpecial: WeaponSpecial.Ravenous,
-                    cSpecial: CapeSpecial.Vainglory
-                );
+                Adv.EnhanceEquipped(type: EnhancementType.Lucky, hSpecial: HelmSpecial.Examen, wSpecial: WeaponSpecial.Ravenous, cSpecial: CapeSpecial.Vainglory);
                 break;
-
-            // Archfiend
             case "Archfiend":
-                Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Forge,
-                    wSpecial: WeaponSpecial.Ravenous,
-                    cSpecial: CapeSpecial.Vainglory
-                );
+                Adv.EnhanceEquipped(type: EnhancementType.Lucky, hSpecial: HelmSpecial.Forge, wSpecial: WeaponSpecial.Ravenous, cSpecial: CapeSpecial.Vainglory);
                 break;
-
-            // Lich
             case "Lich":
-                Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Examen,
-                    wSpecial: WeaponSpecial.Ravenous,
-                    cSpecial: CapeSpecial.Penitence
-                );
+                Adv.EnhanceEquipped(type: EnhancementType.Lucky, hSpecial: HelmSpecial.Examen, wSpecial: WeaponSpecial.Ravenous, cSpecial: CapeSpecial.Penitence);
                 break;
-
-            // Sentinel
             case "Sentinel":
-                Adv.EnhanceEquipped(
-                    type: EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Anima,
-                    wSpecial: WeaponSpecial.Ravenous,
-                    cSpecial: CapeSpecial.Vainglory
-                );
+                Adv.EnhanceEquipped(type: EnhancementType.Lucky, hSpecial: HelmSpecial.Anima, wSpecial: WeaponSpecial.Ravenous, cSpecial: CapeSpecial.Vainglory);
                 break;
         }
     }

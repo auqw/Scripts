@@ -2,6 +2,15 @@
 name: UltraAvatarTyndarius
 description: Ultra Avatar Tyndarius helper with taunter rotation and orb priority.
 tags: Ultra
+
+Fight notes:
+- Composition order is [slot 1-4]: Safe = CAv / LR / AP / LOO, Fast = CSS / LR / AP / LOO, F2PFast = KE / LR / AP / LOO.
+- Default composition is set to Safe when available.
+- Fixed taunt-role assignment is based on the resolved comp slots:
+  - Slot 2: Ball 1 Taunt
+  - Slot 3: Must-Taunt Tyndarius
+  - Slot 4: Focus Tyndarius
+- Slot 1 remains Ball 2 support/killer.
 */
 
 //cs_include Scripts/Ultras/CoreEngine.cs
@@ -10,13 +19,9 @@ tags: Ultra
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
-using System.ComponentModel;
-using System.Reflection;
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
-using Skua.Core.Models.Monsters;
 using Skua.Core.Options;
-using Skua.Core.Threading;
 
 /*
 ============================================================================
@@ -72,16 +77,34 @@ public class UltraAvatarTyndarius
     public CoreEngine Core = new();
     public CoreUltra Ultra = new();
 
-    private string NormalizeString(string input) => (input ?? "").Trim().ToLower();
-
     bool isBall2killer;
     bool isBall1Taunter;
     bool isMustTauntTyn;
     bool isFocusTyn;
+    string tauntSlot1 = "Chaos Avenger";
+    string tauntSlot2 = "Legion Revenant";
+    string tauntSlot3 = "ArchPaladin";
+    string tauntSlot4 = "Lord Of Order";
 
     public bool DontPreconfigure = true;
     public string OptionsStorage = "UltraAvatarTyndarius3";
-    public List<IOption> Options = new()
+
+    string a,
+        b,
+        c,
+        d,
+        overrideA,
+        overrideB,
+        overrideC,
+        overrideD;
+    bool UseLifeSteal;
+    bool EquipBestGear;
+    bool DoEnhancements;
+    bool RestoreGear;
+    TyndariusComp ActiveComp = TyndariusComp.Safe;
+    public string[] MultiOptions = { "Main", "CoreSettings", "ClassOverrides" };
+
+    public List<IOption> Main = new()
     {
         new Option<TyndariusComp>(
             "DoEquipClasses",
@@ -91,97 +114,159 @@ public class UltraAvatarTyndarius
                 + "Fast: CSS / LR / AP / LOO\n"
                 + "F2PFast: KE / LR / AP / LOO\n"
                 + "Unselected = off (use whatever classes you already have equipped).",
-            TyndariusComp.Unselected
+            TyndariusComp.Safe
         ),
-        // Ball 1 Taunter selection
-        new Option<Ball1Taunter>(
-            "Ball1Taunter",
-            "Ball 1 Taunter",
-            "Select which class should taunt Ball 1.",
-            Ball1Taunter.LegionRevenant
-        ),
-        // Ball 2 Taunter selection
-        new Option<Ball2killer>(
-            "Ball2killer",
-            "Ball 2 killer",
-            "Select which class should kill Ball 2.",
-            Ball2killer.ChaosAvenger
-        ),
-        // Must Taunt Tyndarius selection
-        new Option<MustTauntTyndarius>(
-            "MustTauntTyndarius",
-            "Must Taunt Tyndarius",
-            "Select which class must taunt Tyndarius.",
-            MustTauntTyndarius.ArchPaladin
-        ),
-        // Focus Tyndarius selection
-        new Option<DebuffTyndarius>(
-            "DebuffTyndarius",
-            "Focus Tyndarius",
-            "Select which class should focus Tyndarius.",
-            DebuffTyndarius.LordOfOrder
-        ),
-        new Option<bool>("DoEnh", "Do Enhancements",  "Auto-Enhance Gear properly for the fight", true),
         CoreBots.Instance.SkipOptions,
+    };
+
+    public List<IOption> CoreSettings = new()
+    {
+        new Option<bool>("EquipBestGear", "Equip Best Gear", "Equip best gear for encounter", true),
+        new Option<bool>("DoEnh", "Do Enhancements", "Auto-Enhance Gear properly for the fight", true),
+        new Option<bool>("RestoreGear", "Restore Gear", "Restore original gear after the script finishes", false),
+        new Option<bool>("UseLifeSteal", "Use LifeSteal", "Non-taunters equip/restock/use Scroll of Life Steal.", true),
+    };
+
+    public List<IOption> ClassOverrides = new()
+    {
+        new Option<string>("a", "Primary Class Override", "Blank = use selected comp default for slot 1.", ""),
+        new Option<string>("b", "Secondary Class Override", "Blank = use selected comp default for slot 2.", ""),
+        new Option<string>("c", "Tertiary Class Override", "Blank = use selected comp default for slot 3.", ""),
+        new Option<string>("d", "Quaternary Class Override", "Blank = use selected comp default for slot 4.", ""),
     };
 
     public void ScriptMain(IScriptInterface bot)
     {
         C.Join("whitemap");
-        if (
-            Bot.Config != null
-            && Bot.Config.Options.Contains(C.SkipOptions)
-            && !Bot.Config.Get<bool>(C.SkipOptions)
-        )
+        if (Bot.Config != null && !Bot.Config.Get<bool>("Main", "SkipOption"))
             Bot.Config.Configure();
 
-        if (
-            NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter"))) == "Dragon of Time"
-            && NormalizeString(GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer"))) == "Dragon of Time"
-        )
-            C.Logger("Ball1Taunter & Ball2Killer are set to Dragon of Time, choose something else", "Fix This", true, true);
+        UseLifeSteal = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "UseLifeSteal");
+        EquipBestGear = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "EquipBestGear");
+        DoEnhancements = Bot.Config == null ? true : Bot.Config.Get<bool>("CoreSettings", "DoEnh");
+        RestoreGear = Bot.Config == null ? false : Bot.Config.Get<bool>("CoreSettings", "RestoreGear");
+        ActiveComp = Bot.Config == null ? TyndariusComp.Safe : Bot.Config.Get<TyndariusComp>("Main", "DoEquipClasses");
 
-        isBall1Taunter =
-     NormalizeString(Bot.Player.CurrentClass!.Name)
-     == NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")));
-        isBall2killer =
-            NormalizeString(Bot.Player.CurrentClass.Name)
-            == NormalizeString(GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer")));
-        isMustTauntTyn =
-            NormalizeString(Bot.Player.CurrentClass.Name)
-            == NormalizeString(GetDescription(Bot.Config!.Get<MustTauntTyndarius>("MustTauntTyndarius")));
-        isFocusTyn =
-            NormalizeString(Bot.Player.CurrentClass.Name)
-            == NormalizeString(GetDescription(Bot.Config!.Get<DebuffTyndarius>("DebuffTyndarius")));
+        overrideA = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "a") ?? string.Empty)).Trim();
+        overrideB = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "b") ?? string.Empty)).Trim();
+        overrideC = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "c") ?? string.Empty)).Trim();
+        overrideD = (Bot.Config == null ? string.Empty : (Bot.Config.Get<string>("ClassOverrides", "d") ?? string.Empty)).Trim();
+
+        Adv.GearStore();
+
+        try
+        {
+            Run(ActiveComp, EquipBestGear, DoEnhancements, UseLifeSteal, overrideA, overrideB, overrideC, overrideD);
+        }
+        finally
+        {
+            if (RestoreGear)
+                Adv.GearStore(true, true);
+            C.SetOptions(false);
+            Bot.StopSync();
+        }
+    }
+
+    public void Run(
+        TyndariusComp comp = TyndariusComp.Safe,
+        bool equipBestGear = true,
+        bool doEnhancements = true,
+        bool useLifeSteal = true,
+        string? classAOverride = null,
+        string? classBOverride = null,
+        string? classCOverride = null,
+        string? classDOverride = null
+    )
+    {
+        ActiveComp = comp;
+        EquipBestGear = equipBestGear;
+        DoEnhancements = doEnhancements;
+        UseLifeSteal = useLifeSteal;
+        overrideA = classAOverride?.Trim() ?? string.Empty;
+        overrideB = classBOverride?.Trim() ?? string.Empty;
+        overrideC = classCOverride?.Trim() ?? string.Empty;
+        overrideD = classDOverride?.Trim() ?? string.Empty;
+        a = overrideA;
+        b = overrideB;
+        c = overrideC;
+        d = overrideD;
 
         Core.Boot();
         Prep();
         Fight();
-        Bot.StopSync();
     }
 
     void Prep()
     {
         // Sync-equip classes if a comp is selected
-        TyndariusComp comp = Bot.Config!.Get<TyndariusComp>("DoEquipClasses");
-        if (comp != TyndariusComp.Unselected)
-        {
-            string[] classes = comp switch
-            {
-                TyndariusComp.Safe => new[] { "Chaos Avenger", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                TyndariusComp.Fast => new[] { "Chrono ShadowSlayer", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                TyndariusComp.F2PFast => new[] { "King's Echo", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
-                _ => throw new InvalidOperationException($"Unhandled TyndariusComp value: {comp}"),
-            };
+        ApplyCompAndEquip(ActiveComp, overrideA, overrideB, overrideC, overrideD);
 
-            Ultra.EquipClassSync(classes, 4, "tyndarius_class.sync");
-        }
+        if (EquipBestGear)
+            EquipBestDmgGear();
 
-        if (Bot.Config!.Get<bool>("DoEnh"))
+        if (DoEnhancements)
             DoEnh();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
+        Ultra.BuyAlchemyPotion("Potent Honor Potion");
+        Core.EquipConsumable("Potent Honor Potion");
         if (isBall1Taunter || isMustTauntTyn || isFocusTyn)
             Ultra.GetScrollOfEnrage();
+        else if (UseLifeSteal)
+            Ultra.GetScrollOfLifeSteal();
+    }
+
+    void EquipBestDmgGear()
+    {
+        C.EquipBestItemsForMeta(
+            new Dictionary<string, string[]>
+            {
+                { "Weapon", new[] { "dmgAll", "dmg", "gold", "cp", "rep", "xp" } },
+                { "Armor", new[] { "dmgAll", "dmg", "gold", "cp", "rep", "xp" } },
+                { "Helm", new[] { "dmgAll", "dmg", "gold", "cp", "rep", "xp" } },
+                { "Cape", new[] { "dmgAll", "dmg", "gold", "cp", "rep", "xp" } },
+                { "Pet", new[] { "dmgAll", "dmg", "gold", "cp", "rep", "xp" } },
+            }
+        );
+    }
+
+    void ApplyCompAndEquip(TyndariusComp comp, string aOverride, string bOverride, string cOverride, string dOverride)
+    {
+        if (comp == TyndariusComp.Unselected)
+            return;
+
+        string[] classes = comp switch
+        {
+            TyndariusComp.Safe => new[]
+            {
+                string.IsNullOrWhiteSpace(aOverride) ? "Chaos Avenger" : aOverride,
+                string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride,
+                string.IsNullOrWhiteSpace(cOverride) ? "ArchPaladin" : cOverride,
+                string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride,
+            },
+            TyndariusComp.Fast => new[]
+            {
+                string.IsNullOrWhiteSpace(aOverride) ? "Chrono ShadowSlayer" : aOverride,
+                string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride,
+                string.IsNullOrWhiteSpace(cOverride) ? "ArchPaladin" : cOverride,
+                string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride,
+            },
+            TyndariusComp.F2PFast => new[]
+            {
+                string.IsNullOrWhiteSpace(aOverride) ? "King's Echo" : aOverride,
+                string.IsNullOrWhiteSpace(bOverride) ? "Legion Revenant" : bOverride,
+                string.IsNullOrWhiteSpace(cOverride) ? "ArchPaladin" : cOverride,
+                string.IsNullOrWhiteSpace(dOverride) ? "Lord Of Order" : dOverride,
+            },
+            _ => throw new InvalidOperationException($"Unhandled TyndariusComp value: {comp}"),
+        };
+
+        tauntSlot1 = classes[0];
+        tauntSlot2 = classes[1];
+        tauntSlot3 = classes[2];
+        tauntSlot4 = classes[3];
+
+        Ultra.EquipClassSync(classes, 4, "tyndarius_class.sync");
+        SetRoleAllocations();
     }
 
     void Fight()
@@ -209,14 +294,15 @@ public class UltraAvatarTyndarius
                 continue;
             }
 
+            if (UseLifeSteal && Bot.Skills.CanUseSkill(5))
+                Bot.Skills.UseSkill(5);
+
             if (Ultra.CheckArmyProgressBool(() => Bot.TempInv.Contains("Ultra Avatar Tyndarius Defeated", 1), syncPath))
             {
                 C.Jump("Enter", "Spawn");
                 C.Logger("All players finished farm.");
                 C.EnsureComplete(8245);
 
-                if (Bot.Config!.Get<bool>("DoEnh"))
-                    Adv.GearStore(true, true);
                 break;
             }
             if (Bot.Map.Name != map)
@@ -251,8 +337,6 @@ public class UltraAvatarTyndarius
                 {
                     Bot.Combat.Attack(1);
                 }
-                if (Bot.Skills.CanUseSkill(5) && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
-                    Bot.Skills.UseSkill(5);
                 Bot.Sleep(500);
             }
             if (isBall2killer)
@@ -278,8 +362,6 @@ public class UltraAvatarTyndarius
             {
                 Bot.Combat.Attack(2);
                 Bot.Sleep(500);
-                if (Bot.Skills.CanUseSkill(5) && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
-                    Bot.Skills.UseSkill(5);
             }
             // ======================================================
             // FOCUS TYN (semi-taunt)
@@ -294,14 +376,12 @@ public class UltraAvatarTyndarius
         }
     }
 
-    public static string GetDescription(Enum value)
+    void SetRoleAllocations()
     {
-        FieldInfo? field = value.GetType().GetField(value.ToString());
-        DescriptionAttribute? attribute =
-            field?.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault()
-            as DescriptionAttribute;
-
-        return attribute?.Description ?? value.ToString();
+        isBall1Taunter = Core.HasClassEquipped(tauntSlot2);
+        isBall2killer = Core.HasClassEquipped(tauntSlot1);
+        isMustTauntTyn = Core.HasClassEquipped(tauntSlot3);
+        isFocusTyn = Core.HasClassEquipped(tauntSlot4);
     }
 
     void DoEnh()
@@ -405,73 +485,5 @@ public class UltraAvatarTyndarius
         Fast,
         F2PFast,
     }
-
-    public enum Ball2killer
-    {
-        // In order of fast > safe > f2p fast > other
-        [Description("Chrono ShadowSlayer")]
-        ChronoShadowSlayer,
-
-        [Description("Chrono ShadowHunter")]
-        ChronoShadowHunter,
-
-        [Description("Chaos Avenger")]
-        ChaosAvenger,
-
-        [Description("King's Echo")]
-        KingsEcho,
-
-        [Description("StoneCrusher")]
-        StoneCrusher,
-
-        [Description("Arcana Invoker")]
-        ArcanaInvoker,
-
-        [Description("Dragon of Time")]
-        DragonofTime,
-
-        [Description("Current Class | Ball2killer")]
-        Ball2killer_CurrentClass,
-    }
-
-    public enum Ball1Taunter
-    {
-        // In order of fast > safe > f2p fast > other
-        [Description("Legion Revenant")]
-        LegionRevenant,
-
-        [Description("Lich")]
-        Lich,
-
-        [Description("Current Class | Ball1Taunter")]
-        Ball1Taunter_Current,
-    }
-
-    public enum DebuffTyndarius
-    {
-        // In order of fast > safe > f2p fast > other
-        [Description("Lord Of Order")]
-        LordOfOrder,
-
-        [Description("Dragon of Time")]
-        DragonofTime,
-
-        [Description("Current Class | DebuffTyndarius")]
-        DebuffTyndarius_Current,
-    }
-
-    public enum MustTauntTyndarius
-    {
-        // In order of fast > safe > f2p fast > other
-        [Description("ArchPaladin")]
-        ArchPaladin,
-
-        [Description("Verus DoomKnight")]
-        VerusDoomknight,
-
-        [Description("Current Class | MustTauntTyndarius")]
-        MustTauntTyndarius_Current,
-    }
-
 
 }
