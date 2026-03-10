@@ -51,6 +51,8 @@ public class CoreStory
         bool AutoCompleteQuest = true
     )
     {
+        if (Bot.Player?.Cell != null && Bot.Player.Cell.ToLower().Contains("cut"))
+            Core.JumpWait();
         if (string.IsNullOrEmpty(MapName))
             throw new ArgumentException("MapName cannot be null or empty", nameof(MapName));
         if (string.IsNullOrEmpty(MonsterName))
@@ -190,6 +192,8 @@ public class CoreStory
         bool AutoCompleteQuest = true
     )
     {
+        if (Bot.Player?.Cell != null && Bot.Player.Cell.ToLower().Contains("cut"))
+            Core.JumpWait();
         if (string.IsNullOrEmpty(MapName))
             throw new ArgumentException("MapName cannot be null or empty", nameof(MapName));
         if (
@@ -369,8 +373,10 @@ public class CoreStory
     /// or all items are obtained. Moves the player to the optimal cell, attacks available monsters, and picks up drops.
     /// Uses minimal logging for important events and avoids spamming logs during repeated attack cycles.
     /// </remarks>
-    private void _MonsterHuntBatch(string map, string monster, List<string> itemNames, int Qid )
+    private void _MonsterHuntBatch(string map, string monster, List<string> itemNames, int Qid)
     {
+        if (Bot.Player?.Cell != null && Bot.Player.Cell.ToLower().Contains("cut"))
+            Core.JumpWait();
         if (string.IsNullOrEmpty(map))
         {
             Bot.Log("Map is null or empty");
@@ -594,6 +600,11 @@ public class CoreStory
         bool AutoCompleteQuest = true
     )
     {
+
+
+        if (Bot.Player?.Cell != null && Bot.Player.Cell.ToLower().Contains("cut"))
+            Core.JumpWait();
+
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
         if (QuestData == null)
         {
@@ -631,6 +642,10 @@ public class CoreStory
         bool AutoCompleteQuest = true
     )
     {
+
+        if (Bot.Player?.Cell != null && Bot.Player.Cell.ToLower().Contains("cut"))
+            Core.JumpWait();
+
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
         if (QuestData == null)
         {
@@ -676,6 +691,9 @@ public class CoreStory
         bool AutoCompleteQuest = true
     )
     {
+        if (Bot.Player?.Cell != null && Bot.Player.Cell.ToLower().Contains("cut"))
+            Core.JumpWait();
+
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
         if (QuestData == null)
         {
@@ -738,6 +756,8 @@ public class CoreStory
         bool AutoCompleteQuest = true
     )
     {
+        if (Bot.Player?.Cell != null && Bot.Player.Cell.ToLower().Contains("cut"))
+            Core.JumpWait();
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
         if (QuestData == null)
         {
@@ -767,6 +787,8 @@ public class CoreStory
         bool AutoCompleteQuest = true
     )
     {
+        if (Bot.Player?.Cell != null && Bot.Player.Cell.ToLower().Contains("cut"))
+            Core.JumpWait();
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
         if (QuestData == null)
         {
