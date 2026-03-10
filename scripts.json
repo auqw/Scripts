@@ -17119,8 +17119,8 @@
       "underworld"
     ],
     "path": "Legion/MergeShops/LibrarysLostandFoundMerge.cs",
-    "size": 10564,
-    "sha256": "9a1f2ec9477ab2c705c2b5984be81f408bb2546736877251cfe116121d21b347",
+    "size": 10561,
+    "sha256": "88d8abf410465e842ce8597412cd0e6206b046df84cf46d988356694053f56db",
     "fileName": "LibrarysLostandFoundMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/LibrarysLostandFoundMerge.cs"
   },
@@ -25757,8 +25757,8 @@
       "quests"
     ],
     "path": "Nation/Various/HanzoOrbQuest.cs",
-    "size": 2990,
-    "sha256": "2c4339cb8afbc278c21af508fe9f88d8a5f8e3113dcf5fcff8115c24fe394b7a",
+    "size": 2800,
+    "sha256": "f0593ac73d8cd905c6ce665c409509842bd123117d253912826362355e5ebb18",
     "fileName": "HanzoOrbQuest.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/HanzoOrbQuest.cs"
   },
