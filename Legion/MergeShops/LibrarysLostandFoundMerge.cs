@@ -132,7 +132,7 @@ public class LibrarysLostandFoundMerge
         Core.AddDrop("Argus' Iris");
         while (!Bot.ShouldExit && !Core.CheckInventory("Argus' Iris", quant))
         {
-            Core.HuntMonsterQuest(10097, ("legionlibrary", "Argus Panoptes", ClassType.Solo));
+            Core.HuntMonsterQuest(10097, ("phlegethon", "Argus Panoptes", ClassType.Solo));
             Bot.Wait.ForPickup("Argus' Iris");
         }
     }
