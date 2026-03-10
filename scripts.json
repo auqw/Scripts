@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 56454,
-    "sha256": "d9c7a571442fbc188fe8896111777218f7d32e2a4b2c6055cbc21b104ec8ddf1",
+    "size": 57355,
+    "sha256": "1ae1bc4518e4fe5761006b28c81b095b960f483c0c4ff008773fabceda6107c2",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -1929,8 +1929,8 @@
       "titan-attack"
     ],
     "path": "Story/TitanAttack.cs",
-    "size": 4701,
-    "sha256": "aab8239348a5d73b35714554794afb365c74eaac3b57ccd6d085537ec1528e4e",
+    "size": 4655,
+    "sha256": "ac2235422e8bcea1d99c7d5142bde3a72cb915d15bfdb64f39b8f070f6c8cdf0",
     "fileName": "TitanAttack.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/TitanAttack.cs"
   },
