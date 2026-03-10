@@ -123,11 +123,7 @@ public class TitanAttackStory
 
         // Topple Some Titans! 8776
         Core.AddDrop("Heroic Titan's Greatsword");
-        Story.KillQuest(
-            8776,
-            "titanstrike",
-            new[] { "Titanic Paladin", "Titanic DoomKnight", "Titanic Destroyer" }
-        );
+        Story.KillQuest(8776, "titanstrike", new[] { "Titanic Paladin", "Titanic DoomKnight", "Titanic Destroyer" });
 
         // The BIG Finish 8777
         Adv.EnhanceItem(
