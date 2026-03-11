@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 157744,
-    "sha256": "ccb3b4e86278f14e7589f5b86241d1a3fd30f9bfdd370d990b2f1f1f1b5ba3b7",
+    "size": 158920,
+    "sha256": "e5017c326fa22ba483a165a7b7a2b700630d6f1393abf697f287b0d4e0c3db7c",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -87,7 +87,7 @@
     ],
     "path": "Farm/CombatTrophy.cs",
     "size": 1532,
-    "sha256": "c223bc4090b42aa43c9ece52a7389c4e8cdb905635292c90bbfd72f6cc0ecaad",
+    "sha256": "f269eeb15932a182c09fdbf3a1cc51d38247168e682587575d4d29f3cc91e98b",
     "fileName": "CombatTrophy.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/CombatTrophy.cs"
   },
@@ -3424,8 +3424,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 37995,
-    "sha256": "248fd223e769f6f5840432c4558d05aa6047e3dcd7e27fa33e411272c991f503",
+    "size": 38891,
+    "sha256": "3ef9576b61fcfb631da3e6ca6f561e7b8ebca396b90142a1e0c7041619ca4173",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
