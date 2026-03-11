@@ -854,7 +854,10 @@ public class CoreSDKA
             return;
 
         if (!Core.CheckInventory("Necrotic Broadsword of Bane", 1, false))
+        {
             NecroticBroadsword();
+            Core.Logger(" \"Necrotic Broadsword of Bane\" still now owned, most likely missing Daily metal stuffs, stopping", stopBot: true);
+        }
 
         PinpointthePieces(2183, new[] { "Diabolical Aura" }, new[] { quant });
     }
@@ -867,8 +870,16 @@ public class CoreSDKA
         )
             return;
 
-        if (!Core.CheckInventory("Necrotic Bow of the Shadow", 1, false)) // Assuming third argument is toInv
+        if (!Core.CheckInventory("Necrotic Bow of the Shadow", 1, false))
+        {
             NecroticBow();
+            // Recheck
+            if (!Core.CheckInventory("Necrotic Bow of the Shadow", 1, false))
+                Core.Logger(" \"Necrotic Bow of the Shadow\" still now owned, most likely missing Daily metal stuffs, stopping", stopBot: true);
+
+        }
+
+
 
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger("Dark Spirit Orb", quantDSO);
