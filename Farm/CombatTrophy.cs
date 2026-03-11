@@ -40,7 +40,7 @@ public class CombatTrophy
     public void DoCombatTrophy()
     {
         Core.Logger(
-            "90% of this farm is going to be transitioning rooms during pvp. There is nothing we can do to speed this up as it takes 2 return packets from the server a move and a \"mcid\" packet to actualy transition rooms. ( no you can't jump cells as itll soft-lock the map, and yes we've tried teh walking method its **Very** unrelaible as you cna just get stuck at doors.)"
+            "90% of this farm is going to be transitioning rooms during pvp. There is nothing we can do to speed this up as it takes 2 return packets from the server a move and a \"mcid\" packet to actualy transition rooms. ( no you can't jump cells as itll soft-lock the map, and yes we've tried teh walking method its **Very** unrelaible as you can just get stuck at doors.)"
         );
         Farm.BludrutBrawlBoss();
     }

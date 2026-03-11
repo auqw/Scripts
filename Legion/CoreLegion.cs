@@ -749,7 +749,7 @@ public class CoreLegion
         Core.FarmingLogger("Legion Token", quant);
         Core.AddDrop("Legion Token");
         Core.RegisterQuests(4100);
-            Core.KillMonster("dragonheart", "r6", "Right", "Zombie Dragon", "Legion Token", quant, isTemp: false);
+        Core.KillMonster("dragonheart", "r6", "Right", "Zombie Dragon", "Legion Token", quant, isTemp: false);
         Core.CancelRegisteredQuests();
     }
 
@@ -1009,6 +1009,11 @@ public class CoreLegion
             }
             Core.PvPMove(28, "r15", 941, 348);
 
+            int startTrophy = Bot.Inventory.GetQuantity("Legion Combat Trophy");
+            int startTechnique = Bot.Inventory.GetQuantity("Technique Observed");
+            int startScroll = Bot.Inventory.GetQuantity("Sword Scroll Fragment");
+
+
             // Boss kill... GL without the debuff
             Bot.Kill.Monster(27);
 
@@ -1021,13 +1026,27 @@ public class CoreLegion
 
             Bot.Wait.ForDrop("Legion Combat Trophy", 40);
             Bot.Wait.ForPickup("Legion Combat Trophy");
+
+            // Wait for server PvP reward packet to update inventory
+            int trophyNow = Bot.Inventory.GetQuantity("Legion Combat Trophy");
+            int techniqueNow = Bot.Inventory.GetQuantity("Technique Observed");
+            int scrollNow = Bot.Inventory.GetQuantity("Sword Scroll Fragment");
+
+            while (!Bot.ShouldExit &&
+                  trophyNow <= startTrophy &&
+                  techniqueNow <= startTechnique &&
+                  scrollNow <= startScroll)
+            {
+                Core.Sleep(500);
+
+                trophyNow = Bot.Inventory.GetQuantity("Legion Combat Trophy");
+                techniqueNow = Bot.Inventory.GetQuantity("Technique Observed");
+                scrollNow = Bot.Inventory.GetQuantity("Sword Scroll Fragment");
+            }
+
             LogFarmingProgress();
             Exit("Enter0", exitAttempt: ref exitAttempt);
-            if (CheckInventoryCompletion())
-            {
-                Core.Join("Battleon-99999");
-                break;
-            }
+
         }
         // Ensure we exit the map before going esle where
         if (Bot.Map.Name == "dagepvp")

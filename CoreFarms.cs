@@ -1064,7 +1064,7 @@ public class CoreFarms
         }
 
         canSoloBoss = Core.CBOBool("PvP_SoloPvPBoss", out bool KillAds);
-        Core.Logger($"`Kill Ads` Enabled? {KillAds}");
+        Core.Logger($"`Kill Ads` Enabled? {KillAds}" + (KillAds ? "if enabled this will kill the healers aswell for an aditional 3 trophies (totaling 10) but will take longer." : ""));
         Core.AddDrop(new[] { item } ?? new[] { "The Secret 4", "Yoshino's Citrine" });
 
         Core.EquipClass(ClassType.Solo);
@@ -1084,6 +1084,9 @@ public class CoreFarms
             Core.Equip(amulet);
         }
 
+        int CurrentTrohpies;
+        int UpdatedTrophies;
+
     Start:
         int ExitAttempt = 1;
         int Death = 0;
@@ -1092,6 +1095,7 @@ public class CoreFarms
         {
             Core.Join("bludrutbrawl-999999", "Enter0", "Spawn");
             Bot.Wait.ForMapLoad("bludrutbrawl");
+            CurrentTrohpies = Bot.Inventory.GetQuantity("Combat Trophy");
 
             Core.PvPMove(5, "Morale0C", random.Next(784, 862), random.Next(254, 274));
             Core.PvPMove(4, "Morale0B", random.Next(786, 850), random.Next(262, 287));
@@ -1154,14 +1158,30 @@ public class CoreFarms
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
 
+            // Wait for drop to appear in stack
             Bot.Wait.ForTrue(() => Bot.Drops.CurrentDrops.Contains(item), 40);
 
             Core.Sleep(1500);
             Bot.Wait.ForPickup(item, 40);
+
+            // Record updated quantity until server actually updates it
+            UpdatedTrophies = Bot.Inventory.GetQuantity(item);
+
+            while (!Bot.ShouldExit && UpdatedTrophies <= CurrentTrohpies)
+            {
+                Core.Sleep(500); // give server time to process PvP reward
+                UpdatedTrophies = Bot.Inventory.GetQuantity(item);
+            }
+
+            // Update baseline so next run compares correctly
+            CurrentTrohpies = UpdatedTrophies;
+
             if (!string.IsNullOrEmpty(item))
                 Core.FarmingLogger(item, quant);
+
             Core.Sleep(1500);
             goto Exit;
+
 
         Exit:
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
@@ -3180,13 +3200,24 @@ public class CoreFarms
         {
             while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             {
+                int startQuant = Bot.Inventory.GetQuantity(item);
+
                 ExecuteOneBrawlRun();
 
-                if (item != null)
+                Bot.Wait.ForTrue(() => Bot.Inventory.GetQuantity(item) > startQuant, 40);
+
+
+                // Wait for delayed PvP reward packet
+                int updatedQuant = Bot.Inventory.GetQuantity(item);
+
+                while (!Bot.ShouldExit && updatedQuant <= startQuant)
                 {
-                    Bot.Wait.ForPickup(item, 40);
-                    Core.FarmingLogger(item, quant);
+                    Core.Sleep(500);
+                    updatedQuant = Bot.Inventory.GetQuantity(item);
                 }
+
+                Core.FarmingLogger(item, quant);
+
 
                 runTimer.Stop();
                 TimeSpan ts = runTimer.Elapsed;
