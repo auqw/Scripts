@@ -4474,7 +4474,7 @@ public class CoreBots
                 }
                 if (
                     !Bot.Player.HasTarget
-                    || Bot.Player.Target != null && Bot.Player?.Target?.HP <= 0
+                    || Bot.Player.Target != null || Bot.Player?.Target?.HP > 0
                 )
                     Bot.Combat.Attack(monster); // ⚔️
 
@@ -4956,14 +4956,14 @@ public class CoreBots
                     Bot.Wait.ForCellChange(targetMonster?.Cell ?? "Enter");
                     Bot.Player!.SetSpawnPoint();
                 }
-                if (!Bot.Player!.HasTarget && targetMonster != null)
-                    Bot.Combat.Attack(targetMonster.Name);
+                if (!Bot.Player!.HasTarget && targetMonster != null && targetMonster.HP > 0)
+                    Bot.Combat.Attack(targetMonster?.Name);
 
-                Sleep();
+                Bot.Sleep(500);
 
                 if (
                     !Bot.Player.HasTarget
-                    || (Bot.Player.Target != null && Bot.Player.Target.HP <= 0)
+                    || (Bot.Player.Target != null && Bot.Player?.Target?.HP <= 0)
                 )
                 {
                     Bot.Options.AttackWithoutTarget = false;
@@ -4998,7 +4998,7 @@ public class CoreBots
                     Bot.Wait.ForCellChange(cellToJump);
                 }
 
-                if (!Bot.Player.HasTarget && targetMonster != null)
+                if (!Bot.Player.HasTarget || (targetMonster != null && targetMonster?.HP > 0))
                     Bot.Combat.Attack(targetMonster.Name);
 
                 Bot.Sleep(200);
@@ -6064,7 +6064,7 @@ public class CoreBots
 
                 if (
                     !Bot.Player.HasTarget
-                    || Bot.Player.Target == null && Bot.Player?.Target?.HP <= 0
+                    || Bot.Player.Target == null || Bot.Player?.Target?.HP > 0
                 )
                     Bot.Combat.Attack("*");
                 Bot.Sleep(200);
@@ -6208,7 +6208,7 @@ public class CoreBots
                         {
                             if (
                                 !Bot.Player!.HasTarget
-                                || Bot.Player.Target == null && Bot.Player?.Target?.HP <= 0
+                                || Bot.Player.Target == null || Bot.Player?.Target?.HP > 0
                             )
                                 Bot.Combat.Attack("*");
                             Bot.Sleep(500);
@@ -10034,7 +10034,7 @@ public class CoreBots
             {
                 if (
                     !Bot.Player.HasTarget
-                    || Bot.Player.Target == null && Bot.Player?.Target?.HP <= 0
+                    || Bot.Player.Target == null || Bot.Player?.Target?.HP > 0
                 )
                     Bot.Combat.Attack("*");
 
