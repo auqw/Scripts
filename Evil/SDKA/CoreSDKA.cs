@@ -114,8 +114,9 @@ public class CoreSDKA
         "Shadow Creeper Enchant",
         "Shadow Serpent Scythe",
     };
+
     SDKAQuest SelectedQuest;
-    public void DoAll(SDKAQuest sDKAQuest = SDKAQuest.APennyforYourFoughts)
+    public void DoAll()
     {
 
         if (Core.CheckInventory("Sepulchure's DoomKnight Armor") || !Core.IsMember)
@@ -128,10 +129,11 @@ public class CoreSDKA
             return;
         }
 
-        SelectedQuest = Bot.Config!.Get<SDKAQuest>(
-            "SelectedQuest",
-            Core.IsMember ? nameof(SDKAQuest.APennyforYourFoughts) : nameof(SDKAQuest.DarkSpiritOrbs)
-        );
+        SelectedQuest = Bot.Config!.Get<SDKAQuest>("SelectedQuest");
+
+        // Handle cases where `SelectedQuest` isnt selected (via other scripts besides the 0file)
+        if (SelectedQuest == 0 || string.IsNullOrEmpty(SelectedQuest.ToString()))
+            SelectedQuest = Core.IsMember ? SDKAQuest.APennyforYourFoughts : SDKAQuest.DarkSpiritOrbs;
 
         Core.AddDrop(SDKAItems);
         Core.Logger("Step 1/5: Unlock Hard Core Metals");
