@@ -5560,8 +5560,8 @@
       "member"
     ],
     "path": "Evil/SDKA/0SepulchureDoomKnightArmor.cs",
-    "size": 1240,
-    "sha256": "29cfdf7c6344e2eacdd0b86231159d72f5651f78c6b0e33609fd7cdcf2c4b8fd",
+    "size": 1197,
+    "sha256": "cd3b3240a7b596315cd966c8fde42737d0a73dd08cddce68c038cf95b021677f",
     "fileName": "0SepulchureDoomKnightArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/0SepulchureDoomKnightArmor.cs"
   },
@@ -5572,8 +5572,8 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 38418,
-    "sha256": "1a37e5b6fd50100c27604cdf3a792d583eb35c3e0fea88dfa3240f414fbc10c2",
+    "size": 38528,
+    "sha256": "9bbda35d6e414fbf7c37cba15b3d231f58bbe2a1f556e277c7da8de3451d3a03",
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
