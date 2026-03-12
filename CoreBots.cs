@@ -2993,6 +2993,33 @@ public class CoreBots
                     nonChooseQuests.Add(q, 0);
             }
 
+            ItemBase[] requiredItems = q
+           .AcceptRequirements.Where(x => !x.Temp)
+           .Concat(q.Requirements.Where(x => !x.Temp))
+           .Where(item => item != null && item.ID > 0)
+           .ToArray();
+
+            // Loop through the required items and add the Name if either the Name or the ID is not in CurrentDrops or ToPickupIDs
+            requiredItems
+                .ToList()
+                .ForEach(item =>
+                {
+                    // Check if either the Name or ID is not in the drops or pickup list
+                    if (
+                        item != null
+                        && (
+                            !Bot.Drops.ToPickup.Contains(item.Name)
+                            || !Bot.Drops.ToPickupIDs.Contains(item.ID)
+                        )
+                    )
+                    {
+
+                        // Add both ID and Name to the drop list if missing (ID is incase of duplicate names)
+                        AddDrop(item.Name);
+                        AddDrop(item.ID);
+                    }
+                });
+
             // Collect unique item IDs and unbank them in one call
             int[] itemsToUnbank = q
                 .AcceptRequirements.Concat(q.Requirements)
@@ -3001,12 +3028,6 @@ public class CoreBots
                 .ToArray();
 
             Unbank(itemsToUnbank);
-            Bot.Drops.Add(
-                q.AcceptRequirements.Concat(q.Requirements)
-                    .Where(x => x != null && !x.Temp)
-                    .Select(x => x.Name)
-                    .ToArray()
-            );
         }
         GC.Collect();
 
@@ -3305,18 +3326,37 @@ public class CoreBots
             if (Bot.Quests.IsInProgress(quest.ID) || quest.ID <= 0)
                 continue;
 
-            string?[] requiredItemNames = quest
-                .AcceptRequirements.Where(x => !x.Temp)
-                .Concat(quest.Requirements.Where(x => !x.Temp))
-                .Select(item => item?.Name)
-                .Where(name => !string.IsNullOrEmpty(name))
-                .ToArray();
+                  ItemBase[] requiredItems = quest
+            .AcceptRequirements.Where(x => !x.Temp)
+            .Concat(quest.Requirements.Where(x => !x.Temp))
+            .Where(item => item != null && item.ID > 0)
+            .ToArray();
 
-            foreach (string? itemName in requiredItemNames)
+        // Loop through the required items and add the Name if either the Name or the ID is not in CurrentDrops or ToPickupIDs
+        requiredItems
+            .ToList()
+            .ForEach(item =>
             {
-                if (itemName != null && !Bot.Inventory.Contains(itemName))
+                // Check if either the Name or ID is not in the drops or pickup list
+                if (
+                    item != null
+                    && (
+                        !Bot.Drops.ToPickup.Contains(item.Name)
+                        || !Bot.Drops.ToPickupIDs.Contains(item.ID)
+                    )
+                )
                 {
-                    Unbank(itemName);
+                    // Add both ID and Name to the drop list if missing (ID is incase of duplicate names)
+                    AddDrop(item.Name);
+                    AddDrop(item.ID);
+                }
+            });
+
+            foreach (ItemBase? itemName in requiredItems)
+            {
+                if (itemName != null && !Bot.Inventory.Contains(itemName.ID))
+                {
+                    Unbank(itemName.ID);
                 }
             }
 
@@ -4998,10 +5038,10 @@ public class CoreBots
                     Bot.Wait.ForCellChange(cellToJump);
                 }
 
-                if (!Bot.Player.HasTarget && (targetMonster != null && targetMonster.HP > 0))
+                if (!Bot.Player.HasTarget && targetMonster != null && targetMonster.HP > 0)
                     Bot.Combat.Attack(targetMonster.Name);
 
-                Bot.Sleep(200);
+                Bot.Sleep(500);
 
                 if (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
                     break;
@@ -6067,7 +6107,7 @@ public class CoreBots
                     || Bot.Player.Target == null || Bot.Player?.Target?.HP > 0
                 )
                     Bot.Combat.Attack("*");
-                Bot.Sleep(200);
+                Bot.Sleep(500);
             }
         }
 
