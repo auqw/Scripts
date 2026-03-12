@@ -37,7 +37,7 @@ public class SepulchureDoomKnightArmor
     {
         Core.SetOptions();
 
-        SDKA.DoAll();
+        SDKA.DoAll(Bot.Config!.Get<SDKAQuest>("SelectedQuest"));
 
         Core.SetOptions(false);
     }
