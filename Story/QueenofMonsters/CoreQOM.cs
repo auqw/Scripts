@@ -894,8 +894,7 @@ public class CoreQOM
         }
 
         //Smash the Hive
-        Story.KillQuest(5873, "BrokenWoods", "Hive");
-        Story.PreLoad(this);
+        Story.KillQuest(5873, "brokenwoods", "Hive");
 
         //Acolyte's Medallions
         if (!Story.QuestProgression(5874))
