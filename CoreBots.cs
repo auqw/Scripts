@@ -4947,7 +4947,7 @@ public class CoreBots
         {
             while (!Bot.ShouldExit)
             {
-                if (!Bot.Player.Alive)
+                if (Bot.Player != null && !Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
                 if (Bot.Player?.Cell != targetMonster?.Cell)
@@ -4957,7 +4957,7 @@ public class CoreBots
                     Bot.Player!.SetSpawnPoint();
                 }
                 if (!Bot.Player!.HasTarget && targetMonster != null && targetMonster.HP > 0)
-                    Bot.Combat.Attack(targetMonster?.Name);
+                    Bot.Combat.Attack(targetMonster.Name);
 
                 Bot.Sleep(500);
 
@@ -4998,7 +4998,7 @@ public class CoreBots
                     Bot.Wait.ForCellChange(cellToJump);
                 }
 
-                if (!Bot.Player.HasTarget || (targetMonster != null && targetMonster?.HP > 0))
+                if (!Bot.Player.HasTarget && (targetMonster != null && targetMonster.HP > 0))
                     Bot.Combat.Attack(targetMonster.Name);
 
                 Bot.Sleep(200);
