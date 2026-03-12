@@ -114,9 +114,10 @@ public class CoreSDKA
         "Shadow Creeper Enchant",
         "Shadow Serpent Scythe",
     };
-
-    public void DoAll()
+    SDKAQuest SelectedQuest;
+    public void DoAll(SDKAQuest sDKAQuest = SDKAQuest.APennyforYourFoughts)
     {
+
         if (Core.CheckInventory("Sepulchure's DoomKnight Armor") || !Core.IsMember)
         {
             Core.Logger(
@@ -127,6 +128,7 @@ public class CoreSDKA
             return;
         }
 
+        SelectedQuest = Bot.Config!.Get<SDKAQuest>("SelectedQuest") ?? (Core.IsMember) ? SDKAQuest.APennyforYourFoughts : SDKAQuest.DarkSpiritOrbs;
         Core.AddDrop(SDKAItems);
         Core.Logger("Step 1/5: Unlock Hard Core Metals");
         UnlockHardCoreMetals();
@@ -258,7 +260,9 @@ public class CoreSDKA
         if (Core.CheckInventory("Dark Spirit Orb", quant))
             return;
 
-        if (Bot.Config!.Get<SDKAQuest>("SelectedQuest") == SDKAQuest.DarkSpiritOrbs)
+        Core.Logger($"Selected farming Quest: {SelectedQuest}");
+
+        if (SelectedQuest == SDKAQuest.DarkSpiritOrbs)
             DSO(quant);
         else
             Penny(quant);
@@ -275,6 +279,7 @@ public class CoreSDKA
                 : $"Farming \"Dark Spirit Orb\" {Core.dynamicQuant("Dark Spirit Orb", false)} / {quant}"
         );
 
+        UnlockHardCoreMetals();
         Core.AddDrop("DoomCoin", "Dark Spirit Orb", "Shadow Creeper Enchant");
         Core.EquipClass(ClassType.Farm);
         if (oneTime)
