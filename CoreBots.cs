@@ -2507,31 +2507,20 @@ public class CoreBots
     /// <returns>A list of <see cref="ShopItem"/> objects from the specified shop, or an empty list if the shop data could not be loaded.</returns>
     public List<ShopItem> GetShopItems(string map, int shopID)
     {
-
         // Ensure player is in map
-        if (Bot.Map.Name != map)
+        if (!Bot.Map.Name.Equals(map, StringComparison.OrdinalIgnoreCase))
         {
             Join(map);
             Bot.Wait.ForMapLoad(map);
-            Bot.Wait.ForTrue(() => Bot.Player.Loaded && Bot.Player?.Cell != null, 20);
         }
 
         int retry = 0;
         while (!Bot.ShouldExit && retry++ < 20)
         {
-            // Re-Ensure player is in map
-            if (Bot.Map.Name != map)
-            {
-                Join(map);
-                Bot.Wait.ForMapLoad(map);
-                Bot.Wait.ForTrue(() => Bot.Player.Loaded && Bot.Player?.Cell != null, 20);
-            }
-
             if (Bot.Shops.IsLoaded && Bot.Shops.ID == shopID)
                 break;
 
-            if (Bot.Map.Name != map)
-                Bot.Shops.Load(shopID);
+            Bot.Shops.Load(shopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(
                 () => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID,
