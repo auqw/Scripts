@@ -113,28 +113,10 @@ public class CocytusBarracksMerge
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EquipClass(ClassType.Solo);
-                        Core.HuntMonster(
-                            "cocytusbarracks",
-                            "Maleagant",
-                            "Aestiua Shard",
-                            log: false
-                        );
+                        Core.HuntMonster("cocytusbarracks", "Maleagant", "Aestiua Shard", log: false);
                         Core.EquipClass(ClassType.Farm);
-                        Core.HuntMonster(
-                            "cocytusbarracks",
-                            "Cerberus Pup",
-                            "Phlegethon Tag",
-                            8,
-                            log: false
-                        );
-                        Core.HuntMonster(
-                            "cocytusbarracks",
-                            "Mourner",
-                            "Lethe Wreath",
-                            8,
-                            log: false
-                        );
-                        Bot.Wait.ForPickup(req.Name);
+                        Core.HuntMonster("cocytusbarracks", "Cerberus Pup", "Phlegethon Tag", 8, log: false);
+                        Core.HuntMonster("cocytusbarracks", "Mourner", "Lethe Wreath", 8, log: false); Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
                     break;
