@@ -5560,8 +5560,8 @@
       "member"
     ],
     "path": "Evil/SDKA/0SepulchureDoomKnightArmor.cs",
-    "size": 1197,
-    "sha256": "cd3b3240a7b596315cd966c8fde42737d0a73dd08cddce68c038cf95b021677f",
+    "size": 1240,
+    "sha256": "29cfdf7c6344e2eacdd0b86231159d72f5651f78c6b0e33609fd7cdcf2c4b8fd",
     "fileName": "0SepulchureDoomKnightArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/0SepulchureDoomKnightArmor.cs"
   },
@@ -5572,8 +5572,8 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 38065,
-    "sha256": "f645fc43b8d939a01fa63c3832662439b32ec7180bb741790f9e58ac65dcd566",
+    "size": 38367,
+    "sha256": "f726876ff323197b766085315c35407b5b338d29262cc21c07584263a2c0cef2",
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
@@ -17822,8 +17822,8 @@
       "timeinn"
     ],
     "path": "Other/Classes/DragonOfTime.cs",
-    "size": 17963,
-    "sha256": "0f3cce1b2614534e94f4f3a9517fa1da45e4daa9de0201b87f20d328784ef3cc",
+    "size": 17290,
+    "sha256": "63073a227a7d4e5ed1237fa80f5eb07404a8847dd725ab4030e523ec1fcdb9d9",
     "fileName": "DragonOfTime.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonOfTime.cs"
   },
