@@ -4018,7 +4018,7 @@ public class CoreFarms
         Core.SavedState(false);
     }
 
-    public void SwordhavenREP(int rank = 10)
+    public void SwordhavenREP(int rank = 11)
     {
         if (FactionRank("Swordhaven") >= rank)
             return;
@@ -4034,17 +4034,17 @@ public class CoreFarms
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
             Core.EnsureAcceptmultiple(new[] { 3065, 3066, 3067, 3070, 3085, 3086, 3087 });
-            Core.HuntMonster("castle", "Castle Spider", "Eradicated Arachnid", 10, log: false);
-            Core.HuntMonster("castle", "Castle Spider", "Castle Spider Silk", 8, log: false);
-            Core.HuntMonster("castle", "Castle Spider", "Castle Spider Silk Yarn", 2, log: false);
-            Core.HuntMonster("castle", "Castle Wraith", "Castle Wraith Defeated", 10, log: false);
-            Core.HuntMonster("castle", "Castle Wraith", "Jarred Wraith", 5, log: false);
-            Core.HuntMonster("castle", "Castle Wraith", "Castle Wraith Wool", 2, log: false);
-            Core.HuntMonster("castle", "Gargoyle", "Stony Plating", 6, log: false);
-            Core.HuntMonster("castle", "Gargoyle", "Gargoyle Gems", 2, log: false);
-            Core.HuntMonster("castle", "Dungeon Fiend", "Dungeon Fiend Hair Bow", 5, log: false);
-            Core.HuntMonster("castle", "Dungeon Fiend", "Dungeon Fiend Bow Tie", 5, log: false);
-            Core.HuntMonster("castle", "Dungeon Fiend", "Dungeon Fiend Textiles", 2, log: false);
+            Core.HuntMonster("castle", "Castle Spider", "Eradicated Arachnid", 10);
+            Core.HuntMonster("castle", "Castle Spider", "Castle Spider Silk", 8);
+            Core.HuntMonster("castle", "Castle Spider", "Castle Spider Silk Yarn", 2);
+            Core.HuntMonster("castle", "Castle Wraith", "Castle Wraith Defeated", 10);
+            Core.HuntMonster("castle", "Castle Wraith", "Jarred Wraith", 5);
+            Core.HuntMonster("castle", "Castle Wraith", "Castle Wraith Wool", 2);
+            Core.HuntMonster("castle", "Gargoyle", "Stony Plating", 6);
+            Core.HuntMonster("castle", "Gargoyle", "Gargoyle Gems", 2);
+            Core.HuntMonster("castle", "Dungeon Fiend", "Dungeon Fiend Hair Bow", 5);
+            Core.HuntMonster("castle", "Dungeon Fiend", "Dungeon Fiend Bow Tie", 5);
+            Core.HuntMonster("castle", "Dungeon Fiend", "Dungeon Fiend Textiles", 2);
             Core.EnsureComplete(new[] { 3065, 3066, 3067, 3070, 3085, 3086, 3087 });
         }
         Core.CancelRegisteredQuests();
