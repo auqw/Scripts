@@ -128,7 +128,9 @@ public class CoreSDKA
             return;
         }
 
-        SelectedQuest = Bot.Config!.Get<SDKAQuest>("SelectedQuest") ?? (Core.IsMember) ? SDKAQuest.APennyforYourFoughts : SDKAQuest.DarkSpiritOrbs;
+        SelectedQuest = Bot.Config!.Get<SDKAQuest>("SelectedQuest")
+            ?? (Core.IsMember ? SDKAQuest.APennyforYourFoughts : SDKAQuest.DarkSpiritOrbs);
+
         Core.AddDrop(SDKAItems);
         Core.Logger("Step 1/5: Unlock Hard Core Metals");
         UnlockHardCoreMetals();
