@@ -164,8 +164,8 @@ public class LibrarysLostandFoundMerge
         if (!Core.isCompletedBefore(10098))
             Linen(1);
         if (!Core.isCompletedBefore(10100))
-        {
-            Core.HuntMonsterQuest(10100, ("legionlibrary", "Cerberus Pup", ClassType.Farm));
+        {        
+            Core.HuntMonsterQuest(10100, ("Phlegethon ", "Cerberus Pup", ClassType.Farm));
         }
         while (!Bot.ShouldExit && !Core.CheckInventory("River Glowstone", quant))
         {
