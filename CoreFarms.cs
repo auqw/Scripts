@@ -2803,36 +2803,11 @@ public class CoreFarms
         {
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
-            Core.EnsureAccept(1721);
-            Core.HuntMonster(
-                "etherwardes",
-                "Water Dragon Warrior",
-                "Water Dragon Tears",
-                3,
-                log: false
-            );
-            Core.HuntMonster(
-                "etherwardes",
-                "Fire Dragon Warrior",
-                "Fire Dragon Flames",
-                3,
-                log: false
-            );
-            Core.HuntMonster(
-                "etherwardes",
-                "Air Dragon Warrior",
-                "Air Dragon Breaths",
-                3,
-                log: false
-            );
-            Core.HuntMonster(
-                "etherwardes",
-                "Earth Dragon Warrior",
-                "Earth Dragon Claws",
-                3,
-                log: false
-            );
-            Core.EnsureComplete(1721);
+
+            Core.EnsureAccept(3494);
+            Core.HuntMonster("waterstorm", "Fishwing", "Silvery Fins", 4, log: false);
+            Core.HuntMonster("waterstorm", "Frogdrake", "Marsh Leather", 8, log: false);
+            Core.EnsureComplete(3494);
         }
         // Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
