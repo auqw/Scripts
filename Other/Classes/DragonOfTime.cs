@@ -304,17 +304,7 @@ public class DragonOfTime
             }
 
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "aqw3d",
-                "r13",
-                "Bottom",
-                "*",
-                "Cross-Dimensional Weapons",
-                300,
-                isTemp: false,
-                publicRoom: true
-            );
-
+            Core.KillMonster("aqw3d", "r13", "Bottom", "*", "Cross-Dimensional Weapons", 300, isTemp: false, publicRoom: true);
             TOD.ShiftingPyramid();
             if (!Core.CheckInventory("Starlight Singularity"))
             {
@@ -345,23 +335,11 @@ public class DragonOfTime
             Core.HuntMonster("moonlab", "Slime Mold", "Unyielding Slime", 300, false);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "bosschallenge",
-                "Mutated Void Dragon",
-                "Omnipotent Cells",
-                20,
-                false,
-                publicRoom: true
-            );
-
+            Core.HuntMonster("bosschallenge", "Mutated Void Dragon", "Omnipotent Cells", 20, false, publicRoom: true);
             if (!Core.CheckInventory("Dragon's Plasma", 20))
             {
                 //why the fuck was the class buffed!?
-                InventoryItem? usethis = Bot
-                    .Inventory.Items.Concat(Bot.Bank.Items)
-                    .FirstOrDefault(n =>
-                        n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
-                    );
+                InventoryItem? usethis = Bot.Inventory.Items.Concat(Bot.Bank.Items).FirstOrDefault(n => n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer"));
                 if (usethis != null)
                 {
                     Core.Equip(usethis.ID);
@@ -374,35 +352,12 @@ public class DragonOfTime
             Core.JumpWait();
             Core.EquipClass(ClassType.Solo);
 
-            Core.HuntMonster(
-                "chaoskraken",
-                "Chaos Kraken",
-                "Chaotic Invertebrae",
-                20,
-                false,
-                publicRoom: true
-            );
+            Core.HuntMonster("chaoskraken", "Chaos Kraken", "Chaotic Invertebrae", 20, false, publicRoom: true);
 
             Bot.Quests.UpdateQuest(9, 159);
-            Core.HuntMonster(
-                "towerofdoom9",
-                "Dread Fang",
-                "Cryostatic Essence",
-                20,
-                false,
-                publicRoom: true
+            Core.HuntMonster("towerofdoom9", "Dread Fang", "Cryostatic Essence", 20, false, publicRoom: true);
 
-            );
-
-            Core.HuntMonster(
-                "castleroof",
-                "Ultra Chaos Dragon",
-                "Salvaged Chaos Dragon Biomass",
-                20,
-                false,
-                publicRoom: true
-            );
-
+            Core.HuntMonster("castleroof", "Ultra Chaos Dragon", "Salvaged Chaos Dragon Biomass", 20, false, publicRoom: true);
             Story.ChainQuest(7722);
             Bot.Wait.ForPickup("*");
             Core.ToBank("Dragon of Time Reaper", "Dragon of Time WingBlade");
