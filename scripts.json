@@ -5572,8 +5572,8 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 38528,
-    "sha256": "9bbda35d6e414fbf7c37cba15b3d231f58bbe2a1f556e277c7da8de3451d3a03",
+    "size": 38803,
+    "sha256": "bc6a883af92007719ab2871232150c9dbb5a9fdce94ff9e2db076019d55aa3b0",
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
@@ -30843,7 +30843,7 @@
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs",
     "size": 9250,
-    "sha256": "4ac11a687633a888d3e664efea2fbe4430cbfdfd08c6298082a7f9cf331d14b6",
+    "sha256": "8ffb1569af03981d3fc2de541416345a8427eaa244f9d942f0c8851bb2403ccb",
     "fileName": "CoreDageBirthday.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs"
   },
