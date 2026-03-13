@@ -292,7 +292,11 @@ public class CoreSDKA
                 ? $"oneTime set to: {oneTime}"
                 : $"Farming \"Dark Spirit Orb\" {Core.dynamicQuant("Dark Spirit Orb", false)} / {quant}"
         );
-        UnlockHardCoreMetals();
+        
+        // Prevent recursion when called from the unlock quest
+        if (!oneTime)
+            UnlockHardCoreMetals();
+
         Core.AddDrop("DoomCoin", "Dark Spirit Orb", "Shadow Creeper Enchant");
         Core.EquipClass(ClassType.Farm);
         if (oneTime)
