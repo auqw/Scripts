@@ -2648,7 +2648,7 @@ public class CoreFarms
         Core.SavedState(false);
     }
 
-    public void ElementalMasterREP(int rank = 11)
+    public void ElementalMasterREP(int rank = 10)
     {
         if (FactionRank("Elemental Master") >= rank)
             return;
