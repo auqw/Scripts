@@ -125,11 +125,11 @@ public class CoreSoC
         }
 
         //Defeat Goldun 7687
-        if (!Bot.Quests.IsUnlocked(7686))
+        if (!Story.QuestProgression(7687))
         {
-            Core.EnsureAccept(7686);
+            Core.EnsureAccept(7687);
             Core.HuntMonster("chaosamulet", "Goldun", "Goldun Defeated");
-            Core.EnsureComplete(7686);
+            Core.EnsureComplete(7687);
         }
 
         //Goldun Wants Revenge 7688
@@ -178,7 +178,7 @@ public class CoreSoC
         Story.KillQuest(7698, "lagunabeach", "ShadowChaos Gunner");
 
         //The Heart of the Matter 7699
-        Story.KillQuest(7697, "lagunabeach", "Heart of Chaos");
+        Story.KillQuest(7699, "lagunabeach", "Heart of Chaos");
 
         // A Closer Look 7700
         Story.KillQuest(7700, "lagunabeach", "Flying Fisheye");
