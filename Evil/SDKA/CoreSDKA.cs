@@ -150,7 +150,8 @@ public class CoreSDKA
 
     public void UnlockHardCoreMetals()
     {
-        if (!Core.IsMember || Core.isCompletedBefore(2090))
+        //                    // Hard Core Metals | 2098
+        if (!Core.IsMember || Core.isCompletedBefore(2098))
         {
             Core.Logger(
                 message: !Core.IsMember
@@ -175,6 +176,7 @@ public class CoreSDKA
         );
 
         #region DoQuests
+        // Sepulchure's Armor | 2069
         if (!Story.QuestProgression(2069))
         {
             Core.EnsureAccept(2069);
@@ -186,6 +188,7 @@ public class CoreSDKA
             Core.ToBank("Experimental Dark Item");
         }
 
+        // The Doom that Looms | 2086 - 2087
         if (!Story.QuestProgression(Core.CheckInventory(8523) ? 2086 : 2087))
         {
             Core.EnsureAccept(Core.CheckInventory(8523) ? 2086 : 2087);
@@ -231,6 +234,7 @@ public class CoreSDKA
                 Core.ToBank(Core.IsMember ? 8523 : 2083);
         }
 
+        // Toiling with Terror | 2088
         if (!Story.QuestProgression(2088))
         {
             Core.EnsureAccept(2088);
@@ -248,9 +252,13 @@ public class CoreSDKA
             Core.ToBank("Elders' Blood");
         }
 
-        // 2089
-        Penny(Bot.Inventory.GetQuantity("Dark Spirit Orb") + 1, true);
+        // A Penny for your Foughts | 2089
+        if (!Story.QuestProgression(2089))
+        {
+            Penny(oneTime: true);
+        }
 
+        // Dark Spirit Donation | 2090
         if (!Story.QuestProgression(2090))
         {
             Core.EnsureAccept(2090);
@@ -284,7 +292,6 @@ public class CoreSDKA
                 ? $"oneTime set to: {oneTime}"
                 : $"Farming \"Dark Spirit Orb\" {Core.dynamicQuant("Dark Spirit Orb", false)} / {quant}"
         );
-
         UnlockHardCoreMetals();
         Core.AddDrop("DoomCoin", "Dark Spirit Orb", "Shadow Creeper Enchant");
         Core.EquipClass(ClassType.Farm);
