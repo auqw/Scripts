@@ -2648,7 +2648,7 @@ public class CoreFarms
         Core.SavedState(false);
     }
 
-    public void ElementalMasterREP(int rank = 10)
+    public void ElementalMasterREP(int rank = 11)
     {
         if (FactionRank("Elemental Master") >= rank)
             return;
@@ -2679,17 +2679,19 @@ public class CoreFarms
         if (!Bot.Quests.IsDailyComplete(3299) && Core.IsMember)
         {
             Core.Logger("Doing daily first.");
+
             Core.EnsureAccept(3299);
-            foreach (var element in elementalItems)
-                Core.HuntMonster(
-                    "gilead",
-                    $"{element.Key} Elemental",
-                    element.Value.Item1,
-                    6,
-                    log: false
-                ); // Use the second item
+
+            Core.EquipClass(ClassType.Farm);
+
+            Core.HuntMonster("gilead", "Water Elemental", "Water Drop", 6);
+            Core.HuntMonster("gilead", "Fire Elemental", "Flame", 6);
+            Core.HuntMonster("gilead", "Wind Elemental", "Breeze", 6);
+            Core.HuntMonster("gilead", "Earth Elemental", "Stone", 6);
+
             Core.EnsureComplete(3299);
         }
+
 
         Core.Logger(
             !Core.IsMember ? "Daily is mem only, Onto the Farm" : "Daily complete, onto the farm."
@@ -2700,26 +2702,19 @@ public class CoreFarms
         {
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
+
             Core.EnsureAcceptmultiple(new[] { 3050, 3298 });
+
             Core.EquipClass(ClassType.Farm);
-            foreach (var element in elementalItems)
-            {
-                Core.HuntMonster(
-                    "gilead",
-                    $"{element.Key} Elemental",
-                    element.Value.Item2,
-                    log: false
-                ); // Use the second item
-                Core.HuntMonster(
-                    "gilead",
-                    $"{element.Key} Elemental",
-                    element.Value.Item1,
-                    5,
-                    log: false
-                ); // Use the second item
-            }
+            Core.HuntMonsterMulti("gilead", "Water Elemental", new[] { ("Water Core", 1, true), ("Water Drop", 5, true) }, log: false);
+            Core.HuntMonsterMulti("gilead", "Fire Elemental", new[] { ("Fire Core", 1, true), ("Flame", 5, true) }, log: false);
+            Core.HuntMonsterMulti("gilead", "Wind Elemental", new[] { ("Air Core", 1, true), ("Breeze", 5, true) }, log: false);
+            Core.HuntMonsterMulti("gilead", "Earth Elemental", new[] { ("Earth Core", 1, true), ("Stone", 5, true) }, log: false);
+
+
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("gilead", "Mana Elemental", "Mana Core", log: false);
+
             Core.EnsureComplete(new[] { 3050, 3298 });
         }
 

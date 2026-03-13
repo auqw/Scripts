@@ -3326,31 +3326,31 @@ public class CoreBots
             if (Bot.Quests.IsInProgress(quest.ID) || quest.ID <= 0)
                 continue;
 
-                  ItemBase[] requiredItems = quest
-            .AcceptRequirements.Where(x => !x.Temp)
-            .Concat(quest.Requirements.Where(x => !x.Temp))
-            .Where(item => item != null && item.ID > 0)
-            .ToArray();
+            ItemBase[] requiredItems = quest
+      .AcceptRequirements.Where(x => !x.Temp)
+      .Concat(quest.Requirements.Where(x => !x.Temp))
+      .Where(item => item != null && item.ID > 0)
+      .ToArray();
 
-        // Loop through the required items and add the Name if either the Name or the ID is not in CurrentDrops or ToPickupIDs
-        requiredItems
-            .ToList()
-            .ForEach(item =>
-            {
-                // Check if either the Name or ID is not in the drops or pickup list
-                if (
-                    item != null
-                    && (
-                        !Bot.Drops.ToPickup.Contains(item.Name)
-                        || !Bot.Drops.ToPickupIDs.Contains(item.ID)
-                    )
-                )
+            // Loop through the required items and add the Name if either the Name or the ID is not in CurrentDrops or ToPickupIDs
+            requiredItems
+                .ToList()
+                .ForEach(item =>
                 {
-                    // Add both ID and Name to the drop list if missing (ID is incase of duplicate names)
-                    AddDrop(item.Name);
-                    AddDrop(item.ID);
-                }
-            });
+                    // Check if either the Name or ID is not in the drops or pickup list
+                    if (
+                        item != null
+                        && (
+                            !Bot.Drops.ToPickup.Contains(item.Name)
+                            || !Bot.Drops.ToPickupIDs.Contains(item.ID)
+                        )
+                    )
+                    {
+                        // Add both ID and Name to the drop list if missing (ID is incase of duplicate names)
+                        AddDrop(item.Name);
+                        AddDrop(item.ID);
+                    }
+                });
 
             foreach (ItemBase? itemName in requiredItems)
             {
@@ -5018,8 +5018,7 @@ public class CoreBots
         else
         {
             if (log)
-                FarmingLogger($"💎 {item}", quant); // 💎 logger emote
-
+                Logger($"Killing {monster} for item: \"{item}\" " + $"{Bot.Inventory.GetQuantity(item)}/{quant}", "HuntMonster");
             while (
                 !Bot.ShouldExit
                 && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
@@ -5028,6 +5027,7 @@ public class CoreBots
                 if (!Bot.Player.Alive)
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
 
+                targetMonster = FindMonster(map, monster);
                 if (targetMonster == null)
                     continue;
 
@@ -5069,6 +5069,109 @@ public class CoreBots
         }
     }
 
+    /// <summary>
+    /// Hunts a monster for multiple items with independent temp checks.
+    /// </summary>
+    public void HuntMonsterMulti(
+        string map,
+        string monster,
+        (string item, int quant, bool isTemp)[] items,
+        bool log = true,
+        bool publicRoom = false
+    )
+    {
+        if (items == null || items.Length == 0)
+            return;
+
+        // Exit early if everything is already obtained
+        if (items.All(x => x.isTemp
+                ? Bot.TempInv.Contains(x.item, x.quant)
+                : CheckInventory(x.item, x.quant)))
+            return;
+
+        if (Bot.Map.Name != map)
+        {
+            Join(map, publicRoom: publicRoom);
+            Bot.Wait.ForMapLoad(map);
+        }
+
+        Bot.Options.AggroAllMonsters = false;
+        Bot.Options.AggroMonsters = false;
+
+        // Register non-temp drops
+        foreach ((string item, _, bool isTemp) in items)
+            if (!isTemp)
+                AddDrop(item);
+
+        Monster? targetMonster = FindMonster(map, monster);
+        if (targetMonster == null)
+        {
+            Logger($"⚠️ Monster \"{monster}\" not found in /{map}.");
+            return;
+        }
+
+        if (Bot.Map.PlayerNames?.Any(x => x != Bot.Player.Username) == true)
+        {
+            Bot.Options.AggroMonsters = true;
+            Bot.Options.HidePlayers = true;
+        }
+        else
+            Bot.Options.AggroMonsters = false;
+
+        if (log)
+        {
+            foreach ((string item, int quant, bool isTemp) in items)
+            {
+                int current = isTemp
+                    ? Bot.TempInv.GetQuantity(item)
+                    : Bot.Inventory.GetQuantity(item);
+
+                Logger($"Farming \"{item}\" {current}/{quant}", "HuntMonsterMulti");
+            }
+        }
+
+        while (!Bot.ShouldExit &&
+            !items.All(x => x.isTemp
+                ? Bot.TempInv.Contains(x.item, x.quant)
+                : CheckInventory(x.item, x.quant)))
+        {
+            if (!Bot.Player.Alive)
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+            targetMonster = FindMonster(map, monster);
+            if (targetMonster == null)
+                continue;
+
+            if (Bot.Player.Cell != targetMonster.Cell)
+            {
+                Jump(targetMonster.Cell, "Left");
+                Bot.Wait.ForCellChange(targetMonster.Cell);
+            }
+
+            if (!Bot.Player.HasTarget && targetMonster.HP > 0)
+                Bot.Combat.Attack(targetMonster.Name);
+
+            Bot.Sleep(500);
+        }
+
+        Bot.Options.AttackWithoutTarget = false;
+        Bot.Options.AggroMonsters = false;
+        Bot.Options.HidePlayers = false;
+        ToggleAggro(false);
+
+        Bot.Map.Jump(
+            Bot.Map.Cells.FirstOrDefault(c => c.ToLower().Contains("enter"))
+            ?? Bot.Map.Cells.FirstOrDefault(c =>
+                    !c.ToLower().Contains("wait")
+                    && !c.ToLower().Contains("blank")
+                    && !c.ToLower().Contains("enter"))
+            ?? "Enter",
+            "Spawn"
+        );
+
+        JumpWait();
+        Rest();
+    }
 
 
     /// <summary>
@@ -8797,6 +8900,11 @@ public class CoreBots
             case "confrontation":
                 blackListedCells.UnionWith(new[] { "noChaos" });
                 break;
+
+            case "gilead":
+                blackListedCells.UnionWith(new[] { "Fail", "Cut1" });
+                break;
+
 
             default:
                 break;
