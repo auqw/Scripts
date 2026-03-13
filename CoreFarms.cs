@@ -4018,7 +4018,7 @@ public class CoreFarms
         Core.SavedState(false);
     }
 
-    public void SwordhavenREP(int rank = 11)
+    public void SwordhavenREP(int rank = 10)
     {
         if (FactionRank("Swordhaven") >= rank)
             return;
