@@ -78,13 +78,13 @@ public class CoreDageBirthday
         Story.MapItemQuest(6225, "darkpath", 5665);
 
         //Open the Vault (6226)
-        if (!Story.QuestProgression(6225))
+        if (!Story.QuestProgression(6226))
         {
-            Core.EnsureAccept(6225);
+            Core.EnsureAccept(6226);
             Core.KillMonster("darkpath", "r7", "Left", "Void Makai", "Void Makai Slain", 10);
             Core.KillMonster("darkpath", "r8a", "Left", "Void Wyrm", "Key to the Vault");
-            Story.MapItemQuest(6225, "darkpath", 5666);
-            Bot.Wait.ForQuestComplete(6225);
+            Story.MapItemQuest(6226, "darkpath", 5666);
+            Bot.Wait.ForQuestComplete(6226);
             Bot.Wait.ForTrue(() => Bot.Player.Cell.ToLower().Contains("cut"), 20);
             Core.JumpWait();
         }
