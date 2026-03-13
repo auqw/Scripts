@@ -108,7 +108,8 @@ public class UltraSpeaker
             "Automatically Equip Classes",
             "Auto-equip classes across all 4 clients\n"
                 + "Fast: AP / LR / QCM / LOO\n"
-                + "Safe: LR / AP / LOO / SC\n"
+                + "Safe: LR / AP / LOO / VDK\n"
+                + "SafeV2: LR / AP / LOO / SC\n"
                 + "Unselected = off (use whatever classes you already have equipped).",
             SpeakerComp.Unselected
         ),
@@ -143,7 +144,8 @@ public class UltraSpeaker
             string[] classes = comp switch
             {
                 SpeakerComp.Fast => new[] { "ArchPaladin", "Legion Revenant", "Quantum Chronomancer", "Lord Of Order" },
-                SpeakerComp.Safe => new[] { "Legion Revenant", "ArchPaladin", "Lord Of Order", "StoneCrusher" },
+                SpeakerComp.Safe => new[] { "Legion Revenant", "ArchPaladin", "Lord Of Order", "Verus DoomKnight" },
+                SpeakerComp.SafeV2 => new[] { "Legion Revenant", "ArchPaladin", "Lord Of Order", "StoneCrusher" },
                 _ => new[] { "ArchPaladin", "Legion Revenant", "Lord Of Order", "Verus DoomKnight" },
             };
 
@@ -356,5 +358,6 @@ public class UltraSpeaker
         Unselected,
         Fast,
         Safe,
+        SafeV2,
     }
 }
