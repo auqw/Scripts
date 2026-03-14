@@ -228,7 +228,7 @@ public class UltraDrago
         {
             string[] classes = comp switch
             {
-                DragoComp.Fast => new[] { "Chrono ShadowSlayer", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
+                DragoComp.Fast => new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
                 DragoComp.Safe => new[] { "Chaos Avenger", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
                 DragoComp.F2PFast => new[] { "King's Echo", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
                 _ => new[] { "ArchPaladin", "Legion Revenant", "Chaos Avenger", "Lord Of Order" },

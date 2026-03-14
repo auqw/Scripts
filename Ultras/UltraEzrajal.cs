@@ -206,7 +206,7 @@ public class UltraEzrajal
         {
             string[] classes = comp switch
             {
-                EzrajalComp.Fast => new[] { "Chrono ShadowSlayer", "Verus DoomKnight", "Legion Revenant", "Lord Of Order" },
+                EzrajalComp.Fast => new[] { C.CheckInventory("Chrono ShadowSlayer") ? "Chrono ShadowSlayer" : "Chrono ShadowHunter", "Verus DoomKnight", "Legion Revenant", "Lord Of Order" },
                 EzrajalComp.Safe => new[] { "Arcana Invoker", "Legion Revenant", "ArchPaladin", "Lord Of Order" },
                 EzrajalComp.F2PFastest => new[] { "Arcana Invoker", "Verus DoomKnight", "Legion Revenant", "Lord Of Order" },
                 _ => throw new InvalidOperationException($"Unhandled EzrajalComp value: {comp}")
