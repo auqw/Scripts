@@ -57,6 +57,10 @@ public class BrightOak
 
         Ælfred();
         AvenGreywhorl(repFarm);
+        // Early exit if we're doing the rep farm
+        if (repFarm)
+            return;
+
         FlixSpiderwhisp();
         LapisPart1();
         RavinosBrightgladePart1();
@@ -192,6 +196,9 @@ public class BrightOak
 
         // Unlocking the Guardian's Mouth
         Story.MapItemQuest(4667, "elfhame", 3984);
+
+        if (repFarm)
+            return;
 
         // Defeat the Guardian Spirit
         Story.KillQuest(4668, "elfhame", "Guardian Spirit");
