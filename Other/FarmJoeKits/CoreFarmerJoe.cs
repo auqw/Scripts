@@ -757,15 +757,15 @@ public class CoreFarmerJoe
 
     private void HandleLevel75()
     {
-        // Archfiend DeathLord (+30 dmgAll)
+        // Archfiend DoomLord (+30 dmgAll)
         if (
             (
-                !Core.CheckInventory("Archfiend DeathLord", toInv: false)
-                || !AnyRank10(new[] { "Archfiend DeathLord" })
+                !Core.CheckInventory("Archfiend DoomLord", toInv: false)
+                || !AnyRank10(new[] { "Archfiend DoomLord" })
             ) || !Adv.HasMinimalBoost(GenericGearBoost.dmgAll, 30)
         )
         {
-            Core.Logger("Level 75: Acquiring Archfiend DeathLord for +30 dmgAll");
+            Core.Logger("Level 75: Acquiring Archfiend DoomLord for 35% more damage to any monster, and gives 25% more class points, XP, gold, and rep when equipped");
             SetClass();
             EnoughDOOMforanArchfiend.AFDL();
         }
