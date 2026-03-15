@@ -18255,8 +18255,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 49804,
-    "sha256": "6de209e6ca3f21a9064e50eb83ec3b97095a554153733374e4a39f678232efbb",
+    "size": 49886,
+    "sha256": "1d4e384c432361f3d2e3f953da8bc219ef3b0fa9e3f41bfbfa23a0e941513f92",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -25081,8 +25081,8 @@
       "null"
     ],
     "path": "Nation/AFDL/EnoughDOOMforanArchfiend.cs",
-    "size": 4539,
-    "sha256": "1b987d0b94e1cecc9775047b5dd1f97ec5a80597d3940a6a442ad6b000be7c2c",
+    "size": 4469,
+    "sha256": "9b5de1d3b3fca4973106f9a5a18e7c5c141f697d69b46b4bc219d591db124518",
     "fileName": "EnoughDOOMforanArchfiend.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/AFDL/EnoughDOOMforanArchfiend.cs"
   },
@@ -27941,8 +27941,8 @@
       "brightoak"
     ],
     "path": "Story/QueenofMonsters/Extra/BrightOak.cs",
-    "size": 14967,
-    "sha256": "4b64e8b526735318d90a5d0ca8568efa1d9642ff803e8411f5a41aa277e374a4",
+    "size": 15101,
+    "sha256": "b34f106cc4d7196c51a7721415e0d320d45595463aeb5ed5eeccbe18d9863235",
     "fileName": "BrightOak.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/QueenofMonsters/Extra/BrightOak.cs"
   },
