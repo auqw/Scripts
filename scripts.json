@@ -3270,8 +3270,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraAvatarTyndarius.cs",
-    "size": 16477,
-    "sha256": "5fc414996c6b8b804481b11cd94343d828a0049eb2cd215f8c10c992f49697ac",
+    "size": 16543,
+    "sha256": "eccddd96afc0df8bd08d9465001c75eca6ad1ad32bed7d07223525346e250929",
     "fileName": "UltraAvatarTyndarius.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraAvatarTyndarius.cs"
   },
@@ -3282,8 +3282,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraEzrajal.cs",
-    "size": 11725,
-    "sha256": "89de11df903f4a3f2293dbc68d993750b7f1341a5f78cac909057ae50c5297ab",
+    "size": 11791,
+    "sha256": "cb9ed2c3db3c6df2cbf2e3c073e5588511128e63da03348f3ca2516746fe0367",
     "fileName": "UltraEzrajal.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraEzrajal.cs"
   },
@@ -3306,8 +3306,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraDrago.cs",
-    "size": 14026,
-    "sha256": "e93ec91f22ddcaf9998e22c74ffca9b3e5be68b25a89b0a71851ebb2b40d8679",
+    "size": 14092,
+    "sha256": "56a9cb856d22cce140ac3b17f2651c89f7f9193d4b2b4d98192ea02e8f8cbb74",
     "fileName": "UltraDrago.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraDrago.cs"
   },
