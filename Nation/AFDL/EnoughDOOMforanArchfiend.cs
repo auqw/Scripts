@@ -113,13 +113,7 @@ public class EnoughDOOMforanArchfiend
         Farm.BattleUnderB("Undead Essence", 1000);
         Core.EnsureAccept(5260);
         Core.EquipClass(ClassType.Farm);
-        Core.HuntMonster(
-            "orecavern",
-            "Chaorrupted Good Soldier",
-            "Chaorruption Essence",
-            75,
-            false
-        );
+        Core.HuntMonster("orecavern", "Chaorrupted Good Soldier", "Chaorruption Essence", 75, false);
         Core.HuntMonster("starsinc", "Living Star", "Living Star Essence", 100, false);
 
         Core.BuyItem("yulgar", 16, "Aelita's Emerald");
