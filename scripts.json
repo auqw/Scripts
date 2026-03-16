@@ -30691,6 +30691,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/02FutureLegion.cs"
   },
   {
+    "name": "Legion Tournament",
+    "description": "This script completes the storyline in \\legiontournament.",
+    "tags": [
+      "legiontournament",
+      "legion",
+      "tournament",
+      "seasonal",
+      "dage",
+      "story",
+      "seasonal",
+      "dagebirthday",
+      "general vaughn"
+    ],
+    "path": "Seasonal/StaffBirthdays/DageTheEvil/06LegionTournament.cs",
+    "size": 855,
+    "sha256": "490c948565275674a82a18a0b9d6cbdf9ca399c16af83c67de4cea6f1fd9e649",
+    "fileName": "06LegionTournament.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/06LegionTournament.cs"
+  },
+  {
     "name": "DagesBirthdayMerge",
     "description": "null",
     "tags": [
@@ -30842,8 +30862,8 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs",
-    "size": 9250,
-    "sha256": "8ffb1569af03981d3fc2de541416345a8427eaa244f9d942f0c8851bb2403ccb",
+    "size": 12169,
+    "sha256": "87390ab15804724b507c28e444d6fe3bda502d0c7f3286b2932e23e131c36ab3",
     "fileName": "CoreDageBirthday.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs"
   },
