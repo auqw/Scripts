@@ -3214,52 +3214,63 @@ public class CoreEngine
             return;
     }
 
+    private bool _alt23;
+
     void ChronoShadowSlayerClass()
     {
-        if (Bot.Self.GetAura("Rounds Empty")?.Value >= 1)
-        {
-            if (Cast(1))
-            {
-                Bot.Wait.ForTrue(() => !Bot.Self.HasActiveAura("Rounds Empty"), 20);
-                Bot.Sleep(100);
-                return;
-            }
-        }
+        // Snapshot
+        int mana = Bot.Player.Mana;
+        int rift = (int)(Bot.Self.GetAura("Temporal Rift")?.Value ?? 0);
+        int rounds = (int)(Bot.Self.GetAura("Rounds Empty")?.Value ?? 0);
 
-        // Skill cast priority sequence
-        if (Bot.Self.GetAura("Rounds Empty")?.Value == 0)
+        // High mana phase
+        if (mana > 20)
         {
-            if (Bot.Player.Mana >= 5)
+            if (rift >= 4)
+            {
+                if (Cast(4))
+                {
+                    Bot.Wait.ForTrue(() => (int)(Bot.Self.GetAura("Temporal Rift")?.Value ?? 0) == 0, 20);
+                    return;
+                }
+            }
+
+            if (_alt23)
             {
                 if (Cast(2))
                 {
+                    _alt23 = false;
+                    Bot.Sleep(100);
+                    return;
+                }
+            }
+            else
+            {
+                if (Cast(3))
+                {
+                    _alt23 = true;
                     Bot.Sleep(100);
                     return;
                 }
             }
         }
 
-        if (Bot.Self.GetAura("Rounds Empty")?.Value == 0)
-        {
-            if (Bot.Player.Mana >= 5)
-            {
-                if (Bot.Self.GetAura("Temporal Rift")?.Value <= 4)
-                {
-                    if (Cast(3))
-                    {
-                        Bot.Sleep(100);
-                        return;
-                    }
-                }
-            }
-        }
-
-        if (Bot.Self.GetAura("Temporal Rift")?.Value >= 4)
+        // Low mana phase use nuke ability
+        if (mana < 20 && Bot.Skills.CanUseSkill(4))
         {
             if (Cast(4))
             {
-                Bot.Wait.ForTrue(() => Bot.Self.GetAura("Temporal Rift")?.Value == 0, 20);
                 Bot.Sleep(100);
+                return;
+            }
+        }
+
+        // Reload
+        else if (mana < 20 && rounds > 0)
+        {
+            if (Cast(1))
+            {
+                Bot.Wait.ForTrue(() => !Bot.Self.HasActiveAura("Rounds Empty"), 20);
                 return;
             }
         }
