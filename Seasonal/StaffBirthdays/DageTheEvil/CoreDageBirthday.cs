@@ -37,6 +37,7 @@ public class CoreDageBirthday
         Undervoid();
         LegionBarracks();
         CocytusBarracks();
+        LegionTournament();
 
         Core.Logger("All Dage Birthday quests have been completed.");
     }
@@ -304,5 +305,107 @@ public class CoreDageBirthday
             Core.EquipClass(ClassType.Solo);
             Story.KillQuest(9632, "cocytusbarracks", "Maleagant");
         }
+    }
+
+    public void LegionTournament()
+    {
+        if (Core.isCompletedBefore(10634))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+    "Underworld Wolf", // UseableMonsters[0],
+	"Legion Gladiator", // UseableMonsters[1],
+	"Legion Willbreaker", // UseableMonsters[2],
+	"Legion Ritualist", // UseableMonsters[3],
+	"Deathwing", // UseableMonsters[4],
+	"The WarForge", // UseableMonsters[5]
+};
+        #endregion Useable Monsters
+
+        // 10625 | Dog Nights of Summer
+        if (!Story.QuestProgression(10625))
+        {
+            Core.HuntMonsterQuest(10625,
+                ("legiontournament", UseableMonsters[0], ClassType.Solo));
+        }
+
+
+        // 10626 | Achilles Tendon
+        if (!Story.QuestProgression(10626))
+        {
+            Core.HuntMonsterQuest(10626,
+                ("legiontournament", UseableMonsters[1], ClassType.Solo));
+        }
+
+
+        // 10627 | Disciplinary Action
+        if (!Story.QuestProgression(10627))
+        {
+            Core.HuntMonsterQuest(10627,
+                ("legiontournament", UseableMonsters[0], ClassType.Solo),
+                ("legiontournament", UseableMonsters[1], ClassType.Solo));
+        }
+
+
+        // 10628 | The Fun Police
+        if (!Story.QuestProgression(10628))
+        {
+            Story.MapItemQuest(10628, "legiontournament", 15584);
+            Story.KillQuest(10628, "legiontournament", UseableMonsters[2]);
+        }
+
+
+        // 10629 | Despair-ity
+        if (!Story.QuestProgression(10629))
+        {
+            Story.MapItemQuest(10629, "legiontournament", 15585);
+            Story.KillQuest(10629, "legiontournament", UseableMonsters[3]);
+        }
+
+
+        // 10630 | Bad Charms
+        if (!Story.QuestProgression(10630))
+        {
+            Story.MapItemQuest(10630, "legiontournament", 15586, 6);
+        }
+
+
+        // 10631 | Self-Appointed Heel
+        if (!Story.QuestProgression(10631))
+        {
+            Story.MapItemQuest(10631, "legiontournament", 15587);
+            Story.KillQuest(10631, "legiontournament", UseableMonsters[4]);
+        }
+
+
+        // 10632 | Simple Delights
+        if (!Story.QuestProgression(10632))
+        {
+            Story.MapItemQuest(10632, "legiontournament", 15588);
+            Story.MapItemQuest(10632, "legiontournament", 15589);
+        }
+
+
+        // 10633 | Vultures of a Feather
+        if (!Story.QuestProgression(10633))
+        {
+            Core.HuntMonsterQuest(10633,
+                ("legiontournament", UseableMonsters[3], ClassType.Solo),
+                ("legiontournament", UseableMonsters[4], ClassType.Solo));
+        }
+
+
+        // 10634 | All's Fair
+        if (!Story.QuestProgression(10634))
+        {
+            Core.HuntMonsterQuest(10634,
+                ("legiontournament", UseableMonsters[5], ClassType.Solo));
+        }
+
+
     }
 }
