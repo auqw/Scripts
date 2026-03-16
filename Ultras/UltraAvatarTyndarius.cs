@@ -141,19 +141,6 @@ public class UltraAvatarTyndarius
         )
             C.Logger("Ball1Taunter & Ball2Killer are set to Dragon of Time, choose something else", "Fix This", true, true);
 
-        isBall1Taunter =
-     NormalizeString(Bot.Player.CurrentClass!.Name)
-     == NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")));
-        isBall2killer =
-            NormalizeString(Bot.Player.CurrentClass.Name)
-            == NormalizeString(GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer")));
-        isMustTauntTyn =
-            NormalizeString(Bot.Player.CurrentClass.Name)
-            == NormalizeString(GetDescription(Bot.Config!.Get<MustTauntTyndarius>("MustTauntTyndarius")));
-        isFocusTyn =
-            NormalizeString(Bot.Player.CurrentClass.Name)
-            == NormalizeString(GetDescription(Bot.Config!.Get<DebuffTyndarius>("DebuffTyndarius")));
-
         Core.Boot();
         Prep();
         Fight();
@@ -176,6 +163,19 @@ public class UltraAvatarTyndarius
 
             Ultra.EquipClassSync(classes, 4, "tyndarius_class.sync");
         }
+
+        isBall1Taunter =
+     NormalizeString(Bot.Player.CurrentClass!.Name)
+     == NormalizeString(GetDescription(Bot.Config!.Get<Ball1Taunter>("Ball1Taunter")));
+        isBall2killer =
+            NormalizeString(Bot.Player.CurrentClass.Name)
+            == NormalizeString(GetDescription(Bot.Config!.Get<Ball2killer>("Ball2killer")));
+        isMustTauntTyn =
+            NormalizeString(Bot.Player.CurrentClass.Name)
+            == NormalizeString(GetDescription(Bot.Config!.Get<MustTauntTyndarius>("MustTauntTyndarius")));
+        isFocusTyn =
+            NormalizeString(Bot.Player.CurrentClass.Name)
+            == NormalizeString(GetDescription(Bot.Config!.Get<DebuffTyndarius>("DebuffTyndarius")));
 
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnh();
