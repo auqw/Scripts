@@ -309,7 +309,7 @@ public class CoreDageBirthday
 
     public void LegionTournament()
     {
-        if (Core.isCompletedBefore(10634))
+        if (Core.isCompletedBefore(10634) || !Core.isSeasonalMapActive("legiontournament"))
             return;
 
         Story.PreLoad(this);
