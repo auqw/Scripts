@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 439592,
-    "sha256": "b3395c5556aa87d72e49ba43c383187c1063abcb84437fe03d23ec8c595e965c",
+    "size": 439589,
+    "sha256": "d5a56a17205fc67d748a35d59fc0212ab28e2c4accdab701ea381eac7c14c7df",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -2383,8 +2383,8 @@
       "yokai"
     ],
     "path": "Story/Yokai.cs",
-    "size": 9801,
-    "sha256": "5ab0d759c920c741cc33727f1236d2f3fb1aa43d41987f4d164afa3015ed0765",
+    "size": 9963,
+    "sha256": "2514e0e2c728a3db23ddf84ea621a59e03495f82dd5b3632ece365caa575886d",
     "fileName": "Yokai.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Yokai.cs"
   },
