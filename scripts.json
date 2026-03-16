@@ -3187,8 +3187,8 @@
       "ultra"
     ],
     "path": "Ultras/UltraNulgath.cs",
-    "size": 13537,
-    "sha256": "940ad514a5473796d09e9d13f59cc4d999b07784c7360b4712a061d753c0941f",
+    "size": 13884,
+    "sha256": "08670b054c60b533ff2ec17f9b23c7b14479b3217921e4183d829fd59964a78c",
     "fileName": "UltraNulgath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/UltraNulgath.cs"
   },
@@ -3214,8 +3214,8 @@
       "null"
     ],
     "path": "Ultras/CoreEngine.cs",
-    "size": 105232,
-    "sha256": "3d90ba27565ae8c53778e43912898a9904cddb3ef4264d4c23fafa6d4441f3b7",
+    "size": 105419,
+    "sha256": "13a31ddbcb202728f7c3ee5d33e7a773b1c128d775a26f09a6690a28fae168c1",
     "fileName": "CoreEngine.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/CoreEngine.cs"
   },
