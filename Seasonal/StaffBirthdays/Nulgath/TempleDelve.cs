@@ -95,10 +95,7 @@ public class TempleDelve
         Story.MapItemQuest(9136, "siegefortress", 11313);
 
         // Banal Barage 9137
-        Story.KillQuest(
-            9137,
-            "siegefortress",
-            new[] { "Legion Dread Knight", "Legion Dreadmarch" }
+        Story.KillQuest(9137, "siegefortress", new[] { "Legion Dread Knight", "Legion Dreadmarch" }
         );
 
         // Bluebirds 9138
