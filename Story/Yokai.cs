@@ -65,7 +65,12 @@ public class YokaiQuests
         Core.Logger("ShogunWar Quest line");
 
         // Shadow Medals 6450
-        Story.KillQuest(6450, "ShogunWar", "Shadow Samurai");
+        if (!Story.QuestProgression(6450))
+        {
+            Core.EnsureAccept(6450);
+            Core.HuntMonster("ShogunWar", "Shadow Samurai", "Shadow Medallions", 5);
+            Core.EnsureComplete(6450);
+        }
 
         // We Need Supplies 6451
         if (!Story.QuestProgression(6451))
