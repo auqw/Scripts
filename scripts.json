@@ -30589,6 +30589,40 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DarkwarlegionWarChestMerge.cs"
   },
   {
+    "name": "Legion Tournament Rewards Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Legion Tournament Rewards Merge [2685] in /legiontournament",
+    "tags": [
+      "legion",
+      "tournament",
+      "rewards",
+      "merge",
+      "legiontournament",
+      "underworld",
+      "proioxis",
+      "spiked",
+      "baetyl",
+      "ostrakon",
+      "shield",
+      "ker",
+      "berethrou",
+      "ritual",
+      "siculi",
+      "sacrificial",
+      "scythian",
+      "bow",
+      "arrows",
+      "pursuit",
+      "cloak",
+      "executioner",
+      "skull"
+    ],
+    "path": "Seasonal/StaffBirthdays/DageTheEvil/LegionTournamentRewardsMerge.cs",
+    "size": 7130,
+    "sha256": "ca225916e521edbdbe464ab7605c36ea9940f9ae32a007d475051a8dc26fdcd0",
+    "fileName": "LegionTournamentRewardsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/LegionTournamentRewardsMerge.cs"
+  },
+  {
     "name": "Paragon Greatsword BattleGear",
     "description": "This script will complete the \"Soul Food\" [10104] quest for Paragon Greatsword BattleGear.",
     "tags": [
@@ -30862,8 +30896,8 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs",
-    "size": 12169,
-    "sha256": "87390ab15804724b507c28e444d6fe3bda502d0c7f3286b2932e23e131c36ab3",
+    "size": 12218,
+    "sha256": "df674eec942bc3768ebdc71c8002e0a761f5a5cb29a4e0a46d2ee14f4acf8c20",
     "fileName": "CoreDageBirthday.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs"
   },
