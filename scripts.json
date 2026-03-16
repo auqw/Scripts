@@ -16832,11 +16832,16 @@
       "focus",
       "tide",
       "despair",
-      "tides"
+      "tides",
+      "arcane",
+      "shadow",
+      "minion",
+      "battle",
+      "pet"
     ],
     "path": "Legion/MergeShops/UndeadLegionMerge.cs",
-    "size": 37741,
-    "sha256": "dae275a5a522826583a1eb62047b16cdcdb11330e5776aef5ec6848cab8147d7",
+    "size": 29819,
+    "sha256": "945ceb081205e58afbc04c5470f410fc2c5106b8af89ac4b8ee9a31393bff7ec",
     "fileName": "UndeadLegionMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/MergeShops/UndeadLegionMerge.cs"
   },
