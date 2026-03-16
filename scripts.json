@@ -4462,8 +4462,8 @@
       "ultragramiel"
     ],
     "path": "Hollowborn/HollowbornVindicator(Insignia).cs",
-    "size": 4997,
-    "sha256": "8061f933fe1804abebc54218d204dedecfa85c70c49332fc02a6a1298e8cb4fc",
+    "size": 4974,
+    "sha256": "35f88489a976b5846b319bd2047b944359b98346401751a5535ec446d766ad17",
     "fileName": "HollowbornVindicator(Insignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornVindicator(Insignia).cs"
   },
@@ -4481,8 +4481,8 @@
       "ultragramielhub"
     ],
     "path": "Hollowborn/HollowbornVindicator(NonInsignia).cs",
-    "size": 5866,
-    "sha256": "063e838fdfd5768c8449ea4f514a7197a5a5f43eb8358d44b5bec993ff4d3dc1",
+    "size": 5300,
+    "sha256": "97f74e0c47add0e5d84f0e73d05a3a6efa459d829b20bdf42effb56c4ed16df6",
     "fileName": "HollowbornVindicator(NonInsignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornVindicator(NonInsignia).cs"
   },
