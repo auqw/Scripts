@@ -84,7 +84,7 @@ public class HBVNonInsig
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
-        new Option<bool>("FarmExtra", "Farm Next Weeks Mats", "Save yourself some time", true),
+        new Option<bool>("Farm4Weeks", "Farm ALL 4 weeeks mats", "Save yourself some time, prefarm 4x the mats for all 4 weeks", true),
         CoreBots.Instance.SkipOptions,
     };
 
@@ -111,62 +111,41 @@ public class HBVNonInsig
                 Adv.RankUpClass("Hollowborn Vindicator");
             return;
         }
-        FarmNextWeeks = Bot.Config!.Get<bool>("FarmExtra");
         Farm.Experience(80);
         Farm.HollowbornREP();
         HBS.DawnSanctum();
         string reqName = Core.QuestRewards(10299)[0];
         Core.AddDrop(reqName);
-
         int Owned = 4 - Bot.Inventory.GetQuantity(reqName);
+        bool PreFarmNextWeeks = Bot.Config!.Get<bool>("Farm4Weeks");
 
-        if (!Core.CheckInventory(reqName, 4 / Owned))
+        if (!Core.CheckInventory(reqName, Owned))
         {
             Core.EnsureAccept(10300);
 
-            // Death's Power (1 per weekly)
-            DP.GetDP(Owned);
+            int multiplier = PreFarmNextWeeks ? 1 : Owned;
 
-            // Hollow Soul (1500 per weekly)
-            HS.GetYaSoulsHeeeere(1500 * Owned);
-
-            // Vindicator Badge (200 per weekly)
-            VB.GetVindicatorBadge(200 * Owned);
-
-            // Grace Orb (400 per weekly)
-            GO.GetGraceOrb(400 * Owned);
-
-            // Gramiel's Emblem (300 per weekly)
-            GE.GetGramielsEmblem(300 * Owned);
-
-            // Vindicator Crest (100 per weekly)
-            VC.GetVindicatorCrest(100 * Owned);
-
+            DP.GetDP(multiplier);                          // Death's Power      (1 per weekly)
+            HS.GetYaSoulsHeeeere(1500 * multiplier);       // Hollow Soul        (1500 per weekly)
+            VB.GetVindicatorBadge(200 * multiplier);       // Vindicator Badge   (200 per weekly)
+            GO.GetGraceOrb(400 * multiplier);              // Grace Orb          (400 per weekly)
+            GE.GetGramielsEmblem(300 * multiplier);        // Gramiel's Emblem   (300 per weekly)
+            VC.GetVindicatorCrest(100 * multiplier);       // Vindicator Crest   (100 per weekly)
 
             if (!Bot.Quests.IsAvailable(10299))
             {
                 Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
-                Core.Logger($"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}");
+                Core.Logger($"Run the script next on: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
                 return;
             }
-            else
-            {
-                Core.EnsureComplete(10299);
-                Bot.Wait.ForPickup(reqName);
-            }
+
+            Core.EnsureComplete(10299);
+            Bot.Wait.ForPickup(reqName);
         }
 
         if (!Core.CheckInventory(reqName, 4))
         {
-            Core.Logger(
-                $"You need 4x {reqName} to get the class. Run the script next week on: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}"
-            );
-            if (FarmNextWeeks)
-                this.FarmNextWeeks();
-            else
-                Core.Logger(
-                    $"run the script next on: {DateTime.Now.AddDays(7).ToString("yyyy-MM-dd HH:mm:ss")}"
-                );
+            Core.Logger($"You have [x {Bot.Inventory.GetQuantity(reqName)}]/4] {reqName} to get the class. Run the script next week on: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
             return;
         }
         else
@@ -174,17 +153,5 @@ public class HBVNonInsig
 
         if (rankUpClass)
             Adv.RankUpClass("Hollowborn Vindicator");
-    }
-
-    void FarmNextWeeks()
-    {
-        Core.Logger("Farming next week's requirements for Hollowborn Vindicator Class.");
-        VC.GetVindicatorCrest(100);
-        GE.GetGramielsEmblem(300);
-        GO.GetGraceOrb(400);
-        VB.GetVindicatorBadge(200);
-        HS.GetYaSoulsHeeeere(1500);
-        DP.GetDP(1);
-        Core.Logger("Next week's requirements for Hollowborn Vindicator Class have been farmed.");
     }
 }
