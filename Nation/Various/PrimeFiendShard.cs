@@ -242,11 +242,13 @@ public class PrimeFiendShard
             // 9559 requires x13 uni 13
             Nation.FarmUni13(13);
             Nation.EssenceofNulgath(20);
-            Nation.FarmDiamondofNulgath(20);
-            NationMerge.BuyAllMerge("Nation Soulstealer");
-
             TempleDelveMerge.BuyAllMerge("Void Nation Caster");
             DirtlickersMerge.BuyAllMerge("Iron Dreadsaw");
+
+            // "Nation Soulstealer"
+            Nation.FarmDiamondofNulgath(20);
+            Adv.BuyItem("shadowblast", 1206, "Nation Soulstealer", 1, 33176, 2);
+
 
             // Ensure requirements are unbanked
             Quest? quest = Core.InitializeWithRetries(() => Core.EnsureLoad(9555));
