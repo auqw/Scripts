@@ -11,6 +11,7 @@ tags: Ultra
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Items;
 using Skua.Core.Options;
 
 #region Fast Comp
@@ -80,6 +81,7 @@ public class UltraNulgath
         CoreBots.Instance.SkipOptions,
     };
 
+    string? CurrentClass;
     public void ScriptMain(IScriptInterface bot)
     {
         C.OneTimeMessage(
@@ -94,12 +96,22 @@ public class UltraNulgath
         )
             Bot.Config.Configure();
 
-        a = (Bot.Config!.Get<string>("a") ?? "").Trim();
-        b = (Bot.Config!.Get<string>("b") ?? "").Trim();
+        a = Bot.Config!.Get<string>("a") ?? "";
+        b = Bot.Config!.Get<string>("b") ?? "";
+
         if (string.IsNullOrEmpty(a) || string.IsNullOrEmpty(b))
         {
             C.Logger("Setup", "Fill both taunter classes in Script Options.");
             C.SetOptions(false);
+        }
+        CurrentClass = Bot.Player?.CurrentClass?.Name;
+        if (!string.IsNullOrEmpty(CurrentClass))
+        {
+            if (CurrentClass == a || CurrentClass == b)
+                C.Logger("Taunter [Yes]");
+            else
+                C.Logger("Taunter [No]");
+
         }
 
         Core.Boot();
@@ -168,7 +180,8 @@ public class UltraNulgath
             }
 
             // Taunter logic
-            if (Bot.Player.Alive && (Bot.Player.CurrentClass?.Name == a || Bot.Player.CurrentClass?.Name == b) && !Bot.Target.Auras.Any(x => x?.Name == "Focus")
+            if (Bot.Player.Alive && (Bot.Player.CurrentClass?.Name == a || Bot.Player.CurrentClass?.Name == b)
+            && !Bot.Target.Auras.Any(x => x?.Name == "Focus")
             && Bot.Monsters.MapMonsters.Any(x => (x?.MapID == 2 || x?.MapID == 1) && x.HP > 0))
             {
                 Core.DisableSkills();
