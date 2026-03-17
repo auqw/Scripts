@@ -128,14 +128,7 @@ public class ArmyLR
     {
         while (!Bot.ShouldExit)
         {
-            if (
-                Ultra.CheckArmyProgress(
-                    "Revenant's Spellscroll",
-                    quant,
-                    false,
-                    "Revenants_Spellscroll.Sync"
-                )
-            )
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Revenant's Spellscroll", quant), "Revenants_Spellscroll.Sync"))
             {
                 Bot.Wait.ForPickup("Revenant's Spellscroll");
                 Bot.Options.AggroMonsters = false;
@@ -198,7 +191,7 @@ public class ArmyLR
     {
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgress("Conquest Wreath", quant, false, "Conquest_Wreath.Sync"))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Conquest Wreath", quant), "Conquest_Wreath.Sync"))
             {
                 Bot.Wait.ForPickup("Conquest Wreath");
                 Bot.Options.AggroMonsters = false;
@@ -331,7 +324,7 @@ public class ArmyLR
         while (!Bot.ShouldExit)
         {
             C.EnsureAccept(6899);
-            if (Ultra.CheckArmyProgress("Exalted Crown", quant, false, "ExalteCrown.Sync"))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory("Exalted Crown", quant), "Exalted_Crown.Sync"))
             {
                 Bot.Wait.ForPickup("Exalted Crown");
                 Bot.Options.AggroMonsters = false;
@@ -467,7 +460,7 @@ public class ArmyLR
             {
                 // Replace the `Bot.Player.Level >= 100` below with the bool
                 // you want want all accs to have true, leave the rest of this alone.
-                if (Ultra.CheckArmyProgressBool(condition, syncPath))
+                if (Ultra.CheckArmyProgressBool(condition, $"{Itemname}.Sync"))
                 {
                     Bot.Options.AggroMonsters = false;
                     C.Jump("Enter", "Spawn");
@@ -495,7 +488,7 @@ public class ArmyLR
                 // Replace `Itemname` with the wanted item
                 // Replace the 500 with the quantity you desire
                 // Replace `false` if the item is a temp item with `true` or leave as `false` for non-temp items.
-                if (Ultra.CheckArmyProgress(Itemname, quant, false, syncPath))
+                if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(Itemname, quant), $"{Itemname}.Sync"))
                 {
                     Bot.Options.AggroMonsters = false;
                     C.Jump("Enter", "Spawn");
