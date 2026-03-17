@@ -443,8 +443,10 @@ public class ArmyLR
             C.AddDrop(Itemname);
 
         if (map == "revenant")
+        {
+            C.GhostItem(47465, "Revenant Map Bypass", 1, false, category: Skua.Core.Models.Items.ItemCategory.Class, "Used to bypass the dark caster class requirement for the map \"Revenant\"");
             RevenantMapHandler();
-
+        }
         Core.Join(map);
 
         C.Jump(AggroCell, "Left");
@@ -535,6 +537,7 @@ public class ArmyLR
 
         C.PrivateRoomNumber = _revenantBaseRoom + roomOffset;
     }
+
 
 
     enum CheckType
