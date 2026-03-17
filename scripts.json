@@ -3019,8 +3019,8 @@
       "voidaura"
     ],
     "path": "Army/WrongTurnatVoidbuquerque.cs",
-    "size": 7639,
-    "sha256": "1f0106755401c8dfd34616b6c019a439010fcec9e5b1bd6430550d4fbb289190",
+    "size": 8293,
+    "sha256": "8ce4cddb990a0c739975a1bd3b2e1e2dc198bb03e8c1756956d69b219a8f8e9f",
     "fileName": "WrongTurnatVoidbuquerque.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/WrongTurnatVoidbuquerque.cs"
   },
@@ -3125,8 +3125,8 @@
       "null"
     ],
     "path": "Ultras/Xyfrag.cs",
-    "size": 3704,
-    "sha256": "59ba724798b4c2ab2eea5695e60f0fbd8a5165f8e4f80ae559a3630a8127cf27",
+    "size": 4344,
+    "sha256": "b403c7cc014c507525086cd9323cc54b0b2225ddcc1d21dd19717b86f0f0321e",
     "fileName": "Xyfrag.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Xyfrag.cs"
   },
