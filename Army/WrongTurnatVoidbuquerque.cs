@@ -79,7 +79,7 @@ public class VADaily
     bool IsTaunter() => Core.HasClassEquipped(taunter);
     public void ScriptMain(IScriptInterface Bot)
     {
-        C.BankingBlackList.AddRange(new[] { "Flibbitiestgibbet's ??? Essence", "Nightbane's ??? Essence", "Xyfrag's ??? Essence" });
+        C.BankingBlackList.AddRange(new[] { $"Flibbitiestgibbet's ??? Essence", $"Nightbane's ??? Essence", $"Xyfrag's ??? Essence" });
 
         if (
             Bot.Config != null
@@ -115,6 +115,9 @@ public class VADaily
             Bot.Events.ExtensionPacketReceived += Ultra.GenericChargeListener;
             Ultra.GetScrollOfEnrage();
         }
+        Bot.Drops.Add($"Xyfrag's ??? Essence", $"Flibbitiestgibbet's ??? Essence",
+                        $"Nightbane's ??? Essence", $"Xyfrag's Slimy Tooth", "Void Energy");
+        C.AddDrop(73861, 73862, 73863);
         Xyfrag();
 
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
@@ -139,14 +142,13 @@ public class VADaily
         Core.Join(map);
         if (sArmy.Players().Length > 1)
             Ultra.WaitForArmy(sArmy.Players().Length - 1, "VoidFlib.sync");
-        C.AddDrop("Flibbitiestgibbet's ??? Essence");
         Core.ChooseBestCell(Boss);
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(1500);
         Bot.Options.AggroMonsters = true;
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains("Flibbitiestgibbet's ??? Essence"), syncPath))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(73861 /* Flibbitiestgibbet's ??? Essence */), syncPath))
             {
                 C.JumpWait();
                 C.Logger("All players finished farming \"Flibbitiestgibbet's ??? Essence\".");
@@ -177,13 +179,12 @@ public class VADaily
         Core.ChooseBestCell(Boss);
         if (sArmy.Players().Length > 1)
             Ultra.WaitForArmy(sArmy.Players().Length - 1, "Nightbane.sync");
-        C.AddDrop("Nightbane's ??? Essence");
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(1500);
         Bot.Options.AggroMonsters = true;
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains("Nightbane's ??? Essence"), syncPath))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(73862 /* Nightbane's ??? Essence */), syncPath))
             {
                 C.JumpWait();
                 C.Logger("All players finished farming \"Nightbane's ??? Essence\".");
@@ -213,7 +214,6 @@ public class VADaily
 
         // 'Wrong Turn at Voidbuquerque' && 'Doom Spikes'
         C.EnsureAcceptmultiple(9091, 9418, 8547);
-        C.AddDrop("Xyfrag's ??? Essence", "Xyfrag's Slimy Tooth", "Void Energy");
 
         Core.Join(map);
         if (sArmy.Players().Length > 1)
@@ -223,7 +223,7 @@ public class VADaily
         Core.EnableSkills();
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => Bot.Inventory.Contains($"Xyfrag's ??? Essence"), syncPath))
+            if (Ultra.CheckArmyProgressBool(() => C.CheckInventory(73863 /* Xyfrag's ??? Essence */), syncPath))
             {
                 Bot.Events.ExtensionPacketReceived -= Ultra.GenericChargeListener;
                 C.JumpWait();
