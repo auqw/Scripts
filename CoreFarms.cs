@@ -2801,7 +2801,7 @@ public class CoreFarms
 
             Core.EnsureAccept(3494);
             Core.HuntMonster("waterstorm", "Fishwing", "Silvery Fins", 4, log: false);
-            Core.HuntMonster("waterstorm", "Frogdrake", "Marsh Leather", 8, log: false);
+            Core.HuntMonster("waterstorm", "Marsh Lurker", "Marsh Leather", 8, log: false);
             Core.EnsureComplete(3494);
         }
         // Core.CancelRegisteredQuests();
