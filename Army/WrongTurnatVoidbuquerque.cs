@@ -237,9 +237,28 @@ public class VADaily
                 continue;
             }
 
+            if (Core.HasClassEquipped(taunter)) // After 2M → always taunt
+            {
+                Core.DisableSkills();
+                if (Bot.Player.HasTarget && Bot.Skills.CanUseSkill(5))
+                {
+                    while (!Bot.ShouldExit)
+                    {
+                        if (Bot.Skills.CanUseSkill(5))
+                            Bot.Skills.UseSkill(5);
+                        Bot.Sleep(500);
 
-            if (Core.HasClassEquipped(taunter))
-                Ultra.Taunt(taunter, boss, "charge", 250, "Focus");
+                        if (Bot.Player.HasTarget && Bot.Target.Auras.Any(x => x != null && x.Name == "Focus"))
+                        {
+                            Core.EnableSkills();
+                            break;
+                        }
+                    }
+
+                    Bot.Sleep(300);
+                }
+            }
+
             Bot.Combat.Attack(boss);
             Bot.Sleep(500);
         }
