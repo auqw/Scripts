@@ -3019,8 +3019,8 @@
       "voidaura"
     ],
     "path": "Army/WrongTurnatVoidbuquerque.cs",
-    "size": 7591,
-    "sha256": "d7ae1a610c13944b37b949a986ee3daa26120704f3cf8d9847e90bbed7eb1d4c",
+    "size": 7639,
+    "sha256": "1f0106755401c8dfd34616b6c019a439010fcec9e5b1bd6430550d4fbb289190",
     "fileName": "WrongTurnatVoidbuquerque.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/WrongTurnatVoidbuquerque.cs"
   },
@@ -9873,8 +9873,8 @@
       "army"
     ],
     "path": "Army/Classes/ArmyLR.cs",
-    "size": 16415,
-    "sha256": "b020f299f631b738ed12f653dbc36f43bf34e3efb9a96c7ada74926a9ac68a20",
+    "size": 16393,
+    "sha256": "7bb8e38daffceef9d68409097b991df2e9ce40b4a18c99762a372cfb24a9d556",
     "fileName": "ArmyLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyLR.cs"
   },
