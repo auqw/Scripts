@@ -308,6 +308,9 @@ public class CoreFarms
                 Core.CancelRegisteredQuests();
             }
 
+            if (Bot.Player.Level >= level && !rankUpClass)
+                return;
+
             if (Bot.Player.Level < 20)
             {
                 UndeadGiantUnlock();
@@ -323,6 +326,9 @@ public class CoreFarms
                     );
                 Core.CancelRegisteredQuests();
             }
+
+            if (Bot.Player.Level >= level && !rankUpClass)
+                return;
 
             IcestormArena(level, rankUpClass);
         }
