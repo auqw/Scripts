@@ -128,6 +128,9 @@ public class UltraDage
 
     void Prep()
     {
+        if (!Bot.Quests.IsUnlocked(793))
+            Bot.Log("Quest Not unlocked (we'll still do the ultra just you wont be able to complete it)\n" +
+            " -- you must go run \"\\Story\\Legion\\DageChallengeStory.cs\" first");
         // UpdateQuest to `Fail to the king` to unlock ultra dage
         Bot.Quests.UpdateQuest(793);
 
