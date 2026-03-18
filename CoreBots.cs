@@ -8906,6 +8906,10 @@ public class CoreBots
                 blackListedCells.UnionWith(new[] { "Fail", "Cut1" });
                 break;
 
+            case "mummies":
+                blackListedCells.UnionWith(new[] { "moveFrame", "Cut1", "Cut2", "Cut3", "Cut4", "Cut5" });
+                break;
+
 
             default:
                 break;
