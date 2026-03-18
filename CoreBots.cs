@@ -266,7 +266,7 @@ public class CoreBots
             if (Bot.Player.ServerIP.ToString() == "sockpuppet.aq.com")
             {
                 Bot.Log("You're current on a test server!! This will cause issues with scripts\n" + "please logout and login to a non-test server manuall\n" + "*or* set your manager to a non-Test server");
-                changeTo = false;
+                Bot.StopAsync();
             }
         }
 
