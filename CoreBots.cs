@@ -263,9 +263,9 @@ public class CoreBots
        */
         if (changeTo && Bot.Player.LoggedIn && !String.IsNullOrEmpty(Bot.Player.ServerIP))
         {
-            if (Bot.Player.ServerIP.ToString() == "sockpuppet.aq.com")
+            if (Bot.Player.ServerIP == "sockpuppet.aq.com")
             {
-                Bot.Log("You're current on a test server!! This will cause issues with scripts\n" + "please logout and login to a non-test server manuall\n" + "*or* set your manager to a non-Test server");
+                Bot.Log("You're current on a test server!! This will cause issues with scripts\n" + "please logout and login to a non-test server manually\n" + "*or* set your manager to a non-Test server");
                 Bot.StopAsync();
             }
         }
