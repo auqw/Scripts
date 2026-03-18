@@ -2799,16 +2799,14 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank}");
 
-        // Core.RegisterQuests(1721); //Defend Your Master! 1721
+        // Dapper Hats | 3494
+        Core.RegisterQuests(3494);
         while (!Bot.ShouldExit && FactionRank("Etherstorm") < rank)
         {
             if (Core.CheckSaveState())
                 Core.ExecuteSaveState();
 
-            Core.EnsureAccept(3494);
-            Core.HuntMonster("waterstorm", "Fishwing", "Silvery Fins", 4, log: false);
-            Core.HuntMonster("waterstorm", "Marsh Lurker", "Marsh Leather", 8, log: false);
-            Core.EnsureComplete(3494);
+            Core.KillMonster("waterstorm", "r5", "Left", "*");
         }
         // Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
