@@ -650,7 +650,7 @@ public class CoreBots
         get => _BankingBlackList ??= new List<string>();
         set => _BankingBlackList = value;
     }
-    public List<string> _BankingBlackList;
+    public List<string>? _BankingBlackList;
 
     private readonly List<string> EquipmentBeforeBot = new();
     private bool joinedPrison = false;
@@ -3039,7 +3039,7 @@ public class CoreBots
             while (!Bot.ShouldExit && !questCTS.IsCancellationRequested)
             {
                 foreach (
-                    Quest quest in chooseQuests
+                    Quest? quest in chooseQuests
                         .Keys.Concat(nonChooseQuests.Keys)
                         .Where(x =>
                             Bot.Quests.TryGetQuest(x.ID, out Quest? _quest) && _quest != null
@@ -3107,7 +3107,7 @@ public class CoreBots
 
                         // Check if the quest is still in progress
                         await Task.Delay(ActionDelay * 2);
-                        if (Bot.Quests.IsInProgress(quest.ID))
+                        if (Bot.Quests.IsInProgress(quest!.ID))
                             i++;
 
                         if (i >= 20 && Bot.Quests.IsInProgress(quest.ID))
@@ -11420,7 +11420,7 @@ public class CoreBots
         get => _CBOList ??= new List<string>();
         set => _CBOList = value;
     }
-    private List<string> _CBOList;
+    private List<string>? _CBOList;
 
     public string MeasureExecutionTime(Action action, string? PrefixMessage = null)
     {
