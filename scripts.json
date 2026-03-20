@@ -31,7 +31,7 @@
     ],
     "path": "CoreFarms.cs",
     "size": 158159,
-    "sha256": "a01cbc5188be2f3a0e19d5ffa4303b719309c98b229d04a78a29b04c69099632",
+    "sha256": "bd5682606f78afadc7d4189e17fd39a74fd45523c9155024be1aafede0ee2b88",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -24819,8 +24819,8 @@
       "nothingness"
     ],
     "path": "Nation/EvolvedOrb/EvolvedShadowOrbItems[Mem].cs",
-    "size": 9405,
-    "sha256": "5205d77b682f4a2fa09444ec258bd0c6e6c166e47deff55b2934b00ade11c46c",
+    "size": 8756,
+    "sha256": "f0a4376d01fe498cf124716a593f78f7ca6bb863bd2d18855895403b4996f2aa",
     "fileName": "EvolvedShadowOrbItems[Mem].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/EvolvedOrb/EvolvedShadowOrbItems[Mem].cs"
   },
