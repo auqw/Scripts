@@ -1212,33 +1212,17 @@ public class CoreSoW
         Story.MapItemQuest(9123, "manacradle", 11271);
         Story.KillQuest(9123, "manacradle", new[] { "Darkness Elemental", "Dark Tainted Mana" });
 
-        string[] DodgeClasses = new[]
-        {
-            "Yami no Ronin",
-            "TimeKeeper",
-            "Void Highlord",
-            "Void HighLord (IoDA)",
-        };
-        if (Core.CheckInventory(DodgeClasses, any: true))
-        {
-            Adv.GearStore(EnhAfter: true);
-            foreach (string CLASS in DodgeClasses)
-            {
-                if (!Core.CheckInventory(CLASS))
-                    continue;
 
-                Core.Equip(CLASS);
-                break;
-            }
-        }
         // If Dodge Class was found, kill Malgor & The Mainyu with it, else use what you have on.
-        else
+        if (!string.IsNullOrEmpty(Core.DodgeClass))
         {
-            Core.EquipClass(ClassType.Solo);
+            Core.EquipClass(ClassType.Dodge);
             Core.Logger(
                 $"No Dodge Class found! Good luck killing Malgor & The Mainyu with {Bot.Inventory?.Items?.Where(x => x?.Category == ItemCategory.Class && x.Equipped)?.FirstOrDefault()?.Name}"
             );
         }
+        else Core.EquipClass(ClassType.Dodge);
+
         // Cognitive Dissonance 9124
         Story.KillQuest(9124, "manacradle", "Malgor");
 
