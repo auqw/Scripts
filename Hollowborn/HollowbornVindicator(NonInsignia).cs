@@ -98,7 +98,7 @@ public class HBVNonInsig
     public void GetClass(
         bool rankUpClass = true,
         bool merge = false,
-        int quant = 0,
+        int quant = 4,
         bool FarmNextWeeks = false
     )
     {
