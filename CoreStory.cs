@@ -1079,11 +1079,15 @@ public class CoreStory
             || whereToGet.All(x => x.requiredQuestReward?.Count == 0)
         )
         {
+            string ids = questData != null
+            ? string.Join(", ", questData.Select(q => q.ID))
+            : string.Empty;
+
             Core.Logger(
-                "None of the Quest IDs filled in are supposed to be used in the LegacyQuestManager, "
-                    + "please report to the bot makers that they must make this story line in the normal way.",
-                messageBox: true
+                $"None of the Quest IDs filled in ({ids}) are supposed to be used in the LegacyQuestManager, " +
+                "please report to the bot makers that they must make this story line in the normal way."
             );
+
             return;
         }
 
