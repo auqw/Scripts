@@ -10326,7 +10326,7 @@ public class CoreBots
 
         if (!string.IsNullOrEmpty(additionalClass))
             Equip(additionalClass!);
-        EquipClass(ClassType.Dodge);
+        else EquipClass(ClassType.Dodge);
     }
 
     /// <summary>
