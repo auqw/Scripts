@@ -343,6 +343,12 @@ public class MemberFarm
         LegendaryElementalWarrior.GetLEW();
         Core.ToBank("Legendary Elemental Warrior");
 
+        // Dark / Legendary Hero
+        Adv.BuyItem(Bot.Map?.Name, 679, "Legendary Hero", shopItemID: 11597);
+        Adv.BuyItem(Bot.Map?.Name, 679, "Dark Legendary Hero", shopItemID: 11668);
+        Adv.RankUpClass(17178); // Legendary Hero
+        Adv.RankUpClass(18706); // Dark Legendary Hero
+
         //Nation Item
         // TarosItems.TemptationTest();
         Core.ToBank(
@@ -387,8 +393,15 @@ public class MemberFarm
         Core.ToBank("DeathKnight Lord");
 
         //Reputations
+        // Beast Master
         Farm.BeastMasterREP();
+        Adv.BuyItem("northpointe", 976, "BeastMaster", shopItemID: 16031);
+        Adv.RankUpClass("BeastMaster");
+
+        // SkyGuard Grenadier
         Farm.SkyguardREP();
+        Adv.BuyItem("northpointe", 259, "SkyGuard Grenadier", shopItemID: 7517);
+        Adv.RankUpClass("SkyGuard Grenadier");
 
         //Deadfly.BuyAllMerge();
         //GonnaGetcha.BuyAllMerge();
