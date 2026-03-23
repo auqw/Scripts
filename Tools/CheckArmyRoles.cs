@@ -127,7 +127,9 @@ public class CheckArmyRoles
                     "Star Lights of the Empyrean"
                 )
                 + "(Mysteries of War) "
-                + importantItemCheckbox(2, "Sin of the Underworld")
+                + importantItemCheckbox(2, "Sin of the Underworld")                
+                + "(Enoch of War)"
+                + importantItemCheckbox(1, "Gramiel's Divine Enoch")
                 + $"Ａｒｍｏｒ\n"
                 + $"(Ascendant of War) Awescended:\t\t\t{Checkbox(Core.isCompletedBefore(8042))}\n"
                 + "(Radiant Goddess of War) "
