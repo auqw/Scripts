@@ -941,8 +941,8 @@
       "seasonal"
     ],
     "path": "Tools/CheckArmyRoles.cs",
-    "size": 28153,
-    "sha256": "7c61df4d7c3c7e694d093165b2a8a79f14255f842acab857a788a99ae288bba3",
+    "size": 28273,
+    "sha256": "3eec2af9570c7cfbf6345305da2dc304f524f2e0d5411c23eccb93d1ad66c7b2",
     "fileName": "CheckArmyRoles.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/CheckArmyRoles.cs"
   },
@@ -18232,8 +18232,8 @@
       "legend"
     ],
     "path": "Other/FarmJoeKits/1MemberFarmsKit.cs",
-    "size": 33101,
-    "sha256": "497a7693d16d6d2b3d69f60f1783d016329d69c093023b789da1ee9729a91f87",
+    "size": 33699,
+    "sha256": "fec3243917c5f3f7d38b704e0902cb2cac839d174e0997b8c12c06aa4822725a",
     "fileName": "1MemberFarmsKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/1MemberFarmsKit.cs"
   },
