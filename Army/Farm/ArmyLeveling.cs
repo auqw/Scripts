@@ -58,6 +58,7 @@ public class ArmyLeveling
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
+        new Option<bool> ("Solo", "Solo Farm", "Use just 1 account"),
         sArmy.player1,
         sArmy.player2,
         sArmy.player3,
@@ -74,7 +75,6 @@ public class ArmyLeveling
         C.SetOptions(disableClassSwap: true);
 
         Prereqs();
-        C.DL_Enable();
         Leveling();
 
         C.SetOptions(false);
@@ -82,35 +82,45 @@ public class ArmyLeveling
 
     void Leveling()
     {
-        if (sArmy.Players().Length <= 0)
+        if (!Bot.Config.Get<bool>("Solo"))
         {
-            C.Logger(
-                "Players empty, please add players to the options ( scripts botton > edit scripts option > insert account names exactly as is)"
-            );
-            return;
+            if (sArmy.Players().Length <= 0)
+            {
+                C.Logger(
+                    "Players empty, please add players to the options ( scripts botton > edit scripts option > insert account names exactly as is)"
+                );
+                return;
+            }
         }
         const string map = "shadowbattleon";
         string syncPath = Ultra.ResolveSyncPath("ArmyBool.sync");
         Ultra.ClearSyncFile(syncPath);
         Bot.Sleep(2500);
-        C.Logger($"Players in Curreny Army: {sArmy.Players().Length}");
+        C.Logger("Players in Current Army: " +
+          (Bot.Config.Get<bool>("Solo") ? "Yourself" : $"{sArmy.Players().Length}"));
         C.RegisterQuests(9421, 9422, 9426);
         Core.Join(map);
         C.Jump("r11", "Left");
-        if (sArmy.Players().Length > 1)
-            Ultra.WaitForArmy(sArmy.Players().Length - 1, "ArmyLeveling.sync");
+        if (!Bot.Config.Get<bool>("Solo"))
+        {
+            if (sArmy.Players().Length > 1)
+                Ultra.WaitForArmy(sArmy.Players().Length - 1, "ArmyLeveling.sync");
+        }
         Bot.Player.SetSpawnPoint();
         Bot.Sleep(1500);
         Bot.Options.AggroMonsters = true;
         while (!Bot.ShouldExit)
         {
-            if (Ultra.CheckArmyProgressBool(() => Bot.Player.Level >= 100, syncPath))
+
+            if ((Bot.Config.Get<bool>("Solo") && Bot.Player.Level >= 100)
+                || Ultra.CheckArmyProgressBool(() => Bot.Player.Level >= 100, syncPath))
             {
                 Bot.Options.AggroMonsters = false;
                 C.JumpWait();
                 C.Logger("All players finished farm.");
                 break;
             }
+
 
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
@@ -143,5 +153,8 @@ public class ArmyLeveling
 
         // Adult Hatchling 9425
         Story.KillQuest(9425, "shadowbattleon", "Ouro Spawn");
+
+        C.Logger("Quests are done, Leaving map and rejoining to join the armies RoomNumber.");
+        C.Join("whitemap");
     }
 }
