@@ -5288,7 +5288,7 @@
   },
   "Legion SwordMaster Assassin": {
     "Base": {
-      "skillUseMode": "UseIfAvailable",
+      "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
         {
@@ -5302,6 +5302,21 @@
         },
         {
           "skillId": 4
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 2
         }
       ]
     }
