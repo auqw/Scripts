@@ -506,12 +506,12 @@ public class InsertNameHeresUltraPrep
         #region  Potions & Scrolls
         // Buy potions and scrolls
         PotionBuyer.INeedYourStrongestPotions(
-            new[] { "Potent Malevolence Elixir" },
-            new bool[] { true },
-            300,
-            true,
-            true
+            new[] { "Potent Malevolence Elixir" }, // potions to farm
+            PotionQuant: 300,                      // desired quantity
+            BuyReagents: true,                     // whether to buy reagents
+            Seperate: true                          // force farming these even if MaxAll is off
         );
+
         Scroll.BuyScroll(Scrolls.Enrage, 1000);
         if (!Core.CheckInventory("Scroll of Life Steal", 99))
             Adv.BuyItem(
