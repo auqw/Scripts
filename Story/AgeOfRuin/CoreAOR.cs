@@ -528,8 +528,13 @@ public class CoreAOR
         Story.KillQuest(9723, "balemorale", "Chaos Spider");
 
         // Eroding Era (9724)
-        Story.KillQuest(9724, "balemorale", "Chaos Crystal");
-
+        if (!Story.QuestProgression(9724))
+        {
+            Core.EnsureAccept(9724);
+            Core.KillMonster("balemorale", "r13", "Left", "*", "Chaotic Shard", 50);
+            Core.EnsureComplete(9724);
+        }
+        
         // Old Wolf (9725)
         Story.MapItemQuest(9725, "balemorale", 13181, 5);
         Story.MapItemQuest(9725, "balemorale", 13182);
@@ -1232,7 +1237,7 @@ public class CoreAOR
             Bot.Wait.ForQuestComplete(10618);
             Bot.Sleep(2500);
             Core.JumpWait();
-    
+
         }
 
     }
