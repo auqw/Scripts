@@ -968,8 +968,8 @@
       "me"
     ],
     "path": "Tools/InsertNameHeresUltraPrep.cs",
-    "size": 23271,
-    "sha256": "e115cbfb81573297261e933dbf1a4f02f77e8a1e97d4b7c5d992aa150d7eb756",
+    "size": 23452,
+    "sha256": "63139abe9aaccc0dcaa5f4ade56a1c3c5f4770371f57601a1551f2f2948d411d",
     "fileName": "InsertNameHeresUltraPrep.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/InsertNameHeresUltraPrep.cs"
   },
@@ -24407,8 +24407,8 @@
       "null"
     ],
     "path": "Other/Various/Potions.cs",
-    "size": 28597,
-    "sha256": "1be80bc155179d3a6bbacc528628fdcb6339957a47fbd3bedcc198ae970f583e",
+    "size": 20830,
+    "sha256": "262ccff4af52e9390bcabe25c0656523db2a38e1a1cb3dc8d82ca08b58bf9441",
     "fileName": "Potions.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/Potions.cs"
   },
