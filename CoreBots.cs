@@ -1381,7 +1381,7 @@ public class CoreBots
                 .FirstOrDefault(x => x?.Name == item);
             if (inventoryItem == null)
             {
-                Logger($"❌ {item} not found in inventory, skipping.");
+                DebugLogger($"❌ {item} not found in inventory, skipping.", "ToBank Debug");
                 continue;
             }
 
