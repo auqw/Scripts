@@ -131,7 +131,12 @@ public class YokaiQuests
         Core.EquipClass(ClassType.Farm);
 
         // Get Rid of Kame 6462
-        Story.KillQuest(6462, "shinringrove", "Kame");
+        if (!Story.QuestProgression(6462))
+        {
+            Core.EnsureAccept(6462);
+            Core.HuntMonster("shinringrove", "Kame", "Kame Defeated");
+            Core.EnsureComplete(6462);
+        }
 
         // Food for the Utoroshi 6463
         if (!Story.QuestProgression(6463))
