@@ -85,6 +85,9 @@ public class CoreAOR
 
         // Familiar Faces (9213)
         Story.MapItemQuest(9213, "terminatemple", new[] { 11625, 11626, 11627 });
+        Core.Logger("resetting map data ( mobs can bug out and become unattackable)");
+        Core.Join("whitemap-100000");
+        Core.Join("terminatemple");
         Story.KillQuest(9213, "terminatemple", "Termina Defender");
 
         // Loaded Resume (9214)
@@ -534,7 +537,7 @@ public class CoreAOR
             Core.KillMonster("balemorale", "r13", "Left", "*", "Chaotic Shard", 50);
             Core.EnsureComplete(9724);
         }
-        
+
         // Old Wolf (9725)
         Story.MapItemQuest(9725, "balemorale", 13181, 5);
         Story.MapItemQuest(9725, "balemorale", 13182);
