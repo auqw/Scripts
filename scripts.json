@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 439746,
-    "sha256": "be5d01de8f419ec3d3b49cfca27610db28ace2279f48c446ac7839bd09d1a4b3",
+    "size": 439767,
+    "sha256": "9413c03ae2aad7caceb6eaf1b7525f50713a994824ef538681d49ce2b9589716",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -2383,8 +2383,8 @@
       "yokai"
     ],
     "path": "Story/Yokai.cs",
-    "size": 9963,
-    "sha256": "2514e0e2c728a3db23ddf84ea621a59e03495f82dd5b3632ece365caa575886d",
+    "size": 10118,
+    "sha256": "d36756effc84ec87548e362e940254e646f9c0677a2fb4d019098205f96244b3",
     "fileName": "Yokai.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Yokai.cs"
   },
@@ -7145,8 +7145,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 49370,
-    "sha256": "1acc35c627eb9d7f5f470963cbe656f71ba1ab7e1a30dbcffe73b5c5985885b9",
+    "size": 49523,
+    "sha256": "05b289efe2079fbe73603b092652e4f4ad141e93aca7657a682967fa696ccff8",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -17422,11 +17422,15 @@
     "description": "uses the best pet you have for legion token farming",
     "tags": [
       "legion",
-      "legion token"
+      "legion token",
+      "smart token",
+      "smarttoken",
+      "best token",
+      "besttoken"
     ],
     "path": "Legion/LegionTokens/0BestAvailableLegionTokens.cs",
-    "size": 975,
-    "sha256": "a926e91ec4e3a993b8362a3f0625ebde5e611c10e788ef682194609b697e1aab",
+    "size": 1023,
+    "sha256": "aea8a18b2120539d637b2c5c86f791137a0cb62269ec37ac4ae4df20da506db0",
     "fileName": "0BestAvailableLegionTokens.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/LegionTokens/0BestAvailableLegionTokens.cs"
   },
