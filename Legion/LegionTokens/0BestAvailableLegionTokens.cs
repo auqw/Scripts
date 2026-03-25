@@ -1,7 +1,7 @@
 /*
 name: Best Available Legion Token
 description: uses the best pet you have for legion token farming
-tags: legion, legion token
+tags: legion, legion token, Smart Token, SmartToken, Best Token, besttoken
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
