@@ -55,7 +55,7 @@ public class GoldenHanzoVoid
         Nation.FarmVoucher(false);
 
         // Buy GHV
-        Adv.BuyItem("evilwarnul", 456, 27843, shopItemID: 3142);
+        Adv.BuyItem("evilwarnul", 456, 27843, shopItemID: 2694);
         Bot.Wait.ForItemBuy();
     }
 }
