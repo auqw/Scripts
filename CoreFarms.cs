@@ -1707,7 +1707,7 @@ public class CoreFarms
             Core.Join("alchemyacademy");
 
         Voucher("Gold Voucher 100k", quant);
-        Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", quant, 8844);
+        Core.BuyItem("alchemyacademy", 395, "Dragon Runestone", quant, 7679, 0);
     }
 
 

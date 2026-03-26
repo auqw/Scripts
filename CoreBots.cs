@@ -1631,17 +1631,42 @@ public class CoreBots
     /// <param name="quant">Desired quantity</param>
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will re-log you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
     /// <param name="Log"></param>
-    public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, bool Log = true)
+    // public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, bool Log = true)
+    // {
+    //     _CheckInventorySpace();
+
+    //     ShopItem? item = parseShopItem(
+    //         GetShopItems(map, shopID),
+    //         shopID,
+    //         itemName,
+    //         shopItemID
+    //     );
+
+    //     if (item == null)
+    //     {
+    //         Logger(
+    //             $"Failed to find the item '{itemName}' in the shop with ID {shopID}, skipping it."
+    //         );
+    //         return;
+    //     }
+
+    //     if (!string.IsNullOrEmpty(item.CategoryString)
+    //         && CategoryStrings.Contains(item.CategoryString))
+    //     {
+    //         _CheckHouseSpace();
+    //     }
+
+    //     _BuyItem(map, shopID, item, quant, Log);
+    // }
+    public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         _CheckInventorySpace();
-
         ShopItem? item = parseShopItem(
             GetShopItems(map, shopID),
             shopID,
             itemName,
             shopItemID
         );
-
         if (item == null)
         {
             Logger(
@@ -1649,16 +1674,13 @@ public class CoreBots
             );
             return;
         }
-
         if (!string.IsNullOrEmpty(item.CategoryString)
             && CategoryStrings.Contains(item.CategoryString))
         {
             _CheckHouseSpace();
         }
-
-        _BuyItem(map, shopID, item, quant, Log);
+        _BuyItem(map, shopID, item, quant, index, Log);
     }
-
 
     /// <summary>
     /// Buys a item till it have the desired quantity
@@ -1669,7 +1691,7 @@ public class CoreBots
     /// <param name="quant">Desired quantity</param>
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will relog you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
     /// <param name="Log"></param>
-    public void BuyItem(string map, int shopID, int itemID, int quant = 1, int shopItemID = 0, bool Log = true)
+    public void BuyItem(string map, int shopID, int itemID, int quant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         if (CheckInventory(itemID, quant))
             return;
@@ -1697,23 +1719,21 @@ public class CoreBots
             _CheckHouseSpace();
         }
 
-        _BuyItem(map, shopID, item, quant, Log);
+        _BuyItem(map, shopID, item, quant, index, Log);
     }
 
     int retrys = 0;
 
-    public void _BuyItem(string map, int shopID, ShopItem? item, int quant, bool Log = true)
+    public void _BuyItem(string map, int shopID, ShopItem? item, int quant, int index = 0, bool Log = true)
     {
         #region IgnoreMe
 
-        // Set potentialy buy breaking options to false
         Bot.Options.AggroAllMonsters = false;
         Bot.Options.AggroMonsters = false;
         Bot.Options.AttackWithoutTarget = false;
 
         int buy_quant;
         int StaticQuant = quant;
-        // This process will return early if the materials run out (hopefully) - from `_CalcBuyQuantity`'s calculations. [Line 1695]
         if (
             item == null
             || (buy_quant = _CalcBuyQuantity(item, quant)) <= 0
@@ -1736,7 +1756,6 @@ public class CoreBots
             Sleep();
         }
 
-        // Load shop data
         int retry = 0;
         while (!Bot.ShouldExit && Bot.Shops.ID != shopID)
         {
@@ -1752,6 +1771,18 @@ public class CoreBots
         retry = 0;
 
         #endregion IgnoreMe
+
+        // Resolve the correct ShopItem by index when multiple matches exist
+        List<ShopItem> matches = Bot.Shops.Items
+            .Where(x => x.ID == item.ID)
+            .ToList();
+        ShopItem? resolvedItem = matches.Count > index ? matches[index] : matches.FirstOrDefault();
+        if (resolvedItem == null)
+        {
+            Logger($"Failed to find {item.Name} at index {index} in shop {shopID}.", "BuyItem");
+            return;
+        }
+        item = resolvedItem;
 
         dynamic sItem = new ExpandoObject();
         for (int i = 0; i < 5; i++)
@@ -1806,7 +1837,7 @@ public class CoreBots
                 );
                 retrys++;
                 JumpWait();
-                _BuyItem(map, shopID, item, quant, Log);
+                _BuyItem(map, shopID, item, quant, index, Log);
             }
             else
             {
@@ -2505,37 +2536,75 @@ public class CoreBots
     /// <param name="map">The map to join in order to access the shop.</param>
     /// <param name="shopID">The identifier of the shop to retrieve items from.</param>
     /// <returns>A list of <see cref="ShopItem"/> objects from the specified shop, or an empty list if the shop data could not be loaded.</returns>
+    // public List<ShopItem> GetShopItems(string map, int shopID)
+    // {
+    //     // Ensure player is in map
+    //     if (!Bot.Map.Name.Equals(map, StringComparison.OrdinalIgnoreCase))
+    //     {
+    //         Join(map);
+    //         Bot.Wait.ForMapLoad(map);
+    //     }
+
+    //     int retry = 0;
+    //     while (!Bot.ShouldExit && retry++ < 20)
+    //     {
+    //         if (Bot.Shops.IsLoaded && Bot.Shops.ID == shopID)
+    //             break;
+
+    //         Bot.Shops.Load(shopID);
+    //         Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+    //         Bot.Wait.ForTrue(
+    //             () => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID,
+    //             20
+    //         );
+
+    //         Sleep(1000);
+    //     }
+
+    //     if (!Bot.Shops.IsLoaded || Bot.Shops.ID != shopID)
+    //     {
+    //         Logger($"Failed to load shop {shopID} in map {map}.");
+    //         return new();
+    //     }
+
+    //     return Bot.Shops.Items;
+    // }
     public List<ShopItem> GetShopItems(string map, int shopID)
     {
-        // Ensure player is in map
         if (!Bot.Map.Name.Equals(map, StringComparison.OrdinalIgnoreCase))
         {
             Join(map);
             Bot.Wait.ForMapLoad(map);
         }
-
         int retry = 0;
         while (!Bot.ShouldExit && retry++ < 20)
         {
             if (Bot.Shops.IsLoaded && Bot.Shops.ID == shopID)
                 break;
-
             Bot.Shops.Load(shopID);
             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
             Bot.Wait.ForTrue(
                 () => Bot.Shops.IsLoaded && Bot.Shops.ID == shopID,
                 20
             );
-
             Sleep(1000);
         }
-
         if (!Bot.Shops.IsLoaded || Bot.Shops.ID != shopID)
         {
             Logger($"Failed to load shop {shopID} in map {map}.");
             return new();
         }
 
+        // Wait for the popup label to confirm the shop UI is fully ready
+        Bot.Wait.ForTrue(() =>
+        {
+            string label = Bot.Flash.GetGameObject("ui.mcPopup.currentLabel");
+            string flashID = Bot.Flash.GetGameObject("world.shopinfo.ShopID");
+            return (label == "Shop" || label == "MergeShop" || label == "HouseShop")
+                && flashID == shopID.ToString();
+        }, 20);
+
+        Bot.Log($"Shop loaded: \"{Bot.Flash.GetGameObject("world.shopinfo.sName")}\" ({shopID})");
         return Bot.Shops.Items;
     }
 
@@ -2592,6 +2661,51 @@ public class CoreBots
 
         return matches[0];
     }
+    // public ShopItem? parseShopItem(List<ShopItem> shopItems, int shopID, string itemNameID, int shopItemID = 0)
+    // {
+    //     string currentID = Bot.Flash.GetGameObject("world.shopinfo.ShopID");
+    //     if (currentID != shopID.ToString())
+    //     {
+    //         Bot.Log($"Shop {shopID} not loaded, loading...");
+    //         Bot.Send.Packet($"%xt%zm%loadShop%1%{shopID}%");
+    //         while (Bot.Flash.GetGameObject("world.shopinfo.ShopID") != shopID.ToString())
+    //         {
+    //             Sleep(1500);
+    //             Bot.Send.Packet($"%xt%zm%loadShop%1%{shopID}%");
+    //             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
+    //         }
+    //         Bot.Log($"Shop loaded: \"{Bot.Flash.GetGameObject("world.shopinfo.sName")}\" ({shopID})");
+    //     }
+
+    //     if (shopItems.Count == 0)
+    //     {
+    //         Logger($"Shop {shopID} has no items loaded.");
+    //         return null;
+    //     }
+    //     if (shopItemID > 0)
+    //     {
+    //         ShopItem? byId = shopItems.FirstOrDefault(x => x.ShopItemID == shopItemID);
+    //         if (byId != null)
+    //             return byId;
+    //         Logger($"Item with ShopItemID {shopItemID} not found in shop {shopID}.");
+    //         return null;
+    //     }
+    //     List<ShopItem> matches = shopItems
+    //         .Where(x => x.Name.Equals(itemNameID, StringComparison.OrdinalIgnoreCase))
+    //         .ToList();
+    //     if (matches.Count == 0)
+    //     {
+    //         Logger($"Item '{itemNameID}' not found in shop {shopID}.");
+    //         return null;
+    //     }
+    //     if (matches.Count > 1)
+    //     {
+    //         Logger($"Multiple items named '{itemNameID}' in shop {shopID}. Specify ShopItemID.");
+    //         return null;
+    //     }
+    //     return matches[0];
+    // }
+
 
     public ShopItem? parseShopItem(List<ShopItem> shopItems, int shopID, int itemID, int shopItemID = 0)
     {
