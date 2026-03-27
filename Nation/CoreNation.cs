@@ -2359,6 +2359,8 @@ public class CoreNation
         Core.AddDrop("Dark Crystal Shard");
         FarmContractExchage("Dark Crystal Shard", quant);
         NewWorldsNewOpportunities("Dark Crystal Shard", quant); //1minute turning  = 1x guaranteed
+        if (Core.CheckInventory(CragName))
+            Supplies("Dark Crystal Shard", quant, ReturnItem: "Dark Crystal Shard"); //xx:xx time turnin = 10% chance
         VoidKnightSwordQuest("Dark Crystal Shard", quant);
         Supplies("Dark Crystal Shard", quant, ReturnItem: "Dark Crystal Shard"); //xx:xx time turnin = 10% chance
         EssenceofDefeatReagent(quant);
@@ -2383,6 +2385,8 @@ public class CoreNation
             && Core.CheckInventory(Uni(10), 100)
         )
             CragsThirst(quant);
+        if (Core.CheckInventory(CragName))
+            Supplies("Diamond of Nulgath", quant, ReturnItem: "Diamond of Nulgath");
 
         VoidKnightSwordQuest("Diamond of Nulgath", quant);
         Supplies("Diamond of Nulgath", quant, ReturnItem: "Diamond of Nulgath");
@@ -2415,6 +2419,8 @@ public class CoreNation
 
         Core.AddDrop("Gem of Nulgath");
         FarmContractExchage("Gem of Nulgath", quant);
+        if (Core.CheckInventory(CragName))
+            Supplies("Gem of Nulgath", quant, ReturnItem: "Gem of Nulgath");
         VoidKnightSwordQuest("Gem of Nulgath", quant);
         Supplies("Gem of Nulgath", quant, ReturnItem: "Gem of Nulgath");
     }
@@ -2445,6 +2451,8 @@ public class CoreNation
 
         Core.AddDrop("Tainted Gem");
         FarmContractExchage("Tainted Gem", quant);
+        if (Core.CheckInventory(CragName))
+            Supplies("Tainted Gem", quant, ReturnItem: "Tainted Gem");
         ForgeTaintedGems(quant);
         Supplies("Tainted Gem", quant, ReturnItem: "Tainted Gem");
     }
