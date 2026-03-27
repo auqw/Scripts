@@ -116,14 +116,19 @@ public class HBVNonInsig
         HBS.DawnSanctum();
         string reqName = Core.QuestRewards(10299)[0];
         Core.AddDrop(reqName);
-        int Owned = 4 - Bot.Inventory.GetQuantity(reqName);
-        bool PreFarmNextWeeks = Bot.Config!.Get<bool>("Farm4Weeks");
 
-        if (!Core.CheckInventory(reqName, Owned))
+        int currentQty = Bot.Inventory.GetQuantity(reqName);
+        int missingQty = 4 - currentQty;
+        bool preFarmNextWeeks = Bot.Config!.Get<bool>("Farm4Weeks");
+
+        // Run weekly whenever we still need any Condensed Grace
+        if (missingQty > 0)
         {
             Core.EnsureAccept(10300);
 
-            int multiplier = PreFarmNextWeeks ? 1 : Owned;
+            // If prefarming weeks, only farm 1 week's mats.
+            // Otherwise farm exactly the number of weeks still missing.
+            int multiplier = preFarmNextWeeks ? 1 : missingQty;
 
             DP.GetDP(multiplier);                          // Death's Power      (1 per weekly)
             HS.GetYaSoulsHeeeere(1500 * multiplier);       // Hollow Soul        (1500 per weekly)
@@ -154,4 +159,5 @@ public class HBVNonInsig
         if (rankUpClass)
             Adv.RankUpClass("Hollowborn Vindicator");
     }
+
 }
