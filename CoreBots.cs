@@ -2661,79 +2661,33 @@ public class CoreBots
 
         return matches[0];
     }
-    // public ShopItem? parseShopItem(List<ShopItem> shopItems, int shopID, string itemNameID, int shopItemID = 0)
-    // {
-    //     string currentID = Bot.Flash.GetGameObject("world.shopinfo.ShopID");
-    //     if (currentID != shopID.ToString())
-    //     {
-    //         Bot.Log($"Shop {shopID} not loaded, loading...");
-    //         Bot.Send.Packet($"%xt%zm%loadShop%1%{shopID}%");
-    //         while (Bot.Flash.GetGameObject("world.shopinfo.ShopID") != shopID.ToString())
-    //         {
-    //             Sleep(1500);
-    //             Bot.Send.Packet($"%xt%zm%loadShop%1%{shopID}%");
-    //             Bot.Wait.ForActionCooldown(GameActions.LoadShop);
-    //         }
-    //         Bot.Log($"Shop loaded: \"{Bot.Flash.GetGameObject("world.shopinfo.sName")}\" ({shopID})");
-    //     }
-
-    //     if (shopItems.Count == 0)
-    //     {
-    //         Logger($"Shop {shopID} has no items loaded.");
-    //         return null;
-    //     }
-    //     if (shopItemID > 0)
-    //     {
-    //         ShopItem? byId = shopItems.FirstOrDefault(x => x.ShopItemID == shopItemID);
-    //         if (byId != null)
-    //             return byId;
-    //         Logger($"Item with ShopItemID {shopItemID} not found in shop {shopID}.");
-    //         return null;
-    //     }
-    //     List<ShopItem> matches = shopItems
-    //         .Where(x => x.Name.Equals(itemNameID, StringComparison.OrdinalIgnoreCase))
-    //         .ToList();
-    //     if (matches.Count == 0)
-    //     {
-    //         Logger($"Item '{itemNameID}' not found in shop {shopID}.");
-    //         return null;
-    //     }
-    //     if (matches.Count > 1)
-    //     {
-    //         Logger($"Multiple items named '{itemNameID}' in shop {shopID}. Specify ShopItemID.");
-    //         return null;
-    //     }
-    //     return matches[0];
-    // }
 
 
     public ShopItem? parseShopItem(List<ShopItem> shopItems, int shopID, int itemID, int shopItemID = 0)
     {
-        if (shopItems.Count == 0)
+        if (shopItems?.Count == 0)
         {
             Logger($"Shop {shopID} has no items loaded.");
             return null;
         }
 
+        // 1️⃣ Try ShopItemID first (merge shops / duplicates)
         if (shopItemID > 0)
         {
-            ShopItem? byShopItemID =
-                shopItems.FirstOrDefault(x => x.ShopItemID == shopItemID);
+            ShopItem? bySID = shopItems.FirstOrDefault(x => x.ShopItemID == shopItemID);
+            if (bySID != null)
+                return bySID;
 
-            if (byShopItemID != null)
-                return byShopItemID;
-
-            Logger($"ShopItemID {shopItemID} not found in shop {shopID}.");
-            return null;
+            Logger($"ShopItemID {shopItemID} not found in shop {shopID}. Falling back to ItemID...");
         }
 
-        ShopItem? byItemID =
-            shopItems.FirstOrDefault(x => x.ID == itemID);
+        // 2️⃣ Fallback to ItemID
+        ShopItem? byItemID = shopItems.FirstOrDefault(x => x.ID == itemID);
+        if (byItemID != null)
+            return byItemID;
 
-        if (byItemID == null)
-            Logger($"Item ID {itemID} not found in shop {shopID}.");
-
-        return byItemID;
+        Logger($"Item ID {itemID} not found in shop {shopID}.");
+        return null;
     }
 
     /// <summary>
