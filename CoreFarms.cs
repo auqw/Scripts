@@ -403,7 +403,10 @@ public class CoreFarms
             }
 
             if (Core.CheckSaveState())
+            {
                 Core.ExecuteSaveState();
+                Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+            }
             Core.CanWeAggro();
             Bot.Combat.Attack("*");
             Core.Sleep(200);
@@ -452,7 +455,10 @@ public class CoreFarms
             Core.CanWeAggro();
 
             if (Core.CheckSaveState())
+            {
                 Core.ExecuteSaveState();
+                Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+            }
             Bot.Combat.Attack("*");
             Core.Sleep(200);
         }
@@ -498,7 +504,10 @@ public class CoreFarms
 
             Core.CanWeAggro();
             if (Core.CheckSaveState())
+            {
                 Core.ExecuteSaveState();
+                Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+            }
             Bot.Combat.Attack("*");
             Core.Sleep(200);
         }
@@ -594,7 +603,10 @@ public class CoreFarms
 
             Core.CanWeAggro();
             if (Core.CheckSaveState())
+            {
                 Core.ExecuteSaveState();
+                Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+            }
             Bot.Combat.Attack("*");
             Core.Sleep(200);
         }
@@ -645,7 +657,10 @@ public class CoreFarms
                 Core.CanWeAggro();
 
                 if (Core.CheckSaveState())
+                {
                     Core.ExecuteSaveState();
+                    Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+                }
                 Bot.Combat.Attack("*");
                 Core.Sleep(200);
             }
@@ -701,7 +716,10 @@ public class CoreFarms
 
             Core.CanWeAggro();
             if (Core.CheckSaveState())
+            {
                 Core.ExecuteSaveState();
+                Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+            }
             Bot.Combat.Attack("*");
             Core.Sleep(200);
         }
@@ -749,7 +767,10 @@ public class CoreFarms
             }
 
             if (Core.CheckSaveState())
+            {
                 Core.ExecuteSaveState();
+                Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+            }
             Bot.Combat.Attack("*");
             Core.Sleep(200);
         }
@@ -797,7 +818,10 @@ public class CoreFarms
 
                     Core.CanWeAggro();
                     if (Core.CheckSaveState())
+                    {
                         Core.ExecuteSaveState();
+                        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+                    }
                     Bot.Combat.Attack("*");
                     Core.Sleep(200);
                 }
@@ -826,7 +850,10 @@ public class CoreFarms
 
                     Core.CanWeAggro();
                     if (Core.CheckSaveState())
+                    {
                         Core.ExecuteSaveState();
+                        Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+                    }
                     if (!Bot.Player.HasTarget)
                         Bot.Combat.Attack("*");
                     Core.Sleep();
@@ -879,7 +906,10 @@ public class CoreFarms
 
             Core.CanWeAggro();
             if (Core.CheckSaveState())
+            {
                 Core.ExecuteSaveState();
+                Core.ByPassCheck((Bot.Player!.Cell, Bot.Player!.Pad));
+            }
             Bot.Combat.Attack("*");
             Bot.Sleep(200);
         }
