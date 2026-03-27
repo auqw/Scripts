@@ -111,7 +111,7 @@ public class CoreVHL
             Core.AddDrop(ChallengeRewards);
         Core.AddDrop("Roentgenium of Nulgath");
 
-        Continue:
+    Continue:
 
         Core.FarmingLogger("Roentgenium of Nulgath", quant);
         while (!Bot.ShouldExit && !Core.CheckInventory("Roentgenium of Nulgath", quant))
@@ -146,7 +146,8 @@ public class CoreVHL
             Nation.FarmVoucher(false);
             Farm.BlackKnightOrb();
             Adv.BuyItem("citadel", 44, 38316, shopItemID: 22367);
-            Adv.BuyItem("yulgar", 16, "Aelita's Emerald");
+            if (!Core.CheckInventory("Aelita's Emerald"))
+                Adv.BuyItem("yulgar", 16, "Aelita's Emerald");
             Nation.FarmUni13(1);
             Nation.FarmGemofNulgath(20);
             Nation.EmblemofNulgath(20);
@@ -250,7 +251,8 @@ public class CoreVHL
         // Farm Mats for Tomarrow.
         Farm.BlackKnightOrb();
         Adv.BuyItem("citadel", 44, 38316, shopItemID: 22367);
-        Adv.BuyItem("yulgar", 16, "Aelita's Emerald");
+        if (!Core.CheckInventory("Aelita's Emerald"))
+            Adv.BuyItem("yulgar", 16, "Aelita's Emerald");
         Nation.FarmUni13(13);
         Nation.FarmGemofNulgath(1000);
         Nation.EmblemofNulgath(500);

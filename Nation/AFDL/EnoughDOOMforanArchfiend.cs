@@ -116,13 +116,14 @@ public class EnoughDOOMforanArchfiend
         Core.HuntMonster("orecavern", "Chaorrupted Good Soldier", "Chaorruption Essence", 75, false);
         Core.HuntMonster("starsinc", "Living Star", "Living Star Essence", 100, false);
 
-        Core.BuyItem("yulgar", 16, "Aelita's Emerald");
-        Adv.BuyItem("alchemyacademy", 2115, "Essence Potion", 5, 9770); // see if this works
+        if (!Core.CheckInventory("Aelita's Emerald"))
+            Core.BuyItem("yulgar", 16, "Aelita's Emerald");
+        Adv.BuyItem("alchemyacademy", 2115, "Essence Potion", 5, 8580); // see if this works
         // if (!Core.CheckInventory("Essence Potion", 5))
         // {
         //     Farm.Gold(12500000);
         //     Core.BuyItem("alchemyacademy", 2115, "Gold Voucher 500k", 25);
-        //     Core.BuyItem("alchemyacademy", 2115, "Essence Potion", 5, 9770);
+        //     Core.BuyItem("alchemyacademy", 2115, "Essence Potion", 5, 8580);
         //     Bot.Wait.ForItemBuy();
         // }
 
