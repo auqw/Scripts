@@ -25090,8 +25090,8 @@
       "null"
     ],
     "path": "Nation/AFDL/EnoughDOOMforanArchfiend.cs",
-    "size": 4469,
-    "sha256": "9b5de1d3b3fca4973106f9a5a18e7c5c141f697d69b46b4bc219d591db124518",
+    "size": 4527,
+    "sha256": "cc28e06f06c93b02f4eaed32226415ae167ec61ce83ea70465285de56484eda6",
     "fileName": "EnoughDOOMforanArchfiend.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/AFDL/EnoughDOOMforanArchfiend.cs"
   },
@@ -26383,8 +26383,8 @@
       "null"
     ],
     "path": "Nation/VHL/CoreVHL.cs",
-    "size": 9534,
-    "sha256": "062fa942d2207c27f2ae8db0b131860c0276c180e88880fc86a57585ddefacc8",
+    "size": 9650,
+    "sha256": "faa47445274f64611274369b832889299742a2d05c12165fe3cbba699a6e907b",
     "fileName": "CoreVHL.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/VHL/CoreVHL.cs"
   },
