@@ -786,7 +786,6 @@ public class CoreFarms
         {
             if (rankUpClass)
             {
-                Core.SavedState(true, "icestormarena");
                 while (
                     !Bot.ShouldExit
                     && (
