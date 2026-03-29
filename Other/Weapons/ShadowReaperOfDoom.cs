@@ -50,6 +50,6 @@ public class SRoD
             isTemp: false
         );
 
-        Core.BuyItem("overworld", 618, "ShadowReaper Of Doom", shopItemID: 1806);
+        Core.BuyItem("overworld", 618, "ShadowReaper Of Doom", shopItemID: 1220);
     }
 }
