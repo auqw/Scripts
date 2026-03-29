@@ -6,6 +6,7 @@ tags: null
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
+using Skua.Core.Models.Monsters;
 
 public class CoreDageBirthday
 {
@@ -38,6 +39,8 @@ public class CoreDageBirthday
         LegionBarracks();
         CocytusBarracks();
         LegionTournament();
+        Phlegethonarena();
+        Reapfinals();
 
         Core.Logger("All Dage Birthday quests have been completed.");
     }
@@ -305,6 +308,8 @@ public class CoreDageBirthday
             Core.EquipClass(ClassType.Solo);
             Story.KillQuest(9632, "cocytusbarracks", "Maleagant");
         }
+
+
     }
 
     public void LegionTournament()
@@ -330,7 +335,7 @@ public class CoreDageBirthday
         if (!Story.QuestProgression(10625))
         {
             Core.HuntMonsterQuest(10625,
-                ("legiontournament", UseableMonsters[0], ClassType.Solo));
+                ("legiontournament", UseableMonsters[0], ClassType.Farm));
         }
 
 
@@ -338,7 +343,7 @@ public class CoreDageBirthday
         if (!Story.QuestProgression(10626))
         {
             Core.HuntMonsterQuest(10626,
-                ("legiontournament", UseableMonsters[1], ClassType.Solo));
+                ("legiontournament", UseableMonsters[1], ClassType.Farm));
         }
 
 
@@ -346,8 +351,8 @@ public class CoreDageBirthday
         if (!Story.QuestProgression(10627))
         {
             Core.HuntMonsterQuest(10627,
-                ("legiontournament", UseableMonsters[0], ClassType.Solo),
-                ("legiontournament", UseableMonsters[1], ClassType.Solo));
+                ("legiontournament", UseableMonsters[0], ClassType.Farm),
+                ("legiontournament", UseableMonsters[1], ClassType.Farm));
         }
 
 
@@ -377,6 +382,7 @@ public class CoreDageBirthday
         // 10631 | Self-Appointed Heel
         if (!Story.QuestProgression(10631))
         {
+            Core.EquipClass(ClassType.Solo);
             Story.MapItemQuest(10631, "legiontournament", 15587);
             Story.KillQuest(10631, "legiontournament", UseableMonsters[4]);
         }
@@ -408,4 +414,324 @@ public class CoreDageBirthday
 
 
     }
+
+
+    public void Phlegethonarena()
+    {
+        if (Core.isCompletedBefore(10646) || !Core.isSeasonalMapActive("PhlegethonArena"))
+            return;
+
+        LegionTournament();
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+            {
+        "Cerberus pup", // UseableMonsters[0],
+        "Legion Willbreaker", // UseableMonsters[1],
+        "Underworld Wolf", // UseableMonsters[2],
+        "Abyssal Underbeast", // UseableMonsters[3],
+        "Legion Guard", // UseableMonsters[4],
+        "Deathwings", // UseableMonsters[5],
+        "Underworld Wolf Warrior", // UseableMonsters[6],
+        "Devourer of Souls", // UseableMonsters[7],
+        "Rayce ", // UseableMonsters[8],
+        "Warped Revenant", // UseableMonsters[9],
+        "Horseman of Death", // UseableMonsters[10]
+    };
+        #endregion Useable Monsters
+
+        // 10637 | Sprint to the Starting Line
+        if (!Story.QuestProgression(10637))
+        {
+            Core.HuntMonsterQuest(10637,
+                ("Phlegethonarena", UseableMonsters[0], ClassType.Farm));
+        }
+
+
+        // 10638 | Broken Androktasia
+        if (!Story.QuestProgression(10638))
+        {
+            Core.HuntMonsterQuest(10638,
+                ("Phlegethonarena", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 10639 | Phlegethon Watchman
+        if (!Story.QuestProgression(10639))
+        {
+            Story.MapItemQuest(10639, "Phlegethonarena", 15610);
+            Core.HuntMonsterQuest(10639,
+                ("Phlegethonarena", UseableMonsters[1], ClassType.Farm),
+                ("Phlegethonarena", UseableMonsters[0], ClassType.Farm));
+        }
+
+
+        // 10640 | Loophole Abuse
+        if (!Story.QuestProgression(10640))
+        {
+            Core.HuntMonsterQuest(10640,
+                ("Phlegethonarena", UseableMonsters[2], ClassType.Farm));
+        }
+
+
+        // 10641 | Man of the Pack
+        if (!Story.QuestProgression(10641))
+        {
+            Core.HuntMonsterQuest(10641,
+                ("Phlegethonarena", UseableMonsters[6], ClassType.Solo));
+        }
+
+
+        // 10642 | The Ferryman's Offer
+        if (!Story.QuestProgression(10642))
+        {
+            Story.MapItemQuest(10642, "Phlegethonarena", 15611);
+            Core.HuntMonsterQuest(10642,
+                ("Phlegethonarena", UseableMonsters[3], ClassType.Farm));
+        }
+
+
+        // 10643 | Sloth or Pride
+        if (!Story.QuestProgression(10643))
+        {
+            Core.Logger("hey so appearntly this dude hits like a truck without the pot.. so use something like YNR for your dodge class in CBO");
+            Core.HuntMonsterQuest(10643,
+                ("Phlegethonarena", UseableMonsters[7], ClassType.Dodge));
+        }
+
+
+        // 10644 | Remember Rayce?
+        if (!Story.QuestProgression(10644))
+        {
+            Core.HuntMonsterQuest(10644,
+                ("Phlegethonarena", UseableMonsters[8], ClassType.Solo));
+        }
+
+
+        // 10645 | Suspicious Distraction
+        if (!Story.QuestProgression(10645))
+        {
+            Core.HuntMonsterQuest(10645,
+                ("Phlegethonarena", UseableMonsters[5], ClassType.Farm),
+                ("Phlegethonarena", UseableMonsters[4], ClassType.Farm));
+        }
+
+        // 10646 | Death's Revelation
+        if (!Story.QuestProgression(10646))
+        {
+            Core.HuntMonsterQuest(10646,
+                ("Phlegethonarena", UseableMonsters[10], ClassType.Solo));
+        }
+
+
+
+    }
+
+    public void Reapfinals()
+    {
+        Phlegethonarena();
+
+        if (Core.isCompletedBefore(10663) || !Core.isSeasonalMapActive("ReapFinals"))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+        "Legion Gladiator", // UseableMonsters[0],
+        "Legion Knight", // UseableMonsters[1],
+        "Legion Willbreaker", // UseableMonsters[2],
+        "Deathwings", // UseableMonsters[3],
+        "Vulcar", // UseableMonsters[4],
+        "Seneschal", // UseableMonsters[5],
+        "Legion Ritualist", // UseableMonsters[6],
+        "Ritualist Leader", // UseableMonsters[7],
+        "The Crimson Rider", // UseableMonsters[8],
+        "Rhadamanthys", // UseableMonsters[9],
+        "Aeacus", // UseableMonsters[10],
+        "Minos", // UseableMonsters[11],
+        "Deimos", // UseableMonsters[12],
+        "Laken Clone 1.7", // UseableMonsters[13],
+        "Laken Clone 2.3", // UseableMonsters[14],
+        "The Black Rider", // UseableMonsters[15],
+        "General Vaughn", // UseableMonsters[16]
+    };
+        #endregion Useable Monsters
+
+        // 10654 | Straightforward Wrath
+        if (!Story.QuestProgression(10654))
+        {
+            Core.HuntMonsterQuest(10654,
+                ("reapfinals", UseableMonsters[4], ClassType.Solo));
+        }
+
+        // 10655 | Sinister Assist
+        if (!Story.QuestProgression(10655))
+        {
+            Core.HuntMonsterQuest(10655,
+                ("reapfinals", UseableMonsters[5], ClassType.Solo));
+        }
+
+        // 10656 | Disposer of Lots
+        if (!Story.QuestProgression(10656))
+        {
+            Core.EnsureAccept(10656);
+            Story.MapItemQuest(10656, "reapfinals", 15638);
+
+            if (Bot.Map.Name != "reapfinals")
+                Core.Join("reapfinals");
+            if (Bot.Player?.Cell != "Arena3")
+                Core.Jump("Arena3");
+        Retry:
+            Monster CultLeader = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 30);
+
+            while (!Bot.ShouldExit && CultLeader.State == 2 /* invulnerable */)
+            {
+                Core.KillMonster("reapfinals", "arena3", "Bottom", "Legion Ritualist");
+                // Re-snapshop leader for state
+                CultLeader = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 30);
+                if (CultLeader.State != 2)
+                {
+                    Core.KillMonster("reapfinals", "arena3", "Bottom", "Ritualist Leader");
+                    if (Bot.TempInv.Contains("Ritualist's Candle"))
+                    {
+                        Core.JumpWait();
+                        break;
+                    }
+                    else goto Retry;
+                }
+            }
+            Core.EnsureComplete(10656);
+        }
+
+        // 10657 | War's Revelation
+        if (!Story.QuestProgression(10657))
+        {
+            Core.HuntMonsterQuest(10657,
+                ("reapfinals", UseableMonsters[8], ClassType.Solo));
+        }
+
+        // 10658 | Judges' Grudges
+        if (!Story.QuestProgression(10658))
+        {
+            Core.EnsureAccept(10658);
+            Core.EquipClass(ClassType.Solo);
+
+            if (Bot.Map.Name != "reapfinals")
+                Core.Join("reapfinals");
+            if (Bot.Player?.Cell != "Arena5")
+                Core.Jump("Arena5");
+
+            Monster Rhadamanthys = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 35);
+            Monster Minos = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 37);
+            Monster Aeacus = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 36);
+
+            while (!Bot.ShouldExit)
+            {
+                if (Bot.Map.Name != "reapfinals")
+                    Core.Join("reapfinals");
+                if (Bot.Player?.Cell != "Arena5")
+                    Core.Jump("Arena5");
+
+                Rhadamanthys = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 35);
+                Minos = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 37);
+                Aeacus = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 36);
+
+                if (Rhadamanthys.Alive)
+                    Bot.Combat.Attack("Rhadamanthys");
+                else if (Minos.Alive)
+                    Bot.Combat.Attack("Minos");
+                else
+                    Bot.Combat.Attack("Aeacus");
+                Bot.Sleep(500);
+
+                if (Bot.TempInv.Contains("Minos Defeated") && Bot.TempInv.Contains("Rhadamanthys Defeated") && Bot.TempInv.Contains("Aeacus Defeated"))
+                {
+                    Core.JumpWait();
+                    break;
+                }
+            }
+            Core.EnsureComplete(10658);
+        }
+
+
+        // 10659 | Devastated Deimos
+        if (!Story.QuestProgression(10659))
+        {
+            Core.HuntMonsterQuest(10659,
+                ("reapfinals", UseableMonsters[12], ClassType.Solo));
+        }
+
+        // 10660 | Laken, the Sequel
+        if (!Story.QuestProgression(10660))
+        {
+            Core.HuntMonsterQuest(10660,
+                ("reapfinals", UseableMonsters[14], ClassType.Solo),
+                ("reapfinals", UseableMonsters[13], ClassType.Solo));
+        }
+
+
+        // 10661 | Take Ill
+        if (!Story.QuestProgression(10661))
+        {
+            Story.MapItemQuest(10661, "reapfinals", 15639, 2);
+            Story.MapItemQuest(10661, "reapfinals", 15640);
+        }
+
+        // 10662 | Pallidus Curse
+        if (!Story.QuestProgression(10662))
+        {
+            Story.MapItemQuest(10662, "reapfinals", 15641, 8);
+            Core.HuntMonsterQuest(10662,
+                ("reapfinals", UseableMonsters[0], ClassType.Farm));
+        }
+
+        // 10663 | Famine's Revelation
+        if (!Story.QuestProgression(10663))
+        {
+            Core.HuntMonsterQuest(10663,
+                ("reapfinals", UseableMonsters[16], string.IsNullOrEmpty(Core.BossClass) ? ClassType.Solo : ClassType.Boss));
+
+
+            Core.EnsureAccept(10658);
+            Core.EquipClass(ClassType.Solo);
+
+            if (Bot.Map.Name != "reapfinals")
+                Core.Join("reapfinals");
+            if (Bot.Player?.Cell != "Arena8")
+                Core.Jump("Arena8", "Bottom");
+
+            Monster TheBlackRider = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 41);
+            Monster GeneralVaughn = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 42);
+
+            while (!Bot.ShouldExit)
+            {
+                if (Bot.Map.Name != "reapfinals")
+                    Core.Join("reapfinals");
+                if (Bot.Player?.Cell != "Arena5")
+                    Core.Jump("Arena5");
+
+                TheBlackRider = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 41);
+                GeneralVaughn = Bot.Monsters.CurrentAvailableMonsters.Find(x => x != null && x.MapID == 42);
+
+                if (GeneralVaughn.Alive)
+                    Bot.Combat.Attack(42);
+                else
+                    Bot.Combat.Attack(41);
+                Bot.Sleep(500);
+
+                if (Bot.TempInv.Contains(100145))
+                {
+                    Core.JumpWait();
+                    break;
+                }
+            }
+            Core.EnsureComplete(10658);
+
+        }
+    }
+
 }
