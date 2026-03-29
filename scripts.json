@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 442463,
-    "sha256": "953d54fe2c4be69e1770d95ff607ab1fbffac5d3f4851ad5a3d3c7adf589bbe6",
+    "size": 442499,
+    "sha256": "26a4bb8732da7a81c700a27b2aa72a4c8a9aa7925ff03cc0614e5c4e3c4389f4",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -6048,7 +6048,7 @@
     ],
     "path": "Other/Weapons/ShadowReaperOfDoom.cs",
     "size": 1483,
-    "sha256": "8b0f913d2473b94440fc0c6a5cc16abebd7ac5414091df8a84ad63b45d9469f6",
+    "sha256": "c4cc38b7d2f1d3c77454686d051461c8d6415b04f0f932618fbba0fc2eb426bc",
     "fileName": "ShadowReaperOfDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Weapons/ShadowReaperOfDoom.cs"
   },
