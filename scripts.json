@@ -29572,8 +29572,8 @@
       "null"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs",
-    "size": 12218,
-    "sha256": "df674eec942bc3768ebdc71c8002e0a761f5a5cb29a4e0a46d2ee14f4acf8c20",
+    "size": 23331,
+    "sha256": "70b57e123b37a396a0b248becdae2a7622bd451c2d845ed1ac38d5593d4f877c",
     "fileName": "CoreDageBirthday.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/CoreDageBirthday.cs"
   },
@@ -30023,6 +30023,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/ParagonGreatsword.cs"
   },
   {
+    "name": "Reapfinals",
+    "description": "This script completes the storyline in \\Reapfinals.",
+    "tags": [
+      "reapfinals",
+      "legion",
+      "tournament",
+      "seasonal",
+      "dage",
+      "story",
+      "seasonal",
+      "dagebirthday",
+      "general vaughn"
+    ],
+    "path": "Seasonal/StaffBirthdays/DageTheEvil/08Reapfinals.cs",
+    "size": 824,
+    "sha256": "5fd717a68a0e13b339c2e6fcfe22f3d78bb03e2961fc02642b1058d18578c411",
+    "fileName": "08Reapfinals.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/08Reapfinals.cs"
+  },
+  {
     "name": "DagesBirthdayMerge",
     "description": "null",
     "tags": [
@@ -30174,6 +30194,26 @@
     "sha256": "a0a03792a23c51adc268f409ebcf7855366099d657704c2c197c7f6f7b7147f4",
     "fileName": "DarkWarNationMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/DarkWarNationMerge.cs"
+  },
+  {
+    "name": "Phlegethonarena",
+    "description": "This script completes the storyline in \\Phlegethonarena.",
+    "tags": [
+      "phlegethonarena",
+      "legion",
+      "tournament",
+      "seasonal",
+      "dage",
+      "story",
+      "seasonal",
+      "dagebirthday",
+      "general vaughn"
+    ],
+    "path": "Seasonal/StaffBirthdays/DageTheEvil/07Phlegethonarena.cs",
+    "size": 849,
+    "sha256": "70c92ea044ce9250fd9f51b08db492eefab9f700fb8d53943a318251a53e151e",
+    "fileName": "07Phlegethonarena.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/07Phlegethonarena.cs"
   },
   {
     "name": "Future Legion Story",
