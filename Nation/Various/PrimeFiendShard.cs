@@ -247,7 +247,7 @@ public class PrimeFiendShard
 
             // "Nation Soulstealer"
             Nation.FarmDiamondofNulgath(20);
-            Adv.BuyItem("shadowblast", 1206, "Nation Soulstealer", 1, 4175, 2);
+            Adv.BuyItem("shadowblast", 1206, "Nation Soulstealer", 1, 3615, 2);
 
 
             // Ensure requirements are unbanked
