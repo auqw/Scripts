@@ -2637,9 +2637,10 @@ public class CoreBots
             if (byId != null)
                 return byId;
 
-            Logger($"Item with ShopItemID {shopItemID} not found in shop {shopID}.");
-            return null;
         }
+        else
+            Logger($"Item with ShopItemID {shopItemID} not found in shop {shopID}. Using \"{itemNameID}\" string as backup method");
+
 
         List<ShopItem> matches = shopItems
             .Where(x => x.Name.Equals(itemNameID, StringComparison.OrdinalIgnoreCase))
