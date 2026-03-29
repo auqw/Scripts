@@ -160,13 +160,10 @@ public class CoreStory
         TryComplete(QuestData, AutoCompleteQuest);
 
         // Delay & cleanup
-        Bot.Sleep(200);
+        Bot.Sleep(1000);
         CurrentRequirements.Clear();
 
-        Core.DebugLogger(
-            this,
-            $"Finished KillQuest: QuestID={QuestID}. Items farmed: [{string.Join(", ", farmedItems)}]"
-        );
+        Core.DebugLogger(this, $"Finished KillQuest: QuestID={QuestID}. Items farmed: [{string.Join(", ", farmedItems)}]");
     }
 
     /// <summary>
@@ -813,7 +810,6 @@ public class CoreStory
             return;
         }
 
-        // Collect all missing items and their current quantities
         string[] missingItems = questData
             .Requirements.Concat(questData.AcceptRequirements)
             .Where(x => x != null && !Core.CheckInventory(x.ID, x.Quantity))
@@ -821,10 +817,7 @@ public class CoreStory
             {
                 int have = x.Temp
                     ? Bot.TempInv.GetQuantity(x.ID)
-                    : Bot.Inventory.Items.Concat(Bot.Bank.Items)
-                        .FirstOrDefault(m => m?.ID == x.ID)
-                        ?.Quantity
-                    ?? 0;
+                    : Bot.Inventory.GetQuantity(x.Name);
 
                 return $"{x.Name}[{x.ID}] x{x.Quantity} (have {have})";
             })
@@ -841,14 +834,24 @@ public class CoreStory
 
         Core.Sleep();
 
-        if ((questData.Once && !QuestProgression(questData.ID)) || autoCompleteQuest)
-            Core.EnsureComplete(questData.ID);
+        // Always force proper completion
+        Core.EnsureAccept(questData.ID);
+        Core.EnsureComplete(questData.ID);
 
         Bot.Wait.ForQuestComplete(questData.ID);
+
+        if (questData.Rewards != null)
+        {
+            foreach (string reward in questData.Rewards.Select(r => r.Name).ToArray())
+                Bot.Wait.ForPickup(reward);
+        }
+
+
         Core.Logger(
             $"Completed Quest: [{questData.ID}] - \"{questData.Name}\"",
             "QuestProgression"
         );
+
         Core.Sleep();
     }
 
@@ -887,96 +890,54 @@ public class CoreStory
             return true;
         }
 
-        int timeout = 0;
+        int attempts = 0;
+
         while (!Bot.Quests.IsUnlocked(QuestID))
         {
             Core.Sleep(1000);
-            timeout++;
 
-            if (timeout > 15)
+            int currentValue = Bot.Flash.CallGameFunction<int>(
+                "world.getQuestValue",
+                QuestData.Slot
+            );
+
+            if (attempts == 0 || attempts % 3 == 0)
+                Core.Logger($"Progress check: Slot {QuestData.Slot} | Current {currentValue} / Target {QuestData.Value - 1}",
+                "QuestProgression");
+
+            // Find ANY earlier quest in the same chain (safer than Value+1 logic)
+            Quest? prevQuest = Bot.Quests.Tree
+                .Where(q => q.Slot == QuestData.Slot && q.Value < QuestData.Value)
+                .OrderByDescending(q => q.Value)
+                .FirstOrDefault();
+
+            if (prevQuest != null)
             {
-                int currentValue = Bot.Flash.CallGameFunction<int>(
-                    "world.getQuestValue",
-                    QuestData.Slot
-                );
-                Quest? prevQuest = Bot.Quests.Tree.Find(q =>
-                    q.Slot == QuestData.Slot && q.Value == (currentValue + 1)
+                Core.Logger(
+                    $"Attempting recovery via previous quest: [{prevQuest.ID}] \"{prevQuest.Name}\"",
+                    "QuestProgression"
                 );
 
-                prevQuestReq ??=
-                    prevQuest == null
-                    || prevQuest.Requirements.All(r => Core.CheckInventory(r.ID, r.Quantity))
-                        ? null
-                        : string.Join(
-                            ',',
-                            prevQuest
-                                .Requirements.Where(r => !Core.CheckInventory(r.ID, r.Quantity))
-                                .Select(i => i.Name)
-                        );
-                prevQuestAReq ??=
-                    prevQuest == null
-                    || prevQuest.AcceptRequirements.All(r => Core.CheckInventory(r.ID, r.Quantity))
-                        ? null
-                        : string.Join(
-                            ',',
-                            prevQuest
-                                .Requirements.Where(r => !Core.CheckInventory(r.ID, r.Quantity))
-                                .Select(i => i.Name)
-                        );
-                prevQuestExplain ??=
-                    prevQuest == null
-                        ? string.Empty
-                        : $"Quest \"{prevQuest.Name}\" [{prevQuest.ID}] appears to have failed to turn in somehow.| "
-                            + (
-                                prevQuestReq == null
-                                    ? string.Empty
-                                    : $"Missing QuestItems: {prevQuestReq}| "
-                            )
-                            + (
-                                prevQuestAReq == null
-                                    ? string.Empty
-                                    : $"Missing AcceptRequirements: {prevQuestAReq}| "
-                            );
+                TryComplete(prevQuest, true);
+                attempts = 0;
+                continue;
+            }
 
-                if (lastFailedQuestID != QuestData.ID)
-                {
-                    if (prevQuest != null && prevQuest.Status == "c")
-                    {
-                        TryComplete(prevQuest, true);
-                        timeout = 0;
-                    }
-                    else if (QuestData.Value - currentValue <= 2)
-                    {
-                        lastFailedQuestID = QuestData.ID;
-                        timeout = 0;
-                        Core.Relogin(
-                            "A server/client desync happened (common) for your quest progress, the bot will now restart"
-                        );
-                    }
-                }
-                else
-                {
-                    string message2 =
-                        $"Quest \"{QuestData.Name}\" [{QuestID}] is not unlocked.\n"
-                        + $"Expected value = [{QuestData.Value - 1}/{QuestData.Slot}], received = [{currentValue}/{QuestData.Slot}]\n"
-                        + prevQuestExplain
-                        + "First try stopping the script, relogging, and then restarting it, if this happens again, then join the Skua Discord to report this.\n"
-                        + "Do you wish to be brought to the Discord?";
+            attempts++;
 
-                    Core.Logger(message2);
+            // Only relog after multiple failed recovery attempts
+            if (attempts >= 5)
+            {
+                Core.Logger(
+                    $"Quest [{QuestID}] \"{QuestData.Name}\" still not unlocked after retries. Relogging...",
+                    "QuestProgression"
+                );
 
-                    if (Bot.ShowMessageBox(message2, "Quest not unlocked", true) == true)
-                    {
-                        Process.Start(
-                            "explorer",
-                            "https://discord.com/channels/1090693457586176013/1090741396970938399"
-                        );
-                    }
-
-                    Bot.StopSync(true);
-                }
+                Core.Relogin("Quest progression recovery failed, relogging.");
+                attempts = 0;
             }
         }
+
 
         if (Core.isCompletedBefore(QuestID) && (!TestBot || QuestData.Once))
         {
