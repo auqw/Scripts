@@ -239,27 +239,12 @@ public class Awescended
                 Farm.Experience(50);
                 Core.EquipClass(ClassType.Solo);
                 Core.EnsureAccept(8040);
-                Adv.BoostKillMonster(
-                    "ledgermayne",
-                    "Boss",
-                    "Left",
-                    "Ledgermayne",
-                    "The Supreme Arcane Staff",
-                    isTemp: false
-                );
-                Core.BuyItem("doomwood", 276, "Blinding Light of Destiny Handle");
+                Core.KillMonster("ledgermayne", "Boss", "Left", "Ledgermayne", "The Supreme Arcane Staff", isTemp: false); 
+                Adv.BuyItem("doomwood", 276, "Blinding Light of Destiny Handle");
                 SRoD.ShadowReaperOfDoom();
                 Farm.BladeofAweREP(10, true);
                 Core.EquipClass(ClassType.Farm);
-                Core.KillMonster(
-                    "cornelis",
-                    "Side1",
-                    "Left",
-                    "Gargoyle",
-                    "Mirror Shield Fragment",
-                    50,
-                    false
-                );
+                Core.KillMonster("cornelis", "Side1", "Left", "Gargoyle", "Mirror Shield Fragment", 50, false);
                 Core.EnsureComplete(8040);
             }
 
