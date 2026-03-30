@@ -1622,42 +1622,9 @@ public class CoreBots
 
     public List<string> CategoryStrings = new() { "House", "Wall Item", "Floor Item" };
 
-    /// <summary>
-    /// Buys a item till you have the desired quantity
-    /// </summary>
-    /// <param name="map">Map of the shop</param>
-    /// <param name="shopID">ID of the shop</param>
-    /// <param name="itemName">Name of the item</param>
-    /// <param name="quant">Desired quantity</param>
-    /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will re-log you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
-    /// <param name="Log"></param>
-    // public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, bool Log = true)
-    // {
-    //     _CheckInventorySpace();
+    public void BuyItem(string map, int shopID, string itemName, int quant, int shopItemID, bool Log)
+        => BuyItem(map, shopID, itemName, quant, shopItemID, 0, Log);
 
-    //     ShopItem? item = parseShopItem(
-    //         GetShopItems(map, shopID),
-    //         shopID,
-    //         itemName,
-    //         shopItemID
-    //     );
-
-    //     if (item == null)
-    //     {
-    //         Logger(
-    //             $"Failed to find the item '{itemName}' in the shop with ID {shopID}, skipping it."
-    //         );
-    //         return;
-    //     }
-
-    //     if (!string.IsNullOrEmpty(item.CategoryString)
-    //         && CategoryStrings.Contains(item.CategoryString))
-    //     {
-    //         _CheckHouseSpace();
-    //     }
-
-    //     _BuyItem(map, shopID, item, quant, Log);
-    // }
     public void BuyItem(string map, int shopID, string itemName, int quant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         _CheckInventorySpace();
@@ -1691,6 +1658,9 @@ public class CoreBots
     /// <param name="quant">Desired quantity</param>
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will relog you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
     /// <param name="Log"></param>
+    public void BuyItem(string map, int shopID, int itemID, int quant, int shopItemID, bool Log)
+        => BuyItem(map, shopID, itemID, quant, shopItemID, 0, Log);
+
     public void BuyItem(string map, int shopID, int itemID, int quant = 1, int shopItemID = 0, int index = 0, bool Log = true)
     {
         if (CheckInventory(itemID, quant))
