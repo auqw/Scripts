@@ -2636,11 +2636,10 @@ public class CoreBots
             ShopItem? byId = shopItems.FirstOrDefault(x => x.ShopItemID == shopItemID);
             if (byId != null)
                 return byId;
+            else
+                Logger($"Item with ShopItemID {shopItemID} not found in shop {shopID}. Using \"{itemNameID}\" string as backup method");
 
         }
-        else
-            Logger($"Item with ShopItemID {shopItemID} not found in shop {shopID}. Using \"{itemNameID}\" string as backup method");
-
 
         List<ShopItem> matches = shopItems
             .Where(x => x.Name.Equals(itemNameID, StringComparison.OrdinalIgnoreCase))
@@ -2678,8 +2677,8 @@ public class CoreBots
             ShopItem? bySID = shopItems.FirstOrDefault(x => x.ShopItemID == shopItemID);
             if (bySID != null)
                 return bySID;
-
-            Logger($"ShopItemID {shopItemID} not found in shop {shopID}. Falling back to ItemID...");
+            else
+                Logger($"ShopItemID {shopItemID} not found in shop {shopID}. Falling back to ItemID...");
         }
 
         // 2️⃣ Fallback to ItemID
