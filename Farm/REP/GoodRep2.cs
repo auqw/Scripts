@@ -51,11 +51,12 @@ public class GoodRep2
             return;
 
         // Run story prerequisites if not yet done.
-        // This covers Manor (quests 1058–1062) and PoisonForest (1948–1955),
-        // all of which give Good rep. Skips automatically if already completed.
+        // PForest.StoryLine() internally calls Manor.StoryLine() first, so both
+        // storylines (Manor 1058–1062 and PoisonForest 1948–1955) are covered and
+        // give Good rep along the way. Skips automatically if already completed.
         if (!Core.isCompletedBefore(1955))
         {
-            Core.Logger("Running prerequisites: Manor → PoisonForest story (gives Good rep along the way)...");
+            Core.Logger("Running prerequisites: PoisonForest.StoryLine() (includes Manor; gives Good rep along the way)...");
             PForest.StoryLine();
         }
 
@@ -71,21 +72,26 @@ public class GoodRep2
         Farm.ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming Good rank {rank} with Loyalty Rewarded (quest 1952) in PoisonForest");
 
-        // RegisterQuests handles accept/complete in the background automatically
-        Core.RegisterQuests(1952);
-        while (!Bot.ShouldExit && Farm.FactionRank("Good") < rank)
+        try
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
+            // RegisterQuests handles accept/complete in the background automatically
+            Core.RegisterQuests(1952);
+            while (!Bot.ShouldExit && Farm.FactionRank("Good") < rank)
+            {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
 
-            // HuntMonster navigates to Burning Loyalist's cell once, then stays there
-            // since the mob respawns in place — no room-hopping
-            Core.HuntMonster("PoisonForest", "Burning Loyalist");
+                // HuntMonster navigates to Burning Loyalist's cell once, then stays there
+                // since the mob respawns in place — no room-hopping
+                Core.HuntMonster("PoisonForest", "Burning Loyalist");
+            }
+            Core.CancelRegisteredQuests();
         }
-        Core.CancelRegisteredQuests();
-
-        Farm.ToggleBoost(BoostType.Reputation, false);
-        Core.SavedState(false);
-        Core.PrivateRooms = false;
+        finally
+        {
+            Farm.ToggleBoost(BoostType.Reputation, false);
+            Core.SavedState(false);
+            Core.PrivateRooms = false;
+        }
     }
 }
