@@ -1502,18 +1502,18 @@ public class CoreFarms
             return;
         }
 
-        if (!Core.CheckInventory("Dragon Runestone"))
-        {
-            Core.Logger("Dragon Runestone");
-            return;
-        }
-
         int reagentid1 = reg1!.ID;
         int reagentid2 = reg2!.ID;
         int QuantR1 = Bot.Inventory.GetQuantity(reg1!.ID);
         int QuantR2 = Bot.Inventory.GetQuantity(reg2!.ID);
         //buy dstones ( if not owned) of the lowest ingredient quant
         DragonRunestone(Math.Min(QuantR1, QuantR2));
+
+        if (!Core.CheckInventory("Dragon Runestone"))
+        {
+            Core.Logger("Missing Dragon Runestone. Cannot continue alchemy!");
+            return;
+        }
 
         if (reagent1 == "Dragon Scale")
             reg1!.ID = 11475;
