@@ -736,7 +736,7 @@ public class CoreAOR
 
         // Last Snowfall (9810)
         Story.MapItemQuest(9810, "liatarahill", 13368);
-        Story.KillQuest(9810, "liatarahill", new[] { "Undead Garde", "Garde Wraith" });
+        Story.KillQuest(9810, "liatarahill", new[] { "Garde Wraith", "Undead Garde" });
 
         // Spring Melt (9811)
         Story.MapItemQuest(9811, "liatarahill", 13366);
