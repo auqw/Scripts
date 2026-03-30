@@ -1622,6 +1622,8 @@ public class CoreBots
 
     public List<string> CategoryStrings = new() { "House", "Wall Item", "Floor Item" };
 
+    /// <inheritdoc cref="BuyItem(string, int, string, int, int, int, bool)"/>
+    [Obsolete("Use the overload with the index parameter.")]
     public void BuyItem(string map, int shopID, string itemName, int quant, int shopItemID, bool Log)
         => BuyItem(map, shopID, itemName, quant, shopItemID, 0, Log);
 
@@ -1658,6 +1660,8 @@ public class CoreBots
     /// <param name="quant">Desired quantity</param>
     /// <param name="shopItemID">Use this for Merge shops that has 2 or more of the item with the same name and you need the second/third/etc., be aware that it will relog you after to prevent ghost buy. To get the ShopItemID use the built in loader of Skua</param>
     /// <param name="Log"></param>
+    /// <inheritdoc cref="BuyItem(string, int, int, int, int, int, bool)"/>
+    [Obsolete("Use the overload with the index parameter.")]
     public void BuyItem(string map, int shopID, int itemID, int quant, int shopItemID, bool Log)
         => BuyItem(map, shopID, itemID, quant, shopItemID, 0, Log);
 
