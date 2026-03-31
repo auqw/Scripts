@@ -3426,28 +3426,48 @@ public class CoreFarms
 
         Core.ChangeAlignment(Alignment.Good);
         Core.EquipClass(ClassType.Farm);
-        Core.SavedState(true, FactionRank("Good") < 4 ? "swordhavenbridge" : !Core.IsMember ? "castleundead" : "sewer");
+
+        if (!Core.isCompletedBefore(1955))
+        {
+            Core.Logger("/PoisonForest story not complete! You'll be doing the lower reputation reward quest. (just run the GoodRep.cs it will complete the story for you, then come back to this)");
+            Core.SavedState(true, !Core.isCompletedBefore(1955) ? (FactionRank("Good") < 4 ? "swordhavenbridge" : !Core.IsMember ? "castleundead" : "sewer") : "PoisonForest");
+        }
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank}");
-
-        Core.RegisterQuests(369); //That Hero Who Chases Slimes 369
-        while (!Bot.ShouldExit && FactionRank("Good") < 4)
+        if (Core.isCompletedBefore(1955))
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
-            Core.KillMonster("swordhavenbridge", "Bridge", "Left", "*");
+            Core.RegisterQuests(1952);
+            while (!Bot.ShouldExit && FactionRank("Good") < rank)
+            {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
+
+                // HuntMonster navigates to Burning Loyalist's cell once, then stays there
+                Core.HuntMonster("PoisonForest", "Burning Loyalist");
+            }
+            Core.CancelRegisteredQuests();
         }
-        Core.CancelRegisteredQuests();
-
-        Core.RegisterQuests(Core.IsMember ? 371 : 372); //Rumble with Grumble 371, Tomb with a View 372
-        while (!Bot.ShouldExit && FactionRank("Good") < rank)
+        else
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
-            if (!Core.IsMember)
-                Core.KillMonster("castleundead", "Enter", "Spawn", "*");
-            else
-                Core.KillMonster("sewer", "End", "Left", "Grumble");
+            Core.RegisterQuests(369); //That Hero Who Chases Slimes 369
+            while (!Bot.ShouldExit && FactionRank("Good") < 4)
+            {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
+                Core.KillMonster("swordhavenbridge", "Bridge", "Left", "*");
+            }
+            Core.CancelRegisteredQuests();
+
+            Core.RegisterQuests(Core.IsMember ? 371 : 372); //Rumble with Grumble 371, Tomb with a View 372
+            while (!Bot.ShouldExit && FactionRank("Good") < rank)
+            {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
+                if (!Core.IsMember)
+                    Core.KillMonster("castleundead", "Enter", "Spawn", "*");
+                else
+                    Core.KillMonster("sewer", "End", "Left", "Grumble");
+            }
         }
         Core.CancelRegisteredQuests();
         ToggleBoost(BoostType.Reputation, false);
