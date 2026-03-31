@@ -1709,49 +1709,30 @@ public class CoreFarms
             Core.Logger($"Item \"{Voucher}\" not found in the shop.");
             return;
         }
-        const int GOLD_CAP = 100_000_000;
 
         while (!Bot.ShouldExit && needed > 0)
         {
-            if (item?.Name == null)
+            int maxBuyable = Math.Min(needed, item.MaxStack);
+            if (maxBuyable <= 0)
                 break;
 
-            int maxStackBuy = Math.Min(needed, item.MaxStack);
-            if (maxStackBuy <= 0)
-                break;
+            // Farm enough gold to buy these vouchers
+            int lastSpace = item.Name.LastIndexOf(' ');
+            string valuePart = item.Name[(lastSpace + 1)..]
+                .Replace("k", "", StringComparison.OrdinalIgnoreCase)
+                .Replace(",", "");
 
-            // Extract "250k" from voucher name
-            int lastSpaceIndex = item.Name.LastIndexOf(' ');
-            string valuePart = lastSpaceIndex >= 0 ? item.Name[(lastSpaceIndex + 1)..] : string.Empty;
+            if (!decimal.TryParse(valuePart, out decimal thousands) || thousands <= 0)
+                thousands = 100; // fallback
 
-            valuePart = valuePart.Replace("k", "", StringComparison.OrdinalIgnoreCase)
-                                 .Replace(",", "");
+            int valuePerItem = (int)Math.Round(thousands * 1000, MidpointRounding.AwayFromZero);
 
-            decimal thousands = decimal.TryParse(valuePart, out decimal parsed) && parsed > 0
-                ? parsed
-                : 100m;
+            Gold(Math.Max(maxBuyable * valuePerItem, 100_000_000));
 
-            int pricePerVoucher = (int)Math.Round(thousands * 1000m, MidpointRounding.AwayFromZero);
-
-            // How many we can afford RIGHT NOW
-            int currentGold = Bot.Player.Gold;
-            int affordable = currentGold / pricePerVoucher;
-
-            // If we can't afford even one, farm gold safely to cap
-            if (affordable <= 0)
-            {
-                Gold(GOLD_CAP);
-                Bot.Wait.ForTrue(() => Bot.Player.Gold >= GOLD_CAP - 1);
-                continue;
-            }
-
-            int buyAmount = Math.Min(maxStackBuy, affordable);
-
-            Core.BuyItem(map, shopID, item.Name, buyAmount);
-            Bot.Wait.ForPickup(item.Name);
-
-            needed -= buyAmount;
+            Core.BuyItem(map, shopID, item.Name, maxBuyable);
+            needed -= maxBuyable;
         }
+
     }
 
     public void DragonRunestone(int quant = 100)
