@@ -750,7 +750,7 @@ public class UnlockForgeEnhancements
             );
         Core.CancelRegisteredQuests();
 
-        Adv.BuyItem("shadowfortress", 1968, 59465, shopItemID: 8079);
+        Adv.BuyItem("shadowfortress", 1968, 59465, shopItemID: 6869);
 
         Core.EnsureComplete(9171);
         Core.Logger("Enhancement Unlocked: Praxis");

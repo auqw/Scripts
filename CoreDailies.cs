@@ -457,7 +457,7 @@ public class CoreDailies
                 );
         }
         if (Core.CheckInventory("Token of Collection", 90))
-            Core.BuyItem("Collection", 324, 30250, shopItemID: 3511);
+            Core.BuyItem("Collection", 324, 30250, shopItemID: 3015);
     }
 
     public void Cryomancer()

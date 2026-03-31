@@ -43,7 +43,7 @@ public class UltimateBLoD
         ShardOfAnOrb();
         PurifiedUndeadDragonEssence();
 
-        Core.BuyItem("techfortress", 1902, "Ultimate Blinding Light of Destiny", shopItemID: 7585);
+        Core.BuyItem("techfortress", 1902, "Ultimate Blinding Light of Destiny", shopItemID: 6296);
     }
 
     public void OverwhelmedAxe()

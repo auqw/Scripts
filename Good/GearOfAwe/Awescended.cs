@@ -267,7 +267,7 @@ public class Awescended
                     );
                     while (!Core.CheckInventory("Vaden's Helm"))
                     {
-                        Core.BuyItem("bonecastlec", 1242, "Vaden's Helm", shopItemID: 4363);
+                        Core.BuyItem("bonecastlec", 1242, "Vaden's Helm", shopItemID: 3740);
                         Core.Sleep(500);
                     }
                 }

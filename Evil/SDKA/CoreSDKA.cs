@@ -617,7 +617,7 @@ public class CoreSDKA
                     FarmDSO(CSOQuantity * 100);
                 DoomMerge("Corrupt Spirit Orb", CSOQuantity);
                 DoomMerge("Ominous Aura", 2);
-                Core.BuyItem("dwarfhold", 434, 12476, shopItemID: 1198);
+                Core.BuyItem("dwarfhold", 434, 12476, shopItemID: 778);
             }
 
             Core.FarmingLogger("Daggers of Destruction");
