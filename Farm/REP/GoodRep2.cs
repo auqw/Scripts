@@ -63,35 +63,20 @@ public class GoodRep2
         if (Farm.FactionRank("Good") >= rank)
             return;
 
-        Core.ChangeAlignment(Alignment.Good);
         Core.EquipClass(ClassType.Farm);
-
-        // Pin to a private room so the bot never switches rooms mid-farm
-        Core.PrivateRooms = true;
         Core.SavedState(true, "PoisonForest");
         Farm.ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming Good rank {rank} with Loyalty Rewarded (quest 1952) in PoisonForest");
 
-        try
+        Core.RegisterQuests(1952);
+        while (!Bot.ShouldExit && Farm.FactionRank("Good") < rank)
         {
-            // RegisterQuests handles accept/complete in the background automatically
-            Core.RegisterQuests(1952);
-            while (!Bot.ShouldExit && Farm.FactionRank("Good") < rank)
-            {
-                if (Core.CheckSaveState())
-                    Core.ExecuteSaveState();
-
-                // HuntMonster navigates to Burning Loyalist's cell once, then stays there
-                // since the mob respawns in place — no room-hopping
-                Core.HuntMonster("PoisonForest", "Burning Loyalist");
-            }
-            Core.CancelRegisteredQuests();
+            if (Core.CheckSaveState())
+                Core.ExecuteSaveState();
+            Core.HuntMonster("PoisonForest", "Burning Loyalist");
         }
-        finally
-        {
-            Farm.ToggleBoost(BoostType.Reputation, false);
-            Core.SavedState(false);
-            Core.PrivateRooms = false;
-        }
+        Core.CancelRegisteredQuests();
+        Farm.ToggleBoost(BoostType.Reputation, false);
+        Core.SavedState(false);
     }
 }
