@@ -2642,7 +2642,8 @@ public class CoreBots
         }
 
         List<ShopItem> matches = shopItems
-            .Where(x => x.Name.Equals(itemNameID, StringComparison.OrdinalIgnoreCase))
+            .Where(x => x.Name.Equals(itemNameID, StringComparison.OrdinalIgnoreCase)
+            && x.Cost <= 0)
             .ToList();
 
         if (matches.Count == 0)
