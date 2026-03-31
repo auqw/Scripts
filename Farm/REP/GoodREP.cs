@@ -36,11 +36,9 @@ public class GoodREP
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
-        if (!Core.isCompletedBefore(1955))
-        {
-            Core.Logger("Running prerequisites: PoisonForest.StoryLine() (includes Manor; gives Good rep along the way)...");
-            PForest.StoryLine();
-        }
+
+        Core.Logger("Running PoisonForest storyline to be able to do the better rep method.");
+        PForest.StoryLine();
         Farm.GoodREP();
 
         Core.SetOptions(false);
