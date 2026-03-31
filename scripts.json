@@ -7,7 +7,7 @@
     ],
     "path": "CoreDailies.cs",
     "size": 61258,
-    "sha256": "4917ea9f344c55d3f42678a92e138b9971c3513bcd2c00df3b43a0956805217f",
+    "sha256": "2c2a21949cef4b7b4cfdbfb27680d2d4116906d638aaf25fc2e73f8c471e974b",
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreDailies.cs"
   },
@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 159570,
-    "sha256": "015cf42fc83c443cf38f95a1b6ff07e726e2a4c24a32eb2892cc0336fe503367",
+    "size": 160479,
+    "sha256": "f1dd3c600aef19e8de04635fb0fe672d5ed41183ad908f2acddcaf4330fb9ff0",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -1257,7 +1257,7 @@
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
     "size": 53588,
-    "sha256": "5e84926db94d083984489881363757ddae2dd635a9a16b1f4a1bb8e530fea53a",
+    "sha256": "b5ddb8a9e2af2a433a44d9a42b2bd6516ddceea298044403dc1f61f777931b87",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -1817,7 +1817,7 @@
     ],
     "path": "Farm/BuyScrolls.cs",
     "size": 5108,
-    "sha256": "423dc84c670c83e09c1f4e23a946aec2e7cac005ce84c5a488dec9003676c1e4",
+    "sha256": "daa294e3533c3523fdcbd3454b3679de1ffbf21ab2f6c0c9b2bdc7a99fc56231",
     "fileName": "BuyScrolls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/BuyScrolls.cs"
   },
@@ -13066,7 +13066,7 @@
     ],
     "path": "Good/GearOfAwe/Awescended.cs",
     "size": 13269,
-    "sha256": "ca7b709146e85834d4149854cc00f4b29f22f00ba5b7f015e12191ba0bf75b67",
+    "sha256": "0112a593890777382964b3af5ee1ef2accd1e7f05ed35c51cb2645183ef8147b",
     "fileName": "Awescended.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/GearOfAwe/Awescended.cs"
   },
@@ -13301,7 +13301,7 @@
     ],
     "path": "Good/BLoD/2UltimateBlindingLightofDestiny.cs",
     "size": 4629,
-    "sha256": "15de6d328a570a3938c879acb503807c4740f154c2ee34d7bc2e10ce23b10831",
+    "sha256": "646797e5cf71fa81c340698a1e95a96f517fd9128471c2df789568c067265ac3",
     "fileName": "2UltimateBlindingLightofDestiny.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/BLoD/2UltimateBlindingLightofDestiny.cs"
   },
@@ -17371,8 +17371,8 @@
       "reputation"
     ],
     "path": "Farm/REP/GoodREP.cs",
-    "size": 783,
-    "sha256": "382b67e2063cf145d82796f27744c5f0a7565512fde69e74b1ba2e45484c91d6",
+    "size": 1195,
+    "sha256": "28b82047bd80608ea18376d122e734920ca456a36bf3edf0c76476110c1ee52d",
     "fileName": "GoodREP.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/REP/GoodREP.cs"
   },
@@ -17479,8 +17479,8 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 38906,
-    "sha256": "3fbfc8dbc3e5f86204ada7647e322c1da89714ef926007cfe0cc59a44b4c5ea4",
+    "size": 38905,
+    "sha256": "09fa3bab43efed93949f65bd27312da223f66f78e9077036beb588c1bfd0fbdd",
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
