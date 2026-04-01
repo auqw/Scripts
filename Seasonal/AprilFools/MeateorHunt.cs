@@ -84,7 +84,7 @@ public class MeateorHunt
             Core.EnsureComplete(8619);
         }
         //Ashville Hot
-        Story.KillQuest(8620, "AshfallCamp", new[] { "Infernus", "Blackrawk", "Smoldur" });
+        Story.KillQuest(8620, "AshfallCamp", new[] { "Blackrawk", "Smoldur", "Infernus" });
 
         //Holy (Chicken)Cow!
         Story.KillQuest(8621, "CrashRuins", new[] { "Unlucky Explorer", "Cluckmoo Idol" });
