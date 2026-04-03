@@ -94,6 +94,7 @@ public class UltraDarkCarnax
 
     void Prep()
     {
+        Bot.Events.ExtensionPacketReceived += DarkCarnaxListener;
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (Bot.Config!.Get<bool>("DoEnh"))
             DoEnh();
@@ -141,15 +142,12 @@ public class UltraDarkCarnax
                 Core.EnableSkills();
         }
 
-        Bot.Events.ExtensionPacketReceived += DarkCarnaxListener;
         while (!Bot.ShouldExit)
         {
             // Dead → wait for respawn
             if (!Bot.Player.Alive)
             {
-                Bot.Events.ExtensionPacketReceived -= DarkCarnaxListener;
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                Bot.Events.ExtensionPacketReceived += DarkCarnaxListener;
                 continue;
             }
 
@@ -159,7 +157,6 @@ public class UltraDarkCarnax
                 C.Logger("All players finished farm.");
                 if (Bot.Config!.Get<bool>("DoEnh"))
                     Adv.GearStore(true, true);
-                Bot.Events.ExtensionPacketReceived -= DarkCarnaxListener;
                 break;
             }
 
@@ -178,37 +175,37 @@ public class UltraDarkCarnax
         Bot.Options.AttackWithoutTarget = false;
     }
 
-    private DateTime _lastZoneMove = DateTime.MinValue;
-    private bool _isHandlingZone;
-
-    private async void DarkCarnaxListener(dynamic packet)
+    public async void DarkCarnaxListener(dynamic packet)
     {
-        if (packet?.cmd != "event")
+        if (packet?["params"]?.type?.ToString() != "json")
+            return;
+        if (!Bot.Player.Alive)
+            return;
+        dynamic data = packet["params"].dataObj;
+        if (data?.cmd?.ToString() != "event")
             return;
 
-        // Treat dynamic value as nullable
-        string? zone = packet?.dataObj?.zoneSet?.ToString();
-
-        if (string.IsNullOrEmpty(zone))
+        string? zoneSet = data?.args?.zoneSet?.ToString();
+        if (string.IsNullOrEmpty(zoneSet))
             return;
 
-        if ((DateTime.Now - _lastZoneMove).TotalSeconds < 2 || _isHandlingZone)
-            return;
+        int y = Bot.Random.Next(380, 475);
+        int x = 0;
 
-        _isHandlingZone = true;
-        _lastZoneMove = DateTime.Now;
-
-        try
+        switch (zoneSet.ToUpper())
         {
-            await Task.Delay(800);
-            Core.Join("darkcarnax", "Boss", "Left");
-            C.Jump("Boss", "Left");
+            case "A":
+                x = Bot.Random.Next(600, 931);
+                break;
+            case "B":
+                x = Bot.Random.Next(25, 326);
+                break;
+            default:
+                x = Bot.Random.Next(325, 601);
+                break;
         }
-        finally
-        {
-            await Task.Delay(1200);
-            _isHandlingZone = false;
-        }
+
+        _ = Task.Run(() => Bot.Player.WalkTo(x, y));
     }
 
     void DoEnh()
