@@ -161,7 +161,7 @@ public class ArchPaladin
                 Core.BuyItem("castle", 88, "Holy Hand Grenade");
                 Core.EquipClass(ClassType.Farm);
                 Core.HuntMonster("manor", "Bird of Paradise", "Feather of Paradise", 20, false);
-                Core.KillMonster("doomwood", "r6", "Right", "*", "Shoelace of a Fallen Paladin", 77, false); 
+                Core.KillMonster("doomwood", "r6", "Right", "*", "Shoelace of a Fallen Paladin", 77, false);
                 Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("fotia", "Amia the Cult Leader", "Eternity Flame", isTemp: false);
                 Core.EnsureComplete(5466);
@@ -275,7 +275,7 @@ public class ArchPaladin
                         {
                             Farm.Gold(100000);
                             Core.BuyItem("spellcraft", 693, "Gold Voucher 100k");
-                            Core.BuyItem("spellcraft", 693, 17391, 1, 8846); //Arcane Quill x1
+                            Core.BuyItem("spellcraft", 693, 17391, 1, shopItemID: 7685);
                         }
                         Core.BuyItem("spellcraft", 622, "Archmage Ink", 1);
                     }
