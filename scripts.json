@@ -970,8 +970,8 @@
       "undead"
     ],
     "path": "Good/ArchPaladin.cs",
-    "size": 12891,
-    "sha256": "15d73e2c4192421fa0a2e9fb50450db75c5c45e4ef4291dbafcfcc61f1d95d96",
+    "size": 12884,
+    "sha256": "c60e17d182de92ff1a0bb427ca752db6c1a90e3c729d6090f7c0ed15d00b4921",
     "fileName": "ArchPaladin.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/ArchPaladin.cs"
   },
@@ -1580,8 +1580,8 @@
       "synthetic viscera"
     ],
     "path": "Ultras/DarkCarnax.cs",
-    "size": 12012,
-    "sha256": "1887d90489aee308ab54130a9ce4925093664d3a190327f79beeba354e88034a",
+    "size": 11853,
+    "sha256": "12bb2acc2ad1d79fd90311959b628c17495355c445acd3a0dc37a5ef10496bf5",
     "fileName": "DarkCarnax.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/DarkCarnax.cs"
   },
@@ -1816,8 +1816,8 @@
       "decay"
     ],
     "path": "Farm/BuyScrolls.cs",
-    "size": 5108,
-    "sha256": "daa294e3533c3523fdcbd3454b3679de1ffbf21ab2f6c0c9b2bdc7a99fc56231",
+    "size": 5102,
+    "sha256": "04b4239b88a4f003875e3dbbd00c3a954ce7aa597717d7879a455d144bbdfb45",
     "fileName": "BuyScrolls.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Farm/BuyScrolls.cs"
   },
