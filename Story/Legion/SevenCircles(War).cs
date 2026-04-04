@@ -46,8 +46,8 @@ public class SevenCircles
         if (!Story.QuestProgression(7970))
         {
             Core.EnsureAccept(7970);
+            Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Aura of Happiness", 4);
             Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Aura of Power");
-            Core.KillMonster("sevencircles", "r2", "Left", "Limbo Guard", "Aura of Happiness");
             Core.KillMonster("sevencircles", "r3", "Left", "Luxuria Guard", "Aura of Pleasure");
             Core.EnsureComplete(7970);
         }
