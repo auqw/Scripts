@@ -243,7 +243,7 @@ public class Lich
             );
             GrimGaolRun.DoGrimGaol();
         }
-        Core.BuyItem("gaolcell", 2362, "Verata's Necromicon");
+        Core.BuyItem("gaolcell", 2362, "Verata's Necromicon", shopItemID: 60505);
         Bot.Wait.ForPickup("Verata's Necromicon");
     }
 
