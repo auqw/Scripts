@@ -63,8 +63,8 @@ public class CelestialTempleForgeMerge
             ""
         ),
         new Option<bool>(
-            "autoclass", 
-            "Auto Equip Classes", 
+            "autoclass",
+            "Auto Equip Classes",
             "This will auto equip all classes, if false it will use the classes already equipped.",
             true
         ),
@@ -74,31 +74,31 @@ public class CelestialTempleForgeMerge
     {
         Bot.Events.ScriptStopping += OnBotStopped;
         Bot.Events.ExtensionPacketReceived += sArmy.PartyManagement;
-        
-        Core.BankingBlackList.AddRange(new[] { "Sliver of Moonlight", "Sliver of Sunlight", "Victor of the Festival", "Ecliptic Offering"});
-        
+
+        Core.BankingBlackList.AddRange(new[] { "Sliver of Moonlight", "Sliver of Sunlight", "Victor of the Festival", "Ecliptic Offering" });
+
         Core.SetOptions();
         Core.SendPackets($"%xt%zm%cmd%1%uopref%bParty%true%"); //To be able to join party
-        
+
         while (!Bot.ShouldExit && sArmy.PartyMemberArray()!.Length < 4)
             coreEclipse.SetupParty();
-        
+
         Core.SendPackets($"%xt%zm%cmd%1%uopref%bParty%false%");
-        
+
         Adv.GearStore(EnhAfter: true);
-			
+
         coreEclipse.EquipWait();
         coreEclipse.EquipClasses(true);
 
         BuyAllMerge();
-        
+
         sArmy.PartyLeave();
-        
+
         Bot.Events.ScriptStopping -= OnBotStopped;
         Bot.Events.ExtensionPacketReceived -= sArmy.PartyManagement;
-        
+
         Adv.GearStore(true, EnhAfter: true);
-        
+
         Core.SetOptions(false);
     }
 
@@ -132,27 +132,28 @@ public class CelestialTempleForgeMerge
                     Core.FarmingLogger(req.Name, sliverQuant);
                     coreEclipse.GetSliverOfMoonlight(sliverQuant);
                     break;
-            
+
 
                 case "Sliver of Sunlight":
                     Core.FarmingLogger(req.Name, sliverQuant);
                     coreEclipse.GetSliverOfSunlight(sliverQuant);
                     break;
-            
+
 
                 case "Victor of the Festival":
                     VictorMatsuri.Storyline();
-                    if (!Core.CheckInventory("Victor of the Festival")) {
+                    if (!Core.CheckInventory("Victor of the Festival"))
+                    {
                         Core.Logger("Victor Matsuri questline didn't finish, exiting...");
                         Bot.StopSync(true);
                     }
                     break;
-            
+
 
                 case "Ecliptic Offering":
                     if (!Core.CheckInventory("Rite of Ascension"))
                         BuyAllMerge("Rite of Ascension");
-                    Core.FarmingLogger("Ecliptic Offering",  quant);
+                    Core.FarmingLogger("Ecliptic Offering", quant);
                     coreEclipse.GetEclipticOffering(quant);
                     break;
             }
@@ -171,15 +172,16 @@ public class CelestialTempleForgeMerge
         new Option<bool>("78467", "Greatblade of the Midnight Sun", "Mode: [select] only\nShould the bot buy \"Greatblade of the Midnight Sun\" ?", false),
         new Option<bool>("78462", "Greatblade of the Solstice Moon", "Mode: [select] only\nShould the bot buy \"Greatblade of the Solstice Moon\" ?", false),
         new Option<bool>("78457", "Greatblade of the Entwined Eclipse", "Mode: [select] only\nShould the bot buy \"Greatblade of the Entwined Eclipse\" ?", false),
-   };
+    };
 
-    private bool OnBotStopped(Exception? exception) {
+    private bool OnBotStopped(Exception? exception)
+    {
         Bot.Events.ScriptStopping -= OnBotStopped;
         Bot.Events.ExtensionPacketReceived -= sArmy.PartyManagement;
-		
+
         Core.JumpWait();
         sArmy.PartyLeave();
-		
+
         Adv.GearStore(true, EnhAfter: true);
 
         return true;
