@@ -12,8 +12,6 @@ using Skua.Core.Models.Skills;
 using Skua.Core.Options;
 using Skua.Core.Scripts;
 
-namespace SkuaScripts.Scripts.Custom.EclipseAscent;
-
 public class CoreEclipse
 {
     private IScriptInterface Bot => IScriptInterface.Instance;

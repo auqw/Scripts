@@ -12,7 +12,6 @@ tags: celestial, temple, forge, merge, templeshrine, rite, ascension, solarbrand
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
-using SkuaScripts.Scripts.Custom.EclipseAscent;
 
 public class CelestialTempleForgeMerge
 {

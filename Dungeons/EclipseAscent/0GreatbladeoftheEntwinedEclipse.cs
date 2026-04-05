@@ -10,8 +10,6 @@ using Skua.Core.Interfaces;
 using Skua.Core.Models;
 using Skua.Core.Options;
 
-namespace SkuaScripts.Scripts.Custom.EclipseAscent;
-
 public class GreatbladeoftheEntwinedEclipse
 {
     private IScriptInterface Bot => IScriptInterface.Instance;
