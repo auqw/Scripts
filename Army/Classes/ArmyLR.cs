@@ -440,6 +440,10 @@ public class ArmyLR
             C.GhostItem(47465, "Revenant Map Bypass", 1, false, category: Skua.Core.Models.Items.ItemCategory.Class, "Used to bypass the dark caster class requirement for the map \"Revenant\"");
             RevenantMapHandler();
         }
+        if (map == "mummies")
+            // Update to `Act 5 Complete`
+            Bot.Quests.UpdateQuest(4614);
+
         Core.Join(map);
 
         C.Jump(AggroCell, "Left");
