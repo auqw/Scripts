@@ -292,7 +292,7 @@ public class CoreSDKA
                 ? $"oneTime set to: {oneTime}"
                 : $"Farming \"Dark Spirit Orb\" {Core.dynamicQuant("Dark Spirit Orb", false)} / {quant}"
         );
-        
+
         // Prevent recursion when called from the unlock quest
         if (!oneTime)
             UnlockHardCoreMetals();
@@ -349,79 +349,214 @@ public class CoreSDKA
     public void DoomMerge(string item, int quant = 1) =>
         Core.BuyItem("necropolis", 423, item, quant);
 
-    public void DoomSquireWK(int quant = 1)
+    // public void DoomSquireWK(int quant = 1, bool UnlockQuest = false)
+    // {
+    //     int ReservedQuant = quant;
+    //     if (UnlockQuest)
+    //         quant = 1;
+
+    //     if (Core.CheckInventory("DoomSquire Weapon Kit", quant))
+    //         return;
+    //     else
+    //         Core.FarmingLogger("DoomSquire Weapon Kit", quant);
+
+    //     bool DoomSquireUnlocked = false;
+    //     foreach (int q in Core.FromTo(2137, 2143))
+    //     {
+    //         DoomSquireUnlocked = Bot.Quests.IsUnlocked(q);
+
+    //         if (DoomSquireUnlocked)
+    //             break;
+    //     }
+
+    //     // Ensure DoomSquire Weapon Kit quest is unlocked
+    //     if (!DoomSquireUnlocked)
+    //     {
+    //         Core.Logger("DoomSquire Weapon Kit Quest not unlocked, unlocking via metal upgrade...");
+    //         string[] Metals =
+    //             {
+    //             "Arsenic",
+    //             "Beryllium",
+    //             "Chromium",
+    //             "Palladium",
+    //             "Rhodium",
+    //             "Thorium",
+    //             "Mercury",
+    //         };
+
+    //         var allItems = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+    //              .Where(x => x != null && Metals.Contains(x.Name, StringComparer.OrdinalIgnoreCase));
+
+    //         HardCoreMetalsEnum metalEnum = allItems
+    //             .Select(x => Enum.TryParse<HardCoreMetalsEnum>(x.Name, ignoreCase: true, out var parsed) ? parsed : (HardCoreMetalsEnum?)null)
+    //             .FirstOrDefault(x => x.HasValue)
+    //             ?? HardCoreMetalsEnum.Arsenic;
+
+    //         UpgradeMetal(metalEnum);
+    //     }
+
+    //     // Prepare farming
+    //     Core.EquipClass(ClassType.Farm);
+    //     Core.FarmingLogger("DoomSquire Weapon Kit", quant);
+    //     Core.AddDrop("DoomSquire Weapon Kit");
+
+    //     Core.RegisterQuests(2144);
+
+    //     while (!Bot.ShouldExit && !Core.CheckInventory("DoomSquire Weapon Kit", quant))
+    //     {
+    //         // Buy Iron Hammer if available, otherwise farm it
+    //         if (Core.CheckInventory(319))
+    //             Core.BuyItem("swordhaven", 179, "Iron Hammer");
+    //         else
+    //             Core.HuntMonster("battleundera", "Skeletal Warrior", "Iron Hammer", isTemp: false);
+
+    //         Core.HuntMonster(
+    //             "sandcastle",
+    //             "War Mummy",
+    //             "War Mummy Wrap",
+    //             isTemp: false,
+    //             log: false
+    //         );
+    //         Core.HuntMonster("noobshire", "Horc Noob", "Noob Blade Oil", log: false);
+    //         Core.HuntMonster("farm", "Scarecrow", "Burlap Cloth", 4, log: false);
+
+    //         Core.HuntMonster("lair", "Bronze Draconian", "Bronze Brush", log: false);
+    //         Core.HuntMonster("bludrut", "Rock Elemental", "Elemental Stone Sharpener", log: false);
+    //         Core.HuntMonster("nulgath", "Dark Makai", "Dark Makai Lacquer Finish", log: false);
+
+    //         Bot.Wait.ForPickup("DoomSquire Weapon Kit");
+    //     }
+
+    //     Core.CancelRegisteredQuests();
+    // }
+
+    // public void DoomSoldierWK(int quant = 1, bool UnlockQuest = false)
+    // {
+    //     if (Core.CheckInventory("DoomSoldier Weapon Kit", quant))
+    //         return;
+
+    //     int ReservedQuant = quant;
+    //     if (!Core.isCompletedBefore(2164))
+    //     {
+    //         DoomSquireWK(UnlockQuest: UnlockQuest);
+
+    //         if (UnlockQuest)
+    //             quant = 1;
+    //     }
+
+    //     Core.FarmingLogger("DoomSoldier Weapon Kit", ReservedQuant);
+    //     Core.RegisterQuests(2164);
+    //     Core.AddDrop("DoomSoldier Weapon Kit");
+    //     while (!Bot.ShouldExit && (!Core.CheckInventory("DoomSoldier Weapon Kit", ReservedQuant)))
+    //     {
+    //         Core.EquipClass(ClassType.Solo);
+    //         Core.HuntMonster("cornelis", "Stone Golem", "Stone Hammer", isTemp: false);
+    //         Core.HuntMonster("hachiko", "Dai Tengu", "Superior Blade Oil");
+    //         Core.HuntMonster("vordredboss", "Shadow Vordred", "Shadow Lacquer Finish");
+    //         Core.HuntMonster("anders", "Copper Sky Pirate", "Copper Awl");
+    //         Core.HuntMonster("necrocavern", "Shadow Imp", "Shadowstone Sharpener");
+
+    //         Core.EquipClass(ClassType.Farm);
+    //         Core.KillMonster("lycan", "r4", "Left", "Chaos Vampire Knight", "Silver Brush", log: false);
+    //         Core.KillMonster("sandport", "r3", "Right", "Tomb Robber", "Leather Case", log: false);
+    //         Core.KillMonster("pines", "Path1", "Left", "LeatherWing", "LeatherWing Hide", 10, log: false);
+
+    //         Bot.Wait.ForPickup("DoomSoldier Weapon Kit");
+    //     }
+    //     Core.CancelRegisteredQuests();
+    // }
+
+    // public void DoomKnightWK(string item = "DoomKnight Weapon Kit", int quant = 1, bool UnlockQuest = false)
+    // {
+    //     if (Core.CheckInventory(item, quant))
+    //         return;
+
+    //     int ReservedQuant = quant;
+
+    //     if (!Core.isCompletedBefore(2165))
+    //     {
+    //         if (UnlockQuest)
+    //             quant = 1;
+    //         DoomSoldierWK(UnlockQuest: UnlockQuest);
+    //     }
+
+    //     Core.AddDrop("DoomKnight Weapon Kit", "Dark Spirit Orb", "Corrupt Spirit Orb", "Ominous Aura", "Grumpy Warhammer");
+    //     Core.EquipClass(ClassType.Solo);
+    //     Core.FarmingLogger(item, ReservedQuant);
+    //     Bot.Quests.UpdateQuest(999);
+    //     Core.RegisterQuests(2165);
+    //     while (!Bot.ShouldExit && (!Core.CheckInventory(item, ReservedQuant)))
+    //     {
+    //         Core.KillMonster("boxes", "Boss", "Left", "Sneeviltron", "Grumpy Warhammer", isTemp: false);
+    //         Core.KillKitsune("No. 1337 Blade Oil");
+    //         Core.KillMonster("sandcastle", "r7", "Left", "Chaos Sphinx", "Gold Brush");
+    //         Core.KillMonster("crashsite", "Boss", "Left", "ProtoSartorium", "Non-abrasive Power Powder");
+    //         Core.KillMonster("necrocavern", "r13", "Left", "Shadow Dragon", "ShadowDragon Hide", 3);
+    //         Core.KillMonster("dragonplane", "r9", "Left", "Moganth", "Moganth's Stone Sharpener");
+    //         Core.KillMonster("akiba", "cave4boss", "Left", "Shadow Nukemichi", "Doom Lacquer Finish");
+    //         Core.KillMonster("dreamnexus", "r7", "Left", "Dark Wyvern", "Dark Wyvern Hide Travel Case");
+
+    //         Bot.Wait.ForPickup(item);
+    //     }
+    //     Core.CancelRegisteredQuests();
+    // }
+
+    public void DoomSquireWK(int quant = 1, bool UnlockQuest = false, bool skipUnlockCheck = false)
     {
         if (Core.CheckInventory("DoomSquire Weapon Kit", quant))
             return;
 
-        bool DoomSquireUnlocked = false;
-        foreach (int q in Core.FromTo(2137, 2143))
+        int reservedQuant = quant;
+        if (UnlockQuest)
+            quant = 1;
+
+        Core.FarmingLogger("DoomSquire Weapon Kit", quant);
+
+        if (!skipUnlockCheck)
         {
-            if (Story.QuestProgression(q, Log: false))
+            bool DoomSquireUnlocked = false;
+            foreach (int q in Core.FromTo(2137, 2143))
             {
-                DoomSquireUnlocked = true;
-                break;
+                DoomSquireUnlocked = Bot.Quests.IsUnlocked(q);
+                if (DoomSquireUnlocked)
+                    break;
             }
-            else
-                DoomSquireUnlocked = false;
-        }
 
-        // Ensure DoomSquire Weapon Kit quest is unlocked
-        if (!DoomSquireUnlocked)
-        {
-            Core.Logger("DoomSquire Weapon Kit Quest not unlocked, unlocking via metal upgrade...");
-
-            string[] Metals =
+            if (!DoomSquireUnlocked)
             {
-                "Arsenic",
-                "Beryllium",
-                "Chromium",
-                "Palladium",
-                "Rhodium",
-                "Thorium",
-                "Mercury",
+                Core.Logger("DoomSquire Weapon Kit Quest not unlocked, unlocking via metal upgrade...");
+                string[] Metals =
+                {
+                "Arsenic", "Beryllium", "Chromium", "Palladium",
+                "Rhodium", "Thorium", "Mercury",
             };
 
-            // All items in inventory + bank
-            var allItems = Bot.Inventory.Items.Concat(Bot.Bank.Items).Where(x => x != null);
+                var allItems = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+                    .Where(x => x != null && Metals.Contains(x.Name, StringComparer.OrdinalIgnoreCase));
 
-            // Pick the first metal you own, or default to Arsenic if none
-            string metalName =
-                allItems
-                    .FirstOrDefault(x => Metals.Contains(x.Name, StringComparer.OrdinalIgnoreCase))
-                    ?.Name ?? "Arsenic";
+                HardCoreMetalsEnum metalEnum = allItems
+                    .Select(x => Enum.TryParse<HardCoreMetalsEnum>(x.Name, ignoreCase: true, out var parsed) ? parsed : (HardCoreMetalsEnum?)null)
+                    .FirstOrDefault(x => x.HasValue)
+                    ?? HardCoreMetalsEnum.Arsenic;
 
-            if (!Enum.TryParse<HardCoreMetalsEnum>(metalName, out var metalEnum))
-                metalEnum = HardCoreMetalsEnum.Arsenic;
-
-            UpgradeMetal(metalEnum);
+                UpgradeMetal(metalEnum);
+            }
         }
 
-        // Prepare farming
         Core.EquipClass(ClassType.Farm);
-        Core.FarmingLogger("DoomSquire Weapon Kit", quant);
         Core.AddDrop("DoomSquire Weapon Kit");
-
         Core.RegisterQuests(2144);
 
         while (!Bot.ShouldExit && !Core.CheckInventory("DoomSquire Weapon Kit", quant))
         {
-            // Buy Iron Hammer if available, otherwise farm it
             if (Core.CheckInventory(319))
                 Core.BuyItem("swordhaven", 179, "Iron Hammer");
             else
                 Core.HuntMonster("battleundera", "Skeletal Warrior", "Iron Hammer", isTemp: false);
 
-            Core.HuntMonster(
-                "sandcastle",
-                "War Mummy",
-                "War Mummy Wrap",
-                isTemp: false,
-                log: false
-            );
+            Core.HuntMonster("sandcastle", "War Mummy", "War Mummy Wrap", isTemp: false, log: false);
             Core.HuntMonster("noobshire", "Horc Noob", "Noob Blade Oil", log: false);
             Core.HuntMonster("farm", "Scarecrow", "Burlap Cloth", 4, log: false);
-
             Core.HuntMonster("lair", "Bronze Draconian", "Bronze Brush", log: false);
             Core.HuntMonster("bludrut", "Rock Elemental", "Elemental Stone Sharpener", log: false);
             Core.HuntMonster("nulgath", "Dark Makai", "Dark Makai Lacquer Finish", log: false);
@@ -432,18 +567,23 @@ public class CoreSDKA
         Core.CancelRegisteredQuests();
     }
 
-    public void DoomSoldierWK(int quant = 1)
+    public void DoomSoldierWK(int quant = 1, bool UnlockQuest = false, bool skipUnlockCheck = false)
     {
         if (Core.CheckInventory("DoomSoldier Weapon Kit", quant))
             return;
 
-        if (!Core.isCompletedBefore(2164))
-            DoomSquireWK();
+        int reservedQuant = quant;
+        if (UnlockQuest)
+            quant = 1;
 
-        Core.FarmingLogger("DoomSoldier Weapon Kit", quant);
-        Core.RegisterQuests(2164);
+        if (!Core.isCompletedBefore(2164))
+            DoomSquireWK(quant, UnlockQuest: UnlockQuest, skipUnlockCheck: skipUnlockCheck);
+
+        Core.FarmingLogger("DoomSoldier Weapon Kit", reservedQuant);
         Core.AddDrop("DoomSoldier Weapon Kit");
-        while (!Bot.ShouldExit && (!Core.CheckInventory("DoomSoldier Weapon Kit", quant)))
+        Core.RegisterQuests(2164);
+
+        while (!Bot.ShouldExit && !Core.CheckInventory("DoomSoldier Weapon Kit", reservedQuant))
         {
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("cornelis", "Stone Golem", "Stone Hammer", isTemp: false);
@@ -453,87 +593,48 @@ public class CoreSDKA
             Core.HuntMonster("necrocavern", "Shadow Imp", "Shadowstone Sharpener");
 
             Core.EquipClass(ClassType.Farm);
-            Core.KillMonster(
-                "lycan",
-                "r4",
-                "Left",
-                "Chaos Vampire Knight",
-                "Silver Brush",
-                log: false
-            );
+            Core.KillMonster("lycan", "r4", "Left", "Chaos Vampire Knight", "Silver Brush", log: false);
             Core.KillMonster("sandport", "r3", "Right", "Tomb Robber", "Leather Case", log: false);
-            Core.KillMonster(
-                "pines",
-                "Path1",
-                "Left",
-                "LeatherWing",
-                "LeatherWing Hide",
-                10,
-                log: false
-            );
+            Core.KillMonster("pines", "Path1", "Left", "LeatherWing", "LeatherWing Hide", 10, log: false);
 
             Bot.Wait.ForPickup("DoomSoldier Weapon Kit");
         }
+
         Core.CancelRegisteredQuests();
     }
 
-    public void DoomKnightWK(string item = "DoomKnight Weapon Kit", int quant = 1)
+    public void DoomKnightWK(string item = "DoomKnight Weapon Kit", int quant = 1, bool UnlockQuest = false, bool skipUnlockCheck = false)
     {
         if (Core.CheckInventory(item, quant))
             return;
 
-        if (!Core.isCompletedBefore(2165))
-            DoomSoldierWK();
+        int reservedQuant = quant;
+        if (UnlockQuest)
+            quant = 1;
 
-        Core.AddDrop(
-            "DoomKnight Weapon Kit",
-            "Dark Spirit Orb",
-            "Corrupt Spirit Orb",
-            "Ominous Aura",
-            "Grumpy Warhammer"
-        );
+        if (!Core.isCompletedBefore(2165))
+            DoomSoldierWK(quant, UnlockQuest: UnlockQuest, skipUnlockCheck: skipUnlockCheck);
+
+        Core.AddDrop("DoomKnight Weapon Kit", "Dark Spirit Orb", "Corrupt Spirit Orb", "Ominous Aura", "Grumpy Warhammer");
         Core.EquipClass(ClassType.Solo);
-        Core.FarmingLogger(item, quant);
+        Core.FarmingLogger(item, reservedQuant);
         Bot.Quests.UpdateQuest(999);
         Core.RegisterQuests(2165);
-        while (!Bot.ShouldExit && (!Core.CheckInventory(item, quant)))
+
+        while (!Bot.ShouldExit && !Core.CheckInventory(item, reservedQuant))
         {
-            Core.KillMonster(
-                "boxes",
-                "Boss",
-                "Left",
-                "Sneeviltron",
-                "Grumpy Warhammer",
-                isTemp: false
-            );
+            Core.KillMonster("boxes", "Boss", "Left", "Sneeviltron", "Grumpy Warhammer", isTemp: false);
             Core.KillKitsune("No. 1337 Blade Oil");
             Core.KillMonster("sandcastle", "r7", "Left", "Chaos Sphinx", "Gold Brush");
-            Core.KillMonster(
-                "crashsite",
-                "Boss",
-                "Left",
-                "ProtoSartorium",
-                "Non-abrasive Power Powder"
-            );
+            Core.KillMonster("crashsite", "Boss", "Left", "ProtoSartorium", "Non-abrasive Power Powder");
             Core.KillMonster("necrocavern", "r13", "Left", "Shadow Dragon", "ShadowDragon Hide", 3);
             Core.KillMonster("dragonplane", "r9", "Left", "Moganth", "Moganth's Stone Sharpener");
-            Core.KillMonster(
-                "akiba",
-                "cave4boss",
-                "Left",
-                "Shadow Nukemichi",
-                "Doom Lacquer Finish"
-            );
-            Core.KillMonster(
-                "dreamnexus",
-                "r7",
-                "Left",
-                "Dark Wyvern",
-                "Dark Wyvern Hide Travel Case"
-            );
+            Core.KillMonster("akiba", "cave4boss", "Left", "Shadow Nukemichi", "Doom Lacquer Finish");
+            Core.KillMonster("dreamnexus", "r7", "Left", "Dark Wyvern", "Dark Wyvern Hide Travel Case");
 
             Bot.Wait.ForPickup(item);
         }
+
         Core.CancelRegisteredQuests();
     }
 
@@ -1018,6 +1119,7 @@ public class CoreSDKA
         forgekeyitemID =
             ForgeQuestdata.Requirements.FirstOrDefault(x => x != null && x.Name == "Forge Key")?.ID
             ?? 0;
+
         if (forgekeyitemID == 0)
         {
             Core.Logger(
@@ -1033,6 +1135,7 @@ public class CoreSDKA
         if (!Core.CheckInventory(fullMetalName))
         {
             string upgradeMetalName = string.Join(' ', fullMetalName.Split(' ')[..2]);
+            Core.AddDrop(fullMetalName);
             Core.FarmingLogger(fullMetalName, 1);
             // Getting the partially upgraded metal
             if (!Core.CheckInventory(upgradeMetalName))
@@ -1056,8 +1159,8 @@ public class CoreSDKA
                 Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
                 Core.HuntMonster("bludrut4", "Shadow Serpent", "Dark Energy", 26, isTemp: false);
 
-                Core.EnsureComplete(upgradeMetalQuest);
-                Bot.Wait.ForPickup(upgradeMetalName);
+                DoomKnightWK("Corrupt Spirit Orb", 5, skipUnlockCheck: true);
+                DoomKnightWK("Ominous Aura", 2, skipUnlockCheck: true);
             }
 
             // Getting the fully upgraded metal
@@ -1077,6 +1180,7 @@ public class CoreSDKA
             Bot.Wait.ForPickup(fullMetalName);
         }
     }
+
 }
 
 public enum SDKAQuest
