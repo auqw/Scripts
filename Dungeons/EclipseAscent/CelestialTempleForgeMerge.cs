@@ -23,7 +23,12 @@ public class CelestialTempleForgeMerge
     private static CoreAdvanced _Adv;
     private static CoreAdvanced sAdv { get => _sAdv ??= new CoreAdvanced(); set => _sAdv = value; }
     private static CoreAdvanced _sAdv;
-    public CoreEclipse coreEclipse = new();
+    public static CoreEclipse coreEclipse
+    {
+        get => _coreEclipse;
+        set => _coreEclipse = value;
+    }
+    public static CoreEclipse _coreEclipse = new();
     private static CoreArmyLite sArmy = new();
     private static VictorMatsuri VictorMatsuri = new();
 
@@ -35,70 +40,15 @@ public class CelestialTempleForgeMerge
     // [Can Change] This should only be changed by the author.
     //              If true, it will not stop the script if the default case triggers and the user chose to only get mats
     private bool dontStopMissingIng = false;
-    public List<IOption> Options = new()
-    {
-        new Option<string>(
-            "player1",
-            "Account #1",
-            "This character will be using Legion Revenant",
-            ""
-        ),
-        new Option<string>(
-            "player2",
-            "Account #2",
-            "This character will be using StoneCrusher",
-            ""
-        ),
-        new Option<string>(
-            "player3",
-            "Account #3",
-            "This character will be using ArchPaladin",
-            ""
-        ),
-        new Option<string>(
-            "player4",
-            "Account #4",
-            "This character will be using Lord Of Order",
-            ""
-        ),
-        new Option<bool>(
-            "autoclass",
-            "Auto Equip Classes",
-            "This will auto equip all classes, if false it will use the classes already equipped.",
-            true
-        ),
-    };
+    public List<IOption> Options = coreEclipse.Options;
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        Bot.Events.ScriptStopping += OnBotStopped;
-        Bot.Events.ExtensionPacketReceived += sArmy.PartyManagement;
-
-        Core.BankingBlackList.AddRange(new[] { "Sliver of Moonlight", "Sliver of Sunlight", "Victor of the Festival", "Ecliptic Offering" });
-
-        Core.SetOptions();
-        Core.SendPackets($"%xt%zm%cmd%1%uopref%bParty%true%"); //To be able to join party
-
-        while (!Bot.ShouldExit && sArmy.PartyMemberArray()!.Length < 4)
-            coreEclipse.SetupParty();
-
-        Core.SendPackets($"%xt%zm%cmd%1%uopref%bParty%false%");
-
-        Adv.GearStore(EnhAfter: true);
-
-        coreEclipse.EquipWait();
-        coreEclipse.EquipClasses(true);
+        coreEclipse.BotStart();
 
         BuyAllMerge();
-
-        sArmy.PartyLeave();
-
-        Bot.Events.ScriptStopping -= OnBotStopped;
-        Bot.Events.ExtensionPacketReceived -= sArmy.PartyManagement;
-
-        Adv.GearStore(true, EnhAfter: true);
-
-        Core.SetOptions(false);
+        
+        coreEclipse.BotStop();
     }
 
     public void BuyAllMerge(string? buyOnlyThis = null, mergeOptionsEnum? buyMode = null)
@@ -172,17 +122,4 @@ public class CelestialTempleForgeMerge
         new Option<bool>("78462", "Greatblade of the Solstice Moon", "Mode: [select] only\nShould the bot buy \"Greatblade of the Solstice Moon\" ?", false),
         new Option<bool>("78457", "Greatblade of the Entwined Eclipse", "Mode: [select] only\nShould the bot buy \"Greatblade of the Entwined Eclipse\" ?", false),
     };
-
-    private bool OnBotStopped(Exception? exception)
-    {
-        Bot.Events.ScriptStopping -= OnBotStopped;
-        Bot.Events.ExtensionPacketReceived -= sArmy.PartyManagement;
-
-        Core.JumpWait();
-        sArmy.PartyLeave();
-
-        Adv.GearStore(true, EnhAfter: true);
-
-        return true;
-    }
 }

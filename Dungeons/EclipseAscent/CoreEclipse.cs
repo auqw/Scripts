@@ -20,6 +20,78 @@ public class CoreEclipse
     private CoreUltra Ultra = new();
     private static CoreAdvanced Adv = new();
     private static CoreArmyLite sArmy = new();
+    
+    public List<IOption> Options = new()
+    {
+        new Option<string>(
+            "player1",
+            "Account #1",
+            "This character will be using Legion Revenant",
+            ""
+        ),
+        new Option<string>(
+            "player2",
+            "Account #2",
+            "This character will be using StoneCrusher",
+            ""
+        ),
+        new Option<string>(
+            "player3",
+            "Account #3",
+            "This character will be using ArchPaladin",
+            ""
+        ),
+        new Option<string>(
+            "player4",
+            "Account #4",
+            "This character will be using Lord Of Order",
+            ""
+        ),
+        new Option<bool>(
+            "autoclass",
+            "Auto Equip Classes",
+            "This will auto equip all classes, if false it will use the classes already equipped.",
+            true
+        ),
+    };
+
+    public bool IsPlayer1 => Bot.Player.Username.Equals(Bot.Config!.Get<string>("player1")?.ToLower());
+    public bool IsPlayer2 => Bot.Player.Username.Equals(Bot.Config!.Get<string>("player2")?.ToLower());
+    public bool IsPlayer3 => Bot.Player.Username.Equals(Bot.Config!.Get<string>("player3")?.ToLower());
+    public bool IsPlayer4 => Bot.Player.Username.Equals(Bot.Config!.Get<string>("player4")?.ToLower());
+
+    public void BotStart()
+    {
+        Bot.Events.ScriptStopping += OnBotStopped;
+        Bot.Events.ExtensionPacketReceived += sArmy.PartyManagement;
+
+        C.BankingBlackList.AddRange(new[] { "Sliver of Moonlight", "Sliver of Sunlight", "Victor of the Festival", "Ecliptic Offering" });
+
+        C.SetOptions();
+        C.SendPackets($"%xt%zm%cmd%1%uopref%bParty%true%"); //To be able to join party
+
+        while (!Bot.ShouldExit && sArmy.PartyMemberArray()!.Length < 4)
+            SetupParty();
+
+        C.SendPackets($"%xt%zm%cmd%1%uopref%bParty%false%");
+
+        Adv.GearStore(EnhAfter: true);
+
+        EquipWait();
+        EquipClasses(true);
+    }
+
+    public void BotStop()
+    {
+        sArmy.PartyLeave();
+
+        Bot.Events.ScriptStopping -= OnBotStopped;
+        Bot.Events.ExtensionPacketReceived -= sArmy.PartyManagement;
+
+        Adv.GearStore(true, EnhAfter: true);
+
+        C.SetOptions(false);
+    }
 
     public void EquipWait(string item = "Scroll of Enrage")
     {
@@ -31,7 +103,7 @@ public class CoreEclipse
 
     public void SetupParty()
     {
-        if (!Bot.Player.Username.Equals(Bot.Config!.Get<string>("player1").ToLower())) return;
+        if (!IsPlayer1) return;
 
         if (!sArmy.PartyMemberArray().Contains(Bot.Config!.Get<string>("player2")!.ToLower()))
         {
@@ -55,7 +127,7 @@ public class CoreEclipse
     public void EquipClasses(bool autoEnhance)
     {
         if (!Bot.Config!.Get<bool>("autoclass")) return;
-        if (Bot.Player.Username.Equals(Bot.Config!.Get<string>("player1").ToLower()) && C.CheckInventory("Legion Revenant"))
+        if (IsPlayer1 && C.CheckInventory("Legion Revenant"))
         {
             C.Equip("Legion Revenant");
             if (!autoEnhance) return;
@@ -66,7 +138,7 @@ public class CoreEclipse
                 cSpecial: CapeSpecial.Vainglory
             );
         }
-        else if (Bot.Player.Username.Equals(Bot.Config!.Get<string>("player2").ToLower()) && C.CheckInventory("StoneCrusher"))
+        else if (IsPlayer2 && C.CheckInventory("StoneCrusher"))
         {
             C.Equip("StoneCrusher");
             if (!autoEnhance) return;
@@ -77,7 +149,7 @@ public class CoreEclipse
                 cSpecial: CapeSpecial.Absolution
             );
         }
-        else if (Bot.Player.Username.Equals(Bot.Config!.Get<string>("player3").ToLower()) && C.CheckInventory("ArchPaladin"))
+        else if (IsPlayer3 && C.CheckInventory("ArchPaladin"))
         {
             C.Equip("ArchPaladin");
             if (!autoEnhance) return;
@@ -88,7 +160,7 @@ public class CoreEclipse
                 cSpecial: CapeSpecial.Penitence
             );
         }
-        else if (Bot.Player.Username.Equals(Bot.Config!.Get<string>("player4").ToLower()) && C.CheckInventory("Lord Of Order"))
+        else if (IsPlayer4 && C.CheckInventory("Lord Of Order"))
         {
             C.Equip("Lord Of Order");
             if (!autoEnhance) return;
@@ -106,6 +178,14 @@ public class CoreEclipse
             C.Logger("Valid class not found");
             Bot.StopSync(true);
         }
+    }
+
+    public void PotionsBug()
+    {
+        //Try to avoid potions bug
+        C.Unbank("Healer");
+        C.Equip("Healer");
+        EquipClasses(false);
     }
 
     public void GetScrollOfEnrage(int count = 100)
@@ -150,6 +230,20 @@ public class CoreEclipse
         new AscendEclipse(this, count);
     }
 
+    private bool OnBotStopped(Exception? exception)
+    {
+        Bot.Events.ScriptStopping -= OnBotStopped;
+        Bot.Events.ExtensionPacketReceived -= sArmy.PartyManagement;
+
+        C.JumpWait();
+        sArmy.PartyLeave();
+
+        Adv.GearStore(true, EnhAfter: true);
+
+        return true;
+    }
+
+    #region Boss Handler
     private bool needsEnrage;
     private bool usedEnrage;
     private bool usedLastEnrage;
@@ -160,9 +254,7 @@ public class CoreEclipse
     {
         needsEnrage = false;
         usedEnrage = false;
-        usedLastEnrage = alternateEnrage
-            ? Bot.Player.Username.Equals(Bot.Config!.Get<string>(startingEnragePlayer).ToLower())
-            : false;
+        usedLastEnrage = alternateEnrage && Bot.Player.Username.Equals(Bot.Config!.Get<string>(startingEnragePlayer)?.ToLower());
         deathCount = 0;
 
         Bot.Events.ScriptStopping += OnBotStopped;
@@ -195,8 +287,8 @@ public class CoreEclipse
                     C.UsePotion();
                     C.Sleep(200); // Small delay to allow scroll to apply
 
-                    if (Bot.Player.HasTarget && (Bot.Target.Auras.Any(x => x.Name.Equals("Focus", StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4)) ||
-                        Bot.Target.Auras.Any(x => x.Name.Equals("Reckless", StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4))
+                    if (Bot.Player.HasTarget && (Bot.Target.Auras.Any(x => x.Name.Equals("Focus", StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4) ||
+                        Bot.Target.Auras.Any(x => x.Name.Equals("Reckless", StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4)))
                     {
                         usedEnrage = true;
                         needsEnrage = false;
@@ -358,10 +450,7 @@ public class CoreEclipse
 
             C.JumpWait();
 
-            //Try to avoid potions bug
-            C.Unbank("Healer");
-            C.Equip("Healer");
-            EquipClasses(false);
+            PotionsBug();
 
             const string syncPath = "EclipseAscentReset";
             Ultra.ClearSyncFile(syncPath);
@@ -377,7 +466,9 @@ public class CoreEclipse
             return true;
         }
     }
+    #endregion
 
+    #region Dungeon Handlers
     private class EclipseBase
     {
         protected CoreEclipse Eclipse;
@@ -457,10 +548,7 @@ public class CoreEclipse
                 {
                     Restart("%xt%zm%dungeonQueue%24946%solsticemoon%");
                     Bot.Wait.ForMapLoad("solsticemoon");
-                    //Try to avoid potions bug
-                    C.Unbank("Healer");
-                    C.Equip("Healer");
-                    Eclipse.EquipClasses(false);
+                    Eclipse.PotionsBug();
                 }
                 else
                 {
@@ -471,7 +559,7 @@ public class CoreEclipse
 
         private bool IsTaunter()
         {
-            return Bot.Player.Username.Equals(Bot.Config!.Get<string>("player3").ToLower()) || Bot.Player.Username.Equals(Bot.Config!.Get<string>("player4").ToLower());
+            return Eclipse.IsPlayer3 || Eclipse.IsPlayer4;
         }
 
         private void Kill()
@@ -497,10 +585,7 @@ public class CoreEclipse
                 {
                     Restart("%xt%zm%dungeonQueue%25127%midnightsun%");
                     Bot.Wait.ForMapLoad("midnightsun");
-                    //Try to avoid potions bug
-                    C.Unbank("Healer");
-                    C.Equip("Healer");
-                    Eclipse.EquipClasses(false);
+                    Eclipse.PotionsBug();
                 }
                 else
                 {
@@ -511,7 +596,7 @@ public class CoreEclipse
 
         private bool IsTaunter()
         {
-            return Bot.Player.Username.Equals(Bot.Config!.Get<string>("player1").ToLower()) || Bot.Player.Username.Equals(Bot.Config!.Get<string>("player2").ToLower());
+            return Eclipse.IsPlayer1 || Eclipse.IsPlayer2;
         }
 
         private void Kill()
@@ -539,10 +624,7 @@ public class CoreEclipse
                 {
                     Restart("%xt%zm%dungeonQueue%15395%ascendeclipse%");
                     Bot.Wait.ForMapLoad("ascendeclipse");
-                    //Try to avoid potions bug
-                    C.Unbank("Healer");
-                    C.Equip("Healer");
-                    Eclipse.EquipClasses(false);
+                    Eclipse.PotionsBug();
                 }
                 else
                 {
@@ -553,7 +635,7 @@ public class CoreEclipse
 
         private bool IsTeamSun()
         {
-            return Bot.Player.Username.Equals(Bot.Config!.Get<string>("player1").ToLower()) || Bot.Player.Username.Equals(Bot.Config!.Get<string>("player2").ToLower());
+            return Eclipse.IsPlayer1 || Eclipse.IsPlayer2;
         }
 
         private void Kill()
@@ -564,7 +646,7 @@ public class CoreEclipse
                 {
                     case "Enter":
                         if (Bot.Monsters.CurrentMonsters.Any(x => x is { Alive: true, Name: "Fallen Star" }))
-                            if (Bot.Player.Username.Equals(Bot.Config!.Get<string>("player4").ToLower()) && Bot.Monsters.CurrentMonsters.Any(x => x is { Alive: true, Name: "Blessless Deer" }))
+                            if (Eclipse.IsPlayer4 && Bot.Monsters.CurrentMonsters.Any(x => x is { Alive: true, Name: "Blessless Deer" }))
                                 Bot.Combat.Attack("Blessless Deer");
                             else
                                 Bot.Combat.Attack("Fallen Star");
@@ -580,11 +662,11 @@ public class CoreEclipse
                     case "r2":
                         if (Bot.Monsters.CurrentMonsters.Any(x => x is { Alive: true, Name: "Sunset Knight" }))
                         {
-                            if (Bot.Player.Username.Equals(Bot.Config!.Get<string>("player4").ToLower()) &&
+                            if (Eclipse.IsPlayer4 &&
                                 Bot.Monsters.CurrentMonsters.Any(x => x is { Alive: true, Name: "Moon Haze" }))
                                 Eclipse.EclipseBossHandler("player4", "Moon Haze", "You gaze into the moon",
                                     bossCell: Bot.Player.Cell, alternateEnrage: false, tauntOffset: 6);
-                            else if (Bot.Player.Username.Equals(Bot.Config!.Get<string>("player3").ToLower()) &&
+                            else if (Eclipse.IsPlayer3 &&
                                 Bot.Monsters.CurrentMonsters.Any(x => x is { Alive: true, Name: "Sunset Knight" }))
                                 Eclipse.EclipseBossHandler("player3", "Sunset Knight", "You feel the warmth of the sun",
                                     bossCell: Bot.Player.Cell, alternateEnrage: false, tauntOffset: 6);
@@ -612,4 +694,5 @@ public class CoreEclipse
                 Move("%xt%zm%dungeonQueue%15395%ascendeclipse%");
         }
     }
+    #endregion
 }
