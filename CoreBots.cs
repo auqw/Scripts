@@ -9187,7 +9187,7 @@ public class CoreBots
                 break;
 
             case "mummies":
-                SimpleQuestBypass((97, 16));
+                SimpleQuestBypass((97, 15));
                 break;
 
             case "doomvault":
