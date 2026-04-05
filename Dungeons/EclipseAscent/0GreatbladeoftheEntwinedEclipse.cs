@@ -79,7 +79,7 @@ public class GreatbladeoftheEntwinedEclipse
         coreEclipse.EquipWait();
         coreEclipse.EquipClasses(true);
 
-        templeMerge.BuyAllMerge("");
+        templeMerge.BuyAllMerge("Greatblade of the Entwined Eclipse");
 
         sArmy.PartyLeave();
 
