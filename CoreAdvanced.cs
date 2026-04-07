@@ -2492,6 +2492,533 @@ public class CoreAdvanced
 
     public readonly ItemCategory[] WeaponCatagories = EnhanceableCatagories[..12];
 
+    // private void AutoEnhance(
+    //     List<InventoryItem> ItemList,
+    //     EnhancementType type,
+    //     CapeSpecial cSpecial,
+    //     HelmSpecial hSpecial,
+    //     WeaponSpecial wSpecial,
+    //     bool logging = false
+    // )
+    // {
+    //     // In case the 'CurrentEnhancement()' failed and returned 0
+    //     if (type == 0)
+    //         return;
+
+    //     // Empty check
+    //     if (ItemList.Count == 0)
+    //     {
+    //         Core.Logger("Enhancement Failed:\t\"ItemList\" is empty");
+    //         return;
+    //     }
+
+    //     // Defining cape
+    //     InventoryItem? cape = null;
+    //     if (cSpecial != CapeSpecial.None && ItemList.Any(i => i.Category == ItemCategory.Cape))
+    //     {
+    //         cape = ItemList.Find(i => i.Category == ItemCategory.Cape);
+
+    //         // Removing cape from the list because it needs to be enhanced seperately
+    //         if (cape != null)
+    //             ItemList.Remove(cape);
+    //     }
+
+    //     // Defining helm
+    //     InventoryItem? helm = null;
+    //     if (hSpecial != HelmSpecial.None && ItemList.Any(i => i.Category == ItemCategory.Helm))
+    //     {
+    //         helm = ItemList.Find(i => i.Category == ItemCategory.Helm);
+
+    //         // Removing helm from the list because it needs to be enhanced seperately
+    //         if (helm != null)
+    //             ItemList.Remove(helm);
+    //     }
+
+    //     // Defining weapon
+    //     InventoryItem? weapon = null;
+    //     // If Awe-Enhancements aren't unlocked, enhance them with normal enhancements
+    //     if (
+    //         wSpecial != WeaponSpecial.None
+    //         && ItemList.Any(i => i.ItemGroup == "Weapon")
+    //         && (uAwe() || (int)wSpecial > 6)
+    //     )
+    //     {
+    //         weapon = ItemList.Find(i => i.ItemGroup == "Weapon");
+
+    //         // Removing weapon from the list because it needs to be enhanced seperately
+    //         if (weapon != null)
+    //             ItemList.Remove(weapon);
+    //     }
+
+    //     int skipCounter = 0;
+
+    //     // Setting the shop ID for the enhancement type
+    //     if (ItemList.Count > 0)
+    //     {
+    //         int shopID = 0;
+
+    //         switch (type)
+    //         {
+    //             case EnhancementType.Fighter:
+    //                 shopID = Bot.Player.Level >= 50 ? 768 : 141;
+    //                 break;
+    //             case EnhancementType.Thief:
+    //                 shopID = Bot.Player.Level >= 50 ? 767 : 142;
+    //                 break;
+    //             case EnhancementType.Hybrid:
+    //                 shopID = Bot.Player.Level >= 50 ? 766 : 143;
+    //                 break;
+    //             case EnhancementType.Wizard:
+    //                 shopID = Bot.Player.Level >= 50 ? 765 : 144;
+    //                 break;
+    //             case EnhancementType.Healer:
+    //                 shopID = Bot.Player.Level >= 50 ? 762 : 145;
+    //                 break;
+    //             case EnhancementType.SpellBreaker:
+    //                 shopID = Bot.Player.Level >= 50 ? 764 : 146;
+    //                 break;
+    //             case EnhancementType.Lucky:
+    //                 shopID = Bot.Player.Level >= 50 ? 763 : 147;
+    //                 break;
+    //             default:
+    //                 Core.Logger(
+    //                     $"Enhancement Failed:\tInvalid EnhancementType given, received {(int)type} | {type}"
+    //                 );
+    //                 return;
+    //         }
+
+    //         // Enhancing the remaining items
+    //         foreach (InventoryItem item in ItemList)
+    //         {
+    //             _AutoEnhance(item, shopID, Bot.Map?.Name, logging);
+    //             Core.Sleep();
+    //         }
+    //     }
+
+    //     // Enhancing the cape with the cape special
+    //     if (cape != null)
+    //     {
+    //         bool canEnhance = true;
+
+    //         switch (cSpecial)
+    //         {
+    //             case CapeSpecial.Forge:
+    //                 if (!uForgeCape())
+    //                 {
+    //                     Core.Logger(
+    //                         "Enhancement Failed:\tYou did not unlock the Forge (Cape) Enhancement yet"
+    //                     );
+    //                     canEnhance = false;
+    //                 }
+    //                 break;
+    //             case CapeSpecial.Absolution:
+    //                 if (!uAbsolution())
+    //                     Fail();
+    //                 break;
+    //             case CapeSpecial.Avarice:
+    //                 if (!uAvarice())
+    //                     Fail();
+    //                 break;
+    //             case CapeSpecial.Vainglory:
+    //                 if (!uVainglory())
+    //                     Fail();
+    //                 break;
+    //             case CapeSpecial.Penitence:
+    //                 if (!uPenitence())
+    //                     Fail();
+    //                 break;
+    //             case CapeSpecial.Lament:
+    //                 if (!uLament())
+    //                     Fail();
+    //                 break;
+    //             default:
+    //                 Core.Logger(
+    //                     $"Enhancement Failed:\tInvalid \"CapeSpecial\" given, received {(int)cSpecial} | {cSpecial}"
+    //                 );
+    //                 return;
+
+    //                 void Fail()
+    //                 {
+    //                     Core.Logger(
+    //                         $"Enhancement Failed:\tYou did not unlock the {cSpecial} Enhancement yet"
+    //                     );
+    //                     canEnhance = false;
+    //                 }
+    //         }
+
+    //         if (canEnhance)
+    //             _AutoEnhance(cape, 2143, ((int)cSpecial > 0) ? "forge" : null, logging);
+    //         else
+    //             skipCounter++;
+    //     }
+
+    //     // Enhancing the helm with the helm special
+    //     if (helm != null)
+    //     {
+    //         bool canEnhance = true;
+
+    //         switch (hSpecial)
+    //         {
+    //             case HelmSpecial.Vim:
+    //                 if (!uVim())
+    //                     Fail();
+    //                 break;
+    //             case HelmSpecial.Examen:
+    //                 if (!uExamen())
+    //                     Fail();
+    //                 break;
+    //             case HelmSpecial.Forge:
+    //                 if (!uForgeHelm())
+    //                     Fail();
+    //                 break;
+    //             case HelmSpecial.Anima:
+    //                 if (!uAnima())
+    //                     Fail();
+    //                 break;
+    //             case HelmSpecial.Pneuma:
+    //                 if (!uPneuma())
+    //                     Fail();
+    //                 break;
+    //             case HelmSpecial.Hearty:
+    //                 if (!uHearty())
+    //                     Fail();
+    //                 break;
+    //             default:
+    //                 Core.Logger(
+    //                     $"Enhancement Failed:\tInvalid \"HelmSpecial\" given, received {(int)hSpecial} | {hSpecial}"
+    //                 );
+    //                 return;
+
+    //                 void Fail()
+    //                 {
+    //                     Core.Logger(
+    //                         $"Enhancement Failed:\tYou did not unlock the {hSpecial} Enhancement yet"
+    //                     );
+    //                     canEnhance = false;
+    //                 }
+    //         }
+
+    //         if (canEnhance)
+    //             _AutoEnhance(helm, 2164, ((int)hSpecial > 0) ? "forge" : null);
+    //         else
+    //             skipCounter++;
+    //     }
+
+    //     // Enhancing the weapon with the weapon special
+    //     if (weapon != null)
+    //     {
+    //         int shopID = 0;
+    //         bool canEnhance = true;
+
+    //         if ((int)wSpecial <= 6)
+    //         {
+    //             switch (type)
+    //             {
+    //                 case EnhancementType.Fighter:
+    //                     shopID = 635;
+    //                     break;
+    //                 case EnhancementType.Thief:
+    //                     shopID = 637;
+    //                     break;
+    //                 case EnhancementType.Hybrid:
+    //                     shopID = 633;
+    //                     break;
+    //                 case EnhancementType.Wizard:
+    //                 case EnhancementType.SpellBreaker:
+    //                     shopID = 636;
+    //                     break;
+    //                 case EnhancementType.Healer:
+    //                     shopID = 638;
+    //                     break;
+    //                 case EnhancementType.Lucky:
+    //                     shopID = 639;
+    //                     break;
+    //                 default:
+    //                     Core.Logger(
+    //                         $"Enhancement Failed:\tInvalid \"EnhancementType\" given, received {(int)wSpecial} | {wSpecial}"
+    //                     );
+    //                     return;
+    //             }
+    //         }
+    //         else
+    //         {
+    //             switch (wSpecial)
+    //             {
+    //                 case WeaponSpecial.Forge:
+    //                     if (!uForgeWeapon())
+    //                     {
+    //                         Core.Logger(
+    //                             "Enhancement Failed:\tYou did not unlock the Forge (Weapon) Enhancement yet"
+    //                         );
+    //                         canEnhance = false;
+    //                     }
+    //                     break;
+    //                 case WeaponSpecial.Lacerate:
+    //                     if (!uLacerate())
+    //                         Fail();
+    //                     break;
+    //                 case WeaponSpecial.Smite:
+    //                     if (!uSmite())
+    //                         Fail();
+    //                     break;
+    //                 case WeaponSpecial.Valiance:
+    //                     if (!uValiance())
+    //                         Fail();
+    //                     break;
+    //                 case WeaponSpecial.Arcanas_Concerto:
+    //                     if (!uArcanasConcerto())
+    //                     {
+    //                         Core.Logger(
+    //                             "Enhancement Failed:\tYou did not unlock the Arcana's Concerto Enhancement yet"
+    //                         );
+    //                         canEnhance = false;
+    //                     }
+    //                     break;
+    //                 case WeaponSpecial.Elysium:
+    //                     if (!uElysium())
+    //                         Fail();
+    //                     break;
+    //                 case WeaponSpecial.Acheron:
+    //                     if (!uAcheron())
+    //                         Fail();
+    //                     break;
+    //                 case WeaponSpecial.Praxis:
+    //                     if (!uPraxis())
+    //                         Fail();
+    //                     break;
+    //                 case WeaponSpecial.Dauntless:
+    //                     if (!uDauntless())
+    //                         Fail();
+    //                     break;
+    //                 case WeaponSpecial.Ravenous:
+    //                     if (!uRavenous())
+    //                         Fail();
+    //                     break;
+
+    //                 default:
+    //                     Core.Logger(
+    //                         $"Enhancement Failed:\tInvalid \"WeaponSpecial\" given, received {(int)wSpecial} | {wSpecial}"
+    //                     );
+    //                     return;
+
+    //                     void Fail()
+    //                     {
+    //                         Core.Logger(
+    //                             $"Enhancement Failed:\tYou did not unlock the {wSpecial} Enhancement yet"
+    //                         );
+    //                         canEnhance = false;
+    //                     }
+    //             }
+
+    //             shopID = 2142;
+    //         }
+
+    //         if (canEnhance)
+    //             _AutoEnhance(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null, logging);
+    //         else
+    //             skipCounter++;
+    //     }
+
+    //     if (skipCounter > 0)
+    //         Core.Logger(
+    //             $"Enhancement Skipped:\t{skipCounter} item{(skipCounter > 1 ? 's' : null)}"
+    //         );
+
+    //     void _AutoEnhance(InventoryItem item, int shopID, string? map = null, bool logging = false)
+    //     {
+    //         bool specialOnCape = item.Category == ItemCategory.Cape && cSpecial != CapeSpecial.None;
+    //         bool specialOnHelm = item.Category == ItemCategory.Helm && hSpecial != HelmSpecial.None;
+    //         bool specialOnWeapon = item.ItemGroup == "Weapon" && wSpecial.ToString() != "None";
+    //         string mapName = map ?? Bot.Map?.Name ?? "whitemap";
+    //         List<ShopItem> shopItems = Core.GetShopItems(mapName, shopID);
+
+    //         // Shopdata complete check
+    //         if (!shopItems.Any(x => x.Category == ItemCategory.Enhancement) || shopItems.Count == 0)
+    //         {
+    //             Core.Logger(
+    //                 $"Enhancement Failed for {item.Name}[{item.ID}], (EnhancementLevel: {item.EnhancementLevel}, map: {mapName}, shopID: {shopID}):\n"
+    //                     + $"Couldn't find enhancements in shop {shopID}"
+    //             );
+    //             return;
+    //         }
+
+    //         // Checking if the item is already optimally enhanced
+    //         if (Bot.Player.Level == item.EnhancementLevel)
+    //         {
+    //             if (specialOnCape)
+    //             {
+    //                 if ((int)cSpecial == item.EnhancementPatternID)
+    //                 {
+    //                     skipCounter++;
+    //                     return;
+    //                 }
+    //             }
+    //             else if (specialOnHelm)
+    //             {
+    //                 if ((int)hSpecial == item.EnhancementPatternID)
+    //                 {
+    //                     skipCounter++;
+    //                     return;
+    //                 }
+    //             }
+    //             else if (specialOnWeapon)
+    //             {
+    //                 if (
+    //                     ((int)wSpecial <= 6 ? (int)type : 10) == item.EnhancementPatternID
+    //                     && (
+    //                         (int)wSpecial == getProcID(item)
+    //                         || ((int)wSpecial == 99 && getProcID(item) == 0)
+    //                     )
+    //                 )
+    //                 {
+    //                     skipCounter++;
+    //                     return;
+    //                 }
+    //             }
+    //             else if ((int)type == item.EnhancementPatternID)
+    //             {
+    //                 skipCounter++;
+    //                 return;
+    //             }
+    //         }
+
+    //         // Logging
+    //         if (logging)
+    //         {
+    //             if (specialOnCape)
+    //                 Core.Logger(
+    //                     $"Searching Enhancement:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\""
+    //                 );
+    //             else if (specialOnWeapon)
+    //                 Core.Logger(
+    //                     $"Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\""
+    //                 );
+    //             else
+    //                 Core.Logger($"Searching Enhancement:\t{type} - \"{item.Name}\"");
+    //         }
+
+    //         List<ShopItem> availableEnh = new();
+
+    //         // Filters
+    //         foreach (ShopItem enh in shopItems)
+    //         {
+    //             // Remove enhancments that you dont have access to
+    //             if ((!Bot.Player.IsMember && enh.Upgrade) || (enh.Level > Bot.Player.Level))
+    //             {
+    //                 continue;
+    //             }
+
+    //             string enhName = enh.Name.Replace(" ", "").Replace("\'", "").ToLower();
+
+    //             // Cape if cSpecial
+    //             if (
+    //                 specialOnCape
+    //                 && enhName.Contains(cSpecial.ToString().Replace("_", "").ToLower())
+    //             )
+    //                 availableEnh.Add(enh);
+    //             // Weapon if wSpecial
+    //             else if (
+    //                 specialOnWeapon
+    //                 && enhName.Contains(wSpecial.ToString().Replace("_", "").ToLower())
+    //             )
+    //                 availableEnh.Add(enh);
+    //             //Helm if hSpecial
+    //             else if (
+    //                 specialOnHelm
+    //                 && enhName.Contains(hSpecial.ToString().Replace("_", "").ToLower())
+    //             )
+    //                 availableEnh.Add(enh);
+    //             // Class
+    //             else if (item.Category == ItemCategory.Class && enhName.Contains("armor"))
+    //                 availableEnh.Add(enh);
+    //             // Helm
+    //             else if (item.Category == ItemCategory.Helm && enhName.Contains("helm"))
+    //                 availableEnh.Add(enh);
+    //             // Cape if not cSpecial
+    //             else if (item.Category == ItemCategory.Cape && enhName.Contains("cape"))
+    //                 availableEnh.Add(enh);
+    //             // Weapon2 if not wSpecial
+    //             else if (item.ItemGroup == "Weapon" && enhName.Contains("weapon"))
+    //                 availableEnh.Add(enh);
+    //         }
+
+    //         // Empty check
+    //         ShopItem? bestEnhancement = null;
+    //         if (availableEnh.Count == 0)
+    //         {
+    //             if (logging)
+    //                 Core.Logger($"Enhancement Failed:\t\"availableEnh\" is empty");
+    //             return;
+    //         }
+    //         else if (availableEnh.Count == 1)
+    //             bestEnhancement = availableEnh.First();
+    //         else
+    //         {
+    //             // Sorting by level (descending)
+    //             List<ShopItem> sortedList = availableEnh
+    //                 .OrderByDescending(x => x.Level)
+    //                 .ThenByDescending(x => x.Upgrade ? 1 : 0)
+    //                 .ToList();
+    //             bestEnhancement = sortedList[0];
+    //         }
+
+    //         // Null check
+    //         if (bestEnhancement == null)
+    //         {
+    //             if (logging)
+    //                 Core.Logger(
+    //                     $"Enhancement Failed:\tCould not find the best enhancement for \"{item.Name}\""
+    //                 );
+    //             return;
+    //         }
+
+    //         // Compare with current enhancement
+    //         if (
+    //             bestEnhancement.ID == getEnhID(item)
+    //             && item.EnhancementLevel > 0
+    //             && bestEnhancement.Level == item.EnhancementLevel
+    //         )
+    //         {
+    //             if (logging)
+    //                 Core.Logger(
+    //                     $"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\""
+    //                 );
+    //             return;
+    //         }
+
+    //         // Enhancing the item
+    //         int roomId = Bot.Map?.RoomID ?? 1;
+
+    //         Bot.Send.Packet(
+    //             $"%xt%zm%enhanceItemShop%{roomId}%{item.ID}%{bestEnhancement.ID}%{shopID}%"
+    //         );
+
+    //         // Final logging
+    //         if (specialOnCape)
+    //         {
+    //             if (logging)
+    //                 Core.Logger(
+    //                     $"Enhancement Applied:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
+    //                 );
+    //         }
+    //         else if (specialOnWeapon)
+    //         {
+    //             if (logging)
+    //                 Core.Logger(
+    //                     $"Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
+    //                 );
+    //         }
+    //         else
+    //         {
+    //             if (logging)
+    //                 Core.Logger(
+    //                     $"Enhancement Applied:\t{type} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
+    //                 );
+    //         }
+    //         Core.Sleep();
+    //     }
+    // }
+
     private void AutoEnhance(
         List<InventoryItem> ItemList,
         EnhancementType type,
@@ -2501,523 +3028,131 @@ public class CoreAdvanced
         bool logging = false
     )
     {
-        // In case the 'CurrentEnhancement()' failed and returned 0
-        if (type == 0)
-            return;
-
-        // Empty check
-        if (ItemList.Count == 0)
+        if (type == 0 || ItemList.Count == 0)
         {
-            Core.Logger("Enhancement Failed:\t\"ItemList\" is empty");
+            Core.Logger("Enhancement Failed:\tNo items or invalid enhancement type");
             return;
         }
 
-        // Defining cape
-        InventoryItem? cape = null;
-        if (cSpecial != CapeSpecial.None && ItemList.Any(i => i.Category == ItemCategory.Cape))
-        {
-            cape = ItemList.Find(i => i.Category == ItemCategory.Cape);
+        // Separate specials
+        InventoryItem? cape = cSpecial != CapeSpecial.None ? ItemList.FirstOrDefault(i => i.Category == ItemCategory.Cape) : null;
+        InventoryItem? helm = hSpecial != HelmSpecial.None ? ItemList.FirstOrDefault(i => i.Category == ItemCategory.Helm) : null;
+        InventoryItem? weapon = wSpecial != WeaponSpecial.None && ItemList.Any(i => i.ItemGroup == "Weapon") ? ItemList.FirstOrDefault(i => i.ItemGroup == "Weapon") : null;
 
-            // Removing cape from the list because it needs to be enhanced seperately
-            if (cape != null)
-                ItemList.Remove(cape);
-        }
-
-        // Defining helm
-        InventoryItem? helm = null;
-        if (hSpecial != HelmSpecial.None && ItemList.Any(i => i.Category == ItemCategory.Helm))
-        {
-            helm = ItemList.Find(i => i.Category == ItemCategory.Helm);
-
-            // Removing helm from the list because it needs to be enhanced seperately
-            if (helm != null)
-                ItemList.Remove(helm);
-        }
-
-        // Defining weapon
-        InventoryItem? weapon = null;
-        // If Awe-Enhancements aren't unlocked, enhance them with normal enhancements
-        if (
-            wSpecial != WeaponSpecial.None
-            && ItemList.Any(i => i.ItemGroup == "Weapon")
-            && (uAwe() || (int)wSpecial > 6)
-        )
-        {
-            weapon = ItemList.Find(i => i.ItemGroup == "Weapon");
-
-            // Removing weapon from the list because it needs to be enhanced seperately
-            if (weapon != null)
-                ItemList.Remove(weapon);
-        }
+        if (cape != null) ItemList.Remove(cape);
+        if (helm != null) ItemList.Remove(helm);
+        if (weapon != null) ItemList.Remove(weapon);
 
         int skipCounter = 0;
 
-        // Setting the shop ID for the enhancement type
-        if (ItemList.Count > 0)
+        // Determine shop ID for normal enhancements
+        int GetShopID(EnhancementType t) => t switch
         {
-            int shopID = 0;
+            EnhancementType.Fighter => Bot.Player.Level >= 50 ? 768 : 141,
+            EnhancementType.Thief => Bot.Player.Level >= 50 ? 767 : 142,
+            EnhancementType.Hybrid => Bot.Player.Level >= 50 ? 766 : 143,
+            EnhancementType.Wizard => Bot.Player.Level >= 50 ? 765 : 144,
+            EnhancementType.Healer => Bot.Player.Level >= 50 ? 762 : 145,
+            EnhancementType.SpellBreaker => Bot.Player.Level >= 50 ? 764 : 146,
+            EnhancementType.Lucky => Bot.Player.Level >= 50 ? 763 : 147,
+            _ => 0
+        };
 
-            switch (type)
-            {
-                case EnhancementType.Fighter:
-                    shopID = Bot.Player.Level >= 50 ? 768 : 141;
-                    break;
-                case EnhancementType.Thief:
-                    shopID = Bot.Player.Level >= 50 ? 767 : 142;
-                    break;
-                case EnhancementType.Hybrid:
-                    shopID = Bot.Player.Level >= 50 ? 766 : 143;
-                    break;
-                case EnhancementType.Wizard:
-                    shopID = Bot.Player.Level >= 50 ? 765 : 144;
-                    break;
-                case EnhancementType.Healer:
-                    shopID = Bot.Player.Level >= 50 ? 762 : 145;
-                    break;
-                case EnhancementType.SpellBreaker:
-                    shopID = Bot.Player.Level >= 50 ? 764 : 146;
-                    break;
-                case EnhancementType.Lucky:
-                    shopID = Bot.Player.Level >= 50 ? 763 : 147;
-                    break;
-                default:
-                    Core.Logger(
-                        $"Enhancement Failed:\tInvalid EnhancementType given, received {(int)type} | {type}"
-                    );
-                    return;
-            }
+        // Enhance each item in the main list
+        foreach (InventoryItem item in ItemList)
+            _EnhanceItem(item, GetShopID(type), null);
 
-            // Enhancing the remaining items
-            foreach (InventoryItem item in ItemList)
-            {
-                _AutoEnhance(item, shopID, Bot.Map?.Name, logging);
-                Core.Sleep();
-            }
-        }
-
-        // Enhancing the cape with the cape special
-        if (cape != null)
-        {
-            bool canEnhance = true;
-
-            switch (cSpecial)
-            {
-                case CapeSpecial.Forge:
-                    if (!uForgeCape())
-                    {
-                        Core.Logger(
-                            "Enhancement Failed:\tYou did not unlock the Forge (Cape) Enhancement yet"
-                        );
-                        canEnhance = false;
-                    }
-                    break;
-                case CapeSpecial.Absolution:
-                    if (!uAbsolution())
-                        Fail();
-                    break;
-                case CapeSpecial.Avarice:
-                    if (!uAvarice())
-                        Fail();
-                    break;
-                case CapeSpecial.Vainglory:
-                    if (!uVainglory())
-                        Fail();
-                    break;
-                case CapeSpecial.Penitence:
-                    if (!uPenitence())
-                        Fail();
-                    break;
-                case CapeSpecial.Lament:
-                    if (!uLament())
-                        Fail();
-                    break;
-                default:
-                    Core.Logger(
-                        $"Enhancement Failed:\tInvalid \"CapeSpecial\" given, received {(int)cSpecial} | {cSpecial}"
-                    );
-                    return;
-
-                    void Fail()
-                    {
-                        Core.Logger(
-                            $"Enhancement Failed:\tYou did not unlock the {cSpecial} Enhancement yet"
-                        );
-                        canEnhance = false;
-                    }
-            }
-
-            if (canEnhance)
-                _AutoEnhance(cape, 2143, ((int)cSpecial > 0) ? "forge" : null, logging);
-            else
-                skipCounter++;
-        }
-
-        // Enhancing the helm with the helm special
-        if (helm != null)
-        {
-            bool canEnhance = true;
-
-            switch (hSpecial)
-            {
-                case HelmSpecial.Vim:
-                    if (!uVim())
-                        Fail();
-                    break;
-                case HelmSpecial.Examen:
-                    if (!uExamen())
-                        Fail();
-                    break;
-                case HelmSpecial.Forge:
-                    if (!uForgeHelm())
-                        Fail();
-                    break;
-                case HelmSpecial.Anima:
-                    if (!uAnima())
-                        Fail();
-                    break;
-                case HelmSpecial.Pneuma:
-                    if (!uPneuma())
-                        Fail();
-                    break;
-                case HelmSpecial.Hearty:
-                    if (!uHearty())
-                        Fail();
-                    break;
-                default:
-                    Core.Logger(
-                        $"Enhancement Failed:\tInvalid \"HelmSpecial\" given, received {(int)hSpecial} | {hSpecial}"
-                    );
-                    return;
-
-                    void Fail()
-                    {
-                        Core.Logger(
-                            $"Enhancement Failed:\tYou did not unlock the {hSpecial} Enhancement yet"
-                        );
-                        canEnhance = false;
-                    }
-            }
-
-            if (canEnhance)
-                _AutoEnhance(helm, 2164, ((int)hSpecial > 0) ? "forge" : null);
-            else
-                skipCounter++;
-        }
-
-        // Enhancing the weapon with the weapon special
+        // Enhance specials
+        if (cape != null) _EnhanceItem(cape, 2143, ((int)cSpecial > 0) ? "forge" : null);
+        if (helm != null) _EnhanceItem(helm, 2164, ((int)hSpecial > 0) ? "forge" : null);
         if (weapon != null)
         {
-            int shopID = 0;
-            bool canEnhance = true;
-
-            if ((int)wSpecial <= 6)
-            {
-                switch (type)
-                {
-                    case EnhancementType.Fighter:
-                        shopID = 635;
-                        break;
-                    case EnhancementType.Thief:
-                        shopID = 637;
-                        break;
-                    case EnhancementType.Hybrid:
-                        shopID = 633;
-                        break;
-                    case EnhancementType.Wizard:
-                    case EnhancementType.SpellBreaker:
-                        shopID = 636;
-                        break;
-                    case EnhancementType.Healer:
-                        shopID = 638;
-                        break;
-                    case EnhancementType.Lucky:
-                        shopID = 639;
-                        break;
-                    default:
-                        Core.Logger(
-                            $"Enhancement Failed:\tInvalid \"EnhancementType\" given, received {(int)wSpecial} | {wSpecial}"
-                        );
-                        return;
-                }
-            }
-            else
-            {
-                switch (wSpecial)
-                {
-                    case WeaponSpecial.Forge:
-                        if (!uForgeWeapon())
-                        {
-                            Core.Logger(
-                                "Enhancement Failed:\tYou did not unlock the Forge (Weapon) Enhancement yet"
-                            );
-                            canEnhance = false;
-                        }
-                        break;
-                    case WeaponSpecial.Lacerate:
-                        if (!uLacerate())
-                            Fail();
-                        break;
-                    case WeaponSpecial.Smite:
-                        if (!uSmite())
-                            Fail();
-                        break;
-                    case WeaponSpecial.Valiance:
-                        if (!uValiance())
-                            Fail();
-                        break;
-                    case WeaponSpecial.Arcanas_Concerto:
-                        if (!uArcanasConcerto())
-                        {
-                            Core.Logger(
-                                "Enhancement Failed:\tYou did not unlock the Arcana's Concerto Enhancement yet"
-                            );
-                            canEnhance = false;
-                        }
-                        break;
-                    case WeaponSpecial.Elysium:
-                        if (!uElysium())
-                            Fail();
-                        break;
-                    case WeaponSpecial.Acheron:
-                        if (!uAcheron())
-                            Fail();
-                        break;
-                    case WeaponSpecial.Praxis:
-                        if (!uPraxis())
-                            Fail();
-                        break;
-                    case WeaponSpecial.Dauntless:
-                        if (!uDauntless())
-                            Fail();
-                        break;
-                    case WeaponSpecial.Ravenous:
-                        if (!uRavenous())
-                            Fail();
-                        break;
-
-                    default:
-                        Core.Logger(
-                            $"Enhancement Failed:\tInvalid \"WeaponSpecial\" given, received {(int)wSpecial} | {wSpecial}"
-                        );
-                        return;
-
-                        void Fail()
-                        {
-                            Core.Logger(
-                                $"Enhancement Failed:\tYou did not unlock the {wSpecial} Enhancement yet"
-                            );
-                            canEnhance = false;
-                        }
-                }
-
-                shopID = 2142;
-            }
-
-            if (canEnhance)
-                _AutoEnhance(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null, logging);
-            else
-                skipCounter++;
+            int shopID = (int)wSpecial <= 6 ? GetShopID(type) : 2142;
+            _EnhanceItem(weapon, shopID, ((int)wSpecial > 6) ? "forge" : null);
         }
 
         if (skipCounter > 0)
-            Core.Logger(
-                $"Enhancement Skipped:\t{skipCounter} item{(skipCounter > 1 ? 's' : null)}"
-            );
+            Core.Logger($"Enhancement Skipped:\t{skipCounter} item{(skipCounter > 1 ? "s" : "")}");
 
-        void _AutoEnhance(InventoryItem item, int shopID, string? map = null, bool logging = false)
+        void _EnhanceItem(InventoryItem item, int shopID, string? map)
         {
-            bool specialOnCape = item.Category == ItemCategory.Cape && cSpecial != CapeSpecial.None;
-            bool specialOnHelm = item.Category == ItemCategory.Helm && hSpecial != HelmSpecial.None;
-            bool specialOnWeapon = item.ItemGroup == "Weapon" && wSpecial.ToString() != "None";
             string mapName = map ?? Bot.Map?.Name ?? "whitemap";
             List<ShopItem> shopItems = Core.GetShopItems(mapName, shopID);
 
-            // Shopdata complete check
-            if (!shopItems.Any(x => x.Category == ItemCategory.Enhancement) || shopItems.Count == 0)
+            if (shopItems.Count == 0 || !shopItems.Any(s => s.Category == ItemCategory.Enhancement))
             {
-                Core.Logger(
-                    $"Enhancement Failed for {item.Name}[{item.ID}], (EnhancementLevel: {item.EnhancementLevel}, map: {mapName}, shopID: {shopID}):\n"
-                        + $"Couldn't find enhancements in shop {shopID}"
-                );
+                if (logging)
+                    Core.Logger($"Enhancement Failed:\tNo enhancements found in shop {shopID} for {item.Name}");
                 return;
             }
 
-            // Checking if the item is already optimally enhanced
-            if (Bot.Player.Level == item.EnhancementLevel)
+            // Determine if a special applies
+            bool isCape = item.Category == ItemCategory.Cape && cSpecial != CapeSpecial.None;
+            bool isHelm = item.Category == ItemCategory.Helm && hSpecial != HelmSpecial.None;
+            bool isWeapon = item.ItemGroup == "Weapon" && wSpecial != WeaponSpecial.None;
+
+            // Filter available enhancements
+            List<ShopItem> available = shopItems
+                .Where(enh => enh.Level <= Bot.Player.Level && !(enh.Upgrade && !Bot.Player.IsMember))
+                .Where(enh =>
+                {
+                    string n = enh.Name.Replace(" ", "").Replace("'", "").ToLower();
+                    if (isCape) return n.Contains(cSpecial.ToString().Replace("_", "").ToLower());
+                    if (isHelm) return n.Contains(hSpecial.ToString().Replace("_", "").ToLower());
+                    if (isWeapon) return n.Contains(wSpecial.ToString().Replace("_", "").ToLower());
+                    if (item.Category == ItemCategory.Class) return n.Contains("armor");
+                    if (item.Category == ItemCategory.Helm) return n.Contains("helm");
+                    if (item.Category == ItemCategory.Cape) return n.Contains("cape");
+                    if (item.ItemGroup == "Weapon") return n.Contains("weapon");
+                    return false;
+                })
+                .OrderByDescending(x => x.Level)
+                .ThenByDescending(x => x.Upgrade ? 1 : 0)
+                .ToList();
+
+            if (available.Count == 0)
             {
-                if (specialOnCape)
-                {
-                    if ((int)cSpecial == item.EnhancementPatternID)
-                    {
-                        skipCounter++;
-                        return;
-                    }
-                }
-                else if (specialOnHelm)
-                {
-                    if ((int)hSpecial == item.EnhancementPatternID)
-                    {
-                        skipCounter++;
-                        return;
-                    }
-                }
-                else if (specialOnWeapon)
-                {
-                    if (
-                        ((int)wSpecial <= 6 ? (int)type : 10) == item.EnhancementPatternID
-                        && (
-                            (int)wSpecial == getProcID(item)
-                            || ((int)wSpecial == 99 && getProcID(item) == 0)
-                        )
-                    )
-                    {
-                        skipCounter++;
-                        return;
-                    }
-                }
-                else if ((int)type == item.EnhancementPatternID)
-                {
-                    skipCounter++;
-                    return;
-                }
+                if (logging)
+                    Core.Logger($"Enhancement Failed:\tNo valid enhancement found for {item.Name}");
+                return;
             }
 
-            // Logging
+            ShopItem best = available[0];
+
+            // Skip if the same type/pattern is already at this level or higher
+            int currentPatternID = item.EnhancementPatternID;
+            int currentLevel = item.EnhancementLevel;
+
+            bool samePattern = isCape ? (int)cSpecial == currentPatternID
+                             : isHelm ? (int)hSpecial == currentPatternID
+                             : isWeapon ? ((int)wSpecial <= 6 ? (int)type : 10) == currentPatternID
+                             : (int)type == currentPatternID;
+
+            if (samePattern && currentLevel >= best.Level)
+            {
+                if (logging)
+                    Core.Logger($"Enhancement Skipped:\t{item.Name} already has optimal enhancement (Lvl {currentLevel})");
+                skipCounter++;
+                return;
+            }
+
+            // Apply enhancement
+            int roomId = Bot.Map?.RoomID ?? 1;
+            Bot.Send.Packet($"%xt%zm%enhanceItemShop%{roomId}%{item.ID}%{best.ID}%{shopID}%");
+
             if (logging)
             {
-                if (specialOnCape)
-                    Core.Logger(
-                        $"Searching Enhancement:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\""
-                    );
-                else if (specialOnWeapon)
-                    Core.Logger(
-                        $"Searching Enhancement:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\""
-                    );
-                else
-                    Core.Logger($"Searching Enhancement:\t{type} - \"{item.Name}\"");
+                string logType = isCape ? $"Forge/{cSpecial}" :
+                                 isHelm ? $"Forge/{hSpecial}" :
+                                 isWeapon ? ((int)wSpecial <= 6 ? type.ToString() : $"Forge/{wSpecial}") :
+                                 type.ToString();
+                Core.Logger($"Enhancement Applied:\t{logType} - {item.Name} (Lvl {best.Level})");
             }
 
-            List<ShopItem> availableEnh = new();
-
-            // Filters
-            foreach (ShopItem enh in shopItems)
-            {
-                // Remove enhancments that you dont have access to
-                if ((!Bot.Player.IsMember && enh.Upgrade) || (enh.Level > Bot.Player.Level))
-                {
-                    continue;
-                }
-
-                string enhName = enh.Name.Replace(" ", "").Replace("\'", "").ToLower();
-
-                // Cape if cSpecial
-                if (
-                    specialOnCape
-                    && enhName.Contains(cSpecial.ToString().Replace("_", "").ToLower())
-                )
-                    availableEnh.Add(enh);
-                // Weapon if wSpecial
-                else if (
-                    specialOnWeapon
-                    && enhName.Contains(wSpecial.ToString().Replace("_", "").ToLower())
-                )
-                    availableEnh.Add(enh);
-                //Helm if hSpecial
-                else if (
-                    specialOnHelm
-                    && enhName.Contains(hSpecial.ToString().Replace("_", "").ToLower())
-                )
-                    availableEnh.Add(enh);
-                // Class
-                else if (item.Category == ItemCategory.Class && enhName.Contains("armor"))
-                    availableEnh.Add(enh);
-                // Helm
-                else if (item.Category == ItemCategory.Helm && enhName.Contains("helm"))
-                    availableEnh.Add(enh);
-                // Cape if not cSpecial
-                else if (item.Category == ItemCategory.Cape && enhName.Contains("cape"))
-                    availableEnh.Add(enh);
-                // Weapon2 if not wSpecial
-                else if (item.ItemGroup == "Weapon" && enhName.Contains("weapon"))
-                    availableEnh.Add(enh);
-            }
-
-            // Empty check
-            ShopItem? bestEnhancement = null;
-            if (availableEnh.Count == 0)
-            {
-                if (logging)
-                    Core.Logger($"Enhancement Failed:\t\"availableEnh\" is empty");
-                return;
-            }
-            else if (availableEnh.Count == 1)
-                bestEnhancement = availableEnh.First();
-            else
-            {
-                // Sorting by level (descending)
-                List<ShopItem> sortedList = availableEnh
-                    .OrderByDescending(x => x.Level)
-                    .ThenByDescending(x => x.Upgrade ? 1 : 0)
-                    .ToList();
-                bestEnhancement = sortedList[0];
-            }
-
-            // Null check
-            if (bestEnhancement == null)
-            {
-                if (logging)
-                    Core.Logger(
-                        $"Enhancement Failed:\tCould not find the best enhancement for \"{item.Name}\""
-                    );
-                return;
-            }
-
-            // Compare with current enhancement
-            if (
-                bestEnhancement.ID == getEnhID(item)
-                && item.EnhancementLevel > 0
-                && bestEnhancement.Level == item.EnhancementLevel
-            )
-            {
-                if (logging)
-                    Core.Logger(
-                        $"Enhancement Canceled:\tBest enhancement is already applied for \"{item.Name}\""
-                    );
-                return;
-            }
-
-            // Enhancing the item
-            int roomId = Bot.Map?.RoomID ?? 1;
-
-            Bot.Send.Packet(
-                $"%xt%zm%enhanceItemShop%{roomId}%{item.ID}%{bestEnhancement.ID}%{shopID}%"
-            );
-
-            // Final logging
-            if (specialOnCape)
-            {
-                if (logging)
-                    Core.Logger(
-                        $"Enhancement Applied:\tForge/{cSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
-                    );
-            }
-            else if (specialOnWeapon)
-            {
-                if (logging)
-                    Core.Logger(
-                        $"Enhancement Applied:\t{((int)wSpecial <= 6 ? type : "Forge")}/{wSpecial.ToString().Replace("_", " ")} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
-                    );
-            }
-            else
-            {
-                if (logging)
-                    Core.Logger(
-                        $"Enhancement Applied:\t{type} - \"{item.Name}\" (Lvl {bestEnhancement.Level})"
-                    );
-            }
             Core.Sleep();
         }
     }
+
 
     private int getProcID(InventoryItem? item) =>
         item == null ? 0 : Core.GetItemProperty<int>(item, "ProcID");
