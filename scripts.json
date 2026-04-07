@@ -16264,6 +16264,20 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/ShadowsOfWar/MergeShops/ShadowflameFinaleMerge.cs"
   },
   {
+    "name": "KillMasakado",
+    "description": "This script will complete the Empress Ai No Miko's questline in /victormatsuri.",
+    "tags": [
+      "killmasakado",
+      "kill masakado",
+      "masakado"
+    ],
+    "path": "Ultras/Various/KillMasakado.cs",
+    "size": 7259,
+    "sha256": "ae0cf9af9404ccc4e28fda0ac5f5c8227302594f210913cc3df22bc88015fde5",
+    "fileName": "KillMasakado.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Various/KillMasakado.cs"
+  },
+  {
     "name": "EmpoweredOverfiendBlade",
     "description": "if you have 25 nulgath insigs, itll pick the proper sword to get",
     "tags": [
