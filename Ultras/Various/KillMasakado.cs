@@ -67,7 +67,7 @@ public class KillMasakado
         }
 
         Core.OneTimeMessage("Warning", "This script will use the Legion revenant class, and enhance it the way it's required to to kill the boss");
-        Bot.Quests.UpdateQuest(10290);
+        Bot.Quests.UpdateQuest(10294);
         KilltheGuy(
             map: "victormatsuri",
             cell: "r8",
