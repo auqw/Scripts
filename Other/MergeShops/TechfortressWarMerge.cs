@@ -171,15 +171,10 @@ public class TechfortressWarMerge
                     Core.RegisterQuests(7654);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.KillMonster(
-                            "dflesson",
-                            "r12",
-                            "Right",
-                            29,
-                            33257,
-                            isTemp: false,
-                            publicRoom: true
-                        );
+                        //More then one item of the same name as drop btoh temp and non-temp.
+                        while (!Bot.ShouldExit && !Core.CheckInventory(55903, 10))
+                            Core.KillMonster("dflesson", "r12", "Right", "Fluffy the Dracolich", log: false);
+                            
                         Core.KillMonster(
                             "dflesson",
                             "r3",
