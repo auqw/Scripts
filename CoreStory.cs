@@ -911,16 +911,42 @@ public class CoreStory
                 .OrderByDescending(q => q.Value)
                 .FirstOrDefault();
 
-            if (prevQuest != null)
+            string[] combinedReqs = prevQuest.Requirements
+      .Concat(prevQuest.AcceptRequirements)
+      .Select(req => req.Name)
+      .ToArray();
+
+            if (prevQuest != null && Core.CheckInventory(combinedReqs))
             {
+
+
                 Core.Logger(
-                    $"Attempting recovery via previous quest: [{prevQuest.ID}] \"{prevQuest.Name}\"",
+                    $"Attempting recovery via Re-Completing the previous quest: [{prevQuest.ID}] \"{prevQuest.Name}\"",
                     "QuestProgression"
                 );
 
                 TryComplete(prevQuest, true);
                 attempts = 0;
                 continue;
+            }
+            else if (prevQuest != null)
+            {
+                string[] combinedReqs2 = prevQuest.Requirements
+                .Concat(prevQuest.AcceptRequirements)
+                .Select(req => req.Name)
+                .ToArray();
+
+                string[] missingReqs = combinedReqs2
+                    .Where(req => !Core.CheckInventory(req))
+                    .ToArray();
+
+                string missing = string.Join(", ", missingReqs);
+
+                Bot.Log(
+                    $"Missing [{missing}] to accept {QuestData.Name} [{QuestData.ID}]"
+                );
+                // Set attempts to limit so it resets so it refarms it
+                attempts = 5;
             }
 
             attempts++;
