@@ -208,7 +208,7 @@ public class CoreAdvanced
             return;
         }
 
-        Core.BuyItem(map, shopID, mainItem.ID, buyAmount, mainItem.ShopItemID != 1 ? mainItem.ShopItemID : shopItemID, Log: Log);
+        Core.BuyItem(map, shopID, mainItem.ID, buyAmount, mainItem.ShopItemID != 1 ? mainItem.ShopItemID : shopItemID, index: index, Log: Log);
 
         Core.Sleep();
 
