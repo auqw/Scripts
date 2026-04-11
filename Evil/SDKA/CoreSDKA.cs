@@ -954,7 +954,9 @@ public class CoreSDKA
                 break;
         }
 
-        if (Core.CheckInventory(fullMetalName) && Core.isCompletedBefore(2144))
+        // If metal owned & DoomSoldier weapon kit is unlocked ( had to go beyond squire as its unlocked
+        // by the first metal quest, not the returnin with the forge key)
+        if (Core.CheckInventory(fullMetalName) && Bot.Quests.IsUnlocked(2164))
             return;
 
         // Initialize quest data for forge key quest
@@ -1021,16 +1023,13 @@ public class CoreSDKA
             Core.BuyItem("dwarfhold", 434, fullMetalName);
         }
 
-        // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144] & checking for DoomSoldier kit unlocked
-        if (!Core.isCompletedBefore(2164))
-        {
-            Core.AddDrop(fullMetalName);
-            Core.EnsureAccept(forgeKeyQuest);
-            while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
-                Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
-            Core.EnsureComplete(forgeKeyQuest);
-            Bot.Wait.ForPickup(fullMetalName);
-        }
+        // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]  
+        Core.AddDrop(fullMetalName);
+        Core.EnsureAccept(forgeKeyQuest);
+        while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
+            Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
+        Core.EnsureComplete(forgeKeyQuest);
+        Bot.Wait.ForPickup(fullMetalName);
     }
 
 }
