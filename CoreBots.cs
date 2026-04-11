@@ -9608,6 +9608,19 @@ public class CoreBots
                 goto default;
 
             #endregion Bypass Banned
+
+            // #region Seasonal Maps
+            // case "northpointe":
+            //     if (isSeasonalMapActive(map))
+            //         break;
+            //     else
+            //     {
+            //         Bot.Log("Masp isn't currently Available.");
+            //         Bot.StopAsync();
+            //     }
+            //     break;
+            // #endregion
+
         }
 
         if (strippedMap == Bot.Map.Name?.ToLower())
