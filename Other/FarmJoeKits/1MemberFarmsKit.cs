@@ -398,11 +398,14 @@ public class MemberFarm
         Adv.BuyItem("northpointe", 976, "BeastMaster", shopItemID: 16031);
         Adv.RankUpClass("BeastMaster");
 
-        // SkyGuard Grenadier
-        Farm.SkyguardREP();
-        Adv.BuyItem("northpointe", 259, "SkyGuard Grenadier", shopItemID: 7517);
-        Adv.RankUpClass("SkyGuard Grenadier");
-
+        if (Core.isSeasonalMapActive("northpointe"))
+        {
+            // SkyGuard Grenadier
+            Farm.SkyguardREP();
+            Adv.BuyItem("northpointe", 259, "SkyGuard Grenadier", shopItemID: 7517);
+            Adv.RankUpClass("SkyGuard Grenadier");
+        }
+        
         //Deadfly.BuyAllMerge();
         //GonnaGetcha.BuyAllMerge();
         //Oddities.BuyAllMerge();
