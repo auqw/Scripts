@@ -364,17 +364,12 @@ public class CoreSDKA
         if (!skipUnlockCheck)
         {
             bool DoomSquireUnlocked = false;
-            foreach (int q in Core.FromTo(2137, 2143))
-            {
-                DoomSquireUnlocked = Bot.Quests.IsUnlocked(q);
-                Bot.Sleep(2500);
-                if (DoomSquireUnlocked)
-                    break;
-            }
+            DoomSquireUnlocked = Bot.Quests.IsUnlocked(2164);
+            Bot.Sleep(2500);
 
             if (!DoomSquireUnlocked)
             {
-                Core.Logger("DoomSquire Weapon Kit Quest not unlocked, unlocking via metal upgrade...");
+                Core.Logger("DoomSquire Weapon Kit Quest locked, unlocking via metal upgrade...");
                 string[] Metals =
                 {
                 "Arsenic", "Beryllium", "Chromium", "Palladium",
