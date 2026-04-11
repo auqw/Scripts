@@ -1022,7 +1022,7 @@ public class CoreSDKA
         }
 
         // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144] & checking for DoomSoldier kit unlocked
-        if (Core.isCompletedBefore(forgeKeyQuest) && !Core.isCompletedBefore(2164))
+        if (!Core.isCompletedBefore(2164))
         {
             Core.AddDrop(fullMetalName);
             Core.EnsureAccept(forgeKeyQuest);
