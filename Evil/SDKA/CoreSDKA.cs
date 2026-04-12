@@ -302,7 +302,8 @@ public class CoreSDKA
         if (oneTime)
         {
             Core.EnsureAccept(2089);
-            Core.KillMonster("maul", "r7", "left", "Shelleton", "DoomCoin", 20, false);
+            while (!Bot.ShouldExit && !Bot.Quests.CanCompleteFullCheck(2089))
+                Core.KillMonster("maul", "r7", "left", "Shelleton", log: false);
             Core.EnsureComplete(2089);
             Bot.Wait.ForQuestComplete(2089);
             Bot.Wait.ForPickup("Dark Spirit Orb");
@@ -311,7 +312,8 @@ public class CoreSDKA
         else
         {
             Core.RegisterQuests(2089);
-            Core.KillMonster("maul", "r7", "left", "Shelleton", "Dark Spirit Orb", quant, false);
+            while (!Bot.ShouldExit && !Core.CheckInventory("Dark Spirit Orb", quant))
+                Core.KillMonster("maul", "r7", "left", "Shelleton", log: false);
             Bot.Wait.ForQuestComplete(2089);
             Bot.Wait.ForPickup("Dark Spirit Orb");
             Core.CancelRegisteredQuests();
@@ -1083,8 +1085,10 @@ public class CoreSDKA
         // If metal owned & DoomSoldier weapon kit is unlocked ( had to go beyond squire as its unlocked
         // by the first metal quest, not the returnin with the forge key)
         if (Core.CheckInventory(fullMetalName) && Bot.Quests.IsUnlocked(2164))
+        {
+            Bot.Log("Required metal owned, and quest is unlocked");
             return;
-
+        }
         // Initialize quest data for forge key quest
         Quest? ForgeQuestdata = Core.InitializeWithRetries(() => Core.EnsureLoad(forgeKeyQuest));
         if (ForgeQuestdata == null)
@@ -1111,6 +1115,8 @@ public class CoreSDKA
             Core.Logger(
                 $"ForgeKeyItemID: {forgekeyitemID}, Owned? {Core.CheckInventory(forgekeyitemID)}"
             );
+
+        Core.Logger($"forge Key Quest: {forgeKeyQuest}\n Full Metal Name {fullMetalName}\n Forge Key ItemID {forgekeyitemID}", "Information");
 
         if (!Core.CheckInventory(fullMetalName))
         {
@@ -1151,6 +1157,7 @@ public class CoreSDKA
 
         // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]  
         Core.AddDrop(fullMetalName);
+        Core.AddDrop(forgekeyitemID);
         Core.EnsureAccept(forgeKeyQuest);
         while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
             Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
