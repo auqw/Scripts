@@ -1084,11 +1084,12 @@ public class CoreSDKA
 
         // If metal owned & DoomSoldier weapon kit is unlocked ( had to go beyond squire as its unlocked
         // by the first metal quest, not the returnin with the forge key)
-        if (Core.CheckInventory(fullMetalName) && Bot.Quests.IsUnlocked(2164))
+        if (Core.CheckInventory(fullMetalName) && Bot.Quests.HasBeenCompleted(forgeKeyQuest) && Story.QuestProgression(2144))
         {
-            Bot.Log("Required metal owned, and quest is unlocked");
+            Bot.Log($"Required metal ({fullMetalName}) owned, and ForgeKey quest({forgeKeyQuest}) complete");
             return;
         }
+
         // Initialize quest data for forge key quest
         Quest? ForgeQuestdata = Core.InitializeWithRetries(() => Core.EnsureLoad(forgeKeyQuest));
         if (ForgeQuestdata == null)
@@ -1098,6 +1099,7 @@ public class CoreSDKA
             );
             return;
         }
+
 
         // Get the forge key itemid for the quest
         forgekeyitemID =
