@@ -3798,13 +3798,13 @@ public class CoreAdvanced
                 #endregion
 
                 #region Lucky - Valiance - Examen - Vainglory
-                case "king's echo":
+                case "king\u0027s echo":
                     if (!uValiance() || !uExamen() || !uVainglory())
                         goto default;
 
                     type = EnhancementType.Lucky;
-                    cSpecial = CapeSpecial.Vainglory;
-                    wSpecial = WeaponSpecial.Valiance;
+                    cSpecial = uLament() ? CapeSpecial.Lament : CapeSpecial.Vainglory;
+                    wSpecial = uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance;
                     hSpecial = HelmSpecial.Examen;
                     break;
                 #endregion
@@ -4374,7 +4374,7 @@ public class CoreAdvanced
                 case "legion doomknight":
                 case "legion doomknight tester":
                 case "arcana invoker":
-                case "king's echo":
+                case "King\u0027s Echo":
                     type = EnhancementType.Wizard;
                     wSpecial = WeaponSpecial.Spiral_Carve;
                     break;
