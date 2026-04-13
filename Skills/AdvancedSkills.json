@@ -4984,7 +4984,7 @@
           "rules": [
             {
               "type": "Aura",
-              "value": 2.4,
+              "value": 24,
               "comparison": "greater",
               "auraName": "Residual Energy",
               "auraTarget": "self"
