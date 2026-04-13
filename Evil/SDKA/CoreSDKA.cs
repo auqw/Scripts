@@ -1094,12 +1094,9 @@ public class CoreSDKA
         Quest? ForgeQuestdata = Core.InitializeWithRetries(() => Core.EnsureLoad(forgeKeyQuest));
         if (ForgeQuestdata == null)
         {
-            Core.Logger(
-                $"Failed to load quest data for quest ID {forgeKeyQuest}. Cannot proceed with metal upgrade."
-            );
+            Core.Logger($"Failed to load quest data for quest ID {forgeKeyQuest}. Cannot proceed with metal upgrade.");
             return;
         }
-
 
         // Get the forge key itemid for the quest
         forgekeyitemID =
@@ -1108,17 +1105,11 @@ public class CoreSDKA
 
         if (forgekeyitemID == 0)
         {
-            Core.Logger(
-                $"Failed to find the item ID for 'Forge Key' in quest ID {forgeKeyQuest}. Cannot proceed with metal upgrade."
-            );
+            Core.Logger($"Failed to find the item ID for 'Forge Key' in quest ID {forgeKeyQuest}. Cannot proceed with metal upgrade.");
             return;
         }
-        else
-            Core.Logger(
-                $"ForgeKeyItemID: {forgekeyitemID}, Owned? {Core.CheckInventory(forgekeyitemID)}"
-            );
 
-        Core.Logger($"forge Key Quest: {forgeKeyQuest}\n Full Metal Name {fullMetalName}\n Forge Key ItemID {forgekeyitemID}", "Information");
+        Core.Logger($"forge Key Quest: {forgeKeyQuest} [Completed? {Bot.Quests.HasBeenCompleted(forgeKeyQuest)}]\n Full Metal Name {fullMetalName}\n Forge Key ItemID {forgekeyitemID}", "Information");
 
         if (!Core.CheckInventory(fullMetalName))
         {
@@ -1157,14 +1148,16 @@ public class CoreSDKA
             Core.BuyItem("dwarfhold", 434, fullMetalName);
         }
 
-        // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]  
-        Core.AddDrop(fullMetalName);
-        Core.AddDrop(forgekeyitemID);
-        Core.EnsureAccept(forgeKeyQuest);
-        while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
-            Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
-        Core.EnsureComplete(forgeKeyQuest);
-        Bot.Wait.ForPickup(fullMetalName);
+        if (!Story.QuestProgression(forgeKeyQuest))
+        { // Unlocking "DoomSquire Weapon Kit" [Quest ID 2144]  
+            Core.AddDrop(fullMetalName);
+            Core.AddDrop(forgekeyitemID);
+            Core.EnsureAccept(forgeKeyQuest);
+            while (!Bot.ShouldExit && !Core.CheckInventory(forgekeyitemID))
+                Core.KillMonster("dwarfhold", "Enter", "Spawn", "Albino Bat");
+            Core.EnsureComplete(forgeKeyQuest);
+            Bot.Wait.ForPickup(fullMetalName);
+        }
     }
 
 }
