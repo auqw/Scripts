@@ -13700,6 +13700,30 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/WhiteTigerPointMerge.cs"
   },
   {
+    "name": "DeepForest Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the DeepForest Merge [1999] in /deepforest",
+    "tags": [
+      "deepforest",
+      "merge",
+      "deepforest",
+      "chaotic",
+      "monsterhunter",
+      "monsterhunters",
+      "supreme",
+      "arcane",
+      "chaos",
+      "polished",
+      "dragon",
+      "necrotic",
+      "hanzamune"
+    ],
+    "path": "Other/MergeShops/DeepForestMerge.cs",
+    "size": 6866,
+    "sha256": "7d697b633fbdbc19bee3c1449241aedc6ea2272f5be813be08bf34b74520ff1e",
+    "fileName": "DeepForestMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DeepForestMerge.cs"
+  },
+  {
     "name": "ByrodaxMerge",
     "description": "null",
     "tags": [
