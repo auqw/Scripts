@@ -126,12 +126,7 @@ public class FrostSpiritReaver
         if (!Core.CheckInventory(25464) && Core.CheckInventory(new[] { 27437, 27525 }, any: true))
         {
             //Frost Sigil
-            Core.BuyItem(
-                "icedungeon",
-                Core.CheckInventory(27437) ? 2294 : 2295,
-                25464,
-                shopItemID: Core.CheckInventory(27437) ? 48001 : 48002
-            );
+            Core.BuyItem("icedungeon", Core.CheckInventory(27437) ? 2294 : 2295, 25464, shopItemID: Core.CheckInventory(27437) ? 48001 : 48002);
             Core.ToBank(27437, 27525);
         }
 
@@ -150,12 +145,7 @@ public class FrostSpiritReaver
         {
             Core.Logger("Getting the quest item requirements for \"Cold Hearted\"");
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "Northstar",
-                "Karok The Fallen",
-                "Karok's Glaceran Gem",
-                isTemp: false
-            );
+            Core.HuntMonster("Northstar", "Karok The Fallen", "Karok's Glaceran Gem", isTemp: false);
             Adv.BuyItem("Glacera", 1055, "Scythe of Vengeance");
             Adv.BuyItem("Glacera", 1055, "Cold Scythe of Vengeance");
             Adv.BuyItem("Glacera", 1055, "Frigid Scythe of Vengeance");
