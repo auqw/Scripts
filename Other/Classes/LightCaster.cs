@@ -83,9 +83,9 @@ public class LightCaster
     {
         if (Core.CheckInventory("LightCaster"))
         {
-            if (rankUpClass && !Core.CheckInventory("LightCaster", 10))
+            if (rankUpClass)
                 Adv.RankUpClass("LightCaster");
-            return; // Already have the class, no need to
+            return;
         }
 
         Core.AddDrop("LightCaster", "Aranx's Pure Light");
