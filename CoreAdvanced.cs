@@ -4374,7 +4374,7 @@ public class CoreAdvanced
                 case "legion doomknight":
                 case "legion doomknight tester":
                 case "arcana invoker":
-                case "King\u0027s Echo":
+                case "king\u0027s echo":
                     type = EnhancementType.Wizard;
                     wSpecial = WeaponSpecial.Spiral_Carve;
                     break;
