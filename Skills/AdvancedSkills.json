@@ -4888,87 +4888,6 @@
     }
   },
   "King\u0027s Echo": {
-    "Base": {
-      "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 500,
-      "skills": [
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 25,
-              "comparison": "greater",
-              "isPercentage": true
-            }
-          ]
-        },
-        {
-          "skillId": 4,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 25,
-              "comparison": "less",
-              "isPercentage": true
-            }
-          ]
-        },
-        {
-          "skillId": 3,
-          "rules": [
-            {
-              "type": "Health",
-              "value": 50,
-              "comparison": "less",
-              "isPercentage": true
-            },
-            {
-              "type": "Aura",
-              "value": 0,
-              "comparison": "less",
-              "auraName": "Royal Resolve",
-              "auraTarget": "self"
-            }
-          ]
-        }
-      ]
-    },
-    "Dodge": {
-      "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 500,
-      "skills": [
-        {
-          "skillId": 3,
-          "rules": [
-            {
-              "type": "Aura",
-              "value": 0,
-              "comparison": "less",
-              "auraName": "Invulnerable",
-              "auraTarget": "self"
-            }
-          ]
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 4,
-          "rules": [
-            {
-              "type": "Mana",
-              "value": 50,
-              "comparison": "less",
-              "isPercentage": true
-            }
-          ]
-        }
-      ]
-    },
     "Atk": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 500,
@@ -4989,8 +4908,25 @@
               "auraName": "Residual Energy",
               "auraTarget": "self"
             }
-          ],
-          "skipOnMatch": true
+          ]
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 20,
+              "comparison": "less",
+              "isPercentage": true
+            },
+            {
+              "type": "Aura",
+              "value": 24,
+              "comparison": "greater",
+              "auraName": "Residual Energy",
+              "auraTarget": "self"
+            }
+          ]
         },
         {
           "skillId": 3,
@@ -5009,6 +4945,45 @@
               "auraTarget": "self"
             }
           ]
+        }
+      ]
+    },
+    "Def": {
+      "skillUseMode": "WaitForCooldown",
+      "skillTimeout": 500,
+      "skills": [
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 3
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4
         }
       ]
     }
