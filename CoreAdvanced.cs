@@ -3932,14 +3932,14 @@ public class CoreAdvanced
                     break;
                 #endregion
 
-                #region Lucky - Ravenous - Examen - Vainglory
+                #region Lucky - Valiance - Examen - Vainglory
                 case "king's echo":
-                    if (!uRavenous() || !uExamen() || !uVainglory())
+                    if (!uValiance() || !uExamen() || !uVainglory())
                         goto default;
 
                     type = EnhancementType.Lucky;
                     cSpecial = CapeSpecial.Vainglory;
-                    wSpecial = WeaponSpecial.Ravenous;
+                    wSpecial = WeaponSpecial.Valiance;
                     hSpecial = HelmSpecial.Examen;
                     break;
                 #endregion
@@ -4415,7 +4415,6 @@ public class CoreAdvanced
                 case "master martial artist":
                 case "antique hunter":
                 case "archivist of time":
-                case "king's echo":
                     type = EnhancementType.Lucky;
                     wSpecial = WeaponSpecial.Awe_Blast;
                     break;
@@ -4510,6 +4509,7 @@ public class CoreAdvanced
                 case "legion doomknight":
                 case "legion doomknight tester":
                 case "arcana invoker":
+                case "king's echo":
                     type = EnhancementType.Wizard;
                     wSpecial = WeaponSpecial.Spiral_Carve;
                     break;
