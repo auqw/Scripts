@@ -6338,7 +6338,22 @@ public class CoreBots
     }
 
 
-    List<string> DOTClasses = new()
+
+
+    public void KillDoomKitten(
+        string? item = null,
+        int quant = 1,
+        bool isTemp = false,
+        bool log = true
+    )
+    {
+        if (
+            item != null
+            && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+        )
+            return;
+
+        List<string> DOTClasses = new()
         {
             "ShadowStalker of Time",
             "ShadowWeaver of Time",
@@ -6355,19 +6370,6 @@ public class CoreBots
             "Legion Revenant",
             "Void Highlord",
         };
-
-    public void KillDoomKitten(
-        string? item = null,
-        int quant = 1,
-        bool isTemp = false,
-        bool log = true
-    )
-    {
-        if (
-            item != null
-            && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-        )
-            return;
 
         bool hasAnyClass = DOTClasses.Any(c => CheckInventory(c));
 
@@ -9609,17 +9611,17 @@ public class CoreBots
 
             #endregion Bypass Banned
 
-            // #region Seasonal Maps
-            // case "northpointe":
-            //     if (isSeasonalMapActive(map))
-            //         break;
-            //     else
-            //     {
-            //         Bot.Log("Masp isn't currently Available.");
-            //         Bot.StopAsync();
-            //     }
-            //     break;
-            // #endregion
+                // #region Seasonal Maps
+                // case "northpointe":
+                //     if (isSeasonalMapActive(map))
+                //         break;
+                //     else
+                //     {
+                //         Bot.Log("Masp isn't currently Available.");
+                //         Bot.StopAsync();
+                //     }
+                //     break;
+                // #endregion
 
         }
 
