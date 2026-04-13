@@ -4589,8 +4589,8 @@
       "null"
     ],
     "path": "Evil/SDKA/CoreSDKA.cs",
-    "size": 45032,
-    "sha256": "625e0735438050419834b52343164faf104a10ca9385d2eb484b739d24b9d9f0",
+    "size": 44963,
+    "sha256": "d4e44d1578235b17e9f26275701b9bf1ddd7fc5b84c1fc528c2b63c271619eae",
     "fileName": "CoreSDKA.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/SDKA/CoreSDKA.cs"
   },
@@ -17004,8 +17004,8 @@
       "null"
     ],
     "path": "Other/Classes/LightCaster.cs",
-    "size": 3154,
-    "sha256": "3ea24ed623af648d6c9b6b29383782ef9761c4187315332d5ddf210a37c8e908",
+    "size": 3073,
+    "sha256": "d3717f128ea09cbe5283cef249f18d8539a8391e37bd793bb4822c2dfacf4af0",
     "fileName": "LightCaster.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/LightCaster.cs"
   },
@@ -17016,8 +17016,8 @@
       "null"
     ],
     "path": "Other/Classes/FrostSpiritReaver.cs",
-    "size": 12732,
-    "sha256": "5907cfca77e6ae37efef8d4d73ee2017c4ba6995de8a0dc6a15c9ab4b36316d7",
+    "size": 12576,
+    "sha256": "c572c5f4c6ac110fa5ff4ee4f14e81448a178d6ba8894655f6980c0eb7f66648",
     "fileName": "FrostSpiritReaver.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/FrostSpiritReaver.cs"
   },
