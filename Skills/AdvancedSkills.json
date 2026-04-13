@@ -4888,7 +4888,7 @@
     }
   },
   "King\u0027s Echo": {
-    "Atk": {
+    "Base": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 500,
       "skills": [
@@ -4964,6 +4964,49 @@
               "value": 50,
               "comparison": "less",
               "isPercentage": true
+            }
+          ]
+        }
+      ]
+    },
+    "Atk": {
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 500,
+      "skills": [
+        {
+          "skillId": 1
+        },
+        {
+          "skillId": 2
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 2.4,
+              "comparison": "greater",
+              "auraName": "Residual Energy",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 50,
+              "comparison": "less",
+              "isPercentage": true
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Royal Resolve",
+              "auraTarget": "self"
             }
           ]
         }
