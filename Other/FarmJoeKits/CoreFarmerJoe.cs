@@ -1008,14 +1008,7 @@ public class CoreFarmerJoe
         if (configPetChoice == PetChoice.Akriloth && !Core.CheckInventory("Akriloth Pet"))
         {
             SetClass();
-            Core.HuntMonster(
-                "gravestrike",
-                "Ultra Akriloth",
-                "Akriloth Pet",
-                isTemp: false,
-                log: false
-            );
-            Bot.Wait.ForPickup("Akriloth Pet");
+            Core.HuntMonster("gravestrike", "Ultra Akriloth", "Akriloth Pet", isTemp: false, log: false); Bot.Wait.ForPickup("Akriloth Pet");
             Core.Equip("Akriloth Pet");
         }
     }
@@ -1045,14 +1038,7 @@ public class CoreFarmerJoe
 
         Core.FarmingLogger("The Server is Down", 1);
         SetClass();
-        Core.HuntMonster(
-            "undergroundlabb",
-            "Rabid Server Hamster",
-            "The Server is Down",
-            isTemp: false,
-            log: false
-        );
-        Bot.Wait.ForPickup("The Server is Down");
+        Core.HuntMonster("undergroundlabb", "Rabid Server Hamster", "The Server is Down", isTemp: false, log: false); Bot.Wait.ForPickup("The Server is Down");
         Core.Equip("The Server is Down");
     }
 
@@ -1069,24 +1055,8 @@ public class CoreFarmerJoe
     void BeginnerItems()
     {
         // Combined skip logic: skip if EITHER high-tier classes exist OR both beginner classes are rank 10+
-        bool hasHighTier =
-            Core.CheckInventory(
-                soloClasses.Except("Assassin", "Ninja Warrior", "Ninja"),
-                any: true,
-                toInv: false
-            )
-            && Core.CheckInventory(
-                farmClasses.Except("Mage", "Mage (rare)"),
-                any: true,
-                toInv: false
-            );
-
-        bool hasBothRank10Beginners =
-            Core.CheckInventory(
-                new[] { "Assassin", "Ninja Warrior", "Ninja" },
-                any: true,
-                toInv: false
-            )
+        bool hasHighTier = Core.CheckInventory(soloClasses.Except("Assassin", "Ninja Warrior", "Ninja"), any: true, toInv: false) && Core.CheckInventory(farmClasses.Except("Mage", "Mage (rare)"), any: true, toInv: false);
+        bool hasBothRank10Beginners = Core.CheckInventory(new[] { "Assassin", "Ninja Warrior", "Ninja" }, any: true, toInv: false)
             && ClassNinja?.Quantity >= RANK_10_CLASS_POINTS
             && Core.CheckInventory(new[] { "Mage (Rare)", "Mage" }, any: true, toInv: false)
             && ClassMage?.Quantity >= RANK_10_CLASS_POINTS
@@ -1098,10 +1068,7 @@ public class CoreFarmerJoe
             return;
         }
 
-        Core.Logger(
-            "Doing `Tutorial Badges` Required for fresh accounts to leave oaklore (this may take a moment to start.. we dont know why.)\n"
-                + "(by bot i mean.. obviously u can do this manualy)"
-        );
+        Core.Logger("As the Acc is still \"new\", we're going todo the tutorial badges");
 
         Tutorial.Badges();
 
