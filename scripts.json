@@ -18956,8 +18956,8 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/19SanctuaryAiwass.cs"
   },
   {
-    "name": "For tLuma",
-    "description": "Completes the For tLuma storyline.",
+    "name": "Fort Luma",
+    "description": "Completes the Fort Luma storyline.",
     "tags": [
       "forgealbedo",
       "storyline",
@@ -18969,7 +18969,7 @@
     ],
     "path": "Story/AgeOfRuin/21FortLuma.cs",
     "size": 832,
-    "sha256": "f2ecbe06f856485a0b97625977c6a3378ca58c593d6eeebcaa4d37aa189d1e30",
+    "sha256": "281c63c5244624414e24c93b1245adb2fe91b482ddb2dc09e992ff3cc159b622",
     "fileName": "21FortLuma.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/21FortLuma.cs"
   },
