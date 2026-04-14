@@ -393,19 +393,20 @@ public class MemberFarm
         Core.ToBank("DeathKnight Lord");
 
         //Reputations
-        // Beast Master
         Farm.BeastMasterREP();
-        Adv.BuyItem("northpointe", 976, "BeastMaster", shopItemID: 16031);
-        Adv.RankUpClass("BeastMaster");
-
+        Core.Logger("only able to buy the class if portal owned or seasonal map \"northpointe\" is available");
         if (Core.isSeasonalMapActive("northpointe"))
         {
+            // Beast Master
+            Adv.BuyItem("northpointe", 976, "BeastMaster", shopItemID: 16031);
+            Adv.RankUpClass("BeastMaster");
+
             // SkyGuard Grenadier
             Farm.SkyguardREP();
             Adv.BuyItem("northpointe", 259, "SkyGuard Grenadier", shopItemID: 7517);
             Adv.RankUpClass("SkyGuard Grenadier");
         }
-        
+
         //Deadfly.BuyAllMerge();
         //GonnaGetcha.BuyAllMerge();
         //Oddities.BuyAllMerge();
