@@ -1,6 +1,6 @@
 /*
-name: For tLuma
-description: Completes the For tLuma storyline.
+name: Fort Luma
+description: Completes the Fort Luma storyline.
 tags: forgealbedo, storyline,aor,age of ruin, albedo,aleister,jaania
 */
 //cs_include Scripts/CoreBots.cs
