@@ -85,16 +85,14 @@ public class WarwickForestMerge
                     }
 
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
+                    Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
+                    Core.RegisterQuests(Core.IsMember ? 10688 : 10689);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
-                        Core.HuntMonsterQuest(
-                            !Core.IsMember ? 10688 : 10689,
-                            ("warwickforest", "Flame of Rubedo", ClassType.Solo),
-                            ("warwickforest", "Idea of a Champion", ClassType.Solo),
-                            ("warwickforest", "Rubedo Match", ClassType.Solo)
-                        );
+                        Core.KillMonster("warwickforest", "r10", "Bottom", "*", "Rubedo Flicker");
+                        Core.HuntMonster("warwickforest", "Idea of a Champion", "Kolr's Needle");
+                        Core.HuntMonster("warwickforest", "Rubedo Match", "Alkahest", 100);
                         Bot.Wait.ForPickup(req.Name);
                     }
                     Core.CancelRegisteredQuests();
