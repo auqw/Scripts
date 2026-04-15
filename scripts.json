@@ -11220,6 +11220,40 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BrightForestMerge.cs"
   },
   {
+    "name": "WarwickForest Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the WarwickForest Merge [2706] in /warwickforest",
+    "tags": [
+      "warwickforest",
+      "merge",
+      "warwickforest",
+      "adamas",
+      "flamespawn",
+      "raider",
+      "captain",
+      "lord",
+      "anjou",
+      "duke",
+      "formalwear",
+      "regalia",
+      "ashblight",
+      "fur",
+      "spines",
+      "ex",
+      "incendium",
+      "unbreakable",
+      "fist",
+      "fists",
+      "morph",
+      "horns",
+      "guard"
+    ],
+    "path": "Other/MergeShops/WarwickForestMerge.cs",
+    "size": 7557,
+    "sha256": "1a3a311f4852c0123949d1e8fc023b7626ae46ec6969897b5d21b141d768afe6",
+    "fileName": "WarwickForestMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/WarwickForestMerge.cs"
+  },
+  {
     "name": "BeleensMerge",
     "description": "null",
     "tags": [
@@ -18706,6 +18740,24 @@
     "sha256": "0880711ce995318fb464b5dbd246c4e31b27744d37c2f0d1738c900884dd2a46",
     "fileName": "06MidnightZone.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/06MidnightZone.cs"
+  },
+  {
+    "name": "War Wick Forest",
+    "description": "Completes theWarWick Forest storyline.",
+    "tags": [
+      "warwickforest",
+      "storyline",
+      "aor",
+      "age of ruin",
+      "albedo",
+      "aleister",
+      "jaania"
+    ],
+    "path": "Story/AgeOfRuin/22WarWickForest.cs",
+    "size": 854,
+    "sha256": "b4df0dcf241204a04204d01b15186c0ed9334bed4c261fa25e59e7a13c23e00f",
+    "fileName": "22WarWickForest.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/22WarWickForest.cs"
   },
   {
     "name": "Abyssal Zone",
