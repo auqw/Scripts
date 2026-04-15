@@ -376,11 +376,7 @@ public class CoreAOR
         }
     }
 
-    public void DeepWater(
-        bool panopticonMerge = false,
-        bool seaVoice = false,
-        bool coldThunder = false
-    )
+    public void DeepWater(bool panopticonMerge = false, bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9338))
             return;
@@ -1241,6 +1237,104 @@ public class CoreAOR
             Bot.Sleep(2500);
             Core.JumpWait();
 
+        }
+
+    }
+
+    public void WarWickForest(bool seaVoice = false, bool coldThunder = false)
+    {
+        FortLuma(seaVoice, coldThunder);
+        if (Core.isCompletedBefore(10687))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Black Phoenix", // UseableMonsters[0],
+            "Rubedo Elemental", // UseableMonsters[1],
+            "Rubedo Match", // UseableMonsters[2],
+            "Charred Remnant", // UseableMonsters[3],
+            "Idea of a Champion", // UseableMonsters[4],
+            "Flame of Rubedo", // UseableMonsters[5]
+        };
+        #endregion Useable Monsters
+
+        // 10678 | A Phoenix's Repeated Demise
+        if (!Story.QuestProgression(10678))
+        {
+            Story.MapItemQuest(10678, "warwickforest", 15656);
+            Core.HuntMonsterQuest(10678,
+                ("warwickforest", UseableMonsters[0], ClassType.Solo));
+        }
+
+        // 10679 | Reopened Scar
+        if (!Story.QuestProgression(10679))
+        {
+            Story.MapItemQuest(10679, "warwickforest", 15657);
+            Core.HuntMonsterQuest(10679,
+                ("warwickforest", UseableMonsters[1], ClassType.Solo));
+        }
+
+        // 10680 | Pyroclast Breath
+        if (!Story.QuestProgression(10680))
+        {
+            Core.HuntMonsterQuest(10680,
+                ("warwickforest", UseableMonsters[3], ClassType.Solo));
+        }
+
+        // 10681 | Smoke Signals
+        if (!Story.QuestProgression(10681))
+        {
+            Story.MapItemQuest(10681, "warwickforest", 15658);
+            Core.HuntMonsterQuest(10681,
+                ("warwickforest", UseableMonsters[1], ClassType.Solo));
+        }
+
+        // 10682 | Reflection in Oil
+        if (!Story.QuestProgression(10682))
+        {
+            Core.EnsureAccept(10682);
+            Story.MapItemQuest(10682, "warwickforest", 15659);
+            Core.KillMonster("warwickforest", "r8", "Left", "*", "Smoldering Ashes", 6);
+            Core.EnsureComplete(10682);
+        }
+
+        // 10683 | Iosis of the Soul
+        if (!Story.QuestProgression(10683))
+        {
+            Story.MapItemQuest(10683, "warwickforest", 15660);
+            Core.HuntMonsterQuest(10683,
+                ("warwickforest", UseableMonsters[2], ClassType.Solo));
+        }
+
+        // 10684 | The Scorpion and the Fox
+        if (!Story.QuestProgression(10684))
+        {
+            Story.MapItemQuest(10684, "warwickforest", 15661);
+            Core.HuntMonsterQuest(10684,
+                ("warwickforest", UseableMonsters[0], ClassType.Solo));
+        }
+
+        // 10685 | Dalitong Keli
+        if (!Story.QuestProgression(10685))
+        {
+            Story.MapItemQuest(10685, "warwickforest", 15662, 5);
+        }
+
+        // 10686 | The Ideal Champion
+        if (!Story.QuestProgression(10686))
+        {
+            Core.HuntMonsterQuest(10686,
+                ("warwickforest", UseableMonsters[4], ClassType.Solo));
+        }
+
+        // 10687 | Kolr
+        if (!Story.QuestProgression(10687))
+        {
+            Core.HuntMonsterQuest(10687,
+                ("warwickforest", UseableMonsters[5], ClassType.Solo));
         }
 
     }
