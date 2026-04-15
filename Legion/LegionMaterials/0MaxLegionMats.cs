@@ -67,7 +67,6 @@ public class MaxLegionMats
         CL.EmblemofDage();
         CL.DarkToken();
         CL.BoneSigil();
-        CL.DarkToken();
         CL.DiamondTokenofDage();
         CL.ObsidianRock();
         LetItBurn.SoulEssence();
