@@ -10611,8 +10611,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 49328,
-    "sha256": "8153f032ba0488cb4adcba75b2406cb80be22a70206ec3c2231f908977b1ba3d",
+    "size": 49719,
+    "sha256": "7ecfc4e7ed4301446380c803729cb3d3c409b3ff1ff02ec0237f70ad74f86f30",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -17117,8 +17117,8 @@
       "null"
     ],
     "path": "Other/Classes/DragonslayerGeneral.cs",
-    "size": 2810,
-    "sha256": "cf162d94f65c8208e291be35e7119a92dde407408e38fa6c47d46ccce5a67b59",
+    "size": 2916,
+    "sha256": "bef446bab4ac2e7bd2ee4de22df2651ab01cd9d77a6aa76099daf6755cd5f347",
     "fileName": "DragonslayerGeneral.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/DragonslayerGeneral.cs"
   },
