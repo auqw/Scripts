@@ -1423,25 +1423,6 @@ public class CoreAdvanced
         //     _RaceGear(monster);
         Core.Jump(cell, pad);
 
-        bool ded = false;
-        Bot.Events.MonsterKilled += b => ded = true;
-        if (item == null)
-        {
-            if (log)
-                Core.Logger($"Killing Ultra-Boss {monster}");
-            while (!Bot.ShouldExit && !ded)
-            {
-                ded = false;
-                Core.Jump(cell, pad);
-                if (!Bot.Combat.StopAttacking)
-                    Bot.Combat.Attack(monster);
-                Core.Sleep();
-            }
-            Core.Rest();
-            return;
-        }
-        Bot.Events.MonsterKilled -= b => ded = true;
-
         if (log)
             Core.Logger($"Killing Ultra-Boss {monster} for {item} ({quant}) [Temp = {isTemp}]");
 

@@ -79,80 +79,11 @@ public class CoreLegion
 
         Core.EquipClass(ClassType.Farm);
         Core.AddDrop(43266);
-        Core.FarmingLogger("Dark Token", 10);
+        Core.FarmingLogger("Dark Token", quant);
         Core.RegisterQuests(6248, 6249, 6251);
-        while (!Bot.ShouldExit && !Core.CheckInventory(43266, quant))
-        {
-            if (Bot.Map.Name != "seraphicwardage")
-                Core.Join("seraphicwardage");
 
-            if (Bot.Player.Cell != "r3")
-                Core.Jump("r3", "Left");
-
-            List<Monster> M = Bot.Monsters.CurrentAvailableMonsters.FindAll(x =>
-                x != null && x.Cell == Bot.Player.Cell
-            );
-
-            bool ded = false;
-            Bot.Events.MonsterKilled += b => ded = true;
-            M.ForEach(monster =>
-            {
-                ded = false;
-                while (!Bot.ShouldExit && monster != null && !ded)
-                {
-                    Bot.Options.HidePlayers = Core.AggroMonsters();
-                    Bot.Options.AggroMonsters = Core.AggroMonsters();
-
-                    Bot.Combat.Attack(monster); // Attack the specific monster
-                    Bot.Sleep(500); // Wait after attacking}
-                    // Check Inventory for item - quant
-                    if (
-                        Bot.Inventory.TryGetItem(43266, out InventoryItem? DarkTokenInvItem)
-                            && DarkTokenInvItem != null
-                            && DarkTokenInvItem.Quantity >= quant
-                        // Check Bank for item - quant
-                        || Bot.Bank.TryGetItem(43266, out InventoryItem? DarkTokenBankItem)
-                            && DarkTokenBankItem != null
-                            && DarkTokenBankItem.Quantity >= quant
-                    )
-                    {
-                        Core.JumpWait();
-                        break;
-                    }
-                }
-            });
-            Bot.Events.MonsterKilled -= b => ded = true;
-        }
+        Core.KillMonster("seraphicwardage", "r3", "Left", "*", "Dark Token", quant);
         Core.CancelRegisteredQuests();
-
-        Bot.Options.AttackWithoutTarget = false;
-        Bot.Options.AggroAllMonsters = false;
-        Bot.Options.AggroMonsters = false;
-
-        // Filter out blacklisted cells, cells with monsters, and prioritize based on conditions
-        string? targetCell =
-            Bot.Map.Cells.Where(c =>
-                    c != null
-                    && !Core.BlackListedJumptoCells.Contains(c)
-                    && !Bot.Monsters.MapMonsters.Any(monster =>
-                        monster != null && monster.Cell == c
-                    )
-                )
-                .FirstOrDefault(c =>
-                    c != null
-                    && (
-                        Bot.Map.Cells.Count(cell => cell.Contains("Enter")) > 1
-                        || !c.Contains("Enter")
-                    )
-                )
-            ?? "Enter";
-
-        Bot.Map.Jump(targetCell, targetCell == "Enter" ? "Spawn" : "Left");
-        Bot.Wait.ForCellChange(targetCell);
-        Core.Sleep();
-        Core.JumpWait();
-        Core.Rest();
-        Bot.Options.HidePlayers = false;
     }
 
     public void DiamondTokenofDage(int quant = 300)
