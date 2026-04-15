@@ -403,7 +403,7 @@ public class MemberFarm
 
             // SkyGuard Grenadier
             Farm.SkyguardREP();
-            Adv.BuyItem("northpointe", 259, "SkyGuard Grenadier", shopItemID: 7517);
+            Adv.BuyItem("skyguard", 259, "SkyGuard Grenadier", shopItemID: 7517);
             Adv.RankUpClass("SkyGuard Grenadier");
         }
 
