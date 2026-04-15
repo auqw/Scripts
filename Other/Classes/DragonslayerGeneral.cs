@@ -60,41 +60,47 @@ public class DragonslayerGeneral
             Adv.RankUpClass("Dragonslayer General");
     }
 
-    public void EnchantedScaleandClaw(int ScaleQuant, int ClawQuant)
+    public void EnchantedScaleandClaw(int scaleQuant, int clawQuant)
     {
-        DslayerStory();
+        LairStory();
+
         if (!Core.CheckInventory(582))
             Core.BuyItem("lair", 38, "Dragonslayer");
-        Adv.RankUpClass("Dragonslayer");
-
+        if (Core.CheckClassRank(Bot.Player?.CurrentClass.Name == "Dragonslayer" ? true : false, "Dragonslayer") < 10)
+            Adv.RankUpClass("Dragonslayer");
         Core.EquipClass(ClassType.Farm);
 
-        if (ScaleQuant > 0)
+        if (scaleQuant > 0 || clawQuant > 0)
         {
-            Core.AddDrop("Enchanted Scale");
-            Core.Logger($"Farming {ScaleQuant} Enchanted Scale, {Bot.Inventory.GetQuantity("Enchanted Scale")} / {ScaleQuant}");
-            Core.RegisterQuests(5294);
+            Core.AddDrop("Enchanted Scale", "Dragon Claw");
+            Core.Logger($"Farming {scaleQuant} Scale / {clawQuant} Claw");
+            if (scaleQuant > 0)
+                Core.RegisterQuests(5294);
+
+            while (!Bot.ShouldExit &&
+                  !Core.CheckInventory("Enchanted Scale", scaleQuant) && !Core.CheckInventory("Dragon Claw", clawQuant))
+                Core.KillMonster("dragontown", "r4", "Right", "Tempest Dracolich");
+
+            Core.CancelRegisteredQuests();
         }
 
-        Core.KillMonster("dragontown", "r4", "Right", "Tempest Dracolich", "Dragon Claw", ClawQuant, isTemp: false);
-        while (!Bot.ShouldExit && !Core.CheckInventory("Enchanted Scale", ScaleQuant))
-            Core.KillMonster("dragontown", "r4", "Right", "Tempest Dracolich", "Dracolich Slain", 12, log: false);
-        Core.CancelRegisteredQuests();
+        void LairStory()
+        {
+
+            // Dragonslayer Veteran 165
+            Story.KillQuest(165, "lair", "Wyvern");
+
+            // Dragonslayer Sergeant 166
+            Story.KillQuest(166, "lair", "Bronze Draconian");
+
+            // Dragonslayer Captain 167
+            Story.KillQuest(167, "lair", "Dark Draconian");
+
+            // Dragonslayer Marshal 168
+            Story.KillQuest(168, "lair", "Red Dragon");
+        }
+
     }
 
-    void DslayerStory()
-    {
 
-        // Dragonslayer Veteran 165
-        Story.KillQuest(165, "lair", "Wyvern");
-
-        // Dragonslayer Sergeant 166
-        Story.KillQuest(166, "lair", "Bronze Draconian");
-
-        // Dragonslayer Captain 167
-        Story.KillQuest(167, "lair", "Dark Draconian");
-
-        // Dragonslayer Marshal 168
-        Story.KillQuest(168, "lair", "Red Dragon");
-    }
 }
