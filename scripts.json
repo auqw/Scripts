@@ -30,8 +30,8 @@
       "null"
     ],
     "path": "CoreAdvanced.cs",
-    "size": 168290,
-    "sha256": "c73208574ac014f27bf6a8ecea0ed6a83d1c33e1ffe427c776e5a80fe70bbb37",
+    "size": 167719,
+    "sha256": "97ce7f69bfbc3a67f3cb608e44f09bac6750099b19d75321af1b3a1100fb79c2",
     "fileName": "CoreAdvanced.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreAdvanced.cs"
   },
@@ -3107,8 +3107,8 @@
       "null"
     ],
     "path": "Legion/CoreLegion.cs",
-    "size": 38891,
-    "sha256": "3ef9576b61fcfb631da3e6ca6f561e7b8ebca396b90142a1e0c7041619ca4173",
+    "size": 36158,
+    "sha256": "4a350fd6eeb4a4a8926063e012dce75675dacae5b74734fee241b7a4712401f0",
     "fileName": "CoreLegion.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/CoreLegion.cs"
   },
@@ -22339,8 +22339,8 @@
       "you"
     ],
     "path": "Legion/LegionMaterials/0MaxLegionMats.cs",
-    "size": 2295,
-    "sha256": "ebddaf983fa9f18777d758314781715f328cb65d3de892a2a27b3b30063438b6",
+    "size": 2271,
+    "sha256": "c4e9eb2571b53239f9e67767265fb8f9a9f76a7ad396545ab2cdf4ad18729694",
     "fileName": "0MaxLegionMats.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/LegionMaterials/0MaxLegionMats.cs"
   },
