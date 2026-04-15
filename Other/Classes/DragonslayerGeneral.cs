@@ -63,12 +63,13 @@ public class DragonslayerGeneral
     public void EnchantedScaleandClaw(int scaleQuant, int clawQuant)
     {
         LairStory();
-
-        if (!Core.CheckInventory(582))
+        Adv.GearStore(EnhAfter: true);
+        if (!Core.CheckInventory(582) && Core.CheckClassRank(false, "Dragonslayer") < 10)
+        {
             Core.BuyItem("lair", 38, "Dragonslayer");
-        if (Core.CheckClassRank(Bot.Player?.CurrentClass.Name == "Dragonslayer" ? true : false, "Dragonslayer") < 10)
             Adv.RankUpClass("Dragonslayer");
-        Core.EquipClass(ClassType.Farm);
+        }
+        Adv.GearStore(true, EnhAfter: true);
 
         if (scaleQuant > 0 || clawQuant > 0)
         {
@@ -77,10 +78,9 @@ public class DragonslayerGeneral
             if (scaleQuant > 0)
                 Core.RegisterQuests(5294);
 
-            while (!Bot.ShouldExit &&
-                  !Core.CheckInventory("Enchanted Scale", scaleQuant) && !Core.CheckInventory("Dragon Claw", clawQuant))
-                Core.KillMonster("dragontown", "r4", "Right", "Tempest Dracolich");
-
+            Core.EquipClass(ClassType.Farm);
+            Core.KillMonster("dragontown", "r4", "Right", "Tempest Dracolich", "Enchanted Scale", scaleQuant, isTemp: false);
+            Core.KillMonster("dragontown", "r4", "Right", "Tempest Dracolich", "Dragon Claw", clawQuant, isTemp: false);
             Core.CancelRegisteredQuests();
         }
 
