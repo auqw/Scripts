@@ -2000,7 +2000,7 @@ public class CoreNation
         // Check if the desired item is already in inventory or if the player is not a member
         if (Core.CheckInventory(item, quant) || !Core.IsMember)
             return;
-
+        Core.AddDrop(item);
         // Update and register the necessary quests
         Bot.Quests.UpdateQuest(2215);
         Core.RegisterQuests(3053);
@@ -2014,16 +2014,7 @@ public class CoreNation
             // Hunt monsters to complete the quest
             FarmDiamondofNulgath(1);
             Core.HuntMonster("lair", "Red Dragon", "Dragon Fiend Gem", 13, isTemp: false);
-            Core.KillMonster(
-                "battleunderd",
-                "r5",
-                "Left",
-                "Glacial Horror",
-                "Glacial Bones",
-                3,
-                isTemp: false
-            );
-            Core.HuntMonster("dreammaze", "Screamfeeder", "Screamfeeder Heart", isTemp: false);
+            Core.KillMonster("battleunderd", "r5", "Left", "Glacial Horror", "Glacial Bones", 3, isTemp: false); Core.HuntMonster("dreammaze", "Screamfeeder", "Screamfeeder Heart", isTemp: false);
         }
 
         // Wait for the item to be picked up and cancel any registered quests
