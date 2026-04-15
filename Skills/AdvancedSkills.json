@@ -4908,7 +4908,8 @@
               "auraName": "Residual Energy",
               "auraTarget": "self"
             }
-          ]
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 4,
@@ -4926,7 +4927,8 @@
               "auraName": "Residual Energy",
               "auraTarget": "self"
             }
-          ]
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 3,
