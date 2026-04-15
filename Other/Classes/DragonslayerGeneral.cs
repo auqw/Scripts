@@ -6,6 +6,7 @@ tags: null
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 
@@ -25,6 +26,12 @@ public class DragonslayerGeneral
         set => _Adv = value;
     }
     private static CoreAdvanced _Adv;
+    private static CoreStory Story
+    {
+        get => _Story ??= new CoreStory();
+        set => _Story = value;
+    }
+    private static CoreStory _Story;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -55,6 +62,7 @@ public class DragonslayerGeneral
 
     public void EnchantedScaleandClaw(int ScaleQuant, int ClawQuant)
     {
+        DslayerStory();
         if (!Core.CheckInventory(582))
             Core.BuyItem("lair", 38, "Dragonslayer");
         Adv.RankUpClass("Dragonslayer");
@@ -64,32 +72,29 @@ public class DragonslayerGeneral
         if (ScaleQuant > 0)
         {
             Core.AddDrop("Enchanted Scale");
-            Core.Logger(
-                $"Farming {ScaleQuant} Enchanted Scale, {Bot.Inventory.GetQuantity("Enchanted Scale")} / {ScaleQuant}"
-            );
+            Core.Logger($"Farming {ScaleQuant} Enchanted Scale, {Bot.Inventory.GetQuantity("Enchanted Scale")} / {ScaleQuant}");
             Core.RegisterQuests(5294);
         }
 
-        Core.KillMonster(
-            "dragontown",
-            "r4",
-            "Right",
-            "Tempest Dracolich",
-            "Dragon Claw",
-            ClawQuant,
-            isTemp: false
-        );
-
+        Core.KillMonster("dragontown", "r4", "Right", "Tempest Dracolich", "Dragon Claw", ClawQuant, isTemp: false);
         while (!Bot.ShouldExit && !Core.CheckInventory("Enchanted Scale", ScaleQuant))
-            Core.KillMonster(
-                "dragontown",
-                "r4",
-                "Right",
-                "Tempest Dracolich",
-                "Dracolich Slain",
-                12,
-                log: false
-            );
+            Core.KillMonster("dragontown", "r4", "Right", "Tempest Dracolich", "Dracolich Slain", 12, log: false);
         Core.CancelRegisteredQuests();
+    }
+
+    void DslayerStory()
+    {
+
+        // Dragonslayer Veteran 165
+        Story.KillQuest(165, "lair", "Wyvern");
+
+        // Dragonslayer Sergeant 166
+        Story.KillQuest(166, "lair", "Bronze Draconian");
+
+        // Dragonslayer Captain 167
+        Story.KillQuest(167, "lair", "Dark Draconian");
+
+        // Dragonslayer Marshal 168
+        Story.KillQuest(168, "lair", "Red Dragon");
     }
 }
