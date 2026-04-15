@@ -1312,9 +1312,11 @@ public class CoreAOR
         // 10684 | The Scorpion and the Fox
         if (!Story.QuestProgression(10684))
         {
+            Core.EnsureAccept(10684);
             Story.MapItemQuest(10684, "warwickforest", 15661);
-            Core.HuntMonsterQuest(10684,
-                ("warwickforest", UseableMonsters[0], ClassType.Solo));
+            Core.KillMonster("warwickforest", "r2", "Left", "*", "Philosopher's Eye", 15);
+            Core.EnsureComplete(10684);
+
         }
 
         // 10685 | Dalitong Keli
