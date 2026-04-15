@@ -581,6 +581,7 @@ public class CoreFarmerJoe
             { 55, HandleLevel55 },
             { 60, HandleLevel60 },
             { 65, HandleLevel65 },
+            { 70, HandleLevel70 },
             { 75, HandleLevel75 },
         };
 
@@ -743,12 +744,22 @@ public class CoreFarmerJoe
             SetClass();
             GB.GetGB();
         }
+    }
 
+    private void HandleLevel70()
+    {
         // ArchPaladin
         if (
             !Core.CheckInventory("ArchPaladin", toInv: false) || !AnyRank10(new[] { "ArchPaladin" })
         )
         {
+            Core.Logger("Geting Horc Evader so we can attemp to kill Ultra Alteon during the story to get AP");
+            UnlockForgeEnhancements.Vim();
+            Adv.BuyItem("bloodtusk", 308, "Horc Evader");
+            Adv.GearStore(EnhAfter: true);
+            Adv.RankUpClass("Horc Evader");
+            Adv.GearStore(true, EnhAfter: true);
+
             Core.Logger("Level 65: Acquiring ArchPaladin");
             SetClass();
             AP.GetAP();
@@ -857,7 +868,6 @@ public class CoreFarmerJoe
         // Unlock Helmet Enhancements
         Core.Logger("Phase 3: Unlocking Helmet Enhancements");
         UnlockForgeEnhancements.ForgeHelmEnhancement();
-        UnlockForgeEnhancements.Vim();
         UnlockForgeEnhancements.Examen();
         UnlockForgeEnhancements.Anima();
         UnlockForgeEnhancements.Pneuma();
