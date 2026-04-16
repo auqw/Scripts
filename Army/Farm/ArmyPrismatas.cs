@@ -1,7 +1,7 @@
 /*
-name: Army Pristmas
-description: Farms gold using the Pristmas in /archmage and selling the elemental bindings
-tags: Pristmas, elemental binding, gold, farm
+name: Army Prismatas
+description: Farms gold using the Prismatas in /archmage and selling the elemental bindings
+tags: Prismatas, elemental binding, gold, farm
 */
 
 //cs_include Scripts/Ultras/CoreEngine.cs
