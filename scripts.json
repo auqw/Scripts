@@ -24636,17 +24636,17 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Classes/ArmyLR.cs"
   },
   {
-    "name": "Army Pristmas",
-    "description": "Farms gold using the Pristmas in /archmage and selling the elemental bindings",
+    "name": "Army Prismatas",
+    "description": "Farms gold using the Prismatas in /archmage and selling the elemental bindings",
     "tags": [
-      "pristmas",
+      "prismatas",
       "elemental binding",
       "gold",
       "farm"
     ],
     "path": "Army/Farm/ArmyPrismatas.cs",
-    "size": 3873,
-    "sha256": "44cbb393d173b6c6133aa56ce997b7a685014e0420e9e84512a0f49741b7f287",
+    "size": 3876,
+    "sha256": "c1eb5c48949aff66f65b243cdb9311b1be28b765ec890454ca05074429b06b4f",
     "fileName": "ArmyPrismatas.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyPrismatas.cs"
   },
