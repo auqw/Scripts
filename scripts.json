@@ -24690,8 +24690,8 @@
       "oneclient"
     ],
     "path": "Army/OneClient/WheelOfDoom.cs",
-    "size": 1304,
-    "sha256": "23d8365f2d560ecc68548e8f05d205f3ea718de5ac5142529fc90699ec73dd12",
+    "size": 1502,
+    "sha256": "c4606e676eb41813df17a45e6bde1041fa45230aa7ef5d283e277b29cb3f282d",
     "fileName": "WheelOfDoom.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/WheelOfDoom.cs"
   },
@@ -24708,8 +24708,8 @@
       "oneclient"
     ],
     "path": "Army/OneClient/GenerateQueuedOneClientScript.cs",
-    "size": 12261,
-    "sha256": "c2bc48c122bd87d86c0c683d03924fa8e3cca2f01fc4ec77e2e47fd7c31dd80a",
+    "size": 12459,
+    "sha256": "079079c524786f690c45dc835c5300fbe5ed8961e52da2f749bea3559a5ec88a",
     "fileName": "GenerateQueuedOneClientScript.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/GenerateQueuedOneClientScript.cs"
   },
@@ -24720,8 +24720,8 @@
       "null"
     ],
     "path": "Army/OneClient/OneClientTemplate.cs",
-    "size": 1653,
-    "sha256": "11752eac1b608e49b9df8f19a938638ccf9c0df66bcc81983e58ffc9452812c8",
+    "size": 1851,
+    "sha256": "11800c006f8593d8446cca4612acf60c76f7c8345a0688b3ab23da00872f3abc",
     "fileName": "OneClientTemplate.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/OneClientTemplate.cs"
   },
@@ -24734,8 +24734,8 @@
       "all"
     ],
     "path": "Army/OneClient/AllBankAllItems.cs",
-    "size": 1693,
-    "sha256": "8d33b651666c831b0f1978f87b09f3c8a8fb118936f824f4d06fb63820577903",
+    "size": 1892,
+    "sha256": "201619a6db03f875e79023759b6d4d609cc4388e31be8a69aed73bc1f8dca292",
     "fileName": "AllBankAllItems.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AllBankAllItems.cs"
   },
@@ -24749,8 +24749,8 @@
       "army."
     ],
     "path": "Army/OneClient/AccsForAll.cs",
-    "size": 1742,
-    "sha256": "a73e9e33995ecc468741801b217335d642f240d76cc0887ae517ef51ef8dc835",
+    "size": 1949,
+    "sha256": "a36cb8e0d0d250963b72f68890f65072ba1cc8a3f74580c611b2e1ada92f1739",
     "fileName": "AccsForAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AccsForAll.cs"
   },
@@ -24763,8 +24763,8 @@
       "army"
     ],
     "path": "Army/OneClient/AllDailies.cs",
-    "size": 2326,
-    "sha256": "1ea9e6399a3facfcb2d40a2d2bcab6214b4d26f63429302fd66115dcd2e1cdb3",
+    "size": 2525,
+    "sha256": "bff070aedf7f62197a9dfadb2c866ca26aeed46d45b827c0449a56ae2046662c",
     "fileName": "AllDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AllDailies.cs"
   },
@@ -24782,8 +24782,8 @@
       "oneclient"
     ],
     "path": "Army/OneClient/EldersBlood.cs",
-    "size": 1351,
-    "sha256": "ca4dc6b9c052c18f963f7e1ce6270f5f363b717e129202f6c8b6ef49876d1ff6",
+    "size": 1550,
+    "sha256": "e2b96090296157ba51a349707b7d37c05913d7f67bc6975791a55808cddd71ae",
     "fileName": "EldersBlood.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/EldersBlood.cs"
   },
@@ -24796,8 +24796,8 @@
       "auto tag"
     ],
     "path": "Army/OneClient/TagAllAccounts.cs",
-    "size": 1545,
-    "sha256": "1ac7f367c066dce14ed89ebe4469549e26c974ec08972ff606c0b13f05511586",
+    "size": 1743,
+    "sha256": "be7e06cc3fa11d1dafd99701e01021a85307f6011260bce0c0878dfecfd1492d",
     "fileName": "TagAllAccounts.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/TagAllAccounts.cs"
   },
@@ -24810,8 +24810,8 @@
       "all"
     ],
     "path": "Army/OneClient/AllRankAllClasses.cs",
-    "size": 1381,
-    "sha256": "86249b747017aae1b2b87ce522ce6017db5684d04c41aa0bad9aa76a834da104",
+    "size": 1580,
+    "sha256": "a5faf288a27c8438e7f36f094a8796aaf75744c70a3cfef977f16b3b2f6c5511",
     "fileName": "AllRankAllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/OneClient/AllRankAllClasses.cs"
   },
