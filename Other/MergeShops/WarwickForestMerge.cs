@@ -87,7 +87,7 @@ public class WarwickForestMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.RegisterQuests(Core.IsMember ? 10688 : 10689);
+                    Core.RegisterQuests(Core.IsMember ? 10689 : 10688);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
                     {
                         Core.KillMonster("warwickforest", "r10", "Bottom", "*", "Rubedo Flicker");
