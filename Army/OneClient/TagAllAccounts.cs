@@ -26,7 +26,8 @@ public class TagAll
     {
         Core.SetOptions();
 
-        DoTheThing();
+        Bot.Log("OneClient scripts area bit fucked, and i just cant fix the \"not logging into full server\" issue.. so they will be disabled -- please use the normal varients of the scripts.");
+        // DoTheThing();
 
         Core.SetOptions(false);
     }

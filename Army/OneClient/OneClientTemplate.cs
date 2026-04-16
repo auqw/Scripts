@@ -47,7 +47,8 @@ public class OneClientTemplate
     {
         Core.SetOptions();
 
-        Template();
+        Bot.Log("OneClient scripts area bit fucked, and i just cant fix the \"not logging into full server\" issue.. so they will be disabled -- please use the normal varients of the scripts.");
+        // Template();
 
         Core.SetOptions(false);
     }

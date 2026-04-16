@@ -30,7 +30,8 @@ public class ArmyWheelofDoom
     {
         Core.SetOptions();
 
-        WheelOfDoom();
+        Bot.Log("OneClient scripts area bit fucked, and i just cant fix the \"not logging into full server\" issue.. so they will be disabled -- please use the normal varients of the scripts.");
+        // WheelOfDoom();
 
         Core.SetOptions(false);
     }

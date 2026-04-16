@@ -17,7 +17,8 @@ public class GenQueuedOneClientScript
 
     public void ScriptMain(IScriptInterface Bot)
     {
-        GenerateQueuedOneClientScript();
+        Bot.Log("OneClient scripts area bit fucked, and i just cant fix the \"not logging into full server\" issue.. so they will be disabled -- please use the normal varients of the scripts.");
+        // GenerateQueuedOneClientScript();
     }
 
 #nullable enable
