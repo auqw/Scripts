@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreStory.cs",
-    "size": 55109,
-    "sha256": "700ebf81065d3c5e517ff875e6af80df06392c414137d975776334b9376fe823",
+    "size": 55015,
+    "sha256": "3ebfb1e10e35dd6e8d91cba31c3dca7128648f1c170eece931354925a6c63983",
     "fileName": "CoreStory.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreStory.cs"
   },
@@ -16809,8 +16809,8 @@
       "the point sword"
     ],
     "path": "Other/TreasureHunts/DarkScroll.cs",
-    "size": 3638,
-    "sha256": "2a3e6de7f9908ffaf387ac931a4a0165b399980318320f192a92bb77a032aa0a",
+    "size": 3520,
+    "sha256": "59647a02e40459b4b06e648540fbd5900d0943cdd77a80cddc770e2385898f88",
     "fileName": "DarkScroll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/TreasureHunts/DarkScroll.cs"
   },
@@ -30704,6 +30704,28 @@
     "sha256": "cf141f6e6490af6d58d78e02a60478a09c216fa309b16ba4f10aa15519369d2d",
     "fileName": "ColossalWaresMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/ColossalWaresMerge.cs"
+  },
+  {
+    "name": "Crownsreach FXIII Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Crownsreach FXIII Merge [1354] in /crownsreachfxiii",
+    "tags": [
+      "crownsreach",
+      "fxiii",
+      "merge",
+      "crownsreachfxiii",
+      "dandy",
+      "gilded",
+      "tentacle",
+      "wings",
+      "fascinator",
+      "dapper",
+      "cane"
+    ],
+    "path": "Seasonal/Friday13th/MergeShops/CrownsreachFXIIIMerge.cs",
+    "size": 3914,
+    "sha256": "b8a4ac39f2fc65cedc7b973da80213c9dd606ecd19c95fc5b6c63b6ba793cbcf",
+    "fileName": "CrownsreachFXIIIMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/CrownsreachFXIIIMerge.cs"
   },
   {
     "name": "Fabyos Spooky Merge",
