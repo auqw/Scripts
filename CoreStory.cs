@@ -625,19 +625,8 @@ public class CoreStory
     /// <param name="GetReward">Whether to collect the reward if completed.</param>
     /// <param name="Reward">Which reward to pick ("All" by default).</param>
     /// <param name="AutoCompleteQuest">Whether to auto-complete the quest after collecting items.</param>
-    public void MapItemQuest(
-        int QuestID,
-        string MapName,
-        int[] MapItemIDs,
-        int Amount = 1,
-        bool GetReward = true,
-        string Reward = "All",
-        bool AutoCompleteQuest = true
-    )
+    public void MapItemQuest(int QuestID, string MapName, int[] MapItemIDs, int Amount = 1, bool GetReward = true, string Reward = "All", bool AutoCompleteQuest = true)
     {
-
-
-
         Quest? QuestData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
         if (QuestData == null)
         {
@@ -658,9 +647,7 @@ public class CoreStory
 
         if (itemsToGrab.Count > 0)
         {
-            Core.Logger(
-                $"Grabbing items from map {MapName}: {string.Join(", ", itemsToGrab.Select(i => $"{i.ItemID} x{i.Quantity}"))}"
-            );
+            Core.Logger($"Grabbing items from map {MapName}: {string.Join(", ", itemsToGrab.Select(i => $"{i.ItemID} x{i.Quantity}"))}"); 
             Core.GetMapItems(itemsToGrab, MapName); // <-- updated to use the tuple overload
         }
 
