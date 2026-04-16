@@ -54,13 +54,7 @@ public class DarkScroll
                 Core.EquipClass(ClassType.Solo);
                 Adv.GearStore(EnhAfter: true);
                 Core.Logger($"Step 3 Amethyst Gem");
-                Core.HuntMonster(
-                    "onslaughttower",
-                    "Maximillian Lionfang",
-                    "Amethyst Gem",
-                    isTemp: false,
-                    log: false
-                );
+                Core.HuntMonster("onslaughttower", "Maximillian Lionfang", "Amethyst Gem", isTemp: false, log: false);
                 Adv.GearStore(true, EnhAfter: true);
 
                 //Amethyst Inferno Tome
