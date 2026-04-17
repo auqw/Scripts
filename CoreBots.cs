@@ -4816,17 +4816,7 @@ public class CoreBots
     /// Joins a map, jumps to the given cell/pad, and kills the monster with the specified MonsterMapID.
     /// Optionally farms for an item until the desired quantity is reached.
     /// </summary>
-    public void KillMonster(
-        string map,
-        string cell,
-        string pad,
-        int MonsterMapID,
-        int ItemID = 0,
-        int quant = 1,
-        bool isTemp = true,
-        bool log = true,
-        bool publicRoom = false
-    )
+    public void KillMonster(string map, string cell, string pad, int MonsterMapID, int ItemID = 0, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false)
     {
         pad = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pad.ToLower());
         cell = Bot.Map.Cells.FirstOrDefault(c => c.Equals(cell, StringComparison.OrdinalIgnoreCase)) ?? cell;
