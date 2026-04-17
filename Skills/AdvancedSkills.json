@@ -4888,23 +4888,30 @@
     }
   },
   "King\u0027s Echo": {
-    "Atk": {
-      "skillUseMode": "UseIfAvailable",
+    "Base": {
+      "skillUseMode": "WaitForCooldown",
       "skillTimeout": 500,
       "skills": [
         {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4,
+          "skillId": 1,
           "rules": [
             {
               "type": "Aura",
-              "value": 24,
-              "comparison": "greater",
+              "value": 23,
+              "comparison": "less",
+              "auraName": "Residual Energy",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
+        },
+        {
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 23,
+              "comparison": "less",
               "auraName": "Residual Energy",
               "auraTarget": "self"
             }
@@ -4914,12 +4921,6 @@
         {
           "skillId": 4,
           "rules": [
-            {
-              "type": "Mana",
-              "value": 20,
-              "comparison": "less",
-              "isPercentage": true
-            },
             {
               "type": "Aura",
               "value": 24,
@@ -4938,15 +4939,9 @@
               "value": 50,
               "comparison": "less",
               "isPercentage": true
-            },
-            {
-              "type": "Aura",
-              "value": 0,
-              "comparison": "less",
-              "auraName": "Royal Resolve",
-              "auraTarget": "self"
             }
-          ]
+          ],
+          "skipOnMatch": true
         }
       ]
     },
