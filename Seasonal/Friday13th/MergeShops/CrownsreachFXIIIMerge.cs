@@ -74,7 +74,9 @@ public class CrownsreachFXIIIMerge
 
                 case "Amethyst Gem":
                     Core.EquipClass(ClassType.Farm);
-                    Core.KillMonster("crownsreachfxiii", "r4", "Left", "Crawling Ooze", req.ID, req.Quantity, req.Temp);
+                    while (Core.CheckInventory(req.ID, req.Quantity))
+                        Core.KillMonster("crownsreachfxiii", "r4", "Left", "*");
+                    Bot.Wait.ForPickup(req.ID);
                     break;
                 #endregion
 
