@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 442954,
-    "sha256": "c8da8995e58d5ab8aa0dd1d7e92e6f7120bcd8c73dc58c61dbfaf73cf269fcc1",
+    "size": 442876,
+    "sha256": "9c436b67c88ad5e21ceb673f5700ae00f18365fbfa8c6b6ff6c79a4695ef863f",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -30722,8 +30722,8 @@
       "cane"
     ],
     "path": "Seasonal/Friday13th/MergeShops/CrownsreachFXIIIMerge.cs",
-    "size": 3914,
-    "sha256": "b8a4ac39f2fc65cedc7b973da80213c9dd606ecd19c95fc5b6c63b6ba793cbcf",
+    "size": 3992,
+    "sha256": "1bae404f00d0f113a2fc202030537575349b235a395268338d57098fb684698a",
     "fileName": "CrownsreachFXIIIMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/Friday13th/MergeShops/CrownsreachFXIIIMerge.cs"
   },
