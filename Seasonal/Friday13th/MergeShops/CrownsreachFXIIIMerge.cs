@@ -73,8 +73,13 @@ public class CrownsreachFXIIIMerge
                 #region Items not setup
 
                 case "Amethyst Gem":
+                    if (!Core.IsMember)
+                    {
+                        Core.Logger("Map requires memmbership...");
+                        return;
+                    }
                     Core.EquipClass(ClassType.Farm);
-                    while (Core.CheckInventory(req.ID, req.Quantity))
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
                         Core.KillMonster("crownsreachfxiii", "r4", "Left", "*");
                     Bot.Wait.ForPickup(req.ID);
                     break;
