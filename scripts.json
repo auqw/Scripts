@@ -13782,6 +13782,31 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FireandIceMerge.cs"
   },
   {
+    "name": "Golden Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Golden Merge [1490] in /goldenarena",
+    "tags": [
+      "golden",
+      "merge",
+      "goldenarena",
+      "blessed",
+      "inquisitor",
+      "karok",
+      "queen",
+      "hope",
+      "dragon",
+      "banner",
+      "wings",
+      "female",
+      "horned",
+      "mace"
+    ],
+    "path": "Other/MergeShops/GoldenMerge.cs",
+    "size": 6158,
+    "sha256": "8ad60ef94f3a830fd3127dcb746137f15e812972c4478eb1328bb0fd634fb758",
+    "fileName": "GoldenMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/GoldenMerge.cs"
+  },
+  {
     "name": "ColdThunder Merge",
     "description": "This bot will farm the items belonging to the selected mode for the ColdThunder Merge [2467] in /coldthunder",
     "tags": [
