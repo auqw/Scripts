@@ -55,15 +55,17 @@ public class JuggernautItemsofNulgath
     public void JuggItems(RewardsSelection reward = RewardsSelection.All)
     {
         Core.AddDrop(Nation.bagDrops);
-        Core.AddDrop(Rewards);
 
         var Count = 0;
         int x = 1;
 
         List<ItemBase> RewardOptions = Core.EnsureLoad(837).Rewards;
         List<string> RewardsList = new();
-        foreach (Skua.Core.Models.Items.ItemBase Item in RewardOptions)
+        foreach (ItemBase Item in RewardOptions)
+        {
+            Bot.Drops.Add(Item.ID);
             RewardsList.Add(Item.Name);
+        }
         Count = RewardsList.Count;
         var rewards = Core.EnsureLoad(837).Rewards;
         ItemBase? item = rewards.Find(x => x.ID == (int)reward) ?? null;
