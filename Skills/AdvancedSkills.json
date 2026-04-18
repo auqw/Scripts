@@ -4935,8 +4935,32 @@
           ]
         },
         {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 24,
+              "comparison": "less",
+              "isPercentage": false
+            },
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Elysium",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
           "skillId": 3,
           "rules": [
+            {
+              "type": "Health",
+              "value": 50,
+              "comparison": "less",
+              "isPercentage": true
+            },
             {
               "type": "Mana",
               "value": 50,
