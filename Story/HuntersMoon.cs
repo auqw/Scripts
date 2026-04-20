@@ -62,6 +62,8 @@ public class HuntersMoon
         Story.KillQuest(6706, "huntersmoon", "Eclipsed One");
 
         // Find the Skull! 6707
+        Core.Logger("Map is fucked before this quest, we'll do a whitemap join, then go back to questing");
+        Core.Join("whitemap-999999");
         Story.KillQuest(6707, "huntersmoon", "Marchiosas Acolyte");
 
         // Tree of Wisdom 6708
