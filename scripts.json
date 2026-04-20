@@ -3759,8 +3759,8 @@
       "null"
     ],
     "path": "Tools/BankAllItems.cs",
-    "size": 4017,
-    "sha256": "a5133e3bcaba797294f1797febb4ee8cb387f817c4f7d9c0d0fe14eb156d295e",
+    "size": 3956,
+    "sha256": "64bfe2338d5bb982edf9be743e4575e8378ba67c4606545781b3726ed2e93bf4",
     "fileName": "BankAllItems.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/BankAllItems.cs"
   },
