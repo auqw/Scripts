@@ -155,6 +155,6 @@ public class ArmyLeveling
         Story.KillQuest(9425, "shadowbattleon", "Ouro Spawn");
 
         C.Logger("Quests are done, Leaving map and rejoining to join the armies RoomNumber.");
-        C.Join("whitemap");
+        C.Join("whitemap-999999");
     }
 }
