@@ -186,7 +186,8 @@ public class Adam1a1Merge
                 case "Bongo Cart Pet":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.AddDrop("Love Token");
+                    Core.AddDrop("Love Token", "Magenta Dye","Fresh Ectoplasm" );
+                    Core.AddDrop(21567);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
                         Core.EnsureAccept(8013);
@@ -208,14 +209,7 @@ public class Adam1a1Merge
                             {
                                 //Flowers for the Pink Gal 1489
                                 Core.HuntMonster("Sandsea", "Cactus Creeper", "Fandango Flower", 5);
-                                Core.KillMonster(
-                                    "wanders",
-                                    "r5",
-                                    "Left",
-                                    "Lotus Spider",
-                                    "Lotus Flower",
-                                    4
-                                );
+                                Core.KillMonster("wanders", "r5", "Left", "Lotus Spider", "Lotus Flower", 4);
                             }
 
                             Adv.BuyItem("tower", 347, "Pink Rose");
@@ -230,18 +224,9 @@ public class Adam1a1Merge
                             while (!Bot.ShouldExit && !Core.CheckInventory("Fresh Ectoplasm", 15))
                             {
                                 Core.EnsureAccept(8009);
-                                Core.HuntMonster(
-                                    "vendorbooths",
-                                    "Caffeine Imp",
-                                    "Coffee Beans",
-                                    10
-                                );
+                                Core.HuntMonster("vendorbooths", "Caffeine Imp", "Coffee Beans", 10);
                                 Core.HuntMonster("djinn", "Lamia", "Tasty Poison", 10);
-                                Core.HuntMonster(
-                                    "charredpath",
-                                    "Toxic Wisteria",
-                                    "Necessary Antidote"
-                                );
+                                Core.HuntMonster("charredpath", "Toxic Wisteria", "Necessary Antidote");
                                 Core.EnsureComplete(8009);
                                 Bot.Wait.ForPickup("Fresh Ectoplasm");
                             }
@@ -259,13 +244,7 @@ public class Adam1a1Merge
                     Core.RegisterQuests(8011);
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
                     {
-                        Core.HuntMonster(
-                            "extinction",
-                            "Slimed Drone",
-                            "Iron II.0",
-                            4,
-                            isTemp: false
-                        );
+                        Core.HuntMonster("extinction", "Slimed Drone", "Iron II.0", 4, isTemp: false);
                         Core.HuntMonster("doomwood", "Doomwood Treeant", "Wood", 10);
                         Core.HuntMonster("crashsite", "Dwakel Blaster", "Big Iron Bolts", 10);
                         Core.HuntMonster("portalmaze", "Time Wraith", "Piece of Cake", 5);
