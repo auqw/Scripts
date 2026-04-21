@@ -79,10 +79,11 @@ public class CoreLegion
 
         Core.EquipClass(ClassType.Farm);
         Core.AddDrop(43266);
+        Core.AddDrop("Dark Token");
         Core.FarmingLogger("Dark Token", quant);
         Core.RegisterQuests(6248, 6249, 6251);
 
-        Core.KillMonster("seraphicwardage", "r3", "Left", "*", "Dark Token", quant);
+        Core.KillMonster("seraphicwardage", "r3", "Left", "*", "Dark Token", quant, isTemp: false);
         Core.CancelRegisteredQuests();
     }
 
