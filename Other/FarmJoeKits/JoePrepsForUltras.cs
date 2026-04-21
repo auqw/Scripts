@@ -271,6 +271,11 @@ tags: joe, ultra, boss, preparation, farm
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/DoomPirateStory.cs
 //cs_include Scripts/Seasonal/TalkLikeaPirateDay/MergeShops/DoomPirateHaulMerge.cs
 //cs_include Scripts/Other/Classes/VerusDoomKnight.cs
+//cs_include Scripts/Story/Lynaria/CoreLynaria.cs
+//cs_include Scripts/Other/MergeShops/BocklinGroveMerge.cs
+//cs_include Scripts/Other/MergeShops/BocklinTreasuryMerge.cs
+//cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
+//cs_include Scripts/Other/Classes/KingsEcho.cs
 
 #endregion includes
 

@@ -150,7 +150,11 @@ tags: null
 //cs_include Scripts/Other/Classes/Dragonslayer.cs
 //cs_include Scripts/Other/Classes/FrostSpiritReaver.cs
 //cs_include Scripts/Seasonal/Frostvale/NorthlandsMonk.cs
-
+//cs_include Scripts/Story/Lynaria/CoreLynaria.cs
+//cs_include Scripts/Other/MergeShops/BocklinGroveMerge.cs
+//cs_include Scripts/Other/MergeShops/BocklinTreasuryMerge.cs
+//cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
+//cs_include Scripts/Other/Classes/KingsEcho.cs
 #endregion includes
 
 using Skua.Core.Interfaces;

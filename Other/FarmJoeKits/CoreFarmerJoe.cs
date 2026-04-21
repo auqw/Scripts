@@ -124,6 +124,11 @@ tags: null
 //cs_include Scripts/Story/XansLair.cs
 //cs_include Scripts/Story/Yokai.cs
 //cs_include Scripts/Tools/BankAllItems.cs
+//cs_include Scripts/Story/Lynaria/CoreLynaria.cs
+//cs_include Scripts/Other/MergeShops/BocklinGroveMerge.cs
+//cs_include Scripts/Other/MergeShops/BocklinTreasuryMerge.cs
+//cs_include Scripts/Other/Classes/KingsEcho.cs
+//cs_include Scripts/Other/MergeShops/BocklinArmoryMerge.cs
 #endregion includes
 
 
@@ -413,9 +418,15 @@ public class CoreFarmerJoe
         get => _Mazumi ??= new Mazumi();
         set => _Mazumi = value;
     }
+    private static Mazumi _Mazumi;
+    private static KingsEcho KE
+    {
+        get => _KE ??= new KingsEcho();
+        set => _KE = value;
+    }
+    private static KingsEcho _KE;
     #endregion
 
-    private static Mazumi _Mazumi;
     private const int RANK_10_CLASS_POINTS = 302500;
     public string OptionsStorage = "FarmerJoePet";
     public bool DontPreconfigure = true;
@@ -897,7 +908,7 @@ public class CoreFarmerJoe
         UnlockForgeEnhancements.Lament();
 
         // Acquire Yin & Yang Roentgenium
-        Core.Logger("Phase 4: Acquiring Yin & Yang Roentgenium (YnR)");
+        Core.Logger("Phase 4: Acquiring Yami no Ronin (YnR)");
         YNR.GetYnR();
 
         // Acquire Dragon of Time (ensure class is set)
@@ -909,6 +920,10 @@ public class CoreFarmerJoe
         Core.Logger("Phase 4: Final Leveling to 100");
         SetClass();
         Farm.Experience();
+
+        // Get King's Echo
+        SetClass();
+        KE.GetKE();
 
         // Acquire Hollowborn Reaper's Scythe
         Core.Logger("Phase 4: Acquiring Hollowborn Reaper's Scythe");
