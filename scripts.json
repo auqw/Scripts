@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 161197,
-    "sha256": "36861a3538088f2f60c04d3db5ed32d372e439bc6eef7e55c7e34bed26dec043",
+    "size": 161101,
+    "sha256": "2df56d54cfc1ddcb8da85229bc717020c72ad7f60133ac9a17e0e48e85f1cc0e",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -10572,8 +10572,8 @@
       "farm"
     ],
     "path": "Other/FarmJoeKits/JoePrepsForUltras.cs",
-    "size": 27419,
-    "sha256": "aa098c3f1147e21c01d2ea3af255b77dc124965acf7cde10f7b448734e60ce34",
+    "size": 27698,
+    "sha256": "7a87ac3fcc2aaa5ac63b62993f6c9cea7b1bd9108de569cc23071a54e79c0e93",
     "fileName": "JoePrepsForUltras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/JoePrepsForUltras.cs"
   },
@@ -10584,8 +10584,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/0FarmerJoeDoAll.cs",
-    "size": 8666,
-    "sha256": "af3e9180f8f99d7fc9f8a8c1f51cf89ce2019a4dec7d1c7b312cf4a75c380c34",
+    "size": 8944,
+    "sha256": "dfebbaeb6b96e15d589c09b6ca7d08af02606703f6d3dd25770797beb499e7a6",
     "fileName": "0FarmerJoeDoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/0FarmerJoeDoAll.cs"
   },
@@ -10599,8 +10599,8 @@
       "legend"
     ],
     "path": "Other/FarmJoeKits/1MemberFarmsKit.cs",
-    "size": 33909,
-    "sha256": "057c41dcfcaca8ae5e231fd4b976f9154152be71139b93aa140b8bd3aa0d7692",
+    "size": 34188,
+    "sha256": "ef6045e505557e785a47b01b03d4ed3acf5bbec40dfbd1f3290b1ca87bc3ea6d",
     "fileName": "1MemberFarmsKit.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/1MemberFarmsKit.cs"
   },
@@ -10611,8 +10611,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 49719,
-    "sha256": "7ecfc4e7ed4301446380c803729cb3d3c409b3ff1ff02ec0237f70ad74f86f30",
+    "size": 50203,
+    "sha256": "7cd11cd65c2218a30e7f6a4fd06190d4c672475b7befad7ca8df211ee26f1dca",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -24698,8 +24698,8 @@
       "null"
     ],
     "path": "Army/Farm/ArmyLeveling.cs",
-    "size": 4462,
-    "sha256": "8212be1c689cfcc4480b1afd452e1398b1917762b584ade2ba5fd6758e16fca5",
+    "size": 4469,
+    "sha256": "aed27e9a446cebd9c96aa4849af098577dff4fd16daf0aa53cc657f74a46206c",
     "fileName": "ArmyLeveling.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/Farm/ArmyLeveling.cs"
   },
