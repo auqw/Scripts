@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 442876,
-    "sha256": "9c436b67c88ad5e21ceb673f5700ae00f18365fbfa8c6b6ff6c79a4695ef863f",
+    "size": 441928,
+    "sha256": "1bba2e16979574e10b85d47c71f4b160342843a57b9a8bdee3107ad93aa7c3db",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -14777,8 +14777,8 @@
       "mergeshop"
     ],
     "path": "Other/MergeShops/Adam1a1Merge.cs",
-    "size": 13734,
-    "sha256": "333c5c6de22327d7295cd78d115e540da312e34a4e9e916a2876be11c23961de",
+    "size": 13842,
+    "sha256": "ba5ba163e6f6f7c6a3822d1743ebc622c0a4457f481f86e02993c23d78d25877",
     "fileName": "Adam1a1Merge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/Adam1a1Merge.cs"
   },
@@ -26930,8 +26930,8 @@
       "null"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/CoreHollowbornChaosEnvoy.cs",
-    "size": 38129,
-    "sha256": "d17f0b0bb2c6a53461315a63a06d7c3fe634ba8f075f992c79dafff7946ccd95",
+    "size": 38003,
+    "sha256": "2c829776c60ccc8fc7b994308956fac2fac5e87737841d3f582a788cdbaa87b2",
     "fileName": "CoreHollowbornChaosEnvoy.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/CoreHollowbornChaosEnvoy.cs"
   },
