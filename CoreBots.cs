@@ -6330,109 +6330,80 @@ public class CoreBots
 
 
 
-    public void KillDoomKitten(
-        string? item = null,
-        int quant = 1,
-        bool isTemp = false,
-        bool log = true
-    )
+    public void KillDoomKitten(string? item = null, int quant = 1, bool isTemp = false, bool log = true)
     {
-        if (
-            item != null
-            && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-        )
+        // Early exit if item already owned
+        if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
             return;
 
-        List<string> DOTClasses = new()
+        string[] dotClasses =
         {
-            "ShadowStalker of Time",
-            "ShadowWeaver of Time",
-            "ShadowWalker of Time",
-            "Infinity Knight",
-            "Interstellar Knight",
-            "Dragon of Time",
-            "Timeless Dark Caster",
-            "Frostval Barbarian",
-            "Blaze Binder",
-            "DeathKnight",
-            "DragonSoul Shinobi",
-            "Shadow Dragon Shinobi",
-            "Legion Revenant",
-            "Void Highlord",
-        };
+        "ShadowStalker of Time",
+        "ShadowWeaver of Time",
+        "ShadowWalker of Time",
+        "Infinity Knight",
+        "Interstellar Knight",
+        "Dragon of Time",
+        "Timeless Dark Caster",
+        "Frostval Barbarian",
+        "Blaze Binder",
+        "DeathKnight",
+        "DragonSoul Shinobi",
+        "Shadow Dragon Shinobi",
+        "Legion Revenant",
+        "Void Highlord"
+    };
 
-        bool hasAnyClass = DOTClasses.Any(c => CheckInventory(c));
+        // Find first owned DoT class in inventory
+        InventoryItem? ownedDotClass = Bot.Inventory.Items
+            .FirstOrDefault(i =>
+                i.Category == ItemCategory.Class &&
+                dotClasses.Contains(i.Name, StringComparer.OrdinalIgnoreCase));
 
-        if (!hasAnyClass)
+        // If we own one → equip it, otherwise keep whatever class is currently equipped
+        if (ownedDotClass != null)
+            Equip(ownedDotClass.Name);
+        else
         {
-            Logger(
-                "⚠️ Damage over Time class / VHL not found. Check the logs for suggestions. Stopping.",
-                messageBox: true,
-                stopBot: true
-            );
+            Logger("⚠️ No recommended DoT class found — using currently equipped class.");
             Logger("--------------------------------");
-            Logger(string.Join("\n", DOTClasses));
+            Logger($"Suggested Classes:\n{string.Join("\n", dotClasses)}");
             Logger("--------------------------------");
-            return;
         }
 
-        InventoryItem? classItem = null;
-        foreach (string className in DOTClasses)
+        bool usingShinobi =
+            ownedDotClass?.Name is "DragonSoul Shinobi" or "Shadow Dragon Shinobi";
+
+        Join("doomkitten");
+
+        if (usingShinobi)
         {
-            classItem = Bot.Inventory.Items.Find(i =>
-                i.Name.Equals(className, StringComparison.OrdinalIgnoreCase)
-                && i.Category == ItemCategory.Class
-            );
-            if (classItem != null)
+            Logger("🎯 RNG GL due to class + kitten hit range.");
+            Bot.Skills.StartAdvanced("4 | 1 | 3M<30 | 2H<30");
+
+            if (item == null)
             {
-                Equip(classItem.Name);
-
-                if (className is "DragonSoul Shinobi" or "Shadow Dragon Shinobi")
-                {
-                    Logger("🎯 RNG Gl due to class and kitten hit range!");
-                    Join("doomkitten");
-                    Bot.Skills.StartAdvanced("4 | 1 | 3M<30 | 2H<30");
-
-                    if (item == null)
-                    {
-                        Logger("🎯 No item selected, killing DoomKitten once");
-                        Bot.Combat.Attack("*");
-                        Bot.Sleep(500);
-                    }
-                    else
-                    {
-                        while (
-                            !Bot.ShouldExit
-                            && !(
-                                isTemp
-                                    ? Bot.TempInv.Contains(item, quant)
-                                    : CheckInventory(item, quant)
-                            )
-                        )
-                        {
-                            if (
-                                !Bot.Player!.HasTarget
-                                || Bot.Player.Target == null || Bot.Player?.Target?.HP > 0
-                            )
-                                Bot.Combat.Attack("*");
-                            Bot.Sleep(500);
-                        }
-                    }
-                }
-                else
-                {
-                    HuntMonster("doomkitten", "DoomKitten", item, quant, isTemp, log);
-                }
+                Logger("🎯 No item selected, killing DoomKitten once.");
+                Bot.Kill.Monster("*");
+                Bot.Sleep(500);
                 return;
             }
+
+            while (!Bot.ShouldExit && !(isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+            {
+                if (!Bot.Player?.HasTarget ?? true || Bot.Player?.Target?.HP > 0)
+                    Bot.Combat.Attack("*");
+
+                Bot.Sleep(500);
+            }
+
+            return;
         }
 
-        Logger(
-            "⚠️ Could not find any Damage over Time class in inventory. Stopping.",
-            messageBox: true,
-            stopBot: true
-        );
+        // Normal farming path
+        HuntMonster("doomkitten", "DoomKitten", item, quant, isTemp, log);
     }
+
 
     /// <summary>
     /// Kills Xiang or Ultra Xiang to obtain the desired item.
