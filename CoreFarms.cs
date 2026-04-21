@@ -3650,18 +3650,13 @@ public class CoreFarms
         else
         {
             Core.RegisterQuests(7505); //Studying the Rogue 7505
-            Core.SavedState(true, "druids");
+            Core.SavedState(true, "whitemap");
             while (!Bot.ShouldExit && FactionRank("Loremaster") < rank)
             {
                 if (Core.CheckSaveState())
                     Core.ExecuteSaveState();
                 Core.HuntMonster("wardwarf", "Drow Assassin", "Poisoned Dagger", 4, log: false);
-                Core.HuntMonster(
-                    "wardwarf",
-                    "D'wain Jonsen",
-                    "Scroll: Opportunity's Strike",
-                    log: false
-                );
+                Core.HuntMonster("wardwarf", "D'wain Jonsen", "Scroll: Opportunity's Strike", log: false);
                 Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
                 Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
                 Bot.Wait.ForQuestAccept(7505);
