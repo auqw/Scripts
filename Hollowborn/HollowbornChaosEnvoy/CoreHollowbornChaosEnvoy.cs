@@ -334,15 +334,7 @@ public class CoreHollowbornChaosEnvoy
                 "Chaotic Draconian Wings",
                 isTemp: false
             );
-            Core.KillMonster(
-                "blindingsnow",
-                "r5",
-                "Spawn",
-                "*",
-                "Shard of Chaos",
-                100,
-                isTemp: false
-            );
+            Core.KillMonster("blindingsnow", "r5", "Spawn", "*", "Shard of Chaos", 100, isTemp: false);
             Core.HuntMonster("chaosboss", "Ultra Chaos Warlord", "Chaotic War Essence", 15, false);
             Adv.BuyItem("crownsreach", 1383, "Chaotic Knight Helm");
 
