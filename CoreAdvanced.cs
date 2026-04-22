@@ -3778,8 +3778,8 @@ public class CoreAdvanced
                     break;
                 #endregion
 
-                #region Lucky - Valiance - Examen - Vainglory
-                case "king\u0027s echo":
+                #region Lucky - Ravenous/Valiance - Examen - Lament/Vainglory
+                case "king's echo":
                     if (!uValiance() || !uExamen() || !uVainglory())
                         goto default;
 
