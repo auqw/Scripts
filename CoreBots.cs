@@ -10331,6 +10331,7 @@ public class CoreBots
                         if (
                             b.Contains("is not available.")
                             || b.Contains("map is locked until event begins")
+                            || b.Contains("house item from /Basecamp")
                         )
                         {
                             if (log)
