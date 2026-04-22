@@ -135,7 +135,7 @@ public class CoreDoomwood
         Story.MapItemQuest(1082, "maul", 434, 13);
 
         //1083    The Infected
-        Story.KillQuest(1083, "maul", new[] { "Slimeskull", "Personal Chopper" });
+        Story.KillQuest(1083, "maul", new[] { "Personal Chopper", "Slimeskull" });
 
         //1084    Chopping Spree
         if (!Story.QuestProgression(1084))
