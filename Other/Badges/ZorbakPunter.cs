@@ -41,7 +41,6 @@ public class ZorbakPunt
 
         if (!Core.isSeasonalMapActive("zorbakpunt"))
         {
-            Bot.Log("Map isnt aviable right now.");
             return;
         }
 
