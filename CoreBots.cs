@@ -10328,10 +10328,11 @@ public class CoreBots
                 {
                     case "warning":
                         string b = Convert.ToString(packet);
+                        string bLower = b.ToLower();
                         if (
-                            b.Contains("is not available.")
-                            || b.Contains("map is locked until event begins")
-                            || b.Contains("house item from /Basecamp")
+                            bLower.Contains("is not available.")
+                            || bLower.Contains("map is locked until event begins")
+                            || bLower.Contains("house item from /basecamp")
                         )
                         {
                             if (log)
