@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 441999,
-    "sha256": "0cc8d88b0b927dbe8681309c05b69012c57ad070d97cd5168aefc37f4d60aa64",
+    "size": 442067,
+    "sha256": "8ed88240d07c7fa857ce168fd7ffef08fc03449e18912f8a29c538550f4f7a02",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -19721,8 +19721,8 @@
       "null"
     ],
     "path": "Other/Badges/ZorbakPunter.cs",
-    "size": 3998,
-    "sha256": "bce09416ee3b67ec0881d39aab9027373fa5609363c5be1fb3991123381b3009",
+    "size": 3946,
+    "sha256": "aa91a0828b34b75286705087f7d24b1887099255ec6e660779abc0b2ef6994a5",
     "fileName": "ZorbakPunter.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Badges/ZorbakPunter.cs"
   },
