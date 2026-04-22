@@ -33,12 +33,19 @@ public class ZorbakPunt
 
     public void Badge()
     {
-        // Bot.Options.LagKiller = false;
-        if (Core.HasWebBadge(badge) || !Core.isSeasonalMapActive("zorbakpunt"))
+        if (Core.HasWebBadge(badge))
         {
-            Core.Logger($"Already have the {badge} badge, or the map is not available.");
+            Core.Logger($"Already have the {badge} badge ");
             return;
         }
+
+        if (!Core.isSeasonalMapActive("zorbakpunt"))
+        {
+            Bot.Log("Map isnt aviable right now.");
+            return;
+        }
+
+        // Bot.Options.LagKiller = false;
         // Core.OneTimeMessage(
         //     "Minigame Explanation",
         //     "This minigame works off of a \"value\" system for ponts, so 9999 is 99, for the quest so youll need to get a value of 10000 points which may take a while.",
@@ -58,6 +65,8 @@ public class ZorbakPunt
             // Core.SendPackets("%xt%zm%ia%1%rval%btnPuntting%%");
             Core.GetMapItem(7184, 1, "zorbakpunt-100000");
             Core.ChainComplete(7429);
+            Bot.Log("Waiting ~5seconds or so for the badge to register ( quest may repeat)");
+            Bot.Sleep(5000);
             // Bot.Wait.ForCellChange("Punt");
             // Bot.Wait.ForTrue(() => Datagood, 5);
 
