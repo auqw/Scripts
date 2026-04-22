@@ -84,7 +84,16 @@ public class CoreSummer
         Story.KillQuest(4268, "dreadspace", "Cyber Horg");
 
         //Fix the Holodeck (4269)
-        Story.KillQuest(4269, "dreadspace", new[] { "Undead Star Ranger", "Undead Space Warrior", "Cyber Horg", "Undead Space Marine", });
+
+        if (!Story.QuestProgression(4269))
+        {
+            Core.EnsureAccept(4269);
+            Core.HuntMonster("dreadspace", "Undead Space Marine", "Holodeck Force Field", 7);
+            Core.HuntMonster("dreadspace", "Undead Space Warrior", "Holodeck EbilCorp AI");
+            Core.HuntMonster("dreadspace", "Undead Space Warrior", "Holodeck Projector", 7);
+            Core.HuntMonster("dreadspace", "Cyber Horg", "Holodeck Power Source");
+            Core.EnsureComplete(4269);
+        }
 
         //Gorn in 60 Seconds (4270)
         Story.KillQuest(4270, "dreadspace", new[] { "Dra'gorn", "Dra'gorn", "Dra'gorn" });
