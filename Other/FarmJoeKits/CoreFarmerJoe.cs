@@ -596,7 +596,7 @@ public class CoreFarmerJoe
             { 75, HandleLevel75 },
         };
 
-        foreach (int level in new[] { 30, 50, 55, 60, 65, 75 })
+        foreach (int level in new[] { 30, 50, 55, 60, 65, 70, 75 })
         {
             if (Bot.Player.Level > 75)
                 HasEnhancedThisBracket = true;
