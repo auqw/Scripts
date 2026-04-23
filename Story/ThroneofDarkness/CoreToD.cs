@@ -801,10 +801,11 @@ public class CoreToD
         if (!Story.QuestProgression(5157))
         {
             Core.EnsureAccept(5157);
-            Farm.DeathPitToken("Brawler Token", 3);
-            Farm.DeathPitToken("Restorer Token", 3);
+            Farm.DeathPitToken("Brawler Token", 3, ForStory: true);
+            Farm.DeathPitToken("Restorer Token", 3, ForStory: true);
             Core.EnsureComplete(5157);
         }
+        
         // Destroy For Hun'Gar
         if (!Story.QuestProgression(5165))
         {

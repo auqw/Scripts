@@ -3142,21 +3142,21 @@ public class CoreFarms
             if (!Core.isCompletedBefore(5155))
             {
                 Core.EnsureAccept(5155);
-                DeathPitToken();
+                DeathPitToken(ForStory: true);
                 Core.EnsureComplete(5155);
             }
 
             if (!Core.isCompletedBefore(5156))
             {
                 Core.EnsureAccept(5156);
-                DeathPitToken(quant: 15);
+                DeathPitToken(quant: 15, ForStory: true);
                 Core.EnsureAccept(5156);
             }
 
             if (!Core.isCompletedBefore(5157))
             {
                 Core.EnsureAccept(5157);
-                RunDeathPitBrawl("Death Pit Token", 1, 1);
+                RunDeathPitBrawl("Death Pit Token", 1, 1, ForStory: true);
                 Core.EnsureComplete(5157);
             }
         }
@@ -3169,13 +3169,7 @@ public class CoreFarms
         Core.ToggleAggro(true);
     }
 
-    void RunDeathPitBrawl(
-        string? item = null,
-        int quant = 1,
-        int rank = 10,
-        bool canSoloBoss = true,
-        bool ForStory = false
-    )
+    void RunDeathPitBrawl(string? item = null, int quant = 1, int rank = 10, bool canSoloBoss = true, bool ForStory = false)
     {
         var runTimer = new System.Diagnostics.Stopwatch();
         runTimer.Start();
@@ -3234,6 +3228,10 @@ public class CoreFarms
         // -------------------------
         if (item != null)
         {
+            //so it doesnt skip the minions for the items
+            if (item == "Brawler Token" || item == "Restorer Token")
+                canSoloBoss = false;
+
             while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
             {
                 int startQuant = Bot.Inventory.GetQuantity(item);
@@ -3327,7 +3325,6 @@ public class CoreFarms
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
             #endregion
-            ReturnToBattleonAndRestart();
             return;
 
         RestartOnDeath:
@@ -3356,12 +3353,7 @@ public class CoreFarms
         }
     }
 
-    public void DeathPitToken(
-        string? item = "Death Pit Token",
-        int quant = 30,
-        bool isTemp = false,
-        bool ForStory = false
-    )
+    public void DeathPitToken(string? item = "Death Pit Token", int quant = 30, bool isTemp = false, bool ForStory = false)
     {
         // Do not call this with registered quests, or it technically never exits.
         if (Core.CheckInventory(item, quant))
