@@ -3139,24 +3139,29 @@ public class CoreFarms
         if (Core.isCompletedBefore(5157))
         {
             Core.Logger("Checking if farm quests are unlocked--");
+
+            // Do You Even Brawl
             if (!Core.isCompletedBefore(5155))
             {
                 Core.EnsureAccept(5155);
-                DeathPitToken(ForStory: true);
+                DeathPitToken(quant: 1, ForStory: true);
                 Core.EnsureComplete(5155);
             }
 
+            // Flex For Hun'Gar
             if (!Core.isCompletedBefore(5156))
             {
                 Core.EnsureAccept(5156);
                 DeathPitToken(quant: 15, ForStory: true);
-                Core.EnsureAccept(5156);
+                Core.EnsureComplete(5156);
             }
 
+            // Pummel For Hun'Gar
             if (!Core.isCompletedBefore(5157))
             {
                 Core.EnsureAccept(5157);
-                RunDeathPitBrawl("Death Pit Token", 1, 1, ForStory: true);
+                DeathPitToken("Brawler Token", 3, isTemp: true);
+                DeathPitToken("Restorer Token", 3, isTemp: true);
                 Core.EnsureComplete(5157);
             }
         }
@@ -3243,13 +3248,14 @@ public class CoreFarms
 
                 // Wait for delayed PvP reward packet
                 int updatedQuant = Bot.Inventory.GetQuantity(item);
-
+                Bot.Log($"Updating {item!} Quant");
                 while (!Bot.ShouldExit && updatedQuant <= startQuant)
                 {
                     Core.Sleep(500);
                     updatedQuant = Bot.Inventory.GetQuantity(item);
+                    Bot.Log($"{item!} Quant Update Failed");
                 }
-
+                Bot.Log($"{item!} Quant Updated");
                 Core.FarmingLogger(item, quant);
 
 
