@@ -771,7 +771,7 @@ public class CoreFarmerJoe
             Adv.RankUpClass("Horc Evader");
             Adv.GearStore(true, EnhAfter: true);
 
-            Core.Logger("Level 65: Acquiring ArchPaladin");
+            Core.Logger("Level 70: Acquiring ArchPaladin");
             SetClass();
             AP.GetAP();
         }
