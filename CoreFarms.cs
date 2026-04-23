@@ -3327,14 +3327,14 @@ public class CoreFarms
             if (!Bot.Player.Alive)
                 goto RestartOnDeath;
             #endregion
-
+            ReturnToBattleonAndRestart();
             return;
 
         RestartOnDeath:
             while (!Bot.ShouldExit)
             {
                 Bot.Wait.ForTrue(() => Bot.Player.Alive, 100);
-                Bot.Map.Join("battleon-999999", "Enter", "Spawn", autoCorrect: false);
+                Bot.Map.Join("battleon-100000", autoCorrect: false);
                 Bot.Wait.ForMapLoad("battleon");
                 Core.Sleep(1500);
                 return; // Return so caller can restart loop
@@ -3347,11 +3347,11 @@ public class CoreFarms
             while (!Bot.ShouldExit && Bot.Map.Name != "battleon")
             {
                 Bot.Combat.CancelTarget();
-                Bot.Wait.ForCombatExit();
-                Bot.Map.Join("battleon-999999", "Enter", "Spawn", autoCorrect: false);
+                Bot.Map.Join("battleon-100000", autoCorrect: false);
                 Bot.Wait.ForMapLoad("battleon");
                 if (Bot.Map.Name == "battleon")
                     return;
+                Core.Sleep(1500);
             }
         }
     }
