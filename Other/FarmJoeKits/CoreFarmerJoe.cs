@@ -1249,7 +1249,7 @@ public class CoreFarmerJoe
         // Bank all Joe classes that are below the current tier or arent apart of pre-set CBO
         Core.ToBank(soloClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != solo || x != Core.SoloClass)).ToArray());
         Core.ToBank(farmClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != farm || x != Core.FarmClass)).ToArray());
-        Core.ToBank(farmClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != dodge || x != Core.DodgeClass)).ToArray());
+        Core.ToBank(dodgeClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != dodge || x != Core.DodgeClass)).ToArray());
 
         // Re-read CBO after setting
         Core.ReadCBO();
