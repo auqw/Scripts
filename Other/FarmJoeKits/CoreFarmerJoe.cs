@@ -516,6 +516,14 @@ public class CoreFarmerJoe
         "Mage",
     };
 
+    string[] dodgeClasses = new[]
+    {
+            "HorcEvader",
+            "Yami No Ronin",
+            "Chrono Assassin",
+            "Great Thief"
+    };
+
     /// <summary>
     /// Orchestrates the entire progression process from level 1 to endgame, including:
     /// - **Leveling:** Progresses through levels 1 to 100 with specific milestones and enhancements.
@@ -1196,6 +1204,7 @@ public class CoreFarmerJoe
     #region BTS
     string? solo;
     string? farm;
+    string? dodge;
     public void SetClass()
     {
         // Read CBO Data
@@ -1225,9 +1234,22 @@ public class CoreFarmerJoe
                 Core.FarmClass = farm;
         }
 
+        // DodgeClass
+        if (string.IsNullOrEmpty(Core.DodgeClass)
+            || Core.DodgeClass == "Generic"
+            || !dodgeClasses.Any(x => x.Equals(Core.DodgeClass, StringComparison.OrdinalIgnoreCase))
+            || !Core.CheckInventory(Core.DodgeClass))
+        {
+            dodge = dodgeClasses.FirstOrDefault(x => Core.CheckInventory(x));
+
+            if (!string.IsNullOrEmpty(dodge))
+                Core.DodgeClass = dodge;
+        }
+
         // Bank all Joe classes that are below the current tier or arent apart of pre-set CBO
         Core.ToBank(soloClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != solo || x != Core.SoloClass)).ToArray());
         Core.ToBank(farmClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != farm || x != Core.FarmClass)).ToArray());
+        Core.ToBank(farmClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != dodge || x != Core.DodgeClass)).ToArray());
 
         // Re-read CBO after setting
         Core.ReadCBO();
@@ -1238,8 +1260,13 @@ public class CoreFarmerJoe
         if (Core.CheckClassRank(false, Core.FarmClass) < 10)
             Adv.RankUpClass(Core.FarmClass);
 
+        if (Core.CheckClassRank(false, Core.DodgeClass) < 10)
+            Adv.RankUpClass(Core.DodgeClass);
+
+
         Core.Logger($"SoloClass resolved -> {Core.SoloClass}");
         Core.Logger($"FarmClass resolved -> {Core.FarmClass}");
+        Core.Logger($"DodgeClass resolved -> {Core.DodgeClass}");
     }
 
 
