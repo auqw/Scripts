@@ -18,8 +18,8 @@
       "null"
     ],
     "path": "CoreFarms.cs",
-    "size": 161513,
-    "sha256": "1de391802d802f295f1163de2437a7e4d647b24d5e71d6b296ae0aa735c67266",
+    "size": 161951,
+    "sha256": "83e53a8429f14ea15766701019fef8bd86f834aaa1d73057317fbe180b0a1848",
     "fileName": "CoreFarms.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreFarms.cs"
   },
@@ -4175,8 +4175,8 @@
       "ultragramielhub"
     ],
     "path": "Hollowborn/HollowbornVindicator(NonInsignia).cs",
-    "size": 5526,
-    "sha256": "390041622eeab19a851742e30279866117d39e6e6fd3234a28bad1ce960b798b",
+    "size": 5454,
+    "sha256": "5a121a0ecd556ccd9bf08d807e02e12c2ec28de44a964055bd83f4971f0ff211",
     "fileName": "HollowbornVindicator(NonInsignia).cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornVindicator(NonInsignia).cs"
   },
@@ -10611,8 +10611,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 51154,
-    "sha256": "bf8600e50deab25aa5ce2924fedd404cde7ad7290d63a4b0bac7079a296ae66a",
+    "size": 51155,
+    "sha256": "c620ee4b9029b607da523925fd09edaab40a7d344f8886805f9484e516470025",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
@@ -18198,8 +18198,8 @@
       "null"
     ],
     "path": "Story/ThroneofDarkness/CoreToD.cs",
-    "size": 48993,
-    "sha256": "c36c58774c038718902a485fb6207f34815dc45bb6805fa974c4b9e96322d19b",
+    "size": 48990,
+    "sha256": "4594807ca102bb5f3335a59e8dc681e93de64c1ee00e25025c43e9e4ace5a0d3",
     "fileName": "CoreToD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ThroneofDarkness/CoreToD.cs"
   },
