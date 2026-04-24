@@ -320,10 +320,8 @@ public class EtherStormWastes
         Story.PreLoad(this);
 
         //Call from Deep Within 1633
-        Story.KillQuest(
-            1633,
-            "earthstorm",
-            new[] { "Fire Elemental", "wind Elemental", "Water Elemental", "Earth Elemental" }
+        Story.KillQuest(1633, "earthstorm",
+            new[] { "Wind Elemental", "Water Elemental", "Earth Elemental", "Fire Elemental" }
         );
 
         //Chrysalis of Flames 1634
