@@ -518,7 +518,7 @@ public class CoreFarmerJoe
 
     string[] dodgeClasses = new[]
     {
-            "HorcEvader",
+            "Horc Evader",
             "Yami No Ronin",
             "Chrono Assassin",
             "Great Thief"
