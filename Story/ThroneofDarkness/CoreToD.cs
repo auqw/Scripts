@@ -801,8 +801,8 @@ public class CoreToD
         if (!Story.QuestProgression(5157))
         {
             Core.EnsureAccept(5157);
-            Farm.DeathPitToken("Brawler Token", 3, isTemp: true);
-            Farm.DeathPitToken("Restorer Token", 3, isTemp: true);
+            Farm.DeathPitToken("Brawler Token", 3, true, true);
+            Farm.DeathPitToken("Restorer Token", 4, true, true);
             Core.EnsureComplete(5157);
         }
 
@@ -810,7 +810,7 @@ public class CoreToD
         if (!Story.QuestProgression(5165))
         {
             Core.EnsureAccept(5165);
-            Farm.DeathPitToken("Death Pit Victory (Captain Defeat)", isTemp: true);
+            Farm.DeathPitToken("Death Pit Victory (Captain Defeat)", 1, true, true);
             Core.EnsureComplete(5165);
         }
     }

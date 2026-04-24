@@ -3160,8 +3160,8 @@ public class CoreFarms
             if (!Core.isCompletedBefore(5157))
             {
                 Core.EnsureAccept(5157);
-                DeathPitToken("Brawler Token", 3, isTemp: true);
-                DeathPitToken("Restorer Token", 3, isTemp: true);
+                DeathPitToken("Brawler Token", 3, isTemp: true, true);
+                DeathPitToken("Restorer Token", 4, isTemp: true, true);
                 Core.EnsureComplete(5157);
             }
         }
@@ -3238,7 +3238,7 @@ public class CoreFarms
             if (item == "Brawler Token" || item == "Restorer Token")
                 canSoloBoss = false;
 
-            while (!Bot.ShouldExit && isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant))
+            while (!Bot.ShouldExit && isTemp ? !Bot.TempInv.Contains(item, quant) : !Bot.Inventory.Contains(item, quant))
             {
                 int startQuant = isTemp ? Bot.TempInv.GetQuantity(item) : Bot.Inventory.GetQuantity(item);
 
