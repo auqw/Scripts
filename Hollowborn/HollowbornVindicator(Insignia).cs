@@ -95,6 +95,7 @@ public class HBVInsig
 
     public void GetClass(bool rankUpClass = true)
     {
+        // Already own the class
         if (Core.CheckInventory(94357))
         {
             if (rankUpClass)
@@ -102,6 +103,7 @@ public class HBVInsig
             return;
         }
 
+        // Prereqs
         Farm.Experience(80);
         Farm.HollowbornREP();
         HBS.DawnSanctum();
@@ -109,46 +111,56 @@ public class HBVInsig
         string reqName = Core.QuestRewards(10300)[0];
         Core.AddDrop(reqName);
 
-        if (!Core.CheckInventory(reqName, 4))
-        {
-            int Owned = 4 - Bot.Inventory.GetQuantity(reqName);
+        int currentQty = Bot.Inventory.GetQuantity(reqName);
+        int missingQty = 4 - currentQty;
 
+        // Still need weekly turn-ins
+        if (missingQty > 0)
+        {
+            // Hard gate: need insignias before wasting time farming mats
             if (!Core.CheckInventory("Gramiel the Graceful's Insignia", 5))
             {
-                Core.Logger("You need 5x Gramiel the Graceful's Insignia to complete the quest.");
+                Core.Logger("Requires 5x Gramiel the Graceful's Insignia.");
                 return;
             }
 
+            // Weekly lock check
             if (Bot.Quests.IsDailyComplete(10300))
             {
-                Core.Logger("Weekly already complete, come back next week and rerun this.");
-                Core.Logger($"Run the script next on: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
+                Core.Logger("Weekly already completed.");
+                Core.Logger($"Next run: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
                 return;
             }
 
             Core.EnsureAccept(10300);
 
-            int multiplier = Owned;
-            DP.GetDP(multiplier);                      // Death's Power     (1 per weekly)
-            HS.GetYaSoulsHeeeere(75 * multiplier);     // Hollow Soul       (75 per weekly)
-            VB.GetVindicatorBadge(10 * multiplier);    // Vindicator Badge  (10 per weekly)
-            GO.GetGraceOrb(20 * multiplier);           // Grace Orb         (20 per weekly)
-            GE.GetGramielsEmblem(15 * multiplier);     // Gramiel's Emblem  (15 per weekly)
-            VC.GetVindicatorCrest(5 * multiplier);     // Vindicator Crest  (5 per weekly)
+            // Farm all remaining weeks worth of materials in one run
+            int multiplier = missingQty;
+
+            DP.GetDP(multiplier);                   // Death's Power      (1 per weekly)
+            HS.GetYaSoulsHeeeere(75 * multiplier);  // Hollow Soul        (75 per weekly)
+            VB.GetVindicatorBadge(10 * multiplier); // Vindicator Badge   (10 per weekly)
+            GO.GetGraceOrb(20 * multiplier);        // Grace Orb          (20 per weekly)
+            GE.GetGramielsEmblem(15 * multiplier);  // Gramiel's Emblem   (15 per weekly)
+            VC.GetVindicatorCrest(5 * multiplier);  // Vindicator Crest   (5 per weekly)
 
             Core.EnsureComplete(10300);
             Bot.Wait.ForPickup(reqName);
         }
 
+        // Not enough weeklies yet → wait for reset
         if (!Core.CheckInventory(reqName, 4))
         {
-            Core.Logger($"You need 4x {reqName} to get the class. Run the script next week.");
+            Core.Logger($"Progress: {Bot.Inventory.GetQuantity(reqName)}/4 {reqName}");
+            Core.Logger($"Run again next week: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
             return;
         }
 
+        // Buy + optionally rank up class
         Adv.BuyItem("ultragramielhub", 2593, "Hollowborn Vindicator");
 
         if (rankUpClass)
             Adv.RankUpClass("Hollowborn Vindicator");
     }
+
 }

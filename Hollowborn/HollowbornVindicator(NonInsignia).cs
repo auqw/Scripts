@@ -97,42 +97,48 @@ public class HBVNonInsig
 
     public void GetClass(bool rankUpClass = true, bool merge = false, int quant = 4, bool FarmNextWeeks = false)
     {
+        // Already own the class OR already have enough Condensed Grace for merge
         if ((!merge && Core.CheckInventory(94357)) || (merge && Core.CheckInventory("Condensed Grace", quant)))
         {
             if (!merge && rankUpClass)
                 Adv.RankUpClass("Hollowborn Vindicator");
             return;
         }
+
+        // Prereqs
         Farm.Experience(80);
         Farm.HollowbornREP();
         HBS.DawnSanctum();
+
         string reqName = Core.QuestRewards(10299)[0];
         Core.AddDrop(reqName);
 
+        bool preFarmNextWeeks = Bot.Config!.Get<bool>("Farm4Weeks");
         int currentQty = Bot.Inventory.GetQuantity(reqName);
         int missingQty = 4 - currentQty;
-        bool preFarmNextWeeks = Bot.Config!.Get<bool>("Farm4Weeks");
+
+        // Prefarm ON  → farm ALL remaining weeks worth of materials
+        // Prefarm OFF → farm ONLY one week's materials
+        int multiplier = preFarmNextWeeks ? missingQty : 1;
 
         // Run weekly whenever we still need any Condensed Grace
         if (missingQty > 0)
         {
             Core.EnsureAccept(10299);
 
-            // If prefarming weeks, only farm 1 week's mats.
-            // Otherwise farm exactly the number of weeks still missing.
-            int multiplier = preFarmNextWeeks ? 1 : missingQty;
+            // Farm weekly materials
+            DP.GetDP(multiplier);                    // Death's Power      (1 per weekly)
+            HS.GetYaSoulsHeeeere(1500 * multiplier); // Hollow Soul        (1500 per weekly)
+            VB.GetVindicatorBadge(200 * multiplier); // Vindicator Badge   (200 per weekly)
+            GO.GetGraceOrb(400 * multiplier);        // Grace Orb          (400 per weekly)
+            GE.GetGramielsEmblem(300 * multiplier);  // Gramiel's Emblem   (300 per weekly)
+            VC.GetVindicatorCrest(100 * multiplier); // Vindicator Crest   (100 per weekly)
 
-            DP.GetDP(multiplier);                          // Death's Power      (1 per weekly)
-            HS.GetYaSoulsHeeeere(1500 * multiplier);       // Hollow Soul        (1500 per weekly)
-            VB.GetVindicatorBadge(200 * multiplier);       // Vindicator Badge   (200 per weekly)
-            GO.GetGraceOrb(400 * multiplier);              // Grace Orb          (400 per weekly)
-            GE.GetGramielsEmblem(300 * multiplier);        // Gramiel's Emblem   (300 per weekly)
-            VC.GetVindicatorCrest(100 * multiplier);       // Vindicator Crest   (100 per weekly)
-
+            // Weekly lock check AFTER farming mats (so prefarming works safely)
             if (!Bot.Quests.IsAvailable(10299))
             {
-                Core.Logger("This is a weekly quest, you need to wait until next week to get the class.");
-                Core.Logger($"Run the script next on: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
+                Core.Logger("Weekly quest completed. Come back next week.");
+                Core.Logger($"Next run: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
                 return;
             }
 
@@ -140,13 +146,16 @@ public class HBVNonInsig
             Bot.Wait.ForPickup(reqName);
         }
 
+        // Not enough weekly turn-ins yet → exit and wait for reset
         if (!Core.CheckInventory(reqName, 4))
         {
-            Core.Logger($"You have [x {Bot.Inventory.GetQuantity(reqName)}]/4] {reqName} to get the class. Run the script next week on: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
+            Core.Logger($"Progress: {Bot.Inventory.GetQuantity(reqName)}/4 {reqName}");
+            Core.Logger($"Run again next week: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
             return;
         }
-        else
-            Adv.BuyItem("ultragramielhub", 2593, "Hollowborn Vindicator");
+
+        // Buy + optionally rank up class
+        Adv.BuyItem("ultragramielhub", 2593, "Hollowborn Vindicator");
 
         if (rankUpClass)
             Adv.RankUpClass("Hollowborn Vindicator");
