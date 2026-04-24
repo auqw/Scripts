@@ -96,9 +96,12 @@ public class DarkWarLegionandNation
         {
             Core.EquipClass(ClassType.Solo);
             Core.EnsureAccept(8560);
-            while (!Bot.ShouldExit && Bot.Player.Cell != "r3")
+            while (!Bot.ShouldExit && Bot.Map.Name != "dagerecruit" && Bot.Player?.Cell != "r3")
             {
-                Core.Join("dagerecruit", "r3", "Left");
+                if (Bot.Map.Name != "dagerecruit")
+                    Core.Join("dagerecruit");
+                if (Bot.Player?.Cell != "r3")
+                    Core.Jump("r3", "Left");
                 Core.Sleep();
             }
             Core.KillMonster("dagerecruit", "r3", "Left", "Graython", "Graython Defeated");
