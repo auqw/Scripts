@@ -3174,10 +3174,9 @@ public class CoreFarms
         Core.ToggleAggro(true);
     }
 
-    void RunDeathPitBrawl(string? item = null, int quant = 1, int rank = 10, bool canSoloBoss = true, bool ForStory = false)
+    void RunDeathPitBrawl(string? item = null, int quant = 1, bool isTemp = false, int rank = 10, bool canSoloBoss = true, bool ForStory = false)
     {
         var runTimer = new System.Diagnostics.Stopwatch();
-        runTimer.Start();
 
         if (!ForStory)
         {
@@ -3205,7 +3204,8 @@ public class CoreFarms
         if (item != null)
         {
             Core.FarmingLogger(item, quant, "RunDeathPitBrawl");
-            Core.AddDrop(item);
+            if (!isTemp)
+                Core.AddDrop(item);
         }
 
         int RunCount = 1;
@@ -3217,42 +3217,45 @@ public class CoreFarms
         // -------------------------
         while (!Bot.ShouldExit && FactionRank("Death Pit Brawl") < rank)
         {
+            runTimer.Start();
             ExecuteOneBrawlRun();
 
             // timer + completion reporting
             runTimer.Stop();
             TimeSpan ts = runTimer.Elapsed;
             Core.Logger($"Run #{RunCount++} completed in {ts.Minutes:00}:{ts.Seconds:00}");
-
             ReturnToBattleonAndRestart();
+            runTimer.Reset();
             goto Start;
         }
 
         // -------------------------
-        // 2) Token farming (only AFTER rank is done)
+        // 2) {item} farming (only AFTER rank is done)
         // -------------------------
         if (item != null)
         {
-            //so it doesnt skip the minions for the items
+            // if item is one of the 2 temp items, set canSoloBoss to false, so it does the minions
             if (item == "Brawler Token" || item == "Restorer Token")
                 canSoloBoss = false;
 
-            while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
+            while (!Bot.ShouldExit && isTemp ? Bot.TempInv.Contains(item, quant) : Bot.Inventory.Contains(item, quant))
             {
-                int startQuant = Bot.Inventory.GetQuantity(item);
+                int startQuant = isTemp ? Bot.TempInv.GetQuantity(item) : Bot.Inventory.GetQuantity(item);
 
                 ExecuteOneBrawlRun();
 
-                Bot.Wait.ForTrue(() => Bot.Inventory.GetQuantity(item) > startQuant, 40);
+                Bot.Wait.ForTrue(() => (isTemp ? Bot.TempInv.GetQuantity(item) : Bot.Inventory.GetQuantity(item)) > startQuant, 40);
 
 
                 // Wait for delayed PvP reward packet
-                int updatedQuant = Bot.Inventory.GetQuantity(item);
+                int updatedQuant = isTemp ? Bot.TempInv.GetQuantity(item) : Bot.Inventory.GetQuantity(item);
                 Bot.Log($"Updating {item!} Quant");
                 while (!Bot.ShouldExit && updatedQuant <= startQuant)
                 {
                     Core.Sleep(500);
-                    updatedQuant = Bot.Inventory.GetQuantity(item);
+                    updatedQuant = isTemp ? Bot.TempInv.GetQuantity(item) : Bot.Inventory.GetQuantity(item);
+
+                    Bot.Sleep(500);
                     Bot.Log($"{item!} Quant Update Failed");
                 }
                 Bot.Log($"{item!} Quant Updated");
@@ -3262,6 +3265,7 @@ public class CoreFarms
                 runTimer.Stop();
                 TimeSpan ts = runTimer.Elapsed;
                 Core.Logger($"Run #{RunCount++} completed in {ts.Minutes:00}:{ts.Seconds:00}");
+                runTimer.Reset();
 
                 ReturnToBattleonAndRestart();
                 goto Start;
@@ -3365,7 +3369,7 @@ public class CoreFarms
         if (Core.CheckInventory(item, quant))
             return;
 
-        RunDeathPitBrawl(item, quant, 1, ForStory: ForStory);
+        RunDeathPitBrawl(item, quant, isTemp, rank: 1, ForStory: ForStory);
     }
 
     public void FaerieCourtREP(int rank = 10) // Seasonal

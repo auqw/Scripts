@@ -95,17 +95,9 @@ public class HBVNonInsig
         Core.SetOptions(false);
     }
 
-    public void GetClass(
-        bool rankUpClass = true,
-        bool merge = false,
-        int quant = 4,
-        bool FarmNextWeeks = false
-    )
+    public void GetClass(bool rankUpClass = true, bool merge = false, int quant = 4, bool FarmNextWeeks = false)
     {
-        if (
-            (!merge && Core.CheckInventory(94357))
-            || (merge && Core.CheckInventory("Condensed Grace", quant))
-        )
+        if ((!merge && Core.CheckInventory(94357)) || (merge && Core.CheckInventory("Condensed Grace", quant)))
         {
             if (!merge && rankUpClass)
                 Adv.RankUpClass("Hollowborn Vindicator");
@@ -124,7 +116,7 @@ public class HBVNonInsig
         // Run weekly whenever we still need any Condensed Grace
         if (missingQty > 0)
         {
-            Core.EnsureAccept(10300);
+            Core.EnsureAccept(10299);
 
             // If prefarming weeks, only farm 1 week's mats.
             // Otherwise farm exactly the number of weeks still missing.
