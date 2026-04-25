@@ -5391,47 +5391,115 @@
   },
   "Lich": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 50,
       "skills": [
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 2,
+              "comparison": "less",
+              "auraName": "Ex Mortis",
+              "auraTarget": "self"
+            }
+          ]
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "MultiAura",
+              "value": 2,
+              "comparison": "greater",
+              "auraName": "Ex Mortis",
+              "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 0,
+              "comparison": "greater",
+              "auraName": "Necrotic Edge",
+              "auraTarget": "self"
+            }
+          ],
+          "isMultiAura": true,
+          "multiAuraOperator": "AND"
         },
         {
-          "skillId": 4
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "MultiAura",
+              "value": 2,
+              "comparison": "greater",
+              "auraName": "Ex Mortis",
+              "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 0,
+              "comparison": "greater",
+              "auraName": "Necrotic Edge",
+              "auraTarget": "self"
+            }
+          ],
+          "isMultiAura": true,
+          "multiAuraOperator": "AND"
         },
         {
-          "skillId": 2
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "MultiAura",
+              "value": 2,
+              "comparison": "greater",
+              "auraName": "Ex Mortis",
+              "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 0,
+              "comparison": "greater",
+              "auraName": "Necrotic Edge",
+              "auraTarget": "self"
+            }
+          ],
+          "isMultiAura": true,
+          "multiAuraOperator": "AND"
         },
         {
-          "skillId": 4
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 60,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ]
         },
         {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "MultiAura",
+              "value": 2,
+              "comparison": "greater",
+              "auraName": "Ex Mortis",
+              "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 0,
+              "comparison": "greater",
+              "auraName": "Necrotic Edge",
+              "auraTarget": "self"
+            }
+          ],
+          "isMultiAura": true,
+          "multiAuraOperator": "AND"
         }
       ]
     }
