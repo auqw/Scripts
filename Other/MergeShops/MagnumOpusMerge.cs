@@ -156,6 +156,7 @@ public class MagnumOpusMerge
     {
         new Option<bool>("100488", "Aleister the Dawnseeker", "Mode: [select] only\nShould the bot buy \"Aleister the Dawnseeker\" ?", false),
         new Option<bool>("100489", "Aleister's Champion Plate", "Mode: [select] only\nShould the bot buy \"Aleister's Champion Plate\" ?", false),
+        new Option<bool>("100605", "Ranger of Mana", "Mode: [select] only\nShould the bot buy \"Ranger of Mana\" ?", false),
         new Option<bool>("100420", "Magna Visio", "Mode: [select] only\nShould the bot buy \"Magna Visio\" ?", false),
         new Option<bool>("100494", "Ember-Kissed Cape", "Mode: [select] only\nShould the bot buy \"Ember-Kissed Cape\" ?", false),
         new Option<bool>("100495", "Son of Destruction's Cape", "Mode: [select] only\nShould the bot buy \"Son of Destruction's Cape\" ?", false),
@@ -167,6 +168,8 @@ public class MagnumOpusMerge
         new Option<bool>("100491", "Aleister's Ember Crown", "Mode: [select] only\nShould the bot buy \"Aleister's Ember Crown\" ?", false),
         new Option<bool>("100492", "Aleister's Hood", "Mode: [select] only\nShould the bot buy \"Aleister's Hood\" ?", false),
         new Option<bool>("100493", "Aleister's Mantle", "Mode: [select] only\nShould the bot buy \"Aleister's Mantle\" ?", false),
+        new Option<bool>("100606", "Champion Tara Morph", "Mode: [select] only\nShould the bot buy \"Champion Tara Morph\" ?", false),
+        new Option<bool>("100607", "Champion Tara's Locks", "Mode: [select] only\nShould the bot buy \"Champion Tara's Locks\" ?", false),
         new Option<bool>("100419", "Ars Gloriosa", "Mode: [select] only\nShould the bot buy \"Ars Gloriosa\" ?", false),
         new Option<bool>("100418", "Ars Infamis", "Mode: [select] only\nShould the bot buy \"Ars Infamis\" ?", false),
         new Option<bool>("100416", "Magna Ira", "Mode: [select] only\nShould the bot buy \"Magna Ira\" ?", false),
