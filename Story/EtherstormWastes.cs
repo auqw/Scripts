@@ -326,7 +326,7 @@ public class EtherStormWastes
 
         //Chrysalis of Flames 1634
         Story.MapItemQuest(1634, "earthstorm", 860, 3);
-        Story.KillQuest(1634, "earthstorm", new[] { "Crystallized Living Fire", "Sapphire Golem" });
+        Story.KillQuest(1634, "earthstorm", new[] { "Sapphire Golem", "Crystallized Living Fire" });
 
         //Glittering Secrets of Old 1635
         Story.MapItemQuest(1635, "earthstorm", 862, 8);
