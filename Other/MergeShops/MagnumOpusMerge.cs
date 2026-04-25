@@ -101,6 +101,7 @@ public class MagnumOpusMerge
                             break;
                     }
                     Bot.Options.AttackWithoutTarget = false;
+                    Bot.Events.ExtensionPacketReceived -= FlameoftheBeyond;
                     Core.Jump("Enter", "Spawn");
                     Bot.Wait.ForPickup(req.ID);
                     Core.CancelRegisteredQuests();
