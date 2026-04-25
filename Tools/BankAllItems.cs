@@ -75,7 +75,7 @@ public class BankAllItems
                         Core.Logger($"{Core.Username()}'s Bank is full");
                         bankFullLogged = true;
                     }
-                    break;
+                    continue;
                 }
 
                 BankItem(item, isHouse, bankNonAc);
