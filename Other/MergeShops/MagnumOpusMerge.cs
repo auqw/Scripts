@@ -120,10 +120,12 @@ public class MagnumOpusMerge
         dynamic data = packet["params"].dataObj;
         if (data?.cmd?.ToString() != "event")
             return;
-
         string? zoneSet = data?.args?.zoneSet?.ToString();
         if (string.IsNullOrEmpty(zoneSet))
             return;
+
+        float px = Bot.Player.X;
+        float py = Bot.Player.Y;
 
         // Zone A active, walk right
         if (string.Equals(zoneSet, "A", StringComparison.OrdinalIgnoreCase))
@@ -132,6 +134,9 @@ public class MagnumOpusMerge
             x: 550, y: 339
             x: 678, y: 465
             */
+            if (px >= 550 && px <= 678 && py >= 339 && py <= 465)
+                return;
+
             int randX = Random.Shared.Next(550, 678);
             int randY = Random.Shared.Next(339, 465);
             _ = Task.Run(() => Bot.Player.WalkTo(randX, randY));
@@ -145,13 +150,15 @@ public class MagnumOpusMerge
             x: 426, y: 359
             x: 211, y: 445
             */
+            if (px >= 211 && px <= 426 && py >= 359 && py <= 445)
+                return;
+
             int randX = Random.Shared.Next(211, 426);
             int randY = Random.Shared.Next(359, 445);
             _ = Task.Run(() => Bot.Player.WalkTo(randX, randY));
             return;
         }
     }
-
 
     public List<IOption> Select = new()
     {
