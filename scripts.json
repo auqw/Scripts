@@ -17396,6 +17396,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Materials/DarknessShard.cs"
   },
   {
+    "name": "UndeadEnergy",
+    "description": "Farms max Undead Energy",
+    "tags": [
+      "undeadenergy",
+      "undead energy"
+    ],
+    "path": "Other/Materials/UndeadEnergy.cs",
+    "size": 719,
+    "sha256": "8b3e0349736a49964512778eeeb5d583d8e59cb65ee55bdcb11e7205a240080e",
+    "fileName": "UndeadEnergy.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Materials/UndeadEnergy.cs"
+  },
+  {
     "name": "Swordhaven The New World",
     "description": "This will finish the Swordhaven The New World quest.",
     "tags": [
