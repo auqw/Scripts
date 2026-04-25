@@ -1,7 +1,7 @@
 /*
 name: SoulSand
 description: null
-tags: null
+tags: Soul Sand, soulsand
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
