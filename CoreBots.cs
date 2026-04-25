@@ -1324,6 +1324,7 @@ public class CoreBots
             }
         }
     }
+    private static readonly HashSet<int> Extras = new() { 18927, 38575 };
 
     /// <summary>
     /// Transfers specified items by name from inventory/house to bank.
@@ -1336,21 +1337,17 @@ public class CoreBots
         if (items == null || !items.Any(name => !string.IsNullOrEmpty(name)))
             return;
 
-        JumpWait();
-
         List<ItemCategory> whiteList = new()
-        {
-            ItemCategory.Note,
-            ItemCategory.Item,
-            ItemCategory.Resource,
-            ItemCategory.QuestItem,
-        };
-        int?[] Extras = { 18927, 38575 };
+    {
+        ItemCategory.Note,
+        ItemCategory.Item,
+        ItemCategory.Resource,
+        ItemCategory.QuestItem,
+    };
 
         foreach (string? item in items)
         {
-            if (Bot.Bank.FreeSlots <= 0
-                || (string.IsNullOrEmpty(item)
+            if (string.IsNullOrEmpty(item)
                 || item == FarmClass
                 || item == SoloClass
                 || item == DodgeClass
@@ -1359,7 +1356,6 @@ public class CoreBots
                 || SoloGear.Contains(item)
                 || DodgeGear.Contains(item)
                 || BossGear.Contains(item))
-            )
                 continue;
 
             if (Bot.Inventory.IsEquipped(item) || (Bot.House?.IsEquipped(item) ?? false))
@@ -1368,9 +1364,7 @@ public class CoreBots
                 continue;
             }
 
-            bool inBank = Bot.Bank.Contains(item);
-            bool inInventoryOrHouse = Bot.Inventory.Contains(item) || (Bot.House?.Contains(item) ?? false);
-            if (inBank && !inInventoryOrHouse)
+            if (Bot.Bank.Contains(item))
             {
                 Logger($"ℹ️ {item} is already in bank, skipping.");
                 continue;
@@ -1379,9 +1373,27 @@ public class CoreBots
             ItemBase? inventoryItem = Bot
                 .Inventory.Items.Concat(Bot.House?.Items ?? Enumerable.Empty<InventoryItem>())
                 .FirstOrDefault(x => x?.Name == item);
+
             if (inventoryItem == null)
             {
                 DebugLogger($"❌ {item} not found in inventory, skipping.", "ToBank Debug");
+                continue;
+            }
+
+            // Coin (AC) items have infinite bank space, only block non-coin items when bank is full
+            if (!inventoryItem.Coins && Bot.Bank.FreeSlots <= 0)
+            {
+                Logger($"🏦 Bank is full, skipping {item}.");
+                continue;
+            }
+
+            if (
+                (!whiteList.Contains(inventoryItem.Category) && !inventoryItem.Coins)
+                || BankingBlackList.Contains(item)
+                || Extras.Contains(inventoryItem.ID)
+            )
+            {
+                Logger($"⛔ {item} is blacklisted or excluded.");
                 continue;
             }
 
@@ -1396,52 +1408,50 @@ public class CoreBots
                     || houseItem.CategoryString == "Floor Item"
                 );
 
-            if (
-                ((whiteList.Contains(inventoryItem.Category)) || inventoryItem.Coins)
-                && !BankingBlackList.Contains(item)
-                && !Extras.Contains(inventoryItem.ID)
-                && (
-                    Bot.Inventory.Contains(item)
-                    || (itemIsForHouse && (Bot.House?.Contains(item) ?? false) && houseItem?.Equipped != true)
-                )
-            )
+            if (!itemIsForHouse)
             {
-                if (!itemIsForHouse)
+                JumpWait();
+                bool success = false;
+                for (int i = 0; i < 5; i++)
                 {
-                    for (int i = 0; i < 5 && !Bot.Inventory.EnsureToBank(item); i++)
-                        Sleep();
-
-                    if (!Bot.Inventory.EnsureToBank(item) && !Bot.Bank.Contains(item))
+                    if (Bot.Inventory.EnsureToBank(item))
                     {
-                        Logger($"🚫 Failed to bank {item}, skipping it.");
-                        continue;
+                        success = true;
+                        break;
                     }
+                    Sleep();
                 }
-                else
+                if (!success && !Bot.Bank.Contains(item))
                 {
-                    if (houseItem != null)
-                    {
-                        if ((Bot.House?.FreeSlots ?? 0) <= 0)
-                            continue;
-
-                        SendPackets(
-                            $"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%"
-                        );
-                        Bot.Wait.ForTrue(() => !(Bot.House?.Contains(item) ?? false), 20);
-
-                        if (Bot.House?.Items?.Any(x => x?.Name == item) ?? false)
-                        {
-                            Logger($"🚫 Failed to bank {item} in house bank, skipping it.");
-                            continue;
-                        }
-                    }
+                    Logger($"🚫 Failed to bank {item} after 5 attempts, skipping.");
+                    continue;
                 }
-
-                Logger($"💰 {item} moved to bank successfully! 🎒➡️🏦");
             }
+            else
+            {
+                if (houseItem == null)
+                    continue;
+
+                if ((Bot.House?.FreeSlots ?? 0) <= 0)
+                {
+                    Logger($"🏠 House storage full, skipping {item}.");
+                    continue;
+                }
+
+                JumpWait();
+                SendPackets($"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%");
+                Bot.Wait.ForTrue(() => !(Bot.House?.Contains(item) ?? false), 20);
+
+                if (Bot.House?.Items?.Any(x => x?.Name == item) ?? false)
+                {
+                    Logger($"🚫 Failed to bank {item} from house storage, skipping.");
+                    continue;
+                }
+            }
+
+            Logger($"💰 {item} moved to bank successfully! 🎒➡️🏦");
         }
     }
-
     /// <summary>
     /// Transfers specified items by ID from inventory/house to bank.
     /// Skips equipped, blacklisted, or nonexistent items.
@@ -1453,21 +1463,17 @@ public class CoreBots
         if (items == null || !items.Any(id => id > 0))
             return;
 
-        JumpWait();
-
         List<ItemCategory> whiteList = new()
-        {
-            ItemCategory.Note,
-            ItemCategory.Item,
-            ItemCategory.Resource,
-            ItemCategory.QuestItem,
-        };
-        int?[] Extras = { 18927, 38575 };
+    {
+        ItemCategory.Note,
+        ItemCategory.Item,
+        ItemCategory.Resource,
+        ItemCategory.QuestItem,
+    };
 
         foreach (int itemID in items)
         {
-            if ((Bot.Bank?.FreeSlots ?? 0) <= 0
-                || itemID <= 0
+            if (itemID <= 0
                 || Extras.Contains(itemID)
                 || Bot.Inventory.IsEquipped(itemID)
                 || (Bot.House != null && Bot.House.IsEquipped(itemID)))
@@ -1476,8 +1482,26 @@ public class CoreBots
             ItemBase? inventoryItem = Bot
                 .Inventory.Items.Concat(Bot.House?.Items ?? Enumerable.Empty<ItemBase>())
                 .FirstOrDefault(x => x?.ID == itemID);
+
             if (inventoryItem == null)
                 continue;
+
+            // Coin (AC) items have infinite bank space, only block non-coin items when bank is full
+            if (!inventoryItem.Coins && (Bot.Bank?.FreeSlots ?? 0) <= 0)
+            {
+                Logger($"🏦 Bank is full, skipping {inventoryItem.Name ?? $"ID: {itemID}"}.");
+                continue;
+            }
+
+            if (
+                !whiteList.Contains(inventoryItem.Category)
+                && !inventoryItem.Coins
+                || BankingBlackList.Contains(inventoryItem.Name)
+            )
+            {
+                Logger($"⛔ {inventoryItem.Name ?? $"ID: {itemID}"} is blacklisted or excluded.");
+                continue;
+            }
 
             bool itemIsForHouse =
                 Bot.House?.Items?.Any(x =>
@@ -1489,64 +1513,48 @@ public class CoreBots
                     )
                 ) ?? false;
 
-            if (
-                (whiteList.Contains(inventoryItem.Category) || inventoryItem.Coins)
-                && !BankingBlackList.Contains(inventoryItem.Name)
-            )
+            if (!itemIsForHouse)
             {
-                if (!itemIsForHouse)
+                JumpWait();
+                bool success = false;
+                for (int attempt = 0; attempt < 20; attempt++)
                 {
-                    bool success = false;
-                    for (int attempt = 0; attempt < 20; attempt++)
+                    Bot.Inventory.EnsureToBank(itemID);
+                    if (Bot.Bank?.Contains(itemID) == true)
                     {
-                        Bot.Inventory.EnsureToBank(itemID);
-                        Sleep();
-
-                        if (Bot.Bank?.Contains(itemID) == true)
-                        {
-                            success = true;
-                            break;
-                        }
+                        success = true;
+                        break;
                     }
-
-                    if (success)
-                        Logger($"💰 {inventoryItem.Name ?? $"ID: {itemID}"} moved to bank! 🎒➡️🏦");
-                    else
-                        Logger(
-                            $"🚫 Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} after 20 attempts."
-                        );
+                    if (attempt == 10)
+                        Logger($"⏳ Still trying to bank {inventoryItem.Name ?? $"ID: {itemID}"}, attempt {attempt + 1}/20...");
+                    Sleep();
                 }
+                if (success)
+                    Logger($"💰 {inventoryItem.Name ?? $"ID: {itemID}"} moved to bank! 🎒➡️🏦");
                 else
-                {
-                    InventoryItem? houseItem = Bot.House?.Items?.FirstOrDefault(x =>
-                        x?.ID == itemID
-                    );
-                    if (houseItem != null)
-                    {
-                        if ((Bot.House?.FreeSlots ?? 0) <= 0)
-                            continue;
-
-                        SendPackets(
-                            $"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%"
-                        );
-                        Bot.Wait.ForTrue(() => !(Bot.House?.Contains(itemID) ?? true), 20);
-
-                        if (Bot.House?.Items?.Any(x => x?.ID == itemID) == true)
-                        {
-                            Logger(
-                                $"🚫 Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} in house bank."
-                            );
-                            continue;
-                        }
-
-                        Logger(
-                            $"🏠💰 {inventoryItem.Name ?? $"ID: {itemID}"} moved to house bank!"
-                        );
-                    }
-                }
+                    Logger($"🚫 Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} after 20 attempts.");
             }
             else
-                Logger($"⛔ {inventoryItem?.Name ?? $"ID: {itemID}"} is blacklisted or excluded.");
+            {
+                InventoryItem? houseItem = Bot.House?.Items?.FirstOrDefault(x => x?.ID == itemID);
+                if (houseItem == null)
+                    continue;
+
+                if ((Bot.House?.FreeSlots ?? 0) <= 0)
+                {
+                    Logger($"🏠 House storage full, skipping {inventoryItem.Name ?? $"ID: {itemID}"}.");
+                    continue;
+                }
+
+                JumpWait();
+                SendPackets($"%xt%zm%bankFromInv%{Bot.Map.RoomID}%{houseItem.ID}%{houseItem.CharItemID}%");
+                Bot.Wait.ForTrue(() => !(Bot.House?.Contains(itemID) ?? true), 20);
+
+                if (Bot.House?.Items?.Any(x => x?.ID == itemID) == true)
+                    Logger($"🚫 Failed to bank {inventoryItem.Name ?? $"ID: {itemID}"} from house storage.");
+                else
+                    Logger($"🏠💰 {inventoryItem.Name ?? $"ID: {itemID}"} moved to bank from house storage! 🎒➡️🏦");
+            }
         }
     }
 
