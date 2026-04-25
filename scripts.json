@@ -16344,6 +16344,23 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Pets/SerpentineLarvae.cs"
   },
   {
+    "name": "KillWorldBoss",
+    "description": "Kills the world boss to max Flame of the Magnum Opus from Flame of the Beyond",
+    "tags": [
+      "world",
+      "boss",
+      "worldboss",
+      "world boss",
+      "flame of the magnum opus",
+      "flame of the beyond"
+    ],
+    "path": "Other/WorldBoss/WorldBoss[FlameoftheBeyond].cs",
+    "size": 3589,
+    "sha256": "7d580e3f7f403de81aaded6f53a50f0bf6624b85d1d335f8935c205b5e31c50c",
+    "fileName": "WorldBoss[FlameoftheBeyond].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/WorldBoss/WorldBoss[FlameoftheBeyond].cs"
+  },
+  {
     "name": "Doom Metal Necro[class]",
     "description": "does the battle concert even quests for the classes.",
     "tags": [
