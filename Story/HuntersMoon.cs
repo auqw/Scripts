@@ -65,7 +65,7 @@ public class HuntersMoon
         if (!Story.QuestProgression(6707))
         {
             Core.EnsureComplete(6707);
-            Core.KillMonster("huntersmoon", "r6", "Left", "Marchiosas Acolyte", "Skull of Voland");
+            Core.KillMonster("huntersmoon", "r6", "Left", "Marchosias Acolyte", "Skull of Voland");
             Core.EnsureComplete(6707);
         }
         
