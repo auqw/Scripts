@@ -5941,6 +5941,11 @@ public class CoreBots
 
         string target = monster.FormatForCompare();
 
+        // 🔁 If we already auto-corrected this typo before, reuse it silently
+        if (_monsterNameCache.TryGetValue(target, out string? corrected))
+            target = corrected;
+
+
         // 3️⃣ Exact name match ONLY
         List<Monster> matches = candidates
             .Where(x => x.Name.FormatForCompare() == target)
@@ -5949,7 +5954,42 @@ public class CoreBots
         if (matches.Count > 0)
             return matches;
 
-        // 4️⃣ Fail once, loudly, and stop
+        // 4️⃣ Fuzzy fallback (typo protection)
+        string targetClean = target;
+
+        Monster? closestMatch = candidates
+            .Select(x => new
+            {
+                Monster = x,
+                Distance = LevenshteinDistance(
+                    x.Name.FormatForCompare(),
+                    targetClean)
+            })
+            .OrderBy(x => x.Distance)
+            .FirstOrDefault()?.Monster;
+
+        if (closestMatch != null)
+        {
+            int distance = LevenshteinDistance(
+                closestMatch.Name.FormatForCompare(),
+                targetClean);
+
+            if (distance <= AllowedTypoDistance(targetClean))
+            {
+                string correctedName = closestMatch.Name.FormatForCompare();
+                // cache the correction so we never log this again
+                _monsterNameCache[targetClean] = correctedName;
+
+                Logger(
+                    $"⚠️ Monster \"{monster}\" not found in /{map}. "
+                  + $"Auto-correcting to closest match: \"{closestMatch.Name}\" (distance {distance})"
+                );
+
+                return new[] { closestMatch }.ToList();
+            }
+        }
+
+        // 5️⃣ True failure log
         string[] visible = candidates
             .Select(x => $"\"{x.Name}\" [{(x.Alive ? "Alive" : "Dead")}]")
             .Distinct()
@@ -5957,12 +5997,15 @@ public class CoreBots
 
         Logger(
             $"❌ Monster \"{monster}\" not found in /{map}. "
-            + $"Visible monsters: {string.Join(", ", visible)}"
+          + $"Visible monsters: {string.Join(", ", visible)}"
         );
 
         return new();
+
     }
 
+    // monster name typo cache  (requestedName -> correctedName)
+    private readonly Dictionary<string, string> _monsterNameCache = new();
 
     public Monster? FindMonster(string map, string monster, int monsterMapID = -1)
     {
@@ -5971,6 +6014,39 @@ public class CoreBots
         return matches.FirstOrDefault(x => x.Alive)
             ?? matches.FirstOrDefault();
     }
+
+    private static int LevenshteinDistance(string a, string b)
+    {
+        int[,] matrix = new int[a.Length + 1, b.Length + 1];
+
+        for (int i = 0; i <= a.Length; i++)
+            matrix[i, 0] = i;
+
+        for (int j = 0; j <= b.Length; j++)
+            matrix[0, j] = j;
+
+        for (int i = 1; i <= a.Length; i++)
+            for (int j = 1; j <= b.Length; j++)
+            {
+                int cost = a[i - 1] == b[j - 1] ? 0 : 1;
+
+                matrix[i, j] = Math.Min(
+                    Math.Min(matrix[i - 1, j] + 1, matrix[i, j - 1] + 1),
+                    matrix[i - 1, j - 1] + cost
+                );
+            }
+
+        return matrix[a.Length, b.Length];
+    }
+
+    private static int AllowedTypoDistance(string name)
+        => name.Length switch
+        {
+            <= 6 => 1,
+            <= 12 => 2,
+            _ => 3
+        };
+
 
 
 
