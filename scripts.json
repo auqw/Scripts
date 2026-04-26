@@ -1893,8 +1893,8 @@
       "superdeath"
     ],
     "path": "Story/SuperDeath.cs",
-    "size": 2830,
-    "sha256": "85377689013bfd2ccfa0781af034e7ebeddcf3d8af98f4085745bc423f226537",
+    "size": 2805,
+    "sha256": "afab6409d9277de51c1eb2c1a1e5d25068628a760556718a71d8a3d3a7f0d427",
     "fileName": "SuperDeath.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/SuperDeath.cs"
   },
