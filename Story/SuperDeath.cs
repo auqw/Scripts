@@ -85,10 +85,8 @@ public class SuperDeath
         Story.KillQuest(8029, "SuperDeath", "Shadow Cave Bandit");
 
         //Forging the Shadow Key 8030
-        Story.KillQuest(
-            8030,
-            "SuperDeath",
-            new[] { "Shadow Mutant", "Shadow Scorpion", "Shadow Cave Bandit", "Shadow Goo Pup" }
+        Story.KillQuest(8030, "SuperDeath",
+            new[] { "Shadow Goo Pup", "Shadow Mutant", "Shadow Scorpion", "Shadow Cave Bandit" }
         );
 
         //Charge the Key 8031
