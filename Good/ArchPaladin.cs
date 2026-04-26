@@ -92,8 +92,9 @@ public class ArchPaladin
                 Core.EnsureAccept(5464);
                 BLOD.UnlockMineCrafting();
                 Farm.BattleUnderB("Undead Energy", 1000);
-                Core.EquipClass(ClassType.Solo);
+                Core.EquipClass(ClassType.Dodge);
                 Core.KillMonster("doomvault", "r5", "Left", "Binky", "Binky's Uni-horn", isTemp: false, publicRoom: true);
+                Core.EquipClass(ClassType.Solo);
                 Core.HuntMonster("banished", "Desterrat Moya", "Desterrat Moya Tentacle", publicRoom: true);
                 Core.KillMonster("dreadfight", "Enter", "Spawn", "*", "Dreadhaven Helm", publicRoom: true);
                 Adv.GearStore(EnhAfter: true);
@@ -110,46 +111,15 @@ public class ArchPaladin
                 Core.EnsureAccept(5465);
                 Core.EquipClass(ClassType.Solo);
 
-                Core.KillMonster(
-                    "xantown",
-                    "r8",
-                    "Left",
-                    "Xan",
-                    "Pyromancer Artifact",
-                    isTemp: false
-                );
-                if (Bot.Map.Name == "xantown")
+                Core.KillMonster("xantown", "r8", "Left", "Xan", "Pyromancer Artifact", isTemp: false); if (Bot.Map.Name == "xantown")
                     Core.Jump("r12", "Left"); // map is aggro af this is a safe cell.
 
-                Core.HuntMonster(
-                    "dragonheart",
-                    "Proto-Air Dracolich",
-                    "Zephyrus Manifesto",
-                    isTemp: false
-                );
-                Core.HuntMonster(
-                    "northstar",
-                    "Karok The Fallen",
-                    "Karok's Glaceran Gem",
-                    isTemp: false,
-                    publicRoom: true
-                );
+                Core.HuntMonster("dragonheart", "Proto-Air Dracolich", "Zephyrus Manifesto", isTemp: false);
+                Core.HuntMonster("northstar", "Karok The Fallen", "Karok's Glaceran Gem", isTemp: false, publicRoom: true);
                 Core.EquipClass(ClassType.Farm);
                 Core.HuntMonster("thirdspell", "Mana Phoenix", "Nightmare Kibble", 200, false);
-                Core.HuntMonster(
-                    "thunderfang",
-                    "Lightning Ball",
-                    "Condensed Energy",
-                    isTemp: false
-                );
-                Core.KillMonster(
-                    "downward",
-                    "r11",
-                    "Right",
-                    "Crystal Mana Construct",
-                    "Crystallized Mana Catalyst",
-                    isTemp: false
-                );
+                Core.HuntMonster("thunderfang", "Lightning Ball", "Condensed Energy", isTemp: false);
+                Core.KillMonster("downward", "r11", "Right", "Crystal Mana Construct", "Crystallized Mana Catalyst", isTemp: false);
                 Core.HuntMonster("farm", "Treeant", "Just the Perfect Stick", isTemp: false);
                 Core.EnsureComplete(5465);
             }
@@ -182,22 +152,10 @@ public class ArchPaladin
             {
                 Core.EnsureAccept(Core.CheckInventory("Silver Paladin") ? 5478 : 5474);
                 Core.EquipClass(ClassType.Dodge);
-                Core.HuntMonster(
-                    "bosschallenge",
-                    "Colossal Primarch",
-                    "Primarch's Hilt",
-                    isTemp: false,
-                    publicRoom: true
-                );
-                Farm.Gold(500000);
+                Core.HuntMonster("bosschallenge", "Colossal Primarch", "Primarch's Hilt", isTemp: false, publicRoom: true); Farm.Gold(500000);
                 Core.BuyItem("darkthronehub", 1308, "Exalted Paladin Seal");
-                Core.HuntMonster(
-                    "timevoid",
-                    "Unending Avatar",
-                    "Condensed Mana",
-                    isTemp: false,
-                    publicRoom: true
-                );
+                Core.EquipClass(ClassType.Solo);
+                Core.HuntMonster("timevoid", "Unending Avatar", "Condensed Mana", isTemp: false, publicRoom: true);
                 Core.EnsureComplete(Core.CheckInventory("Silver Paladin") ? 5478 : 5474);
             }
         }
@@ -207,21 +165,9 @@ public class ArchPaladin
         {
             Core.EnsureAccept(5467);
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "brightfall",
-                "Painadin Overlord",
-                "Skill Observed",
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.HuntMonster("brightfall", "Painadin Overlord", "Skill Observed", isTemp: false, publicRoom: true);
             Core.HuntMonster("citadel", "Grand Inquisitor", "Spirit of Vindication", isTemp: false);
-            Core.HuntMonster(
-                "alliance",
-                "Good Lieutenant",
-                "Radiant Blade Enhancement",
-                isTemp: false
-            );
-            Core.EnsureComplete(5467);
+            Core.HuntMonster("alliance", "Good Lieutenant", "Radiant Blade Enhancement", isTemp: false); Core.EnsureComplete(5467);
         }
 
         // Hymn of Light
@@ -230,13 +176,8 @@ public class ArchPaladin
             Core.EnsureAccept(5468);
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("poisonforest", "Xavier Lionfang", "Divine Elixir", isTemp: false);
-            Core.HuntMonster(
-                "ultraalteon",
-                "Ultra Chaos Alteon",
-                "Prayer of Salvation",
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.EquipClass(ClassType.Dodge);
+            Core.HuntMonster("ultraalteon", "Ultra Chaos Alteon", "Prayer of Salvation", isTemp: false, publicRoom: true);
             Core.EquipClass(ClassType.Farm);
             Core.HuntMonster("newfinale", "Alliance Healer", "Acolyte's Braille", isTemp: false);
             Core.HuntMonster("skytower", "Dove", "Innocence", 25, false);
@@ -246,22 +187,11 @@ public class ArchPaladin
         // Righteous Seal
         if (!Story.QuestProgression(5469))
         {
-            Core.AddDrop(
-                "Scroll of Ethereal Slumber",
-                "Fists of Fire",
-                "Holy Magic Attunement",
-                "Ring of Mana Transposition"
-            );
+            Core.AddDrop("Scroll of Ethereal Slumber", "Fists of Fire", "Holy Magic Attunement", "Ring of Mana Transposition");
             Core.EnsureAccept(5469);
             Xan.DoAll();
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "xancave",
-                "Shurpu Ring Guardian",
-                "Fists of Fire",
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.HuntMonster("xancave", "Shurpu Ring Guardian", "Fists of Fire", isTemp: false, publicRoom: true);
             if (!Core.CheckInventory("Scroll of Ethereal Slumber"))
             {
                 if (!Core.CheckInventory("Archmage Ink"))
