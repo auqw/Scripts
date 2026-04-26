@@ -9099,86 +9099,65 @@
   },
   "Verus DoomKnight": {
     "Def": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
+      "skillUseMode": "UseIfAvailable",
+      "skillTimeout": 50,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 2,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 9,
+              "comparison": "less",
+              "auraName": "Doom",
+              "auraTarget": "self"
+            }
+          ]
         },
         {
-          "skillId": 3
+          "skillId": 3,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 9,
+              "comparison": "less",
+              "auraName": "Doom",
+              "auraTarget": "self"
+            }
+          ]
         },
         {
-          "skillId": 2
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 9,
+              "comparison": "less",
+              "auraName": "Doom",
+              "auraTarget": "self"
+            }
+          ]
         },
         {
-          "skillId": 1
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
-        }
-      ]
-    },
-    "Atk": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
-      "skills": [
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "MultiAura",
+              "value": 9,
+              "comparison": "greater",
+              "auraName": "Doom",
+              "auraTarget": "self"
+            },
+            {
+              "type": "MultiAura",
+              "value": 1,
+              "comparison": "greater",
+              "auraName": "Unleashed Doom",
+              "auraTarget": "self"
+            }
+          ],
+          "isMultiAura": true,
+          "multiAuraOperator": "OR"
         }
       ]
     }
