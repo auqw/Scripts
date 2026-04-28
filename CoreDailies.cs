@@ -485,7 +485,7 @@ public class CoreDailies
             Core.ToBank("Glacera Ice Token");
         }
         if (Core.CheckInventory("Glacera Ice Token", 84))
-            Core.BuyItem("frozenruins", 1056, "Cryomancer", shopItemID: 3041);
+            Core.BuyItem("frozenruins", 1056, 27525, shopItemID: 2603, index: 1);
         Core.ToBank("Glacera Ice Token");
     }
 
