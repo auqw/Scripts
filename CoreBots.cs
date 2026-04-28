@@ -590,14 +590,13 @@ public class CoreBots
                         Bot.Options.LagKiller = changeTo;
 
                         // Some maps are codded horrible and the animations can cause lag or freezes, so we'll turn all the animations off
-                        Bot.Lite.FreezeMonsterPosition = true;
-                        Bot.Lite.DisableMonsterAnimation = true;
-                        Bot.Lite.DisableDamageStrobe = true;
-                        Bot.Lite.DisableSelfAnimation = true;
-                        Bot.Lite.DisableWeaponAnimation = true;
-                        Bot.Lite.DisableSkillAnimation = true;
-                        Bot.Lite.DisableAuraAnimations = true;
-                        Bot.Lite.DisableDamageNumbers = true;
+                        Bot.Lite.FreezeMonsterPosition = changeTo;
+                        Bot.Lite.DisableMonsterAnimation = changeTo;
+                        Bot.Lite.DisableDamageStrobe = changeTo;
+                        Bot.Lite.DisableSelfAnimation = changeTo;
+                        Bot.Lite.DisableWeaponAnimation = changeTo;
+                        Bot.Lite.DisableSkillAnimation = changeTo;
+                        Bot.Lite.DisableAuraAnimations = changeTo;
 
                         Bot.Flash.SetGameObject("stage.frameRate", 10);
                         if (!Bot.Flash.GetGameObject<bool>("ui.monsterIcon.redX.visible"))
@@ -2336,9 +2335,9 @@ public class CoreBots
 
         if (buyAmount <= 0)
         {
-            Logger(
-                $"Cannot buy more {item.Name}, max stack reached ({currentStock}/{item.MaxStack})."
-            );
+            Logger(item.Category != ItemCategory.Class
+            ? $"Cannot buy more {item.Name}, max stack reached ({currentStock}/{item.MaxStack})."
+            : $"Already own {item.Name} — currently Rank {PointsToLevel(currentStock)}.");
             return 0;
         }
 
