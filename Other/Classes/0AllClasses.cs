@@ -1210,21 +1210,11 @@ public class AllClasses
         Core.Logger("=== AC / Special Requirement / Army Classes - Completed! ===");
     }
 
-    bool IsitRank10(ItemBase item) => item != null && item.Quantity == 302500;
 
     void CheckAndExecute(string className, Action action)
     {
-        // Find the item in both inventory and bank.
-        ItemBase? Class = Bot
-            .Inventory.Items.Concat(Bot.Bank.Items)
-            .FirstOrDefault(x => x.Name.ToLower() == className.ToLower());
-
-        bool ItemOwned = Bot.Inventory.Items.Concat(Bot.Bank.Items).Contains(Class);
-
         // Check if the item is found and if it meets the quantity requirement.
-        if (!ItemOwned || (Class != null && !IsitRank10(Class)))
-        {
+        if (!Core.CheckInventory(className) || Core.CheckClassRank(false, className) < 10)
             action();
-        }
     }
 }
