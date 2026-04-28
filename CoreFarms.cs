@@ -2595,7 +2595,6 @@ public class CoreFarms
         Core.SavedState(true, "shadowfallwar");
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank}");
-
         Core.RegisterQuests(1151, 1152, 1153); //Minion Morale 1151, Shadowfall is DOOMed 1152, Grave-lyn Danger, 1153
         while (!Bot.ShouldExit && FactionRank("DoomWood") < rank)
         {
@@ -4535,20 +4534,34 @@ public class CoreFarms
 
     public int FactionRank(string faction) => Bot.Reputation.GetRank(faction);
 
-    public int FactionRep(string faction) =>
-        Bot.Reputation.FactionList.FirstOrDefault(f =>
-            string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase)
-        )?.Rep
-        ?? 0;
+    public int FactionRep(string faction) => Bot.Reputation.FactionList.FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase))?.Rep ?? 0;
 
-    public int RemainingFactionXp(string faction)
+    public int RemainingFactionXp(string faction) => Bot.Reputation.FactionList.FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase))?.RemainingRep ?? 302500;
+    public int TotalFactionRep(string faction)
     {
-        var factionData = Bot.Reputation.FactionList.FirstOrDefault(f =>
-            string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase)
-        );
+        int rank = FactionRank(faction);
+        int repInRank = FactionRep(faction);
 
-        return factionData?.RemainingRep ?? 302500; // Return 302500 (Max rep) if factionData is null
+        int repBeforeRank = RepThresholds
+            .First(x => x.Rank == rank).RepRequired;
+
+        return repBeforeRank + repInRank;
     }
+    public int MaxFactionRep = 302500;
+    private static readonly (int Rank, int RepRequired)[] RepThresholds =
+    [
+        (1, 0),
+    (2, 900),
+    (3, 3600),
+    (4, 10000),
+    (5, 22500),
+    (6, 44100),
+    (7, 78400),
+    (8, 129600),
+    (9, 202500),
+    (10, 302500)
+    ];
+    public int RemainingFactionRepToMax(string faction) => Math.Max(302500 - TotalFactionRep(faction), 0);
 
     #endregion Reputation
 
