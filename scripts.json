@@ -21179,7 +21179,7 @@
     ],
     "path": "Legion/Revenant/CoreLR.cs",
     "size": 9556,
-    "sha256": "6619781d43342d078e62221d71df74936e22c3c3c64d6ab3da2cb6aa77d543f2",
+    "sha256": "e765bd95bf9fa3030fb95615ce0c27715b9efa112017335b53b86740bac1899c",
     "fileName": "CoreLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Revenant/CoreLR.cs"
   },
@@ -24338,8 +24338,8 @@
       "void chasm"
     ],
     "path": "Nation/Various/PrimeFiendShard.cs",
-    "size": 13624,
-    "sha256": "b2fa2a26b9dd8f9396aaa031b3d177a1f403b370fefb8ecbacbd57578f6bb079",
+    "size": 14311,
+    "sha256": "757421a0d60df3c3340d65e389c2fd6048f61e0bf2cdb1afbd9bafe269da26ba",
     "fileName": "PrimeFiendShard.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Various/PrimeFiendShard.cs"
   },
