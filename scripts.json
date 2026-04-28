@@ -17268,8 +17268,8 @@
       "all"
     ],
     "path": "Other/Classes/0AllClasses.cs",
-    "size": 46032,
-    "sha256": "928b5dabe0683c5480c603c5a9d8809711223e32c3bef3d30f62be454ee91003",
+    "size": 45662,
+    "sha256": "16fab34bac8b73aca7dabbfd80bd20aa469d380e13b37a9eb9913772c7e27012",
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
@@ -21178,8 +21178,8 @@
       "null"
     ],
     "path": "Legion/Revenant/CoreLR.cs",
-    "size": 9556,
-    "sha256": "e765bd95bf9fa3030fb95615ce0c27715b9efa112017335b53b86740bac1899c",
+    "size": 9657,
+    "sha256": "988d482a73c25cefd8e6a812fd5d2285c344a9bef2e463b33780d9c278276ecf",
     "fileName": "CoreLR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/Revenant/CoreLR.cs"
   },
