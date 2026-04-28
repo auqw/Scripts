@@ -486,17 +486,21 @@ public class CoreFarmerJoe
     // Class lists for solo and farm activities
     string[] soloClasses = new[]
     {
+        "King's Echo",
+        "Chaos Avenger",
         "Void Highlord",
         "Legion Revenant",
         "Dragon of Time",
         "ArchPaladin",
+        "Lord Of Order",
+        "Cryomancer",
         "Dragonslayer General",
         "Glacial Berserker",
         "Dragonslayer",
         "DragonSoul Shinobi",
         "Assassin",
-        "Classic Ninja",
         "Ninja Warrior",
+        "Classic Ninja",
         "Ninja",
         "Ninja (Rare)",
         "Rogue (Rare)",
@@ -508,9 +512,12 @@ public class CoreFarmerJoe
     string[] farmClasses = new[]
     {
         "Legion Revenant",
-        "Blaze Binder",
+        "ArchMage",
+        "Dragon of Time",
         "Archfiend",
+        "Blaze Binder",
         "Scarlet Sorceress",
+        "Pyromancer",
         "Master Ranger",
         "Mage (Rare)",
         "Mage",
@@ -518,10 +525,17 @@ public class CoreFarmerJoe
 
     string[] dodgeClasses = new[]
     {
-            "Horc Evader",
+            "Great Thief",
             "Yami No Ronin",
             "Chrono Assassin",
-            "Great Thief"
+            "Horc Evader",
+            "Assassin",
+            "Ninja Warrior",
+            "Classic Ninja",
+            "Ninja",
+            "Ninja (Rare)",
+            "Rogue (Rare)",
+            "Rogue"
     };
 
     /// <summary>
@@ -609,15 +623,15 @@ public class CoreFarmerJoe
             if (Bot.Player.Level > 75)
                 HasEnhancedThisBracket = true;
 
-            // Smart enhance at start of each bracket
-            if (
-                !HasEnhancedThisBracket
-                || Bot.Inventory.Items.Any(x => x != null && x.EnhancementLevel < Bot.Player.Level)
-            )
-            {
-                Adv.SmartEnhance(Bot.Player.CurrentClass?.Name ?? string.Empty);
-                HasEnhancedThisBracket = true;
-            }
+            // // Smart enhance at start of each bracket
+            // if (
+            //     !HasEnhancedThisBracket
+            //     || Bot.Inventory.Items.Any(x => x != null && x.EnhancementLevel < Bot.Player.Level)
+            // )
+            // {
+            //     Adv.SmartEnhance(Bot.Player.CurrentClass?.Name ?? string.Empty);
+            //     HasEnhancedThisBracket = true;
+            // }
 
             // Level up to target
             Farm.Experience(level);
@@ -775,10 +789,6 @@ public class CoreFarmerJoe
             Core.Logger("Geting Horc Evader so we can attemp to kill Ultra Alteon during the story to get AP");
             UnlockForgeEnhancements.Vim();
             Adv.BuyItem("bloodtusk", 308, "Horc Evader");
-            Adv.GearStore(EnhAfter: true);
-            Adv.RankUpClass("Horc Evader");
-            Adv.GearStore(true, EnhAfter: true);
-
             Core.Logger("Level 70: Acquiring ArchPaladin");
             SetClass();
             AP.GetAP();
@@ -832,7 +842,7 @@ public class CoreFarmerJoe
             if (ClassDragonOfTime?.Quantity < RANK_10_CLASS_POINTS)
             {
                 Core.Logger("Dragon of Time found but not rank 10 - ranking up");
-                Adv.RankUpClass("Dragon of Time");
+                SetClass();
             }
         }
         else
@@ -840,9 +850,7 @@ public class CoreFarmerJoe
             string healer = Core.CheckInventory("Healer (Rare)") ? "Healer (Rare)" : "Healer";
             if (!Core.CheckInventory(new[] { "Healer", "Healer (Rare)" }, any: true))
             {
-                Core.Logger(
-                    "No healing class found - acquiring Healer todo xang later during 13LoC"
-                );
+                Core.Logger("No healing class found! Acquiring the `Healer` class to do `Xang` later during the 13LoC story quests ( as healing classes basicly NUKE her....).");
                 Adv.BuyItem("classhalla", 176, "Healer");
                 Adv.RankUpClass(healer);
             }
@@ -858,6 +866,7 @@ public class CoreFarmerJoe
         // --- Phase 3: Solo Classes & Weapons ---
         Core.Logger("Phase 3: Solo Classes & Weapon - LoO Daily");
         LOO.GetLoO();
+        SetClass();
 
         // Bank any LoO rewards
         Core.ToBank(Core.EnsureLoad(7156).Rewards.Select(i => i.Name).ToArray());
@@ -1189,7 +1198,6 @@ public class CoreFarmerJoe
             Core.BuyItem("classhalla", 178, "Ninja");
         }
 
-        Adv.RankUpClass("Ninja");
         SetClass();
 
         if (!Core.CheckInventory(new[] { "Mage (Rare)", "Mage" }, any: true, toInv: false))
@@ -1201,74 +1209,155 @@ public class CoreFarmerJoe
     }
     #endregion Extra:
 
+
     #region BTS
     string? solo;
     string? farm;
     string? dodge;
+    bool HasEnhancedDodge = false;
+    int PreEnhLvl = 0;
+    int PostEnhLvl = 0;
+    private int _lastCheckedLevel = 0;
+    private string? _lastSolo;
+    private string? _lastFarm;
+    private string? _lastDodge;
+
+
     public void SetClass()
     {
-        // Read CBO Data
         Core.ReadCBO();
 
-        // SoloClass
-        if (string.IsNullOrEmpty(Core.SoloClass)
-            || Core.SoloClass == "Generic"
-            || !soloClasses.Any(x => x.Equals(Core.SoloClass, StringComparison.OrdinalIgnoreCase))
-            || !Core.CheckInventory(Core.SoloClass))
-        {
-            solo = soloClasses.FirstOrDefault(x => Core.CheckInventory(x));
+        // Skip if nothing meaningful changed
+        if (ShouldSkipSetClass())
+            return;
 
-            if (!string.IsNullOrEmpty(solo))
-                Core.SoloClass = solo;
-        }
+        // Resolve classes
+        Core.SoloClass = ResolveClass(Core.SoloClass, soloClasses, out _) ?? Core.SoloClass;
+        Core.FarmClass = ResolveClass(Core.FarmClass, farmClasses, out _) ?? Core.FarmClass;
+        Core.DodgeClass = ResolveClass(Core.DodgeClass, dodgeClasses, out _) ?? Core.DodgeClass;
 
-        // FarmClass
-        if (string.IsNullOrEmpty(Core.FarmClass)
-            || Core.FarmClass == "Generic"
-            || !farmClasses.Any(x => x.Equals(Core.FarmClass, StringComparison.OrdinalIgnoreCase))
-            || !Core.CheckInventory(Core.FarmClass))
-        {
-            farm = farmClasses.FirstOrDefault(x => Core.CheckInventory(x));
+        // Build ownership lookup (inventory + bank)
+        HashSet<string> ownedClasses = Bot.Inventory.Items
+            .Select(i => i.Name)
+            .Concat(Bot.Bank.Items.Select(i => i.Name))
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
-            if (!string.IsNullOrEmpty(farm))
-                Core.FarmClass = farm;
-        }
+        BankAllUnusedClasses(ownedClasses);
 
-        // DodgeClass
-        if (string.IsNullOrEmpty(Core.DodgeClass)
-            || Core.DodgeClass == "Generic"
-            || !dodgeClasses.Any(x => x.Equals(Core.DodgeClass, StringComparison.OrdinalIgnoreCase))
-            || !Core.CheckInventory(Core.DodgeClass))
-        {
-            dodge = dodgeClasses.FirstOrDefault(x => Core.CheckInventory(x));
-
-            if (!string.IsNullOrEmpty(dodge))
-                Core.DodgeClass = dodge;
-        }
-
-        // Bank all Joe classes that are below the current tier or arent apart of pre-set CBO
-        Core.ToBank(soloClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != solo || x != Core.SoloClass)).ToArray());
-        Core.ToBank(farmClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != farm || x != Core.FarmClass)).ToArray());
-        Core.ToBank(dodgeClasses.Where(x => Core.CheckInventory(x, toInv: false) && (x != dodge || x != Core.DodgeClass)).ToArray());
-
-        // Re-read CBO after setting
         Core.ReadCBO();
 
-        if (Core.CheckClassRank(false, Core.SoloClass) < 10)
-            Adv.RankUpClass(Core.SoloClass);
+        (string? Class, string Label)[] rankTargets =
+        [
+            (Core.SoloClass, "SoloClass"),
+            (Core.FarmClass, "FarmClass"),
+            (Core.DodgeClass, "DodgeClass")
+        ];
 
-        if (Core.CheckClassRank(false, Core.FarmClass) < 10)
-            Adv.RankUpClass(Core.FarmClass);
+        foreach ((string? className, string label) in rankTargets)
+        {
+            if (string.IsNullOrWhiteSpace(className))
+                continue;
 
-        if (Core.CheckClassRank(false, Core.DodgeClass) < 10)
-            Adv.RankUpClass(Core.DodgeClass);
+            if (Core.CheckClassRank(false, className) >= 10)
+                continue;
 
+            Core.Logger($"{label} resolved -> {className}");
+            Adv.RankUpClass(className);
+        }
 
-        Core.Logger($"SoloClass resolved -> {Core.SoloClass}");
-        Core.Logger($"FarmClass resolved -> {Core.FarmClass}");
-        Core.Logger($"DodgeClass resolved -> {Core.DodgeClass}");
+        Core.EquipClass(ClassType.Solo);
+
+        if (Core.AutoEnhance && !HasEnhancedDodge && PostEnhLvl < Bot.Player?.Level)
+        {
+            PreEnhLvl = Bot.Player?.Level ?? 0;
+            if (Bot.Player?.CurrentClass?.Name != null)
+                Adv.SmartEnhance(Bot.Player.CurrentClass.Name);
+            PostEnhLvl = Bot.Player?.Level ?? 0;
+            HasEnhancedDodge = true;
+        }
+
+        _lastCheckedLevel = Bot.Player?.Level ?? 0;
+
+        _lastSolo = Core.SoloClass;
+        _lastFarm = Core.FarmClass;
+        _lastDodge = Core.DodgeClass;
+
     }
 
+    private bool ShouldSkipSetClass()
+    {
+        int currentLevel = Bot.Player?.Level ?? 0;
+
+        bool levelIncreased = currentLevel > _lastCheckedLevel;
+
+        bool classChanged =
+            !string.Equals(_lastSolo, Core.SoloClass, StringComparison.OrdinalIgnoreCase) ||
+            !string.Equals(_lastFarm, Core.FarmClass, StringComparison.OrdinalIgnoreCase) ||
+            !string.Equals(_lastDodge, Core.DodgeClass, StringComparison.OrdinalIgnoreCase);
+
+        return !levelIncreased && !classChanged;
+    }
+
+    private string? ResolveClass(string? current, string[] pool, out string? found)
+    {
+        found = null;
+
+        bool invalid =
+            string.IsNullOrEmpty(current)
+            || current.Equals("Generic", StringComparison.OrdinalIgnoreCase)
+            || !pool.Any(x => x.Equals(current, StringComparison.OrdinalIgnoreCase))
+            || !Core.CheckInventory(current);
+
+        if (!invalid)
+            return current;
+
+        found = pool.FirstOrDefault(x => Core.CheckInventory(x));
+        return !string.IsNullOrEmpty(found) ? found : current;
+    }
+
+    private void BankAllUnusedClasses(HashSet<string> owned)
+    {
+        // Classes we must NEVER bank
+        string[] keep =
+        [
+            .. new[] { solo, farm, dodge, Core.SoloClass, Core.FarmClass, Core.DodgeClass }
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Select(x => x!)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+        ];
+
+        // All candidate classes across pools
+        string[] candidates =
+        [
+            .. soloClasses,
+        .. farmClasses,
+        .. dodgeClasses
+        ];
+
+        // Bank anything we own that isn't in the keep list
+        string[] toBank =
+        [
+            .. candidates
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Where(x => owned.Contains(x) &&
+                        !keep.Contains(x, StringComparer.OrdinalIgnoreCase))
+        ];
+
+        if (toBank.Length > 0)
+            Core.ToBank(toBank);
+    }
+
+    private void RankIfNeeded(string? className, string label)
+    {
+        if (string.IsNullOrEmpty(className))
+            return;
+
+        if (Core.CheckClassRank(false, className) >= 10)
+            return;
+
+        Core.Logger($"{label} resolved -> {className}");
+        Adv.RankUpClass(className);
+    }
 
 
     /// <summary>
