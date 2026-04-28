@@ -1144,7 +1144,7 @@ public class CoreSDKA
             if (!Bot.Quests.IsUnlocked(2165))
             {
                 DSO(5500);
-                DoomMerge("Corrupt Spirit Orb", 55);
+                DoomMerge("Corrupt Spirit Orb", 5);
                 DoomMerge("Ominous Aura", 2);
             }
             else
