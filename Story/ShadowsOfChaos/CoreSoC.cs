@@ -373,7 +373,7 @@ public class CoreSoC
         Story.KillQuest(7756, "BrightForest", new[] { "Shadow Flame", "ShadowFlame Scout" });
 
         //Drink and Fight 7757
-        Story.KillQuest(7757, "BrightForest", new[] { "ShadowFlame Scout", "ShadowFlame Warrior" });
+        Story.KillQuest(7757, "BrightForest", new[] { "ShadowFlame Scout" });
 
         //Oooommm 7758
         Story.MapItemQuest(7758, "BrightForest", 7754, 2);
