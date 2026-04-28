@@ -1658,7 +1658,10 @@ public class CoreFarms
         int needed = quant - current;
 
         if (needed <= 0)
+        {
+            Bot.Log($"x{current}/{needed} Vouchers Owned");
             return;
+        }
 
         Core.Logger($"{Voucher} [Current: {current}/{quant}] - Buying x{needed}");
 
