@@ -1137,14 +1137,21 @@ public class CoreSDKA
                 DSO(6);
                 Core.HuntMonster("arcangrove", "Seed Spitter", "Deadly Knightshade", 16);
                 Core.HuntMonster("bludrut4", "Shadow Serpent", "Dark Energy", 26, isTemp: false);
-
-                DoomKnightWK("Corrupt Spirit Orb", 5);
-                DoomKnightWK("Ominous Aura", 2);
             }
 
             // Getting the fully upgraded metal
-            DoomKnightWK("Corrupt Spirit Orb", 5);
-            DoomKnightWK("Ominous Aura", 2);
+            // IF the gooquest isnt unlocked do the very slow method first.           
+            if (!Bot.Quests.IsUnlocked(2165))
+            {
+                DSO(5500);
+                DoomMerge("Corrupt Spirit Orb", 55);
+                DoomMerge("Ominous Aura", 2);
+            }
+            else
+            {
+                DoomKnightWK("Corrupt Spirit Orb", 5);
+                DoomKnightWK("Ominous Aura", 2);
+            }
             Core.BuyItem("dwarfhold", 434, fullMetalName);
         }
 
