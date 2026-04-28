@@ -253,8 +253,7 @@ public class CoreAdvanced
             int totalRep = Farm.TotalFactionRep(item.Faction);
             int remaining = Farm.RemainingFactionRepToMax(item.Faction);
 
-            Core.Logger($"Farming reputation for {item.Faction} ({totalRep}/{Farm.MaxFactionRep} | {remaining} remaining)");
-
+            Core.Logger($"Farming reputation for {item.Faction} ({totalRep}/302500 | {remaining} remaining)");
             runRep(item.Faction, Core.PointsToLevel(item.RequiredReputation));
         }
 

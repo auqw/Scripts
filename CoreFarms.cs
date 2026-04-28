@@ -4532,9 +4532,9 @@ public class CoreFarms
         Bot.Options.SkipCutscenes = true;
     }
 
-    public const int MaxFactionRep = 302500;
+    public static readonly int MaxFactionRep = 302500;
 
-    private static readonly (int Rank, int RepRequired)[] RepThresholds =
+    public static readonly (int Rank, int RepRequired)[] RepThresholds =
     [
         (1, 0),
         (2, 900),
@@ -4583,10 +4583,14 @@ public class CoreFarms
         if (factionObj == null) return 0;
 
         int rank = Math.Clamp(Bot.Reputation.GetRank(faction), 1, 10);
-        var threshold = RepThresholds.FirstOrDefault(x => x.Rank == rank);
-        if (threshold == default) return 0;
 
-        return threshold.RepRequired + factionObj.Rep;
+        var threshold = RepThresholds
+            .Cast<(int Rank, int RepRequired)?>()
+            .FirstOrDefault(x => x.HasValue && x.Value.Rank == rank);
+
+        if (!threshold.HasValue) return 0;
+
+        return threshold.Value.RepRequired + factionObj.Rep;
     }
 
     public int RemainingFactionRepToMax(string faction)
