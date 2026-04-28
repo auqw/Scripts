@@ -330,13 +330,31 @@ public class PrimeFiendShard
         {
             Core.EnsureAccept(9559);
 
-            Nation.FarmUni13(13);
-            Nation.FarmTaintedGem(750);
-            Nation.FarmDarkCrystalShard(400);
-            Nation.FarmDiamondofNulgath(1000);
-            Nation.FarmTotemofNulgath(60);
-            Nation.FarmGemofNulgath(300);
-            Nation.FarmBloodGem(100);
+            // If cragname owned do this order
+            if (Core.CheckInventory(Nation.CragName))
+            {
+                Core.Logger("Prefarming max diamonds for BG and U13 excahnges");
+                Nation.FarmDiamondofNulgath(1000);
+                Nation.FarmTotemofNulgath(60);
+                Nation.FarmBloodGem(100);
+                Nation.FarmUni13(13);
+                Nation.FarmDiamondofNulgath(1000);
+                Nation.FarmTaintedGem(750);
+                Nation.FarmDarkCrystalShard(400);
+                Nation.FarmGemofNulgath(300);
+            }
+            // Else do this order
+            else
+            {
+                Nation.FarmUni13(13);
+                Nation.FarmTaintedGem(750);
+                Nation.FarmDarkCrystalShard(400);
+                Nation.FarmDiamondofNulgath(1000);
+                Nation.FarmTotemofNulgath(60);
+                Nation.FarmGemofNulgath(300);
+                Nation.FarmBloodGem(100);
+            }
+
 
             if (Core.CheckInventory("Roentgenium of Nulgath", 10))
             { // Ensure requirements are unbanked
