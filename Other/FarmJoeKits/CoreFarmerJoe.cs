@@ -700,6 +700,7 @@ public class CoreFarmerJoe
         SetClass();
         Farm.BladeofAweREP();
         Adv.BuyItem("museum", 631, "Awethur's Accoutrements");
+        UnlockForgeEnhancements.ForgeHelmEnhancement();
     }
 
     private void HandleLevel50()
@@ -764,6 +765,7 @@ public class CoreFarmerJoe
             SetClass();
             DS.GetDSS();
         }
+        UnlockForgeEnhancements.Lacerate();
     }
 
     private void HandleLevel65()
@@ -786,9 +788,16 @@ public class CoreFarmerJoe
             !Core.CheckInventory("ArchPaladin", toInv: false) || !AnyRank10(new[] { "ArchPaladin" })
         )
         {
+
             Core.Logger("Geting Horc Evader so we can attemp to kill Ultra Alteon during the story to get AP");
-            UnlockForgeEnhancements.Vim();
             Adv.BuyItem("bloodtusk", 308, "Horc Evader");
+            SetClass();
+            Core.Logger("unlocking the easy lvl 70 forge enhs");
+            UnlockForgeEnhancements.Smite();
+            UnlockForgeEnhancements.Vim();
+            UnlockForgeEnhancements.Pneuma();
+            UnlockForgeEnhancements.Examen();
+            UnlockForgeEnhancements.Anima();
             Core.Logger("Level 70: Acquiring ArchPaladin");
             SetClass();
             AP.GetAP();
@@ -972,14 +981,21 @@ public class CoreFarmerJoe
             "P5: Preparing for Remaining Enhancements: Heros Valiance, Elysium, Arcanas Concerto, Ravenous, DauntLess"
         );
         UnlockForgeEnhancements.HerosValiance();
-        UnlockForgeEnhancements.Elysium();
-        UnlockForgeEnhancements.ArcanasConcerto();
-        UnlockForgeEnhancements.Ravenous();
-        UnlockForgeEnhancements.DauntLess();
+        if (Core.CheckInventory("The Divine Will"))
+            UnlockForgeEnhancements.Elysium();
+        // UnlockForgeEnhancements.ArcanasConcerto();
+        // UnlockForgeEnhancements.DauntLess();
+        if (Core.CheckInventory("Void Highlord") && Core.CheckInventory("Roentgenium of Nulgath", 10))
+            UnlockForgeEnhancements.Ravenous();
 
         // Apotheosis:
         Core.Logger("P5: Apotheosis prereqs");
         ExaltedApotheosisPreReqs.PreReqs();
+
+        // Max nulgath materials
+
+        Core.Logger("P6: Max nation materials via Supplies");
+        Nation.Supplies();
 
         #endregion Prefarm some non-Skua-able items:
 
