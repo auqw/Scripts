@@ -624,14 +624,14 @@ public class CoreFarmerJoe
                 HasEnhancedThisBracket = true;
 
             // // Smart enhance at start of each bracket
-            // if (
-            //     !HasEnhancedThisBracket
-            //     || Bot.Inventory.Items.Any(x => x != null && x.EnhancementLevel < Bot.Player.Level)
-            // )
-            // {
-            //     Adv.SmartEnhance(Bot.Player.CurrentClass?.Name ?? string.Empty);
-            //     HasEnhancedThisBracket = true;
-            // }
+            if (
+                !HasEnhancedThisBracket
+                || Bot.Inventory.Items.Any(x => x != null && x.EnhancementLevel < Bot.Player.Level)
+            )
+            {
+                Adv.SmartEnhance(Bot.Player.CurrentClass?.Name ?? string.Empty);
+                HasEnhancedThisBracket = true;
+            }
 
             // Level up to target
             Farm.Experience(level);
