@@ -136,16 +136,7 @@ public class DragonOfTime
             Core.EquipClass(ClassType.Solo);
             Core.HuntMonster("kingcoal", "Frost King", "Frost King's Story", isTemp: false);
 
-            Core.KillMonster(
-                "baconcatyou",
-                "Enter",
-                "Spawn",
-                "*",
-                "Your Own Memories",
-                isTemp: false,
-                publicRoom: true
-            );
-
+            Core.KillMonster("baconcatyou", "Enter", "Spawn", "*", "Your Own Memories", isTemp: false, publicRoom: true);
             Story.ChainQuest(7716);
             Bot.Wait.ForPickup("*");
             Core.ToBank("Dragon of Time Helm", "Dragon of Time Ponytail");
@@ -169,14 +160,7 @@ public class DragonOfTime
             Core.HuntMonster("blindingsnow", "Nythera", "Nythera's Patience", isTemp: false);
 
             Core.AddDrop("Key of Greed");
-            Core.HuntMonster(
-                "greed",
-                "Goregold",
-                "Goregold's Luck",
-                isTemp: false,
-                publicRoom: true
-            );
-
+            Core.HuntMonster("greed", "Goregold", "Goregold's Luck", isTemp: false, publicRoom: true);
             Core.HuntMonster("darkplane", "Victorious", "Victorious's Dignity", isTemp: false);
 
             Core.KillTrigoras("Trigoras's Tenacity", 3, Phase: 2);
@@ -202,12 +186,7 @@ public class DragonOfTime
             if (!Core.CheckInventory("Chronomancer's Codex"))
             {
                 Core.HuntMonster("mqlesson", "Dragonoid", "Dragonoid of Hours", isTemp: false);
-                Core.HuntMonster(
-                    "timespace",
-                    "Chaos Lord Iadoa",
-                    "Chronomancer's Codex",
-                    isTemp: false
-                );
+                Core.HuntMonster("timespace", "Chaos Lord Iadoa", "Chronomancer's Codex", isTemp: false);
             }
 
             Core.EquipClass(ClassType.Farm);
@@ -255,23 +234,8 @@ public class DragonOfTime
             Core.EnsureAccept(7720);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "lairdefend",
-                "Dragon Summoner",
-                "Dimensional Dragon Portal",
-                2,
-                false
-            );
-
-            Core.HuntMonster(
-                "bosschallenge",
-                "Grievous Inbunche",
-                "Brutal Slash Studied",
-                10,
-                isTemp: false,
-                publicRoom: true
-            );
-
+            Core.HuntMonster("lairdefend", "Dragon Summoner", "Dimensional Dragon Portal", 2, false);
+            Core.HuntMonster("bosschallenge", "Grievous Inbunche", "Brutal Slash Studied", 10, isTemp: false, publicRoom: true);
             Core.KillMonster("hydrachallenge", "h90", "Left", "*", "Epic Hydra Fang", 125, false);
 
             Story.ChainQuest(7720);
@@ -373,33 +337,9 @@ public class DragonOfTime
             Core.KillMonster("volcano", "r10", "Left", "Fire Imp", "Fire Essence", 3000, false);
 
             Core.EquipClass(ClassType.Solo);
-            Core.HuntMonster(
-                "charredplains",
-                "Akriloth",
-                "Akriloth's Flametongue",
-                100,
-                false,
-                publicRoom: true
-            );
-
-            Core.HuntMonster(
-                "ultraphedra",
-                "Ultra Phedra",
-                "Immortal Embers",
-                50,
-                false,
-                publicRoom: true
-            );
-
-            Core.HuntMonster(
-                "thevoid",
-                "Reaper",
-                "Ashes from the Void Realm",
-                50,
-                false,
-                publicRoom: true
-            );
-
+            Core.HuntMonster("charredplains", "Akriloth", "Akriloth's Flametongue", 100, false, publicRoom: true);
+            Core.HuntMonster("ultraphedra", "Ultra Phedra", "Immortal Embers", 50, false, publicRoom: true);
+            Core.HuntMonster("thevoid", "Reaper", "Ashes from the Void Realm", 50, false, publicRoom: true);
             Story.ChainQuest(7723);
             Bot.Wait.ForPickup("*");
             Core.ToBank("Ascended Dragon of Time");
@@ -417,36 +357,11 @@ public class DragonOfTime
 
             Core.EquipClass(ClassType.Solo);
             Bot.Quests.UpdateQuest(3880);
-            Core.KillMonster(
-                "chaoslord",
-                "r2",
-                "Left",
-                "*",
-                "Conquered Past",
-                isTemp: false,
-                publicRoom: true
-            );
-
+            Core.KillMonster("chaoslord", "r2", "Left", "*", "Conquered Past", isTemp: false, publicRoom: true);
             Bot.Quests.UpdateQuest(10, 159);
-            Core.HuntMonster(
-                "towerofdoom10",
-                "Slugbutter",
-                "Slugbutter Trophy",
-                100,
-                false,
-                publicRoom: true
-            );
-
+            Core.HuntMonster("towerofdoom10", "Slugbutter", "Slugbutter Trophy", 100, false, publicRoom: true);
             Core.EquipClass(ClassType.Dodge);
-            Core.HuntMonster(
-                "icewing",
-                "Warlord Icewing",
-                "Icewing's Laurel",
-                30,
-                false,
-                publicRoom: true
-            );
-
+            Core.HuntMonster("icewing", "Warlord Icewing", "Icewing's Laurel", 30, false, publicRoom: true);
             Story.ChainQuest(7724);
             Bot.Wait.ForPickup("Dragon of Time");
             Bot.Wait.ForPickup("*");
