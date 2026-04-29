@@ -592,45 +592,11 @@ public class UnlockForgeEnhancements
                     Core.EnsureComplete(90);
                 }
                 Core.EnsureAccept(91);
-                Core.KillMonster(
-                    "greenguardwest",
-                    "West1",
-                    "Left",
-                    "Kittarian",
-                    "Kittarian's Wallet",
-                    2
-                );
-                Core.KillMonster(
-                    "greenguardwest",
-                    "West9",
-                    "Left",
-                    "River Fishman",
-                    "River Fishman's Wallet",
-                    2
-                );
-                Core.KillMonster(
-                    "greenguardwest",
-                    "West10",
-                    "Left",
-                    "Slime",
-                    "Slime-Soaked Wallet",
-                    2
-                );
-                Core.KillMonster(
-                    "greenguardwest",
-                    "West3",
-                    "Left",
-                    "Frogzard",
-                    "Frogzard's Lint Hoard",
-                    2
-                );
-                Core.KillMonster(
-                    "greenguardwest",
-                    "West12",
-                    "Up",
-                    "Big Bad Boar",
-                    "Big Bad Boar's Wallet"
-                );
+                Core.KillMonster("greenguardwest", "West1", "Left", "Kittarian", "Kittarian's Wallet", 2);
+                Core.KillMonster("greenguardwest", "West9", "Left", "River Fishman", "River Fishman's Wallet", 2);
+                Core.KillMonster("greenguardwest", "West10", "Left", "Slime", "Slime-Soaked Wallet", 2);
+                Core.KillMonster("greenguardwest", "West3", "Left", "Frogzard", "Frogzard's Lint Hoard", 2);
+                Core.KillMonster("greenguardwest", "West12", "Up", "Big Bad Boar", "Big Bad Boar's Wallet");
                 Core.EnsureComplete(91);
             }
             Story.KillQuest(92, "greenguardwest", new[] { "Breken the Vile", "Ogug Stoneaxe" });
@@ -699,13 +665,7 @@ public class UnlockForgeEnhancements
 
         Core.HuntMonster("shadowattack", "Death", "Death's Power", 3, isTemp: false);
         Core.KillEscherion("Chaotic Power", 7);
-        Core.HuntMonster(
-            "shadowrealmpast",
-            "Pure Shadowscythe",
-            "Empowered Essence",
-            50,
-            isTemp: false
-        );
+        Core.HuntMonster("shadowrealmpast", "Pure Shadowscythe", "Empowered Essence", 50, isTemp: false);
         Core.HuntMonster("undergroundlabb", "Ultra Battle Gem", "Gem Power", 25, false);
         Adv.BuyItem("alchemyacademy", 2116, "Power Tonic", 10);
 
@@ -741,13 +701,7 @@ public class UnlockForgeEnhancements
 
         Core.RegisterQuests(7924);
         while (!Bot.ShouldExit && !Core.CheckInventory("Dragon Shinobi Token", 100))
-            Core.HuntMonster(
-                "shadowfortress",
-                "1st Head of Orochi",
-                "Perfect Orochi Scales",
-                10,
-                isTemp: false
-            );
+            Core.HuntMonster("shadowfortress", "1st Head of Orochi", "Perfect Orochi Scales", 10, isTemp: false);
         Core.CancelRegisteredQuests();
 
         Adv.BuyItem("shadowfortress", 1968, 59465, shopItemID: 6869);
@@ -939,7 +893,7 @@ public class UnlockForgeEnhancements
 
         Adv.GearStore(EnhAfter: true);
         Core.EquipClass(ClassType.Dodge);
-        Core.HuntMonster("tercessuinotlim", "Nulgath", "The Mortal Coil", isTemp: false );
+        Core.HuntMonster("tercessuinotlim", "Nulgath", "The Mortal Coil", isTemp: false);
         Adv.GearStore(true, EnhAfter: true);
         Core.EnsureComplete(8820);
         Core.Logger("Enhancement Unlocked: Acheron");
@@ -1019,12 +973,7 @@ public class UnlockForgeEnhancements
                 SOWM.ElementalCore(20);
                 Adv.GearStore(true, EnhAfter: true);
                 Core.EquipClass(ClassType.Solo);
-                Core.HuntMonster(
-                    "shadowgrove",
-                    "Titan Shadow Dragonlord",
-                    "ShadowFlame Dragon Blade",
-                    isTemp: false
-                );
+                Core.HuntMonster("shadowgrove", "Titan Shadow Dragonlord", "ShadowFlame Dragon Blade", isTemp: false);
             }
             #endregion
 
@@ -1379,15 +1328,7 @@ public class UnlockForgeEnhancements
         Adv.GearStore(true, EnhAfter: true);
 
         Core.EquipClass(ClassType.Farm);
-        Core.KillMonster(
-            "Towerofdoom10",
-            "r8",
-            "Left",
-            "*",
-            "Ethereal Essence",
-            250,
-            isTemp: false
-        );
+        Core.KillMonster("Towerofdoom10", "r8", "Left", "*", "Ethereal Essence", 250, isTemp: false);
 
         Core.EnsureComplete(8824);
         if (Bot.Config!.Get<bool>("SellQuestClass"))
@@ -1442,15 +1383,7 @@ public class UnlockForgeEnhancements
         Adv.GearStore(true, EnhAfter: true);
 
         Core.EquipClass(ClassType.Farm);
-        Core.KillMonster(
-            "Towerofdoom10",
-            "r8",
-            "Left",
-            "*",
-            "Ethereal Essence",
-            650,
-            isTemp: false
-        );
+        Core.KillMonster("Towerofdoom10", "r8", "Left", "*", "Ethereal Essence", 650, isTemp: false);
 
         Core.EnsureComplete(8826);
         if (Bot.Config!.Get<bool>("SellQuestClass"))
@@ -1474,15 +1407,7 @@ public class UnlockForgeEnhancements
         Adv.GearStore(true, EnhAfter: true);
 
         Core.EquipClass(ClassType.Farm);
-        Core.KillMonster(
-            "Towerofdoom10",
-            "r8",
-            "Left",
-            "*",
-            "Ethereal Essence",
-            650,
-            isTemp: false
-        );
+        Core.KillMonster("Towerofdoom10", "r8", "Left", "*", "Ethereal Essence", 650, isTemp: false);
 
         Core.EnsureComplete(8827);
         if (Bot.Config!.Get<bool>("SellQuestClass"))
