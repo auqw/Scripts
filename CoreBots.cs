@@ -1365,7 +1365,7 @@ public class CoreBots
 
             if (Bot.Bank.Contains(item))
             {
-                DebugLogger(this, $"ℹ️ {item} is already in bank, skipping.", "Item Already in Bank");
+                Logger($"ℹ️ {item} is already in bank, skipping.");
                 continue;
             }
 
@@ -2344,29 +2344,21 @@ public class CoreBots
         return buyAmount;
     }
 
-    private static readonly (int Rank, int RepRequired)[] RepThresholds =
-    [
-        (1, 0),
-        (2, 900),
-        (3, 3600),
-        (4, 10000),
-        (5, 22500),
-        (6, 44100),
-        (7, 78400),
-        (8, 129600),
-        (9, 202500),
-        (10, 302500)
-    ];
+    public int PointsToLevel(int points) => RepCPLevel.First(kvp => points <= kvp.Value).Key;
 
-    public int PointsToLevel(int points)
+    private readonly Dictionary<int, int> RepCPLevel = new()
     {
-        foreach ((int rank, int req) in RepThresholds)
-            if (points <= req)
-                return rank;
-
-        return 10; // max rank if somehow above cap
-    }
-
+        { 1, 0 },
+        { 2, 900 },
+        { 3, 3600 },
+        { 4, 10000 },
+        { 5, 22500 },
+        { 6, 44100 },
+        { 7, 78400 },
+        { 8, 129600 },
+        { 9, 202500 },
+        { 10, 302500 },
+    };
 
     /// <summary>
     /// Sells a item till you have the desired quantity

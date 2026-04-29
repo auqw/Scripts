@@ -245,18 +245,18 @@ public class CoreAdvanced
         }
 
         // Ensure required reputation for faction-based items
-        if (!string.IsNullOrWhiteSpace(item.Faction)
+        if (
+            !string.IsNullOrEmpty(item.Faction)
             && item.Faction != "None"
             && item.RequiredReputation > 0
-            && Farm.FactionRank(item.Faction) < item.RequiredReputation)
+            && Farm.FactionRank(item.Faction) < item.RequiredReputation
+        )
         {
-            int totalRep = Farm.TotalFactionRep(item.Faction);
-            int remaining = Farm.RemainingFactionRepToMax(item.Faction);
-
-            Core.Logger($"Farming reputation for {item.Faction} ({totalRep}/302500 | {remaining} remaining)");
+            Core.Logger(
+                $"Farming reputation for {item.Faction} (Required: {item.RequiredReputation})"
+            );
             runRep(item.Faction, Core.PointsToLevel(item.RequiredReputation));
         }
-
 
         // Level up if the item requires a higher player level
         if (item.Level > Bot.Player.Level)
