@@ -16898,8 +16898,8 @@
       "null"
     ],
     "path": "Other/Classes/BloodSorceress.cs",
-    "size": 1417,
-    "sha256": "7210c2c68f9ba87beb20a379fa630383d468b016c1ee008a67db748153efa178",
+    "size": 1375,
+    "sha256": "c14d6a6ed1a658079ff0fd4432b134fc6b7861e576c26176a831e481c1a6c93c",
     "fileName": "BloodSorceress.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/BloodSorceress.cs"
   },
@@ -16910,8 +16910,8 @@
       "null"
     ],
     "path": "Other/Classes/ScarletSorceress.cs",
-    "size": 3173,
-    "sha256": "7c52c780bda6a0d89c9759a61f61dda22e81098125ce3f9c73cbc98337a17e4e",
+    "size": 3096,
+    "sha256": "aaa409ef65205e39e940bd1e64377a24ab2a612a3ddf43be96438a37a9c19604",
     "fileName": "ScarletSorceress.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ScarletSorceress.cs"
   },
