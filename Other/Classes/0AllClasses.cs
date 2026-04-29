@@ -288,6 +288,7 @@ using Skua.Core.Options;
 
 public class AllClasses
 {
+    #region Class stuffs
     private IScriptInterface Bot => IScriptInterface.Instance;
     private CoreBots Core => CoreBots.Instance;
     private static CoreAdvanced Adv
@@ -428,6 +429,17 @@ public class AllClasses
     }
     private static TrollSpellsmith _TS;
     #endregion Rep
+
+    #region Legion
+
+    private static CoreLegion Legion
+    {
+        get => _Legion ??= new CoreLegion();
+        set => _Legion = value;
+    }
+    private static CoreLegion _Legion;
+
+    #endregion
 
     #region Member
     private static AlphaOmega AO
@@ -830,6 +842,7 @@ public class AllClasses
     }
     private static CoreYnR _YNR;
     #endregion End game
+    #endregion 
 
 
     public string OptionsStorage = "GetAllClasses";
@@ -841,6 +854,12 @@ public class AllClasses
             "Rankup All Classes",
             "wether to Rankup the class to 10 after acquiring it",
             true
+        ),
+        new Option<bool>(
+            "DoLegion",
+            "GetLegionClasses",
+            "Join Legion if not( you'll have to stuck around for this one itll be at the top) -- cost 1200acs",
+            false
         ),
         CoreBots.Instance.SkipOptions,
     };
@@ -873,6 +892,8 @@ public class AllClasses
     public void GetAllClasses()
     {
         bool rankUpClass = Bot.Config!.Get<bool>("RankALL");
+        // Start off with legion classes as they cost 1200 acs to start with by joining the legion
+        LegionCLasses(rankUpClass);
 
         //some of these are required for forge enhancements
         MoreClassesToGet(rankUpClass);
@@ -1058,9 +1079,7 @@ public class AllClasses
         CheckAndExecute("Alpha Pirate", () => APir.GetAlphaPirate(rankUpClass));
         CheckAndExecute("Dark Lord", () => DL.GetDL(rankUpClass));
         CheckAndExecute("Evolved Leprechaun", () => EL.GetClass(rankUpClass));
-        CheckAndExecute("Exalted Harbinger", () => EH.GetEH(rankUpClass));
         CheckAndExecute("Frostval Barbarian", () => FB.GetFB(rankUpClass));
-        CheckAndExecute("Legion SwordMaster Assassin", () => LSMA.GetClass(rankUpClass));
         CheckAndExecute("Northlands Monk", () => NM.GetNlMonk(rankUpClass));
         CheckAndExecute("Pirate", () => Pirate.GetPirate(rankUpClass));
         CheckAndExecute("Shadow Dragon Shinobi", () => SDS.GetClass(rankUpClass));
@@ -1170,7 +1189,6 @@ public class AllClasses
 
         // Classes that Cost ACs / AC badges:
         CheckAndExecute("LightCaster", () => LC.GetLC(rankUpClass)); // LC gets LM at the same time
-        CheckAndExecute("Legion Revenant", () => LR.GetLR(rankUpClass));
         CheckAndExecute("Exalted Soul Cleaver", () => ESC.GetClass(rankUpClass));
 
         // Classes that require an army or are just to damn hard to solo,
@@ -1208,6 +1226,24 @@ public class AllClasses
         );
 
         Core.Logger("=== AC / Special Requirement / Army Classes - Completed! ===");
+    }
+
+    void LegionCLasses(bool rankUpClass)
+    {
+        if (!Bot.Config!.Get<bool>("namehere"))
+            return;
+
+        Core.Logger("=== AC / Join Legion REquired / 1200 acs ===");
+
+        Legion.JoinLegion();
+
+        Adv.GearStore(EnhAfter: true);
+
+        CheckAndExecute("Legion Revenant", () => LR.GetLR(rankUpClass));
+        CheckAndExecute("Exalted Harbinger", () => EH.GetEH(rankUpClass));
+        CheckAndExecute("Legion SwordMaster Assassin", () => LSMA.GetClass(rankUpClass));
+
+
     }
 
 
