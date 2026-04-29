@@ -36,10 +36,7 @@ public class BloodSorceress
 
     public void GetBSorc(bool rankUpClass = true)
     {
-        if (
-            Core.CheckInventory( /*Blood Sorceress*/
-                36298
-            )
+        if (Core.CheckInventory( /*Blood Sorceress*/ 36298)
         )
         {
             if (rankUpClass)
