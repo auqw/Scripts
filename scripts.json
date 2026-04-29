@@ -3889,8 +3889,8 @@
       "ravenous"
     ],
     "path": "Enhancement/UnlockForgeEnhancements.cs",
-    "size": 53588,
-    "sha256": "b5ddb8a9e2af2a433a44d9a42b2bd6516ddceea298044403dc1f61f777931b87",
+    "size": 52298,
+    "sha256": "89978e0143204e9ad7a0ba97ec3acf1634cae1689c531bbf035143ae4c08931a",
     "fileName": "UnlockForgeEnhancements.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Enhancement/UnlockForgeEnhancements.cs"
   },
@@ -10611,8 +10611,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 54022,
-    "sha256": "17fccadcd7e70050831adc4bd2a6f383cddd92784c5a11e52fb41ea28eea594e",
+    "size": 53911,
+    "sha256": "ce6274e03734b39718ca289400cb6f14b9cb0d1cc07d1d4ee66019e726f1fbca",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
