@@ -765,6 +765,7 @@ public class CoreFarmerJoe
             SetClass();
             DS.GetDSS();
         }
+        
         UnlockForgeEnhancements.Lacerate();
     }
 
@@ -783,21 +784,30 @@ public class CoreFarmerJoe
 
     private void HandleLevel70()
     {
+        // Horc Evader
+        if (
+            !Core.CheckInventory("Horc Evader", toInv: false) || !AnyRank10(new[] { "Horc Evader" })
+        )
+        {
+
+
+            Core.Logger("Geting Horc Evader so we can attemp to kill Ultra Alteon during the story to get AP");
+            Adv.BuyItem("bloodtusk", 308, "Horc Evader");
+            SetClass();
+        }
+
+        Core.Logger("unlocking the easy lvl 70 forge enhs");
+        UnlockForgeEnhancements.Smite();
+        UnlockForgeEnhancements.Vim();
+        UnlockForgeEnhancements.Pneuma();
+        UnlockForgeEnhancements.Examen();
+        UnlockForgeEnhancements.Anima();
+
         // ArchPaladin
         if (
             !Core.CheckInventory("ArchPaladin", toInv: false) || !AnyRank10(new[] { "ArchPaladin" })
         )
         {
-
-            Core.Logger("Geting Horc Evader so we can attemp to kill Ultra Alteon during the story to get AP");
-            Adv.BuyItem("bloodtusk", 308, "Horc Evader");
-            SetClass();
-            Core.Logger("unlocking the easy lvl 70 forge enhs");
-            UnlockForgeEnhancements.Smite();
-            UnlockForgeEnhancements.Vim();
-            UnlockForgeEnhancements.Pneuma();
-            UnlockForgeEnhancements.Examen();
-            UnlockForgeEnhancements.Anima();
             Core.Logger("Level 70: Acquiring ArchPaladin");
             SetClass();
             AP.GetAP();
@@ -904,16 +914,10 @@ public class CoreFarmerJoe
 
         // Unlock Helmet Enhancements
         Core.Logger("Phase 3: Unlocking Helmet Enhancements");
-        UnlockForgeEnhancements.ForgeHelmEnhancement();
-        UnlockForgeEnhancements.Examen();
-        UnlockForgeEnhancements.Anima();
-        UnlockForgeEnhancements.Pneuma();
 
         // Unlock Weapon Enhancements
         Core.Logger("Phase 3: Unlocking Weapon Enhancements");
         UnlockForgeEnhancements.ForgeWeaponEnhancement();
-        UnlockForgeEnhancements.Lacerate();
-        UnlockForgeEnhancements.Smite();
         UnlockForgeEnhancements.Praxis();
 
         // --- Phase 4: Leveling & Endgame ---
