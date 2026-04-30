@@ -1130,7 +1130,6 @@ public class AllClasses
         CheckAndExecute("ProtoSartorium", () => PS.GetPS(rankUpClass));
         CheckAndExecute("Rustbucket", () => RB.GetRustbucket(rankUpClass));
         CheckAndExecute("Scarlet Sorceress", () => SS.GetSSorc(rankUpClass));
-        CheckAndExecute("SwordMaster", () => SM.GetSwordMaster(rankUpClass));
         Adv.GearStore(true, true);
         Core.ToBank(
             new[]
@@ -1242,6 +1241,7 @@ public class AllClasses
         CheckAndExecute("Exalted Harbinger", () => EH.GetEH(rankUpClass));
         CheckAndExecute("Legion SwordMaster Assassin", () => LSMA.GetClass(rankUpClass));
         CheckAndExecute("Infinite Legion Dark Caster", () => ILDC.GetILDC(rankUpClass));
+        CheckAndExecute("SwordMaster", () => SM.GetSwordMaster(rankUpClass));
 
 
     }
