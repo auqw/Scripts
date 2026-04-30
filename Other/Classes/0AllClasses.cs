@@ -1229,7 +1229,7 @@ public class AllClasses
 
     void LegionCLasses(bool rankUpClass)
     {
-        if (!Bot.Config!.Get<bool>("namehere"))
+        if (!Bot.Config!.Get<bool>("DoLegion"))
             return;
 
         Core.Logger("=== AC / Join Legion REquired / 1200 acs ===");
