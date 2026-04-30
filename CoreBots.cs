@@ -2335,9 +2335,7 @@ public class CoreBots
 
         if (buyAmount <= 0)
         {
-            Logger(item.Category != ItemCategory.Class
-            ? $"Cannot buy more {item.Name}, max stack reached ({currentStock}/{item.MaxStack})."
-            : $"Already own {item.Name} — currently Rank {PointsToLevel(currentStock)}.");
+            Logger($"Cannot buy more {item.Name}, max stack reached ({currentStock}/{item.MaxStack}).");
             return 0;
         }
 
@@ -8885,7 +8883,7 @@ public class CoreBots
 
             case "towerofmirrors":
                 blackListedCells.UnionWith(new[] { "replay", "EndCuts" });
-            break;
+                break;
 
             case "thevoid":
                 blackListedCells.UnionWith(new[] { "r4" });
