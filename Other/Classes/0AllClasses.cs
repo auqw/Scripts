@@ -1123,7 +1123,6 @@ public class AllClasses
         CheckAndExecute("Enforcer", () => Enf.GetClass(rankUpClass));
         CheckAndExecute("Frost SpititReaver", () => FSR.GetFSR(rankUpClass));
         CheckAndExecute("HighSeas Commander", () => HSC.GetHSC(rankUpClass));
-        CheckAndExecute("Infinite Legion Dark Caster", () => ILDC.GetILDC(rankUpClass));
         CheckAndExecute("Martial Artist", () => MA.GetMartialArtist(rankUpClass));
         CheckAndExecute("MechaJouster", () => MJ.GetMJ(rankUpClass));
         CheckAndExecute("Necromancer", () => Necro.GetNecromancer(rankUpClass));
@@ -1242,6 +1241,7 @@ public class AllClasses
         CheckAndExecute("Legion Revenant", () => LR.GetLR(rankUpClass));
         CheckAndExecute("Exalted Harbinger", () => EH.GetEH(rankUpClass));
         CheckAndExecute("Legion SwordMaster Assassin", () => LSMA.GetClass(rankUpClass));
+        CheckAndExecute("Infinite Legion Dark Caster", () => ILDC.GetILDC(rankUpClass));
 
 
     }
