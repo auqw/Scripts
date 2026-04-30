@@ -4533,7 +4533,28 @@ public class CoreFarms
         Bot.Options.SkipCutscenes = true;
     }
 
-    public int FactionRank(string faction) => Bot.Reputation.GetRank(faction);
+    public const int MaxFactionRep = 302500;
+
+    private static readonly (int Rank, int RepRequired)[] RepThresholds =
+    [
+        (1, 0),
+        (2, 900),
+        (3, 3600),
+        (4, 10000),
+        (5, 22500),
+        (6, 44100),
+        (7, 78400),
+        (8, 129600),
+        (9, 202500),
+        (10, 302500)
+    ];
+
+    public int FactionRank(string faction)
+    {
+        if (string.IsNullOrWhiteSpace(faction)) return 0;
+        if (Bot.Reputation == null) return 0;
+        return Bot.Reputation.GetRank(faction);
+    }
 
     public int FactionRep(string faction) =>
         Bot.Reputation.FactionList.FirstOrDefault(f =>
@@ -4543,12 +4564,42 @@ public class CoreFarms
 
     public int RemainingFactionXp(string faction)
     {
-        var factionData = Bot.Reputation.FactionList.FirstOrDefault(f =>
-            string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase)
-        );
-
-        return factionData?.RemainingRep ?? 302500; // Return 302500 (Max rep) if factionData is null
+        if (string.IsNullOrWhiteSpace(faction)) return 0;
+        if (Bot.Reputation?.FactionList == null) return 0;
+        return Bot.Reputation.FactionList
+            .FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase))
+            ?.RemainingRep ?? 0;
     }
+
+    public int TotalFactionRep(string faction)
+    {
+        if (string.IsNullOrWhiteSpace(faction)) return 0;
+        if (Bot.Reputation?.FactionList == null) return 0;
+
+        var factionObj = Bot.Reputation.FactionList
+            .FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase));
+        if (factionObj == null) return 0;
+
+        int rank = Math.Clamp(Bot.Reputation.GetRank(faction), 1, 10);
+        var threshold = RepThresholds.FirstOrDefault(x => x.Rank == rank);
+        if (threshold == default) return 0;
+
+        return threshold.RepRequired + factionObj.Rep;
+    }
+
+    public int RemainingFactionRepToMax(string faction)
+    {
+        if (string.IsNullOrWhiteSpace(faction)) return MaxFactionRep;
+        if (Bot.Reputation?.FactionList == null) return MaxFactionRep;
+
+        var factionObj = Bot.Reputation.FactionList
+            .FirstOrDefault(f => string.Equals(f.Name, faction, StringComparison.OrdinalIgnoreCase));
+        if (factionObj == null) return MaxFactionRep;
+
+        int total = TotalFactionRep(faction);
+        return Math.Max(MaxFactionRep - total, 0);
+    }
+
 
     #endregion Reputation
     public void UndeadGiantUnlock()

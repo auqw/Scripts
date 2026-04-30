@@ -2342,21 +2342,28 @@ public class CoreBots
         return buyAmount;
     }
 
-    public int PointsToLevel(int points) => RepCPLevel.First(kvp => points <= kvp.Value).Key;
+    private static readonly (int Rank, int RepRequired)[] RepThresholds =
+    [
+        (1, 0),
+        (2, 900),
+        (3, 3600),
+        (4, 10000),
+        (5, 22500),
+        (6, 44100),
+        (7, 78400),
+        (8, 129600),
+        (9, 202500),
+        (10, 302500)
+    ];
 
-    private readonly Dictionary<int, int> RepCPLevel = new()
+    public int PointsToLevel(int points)
     {
-        { 1, 0 },
-        { 2, 900 },
-        { 3, 3600 },
-        { 4, 10000 },
-        { 5, 22500 },
-        { 6, 44100 },
-        { 7, 78400 },
-        { 8, 129600 },
-        { 9, 202500 },
-        { 10, 302500 },
-    };
+        foreach ((int rank, int req) in RepThresholds)
+            if (points <= req)
+                return rank;
+
+        return 10; // max rank if somehow above cap
+    }
 
     /// <summary>
     /// Sells a item till you have the desired quantity
