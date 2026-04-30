@@ -252,9 +252,7 @@ public class CoreAdvanced
             && Farm.FactionRank(item.Faction) < item.RequiredReputation
         )
         {
-            Core.Logger(
-                $"Farming reputation for {item.Faction} (Required: {item.RequiredReputation})"
-            );
+            Core.Logger($"Farming reputation for {item.Faction} (Required: {item.RequiredReputation})");
             runRep(item.Faction, Core.PointsToLevel(item.RequiredReputation));
         }
 
