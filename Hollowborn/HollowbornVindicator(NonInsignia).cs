@@ -112,7 +112,7 @@ public class HBVNonInsig
 
         Core.AddDrop("Condensed Grace");
 
-        bool preFarmNextWeeks = Bot.Config!.Get<bool>("Farm4Weeks");
+        bool preFarmNextWeeks = FarmNextWeeks || Bot.Config!.Get<bool>("Farm4Weeks");
         int currentQty = Bot.Inventory.GetQuantity("Condensed Grace");
         int missingQty = 4 - currentQty;
 
