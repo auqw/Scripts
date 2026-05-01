@@ -3143,7 +3143,7 @@ public class CoreAdvanced
                     if (!uLacerate() || !uVim() || !uVainglory())
                         goto default;
 
-                    type = EnhancementType.Lucky;
+                    type = EnhancementType.Thief;
                     cSpecial = CapeSpecial.Vainglory;
                     wSpecial = WeaponSpecial.Lacerate;
                     hSpecial = HelmSpecial.Vim;
@@ -4185,7 +4185,6 @@ public class CoreAdvanced
                 case "heroic naval commander":
                 case "legendary elemental warrior":
                 case "mythic elemental warrior":
-                case "horc evader":
                 case "legendary naval commander":
                 case "legion revenant member test":
                 case "naval commander":
@@ -4292,6 +4291,7 @@ public class CoreAdvanced
                 case "ninja":
                 case "classic ninja":
                 case "ninja (rare)":
+                case "horc evader":
                     type = EnhancementType.Thief;
                     wSpecial = WeaponSpecial.Mana_Vamp;
                     break;
