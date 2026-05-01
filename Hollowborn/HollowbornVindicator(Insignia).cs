@@ -108,11 +108,11 @@ public class HBVInsig
         Farm.HollowbornREP();
         HBS.DawnSanctum();
 
-        string reqName = Core.QuestRewards(10300)[0];
         Core.AddDrop("Condensed Grace");
 
-        int currentQty = Bot.Inventory.GetQuantity(reqName);
+        int currentQty = Bot.Inventory.GetQuantity("Condensed Grace");
         int missingQty = 4 - currentQty;
+        int multiplier = missingQty;
 
         // Still need weekly turn-ins
         if (missingQty > 0)
@@ -135,7 +135,6 @@ public class HBVInsig
             Core.EnsureAccept(10300);
 
             // Farm all remaining weeks worth of materials in one run
-            int multiplier = missingQty;
 
             DP.GetDP(multiplier);                   // Death's Power      (1 per weekly)
             HS.GetYaSoulsHeeeere(75 * multiplier);  // Hollow Soul        (75 per weekly)
@@ -149,9 +148,9 @@ public class HBVInsig
         }
 
         // Not enough weeklies yet → wait for reset
-        if (!Core.CheckInventory(reqName, 4))
+        if (!Core.CheckInventory("Condensed Grace", 4))
         {
-            Core.Logger($"Progress: {Bot.Inventory.GetQuantity(reqName)}/4 {reqName}");
+            Core.Logger($"Progress: {Bot.Inventory.GetQuantity("Condensed Grace")}/4 {"Condensed Grace"}");
             Core.Logger($"Run again next week: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
             return;
         }

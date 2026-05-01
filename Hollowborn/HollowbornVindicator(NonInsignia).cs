@@ -110,11 +110,10 @@ public class HBVNonInsig
         Farm.HollowbornREP();
         HBS.DawnSanctum();
 
-        string reqName = Core.QuestRewards(10299)[0];
         Core.AddDrop("Condensed Grace");
 
         bool preFarmNextWeeks = Bot.Config!.Get<bool>("Farm4Weeks");
-        int currentQty = Bot.Inventory.GetQuantity(reqName);
+        int currentQty = Bot.Inventory.GetQuantity("Condensed Grace");
         int missingQty = 4 - currentQty;
 
         // Prefarm ON  → farm ALL remaining weeks worth of materials
@@ -135,7 +134,7 @@ public class HBVNonInsig
             VC.GetVindicatorCrest(100 * multiplier); // Vindicator Crest   (100 per weekly)
 
             // Weekly lock check AFTER farming mats (so prefarming works safely)
-            if (!Bot.Quests.IsAvailable(10299))
+            if (Bot.Quests.IsDailyComplete(10299) && !preFarmNextWeeks)
             {
                 Core.Logger("Weekly quest completed. Come back next week.");
                 Core.Logger($"Next run: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
@@ -147,9 +146,9 @@ public class HBVNonInsig
         }
 
         // Not enough weekly turn-ins yet → exit and wait for reset
-        if (!Core.CheckInventory(reqName, 4))
+        if (!Core.CheckInventory("Condensed Grace", 4))
         {
-            Core.Logger($"Progress: {Bot.Inventory.GetQuantity(reqName)}/4 {reqName}");
+            Core.Logger($"Progress: {Bot.Inventory.GetQuantity("Condensed Grace")}/4 {"Condensed Grace"}");
             Core.Logger($"Run again next week: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
             return;
         }
