@@ -8372,6 +8372,25 @@ public class CoreBots
         ToBank(selected.Select(i => i.ID).ToArray());
     }
 
+    /// <summary>
+    /// Returns a combined array of all items from Inventory and Temp Inventory.
+    /// Safe against null collections and optimized to avoid extra allocations.
+    /// </summary>
+    public ItemBase[] GetAllItems()
+    {
+        ItemBase[] inv = Bot.Inventory?.Items?.ToArray() ?? Array.Empty<ItemBase>();
+        ItemBase[] temp = Bot.TempInv?.Items?.ToArray() ?? Array.Empty<ItemBase>();
+
+        ItemBase[] result = new ItemBase[inv.Length + temp.Length];
+
+        // Copy both arrays into the result (faster than LINQ Concat + ToArray)
+        Array.Copy(inv, 0, result, 0, inv.Length);
+        Array.Copy(temp, 0, result, inv.Length, temp.Length);
+
+        return result;
+    }
+
+
     public Option<bool> SkipOptions = new(
         "SkipOption",
         "Skip this window next time",
@@ -9489,62 +9508,50 @@ public class CoreBots
 
             case "hyperium":
                 JumpWait();
-                Bot.Send.Packet(
-                    $"%xt%zm%serverUseItem%{Bot.Map.RoomID}%+%5041%525,275%{(PrivateRooms ? (map + "-" + PrivateRoomNumber) : map)}%"
-                );
+                // Complete J6 Quiz quest for Co-ords
+                if (!Bot.Quests.HasBeenCompleted(674))
+                {
+                    Join("saloon", "R7", "Left");
+                    EnsureAccept(674);
+                    GetMapItem(109, map: "saloon");
+                    EnsureComplete(674);
+                }
+                Bot.Send.Packet($"%xt%zm%serverUseItem%{Bot.Map.RoomID}%+%5041%525,275%{(PrivateRooms ? (map + "-" + PrivateRoomNumber) : map)}%");
                 Bot.Wait.ForMapLoad("hyperium");
                 break;
 
             case "moonyard":
-                JumpWait();
-                Bot.Send.Packet(
-                    $"%xt%zm%serverUseItem%{Bot.Map.RoomID}%+%5041%525,275%{(PrivateRooms ? (map + "-" + PrivateRoomNumber) : map)}%"
-                );
-                Bot.Wait.ForMapLoad("hyperium");
-                Jump("R10");
-                Bot.Map.Join(
-                    PrivateRooms ? $"{map}-" + PrivateRoomNumber : "moonyard",
-                    autoCorrect: false
-                );
+                Join("hyperium");
+                Jump("R10", "Left");
+                Bot.Map.Join(PrivateRooms ? "moonyard-" + PrivateRoomNumber : "moonyard", autoCorrect: false);
                 Bot.Wait.ForMapLoad("moonyard");
-                Sleep();
-                Bot.Wait.ForItemEquip(8733);
-                Bot.Wait.ForCellChange("MoonCut");
                 break;
 
             case "moonyardb":
-                JumpWait();
-                Bot.Send.Packet(
-                    $"%xt%zm%serverUseItem%{Bot.Map.RoomID}%+%5041%525,275%{(PrivateRooms ? ("hyperium-" + PrivateRoomNumber) : "hyperium")}%"
-                );
-                Bot.Wait.ForMapLoad("hyperium");
-                Jump("R10");
-                Bot.Map.Join(
-                    PrivateRooms ? "moonyard-" + PrivateRoomNumber : "moonyard",
-                    autoCorrect: false
-                );
-                Bot.Wait.ForMapLoad("moonyard");
-                Bot.Wait.ForItemEquip(8733);
+                Join("moonyard");
+                if (!Bot.TempInv.Contains(8733))
+                {
+                    GetMapItem(499, map: "moonyard");
+                    Bot.Wait.ForTrue(() => Bot.TempInv.Contains(8733), 20);
+                    /* Ensure we equip J5 temp armor */
+                    SendPackets($"%xt%zm%equipItem%{Bot.Map.RoomID}%8733%");
+                }
+                // Jump to Transition cell to goto yardb
+                Bot.Map.Jump("MoonCut", "Left");
+                Bot.Wait.ForCellChange("MoonCut");
                 SimpleQuestBypass((28, 35));
-                Bot.Map.Join(
-                    PrivateRooms ? $"{map}-" + PrivateRoomNumber : map,
-                    autoCorrect: false
-                );
-                Bot.Wait.ForMapLoad(strippedMap);
+                Bot.Map.Join(PrivateRooms ? $"{map}-" + PrivateRoomNumber : map, autoCorrect: false);
+                Bot.Wait.ForMapLoad("moonyardb");
                 break;
 
             case "zephyrus":
-                JumpWait();
                 Join("hyperium");
-                Bot.Send.Packet(
-                    $"%xt%zm%serverUseItem%{Bot.Map.RoomID}%+%5041%525,275%{(PrivateRooms ? (map + "-" + PrivateRoomNumber) : map)}%"
-                );
-                Bot.Wait.ForMapLoad("hyperium");
-                Jump("R10");
-                tryJoin();
-                Bot.Wait.ForCellChange("Enter");
-                Jump("R1", "Up");
-                Jump("R2", "Up");
+                Bot.Wait.ForCellChange("R10");
+                Bot.Map.Jump("R10", "Left");
+                if (!Bot.Quests.HasBeenCompleted(693))
+                    ChainComplete(693);
+                Bot.Map.Join(PrivateRooms ? $"{"zephyrus"}-" + PrivateRoomNumber : map, "R2", "Up", autoCorrect: false);
+                Bot.Wait.ForMapLoad("zephyrus");
                 break;
 
             case "icestormarena":
@@ -9874,6 +9881,8 @@ public class CoreBots
             {
                 Logger($"An error occurred: {ex.Message}. StackTrace: {ex.StackTrace}");
             }
+
+
 
             // Local handler for membership lock
             void MapIsMemberLocked(dynamic packet)
