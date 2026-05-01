@@ -4551,8 +4551,8 @@ public class CoreFarms
 
     public int FactionRank(string faction)
     {
-        if (string.IsNullOrWhiteSpace(faction)) return 0;
-        if (Bot.Reputation == null) return 0;
+        if (string.IsNullOrWhiteSpace(faction))
+            return 0;
         return Bot.Reputation.GetRank(faction);
     }
 
