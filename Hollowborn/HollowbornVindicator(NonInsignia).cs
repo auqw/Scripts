@@ -134,7 +134,7 @@ public class HBVNonInsig
             VC.GetVindicatorCrest(100 * multiplier); // Vindicator Crest   (100 per weekly)
 
             // Weekly lock check AFTER farming mats (so prefarming works safely)
-            if (Bot.Quests.IsDailyComplete(10299) && !preFarmNextWeeks)
+            if (Bot.Quests.IsDailyComplete(10299))
             {
                 Core.Logger("Weekly quest completed. Come back next week.");
                 Core.Logger($"Next run: {DateTime.Now.AddDays(7):yyyy-MM-dd HH:mm:ss}");
