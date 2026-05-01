@@ -109,7 +109,7 @@ public class HBVInsig
         HBS.DawnSanctum();
 
         string reqName = Core.QuestRewards(10300)[0];
-        Core.AddDrop(reqName);
+        Core.AddDrop("Condensed Grace");
 
         int currentQty = Bot.Inventory.GetQuantity(reqName);
         int missingQty = 4 - currentQty;
@@ -145,7 +145,7 @@ public class HBVInsig
             VC.GetVindicatorCrest(5 * multiplier);  // Vindicator Crest   (5 per weekly)
 
             Core.EnsureComplete(10300);
-            Bot.Wait.ForPickup(reqName);
+            Bot.Wait.ForPickup("Condensed Grace");
         }
 
         // Not enough weeklies yet → wait for reset

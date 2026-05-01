@@ -111,7 +111,7 @@ public class HBVNonInsig
         HBS.DawnSanctum();
 
         string reqName = Core.QuestRewards(10299)[0];
-        Core.AddDrop(reqName);
+        Core.AddDrop("Condensed Grace");
 
         bool preFarmNextWeeks = Bot.Config!.Get<bool>("Farm4Weeks");
         int currentQty = Bot.Inventory.GetQuantity(reqName);
@@ -143,7 +143,7 @@ public class HBVNonInsig
             }
 
             Core.EnsureComplete(10299);
-            Bot.Wait.ForPickup(reqName);
+            Bot.Wait.ForPickup("Condensed Grace");
         }
 
         // Not enough weekly turn-ins yet → exit and wait for reset
