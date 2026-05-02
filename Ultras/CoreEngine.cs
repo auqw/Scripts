@@ -3068,7 +3068,7 @@ public class CoreEngine
         if (IsHealthLow(50))
             if (Cast(2))
                 return;
-        if (Stacks("Doom", 10, true))
+        if (GetAuraStacks("Doom", true) > 9)
             if (Cast(4))
                 return;
         if (Cast(1))
