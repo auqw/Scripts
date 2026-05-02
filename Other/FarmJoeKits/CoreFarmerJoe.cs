@@ -765,7 +765,7 @@ public class CoreFarmerJoe
             SetClass();
             DS.GetDSS();
         }
-        
+
         UnlockForgeEnhancements.Lacerate();
     }
 
@@ -890,27 +890,50 @@ public class CoreFarmerJoe
         // Bank any LoO rewards
         Core.ToBank(Core.EnsureLoad(7156).Rewards.Select(i => i.Name).ToArray());
 
-        // Additional farming classes
-        string[] additionalClasses = { "Frost Spirit Reaver", "Northlands Monk", "Shaman" };
+        string[] additionalClasses =
+        {
+            "Frost Spirit Reaver",
+            "Northlands Monk",
+            "Shaman"
+        };
+
         Action[] getters =
         {
-            () => FSR.GetFSR(), // default rankUpClass = true
+            () => FSR.GetFSR(),
             () => NM.GetNlMonk(),
-            () => Shaman.GetShaman(),
+            () => Shaman.GetShaman()
         };
 
         for (int i = 0; i < additionalClasses.Length; i++)
         {
-            if (
-                !Core.CheckInventory(additionalClasses[i], toInv: false)
-                || !AnyRank10(new[] { additionalClasses[i] })
-            )
+            string className = additionalClasses[i];
+
+            bool hasClass = Core.CheckInventory(className, toInv: false);
+
+            // If player doesn't own the class, try to get it ONCE
+            if (!hasClass)
             {
-                Core.Logger($"Acquiring {additionalClasses[i]}");
+                Core.Logger($"{className} not owned — attempting acquisition.");
+                SetClass();
+                getters[i].Invoke();
+
+                // Recheck after attempt. If still missing, skip (seasonal / unavailable)
+                if (!Core.CheckInventory(className, toInv: false))
+                {
+                    Core.Logger($"{className} unavailable — skipping.");
+                    continue;
+                }
+            }
+
+            // At this point the class exists → now ensure rank 10
+            if (!AnyRank10(new[] { className }))
+            {
+                Core.Logger($"Ranking {className} to Rank 10.");
                 SetClass();
                 getters[i].Invoke();
             }
         }
+
 
         // Unlock Helmet Enhancements
         Core.Logger("Phase 3: Unlocking Helmet Enhancements");
