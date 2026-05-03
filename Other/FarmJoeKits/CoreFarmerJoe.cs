@@ -1326,37 +1326,26 @@ public class CoreFarmerJoe
 
     private void BankAllUnusedClasses()
     {
-        // Only keep the three classes actively being used
         string[] keep =
         [
             .. new[] { Core.SoloClass, Core.FarmClass, Core.DodgeClass }
-        .Where(x => !string.IsNullOrWhiteSpace(x))
-        .Select(x => x!)
-        .Distinct(StringComparer.OrdinalIgnoreCase)
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Select(x => x!)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
         ];
 
-        // All candidate classes across pools
-        string[] candidates =
-        [
-            .. soloClasses,
-        .. farmClasses,
-        .. dodgeClasses
-        ];
-
-        // Bank anything in inventory that isn't in the keep list
-        string[] toBank =
-        [
-            .. candidates
-        .Distinct(StringComparer.OrdinalIgnoreCase)
-        .Where(x => Bot.Inventory.Items
-                        .Any(i => i.Name.Equals(x, StringComparison.OrdinalIgnoreCase)) &&
-                    !keep.Contains(x, StringComparer.OrdinalIgnoreCase))
-        ];
+        string[] toBank = Bot.Inventory.Items
+            .Where(x => x != null
+                && x.Category == ItemCategory.Class
+                && !keep.Contains(x.Name, StringComparer.OrdinalIgnoreCase))
+            .Select(x => x.Name)
+            .ToArray();
 
         if (toBank.Length > 0)
             Core.ToBank(toBank);
     }
 
+    
     private void RankIfNeeded(string? className, string label)
     {
         if (string.IsNullOrEmpty(className))
