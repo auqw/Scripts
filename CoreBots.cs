@@ -1792,6 +1792,7 @@ public class CoreBots
         item = resolvedItem;
 
         dynamic sItem = new ExpandoObject();
+        bool succeeded = false;
         for (int i = 0; i < 5; i++)
         {
             dynamic objData = getData(item.ID, item.ShopItemID);
@@ -1802,17 +1803,19 @@ public class CoreBots
                 sItem.iQty = buy_quant;
                 sItem.iSel.iQty = buy_quant;
                 sItem.accept = 1;
+                succeeded = true;
                 break;
             }
             catch
             {
                 Sleep(1000);
             }
-            if (i == 5)
-            {
-                Logger("BuyItem Failed, crashed 5 times", stopBot: true);
-                return;
-            }
+        }
+
+        if (!succeeded)
+        {
+            Logger("BuyItem Failed, crashed 5 times", stopBot: true);
+            return;
         }
         Sleep(1000);
 
@@ -2900,7 +2903,7 @@ public class CoreBots
     /// <param name="items">Items to Trash/Bank</param>
     public void TrashCan(params string[] items)
     {
-        while (Bot.ShouldExit && (Bot.Player.InCombat || Bot.Player.HasTarget))
+        while (!Bot.ShouldExit && (Bot.Player.InCombat || Bot.Player.HasTarget))
         {
             Bot.Combat.CancelTarget();
             Bot.Combat.Exit();
@@ -3382,13 +3385,12 @@ public class CoreBots
     public void EnsureAcceptmultiple(params int[]? questIDs)
     {
         if (questIDs == null || questIDs.Length == 0)
-        {
-            questIDs = new int[] { 0 }; // Default value
-        }
+            questIDs = new int[] { 0 };
 
         List<Quest>? QuestData = InitializeWithRetries(() =>
             EnsureLoad(questIDs?.Where(q => q > 0).ToArray() ?? Array.Empty<int>())
         );
+
         if (QuestData == null)
         {
             Logger("Failed to load quests after multiple attempts.");
@@ -3406,72 +3408,30 @@ public class CoreBots
             if (Bot.Quests.IsInProgress(quest.ID) || quest.ID <= 0)
                 continue;
 
-            ItemBase[] requiredItems = quest
-      .AcceptRequirements.Where(x => !x.Temp)
-      .Concat(quest.Requirements.Where(x => !x.Temp))
-      .Where(item => item != null && item.ID > 0)
-      .ToArray();
-
-            // Loop through the required items and add the Name if either the Name or the ID is not in CurrentDrops or ToPickupIDs
-            requiredItems
-                .ToList()
-                .ForEach(item =>
-                {
-                    // Check if either the Name or ID is not in the drops or pickup list
-                    if (
-                        item != null
-                        && (
-                            !Bot.Drops.ToPickup.Contains(item.Name)
-                            || !Bot.Drops.ToPickupIDs.Contains(item.ID)
-                        )
-                    )
-                    {
-                        // Add both ID and Name to the drop list if missing (ID is incase of duplicate names)
-                        AddDrop(item.Name);
-                        AddDrop(item.ID);
-                    }
-                });
-
-            foreach (ItemBase? itemName in requiredItems)
-            {
-                if (itemName != null && !Bot.Inventory.Contains(itemName.ID))
-                {
-                    Unbank(itemName.ID);
-                }
-            }
-
-            // Loop through AcceptRequirements and Requirements for items to handle drops and pickup IDs
-            var allItems = quest
+            ItemBase[] items = quest
                 .AcceptRequirements.Concat(quest.Requirements)
-                .Where(x => !x.Temp)
+                .Where(x => x != null && !x.Temp && x.ID > 0)
                 .ToArray();
 
-            allItems
-                .ToList()
-                .ForEach(item =>
+            foreach (ItemBase item in items)
+            {
+                if (!Bot.Drops.ToPickup.Contains(item.Name) || !Bot.Drops.ToPickupIDs.Contains(item.ID))
                 {
-                    if (item == null)
-                        return;
+                    AddDrop(item.Name);
+                    AddDrop(item.ID);
+                }
 
-                    // Check if either Name or ID is missing from CurrentDrops or ToPickupIDs
-                    if (
-                        !Bot.Drops.ToPickup.Contains(item.Name)
-                        || !Bot.Drops.ToPickupIDs.Contains(item.ID)
-                    )
-                    {
-                        // Add both ID and Name to the drop list if missing (ID is incase of duplicate names)
-                        AddDrop(item.ID);
-                        AddDrop(item.Name);
-                    }
-                });
+                if (!Bot.Inventory.Contains(item.ID))
+                    Unbank(item.ID);
+            }
 
             Sleep(ActionDelay * 2);
-            // Bot.Send.Packet($"%xt%zm%acceptQuest%{Bot.Map.RoomID}%{quest.ID}%");
             Bot.Quests.EnsureAccept(quest.ID);
             Bot.Wait.ForActionCooldown(GameActions.AcceptQuest);
         }
     }
 
+    
     /// <summary>
     /// Completes the quest with a choose-able reward item
     /// </summary>
@@ -3488,9 +3448,6 @@ public class CoreBots
             Logger($"Failed to load quest with ID {questID} after multiple attempts.");
             return false;
         }
-
-        if (itemID > 0)
-            Bot.Drops.Add(itemID);
 
         if (!Bot.Drops.ToPickupIDs.Contains(itemID) && itemID > 0)
             Bot.Drops.Add(itemID);
@@ -3553,11 +3510,8 @@ public class CoreBots
             if (questData == null)
                 EnsureLoad(questID.ID);
 
-            if (
-                questData != null
-                && questID.Requirements != null
-                && (
-                    !questID.Requirements.Any()
+            if (questID.Requirements != null
+                && (!questID.Requirements.Any()
                     || questID.Requirements.All(r => r != null && r.ID > 0)
                         && CheckInventory(questID.Requirements.Select(x => x.ID).ToArray())
                 )
@@ -10371,7 +10325,6 @@ public class CoreBots
         {
             // Ensure and wait for quest acceptance
             EnsureAccept(QuestID);
-            Bot.Wait.ForTrue(() => Bot.Quests.EnsureAccept(QuestID), 20);
 
             // Abandon the quest after acceptance
             AbandonQuest(QuestID);
@@ -10592,112 +10545,6 @@ public class CoreBots
     #endregion Map
 
     #region AutoReport
-
-    // public void AutoReport(AutoReportType type, Exception? e = null, LockedQuestData? lqd = null)
-    // {
-    //     if (e == null && lqd == null)
-    //         return;
-
-    //     string path = loadedBot;
-    //     string idPath = Path.Combine(ClientFileSources.SkuaDIR, "AutoReportIdentity.txt");
-    //     if (File.Exists(idPath))
-    //     {
-    //         string identity = File.ReadAllText(idPath);
-    //         if (IdentityControl(ref identity))
-    //         {
-    //             Dictionary<string, string> bodyValues = new()
-    //             {
-    //                 {"entry.2118425091", "Bug Report"},
-    //                 {"entry.290078150", path},
-    //                 {"entry.1700030786", identity},
-    //             };
-
-    //             switch (type)
-    //             {
-    //                 case AutoReportType.ScriptCrash:
-    //                     if (e == null)
-    //                         return;
-
-    //                     List<string> ScriptLogs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script);
-
-    //                     bodyValues.Add("entry.1803231651", "It stopped at the wrong time (crash)");
-    //                     bodyValues.Add("entry.1954840906", ScriptLogs.Skip(ScriptLogs.Count - 6).Join("\n"));
-    //                     bodyValues.Add("entry.285894207", e.ToString());
-    //                     break;
-
-    //                 case AutoReportType.LockedQuest:
-    //                     if (lqd == null)
-    //                         return;
-
-    //                     bodyValues.Add("entry.1803231651", "I got a popup saying a quest was not unlocked");
-    //                     bodyValues.Add("entry.1918245848", $"{lqd.ID}");
-    //                     bodyValues.Add("entry.1809007115", $"{lqd.ExpectedValue}/{lqd.Slot}");
-    //                     bodyValues.Add("entry.493943632", $"{lqd.CurrentValue}/{lqd.Slot}");
-    //                     bodyValues.Add("entry.148016785", lqd.Name);
-    //                     break;
-    //             }
-
-    //             FormUrlEncodedContent content = new(bodyValues);
-    //             WebClient.PostAsync(
-    //                             "https://docs.google.com/forms/d/e/" +
-    //                             "1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg" +
-    //                             "/formResponse",
-    //                             content);
-    //         }
-    //         else ManualReport();
-    //     }
-    //     else ManualReport();
-    //     Bot.Stop(type == AutoReportType.LockedQuest);
-
-    //     void ManualReport()
-    //     {
-    //         switch (type)
-    //         {
-    //             case AutoReportType.ScriptCrash:
-    //                 if (e == null)
-    //                     break;
-
-    //                 string scriptCrashMessage = "A crash has been detected\n" + e.ToString();
-    //                 Logger(scriptCrashMessage);
-    //                 if (Bot.ShowMessageBox(scriptCrashMessage + "\n\nPress Yes to be be brought to the report form", "Quest not unlocked", true) == true)
-    //                 {
-    //                     List<string> ScriptLogs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script);
-
-    //                     Process.Start("explorer", $"\"https://docs.google.com/forms/d/e/1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg/viewform?usp=pp_url&" +
-    //                                                  "entry.2118425091=Bug+Report&" +
-    //                                                 $"entry.290078150={path}&" +
-    //                                                  "entry.1803231651=It+stopped+at+the+wrong+time+(crash)&" +
-    //                                                 $"entry.1954840906={ScriptLogs.Skip(ScriptLogs.Count - 6).Join("\n")}&" +
-    //                                                 $"entry.285894207={e}\"");
-    //                 }
-    //                 break;
-
-    //             case AutoReportType.LockedQuest:
-    //                 if (lqd == null)
-    //                     break;
-
-    //                 string lockedQuestMessage = $"Quest \"{lqd.Name}\" [{lqd.ID}] is not unlocked.\n" +
-    //                                             $"Expected value = [{lqd.ExpectedValue}/{lqd.Slot}], but received = [{lqd.CurrentValue}/{lqd.Slot}]\n" +
-    //                                              "Please Join the discord, and @Tato2 or @Bogalj with a screenshot of the issue (The `Logs` button > `Scripts` tab) + the ingame \"Current Quest\" area.\n" +
-    //                                              "Do you wish to be brought to the discord?";
-    //                 Logger(lockedQuestMessage);
-    //                 if (Bot.ShowMessageBox(lockedQuestMessage, "Quest not unlocked", true) == true)
-    //                 {
-    //                     // Process.Start("explorer", $"\"https://docs.google.com/forms/d/e/1FAIpQLSeI_S99Q7BSKoUCY2O6o04KXF1Yh2uZtLp0ykVKsFD1bwAXUg/viewform?usp=pp_url&" +
-    //                     //                              "entry.2118425091=Bug+Report&" +
-    //                     //                             $"entry.290078150={path}&" +
-    //                     //                              "entry.1803231651=I+got+a+popup+saying+a+quest+was+not+unlocked&" +
-    //                     //                             $"entry.1918245848={lqd.ID}&" +
-    //                     //                             $"entry.1809007115={lqd.ExpectedValue}/{lqd.Slot}&" +
-    //                     //                             $"entry.493943632={lqd.CurrentValue}/{lqd.Slot}&" +
-    //                     //                             $"entry.148016785={lqd.Name}\"");
-    //                     Process.Start("explorer", $"https://discord.com/channels/1090693457586176013/1090741396970938399");
-
-    //                 }
-    //                 break;
-    //         }
-    //     }
-    // }
     public void AutoReport(AutoReportType type, Exception? e = null, LockedQuestData? lqd = null)
     {
         if (e == null && lqd == null)
@@ -10751,61 +10598,6 @@ public class CoreBots
         Bot.StopSync(type == AutoReportType.LockedQuest);
     }
 
-    // public bool IdentityControl(ref string identity)
-    // {
-    //     identity = identity.Trim().Replace("​", ""); //There is a 0-width charactr in the first ""
-    //     while (identity.Contains("  "))
-    //         identity = identity.Replace("  ", " ");
-
-    //     if (identity.Length < 7)
-    //     {
-    //         FaultyInput("It's too short");
-    //         return false;
-    //     }
-    //     if (identity.Length > 37)
-    //     {
-    //         FaultyInput("It's too long");
-    //         return false;
-    //     }
-
-    //     if (!identity.Contains('#'))
-    //     {
-    //         FaultyInput("It doesn't contain a '#'");
-    //         return false;
-    //     }
-    //     if (identity[^5..^4] != "#")
-    //     {
-    //         FaultyInput("It doesn't have a '#' in the right location");
-    //         return false;
-    //     }
-
-    //     if (!int.TryParse(identity[^4..], out int _numbers))
-    //     {
-    //         FaultyInput("It's missing the 4 digits at the end");
-    //         return false;
-    //     }
-
-    //     foreach (string s in new string[] { "@", "#", ":", "```", "discord" })
-    //     {
-    //         if (!identity[..^5].Contains(s))
-    //             continue;
-
-    //         if (s == "#")
-    //             FaultyInput("There can only be one '#', which is near the end");
-    //         else FaultyInput($"It's not able to contain the character '{s}'");
-    //         return false;
-    //     }
-
-    //     if (identity[..^5].ToLower() == "everyone" || identity[..^5].ToLower() == "here")
-    //     {
-    //         FaultyInput($"It cannot be {identity[..^5]}");
-    //         return false;
-    //     }
-
-    //     return true;
-
-    //     void FaultyInput(string text) => Bot.ShowMessageBox($"Invalid Discord username detected:\n{text}!", "Invalid AutoReport Identity");
-    // }
     public bool IdentityControl(ref string identity)
     {
         identity = identity.Trim().Replace("\u200B", ""); // Remove zero-width character
