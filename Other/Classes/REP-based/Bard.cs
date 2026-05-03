@@ -44,7 +44,7 @@ public class Bard
 
     public void GetBard(bool rankUpClass = true)
     {
-        if (Core.CheckInventory("Bard") || !Core.IsMember)
+        if (Core.CheckInventory("Bard"))
             return;
 
         LOC.Kimberly();
