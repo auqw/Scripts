@@ -1254,21 +1254,15 @@ public class CoreFarmerJoe
 
 
     #region BTS
-    string? solo;
-    string? farm;
-    string? dodge;
-    bool HasEnhancedDodge = false;
-    int PreEnhLvl = 0;
-    int PostEnhLvl = 0;
     private int _lastCheckedLevel = 0;
     private string? _lastSolo;
     private string? _lastFarm;
     private string? _lastDodge;
 
-
     public void SetClass()
     {
         Core.ReadCBO();
+        _classCache.Clear();
 
         // Skip if nothing meaningful changed
         if (ShouldSkipSetClass())
@@ -1279,52 +1273,24 @@ public class CoreFarmerJoe
         Core.FarmClass = ResolveClass(Core.FarmClass, farmClasses, out _) ?? Core.FarmClass;
         Core.DodgeClass = ResolveClass(Core.DodgeClass, dodgeClasses, out _) ?? Core.DodgeClass;
 
-        // Build ownership lookup (inventory + bank)
-        HashSet<string> ownedClasses = Bot.Inventory.Items
-            .Select(i => i.Name)
-            .Concat(Bot.Bank.Items.Select(i => i.Name))
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
-
-        BankAllUnusedClasses(ownedClasses);
-
-        Core.ReadCBO();
-
         (string? Class, string Label)[] rankTargets =
         [
             (Core.SoloClass, "SoloClass"),
-            (Core.FarmClass, "FarmClass"),
-            (Core.DodgeClass, "DodgeClass")
+        (Core.FarmClass, "FarmClass"),
+        (Core.DodgeClass, "DodgeClass")
         ];
 
         foreach ((string? className, string label) in rankTargets)
-        {
-            if (string.IsNullOrWhiteSpace(className))
-                continue;
-
-            if (Core.CheckClassRank(false, className) >= 10)
-                continue;
-
-            Core.Logger($"{label} resolved -> {className}");
-            Adv.RankUpClass(className);
-        }
+            RankIfNeeded(className, label);
 
         Core.EquipClass(ClassType.Solo);
 
-        if (Core.AutoEnhance && !HasEnhancedDodge && PostEnhLvl < Bot.Player?.Level)
-        {
-            PreEnhLvl = Bot.Player?.Level ?? 0;
-            if (Bot.Player?.CurrentClass?.Name != null)
-                Adv.SmartEnhance(Bot.Player.CurrentClass.Name);
-            PostEnhLvl = Bot.Player?.Level ?? 0;
-            HasEnhancedDodge = true;
-        }
-
         _lastCheckedLevel = Bot.Player?.Level ?? 0;
-
         _lastSolo = Core.SoloClass;
         _lastFarm = Core.FarmClass;
         _lastDodge = Core.DodgeClass;
 
+        BankAllUnusedClasses();
     }
 
     private bool ShouldSkipSetClass()
@@ -1358,15 +1324,15 @@ public class CoreFarmerJoe
         return !string.IsNullOrEmpty(found) ? found : current;
     }
 
-    private void BankAllUnusedClasses(HashSet<string> owned)
+    private void BankAllUnusedClasses()
     {
-        // Classes we must NEVER bank
+        // Only keep the three classes actively being used
         string[] keep =
         [
-            .. new[] { solo, farm, dodge, Core.SoloClass, Core.FarmClass, Core.DodgeClass }
-            .Where(x => !string.IsNullOrWhiteSpace(x))
-            .Select(x => x!)
-            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .. new[] { Core.SoloClass, Core.FarmClass, Core.DodgeClass }
+        .Where(x => !string.IsNullOrWhiteSpace(x))
+        .Select(x => x!)
+        .Distinct(StringComparer.OrdinalIgnoreCase)
         ];
 
         // All candidate classes across pools
@@ -1377,13 +1343,14 @@ public class CoreFarmerJoe
         .. dodgeClasses
         ];
 
-        // Bank anything we own that isn't in the keep list
+        // Bank anything in inventory that isn't in the keep list
         string[] toBank =
         [
             .. candidates
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .Where(x => owned.Contains(x) &&
-                        !keep.Contains(x, StringComparer.OrdinalIgnoreCase))
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .Where(x => Bot.Inventory.Items
+                        .Any(i => i.Name.Equals(x, StringComparison.OrdinalIgnoreCase)) &&
+                    !keep.Contains(x, StringComparer.OrdinalIgnoreCase))
         ];
 
         if (toBank.Length > 0)
@@ -1401,7 +1368,7 @@ public class CoreFarmerJoe
         Core.Logger($"{label} resolved -> {className}");
         Adv.RankUpClass(className);
     }
-
+    #endregion BTS
 
     /// <summary>
     /// Enhances the first item from the given list of items in the player's inventory, if found.
@@ -1439,7 +1406,6 @@ public class CoreFarmerJoe
             }
         }
     }
-    #endregion BTS
 
 
     #region Explanation:
