@@ -67,6 +67,8 @@ public class CoreAOR
         SanctuaryAiwass(false, false);
         ForgeAlbedo(false, false);
         FortLuma(false, false);
+        WarWickForest();
+
     }
 
     public void TerminaTemple(bool seaVoice = false, bool coldThunder = false)
@@ -1241,6 +1243,7 @@ public class CoreAOR
 
     }
 
+
     public void WarWickForest(bool seaVoice = false, bool coldThunder = false)
     {
         FortLuma(seaVoice, coldThunder);
@@ -1341,6 +1344,105 @@ public class CoreAOR
 
     }
 
+    public void MagnumOpus(bool seaVoice = false, bool coldThunder = false)
+    {
+        if (Story.QuestProgression(10704))
+            return;
+
+        WarWickForest(true, true);
+
+        Story.MapItemQuest(10703, "magnumopus", 15703, AutoCompleteQuest: false);
+
+        if (!Story.QuestProgression(10704))
+        {
+            Core.EnsureAccept(10704);
+            if (!string.IsNullOrEmpty(Core.BossClass))
+                Core.EquipClass(ClassType.Boss);
+            else
+            {
+                Bot.Log("BossClass is empty/unselected in CBO, we'll use the Solo class or if thats empty, the currently equipped class.");
+                Core.EquipClass(ClassType.Solo);
+            }
+            Bot.Events.ExtensionPacketReceived += FlameoftheBeyond;
+
+            while (!Bot.ShouldExit && !Bot.TempInv.Contains("Flame of the Beyond Defeated"))
+            {
+                if (Bot.Map.Name != "magnumopus")
+                    Core.Join("magnumopus");
+
+                if (Bot.Player.Cell != "r2")
+                    Core.Jump("r2", "bottom");
+
+                Bot.Combat.Attack("*");
+
+                Bot.Sleep(200);
+                if (Bot.TempInv.Contains("Flame of the Beyond Defeated"))
+                    break;
+            }
+
+            Bot.Events.ExtensionPacketReceived -= FlameoftheBeyond;
+            Core.EnsureComplete(10704);
+        }
+
+        async void FlameoftheBeyond(dynamic packet)
+        {
+            if (packet?["params"]?.type?.ToString() != "json")
+                return;
+            if (!Bot.Player.Alive)
+                return;
+            dynamic data = packet["params"].dataObj;
+            if (data?.cmd?.ToString() != "event")
+                return;
+            string? zoneSet = data?.args?.zoneSet?.ToString();
+            if (string.IsNullOrEmpty(zoneSet))
+                return;
+
+            float px = Bot.Player.X;
+            float py = Bot.Player.Y;
+
+            // Zone A active, walk right
+            if (string.Equals(zoneSet, "A", StringComparison.OrdinalIgnoreCase))
+            {
+                /* box of : 
+                x: 550, y: 339
+                x: 678, y: 465
+                */
+                if (px >= 550 && px <= 678 && py >= 339 && py <= 465)
+                    return;
+
+                int randX = Random.Shared.Next(550, 678);
+                int randY = Random.Shared.Next(339, 465);
+                _ = Task.Run(() => Bot.Player.WalkTo(randX, randY));
+                return;
+            }
+
+            // Zone B active, walk left
+            if (string.Equals(zoneSet, "B", StringComparison.OrdinalIgnoreCase))
+            {
+                /* box of : 
+                x: 426, y: 359
+                x: 211, y: 445
+                */
+                if (px >= 211 && px <= 426 && py >= 359 && py <= 445)
+                    return;
+
+                int randX = Random.Shared.Next(211, 426);
+                int randY = Random.Shared.Next(359, 445);
+                _ = Task.Run(() => Bot.Player.WalkTo(randX, randY));
+                return;
+            }
+        }
+
+    }
+
+    public void Epilogue(bool seaVoice = false, bool coldThunder = false)
+    {
+
+        /* 
+        Not Out *Yet*
+        */
+
+    }
 
     // Mostly for `Skye's Lightning` for the Merge
     public void ColdThunderBoss(string? item = null, int quant = 1, bool isTemp = true)
