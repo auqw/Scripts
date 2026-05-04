@@ -1455,25 +1455,34 @@
   },
   "Chaos Slayer Berserker": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
         },
         {
-          "skillId": 1
-        },
-        {
           "skillId": 2
         },
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Courageous",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 1
         }
       ]
     },
     "Farm": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
@@ -1483,32 +1492,50 @@
           "skillId": 2
         },
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0.5,
+              "comparison": "less",
+              "auraName": "Courageous",
+              "auraTarget": "self"
+            }
+          ]
         }
       ]
     }
   },
   "Chaos Slayer Cleric": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
         },
         {
-          "skillId": 1
-        },
-        {
           "skillId": 2
         },
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0.5,
+              "comparison": "less",
+              "auraName": "Courageous",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 1
         }
       ]
     },
     "Farm": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
@@ -1518,32 +1545,50 @@
           "skillId": 2
         },
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0.5,
+              "comparison": "less",
+              "auraName": "Courageous",
+              "auraTarget": "self"
+            }
+          ]
         }
       ]
     }
   },
   "Chaos Slayer Mystic": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
         },
         {
-          "skillId": 1
-        },
-        {
           "skillId": 2
         },
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0.5,
+              "comparison": "less",
+              "auraName": "Courageous",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 1
         }
       ]
     },
     "Farm": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
@@ -1553,32 +1598,50 @@
           "skillId": 2
         },
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0.5,
+              "comparison": "less",
+              "auraName": "Courageous",
+              "auraTarget": "self"
+            }
+          ]
         }
       ]
     }
   },
   "Chaos Slayer Thief": {
     "Base": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
           "skillId": 3
         },
         {
-          "skillId": 1
-        },
-        {
           "skillId": 2
         },
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0.5,
+              "comparison": "less",
+              "auraName": "Courageous",
+              "auraTarget": "self"
+            }
+          ]
+        },
+        {
+          "skillId": 1
         }
       ]
     },
     "Farm": {
-      "skillUseMode": "WaitForCooldown",
+      "skillUseMode": "UseIfAvailable",
       "skillTimeout": 100,
       "skills": [
         {
@@ -1588,7 +1651,16 @@
           "skillId": 2
         },
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0.5,
+              "comparison": "less",
+              "auraName": "Courageous",
+              "auraTarget": "self"
+            }
+          ]
         }
       ]
     }
@@ -3115,28 +3187,7 @@
     }
   },
   "Dragon of Time": {
-    "Farm": {
-      "skillUseMode": "WaitForCooldown",
-      "skillTimeout": 100,
-      "skills": [
-        {
-          "skillId": 1
-        },
-        {
-          "skillId": 2
-        },
-        {
-          "skillId": 3
-        },
-        {
-          "skillId": 4
-        },
-        {
-          "skillId": 2
-        }
-      ]
-    },
-    "Solo": {
+    "Base": {
       "skillUseMode": "WaitForCooldown",
       "skillTimeout": 100,
       "skills": [
@@ -3154,6 +3205,9 @@
         },
         {
           "skillId": 4
+        },
+        {
+          "skillId": 2
         }
       ]
     }
