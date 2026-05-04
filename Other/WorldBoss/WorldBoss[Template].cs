@@ -15,8 +15,8 @@ using Skua.Core.Models.Quests;
 
 public class KillWorldBoss
 {
-    private IScriptInterface Bot => IScriptInterface.Instance;
-    private CoreBots Core => CoreBots.Instance;
+    private static IScriptInterface Bot => IScriptInterface.Instance;
+    private static CoreBots Core => CoreBots.Instance;
 
     public void ScriptMain(IScriptInterface Bot)
     {
@@ -27,47 +27,51 @@ public class KillWorldBoss
 
         Core.SetOptions(false);
     }
+    readonly Dictionary<string, int> Drops = new()
+    {
+        ["Drop1"] = 1,
+        ["Drop2"] = 1
+    };
+
+    readonly string Map = "Map";
+    readonly string Cell = "WB Cell";
+    readonly string Pad = "WB Pad";
 
     void WorldBoss()
     {
-
         Core.RegisterQuests(10702);
-        Core.AddDrop("Flame of the Magnum Opus");
-        Core.FarmingLogger("Flame of the Magnum Opus", 1000);
-
+        Core.AddDrop(Drops.Keys.ToArray());
+        foreach (var d in Drops)
+            Core.FarmingLogger(d.Key, d.Value);
 
         if (!string.IsNullOrEmpty(Core.BossClass))
             Core.EquipClass(ClassType.Boss);
         else
         {
-            Bot.Log("BossClass is empty/unselected in CBO, we'll use the Solo class or if thats empty, the currently equipped class.");
+            Bot.Log("BossClass is empty/unselected in CBO, we'll use the Solo class or if that's empty, the currently equipped class.");
             Core.EquipClass(ClassType.Solo);
         }
-        Bot.Events.ExtensionPacketReceived += FlameoftheBeyond;
+
+        Bot.Events.ExtensionPacketReceived += Listener;
         Bot.Options.AttackWithoutTarget = true;
 
-        while (!Bot.ShouldExit && !Core.CheckInventory("Flame of the Magnum Opus", 1000))
+        while (!Bot.ShouldExit && !Drops.All(d => Core.CheckInventory(d.Key, d.Value)))
         {
-            if (Bot.Map.Name != "magnumopus")
-                Core.Join("magnumopus");
-
-            if (Bot.Player.Cell != "r2")
-                Core.Jump("r2", "bottom");
-
-
+            if (Bot.Map.Name != Map)
+                Core.Join(Map);
+            if (Bot.Player.Cell != Cell)
+                Core.Jump(Cell, Pad);
             Bot.Combat.Attack("*");
-
             Bot.Sleep(200);
-            if (Bot.Inventory.Contains("Flame of the Magnum Opus", 1000))
+            if (Drops.All(d => Core.CheckInventory(d.Key, d.Value)))
                 break;
         }
 
         Bot.Options.AttackWithoutTarget = false;
-        Bot.Events.ExtensionPacketReceived -= FlameoftheBeyond;
+        Bot.Events.ExtensionPacketReceived -= Listener;
     }
 
-
-    public async void FlameoftheBeyond(dynamic packet)
+    public async void Listener(dynamic packet)
     {
         if (packet?["params"]?.type?.ToString() != "json")
             return;
@@ -118,6 +122,3 @@ public class KillWorldBoss
 
 
 }
-
-
-
