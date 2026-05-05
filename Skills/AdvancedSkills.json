@@ -2964,7 +2964,7 @@
           "rules": [
             {
               "type": "Mana",
-              "value": 15,
+              "value": 10,
               "comparison": "less",
               "isPercentage": true
             }
@@ -3073,7 +3073,17 @@
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 1
+          "skillId": 1,
+          "rules": [
+            {
+              "type": "Aura",
+              "value": 0,
+              "comparison": "less",
+              "auraName": "Blood Boil",
+              "auraTarget": "self"
+            }
+          ],
+          "skipOnMatch": true
         },
         {
           "skillId": 2
@@ -3082,7 +3092,26 @@
           "skillId": 3
         },
         {
-          "skillId": 4
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Health",
+              "value": 40,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ]
+        },
+        {
+          "skillId": 4,
+          "rules": [
+            {
+              "type": "Mana",
+              "value": 10,
+              "comparison": "less",
+              "isPercentage": true
+            }
+          ]
         }
       ]
     }
