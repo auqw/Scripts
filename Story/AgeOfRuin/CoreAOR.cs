@@ -442,67 +442,66 @@ public class CoreAOR
         SoW.ManaCradle();
         DeepWater(panopticonMerge: false, seaVoice: false, coldThunder: false);
         Story.PreLoad(this);
+        Core.EnsureAccept(9348);
 
-        if (!Core.isCompletedBefore(9348))
+        string[] possibleSoloClasses = new[]
         {
-            Core.EnsureAccept(9348);
+        "Chrono ShadowHunter",
+        "Chrono ShadowSlayer",
+        "Chaos Avenger",
+        "Verus DoomKnight",
+        "Hollowborn Vindicator",
+        "Lich",
+        "ArchPaladin",
+        "Lord Of Order",
+        "StoneCrusher",
+        "Dragon of Time",
+        "Unundead Goat",
+    };
 
+        // Build owned class lookup (inventory + bank)
+        HashSet<string> ownedClasses =
+            Bot.Inventory?.Items?.Select(i => i.Name)
+                .Concat(Bot.Bank?.Items?.Select(i => i.Name) ?? Enumerable.Empty<string>())
+                .ToHashSet()
+            ?? new();
 
-            // Define the possible solo classes
-            string[] PossibleSoloClasses = new[]
-            {
-            "Chrono ShadowHunter",
-            "Chrono ShadowSlayer",
-            "Chaos Avenger",
-            "Verus DoomKnight",
-            "Hollowborn Vindicator",
-            "Lich",
-            "ArchPaladin",
-            "Lord Of Order",
-            "StoneCrusher",
-            "Dragon of Time",
-            "Unundead Goat",
-        };
+        // Priority chain:
+        // 1) BossClass
+        // 2) SoloClass
+        // 3) First owned meta solo class
+        // 4) Currently equipped class
+        string? selectedClass =
+            Core.BossClass
+            ?? Core.SoloClass
+            ?? possibleSoloClasses.FirstOrDefault(ownedClasses.Contains)
+            ?? Bot.Player?.CurrentClass?.Name;
 
-            if (!Core.CheckInventory(PossibleSoloClasses, any: true))
-                Core.Logger(
-                    "No soloing classes found in inventory; stopping (go get AP at least and rerun)",
-                    stopBot: true
-                );
-
-            string? selectedClass =
-                PossibleSoloClasses.FirstOrDefault(className =>
-                    Bot.Inventory.Items.Any(item => item.Name == className)
-                    || Bot.Bank.Items.Any(item => item.Name == className)
-                ) ?? Bot.Player.CurrentClass?.Name;
-
-            if (string.IsNullOrWhiteSpace(selectedClass))
-            {
-                Core.Logger("No soloing class found and nothing equipped; aborting SeaVoice.");
-                return;
-            }
-
-            Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
-
-            Adv.GearStore(EnhAfter: true);
-            Adv.SmartEnhance(selectedClass);
-
-            KillThing(
-                map: "seavoice",
-                mobMapID: 1,
-                itemUsed: 78994,
-                Class: selectedClass,
-                item: "Voice in the Sea Defeated",
-                quant: 1,
-                isTemp: true
-            );
-
-            Adv.GearStore(true, EnhAfter: true);
-            Core.EnsureComplete(9348);
-            Core.SellItem("Vigil", all: true);
+        if (string.IsNullOrWhiteSpace(selectedClass))
+        {
+            Core.Logger("No solo class found and no class equipped; aborting SeaVoice.");
+            return;
         }
-    }
 
+        Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
+
+        Adv.GearStore(EnhAfter: true);
+        Adv.SmartEnhance(selectedClass);
+
+        KillThing(
+            map: "seavoice",
+            mobMapID: 1,
+            itemUsed: 78994,
+            Class: selectedClass,
+            item: "Voice in the Sea Defeated",
+            quant: 1,
+            isTemp: true
+        );
+
+        Adv.GearStore(true, EnhAfter: true);
+        Core.EnsureComplete(9348);
+        Core.SellItem("Vigil", all: true);
+    }
     public void Balemorale(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(9729))
@@ -1249,7 +1248,6 @@ public class CoreAOR
         FortLuma(seaVoice, coldThunder);
         if (Core.isCompletedBefore(10687))
             return;
-
         Story.PreLoad(this);
 
         #region Useable Monsters
