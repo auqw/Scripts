@@ -115,26 +115,23 @@ public class FireChampionsArmor
         if (Core.CheckInventory("Void Scale", VoidScaleQuant))
             return;
 
-        //why the fuck was the class buffed!?
-        InventoryItem? usethis = Bot
-            .Inventory.Items.Concat(Bot.Bank.Items)
-            .FirstOrDefault(n =>
-                n.Name.Equals("Yami no Ronin") || n.Name.StartsWith("Chaos Slayer")
-            );
+        HashSet<string> OptimalClasses = ["Yami no Ronin", "Chaos Slayer"];
+
+        InventoryItem? usethis = Bot.Inventory.Items.Concat(Bot.Bank.Items)
+            .FirstOrDefault(n => OptimalClasses.Any(o => n.Name.Equals(o) || n.Name.StartsWith(o)));
+
+        Core.Logger(usethis != null ? $"{usethis.Name} found -- equipping optimal class."
+            : !string.IsNullOrEmpty(Core.DodgeClass) ? "No optimal class found, falling back to Dodge Class."
+            : "No optimal/dodge class found, using equipped class for Archfiend Dragonlord... GOOD LUCK!!");
+
         if (usethis != null)
         {
             Core.Equip(usethis.ID);
-            Core.Equip(Core.FarmGear);
+            Core.Equip(Core.DodgeGear);
         }
-        else
+        else if (!string.IsNullOrEmpty(Core.DodgeClass))
             Core.EquipClass(ClassType.Dodge);
 
-        Core.HuntMonster(
-            "underlair",
-            "Archfiend Dragonlord",
-            "Void Scale",
-            VoidScaleQuant,
-            isTemp: false
-        );
+        Core.HuntMonster("underlair", "Archfiend Dragonlord", "Void Scale", VoidScaleQuant, isTemp: false);
     }
 }
