@@ -16354,11 +16354,11 @@
       "flame of the magnum opus",
       "flame of the beyond"
     ],
-    "path": "Other/WorldBoss/WorldBoss[FlameoftheBeyond].cs",
-    "size": 3589,
-    "sha256": "7d580e3f7f403de81aaded6f53a50f0bf6624b85d1d335f8935c205b5e31c50c",
-    "fileName": "WorldBoss[FlameoftheBeyond].cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/WorldBoss/WorldBoss[FlameoftheBeyond].cs"
+    "path": "Other/WorldBoss/WorldBoss[Template].cs",
+    "size": 3770,
+    "sha256": "9e2bf904a6cf71e03faf841e8ba6941446c7268c66b454318fb4373697eb3cab",
+    "fileName": "WorldBoss[Template].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/WorldBoss/WorldBoss[Template].cs"
   },
   {
     "name": "Doom Metal Necro[class]",
@@ -16812,8 +16812,8 @@
       "hero-s-valiance"
     ],
     "path": "Other/Armor/FireChampionsArmor.cs",
-    "size": 4142,
-    "sha256": "5b82c9bf2f13f2babfd71ddc3cb503a4ea4e4c53016979066f22956b6e6c1ace",
+    "size": 4415,
+    "sha256": "acebd6591c7a791be2cbb7f98f352aa6c25b218459f294b21dc896aa54bd3b30",
     "fileName": "FireChampionsArmor.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Armor/FireChampionsArmor.cs"
   },
@@ -18994,8 +18994,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 55985,
-    "sha256": "bd94bb502d71ce02712ece65b24015f8d3fe23e2d716711887965e23d52004f5",
+    "size": 55828,
+    "sha256": "bbe409af6c8be757bf3a67f33d71ef83a037cd7e16cfc63e6db3c0794fc17482",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
