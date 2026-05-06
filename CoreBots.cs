@@ -832,7 +832,7 @@ public class CoreBots
 
         string eSlice = e.Message + "\n" + e.InnerException;
         List<string> logs = Ioc.Default.GetRequiredService<ILogService>().GetLogs(LogType.Script);
-        logs = logs.Skip(logs.Count > 5 ? (logs.Count - 5) : logs.Count).ToList();
+        logs = [.. logs.Skip(logs.Count > 5 ? (logs.Count - 5) : logs.Count)];
         if (
             Bot.ShowMessageBox(
                 "A crash has been detected, please fill in the report form (prefilled):\n\n"
@@ -1978,7 +1978,7 @@ public class CoreBots
                 if (v != null)
                 {
                     List<int> ids = v.Where(x => x.Name == questName).Select(q => q.ID).ToList();
-                    List<int> incompleteIDs = ids.Where(q => !isCompletedBefore(q)).ToList();
+                    List<int> incompleteIDs = [.. ids.Where(q => !isCompletedBefore(q))];
                     if (incompleteIDs.Any())
                     {
                         List<Quest>? quests = InitializeWithRetries(() =>
@@ -3431,7 +3431,7 @@ public class CoreBots
         }
     }
 
-    
+
     /// <summary>
     /// Completes the quest with a choose-able reward item
     /// </summary>
@@ -3772,7 +3772,7 @@ public class CoreBots
         for (int i = 0; i < missing.Count; i += batchSize)
         {
             int take = Math.Min(batchSize, missing.Count - i);
-            int[] batch = missing.GetRange(i, take).ToArray();
+            int[] batch = [.. missing.GetRange(i, take)];
             Bot.Quests.Load(batch);
             Sleep(1500);
         }
@@ -3783,7 +3783,7 @@ public class CoreBots
 
         if (toReturn.Count < questIDs.Length)
         {
-            List<Quest>? fileQuests = EnsureLoadFromFile(missing.ToArray()).Result;
+            List<Quest>? fileQuests = EnsureLoadFromFile([.. missing]).Result;
             if (fileQuests != null)
                 toReturn.AddRange(fileQuests.Where(q => !toReturn.Any(x => x.ID == q.ID)));
 
@@ -4057,7 +4057,7 @@ public class CoreBots
             );
         }
 
-        return toReturn.ToArray();
+        return [.. toReturn];
     }
 
     /// <summary>
@@ -4080,7 +4080,7 @@ public class CoreBots
             toReturn.AddRange(q.Rewards.Where(r => r != null).Select(r => r!.ID));
         }
 
-        return toReturn.ToArray();
+        return [.. toReturn];
     }
 
     /// <summary>
@@ -4121,7 +4121,7 @@ public class CoreBots
             }
         }
 
-        return toReturn.ToArray();
+        return [.. toReturn];
     }
 
     /// <summary>
@@ -5354,9 +5354,8 @@ public class CoreBots
         // If no MapMonsterClassPairs are provided, auto-generate default values
         if (MapMonsterClassPairs.Length == 0)
         {
-            MapMonsterClassPairs = quest
-                .Requirements.Select(_ => ("Fill ME", "Fill ME", ClassType.Solo))
-                .ToArray();
+            MapMonsterClassPairs = [.. quest
+                .Requirements.Select(_ => ("Fill ME", "Fill ME", ClassType.Solo))];
         }
 
         for (int i = 0; i < MapMonsterClassPairs.Length && i < quest.Requirements.Count; i++)
@@ -5507,9 +5506,8 @@ public class CoreBots
         );
 
         if (mapMonsterClassPairs.Length == 0)
-            mapMonsterClassPairs = quest
-                .Requirements.Select(_ => ("default_map", "default_monster", ClassType.Solo))
-                .ToArray();
+            mapMonsterClassPairs = [.. quest
+                .Requirements.Select(_ => ("default_map", "default_monster", ClassType.Solo))];
         else if (mapMonsterClassPairs.Length > quest.Requirements.Count)
             Logger(
                 $"⚠️🛑 More map-monster-class pairs provided than quest requirements. Extra pairs will be ignored.",
@@ -5712,9 +5710,8 @@ public class CoreBots
         Bot.Drops.Add(allRequirements.Where(x => !x.Temp).Select(x => x.Name).Distinct().ToArray());
 
         if (mapMonsterClassPairs.Length == 0)
-            mapMonsterClassPairs = quest
-                .Requirements.Select(_ => ("default_map", "default_monster", ClassType.Solo))
-                .ToArray();
+            mapMonsterClassPairs = [.. quest
+                .Requirements.Select(_ => ("default_map", "default_monster", ClassType.Solo))];
         else if (mapMonsterClassPairs.Length > quest.Requirements.Count)
             Logger(
                 $"⚠️🛑 More map-monster-class pairs provided than quest requirements. Extra pairs will be ignored.",
@@ -5864,6 +5861,8 @@ public class CoreBots
             HuntMonsterQuestChoose(106, 202, mapName: "Map5", monsterName: "MonsterE", log: true);
     */
 
+    int MobFindRetry = 0;
+
     /// <summary>
     /// Finds monsters on the map, optionally filtering by MapID or monster name.<br/>
     /// Supports wildcards ("*") to return all monsters.<br/>
@@ -5882,6 +5881,9 @@ public class CoreBots
         if (!Bot.Player.Loaded)
             Bot.Wait.ForTrue(() => Bot.Player.Loaded, 20);
 
+        if (Bot.Map.Name != map)
+            Join(map);
+            
         IEnumerable<Monster> candidates = Bot.Monsters.MapMonsters
             .Where(x => x != null && !string.IsNullOrWhiteSpace(x.Name));
 
@@ -5903,7 +5905,7 @@ public class CoreBots
 
         // "*" → everything valid
         if (string.IsNullOrWhiteSpace(monster) || monster == "*")
-            return candidates.ToList();
+            return [.. candidates];
 
         string target = monster.FormatForCompare();
 
@@ -5951,7 +5953,7 @@ public class CoreBots
                   + $"Auto-correcting to closest match: \"{closestMatch.Name}\" (distance {distance})"
                 );
 
-                return new[] { closestMatch }.ToList();
+                return [closestMatch];
             }
         }
 
@@ -5965,9 +5967,21 @@ public class CoreBots
             $"❌ Monster \"{monster}\" not found in /{map}. "
           + $"Visible monsters: {string.Join(", ", visible)}"
         );
+        MobFindRetry++;
 
-        return new();
+        if (MobFindRetry < 5)
+            return [];
 
+        Bot.Log(
+            $"Failed to Find the mob {monster} within 5 retrys"
+            + (monsterMapID > 0 ? $"[MID: {monsterMapID}]" : "")
+            + $"Do either of the following:\n" +
+            "\t1. Relog, and restart the script\n" +
+            "\t2. Try a different server."
+            + "Script will now stop.");
+        Bot.StopAsync();
+
+        return [];
     }
 
     // monster name typo cache  (requestedName -> correctedName)
@@ -7101,7 +7115,7 @@ public class CoreBots
             {
                 List<string> pathParts = new() { ClientFileSources.SkuaDIR };
                 pathParts.AddRange(cs.Replace("//cs_include ", "").Replace("\\", "/").Split('/'));
-                includedScript = File.ReadAllLines(Path.Combine(pathParts.ToArray()));
+                includedScript = File.ReadAllLines(Path.Combine([.. pathParts]));
 
                 if (includedScript.Any(line => line.Trim() == $"public class {_class}"))
                     break;
@@ -8175,7 +8189,7 @@ public class CoreBots
         List<int> toReturn = new();
         for (int i = from; i < to + 1; i++)
             toReturn.Add(i);
-        return toReturn.ToArray();
+        return [.. toReturn];
     }
 
     /// <summary>
@@ -9761,7 +9775,7 @@ public class CoreBots
                     }
 
                     // Update blacklisted cells
-                    BlackListedJumptoCells = BlackListedJumptoCells
+                    BlackListedJumptoCells = [.. BlackListedJumptoCells
                         .Union(
                             Bot.Map.Cells.Where(x =>
                                 x != null
@@ -9772,8 +9786,7 @@ public class CoreBots
                                 )
                             )
                         )
-                        .Distinct()
-                        .ToArray();
+                        .Distinct()];
 
                     // Auto-cell selection for maps (skip oaklore)
                     if (map != null && map != "oaklore" && (cell == null || cell == "Enter"))
@@ -11135,7 +11148,7 @@ public class CoreBots
         if (!CBO_Active())
             return;
 
-        CBOList = File.ReadAllLines(CBO_Path()).ToList();
+        CBOList = [.. File.ReadAllLines(CBO_Path())];
 
         //Generic
         if (CBOBool("PrivateRooms", out bool _PrivateRooms))
@@ -11241,7 +11254,7 @@ public class CoreBots
                 _SoloGear.Add(_GroundItem1);
         }
         if (_SoloGear.Count > 0)
-            SoloGear = _SoloGear.ToArray();
+            SoloGear = [.. _SoloGear];
 
         List<string> _FarmGear = new();
         if (FarmGearOn)
@@ -11260,7 +11273,7 @@ public class CoreBots
                 _FarmGear.Add(_GroundItem2);
         }
         if (_FarmGear.Count > 0)
-            FarmGear = _FarmGear.ToArray();
+            FarmGear = [.. _FarmGear];
 
         // Dodge gear
         List<string> _DodgeGear = new();
@@ -11280,7 +11293,7 @@ public class CoreBots
                 _DodgeGear.Add(_GroundItemDodge);
         }
         if (_DodgeGear.Count > 0)
-            DodgeGear = _DodgeGear.ToArray();
+            DodgeGear = [.. _DodgeGear];
 
         // Boss gear
         List<string> _BossGear = new();
@@ -11300,7 +11313,7 @@ public class CoreBots
                 _BossGear.Add(_GroundItemBoss);
         }
         if (_BossGear.Count > 0)
-            BossGear = _BossGear.ToArray();
+            BossGear = [.. _BossGear];
 
         var item = Bot
             .Inventory.Items.Concat(Bot.Bank.Items)
@@ -11902,7 +11915,7 @@ public static class UtilExtensionsS
 
     // List management
     public static T[] Except<T>(this IEnumerable<T> source, params T[] obj) =>
-        source.Except(second: obj).ToArray();
+        [.. source.Except(second: obj)];
 
     public static T? Find<T>(this IEnumerable<T> source, Predicate<T> Match) =>
         source.ToList().Find(match: Match);
