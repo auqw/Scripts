@@ -148,60 +148,65 @@ public class CoreHollowbornLichKing
         bool optionsLogged = false;
 
         var questDictionary = new Dictionary<string, (int Order, Action Action)>
-        {
-            {
-                "Draftless",
-                (
-                    9637,
-                    () =>
-                        Draftless(
-                            getAllDrops
-                                ? DraftlessRewards.All
-                                : Bot.Config!.Get<DraftlessRewards>("Draftless"),
-                            !getAllDrops && BankAfter
-                        )
+{
+    {
+        "Draftless",
+        (
+            9637,
+            (Action)(() =>
+                Draftless(
+                    getAllDrops
+                        ? DraftlessRewards.All
+                        : Bot.Config!.Get<DraftlessRewards>("Draftless"),
+                    !getAllDrops && BankAfter
                 )
-            },
-            {
-                "Flow Stress",
-                (
-                    9638,
-                    () =>
-                        FlowStress(
-                            getAllDrops
-                                ? FlowStressRewards.All
-                                : Bot.Config!.Get<FlowStressRewards>("Flow Stress"),
-                            !getAllDrops && BankAfter
-                        )
+            )
+        )
+    },
+    {
+        "Flow Stress",
+        (
+            9638,
+            (Action)(() =>
+                FlowStress(
+                    getAllDrops
+                        ? FlowStressRewards.All
+                        : Bot.Config!.Get<FlowStressRewards>("Flow Stress"),
+                    !getAllDrops && BankAfter
                 )
-            },
-            {
-                "Heat Treatment",
-                (
-                    9639,
-                    () =>
-                        HeatTreatment(
-                            getAllDrops
-                                ? HeatTreatmentRewards.All
-                                : Bot.Config!.Get<HeatTreatmentRewards>("Heat Treatment"),
-                            !getAllDrops && BankAfter
-                        )
+            )
+        )
+    },
+    {
+        "Heat Treatment",
+        (
+            9639,
+            (Action)(() =>
+                HeatTreatment(
+                    getAllDrops
+                        ? HeatTreatmentRewards.All
+                        : Bot.Config!.Get<HeatTreatmentRewards>("Heat Treatment"),
+                    !getAllDrops && BankAfter
                 )
-            },
-            {
-                "Counterblow",
-                (
-                    9640,
-                    () =>
-                        Counterblow(
-                            getAllDrops
-                                ? CounterblowRewards.All
-                                : Bot.Config!.Get<CounterblowRewards>("Counterblow"),
-                            !getAllDrops && BankAfter
-                        )
+            )
+        )
+    },
+    {
+        "Counterblow",
+        (
+            9640,
+            (Action)(() =>
+                Counterblow(
+                    getAllDrops
+                        ? CounterblowRewards.All
+                        : Bot.Config!.Get<CounterblowRewards>("Counterblow"),
+                    !getAllDrops && BankAfter
                 )
-            },
-        };
+            )
+        )
+    }
+};
+
         string[] questOrder = { "Draftless", "Flow Stress", "Heat Treatment", "Counterblow" };
 
         foreach (var quest in questOrder)
