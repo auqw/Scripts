@@ -17274,6 +17274,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/0AllClasses.cs"
   },
   {
+    "name": "Scion of Flames (Class)",
+    "description": "This script will get Scion of Flames class.",
+    "tags": [
+      "scionofflames",
+      "scion of flames"
+    ],
+    "path": "Other/Classes/ScionofFlames[WIP].cs",
+    "size": 8334,
+    "sha256": "c1dfc88769730e6972cd1f583ed8750b6e8ded3c782122f2304300fb8ce2a35c",
+    "fileName": "ScionofFlames[WIP].cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ScionofFlames[WIP].cs"
+  },
+  {
     "name": "DragonShinobi",
     "description": "null",
     "tags": [
@@ -18994,8 +19007,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 55828,
-    "sha256": "bbe409af6c8be757bf3a67f33d71ef83a037cd7e16cfc63e6db3c0794fc17482",
+    "size": 55873,
+    "sha256": "c9845930f7a9c38b2e69822f1d33d083c3827901016e70f1e486cfaee4585405",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -26806,8 +26819,8 @@
       "null"
     ],
     "path": "Hollowborn/HollowbornLichKing/CoreHollowbornLichKing.cs",
-    "size": 25527,
-    "sha256": "06f1dfcc328e50941de7d776ae68b8443c5ac68d788dc5ba6a8ec972463a5bd1",
+    "size": 25187,
+    "sha256": "eee2cc04ac1b0eb166b5a6f172addfffb8bf31e2d9018352b2d287869b883301",
     "fileName": "CoreHollowbornLichKing.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornLichKing/CoreHollowbornLichKing.cs"
   },
