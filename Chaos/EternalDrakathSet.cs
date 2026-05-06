@@ -95,15 +95,7 @@ public class EternalDrakath
         BLOD.SpiritOrb(2000);
 
         Core.EquipClass(ClassType.Farm);
-        Core.KillMonster(
-            "chaoslab",
-            "r3",
-            "Center",
-            "Chaorrupted Moglin",
-            "Crystallized Chaos",
-            800,
-            false
-        );
+        Core.KillMonster("chaoslab", "r3", "Center", "Chaorrupted Moglin", "Crystallized Chaos", 800, false);
 
         if (!Core.CheckInventory("Star Fragment", 33))
         {
@@ -114,13 +106,7 @@ public class EternalDrakath
             Core.RegisterQuests(4413);
             while (!Bot.ShouldExit && !Core.CheckInventory("Star Fragment", 33))
             {
-                Core.HuntMonster(
-                    "starsinc",
-                    "Living Star",
-                    "Living Star Defeated",
-                    30,
-                    isTemp: false
-                );
+                Core.HuntMonster("starsinc", "Living Star", "Living Star Defeated", 30, isTemp: false); 
                 Bot.Wait.ForPickup("Star Fragment");
             }
             Core.CancelRegisteredQuests();
@@ -130,15 +116,7 @@ public class EternalDrakath
         {
             Bot.Quests.UpdateQuest(3799);
             Core.EquipClass(ClassType.Solo);
-            Core.KillMonster(
-                "shadowattack",
-                "Boss",
-                "Left",
-                "Death",
-                "Death's Oversight",
-                5,
-                false
-            );
+            Core.KillMonster("shadowattack", "Boss", "Left", "Death", "Death's Oversight", 5, false);
         }
 
         if (!Core.CheckInventory("Reality Shard", 300))
@@ -150,13 +128,7 @@ public class EternalDrakath
             Core.RegisterQuests(8456);
             while (!Bot.ShouldExit && !Core.CheckInventory("Reality Shard", 200))
             {
-                Core.HuntMonster(
-                    "eternalchaos",
-                    "Chaos Time Fairy",
-                    "Preserved Chaos Fairy Wing",
-                    5,
-                    log: false
-                );
+                Core.HuntMonster("eternalchaos", "Chaos Time Fairy", "Preserved Chaos Fairy Wing", 5, log: false); 
                 Bot.Wait.ForPickup("Reality Shard");
             }
             Core.CancelRegisteredQuests();
