@@ -67,7 +67,8 @@ public class CoreAOR
         SanctuaryAiwass(false, false);
         ForgeAlbedo(false, false);
         FortLuma(false, false);
-        WarWickForest();
+        WarWickForest(false, false);
+        MagnumOpus(false, false);
 
     }
 
@@ -1588,7 +1589,6 @@ public class CoreAOR
             }
         }
     }
-
 
     public void KillThing(
         string map,
