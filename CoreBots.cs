@@ -646,12 +646,12 @@ public class CoreBots
 
     public List<string> BankingBlackList
     {
-        get => _BankingBlackList ??= new List<string>();
+        get => _BankingBlackList ??= [];
         set => _BankingBlackList = value;
     }
     public List<string>? _BankingBlackList;
 
-    private readonly List<string> EquipmentBeforeBot = new();
+    private readonly List<string> EquipmentBeforeBot = [];
     private bool joinedPrison = false;
     private bool prisonListernerActive = false;
     public string loadedBot = string.Empty;
@@ -1323,7 +1323,7 @@ public class CoreBots
             }
         }
     }
-    private static readonly HashSet<int> Extras = new() { 18927, 38575 };
+    private static readonly HashSet<int> Extras = [18927, 38575];
 
     /// <summary>
     /// Transfers specified items by name from inventory/house to bank.
@@ -1336,13 +1336,13 @@ public class CoreBots
         if (items == null || !items.Any(name => !string.IsNullOrEmpty(name)))
             return;
 
-        List<ItemCategory> whiteList = new()
-    {
+        List<ItemCategory> whiteList =
+    [
         ItemCategory.Note,
         ItemCategory.Item,
         ItemCategory.Resource,
         ItemCategory.QuestItem,
-    };
+    ];
 
         foreach (string? item in items)
         {
@@ -1462,13 +1462,13 @@ public class CoreBots
         if (items == null || !items.Any(id => id > 0))
             return;
 
-        List<ItemCategory> whiteList = new()
-    {
+        List<ItemCategory> whiteList =
+    [
         ItemCategory.Note,
         ItemCategory.Item,
         ItemCategory.Resource,
         ItemCategory.QuestItem,
-    };
+    ];
 
         foreach (int itemID in items)
         {
@@ -1627,7 +1627,7 @@ public class CoreBots
         }
     }
 
-    public List<string> CategoryStrings = new() { "House", "Wall Item", "Floor Item" };
+    public List<string> CategoryStrings = ["House", "Wall Item", "Floor Item"];
 
     /// <summary>
     /// Buys a item till you have the desired quantity
@@ -2607,7 +2607,7 @@ public class CoreBots
         if (!Bot.Shops.IsLoaded || Bot.Shops.ID != shopID)
         {
             Logger($"Failed to load shop {shopID} in map {map}.");
-            return new();
+            return [];
         }
 
         // Wait for the popup label to confirm the shop UI is fully ready
@@ -3036,8 +3036,8 @@ public class CoreBots
         if (questIDs == null || questIDs.Length == 0)
             return;
 
-        Dictionary<Quest, int> chooseQuests = new();
-        Dictionary<Quest, int> nonChooseQuests = new();
+        Dictionary<Quest, int> chooseQuests = [];
+        Dictionary<Quest, int> nonChooseQuests = [];
 
         foreach (int questID in questIDs.Distinct())
         {
@@ -3759,7 +3759,7 @@ public class CoreBots
     public List<Quest> EnsureLoad(params int[] questIDs)
     {
         if (questIDs.Length == 0)
-            return new List<Quest>();
+            return [];
 
         List<Quest> quests = Bot.Quests.Tree.Where(x => questIDs.Contains(x.ID)).ToList();
         if (quests.Count == questIDs.Length)
@@ -3795,7 +3795,7 @@ public class CoreBots
                     messageBox: true,
                     stopBot: true
                 );
-                return new List<Quest>();
+                return [];
             }
         }
 
@@ -3883,7 +3883,7 @@ public class CoreBots
                     .Select(g => g.First())
                     .ToDictionary(q => q.ID);
 
-                List<Quest> result = new();
+                List<Quest> result = [];
                 foreach (int questID in questIDs.Distinct())
                 {
                     if (!questMap.TryGetValue(questID, out QuestData? data))
@@ -3929,7 +3929,7 @@ public class CoreBots
                     .Select(g => g.First())
                     .ToDictionary(q => q.ID);
 
-                List<Quest> result = new();
+                List<Quest> result = [];
                 foreach (int questID in questIDs.Distinct())
                 {
                     if (!questMap.TryGetValue(questID, out QuestData? data))
@@ -4025,7 +4025,7 @@ public class CoreBots
         if (questIDs == null || questIDs.Length == 0)
             return Array.Empty<string>();
 
-        List<string> toReturn = new();
+        List<string> toReturn = [];
 
         if (questIDs.Length <= 15)
         {
@@ -4070,7 +4070,7 @@ public class CoreBots
         if (questIDs == null || questIDs.Length == 0)
             return Array.Empty<int>();
 
-        List<int> toReturn = new();
+        List<int> toReturn = [];
 
         foreach (Quest? q in EnsureLoad(questIDs) ?? Enumerable.Empty<Quest>())
         {
@@ -4100,7 +4100,7 @@ public class CoreBots
         if (questIDs == null || questIDs.Length == 0)
             return Array.Empty<T>();
 
-        List<T> toReturn = new();
+        List<T> toReturn = [];
 
         foreach (Quest? q in EnsureLoad(questIDs) ?? Enumerable.Empty<Quest>())
         {
@@ -4219,8 +4219,8 @@ public class CoreBots
             Logger("No quests found to register.");
             return;
         }
-        Dictionary<Quest, int> chooseQuests = new();
-        Dictionary<Quest, int> nonChooseQuests = new();
+        Dictionary<Quest, int> chooseQuests = [];
+        Dictionary<Quest, int> nonChooseQuests = [];
 
         foreach (Quest q in questData)
         {
@@ -4633,7 +4633,7 @@ public class CoreBots
             return; // Nothing to farm
 
         // Count monsters by (Name + Cell) for farm decision
-        Dictionary<(string Name, string Cell), int> monsterCounts = new();
+        Dictionary<(string Name, string Cell), int> monsterCounts = [];
 
         foreach (Monster monster in Bot.Monsters.MapMonsters)
         {
@@ -5976,9 +5976,9 @@ public class CoreBots
                 .FirstOrDefault();
 
             if (best != null)
-                return new List<Monster> { best };
+                return [best];
 
-            return new List<Monster>();
+            return [];
         }
 
         Bot.Log(
@@ -6005,7 +6005,7 @@ public class CoreBots
     }
 
     // monster name typo cache  (requestedName -> correctedName)
-    private readonly Dictionary<string, string> _monsterNameCache = new();
+    private readonly Dictionary<string, string> _monsterNameCache = [];
 
     public Monster? FindMonster(string map, string monster, int monsterMapID = -1)
     {
@@ -6737,7 +6737,7 @@ public class CoreBots
             return Bot.Monsters.CurrentMonsters.Where(m => m.ID == monsterID).Any(IsMonsterAlive);
     }
 
-    public readonly List<int> KilledMonsters = new();
+    public readonly List<int> KilledMonsters = [];
 
     public void CleanKilledMonstersList(string map) => KilledMonsters.Clear();
 
@@ -6803,7 +6803,7 @@ public class CoreBots
         }
     }
 
-    List<string> TagsToAdd = new();
+    List<string> TagsToAdd = [];
 
     public void AutoAddTags()
     {
@@ -6824,12 +6824,12 @@ public class CoreBots
         }
     }
 
-    List<string> TagsToRemove = new();
+    List<string> TagsToRemove = [];
 
     public void FilterTags(string username, Dictionary<string, string> tags)
     {
         TagsToRemove.Clear();
-        List<string> baseTags = new();
+        List<string> baseTags = [];
         foreach (var kvp in tags)
         {
             baseTags.Add(kvp.Value);
@@ -6912,7 +6912,7 @@ public class CoreBots
         }
     }
 
-    private readonly List<int> KilledDungeonMonsters = new();
+    private readonly List<int> KilledDungeonMonsters = [];
 
     private void CleanKilledDungeonMonstersList(string map) => KilledMonsters.Clear();
 
@@ -7133,8 +7133,7 @@ public class CoreBots
         {
             foreach (string cs in currentScript.Where(x => x.StartsWith("//cs_include")).ToArray())
             {
-                List<string> pathParts = new() { ClientFileSources.SkuaDIR };
-                pathParts.AddRange(cs.Replace("//cs_include ", "").Replace("\\", "/").Split('/'));
+                List<string> pathParts = [ClientFileSources.SkuaDIR, .. cs.Replace("//cs_include ", "").Replace("\\", "/").Split('/')];
                 includedScript = File.ReadAllLines(Path.Combine([.. pathParts]));
 
                 if (includedScript.Any(line => line.Trim() == $"public class {_class}"))
@@ -8046,10 +8045,10 @@ public class CoreBots
         get
         {
             if (CharacterID <= 0)
-                return new();
+                return [];
             return JsonConvert.DeserializeObject<List<Badge>>(
                     GetRequest($"https://account.aq.com/CharPage/Badges?ccid={CharacterID}")
-                ) ?? new();
+                ) ?? [];
         }
     }
 
@@ -8206,7 +8205,7 @@ public class CoreBots
     /// <returns>An array of integers from 'from' to 'to' (inclusive).</returns>
     public int[] FromTo(int from, int to)
     {
-        List<int> toReturn = new();
+        List<int> toReturn = [];
         for (int i = from; i < to + 1; i++)
             toReturn.Add(i);
         return [.. toReturn];
@@ -8226,13 +8225,13 @@ public class CoreBots
         // Items to never bank (e.g., important consumables)
         int[] exemptIDs = { 18927, 38575 }; // Treasure Potion, Dark Potion
         // Allowed inventory categories
-        List<ItemCategory> allowedCategories = new()
-        {
+        List<ItemCategory> allowedCategories =
+        [
             ItemCategory.Note,
             ItemCategory.Item,
             ItemCategory.Resource,
             ItemCategory.QuestItem
-        };
+        ];
 
         // Include ServerUse if boosts are not active
         if (
@@ -8326,12 +8325,12 @@ public class CoreBots
     /// <param name="RequiredSpaces">Max number of items to bank; 0 means all.</param>
     public void BankACUnenhancedGear(int RequiredSpaces = 0)
     {
-        List<ItemCategory> whitelistedCategories = new()
-        {
+        List<ItemCategory> whitelistedCategories =
+        [
             ItemCategory.Class,
             ItemCategory.Helm,
             ItemCategory.Cape,
-        };
+        ];
 
         var toBankItems = Bot
             .Inventory.Items.Where(item =>
@@ -8503,7 +8502,7 @@ public class CoreBots
     public void EquipBestItemsForMeta(Dictionary<string, string[]> categoryMetaMapping)
     {
         // Define unwanted meta types
-        HashSet<string> unwantedMetaTypes = new() { "AutoAdd", "Drakath" };
+        HashSet<string> unwantedMetaTypes = ["AutoAdd", "Drakath"];
 
         // Define weapon categories for matching
         var weaponCategories = new[]
@@ -8618,9 +8617,9 @@ public class CoreBots
         }
 
         // Variables to track the best items across categories
-        Dictionary<string, ItemBase?> bestItems = new();
-        Dictionary<string, double> bestMainMetaValues = new();
-        Dictionary<string, double> bestAdditionalMetaScores = new();
+        Dictionary<string, ItemBase?> bestItems = [];
+        Dictionary<string, double> bestMainMetaValues = [];
+        Dictionary<string, double> bestAdditionalMetaScores = [];
 
         // Iterate through each category and its meta priorities
         foreach (var categoryMeta in categoryMetaMapping)
@@ -11257,7 +11256,7 @@ public class CoreBots
             LoadedQuestLimit = _LoadedQuestLimit;
 
         //Class Equipment
-        List<string> _SoloGear = new();
+        List<string> _SoloGear = [];
         if (SoloGearOn)
         {
             if (CBOString("Helm1Select", out string _Helm1))
@@ -11276,7 +11275,7 @@ public class CoreBots
         if (_SoloGear.Count > 0)
             SoloGear = [.. _SoloGear];
 
-        List<string> _FarmGear = new();
+        List<string> _FarmGear = [];
         if (FarmGearOn)
         {
             if (CBOString("Helm2Select", out string _Helm2))
@@ -11296,7 +11295,7 @@ public class CoreBots
             FarmGear = [.. _FarmGear];
 
         // Dodge gear
-        List<string> _DodgeGear = new();
+        List<string> _DodgeGear = [];
         if (DodgeGearOn)
         {
             if (CBOString("HelmDodgeSelect", out string _HelmDodge))
@@ -11316,7 +11315,7 @@ public class CoreBots
             DodgeGear = [.. _DodgeGear];
 
         // Boss gear
-        List<string> _BossGear = new();
+        List<string> _BossGear = [];
         if (BossGearOn)
         {
             if (CBOString("HelmBossSelect", out string _HelmBoss))
@@ -11393,7 +11392,7 @@ public class CoreBots
 
     private List<string> CBOList
     {
-        get => _CBOList ??= new List<string>();
+        get => _CBOList ??= [];
         set => _CBOList = value;
     }
     private List<string>? _CBOList;
