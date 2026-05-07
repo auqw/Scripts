@@ -28524,13 +28524,14 @@
   },
   {
     "name": "FutureWarMerge",
-    "description": "null",
+    "description": "Merges Dage's Seasonal staff birthday and has the Shogun Paragon pet for LT",
     "tags": [
-      "null"
+      "shogun paragon",
+      "legion token"
     ],
     "path": "Seasonal/StaffBirthdays/DageTheEvil/FutureWarMerge.cs",
-    "size": 8703,
-    "sha256": "7315eac64de5d6fb55ea118a423cb7cff70a327e34bf7d49c7b18f07eedc1a62",
+    "size": 8798,
+    "sha256": "7fb57bc608e075ee381fdf4551092fe53df6484f4f20c9dcb075d71b9e84edd2",
     "fileName": "FutureWarMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/StaffBirthdays/DageTheEvil/FutureWarMerge.cs"
   },
