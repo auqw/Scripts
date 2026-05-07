@@ -15749,8 +15749,8 @@
       "infamis"
     ],
     "path": "Other/MergeShops/MagnumOpusMerge.cs",
-    "size": 9038,
-    "sha256": "705af9bd84fbbe4334829db49da2c74d1a8155bc9b13d77ecc984825a79401df",
+    "size": 9025,
+    "sha256": "bb1be544de917a03fd5b3159b0a33c72c7a89bc39d6f4014ac92ab8ca926570b",
     "fileName": "MagnumOpusMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/MagnumOpusMerge.cs"
   },
@@ -17281,8 +17281,8 @@
       "scion of flames"
     ],
     "path": "Other/Classes/ScionofFlames[WIP].cs",
-    "size": 8334,
-    "sha256": "c1dfc88769730e6972cd1f583ed8750b6e8ded3c782122f2304300fb8ce2a35c",
+    "size": 8065,
+    "sha256": "cd4e2cb393980aa3de6494cd08ecd1391279a448eab18f8a32d6a2c58c86a8b7",
     "fileName": "ScionofFlames[WIP].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ScionofFlames[WIP].cs"
   },
@@ -19007,8 +19007,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 55873,
-    "sha256": "c9845930f7a9c38b2e69822f1d33d083c3827901016e70f1e486cfaee4585405",
+    "size": 55920,
+    "sha256": "ba6fffc94ee2c17482894077bff00d5b4113a9d487768dde060220be2728fa10",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
