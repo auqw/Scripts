@@ -54,7 +54,10 @@ public class InfernalArena
 
         Story.PreLoad(this);
 
-        Core.EquipClass(ClassType.Solo);
+        if (Core.CheckInventory("ArchPaladin"))
+            Core.Equip("ArchPaladin");
+        else
+            Core.EquipClass(ClassType.Solo);
 
         // Maligned Magus 9356
         Story.KillQuest(9356, "infernalarena", "Infernal Mage");
@@ -108,60 +111,21 @@ public class InfernalArena
         Story.KillQuest(9372, "infernalarena", "Accursed Apephyrx");
 
         #region Fuck these guys
-        //Rest below require potions or aloooota luck and fuck that
-        Core.Logger(
-            "The Remaining quests will require specific\n"
-                + "classes [thanks to famous youtuber deso]"
-        );
 
-        foreach (
-            string Class in new[]
-            {
-                Core.CheckInventory("Legion DoomKnight")
-                    ? "Legion DoomKnight"
-                    : "Classic Legion DoomKnight",
-                "Lord of Order",
-                "Dragon of Time",
-                "Void Highlord",
-            }
-        )
-        {
-            if (Core.CheckInventory(Class))
-                Core.Logger($"{Class} Found!");
-            else
-                Core.Logger($"{Class} not Found! good luck killing them");
-        }
 
-        // Reviled Returner 9373
-        //this ones barely soloable so gl
-        Core.JumpWait();
-        Core.Equip(
-            Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord"
-        );
+        // Reviled Returner 9373        
         Core.Logger("Boss: [Deadly Duo]");
         Story.KillQuest(9373, "infernalarena", "Deadly Duo");
 
         // Reign of the Deer 9374
-        Core.JumpWait();
-        Core.Equip(
-            Core.CheckInventory("Legion DoomKnight")
-                ? "Legion DoomKnight"
-                : "Classic Legion DoomKnight"
-        );
         Core.Logger("Boss: [Cervus Malus]");
         Story.KillQuest(9374, "infernalarena", "Cervus Malus");
 
         // Ars Infernum 9375
-        Core.JumpWait();
-        Core.Equip("Dragon of Time");
         Core.Logger("Boss: [Key of Sholemoh]");
         Story.KillQuest(9375, "infernalarena", "Key of Sholemoh");
 
         // Unrepentant Culler 9376
-        Core.JumpWait();
-        Core.Equip(
-            Core.CheckInventory("Yami no Ronin") ? "Yami no Ronin" : "Lord of Order"
-        );
         Core.Logger("Boss: [Azalith's Scythe]");
         Bot.Options.AttackWithoutTarget = true;
         Story.KillQuest(9376, "infernalarena", "Azalith's Scythe");
@@ -170,13 +134,6 @@ public class InfernalArena
         if (!ReturnEarly)
         {
             // Lord of the Scarred Barrens  9377
-            Core.JumpWait();
-            //  Core.UseDodgeClass();
-            Core.Equip(
-                Core.CheckInventory("Chaos Avenger") ? "Chaos Avenger"
-                : Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)"
-                : "Void Highlord"
-            );
             Core.Logger("Boss: [Na'al]");
             Core.Logger(
                 "this may take an hr or 2... or u may first try\n"
