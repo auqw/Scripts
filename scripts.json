@@ -3211,12 +3211,12 @@
       "nulgath",
       "nation",
       "supplies",
-      "ultra alteon",
+      "ultra chaos alteon",
       "escherion"
     ],
     "path": "Nation/SuppliesToSpinTheWheelofChance.cs",
-    "size": 9801,
-    "sha256": "232d2fb0ce42c4e86e8163fa6be58c64e6b75cdd49d09fed5604b8b103a41b5d",
+    "size": 9813,
+    "sha256": "a7f57453a76e79055633932eecef416d45ac7fa45e5949f5263e9a0b5782fb8e",
     "fileName": "SuppliesToSpinTheWheelofChance.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/SuppliesToSpinTheWheelofChance.cs"
   },
@@ -3363,8 +3363,8 @@
       "null"
     ],
     "path": "Nation/CoreNation.cs",
-    "size": 126550,
-    "sha256": "e44cf1c190a3af6b32dfba927e97ec3796d1e71db5d6b45d405b5708ba79c267",
+    "size": 126139,
+    "sha256": "e696709855ae9baaf0545056a1b2048e5b4007a82809543e604b729e3e96cc35",
     "fileName": "CoreNation.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/CoreNation.cs"
   },
@@ -10611,8 +10611,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 53223,
-    "sha256": "61891c3618d304440851fd77b6b7c75271782d22f5abfa58227ea90beea99a84",
+    "size": 53229,
+    "sha256": "1fdbfc3ec88addd9f4dfe409bb3565bbae43ea316cbcd7382da02c48123fbadb",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
