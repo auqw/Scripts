@@ -121,13 +121,11 @@ public class ScionofFlames
             }
 
             Core.FarmingLogger(item, quant);
-            Core.Logger($"[MATS] Farming {item} x{quant}");
-
+            Core.AddDrop(item);
             switch (item)
             {
                 case "Red Flame of Rubedo":
                     Core.EquipClass(ClassType.Solo);
-                    Core.AddDrop(item);
                     Core.RegisterQuests(Core.IsMember ? 10689 : 10688);
 
                     while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
@@ -147,14 +145,14 @@ public class ScionofFlames
                     break;
 
                 case "Yellow Flame of Citrinitas":
-                    Core.EquipClass(ClassType.Farm);
-                    Core.AddDrop(item);
                     Core.RegisterQuests(Core.IsMember ? 10620 : 10619);
 
                     while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                     {
+                        Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("fortluma", "Flame of Citrinitas", "Citrinitas Flicker");
                         Core.HuntMonster("fortluma", "Luma Dragon Twins", "Draconic Contrasoul");
+                        Core.EquipClass(ClassType.Solo);
                         Core.HuntMonsterMapID("fortluma", 10, "King's Yellow");
                         Bot.Wait.ForPickup(item);
                     }
@@ -163,8 +161,6 @@ public class ScionofFlames
                     break;
 
                 case "White Flame of Albedo":
-                    Core.AddDrop(item);
-
                     while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                     {
                         Core.HuntMonsterQuest(
@@ -179,9 +175,6 @@ public class ScionofFlames
                     break;
 
                 case "Black Flame of Maleno":
-                    Core.EquipClass(ClassType.Farm);
-                    Core.AddDrop(item);
-
                     while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                     {
                         Core.HuntMonsterQuest(
@@ -196,8 +189,6 @@ public class ScionofFlames
                     break;
 
                 case "Steel Ingot":
-                    Core.AddDrop(item);
-
                     while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                     {
                         Core.HuntMonsterQuest(
@@ -212,10 +203,8 @@ public class ScionofFlames
                     break;
 
                 case "Aiwass Diamond":
-                    int questID = Core.IsMember ? 10387 : 10385;
-
                     Core.EquipClass(ClassType.Farm);
-                    Core.RegisterQuests(questID);
+                    Core.RegisterQuests(Core.IsMember ? 10387 : 10385);
 
                     while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                     {
@@ -223,7 +212,6 @@ public class ScionofFlames
                         Core.KillMonster("sanctuaryaiwass", "r9", "Top", "*", "Milk of Sulfur", 1, false);
                         Core.HuntMonster("sanctuaryaiwass", "Anima Animus Aiwass", "Aeon Dream", 1, false);
                     }
-
                     Core.CancelRegisteredQuests();
                     break;
             }
