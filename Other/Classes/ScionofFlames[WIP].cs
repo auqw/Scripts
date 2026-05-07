@@ -102,6 +102,9 @@ public class ScionofFlames
         Materials("Yellow Flame of Citrinitas", 100);
         Materials("Red Flame of Rubedo", 100);
 
+        // Uncomment & finish when Challenge boss is released.
+        // ArmorFarm();
+
         Core.Logger("please ping me (@Tato2 on discord) when the shop is released... for the armors and class ( ill prolly be at work -- ill finish it in the morning at that point).");
         Core.Logger("STopping Bot as the class and armors are not Released yet.", stopBot: true);
 
@@ -215,7 +218,32 @@ public class ScionofFlames
                     break;
             }
         }
+        
+        // Place Holder for Challenge boss to farm the armors.
+        void ArmorFarm()
+        {
+            string[] armors = new[]
+            {
+                "Flame of Maleno Armor",
+                "Flame of Albedo Armor",
+                "Flame of Citrinitas Armor",
+                "Flame of Rubedo Armor"
+            };
+            Core.AddDrop(armors);
+            Core.Logger("Farming \"Flame of--\" Armors...");
+            while (!Bot.ShouldExit && !Core.CheckInventory(armors))
+            {
+                Core.KillMonster(
+                    map: "SomeMap",
+                    cell: "SomeCell",
+                    pad: "SomePad",
+                    monster: "SomeMonster",
+                    item: "SomeItem",
+                    quant: 1,
+                    isTemp: false
+                );
 
-        Core.Logger("[Scion of Flames] Script complete");
+            }
+        }
     }
 }
