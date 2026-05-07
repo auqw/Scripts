@@ -147,12 +147,11 @@ public class ScionofFlames
                 case "Yellow Flame of Citrinitas":
                     Core.RegisterQuests(Core.IsMember ? 10620 : 10619);
 
+                    Core.EquipClass(ClassType.Solo);
                     while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                     {
-                        Core.EquipClass(ClassType.Farm);
                         Core.HuntMonster("fortluma", "Flame of Citrinitas", "Citrinitas Flicker");
                         Core.HuntMonster("fortluma", "Luma Dragon Twins", "Draconic Contrasoul");
-                        Core.EquipClass(ClassType.Solo);
                         Core.HuntMonsterMapID("fortluma", 10, "King's Yellow");
                         Bot.Wait.ForPickup(item);
                     }
