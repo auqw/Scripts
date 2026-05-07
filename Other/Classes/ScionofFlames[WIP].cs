@@ -91,7 +91,7 @@ public class ScionofFlames
         // Shared requirements
         Core.Logger("[MATS] Farming shared resources");
         Farm.Voucher("Gold Voucher 100k", 60);
-        Materials("Yew Ember", 110);
+        Materials("Yew Ember", 80);
 
         // Unique materials
         Core.Logger("[MATS] Farming unique flames & ingots");
