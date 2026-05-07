@@ -81,7 +81,7 @@ public class MagnumOpusMerge
                         Core.EquipClass(ClassType.Solo);
                     }
                     Core.AddDrop(req.ID);
-                    Core.RegisterQuests(10702); // TODO: Replace with actual quest ID
+                    Core.RegisterQuests(Core.IsMember ? 10706 : 10705); 
 
                     Bot.Events.ExtensionPacketReceived += FlameoftheBeyond;
                     Bot.Options.AttackWithoutTarget = true;
