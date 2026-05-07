@@ -1,7 +1,7 @@
 /*
 name: FutureWarMerge
-description: null
-tags: null
+description: Merges Dage's Seasonal staff birthday and has the Shogun Paragon pet for LT
+tags: Shogun Paragon, Legion Token
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
