@@ -1350,8 +1350,10 @@ public class CoreAOR
 
         WarWickForest(true, true);
 
-        Story.MapItemQuest(10703, "magnumopus", 15703, AutoCompleteQuest: false);
+        // 10703 | The Black Mage
+        Story.MapItemQuest(10703, "magnumopus", 15703);
 
+        // 10704 | Hic Iacet Revelatio
         if (!Story.QuestProgression(10704))
         {
             Core.EnsureAccept(10704);
