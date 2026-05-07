@@ -5883,7 +5883,7 @@ public class CoreBots
 
         if (Bot.Map.Name != map)
             Join(map);
-
+            
         IEnumerable<Monster> candidates = Bot.Monsters.MapMonsters
             .Where(x => x != null && !string.IsNullOrWhiteSpace(x.Name));
 
@@ -5970,16 +5970,7 @@ public class CoreBots
         MobFindRetry++;
 
         if (MobFindRetry < 5)
-        {
-            Monster best = candidates
-                .OrderByDescending(x => GetSimilarityScore(monster, x.Name))
-                .FirstOrDefault();
-
-            if (best != null)
-                return [best];
-
             return [];
-        }
 
         Bot.Log(
             $"Failed to Find the mob {monster} within 5 retrys"
@@ -5991,17 +5982,6 @@ public class CoreBots
         Bot.StopAsync();
 
         return [];
-    }
-    
-    private static int GetSimilarityScore(string target, string value)
-    {
-        target = target.ToLower();
-        value = value.ToLower();
-
-        int matches = target.Intersect(value).Count();
-        int maxLen = Math.Max(target.Length, value.Length);
-
-        return (int)((matches / (double)maxLen) * 100);
     }
 
     // monster name typo cache  (requestedName -> correctedName)
