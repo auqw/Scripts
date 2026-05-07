@@ -791,7 +791,7 @@ public class CoreFarmerJoe
         {
 
 
-            Core.Logger("Geting Horc Evader so we can attemp to kill Ultra Alteon during the story to get AP");
+            Core.Logger("Geting Horc Evader so we can attemp to kill Ultra Chaos Alteon during the story to get AP");
             Adv.BuyItem("bloodtusk", 308, "Horc Evader");
             SetClass();
         }

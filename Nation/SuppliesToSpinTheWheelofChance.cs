@@ -1,7 +1,7 @@
 /*
 name: SuppliesToSpinTheWheelofChance
 description: Do "Supplies to Spin the Wheel" [*or* swindles bilk quests if u have it avaible.]
-tags: swindles return policy, supplies to spin the wheel, swindles bilk, the assistant, nulgath, nation, supplies, ULTRA Alteon, escherion
+tags: swindles return policy, supplies to spin the wheel, swindles bilk, the assistant, nulgath, nation, supplies, Ultra Chaos Alteon, escherion
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
@@ -48,7 +48,7 @@ public class SuppliesToSpinTheWheelofChance
         new Option<bool>(
             "UltraAlteon",
             "Kill \"UltraAlteon\"",
-            "Instead of \"Escherion\" or bamboozle, do \"ULTRA Alteon\"?",
+            "Instead of \"Escherion\" or bamboozle, do \"Ultra Chaos Alteon\"?",
             false
         ),
         // add option for Voucher Item: Totem of Nulgath During

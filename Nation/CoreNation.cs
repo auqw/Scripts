@@ -1073,7 +1073,7 @@ public class CoreNation
     /// </summary>
     /// <param name="item">Desired item name.</param>
     /// <param name="quant">Desired item quantity.</param>
-    /// <param name="UltraAlteon">Flag indicating if ULTRA Alteon should be used.</param>
+    /// <param name="UltraAlteon">Flag indicating if Ultra Chaos Alteon should be used.</param>
     /// <param name="KeepVoucher">Flag indicating if the voucher should be kept.</param>
     /// <param name="AssistantDuring">Flag indicating if the assistant should be active during the process.</param>
     /// <param name="returnPolicyDuringSupplies"></param>
@@ -1239,22 +1239,9 @@ public class CoreNation
                         {
                             // Kill monsters
                             if (UltraAlteon)
-                                Core.KillMonster(
-                                    "ultraalteon",
-                                    "r10",
-                                    "Left",
-                                    "ULTRA Alteon",
-                                    "Relic of Chaos",
-                                    isTemp: false,
-                                    log: false
-                                );
+                                Core.KillMonster("ultraalteon", "r10", "Left", "Ultra Chaos Alteon", "Relic of Chaos", isTemp: false, log: false);
                             else
-                                Core.KillEscherion(
-                                    "Relic of Chaos",
-                                    log: false,
-                                    FromSupplies: true
-                                );
-
+                                Core.KillEscherion("Relic of Chaos", log: false, FromSupplies: true);
                             // Sell Voucher of Nulgath if allowed
                             SellVoucherOfNulgath(sellMemVoucher, item);
 
@@ -1983,7 +1970,7 @@ public class CoreNation
             if (Bot.Quests.IsAvailable(3826) && !Core.CheckInventory(25026))
             {
                 Core.EnsureAccept(3826);
-                Core.HuntMonster("alteonbattle", "ULTRA Alteon", "Seal of Light");
+                Core.HuntMonster("alteonbattle", "Ultra Chaos Alteon", "Seal of Light");
                 Core.EnsureComplete(3826);
             }
             Core.EnsureComplete(5816);
