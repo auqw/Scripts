@@ -472,17 +472,12 @@ public class CoreAOR
         // 2) SoloClass
         // 3) First owned meta solo class
         // 4) Currently equipped class
-        string? selectedClass =
-            Core.BossClass
-            ?? Core.SoloClass
-            ?? possibleSoloClasses.FirstOrDefault(ownedClasses.Contains)
-            ?? Bot.Player?.CurrentClass?.Name;
-
-        if (string.IsNullOrWhiteSpace(selectedClass))
-        {
-            Core.Logger("No solo class found and no class equipped; aborting SeaVoice.");
-            return;
-        }
+        string selectedClass =
+      !string.IsNullOrWhiteSpace(Core.BossClass) ? Core.BossClass :
+      !string.IsNullOrWhiteSpace(Core.SoloClass) ? Core.SoloClass :
+      possibleSoloClasses.FirstOrDefault(ownedClasses.Contains) ??
+      Bot.Player?.CurrentClass?.Name ??
+      Bot.Player?.CurrentClass?.Name;
 
         Core.Logger($"Soloing \"Voice of the Sea\" with {selectedClass}");
 
