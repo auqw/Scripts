@@ -163,7 +163,7 @@ public class ScionofFlames
                     while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                     {
                         Core.HuntMonsterQuest(
-                            10423,
+                            !Core.IsMember ? 10423 : 10424,
                             ("forgealbedo", "Defensive Turret", ClassType.Farm),
                             ("forgealbedo", "Defense Droid", ClassType.Farm),
                             ("forgealbedo", "Flame of Albedo", ClassType.Solo)
