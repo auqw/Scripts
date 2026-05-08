@@ -179,9 +179,21 @@ public class Grimgaol
     }
     private static UnlockForgeEnhancements _Forge;
 
-    Stopwatch runTimer = new();
-    TimeSpan bestTime = TimeSpan.MaxValue;
+    readonly Stopwatch runTimer = new();
     int RunCount = 0;
+
+    // ── Split Timer State ────────────────────────────────────────────────────
+    static readonly string Dir =
+        Path.Combine(ClientFileSources.SkuaScriptsDIR, "Prototypes");
+
+    static readonly string LogFile =
+        Path.Combine(Dir, "GrimGaolRunTimes.txt");
+
+    static TimeSpan _lastSplit;
+    static TimeSpan _bestRun = TimeSpan.MaxValue;
+    static readonly List<Split> _splits = [];
+    static bool _initialized;
+    // ────────────────────────────────────────────────────────────────────────
 
     public string OptionsStorage = "Grimgaol2";
     public bool DontPreconfigure = true;
@@ -208,6 +220,116 @@ public class Grimgaol
 
     };
 
+    // ── Split Timer Methods ──────────────────────────────────────────────────
+
+    /// <summary>
+    /// Load the best run time from disk (runs once per session).
+    /// </summary>
+    void EnsureInit()
+    {
+        if (_initialized)
+            return;
+
+        Directory.CreateDirectory(Dir);
+
+        if (File.Exists(LogFile))
+        {
+            foreach (string line in File.ReadLines(LogFile))
+            {
+                if (TimeSpan.TryParse(line.Trim(), out TimeSpan t) && t < _bestRun)
+                    _bestRun = t;
+            }
+        }
+
+        _initialized = true;
+    }
+
+    /// <summary>
+    /// Call once at the start of each dungeon run.
+    /// Resets the stopwatch and clears previous split data.
+    /// </summary>
+    void StartRun()
+    {
+        EnsureInit();
+
+        _splits.Clear();
+        _lastSplit = TimeSpan.Zero;
+
+        runTimer.Restart();
+    }
+
+    /// <summary>
+    /// Record a named checkpoint split based on elapsed combat time.
+    /// Only records if RoomTimers is enabled — otherwise silently skips.
+    /// </summary>
+    void RecordSplit(string name)
+    {
+        TimeSpan now = runTimer.Elapsed;
+        TimeSpan delta = now - _lastSplit;
+        _lastSplit = now;
+
+        _splits.Add(new Split { Name = name, Time = delta });
+
+        if (Bot.Config!.Get<bool>("RoomTimers"))
+            Core.Logger($"⏱ {name}: {FormatTs(delta)}");
+    }
+
+    /// <summary>
+    /// Call at the end of a completed run.
+    /// Logs total time, compares to PB, appends to file, and prints split breakdown.
+    /// </summary>
+    void EndRun()
+    {
+        runTimer.Stop();
+        TimeSpan total = runTimer.Elapsed;
+
+        // Append to log file
+        File.AppendAllText(LogFile, total.ToString() + Environment.NewLine);
+
+        // PB check
+        if (total < _bestRun)
+        {
+            _bestRun = total;
+            Core.Logger($"🔥 NEW PB: {FormatTs(total)}");
+        }
+        else
+        {
+            TimeSpan diff = total - _bestRun;
+            Core.Logger($"Run complete: {FormatTs(total)} | PB: {FormatTs(_bestRun)} (+{FormatTs(diff)})");
+        }
+
+        // Always print split breakdown
+        LogSplits(total);
+    }
+
+    /// <summary>
+    /// Prints the per-room split breakdown and the run total.
+    /// </summary>
+    void LogSplits(TimeSpan total)
+    {
+        if (_splits.Count == 0)
+            return;
+
+        // Find the slowest split so we can flag it
+        TimeSpan slowest = _splits.Max(s => s.Time);
+
+        Core.Logger("────── SPLIT BREAKDOWN ──────");
+        foreach (Split s in _splits)
+        {
+            string flag = s.Time == slowest ? " ◄ slowest" : "";
+            Core.Logger($"  {s.Name,-30} {FormatTs(s.Time)}{flag}");
+        }
+        Core.Logger($"  {"TOTAL",-30} {FormatTs(total)}");
+        Core.Logger("─────────────────────────────");
+    }
+
+    /// <summary>
+    /// Formats a TimeSpan as m:ss.ff — cleaner than the default ToString.
+    /// </summary>
+    static string FormatTs(TimeSpan t) =>
+        $"{(int)t.TotalMinutes}:{t.Seconds:D2}.{t.Milliseconds / 10:D2}";
+
+    // ────────────────────────────────────────────────────────────────────────
 
 
     public void ScriptMain(IScriptInterface Bot)
@@ -272,147 +394,6 @@ public class Grimgaol
         Farm.ToggleBoost(BoostType.Reputation, false);
     }
 
-    const int MaxBackupRuns = 50;
-
-    void LogRun()
-    {
-        runTimer.Stop();
-        TimeSpan currentTime = runTimer.Elapsed;
-        if (currentTime < TimeSpan.Zero)
-            currentTime = TimeSpan.Zero;
-
-        AppendRun(currentTime);
-
-        TimeSpan bestTime = LoadBestTime();
-        bool isNewPB = currentTime < bestTime;
-
-        Core.Logger(
-            $"Dungeon run took: {currentTime:mm\\:ss\\.fff} | Personal Best: {(bestTime == TimeSpan.MaxValue ? "N/A" : bestTime.ToString("mm\\:ss\\.fff"))}"
-                + (isNewPB ? " (New PB!)" : "")
-        );
-    }
-
-    TimeSpan LoadBestTime()
-    {
-        string path = Path.Combine(
-            ClientFileSources.SkuaScriptsDIR,
-            "Prototypes",
-            "GrimGaolRunTimes.txt"
-        );
-        string backupPath = Path.Combine(
-            ClientFileSources.SkuaScriptsDIR,
-            "Prototypes",
-            "GrimGaolRunTimes_backup.txt"
-        );
-
-        // Auto-restore from backup if main file missing or empty
-        if (!File.Exists(path) || new FileInfo(path).Length == 0)
-        {
-            if (File.Exists(backupPath))
-            {
-                File.Copy(backupPath, path, overwrite: true);
-                Core.Logger("Main run file missing or empty, restored from backup.");
-            }
-            else
-            {
-                return TimeSpan.MaxValue; // No data at all
-            }
-        }
-
-        TimeSpan best = TimeSpan.MaxValue;
-        List<string> validLines = new();
-
-        foreach (string line in File.ReadAllLines(path))
-        {
-            string trimmed = line.Trim();
-            if (string.IsNullOrWhiteSpace(trimmed))
-                continue;
-
-            if (
-                TimeSpan.TryParseExact(
-                    trimmed,
-                    "c",
-                    CultureInfo.InvariantCulture,
-                    out TimeSpan parsed
-                )
-                && parsed >= TimeSpan.Zero
-            )
-            {
-                validLines.Add(parsed.ToString("c", CultureInfo.InvariantCulture));
-                if (parsed < best)
-                    best = parsed;
-            }
-        }
-
-        // If all lines were invalid, try restore from backup
-        if (validLines.Count == 0 && File.Exists(backupPath))
-        {
-            File.Copy(backupPath, path, overwrite: true);
-            Core.Logger("All main file entries were invalid, restored from backup.");
-            foreach (string line in File.ReadAllLines(path))
-            {
-                if (
-                    TimeSpan.TryParseExact(
-                        line.Trim(),
-                        "c",
-                        CultureInfo.InvariantCulture,
-                        out TimeSpan parsed
-                    )
-                    && parsed >= TimeSpan.Zero
-                )
-                {
-                    validLines.Add(parsed.ToString("c", CultureInfo.InvariantCulture));
-                    if (parsed < best)
-                        best = parsed;
-                }
-            }
-        }
-
-        // Rewrite main file with only valid entries
-        if (validLines.Count > 0)
-            File.WriteAllLines(path, validLines);
-
-        // Maintain backup with last MaxBackupRuns
-        if (validLines.Count > 0)
-        {
-            List<string> backupLines =
-                validLines.Count > MaxBackupRuns
-                    ? validLines.GetRange(validLines.Count - MaxBackupRuns, MaxBackupRuns)
-                    : new List<string>(validLines);
-
-            File.WriteAllLines(backupPath, backupLines);
-        }
-
-        return best;
-    }
-
-    void AppendRun(TimeSpan run)
-    {
-        if (run < TimeSpan.Zero)
-            run = TimeSpan.Zero;
-
-        string path = Path.Combine(
-            ClientFileSources.SkuaScriptsDIR,
-            "Prototypes",
-            "GrimGaolRunTimes.txt"
-        );
-        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-
-        try
-        {
-            File.AppendAllText(
-                path,
-                run.ToString("c", CultureInfo.InvariantCulture) + Environment.NewLine
-            );
-        }
-        catch (IOException ex)
-        {
-            Core.Logger($"Failed to write run time: {ex.Message}");
-        }
-    }
-
-    bool Daunt => Adv.uDauntless();
-
     private void Init()
     {
         if (Bot.Player.Cell.ToLower().Contains("cut"))
@@ -421,6 +402,9 @@ public class Grimgaol
             Bot.Map.Jump("Enter", "Left", autoCorrect: false);
             Bot.Wait.ForCellChange("Enter");
         }
+
+        // Start the run timer (resets stopwatch + clears splits)
+        StartRun();
 
         // Stop usage of AdvSkills after story & prereqs. as we'll use our own here.
         while (!Bot.ShouldExit && !Bot.TempInv.Contains("Grimskull's Gaol Cleared"))
@@ -433,8 +417,7 @@ public class Grimgaol
                     // Grimskull? 
                     case "Enter":
                         RKE(Bot.Player.Cell);
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"Enter\" Done in: {runTimer.Elapsed}");
+                        RecordSplit("Enter — Grimskull?");
                         if (Bot.Player.Cell != "r2")
                         {
                             Bot.Map.Jump("r2", "Left", autoCorrect: false);
@@ -445,8 +428,7 @@ public class Grimgaol
                     // Grim Bomb  
                     case "r2":
                         RLR(Bot.Player.Cell);
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r2\" Done in: {runTimer.Elapsed}");
+                        RecordSplit("r2 — Grim Bomb");
                         if (Bot.Player.Cell != "r3")
                         {
                             Bot.Map.Jump("r3", "Left", autoCorrect: false);
@@ -457,8 +439,7 @@ public class Grimgaol
                     // Empress Angler 
                     case "r3":
                         R3();
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r3\" Done in: {runTimer.Elapsed}");
+                        RecordSplit("r3 — Empress Angler");
                         if (Bot.Player.Cell != "r4")
                         {
                             Bot.Map.Jump("r4", "Left", autoCorrect: false);
@@ -469,8 +450,7 @@ public class Grimgaol
                     // Treasure Chest 
                     case "r4":
                         RDoT(Bot.Player.Cell);
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r4\" Done in: {runTimer.Elapsed}");
+                        RecordSplit("r4 — Treasure Chest");
                         if (Bot.Player.Cell != "r5")
                         {
                             Bot.Map.Jump("r5", "Left", autoCorrect: false);
@@ -480,9 +460,8 @@ public class Grimgaol
 
                     // Reinforced Shelleton  
                     case "r5":
-                        RDoT(Bot.Player.Cell);
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r5\" Done in: {runTimer.Elapsed}");
+                        RLR(Bot.Player.Cell);
+                        RecordSplit("r5 — Reinforced Shelleton");
                         if (Bot.Player.Cell != "r6")
                         {
                             Bot.Map.Jump("r6", "Left", autoCorrect: false);
@@ -493,8 +472,7 @@ public class Grimgaol
                     // Fell Statue 
                     case "r6":
                         RDoT(Bot.Player.Cell);
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r6\" Done in: {runTimer.Elapsed}");
+                        RecordSplit("r6 — Fell Statue");
                         if (Bot.Player.Cell != "r7")
                         {
                             Bot.Map.Jump("r7", "Left", autoCorrect: false);
@@ -505,8 +483,7 @@ public class Grimgaol
                     // Emperor Angler 
                     case "r7":
                         RDoT(Bot.Player.Cell);
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r7\" Done in: {runTimer.Elapsed}");
+                        RecordSplit("r7 — Emperor Angler");
                         if (Bot.Player.Cell != "r8")
                         {
                             Bot.Map.Jump("r8", "Left", autoCorrect: false);
@@ -517,8 +494,7 @@ public class Grimgaol
                     // Treasure Chest 
                     case "r8":
                         RDoT(Bot.Player.Cell);
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r8\" Done in: {runTimer.Elapsed}");
+                        RecordSplit("r8 — Treasure Chest");
                         if (Bot.Player.Cell != "r9")
                         {
                             Bot.Map.Jump("r9", "Left", autoCorrect: false);
@@ -529,8 +505,7 @@ public class Grimgaol
                     // Rick, Grim Soldier 
                     case "r9":
                         RDoT(Bot.Player.Cell);
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r9\" Done in: {runTimer.Elapsed}");
+                        RecordSplit("r9 — Rick, Grim Soldier");
                         if (Bot.Player.Cell != "r10")
                         {
                             Bot.Map.Jump("r10", "Left", autoCorrect: false);
@@ -541,8 +516,7 @@ public class Grimgaol
                     // Mechro Lich + Rampaging Cyborg  
                     case "r10":
                         R10();
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r10\" Done in: {runTimer.Elapsed}");
+                        RecordSplit("r10 — Mechro Lich + Cyborg");
                         if (Bot.Player.Cell != "r11")
                         {
                             Bot.Map.Jump("r11", "Left", autoCorrect: false);
@@ -550,11 +524,10 @@ public class Grimgaol
                         }
                         break;
 
-                    // Mechabinky &amp; Raxborg 
+                    // Mechabinky & Raxborg 
                     case "r11":
                         RKE(Bot.Player.Cell);
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r11\" Done in: {runTimer.Elapsed}");
+                        RecordSplit("r11 — Mechabinky & Raxborg");
                         if (Bot.Player.Cell != "r12")
                         {
                             Bot.Map.Jump("r12", "Left", autoCorrect: false);
@@ -565,9 +538,7 @@ public class Grimgaol
                     // Grimskull 
                     case "r12":
                         RKE(Bot.Player.Cell);
-                        if (Bot.Config!.Get<bool>("RoomTimers"))
-                            Core.Logger($"Room \"r12\" Done in: {runTimer.Elapsed}");
-                        runTimer.Reset();
+                        RecordSplit("r12 — Grimskull (Final Boss)");
                         if (Bot.Player.Cell != "r12a")
                         {
                             Bot.Map.Jump("r12a", "Left", autoCorrect: false);
@@ -586,11 +557,12 @@ public class Grimgaol
             Bot.Sleep(200);
         }
 
-        // End runtime here
+        // End run: log total, compare PB, print splits
         if (Core.CheckInventory("Grimskull's Gaol Cleared"))
         {
-            Core.Logger($"Runs complete so far: {RunCount++}");
-            LogRun();
+            RunCount++;
+            Core.Logger($"Runs complete so far: {RunCount}");
+            EndRun();
         }
 
         Core.EnsureComplete(
@@ -773,7 +745,6 @@ public class Grimgaol
 
         while (!Bot.ShouldExit)
         {
-
             if (Bot.Player.Alive && !monsterAvail())
             {
 
@@ -805,14 +776,10 @@ public class Grimgaol
             //aura check 
             bool hasConcealedBlade = Bot.Player.HasTarget && Bot.Target?.Auras.Any(x => x != null && x.Name == "Concealed Blade") == true;
             bool hasBottomFeeder = Bot.Player.HasTarget && Bot.Target?.Auras.Any(x => x != null && x.Name == "Bottom Feeder") == true;
-            bool executeLogged = false;
             if (hasConcealedBlade && !hasBottomFeeder)
             {
-                if (!executeLogged)
-                {
-                    Core.Logger("EXECUTE DETECTED!!! HEAL UP!!!");
-                    executeLogged = true;
-                }
+                Core.DebugLogger(this, "EXECUTE DETECTED!!! HEAL UP!!!");
+
                 if (Bot.Skills.CanUseSkill(2))
                     Bot.Skills.UseSkill(2);
 
@@ -820,7 +787,6 @@ public class Grimgaol
                 continue;
             }
 
-            executeLogged = false;
 
             UseSkillRotation(skillList, ref skillIndex);
             Bot.Sleep(100);
@@ -1181,13 +1147,13 @@ public class Grimgaol
     }
 
     // Auto-select IoDA version if available
-    string dragonoftime = Core.CheckInventory("Dragon of Time (IoDA)")
+    readonly string dragonoftime = Core.CheckInventory("Dragon of Time (IoDA)")
         ? "Dragon of Time (IoDA)"
         : "Dragon of Time";
-    string legionrevenant = Core.CheckInventory("Legion Revenant (IoDA)")
+    readonly string legionrevenant = Core.CheckInventory("Legion Revenant (IoDA)")
         ? "Legion Revenant (IoDA)"
         : "Legion Revenant";
-    string kingsecho = "King's Echo";
+    readonly string kingsecho = "King's Echo";
 
 
 
@@ -1363,4 +1329,10 @@ public class Grimgaol
         }
         #endregion Grimgaol Prereqs
     }
+}
+
+class Split
+{
+    public string Name { get; init; } = "";
+    public TimeSpan Time { get; init; }
 }
