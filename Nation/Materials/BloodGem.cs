@@ -1,7 +1,7 @@
 /*
 name: BloodGem
 description: null
-tags: blood gem, bloodgem, blood, gem, nation, materials, nation materials
+tags: null
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
