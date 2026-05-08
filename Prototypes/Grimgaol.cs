@@ -444,7 +444,7 @@ public class Grimgaol
 
                     // Grim Bomb  
                     case "r2":
-                        RDoT(Bot.Player.Cell);
+                        RLR(Bot.Player.Cell);
                         if (Bot.Config!.Get<bool>("RoomTimers"))
                             Core.Logger($"Room \"r2\" Done in: {runTimer.Elapsed}");
                         if (Bot.Player.Cell != "r3")
@@ -923,7 +923,7 @@ public class Grimgaol
             Bot.Wait.ForCellChange(cell);
         }
 
-        string[] WizHelmCells = new[] { "r2", "r4", "r7", "r9", "r10", "r12" };
+        string[] WizHelmCells = new[] { "r4", "r7", "r9", "r10", "r12" };
         if (WizHelmCells.Contains(Bot.Player.Cell))
             UseWizHelm = true;
 
