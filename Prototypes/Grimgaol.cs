@@ -310,17 +310,37 @@ public class Grimgaol
         if (_splits.Count == 0)
             return;
 
-        // Find the slowest split so we can flag it
         TimeSpan slowest = _splits.Max(s => s.Time);
 
-        Core.Logger("────── SPLIT BREAKDOWN ──────");
+        Core.Logger("---- SPLIT BREAKDOWN ----");
+
         foreach (Split s in _splits)
         {
-            string flag = s.Time == slowest ? " ◄ slowest" : "";
-            Core.Logger($"  {s.Name,-30} {FormatTs(s.Time)}{flag}");
+            bool isSlowest = s.Time == slowest;
+
+            string line =
+                $"{s.Name,-25} {FormatTs(s.Time)}" +
+                (isSlowest ? " (slowest)" : string.Empty);
+
+            Core.Logger(Sanitize(line));
         }
-        Core.Logger($"  {"TOTAL",-30} {FormatTs(total)}");
-        Core.Logger("─────────────────────────────");
+
+        Core.Logger($"TOTAL                    {FormatTs(total)}");
+        Core.Logger("------------------------");
+    }
+
+    /// <summary>
+    /// Removes unsafe Unicode that can break AQW/Skua chat rendering.
+    /// </summary>
+    static string Sanitize(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return string.Empty;
+
+        // keep it brutally safe for legacy client chat parsers
+        return new string(input
+            .Where(c => c <= 127) // ASCII only
+            .ToArray());
     }
 
     /// <summary>
