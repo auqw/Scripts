@@ -1340,13 +1340,18 @@ public class CoreAOR
 
     public void MagnumOpus(bool seaVoice = false, bool coldThunder = false)
     {
-        if (Story.QuestProgression(10704))
+        if (Core.isCompletedBefore(10705))
             return;
 
         WarWickForest(true, true);
 
         // 10703 | The Black Mage
-        Story.MapItemQuest(10703, "magnumopus", 15703);
+        if (!Story.QuestProgression(10703))
+        {
+            Core.EnsureAccept(10703);
+            Core.GetMapItem(15703, 1, "magnumopus");
+            Core.EnsureComplete(10703);
+        }
 
         // 10704 | Hic Iacet Revelatio
         if (!Story.QuestProgression(10704))
@@ -1379,6 +1384,7 @@ public class CoreAOR
             Bot.Events.ExtensionPacketReceived -= FlameoftheBeyond;
             Core.EnsureComplete(10704);
         }
+
 
         async void FlameoftheBeyond(dynamic packet)
         {
