@@ -1383,8 +1383,8 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Templates/CustomAggromonTemplate.cs"
   },
   {
-    "name": "Grimgoal",
-    "description": "Goes through the grimgaol dungeon... Testing Phase",
+    "name": "Grimgaol",
+    "description": "Goes through the Grimgaol dungeon... Testing Phase",
     "tags": [
       "grimgoal",
       "dungeon",
@@ -1398,8 +1398,8 @@
       "beta"
     ],
     "path": "Prototypes/Grimgaol.cs",
-    "size": 62775,
-    "sha256": "3d1466fcff065e5da08e4a560060914e4eaafb3d95801dfbaf1bbd78f2b963f4",
+    "size": 46562,
+    "sha256": "460306bddcab1fde73d9757216c87955c79b04dff91503b0a84fd08a17065ba6",
     "fileName": "Grimgaol.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Prototypes/Grimgaol.cs"
   },
@@ -24647,11 +24647,17 @@
     "name": "BloodGem",
     "description": "null",
     "tags": [
-      "null"
+      "blood gem",
+      "bloodgem",
+      "blood",
+      "gem",
+      "nation",
+      "materials",
+      "nation materials"
     ],
     "path": "Nation/Materials/BloodGem.cs",
-    "size": 1440,
-    "sha256": "c85c0d640305f134b715acc33dc908129bc923aceb4a398a7a15eeeb4ba0b63a",
+    "size": 1504,
+    "sha256": "93b626760e600d04b2cf89b576861a73f9b19ff358f7dd9e3b877c4fce6db873",
     "fileName": "BloodGem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Materials/BloodGem.cs"
   },
