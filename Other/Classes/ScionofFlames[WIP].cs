@@ -144,7 +144,7 @@ public class ScionofFlames
 
                 case "Yew Ember":
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("thelimacity", "Maleno Match", item, quant, false);
+                    Core.HuntMonster("warwickforest", "Rubedo Elemental", item, quant, false);
                     break;
 
                 case "Yellow Flame of Citrinitas":
