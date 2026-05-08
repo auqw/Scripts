@@ -338,9 +338,7 @@ public class Grimgaol
             return string.Empty;
 
         // keep it brutally safe for legacy client chat parsers
-        return new string(input
-            .Where(c => c <= 127) // ASCII only
-            .ToArray());
+        return new string([.. input.Where(c => c <= 127)]);
     }
 
     /// <summary>
