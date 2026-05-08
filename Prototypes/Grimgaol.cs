@@ -290,7 +290,7 @@ public class Grimgaol
         if (total < _bestRun)
         {
             _bestRun = total;
-            Core.Logger($"🔥 NEW PB: {FormatTs(total)}");
+            Core.Logger($"!! NEW PB: {FormatTs(total)}");
         }
         else
         {
@@ -342,7 +342,7 @@ public class Grimgaol
     }
 
 
-    public void DoGrimGaol(int rank = 10)
+    public void DoGrimGaol(int rank = 11)
     {
         if (Farm.FactionRank("Grimskull Trolling") >= rank)
         {
@@ -527,7 +527,7 @@ public class Grimgaol
                     // Mechabinky & Raxborg 
                     case "r11":
                         RKE(Bot.Player.Cell);
-                        RecordSplit("r11 — Mechabinky & Raxborg");
+                        RecordSplit($"r11 — Mechabinky &amp; Raxborg");
                         if (Bot.Player.Cell != "r12")
                         {
                             Bot.Map.Jump("r12", "Left", autoCorrect: false);
