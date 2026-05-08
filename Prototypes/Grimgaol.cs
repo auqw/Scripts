@@ -342,7 +342,7 @@ public class Grimgaol
     }
 
 
-    public void DoGrimGaol(int rank = 11)
+    public void DoGrimGaol(int rank = 10)
     {
         if (Farm.FactionRank("Grimskull Trolling") >= rank)
         {
