@@ -24647,11 +24647,17 @@
     "name": "BloodGem",
     "description": "null",
     "tags": [
-      "null"
+      "blood gem",
+      "bloodgem",
+      "blood",
+      "gem",
+      "nation",
+      "materials",
+      "nation materials"
     ],
     "path": "Nation/Materials/BloodGem.cs",
-    "size": 1440,
-    "sha256": "c85c0d640305f134b715acc33dc908129bc923aceb4a398a7a15eeeb4ba0b63a",
+    "size": 1504,
+    "sha256": "93b626760e600d04b2cf89b576861a73f9b19ff358f7dd9e3b877c4fce6db873",
     "fileName": "BloodGem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Nation/Materials/BloodGem.cs"
   },
