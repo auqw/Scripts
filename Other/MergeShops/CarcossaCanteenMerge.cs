@@ -171,18 +171,10 @@ public class CarcossaCanteenMerge
                     Core.HuntMonster("forgealbedo", "Flame of Albedo", req.Name, quant, req.Temp, false); break;
 
                 case "Yew Ember":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.AddDrop(req.ID);
-                    Core.HuntMonster("thelimacity", "Maleno Match", req.Name, quant, false, false);
+                    Core.HuntMonster("warwickforest", "Rubedo Elemental", req.Name, quant, false);
                     break;
-
                 case "Mystic Topaz":
                     if (req.Upgrade && !Core.IsMember)
                     {

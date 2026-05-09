@@ -107,7 +107,7 @@ public class WarwickForestMerge
                 case "Yew Ember":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
-                    Core.HuntMonster("thelimacity", "Maleno Match", req.Name, quant, false);
+                    Core.HuntMonster("warwickforest", "Rubedo Elemental", req.Name, quant, false);
                     break;
 
                 case "Blade of Citrinitas":
