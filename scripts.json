@@ -11248,8 +11248,8 @@
       "guard"
     ],
     "path": "Other/MergeShops/WarwickForestMerge.cs",
-    "size": 8557,
-    "sha256": "936a80364a85b91398e4424f0fa717d2d92582ca7aa579ca6105840c79adab8c",
+    "size": 8563,
+    "sha256": "d71d227cf5832ce8009cd12f6feb5ff7cba57b5e4883752164662f5cb1d97242",
     "fileName": "WarwickForestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/WarwickForestMerge.cs"
   },
@@ -12337,8 +12337,8 @@
       "rubble"
     ],
     "path": "Other/MergeShops/FortLumaForgeMerge.cs",
-    "size": 9443,
-    "sha256": "1dd9126763ba2ae2ee6daa2d4d1a87bfb7651513f5c741c6041b2cb539b40e57",
+    "size": 9448,
+    "sha256": "b981dcb79e11595a99b0872bc8a86d43d96fe33cd00bc6d47de3eedb8c422c5b",
     "fileName": "FortLumaForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FortLumaForgeMerge.cs"
   },
@@ -12364,8 +12364,8 @@
       "bob"
     ],
     "path": "Other/MergeShops/CarcossaCanteenMerge.cs",
-    "size": 10168,
-    "sha256": "443fb2527e2bc48ad788fc98cbf89d118523499bfac574baea7a890753cca3e8",
+    "size": 9901,
+    "sha256": "cc8119613ec6fce68c52bf45d22edfb767f068bbe6d04b2b46301947ec8f4648",
     "fileName": "CarcossaCanteenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CarcossaCanteenMerge.cs"
   },
@@ -13123,8 +13123,8 @@
       "fangs"
     ],
     "path": "Other/MergeShops/ForgeMalenoMerge.cs",
-    "size": 9639,
-    "sha256": "488bdaacdc17bcbbe8961591845ab70f3a34822ee546c1e6d2e5bce19fc1354c",
+    "size": 9077,
+    "sha256": "3b1db22f539e31ad143186002577df886bbc74f12f3b0471ebe790ae7ad0b568",
     "fileName": "ForgeMalenoMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ForgeMalenoMerge.cs"
   },
@@ -16314,8 +16314,8 @@
       "enchanted"
     ],
     "path": "Other/MergeShops/AiwassBlessingsMerge.cs",
-    "size": 10325,
-    "sha256": "c8b016d9aecd707bdac414afaafa355e679fa1efc1b58b04f595d21570e79b04",
+    "size": 10331,
+    "sha256": "7c8f4a2394d3db8414710d157d2791c634da8b1057680a336ad195fda64c341c",
     "fileName": "AiwassBlessingsMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/AiwassBlessingsMerge.cs"
   },
@@ -17141,8 +17141,8 @@
       "scion of flames"
     ],
     "path": "Other/Classes/ScionofFlames.cs",
-    "size": 7559,
-    "sha256": "758fef29201b437d4fbaeb8753a2915efe7393a3fcc7576a943a747519015d35",
+    "size": 8288,
+    "sha256": "30de89f86a2f3dee0bb62240d47c2d49a3f7316742af9c5d959974724775446d",
     "fileName": "ScionofFlames.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ScionofFlames.cs"
   },
@@ -25076,8 +25076,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1145867,
-    "sha256": "6d7c3ca9a5656a838e43ce310786af0d7ccfdd24ca2d40589bb9277d271fb62b",
+    "size": 1154446,
+    "sha256": "f0d1180ceb384fb0e35a3c4512616028d33f0d02efa3ce0d7977c130784ae329",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
