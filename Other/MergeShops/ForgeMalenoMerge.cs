@@ -150,9 +150,7 @@ public class ForgeMalenoMerge
                     Core.HuntMonster("mountmaleno", "Idalion", req.Name, quant, false, false);
                     break;
 
-
-
-                 case "Yew Ember":
+                case "Yew Ember":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("warwickforest", "Rubedo Elemental", req.Name, quant, false);
@@ -181,6 +179,19 @@ public class ForgeMalenoMerge
                     Core.EquipClass(ClassType.Farm);
                     Core.AddDrop(req.ID);
                     Core.HuntMonster("thelimacity", "Drow Soldier", req.Name, quant, false, false);
+                    break;
+
+                case "Aiwass Diamond":
+                    Core.EquipClass(ClassType.Farm);
+                    Core.RegisterQuests(Core.IsMember ? 10387 : 10385);
+
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                    {
+                        Core.KillMonster("sanctuaryaiwass", "r9", "Top", "*", "Sal Alembroth", 1, false);
+                        Core.KillMonster("sanctuaryaiwass", "r9", "Top", "*", "Milk of Sulfur", 1, false);
+                        Core.HuntMonster("sanctuaryaiwass", "Anima Animus Aiwass", "Aeon Dream", 1, false);
+                    }
+                    Core.CancelRegisteredQuests();
                     break;
             }
         }
