@@ -109,7 +109,6 @@ public class ForgeMalenoMerge
                     break;
         #endregion
 
-                #region Items not setup
 
                 case "Black Flame of Maleno":
                     if (req.Upgrade && !Core.IsMember)
@@ -151,9 +150,7 @@ public class ForgeMalenoMerge
                     Core.HuntMonster("mountmaleno", "Idalion", req.Name, quant, false, false);
                     break;
 
-                #endregion
 
-                #region Known items
 
                 case "Yew Ember":
                     if (req.Upgrade && !Core.IsMember)
@@ -178,14 +175,7 @@ public class ForgeMalenoMerge
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
-                    Core.HuntMonster(
-                        "thelimacity",
-                        "Maleno Elemental",
-                        req.Name,
-                        quant,
-                        false,
-                        false
-                    );
+                    Core.HuntMonster("thelimacity", "Maleno Elemental", req.Name, quant, false, false);
                     break;
 
                 case "Drow Silver":
@@ -200,7 +190,6 @@ public class ForgeMalenoMerge
                     Core.AddDrop(req.ID);
                     Core.HuntMonster("thelimacity", "Drow Soldier", req.Name, quant, false, false);
                     break;
-                #endregion
             }
         }
     }
