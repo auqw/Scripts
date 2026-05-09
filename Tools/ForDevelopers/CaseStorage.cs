@@ -31684,6 +31684,265 @@ case ""Geopetal Repair Glue"":
                     break;
     "
 },
+{
+    "DoomKitten's Hairball",
+    @"
+case ""DoomKitten's Hairball"":
+                    Core.KillDoomKitten(req.Name, req.Quantity, req.Temp);
+                    break;
+    "
+},
+{
+    "Shard of Chaos",
+    @"
+case ""Shard of Chaos"":
+                    Core.KillMonster(""blindingsnow"", ""r5"", ""Spawn"", ""*"", ""Shard of Chaos"", 100, isTemp: false);
+                    break;
+    "
+},
+{
+    "Blade of Maleno",
+    @"
+case ""Blade of Maleno"":
+                    FMM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Necrotic Blade of Chaos",
+    @"
+case ""Necrotic Blade of Chaos"":
+                    Adv.BuyItem(""castleundead"", 45, req.Name);
+                    break;
+    "
+},
+{
+    "Dragon Sword of Chaos",
+    @"
+case ""Dragon Sword of Chaos"":
+                    Adv.BuyItem(""castleundead"", 45, req.Name);
+                    break;
+    "
+},
+{
+    "Chaotic Hanzamune",
+    @"
+case ""Chaotic Hanzamune"":
+                    Core.KillKitsune(req.Name, req.Quantity, req.Temp);
+                    break;
+    "
+},
+{
+    "Deep Forest Sap",
+    @"
+case ""Deep Forest Sap"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(8081);  
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.KillMonster(""deepforest"", ""r2"", ""Left"", ""Deep Truffle"");
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Blade of Albedo",
+    @"
+case ""Blade of Albedo"":
+                    CCM.BuyAllMerge(req.Name);
+                    break;
+    "
+},
+{
+    "Flame of the Magnum Opus",
+    @"
+case ""Flame of the Magnum Opus"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    if (!string.IsNullOrEmpty(Core.BossClass))
+                        Core.EquipClass(ClassType.Boss);
+                    else
+                    {
+                        Bot.Log(""BossClass is empty/unselected in CBO, we'll use the Solo class or if thats empty, the currently equipped class."");
+                        Core.EquipClass(ClassType.Solo);
+                    }
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(Core.IsMember ? 10706 : 10705); 
+
+                    Bot.Events.ExtensionPacketReceived += FlameoftheBeyond;
+                    Bot.Options.AttackWithoutTarget = true;
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        if (Bot.Map.Name != ""magnumopus"")
+                            Core.Join(""magnumopus"");
+
+                        if (Bot.Player.Cell != ""r2"")
+                            Core.Jump(""r2"", ""bottom"");
+
+
+                        Bot.Combat.Attack(""*"");
+
+                        Bot.Sleep(200);
+                        if (req.Temp ? Bot.TempInv.Contains(req.ID, req.Quantity) : Bot.Inventory.Contains(req.ID, req.Quantity))
+                            break;
+                    }
+                    Bot.Options.AttackWithoutTarget = false;
+                    Bot.Events.ExtensionPacketReceived -= FlameoftheBeyond;
+                    Core.Jump(""Enter"", ""Spawn"");
+                    Bot.Wait.ForPickup(req.ID);
+                    Core.CancelRegisteredQuests();
+                    break;
+
+    "
+},
+{
+    "Great Flame of Yew",
+    @"
+case ""Great Flame of Yew"":
+                    Core.Logger(""As of the time of making this, the bot *Cannot* farm this item. farm it yourself manaully then rerun this."");
+                    break;
+    "
+},
+{
+    "Cinders of a Champion",
+    @"
+case ""Cinders of a Champion"":
+                    Core.Logger(""As of the time of making this, the bot *Cannot* farm this item. farm it yourself manaully then rerun this."");
+                    break;
+    "
+},
+{
+    "Blade of Rubedo",
+    @"
+case ""Blade of Rubedo"":
+                    WFM.BuyAllMerge(req.Name);
+                    break;
+
+    "
+},
+{
+    "Red Flame of Rubedo",
+    @"
+case ""Red Flame of Rubedo"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Solo);
+                    Core.AddDrop(req.ID);
+                    Core.RegisterQuests(Core.IsMember ? 10689 : 10688);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.KillMonster(""warwickforest"", ""r10"", ""Bottom"", ""*"", ""Rubedo Flicker"");
+                        Core.HuntMonster(""warwickforest"", ""Idea of a Champion"", ""Kolr's Needle"");
+                        Core.HuntMonster(""warwickforest"", ""Rubedo Match"", ""Alkahest"", 100);
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    Core.CancelRegisteredQuests();
+                    break;
+    "
+},
+{
+    "Blade of Citrinitas",
+    @"
+case ""Blade of Citrinitas"":
+                    FLF.BuyAllMerge(req.Name);
+                    break;
+
+    "
+},
+{
+    "Amethyst Gem",
+    @"
+case ""Amethyst Gem"":
+                    if (!Core.IsMember)
+                    {
+                        Core.Logger(""Map requires memmbership..."");
+                        return;
+                    }
+                    Core.EquipClass(ClassType.Farm);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, req.Quantity))
+                        Core.KillMonster(""crownsreachfxiii"", ""r4"", ""Left"", ""*"");
+                    Bot.Wait.ForPickup(req.ID);
+                    break;
+    "
+},
+{
+    "Dark Ostrakon",
+    @"
+case ""Dark Ostrakon"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""legiontournament"", ""Dark Ostrakon"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "Proioxis Pursuit Cloak",
+    @"
+case ""Proioxis Pursuit Cloak"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    Core.HuntMonster(""legiontournament"", ""Dark Ostrakon"", req.Name, quant, req.Temp, false);
+                    break;
+    "
+},
+{
+    "WarForge Coal",
+    @"
+case ""WarForge Coal"":
+                    if (req.Upgrade && !Core.IsMember)
+                    {
+                        Core.Logger($""{req.Name} requires membership to farm, skipping."");
+                        return;
+                    }
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.EquipClass(ClassType.Farm);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(Core.IsMember ? 10636 : 10635,
+                        (""legiontournament"", ""Legion Ritualist"", ClassType.Solo),
+                        (""legiontournament"", ""The WarForge"", ClassType.Solo),
+                        (""legiontournament"", ""Deathwing"", ClassType.Solo));
+                        Bot.Wait.ForPickup(req.Name);
+                    }
+                    break;
+    "
+},
 };
 
     public static bool TryGetCase(string itemName, out string? logic) =>
