@@ -52,6 +52,31 @@ public class ScionofFlames
     }
     private static RemnantsofachampionMerge _RoaCM;
 
+    private static WarwickForestMerge WFM
+    {
+        get => _WFM ??= new WarwickForestMerge();
+        set => _WFM = value;
+    }
+    private static WarwickForestMerge _WFM;
+    private static FortLumaForgeMerge FLF
+    {
+        get => _FLF ??= new FortLumaForgeMerge();
+        set => _FLF = value;
+    }
+    private static FortLumaForgeMerge _FLF;
+    private static CarcossaCanteenMerge CCM
+    {
+        get => _CCM ??= new CarcossaCanteenMerge();
+        set => _CCM = value;
+    }
+    private static CarcossaCanteenMerge _CCM;
+    private static ForgeMalenoMerge FMM
+    {
+        get => _FMM ??= new ForgeMalenoMerge();
+        set => _FMM = value;
+    }
+    private static ForgeMalenoMerge _FMM;
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -96,14 +121,11 @@ public class ScionofFlames
         // P5: Aleister the Dawnseeker
         Core.Logger("[P5] mering Aleister the Dawnseeker Via MagnumOpusMerge");
         MOM.BuyAllMerge("Aleister the Dawnseeker");
-        foreach (string Armor in new[]
-        {
-        "Flame of Albedo",
-        "Flame of Citrinitas",
-        "Flame of Maleno",
-        "Flame of Rubedo",
-        })
-            RoaCM.BuyAllMerge(Armor);
+        WFM.BuyAllMerge("Flame of Rubedo");
+        FLF.BuyAllMerge("Flame of Citrinitas");
+        CCM.BuyAllMerge("Flame of Albedo");
+        FMM.BuyAllMerge("Flame of Maleno");
+
         Core.EnsureComplete(10716);
 
         Bot.Wait.ForDrop(ClassName);
@@ -143,6 +165,7 @@ public class ScionofFlames
                 break;
 
             case "Yew Ember":
+                Core.FarmingLogger(item, quant);
                 Core.EquipClass(ClassType.Farm);
                 Core.HuntMonster("warwickforest", "Rubedo Elemental", item, quant, false);
                 break;
