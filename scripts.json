@@ -11248,8 +11248,8 @@
       "guard"
     ],
     "path": "Other/MergeShops/WarwickForestMerge.cs",
-    "size": 8563,
-    "sha256": "d71d227cf5832ce8009cd12f6feb5ff7cba57b5e4883752164662f5cb1d97242",
+    "size": 9257,
+    "sha256": "9659364f3f3fe7f16048769131c1146adfd8cbc8d8e8fc01fe4b1a10e7b234cc",
     "fileName": "WarwickForestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/WarwickForestMerge.cs"
   },
@@ -12337,8 +12337,8 @@
       "rubble"
     ],
     "path": "Other/MergeShops/FortLumaForgeMerge.cs",
-    "size": 9448,
-    "sha256": "b981dcb79e11595a99b0872bc8a86d43d96fe33cd00bc6d47de3eedb8c422c5b",
+    "size": 10142,
+    "sha256": "ba85e91ec65c69850ff09f6b3c0d52e25f6f121b6c41df13263b9993b0a2b5e1",
     "fileName": "FortLumaForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FortLumaForgeMerge.cs"
   },
@@ -12364,8 +12364,8 @@
       "bob"
     ],
     "path": "Other/MergeShops/CarcossaCanteenMerge.cs",
-    "size": 9901,
-    "sha256": "cc8119613ec6fce68c52bf45d22edfb767f068bbe6d04b2b46301947ec8f4648",
+    "size": 10551,
+    "sha256": "c06285c5392604c1c031ba75a2db56608b92852afda0bea48ddb3e1146e14a3c",
     "fileName": "CarcossaCanteenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CarcossaCanteenMerge.cs"
   },
@@ -13123,8 +13123,8 @@
       "fangs"
     ],
     "path": "Other/MergeShops/ForgeMalenoMerge.cs",
-    "size": 9077,
-    "sha256": "3b1db22f539e31ad143186002577df886bbc74f12f3b0471ebe790ae7ad0b568",
+    "size": 9768,
+    "sha256": "ce0a65cdb58236851242bd8981a65eca05bae2af20a4fea5cdbda04b47ec151f",
     "fileName": "ForgeMalenoMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ForgeMalenoMerge.cs"
   },
