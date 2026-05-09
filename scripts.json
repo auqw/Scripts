@@ -11248,8 +11248,8 @@
       "guard"
     ],
     "path": "Other/MergeShops/WarwickForestMerge.cs",
-    "size": 7539,
-    "sha256": "c76f8259b42b824d4a91f8fbbc84b06e54d45212ae102a8f910285050495c138",
+    "size": 8557,
+    "sha256": "936a80364a85b91398e4424f0fa717d2d92582ca7aa579ca6105840c79adab8c",
     "fileName": "WarwickForestMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/WarwickForestMerge.cs"
   },
@@ -11970,6 +11970,41 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/TrenchObserveMerge.cs"
   },
   {
+    "name": "Remnants of a champion Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Remnants of a champion Merge [2711] in /flameusurper",
+    "tags": [
+      "remnants",
+      "of",
+      "a",
+      "champion",
+      "merge",
+      "flameusurper",
+      "flame",
+      "maleno",
+      "albedo",
+      "citrinitas",
+      "rubedo",
+      "magnum",
+      "opus",
+      "wings",
+      "divine",
+      "quintessence",
+      "eye",
+      "extinction",
+      "scion",
+      "destruction",
+      "horns",
+      "morph",
+      "liberta",
+      "aeterna"
+    ],
+    "path": "Other/MergeShops/RemnantsofachampionMerge.cs",
+    "size": 5820,
+    "sha256": "ffb85b3b00681d4601e67f4574a23c01bd9b9daf6a1c7451778645e89af61715",
+    "fileName": "RemnantsofachampionMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/RemnantsofachampionMerge.cs"
+  },
+  {
     "name": "Exaltia Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Exaltia Merge [2010] in /timeinn",
     "tags": [
@@ -12302,8 +12337,8 @@
       "rubble"
     ],
     "path": "Other/MergeShops/FortLumaForgeMerge.cs",
-    "size": 8268,
-    "sha256": "d35369b20fefa932be0a1a7e21405fda00309f5c00eeffa6c17c99d3c5fe1c98",
+    "size": 9443,
+    "sha256": "1dd9126763ba2ae2ee6daa2d4d1a87bfb7651513f5c741c6041b2cb539b40e57",
     "fileName": "FortLumaForgeMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FortLumaForgeMerge.cs"
   },
@@ -12329,8 +12364,8 @@
       "bob"
     ],
     "path": "Other/MergeShops/CarcossaCanteenMerge.cs",
-    "size": 10551,
-    "sha256": "397ea662aa4cbae27c155feed407bcc18b60a5b6ab647ad40f31d8923b776d39",
+    "size": 10168,
+    "sha256": "443fb2527e2bc48ad788fc98cbf89d118523499bfac574baea7a890753cca3e8",
     "fileName": "CarcossaCanteenMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CarcossaCanteenMerge.cs"
   },
@@ -13088,8 +13123,8 @@
       "fangs"
     ],
     "path": "Other/MergeShops/ForgeMalenoMerge.cs",
-    "size": 9811,
-    "sha256": "928fdee89fa99d05deae4d350928840b274feaffb1bb76486838fabe201f4fe2",
+    "size": 9639,
+    "sha256": "488bdaacdc17bcbbe8961591845ab70f3a34822ee546c1e6d2e5bce19fc1354c",
     "fileName": "ForgeMalenoMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ForgeMalenoMerge.cs"
   },
@@ -17099,6 +17134,19 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/LightMage.cs"
   },
   {
+    "name": "Scion of Flames (Class)",
+    "description": "This script will get Scion of Flames class.",
+    "tags": [
+      "scionofflames",
+      "scion of flames"
+    ],
+    "path": "Other/Classes/ScionofFlames.cs",
+    "size": 7559,
+    "sha256": "758fef29201b437d4fbaeb8753a2915efe7393a3fcc7576a943a747519015d35",
+    "fileName": "ScionofFlames.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ScionofFlames.cs"
+  },
+  {
     "name": "LegionDoomKnight[Mem]",
     "description": "null",
     "tags": [
@@ -17272,19 +17320,6 @@
     "sha256": "e24d2cd60b72d2798572104843ddfc4c0ef741a33a6cacf23d47d7e7ca752d01",
     "fileName": "0AllClasses.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/0AllClasses.cs"
-  },
-  {
-    "name": "Scion of Flames (Class)",
-    "description": "This script will get Scion of Flames class.",
-    "tags": [
-      "scionofflames",
-      "scion of flames"
-    ],
-    "path": "Other/Classes/ScionofFlames[WIP].cs",
-    "size": 8913,
-    "sha256": "2f97a6e76c39c5a6aa1776805eeabb6c99c37c87b39f91587fe283e5c2674188",
-    "fileName": "ScionofFlames[WIP].cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ScionofFlames[WIP].cs"
   },
   {
     "name": "DragonShinobi",
@@ -19007,8 +19042,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 55978,
-    "sha256": "648d7da7baa37e66e9c6a5c57dfd129098f28947b7fa5193b55f8dcc88d01d9e",
+    "size": 56059,
+    "sha256": "1e85f59e1c791c422a6a76e26f59466891648ba9e7d98157abd15ad65fb41b85",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
