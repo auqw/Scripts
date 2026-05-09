@@ -69,6 +69,7 @@ public class CoreAOR
         FortLuma(false, false);
         WarWickForest(false, false);
         MagnumOpus(false, false);
+        RubedoPeak(false, false);
 
     }
 
@@ -1437,14 +1438,19 @@ public class CoreAOR
 
     }
 
-    public void Epilogue(bool seaVoice = false, bool coldThunder = false)
+    private void RubedoPeak(bool seaVoice = false, bool coldThunder = false)
     {
+        if (Core.isCompletedBefore(10714))
+            return;
 
-        /* 
-        Not Out *Yet*
-        */
+        MagnumOpus();
 
+        Story.KillQuest(10714, "rubedopeak", "Rubedo Match");
     }
+
+
+
+
 
     // Mostly for `Skye's Lightning` for the Merge
     public void ColdThunderBoss(string? item = null, int quant = 1, bool isTemp = true)
@@ -1593,15 +1599,7 @@ public class CoreAOR
         }
     }
 
-    public void KillThing(
-        string map,
-        int mobMapID,
-        int itemUsed,
-        string Class,
-        string item,
-        int quant = 1,
-        bool isTemp = false
-    )
+    public void KillThing(string map, int mobMapID, int itemUsed, string Class, string item, int quant = 1, bool isTemp = false)
     {
         string? classFromPlayer = Bot.Player.CurrentClass?.Name;
 
