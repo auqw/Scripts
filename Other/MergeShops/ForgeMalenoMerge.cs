@@ -5,10 +5,10 @@ tags: forge, maleno, merge, mountmaleno, idalions, shadowbrand, flame, halberd, 
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
-//cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs
+//cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs  
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -205,79 +205,24 @@ public class ForgeMalenoMerge
         }
     }
 
+
     public List<IOption> Select = new()
     {
-        new Option<bool>(
-            "92799",
-            "Idalion's Shadowbrand Blade",
-            "Mode: [select] only\nShould the bot buy \"Idalion's Shadowbrand Blade\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92800",
-            "Idalion's Shadowbrand Blades",
-            "Mode: [select] only\nShould the bot buy \"Idalion's Shadowbrand Blades\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92810",
-            "Idalion's Flame Halberd",
-            "Mode: [select] only\nShould the bot buy \"Idalion's Flame Halberd\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92814",
-            "Idalion's ShadowCleaver",
-            "Mode: [select] only\nShould the bot buy \"Idalion's ShadowCleaver\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92815",
-            "Idalion's ShadowCleavers",
-            "Mode: [select] only\nShould the bot buy \"Idalion's ShadowCleavers\" ?",
-            false
-        ),
-        new Option<bool>(
-            "94685",
-            "Drow Oathkeeper",
-            "Mode: [select] only\nShould the bot buy \"Drow Oathkeeper\" ?",
-            false
-        ),
-        new Option<bool>(
-            "94686",
-            "Drow Oathkeeper Morph",
-            "Mode: [select] only\nShould the bot buy \"Drow Oathkeeper Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "94687",
-            "Drow Oathkeeper Visage",
-            "Mode: [select] only\nShould the bot buy \"Drow Oathkeeper Visage\" ?",
-            false
-        ),
-        new Option<bool>(
-            "94688",
-            "Silver Drow Saber",
-            "Mode: [select] only\nShould the bot buy \"Silver Drow Saber\" ?",
-            false
-        ),
-        new Option<bool>(
-            "94689",
-            "Silver Drow Sabers",
-            "Mode: [select] only\nShould the bot buy \"Silver Drow Sabers\" ?",
-            false
-        ),
-        new Option<bool>(
-            "95110",
-            "Idalion's Blazing Fang",
-            "Mode: [select] only\nShould the bot buy \"Idalion's Blazing Fang\" ?",
-            false
-        ),
-        new Option<bool>(
-            "95111",
-            "Idalion's Blazing Fangs",
-            "Mode: [select] only\nShould the bot buy \"Idalion's Blazing Fangs\" ?",
-            false
-        ),
-    };
+        new Option<bool>("94685", "Drow Oathkeeper", "Mode: [select] only\nShould the bot buy \"Drow Oathkeeper\" ?", false),
+        new Option<bool>("100873", "Flame of Maleno", "Mode: [select] only\nShould the bot buy \"Flame of Maleno\" ?", false),
+        new Option<bool>("92814", "Idalion's ShadowCleaver", "Mode: [select] only\nShould the bot buy \"Idalion's ShadowCleaver\" ?", false),
+        new Option<bool>("100875", "Ferrum Flame Cape", "Mode: [select] only\nShould the bot buy \"Ferrum Flame Cape\" ?", false),
+        new Option<bool>("94689", "Silver Drow Sabers", "Mode: [select] only\nShould the bot buy \"Silver Drow Sabers\" ?", false),
+        new Option<bool>("95111", "Idalion's Blazing Fangs", "Mode: [select] only\nShould the bot buy \"Idalion's Blazing Fangs\" ?", false),
+        new Option<bool>("92815", "Idalion's ShadowCleavers", "Mode: [select] only\nShould the bot buy \"Idalion's ShadowCleavers\" ?", false),
+        new Option<bool>("92800", "Idalion's Shadowbrand Blades", "Mode: [select] only\nShould the bot buy \"Idalion's Shadowbrand Blades\" ?", false),
+        new Option<bool>("94686", "Drow Oathkeeper Morph", "Mode: [select] only\nShould the bot buy \"Drow Oathkeeper Morph\" ?", false),
+        new Option<bool>("94687", "Drow Oathkeeper Visage", "Mode: [select] only\nShould the bot buy \"Drow Oathkeeper Visage\" ?", false),
+        new Option<bool>("100874", "Flame of Maleno Hood", "Mode: [select] only\nShould the bot buy \"Flame of Maleno Hood\" ?", false),
+        new Option<bool>("92810", "Idalion's Flame Halberd", "Mode: [select] only\nShould the bot buy \"Idalion's Flame Halberd\" ?", false),
+        new Option<bool>("95110", "Idalion's Blazing Fang", "Mode: [select] only\nShould the bot buy \"Idalion's Blazing Fang\" ?", false),
+        new Option<bool>("100876", "Blade of Maleno", "Mode: [select] only\nShould the bot buy \"Blade of Maleno\" ?", false),
+        new Option<bool>("94688", "Silver Drow Saber", "Mode: [select] only\nShould the bot buy \"Silver Drow Saber\" ?", false),
+        new Option<bool>("92799", "Idalion's Shadowbrand Blade", "Mode: [select] only\nShould the bot buy \"Idalion's Shadowbrand Blade\" ?", false),
+   };
 }

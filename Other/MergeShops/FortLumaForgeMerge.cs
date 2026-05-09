@@ -4,11 +4,12 @@ description: This bot will farm the items belonging to the selected mode for the
 tags: fort, luma, forge, merge, fortluma, sol, gloria, proxima, imperator, nova, fomalhaut, luminary, white, knight, armet, lumiel, spinsaw, spinsaws, torch, celerity, gold, celeritas, statue, brasier, golden, geopetal, rubble
 */
 //cs_include Scripts/CoreBots.cs
-//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreAdvanced.cs
+//cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
-//cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs
+//cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs 
+//cs_include Scripts/Other/MergeShops/CarcossaCanteenMerge.cs 
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -29,6 +30,12 @@ public class FortLumaForgeMerge
         set => _AOR = value;
     }
     private static CoreAOR _AOR;
+    private static CarcossaCanteenMerge CCM
+    {
+        get => _CCM ??= new CarcossaCanteenMerge();
+        set => _CCM = value;
+    }
+    private static CarcossaCanteenMerge _CCM;
 
 
     public bool DontPreconfigure = true;
@@ -88,7 +95,6 @@ public class FortLumaForgeMerge
                     Core.CancelRegisteredQuests();
                     break;
 
-
                 case "Luma Torch of Clarity":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -100,7 +106,6 @@ public class FortLumaForgeMerge
                     Core.AddDrop(req.ID);
                     Core.HuntMonsterMapID("fortluma", 5, req.Name, req.Quantity, req.Temp);
                     break;
-
 
                 case "Yellow Flame of Citrinitas":
                     if (req.Upgrade && !Core.IsMember)
@@ -123,7 +128,6 @@ public class FortLumaForgeMerge
                     Core.CancelRegisteredQuests();
                     break;
 
-
                 case "Geopetal Repair Glue":
                     if (req.Upgrade && !Core.IsMember)
                     {
@@ -138,34 +142,42 @@ public class FortLumaForgeMerge
 
                     break;
 
-
                 case "Yew Ember":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("thelimacity", "Maleno Match", req.Name, quant, false);
                     break;
 
+                case "Blade of Albedo":
+                    CCM.BuyAllMerge(req.Name);
+                    break;
             }
         }
     }
 
     public List<IOption> Select = new()
     {
-        new Option<bool>("93388", "Sol Gloria", "Mode: [select] only\nShould the bot buy \"Sol Gloria\" ?", false),
-        new Option<bool>("93389", "Dual Sol Gloria", "Mode: [select] only\nShould the bot buy \"Dual Sol Gloria\" ?", false),
-        new Option<bool>("93392", "Sol Proxima", "Mode: [select] only\nShould the bot buy \"Sol Proxima\" ?", false),
-        new Option<bool>("93397", "Dual Sol Imperator", "Mode: [select] only\nShould the bot buy \"Dual Sol Imperator\" ?", false),
-        new Option<bool>("93396", "Sol Imperator", "Mode: [select] only\nShould the bot buy \"Sol Imperator\" ?", false),
-        new Option<bool>("94451", "Nova Fomalhaut", "Mode: [select] only\nShould the bot buy \"Nova Fomalhaut\" ?", false),
-        new Option<bool>("94452", "Dual Nova Fomalhaut", "Mode: [select] only\nShould the bot buy \"Dual Nova Fomalhaut\" ?", false),
         new Option<bool>("97345", "Luminary White Knight", "Mode: [select] only\nShould the bot buy \"Luminary White Knight\" ?", false),
-        new Option<bool>("97346", "Luminary White Armet", "Mode: [select] only\nShould the bot buy \"Luminary White Armet\" ?", false),
+        new Option<bool>("100881", "Flame of Citrinitas", "Mode: [select] only\nShould the bot buy \"Flame of Citrinitas\" ?", false),
         new Option<bool>("97350", "Lumiel Spinsaw", "Mode: [select] only\nShould the bot buy \"Lumiel Spinsaw\" ?", false),
+        new Option<bool>("93396", "Sol Imperator", "Mode: [select] only\nShould the bot buy \"Sol Imperator\" ?", false),
+        new Option<bool>("100883", "Citrinitas Crown", "Mode: [select] only\nShould the bot buy \"Citrinitas Crown\" ?", false),
+        new Option<bool>("100884", "Splendor Solace Cape", "Mode: [select] only\nShould the bot buy \"Splendor Solace Cape\" ?", false),
+        new Option<bool>("100885", "Dawn's Splendor Cape", "Mode: [select] only\nShould the bot buy \"Dawn's Splendor Cape\" ?", false),
+        new Option<bool>("94452", "Dual Nova Fomalhaut", "Mode: [select] only\nShould the bot buy \"Dual Nova Fomalhaut\" ?", false),
+        new Option<bool>("93397", "Dual Sol Imperator", "Mode: [select] only\nShould the bot buy \"Dual Sol Imperator\" ?", false),
+        new Option<bool>("93389", "Dual Sol Gloria", "Mode: [select] only\nShould the bot buy \"Dual Sol Gloria\" ?", false),
         new Option<bool>("97351", "Lumiel Spinsaws", "Mode: [select] only\nShould the bot buy \"Lumiel Spinsaws\" ?", false),
-        new Option<bool>("99503", "Luma Torch of Celerity", "Mode: [select] only\nShould the bot buy \"Luma Torch of Celerity\" ?", false),
         new Option<bool>("99506", "Gold Celeritas Statue", "Mode: [select] only\nShould the bot buy \"Gold Celeritas Statue\" ?", false),
         new Option<bool>("99507", "Fort Luma Brasier", "Mode: [select] only\nShould the bot buy \"Fort Luma Brasier\" ?", false),
         new Option<bool>("99508", "Golden Geopetal Rubble", "Mode: [select] only\nShould the bot buy \"Golden Geopetal Rubble\" ?", false),
         new Option<bool>("99509", "Golden Geopetal", "Mode: [select] only\nShould the bot buy \"Golden Geopetal\" ?", false),
+        new Option<bool>("100882", "Flame of Citrinitas Hood", "Mode: [select] only\nShould the bot buy \"Flame of Citrinitas Hood\" ?", false),
+        new Option<bool>("97346", "Luminary White Armet", "Mode: [select] only\nShould the bot buy \"Luminary White Armet\" ?", false),
+        new Option<bool>("99503", "Luma Torch of Celerity", "Mode: [select] only\nShould the bot buy \"Luma Torch of Celerity\" ?", false),
+        new Option<bool>("93392", "Sol Proxima", "Mode: [select] only\nShould the bot buy \"Sol Proxima\" ?", false),
+        new Option<bool>("93388", "Sol Gloria", "Mode: [select] only\nShould the bot buy \"Sol Gloria\" ?", false),
+        new Option<bool>("94451", "Nova Fomalhaut", "Mode: [select] only\nShould the bot buy \"Nova Fomalhaut\" ?", false),
+        new Option<bool>("100886", "Blade of Citrinitas", "Mode: [select] only\nShould the bot buy \"Blade of Citrinitas\" ?", false),
    };
 }

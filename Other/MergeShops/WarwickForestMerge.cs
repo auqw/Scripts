@@ -8,7 +8,8 @@ tags: warwickforest, merge, warwickforest, adamas, flamespawn, raider, captain, 
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/CoreStory.cs
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
-//cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs
+//cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs 
+//cs_include Scripts/Other/MergeShops/FortLumaForgeMerge.cs
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
 using Skua.Core.Options;
@@ -29,6 +30,12 @@ public class WarwickForestMerge
         set => _AOR = value;
     }
     private static CoreAOR _AOR;
+    private static FortLumaForgeMerge FLF
+    {
+        get => _FLF ??= new FortLumaForgeMerge();
+        set => _FLF = value;
+    }
+    private static FortLumaForgeMerge _FLF;
 
 
     public bool DontPreconfigure = true;
@@ -75,7 +82,6 @@ public class WarwickForestMerge
                     break;
         #endregion
 
-                #region Items not setup
 
                 case "Red Flame of Rubedo":
                     if (req.Upgrade && !Core.IsMember)
@@ -97,16 +103,16 @@ public class WarwickForestMerge
                     }
                     Core.CancelRegisteredQuests();
                     break;
-                #endregion
-
-                #region Known items
 
                 case "Yew Ember":
                     Core.FarmingLogger(req.Name, quant);
                     Core.EquipClass(ClassType.Farm);
                     Core.HuntMonster("thelimacity", "Maleno Match", req.Name, quant, false);
                     break;
-                #endregion
+
+                case "Blade of Citrinitas":
+                    FLF.BuyAllMerge(req.Name);
+                    break;
 
             }
         }
@@ -119,6 +125,10 @@ public class WarwickForestMerge
         new Option<bool>("95232", "Adamas Flamespawn Lord", "Mode: [select] only\nShould the bot buy \"Adamas Flamespawn Lord\" ?", false),
         new Option<bool>("94858", "Anjou Duke Formalwear", "Mode: [select] only\nShould the bot buy \"Anjou Duke Formalwear\" ?", false),
         new Option<bool>("94859", "Anjou Duke Regalia", "Mode: [select] only\nShould the bot buy \"Anjou Duke Regalia\" ?", false),
+        new Option<bool>("100887", "Flame of Rubedo", "Mode: [select] only\nShould the bot buy \"Flame of Rubedo\" ?", false),
+        new Option<bool>("100889", "Rubedo Crown", "Mode: [select] only\nShould the bot buy \"Rubedo Crown\" ?", false),
+        new Option<bool>("100890", "Vermillion Vertis Cape", "Mode: [select] only\nShould the bot buy \"Vermillion Vertis Cape\" ?", false),
+        new Option<bool>("100891", "Rubedo Resonance Cape", "Mode: [select] only\nShould the bot buy \"Rubedo Resonance Cape\" ?", false),
         new Option<bool>("95239", "Ashblight Fur", "Mode: [select] only\nShould the bot buy \"Ashblight Fur\" ?", false),
         new Option<bool>("95240", "Ashblight Spines", "Mode: [select] only\nShould the bot buy \"Ashblight Spines\" ?", false),
         new Option<bool>("95242", "Dual Ex Incendium", "Mode: [select] only\nShould the bot buy \"Dual Ex Incendium\" ?", false),
@@ -134,6 +144,8 @@ public class WarwickForestMerge
         new Option<bool>("95236", "Adamas Flamespawn Horns Visage", "Mode: [select] only\nShould the bot buy \"Adamas Flamespawn Horns Visage\" ?", false),
         new Option<bool>("95237", "Adamas Flamespawn Helm", "Mode: [select] only\nShould the bot buy \"Adamas Flamespawn Helm\" ?", false),
         new Option<bool>("95238", "Adamas Flamespawn Guard", "Mode: [select] only\nShould the bot buy \"Adamas Flamespawn Guard\" ?", false),
+        new Option<bool>("100888", "Flame of Rubedo Hood", "Mode: [select] only\nShould the bot buy \"Flame of Rubedo Hood\" ?", false),
+        new Option<bool>("100892", "Blade of Rubedo", "Mode: [select] only\nShould the bot buy \"Blade of Rubedo\" ?", false),
         new Option<bool>("95241", "Ex Incendium Blade", "Mode: [select] only\nShould the bot buy \"Ex Incendium Blade\" ?", false),
    };
 }
