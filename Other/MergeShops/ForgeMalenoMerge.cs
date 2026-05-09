@@ -181,17 +181,26 @@ public class ForgeMalenoMerge
                     Core.HuntMonster("thelimacity", "Drow Soldier", req.Name, quant, false, false);
                     break;
 
-                case "Aiwass Diamond":
-                    Core.EquipClass(ClassType.Farm);
-                    Core.RegisterQuests(Core.IsMember ? 10387 : 10385);
 
-                    while (!Bot.ShouldExit && !Core.CheckInventory(req.Name, quant))
+                case "Steel Ingot":
+                    if (req.Upgrade && !Core.IsMember)
                     {
-                        Core.KillMonster("sanctuaryaiwass", "r9", "Top", "*", "Sal Alembroth", 1, false);
-                        Core.KillMonster("sanctuaryaiwass", "r9", "Top", "*", "Milk of Sulfur", 1, false);
-                        Core.HuntMonster("sanctuaryaiwass", "Anima Animus Aiwass", "Aeon Dream", 1, false);
+                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
+                        return;
                     }
-                    Core.CancelRegisteredQuests();
+
+                    Core.FarmingLogger(req.Name, quant);
+                    Core.AddDrop(req.ID);
+                    while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
+                    {
+                        Core.HuntMonsterQuest(
+                            Core.IsMember ? 10358 : 10357,
+                            ("thelimacity", "Maleno Elemental", ClassType.Solo),
+                            ("thelimacity", "Maleno Match", ClassType.Farm),
+                            ("thelimacity", "Flame of Maleno", ClassType.Solo)
+                        );
+                        Bot.Wait.ForPickup(req.Name);
+                    }
                     break;
             }
         }
