@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 61261,
-    "sha256": "0704b13cc451a4e4f5cef7cb220c6baa948d2081f61d71663d8b779fec9b45bf",
+    "size": 60949,
+    "sha256": "d5e79a008e73cae132bacdceeee3287eacb0c139969210b3c3c00590c62acd34",
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreDailies.cs"
   },
@@ -31189,8 +31189,8 @@
       "null"
     ],
     "path": "Other/Classes/Daily-Classes/BlazeBinder.cs",
-    "size": 2458,
-    "sha256": "cdc6a59f3696dd85dbfa1d5cbf1fc085a638cf9ed18a91f76ce66e0155158261",
+    "size": 2114,
+    "sha256": "d5297bb12aa5f5d5e14838458cf5a54ab996d679c2970bbffefbee1f4132cd38",
     "fileName": "BlazeBinder.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/Daily-Classes/BlazeBinder.cs"
   },
