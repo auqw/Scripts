@@ -3732,13 +3732,14 @@ public class CoreAdvanced
                 #endregion
 
                 case "scion of flames":
-                    if (!uVainglory() || !uPneuma() || !uValiance())
+                    if ((!uVainglory() || !uLament())
+                    && (!uPneuma() || !uForgeHelm())
+                    && (!uRavenous() || !uValiance()))
                         goto default;
-
                     type = EnhancementType.Wizard;
-                    cSpecial = CapeSpecial.Vainglory;
-                    wSpecial = WeaponSpecial.Valiance;
-                    hSpecial = HelmSpecial.Pneuma;
+                    cSpecial = uVainglory() ? CapeSpecial.Vainglory : CapeSpecial.Lament;
+                    wSpecial = uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance;
+                    hSpecial = uPneuma() ? HelmSpecial.Pneuma : HelmSpecial.Forge;
                     break;
 
                 #region Healer - Current - Valiance/Awe - Current
