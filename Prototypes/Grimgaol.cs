@@ -445,9 +445,9 @@ public class Grimgaol
 
                     // Grim Bomb  
                     case "r2":
-                        if (Core.CheckInventory(legionrevenant))
-                            RLR(Bot.Player.Cell);
-                        else RBB(Bot.Player.Cell);
+                        if (!Core.CheckInventory(legionrevenant))
+                            RDoT(Bot.Player.Cell);
+                            else RLR(Bot.Player.Cell);
                         RecordSplit("r2 — Grim Bomb");
                         if (Bot.Player.Cell != "r3")
                         {
