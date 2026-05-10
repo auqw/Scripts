@@ -1273,11 +1273,14 @@ public class CoreFarmerJoe
         Core.FarmClass = ResolveClass(Core.FarmClass, farmClasses, out _) ?? Core.FarmClass;
         Core.DodgeClass = ResolveClass(Core.DodgeClass, dodgeClasses, out _) ?? Core.DodgeClass;
 
+        Core.ReadCBO();
+
+
         (string? Class, string Label)[] rankTargets =
         [
             (Core.SoloClass, "SoloClass"),
-        (Core.FarmClass, "FarmClass"),
-        (Core.DodgeClass, "DodgeClass")
+            (Core.FarmClass, "FarmClass"),
+            (Core.DodgeClass, "DodgeClass")
         ];
 
         foreach ((string? className, string label) in rankTargets)
@@ -1345,7 +1348,7 @@ public class CoreFarmerJoe
             Core.ToBank(toBank);
     }
 
-    
+
     private void RankIfNeeded(string? className, string label)
     {
         if (string.IsNullOrEmpty(className))
