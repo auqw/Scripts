@@ -3731,6 +3731,16 @@ public class CoreAdvanced
 
                 #endregion
 
+                case "Scion of Flames":
+                    if (!uVainglory() || !uPneuma() || !uValiance())
+                        goto default;
+
+                    type = EnhancementType.Lucky;
+                    cSpecial = CapeSpecial.Vainglory;
+                    wSpecial = WeaponSpecial.Valiance;
+                    hSpecial = HelmSpecial.Pneuma;
+                    break;
+
                 #region Healer - Current - Valiance/Awe - Current
                 case "healer":
                 case "healer (rare)":
@@ -4324,6 +4334,7 @@ public class CoreAdvanced
                 case "timeless dark caster":
                 case "witch":
                 case "stonecrusher":
+                case "Scion of Flames":
                     type = EnhancementType.Wizard;
                     wSpecial = WeaponSpecial.Awe_Blast;
                     break;
