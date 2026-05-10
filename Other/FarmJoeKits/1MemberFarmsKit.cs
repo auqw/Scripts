@@ -458,7 +458,7 @@ public class MemberFarm
         Core.FarmingLogger("Darkwave Khopesh");
 
         Core.RegisterQuests(4618);
-        Core.KillMonster("cruxship", "r13", "Bottom", "Darkwave Khopesh", isTemp: false);
+        Core.KillMonster("cruxship", "r13", "Bottom", "Apephryx", "Darkwave Khopesh", isTemp: false);
         Bot.Wait.ForPickup("Darkwave Khopesh");
         Core.CancelRegisteredQuests();
 
