@@ -489,6 +489,7 @@ public class CoreDailies
         Core.ToBank("Glacera Ice Token");
     }
 
+    // This is no longer a dainy.. i just dont fee like moving it.
     public void Pyromancer()
     {
         Core.Logger("Daily: Pyromancer Class");
@@ -497,22 +498,12 @@ public class CoreDailies
             Core.Logger("You already own Pryomancer, Skipped");
             return;
         }
-        int questID =
-            Core.IsMember && CheckDailyv2(2210, true, false, "Shurpu Blaze Token") ? 2210
-            : CheckDailyv2(2209, true, false, "Shurpu Blaze Token") ? 2209
-            : 0;
+        Core.AddDrop("Shurpu Blaze Token");
+        Core.EquipClass(ClassType.Farm);
+        Core.KillMonster("xancave", "r9", "Down", "*", "Shurpu Blaze Token", 84, isTemp: false);
 
-        if (questID != 0)
-        {
-            Core.EquipClass(ClassType.Solo);
-            DailyRoutine(questID, "xancave", "Shurpu Ring Guardian", "Guardian Shale");
-            Core.FarmingLogger("Shurpu Blaze Token", 84, "Shurpu Blaze Token");
-            Core.ToBank("Shurpu Blaze Token");
-        }
-
-        if (Core.CheckInventory("Shurpu Blaze Token", 84))
-            Core.BuyItem("xancave", 447, 12812, shopItemID: 1278);
-        Core.ToBank("Shurpu Blaze Token");
+        Core.BuyItem("xancave", 447, 12812, shopItemID: 1278);
+        Core.SellItem("Shurpu Blaze Token", all: true);
     }
 
     public void ShadowScytheClass()
