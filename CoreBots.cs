@@ -5201,16 +5201,7 @@ public class CoreBots
     /// <summary>
     /// Kills a monster using its MapID
     /// </summary>
-    public void HuntMonsterMapID(
-        string map,
-        int monsterMapID,
-        string? item = null,
-        int quant = 1,
-        bool isTemp = true,
-        bool log = true,
-        bool publicRoom = false,
-        string pad = "Left"
-    )
+    public void HuntMonsterMapID(string map, int monsterMapID, string? item = null, int quant = 1, bool isTemp = true, bool log = true, bool publicRoom = false, string pad = "Left")
     {
         // Join map if needed
         if (!string.Equals(Bot.Map.Name, map, StringComparison.OrdinalIgnoreCase))
@@ -5883,7 +5874,7 @@ public class CoreBots
 
         if (Bot.Map.Name != map)
             Join(map);
-            
+
         IEnumerable<Monster> candidates = Bot.Monsters.MapMonsters
             .Where(x => x != null && !string.IsNullOrWhiteSpace(x.Name));
 
