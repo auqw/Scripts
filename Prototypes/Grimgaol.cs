@@ -445,7 +445,9 @@ public class Grimgaol
 
                     // Grim Bomb  
                     case "r2":
-                        RLR(Bot.Player.Cell);
+                        if (Core.CheckInventory(legionrevenant))
+                            RLR(Bot.Player.Cell);
+                        else RBB(Bot.Player.Cell);
                         RecordSplit("r2 — Grim Bomb");
                         if (Bot.Player.Cell != "r3")
                         {
@@ -478,7 +480,9 @@ public class Grimgaol
 
                     // Reinforced Shelleton  
                     case "r5":
-                        RLR(Bot.Player.Cell);
+                        if (Core.CheckInventory(legionrevenant))
+                            RLR(Bot.Player.Cell);
+                        else RBB(Bot.Player.Cell);
                         RecordSplit("r5 — Reinforced Shelleton");
                         if (Bot.Player.Cell != "r6")
                         {
@@ -624,7 +628,7 @@ public class Grimgaol
         runTimer.Start();
 
         int skillIndex = 0;
-        int[] skillList = { 1, 2, 4, 4, 3 };
+        int[] skillList = { 1, 2 };
 
         while (!Bot.ShouldExit)
         {
@@ -648,7 +652,20 @@ public class Grimgaol
                 Bot.Sleep(1000);
             }
 
-            if (Bot.Player.HasTarget && Bot.Target.Auras.Any(x => x.Name == "Talon Twisting") == true)
+
+            if (!Bot.Player.HasTarget)
+                Bot.Combat.Attack("*");
+
+            if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
+                break;
+
+
+            bool hasTalonTwisting = Bot.Target.HasActiveAura("Talon Twisting");
+            bool hasRetaliate = Bot.Target.HasActiveAura("Retaliate");
+
+            bool hasContrarium = Bot.Self.HasActiveAura("Contrarium");
+
+            if (hasTalonTwisting && !hasRetaliate)
             {
                 Bot.Combat.CancelTarget();
                 Bot.Skills.Pause();
@@ -659,79 +676,41 @@ public class Grimgaol
                 while (!Bot.ShouldExit && Bot.Player.HasTarget && Bot.Target.HasActiveAura("Retaliate") == true)
                     Bot.Sleep(200);
 
+
                 Bot.Combat.StopAttacking = false;
-                skillIndex = 0;
+                //skillIndex = 0;
                 Bot.Skills.Resume();
-                Bot.Sleep(1000);
+                Bot.Sleep(200);
             }
 
-            if (!Bot.Player.HasTarget)
-                Bot.Combat.Attack("*");
-
-            if (Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0)
-                break;
-
-            // emergency heal (skill 3)
-            if (skillIndex == 3 &&
-                Bot.Player!.Health <= Bot.Player.MaxHealth / 2 &&
-                Bot.Player.Mana > 50 &&
-                Bot.Skills.CanUseSkill(3))
-                Bot.Skills.UseSkill(3);
-
-            if (Bot.Player?.HasTarget == true
-                && Bot.Player.Target?.HP > 0)
+            if (Bot.Player.Mana <= Bot.Player.MaxMana * 0.25 && Bot.Skills.CanUseSkill(4))
             {
-                // 1 — Skill 1 : Residual Energy <= 23
-                if (Bot.Skills.CanUseSkill(1)
-                    && Bot.Self.GetAuraValue("Residual Energy") <= 23)
-                {
-                    Bot.Skills.UseSkill(1);
-                }
-
-                // 2 — Skill 2 : Mana > 25 AND Residual Energy <= 23
-                else if (Bot.Skills.CanUseSkill(2)
-                    && Bot.Player!.Mana > 25
-                    && Bot.Self.GetAuraValue("Residual Energy") <= 23)
-                {
-                    Bot.Skills.UseSkill(2);
-                }
-
-                // 3 — Skill 4 : Residual Energy >= 24
-                else if (Bot.Skills.CanUseSkill(4)
-                    && Bot.Self.GetAuraValue("Residual Energy") >= 24)
-                {
-                    Bot.Skills.UseSkill(4);
-                }
-
-                // 4 — Skill 4 : Mana <= 24 AND NO Elysium aura
-                else if (Bot.Skills.CanUseSkill(4)
-                    && Bot.Player!.Mana <= 24
-                    && !Bot.Self.HasActiveAura("Elysium"))
-                {
-                    Bot.Skills.UseSkill(4);
-                }
-
-                // 5 — Skill 3 : HP <= 50% AND Mana > 50 AND NO Royal Resolve
-                else if (Bot.Skills.CanUseSkill(3)
-                    && Bot.Player!.Health <= Bot.Player.MaxHealth * 0.65 //lonewolf changed, original number was 0.5
-                    && Bot.Player.Mana > 50
-                    && !Bot.Self.HasActiveAura("Royal Resolve"))
-                {
-                    Bot.Skills.UseSkill(3);
-                }
-
-                else if (!Bot.Self.HasActiveAura("Residual Energy"))
-                {
-                    if (Bot.Skills.CanUseSkill(2))
-                        Bot.Skills.UseSkill(2);
-                    else
-                        if (Bot.Skills.CanUseSkill(1))
-                            Bot.Skills.UseSkill(1);
-                }
+                Bot.Skills.UseSkill(4);
+                Bot.Sleep(200);
+                continue;
             }
+
+            if (Bot.Self.GetAuraValue("Residual Aura") >= 24 && Bot.Skills.CanUseSkill(4))
+            {
+                Bot.Skills.UseSkill(4);
+                Bot.Sleep(200);
+                continue;
+            }
+
+            if (Bot.Player.Health <= Bot.Player.MaxHealth * 0.65 && Bot.Player.Mana >= Bot.Player.MaxMana * 0.50 && !hasContrarium && Bot.Skills.CanUseSkill(3))
+            {
+                Bot.Skills.UseSkill(3);
+                Bot.Sleep(200);
+                continue;
+            }
+
+            UseSkillRotation(skillList, ref skillIndex);
+
             Bot.Sleep(200);
         }
     }
+
+
     //empress room
     private void R3()
     {
@@ -1090,6 +1069,82 @@ public class Grimgaol
             }
         }
     }
+    private void RBB(string cell)
+    {
+        // Jump to cell if needed
+        if (Bot.Player.Cell != cell)
+        {
+            Core.Logger($"Jumping to \"{cell}\"");
+            Bot.Map.Jump(cell, "Left", autoCorrect: false);
+            Bot.Wait.ForCellChange(cell);
+        }
+
+        if (Bot.Player.Alive && !monsterAvail())
+        {
+            runTimer.Stop();
+            return;
+        }
+
+        Bot.Player.SetSpawnPoint();
+
+        #region Equipment Setup
+        EquipIfAvailable(blazebinder);
+        EquipIfAvailable(Bot.Config!.Get<string>("WizHelm"));
+        EquipIfAvailable(Bot.Config!.Get<string>("Elysium"));
+        EquipIfAvailable(Bot.Config!.Get<string>("Absolution"));
+        #endregion
+        runTimer.Start();
+
+        int skillIndex = 0;
+        int[] skillList = new[] { 3, 4, 1, 2 };
+
+        while (!Bot.ShouldExit)
+        {
+            if (Bot.Player.Alive && !monsterAvail())
+            {
+                runTimer.Stop();
+                return;
+            }
+
+            foreach (Monster m in Bot.Monsters.CurrentAvailableMonsters)
+            {
+                if (m == null || m?.HP <= 0 || m?.State == 0 || m?.Alive == false)
+                    continue;
+
+                while (!Bot.ShouldExit)
+                {
+                    if (Bot.Player.Alive && !monsterAvail())
+                    {
+                        runTimer.Stop();
+                        return;
+                    }
+
+                    if (!Bot.Player!.Alive)
+                    {
+                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+                        skillIndex = 0;
+                    }
+
+                    if (!Bot.Player.HasTarget || !Bot.Player.InCombat)
+                        Bot.Combat.Attack(m!.MapID);
+
+                    if (Bot.Player.Target?.HP <= 0 || m?.HP <= 0 || m?.State == 0 || m?.Alive == false)
+                    {
+                        if (Bot.Player.InCombat)
+                            Bot.Combat.CancelTarget();
+                        break;
+                    }
+                    //not using UseSkillRotation on purpose so that every skill is used instead of waiting for cooldowns
+                    if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0)
+                    {
+                        Bot.Skills.UseSkill(skillList[skillIndex]);
+                        skillIndex = (skillIndex + 1) % skillList.Length;
+                    }
+                    Bot.Sleep(100);
+                }
+            }
+        }
+    }
 
     #endregion
 
@@ -1172,6 +1227,7 @@ public class Grimgaol
         ? "Legion Revenant (IoDA)"
         : "Legion Revenant";
     readonly string kingsecho = "King's Echo";
+    readonly string blazebinder = "Blaze Binder";
 
 
 
@@ -1191,7 +1247,7 @@ public class Grimgaol
         };
 
         // Optional: Check all and log missing
-        string[] requiredClasses = { dragonoftime, legionrevenant, kingsecho };
+        string[] requiredClasses = { dragonoftime, Core.CheckInventory(legionrevenant) ? legionrevenant : blazebinder, kingsecho };
         string[] missingClasses = [.. requiredClasses.Where(c => !Core.CheckInventory(c))];
 
         if (missingClasses.Length > 0)
@@ -1286,7 +1342,7 @@ public class Grimgaol
 
         // Static class enhancements
         EnhanceIfFound(kingsecho, EnhancementType.Lucky);
-        EnhanceIfFound(legionrevenant, EnhancementType.Wizard);
+        EnhanceIfFound(Core.CheckInventory(legionrevenant) ? legionrevenant : blazebinder, EnhancementType.Wizard);
         EnhanceIfFound(dragonoftime, EnhancementType.Wizard);
 
         // Weapon enhancements
