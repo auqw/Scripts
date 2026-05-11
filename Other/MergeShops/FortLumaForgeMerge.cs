@@ -108,14 +108,8 @@ public class FortLumaForgeMerge
                     break;
 
                 case "Yellow Flame of Citrinitas":
-                    if (req.Upgrade && !Core.IsMember)
-                    {
-                        Core.Logger($"{req.Name} requires membership to farm, skipping.");
-                        return;
-                    }
-
                     Core.FarmingLogger(req.Name, quant);
-                    Core.EquipClass(ClassType.Farm);
+                    Core.EquipClass(ClassType.Solo);
                     Core.AddDrop(req.ID);
                     Core.RegisterQuests(Core.IsMember ? 10620 : 10619); // TODO: Replace with actual quest ID
                     while (!Bot.ShouldExit && !Core.CheckInventory(req.ID, quant))
