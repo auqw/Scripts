@@ -4970,7 +4970,7 @@
       ]
     }
   },
-  "King\u0027s Echo": {
+  "King's Echo": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
       "skillTimeout": 500,
