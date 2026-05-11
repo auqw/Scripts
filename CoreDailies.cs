@@ -493,7 +493,7 @@ public class CoreDailies
     public void Pyromancer()
     {
         Core.Logger("Daily: Pyromancer Class");
-        if (Core.CheckInventory(12811, toInv: false) || Core.CheckInventory(12812, toInv: false))
+        if (Core.CheckInventory(12811) || Core.CheckInventory(12812))
         {
             Core.Logger("You already own Pryomancer, Skipped");
             return;
