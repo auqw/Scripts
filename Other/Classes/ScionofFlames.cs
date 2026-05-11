@@ -6,6 +6,7 @@ tags: ScionofFlames, Scion of Flames
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
 //cs_include Scripts/CoreStory.cs
+//cs_include Scripts/CoreDailies.cs
 //cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/Story/AgeOfRuin/CoreAOR.cs
@@ -76,6 +77,12 @@ public class ScionofFlames
         set => _FMM = value;
     }
     private static ForgeMalenoMerge _FMM;
+    private static CoreDailies Dailies
+    {
+        get => _Dailies ??= new CoreDailies();
+        set => _Dailies = value;
+    }
+    private static CoreDailies _Dailies;
 
     public void ScriptMain(IScriptInterface bot)
     {
@@ -115,7 +122,8 @@ public class ScionofFlames
         Farm.YewMountainsREP();
 
         // P4: Unlock sigil
-        Core.Logger("[P4] Buying Flame Sigil");
+        Core.Logger("[P4] Pyromancer & Flame Sigil");
+        Dailies.Pyromancer();
         Adv.BuyItem("fireforge", 1142, "Flame Sigil");
 
         // P5: Aleister the Dawnseeker
