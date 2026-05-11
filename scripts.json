@@ -6,8 +6,8 @@
       "null"
     ],
     "path": "CoreDailies.cs",
-    "size": 60949,
-    "sha256": "d5e79a008e73cae132bacdceeee3287eacb0c139969210b3c3c00590c62acd34",
+    "size": 60921,
+    "sha256": "0cfee35d5ef6a72f60b62a2228dcde94a66d385dddb04f3958d592521c5cea22",
     "fileName": "CoreDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreDailies.cs"
   },
@@ -17141,8 +17141,8 @@
       "scion of flames"
     ],
     "path": "Other/Classes/ScionofFlames.cs",
-    "size": 8288,
-    "sha256": "30de89f86a2f3dee0bb62240d47c2d49a3f7316742af9c5d959974724775446d",
+    "size": 8532,
+    "sha256": "f27e2077a491afe160f02dab48ee20412cd9fbe2af6cb6ff1f4781743316fbe1",
     "fileName": "ScionofFlames.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Classes/ScionofFlames.cs"
   },
