@@ -105,9 +105,15 @@ public class CoreAdvanced
         // House space check if item is a house-storable category
         if (!string.IsNullOrEmpty(item.CategoryString) && Core.CategoryStrings.Contains(item.CategoryString))
         {
+            // Check for house item space
+            if (Bot.House.FreeSlots <= 0 && !Bot.House.Contains(itemID))
+                Core.BankACHouseItems();
+
+            //Recheck after banking a house items that arent equiped
             if (Bot.House.FreeSlots <= 0 && !Bot.House.Contains(itemID))
             {
-                if (Log) Core.Logger("❌ House full, cannot store this item.");
+                if (Log)
+                    Core.Logger("❌ House full, cannot store this item.");
                 return;
             }
         }
