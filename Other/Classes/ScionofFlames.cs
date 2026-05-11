@@ -173,15 +173,13 @@ public class ScionofFlames
                 break;
 
             case "Yew Ember":
-                Core.FarmingLogger(item, quant);
                 Core.EquipClass(ClassType.Farm);
                 Core.HuntMonster("warwickforest", "Rubedo Elemental", item, quant, false);
                 break;
 
             case "Yellow Flame of Citrinitas":
-                Core.RegisterQuests(Core.IsMember ? 10620 : 10619);
-
                 Core.EquipClass(ClassType.Solo);
+                Core.RegisterQuests(Core.IsMember ? 10620 : 10619); // TODO: Replace with actual quest ID
                 while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                 {
                     Core.HuntMonster("fortluma", "Flame of Citrinitas", "Citrinitas Flicker");
@@ -189,7 +187,6 @@ public class ScionofFlames
                     Core.HuntMonsterMapID("fortluma", 10, "King's Yellow");
                     Bot.Wait.ForPickup(item);
                 }
-
                 Core.CancelRegisteredQuests();
                 break;
 
@@ -238,9 +235,9 @@ public class ScionofFlames
             case "Aiwass Diamond":
                 Core.EquipClass(ClassType.Farm);
                 Core.RegisterQuests(Core.IsMember ? 10387 : 10385);
-
                 while (!Bot.ShouldExit && !Core.CheckInventory(item, quant))
                 {
+
                     Core.KillMonster("sanctuaryaiwass", "r9", "Top", "*", "Sal Alembroth", 1, false);
                     Core.KillMonster("sanctuaryaiwass", "r9", "Top", "*", "Milk of Sulfur", 1, false);
                     Core.HuntMonster("sanctuaryaiwass", "Anima Animus Aiwass", "Aeon Dream", 1, false);
