@@ -42,8 +42,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 435516,
-    "sha256": "abda49bbaedee4225b74b61edf3121bfb408006e334a459ccc93d37a19bbe520",
+    "size": 435458,
+    "sha256": "f6df09f6de7f9f9d36e0987e808144e156b40a769e6fb9e63b3c9f2866cbc20f",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -16532,8 +16532,8 @@
       "null"
     ],
     "path": "Other/Various/Potions.cs",
-    "size": 20830,
-    "sha256": "262ccff4af52e9390bcabe25c0656523db2a38e1a1cb3dc8d82ca08b58bf9441",
+    "size": 20777,
+    "sha256": "83691e7f5d863f609673aa55f68c89fa3c147e74ade1be58839af870bfbe6bf7",
     "fileName": "Potions.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/Potions.cs"
   },
