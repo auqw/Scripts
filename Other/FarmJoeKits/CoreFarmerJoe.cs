@@ -647,7 +647,7 @@ public class CoreFarmerJoe
         }
     }
 
-    private bool AnyRank10(string[] names)
+    private static bool AnyRank10(string[] names)
     {
         foreach (string name in names)
         {
@@ -1103,7 +1103,7 @@ public class CoreFarmerJoe
     /// - **NO BOTS Armor:** Purchases and merges the "NO BOTS Armor."
     /// - **Scarecrow Hat:** Buys the "Scarecrow Hat" from Yulgar's shop.
     /// </summary>
-    public void ShirtAndHat()
+    public static void ShirtAndHat()
     {
         Core.FarmingLogger("NO BOTS Armor", 1);
         SM.BuyAllMerge(buyOnlyThis: "NO BOTS Armor");
@@ -1275,7 +1275,6 @@ public class CoreFarmerJoe
 
         Core.ReadCBO();
 
-
         (string? Class, string Label)[] rankTargets =
         [
             (Core.SoloClass, "SoloClass"),
@@ -1286,14 +1285,16 @@ public class CoreFarmerJoe
         foreach ((string? className, string label) in rankTargets)
             RankIfNeeded(className, label);
 
+        BankAllUnusedClasses();
+
+        Bot.Sleep(500);
+
         Core.EquipClass(ClassType.Solo);
 
         _lastCheckedLevel = Bot.Player?.Level ?? 0;
         _lastSolo = Core.SoloClass;
         _lastFarm = Core.FarmClass;
         _lastDodge = Core.DodgeClass;
-
-        BankAllUnusedClasses();
     }
 
     private bool ShouldSkipSetClass()
@@ -1310,10 +1311,9 @@ public class CoreFarmerJoe
         return !levelIncreased && !classChanged;
     }
 
-    private string? ResolveClass(string? current, string[] pool, out string? found)
+    private static string? ResolveClass(string? current, string[] pool, out string? found)
     {
         found = null;
-
         bool invalid =
             string.IsNullOrEmpty(current)
             || current.Equals("Generic", StringComparison.OrdinalIgnoreCase)
@@ -1324,19 +1324,23 @@ public class CoreFarmerJoe
             return current;
 
         found = pool.FirstOrDefault(x => Core.CheckInventory(x));
-        return !string.IsNullOrEmpty(found) ? found : current;
+        return found ?? current;
     }
 
-    private void BankAllUnusedClasses()
+    private static void BankAllUnusedClasses()
     {
-        string[] keep =
-        [
-            .. new[] { Core.SoloClass, Core.FarmClass, Core.DodgeClass }
-            .Where(x => !string.IsNullOrWhiteSpace(x))
-            .Select(x => x!)
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-        ];
+        // More explicit null handling instead of relying on spread operator
+        var keepList = new List<string>();
+        if (!string.IsNullOrWhiteSpace(Core.SoloClass))
+            keepList.Add(Core.SoloClass!);
+        if (!string.IsNullOrWhiteSpace(Core.FarmClass))
+            keepList.Add(Core.FarmClass!);
+        if (!string.IsNullOrWhiteSpace(Core.DodgeClass))
+            keepList.Add(Core.DodgeClass!);
 
+        string[] keep = [.. keepList.Distinct(StringComparer.OrdinalIgnoreCase)];
+
+        // Get ALL classes from inventory (actual items)
         string[] toBank = Bot.Inventory.Items
             .Where(x => x != null
                 && x.Category == ItemCategory.Class
@@ -1345,14 +1349,26 @@ public class CoreFarmerJoe
             .ToArray();
 
         if (toBank.Length > 0)
+        {
+            Core.Logger($"Banking unused classes: {string.Join(", ", toBank)}");
             Core.ToBank(toBank);
+        }
+        else
+        {
+            Core.Logger("No unused classes to bank");
+        }
     }
 
-
-    private void RankIfNeeded(string? className, string label)
+    private static void RankIfNeeded(string? className, string label)
     {
         if (string.IsNullOrEmpty(className))
             return;
+
+        if (!Core.CheckInventory(className))
+        {
+            Core.Logger($"WARNING: {label} class '{className}' not in inventory!");
+            return;
+        }
 
         if (Core.CheckClassRank(false, className) >= 10)
             return;
@@ -1369,7 +1385,7 @@ public class CoreFarmerJoe
     /// This method checks the player's inventory for the specified items and enhances the first
     /// item found using the "Adv.SmartEnhance" method.
     /// </remarks>
-    public void DmgOverTimeEnh()
+    public static void DmgOverTimeEnh()
     {
         string[] itemsToCheck = new[]
         {
