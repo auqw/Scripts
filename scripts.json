@@ -20769,14 +20769,17 @@
     "tags": [
       "story",
       "quest",
-      "chaos-saga",
-      "13-lords-of-chaos",
+      "chaos saga",
+      "13 lords of chaos",
       "complete",
-      "all"
+      "all",
+      "all chaos",
+      "chaos",
+      "chaos all"
     ],
     "path": "Story/LordsofChaos/00Complete13LOC.cs",
-    "size": 1138,
-    "sha256": "15bb8f4eacd43ff7ff6467cd978f09c203b6a35889c23dbe9c297e267cc439a5",
+    "size": 1167,
+    "sha256": "bd5349a07dbb48aa113079698a0b8e37c9b19ed44ad272cf13d2683ebe93f581",
     "fileName": "00Complete13LOC.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/LordsofChaos/00Complete13LOC.cs"
   },
