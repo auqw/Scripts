@@ -10572,8 +10572,8 @@
       "farm"
     ],
     "path": "Other/FarmJoeKits/JoePrepsForUltras.cs",
-    "size": 27698,
-    "sha256": "7a87ac3fcc2aaa5ac63b62993f6c9cea7b1bd9108de569cc23071a54e79c0e93",
+    "size": 27653,
+    "sha256": "159c3fb84f1fea99ff9f7930b51704126e8312ffe3c6be4ee04c2a6acdc88cdd",
     "fileName": "JoePrepsForUltras.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/JoePrepsForUltras.cs"
   },
@@ -16532,8 +16532,8 @@
       "null"
     ],
     "path": "Other/Various/Potions.cs",
-    "size": 20777,
-    "sha256": "83691e7f5d863f609673aa55f68c89fa3c147e74ade1be58839af870bfbe6bf7",
+    "size": 21670,
+    "sha256": "eaf1edbe1176979a99332b3e02deb1cb06d04946a5bed1cce6c61b458065bcae",
     "fileName": "Potions.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/Various/Potions.cs"
   },
@@ -22834,8 +22834,8 @@
       "voyage"
     ],
     "path": "Darkon/MergeShops/ArcanaInvokerResourceMerge.cs",
-    "size": 45599,
-    "sha256": "1f246747548b87ec9a43eee80c83f7f065de0787777a1fbfa85061d9dfa92b70",
+    "size": 45260,
+    "sha256": "ee2987f095a38f81f1cbc216c83df4d5201288a16d1df7378829b4b58186be1f",
     "fileName": "ArcanaInvokerResourceMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Darkon/MergeShops/ArcanaInvokerResourceMerge.cs"
   },
@@ -25076,8 +25076,8 @@
       "developer"
     ],
     "path": "Tools/ForDevelopers/CaseStorage.cs",
-    "size": 1154446,
-    "sha256": "f0d1180ceb384fb0e35a3c4512616028d33f0d02efa3ce0d7977c130784ae329",
+    "size": 1154035,
+    "sha256": "dd648fe773d68f9df739ebe48428bd93af1d25f7b4e2ef729773da8d07ccc7ad",
     "fileName": "CaseStorage.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Tools/ForDevelopers/CaseStorage.cs"
   },
