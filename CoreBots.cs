@@ -5264,7 +5264,8 @@ public class CoreBots
 
             Sleep(200);
 
-            if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
+            if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
+            || (item == null && Bot.Player.HasTarget && Bot.Player.Target?.HP <= 0))
                 break;
         }
 
