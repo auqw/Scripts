@@ -619,6 +619,12 @@ public class CoreDailies
         if (!CheckDailyv2(803, false, true, "Sparrow's Blood"))
             return;
 
+        if (Core.CheckInventory("Sparrow's Blood", 3))
+        {
+            Core.Logger("You've maxed out Sparrow's Blood [3]");
+            return;
+        }
+
         if (Core.CheckInventory("Sparrow's Blood", quant))
         {
             Core.Logger(
