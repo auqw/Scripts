@@ -6114,10 +6114,7 @@ public class CoreBots
                     done = true;
                     break;
                 }
-                else if (
-                    item != null
-                    && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant))
-                )
+                else if (item != null && (isTemp ? Bot.TempInv.Contains(item, quant) : CheckInventory(item, quant)))
                 {
                     done = true;
                     break;
