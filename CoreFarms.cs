@@ -2807,12 +2807,30 @@ public class CoreFarms
         Core.Logger($"Farming rank {rank}");
 
         //  Slay the Blazebinders (500rep - 5 kills)
-        Core.RegisterQuests(4228);
-        while (!Bot.ShouldExit && FactionRank("Embersea") < rank)
+        // Easy method requires a story 
+        bool DoEasyMethod = !Core.isCompletedBefore(4080);
+        Core.RegisterQuests(DoEasyMethod ? 4080 : 4228);
+        if (DoEasyMethod)
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
-            Core.HuntMonsterMapID("fireforge", 4, log: false);
+            while (!Bot.ShouldExit && FactionRank("Embersea") < rank)
+            {
+                if (Bot.Map.Name != "Pyrewatch")
+                    Core.Join("Pyrewatch");
+
+                if (!Bot.TempInv.Contains(28575, 4))
+                    Bot.Map.GetMapItem(3162);         
+                               
+                Bot.Sleep(500);
+            }
+        }
+        else
+        {
+            while (!Bot.ShouldExit && FactionRank("Embersea") < rank)
+            {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
+                Core.HuntMonsterMapID("fireforge", 4, log: false);
+            }
         }
 
         ToggleBoost(BoostType.Reputation, false);
