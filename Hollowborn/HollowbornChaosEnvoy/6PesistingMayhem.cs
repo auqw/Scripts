@@ -1,7 +1,7 @@
 /*
 name: Hollowborn Chaos Envoy - Persisting Mayhem
 description: does the 'pesisting mayhem' part of hollowborn chaos envoy
-tags: hollowborn chaos envy, hollowborn, pesisting mayhem
+tags: hollowborn chaos envoy, hollowborn, pesisting mayhem
 */
 //cs_include Scripts/Chaos/ChaosAvengerPreReqs.cs
 //cs_include Scripts/Chaos/DrakathsArmor.cs

@@ -1,7 +1,7 @@
 /*
 name: Hollowborn Chaos Envoy - Wavering Illusions
 description: does the 'wavering illusions' part of hollowborn chaos envoy
-tags: hollowborn chaos envy, hollowborn, wavering illusions
+tags: hollowborn chaos envoy, hollowborn, wavering illusions
 */
 //cs_include Scripts/Chaos/ChaosAvengerPreReqs.cs
 //cs_include Scripts/Chaos/DrakathsArmor.cs

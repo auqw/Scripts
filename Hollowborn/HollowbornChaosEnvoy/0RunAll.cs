@@ -1,7 +1,7 @@
 /*
 name: Hollowborn Chaos Envy Run all
 description: does all of hollowborn chaos envy
-tags: hollowborn chaos envy, hollowborn, do all
+tags: hollowborn chaos envoy, hollowborn, do all
 */
 //cs_include Scripts/Chaos/ChaosAvengerPreReqs.cs
 //cs_include Scripts/Chaos/DrakathsArmor.cs

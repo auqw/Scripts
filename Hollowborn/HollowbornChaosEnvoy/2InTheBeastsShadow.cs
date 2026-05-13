@@ -1,7 +1,7 @@
 /*
 name: Hollowborn Chaos Envoy - In The Beasts Shadow
 description: does the 'beasts shadow' part of hollowborn chaos envoy
-tags: hollowborn chaos envy, hollowborn, beasts shadow
+tags: hollowborn chaos envoy, hollowborn, beasts shadow
 */
 //cs_include Scripts/Chaos/ChaosAvengerPreReqs.cs
 //cs_include Scripts/Chaos/DrakathsArmor.cs
