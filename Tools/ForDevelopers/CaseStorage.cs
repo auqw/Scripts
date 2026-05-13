@@ -3172,15 +3172,14 @@ case ""Zealous Crown"":
                     break;
     "
         },
-        {
-            "Judgment Tonic",
-            @"
+{
+    "Judgment Tonic",
+    @"
 case ""Judgment Tonic"":
-                    PotionBuyer.// Call the method with specific parameters to farm Judgment Tonics with a quantity of 50
-                    INeedYourStrongestPotions(new[] { ""Judgment Tonic"" }, new bool[] { true }, quant, true, true);
-                    break;
-    "
-        },
+    PotionBuyer.INeedYourStrongestPotions(new[] { ""Judgment Tonic"" }, quant, true);
+    break;
+"
+},
         {
             "Lich Emperor's Catalyst",
             @"
@@ -3443,15 +3442,14 @@ case ""Strong Axe of Golmoth"":
                     break;
     "
         },
-        {
-            "Fortitude Tonic",
-            @"
+{
+    "Fortitude Tonic",
+    @"
 case ""Fortitude Tonic"":
-                    PotionBuyer.// Call the method with specific parameters to farm Fortitude Tonics with a quantity of 50
-                    INeedYourStrongestPotions(new[] { ""Fortitude Tonic"" }, new bool[] { true }, quant, true, true);
-                    break;
-    "
-        },
+    PotionBuyer.INeedYourStrongestPotions(new[] { ""Fortitude Tonic"" }, quant, true);
+    break;
+"
+},
         {
             "Strong Drag's Intact Wing",
             @"

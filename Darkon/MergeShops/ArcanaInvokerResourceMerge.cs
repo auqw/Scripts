@@ -491,13 +491,7 @@ public class ArcanaInvokerResourceMerge
 
                 case "Judgment Tonic":
                     PotionBuyer. // Call the method with specific parameters to farm Judgment Tonics with a quantity of 50
-                    INeedYourStrongestPotions(
-                        new[] { "Judgment Tonic" },
-                        new bool[] { true },
-                        quant,
-                        true,
-                        true
-                    );
+                   INeedYourStrongestPotions(new[] { "Judgment Tonic" }, quant, true);
                     break;
 
                 case "Lich Emperor's Catalyst":
@@ -712,13 +706,7 @@ public class ArcanaInvokerResourceMerge
 
                 case "Fortitude Tonic":
                     PotionBuyer. // Call the method with specific parameters to farm Fortitude Tonics with a quantity of 50
-                    INeedYourStrongestPotions(
-                        new[] { "Fortitude Tonic" },
-                        new bool[] { true },
-                        quant,
-                        true,
-                        true
-                    );
+                    INeedYourStrongestPotions(new[] { "Fortitude Tonic" }, quant, true);
                     break;
 
                 case "Strong Drag's Intact Wing":

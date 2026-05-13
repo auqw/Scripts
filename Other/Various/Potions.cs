@@ -121,10 +121,7 @@ public class PotionBuyer
         "Might Tonic", "Malice Potion", "Potent Life Potion",
     };
 
-    public void INeedYourStrongestPotions(
-        string[]? Potions = null,
-        int PotionQuant = 300,
-        bool BuyReagents = false)
+    public void INeedYourStrongestPotions(string[]? Potions = null, int PotionQuant = 300, bool BuyReagents = false)
     {
         BuyReagents = Bot.Config!.Get<bool>("BuyReagents") || BuyReagents;
         Farm.AlchemyREP();
@@ -470,5 +467,32 @@ public class PotionBuyer
 
         }
     }
+    
+    private int GetSafeInt(string key, int defaultValue, int min = int.MinValue, int max = int.MaxValue)
+    {
+        try
+        {
+            object? raw = Bot.Config?.Get<object>(key);
 
+            // Handle null / empty
+            if (raw is null)
+                return defaultValue;
+
+            // Already an int → fast path
+            if (raw is int intVal)
+                return Math.Clamp(intVal, min, max);
+
+            // Try parse string / other junk
+            if (int.TryParse(raw.ToString(), out int parsed))
+                return Math.Clamp(parsed, min, max);
+
+            Core.Logger($"Invalid value for [{key}] → using default [{defaultValue}]");
+            return defaultValue;
+        }
+        catch (Exception ex)
+        {
+            Core.Logger($"Config parse error [{key}] → using default [{defaultValue}] :: {ex.Message}");
+            return defaultValue;
+        }
+    }
 }
