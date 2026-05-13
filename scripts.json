@@ -26979,13 +26979,13 @@
     "name": "Hollowborn Chaos Envoy - Stirring Discord",
     "description": "does the 'stirring discord' part of hollowborn chaos envoy",
     "tags": [
-      "hollowborn chaos envy",
+      "hollowborn chaos envoy",
       "hollowborn",
       "stirring discord"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/1StirringDiscord.cs",
-    "size": 1845,
-    "sha256": "bff6f94e72a31654c62b9c62134e49d48bf8d6c59c24c0e8818559e6e7d0e08b",
+    "size": 1846,
+    "sha256": "61e00a21a419187457a53f0be9a2c4c287a3431c14d6d445a39bf7e1109c719a",
     "fileName": "1StirringDiscord.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/1StirringDiscord.cs"
   },
@@ -26993,13 +26993,13 @@
     "name": "Hollowborn Chaos Envoy - Wavering Illusions",
     "description": "does the 'wavering illusions' part of hollowborn chaos envoy",
     "tags": [
-      "hollowborn chaos envy",
+      "hollowborn chaos envoy",
       "hollowborn",
       "wavering illusions"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/4WaveringIllusions.cs",
-    "size": 2142,
-    "sha256": "3b59e91ad2f307934021d32c0466c686e596280bae0d90abfc162030fbbdeb1f",
+    "size": 2143,
+    "sha256": "3995c0446b537a7574b24775507b22bb61b9e608498425a76dd9edf6c5a1e3bd",
     "fileName": "4WaveringIllusions.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/4WaveringIllusions.cs"
   },
@@ -27007,13 +27007,13 @@
     "name": "Hollowborn Chaos Envoy - Unique Quarry",
     "description": "does the 'unique quarry' part of hollowborn chaos envoy",
     "tags": [
-      "hollowborn chaos envy",
+      "hollowborn chaos envoy",
       "hollowborn",
       "unique quarry"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/3UniqueQuarry.cs",
-    "size": 2112,
-    "sha256": "7f16cb3a37665273b2ceaa7597c39cd832ac1d366a30626d3d8d34e7e4afe390",
+    "size": 2113,
+    "sha256": "fd7a01795197dee76bafce7987c165ee0c5ebd0e1a5dd7cf9c3c8380a6c6afe6",
     "fileName": "3UniqueQuarry.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/3UniqueQuarry.cs"
   },
@@ -27021,14 +27021,14 @@
     "name": "Hollowborn Chaos Envoy - Shadow Of Disdain",
     "description": "does the 'shadow of disdain' part of hollowborn chaos envoy",
     "tags": [
-      "hollowborn chaos envy",
+      "hollowborn chaos envoy",
       "hollowborn",
       "shadow of disdain",
       "hollowborn envoy of chaos character page badge"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/5ShadowOfDisdain.cs",
-    "size": 2184,
-    "sha256": "342305293d1267cb095cf65528ed02fc85cfcf0f092afcc452c103a9b76dccc8",
+    "size": 2185,
+    "sha256": "0821b670dbafe60c649af1ce88021c562468619f11dd38ebd4d4d5b165b10e4c",
     "fileName": "5ShadowOfDisdain.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/5ShadowOfDisdain.cs"
   },
@@ -27036,13 +27036,13 @@
     "name": "Hollowborn Chaos Envy Run all",
     "description": "does all of hollowborn chaos envy",
     "tags": [
-      "hollowborn chaos envy",
+      "hollowborn chaos envoy",
       "hollowborn",
       "do all"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/0RunAll.cs",
-    "size": 1968,
-    "sha256": "622a55bfd4492325f2ee188ea827a51d3fe314e75497d549ea620f0f27b31deb",
+    "size": 1969,
+    "sha256": "25ea12379481535d29fa44a4914f686bdfe6bad91d43ce206aa9452a8a1c4102",
     "fileName": "0RunAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/0RunAll.cs"
   },
@@ -27062,13 +27062,13 @@
     "name": "Hollowborn Chaos Envoy - In The Beasts Shadow",
     "description": "does the 'beasts shadow' part of hollowborn chaos envoy",
     "tags": [
-      "hollowborn chaos envy",
+      "hollowborn chaos envoy",
       "hollowborn",
       "beasts shadow"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/2InTheBeastsShadow.cs",
-    "size": 2166,
-    "sha256": "a2d02e168592f1c6a36409b029010c4ca7c6df43d7101ccc9497c44e65d8b46c",
+    "size": 2167,
+    "sha256": "b589058793b2089898a1d2b7a8268564664c110239c778a4d7f349f23b19b0ee",
     "fileName": "2InTheBeastsShadow.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/2InTheBeastsShadow.cs"
   },
@@ -27076,13 +27076,13 @@
     "name": "Hollowborn Chaos Envoy - Persisting Mayhem",
     "description": "does the 'pesisting mayhem' part of hollowborn chaos envoy",
     "tags": [
-      "hollowborn chaos envy",
+      "hollowborn chaos envoy",
       "hollowborn",
       "pesisting mayhem"
     ],
     "path": "Hollowborn/HollowbornChaosEnvoy/6PesistingMayhem.cs",
-    "size": 2134,
-    "sha256": "88d10b3e657251e476358d158d293e971b3a979d5a3e45a7cd03efbb7a5e3e91",
+    "size": 2135,
+    "sha256": "2fecc67a023992185d431bc7736b6a0dc9d0783cfef6619375affa71a4ab862e",
     "fileName": "6PesistingMayhem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornChaosEnvoy/6PesistingMayhem.cs"
   },
