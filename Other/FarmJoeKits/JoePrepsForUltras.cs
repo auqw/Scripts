@@ -541,7 +541,9 @@ public class JoePrepsForUltras
         Core.Logger("Getting potions and scrolls...");
         PotionBuyer.INeedYourStrongestPotions(
             new[] { "Potent Malevolence Elixir" },
-            300,
+            new[] { true },
+            10,
+            true,
             true
         );
         Scroll.BuyScroll(Scrolls.Enrage, 1000);

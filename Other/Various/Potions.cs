@@ -64,21 +64,6 @@ public class PotionBuyer
     //2ndary potions that are obtained alongside the normal versions, to be banked and added as a drop.
     string[] SecondaryPotions = new[] { "Potent Malice Potion", "Potent Soul Potion" };
 
-    private static readonly Dictionary<string, (string map, string monster, int shopID, int price)> IngredientData = new()
-    {
-        ["Ice Vapor"] = ("lair", "Spawn", 11478, 1235),
-        ["Lemurphant Tears"] = ("ravinetemple", "Lemurphant", 11479, 1236),
-        ["Dried Slime"] = ("orecavern", "Crashroom", 11474, 1231),
-        ["Arashtite Ore"] = ("orecavern", "Deathmole", 11473, 1230),
-        ["Nimblestem"] = ("mudluk", "Swamp Frogdrake", 11469, 1226),
-        ["Trollola Nectar"] = ("bloodtusk", "Trollola Plant", 11476, 1233),
-        ["Searbush"] = ("mafic", "Living Fire", 11468, 1225),
-        ["Roc Tongue"] = ("roc", "Rock Roc", 11471, 1228),
-        ["Necrot"] = ("deathsrealm", "Skeleton Fighter", 11480, 1237),
-        ["Rhison Blood"] = ("bloodtusk", "Rhison", 11470, 1227),
-        ["Moglin Tears"] = ("twig", "Sweetish Fish", 11472, 1229),
-    };
-
     public void ScriptMain(IScriptInterface bot)
     {
         // Add items that should never be banked
@@ -87,49 +72,108 @@ public class PotionBuyer
 
         Core.SetOptions();
 
+        // Determine if MaxAll is enabled
         bool maxAll = Bot.Config!.Get<bool>("MaxAll");
-        string[]? potions = maxAll ? GetDefaultPotions() : null;
-        int potionQuant = maxAll ? 300 : GetSafePotionQuant();
-        INeedYourStrongestPotions(Potions: potions, PotionQuant: potionQuant, BuyReagents: Bot.Config!.Get<bool>("BuyReagents"));
+
+        // Prepare Potions and PotionsFarm arrays if MaxAll is true
+        string[]? potions = maxAll
+            ? new[]
+            {
+            "Judgment Tonic",
+            "Fortitude Tonic",
+            "Fate Tonic",
+            "Sage Tonic",
+            "Potent Battle Elixir",
+            "Potent Malevolence Elixir",
+            "Potent Honor Potion",
+            "Unstable Divine Elixir",
+            "Potent Revitalize Elixir",
+            "Endurance Draught",
+            "Felicitous Philtre",
+            "Potent Destruction Elixir",
+            "Body Tonic",
+            "Soul Potion",
+            "Unstable Battle Elixir",
+            "Unstable Body Tonic",
+            "Unstable Fate Tonic",
+            "Unstable Keen Elixir",
+            "Unstable Mastery Tonic",
+            "Unstable Might Tonic",
+            "Unstable Wise Tonic",
+            "Might Tonic",
+            "Malice Potion",
+            "Potent Life Potion",
+            }
+            : null;
+
+        bool[]? potionsFarm = maxAll
+            ? [.. Enumerable.Repeat(true, potions!.Length)]
+            : null;
+
+        string raw = Bot.Config!.Get<string>("PotionQuant");
+
+        int potionQuant;
+
+        if (!int.TryParse(raw, out potionQuant))
+        {
+            Core.Logger($"Invalid PotionQuant '{raw}', defaulting to 300");
+            potionQuant = 300;
+        }
+
+        potionQuant = maxAll ? 300 : potionQuant;
+        // Call the main potion farming method
+        INeedYourStrongestPotions(
+        Potions: potions,
+        PotionsFarm: potionsFarm,
+        PotionQuant: potionQuant,
+        BuyReagents: Bot.Config!.Get<bool>("BuyReagents")
+    );
+
+
         Core.SetOptions(false);
     }
 
 
-    private int GetSafePotionQuant()
+    public void INeedYourStrongestPotions(string[]? Potions = null, bool[]? PotionsFarm = null, int PotionQuant = 300, bool BuyReagents = false, bool Seperate = false)
     {
-        try
-        {
-            int value = Bot.Config!.Get<int>("PotionQuant");
-            return Math.Max(0, Math.Min(value, 300));
-        }
-        catch
-        {
-            Core.Logger("⚠️ bruh... PotionQuant is supposed to be a NUMBER, not a string. use 0-300. Defaulting to 0.");
-            return 0;
-        }
-    }
-
-    private string[] GetDefaultPotions() => new[]
-    {
-        "Judgment Tonic", "Fortitude Tonic", "Fate Tonic", "Sage Tonic",
-        "Potent Battle Elixir", "Potent Malevolence Elixir", "Potent Honor Potion",
-        "Unstable Divine Elixir", "Potent Revitalize Elixir",
-        "Endurance Draught", "Felicitous Philtre", "Potent Destruction Elixir",
-        "Body Tonic", "Soul Potion",
-        "Unstable Battle Elixir", "Unstable Body Tonic", "Unstable Fate Tonic",
-        "Unstable Keen Elixir", "Unstable Mastery Tonic", "Unstable Might Tonic", "Unstable Wise Tonic",
-        "Might Tonic", "Malice Potion", "Potent Life Potion",
-    };
-
-    public void INeedYourStrongestPotions(string[]? Potions = null, int PotionQuant = 300, bool BuyReagents = false)
-    {
+        // Clean boolean logic
         BuyReagents = Bot.Config!.Get<bool>("BuyReagents") || BuyReagents;
+
         Farm.AlchemyREP();
         Farm.GoodREP();
-        Core.Logger(BuyReagents ? "Strategy: Buy Reagents" : "Strategy: Farm Reagents");
+
+        Core.Logger(BuyReagents ? "Method Choose: Buy Reagents" : "Farm Reagents");
 
         bool maxAll = Bot.Config!.Get<bool>("MaxAll");
-        Potions ??= GetDefaultPotions();
+
+        // Default potion list
+        Potions ??= new[]
+        {
+        "Judgment Tonic",
+        "Fortitude Tonic",
+        "Fate Tonic",
+        "Sage Tonic",
+        "Potent Battle Elixir",
+        "Potent Malevolence Elixir",
+        "Potent Honor Potion",
+        "Unstable Divine Elixir",
+        "Potent Revitalize Elixir",
+        "Endurance Draught",
+        "Felicitous Philtre",
+        "Potent Destruction Elixir",
+        "Body Tonic",
+        "Soul Potion",
+        "Unstable Battle Elixir",
+        "Unstable Body Tonic",
+        "Unstable Fate Tonic",
+        "Unstable Keen Elixir",
+        "Unstable Mastery Tonic",
+        "Unstable Might Tonic",
+        "Unstable Wise Tonic",
+        "Might Tonic",
+        "Malice Potion",
+        "Potent Life Potion",
+    };
 
         // Selection mapping (NO MORE INDEX DEPENDENCY)
         Dictionary<string, Func<bool>> potionSelection = new()
@@ -168,7 +212,7 @@ public class PotionBuyer
         };
 
         // Validation
-        if ((!maxAll && !potionSelection.Any(p => p.Value())) || PotionQuant is < 1 or > 300)
+        if ((!Seperate && !maxAll && !potionSelection.Any(p => p.Value())) || PotionQuant is < 1 or > 300)
         {
             Core.Logger("No Potions selected or invalid quantity. Stopping.", messageBox: true, stopBot: true);
             return;
@@ -179,11 +223,11 @@ public class PotionBuyer
         Core.AddDrop(SecondaryPotions);
 
         // Debug (super useful)
-        Core.Logger($"Selected: {string.Join(", ", Potions.Where(p => maxAll || potionSelection[p]()))}");
+        Core.Logger($"Selected: {string.Join(", ", Potions.Where(p => maxAll || Seperate || potionSelection[p]()))}");
 
         foreach (string Potion in Potions)
         {
-            bool shouldFarm = maxAll || potionSelection[Potion]();
+            bool shouldFarm = maxAll || Seperate || potionSelection[Potion]();
 
             Core.Logger($"{Potion}: {shouldFarm}");
 
@@ -347,12 +391,10 @@ public class PotionBuyer
                         break;
 
                     case "Moglin Tears":
-                        if (!Core.IsMember)
-                        {
-                            Core.Logger("Farming map is members only, buying the materials instead");
-                            Adv.BuyItem("alchemyacademy", 397, 11472, ingreQuant, 2, 1229);
-                        }
-                        else if (!BuyReagents)
+                        if (!Core.IsMember && !BuyReagents)
+                            Core.Logger("Farming map is members only, buying the materials");
+
+                        if (!BuyReagents && Core.IsMember)
                             Core.HuntMonster("twig", "Sweetish Fish", ingredient, ingreQuant, isTemp: false);
                         else
                             Adv.BuyItem("alchemyacademy", 397, 11472, ingreQuant, 2, 1229);
@@ -467,32 +509,5 @@ public class PotionBuyer
 
         }
     }
-    
-    private int GetSafeInt(string key, int defaultValue, int min = int.MinValue, int max = int.MaxValue)
-    {
-        try
-        {
-            object? raw = Bot.Config?.Get<object>(key);
 
-            // Handle null / empty
-            if (raw is null)
-                return defaultValue;
-
-            // Already an int → fast path
-            if (raw is int intVal)
-                return Math.Clamp(intVal, min, max);
-
-            // Try parse string / other junk
-            if (int.TryParse(raw.ToString(), out int parsed))
-                return Math.Clamp(parsed, min, max);
-
-            Core.Logger($"Invalid value for [{key}] → using default [{defaultValue}]");
-            return defaultValue;
-        }
-        catch (Exception ex)
-        {
-            Core.Logger($"Config parse error [{key}] → using default [{defaultValue}] :: {ex.Message}");
-            return defaultValue;
-        }
-    }
 }
