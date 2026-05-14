@@ -2806,10 +2806,10 @@ public class CoreFarms
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank}");
 
-        //  Slay the Blazebinders (500rep - 5 kills)
         // Easy method requires a story 
         bool DoEasyMethod = Core.isCompletedBefore(4080);
         Core.RegisterQuests(DoEasyMethod ? 4080 : 4228);
+        // Spreading Like Wildfire (250rep - 4 map items)
         if (DoEasyMethod)
         {
             while (!Bot.ShouldExit && FactionRank("Embersea") < rank)
@@ -2817,14 +2817,18 @@ public class CoreFarms
                 if (Bot.Map.Name != "Pyrewatch")
                     Core.Join("Pyrewatch");
 
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
+
                 if (!Bot.TempInv.Contains(28575, 4))
-                    Bot.Map.GetMapItem(3162);         
-                               
+                    Bot.Map.GetMapItem(3162);
+
                 Bot.Sleep(500);
             }
         }
         else
         {
+            //  Slay the Blazebinders (500rep - 5 kills)
             while (!Bot.ShouldExit && FactionRank("Embersea") < rank)
             {
                 if (Core.CheckSaveState())
