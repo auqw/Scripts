@@ -7071,7 +7071,7 @@ public class CoreBots
             ? 0
             : Bot.TempInv.GetQuantity(item) + Bot.Inventory.GetQuantity(item);
 
-        Logger($"Farming 💎 {item} ({quantity}/{quant})", caller);
+        Logger($"Farming {item} ({quantity}/{quant})", caller);
     }
 
     /// <summary>
