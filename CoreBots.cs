@@ -187,71 +187,82 @@ public class CoreBots
 
         if (changeTo)
         {
+            // Prevent duplicate subscriptions if script restarts internally
+            Bot.Events.ScriptStopping -= CrashDetector;
             Bot.Events.ScriptStopping += CrashDetector;
-            // Start the stopwatch for timing the script run
+
             _scriptStopwatch = Stopwatch.StartNew();
 
-            loadedBot = Bot
-                .Manager.LoadedScript.Replace("\\", "/")
+            loadedBot = Bot.Manager.LoadedScript?
+                .Replace("\\", "/")
                 .Split("/Scripts/")
                 .Last()
-                .Replace(".cs", "");
+                .Replace(".cs", "") ?? "Unknown";
+
             Logger($"Bot Started [{loadedBot}]");
+
             if (
                 Bot.Config != null
+                && Bot.Config.Options != null
                 && Bot.Config.Options.Contains(SkipOptions)
                 && !Bot.Config.Get<bool>(SkipOptions)
             )
                 Bot.Config.Configure();
 
-            int retries = 0;
             const int maxRetries = 3;
+            int retries = 0;
+
+            // Pre-calc fallback server once
+            string server =
+                Bot.Options.ReloginServer ??
+                Bot.Servers.CachedServers?
+                    .FirstOrDefault(s =>
+                        s.Name != "Class Test Realm" &&
+                        s.Online &&
+                        s.PlayerCount < s.MaxPlayers)?.Name
+                ?? "Twilly";
 
             while (!Bot.Player.LoggedIn && retries < maxRetries)
             {
                 retries++;
 
-                if (Bot.Servers.CachedServers.Any())
+                if (!Bot.Servers.CachedServers.Any())
                 {
-                    Logger("Auto Login triggered");
-                    try
-                    {
-                        if (
-                            !Bot.Servers.EnsureRelogin(
-                                Bot.Options.ReloginServer
-                                    ?? Bot.Servers.CachedServers.FirstOrDefault(s =>
-                                        s.Name != "Class Test Realm"
-                                        && s.Online
-                                        && s.PlayerCount < s.MaxPlayers
-                                    )?.Name
-                                    ?? "Twilly"
-                            )
-                        )
-                            Logger(
-                                "Please log-in before starting the bot.\nIf you are already logged in but are receiving this message regardless, please re-install CleanFlash",
-                                messageBox: true,
-                                stopBot: true
-                            );
-                        Sleep(5000);
-                    }
-                    catch
-                    {
-                        Logger(
-                            "Please log-in before starting the bot.\nIf you are already logged in but are receiving this message regardless, please re-install CleanFlash",
-                            messageBox: true,
-                            stopBot: true
-                        );
-                    }
+                    Logger("Server list not ready, waiting...");
+                    Sleep(3000);
+                    continue;
                 }
-                else
-                    Logger(
-                        "Please log-in before starting the bot.\nIf you are already logged in but are receiving this message regardless, please re-install CleanFlash",
-                        messageBox: true,
-                        stopBot: true
-                    );
+
+                Logger($"Auto Login attempt {retries}/{maxRetries} → {server}");
+
+                try
+                {
+                    bool relogSuccess = Bot.Servers.EnsureRelogin(server);
+                    if (relogSuccess)
+                        break;
+
+                    Logger("Relogin failed, retrying...");
+                }
+                catch (Exception ex)
+                {
+                    Logger($"Relogin exception: {ex.Message}");
+                }
+
+                Sleep(5000);
             }
 
-            Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10);
+            // Only stop AFTER retries exhausted
+            if (!Bot.Player.LoggedIn)
+            {
+                Logger(
+                    "Please log-in before starting the bot.\nIf already logged in but still seeing this, reinstall CleanFlash.",
+                    messageBox: true,
+                    stopBot: true
+                );
+                return;
+            }
+
+            Bot.Wait.ForTrue(() => Bot.Player?.Loaded == true, 10);
         }
 
         if (!Bot.Player.LoggedIn)
