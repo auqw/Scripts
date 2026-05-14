@@ -2808,7 +2808,7 @@ public class CoreFarms
 
         //  Slay the Blazebinders (500rep - 5 kills)
         // Easy method requires a story 
-        bool DoEasyMethod = !Core.isCompletedBefore(4080);
+        bool DoEasyMethod = Core.isCompletedBefore(4080);
         Core.RegisterQuests(DoEasyMethod ? 4080 : 4228);
         if (DoEasyMethod)
         {
