@@ -6963,12 +6963,7 @@ public class CoreBots
     // }
 
     //testing
-    public void Logger(
-        string message = "",
-        [CallerMemberName] string caller = "",
-        bool messageBox = false,
-        bool stopBot = false
-    )
+    public void Logger(string message = "", [CallerMemberName] string caller = "", bool messageBox = false, bool stopBot = false)
     {
         message = message.Replace('[', '(').Replace(']', ')');
         message = WordWrap(message, 50);
