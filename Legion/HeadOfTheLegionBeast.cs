@@ -168,11 +168,8 @@ public class HeadoftheLegionBeast
         Core.FarmingLogger("Essence of Wrath", quant);
         Core.RegisterQuests(7979);
 
-        while (!Bot.ShouldExit && !Core.CheckInventory("Essence of Wrath", quant))
-        {
-            Core.KillMonster("sevencircleswar", "Enter", "Spawn", "*", log: false);
-            Bot.Wait.ForDrop("Essence of Wrath");
-        }
+        Core.KillMonster("sevencircleswar", "Enter", "Spawn", "*", "Essence of Wrath", quant, isTemp: false, log: false);
+        Bot.Wait.ForDrop("Essence of Wrath");
 
         Core.CancelRegisteredQuests();
         Core.Logger($"Farm complete!", "EssenceWrath");
@@ -196,11 +193,8 @@ public class HeadoftheLegionBeast
         Core.FarmingLogger("Essence of Violence", quant);
         Core.RegisterQuests(7985);
 
-        while (!Bot.ShouldExit && !Core.CheckInventory("Essence of Violence", quant))
-        {
-            Core.KillMonster("sevencircleswar", "r9", "Left", "Violence Guard", log: false);
-            Bot.Wait.ForDrop("Essence of Violence");
-        }
+        Core.KillMonster("sevencircleswar", "r9", "Left", "Violence Guard", "Essence of Violence", quant, isTemp: false, log: false);
+        Bot.Wait.ForDrop("Essence of Violence");
 
         Core.CancelRegisteredQuests();
         Core.Logger($"Farm complete!", "EssenceViolence");
@@ -222,13 +216,10 @@ public class HeadoftheLegionBeast
         Core.AddDrop(HeadLegionBeast);
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger("Essence of Treachery", quant);
-        Core.RegisterQuests(7986);
+        Core.RegisterQuests(7988);
 
-        while (!Bot.ShouldExit && !Core.CheckInventory("Essence of Treachery", quant))
-        {
-            Core.KillMonster("sevencircleswar", "r13", "Left", "Treachery Guard", log: false);
-            Bot.Wait.ForDrop("Essence of Treachery");
-        }
+        Core.KillMonster("sevencircleswar", "r13", "Left", "Treachery Guard", "Essence of Treachery", quant, isTemp: false, log: false);
+        Bot.Wait.ForDrop("Essence of Treachery");
 
         Core.CancelRegisteredQuests();
         Core.Logger($"Farm complete!", "EssenceTreachery");
@@ -456,9 +447,9 @@ public class HeadoftheLegionBeast
             Core.EquipClass(ClassType.Solo);
 
             Core.Logger($"Farming essences...", "Indulgence");
-            Core.KillMonster("sevencircles", "r4", "Left", "Luxuria", "Essence of Luxuria", essenceTarget, log: false);
-            Core.KillMonster("sevencircles", "r6", "Left", "Gluttony", "Essence of Gluttony", essenceTarget, log: false);
-            Core.KillMonster("sevencircles", "r8", "Left", "Avarice", "Essence of Avarice", essenceTarget, log: false);
+            Core.KillMonster("sevencircles", "r4", "Left", "Luxuria", "Essence of Luxuria", essenceTarget, isTemp: false, log: false);
+            Core.KillMonster("sevencircles", "r6", "Left", "Gluttony", "Essence of Gluttony", essenceTarget, isTemp: false, log: false);
+            Core.KillMonster("sevencircles", "r8", "Left", "Avarice", "Essence of Avarice", essenceTarget, isTemp: false, log: false);
 
             Core.Logger($"Completing quest...", "Indulgence");
             Core.EnsureCompleteMulti(7978);
