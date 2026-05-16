@@ -308,17 +308,17 @@ public class HeadoftheLegionBeast
             return;
         }
 
-        Core.Logger($"Starting farm for {quant} Penance", "Penance");
         Core.AddDrop(HeadLegionBeast);
         Core.FarmingLogger("Penance", quant);
         Core.EquipClass(ClassType.Farm);
 
         // Farm essences once (they don't have stack limit issues)
-        Core.Logger($"Essence check & farm phase:", "Penance");
+        Core.Logger($"", "Penance");
+        Core.Logger($"┌─ PHASE 1: Essence Verification", "Penance");
         EssenceWrath(quant);
         EssenceViolence(quant);
         EssenceTreachery(quant);
-        Core.Logger($"All essences secured | Proceeding to soul farming & penance purchase", "Penance");
+        Core.Logger($"└─ ✓ All essences secured", "Penance");
 
         const int SOULS_MAX_STACK = 300;
         const int SOULS_PER_PENANCE = 15;
@@ -326,9 +326,12 @@ public class HeadoftheLegionBeast
         int penance_bought = 0;
         int totalSoulsUsed = 0;
 
-        Core.Logger($"Penance Target: {quant} | Souls needed per penance: {SOULS_PER_PENANCE}", "Penance");
-        Core.Logger($"Total souls needed: {totalSoulsNeeded} (farming in batches of max {SOULS_MAX_STACK})", "Penance");
-        Core.Logger($"═══════════════════════════════════════════", "Penance");
+        Core.Logger($"", "Penance");
+        Core.Logger($"┌─ PHASE 2: Soul Farming & Penance Purchase", "Penance");
+        Core.Logger($"│  Target: {quant} Penance | Cost: {totalSoulsNeeded} souls | Per item: {SOULS_PER_PENANCE} souls", "Penance");
+        Core.Logger($"│  Batch size: {SOULS_MAX_STACK} souls (max stack)", "Penance");
+        Core.Logger($"├────────────────────────────────────────", "Penance");
+
 
         // Buy penance in batches accounting for souls max stack of 300
         while (!Bot.ShouldExit && penance_bought < quant)
@@ -336,45 +339,78 @@ public class HeadoftheLegionBeast
             int soulsCurrently = Bot.Inventory.GetQuantity("Souls of Heresy");
             int penanceRemaining = quant - penance_bought;
 
-            Core.Logger($"Batch {(penance_bought / 10) + 1} | Progress: {penance_bought}/{quant} Penance | Souls on hand: {soulsCurrently}/{SOULS_MAX_STACK} | Need: {penanceRemaining} more", "Penance");
+            // ===== Fancy progress block =====
+            const int progressWidth = 24;
 
-            // FIXED: Changed from == 0 to < SOULS_PER_PENANCE to farm when insufficient, not just depleted
+            float progressRatio = quant > 0 ? Math.Clamp((float)penance_bought / quant, 0f, 1f) : 0f;
+            int progressFilled = (int)Math.Round(progressRatio * progressWidth);
+            int percent = (int)Math.Round(progressRatio * 100);
+
+            string progressBar = new string('█', progressFilled) + new string('░', progressWidth - progressFilled);
+            char spinner = new[] { '|', '/', '-', '\\' }[(penance_bought + soulsCurrently) & 3];
+
+            string line =
+                $"│ {spinner} [{progressBar}] {percent,3}% " +
+                $"| Penance {penance_bought,3}/{quant,-3} " +
+                $"| Souls {soulsCurrently,3}/300 " +
+                $"| Left {penanceRemaining,3}";
+
+            Core.Logger(line, "Penance");
+
             if (soulsCurrently < SOULS_PER_PENANCE)
             {
-                // Farm souls up to max stack
                 int soulsToFarm = Math.Min(SOULS_MAX_STACK, totalSoulsNeeded - totalSoulsUsed);
-                Core.Logger($"  └─ Insufficient souls ({soulsCurrently} < {SOULS_PER_PENANCE}). Farming {soulsToFarm} more...", "Penance");
+                Core.Logger($"│ ↓ Farming {soulsToFarm} souls...", "Penance");
                 SoulsHeresy(soulsToFarm);
                 soulsCurrently = Bot.Inventory.GetQuantity("Souls of Heresy");
-                Core.Logger($"  └─ Soul farm complete! Inventory: {soulsCurrently}/{SOULS_MAX_STACK}", "Penance");
+                Core.Logger($"│ ↑ Farm complete! {soulsCurrently}/{SOULS_MAX_STACK}", "Penance");
             }
 
-            // Buy as much penance as we can with current souls
             int penanceCanBuy = soulsCurrently / SOULS_PER_PENANCE;
             int penanceToBuy = Math.Min(penanceCanBuy, penanceRemaining);
 
             if (penanceToBuy > 0)
             {
                 int soulsCost = penanceToBuy * SOULS_PER_PENANCE;
-                Core.Logger($"  ├─ Buying {penanceToBuy} Penance (costs {soulsCost} souls)...", "Penance");
+                Core.Logger($"│ → Buying {penanceToBuy} Penance ({soulsCost} souls)...", "Penance");
                 Core.BuyItem("sevencircleswar", 1984, "Penance", penanceToBuy);
                 Bot.Wait.ForPickup("Penance");
                 penance_bought += penanceToBuy;
                 totalSoulsUsed += soulsCost;
-                soulsCurrently -= soulsCost;
-                Core.Logger($"  └─ Purchase complete! Total bought: {penance_bought}/{quant} | Souls used: {totalSoulsUsed}/{totalSoulsNeeded}", "Penance");
+                Core.Logger($"│ ✓ Purchased! Total: {penance_bought}/{quant}", "Penance");
             }
             else
             {
-                Core.Logger($"  └─ ERROR: Not enough souls to buy penance. Have: {soulsCurrently}, Need: {SOULS_PER_PENANCE} per item", "Penance");
+                Core.Logger($"│ ✗ Error: Not enough souls ({soulsCurrently}/{SOULS_PER_PENANCE})", "Penance");
             }
 
             Core.Sleep(500);
         }
 
-        Core.Logger($"═══════════════════════════════════════════", "Penance");
-        Core.Logger($"Farm complete! Got {penance_bought}/{quant} Penance | Total souls used: {totalSoulsUsed}/{totalSoulsNeeded}", "Penance");
+        Bot.Log("Penance: ├────────────────────────────────────────");
+        Bot.Log($"Penance: └─ ✓ Phase 2 Complete! {totalSoulsUsed}/{totalSoulsNeeded} souls used");
+        Bot.Log("Penance: ");
+        Bot.Log($"╔{new string('═', boxWidth)}╗");
+        Bot.Log($"║{CenterWithFill("✦ PENANCE FARMING SESSION START ✦")}║");
+        Bot.Log($"╚{new string('═', boxWidth)}╝");
     }
+
+    const int boxWidth = 44;
+
+    string CenterWithFill(string text)
+    {
+        string decorated = $" {text} ";
+
+        if (decorated.Length >= boxWidth)
+            return decorated;
+
+        int fillTotal = boxWidth - decorated.Length;
+        int left = fillTotal / 2;
+        int right = fillTotal - left;
+
+        return new string('═', left) + decorated + new string('═', right);
+    }
+
 
     /// <summary>
     /// Farms the specified quantity of "Indulgence" items.
