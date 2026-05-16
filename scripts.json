@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 435316,
-    "sha256": "967e88cabefd6cf8a024e67f0abed5a0f38cb58be35d02bdc7c8df6e4c155f57",
+    "size": 435278,
+    "sha256": "cfedbd1225cac6bcd87ae9d0585e4a7768a44d8bc5b83d5eaabebd48c81d282d",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -2618,8 +2618,8 @@
       "luxuria"
     ],
     "path": "Legion/HeadOfTheLegionBeast.cs",
-    "size": 17978,
-    "sha256": "838ab5f1ae7f75d2f861d9bb608f62f04b2acedaeb5fca98deebc247ca884ce8",
+    "size": 18809,
+    "sha256": "3e3899efa5f3b2b9974c5533190f2567e5f56f5d1032661d67d4c456faae6e79",
     "fileName": "HeadOfTheLegionBeast.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Legion/HeadOfTheLegionBeast.cs"
   },
