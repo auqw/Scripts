@@ -114,6 +114,7 @@ public class HeadoftheLegionBeast
 
         Core.EquipClass(ClassType.Dodge);
         Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "Beast Soul", 15, isTemp: false, publicRoom: true, log: false);
+
         Adv.BuyItem("sevencircleswar", 1984, HeadName);
 
         if (wantBadge && !hasBadge)
@@ -157,7 +158,6 @@ public class HeadoftheLegionBeast
     {
         if (Core.CheckInventory("Essence of Wrath", quant))
         {
-            Core.FarmingLogger("Essence of Wrath", quant);
             Core.Logger($"Already have {quant}. Skipping.", "EssenceWrath");
             return;
         }
@@ -186,7 +186,6 @@ public class HeadoftheLegionBeast
     {
         if (Core.CheckInventory("Essence of Violence", quant))
         {
-            Core.FarmingLogger("Essence of Violence", quant);
             Core.Logger($"Already have {quant}. Skipping.", "EssenceViolence");
             return;
         }
@@ -215,7 +214,6 @@ public class HeadoftheLegionBeast
     {
         if (Core.CheckInventory("Essence of Treachery", quant))
         {
-            Core.FarmingLogger("Essence of Treachery", quant);
             Core.Logger($"Already have {quant}. Skipping.", "EssenceTreachery");
             return;
         }
@@ -224,7 +222,7 @@ public class HeadoftheLegionBeast
         Core.AddDrop(HeadLegionBeast);
         Core.EquipClass(ClassType.Farm);
         Core.FarmingLogger("Essence of Treachery", quant);
-        Core.RegisterQuests(7988);
+        Core.RegisterQuests(7986);
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Essence of Treachery", quant))
         {
@@ -246,14 +244,16 @@ public class HeadoftheLegionBeast
         const int SOULS_MAX_STACK = 300;
         quant = Math.Min(quant, SOULS_MAX_STACK); // Cap at max stack
 
+        int soulsOnHandStart = Bot.Inventory.GetQuantity("Souls of Heresy");
+
         if (Core.CheckInventory("Souls of Heresy", quant))
         {
-            Core.FarmingLogger("Souls of Heresy", quant);
             Core.Logger($"Already have {quant}. Skipping.", "SoulsHeresy");
             return;
         }
 
-        Core.Logger($"Starting farm for {quant} (capped at max stack {SOULS_MAX_STACK})...", "SoulsHeresy");
+        Core.Logger($"Starting farm for {quant} souls (capped at max stack {SOULS_MAX_STACK})", "SoulsHeresy");
+        Core.Logger($"  Starting inventory: {soulsOnHandStart}/{SOULS_MAX_STACK}", "SoulsHeresy");
         Core.AddDrop(HeadLegionBeast);
 
         if (!Bot.Quests.IsUnlocked(7983))
@@ -266,16 +266,33 @@ public class HeadoftheLegionBeast
         Core.RegisterQuests(7983, 7980, 7981); // Blasphemy? Blasphe-you! | War Medals | Mega War Medals
 
         Core.EquipClass(ClassType.Farm);
-        Core.Logger($"Farming {quant} souls...", "SoulsHeresy");
+        Core.Logger($"Target this session: {quant} souls | Collecting souls from heretics...", "SoulsHeresy");
+
+        int killCount = 0;
+        int lastLoggedProgress = soulsOnHandStart;
 
         while (!Bot.ShouldExit && !Core.CheckInventory("Souls of Heresy", quant))
         {
             Core.KillMonster("sevencircleswar", "r7", "Left", "*", log: false);
             Bot.Wait.ForDrop("Souls of Heresy");
+
+            killCount++;
+            int currentSouls = Bot.Inventory.GetQuantity("Souls of Heresy");
+
+            // Log progress every 25 kills or when we hit major milestones
+            if (killCount % 25 == 0 || currentSouls >= lastLoggedProgress + 50)
+            {
+                int soulsInThisSession = currentSouls - soulsOnHandStart;
+                Core.Logger($"Collected: {soulsInThisSession}/{quant} | Inventory: {currentSouls}/{SOULS_MAX_STACK} | Kills: {killCount}", "SoulsHeresy");
+                lastLoggedProgress = currentSouls;
+            }
         }
 
+        int soulsAtEnd = Bot.Inventory.GetQuantity("Souls of Heresy");
+        int totalCollected = soulsAtEnd - soulsOnHandStart;
+
         Core.CancelRegisteredQuests();
-        Core.Logger($"Farm complete!", "SoulsHeresy");
+        Core.Logger($"✓ Collected {totalCollected} souls | Final: {soulsAtEnd}/{SOULS_MAX_STACK} | Kills: {killCount}", "SoulsHeresy");
     }
 
     /// <summary>
@@ -297,18 +314,21 @@ public class HeadoftheLegionBeast
         Core.EquipClass(ClassType.Farm);
 
         // Farm essences once (they don't have stack limit issues)
-        Core.Logger($"Farming essences...", "Penance");
+        Core.Logger($"Essence check & farm phase:", "Penance");
         EssenceWrath(quant);
         EssenceViolence(quant);
         EssenceTreachery(quant);
-        Core.Logger($"Essence farming complete", "Penance");
+        Core.Logger($"All essences secured | Proceeding to soul farming & penance purchase", "Penance");
 
         const int SOULS_MAX_STACK = 300;
         const int SOULS_PER_PENANCE = 15;
         int totalSoulsNeeded = quant * SOULS_PER_PENANCE;
         int penance_bought = 0;
+        int totalSoulsUsed = 0;
 
+        Core.Logger($"Penance Target: {quant} | Souls needed per penance: {SOULS_PER_PENANCE}", "Penance");
         Core.Logger($"Total souls needed: {totalSoulsNeeded} (farming in batches of max {SOULS_MAX_STACK})", "Penance");
+        Core.Logger($"═══════════════════════════════════════════", "Penance");
 
         // Buy penance in batches accounting for souls max stack of 300
         while (!Bot.ShouldExit && penance_bought < quant)
@@ -316,16 +336,17 @@ public class HeadoftheLegionBeast
             int soulsCurrently = Bot.Inventory.GetQuantity("Souls of Heresy");
             int penanceRemaining = quant - penance_bought;
 
-            Core.Logger($"Batch Progress: {penance_bought}/{quant} Penance bought | Souls on hand: {soulsCurrently}", "Penance");
+            Core.Logger($"Batch {(penance_bought / 10) + 1} | Progress: {penance_bought}/{quant} Penance | Souls on hand: {soulsCurrently}/{SOULS_MAX_STACK} | Need: {penanceRemaining} more", "Penance");
 
+            // FIXED: Changed from == 0 to < SOULS_PER_PENANCE to farm when insufficient, not just depleted
             if (soulsCurrently < SOULS_PER_PENANCE)
             {
                 // Farm souls up to max stack
-                int soulsToFarm = Math.Min(SOULS_MAX_STACK, totalSoulsNeeded - (penance_bought * SOULS_PER_PENANCE));
-                Core.Logger($"Souls depleted. Farming {soulsToFarm} more souls...", "Penance");
+                int soulsToFarm = Math.Min(SOULS_MAX_STACK, totalSoulsNeeded - totalSoulsUsed);
+                Core.Logger($"  └─ Insufficient souls ({soulsCurrently} < {SOULS_PER_PENANCE}). Farming {soulsToFarm} more...", "Penance");
                 SoulsHeresy(soulsToFarm);
                 soulsCurrently = Bot.Inventory.GetQuantity("Souls of Heresy");
-                Core.Logger($"Souls farmed. Current count: {soulsCurrently}", "Penance");
+                Core.Logger($"  └─ Soul farm complete! Inventory: {soulsCurrently}/{SOULS_MAX_STACK}", "Penance");
             }
 
             // Buy as much penance as we can with current souls
@@ -334,21 +355,25 @@ public class HeadoftheLegionBeast
 
             if (penanceToBuy > 0)
             {
-                Core.Logger($"Buying {penanceToBuy} Penance (requires {penanceToBuy * SOULS_PER_PENANCE} souls)...", "Penance");
+                int soulsCost = penanceToBuy * SOULS_PER_PENANCE;
+                Core.Logger($"  ├─ Buying {penanceToBuy} Penance (costs {soulsCost} souls)...", "Penance");
                 Core.BuyItem("sevencircleswar", 1984, "Penance", penanceToBuy);
                 Bot.Wait.ForPickup("Penance");
                 penance_bought += penanceToBuy;
-                Core.Logger($"Purchase complete. Total bought: {penance_bought}/{quant}", "Penance");
+                totalSoulsUsed += soulsCost;
+                soulsCurrently -= soulsCost;
+                Core.Logger($"  └─ Purchase complete! Total bought: {penance_bought}/{quant} | Souls used: {totalSoulsUsed}/{totalSoulsNeeded}", "Penance");
             }
             else
             {
-                Core.Logger($"Not enough souls to buy more penance. Need {SOULS_PER_PENANCE}, have {soulsCurrently}", "Penance");
+                Core.Logger($"  └─ ERROR: Not enough souls to buy penance. Have: {soulsCurrently}, Need: {SOULS_PER_PENANCE} per item", "Penance");
             }
 
             Core.Sleep(500);
         }
 
-        Core.Logger($"Farm complete! Got {penance_bought} Penance", "Penance");
+        Core.Logger($"═══════════════════════════════════════════", "Penance");
+        Core.Logger($"Farm complete! Got {penance_bought}/{quant} Penance | Total souls used: {totalSoulsUsed}/{totalSoulsNeeded}", "Penance");
     }
 
     /// <summary>
@@ -398,6 +423,7 @@ public class HeadoftheLegionBeast
             Core.KillMonster("sevencircles", "r4", "Left", "Luxuria", "Essence of Luxuria", essenceTarget, log: false);
             Core.KillMonster("sevencircles", "r6", "Left", "Gluttony", "Essence of Gluttony", essenceTarget, log: false);
             Core.KillMonster("sevencircles", "r8", "Left", "Avarice", "Essence of Avarice", essenceTarget, log: false);
+
             Core.Logger($"Completing quest...", "Indulgence");
             Core.EnsureCompleteMulti(7978);
             Bot.Wait.ForPickup("Indulgence");
