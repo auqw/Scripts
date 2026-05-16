@@ -26,7 +26,12 @@ public class InfernalArena
         set => _CAQuests = value;
     }
     private static CelestialArenaQuests _CAQuests;
-
+    private static CoreAdvanced Adv
+    {
+        get => _Adv ??= new CoreAdvanced();
+        set => _Adv = value;
+    }
+    private static CoreAdvanced _Adv;
     public void ScriptMain(IScriptInterface Bot)
     {
         Core.SetOptions();
@@ -120,6 +125,15 @@ public class InfernalArena
         // Reign of the Deer 9374
         Core.Logger("Boss: [Cervus Malus]");
         Story.KillQuest(9374, "infernalarena", "Cervus Malus");
+
+        string VHLCheck = Core.CheckInventory("Void HighLord (IoDA)") ? "Void HighLord (IoDA)" : "Void Highlord" ?? string.Empty;
+        if (!string.IsNullOrEmpty(VHLCheck))
+        {
+            Core.Equip(VHLCheck);
+            Bot.Skills.StartAdvanced(VHLCheck, false, Skua.Core.Models.Skills.ClassUseMode.Def);
+        }
+        else Core.EquipClass(ClassType.Solo);
+
 
         // Ars Infernum 9375
         Core.Logger("Boss: [Key of Sholemoh]");
