@@ -841,14 +841,7 @@ public class CoreHollowbornChaosEnvoy
             // Complete additional quest requirements
             CAV.FragmentsoftheLordsA();
             CAV.FragmentsoftheLordsB();
-            Core.HuntMonster(
-                "ultradrakath",
-                "Champion of Chaos",
-                "Trace of Chaos",
-                13,
-                isTemp: false,
-                publicRoom: true
-            );
+            Core.HuntMonster("ultradrakath", "Champion of Chaos", "Trace of Chaos", 13, isTemp: false, publicRoom: true);
 
             // Purchase Chaorrupted Usurper
             Adv.BuyItem("transformation", 2002, "Chaorrupted Usurper");
