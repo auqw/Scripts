@@ -113,18 +113,7 @@ public class HeadoftheLegionBeast
         Legion.FarmLegionToken(15000);
 
         Core.EquipClass(ClassType.Dodge);
-        Core.KillMonster(
-            "sevencircleswar",
-            "r17",
-            "Left",
-            "The Beast",
-            "Beast Soul",
-            15,
-            isTemp: false,
-            publicRoom: true,
-            log: false
-        );
-
+        Core.KillMonster("sevencircleswar", "r17", "Left", "The Beast", "Beast Soul", 15, isTemp: false, publicRoom: true, log: false);
         Adv.BuyItem("sevencircleswar", 1984, HeadName);
 
         if (wantBadge && !hasBadge)
@@ -408,16 +397,7 @@ public class HeadoftheLegionBeast
             Core.Logger($"Farming essences...", "Indulgence");
             Core.KillMonster("sevencircles", "r4", "Left", "Luxuria", "Essence of Luxuria", essenceTarget, log: false);
             Core.KillMonster("sevencircles", "r6", "Left", "Gluttony", "Essence of Gluttony", essenceTarget, log: false);
-            Core.KillMonster(
-                "sevencircles",
-                "r8",
-                "Left",
-                "Avarice",
-                "Essence of Avarice",
-                essenceTarget,
-                log: false
-            );
-
+            Core.KillMonster("sevencircles", "r8", "Left", "Avarice", "Essence of Avarice", essenceTarget, log: false);
             Core.Logger($"Completing quest...", "Indulgence");
             Core.EnsureCompleteMulti(7978);
             Bot.Wait.ForPickup("Indulgence");
