@@ -53,6 +53,7 @@ tags: arcana, invoker, class, arcana invoker, darkon, astravia, garden
 
 using Skua.Core.Interfaces;
 using Skua.Core.Models.Items;
+using Skua.Core.Options;
 
 public class ArcanaInvoker
 {
@@ -89,6 +90,15 @@ public class ArcanaInvoker
     }
     private static CoreStory _Story;
 
+    public string OptionsStorage = "AIClassBadge";
+    public bool DontPreconfigure = true;
+    public List<IOption> Options =
+    [
+        new Option<bool>( "Badge", "Badge (For ioda users)", "For those that retardedly ioda-ed this class... you'll have todo enable this so it can go do the quests.", false),
+        CoreBots.Instance.SkipOptions,
+    ];
+
+
     public void ScriptMain(IScriptInterface bot)
     {
         Core.SetOptions();
@@ -97,10 +107,12 @@ public class ArcanaInvoker
 
         Core.SetOptions(false);
     }
+    bool GetBadge;
 
     public void GetAI(bool rankUpClass = true)
     {
-        if (Core.CheckInventory("Arcana Invoker"))
+        GetBadge = Bot.Config.Get<bool>("Badge");
+        if (GetBadge && Core.HasWebBadge("Arcana Invoker") || Core.CheckInventory("Arcana Invoker"))
         {
             if (rankUpClass)
                 Adv.RankUpClass("Arcana Invoker");
@@ -109,7 +121,9 @@ public class ArcanaInvoker
 
         DoStory();
 
-        Adv.BuyItem("arcana", 2436, "Arcana Invoker");
+        // Checks require for ioda user .. why would you want 2...?
+        if (!Core.CheckInventory("Arcana Invoker"))
+            Adv.BuyItem("arcana", 2436, "Arcana Invoker");
 
         if (rankUpClass)
             Adv.RankUpClass("Arcana Invoker");
