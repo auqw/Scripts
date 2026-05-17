@@ -1251,7 +1251,7 @@ public class CoreNation
         Core.Logger($"Keep Voucher: [{Flag(keepVoucher)}]  ", "Supplies");
         Core.Logger($"Selll Voucher: [{Flag(sellMemVoucher)}]", "Supplies");
         Core.Logger($"Assist During: [{Flag(assistantDuring)}]", "Supplies");
-        Core.Logger($"Retrn Durinbg: [{Flag(returnPolicyDuringSupplies)}]", "Supplies");
+        Core.Logger($"Return During: [{Flag(returnPolicyDuringSupplies)}]", "Supplies");
         Core.Logger($"Return Item: [{returnItem ?? "None"}]", "Supplies");
         Core.Logger("╚═════════════════════════════════╝", "Supplies");
     }
