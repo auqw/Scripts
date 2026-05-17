@@ -181,7 +181,10 @@ public class UltraAvatarTyndarius
             DoEnh();
         Ultra.UseAlchemyPotions(Ultra.GetBestTonicPotion(), Ultra.GetBestElixirPotion());
         if (isBall1Taunter || isMustTauntTyn || isFocusTyn)
+        {
             Ultra.GetScrollOfEnrage();
+            Core.EquipEnrage();
+        }
     }
 
     void Fight()
@@ -220,9 +223,7 @@ public class UltraAvatarTyndarius
                 break;
             }
             if (Bot.Map.Name != map)
-            {
                 Core.Join(map);
-            }
 
             if (Bot.Player.Cell != "Boss")
             {
@@ -250,10 +251,10 @@ public class UltraAvatarTyndarius
                 else if (Ball1alive)
                 {
                     Bot.Combat.Attack(1);
+                    Bot.Wait.ForTrue(() => Bot.Player.CurrentTarget?.MapID == 1, 20); // Wait for Ball 1 to be targeted
                 }
-                if (Bot.Skills.CanUseSkill(5) && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
+                if (Bot.Skills.CanUseSkill(5))
                     Bot.Skills.UseSkill(5);
-                Bot.Sleep(500);
             }
             if (isBall2killer)
             {
@@ -269,7 +270,6 @@ public class UltraAvatarTyndarius
                 {
                     Bot.Combat.Attack(2);
                 }
-                Bot.Sleep(500);
             }
             // ======================================================
             // MUST TAUNT TYN (full tank)
@@ -277,8 +277,7 @@ public class UltraAvatarTyndarius
             if (isMustTauntTyn)
             {
                 Bot.Combat.Attack(2);
-                Bot.Sleep(500);
-                if (Bot.Skills.CanUseSkill(5) && !Bot.Target.Auras.Any(a => a.Name == "Focus"))
+                if (Bot.Skills.CanUseSkill(5))
                     Bot.Skills.UseSkill(5);
             }
             // ======================================================
@@ -287,11 +286,11 @@ public class UltraAvatarTyndarius
             if (isFocusTyn)
             {
                 Bot.Combat.Attack(2);
-                Bot.Sleep(500);
             }
             if (Bot.ShouldExit)
                 C.Jump("Enter", "Spawn");
         }
+        Bot.Sleep(500);
     }
 
     public static string GetDescription(Enum value)
