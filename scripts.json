@@ -22711,11 +22711,13 @@
       "may-the-4th",
       "dark",
       "lord",
-      "class"
+      "class",
+      "dark lord",
+      "darklord"
     ],
     "path": "Seasonal/MayThe4th/DarkLord.cs",
-    "size": 3141,
-    "sha256": "76eaac348c2cc772ed8031cc882e4cacab8f1b81296a90aad6a8fc389b378177",
+    "size": 3162,
+    "sha256": "4c93419997635d9b280b3d52b9588a080be5e3e3cd895ea30f6b2590b30fb017",
     "fileName": "DarkLord.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Seasonal/MayThe4th/DarkLord.cs"
   },
