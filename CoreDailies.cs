@@ -97,17 +97,13 @@ public class CoreDailies
         // Check if the daily quest is complete
         if (Bot.Quests.IsDailyComplete(quest))
         {
-            Core.Logger(
-                $"Daily/Weekly/Monthly \"{Quest.Name} [{Quest.ID}]\" is not available right now"
-            );
+            Core.Logger($"Daily/Weekly/Monthly \"{Quest.Name} [{Quest.ID}]\" is not available right now");
             return false;
         }
 
         // Handle the item checks and drop additions
-        {
-            if (items == null || items.Length == 0)
-                return true;
-        }
+        if (items == null || items.Length == 0)
+            return true;
 
         var invBank = Bot
             .Inventory.Items.Concat(Bot.Bank.Items)
@@ -185,7 +181,6 @@ public class CoreDailies
     {
         metals ??= MineCraftingMetalsArray;
         Core.Logger($"Daily: Mine Crafting ({string.Join('/', metals)})");
-
         // Check if all metals are in inventory
         bool allMetalsFound = metals.All(metal => Core.CheckInventory(metal, quant, false));
 
@@ -627,15 +622,14 @@ public class CoreDailies
 
         if (Core.CheckInventory("Sparrow's Blood", quant))
         {
-            Core.Logger(
-                $"You already have enough Sparrow's Blood ({Bot.Inventory.GetQuantity("Sparrow's Blood")}/{quant}). Skipped"
-            );
+            Core.Logger($"You already have enough Sparrow's Blood ({Bot.Inventory.GetQuantity("Sparrow's Blood")}/{quant}). Skipped");
             return;
         }
 
         Core.Logger("Daily: Sparrow's Blood");
 
         Core.AddDrop(5584);
+        Core.AddDrop("Sparrow's Blood");
         Core.EquipClass(ClassType.Farm);
         Core.EnsureAccept(803);
         Core.KillMonster("arcangrove", "LeftBack", "Left", "*", "Blood Lily", 30);
