@@ -37,7 +37,7 @@ public class CoreNation
     /// <summary>
     /// Crag and Bamboozle name in game
     /// </summary>
-    public static string CragName => "Crag &amp; Bamboozle";
+    public string CragName => "Crag &amp; Bamboozle";
 
     /// <summary>
     /// All principal drops from Nulgath
@@ -161,7 +161,7 @@ public class CoreNation
         "Receipt of Swindle",
     };
 
-    public static string Uni(int nr) => $"Unidentified {nr}";
+    public string Uni(int nr) => $"Unidentified {nr}";
 
     /// <summary>
     /// Does Essence of Defeat Reagent quest for Dark Crystal Shards
@@ -1214,7 +1214,7 @@ public class CoreNation
         }
     }
 
-    private static void HandleVoucherConversions(string item)
+    private void HandleVoucherConversions(string item)
     {
         if (!Core.CheckInventory("Voucher of Nulgath (non-mem)") || !Core.CheckInventory("Essence of Nulgath", 60))
             return;
@@ -1241,9 +1241,9 @@ public class CoreNation
         }
     }
 
-    private static void LogSuppliesConfig(string? item, int quant, bool ultraAlteon, bool keepVoucher, bool sellMemVoucher, bool assistantDuring, bool returnPolicyDuringSupplies, string? returnItem)
+    private void LogSuppliesConfig(string? item, int quant, bool ultraAlteon, bool keepVoucher, bool sellMemVoucher, bool assistantDuring, bool returnPolicyDuringSupplies, string? returnItem)
     {
-        static string Flag(bool v) => v ? "✓" : "✗";
+        string Flag(bool v) => v ? "✓" : "✗";
 
         Core.Logger("╔═══════ NULGATH SUPPLIES ═══════╗", "Supplies");
         Core.Logger($"Item: [{item ?? "All"} x{quant}]", "Supplies");

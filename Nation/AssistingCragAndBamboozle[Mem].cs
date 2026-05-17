@@ -24,12 +24,12 @@ public class AssistingCragAndBamboozle
         set => _Daily = value;
     }
     private static CoreDailies _Daily;
-    private static CoreNation Nation
+    private CoreNation Nation
     {
         get => _Nation ??= new CoreNation();
         set => _Nation = value;
     }
-    private static CoreNation _Nation;
+    static CoreNation _Nation;
 
     readonly string[] ACaBItems =
     {
@@ -69,7 +69,7 @@ public class AssistingCragAndBamboozle
         Core.BankingBlackList.AddRange(
             new[]
             {
-                CoreNation.CragName,
+                Nation.CragName,
                 "Gem of Nulgath",
                 "Tainted Gem",
                 "Dark Crystal Shard",
@@ -89,7 +89,7 @@ public class AssistingCragAndBamboozle
     public void AssistingCandB(Rewards reward = Rewards.Get_whats_not_maxed)
     {
         if (!Core.IsMember ||
-            !Core.CheckInventory(CoreNation.CragName) ||
+            !Core.CheckInventory(Nation.CragName) ||
             (!Core.CheckInventory("Sparrow's Blood") &&
              !Daily.CheckDailyv2(803, true, true, "Sparrow's Blood")))
             return;
