@@ -69,7 +69,7 @@ public class AssistingCragAndBamboozle
         Core.BankingBlackList.AddRange(
             new[]
             {
-                Nation.CragName,
+                CoreNation.CragName,
                 "Gem of Nulgath",
                 "Tainted Gem",
                 "Dark Crystal Shard",
@@ -86,146 +86,95 @@ public class AssistingCragAndBamboozle
         Core.SetOptions(false);
     }
 
-    public void AssistingCandB(Rewards reward = new())
+    public void AssistingCandB(Rewards reward = Rewards.Get_whats_not_maxed)
     {
-        if (
-            !Core.IsMember
-            || !Core.CheckInventory(Nation.CragName)
-            || !Core.CheckInventory("Sparrow's Blood")
-                && !Daily.CheckDailyv2(803, true, true, "Sparrow's Blood")
-        )
+        if (!Core.IsMember ||
+            !Core.CheckInventory(CoreNation.CragName) ||
+            (!Core.CheckInventory("Sparrow's Blood") &&
+             !Daily.CheckDailyv2(803, true, true, "Sparrow's Blood")))
             return;
 
-        ItemBase? Item = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(5817))
-            ?.Rewards.FirstOrDefault(r =>
-                (int)reward == -1 ? r.Quantity < r.MaxStack : r.ID == (int)reward
-            );
-
-        if (Item != null)
+        Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(5817));
+        if (quest?.Rewards == null)
         {
-            Core.AddDrop(
-                "Nulgath Larvae",
-                "Sparrow's Blood",
-                "Sword of Nulgath",
-                "Gem of Nulgath",
-                "Tainted Gem",
-                "Dark Crystal Shard",
-                "Diamond of Nulgath",
-                "Totem of Nulgath",
-                "Blood Gem of the Archfiend",
-                "Unidentified 19",
-                "Elders' Blood",
-                "Voucher of Nulgath",
-                "Voucher of Nulgath (non-mem)"
-            );
-
-            Core.FarmingLogger(Item.Name, Item.MaxStack);
+            Core.Logger("Quest 5817 failed to load.");
+            return;
         }
-        else
-            Core.Logger("Failed to find the item in the quest rewards.");
-        bool continueFarming = true;
-        while (continueFarming)
+
+        // Build target pool once
+        List<ItemBase> targets = quest.Rewards
+            .Where(r => reward == Rewards.Get_whats_not_maxed
+                ? !Core.CheckInventory(r.ID, r.MaxStack)
+                : r.ID == (int)reward && !Core.CheckInventory(r.ID, r.MaxStack))
+            .ToList();
+
+        if (targets.Count == 0)
+        {
+            Core.Logger("Everything already maxed. No work needed.");
+            return;
+        }
+
+        Core.AddDrop(
+            "Nulgath Larvae", "Sparrow's Blood", "Sword of Nulgath", "Gem of Nulgath",
+            "Tainted Gem", "Dark Crystal Shard", "Diamond of Nulgath", "Totem of Nulgath",
+            "Blood Gem of the Archfiend", "Unidentified 19", "Elders' Blood",
+            "Voucher of Nulgath", "Voucher of Nulgath (non-mem)"
+        );
+
+        Core.Logger($"AssistingCandB Optimized → Targets: {targets.Count}");
+
+        while (!Bot.ShouldExit && targets.Count > 0)
         {
             Core.EnsureAccept(5817);
 
-            //Required to "Accept"
             if (!Core.CheckInventory("Tendurrr The Assistant"))
-                Core.KillMonster(
-                    "tercessuinotlim",
-                    "m2",
-                    "Left",
-                    "*",
-                    "Tendurrr The Assistant",
-                    isTemp: false
-                );
+                Core.KillMonster("tercessuinotlim", "m2", "Left", "*", "Tendurrr The Assistant", isTemp: false);
 
             Daily.SparrowsBlood(1);
+            Bot.Wait.ForPickup(5584);
 
-            // ReCheck Sparrow's Blood
-            if (!Core.CheckInventory(5584))
+            if (!Core.CheckInventory("Sparrow's Blood"))
             {
-                continueFarming = false;
-                Core.Logger("This bot requires you to have at least 1 Sparrow's Blood");
+                Core.Logger("Missing Sparrow's Blood. Stopping.");
                 return;
             }
 
-            Nation.EssenceofNulgath(20);
+            CoreNation.EssenceofNulgath(20);
             Nation.ApprovalAndFavor(100, 100);
-
-            //medal required to get seals
             Nation.NationRound4Medal();
-            Core.Logger(
-                "Accepting \"Nation Recruits: Seal Your Fate[4748]\", to allow \"Fiend Seal\" to drop."
-            );
+
             Core.EnsureAccept(4748);
             Core.HuntMonster("shadowblast", "Legion Fenrir", "Fiend Seal", 10, isTemp: false);
 
-            if (Bot.Config!.Get<Rewards>("PickReward") == Rewards.Get_whats_not_maxed)
+            // ---- SMART BATCH EXECUTION ----
+            List<ItemBase> completedThisCycle = new();
+
+            foreach (ItemBase target in targets)
             {
-                foreach (Rewards rewardEnum in Enum.GetValues(typeof(Rewards)))
+                if (Core.CheckInventory(target.ID, target.MaxStack))
                 {
-                    // Skip processing if the rewardEnum is Get_whats_not_maxed
-                    if (rewardEnum == Rewards.Get_whats_not_maxed)
-                        continue;
+                    completedThisCycle.Add(target);
+                    continue;
+                }
 
-                    string? rewardName = rewardEnum.ToString().Replace("_", " ");
-                    Retry5817:
-                    Quest? quest = Core.InitializeWithRetries(() => Bot.Quests.EnsureLoad(5817));
+                Core.EnsureComplete(5817, target.ID);
 
-                    if (quest != null)
-                    {
-                        ItemBase? rewardItem = quest.Rewards.FirstOrDefault(x =>
-                            x.Name == rewardName && x.Quantity < x.MaxStack
-                        );
+                if (Core.CheckInventory(target.ID, target.MaxStack))
+                    completedThisCycle.Add(target);
 
-                        if (rewardItem != null)
-                        {
-                            if (!Core.CheckInventory(rewardItem.Name, rewardItem.MaxStack))
-                                Core.EnsureComplete(5817, rewardItem.ID);
-
-                            if (!Core.CheckInventory("Sparrow's Blood"))
-                            {
-                                continueFarming = false;
-                                Core.Logger(
-                                    $"{rewardItem.Name} owned in max quantity: {rewardItem.MaxStack}"
-                                );
-                                break;
-                            }
-                        }
-                        else
-                            Core.Logger("Failed to find the reward item in the quest rewards.");
-                    }
-                    else
-                    {
-                        Core.Logger("Failed to load quest 5817.");
-                        Core.Sleep();
-                        goto Retry5817;
-                    }
+                if (!Core.CheckInventory("Sparrow's Blood"))
+                {
+                    Core.Logger($"Stopped early after completing {target.Name}");
+                    return;
                 }
             }
-            else
-            {
-                if (Item != null)
-                {
-                    Core.FarmingLogger(Item.Name, Item.MaxStack);
-                    Core.ChainComplete(5817, Item.ID);
 
-                    if (!Core.CheckInventory("Sparrow's Blood"))
-                    {
-                        continueFarming = false;
-                    }
-
-                    if (!continueFarming)
-                        Core.Logger(
-                            $"Not enough \"Sparrow's Blood\", please do the daily 1 more time (not today)"
-                        );
-                }
-                else
-                    Core.Logger("Failed to find the item in the quest rewards.");
-            }
+            // prune finished items in one go (fast + clean)
+            targets.RemoveAll(t => completedThisCycle.Any(c => c.ID == t.ID));
         }
-    }
 
+        Core.Logger("AssistingCandB Optimized → COMPLETE.");
+    }
     public enum Rewards
     {
         Blood_Gem_of_the_Archfiend = 22332,
