@@ -139,7 +139,7 @@ public class AssistingCragAndBamboozle
                 return;
             }
 
-            CoreNation.EssenceofNulgath(20);
+            Nation.EssenceofNulgath(20);
             Nation.ApprovalAndFavor(100, 100);
             Nation.NationRound4Medal();
 
