@@ -74,27 +74,25 @@ public class SuppliesToSpinTheWheelofChance
     public void DoSupplies()
     {
         // Get and normalize config options
-        string? swindlesReturnItem = GetNormalizedConfigItem<SwindlesReturnItem>("SwindlesReturnItem");
-        string? suppliesItem = GetNormalizedConfigItem<SuppliesReward>("SuppliesReward");
+        string? swindlesReturnItem = GetNormalizedConfigItem<SwindlesReturnItem>("SwindlesReturnItem", out bool maxSwindles);
+        string? suppliesItem = GetNormalizedConfigItem<SuppliesReward>("SuppliesReward", out bool maxSupplies);
 
         // Load required quests
         Quest supplies = LoadQuestWithRetry(2857, "Supplies");
         Quest swindlesReturn = LoadQuestWithRetry(7551, "Swindle's Return");
 
-        // Build combined rewards list
-        List<ItemBase> combinedRewards = BuildCombinedRewardsList(supplies, swindlesReturn, suppliesItem);
-
-        // Log configuration
-        LogSuppliesConfiguration(combinedRewards, suppliesItem, swindlesReturnItem);
+        // Build combined rewards list (filtered to exclude maxed items)
+        List<ItemBase> combinedRewards = BuildCombinedRewardsList(supplies, swindlesReturn);
 
         // Process each reward
         ProcessRewards(combinedRewards, supplies, swindlesReturn, ref suppliesItem, ref swindlesReturnItem);
     }
 
-    private string? GetNormalizedConfigItem<T>(string configKey) where T : Enum
+    private string? GetNormalizedConfigItem<T>(string configKey, out bool isMaxAll) where T : Enum
     {
         string? item = Bot.Config!.Get<T>(configKey)?.ToString()?.Replace('_', ' ');
-        return item == "All" ? null : item;
+        isMaxAll = item == "All";
+        return isMaxAll ? null : item;
     }
 
     private Quest LoadQuestWithRetry(int questId, string questName)
@@ -110,42 +108,39 @@ public class SuppliesToSpinTheWheelofChance
         }
     }
 
-    private List<ItemBase> BuildCombinedRewardsList(Quest supplies, Quest swindlesReturn, string? suppliesItem)
+    private List<ItemBase> BuildCombinedRewardsList(Quest supplies, Quest swindlesReturn)
     {
         List<ItemBase> combinedRewards = new();
 
-        // Add unique Supplies rewards
+        // Add unique Supplies rewards (excluding maxed items)
         combinedRewards.AddRange(
             supplies.Rewards
-                .Where(r => r != null && Nation.SuppliesRewards.Contains(r.Name))
+                .Where(r => r != null &&
+                            Nation.SuppliesRewards.Contains(r.Name) &&
+                            !Core.CheckInventory(r.ID, r.MaxStack))
                 .DistinctBy(r => r.ID)
         );
 
-        // Add unique Swindle's Return rewards
+        // Add unique Swindle's Return rewards (excluding maxed items)
         combinedRewards.AddRange(
             swindlesReturn.Rewards
-                .Where(r => r != null && Nation.SwindlesReturnRewards.Contains(r.Name))
+                .Where(r => r != null &&
+                            Nation.SwindlesReturnRewards.Contains(r.Name) &&
+                            !Core.CheckInventory(r.ID, r.MaxStack))
                 .DistinctBy(r => r.ID)
         );
-
-        // Filter to specific item if chosen
-        if (suppliesItem != null)
-        {
-            ItemBase? chosen = supplies.Rewards?.FirstOrDefault(r => r.Name == suppliesItem);
-            if (chosen != null)
-                return new List<ItemBase> { chosen };
-        }
 
         return combinedRewards.DistinctBy(r => r.ID).ToList();
     }
 
-    private void LogSuppliesConfiguration(List<ItemBase> rewards, string? suppliesItem, string? swindlesReturnItem)
+    private void LogSuppliesConfiguration(List<ItemBase> rewards, bool maxSupplies, bool maxSwindles)
     {
-        string rewardNames = string.Join("\", \"", rewards.Select(r => r.Name));
+        static string Flag(bool v) => v ? "✓" : "✗";
+
+        string rewardNames = string.Join(", ", rewards.Select(r => r.Name));
         Core.Logger(
-            $"Rewards Selected: \"{rewardNames}\"\n\n" +
-            $"Maxing Supplies? {(suppliesItem == null ? "Yes" : "No")}\n" +
-            $"Maxing Swindles? {(swindlesReturnItem == null ? "Yes" : "No")}\n",
+            $"(STStW) Rewards: {rewardNames}\n" +
+            $"Supplies: {Flag(maxSupplies)} | Swindles: {Flag(maxSwindles)}",
             "STStW Config"
         );
     }
@@ -171,22 +166,18 @@ public class SuppliesToSpinTheWheelofChance
             swindlesReturnItem ??= GetNextNonMaxedReward(swindlesReturn, Nation.SwindlesReturnRewards);
             suppliesItem ??= GetNextNonMaxedReward(supplies, Nation.SuppliesRewards);
 
-            if (swindlesReturnItem == null)
-                Core.Logger("All Swindle's Return items are maxed - Return Policy will be disabled");
-
-            if (suppliesItem == null && !Nation.SuppliesRewards.Contains(item.Name))
-            {
-                Core.Logger($"No valid Supplies item found for {item.Name} - skipping");
-                continue;
-            }
-            // ✅ FIX: Only use item.Name as fallback if it's actually valid for that quest
+            // Fallback with deterministic logic
             string? currentSuppliesItem = suppliesItem ??
-                (Nation.SuppliesRewards.Contains(item.Name) ? item.Name : suppliesItem);
+                (Nation.SuppliesRewards.Contains(item.Name) ? item.Name : null);
 
             string? currentSwindlesItem = swindlesReturnItem ??
                 (Nation.SwindlesReturnRewards.Contains(item.Name) ? item.Name : null);
 
-            Core.Logger($"Target - Supplies: {currentSuppliesItem ?? "None"}, Swindle's Return: {currentSwindlesItem ?? "None"}");
+            if (currentSuppliesItem == null)
+                Core.Logger("All Supplies items are maxed");
+
+            if (currentSwindlesItem == null)
+                Core.Logger("All Swindle's Return items are maxed - Return Policy will be disabled");
 
             // Get max stacks only for valid items
             int suppliesMaxStack = currentSuppliesItem != null
@@ -197,11 +188,11 @@ public class SuppliesToSpinTheWheelofChance
                 ? GetRewardMaxStack(swindlesReturn, currentSwindlesItem)
                 : 0;
 
-            Core.Logger($"Max Stacks - Supplies: {suppliesMaxStack}, Swindle's Return: {swindlesMaxStack}");
+            // Core.Logger($"Target - Supplies: {currentSuppliesItem ?? "None"} x{suppliesMaxStack}, Swindle's Return: {currentSwindlesItem ?? "None"} x{swindlesMaxStack}");
 
             bool returnPolicyActive = Core.CBOBool("Nation_ReturnPolicyDuringSupplies", out bool returnSupplies)
                 && returnSupplies
-                && currentSwindlesItem != null; // ✅ Only activate if we have a valid Swindle's item
+                && currentSwindlesItem != null;
 
             Nation.Supplies(
                 currentSuppliesItem,
@@ -209,9 +200,9 @@ public class SuppliesToSpinTheWheelofChance
                 Bot.Config!.Get<bool>("UltraAlteon"),
                 Bot.Config!.Get<bool>("KeepVoucher"),
                 Bot.Config!.Get<bool>("AssistantDuring"),
-                currentSwindlesItem, // Can be null now
+                currentSwindlesItem,
                 returnPolicyActive,
-                Bot.Config.Get<bool>("VoucherItemQuestDuring")
+                Bot.Config!.Get<bool>("VoucherItemQuestDuring")
             );
         }
     }
