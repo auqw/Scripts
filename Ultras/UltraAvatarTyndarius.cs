@@ -251,7 +251,7 @@ public class UltraAvatarTyndarius
                 else if (Ball1alive)
                 {
                     Bot.Combat.Attack(1);
-                    Bot.Wait.ForTrue(() => Bot.Player.CurrentTarget?.MapID == 1, 20); // Wait for Ball 1 to be targeted
+                    Bot.Wait.ForTrue(() => Bot.Player.Target?.MapID == 1, 20); // Wait for Ball 1 to be targeted
                 }
                 if (Bot.Skills.CanUseSkill(5))
                     Bot.Skills.UseSkill(5);
