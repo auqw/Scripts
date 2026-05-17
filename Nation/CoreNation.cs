@@ -1152,7 +1152,7 @@ public class CoreNation
 
         #endregion
 
-        if (item == null)
+        if (item == null || item == "All")
             FarmAllSupplies(UltraAlteon, KeepVoucher, AssistantDuring, ReturnItem, returnPolicyDuringSupplies);
         else
             FarmSingleSupply(item, quant, UltraAlteon, KeepVoucher, AssistantDuring, ReturnItem, returnPolicyDuringSupplies, VoucherItemDuring);
