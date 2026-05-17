@@ -29,7 +29,7 @@ public class CoreNation
     //CanChange: If enabled will do "Swindles Return Policy" passively during "Supplies To Spin The Wheels of Fate".
     bool returnPolicyDuringSupplies = true;
 
-    public static void ScriptMain(IScriptInterface Bot)
+    public void ScriptMain(IScriptInterface Bot)
     {
         Core.RunCore();
     }
@@ -902,7 +902,7 @@ public class CoreNation
     /// Farms Essences of Nulgath from Dark Makais in Tercessuinotlim
     /// </summary>
     /// <param name="quant">Desired quantity, 100 = max stack</param>
-    public static void EssenceofNulgath(int quant = 60)
+    public void EssenceofNulgath(int quant = 60)
     {
         if (Core.CheckInventory("Essence of Nulgath", quant))
             return;
@@ -1256,7 +1256,7 @@ public class CoreNation
         Core.Logger("╚═════════════════════════════════╝", "Supplies");
     }
 
-    public static void SellVoucherOfNulgath(bool sellMemVoucher = true, string? item = null)
+    public void SellVoucherOfNulgath(bool sellMemVoucher = true, string? item = null)
     {
         if (!sellMemVoucher || sellMemVoucher && item == "Voucher of Nulgath")
             return;
@@ -2291,7 +2291,7 @@ public class CoreNation
     /// <summary>
     /// Completes the lair questline to unlock Nation mats if not completed.
     /// </summary>
-    public static void DragonSlayerReward()
+    public void DragonSlayerReward()
     {
         if (Core.isCompletedBefore(169))
             return;
@@ -2479,7 +2479,7 @@ public class CoreNation
     /// 2. Hunt Undead Berserkers in 'battleundera' for the Warrior Claymore Blade.
     /// 3. Complete the quest to obtain the Purified Claymore of Destiny.
     /// </remarks>
-    public static void GetPCoD()
+    public void GetPCoD()
     {
         if (Core.CheckInventory("Purified Claymore of Destiny"))
             return;
@@ -3177,7 +3177,7 @@ public class CoreNation
     /// Swindles Bilk method
     /// </summary>
     /// <param name="item">Desired item name</param>
-    public static void SwindlesBilk(string item)
+    public void SwindlesBilk(string item)
     {
         if (string.IsNullOrEmpty(item))
         {
