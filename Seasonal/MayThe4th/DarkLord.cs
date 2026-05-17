@@ -1,7 +1,7 @@
 /*
 name: (Class) Dark Lord
 description: This will merge Cyber Crystals and get the Dark Lord class.
-tags: merge, seasonal, may-the-4th, dark, lord, class
+tags: merge, seasonal, may-the-4th, dark, lord, class, dark lord, darklord
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreFarms.cs
