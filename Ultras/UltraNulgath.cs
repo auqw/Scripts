@@ -179,28 +179,29 @@ public class UltraNulgath
                 Bot.Sleep(200);
             }
 
-            // Taunter logic
-            if (Bot.Player.Alive && (Bot.Player.CurrentClass?.Name == a || Bot.Player.CurrentClass?.Name == b)
-            && !Bot.Target.Auras.Any(x => x?.Name == "Focus")
-            && Bot.Monsters.MapMonsters.Any(x => (x?.MapID == 2 || x?.MapID == 1) && x.HP > 0))
+            // --- Advanced Time-Buffered Taunter Logic ---
+            if (Bot.Player.Alive && Bot.Monsters.MapMonsters.Any(x => (x?.MapID == 2 || x?.MapID == 1) && x.HP > 0))
             {
-                Core.DisableSkills();
-                while (!Bot.ShouldExit && !Bot.Target.Auras.Any(x => x?.Name == "Focus"))
+                // Find the Focus aura object on Nulgath if it exists
+                var focusAura = Bot.Target.Auras.FirstOrDefault(x => x?.Name == "Focus");
+
+                // Get the remaining duration. If the aura doesn't exist, duration is 0.
+                float remainingTime = focusAura != null ? focusAura.Duration : 0f;
+
+                // Taunter A (The Lead): Casts if the boss is completely untaunted (0 seconds left)
+                if (Bot.Player.CurrentClass?.Name == a && remainingTime <= 0f)
                 {
-                    if (!Bot.Player.Alive)
-                    {
-                        Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                        continue;
-                    }
-
-                    if (!Bot.Target.Auras.Any(x => x != null && x?.Name == "Focus"))
-                        Bot.Skills.UseSkill(5);
-                    else
-                        break;
-
-                    Bot.Sleep(500);
+                    Bot.Skills.UseSkill(5);
+                    Bot.Sleep(200);
                 }
-                Core.EnableSkills();
+
+                // Taunter B (The Interceptor): Uses your 2-second buffer rule. 
+                // Steals focus early to account for server ping and animation locks.
+                else if (Bot.Player.CurrentClass?.Name == b && remainingTime <= 2.0f)
+                {
+                    Bot.Skills.UseSkill(5);
+                    Bot.Sleep(200);
+                }
             }
 
         }
