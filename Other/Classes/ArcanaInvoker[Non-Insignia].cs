@@ -113,8 +113,16 @@ public class ArcanaInvoker
     {
         GetBadge = Bot.Config!.Get<bool>("Badge");
         Bot.Log($"Get Badge Enabled (if you iodaded)?: {GetBadge}");
-        if (GetBadge && Core.HasWebBadge("Arcana Invoker") || (!GetBadge && Core.CheckInventory("Arcana Invoker")))
+        if (GetBadge && Core.HasWebBadge("Arcana Invoker"))
         {
+            if (rankUpClass)
+                Adv.RankUpClass("Arcana Invoker");
+            return;
+        }
+
+        if (!GetBadge && Core.CheckInventory("Arcana Invoker"))
+        {
+
             if (rankUpClass)
                 Adv.RankUpClass("Arcana Invoker");
             return;
