@@ -24953,11 +24953,15 @@
       "SOW",
       "shadow-of-war",
       "complete",
-      "all"
+      "all",
+      "fire avatar",
+      "ultra avatar tyndarius",
+      "ultra speaker",
+      "the first speaker"
     ],
     "path": "Story/ShadowsOfWar/00DoAll.cs",
-    "size": 802,
-    "sha256": "a8d95b0f8d5f019eb6cc7e19ad7aa2cbb44d774534f02a280338aaa6f1f32d97",
+    "size": 873,
+    "sha256": "8872ca12723415ae8eec7a6efa23a345033547f03e5dd2e5f3729c2370c9b6f2",
     "fileName": "00DoAll.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ShadowsOfWar/00DoAll.cs"
   },
