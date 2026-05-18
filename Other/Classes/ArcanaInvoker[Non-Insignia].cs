@@ -94,7 +94,7 @@ public class ArcanaInvoker
     public bool DontPreconfigure = true;
     public List<IOption> Options =
     [
-        new Option<bool>( "Badge", "Badge (For ioda users)", "For those that retardedly ioda-ed this class... you'll have todo enable this so it can go do the quests.", false),
+        new Option<bool>("Badge", "Badge (For ioda users)", "For those that retardedly ioda-ed this class... you'll have todo enable this so it can go do the quests.", false),
         CoreBots.Instance.SkipOptions,
     ];
 
@@ -111,8 +111,9 @@ public class ArcanaInvoker
 
     public void GetAI(bool rankUpClass = true)
     {
-        GetBadge = Bot.Config.Get<bool>("Badge");
-        if (GetBadge && Core.HasWebBadge("Arcana Invoker") || Core.CheckInventory("Arcana Invoker"))
+        GetBadge = Bot.Config!.Get<bool>("Badge");
+        Bot.Log($"Get Badge Enabled (if you iodaded)?: {GetBadge}");
+        if (GetBadge && Core.HasWebBadge("Arcana Invoker") || (!GetBadge && Core.CheckInventory("Arcana Invoker")))
         {
             if (rankUpClass)
                 Adv.RankUpClass("Arcana Invoker");
