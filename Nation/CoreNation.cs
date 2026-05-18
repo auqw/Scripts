@@ -1243,9 +1243,9 @@ public class CoreNation
 
     private void LogSuppliesConfig(string? item, int quant, bool ultraAlteon, bool keepVoucher, bool sellMemVoucher, bool assistantDuring, bool returnPolicyDuringSupplies, string? returnItem)
     {
-        string Flag(bool v) => v ? "✓" : "✗";
+        string Flag(bool v) => v ? "True" : "False";
 
-        Core.Logger("╔═══════ NULGATH SUPPLIES ═══════╗", "Supplies");
+        Core.Logger("╔═══════ Supplies Config ═══════╗", "Supplies");
         Core.Logger($"Item: [{item ?? "All"} x{quant}]", "Supplies");
         Core.Logger($"Ultra Alton: [{Flag(ultraAlteon)}]", "Supplies");
         Core.Logger($"Keep Voucher: [{Flag(keepVoucher)}]  ", "Supplies");
