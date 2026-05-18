@@ -2864,17 +2864,17 @@ public class CoreEngine
 
     void LordsOfOrderClass()
     {
-        if ((IsHealthLow(85) || IsArmyHealthLow(85)) && NotUltraDage())
+        if (NotUltraDage())
             if (Cast(2))
+                return;
+        if (Left("Empowerment", 2, true))
+            if (Cast(1))
+                return;
+        if (Left("Clarity", 2, true))
+            if (Cast(3))
                 return;
         if (Cast(4))
             return;
-        if (Left("Empowerment", 1, true))
-            if (Cast(1))
-                return;
-        if (Left("Clarity", 1, true))
-            if (Cast(3))
-                return;
     }
 
     void PhantomPhantasmChronomancer()
@@ -2897,35 +2897,21 @@ public class CoreEngine
 
     void StoneCrusherClass()
     {
-        var mode = GetMode("StoneCrusher");
+        // 1. Step 3: Stalagmite (Core Debuff)
+        if (Cast(2))
+            return;
 
-        if (mode == "Ultra")
-        {
-            if (IsHealthLow(80) || IsArmyHealthLow(80) && HasAura("Magnitude", true))
-                if (Cast(3))
-                    return;
-            if (Left("Dissonance", 1, true))
-                if (Cast(2))
-                    return;
-            if (Cast(4))
-                return;
-            if (Cast(1))
-                return;
-        }
-        else
-        {
-            if (IsHealthLow(80) || IsArmyHealthLow(80))
-                if (Cast(3))
-                    return;
-            if (HasAura("Magnitude", true))
-                if (Cast(4))
-                    return;
-            if (Left("Dissonance", 1, true))
-                if (Cast(2))
-                    return;
-            if (Cast(1))
-                return;
-        }
+        // 2. Step 5: Land's Embrace (Team Shield / Sustain)
+        if (Cast(4))
+            return;
+
+        // 3. Step 4: Fault Line (Haste / Team DPS Buff)
+        if (Cast(3))
+            return;
+
+        // 4. Step 2: Echoing Earth (Defense Shield / HoT)
+        if (Cast(1))
+            return;
     }
 
     void InfinityTitanClass()
@@ -2963,14 +2949,24 @@ public class CoreEngine
 
     void ArchPaladinClass()
     {
-        if ((IsHealthLow(70) || IsArmyHealthLow(70)) && NotUltraDage())
+        // Hymn of Light (Heal) is action bar button 2
+        if (NotUltraDage())
             if (Cast(2))
                 return;
+
+        // Righteous Seal is action bar button 3
+        // If the monster target does NOT have the debuff, apply it
         if (!HasAura("Righteous Seal"))
+            if (Cast(3))
+                return;
+
+        // Sacred Magic: Eden (Nuke) is action bar button 4
+        // Only cast this if the target HAS the aura, and it has 1 second or less remaining
+        if (HasAura("Righteous Seal") && Left("Righteous Seal", 2))
             if (Cast(4))
                 return;
-        if (Cast(3))
-            return;
+
+        // Commandment (Spam debuff) is action bar button 1
         if (Cast(1))
             return;
     }
@@ -3487,6 +3483,25 @@ public class CoreEngine
             if (Cast(3))
                 return;
         if (Cast(2))
+            return;
+    }
+
+    void ArchFiend()
+    {
+        // 1. Fiend Frenzy - 120% Crit Damage party buff (Use when available)
+        if (Cast(4))
+            return;
+
+        // 2. Mark of Death - Free damage stack application
+        if (Cast(1))
+            return;
+
+        // 3. Fiendish Strike - Builds personal ArchFiend's Mark stacks
+        if (Cast(2))
+            return;
+
+        // 4. Consumed by the Abyss - Essential 25% Haste & Enemy Dodge reduction
+        if (Cast(3))
             return;
     }
 
