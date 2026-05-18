@@ -1,7 +1,7 @@
 /*
 name: Complete all Shadows of War
 description: This will finish all the Shadows of War story.
-tags: story, SOW, shadow-of-war, complete, all
+tags: story, SOW, shadow-of-war, complete, all, fire avatar, ultra avatar tyndarius, ultra speaker, the first speaker
 */
 //cs_include Scripts/CoreBots.cs
 //cs_include Scripts/CoreStory.cs
