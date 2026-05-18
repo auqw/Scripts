@@ -3530,28 +3530,38 @@ public class CoreFarms
             return;
 
         Core.AddDrop("Hollow Soul");
-        Core.EquipClass(ClassType.Farm);
         Core.SavedState(true, "shadowrealm");
         ToggleBoost(BoostType.Reputation);
         Core.Logger($"Farming rank {rank}");
-
-        // Get the Seeds 7553 && Flex it! 7555
-        Core.RegisterQuests(7553, 7555);
-
-        while (!Bot.ShouldExit && FactionRank("Hollowborn") < rank)
+        bool StoryProgress = Bot.Quests.IsUnlocked(9865);
+        if (StoryProgress)
         {
-            if (Core.CheckSaveState())
-                Core.ExecuteSaveState();
-            Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
-            Core.KillMonster(
-                "shadowrealm",
-                "r2",
-                "Left",
-                "Shadow Guardian",
-                "Shadow Medallion",
-                5,
-                log: false
-            );
+            // Mutual Friends | 9865 && Mutual Friends (Legend) | 10298
+            Core.RegisterQuests(Core.IsMember ? 10298 : 9865);
+            Core.EquipClass(ClassType.Solo);
+            while (!Bot.ShouldExit && FactionRank("Hollowborn") < rank)
+            {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
+
+                Core.KillMonster("neotower", "r6", "Left", "Vindicator Assassin", "Vindicated Blades");
+                Core.KillMonster("neotower", "r7", "Right", "Vindicator BeastTamer", "Vindicated Chain");
+                Core.KillMonster("neotower", "r10", "Right", "Vindicator Priest", "Vindicated Scripture");
+                Bot.Wait.ForQuestComplete(Core.IsMember ? 10298 : 9865);
+            }
+        }
+        else
+        {
+            // Get the Seeds 7553 && Flex it! 7555
+            Core.RegisterQuests(7553, 7555);
+            Core.EquipClass(ClassType.Farm);
+            while (!Bot.ShouldExit && FactionRank("Hollowborn") < rank)
+            {
+                if (Core.CheckSaveState())
+                    Core.ExecuteSaveState();
+                Core.KillMonster("shadowrealm", "r2", "Left", "Gargrowl", "Darkseed", 8, log: false);
+                Core.KillMonster("shadowrealm", "r2", "Left", "Shadow Guardian", "Shadow Medallion", 5, log: false);
+            }
         }
         ToggleBoost(BoostType.Reputation, false);
         Core.CancelRegisteredQuests();
