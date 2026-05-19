@@ -4319,20 +4319,18 @@ public class CoreFarms
                 .Concat(Core.EnsureLoad(10346).Rewards.Select(r => r.Name))
                 .ToArray()
         );
-        bool didDaily = Bot.Quests.IsDailyComplete(10342);
+
+        // Thelima Training | 10342
+        Core.Logger("Checking Daily Completion of \"Thelima Training | 10342\"");
+        if (!Bot.Quests.IsDailyComplete(10342))
+        {
+            Core.EnsureAccept(10342);
+            Core.KillMonster("thelimacity", "r6", "Left", "*", "Thelima Soldiers Trained", 100);
+            Core.EnsureComplete(10342);
+        }
+
         while (!Bot.ShouldExit && FactionRank("Yew Mountains") < rank)
         {
-            if (!didDaily && Bot.Quests.IsAvailable(10342))
-            {
-                Core.EnsureAccept(10342);
-                Core.KillMonster("thelimacity", "r6", "Left", "*", log: false);
-                if (Bot.Quests.CanCompleteFullCheck(10342))
-                {
-                    Core.EnsureComplete(10342);
-                    Bot.Wait.ForActionCooldown(GameActions.TryQuestComplete);
-                    didDaily = true;
-                }
-            }
             Core.KillMonster(
                 !Core.IsMember ? "thelimacity" : "dwarfhold",
                 !Core.IsMember ? "r6" : "New1",
