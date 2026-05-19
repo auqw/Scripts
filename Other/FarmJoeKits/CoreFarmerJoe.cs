@@ -641,6 +641,7 @@ public class CoreFarmerJoe
             {
                 Bot.Log($"Level Handler: {level} bracket");
                 handler();
+                BankAllUnusedClasses();
             }
             // Reset enhancement flag for next bracket
             HasEnhancedThisBracket = false;
@@ -1285,7 +1286,6 @@ public class CoreFarmerJoe
         foreach ((string? className, string label) in rankTargets)
             RankIfNeeded(className, label);
 
-        BankAllUnusedClasses();
 
         Bot.Sleep(500);
 
