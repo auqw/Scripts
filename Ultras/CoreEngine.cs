@@ -2841,12 +2841,35 @@ public class CoreEngine
 
     void KingsEcho()
     {
-        if (!HasAura("Invulnerable"))
+        // --- 1. EMERGENCY ULTRA SHIELD RULE ---
+        if (IsHealthLow(50) && NotUltraDage())
             if (Cast(3))
                 return;
-        if (Cast(1))
+
+        // --- 2. EMERGENCY MANA RECOVERY ---
+        // If mana drops below 20 (the cost of Skill 3), force-cast CORVAK! 
+        // to refill your mana bar instantly, ignoring stack counts.
+        if (Bot.Player.Mana < 20)
+        {
+            if (Cast(4)) // CORVAK!
+                return;
+        }
+
+        // --- 3. MAIN ULTRA COMBO (OPTIMAL NUKE) ---
+        int energyStacks = GetAuraStacks("Residual Energy", true);
+
+        // If we are safely building stacks and hit our optimal low-mana/high-stack window
+        if (energyStacks >= 6 && Bot.Player.Mana < 40)
+        {
+            if (Cast(4)) // CORVAK!
+                return;
+        }
+
+        // --- 4. STACK BUILDERS ---
+        if (Cast(1)) // Skill 2
             return;
-        if (Bot.Player.Mana < 50 && Cast(4))
+
+        if (Cast(2)) // Skill 3 (Bolt of Authority)
             return;
     }
 
@@ -2949,6 +2972,7 @@ public class CoreEngine
 
     void ArchPaladinClass()
     {
+
         // Hymn of Light (Heal) is action bar button 2
         if (NotUltraDage())
             if (Cast(2))
