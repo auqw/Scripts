@@ -5665,19 +5665,16 @@
       "skillTimeout": 100,
       "skills": [
         {
-          "skillId": 0
-        },
-        {
-          "skillId": 2
-        },
-        {
           "skillId": 4
+        },
+        {
+          "skillId": 3
         },
         {
           "skillId": 1
         },
         {
-          "skillId": 3
+          "skillId": 2
         }
       ]
     }
