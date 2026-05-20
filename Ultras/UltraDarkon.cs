@@ -106,6 +106,7 @@ public class UltraDarkon
             string[] classes = comp switch
             {
                 DarkonComp.Recommended => new[] { "LightCaster", "Legion Revenant", "Lord Of Order", "StoneCrusher" },
+                DarkonComp.Alternative => new[] { "ArchPaladin", "Legion Revenant", "Lord Of Order", "StoneCrusher" },
                 _ => throw new InvalidOperationException($"Unhandled DarkonComp value: {comp}")
             };
 
@@ -262,6 +263,15 @@ public class UltraDarkon
                 );
                 break;
 
+            case "ArchPaladin":
+                Adv.EnhanceEquipped(
+                    type: EnhancementType.Lucky, // Class
+                    hSpecial: HelmSpecial.None, // Helm
+                    wSpecial: WeaponSpecial.Valiance, // Weapon
+                    cSpecial: CapeSpecial.None // Cape
+                );
+                break;
+
             // Alpha Omega / Alpha DOOMmega
             case "Alpha Omega":
             case "Alpha DOOMmega":
@@ -319,5 +329,6 @@ public class UltraDarkon
     {
         Unselected,
         Recommended,
+        Alternative,
     }
 }
