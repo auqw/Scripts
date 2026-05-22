@@ -290,7 +290,7 @@ public class CoreUltra
         int timeoutMs = 0
     )
     {
-        if (Bot?.Map == null)
+        if (Bot.Map == null)
             return;
 
         // --- Resolve safe writable sync path ---
@@ -317,7 +317,7 @@ public class CoreUltra
             }
             catch (Exception ex)
             {
-                Bot?.Log($"[WaitForArmy] Path resolution failed: {ex.Message}");
+                Bot.Log($"[WaitForArmy] Path resolution failed: {ex.Message}");
                 return Path.GetFullPath(path);
             }
         }
@@ -341,7 +341,7 @@ public class CoreUltra
                 }
                 catch (IOException)
                 {
-                    Bot?.Sleep(50);
+                    Bot.Sleep(50);
                 }
                 catch
                 {
@@ -362,7 +362,7 @@ public class CoreUltra
                 }
                 catch (IOException)
                 {
-                    Bot?.Sleep(50);
+                    Bot.Sleep(50);
                 }
                 catch
                 {
@@ -457,11 +457,11 @@ public class CoreUltra
         }
         catch (Exception ex)
         {
-            Bot?.Log($"[WaitForArmy] Sync file setup failed: {ex.Message}");
+            Bot.Log($"[WaitForArmy] Sync file setup failed: {ex.Message}");
         }
 
         string me =
-            $"{Bot?.Player?.Username ?? "Nobody"}|{Bot?.Player?.CurrentClass?.Name ?? "Peasant"}".Replace(
+            $"{Bot.Player?.Username ?? "Nobody"}|{Bot.Player?.CurrentClass?.Name ?? "Peasant"}".Replace(
                 ":",
                 "-"
             );
@@ -479,12 +479,12 @@ public class CoreUltra
             if (ready != lastReady)
             {
                 lastReady = ready;
-                Bot?.Log($"[WaitForArmy] Ready: {ready}/{need}");
+                Bot.Log($"[WaitForArmy] Ready: {ready}/{need}");
             }
 
             if (ready >= need)
             {
-                Bot?.Log("[WaitForArmy] All members ready!");
+                Bot.Log("[WaitForArmy] All members ready!");
                 break;
             }
 
@@ -492,14 +492,14 @@ public class CoreUltra
 
             if (timeoutMs > 0 && clock.ElapsedMilliseconds >= timeoutMs)
             {
-                Bot?.Log("[WaitForArmy] Timeout reached — continuing anyway.");
+                Bot.Log("[WaitForArmy] Timeout reached — continuing anyway.");
                 break;
             }
 
-            Bot?.Sleep(tickMs);
+            Bot.Sleep(tickMs);
         }
 
-        if (Bot?.ShouldExit == true)
+        if (Bot.ShouldExit == true)
         {
             try
             {
@@ -513,15 +513,15 @@ public class CoreUltra
         DateTime spam = DateTime.UtcNow.AddMilliseconds(2000);
         while (!Bot!.ShouldExit && DateTime.UtcNow < spam)
         {
-            Bot?.Skills.UseSkill(3);
-            Bot?.Sleep(300);
-            Bot?.Skills.UseSkill(2);
-            Bot?.Sleep(300);
-            Bot?.Skills.UseSkill(1);
-            Bot?.Sleep(300);
+            Bot.Skills.UseSkill(3);
+            Bot.Sleep(300);
+            Bot.Skills.UseSkill(2);
+            Bot.Sleep(300);
+            Bot.Skills.UseSkill(1);
+            Bot.Sleep(300);
         }
 
-        Bot?.Sleep(bufferTimeMs);
+        Bot.Sleep(bufferTimeMs);
 
         try
         {
@@ -549,8 +549,8 @@ public class CoreUltra
         string syncFile = ResolveSyncPath(syncFilePath);
         string myKey = $"{Bot.Player.Username}|{Bot.Player.CurrentClass?.Name ?? "Peasant"}".Replace(":", "-");
         int myQty = isTemp
-            ? (Bot?.TempInv?.GetQuantity(itemName) ?? 0)
-            : (Bot?.Inventory?.GetQuantity(itemName) ?? 0);
+            ? (Bot.TempInv?.GetQuantity(itemName) ?? 0)
+            : (Bot.Inventory?.GetQuantity(itemName) ?? 0);
 
         // Update my progress
         UpdateEntry(syncFile, myKey, $"{myQty}:{targetQuantity}:{(isTemp ? "TEMP" : "INV")}");
@@ -654,7 +654,7 @@ public class CoreUltra
             if (!File.Exists(filePath))
             {
                 File.WriteAllText(filePath, "");
-                Bot?.Log($"[ArmySync] Created fresh sync file: {filePath}");
+                Bot.Log($"[ArmySync] Created fresh sync file: {filePath}");
                 return;
             }
 
@@ -662,17 +662,17 @@ public class CoreUltra
             FileInfo fi = new(filePath);
             if (fi.Length == 0)
             {
-                Bot?.Log("[ArmySync] Sync file already empty — no action needed.");
+                Bot.Log("[ArmySync] Sync file already empty — no action needed.");
                 return;
             }
 
             // Clear it.
             File.WriteAllText(filePath, "");
-            Bot?.Log("[ArmySync] Sync file cleared.");
+            Bot.Log("[ArmySync] Sync file cleared.");
         }
         catch (Exception ex)
         {
-            Bot?.Log($"[ArmySync] ERROR clearing sync file: {ex.Message}");
+            Bot.Log($"[ArmySync] ERROR clearing sync file: {ex.Message}");
         }
     }
 
@@ -711,7 +711,7 @@ public class CoreUltra
                 }
                 catch (IOException)
                 {
-                    Bot?.Sleep(50);
+                    Bot.Sleep(50);
                 }
             }
 
@@ -744,7 +744,7 @@ public class CoreUltra
             }
             catch (IOException)
             {
-                Bot?.Sleep(50);
+                Bot.Sleep(50);
             }
         }
         return Array.Empty<string>();
@@ -764,7 +764,7 @@ public class CoreUltra
             {
                 // Phase 1: Read existing content (shared lock)
                 List<string> lines = new List<string>();
-                
+
                 if (File.Exists(path))
                 {
                     using (var fs = new FileStream(
@@ -790,7 +790,7 @@ public class CoreUltra
                 int idx = lines.FindIndex(l =>
                 {
                     string[] parts = l.Split(':');
-                    return parts.Length > 0 && 
+                    return parts.Length > 0 &&
                         parts[0].Equals(key, StringComparison.OrdinalIgnoreCase);
                 });
 
@@ -812,27 +812,22 @@ public class CoreUltra
                         writer.WriteLine(line);
                     }
                 }
-                
+
                 return; // Success
             }
             catch (IOException)
             {
-                Bot?.Sleep(100 + (attempt * 20));
+                Bot.Sleep(100 + (attempt * 20));
             }
         }
-        
-        Bot?.Log($"[ArmySync] Failed to update {path} after retries");
+
+        Bot.Log($"[ArmySync] Failed to update {path} after retries");
     }
 
     // -------------------------------------------------------
     // Sync-based class equipping for army comps
     // -------------------------------------------------------
-    public string EquipClassSync(
-        string[][] classSlots,
-        int armySize,
-        string syncFilePath = "class_assign.sync",
-        bool allowDuplicates = false
-    )
+    public string EquipClassSync(string[][] classSlots, int armySize, string syncFilePath = "class_assign.sync", bool allowDuplicates = false)
     {
         if (classSlots == null || classSlots.Length == 0 || armySize < 1)
             return string.Empty;
@@ -866,7 +861,7 @@ public class CoreUltra
 
         string username = Bot.Player.Username;
         string payload = string.Join(",", myClasses);
-        Bot?.Log(
+        Bot.Log(
             $"[EquipClassSync] {username} owns: {(myClasses.Count > 0 ? payload : "NONE of the needed classes")}"
         );
 
@@ -896,7 +891,7 @@ public class CoreUltra
             if (validCount != lastCount)
             {
                 lastCount = validCount;
-                Bot?.Log($"[EquipClassSync] Registered: {validCount}/{armySize}");
+                Bot.Log($"[EquipClassSync] Registered: {validCount}/{armySize}");
             }
 
             if (validCount >= armySize)
@@ -904,17 +899,17 @@ public class CoreUltra
 
             // Re-poke to keep entry fresh
             UpdateEntry(syncFile, username, payload);
-            Bot?.Sleep(500);
+            Bot.Sleep(500);
         }
 
-        if (Bot?.ShouldExit == true)
+        if (Bot.ShouldExit == true)
             return string.Empty;
 
         // Phase 2: Mark self as READY with classes preserved
         // Format: username:READY|class1,class2,...:timestamp
         string readyPayload = $"READY|{string.Join(",", myClasses)}";
         UpdateEntry(syncFile, username, readyPayload);
-        Bot?.Log($"[EquipClassSync] {username} marked READY, waiting for all...");
+        Bot.Log($"[EquipClassSync] {username} marked READY, waiting for all...");
 
         // Wait for all clients to be READY (ensures no more class-list writes)
         while (!Bot!.ShouldExit)
@@ -939,18 +934,18 @@ public class CoreUltra
 
             if (readyCount >= armySize)
             {
-                Bot?.Log($"[EquipClassSync] All {readyCount} clients READY. Reading final state...");
+                Bot.Log($"[EquipClassSync] All {readyCount} clients READY. Reading final state...");
                 break;
             }
 
-            Bot?.Sleep(300);
+            Bot.Sleep(300);
         }
 
-        if (Bot?.ShouldExit == true)
+        if (Bot.ShouldExit == true)
             return string.Empty;
 
         // Small buffer to ensure file system has flushed all writes
-        Bot?.Sleep(500);
+        Bot.Sleep(500);
 
         // Parse entries: player - owned classes
         Dictionary<string, List<string>> playerClasses =
@@ -984,7 +979,7 @@ public class CoreUltra
             }
         }
 
-        Bot?.Log($"[EquipClassSync] {playerClasses.Count} player(s) registered. Assigning classes...");
+        Bot.Log($"[EquipClassSync] {playerClasses.Count} player(s) registered. Assigning classes...");
 
         // Pre-count how many times each class appears across all slot definitions
         // This determines the max allowed duplicates for each class
@@ -1078,13 +1073,13 @@ public class CoreUltra
                 assignedPlayers.Add(best);
                 classUsedCount[acceptedClass] = used + 1;
                 filledSlots.Add(s);
-                Bot?.Log($"[EquipClassSync] Slot {s} > {best} ({acceptedClass})");
+                Bot.Log($"[EquipClassSync] Slot {s} > {best} ({acceptedClass})");
                 filled = true;
                 break;
             }
 
             if (!filled)
-                Bot?.Log($"[EquipClassSync] WARNING: No candidate for slot {s} ({string.Join("/", classSlots[s])})!");
+                Bot.Log($"[EquipClassSync] WARNING: No candidate for slot {s} ({string.Join("/", classSlots[s])})!");
         }
 
         // Find this client's assignment
@@ -1094,9 +1089,52 @@ public class CoreUltra
             return string.Empty;
         }
 
-        Bot?.Log($"[EquipClassSync] - Equipping: {myClass}");
-        C.Equip(myClass);
-        Bot?.Sleep(1000);
+        Bot.Log($"[EquipClassSync] - Equipping class: {myClass}");
+
+        // Search inventory + bank and only allow actual class-category items
+        InventoryItem? classItem = (Bot.Inventory.Items ?? [])
+            .Concat(Bot.Bank.Items ?? [])
+            .FirstOrDefault(item =>
+                item != null
+                && item.ID > 0
+                && item.Category == ItemCategory.Class
+                && item.Name.Equals(myClass, StringComparison.OrdinalIgnoreCase)
+            );
+
+        if (classItem == null)
+        {
+            C.Logger(
+                $"[EquipClassSync] Failed to locate class item '{myClass}'.",
+                "EquipClassSync",
+                true,
+                true
+            );
+
+            return string.Empty;
+        }
+
+        // Ensure the exact class item ID is in inventory
+        if (!(Bot.Inventory.Items?.Any(i => i?.ID == classItem.ID) ?? false))
+            Bot.Bank.ToInventory(classItem.ID);
+
+        // Re-fetch from inventory by ID to avoid same-name armor collisions
+        InventoryItem? equippedClass = Bot.Inventory.Items?
+            .FirstOrDefault(i => i?.ID == classItem.ID);
+
+        if (equippedClass == null)
+        {
+            C.Logger(
+                $"[EquipClassSync] Failed to move class '{myClass}' to inventory.",
+                "EquipClassSync",
+                true,
+                true
+            );
+
+            return string.Empty;
+        }
+
+        C.Equip(equippedClass.ID);
+        Bot.Sleep(1000);
 
         // Clear sync file for next run
         try { File.WriteAllText(syncFile, ""); } catch { }
