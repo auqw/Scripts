@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 435532,
-    "sha256": "eb9b789b877e5615e54d5b55cf940bfd1abb4e7d155c3fdd25d5dccd64cc7016",
+    "size": 435237,
+    "sha256": "5fc8cd1314a051c3291c25b99da05068e1937011b19e5515a0c397c1aaf7a70a",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -31962,8 +31962,8 @@
       "null"
     ],
     "path": "Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs",
-    "size": 1466,
-    "sha256": "d60bc36b39b70c553e083ea4f12645bbacf58f55d2c5f5f41f8f55a86894cad6",
+    "size": 1314,
+    "sha256": "3806136d5d99e1e48a95c7eb6f357913eea0069e7b7d40af318203f6842dc14a",
     "fileName": "EmptyTemplate[Basics].cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Templates/Examples/ItemGathering/EmptyTemplate[Basics].cs"
   },
