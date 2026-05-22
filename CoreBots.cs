@@ -1170,12 +1170,27 @@ public class CoreBots
                     && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots
                 )
                 {
-                    Logger(
-                        $"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}) — please make {requiredSpaces} space(s) and restart the bot.",
-                        messageBox: true,
-                        stopBot: true
-                    );
-                    return;
+                    Logger($"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}. Attempting to make room by banking Misc Ac items");
+                  
+                  // Try *All* banking metods to try and make space.
+                    BankACMisc();
+                    BankACUnenhancedGear();
+                    BankACHouseItems();
+                }
+
+                //Retry after banking misc stuff
+                if (
+                    Bot.Inventory.FreeSlots <= 0
+                    && Bot.Inventory.Slots != 0
+                    && Bot.Inventory.UsedSlots >= Bot.Inventory.Slots
+                )
+                {
+                    if (Bot.Inventory.FreeSlots <= 0)
+                        Logger($"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}) — please make {requiredSpaces} space(s) and restart the bot.",
+                            messageBox: true,
+                            stopBot: true
+                        );
+                    else return;
                 }
 
                 bool isHouseItem =
@@ -7006,7 +7021,7 @@ public class CoreBots
         return input.Trim();
     }
 
-    
+
     // Word wrap function
     public static string WordWrap(string? input, int lineLength)
     {
@@ -8190,7 +8205,7 @@ public class CoreBots
     /// <param name="from">The starting integer value.</param>
     /// <param name="to">The ending integer value.</param>
     /// <returns>An array of integers from 'from' to 'to' (inclusive).</returns>
-    public int[] FromTo(int from, int to)
+    public static int[] FromTo(int from, int to)
     {
         List<int> toReturn = [];
         for (int i = from; i < to + 1; i++)
@@ -8305,46 +8320,62 @@ public class CoreBots
     }
 
     /// <summary>
-    /// Banks unenhanced AdventureCoins (AC) gear items from whitelisted categories or weapons,
-    /// excluding equipped items and those in SoloGear or FarmGear.
-    /// Optionally limits how many items are banked based on RequiredSpaces.
+    /// Banks unenhanced AdventureCoins (AC) gear from whitelisted categories or weapons,
+    /// excluding equipped items and those in any active gear set (Solo/Farm/Boss/Dodge).
+    /// Optionally limits how many items are banked based on requiredSpaces.
     /// </summary>
-    /// <param name="RequiredSpaces">Max number of items to bank; 0 means all.</param>
-    public void BankACUnenhancedGear(int RequiredSpaces = 0)
+    /// <param name="requiredSpaces">Max number of items to bank; 0 means all.</param>
+    public void BankACUnenhancedGear(int requiredSpaces = 0)
     {
-        List<ItemCategory> whitelistedCategories =
-        [
-            ItemCategory.Class,
-            ItemCategory.Helm,
-            ItemCategory.Cape,
-        ];
+        var allProtectedGear = CombineGearSets([SoloGear, FarmGear, BossGear, DodgeGear]);
 
-        var toBankItems = Bot
-            .Inventory.Items.Where(item =>
-                item is not null
-                && item.Coins
-                && item.EnhancementLevel == 0
-                && !item.Equipped
-                && (whitelistedCategories.Contains(item.Category) || item.ItemGroup == "Weapon")
-                && !SoloGear.Contains(item.Name)
-                && !FarmGear.Contains(item.Name)
-            )
+        var bankableItems = Bot.Inventory.Items
+            .Where(IsValidBankableItem)
             .ToArray();
 
-        if (toBankItems.Length == 0)
+        if (bankableItems.Length == 0)
+        {
+            Logger("✅ Inventory clean — no bankable unenhanced AC gear found.");
             return;
+        }
 
-        var selected =
-            RequiredSpaces > 0 ? toBankItems.Take(RequiredSpaces).ToArray() : toBankItems;
+        var itemsToBanked = requiredSpaces > 0
+            ? bankableItems.Take(requiredSpaces).ToArray()
+            : bankableItems;
 
-        string namesWithQty = string.Join(
-            ", ",
-            selected.Select(i => $"\"{i.Name} x{i.Quantity}\"")
-        );
+        LogBankingIntent(itemsToBanked);
+        ToBank([.. itemsToBanked.Select(i => i.ID)]);
 
-        Logger($"Banking unenhanced AC gear [{selected.Length} items]: {namesWithQty}");
-        ToBank(selected.Select(i => i.ID).ToArray());
+        bool IsValidBankableItem(InventoryItem item)
+        {
+            return item is not null
+                && item.Coins
+                // Bank lvl1 / non-level items & items with Adventure Enh
+                && (item.EnhancementLevel <= 1 || item.EnhancementPatternID == 1)
+                && !item.Equipped
+                && !item.Wearing
+                && !BankingBlackList.Contains(item.Name)
+                && !allProtectedGear.Contains(item.Name);
+        }
+
+        void LogBankingIntent(InventoryItem[] items)
+        {
+            var itemSummary = string.Join(", ", items.Select(i => $"\"{i.Name}\" x{i.Quantity}"));
+            Logger($"🏦 Banking unenhanced AC gear [{items.Length} items]: {itemSummary}");
+        }
     }
+
+    private static HashSet<string> CombineGearSets(string[][] gearSets)
+    {
+        return new HashSet<string>(
+            gearSets
+                .Where(set => set?.Length > 0)
+                .SelectMany(set => set)
+                .Where(item => !string.IsNullOrWhiteSpace(item)),
+            StringComparer.OrdinalIgnoreCase
+        );
+    }
+
 
     /// <summary>
     /// Returns a combined array of all items from Inventory and Temp Inventory.
