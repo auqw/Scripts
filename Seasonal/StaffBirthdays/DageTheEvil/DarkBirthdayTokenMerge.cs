@@ -214,535 +214,119 @@ public class DarkBirthdayTokenMerge
         }
     }
 
-    public List<IOption> Select = new()
-    {
-        new Option<bool>(
-            "28635",
-            "Legion DoomKnight Armor",
-            "Mode: [select] only\nShould the bot buy \"Legion DoomKnight Armor\" ?",
-            false
-        ),
-        new Option<bool>(
-            "28636",
-            "Legion DoomKnight Helm",
-            "Mode: [select] only\nShould the bot buy \"Legion DoomKnight Helm\" ?",
-            false
-        ),
-        new Option<bool>(
-            "28637",
-            "Legion DoomBlade",
-            "Mode: [select] only\nShould the bot buy \"Legion DoomBlade\" ?",
-            false
-        ),
-        new Option<bool>(
-            "28686",
-            "Ultimate Dark Caster",
-            "Mode: [select] only\nShould the bot buy \"Ultimate Dark Caster\" ?",
-            false
-        ),
-        new Option<bool>(
-            "28688",
-            "Mystic Dark Caster Spikes",
-            "Mode: [select] only\nShould the bot buy \"Mystic Dark Caster Spikes\" ?",
-            false
-        ),
-        new Option<bool>(
-            "28690",
-            "Mystica Dark Caster Locks",
-            "Mode: [select] only\nShould the bot buy \"Mystica Dark Caster Locks\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53839",
-            "Legion SwordMaster Assassin",
-            "Mode: [select] only\nShould the bot buy \"Legion SwordMaster Assassin\" ?",
-            false
-        ),
-        new Option<bool>(
-            "38741",
-            "Legion DoomKnight",
-            "Mode: [select] only\nShould the bot buy \"Legion DoomKnight\" ?",
-            false
-        ),
-        new Option<bool>(
-            "42801",
-            "Exalted Harbinger",
-            "Mode: [select] only\nShould the bot buy \"Exalted Harbinger\" ?",
-            false
-        ),
-        new Option<bool>(
-            "43048",
-            "Envy Armor",
-            "Mode: [select] only\nShould the bot buy \"Envy Armor\" ?",
-            false
-        ),
-        new Option<bool>(
-            "47465",
-            "Infinite Legion Dark Caster",
-            "Mode: [select] only\nShould the bot buy \"Infinite Legion Dark Caster\" ?",
-            false
-        ),
-        new Option<bool>(
-            "47551",
-            "Legion's Fiend",
-            "Mode: [select] only\nShould the bot buy \"Legion's Fiend\" ?",
-            false
-        ),
-        new Option<bool>(
-            "47552",
-            "Legion Fiend's Crested Helm",
-            "Mode: [select] only\nShould the bot buy \"Legion Fiend's Crested Helm\" ?",
-            false
-        ),
-        new Option<bool>(
-            "47553",
-            "Nation's Paragon Helm",
-            "Mode: [select] only\nShould the bot buy \"Nation's Paragon Helm\" ?",
-            false
-        ),
-        new Option<bool>(
-            "47554",
-            "Legion's Fiend Skull Helm",
-            "Mode: [select] only\nShould the bot buy \"Legion's Fiend Skull Helm\" ?",
-            false
-        ),
-        new Option<bool>(
-            "47348",
-            "Legion Sigil Pet",
-            "Mode: [select] only\nShould the bot buy \"Legion Sigil Pet\" ?",
-            false
-        ),
-        new Option<bool>(
-            "41597",
-            "Paragon of Loyalty",
-            "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty\" ?",
-            false
-        ),
-        new Option<bool>(
-            "41598",
-            "Paragon of Loyalty Horns",
-            "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Horns\" ?",
-            false
-        ),
-        new Option<bool>(
-            "41599",
-            "Paragon of Loyalty Hood",
-            "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Hood\" ?",
-            false
-        ),
-        new Option<bool>(
-            "41600",
-            "Paragon of Loyalty Cloak",
-            "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Cloak\" ?",
-            false
-        ),
-        new Option<bool>(
-            "41601",
-            "Paragon of Loyalty Daggers",
-            "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Daggers\" ?",
-            false
-        ),
-        new Option<bool>(
-            "41602",
-            "Paragon of Loyalty Blade",
-            "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Blade\" ?",
-            false
-        ),
-        new Option<bool>(
-            "41603",
-            "Paragon of Loyalty Accoutrements",
-            "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Accoutrements\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53550",
-            "Legion Marauder",
-            "Mode: [select] only\nShould the bot buy \"Legion Marauder\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53551",
-            "Legion Scout",
-            "Mode: [select] only\nShould the bot buy \"Legion Scout\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53552",
-            "Legion Scout's Hood",
-            "Mode: [select] only\nShould the bot buy \"Legion Scout's Hood\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53553",
-            "Legion Marauder's Hood",
-            "Mode: [select] only\nShould the bot buy \"Legion Marauder's Hood\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53554",
-            "Legion Scout's Skull Hood",
-            "Mode: [select] only\nShould the bot buy \"Legion Scout's Skull Hood\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53555",
-            "Legion Marauder's Skull Hood",
-            "Mode: [select] only\nShould the bot buy \"Legion Marauder's Skull Hood\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53556",
-            "Legion Scout's Skull Mask",
-            "Mode: [select] only\nShould the bot buy \"Legion Scout's Skull Mask\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53557",
-            "Legion Marauder's Skull Mask",
-            "Mode: [select] only\nShould the bot buy \"Legion Marauder's Skull Mask\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53558",
-            "Legion Scout's Skull Morph",
-            "Mode: [select] only\nShould the bot buy \"Legion Scout's Skull Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53559",
-            "Legion Marauder's Skull Morph",
-            "Mode: [select] only\nShould the bot buy \"Legion Marauder's Skull Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53560",
-            "Legion Scout's Cloak",
-            "Mode: [select] only\nShould the bot buy \"Legion Scout's Cloak\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53561",
-            "Legion Marauder's Back Sword",
-            "Mode: [select] only\nShould the bot buy \"Legion Marauder's Back Sword\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53562",
-            "Legion Marauder's Cloak + Sword",
-            "Mode: [select] only\nShould the bot buy \"Legion Marauder's Cloak + Sword\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53563",
-            "Legion Marauder's Sword",
-            "Mode: [select] only\nShould the bot buy \"Legion Marauder's Sword\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53564",
-            "Legion Scout's Sword",
-            "Mode: [select] only\nShould the bot buy \"Legion Scout's Sword\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53595",
-            "Ultra FiendHunter",
-            "Mode: [select] only\nShould the bot buy \"Ultra FiendHunter\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53596",
-            "Vhall's Dystopia",
-            "Mode: [select] only\nShould the bot buy \"Vhall's Dystopia\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53597",
-            "Ultra FiendHunter's Skull Armet",
-            "Mode: [select] only\nShould the bot buy \"Ultra FiendHunter's Skull Armet\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53598",
-            "Rheyl's Helm",
-            "Mode: [select] only\nShould the bot buy \"Rheyl's Helm\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53603",
-            "Rheyl's Edge",
-            "Mode: [select] only\nShould the bot buy \"Rheyl's Edge\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53604",
-            "Vhall's Violence",
-            "Mode: [select] only\nShould the bot buy \"Vhall's Violence\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53599",
-            "Vhall's Cape",
-            "Mode: [select] only\nShould the bot buy \"Vhall's Cape\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53600",
-            "Vhall's Cape + Sword",
-            "Mode: [select] only\nShould the bot buy \"Vhall's Cape + Sword\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53591",
-            "Legion Sage Petite Morph",
-            "Mode: [select] only\nShould the bot buy \"Legion Sage Petite Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53592",
-            "Legion Sage Morph",
-            "Mode: [select] only\nShould the bot buy \"Legion Sage Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53593",
-            "Legion Sage's Disciple",
-            "Mode: [select] only\nShould the bot buy \"Legion Sage's Disciple\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53594",
-            "Legion Sage's Curse",
-            "Mode: [select] only\nShould the bot buy \"Legion Sage's Curse\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53652",
-            "Legion Devourer of Souls Scythe",
-            "Mode: [select] only\nShould the bot buy \"Legion Devourer of Souls Scythe\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53647",
-            "Legion Devourer of Souls Blade",
-            "Mode: [select] only\nShould the bot buy \"Legion Devourer of Souls Blade\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53648",
-            "Activated Legion Devourer of Souls Blade",
-            "Mode: [select] only\nShould the bot buy \"Activated Legion Devourer of Souls Blade\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53663",
-            "Legion Devourer of Souls Blade Pet",
-            "Mode: [select] only\nShould the bot buy \"Legion Devourer of Souls Blade Pet\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53655",
-            "Dark Devourer of Souls Scythe",
-            "Mode: [select] only\nShould the bot buy \"Dark Devourer of Souls Scythe\" ?",
-            false
-        ),
-        new Option<bool>(
-            "53642",
-            "Devourer of Souls Mask",
-            "Mode: [select] only\nShould the bot buy \"Devourer of Souls Mask\" ?",
-            false
-        ),
-        new Option<bool>(
-            "59723",
-            "Legion Operative",
-            "Mode: [select] only\nShould the bot buy \"Legion Operative\" ?",
-            false
-        ),
-        new Option<bool>(
-            "59724",
-            "Legion Operative Hood",
-            "Mode: [select] only\nShould the bot buy \"Legion Operative Hood\" ?",
-            false
-        ),
-        new Option<bool>(
-            "59725",
-            "Legion Operative Hood + Locks",
-            "Mode: [select] only\nShould the bot buy \"Legion Operative Hood + Locks\" ?",
-            false
-        ),
-        new Option<bool>(
-            "59727",
-            "Operative's Locks",
-            "Mode: [select] only\nShould the bot buy \"Operative's Locks\" ?",
-            false
-        ),
-        new Option<bool>(
-            "59728",
-            "Operative's Morph",
-            "Mode: [select] only\nShould the bot buy \"Operative's Morph\" ?",
-            false
-        ),
-        new Option<bool>(
-            "59729",
-            "Operative's Shadow",
-            "Mode: [select] only\nShould the bot buy \"Operative's Shadow\" ?",
-            false
-        ),
-        new Option<bool>(
-            "59730",
-            "Legion Operative's Gun",
-            "Mode: [select] only\nShould the bot buy \"Legion Operative's Gun\" ?",
-            false
-        ),
-        new Option<bool>(
-            "59731",
-            "Dual Legion Operative's Guns",
-            "Mode: [select] only\nShould the bot buy \"Dual Legion Operative's Guns\" ?",
-            false
-        ),
-        new Option<bool>(
-            "77004",
-            "Mortal Painsaw Man",
-            "Mode: [select] only\nShould the bot buy \"Mortal Painsaw Man\" ?",
-            false
-        ),
-        new Option<bool>(
-            "77005",
-            "Underworld Painsaw Man",
-            "Mode: [select] only\nShould the bot buy \"Underworld Painsaw Man\" ?",
-            false
-        ),
-        new Option<bool>(
-            "77006",
-            "Mask of Pain",
-            "Mode: [select] only\nShould the bot buy \"Mask of Pain\" ?",
-            false
-        ),
-        new Option<bool>(
-            "77007",
-            "Chainsaw Mask of Pain",
-            "Mode: [select] only\nShould the bot buy \"Chainsaw Mask of Pain\" ?",
-            false
-        ),
-        new Option<bool>(
-            "77008",
-            "Chainsaw Mask of Pain",
-            "Mode: [select] only\nShould the bot buy \"Chainsaw Mask of Pain\" ?",
-            false
-        ),
-        new Option<bool>(
-            "77009",
-            "Underworld Painsaw Gauntlet",
-            "Mode: [select] only\nShould the bot buy \"Underworld Painsaw Gauntlet\" ?",
-            false
-        ),
-        new Option<bool>(
-            "77010",
-            "Underworld Painsaw Gauntlets",
-            "Mode: [select] only\nShould the bot buy \"Underworld Painsaw Gauntlets\" ?",
-            false
-        ),
-        new Option<bool>(
-            "76977",
-            "Dage's Devastation Paragon Helmet",
-            "Mode: [select] only\nShould the bot buy \"Dage's Devastation Paragon Helmet\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92851",
-            "Dark Sworn Legion Sovereign",
-            "Mode: [select] only\nShould the bot buy \"Dark Sworn Legion Sovereign\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92852",
-            "Dark Legion Sovereign",
-            "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92854",
-            "Dark Legion Sovereign Helm",
-            "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Helm\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92855",
-            "Dark Legion Sovereign Horns",
-            "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Horns\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92856",
-            "Dark Legion Sovereign Locks",
-            "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Locks\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92857",
-            "Empowered Dark Sovereign Locks",
-            "Mode: [select] only\nShould the bot buy \"Empowered Dark Sovereign Locks\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92858",
-            "Dark Legion Sovereign Banner",
-            "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Banner\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92859",
-            "Dark Legion Sovereign Cloak",
-            "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Cloak\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92860",
-            "Dark Legion Sovereign Crown",
-            "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Crown\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92861",
-            "Dark Evanescence",
-            "Mode: [select] only\nShould the bot buy \"Dark Evanescence\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92862",
-            "Dual Dark Evanescence",
-            "Mode: [select] only\nShould the bot buy \"Dual Dark Evanescence\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92863",
-            "Dark Terror of Enyo",
-            "Mode: [select] only\nShould the bot buy \"Dark Terror of Enyo\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92864",
-            "Dark Eclipse of Enyo",
-            "Mode: [select] only\nShould the bot buy \"Dark Eclipse of Enyo\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92865",
-            "Dark Eclipses of Enyo",
-            "Mode: [select] only\nShould the bot buy \"Dark Eclipses of Enyo\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92866",
-            "Dark Hand of the Legion Sovereign",
-            "Mode: [select] only\nShould the bot buy \"Dark Hand of the Legion Sovereign\" ?",
-            false
-        ),
-        new Option<bool>(
-            "92867",
-            "Dark Hands of the Legion Sovereign",
-            "Mode: [select] only\nShould the bot buy \"Dark Hands of the Legion Sovereign\" ?",
-            false
-        ),
-    };
+    public List<IOption> Select =
+    [
+        new Option<bool>("47551", "Legion's Fiend", "Mode: [select] only\nShould the bot buy \"Legion's Fiend\" ?", false),
+        new Option<bool>("41597", "Paragon of Loyalty", "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty\" ?", false),
+        new Option<bool>("43048", "Envy Armor", "Mode: [select] only\nShould the bot buy \"Envy Armor\" ?", false),
+        new Option<bool>("28686", "Ultimate Dark Caster", "Mode: [select] only\nShould the bot buy \"Ultimate Dark Caster\" ?", false),
+        new Option<bool>("28635", "Legion DoomKnight Armor", "Mode: [select] only\nShould the bot buy \"Legion DoomKnight Armor\" ?", false),
+        new Option<bool>("53550", "Legion Marauder", "Mode: [select] only\nShould the bot buy \"Legion Marauder\" ?", false),
+        new Option<bool>("53551", "Legion Scout", "Mode: [select] only\nShould the bot buy \"Legion Scout\" ?", false),
+        new Option<bool>("53595", "Ultra FiendHunter", "Mode: [select] only\nShould the bot buy \"Ultra FiendHunter\" ?", false),
+        new Option<bool>("59723", "Legion Operative", "Mode: [select] only\nShould the bot buy \"Legion Operative\" ?", false),
+        new Option<bool>("77004", "Mortal Painsaw Man", "Mode: [select] only\nShould the bot buy \"Mortal Painsaw Man\" ?", false),
+        new Option<bool>("92851", "Dark Sworn Legion Sovereign", "Mode: [select] only\nShould the bot buy \"Dark Sworn Legion Sovereign\" ?", false),
+        new Option<bool>("92852", "Dark Legion Sovereign", "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign\" ?", false),
+        new Option<bool>("77005", "Underworld Painsaw Man", "Mode: [select] only\nShould the bot buy \"Underworld Painsaw Man\" ?", false),
+        new Option<bool>("99935", "Underworld Death Draoi", "Mode: [select] only\nShould the bot buy \"Underworld Death Draoi\" ?", false),
+        new Option<bool>("92636", "Legion Kydoimos", "Mode: [select] only\nShould the bot buy \"Legion Kydoimos\" ?", false),
+        new Option<bool>("92637", "Grand Legion Kydoimos", "Mode: [select] only\nShould the bot buy \"Grand Legion Kydoimos\" ?", false),
+        new Option<bool>("99737", "Legion Kydoimos Pupil", "Mode: [select] only\nShould the bot buy \"Legion Kydoimos Pupil\" ?", false),
+        new Option<bool>("92640", "Cydoemus Battle Strife", "Mode: [select] only\nShould the bot buy \"Cydoemus Battle Strife\" ?", false),
+        new Option<bool>("99939", "Moon Shield of Dhuosnos", "Mode: [select] only\nShould the bot buy \"Moon Shield of Dhuosnos\" ?", false),
+        new Option<bool>("99940", "Death Draoi's Sword + Shield", "Mode: [select] only\nShould the bot buy \"Death Draoi's Sword + Shield\" ?", false),
+        new Option<bool>("92858", "Dark Legion Sovereign Banner", "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Banner\" ?", false),
+        new Option<bool>("92859", "Dark Legion Sovereign Cloak", "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Cloak\" ?", false),
+        new Option<bool>("92860", "Dark Legion Sovereign Crown", "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Crown\" ?", false),
+        new Option<bool>("59729", "Operative's Shadow", "Mode: [select] only\nShould the bot buy \"Operative's Shadow\" ?", false),
+        new Option<bool>("77008", "Chainsaw Mask of Pain", "Mode: [select] only\nShould the bot buy \"Chainsaw Mask of Pain\" ?", false),
+        new Option<bool>("53599", "Vhall's Cape", "Mode: [select] only\nShould the bot buy \"Vhall's Cape\" ?", false),
+        new Option<bool>("53600", "Vhall's Cape + Sword", "Mode: [select] only\nShould the bot buy \"Vhall's Cape + Sword\" ?", false),
+        new Option<bool>("53560", "Legion Scout's Cloak", "Mode: [select] only\nShould the bot buy \"Legion Scout's Cloak\" ?", false),
+        new Option<bool>("53561", "Legion Marauder's Back Sword", "Mode: [select] only\nShould the bot buy \"Legion Marauder's Back Sword\" ?", false),
+        new Option<bool>("53562", "Legion Marauder's Cloak + Sword", "Mode: [select] only\nShould the bot buy \"Legion Marauder's Cloak + Sword\" ?", false),
+        new Option<bool>("41600", "Paragon of Loyalty Cloak", "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Cloak\" ?", false),
+        new Option<bool>("42801", "Exalted Harbinger", "Mode: [select] only\nShould the bot buy \"Exalted Harbinger\" ?", false),
+        new Option<bool>("47465", "Infinite Legion Dark Caster", "Mode: [select] only\nShould the bot buy \"Infinite Legion Dark Caster\" ?", false),
+        new Option<bool>("38741", "Legion DoomKnight", "Mode: [select] only\nShould the bot buy \"Legion DoomKnight\" ?", false),
+        new Option<bool>("53839", "Legion SwordMaster Assassin", "Mode: [select] only\nShould the bot buy \"Legion SwordMaster Assassin\" ?", false),
+        new Option<bool>("59731", "Dual Legion Operative's Guns", "Mode: [select] only\nShould the bot buy \"Dual Legion Operative's Guns\" ?", false),
+        new Option<bool>("41603", "Paragon of Loyalty Accoutrements", "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Accoutrements\" ?", false),
+        new Option<bool>("41601", "Paragon of Loyalty Daggers", "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Daggers\" ?", false),
+        new Option<bool>("99943", "Deathly Moon Sword + Shield", "Mode: [select] only\nShould the bot buy \"Deathly Moon Sword + Shield\" ?", false),
+        new Option<bool>("92862", "Dual Dark Evanescence", "Mode: [select] only\nShould the bot buy \"Dual Dark Evanescence\" ?", false),
+        new Option<bool>("92865", "Dark Eclipses of Enyo", "Mode: [select] only\nShould the bot buy \"Dark Eclipses of Enyo\" ?", false),
+        new Option<bool>("92645", "Dual Theos Apóleia", "Mode: [select] only\nShould the bot buy \"Dual Theos Apóleia\" ?", false),
+        new Option<bool>("92866", "Dark Hand of the Legion Sovereign", "Mode: [select] only\nShould the bot buy \"Dark Hand of the Legion Sovereign\" ?", false),
+        new Option<bool>("92867", "Dark Hands of the Legion Sovereign", "Mode: [select] only\nShould the bot buy \"Dark Hands of the Legion Sovereign\" ?", false),
+        new Option<bool>("77009", "Underworld Painsaw Gauntlet", "Mode: [select] only\nShould the bot buy \"Underworld Painsaw Gauntlet\" ?", false),
+        new Option<bool>("77010", "Underworld Painsaw Gauntlets", "Mode: [select] only\nShould the bot buy \"Underworld Painsaw Gauntlets\" ?", false),
+        new Option<bool>("59730", "Legion Operative's Gun", "Mode: [select] only\nShould the bot buy \"Legion Operative's Gun\" ?", false),
+        new Option<bool>("76977", "Dage's Devastation Paragon Helmet", "Mode: [select] only\nShould the bot buy \"Dage's Devastation Paragon Helmet\" ?", false),
+        new Option<bool>("92854", "Dark Legion Sovereign Helm", "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Helm\" ?", false),
+        new Option<bool>("92855", "Dark Legion Sovereign Horns", "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Horns\" ?", false),
+        new Option<bool>("92856", "Dark Legion Sovereign Locks", "Mode: [select] only\nShould the bot buy \"Dark Legion Sovereign Locks\" ?", false),
+        new Option<bool>("92857", "Empowered Dark Sovereign Locks", "Mode: [select] only\nShould the bot buy \"Empowered Dark Sovereign Locks\" ?", false),
+        new Option<bool>("53642", "Devourer of Souls Mask", "Mode: [select] only\nShould the bot buy \"Devourer of Souls Mask\" ?", false),
+        new Option<bool>("59724", "Legion Operative Hood", "Mode: [select] only\nShould the bot buy \"Legion Operative Hood\" ?", false),
+        new Option<bool>("59725", "Legion Operative Hood + Locks", "Mode: [select] only\nShould the bot buy \"Legion Operative Hood + Locks\" ?", false),
+        new Option<bool>("59727", "Operative's Locks", "Mode: [select] only\nShould the bot buy \"Operative's Locks\" ?", false),
+        new Option<bool>("59728", "Operative's Morph", "Mode: [select] only\nShould the bot buy \"Operative's Morph\" ?", false),
+        new Option<bool>("53591", "Legion Sage Petite Morph", "Mode: [select] only\nShould the bot buy \"Legion Sage Petite Morph\" ?", false),
+        new Option<bool>("53592", "Legion Sage Morph", "Mode: [select] only\nShould the bot buy \"Legion Sage Morph\" ?", false),
+        new Option<bool>("53593", "Legion Sage's Disciple", "Mode: [select] only\nShould the bot buy \"Legion Sage's Disciple\" ?", false),
+        new Option<bool>("53594", "Legion Sage's Curse", "Mode: [select] only\nShould the bot buy \"Legion Sage's Curse\" ?", false),
+        new Option<bool>("41598", "Paragon of Loyalty Horns", "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Horns\" ?", false),
+        new Option<bool>("41599", "Paragon of Loyalty Hood", "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Hood\" ?", false),
+        new Option<bool>("47552", "Legion Fiend's Crested Helm", "Mode: [select] only\nShould the bot buy \"Legion Fiend's Crested Helm\" ?", false),
+        new Option<bool>("47553", "Nation's Paragon Helm", "Mode: [select] only\nShould the bot buy \"Nation's Paragon Helm\" ?", false),
+        new Option<bool>("47554", "Legion's Fiend Skull Helm", "Mode: [select] only\nShould the bot buy \"Legion's Fiend Skull Helm\" ?", false),
+        new Option<bool>("28636", "Legion DoomKnight Helm", "Mode: [select] only\nShould the bot buy \"Legion DoomKnight Helm\" ?", false),
+        new Option<bool>("28688", "Mystic Dark Caster Spikes", "Mode: [select] only\nShould the bot buy \"Mystic Dark Caster Spikes\" ?", false),
+        new Option<bool>("28690", "Mystica Dark Caster Locks", "Mode: [select] only\nShould the bot buy \"Mystica Dark Caster Locks\" ?", false),
+        new Option<bool>("53596", "Vhall's Dystopia", "Mode: [select] only\nShould the bot buy \"Vhall's Dystopia\" ?", false),
+        new Option<bool>("53597", "Ultra FiendHunter's Skull Armet", "Mode: [select] only\nShould the bot buy \"Ultra FiendHunter's Skull Armet\" ?", false),
+        new Option<bool>("53598", "Rheyl's Helm", "Mode: [select] only\nShould the bot buy \"Rheyl's Helm\" ?", false),
+        new Option<bool>("53552", "Legion Scout's Hood", "Mode: [select] only\nShould the bot buy \"Legion Scout's Hood\" ?", false),
+        new Option<bool>("53553", "Legion Marauder's Hood", "Mode: [select] only\nShould the bot buy \"Legion Marauder's Hood\" ?", false),
+        new Option<bool>("53554", "Legion Scout's Skull Hood", "Mode: [select] only\nShould the bot buy \"Legion Scout's Skull Hood\" ?", false),
+        new Option<bool>("53555", "Legion Marauder's Skull Hood", "Mode: [select] only\nShould the bot buy \"Legion Marauder's Skull Hood\" ?", false),
+        new Option<bool>("53556", "Legion Scout's Skull Mask", "Mode: [select] only\nShould the bot buy \"Legion Scout's Skull Mask\" ?", false),
+        new Option<bool>("53557", "Legion Marauder's Skull Mask", "Mode: [select] only\nShould the bot buy \"Legion Marauder's Skull Mask\" ?", false),
+        new Option<bool>("53558", "Legion Scout's Skull Morph", "Mode: [select] only\nShould the bot buy \"Legion Scout's Skull Morph\" ?", false),
+        new Option<bool>("53559", "Legion Marauder's Skull Morph", "Mode: [select] only\nShould the bot buy \"Legion Marauder's Skull Morph\" ?", false),
+        new Option<bool>("77006", "Mask of Pain", "Mode: [select] only\nShould the bot buy \"Mask of Pain\" ?", false),
+        new Option<bool>("77007", "Chainsaw Mask of Pain", "Mode: [select] only\nShould the bot buy \"Chainsaw Mask of Pain\" ?", false),
+        new Option<bool>("99936", "Death Draoi Crown", "Mode: [select] only\nShould the bot buy \"Death Draoi Crown\" ?", false),
+        new Option<bool>("99937", "Undead Draoi Crown", "Mode: [select] only\nShould the bot buy \"Undead Draoi Crown\" ?", false),
+        new Option<bool>("99938", "Undead Draoi Skull", "Mode: [select] only\nShould the bot buy \"Undead Draoi Skull\" ?", false),
+        new Option<bool>("92638", "Cydoemus Galea", "Mode: [select] only\nShould the bot buy \"Cydoemus Galea\" ?", false),
+        new Option<bool>("92639", "Kydoimos Winged Vision", "Mode: [select] only\nShould the bot buy \"Kydoimos Winged Vision\" ?", false),
+        new Option<bool>("53910", "Bronze Paragon Medal", "Mode: [select] only\nShould the bot buy \"Bronze Paragon Medal\" ?", false),
+        new Option<bool>("53908", "Gold Paragon Medal", "Mode: [select] only\nShould the bot buy \"Gold Paragon Medal\" ?", false),
+        new Option<bool>("53907", "Platinum Paragon Medal", "Mode: [select] only\nShould the bot buy \"Platinum Paragon Medal\" ?", false),
+        new Option<bool>("92644", "Theos Apóleia", "Mode: [select] only\nShould the bot buy \"Theos Apóleia\" ?", false),
+        new Option<bool>("92864", "Dark Eclipse of Enyo", "Mode: [select] only\nShould the bot buy \"Dark Eclipse of Enyo\" ?", false),
+        new Option<bool>("47348", "Legion Sigil Pet", "Mode: [select] only\nShould the bot buy \"Legion Sigil Pet\" ?", false),
+        new Option<bool>("53663", "Legion Devourer of Souls Blade Pet", "Mode: [select] only\nShould the bot buy \"Legion Devourer of Souls Blade Pet\" ?", false),
+        new Option<bool>("53655", "Dark Devourer of Souls Scythe", "Mode: [select] only\nShould the bot buy \"Dark Devourer of Souls Scythe\" ?", false),
+        new Option<bool>("53652", "Legion Devourer of Souls Scythe", "Mode: [select] only\nShould the bot buy \"Legion Devourer of Souls Scythe\" ?", false),
+        new Option<bool>("92863", "Dark Terror of Enyo", "Mode: [select] only\nShould the bot buy \"Dark Terror of Enyo\" ?", false),
+        new Option<bool>("92641", "Theos Antara", "Mode: [select] only\nShould the bot buy \"Theos Antara\" ?", false),
+        new Option<bool>("92643", "Death's Standard", "Mode: [select] only\nShould the bot buy \"Death's Standard\" ?", false),
+        new Option<bool>("90515", "Forbidden Runeblade", "Mode: [select] only\nShould the bot buy \"Forbidden Runeblade\" ?", false),
+        new Option<bool>("99941", "Black Moon Dhuosnos", "Mode: [select] only\nShould the bot buy \"Black Moon Dhuosnos\" ?", false),
+        new Option<bool>("53647", "Legion Devourer of Souls Blade", "Mode: [select] only\nShould the bot buy \"Legion Devourer of Souls Blade\" ?", false),
+        new Option<bool>("53648", "Activated Legion Devourer of Souls Blade", "Mode: [select] only\nShould the bot buy \"Activated Legion Devourer of Souls Blade\" ?", false),
+        new Option<bool>("92861", "Dark Evanescence", "Mode: [select] only\nShould the bot buy \"Dark Evanescence\" ?", false),
+        new Option<bool>("41602", "Paragon of Loyalty Blade", "Mode: [select] only\nShould the bot buy \"Paragon of Loyalty Blade\" ?", false),
+        new Option<bool>("28637", "Legion DoomBlade", "Mode: [select] only\nShould the bot buy \"Legion DoomBlade\" ?", false),
+        new Option<bool>("53603", "Rheyl's Edge", "Mode: [select] only\nShould the bot buy \"Rheyl's Edge\" ?", false),
+        new Option<bool>("53604", "Vhall's Violence", "Mode: [select] only\nShould the bot buy \"Vhall's Violence\" ?", false),
+        new Option<bool>("53563", "Legion Marauder's Sword", "Mode: [select] only\nShould the bot buy \"Legion Marauder's Sword\" ?", false),
+        new Option<bool>("53564", "Legion Scout's Sword", "Mode: [select] only\nShould the bot buy \"Legion Scout's Sword\" ?", false),
+   ];
+
+
 }
