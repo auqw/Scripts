@@ -38,11 +38,7 @@ public class DefaultTemplate
 
     void Example()
     {
-        // This is a simple Test for a CLI Dash board notification im working on
-        while (!Bot.ShouldExit)
-        {
-            Bot.Sleep(500);
-        }
+        
     }
 
 
