@@ -5502,7 +5502,7 @@
             {
               "type": "MultiAura",
               "value": 0,
-              "comparison": "greater",
+              "comparison": "less",
               "auraName": "Necrotic Edge",
               "auraTarget": "self"
             }
