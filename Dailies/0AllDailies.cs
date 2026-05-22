@@ -103,32 +103,68 @@ public class FarmAllDailies
         if (Set == DailySet.Recommended)
         {
             Core.Logger($"Doing selected set of dailies: Recommended");
-            LOO.GetLoO();
-            Daily.Pyromancer();
+
+            // LoO
+            if (!Core.CheckInventory(new[] { 50741, 50576 }, any: true, toInv: false))
+                LOO.GetLoO();
+            else
+                Core.ToBank(50741, 50576);
+
+            // Pyromancer
+            if (!Core.CheckInventory(new[] { 12811, 12812 }, any: true, toInv: false))
+                Daily.Pyromancer();
+            else
+                Core.ToBank(12811, 12812);
+
             Daily.ShadowScytheClass();
             Daily.WheelofDoom();
             Daily.FreeDailyBoost();
             Daily.CollectorClass();
             Glac.FrozenTower();
-            Daily.Cryomancer();
+
+            // Cryomancer
+            if (!Core.CheckInventory("Cryomancer", toInv: false))
+                Daily.Cryomancer();
+            else
+                Core.ToBank("Cryomancer");
+
             Daily.EldersBlood();
+            Daily.SparrowsBlood();
             Daily.ShadowShroud();
             Daily.DagesScrollFragment();
             MineCrafting.DoMinecrafting();
             Daily.CryptoToken();
+
             Core.Logger("Recommended Dailies finished!");
         }
         else
         {
             Core.Logger($"Doing selected set of dailies: All");
-            LOO.GetLoO();
-            Daily.Pyromancer();
+
+            // LoO
+            if (!Core.CheckInventory(new[] { 50741, 50576 }, any: true, toInv: false))
+                LOO.GetLoO();
+            else
+                Core.ToBank(50741, 50576);
+
+            // Pyromancer
+            if (!Core.CheckInventory(new[] { 12811, 12812 }, any: true, toInv: false))
+                Daily.Pyromancer();
+            else
+                Core.ToBank(12811, 12812);
+
             Daily.ShadowScytheClass();
             Daily.WheelofDoom();
             Daily.FreeDailyBoost();
             Daily.CollectorClass();
             Glac.FrozenTower();
-            Daily.Cryomancer();
+
+            // Cryomancer
+            if (!Core.CheckInventory("Cryomancer", toInv: false))
+                Daily.Cryomancer();
+            else
+                Core.ToBank("Cryomancer");
+
             Daily.EldersBlood();
             Daily.PearlOfNulgath();
             Daily.CryptoToken();
@@ -138,21 +174,22 @@ public class FarmAllDailies
             Daily.BeastMasterChallenge();
             Daily.FungiforaFunGuy();
             CSDKA.UnlockHardCoreMetals();
+
             Daily.HardCoreMetals(
                 new[]
                 {
-                    "Arsenic",
-                    "Beryllium",
-                    "Chromium",
-                    "Palladium",
-                    "Rhodium",
-                    "Rhodium",
-                    "Thorium",
-                    "Mercury",
+                "Arsenic",
+                "Beryllium",
+                "Chromium",
+                "Palladium",
+                "Rhodium",
+                "Thorium",
+                "Mercury",
                 },
                 10,
                 ToBank: true
             );
+
             Daily.GoldenInquisitor();
             Daily.BreakIntotheHoard(false, false);
             Daily.EldenRuby();
@@ -167,16 +204,18 @@ public class FarmAllDailies
             Daily.PowerGem();
             Daily.DesignNotes();
             Daily.MoglinPets();
+
             if (Set == DailySet.All)
             {
                 FR.CompleteStory();
                 Daily.Friendships();
             }
+
             Daily.DagesScrollFragment();
+
             Core.Logger("\"All\" Dailies finished!");
         }
     }
-
     public enum DailySet
     {
         Recommended,
