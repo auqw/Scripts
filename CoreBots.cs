@@ -6945,55 +6945,78 @@ public class CoreBots
         Thread.Sleep(delay);
     }
 
-    // /// <summary>
-    // /// Logs a line of text to the script log with time, method from where it's called and a message
-    // /// </summary>
-    // public void Logger(string message = "", [CallerMemberName] string caller = "", bool messageBox = false, bool stopBot = false)
-    // {
-    //     Bot.Log($"[{DateTime.Now:HH:mm:ss}] ({caller})  {message}");
-    //     if (LoggerInChat && Bot.Player.LoggedIn)
-    //         Bot.Send.ClientModerator(message.Replace('[', '(').Replace(']', ')'), caller);
-    //     if (messageBox & !ForceOffMessageboxes)
-    //         Message(message, caller);
-    //     if (stopBot)
-    //     {
-    //         scriptFinished = false;
-    //         Bot.Stop(true);
-    //     }
-    // }
-
-    //testing
     public void Logger(string message = "", [CallerMemberName] string caller = "", bool messageBox = false, bool stopBot = false)
     {
-        message = message.Replace('[', '(').Replace(']', ')');
-        message = WordWrap(message, 50);
+        string rawMessage = message ?? string.Empty;
 
-        Bot.Log($"[{DateTime.Now:HH:mm:ss}] ({caller})  {message}");
+        // =========================
+        // Console / file log (FULL)
+        // =========================
+        string logMessage = $"[{DateTime.Now:HH:mm:ss}] ({caller}) {rawMessage}";
+        Bot.Log(logMessage);
+
+        // =========================
+        // AQW CHAT SAFE PIPELINE
+        // =========================
         if (LoggerInChat && Bot.Player.LoggedIn)
         {
-            // Remove emojis for ClientModerator since it doesn't support them well
-            string cleanMessage = System.Text.RegularExpressions.Regex.Replace(
-                message,
-                @"[\p{So}\p{Sk}]",
-                ""
-            );
-            Bot.Send.ClientModerator(cleanMessage, caller);
+            string chatMessage = SanitizeAQWChat(rawMessage);
+
+            const int maxLen = 180;
+            if (chatMessage.Length > maxLen)
+                chatMessage = chatMessage[..maxLen];
+
+            Bot.Send.ClientModerator(chatMessage, caller);
         }
 
-        if (messageBox & !ForceOffMessageboxes)
-        {
-            // Ensure proper UTF-8 encoding for all Unicode characters (emojis, etc)
-            byte[] utf8Bytes = System.Text.Encoding.UTF8.GetBytes(message);
-            string properlyEncoded = System.Text.Encoding.UTF8.GetString(utf8Bytes);
-            Message(properlyEncoded, caller);
-        }
+        // =========================
+        // MESSAGE BOX (RAW SAFE)
+        // =========================
+        if (messageBox && !ForceOffMessageboxes)
+            Message(rawMessage, caller);
 
+        // =========================
+        // STOP BOT FLAG
+        // =========================
         if (stopBot)
         {
             scriptFinished = false;
             Bot.StopSync(true);
         }
     }
+
+    private static string SanitizeAQWChat(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return string.Empty;
+
+        // Convert common UI arrows to ASCII-safe equivalents
+        input = input
+            .Replace("→", "->")
+            .Replace("←", "<-")
+            .Replace("↑", "^")
+            .Replace("↓", "v")
+            .Replace("↔", "<->");
+
+        // Strip:
+        // - emoji ranges
+        // - symbols
+        // - modifiers
+        // - control chars
+        // - zero-width chars
+        // - line separators
+        input = Regex.Replace(
+            input,
+            @"[\p{So}\p{Sk}\p{Cc}\u200B\u200C\u200D\uFEFF\u2028\u2029\u1F300-\u1FAFF\u2600-\u26FF\u2700-\u27BF]",
+            ""
+        );
+
+        // Normalize whitespace to prevent AQW spacing glitches
+        input = Regex.Replace(input, @"\s+", " ");
+
+        return input.Trim();
+    }
+
 
     // Word wrap function
     public static string WordWrap(string? input, int lineLength)

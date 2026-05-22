@@ -1245,15 +1245,15 @@ public class CoreNation
     {
         string Flag(bool v) => v ? "True" : "False";
 
-        Core.Logger("╔═══════ Supplies Config ═══════╗", "Supplies");
-        Core.Logger($"Item: [{item ?? "All"} x{quant}]", "Supplies");
-        Core.Logger($"Ultra Alton: [{Flag(ultraAlteon)}]", "Supplies");
-        Core.Logger($"Keep Voucher: [{Flag(keepVoucher)}]  ", "Supplies");
-        Core.Logger($"Selll Voucher: [{Flag(sellMemVoucher)}]", "Supplies");
-        Core.Logger($"Assist During: [{Flag(assistantDuring)}]", "Supplies");
-        Core.Logger($"Return During: [{Flag(returnPolicyDuringSupplies)}]", "Supplies");
-        Core.Logger($"Return Item: [{returnItem ?? "None"}]", "Supplies");
-        Core.Logger("╚═════════════════════════════════╝", "Supplies");
+        Core.Logger("[Supplies] =========================", "Supplies");
+        Core.Logger($"Item      : {item ?? "All"} x{quant}", "Supplies");
+        Core.Logger($"Ultra     : {Flag(ultraAlteon)}", "Supplies");
+        Core.Logger($"Voucher K : {Flag(keepVoucher)}", "Supplies");
+        Core.Logger($"Voucher S : {Flag(sellMemVoucher)}", "Supplies");
+        Core.Logger($"Assist    : {Flag(assistantDuring)}", "Supplies");
+        Core.Logger($"Return    : {Flag(returnPolicyDuringSupplies)}", "Supplies");
+        Core.Logger($"Return It : {returnItem ?? "None"}", "Supplies");
+        Core.Logger("[Supplies] =========================", "Supplies");
     }
 
     public void SellVoucherOfNulgath(bool sellMemVoucher = true, string? item = null)
