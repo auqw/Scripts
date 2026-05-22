@@ -725,8 +725,8 @@
       "all"
     ],
     "path": "Dailies/0AllDailies.cs",
-    "size": 5604,
-    "sha256": "966959e6d3839be3d53b72ad35a97da65c0eec001bfebdf434ea23eb752f8732",
+    "size": 6640,
+    "sha256": "6a854c473b042b55b7d180b9dd5b443124a54019a945e986dae99d448b10f279",
     "fileName": "0AllDailies.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Dailies/0AllDailies.cs"
   },
@@ -4580,8 +4580,8 @@
       "null"
     ],
     "path": "Good/BLoD/CoreBLOD.cs",
-    "size": 27640,
-    "sha256": "62159d0dcdb4ecda4a17530ab6dc7864e78b060dfcae304c01762c1937cb5bca",
+    "size": 27415,
+    "sha256": "eca80330e24249e478e760b97d6ee47d5ff587d08605e0edd78d4f309aa8d783",
     "fileName": "CoreBLOD.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Good/BLoD/CoreBLOD.cs"
   },
