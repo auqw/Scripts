@@ -6990,34 +6990,23 @@ public class CoreBots
         if (string.IsNullOrEmpty(input))
             return string.Empty;
 
-        // Convert common UI arrows to ASCII-safe equivalents
+        // Strip non-ASCII first
+        input = Regex.Replace(input, @"[^\x20-\x7E\t\n]", "");
+
+        // Remove specific Flash-breaking characters
         input = input
-            .Replace("→", "->")
-            .Replace("←", "<-")
-            .Replace("↑", "^")
-            .Replace("↓", "v")
-            .Replace("↔", "<->");
+            .Replace("\x00", "")  // null
+            .Replace("\x1B", "")  // escape
+            .Replace("\x7F", "")  // DEL
+            .Replace("\r", "");   // carriage return
 
-        // Strip:
-        // - emoji ranges
-        // - symbols
-        // - modifiers
-        // - control chars
-        // - zero-width chars
-        // - line separators
-        input = Regex.Replace(
-            input,
-            @"[\p{So}\p{Sk}\p{Cc}\u200B\u200C\u200D\uFEFF\u2028\u2029\u1F300-\u1FAFF\u2600-\u26FF\u2700-\u27BF]",
-            ""
-        );
-
-        // Normalize whitespace to prevent AQW spacing glitches
+        // Normalize whitespace
         input = Regex.Replace(input, @"\s+", " ");
 
         return input.Trim();
     }
 
-
+    
     // Word wrap function
     public static string WordWrap(string? input, int lineLength)
     {
