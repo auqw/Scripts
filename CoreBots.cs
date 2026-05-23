@@ -1171,8 +1171,8 @@ public class CoreBots
                 )
                 {
                     Logger($"⚠️ Your inventory is full ({Bot.Inventory.UsedSlots}/{Bot.Inventory.Slots}. Attempting to make room by banking Misc Ac items");
-                  
-                  // Try *All* banking metods to try and make space.
+
+                    // Try *All* banking metods to try and make space.
                     BankACMisc();
                     BankACUnenhancedGear();
                     BankACHouseItems();
@@ -8205,7 +8205,7 @@ public class CoreBots
     /// <param name="from">The starting integer value.</param>
     /// <param name="to">The ending integer value.</param>
     /// <returns>An array of integers from 'from' to 'to' (inclusive).</returns>
-    public static int[] FromTo(int from, int to)
+    public int[] FromTo(int from, int to)
     {
         List<int> toReturn = [];
         for (int i = from; i < to + 1; i++)
