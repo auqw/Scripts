@@ -1498,7 +1498,7 @@ public class CoreAOR
         if (!Story.QuestProgression(10728))
         {
             Core.HuntMonsterQuest(10728,
-                ("forgecitrinitas", UseableMonsters[3], ClassType.Solo));
+                ("forgecitrinitas", UseableMonsters[3], ClassType.Farm));
         }
 
 
