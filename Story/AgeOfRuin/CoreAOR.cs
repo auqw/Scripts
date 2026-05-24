@@ -1482,7 +1482,7 @@ public class CoreAOR
         // 10726 | Pointed Suggestions
         if (!Story.QuestProgression(10726))
         {
-            Story.MapItemQuest(10726, "forgecitrinitas", new[] { 15820, 1 });
+            Story.MapItemQuest(10726, "forgecitrinitas", new[] { 100982, 1 });
         }
 
 
