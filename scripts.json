@@ -26061,6 +26061,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/01TerminaTemple.cs"
   },
   {
+    "name": "Forge Citrinitas",
+    "description": "Completes  Forge Citrinitas storyline.",
+    "tags": [
+      "forgecitrinitas",
+      "forge citrinitas",
+      "storyline",
+      "aor",
+      "age of ruin",
+      "albedo",
+      "aleister",
+      "jaania"
+    ],
+    "path": "Story/AgeOfRuin/25ForgeCitrinitas.cs",
+    "size": 879,
+    "sha256": "4473ed1227db2d7af2cb61cf7523b5d1bc6f99d47b84fb7b5095c30b4011c307",
+    "fileName": "25ForgeCitrinitas.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/25ForgeCitrinitas.cs"
+  },
+  {
     "name": "Forge Albedo",
     "description": "Completes the Forge Albedo storyline.",
     "tags": [
@@ -26234,8 +26253,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 56054,
-    "sha256": "a5b72f596ef13ac8863284623691f206af3817265a9647cd42253d4b563d3bdc",
+    "size": 59616,
+    "sha256": "b7fab5283623b406886d4335c184daa1eae84bb41e73ca2f12ad09e2cf86830a",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
