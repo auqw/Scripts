@@ -26099,6 +26099,25 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/16ColdThunder.cs"
   },
   {
+    "name": "Rubedo Peak",
+    "description": "Completes Rubedo Peak storyline.",
+    "tags": [
+      "rubedopeak",
+      "rubedo peak",
+      "storyline",
+      "aor",
+      "age of ruin",
+      "albedo",
+      "aleister",
+      "jaania"
+    ],
+    "path": "Story/AgeOfRuin/24RubedoPeak.cs",
+    "size": 848,
+    "sha256": "b019863d338bcf2e016c92f91a89a4926ca8f5d26f2a8858c8e51fa1abaf1c96",
+    "fileName": "24RubedoPeak.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/24RubedoPeak.cs"
+  },
+  {
     "name": "Sanctuary Aiwass Storyline",
     "description": "Completes the Sanctuary Aiwass storyline (quests 10375–10384)",
     "tags": [
@@ -26215,8 +26234,8 @@
       "null"
     ],
     "path": "Story/AgeOfRuin/CoreAOR.cs",
-    "size": 56059,
-    "sha256": "1e85f59e1c791c422a6a76e26f59466891648ba9e7d98157abd15ad65fb41b85",
+    "size": 56054,
+    "sha256": "a5b72f596ef13ac8863284623691f206af3817265a9647cd42253d4b563d3bdc",
     "fileName": "CoreAOR.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/CoreAOR.cs"
   },
@@ -26401,6 +26420,25 @@
     "sha256": "317c37926f3a840580ead7397bba5b39e0b4509d0f3083c2944206b98cce43f5",
     "fileName": "09SeaVoice.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/09SeaVoice.cs"
+  },
+  {
+    "name": "Magnum Opus",
+    "description": "Completes Magnum Opus storyline.",
+    "tags": [
+      "magnumopus",
+      "magnum opus",
+      "storyline",
+      "aor",
+      "age of ruin",
+      "albedo",
+      "aleister",
+      "jaania"
+    ],
+    "path": "Story/AgeOfRuin/23MagnumOpus.cs",
+    "size": 847,
+    "sha256": "346bc6015783151820e60f4599b3da5126fca79191cc514327ba8b0f38ab379e",
+    "fileName": "23MagnumOpus.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/AgeOfRuin/23MagnumOpus.cs"
   },
   {
     "name": "Sunlight Zone",
