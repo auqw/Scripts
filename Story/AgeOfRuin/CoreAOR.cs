@@ -1448,6 +1448,129 @@ public class CoreAOR
         Story.KillQuest(10714, "rubedopeak", "Rubedo Match");
     }
 
+    public void ForgeCitrinitas(bool seaVoice = false, bool coldThunder = false)
+    {
+        if (Core.isCompletedBefore(10736))
+            return;
+
+        Story.PreLoad(this);
+
+        #region Useable Monsters
+        string[] UseableMonsters = new[]
+        {
+            "Citrinitas Elemental", // UseableMonsters[0],
+            "Defensive Turret", // UseableMonsters[1],
+            "Citrinitas Match", // UseableMonsters[2],
+            "Luma Lifeform", // UseableMonsters[3],
+            "Defense Droid", // UseableMonsters[4],
+            "Clematis", // UseableMonsters[5]
+        };
+        #endregion Useable Monsters
+
+        // 10725 | The Tarnished Ideal
+        if (!Story.QuestProgression(10725))
+        {
+            Core.HuntMonsterQuest(10725,
+                ("forgecitrinitas", UseableMonsters[0], ClassType.Farm));
+        }
+
+
+        // 10726 | Pointed Suggestions
+        if (!Story.QuestProgression(10726))
+        {
+            Story.MapItemQuest(10726, "forgecitrinitas", new[] { 15820, 1 });
+        }
+
+
+        // 10727 | Bite the Bullet
+        if (!Story.QuestProgression(10727))
+        {
+            Core.HuntMonsterQuest(10727,
+                ("forgecitrinitas", UseableMonsters[1], ClassType.Farm));
+        }
+
+
+        // 10728 | Pain and Ecstasy
+        if (!Story.QuestProgression(10728))
+        {
+            Core.HuntMonsterQuest(10728,
+                ("forgecitrinitas", UseableMonsters[5], ClassType.Solo));
+        }
+
+
+        // 10729 | Reincubation
+        if (!Story.QuestProgression(10729))
+        {
+            Story.MapItemQuest(10729, "forgecitrinitas", 15822);
+        }
+
+
+        // 10730 | Server Reboot
+        if (!Story.QuestProgression(10730))
+        {
+            Core.HuntMonsterQuest(10730,
+                ("forgecitrinitas", UseableMonsters[4], ClassType.Farm));
+        }
+
+
+        // 10731 | Of Pyrite and Nickel
+        if (!Story.QuestProgression(10731))
+        {
+            Core.HuntMonsterQuest(10731,
+                ("forgecitrinitas", "Citrinitas Match", ClassType.Solo));
+        }
+
+
+        // 10732 | Skin Deep
+        if (!Story.QuestProgression(10732))
+        {
+            Core.HuntMonsterQuest(10732,
+                ("forgecitrinitas", UseableMonsters[3], ClassType.Farm));
+        }
+
+
+        // 10733 | Break Room
+        if (!Story.QuestProgression(10733))
+        {
+            Story.MapItemQuest(10733, "forgecitrinitas", new[] { 15823, 15824, 15825 });
+        }
+
+
+        // 10734 | Clematis' Aspirations
+        if (!Story.QuestProgression(10734))
+        {
+            Core.HuntMonsterQuest(10734,
+                ("forgecitrinitas", UseableMonsters[5], ClassType.Solo));
+        }
+
+
+        if (Core.IsMember)
+        {
+            // 10735 | Silica Spring
+            if (!Story.QuestProgression(10735))
+            {
+                Core.HuntMonsterQuest(10735,
+                    ("forgecitrinitas", UseableMonsters[5], ClassType.Solo),
+                    ("forgecitrinitas", UseableMonsters[3], ClassType.Farm),
+                    ("forgecitrinitas", UseableMonsters[4], ClassType.Farm));
+            }
+        }
+
+        else
+        {
+            // 10736 | Silica Spring (Legend)
+            if (!Story.QuestProgression(10736))
+            {
+                Core.HuntMonsterQuest(10736,
+                    ("forgecitrinitas", UseableMonsters[5], ClassType.Solo),
+                    ("forgecitrinitas", UseableMonsters[3], ClassType.Farm),
+                    ("forgecitrinitas", UseableMonsters[4], ClassType.Farm));
+            }
+        }
+
+
+    }
+
     // Mostly for `Skye's Lightning` for the Merge
     public void ColdThunderBoss(string? item = null, int quant = 1, bool isTemp = true)
     {
