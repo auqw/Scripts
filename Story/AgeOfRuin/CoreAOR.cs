@@ -70,6 +70,7 @@ public class CoreAOR
         WarWickForest(false, false);
         MagnumOpus(false, false);
         RubedoPeak(false, false);
+        ForgeCitrinitas(false, false);
 
     }
 
