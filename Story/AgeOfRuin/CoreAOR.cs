@@ -1438,7 +1438,7 @@ public class CoreAOR
 
     }
 
-    private void RubedoPeak(bool seaVoice = false, bool coldThunder = false)
+    public void RubedoPeak(bool seaVoice = false, bool coldThunder = false)
     {
         if (Core.isCompletedBefore(10714))
             return;
@@ -1447,10 +1447,6 @@ public class CoreAOR
 
         Story.KillQuest(10714, "rubedopeak", "Rubedo Match");
     }
-
-
-
-
 
     // Mostly for `Skye's Lightning` for the Merge
     public void ColdThunderBoss(string? item = null, int quant = 1, bool isTemp = true)
