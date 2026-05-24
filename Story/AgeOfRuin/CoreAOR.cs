@@ -824,6 +824,7 @@ public class CoreAOR
 
         TerminaTemple(seaVoice, coldThunder);
 
+        Story.PreLoad(this);
         #region Useable Monsters
         string[] UseableMonsters = new[]
         {
@@ -1122,11 +1123,10 @@ public class CoreAOR
 
     public void FortLuma(bool seaVoice = false, bool coldThunder = false)
     {
-        ForgeAlbedo(seaVoice, coldThunder);
-
         if (Core.isCompletedBefore(10618))
             return;
 
+        ForgeAlbedo(seaVoice, coldThunder);
         Story.PreLoad(this);
 
         #region Useable Monsters
@@ -1240,12 +1240,12 @@ public class CoreAOR
 
     }
 
-
     public void WarWickForest(bool seaVoice = false, bool coldThunder = false)
     {
-        FortLuma(seaVoice, coldThunder);
         if (Core.isCompletedBefore(10687))
             return;
+        FortLuma(seaVoice, coldThunder);
+
         Story.PreLoad(this);
 
         #region Useable Monsters
@@ -1346,6 +1346,7 @@ public class CoreAOR
             return;
 
         WarWickForest(true, true);
+        Story.PreLoad(this);
 
         // 10703 | The Black Mage
         if (!Story.QuestProgression(10703))
@@ -1444,8 +1445,9 @@ public class CoreAOR
         if (Core.isCompletedBefore(10714))
             return;
 
-        MagnumOpus();
+        MagnumOpus(seaVoice, coldThunder);
 
+        Story.PreLoad(this);
         Story.KillQuest(10714, "rubedopeak", "Rubedo Match");
     }
 
@@ -1454,7 +1456,8 @@ public class CoreAOR
         if (Core.isCompletedBefore(10736))
             return;
 
-        RubedoPeak(false, false);
+        RubedoPeak(seaVoice, coldThunder);
+        Story.PreLoad(this);
 
         #region Useable Monsters
         string[] UseableMonsters = new[]
