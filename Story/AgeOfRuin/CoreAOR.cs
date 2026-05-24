@@ -1454,7 +1454,7 @@ public class CoreAOR
         if (Core.isCompletedBefore(10736))
             return;
 
-        Story.PreLoad(this);
+        RubedoPeak(false, false);
 
         #region Useable Monsters
         string[] UseableMonsters = new[]
