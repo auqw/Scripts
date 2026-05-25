@@ -843,50 +843,108 @@ public class CoreStory
     }
 
     /// <summary>
-    /// Handles quest progression with automatic recovery for broken quest chains.
-    /// Supports multi-map quests and test mode. Returns true if quest is already completed or reward obtained.
+    /// Skeleton of KillQuest, MapItemQuest, BuyQuest and ChainQuest. Only needs to be used inside a script if the quest spans across multiple maps
     /// </summary>
-    /// <param name="QuestID">ID of the quest to process</param>
-    /// <param name="GetReward">Whether to add quest rewards to inventory</param>
-    /// <param name="Reward">Specific reward item ("All" for all rewards, or item name)</param>
-    /// <param name="Log">Whether to log quest progress</param>
+    /// <param name="QuestID">ID of the quest</param>
+    /// <param name="GetReward">Whether or not the <paramref name="Reward"/> should be added with AddDrop</param>
+    /// <param name="Reward">What item should be added with AddDrop</param>
+    /// <param name="Log"></param>
     public bool QuestProgression(int QuestID, bool GetReward = true, string Reward = "All", bool Log = true)
     {
-        // Validate input
         if (QuestID <= 0)
             return false;
 
-        // Return cached result to avoid redundant processing
+        // Cache previous result to avoid repeated processing in same loop tick
         if (PreviousQuestID == QuestID)
             return PreviousQuestState;
-
         PreviousQuestID = QuestID;
 
         // Load CBO test flag once
         if (!CBO_Checked)
         {
-            TestBot = Core.CBOBool("BCO_Story_TestBot", out bool testBot) ? testBot : false;
+            if (Core.CBOBool("BCO_Story_TestBot", out bool testBot))
+                TestBot = testBot;
             CBO_Checked = true;
         }
 
-        // Load quest data with retry logic
         Quest? questData = Core.InitializeWithRetries(() => Core.EnsureLoad(QuestID));
         if (questData == null)
         {
             Core.Logger($"Quest with ID {QuestID} not found");
-            PreviousQuestState = true; // Treat missing quest as "skip"
             return true;
         }
 
+        int attempts = 0;
+
         // ─────────────────────────────────────────────────────────────
-        // EARLY EXIT: Check if already completed
+        // QUEST UNLOCK RECOVERY LOOP
+        // ─────────────────────────────────────────────────────────────
+        while (!Bot.Quests.IsUnlocked(QuestID))
+        {
+            Core.Sleep(1000);
+
+            int currentValue = questData.Slot > 0
+                ? Bot.Flash.CallGameFunction<int>("world.getQuestValue", questData.Slot)
+                : 0;
+
+            if (attempts == 0 || attempts % 3 == 0)
+                Core.Logger($"Progress check: Slot {questData.Slot} | Current {currentValue} / Target {questData.Value - 1}", "QuestProgression");
+
+            // Find previous quest in same chain safely
+            Quest? prevQuest = Bot.Quests.Tree?
+                .Where(q => q.Slot == questData.Slot && q.Value < questData.Value)
+                .OrderByDescending(q => q.Value)
+                .FirstOrDefault();
+
+            if (prevQuest != null)
+            {
+                // Safely gather requirements (quests may have null collections)
+                string[] prevReqs = (prevQuest.Requirements ?? Enumerable.Empty<ItemBase>())
+                    .Concat(prevQuest.AcceptRequirements ?? Enumerable.Empty<ItemBase>())
+                    .Select(req => req.Name)
+                    .ToArray();
+
+                // If we already have the items, re-complete the quest to repair the chain
+                if (prevReqs.Length > 0 && Core.CheckInventory(prevReqs))
+                {
+                    Core.Logger($"Attempting recovery via re-completing previous quest: [{prevQuest.ID}] \"{prevQuest.Name}\"", "QuestProgression");
+
+                    TryComplete(prevQuest, true);
+                    attempts = 0;
+                    continue;
+                }
+
+                // Log missing requirements
+                string[] missingReqs = prevReqs.Where(req => !Core.CheckInventory(req)).ToArray();
+                if (missingReqs.Length > 0)
+                {
+                    Bot.Log($"Missing [{string.Join(", ", missingReqs)}] to accept {questData.Name} [{questData.ID}]");
+                    attempts = 5; // force relog sooner
+                }
+            }
+
+            attempts++;
+
+            // Relog after repeated failures
+            if (attempts >= 5)
+            {
+                Core.Logger($"Quest [{QuestID}] \"{questData.Name}\" still not unlocked after retries. Relogging...", "QuestProgression");
+                Core.Relogin("Quest progression recovery failed, relogging.");
+                attempts = 0;
+            }
+        }
+
+        // ─────────────────────────────────────────────────────────────
+        // COMPLETION CHECK
         // ─────────────────────────────────────────────────────────────
         if (Core.isCompletedBefore(QuestID) && (!TestBot || questData.Once))
         {
             if (Log)
             {
-                string status = TestBot ? "Skipped (Once = true)" : "Already Completed";
-                Core.Logger($"{status}: [{QuestID}] - \"{questData.Name}\"");
+                if (TestBot)
+                    Core.Logger($"Skipped (Once = true): [{QuestID}] - \"{questData.Name}\"");
+                else
+                    Core.Logger($"Already Completed: [{QuestID}] - \"{questData.Name}\"");
             }
 
             PreviousQuestState = true;
@@ -894,125 +952,31 @@ public class CoreStory
         }
 
         // ─────────────────────────────────────────────────────────────
-        // REWARD CHECK: Skip if already have specific reward
-        // ─────────────────────────────────────────────────────────────
-        if (GetReward && Reward != "All" && Core.CheckInventory(Reward))
-        {
-            if (Log)
-                Core.Logger($"Already have reward \"{Reward}\", skipping quest [{QuestID}].");
-
-            PreviousQuestState = true;
-            return true;
-        }
-
-        // ─────────────────────────────────────────────────────────────
-        // QUEST UNLOCK RECOVERY: Handle broken quest chains
-        // ─────────────────────────────────────────────────────────────
-        int relogAttempts = 0;
-        const int MAX_RELOG_ATTEMPTS = 3;
-
-        while (!Bot.ShouldExit && !Bot.Quests.IsUnlocked(QuestID))
-        {
-            Core.Sleep(1000);
-
-            // Get current quest progress
-            int currentValue = questData.Slot > 0
-                ? Bot.Flash.CallGameFunction<int>("world.getQuestValue", questData.Slot)
-                : 0;
-
-            if (Log && (relogAttempts == 0 || relogAttempts % 3 == 0))
-                Core.Logger($"Progress check: Slot {questData.Slot} | Current {currentValue} / Target {questData.Value - 1}", "QuestProgression");
-
-            // Try to repair chain by completing previous quest
-            if (TryRepairQuestChain(questData, Log))
-            {
-                relogAttempts = 0;
-                continue;
-            }
-
-            // Increment attempts and handle relogin
-            relogAttempts++;
-
-            if (relogAttempts >= MAX_RELOG_ATTEMPTS)
-            {
-                if (Log)
-                    Core.Logger($"Quest [{QuestID}] \"{questData.Name}\" failed to unlock after {MAX_RELOG_ATTEMPTS} relogin attempts. Stopping.", "QuestProgression");
-                Bot.StopAsync();
-                PreviousQuestState = true;
-                return true;
-            }
-
-            if (Log)
-                Core.Logger($"Quest [{QuestID}] \"{questData.Name}\" still not unlocked. Relogging... (Try {relogAttempts}/{MAX_RELOG_ATTEMPTS})", "QuestProgression");
-
-            Core.Relogin($"Quest progression recovery failed [Try {relogAttempts}/{MAX_RELOG_ATTEMPTS}]");
-        }
-
-        // ─────────────────────────────────────────────────────────────
-        // ADD REWARDS
+        // REWARD HANDLING
         // ─────────────────────────────────────────────────────────────
         if (GetReward)
         {
-            if (Reward == "All")
-                Core.AddDrop(Core.QuestRewards(QuestID));
-            else
+            if (Reward != "All")
+            {
+                if (Core.CheckInventory(Reward))
+                {
+                    Core.Logger($"Already have reward \"{Reward}\", skipping quest.");
+                    PreviousQuestState = true;
+                    return true;
+                }
+
                 Core.AddDrop(Reward);
+            }
+            else
+                Core.AddDrop(Core.QuestRewards(QuestID));
         }
 
-        if (Log)
-            Core.Logger($"Doing Quest: [{QuestID}] - \"{questData.Name}\"");
+        Core.Logger($"Doing Quest: [{QuestID}] - \"{questData.Name}\"");
 
         PreviousQuestState = false;
         return false;
     }
-
-    /// <summary>
-    /// Attempts to repair a broken quest chain by completing the previous quest.
-    /// </summary>
-    private bool TryRepairQuestChain(Quest questData, bool Log)
-    {
-        if (questData?.Slot <= 0)
-            return false;
-
-        // Find previous quest in the same chain
-        Quest? prevQuest = Bot.Quests.Tree?
-            .Where(q => q.Slot == questData.Slot && q.Value < questData.Value)
-            .OrderByDescending(q => q.Value)
-            .FirstOrDefault();
-
-        if (prevQuest == null)
-            return false;
-
-        // Gather all requirements
-        var requirements = new List<string>();
-        if (prevQuest.Requirements != null)
-            requirements.AddRange(prevQuest.Requirements.Select(r => r.Name));
-        if (prevQuest.AcceptRequirements != null)
-            requirements.AddRange(prevQuest.AcceptRequirements.Select(r => r.Name));
-
-        if (requirements.Count == 0)
-            return false;
-
-        // Check if we have all required items
-        string[] missingReqs = [.. requirements.Where(req => !Core.CheckInventory(req))];
-
-        if (missingReqs.Length > 0)
-        {
-            // Log missing items and stop
-            if (Log)
-                Bot.Log($"Cannot repair chain: Missing [{string.Join(", ", missingReqs)}] to complete {questData.Name} [{questData.ID}]");
-            Bot.StopAsync();
-            return false;
-        }
-
-        // All items available - re-complete previous quest
-        if (Log)
-            Core.Logger($"Repairing chain: Re-completing [{prevQuest.ID}] \"{prevQuest.Name}\"", "QuestProgression");
-
-        TryComplete(prevQuest, true);
-        return true;
-    }
-
+    
     private bool CBO_Checked = false;
     private int lastFailedQuestID = 0;
     private string? prevQuestExplain;
