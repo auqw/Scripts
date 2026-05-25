@@ -8790,6 +8790,9 @@ public class CoreBots
     /// </summary>
     public void JumpWait()
     {
+        if (Bot.Map?.Name == "battleon")
+            return;
+
         // Disable all combat-related options
         Bot.Options.AttackWithoutTarget = false;
         Bot.Options.AggroAllMonsters = false;
