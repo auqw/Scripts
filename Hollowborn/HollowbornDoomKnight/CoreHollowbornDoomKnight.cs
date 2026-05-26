@@ -283,10 +283,7 @@ public class CoreHollowbornDoomKnight
         bool cantcomplete = !Core.isCompletedBefore(2090) && !Bot.Player.IsMember;
         if (cantcomplete)
         {
-            Core.Logger(
-                "Completion of the quest \"Dark Spirit Donation\" is required for the \"Dark Energy\" to drop, which is members only, we cannot complete this."
-            );
-            return;
+            Core.Logger("Completion of the quest \"Dark Spirit Donation\" is required for the \"Dark Energy\" to drop, which is members only, we cannot complete this."); return;
         }
 
         // Requirements
@@ -301,41 +298,17 @@ public class CoreHollowbornDoomKnight
         ADKRises(10);
         ADK(30);
         Core.EquipClass(ClassType.Farm);
-
-        Core.KillMonster("dwarfhold", "r2", "Left", "Chaos Drow", "Dark Energy", 10000, false);
-        Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster(
-            "epicvordred",
-            "Ultra Vordred",
-            "(Necro) Scroll of Dark Arts",
-            3,
-            false,
-            publicRoom: true
-        );
         NSoD.BonesVoidRealm(1);
+        Core.KillMonster("dwarfhold", "r2", "Left", "Chaos Drow", "Dark Energy", 10000, false);
+
+        Core.EquipClass(ClassType.Solo);
+        Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", 3, false, publicRoom: true);
         Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", 1, false);
         Bot.Quests.UpdateQuest(3008);
         Core.SetAchievement(18);
         Bot.Quests.UpdateQuest(3004);
-        Core.EquipClass(ClassType.Solo);
-        Core.KillMonster(
-            "doomvaultb",
-            "r26",
-            "Left",
-            "Undead Raxgore",
-            "Weapon Imprint",
-            12,
-            false
-        );
-        Core.HuntMonster(
-            "Desolich",
-            "Desolich",
-            "Desolich's Dark Horn",
-            3,
-            false,
-            publicRoom: true
-        );
-
+        Core.KillMonster("doomvaultb", "r26", "Left", "Undead Raxgore", "Weapon Imprint", 12, false);
+        Core.HuntMonster("Desolich", "Desolich", "Desolich's Dark Horn", 3, false, publicRoom: true);
         Core.EnsureComplete(8416);
     }
 }

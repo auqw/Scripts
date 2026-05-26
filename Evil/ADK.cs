@@ -225,14 +225,7 @@ public class ArchDoomKnight
         Farm.BattleUnderB("Undead Energy", 2000);
 
         Core.EquipClass(ClassType.Solo);
-        Core.HuntMonster(
-            "epicvordred",
-            "Ultra Vordred",
-            "(Necro) Scroll of Dark Arts",
-            2,
-            isTemp: false
-        );
-        Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false);
+        Core.HuntMonster("epicvordred", "Ultra Vordred", "(Necro) Scroll of Dark Arts", 2, isTemp: false); Core.HuntMonster("sepulchurebattle", "ULTRA Sepulchure", "Doom Heart", isTemp: false);
         Core.HuntMonster("sepulchure", "Dark Sepulchure", "Dread Knight Cleaver", isTemp: false);
         Core.HuntMonster("thevoid", "Reaper", "Reaper's Soul", 1, isTemp: false);
         Core.HuntMonster("Desolich", "Desolich", "Desolich's Undead Eye", 2, isTemp: false);
