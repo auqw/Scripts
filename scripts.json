@@ -2178,8 +2178,8 @@
       "chaotic lords"
     ],
     "path": "Evil/ADK.cs",
-    "size": 7707,
-    "sha256": "9ca885793bcfc1d25e090014c87e681e42896943d0bd3e912d9b5fb820fa7fb8",
+    "size": 7622,
+    "sha256": "f0070472003a8ff179ab15a318067ae0cf890380ff96b3eb1daeb965f56b9887",
     "fileName": "ADK.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Evil/ADK.cs"
   },
@@ -15191,8 +15191,8 @@
       "null"
     ],
     "path": "Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs",
-    "size": 9982,
-    "sha256": "6341e28f02a7f4ded4b7d9435fa34e54199f633a39305d53f09e5ed24705ba86",
+    "size": 9640,
+    "sha256": "741ce091a4cdb7737ad056e77ee3da55d41b4f23a01bc1a22a0d5dd2d1834577",
     "fileName": "CoreHollowbornDoomKnight.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Hollowborn/HollowbornDoomKnight/CoreHollowbornDoomKnight.cs"
   },
