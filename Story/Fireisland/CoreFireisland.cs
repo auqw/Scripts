@@ -267,7 +267,7 @@ public class CoreFireIsland
         Story.KillQuest(4201, "phoenixrise", new[] { "Lava Troll", "Infernal Goblin" });
 
         //Preying for a Good Offense
-        Story.KillQuest(4202, "phoenixrise", new[] { "Infernal Goblin", "Lava Troll","Gargrowl" });
+        Story.KillQuest(4202, "phoenixrise", new[] { "Infernal Goblin", "Lava Troll", "Gargrowl" });
 
         //Red Alert
         Story.MapItemQuest(4203, "phoenixrise", 3283, 4);
@@ -367,7 +367,12 @@ public class CoreFireIsland
         Story.KillQuest(4226, "Fireforge", "Flamewing");
 
         //Final Round: Tyndarius Tigermaster 4230
-        Story.KillQuest(4230, "Fireforge", "Tyndarius", AutoCompleteQuest: false);
+        if (!Story.QuestProgression(4230))
+        {
+            Core.EnsureAccept(4230);
+            Core.HuntMonsterMapID("Fireforge", 24, "Tyndarius Defeated?");
+            Core.EnsureComplete(4230);
+        }
     }
 
     public void Lavarun()
