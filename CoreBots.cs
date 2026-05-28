@@ -95,7 +95,7 @@ public class CoreBots
     public bool SoloGearOn { get; set; } = true;
 
     // [Can Change] Names of your soloing equipment
-    public string[] SoloGear { get; set; } = Array.Empty<string>();
+    public string[] SoloGear { get; set; } = [];
 
     // [Can Change] Name of your farming class
     public string FarmClass { get; set; } = string.Empty;
@@ -107,7 +107,7 @@ public class CoreBots
     public bool FarmGearOn { get; set; } = true;
 
     // [Can Change] Names of your farming equipment
-    public string[] FarmGear { get; set; } = Array.Empty<string>();
+    public string[] FarmGear { get; set; } = [];
 
     // [Can Change] Name of your dodge class
     public string DodgeClass { get; set; } = string.Empty;
@@ -119,7 +119,7 @@ public class CoreBots
     public bool DodgeGearOn { get; set; } = true;
 
     // [Can Change] Names of your dodge equipment
-    public string[] DodgeGear { get; set; } = Array.Empty<string>();
+    public string[] DodgeGear { get; set; } = [];
 
     // [Can Change] Name of your bossing class
     public string BossClass { get; set; } = string.Empty;
@@ -131,7 +131,7 @@ public class CoreBots
     public bool BossGearOn { get; set; } = true;
 
     // [Can Change] Names of your bossing equipment
-    public string[] BossGear { get; set; } = Array.Empty<string>();
+    public string[] BossGear { get; set; } = [];
 
     // [Can Change] Some Sagas use the hero alignment to give extra reputation, change to your desired rep (Alignment.Evil or Alignment.Good).
     public int HeroAlignment { get; set; } = (int)Alignment.Evil;
@@ -11190,6 +11190,9 @@ public class CoreBots
         if (!CBO_Active())
             return;
 
+        // To rename old dodge and boss keys to the correct ones automaticly.
+        MigrateCBOKeys();
+
         CBOList = [.. File.ReadAllLines(CBO_Path())];
 
         //Generic
@@ -11321,17 +11324,17 @@ public class CoreBots
         List<string> _DodgeGear = [];
         if (DodgeGearOn)
         {
-            if (CBOString("HelmDodgeSelect", out string _HelmDodge))
+            if (CBOString("Helm3Select", out string _HelmDodge))
                 _DodgeGear.Add(_HelmDodge);
-            if (CBOString("ArmorDodgeSelect", out string _ArmorDodge))
+            if (CBOString("Armor3Select", out string _ArmorDodge))
                 _DodgeGear.Add(_ArmorDodge);
-            if (CBOString("CapeDodgeSelect", out string _CapeDodge))
+            if (CBOString("Cape3Select", out string _CapeDodge))
                 _DodgeGear.Add(_CapeDodge);
-            if (CBOString("WeaponDodgeSelect", out string _WeaponDodge))
+            if (CBOString("Weapon3Select", out string _WeaponDodge))
                 _DodgeGear.Add(_WeaponDodge);
-            if (CBOString("PetDodgeSelect", out string _PetDodge))
+            if (CBOString("Pet3Select", out string _PetDodge))
                 _DodgeGear.Add(_PetDodge);
-            if (CBOString("GroundItemDodgeSelect", out string _GroundItemDodge))
+            if (CBOString("GroundItem3Select", out string _GroundItemDodge))
                 _DodgeGear.Add(_GroundItemDodge);
         }
         if (_DodgeGear.Count > 0)
@@ -11341,17 +11344,17 @@ public class CoreBots
         List<string> _BossGear = [];
         if (BossGearOn)
         {
-            if (CBOString("HelmBossSelect", out string _HelmBoss))
+            if (CBOString("Helm4Select", out string _HelmBoss))
                 _BossGear.Add(_HelmBoss);
-            if (CBOString("ArmorBossSelect", out string _ArmorBoss))
+            if (CBOString("Armor4Select", out string _ArmorBoss))
                 _BossGear.Add(_ArmorBoss);
-            if (CBOString("CapeBossSelect", out string _CapeBoss))
+            if (CBOString("Cape4Select", out string _CapeBoss))
                 _BossGear.Add(_CapeBoss);
-            if (CBOString("WeaponBossSelect", out string _WeaponBoss))
+            if (CBOString("Weapon4Select", out string _WeaponBoss))
                 _BossGear.Add(_WeaponBoss);
-            if (CBOString("PetBossSelect", out string _PetBoss))
+            if (CBOString("Pet4Select", out string _PetBoss))
                 _BossGear.Add(_PetBoss);
-            if (CBOString("GroundItemBossSelect", out string _GroundItemBoss))
+            if (CBOString("GroundItem4Select", out string _GroundItemBoss))
                 _BossGear.Add(_GroundItemBoss);
         }
         if (_BossGear.Count > 0)
@@ -11365,6 +11368,51 @@ public class CoreBots
                 || x.Name == "Radiant Goddess of War"
             );
         var itemName = item?.Name;
+    }
+
+    public void MigrateCBOKeys()
+    {
+        if (!CBO_Active())
+            return;
+
+        var migrations = new Dictionary<string, string>
+    {
+        { "HelmDodgeSelect",      "Helm3Select"       },
+        { "ArmorDodgeSelect",     "Armor3Select"      },
+        { "CapeDodgeSelect",      "Cape3Select"       },
+        { "WeaponDodgeSelect",    "Weapon3Select"     },
+        { "PetDodgeSelect",       "Pet3Select"        },
+        { "GroundItemDodgeSelect","GroundItem3Select"  },
+        { "HelmBossSelect",       "Helm4Select"       },
+        { "ArmorBossSelect",      "Armor4Select"      },
+        { "CapeBossSelect",       "Cape4Select"       },
+        { "WeaponBossSelect",     "Weapon4Select"     },
+        { "PetBossSelect",        "Pet4Select"        },
+        { "GroundItemBossSelect", "GroundItem4Select"  },
+    };
+
+        var lines = File.ReadAllLines(CBO_Path()).ToList();
+        bool changed = false;
+
+        for (int i = 0; i < lines.Count; i++)
+        {
+            foreach (var kvp in migrations)
+            {
+                if (lines[i].StartsWith(kvp.Key + ":"))
+                {
+                    lines[i] = lines[i].Replace(kvp.Key, kvp.Value);
+                    changed = true;
+                    Logger($"[CBO Migration] Renamed \"{kvp.Key}\" → \"{kvp.Value}\"");
+                    break;
+                }
+            }
+        }
+
+        if (changed)
+        {
+            File.WriteAllLines(CBO_Path(), lines);
+            Logger("[CBO Migration] CBO file updated successfully.");
+        }
     }
 
     public string CBO_Path() =>
