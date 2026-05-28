@@ -4973,7 +4973,7 @@
   "King's Echo": {
     "Base": {
       "skillUseMode": "UseIfAvailable",
-      "skillTimeout": 500,
+      "skillTimeout": 100,
       "skills": [
         {
           "skillId": 1,
@@ -5040,7 +5040,7 @@
           "rules": [
             {
               "type": "Health",
-              "value": 50,
+              "value": 75,
               "comparison": "less",
               "isPercentage": true
             },
@@ -5048,16 +5048,10 @@
               "type": "Mana",
               "value": 50,
               "comparison": "greater",
-              "isPercentage": false
-            },
-            {
-              "type": "Aura",
-              "value": 0,
-              "comparison": "less",
-              "auraName": "Royal Resolve",
-              "auraTarget": "self"
+              "isPercentage": true
             }
-          ]
+          ],
+          "skipOnMatch": true
         }
       ]
     },
