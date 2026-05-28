@@ -6690,27 +6690,29 @@ public class CoreBots
             CanWeAggro();
 
             // Re-find monster every loop for reliability
-            Monster? target = name == "*"
-                ? null
+            Monster? target =
+                // Wild card ? > null \ else name trimmed
+                name == "*" ? null
                 : FindMonster(Bot.Map.Name, trimmedName);
 
-            if (name == "*")
+            if (name == "*" && !Bot.Player.HasTarget)
             {
                 Bot.Combat.Attack("*");
             }
-            else if (target != null && target.HP > 0)
+
+            /* Only attack if we 
+            1. Dont have a target
+            2. Target isnt {target}
+            3. Target.HP <= 0
+            */
+            else if (target != null
+                    && (!Bot.Player.HasTarget || Bot.Player.Target != target || target.HP <= 0))
             {
-                // Only attack if we don't have a target or our target is dead
-                if (!Bot.Player.HasTarget || Bot.Player.Target != target)
-                    Bot.Combat.Attack(target.Name);
-            }
-            else
-            {
-                Sleep(500);
-                continue; // Monster not found yet, loop again
+                Bot.Combat.Attack(target.Name);
             }
 
             Sleep(250); // Small delay to prevent spam
+            continue; // Monster not found yet, loop again
         }
 
         Bot.Wait.ForPickup(item);
