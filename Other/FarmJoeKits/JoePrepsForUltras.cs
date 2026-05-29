@@ -380,6 +380,7 @@ public class JoePrepsForUltras
     public bool DontPreconfigure = true;
     public List<IOption> Options = new()
     {
+        new Option<bool>("GetClasses", "Get Classes", "Enable to Skip aquiring classes for each player -- and still do the rest of the prep ( faster for those that already own the classes)", false),
         new Option<PlayerNumber>(
             "Player",
             "Player Number",
@@ -404,6 +405,13 @@ public class JoePrepsForUltras
 
     public void PlayerSetup()
     {
+        if (!Bot.Config!.Get<bool>("GetClasses"))
+        {
+            Bot.Log("Class Aquisition disabled, skipping this part.");
+            OtherPrep();
+            return;
+        }
+
         PlayerNumber playerNumber = Bot.Config!.Get<PlayerNumber>("Player");
         Core.Logger($"Setting up for {playerNumber}");
 
