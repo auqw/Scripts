@@ -86,6 +86,7 @@ public class AscendEclipseTest
     bool autoGetEnrage;
     int runCount;
     int syncCount;
+    bool syncFilesClearedOnStartup;
 
     /// <summary>
     /// Optional orchestration hook: when > 0, the main loop exits once the account holds
@@ -493,6 +494,35 @@ public class AscendEclipseTest
 
                 LogR3Debug(cell, ref lastR3StatusLogAt, ref lastR3AuraLogAt, ref lastR3Target);
 
+                bool solsticeAliveNow = MonsterAvailable(AscendedSolstice, cell);
+                bool midnightAliveNow = MonsterAvailable(AscendedMidnight, cell);
+
+                if (!solsticeAliveNow && !midnightAliveNow)
+                {
+                    noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
+
+                    if (Environment.TickCount64 - noTargetSince > 500)
+                        break;
+                }
+                else
+                {
+                    noTargetSince = 0;
+                }
+
+                // Clear stale convergence flags before processing taunts.
+                // This prevents a late packet from forcing Scroll attempts after a boss is already dead.
+                if (!solsticeAliveNow)
+                {
+                    sunNeedsEnrage = false;
+                    sunHandledThisCycle = true;
+                }
+
+                if (!midnightAliveNow)
+                {
+                    moonNeedsEnrage = false;
+                    moonHandledThisCycle = true;
+                }
+
                 // Keep opposite-side packet flags from polluting each account's logs.
                 if (!IsSunTaunter())
                 {
@@ -725,7 +755,7 @@ public class AscendEclipseTest
         }
     }
 
-   bool TryR3Taunt(string logPrefix, string bossName, string cell)
+    bool TryR3Taunt(string logPrefix, string bossName, string cell)
     {
         if (!MonsterAvailable(bossName, cell))
         {
@@ -734,34 +764,46 @@ public class AscendEclipseTest
         }
 
         Core.Logger($"{logPrefix} Targeting {bossName} for Scroll of Enrage.");
+        Core.Logger($"{logPrefix} Force-using Scroll of Enrage on {bossName}; skipping CanUseSkill(5) gate.");
 
         Bot.Skills.Pause();
 
         try
         {
-            Bot.Combat.Attack(bossName);
-            Bot.Sleep(150);
-            Bot.Combat.CancelAutoAttack();
-
-            Core.Logger($"{logPrefix} Force-using Scroll of Enrage on {bossName}; skipping CanUseSkill(5) gate.");
-
             for (int attempt = 1; attempt <= 10 && !Bot.ShouldExit; attempt++)
             {
+                if (!MonsterAvailable(bossName, cell))
+                {
+                    Core.Logger($"{logPrefix} {bossName} died/disappeared during taunt attempts; treating taunt as handled.");
+                    return true;
+                }
+
                 Core.Logger($"{logPrefix} Scroll attempt {attempt}/10.");
+
+                // Retarget every attempt so a stale target or desync cannot make all retries hit the wrong target.
+                Bot.Combat.Attack(bossName);
+                Bot.Sleep(100);
+                Bot.Combat.CancelAutoAttack();
 
                 Core.UsePotion();
 
-                long confirmEnd = Environment.TickCount64 + 1000;
+                long confirmEnd = Environment.TickCount64 + 500;
 
                 while (!Bot.ShouldExit && Environment.TickCount64 < confirmEnd)
                 {
                     Bot.Sleep(100);
 
+                    if (!MonsterAvailable(bossName, cell))
+                    {
+                        Core.Logger($"{logPrefix} {bossName} died/disappeared while confirming Enrage; treating taunt as handled.");
+                        return true;
+                    }
+
                     if (Bot.Player.HasTarget &&
                         Bot.Target != null &&
                         Bot.Target.Auras.Any(x =>
                             (x.Name.Equals("Focus", StringComparison.OrdinalIgnoreCase) ||
-                            x.Name.Equals("Reckless", StringComparison.OrdinalIgnoreCase)) &&
+                             x.Name.Equals("Reckless", StringComparison.OrdinalIgnoreCase)) &&
                             x.RemainingTime > 4))
                     {
                         Core.Logger($"{logPrefix} Enrage confirmed on {bossName}.");
@@ -769,7 +811,7 @@ public class AscendEclipseTest
                     }
                 }
 
-                Bot.Sleep(500);
+                Bot.Sleep(150);
             }
 
             Core.Logger($"{logPrefix} Scroll force-use attempts failed; Enrage was not confirmed on {bossName}.");
@@ -780,7 +822,7 @@ public class AscendEclipseTest
             Bot.Skills.Resume();
         }
     }
-    
+
     /// <summary>
     /// Returns the r3 focus target with a balance guard.
     /// Normal split: SC + AP focus Ascended Solstice, LR + LoO focus Ascended Midnight.
@@ -1110,25 +1152,58 @@ public class AscendEclipseTest
         if (name.Contains("party"))
             return "setup";
 
-        if (name.Contains("reset") || name.Contains("whitemap") || name.Contains("rejoined"))
+        if (name.Contains("reset") || name.Contains("whitemap") || name.Contains("rejoined") || name.Contains("restock"))
             return "reset";
 
         return "run";
     }
 
+
     void ResetReusableSyncFiles()
     {
-        // Only player1 clears the shared files so accounts do not erase each other's checkpoint lines.
-        if (!IsConfiguredAccount(Bot.Config!.Get<string>("player1") ?? ""))
+        bool isPlayer1 = IsConfiguredAccount(Bot.Config!.Get<string>("player1") ?? "");
+
+        if (!isPlayer1)
         {
+            if (!syncFilesClearedOnStartup)
+                Core.Logger("[Sync] Waiting briefly while player1 clears startup sync files.");
+            else
+                Core.Logger("[Sync] Waiting briefly while player1 resets reusable reset sync file.");
+
+            Bot.Sleep(1500);
+
+            if (!syncFilesClearedOnStartup)
+            {
+                syncFilesClearedOnStartup = true;
+                Core.Logger("[Sync] Done waiting for player1 startup sync clear.");
+            }
+            else
+            {
+                Core.Logger("[Sync] Done waiting for player1 sync reset.");
+            }
+
+            return;
+        }
+
+        if (!syncFilesClearedOnStartup)
+        {
+            Core.Logger("[Sync] Player1 is clearing startup sync files for AscendEclipse.");
+
+            ResetSyncFile(SyncGroupPath("AscendEclipse_reset_ready.sync"));
+            ResetSyncFile(SyncGroupPath("AscendEclipse_run_ready.sync"));
+
+            syncFilesClearedOnStartup = true;
+
+            Core.Logger("[Sync] Startup sync files cleared.");
             Bot.Sleep(1500);
             return;
         }
 
-        ResetSyncFile(SyncGroupPath("party_setup_ready.sync"));
+        Core.Logger("[Sync] Player1 is resetting reusable reset sync file for the new AscendEclipse run.");
+
         ResetSyncFile(SyncGroupPath("AscendEclipse_reset_ready.sync"));
-        ResetSyncFile(SyncGroupPath("AscendEclipse_run_ready.sync"));
-        Core.Logger("[Sync] Reset reusable sync files for the new run.");
+
+        Core.Logger("[Sync] Reusable reset sync file reset complete.");
         Bot.Sleep(1500);
     }
 
