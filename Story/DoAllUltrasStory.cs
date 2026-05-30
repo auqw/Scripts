@@ -10,9 +10,6 @@ description: Completes all story prerequisites needed to unlock every Ultra boss
 tags: story, quest, ultra, ezrajal, warden, engineer, tyndarius, speaker, dage, drakath, darkon, drago, all, complete
 */
 //cs_include Scripts/CoreBots.cs
-//cs_include Scripts/CoreFarms.cs
-//cs_include Scripts/CoreStory.cs
-//cs_include Scripts/CoreAdvanced.cs
 //cs_include Scripts/Story/ExaltiaTower.cs
 //cs_include Scripts/Story/ShadowsOfWar/CoreSoW.cs
 //cs_include Scripts/Story/IsleOfFotia/CoreIsleOfFotia.cs
@@ -24,53 +21,15 @@ public class DoAllUltrasStory
 {
     public IScriptInterface Bot => IScriptInterface.Instance;
     public CoreBots Core => CoreBots.Instance;
-    private static CoreStory Story
-    {
-        get => _Story ??= new CoreStory();
-        set => _Story = value;
-    }
-    private static CoreStory _Story;
-    private static ExaltiaTower Exaltia
-    {
-        get => _Exaltia ??= new ExaltiaTower();
-        set => _Exaltia = value;
-    }
+    private static ExaltiaTower Exaltia => _Exaltia ??= new ExaltiaTower();
     private static ExaltiaTower _Exaltia;
-    private static CoreSoW SoW
-    {
-        get => _SoW ??= new CoreSoW();
-        set => _SoW = value;
-    }
+    private static CoreSoW SoW => _SoW ??= new CoreSoW();
     private static CoreSoW _SoW;
-    private static CoreIsleOfFotia Fotia
-    {
-        get => _Fotia ??= new CoreIsleOfFotia();
-        set => _Fotia = value;
-    }
+    private static CoreIsleOfFotia Fotia => _Fotia ??= new CoreIsleOfFotia();
     private static CoreIsleOfFotia _Fotia;
-    private static Core13LoC LoC
-    {
-        get => _LoC ??= new Core13LoC();
-        set => _LoC = value;
-    }
+    private static Core13LoC LoC => _LoC ??= new Core13LoC();
     private static Core13LoC _LoC;
-    private static CoreAdvanced Adv
-    {
-        get => _Adv ??= new CoreAdvanced();
-        set => _Adv = value;
-    }
-    private static CoreAdvanced _Adv;
-    private static CoreFarms Farm
-    {
-        get => _Farm ??= new CoreFarms();
-        set => _Farm = value;
-    }
-    private static CoreFarms _Farm;
-    private static CoreAstravia Astravia
-    {
-        get => _Astravia ??= new CoreAstravia();
-        set => _Astravia = value;
-    }
+    private static CoreAstravia Astravia => _Astravia ??= new CoreAstravia();
     private static CoreAstravia _Astravia;
 
     public void ScriptMain(IScriptInterface bot)
