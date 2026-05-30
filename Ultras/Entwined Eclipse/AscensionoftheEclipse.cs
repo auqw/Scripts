@@ -87,16 +87,33 @@ public class AscendEclipseTest
     int runCount;
     int syncCount;
 
+    /// <summary>
+    /// Optional orchestration hook: when > 0, the main loop exits once the account holds
+    /// at least this many Ecliptic Offering. Leave 0 for the normal "loop forever" behavior.
+    /// </summary>
+    public int TargetEclipticOfferingCount;
+    const string EclipticOffering = "Ecliptic Offering";
+
+    /// <summary>
+    /// Orchestration hook: when true, skip Core.SetOptions(true/false). Used when this
+    /// script is invoked from a parent orchestrator that runs its own SetOptions.
+    /// </summary>
+    public bool SkipSetOptions;
+
     public void ScriptMain(IScriptInterface bot)
     {
-        Core.SetOptions(disableClassSwap: true);
+        if (!SkipSetOptions)
+            Core.SetOptions(disableClassSwap: true);
         if (sArmy.Players().Length < 4)
         {
             Core.Logger("Add 4 account names in the script options before starting.");
-            Core.SetOptions(false);
+
+            if (!SkipSetOptions)
+                Core.SetOptions(false);
+
             return;
         }
-
+        
         Core.PrivateRooms = true;
         if (Core.PrivateRoomNumber < 1000 || Core.PrivateRoomNumber > 99999)
             Core.PrivateRoomNumber = sArmy.getRoomNr();
@@ -118,12 +135,25 @@ public class AscendEclipseTest
 
         try
         {
+            if (TargetEclipticOfferingCount > 0)
+                Core.AddDrop(EclipticOffering);
+
             while (!Bot.ShouldExit)
+            {
+                if (TargetEclipticOfferingCount > 0 &&
+                    Core.CheckInventory(EclipticOffering, TargetEclipticOfferingCount))
+                {
+                    Core.Logger($"[AscendEclipse] Reached target of {TargetEclipticOfferingCount} {EclipticOffering}; stopping.");
+                    break;
+                }
+
                 RunAscendEclipse();
+            }
         }
         finally
         {
-            Core.SetOptions(false);
+            if (!SkipSetOptions)
+                Core.SetOptions(false);
         }
     }
 
