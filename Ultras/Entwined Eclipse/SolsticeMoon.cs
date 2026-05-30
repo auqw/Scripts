@@ -39,10 +39,10 @@ public class SolsticeMoonTest
     public string OptionsStorage = "SolsticeMoon_Test";
     public List<IOption> Options = new()
     {
-        new Option<string>("player1", "Legion Revenant", "AQW account name for the Legion Revenant slot.", ""),
-        new Option<string>("player2", "StoneCrusher", "AQW account name for the StoneCrusher slot.", ""),
-        new Option<string>("player3", "ArchPaladin", "AQW account name for the ArchPaladin slot.", ""),
-        new Option<string>("player4", "Lord Of Order", "AQW account name for the Lord Of Order slot.", ""),
+        new Option<string>("player1", "LR Account", "Name of the account that will use Legion Revenant.", ""),
+        new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""), 
+        new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
+        new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
         new Option<bool>(
@@ -58,6 +58,13 @@ public class SolsticeMoonTest
             "Auto-Craft Scroll of Enrage",
             "ON: all accounts auto-farm Mystic Parchment, buy Zealous Ink, and craft Scroll of Enrage before farming. Requires SpellCrafting rank 5.\n" +
             "OFF: scroll requirement is skipped.",
+            true
+        ),
+        new Option<bool>(
+            "checkUsableSlotBeforeBossRooms",
+            "Check Usable Slot Before Boss Rooms",
+            "ON: before each taunt boss room, re-checks that Scroll of Enrage is equipped and waits briefly for the usable slot to be ready. " +
+            "This helps recover from AQW/Skua usable-slot desync before dangerous taunt checks.",
             true
         ),
     };
@@ -106,12 +113,13 @@ public class SolsticeMoonTest
 
     bool autoEnhance;
     bool autoGetEnrage;
+    bool checkUsableSlotBeforeBossRooms;
 
     // Fixed 4-class lineup matching the working reference script
-    const string player1Class = "Legion Revenant";  // sun taunter  (player1+2 alternate)
-    const string player2Class = "StoneCrusher";      // sun taunter  (player1+2 alternate)
-    const string player3Class = "ArchPaladin";       // moon taunter (player3+4 alternate)
-    const string player4Class = "Lord Of Order";     // moon taunter (player3+4 alternate)
+    const string player1Class = "Legion Revenant";  // Lunar Haze taunter
+    const string player2Class = "StoneCrusher";     // DPS/support
+    const string player3Class = "ArchPaladin";      // Hollow Midnight taunter
+    const string player4Class = "Lord Of Order";    // Hollow Midnight taunter
 
     readonly int[] lrSkillList = new[] { 3, 4, 2, 1 };
     readonly int[] scSkillList = new[] { 3, 2, 4, 1 };
@@ -120,7 +128,7 @@ public class SolsticeMoonTest
 
     int midnightRunCount;
     int solsticeRunCount;
-    int syncCount;
+    bool syncFilesClearedOnStartup;
 
     /// <summary>
     /// Optional orchestration hook: when > 0, the main loop exits once the account holds
@@ -150,8 +158,10 @@ public class SolsticeMoonTest
             Core.PrivateRoomNumber = sArmy.getRoomNr();
         Core.Logger($"Army mode enabled: {sArmy.Players().Length} accounts, private room #{Core.PrivateRoomNumber}.");
 
+
         autoEnhance = Bot.Config.Get<bool>("autoEnhance");
         autoGetEnrage = Bot.Config.Get<bool>("autoGetEnrage");
+        checkUsableSlotBeforeBossRooms = Bot.Config.Get<bool>("checkUsableSlotBeforeBossRooms");
 
         EquipArmyClasses();
 
@@ -282,26 +292,128 @@ public class SolsticeMoonTest
             RunSolsticeMoon();
     }
 
+    string SyncGroupPath(string syncFile)
+    {
+        string group = GetSyncGroup(syncFile);
+        return Ultra.ResolveSyncPath($"SolsticeMoon_{Core.PrivateRoomNumber}_{group}.sync");
+    }
+
+    string ItemProgressSyncPath(string syncFile) =>
+        Ultra.ResolveSyncPath($"SolsticeMoon_{Core.PrivateRoomNumber}_{syncFile}");
+
+    string GetSyncGroup(string syncFile)
+    {
+        string name = syncFile.ToLower();
+
+        if (name.Contains("party") || name.Contains("setup"))
+            return "setup";
+
+        if (name.Contains("reset") || name.Contains("whitemap") || name.Contains("rejoined") || name.Contains("restock"))
+            return "reset";
+
+        return "run";
+    }
+
+    void ResetReusableSyncFiles()
+    {
+        bool isPlayer1 = IsConfiguredAccount(Bot.Config!.Get<string>("player1") ?? "");
+
+        if (!isPlayer1)
+        {
+            if (!syncFilesClearedOnStartup)
+                Core.Logger("[Sync] Waiting briefly while player1 clears startup sync files.");
+            else
+                Core.Logger("[Sync] Waiting briefly while player1 resets reusable reset sync file.");
+
+            Bot.Sleep(1500);
+
+            if (!syncFilesClearedOnStartup)
+            {
+                syncFilesClearedOnStartup = true;
+                Core.Logger("[Sync] Done waiting for player1 startup sync clear.");
+            }
+            else
+            {
+                Core.Logger("[Sync] Done waiting for player1 sync reset.");
+            }
+
+            return;
+        }
+
+        if (!syncFilesClearedOnStartup)
+        {
+            Core.Logger("[Sync] Player1 is clearing startup sync files for SolsticeMoon.");
+
+            ResetSyncFile(SyncGroupPath("SolsticeMoon_reset_ready.sync"));
+            ResetSyncFile(SyncGroupPath("SolsticeMoon_run_ready.sync"));
+
+            syncFilesClearedOnStartup = true;
+
+            Core.Logger("[Sync] Startup sync files cleared.");
+            Bot.Sleep(1500);
+            return;
+        }
+
+        Core.Logger("[Sync] Player1 is resetting reusable reset sync file for the new SolsticeMoon run.");
+
+        ResetSyncFile(SyncGroupPath("SolsticeMoon_reset_ready.sync"));
+
+        Core.Logger("[Sync] Reusable reset sync file reset complete.");
+        Bot.Sleep(1500);
+    }
+
+    void ResetSyncFile(string path)
+    {
+        try
+        {
+            string? directory = Path.GetDirectoryName(path);
+
+            if (!string.IsNullOrWhiteSpace(directory))
+                Directory.CreateDirectory(directory);
+
+            File.WriteAllText(path, string.Empty);
+        }
+        catch
+        {
+            Bot.Sleep(100);
+        }
+    }
+
     void SyncArmy(string syncFile)
     {
         int partySize = sArmy.Players().Length;
         if (partySize <= 1)
             return;
 
-        string path = Ultra.ResolveSyncPath($"Greatblade_{Core.PrivateRoomNumber}_{++syncCount}_{syncFile}");
+        string path = SyncGroupPath(syncFile);
         string username = Core.Username().ToLower();
+        string checkpoint = syncFile.Replace(":", "_");
 
         while (!Bot.ShouldExit)
         {
             string[] lines = ReadSyncLines(path);
-            lines = lines.Where(line => !line.StartsWith($"{username}:", StringComparison.OrdinalIgnoreCase)).ToArray();
-            WriteSyncLines(path, lines.Append($"{username}:ready:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}").ToArray());
+
+            lines = lines
+                .Where(line => !line.StartsWith($"{checkpoint}:{username}:", StringComparison.OrdinalIgnoreCase))
+                .ToArray();
+
+            WriteSyncLines(
+                path,
+                lines
+                    .Append($"{checkpoint}:{username}:ready:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}")
+                    .ToArray()
+            );
 
             long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
             int ready = ReadSyncLines(path)
                 .Select(line => line.Split(':'))
-                .Where(parts => parts.Length >= 3 && long.TryParse(parts[2], out long ts) && now - ts <= 120)
-                .Select(parts => parts[0])
+                .Where(parts =>
+                    parts.Length >= 4 &&
+                    parts[0].Equals(checkpoint, StringComparison.OrdinalIgnoreCase) &&
+                    long.TryParse(parts[3], out long ts) &&
+                    now - ts <= 120)
+                .Select(parts => parts[1])
                 .Distinct(StringComparer.OrdinalIgnoreCase)
                 .Count();
 
@@ -348,7 +460,7 @@ public class SolsticeMoonTest
     bool ArmyProgress(string itemName, int target, string syncFile)
     {
         int partySize = sArmy.Players().Length;
-        string path = Ultra.ResolveSyncPath($"Greatblade_{Core.PrivateRoomNumber}_{syncFile}");
+        string path = ItemProgressSyncPath(syncFile);
         string username = Core.Username().ToLower();
         int quantity = Bot.Inventory.GetQuantity(itemName);
 
@@ -371,36 +483,166 @@ public class SolsticeMoonTest
     {
         JoinAndFocus(map, cell, pad);
         SyncArmy($"{checkpoint}_ready.sync");
-        KillFocusedMonster(monster, cell, pad);
+        KillFocusedMonster(map, monster, cell, pad);
         SyncArmy($"{checkpoint}_done.sync");
     }
 
     void ArmyKillWithDelayedTaunt(string map, string cell, string pad, string monster, string checkpoint, bool sunSide, string enrageMessage, int tauntOffsetSeconds = 6)
     {
         JoinAndFocus(map, cell, pad);
-        SyncArmy($"{checkpoint}_ready.sync");
 
-        // Sun side (midnightsun): player1+2 alternate — player1 "starts" so player2 fires first
-        // Moon side (solsticemoon): player3+4 alternate — player3 "starts" so player4 fires first
+        // Sun side (midnightsun): player1+2 alternate — player1 "starts" so player2 fires first.
+        // Moon side (solsticemoon): player3+4 alternate — player3 "starts" so player4 fires first.
         bool isTaunter = sunSide ? IsSunTaunter() : IsMoonTaunter();
         string startingTaunterConfig = sunSide ? "player1" : "player3";
 
+        if (isTaunter)
+            CheckUsableSlotBeforeBossRoom($"{monster} / {enrageMessage}");
+
+        SyncArmy($"{checkpoint}_ready.sync");
+
         BossFight(monster, cell, enrageMessage, isTaunter, tauntOffsetSeconds, startingTaunterConfig);
+
         SyncArmy($"{checkpoint}_done.sync");
+    }
+
+    void ArmyKillLunarHazeWithLrTaunt(string map, string cell, string pad, string secondaryMob, string checkpoint)
+    {
+        JoinAndFocus(map, cell, pad);
+        SyncArmy($"{checkpoint}_ready.sync");
+
+        KillLunarHazeWithLrOnlyTaunt(cell, pad, secondaryMob);
+
+        SyncArmy($"{checkpoint}_done.sync");
+    }
+
+    void KillLunarHazeWithLrOnlyTaunt(string cell, string pad, string secondaryMob)
+    {
+        const string lunarHaze = "Lunar Haze";
+        const string lunarAura = "Moonlight Gaze";
+        const int tauntDelayMs = 6000;
+
+        long noTargetSince = 0;
+
+        bool lrMoonlightGazeArmed = false;
+        bool lrMoonlightGazeTaunted = false;
+        long lrTauntAt = 0;
+
+        while (!Bot.ShouldExit)
+        {
+            if (!Bot.Player.Alive)
+            {
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
+
+                if (Bot.Player.Cell != cell)
+                {
+                    Bot.Map.Jump(cell, pad, autoCorrect: false);
+                    Bot.Wait.ForCellChange(cell);
+                }
+
+                Bot.Player.SetSpawnPoint();
+                Bot.Sleep(500);
+                continue;
+            }
+
+            if (Bot.Player.Cell != cell)
+            {
+                Bot.Map.Jump(cell, pad, autoCorrect: false);
+                Bot.Wait.ForCellChange(cell);
+                Bot.Player.SetSpawnPoint();
+            }
+
+            bool isLegionRevenant = string.Equals(
+                Bot.Player.CurrentClass?.Name,
+                "Legion Revenant",
+                StringComparison.OrdinalIgnoreCase
+            );
+
+            bool lunarHazeAlive = MonsterAvailable(lunarHaze, cell);
+            bool secondaryAlive = MonsterAvailable(secondaryMob, cell);
+
+            string target = lunarHazeAlive
+                ? lunarHaze
+                : secondaryAlive
+                    ? secondaryMob
+                    : string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(target))
+                Bot.Combat.Attack(target);
+
+            bool handledTauntWindow = false;
+
+            if (isLegionRevenant && target == lunarHaze && lunarHazeAlive)
+            {
+                bool moonlightGazeActive = Bot.Self.HasActiveAura(lunarAura);
+
+                if (moonlightGazeActive && !lrMoonlightGazeArmed)
+                {
+                    lrMoonlightGazeArmed = true;
+                    lrMoonlightGazeTaunted = false;
+                    lrTauntAt = Environment.TickCount64 + tauntDelayMs;
+                    Core.Logger($"[Lunar Haze LR Taunt] {lunarAura} detected on {lunarHaze}. Taunting in {tauntDelayMs / 1000.0:0.#} seconds.");
+                }
+
+                if (lrMoonlightGazeArmed && !lrMoonlightGazeTaunted && Environment.TickCount64 >= lrTauntAt)
+                {
+                    lrMoonlightGazeTaunted = TauntCurrentTarget("[Lunar Haze LR Taunt]", lunarHaze);
+                    handledTauntWindow = true;
+                }
+
+                if (!moonlightGazeActive && lrMoonlightGazeTaunted)
+                {
+                    lrMoonlightGazeArmed = false;
+                    lrMoonlightGazeTaunted = false;
+                    lrTauntAt = 0;
+                }
+            }
+            else
+            {
+                lrMoonlightGazeArmed = false;
+                lrMoonlightGazeTaunted = false;
+                lrTauntAt = 0;
+            }
+
+            if (!handledTauntWindow)
+            {
+                UseClassSkills();
+                Bot.Sleep(400);
+            }
+
+            if (!lunarHazeAlive && !secondaryAlive)
+            {
+                noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
+
+                if (Environment.TickCount64 - noTargetSince > 1800)
+                    break;
+            }
+            else
+            {
+                noTargetSince = 0;
+            }
+        }
     }
 
     void ArmyKillShrineBoss(string map, string cell, string pad, string monster, string checkpoint, bool moonBoss)
     {
         JoinAndFocus(map, cell, pad);
-        SyncArmy($"{checkpoint}_ready.sync");
 
-        // Sun boss: player1+2 alternate — player1 fires first, player2 is "starting" (defers first)
-        // Moon boss: player3+4 alternate — player3 fires first, player4 is "starting" (defers first)
+        // Sun boss: player1+2 alternate — player1 fires first, player2 is "starting" (defers first).
+        // Moon boss: player3+4 alternate — player3 fires first, player4 is "starting" (defers first).
         bool isTaunter = moonBoss ? IsMoonTaunter() : IsSunTaunter();
-        string enrageMessage         = moonBoss ? "The Moon Converges" : "The Sun Converges";
+        string enrageMessage = moonBoss ? "The Moon Converges" : "The Sun Converges";
         string startingTaunterConfig = moonBoss ? "player4" : "player2";
 
+        if (isTaunter)
+            CheckUsableSlotBeforeBossRoom($"{monster} / {enrageMessage}");
+
+        SyncArmy($"{checkpoint}_ready.sync");
+
         BossFight(monster, cell, enrageMessage, isTaunter, 0, startingTaunterConfig);
+
+        if (string.Equals(cell, "r3", StringComparison.OrdinalIgnoreCase))
+            Core.Logger($"[r3] {monster} fight complete. Waiting for army done sync.");
 
         SyncArmy($"{checkpoint}_done.sync");
     }
@@ -421,10 +663,53 @@ public class SolsticeMoonTest
 
         SyncArmy($"{checkpoint}_all_in_whitemap.sync");
 
+        RestockEnrageIfLow($"Before {checkpoint}", minimumCount: 80);
+        SyncArmy($"{checkpoint}_restock_done.sync");
+
         JoinShrineDungeon(nextMap, "Enter", "Left", force: true);
         Bot.Sleep(1000);
 
         SyncArmy($"{checkpoint}_all_rejoined_dungeon.sync");
+    }
+
+    int GetInventoryQuantity(string itemName)
+    {
+        return Bot.Inventory.Items
+            .FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase))
+            ?.Quantity ?? 0;
+    }
+
+    void RestockEnrageIfLow(string context, int minimumCount = 80)
+    {
+        bool needsEnrage =
+            IsConfiguredAccount(Bot.Config!.Get<string>("player1") ?? "") ||
+            IsConfiguredAccount(Bot.Config!.Get<string>("player2") ?? "") ||
+            IsConfiguredAccount(Bot.Config!.Get<string>("player3") ?? "") ||
+            IsConfiguredAccount(Bot.Config!.Get<string>("player4") ?? "");
+
+        if (!needsEnrage)
+            return;
+
+        if (!string.Equals(Bot.Map.Name, "whitemap", StringComparison.OrdinalIgnoreCase))
+        {
+            Core.Logger($"[Taunt] {context}: skipping Scroll of Enrage restock because this account is not in /whitemap.");
+            return;
+        }
+
+        int count = GetInventoryQuantity("Scroll of Enrage");
+        Core.Logger($"[Taunt] {context}: {count} Scroll of Enrage remaining.");
+
+        if (count >= minimumCount)
+            return;
+
+        Core.Logger($"[Taunt] Scroll of Enrage is below {minimumCount}. Restocking before continuing.");
+
+        Ultra.GetScrollOfEnrage();
+
+        int newCount = GetInventoryQuantity("Scroll of Enrage");
+        Core.Logger($"[Taunt] Restock complete: {newCount} Scroll of Enrage remaining.");
+
+        EnsureEnrageEquipped("restock");
     }
 
     void JoinAndFocus(string map, string cell, string pad)
@@ -487,7 +772,7 @@ public class SolsticeMoonTest
             Bot.Sleep(250);
     }
 
-    void KillFocusedMonster(string monster, string cell, string pad)
+    void KillFocusedMonster(string map, string monster, string cell, string pad)
     {
         long noTargetSince = 0;
 
@@ -512,7 +797,7 @@ public class SolsticeMoonTest
                 Bot.Wait.ForCellChange(cell);
             }
 
-            Bot.Combat.Attack(monster);
+            AttackPriorityTarget(map, cell, monster);
             UseClassSkills();
             Bot.Sleep(400);
 
@@ -533,6 +818,21 @@ public class SolsticeMoonTest
                 noTargetSince = 0;
                 Bot.Sleep(300);
             }
+        }
+    }
+
+    bool TargetBossDefeated(string monster)
+    {
+        try
+        {
+            return Bot.Player.HasTarget &&
+                Bot.Player.Target != null &&
+                string.Equals(Bot.Player.Target.Name, monster, StringComparison.OrdinalIgnoreCase) &&
+                Bot.Player.Target.HP <= 0;
+        }
+        catch
+        {
+            return false;
         }
     }
 
@@ -573,6 +873,9 @@ public class SolsticeMoonTest
 
                 ReturnToFightCell(cell);
 
+                if (TargetBossDefeated(monster))
+                    break;
+
                 if (isTaunter && needsEnrage && !usedEnrage)
                 {
                     if (!usedLastEnrage && Bot.Player.HasTarget &&
@@ -580,41 +883,35 @@ public class SolsticeMoonTest
                     {
                         // My turn — apply the scroll and verify it landed.
                         Core.Logger($"[Taunt] '{enrageMessage}' — my turn, applying Scroll of Enrage...");
-                        Bot.Skills.Pause();
-                        try
-                        {
-                            while (!Bot.ShouldExit && Bot.Player.HasTarget && needsEnrage && !usedEnrage)
-                            {
-                                Bot.Combat.CancelAutoAttack();
-                                Core.UsePotion();
-                                Bot.Sleep(200);
 
-                                if (Bot.Player.HasTarget &&
-                                    (Bot.Target.Auras.Any(x => x.Name.Equals("Focus",    StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4) ||
-                                     Bot.Target.Auras.Any(x => x.Name.Equals("Reckless", StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4)))
-                                {
-                                    usedEnrage  = true;
-                                    needsEnrage = false;
-                                    usedLastEnrage = true; // other taunter goes next convergence
-                                    Core.Logger("[Taunt] Enrage confirmed!");
-                                }
-                                else
-                                {
-                                    Bot.Sleep(200);
-                                }
-                            }
-                        }
-                        finally
+                        if (TauntCurrentTarget(enrageMessage, maxAttempts: 10))
                         {
-                            Bot.Skills.Resume();
+                            usedEnrage = true;
+                            needsEnrage = false;
+                            usedLastEnrage = true; // other taunter goes next convergence
                         }
                     }
                     else if (usedLastEnrage)
                     {
-                        // Other taunter's turn this convergence — stand by.
+                        // Other taunter's turn this convergence — stand by long enough to observe Focus/Reckless.
                         Core.Logger($"[Taunt] '{enrageMessage}' — other taunter's turn.");
-                        usedEnrage     = true;
-                        needsEnrage    = false;
+
+                        long waitUntil = Environment.TickCount64 + 2500;
+                        while (!Bot.ShouldExit &&
+                               Bot.Player.HasTarget &&
+                               !TargetHasEnrageAura() &&
+                               Environment.TickCount64 < waitUntil)
+                        {
+                            Bot.Sleep(100);
+                        }
+
+                        if (TargetHasEnrageAura())
+                            Core.Logger("[Taunt] Other taunter's Enrage confirmed.");
+                        else
+                            Core.Logger("[Taunt] Other taunter turn complete; rotating.");
+
+                        usedEnrage = true;
+                        needsEnrage = false;
                         usedLastEnrage = false; // I go next convergence
                     }
                 }
@@ -717,6 +1014,31 @@ public class SolsticeMoonTest
         }
     }
 
+    void AttackPriorityTarget(string map, string cell, string fallbackMonster)
+    {
+        foreach (string target in GetRoomTargetPriority(map, cell, fallbackMonster))
+        {
+            if (target == "*" || MonsterAvailable(target, cell))
+            {
+                Bot.Combat.Attack(target);
+                return;
+            }
+        }
+
+        Bot.Combat.Attack(fallbackMonster);
+    }
+
+    string[] GetRoomTargetPriority(string map, string cell, string fallbackMonster)
+    {
+        if (string.Equals(map, "solsticemoon", StringComparison.OrdinalIgnoreCase) &&
+            string.Equals(cell, "Enter", StringComparison.OrdinalIgnoreCase))
+        {
+            return new[] { "Shackled Fairy", "Faithless Deer", fallbackMonster };
+        }
+
+        return new[] { fallbackMonster };
+    }
+
     bool MonsterAvailable(string monster, string cell)
     {
         try
@@ -745,6 +1067,7 @@ public class SolsticeMoonTest
                 break;
 
             case "stonecrusher":
+            case "infinity titan":
                 UseFirstAvailableSkill(scSkillList);
                 break;
 
@@ -792,20 +1115,31 @@ public class SolsticeMoonTest
         if (string.IsNullOrWhiteSpace(className))
             return;
 
-        if (!Core.CheckInventory(className))
+        string classToEquip = className;
+
+        if (!Core.CheckInventory(classToEquip))
         {
-            Core.Logger($"{Core.Username()} is assigned to use {className}, but that class is not in inventory.", stopBot: true);
-            return;
+            if (className.Equals("StoneCrusher", StringComparison.OrdinalIgnoreCase) &&
+                Core.CheckInventory("Infinity Titan"))
+            {
+                Core.Logger($"{Core.Username()} is assigned to use StoneCrusher, but StoneCrusher is missing. Using Infinity Titan instead.");
+                classToEquip = "Infinity Titan";
+            }
+            else
+            {
+                Core.Logger($"{Core.Username()} is assigned to use {className}, but that class is not in inventory.", stopBot: true);
+                return;
+            }
         }
 
-        if (!IsClassEquipped(className))
+        if (!IsClassEquipped(classToEquip))
         {
-            Core.Equip(className);
-            Bot.Wait.ForItemEquip(className);
+            Core.Equip(classToEquip);
+            Bot.Wait.ForItemEquip(classToEquip);
             Bot.Sleep(1000);
         }
 
-        Core.Logger($"{Core.Username()} equipped {className}; using custom skill rotation.");
+        Core.Logger($"{Core.Username()} equipped {classToEquip}; using custom skill rotation.");
     }
 
     bool IsClassEquipped(string className) =>
@@ -849,6 +1183,7 @@ public class SolsticeMoonTest
                 break;
 
             case "stonecrusher":
+            case "infinity titan":
                 Adv.EnhanceEquipped(
                     type:     EnhancementType.Fighter,
                     hSpecial: HelmSpecial.Anima,
@@ -881,6 +1216,145 @@ public class SolsticeMoonTest
         }
     }
 
+
+    bool TargetHasEnrageAura()
+    {
+        return Bot.Player.HasTarget &&
+            (Bot.Target.Auras.Any(x =>
+                x.Name.Equals("Focus", StringComparison.OrdinalIgnoreCase) &&
+                x.RemainingTime > 4) ||
+             Bot.Target.Auras.Any(x =>
+                x.Name.Equals("Reckless", StringComparison.OrdinalIgnoreCase) &&
+                x.RemainingTime > 4));
+    }
+
+    bool EnsureEnrageEquipped(string context)
+    {
+        if (!Core.CheckInventory("Scroll of Enrage"))
+        {
+            Core.Logger($"[Taunt] {context}: missing Scroll of Enrage.");
+            return false;
+        }
+
+        if (!Bot.Inventory.IsEquipped("Scroll of Enrage"))
+        {
+            Core.Logger($"[Taunt] {context}: Scroll of Enrage was not equipped; re-equipping usable slot.");
+            Bot.Inventory.EquipUsableItem("Scroll of Enrage");
+            Bot.Sleep(600);
+        }
+
+        return Bot.Inventory.IsEquipped("Scroll of Enrage");
+    }
+
+    void CheckUsableSlotBeforeBossRoom(string context)
+    {
+        if (!checkUsableSlotBeforeBossRooms)
+            return;
+
+        if (!EnsureEnrageEquipped(context))
+            return;
+
+        if (!Bot.Skills.CanUseSkill(5))
+        {
+            Core.Logger($"[Taunt] {context}: usable slot is not ready yet; waiting briefly before boss room.");
+            Bot.Wait.ForTrue(() => Bot.Skills.CanUseSkill(5), 10);
+        }
+    }
+
+    bool TauntCurrentTarget(string logPrefix, string expectedTarget, int maxAttempts = 10)
+    {
+        if (!Bot.Player.HasTarget || Bot.Player.Target?.HP <= 0)
+        {
+            Bot.Sleep(300);
+            return false;
+        }
+
+        Core.Logger($"{logPrefix} Targeting {expectedTarget} for Scroll of Enrage.");
+        Core.Logger($"{logPrefix} Force-using Scroll of Enrage on {expectedTarget}; skipping CanUseSkill(5) gate.");
+
+        Bot.Skills.Pause();
+
+        try
+        {
+            Bot.Combat.CancelAutoAttack();
+
+            for (int attempt = 1; attempt <= maxAttempts && !Bot.ShouldExit; attempt++)
+            {
+                if (!Bot.Player.HasTarget)
+                    return false;
+
+                EnsureEnrageEquipped(expectedTarget);
+
+                Core.Logger($"{logPrefix} Scroll attempt {attempt}/{maxAttempts}.");
+
+                Core.UsePotion();
+
+                long confirmEnd = Environment.TickCount64 + 1000;
+
+                while (!Bot.ShouldExit && Environment.TickCount64 < confirmEnd)
+                {
+                    Bot.Sleep(100);
+
+                    if (TargetHasEnrageAura())
+                    {
+                        Core.Logger($"{logPrefix} Enrage confirmed on {expectedTarget}.");
+                        return true;
+                    }
+                }
+
+                Bot.Sleep(500);
+            }
+
+            Core.Logger($"{logPrefix} Scroll force-use attempts failed; Enrage was not confirmed on {expectedTarget}.");
+            return false;
+        }
+        finally
+        {
+            Bot.Skills.Resume();
+        }
+    }
+
+    bool TauntCurrentTarget(string enrageMessage, int maxAttempts = 10)
+    {
+        Bot.Skills.Pause();
+
+        try
+        {
+            for (int attempt = 1; attempt <= maxAttempts && !Bot.ShouldExit; attempt++)
+            {
+                if (!Bot.Player.HasTarget)
+                    return false;
+
+                if (TargetHasEnrageAura())
+                    return true;
+
+                EnsureEnrageEquipped(enrageMessage);
+
+                if (!Bot.Skills.CanUseSkill(5))
+                    Bot.Wait.ForTrue(() => Bot.Skills.CanUseSkill(5), 3);
+
+                Core.Logger($"[Taunt] '{enrageMessage}' — Scroll of Enrage attempt {attempt}/{maxAttempts}.");
+
+                Bot.Combat.CancelAutoAttack();
+                Core.UsePotion();
+                Bot.Sleep(350);
+
+                if (TargetHasEnrageAura())
+                {
+                    Core.Logger("[Taunt] Enrage confirmed!");
+                    return true;
+                }
+            }
+
+            Core.Logger($"[Taunt] WARNING: '{enrageMessage}' was not confirmed after {maxAttempts} attempts.");
+            return false;
+        }
+        finally
+        {
+            Bot.Skills.Resume();
+        }
+    }
+
     void PrepareTauntRole()
     {
         // All 4 players equip Scroll of Enrage:
@@ -891,15 +1365,11 @@ public class SolsticeMoonTest
             Ultra.GetScrollOfEnrage();
         }
 
-        if (!Core.CheckInventory("Scroll of Enrage"))
+        if (!EnsureEnrageEquipped("setup"))
         {
-            Core.Logger($"{Core.Username()} has no Scroll of Enrage — boss charges will NOT be redirected. " +
-                        $"Enable 'Auto-Craft Scroll of Enrage' or craft one manually (SpellCrafting rank 5 required).");
+            Core.Logger($"{Core.Username()} has no Scroll of Enrage — boss charges will NOT be redirected.");
             return;
         }
-
-        if (!Bot.Inventory.IsEquipped("Scroll of Enrage"))
-            Bot.Inventory.EquipUsableItem("Scroll of Enrage");
 
         Core.Logger($"{Core.Username()} has Scroll of Enrage equipped.");
     }
@@ -909,30 +1379,94 @@ public class SolsticeMoonTest
 
     void RunMidnightSun()
     {
+        ResetReusableSyncFiles();
         int run = ++midnightRunCount;
         ResetDungeonInstance("midnightsun", $"GreatbladeMidnight_{run}");
         ArmyKillMonster("midnightsun", "Enter", "Left", "Shining Star",  $"GreatbladeMidnight_{run}_01");
         ArmyKillMonster("midnightsun", "Enter", "Left", "Dying Light",   $"GreatbladeMidnight_{run}_02");
         ArmyKillMonster("midnightsun", "r1",    "Left", "Shining Star",  $"GreatbladeMidnight_{run}_03");
-        // Dawn Knight: taunt immediately on "The Light Gathers"; the old 6s delay was too late and caused wipes.
-        ArmyKillWithDelayedTaunt("midnightsun", "r1", "Left", "Dawn Knight", $"GreatbladeMidnight_{run}_04", sunSide: true, enrageMessage: "The Light Gathers", tauntOffsetSeconds: 0);
+        // Dawn Knight at r1: player1+2 alternate on "The Light Gathers" (6 s offset)
+        ArmyKillWithDelayedTaunt("midnightsun", "r1", "Left", "Dawn Knight", $"GreatbladeMidnight_{run}_04", sunSide: true, enrageMessage: "The Light Gathers");
         ArmyKillMonster("midnightsun", "r2",    "Left", "Dying Light",   $"GreatbladeMidnight_{run}_05");
-        // Dawn Knight: taunt immediately on "The Light Gathers"; the old 6s delay was too late and caused wipes.
-        ArmyKillWithDelayedTaunt("midnightsun", "r2", "Left", "Dawn Knight", $"GreatbladeMidnight_{run}_06", sunSide: true, enrageMessage: "The Light Gathers", tauntOffsetSeconds: 0);
+        // Dawn Knight at r2: player1+2 alternate on "The Light Gathers" (6 s offset)
+        ArmyKillWithDelayedTaunt("midnightsun", "r2", "Left", "Dawn Knight", $"GreatbladeMidnight_{run}_06", sunSide: true, enrageMessage: "The Light Gathers");
         // Shrine boss: Hollow Solstice — LR taunts on "The Sun Converges" (no offset)
         ArmyKillShrineBoss("midnightsun", "r3", "Left", "Hollow Solstice",  $"GreatbladeMidnight_{run}_07", moonBoss: false);
     }
 
     void RunSolsticeMoon()
     {
+        ResetReusableSyncFiles();
         int run = ++solsticeRunCount;
+
         ResetDungeonInstance("solsticemoon", $"GreatbladeSolstice_{run}");
-        ArmyKillMonster("solsticemoon", "Enter", "Left", "Faithless Deer",  $"GreatbladeSolstice_{run}_01");
-        ArmyKillMonster("solsticemoon", "Enter", "Left", "Shackled Fairy", $"GreatbladeSolstice_{run}_02");
-        ArmyKillMonster("solsticemoon", "r1",    "Left", "Faithless Deer",  $"GreatbladeSolstice_{run}_03");
-        ArmyKillWithDelayedTaunt("solsticemoon", "r1", "Left", "Lunar Haze", $"GreatbladeSolstice_{run}_04", sunSide: false, enrageMessage: "You gaze into the moon");
-        ArmyKillMonster("solsticemoon", "r2",    "Left", "Shackled Fairy", $"GreatbladeSolstice_{run}_05");
-        ArmyKillWithDelayedTaunt("solsticemoon", "r2", "Left", "Lunar Haze", $"GreatbladeSolstice_{run}_06", sunSide: false, enrageMessage: "You gaze into the moon");
-        ArmyKillShrineBoss("solsticemoon", "r3", "Left", "Hollow Midnight", $"GreatbladeSolstice_{run}_07", moonBoss: true);
+
+        ArmyKillMonster("solsticemoon", "Enter", "Left", "*", $"GreatbladeSolstice_{run}_01");
+
+        // r1: everyone focuses Lunar Haze first, only LR taunts Moonlight Gaze.
+        // After Lunar Haze dies, everyone swaps to Faithless Deer before moving on.
+        ArmyKillLunarHazeWithLrTaunt(
+            "solsticemoon",
+            "r1",
+            "Left",
+            "Faithless Deer",
+            $"GreatbladeSolstice_{run}_02"
+        );
+
+        // r2: everyone focuses Lunar Haze first, only LR taunts Moonlight Gaze.
+        // After Lunar Haze dies, everyone swaps to Shackled Fairy before moving on.
+        ArmyKillLunarHazeWithLrTaunt(
+            "solsticemoon",
+            "r2",
+            "Left",
+            "Shackled Fairy",
+            $"GreatbladeSolstice_{run}_03"
+        );
+
+        // Shrine boss: Hollow Midnight — player3+4 alternate on "The Moon Converges".
+        ArmyKillShrineBoss(
+            "solsticemoon",
+            "r3",
+            "Left",
+            "Hollow Midnight",
+            $"GreatbladeSolstice_{run}_04",
+            moonBoss: true
+        );
+    }
+
+    void MoveSolstice(string checkpoint)
+    {
+        switch (Bot.Player.Cell)
+        {
+            case "Enter":
+                Bot.Map.Jump("r1", "Left", autoCorrect: false);
+                break;
+
+            case "r1":
+                Bot.Map.Jump("r2", "Left", autoCorrect: false);
+                break;
+
+            case "r2":
+                Bot.Map.Jump("r3", "Left", autoCorrect: false);
+                break;
+
+            case "r3":
+            case "r3a":
+                RestartSolstice(checkpoint);
+                break;
+        }
+    }
+
+    void RestartSolstice(string checkpoint)
+    {
+        SyncArmy($"{checkpoint}_restart_ready.sync");
+        string target = Core.PrivateRooms ? $"solsticemoon-{Core.PrivateRoomNumber}" : "solsticemoon";
+        Core.Logger($"Restarting /{target} with EclipseAscent packet 24946...");
+        Bot.Send.Packet($"%xt%zm%dungeonQueue%24946%{target}%");
+        Bot.Wait.ForMapLoad("solsticemoon");
+        Bot.Wait.ForTrue(() => string.Equals(Bot.Player.Cell, "Enter", StringComparison.OrdinalIgnoreCase), 20);
+        SyncArmy($"{checkpoint}_restart_done.sync");
     }
 }
+
+//lonewolf was here ( ͡° ͜ʖ ͡°)
