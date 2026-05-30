@@ -24169,6 +24169,36 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/DeerHuntMerge.cs"
   },
   {
+    "name": "Blighs Collectibles Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Blighs Collectibles Merge [2724] in /forgecitrinitas",
+    "tags": [
+      "blighs",
+      "collectibles",
+      "merge",
+      "forgecitrinitas",
+      "syszeros",
+      "uniform",
+      "mech",
+      "guest",
+      "ebilgames",
+      "arcade",
+      "game",
+      "assault",
+      "mecha",
+      "server",
+      "ping",
+      "syszero",
+      "morph",
+      "astronomical",
+      "viewport"
+    ],
+    "path": "Other/MergeShops/BlighsCollectiblesMerge.cs",
+    "size": 5493,
+    "sha256": "8e3de4ac9197617ebb25482e25672df31ce81b58d7df8f462cec466ce7e4b00a",
+    "fileName": "BlighsCollectiblesMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/BlighsCollectiblesMerge.cs"
+  },
+  {
     "name": "Argentos Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Argentos Merge [2517] in /frozenbalemorale",
     "tags": [
@@ -26132,6 +26162,34 @@
     "sha256": "114ef37f3d3b659b1993890ed54f7adaf067d36bfd20a63470ed1b1ae959c4e0",
     "fileName": "SpoilsofLightMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SpoilsofLightMerge.cs"
+  },
+  {
+    "name": "Ouroboros Lost and Found Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Ouroboros Lost and Found Merge [2716] in /forgecitrinitas",
+    "tags": [
+      "ouroboros",
+      "lost",
+      "and",
+      "found",
+      "merge",
+      "forgecitrinitas",
+      "wolfblade",
+      "leader",
+      "eye",
+      "dn",
+      "doomed",
+      "obsession",
+      "gram",
+      "prototype",
+      "eckesachs",
+      "spear",
+      "discord"
+    ],
+    "path": "Other/MergeShops/OuroborosLostandFoundMerge.cs",
+    "size": 5961,
+    "sha256": "d8f04d7cacdb930c215e8d7a6fc3d7b9df6c6a5ad5fcf82cb36d321688039d30",
+    "fileName": "OuroborosLostandFoundMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/OuroborosLostandFoundMerge.cs"
   },
   {
     "name": "Golden Merge",
