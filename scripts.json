@@ -4515,123 +4515,6 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Army/ArmySpiritOrbs.cs"
   },
   {
-    "name": "Solstice Moon Test",
-    "description": "Runs only the Solstice Moon / Shrine - Left portion for testing Lunar Haze and Hollow Midnight taunt timing.",
-    "tags": [
-      "solstice",
-      "moon",
-      "hollow midnight",
-      "lunar haze",
-      "army",
-      "taunt",
-      "test"
-    ],
-    "path": "Entwined Eclipse/SolsticeMoon.cs",
-    "size": 38792,
-    "sha256": "1829d8d028ba6866d8dde3479b6cf979d7a81dd4b7c824f4ee83e9b528b5de1e",
-    "fileName": "SolsticeMoon.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Entwined Eclipse/SolsticeMoon.cs"
-  },
-  {
-    "name": "Greatblade of the Entwined Eclipse (Full Chain)",
-    "description": "End-to-end farm for Greatblade of the Entwined Eclipse. Runs Victor Matsuri storyline, kills Masakado via the King's Echo army flow for Victor of the Festival, farms Slivers of Sunlight/Moonlight, merges Rite of Ascension, farms Ecliptic Offering in Ascension of the Eclipse, then merges the full blade chain up to the final Greatblade.",
-    "tags": [
-      "greatblade",
-      "entwined",
-      "eclipse",
-      "full",
-      "chain",
-      "victor",
-      "matsuri",
-      "masakado",
-      "rite",
-      "ascension",
-      "midnight",
-      "solstice",
-      "ascend",
-      "army"
-    ],
-    "path": "Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs",
-    "size": 21566,
-    "sha256": "2da476b12ba9a0d9bc8de2dacd4bc5afb343573c54bbb3ea59c61529bd4f26ba",
-    "fileName": "0GreatbladeOfTheEntwinedEclipse.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs"
-  },
-  {
-    "name": "Victor Matsuri Story (Pre-Masakado)",
-    "description": "Runs Empress Ai No Miko's questline in /victormatsuri up to (but not including) the Masakado quest (10295). Used as a setup step before handing off to the dedicated Masakado army script. Quest 10295 must be handled separately via MasakadoKingsEchoArmy.",
-    "tags": [
-      "victor matsuri",
-      "victormatsuri",
-      "empress ai no miko",
-      "story",
-      "pre-masakado",
-      "eclipse",
-      "rite of ascension"
-    ],
-    "path": "Entwined Eclipse/VictorMatsuriStory.cs",
-    "size": 3124,
-    "sha256": "d569a8254fb3fb4858bf0952f88b7c55c6946b22213c4ec91502daae0949daad",
-    "fileName": "VictorMatsuriStory.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Entwined Eclipse/VictorMatsuriStory.cs"
-  },
-  {
-    "name": "Masakado King's Echo",
-    "description": "Solo or army helper for Victor Matsuri's final boss, Masakado, using King's Echo and Royal Resolve.",
-    "tags": [
-      "masakado",
-      "victor matsuri",
-      "kings echo",
-      "king's echo",
-      "army",
-      "solo",
-      "royal resolve"
-    ],
-    "path": "Entwined Eclipse/Masakado.cs",
-    "size": 23954,
-    "sha256": "eb7d1939faf3a8d11ec2a4054125c8e66944df794d5f1655f45a80bb69fbde1b",
-    "fileName": "Masakado.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Entwined Eclipse/Masakado.cs"
-  },
-  {
-    "name": "Midnight Sun (Sun Side Test)",
-    "description": "Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord Of Order.",
-    "tags": [
-      "greatblade",
-      "entwined",
-      "eclipse",
-      "midnight",
-      "sun",
-      "farm",
-      "test",
-      "army"
-    ],
-    "path": "Entwined Eclipse/MidnightSun.cs",
-    "size": 25454,
-    "sha256": "de1b8d8a16e7981e480145e33d71761fb35e997db316f9ff5efe0b0ac7573c8a",
-    "fileName": "MidnightSun.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Entwined Eclipse/MidnightSun.cs"
-  },
-  {
-    "name": "Ascend Eclipse Test",
-    "description": "Tests the Ascension of the Eclipse dungeon in a loop. Handles dual final bosses (Ascended Solstice + Ascended Midnight) with HP-balanced targeting, alternating convergence taunts, and Daybreak/Nightfall cross-cancel mechanic.",
-    "tags": [
-      "greatblade",
-      "entwined",
-      "eclipse",
-      "ascend",
-      "ascendeclipse",
-      "army",
-      "taunt",
-      "test"
-    ],
-    "path": "Entwined Eclipse/AscensionoftheEclipse.cs",
-    "size": 69699,
-    "sha256": "8261bd5e46c95e3765393218a1bd4291dc016f38dfeece1368996059304e77dc",
-    "fileName": "AscensionoftheEclipse.cs",
-    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Entwined Eclipse/AscensionoftheEclipse.cs"
-  },
-  {
     "name": "null",
     "description": "null",
     "tags": [
@@ -20260,6 +20143,123 @@
     "sha256": "2ef475704dfc21b3e598de621d12de14b374d60f19987ca396deb517a4a24c88",
     "fileName": "EmpoweredNationItem.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Weapons/EmpoweredNationItem.cs"
+  },
+  {
+    "name": "Solstice Moon Test",
+    "description": "Runs only the Solstice Moon / Shrine - Left portion for testing Lunar Haze and Hollow Midnight taunt timing.",
+    "tags": [
+      "solstice",
+      "moon",
+      "hollow midnight",
+      "lunar haze",
+      "army",
+      "taunt",
+      "test"
+    ],
+    "path": "Ultras/Entwined Eclipse/SolsticeMoon.cs",
+    "size": 38792,
+    "sha256": "1829d8d028ba6866d8dde3479b6cf979d7a81dd4b7c824f4ee83e9b528b5de1e",
+    "fileName": "SolsticeMoon.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/SolsticeMoon.cs"
+  },
+  {
+    "name": "Greatblade of the Entwined Eclipse (Full Chain)",
+    "description": "End-to-end farm for Greatblade of the Entwined Eclipse. Runs Victor Matsuri storyline, kills Masakado via the King's Echo army flow for Victor of the Festival, farms Slivers of Sunlight/Moonlight, merges Rite of Ascension, farms Ecliptic Offering in Ascension of the Eclipse, then merges the full blade chain up to the final Greatblade.",
+    "tags": [
+      "greatblade",
+      "entwined",
+      "eclipse",
+      "full",
+      "chain",
+      "victor",
+      "matsuri",
+      "masakado",
+      "rite",
+      "ascension",
+      "midnight",
+      "solstice",
+      "ascend",
+      "army"
+    ],
+    "path": "Ultras/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs",
+    "size": 21602,
+    "sha256": "553ad5da37d5a697bfded58dddddb9b6cae4dbfead044062d2251421ebfb63e1",
+    "fileName": "0GreatbladeOfTheEntwinedEclipse.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/0GreatbladeOfTheEntwinedEclipse.cs"
+  },
+  {
+    "name": "Victor Matsuri Story (Pre-Masakado)",
+    "description": "Runs Empress Ai No Miko's questline in /victormatsuri up to (but not including) the Masakado quest (10295). Used as a setup step before handing off to the dedicated Masakado army script. Quest 10295 must be handled separately via MasakadoKingsEchoArmy.",
+    "tags": [
+      "victor matsuri",
+      "victormatsuri",
+      "empress ai no miko",
+      "story",
+      "pre-masakado",
+      "eclipse",
+      "rite of ascension"
+    ],
+    "path": "Ultras/Entwined Eclipse/VictorMatsuriStory.cs",
+    "size": 3124,
+    "sha256": "d569a8254fb3fb4858bf0952f88b7c55c6946b22213c4ec91502daae0949daad",
+    "fileName": "VictorMatsuriStory.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/VictorMatsuriStory.cs"
+  },
+  {
+    "name": "Masakado King's Echo",
+    "description": "Solo or army helper for Victor Matsuri's final boss, Masakado, using King's Echo and Royal Resolve.",
+    "tags": [
+      "masakado",
+      "victor matsuri",
+      "kings echo",
+      "king's echo",
+      "army",
+      "solo",
+      "royal resolve"
+    ],
+    "path": "Ultras/Entwined Eclipse/Masakado.cs",
+    "size": 23954,
+    "sha256": "eb7d1939faf3a8d11ec2a4054125c8e66944df794d5f1655f45a80bb69fbde1b",
+    "fileName": "Masakado.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/Masakado.cs"
+  },
+  {
+    "name": "Midnight Sun (Sun Side Test)",
+    "description": "Farms Sliver of Sunlight by running /midnightsun in a loop. 4-account army script with alternating Scroll of Enrage taunt. Slot 1 = Legion Revenant, Slot 2 = StoneCrusher, Slot 3 = ArchPaladin, Slot 4 = Lord Of Order.",
+    "tags": [
+      "greatblade",
+      "entwined",
+      "eclipse",
+      "midnight",
+      "sun",
+      "farm",
+      "test",
+      "army"
+    ],
+    "path": "Ultras/Entwined Eclipse/MidnightSun.cs",
+    "size": 25454,
+    "sha256": "de1b8d8a16e7981e480145e33d71761fb35e997db316f9ff5efe0b0ac7573c8a",
+    "fileName": "MidnightSun.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/MidnightSun.cs"
+  },
+  {
+    "name": "Ascend Eclipse Test",
+    "description": "Tests the Ascension of the Eclipse dungeon in a loop. Handles dual final bosses (Ascended Solstice + Ascended Midnight) with HP-balanced targeting, alternating convergence taunts, and Daybreak/Nightfall cross-cancel mechanic.",
+    "tags": [
+      "greatblade",
+      "entwined",
+      "eclipse",
+      "ascend",
+      "ascendeclipse",
+      "army",
+      "taunt",
+      "test"
+    ],
+    "path": "Ultras/Entwined Eclipse/AscensionoftheEclipse.cs",
+    "size": 69699,
+    "sha256": "8261bd5e46c95e3765393218a1bd4291dc016f38dfeece1368996059304e77dc",
+    "fileName": "AscensionoftheEclipse.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Ultras/Entwined Eclipse/AscensionoftheEclipse.cs"
   },
   {
     "name": "ShadowslayerSummoningRitual",
