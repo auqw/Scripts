@@ -39,10 +39,10 @@ public class AscendEclipseTest
     public string OptionsStorage = "AscendEclipse_Test";
     public List<IOption> Options = new()
     {
-        new Option<string>("player1", "Legion Revenant", "AQW account name for the Legion Revenant slot.", ""),
-        new Option<string>("player2", "StoneCrusher", "AQW account name for the StoneCrusher slot.", ""), 
-        new Option<string>("player3", "ArchPaladin", "AQW account name for the ArchPaladin slot.", ""),
-        new Option<string>("player4", "Lord Of Order", "AQW account name for the Lord Of Order slot.", ""),
+        new Option<string>("player1", "LR Account", "Name of the account that will use Legion Revenant.", ""),
+        new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""), 
+        new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
+        new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
         new Option<bool>(
@@ -62,13 +62,6 @@ public class AscendEclipseTest
             "OFF: scroll requirement is skipped.",
             true
         ),
-        new Option<bool>(
-            "tauntSanityCheck",
-            "Check Usable Slot Before Boss Rooms",
-            "ON: after the Oracle class reset, temporarily equips Vigil and tests whether the usable/potion slot is responsive.\n" +
-            "If the slot appears stuck, the script swaps Oracle -> assigned class and tests again, then re-equips Scroll of Enrage before fighting.",
-            true
-        ),
     };
 
     // Fixed 4-class lineup
@@ -86,13 +79,11 @@ public class AscendEclipseTest
     const string AscendedSolstice = "Ascended Solstice"; // sun — Solar Charge  → "The Sun Converges"
     const string AscendedMidnight = "Ascended Midnight"; // moon — Lunar Charge → "The Moon Converges"
 
-    // Usable-slot safety check items
+    // Usable-slot taunt item
     const string TauntItem = "Scroll of Enrage";
-    const string TauntTestItem = "Vigil";
 
     bool autoEnhance;
     bool autoGetEnrage;
-    bool tauntSanityCheck;
     int runCount;
     int syncCount;
 
@@ -116,19 +107,20 @@ public class AscendEclipseTest
         if (sArmy.Players().Length < 4)
         {
             Core.Logger("Add 4 account names in the script options before starting.");
+
             if (!SkipSetOptions)
                 Core.SetOptions(false);
+
             return;
         }
-
+        
         Core.PrivateRooms = true;
         if (Core.PrivateRoomNumber < 1000 || Core.PrivateRoomNumber > 99999)
             Core.PrivateRoomNumber = sArmy.getRoomNr();
         Core.Logger($"Army mode: {sArmy.Players().Length} accounts, private room #{Core.PrivateRoomNumber}.");
 
-        autoEnhance       = Bot.Config!.Get<bool>("autoEnhance");
-        autoGetEnrage     = Bot.Config.Get<bool>("autoGetEnrage");
-        tauntSanityCheck  = Bot.Config.Get<bool>("tauntSanityCheck");
+        autoEnhance   = Bot.Config!.Get<bool>("autoEnhance");
+        autoGetEnrage = Bot.Config.Get<bool>("autoGetEnrage");
 
         SetupPartyFromPlayer1();
 
@@ -148,11 +140,13 @@ public class AscendEclipseTest
 
             while (!Bot.ShouldExit)
             {
-                if (TargetEclipticOfferingCount > 0 && Core.CheckInventory(EclipticOffering, TargetEclipticOfferingCount))
+                if (TargetEclipticOfferingCount > 0 &&
+                    Core.CheckInventory(EclipticOffering, TargetEclipticOfferingCount))
                 {
                     Core.Logger($"[AscendEclipse] Reached target of {TargetEclipticOfferingCount} {EclipticOffering}; stopping.");
                     break;
                 }
+
                 RunAscendEclipse();
             }
         }
@@ -169,6 +163,8 @@ public class AscendEclipseTest
     {
         int run = ++runCount;
         string runCheckpoint = $"AscendEclipse_{run}";
+
+        ResetReusableSyncFiles();
 
         ResetDungeonInstance("ascendeclipse", runCheckpoint);
 
@@ -231,104 +227,23 @@ public class AscendEclipseTest
     void OracleResetBeforeRoomFight(string checkpoint)
     {
         string assignedClass = GetConfiguredClassForCurrentAccount();
-        string logPrefix = $"[Taunt Check {checkpoint}]";
+        string logPrefix = $"[Taunt Setup {checkpoint}]";
 
         Core.Logger($"[Oracle Reset] Resetting class state before {checkpoint}: Oracle -> {assignedClass}.");
         SyncArmy($"{checkpoint}_oracle_reset_ready.sync");
 
         ResetClassStateWithOracle(assignedClass);
-
-        // Vigil self-cast testing uses the usable slot and may trigger usable-item cooldown,
-        // so only run it before r3 where the taunt desync is most punishing.
-        if (tauntSanityCheck && checkpoint.EndsWith("_07", StringComparison.OrdinalIgnoreCase))
-            EnsureUsableSlotWorksWithVigil(logPrefix, assignedClass);
-        else
-            EnsureTauntItemEquipped(logPrefix, waitForReady: false);
+        EnsureTauntItemEquipped(logPrefix);
 
         SyncArmy($"{checkpoint}_oracle_reset_done.sync");
         Core.Logger($"[Oracle Reset] Class state reset complete before {checkpoint}.");
     }
 
-    bool EnsureUsableSlotWorksWithVigil(string logPrefix, string assignedClass, int maxAttempts = 3)
-    {
-        const string testAura = "Vigil";
-
-        if (!Core.CheckInventory(TauntTestItem))
-        {
-            Core.Logger($"{logPrefix} {TauntTestItem} is missing; skipping Vigil self-cast check.");
-            EnsureTauntItemEquipped(logPrefix, waitForReady: false);
-            return true;
-        }
-
-        if (!Core.CheckInventory(TauntItem))
-        {
-            Core.Logger($"{logPrefix} {TauntItem} is missing; skipping usable-slot sanity check.");
-            return false;
-        }
-
-        for (int attempt = 1; attempt <= maxAttempts && !Bot.ShouldExit; attempt++)
-        {
-            Core.Logger($"{logPrefix} Testing usable slot by self-casting {TauntTestItem}. Attempt {attempt}/{maxAttempts}.");
-
-            Bot.Skills.Pause();
-            try
-            {
-                if (!Bot.Inventory.IsEquipped(TauntTestItem))
-                {
-                    Bot.Inventory.EquipUsableItem(TauntTestItem);
-                    Bot.Sleep(1000);
-                }
-
-                long readyEnd = Environment.TickCount64 + 5000;
-
-                while (!Bot.ShouldExit && !Bot.Skills.CanUseSkill(5) && Environment.TickCount64 < readyEnd)
-                    Bot.Sleep(100);
-
-                if (!Bot.Skills.CanUseSkill(5))
-                {
-                    Core.Logger($"{logPrefix} Slot 5 is not ready with {TauntTestItem}. Resetting class state and testing again.");
-                }
-                else
-                {
-                    Core.Logger($"{logPrefix} Using {TauntTestItem} to verify usable slot.");
-                    Core.UsePotion();
-
-                    long auraEnd = Environment.TickCount64 + 3000;
-
-                    while (!Bot.ShouldExit && Environment.TickCount64 < auraEnd)
-                    {
-                        if (Bot.Self.HasActiveAura(testAura))
-                        {
-                            Core.Logger($"{logPrefix} Passed: {testAura} aura detected. Re-equipping {TauntItem}.");
-                            EnsureTauntItemEquipped(logPrefix, waitForReady: true);
-                            return true;
-                        }
-
-                        Bot.Sleep(100);
-                    }
-
-                    Core.Logger($"{logPrefix} {TauntTestItem} fired, but {testAura} aura was not detected. Resetting class state and testing again.");
-                }
-            }
-            finally
-            {
-                Bot.Skills.Resume();
-            }
-
-            ResetClassStateWithOracle(assignedClass);
-            Bot.Sleep(1000);
-        }
-
-        Core.Logger($"{logPrefix} Vigil self-cast check failed after {maxAttempts} attempts. Re-equipping {TauntItem} anyway, but taunts may fail.");
-        EnsureTauntItemEquipped(logPrefix, waitForReady: true);
-        return false;
-    }
-
-    void EnsureTauntItemEquipped(string logPrefix, bool waitForReady = false)
+    void EnsureTauntItemEquipped(string logPrefix)
     {
         if (!Core.CheckInventory(TauntItem))
         {
-            Core.Logger($"{logPrefix} {TauntItem} is missing; cannot re-equip taunt item.");
+            Core.Logger($"{logPrefix} {TauntItem} is missing; boss charges will NOT be redirected.");
             return;
         }
 
@@ -338,18 +253,10 @@ public class AscendEclipseTest
             Bot.Sleep(750);
         }
 
-        if (!waitForReady)
-            return;
-
-        long readyEnd = Environment.TickCount64 + 12000;
-
-        while (!Bot.ShouldExit && !Bot.Skills.CanUseSkill(5) && Environment.TickCount64 < readyEnd)
-            Bot.Sleep(100);
-
-        if (Bot.Skills.CanUseSkill(5))
-            Core.Logger($"{logPrefix} {TauntItem} is equipped and usable slot is ready.");
+        if (Bot.Inventory.IsEquipped(TauntItem))
+            Core.Logger($"{logPrefix} {TauntItem} equipped.");
         else
-            Core.Logger($"{logPrefix} {TauntItem} re-equipped, but usable slot is still on cooldown/not ready.");
+            Core.Logger($"{logPrefix} Tried to equip {TauntItem}, but it is not showing as equipped.");
     }
 
     // ── Army helpers ──────────────────────────────────────────────────────────
@@ -838,9 +745,9 @@ public class AscendEclipseTest
 
             Core.Logger($"{logPrefix} Force-using Scroll of Enrage on {bossName}; skipping CanUseSkill(5) gate.");
 
-            for (int attempt = 1; attempt <= 6 && !Bot.ShouldExit; attempt++)
+            for (int attempt = 1; attempt <= 10 && !Bot.ShouldExit; attempt++)
             {
-                Core.Logger($"{logPrefix} Scroll attempt {attempt}/6.");
+                Core.Logger($"{logPrefix} Scroll attempt {attempt}/10.");
 
                 Core.UsePotion();
 
@@ -1209,6 +1116,39 @@ public class AscendEclipseTest
         return "run";
     }
 
+    void ResetReusableSyncFiles()
+    {
+        // Only player1 clears the shared files so accounts do not erase each other's checkpoint lines.
+        if (!IsConfiguredAccount(Bot.Config!.Get<string>("player1") ?? ""))
+        {
+            Bot.Sleep(1500);
+            return;
+        }
+
+        ResetSyncFile(SyncGroupPath("party_setup_ready.sync"));
+        ResetSyncFile(SyncGroupPath("AscendEclipse_reset_ready.sync"));
+        ResetSyncFile(SyncGroupPath("AscendEclipse_run_ready.sync"));
+        Core.Logger("[Sync] Reset reusable sync files for the new run.");
+        Bot.Sleep(1500);
+    }
+
+    void ResetSyncFile(string path)
+    {
+        try
+        {
+            string? dir = Path.GetDirectoryName(path);
+
+            if (!string.IsNullOrWhiteSpace(dir))
+                Directory.CreateDirectory(dir);
+
+            File.WriteAllText(path, string.Empty);
+        }
+        catch
+        {
+            Bot.Sleep(100);
+        }
+    }
+
     void SyncArmy(string syncFile)
     {
         int partySize = sArmy.Players().Length;
@@ -1221,24 +1161,16 @@ public class AscendEclipseTest
 
         while (!Bot.ShouldExit)
         {
-            long writeNow = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            long pruneCutoff = writeNow - 120;
-
             string[] lines = ReadSyncLines(path);
 
             lines = lines
                 .Where(l => !l.StartsWith($"{checkpoint}:{username}:", StringComparison.OrdinalIgnoreCase))
-                .Where(l =>
-                {
-                    var p = l.Split(':');
-                    return p.Length < 4 || !long.TryParse(p[3], out long ts) || ts >= pruneCutoff;
-                })
                 .ToArray();
 
             WriteSyncLines(
                 path,
                 lines
-                    .Append($"{checkpoint}:{username}:ready:{writeNow}")
+                    .Append($"{checkpoint}:{username}:ready:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}")
                     .ToArray()
             );
 
@@ -1295,6 +1227,7 @@ public class AscendEclipseTest
                 break;
 
             case "stonecrusher":
+            case "infinity titan":
                 UseFirstAvailableSkill(scSkillList);
                 break;
 
@@ -1402,7 +1335,8 @@ public class AscendEclipseTest
                 Bot.Player.SetSpawnPoint();
             }
 
-            bool isStoneCrusher = string.Equals(Bot.Player.CurrentClass?.Name, "StoneCrusher", StringComparison.OrdinalIgnoreCase);
+            bool isStoneCrusher = string.Equals(Bot.Player.CurrentClass?.Name, "StoneCrusher", StringComparison.OrdinalIgnoreCase) || string.Equals(Bot.Player.CurrentClass?.Name, "Infinity Titan", StringComparison.OrdinalIgnoreCase);
+
             bool isLegionRevenant = string.Equals(Bot.Player.CurrentClass?.Name, "Legion Revenant", StringComparison.OrdinalIgnoreCase);
 
             bool sunsetKnightAlive = MonsterAvailable("Sunset Knight", cell);
@@ -1500,7 +1434,7 @@ public class AscendEclipseTest
         }
     }
 
-    bool TauntCurrentTarget(string logPrefix, string expectedTarget, int maxAttempts = 6)
+    bool TauntCurrentTarget(string logPrefix, string expectedTarget, int maxAttempts = 10)
     {
         if (!Bot.Player.HasTarget || Bot.Player.Target?.HP <= 0)
         {
@@ -1680,9 +1614,41 @@ public class AscendEclipseTest
         WaitForMapName("whitemap", 8000);
         Bot.Sleep(1000);
         SyncArmy($"{checkpoint}_all_in_whitemap.sync");
+
+        RestockEnrageIfLow($"Before {checkpoint}", minimumCount: 80);
+        SyncArmy($"{checkpoint}_restock_done.sync");
+
         JoinShrineDungeon(nextMap, "Enter", "Left", force: true);
         Bot.Sleep(1000);
         SyncArmy($"{checkpoint}_all_rejoined_dungeon.sync");
+    }
+
+    int GetInventoryQuantity(string itemName)
+    {
+        return Bot.Inventory.Items
+            .FirstOrDefault(item => item.Name.Equals(itemName, StringComparison.OrdinalIgnoreCase))
+            ?.Quantity ?? 0;
+    }
+
+    void RestockEnrageIfLow(string context, int minimumCount = 80)
+    {
+        if (!autoGetEnrage)
+            return;
+
+        int count = GetInventoryQuantity(TauntItem);
+        Core.Logger($"[Taunt] {context}: {count} {TauntItem} remaining.");
+
+        if (count >= minimumCount)
+            return;
+
+        Core.Logger($"[Taunt] {TauntItem} is below {minimumCount}. Restocking before continuing.");
+
+        Ultra.GetScrollOfEnrage();
+
+        int newCount = GetInventoryQuantity(TauntItem);
+        Core.Logger($"[Taunt] Restock complete: {newCount} {TauntItem} remaining.");
+
+        EnsureTauntItemEquipped("[Taunt Restock]");
     }
 
     void JoinAndFocus(string map, string cell, string pad)
@@ -1758,10 +1724,34 @@ public class AscendEclipseTest
 
     void EquipClassByName(string className)
     {
-        if (string.IsNullOrWhiteSpace(className)) return;
-        if (!Core.CheckInventory(className)) { Core.Logger($"{Core.Username()} missing {className}.", stopBot: true); return; }
-        if (!IsClassEquipped(className)) { Core.Equip(className); Bot.Wait.ForItemEquip(className); Bot.Sleep(1000); }
-        Core.Logger($"{Core.Username()} equipped {className}; using custom skill rotation.");
+        if (string.IsNullOrWhiteSpace(className))
+            return;
+
+        string classToEquip = className;
+
+        if (!Core.CheckInventory(classToEquip))
+        {
+            if (className.Equals("StoneCrusher", StringComparison.OrdinalIgnoreCase) &&
+                Core.CheckInventory("Infinity Titan"))
+            {
+                Core.Logger($"{Core.Username()} is assigned to use StoneCrusher, but StoneCrusher is missing. Using Infinity Titan instead.");
+                classToEquip = "Infinity Titan";
+            }
+            else
+            {
+                Core.Logger($"{Core.Username()} missing {className}.", stopBot: true);
+                return;
+            }
+        }
+
+        if (!IsClassEquipped(classToEquip))
+        {
+            Core.Equip(classToEquip);
+            Bot.Wait.ForItemEquip(classToEquip);
+            Bot.Sleep(1000);
+        }
+
+        Core.Logger($"{Core.Username()} equipped {classToEquip}; using custom skill rotation.");
     }
 
     bool IsClassEquipped(string className) =>
@@ -1803,6 +1793,7 @@ public class AscendEclipseTest
                 break;
 
             case "stonecrusher":
+            case "infinity titan":
                 Adv.EnhanceEquipped(
                     type: EnhancementType.Fighter,
                     hSpecial: HelmSpecial.None,
@@ -1830,6 +1821,7 @@ public class AscendEclipseTest
                 break;
 
             case "stonecrusher":
+            case "infinity titan":
                 UsePotionSet("Might Tonic", "Potent Revitalize Elixir");
                 break;
 
