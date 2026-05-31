@@ -43,6 +43,14 @@ public class AscendEclipseTest
         new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""), 
         new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
         new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
+
+        new Option<int>(
+            "privateRoomNumber",
+            "Private Room Number (IMPORTANT)",
+            "Private room number used by all 4 accounts. Set the same number on every account!",
+            69420
+        ),
+
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
         new Option<bool>(
@@ -89,11 +97,24 @@ public class AscendEclipseTest
     // Usable-slot taunt item
     const string TauntItem = "Scroll of Enrage";
 
+    // Room monster names
+    const string FallenStar = "Fallen Star";
+    const string BlesslessDeer = "Blessless Deer";
+    const string SuffocatedLight = "Suffocated Light";
+    const string ImprisonedFairy = "Imprisoned Fairy";
+    const string SunsetKnight = "Sunset Knight";
+    const string MoonHaze = "Moon Haze";
+
+    // Room aura names
+    const string SolarFlare = "Solar Flare";
+    const string GatheringLight = "Gathering Light";
+    const string MoonlightGaze = "Moonlight Gaze";
+    const string SunsWarmth = "Sun's Warmth";
+
     bool autoEnhance;
     bool autoGetEnrage;
     bool oracleClassTauntReset;
     int runCount;
-    int syncCount;
     bool syncFilesClearedOnStartup;
 
     /// <summary>
@@ -124,17 +145,34 @@ public class AscendEclipseTest
         }
         
         Core.PrivateRooms = true;
-        if (Core.PrivateRoomNumber < 1000 || Core.PrivateRoomNumber > 99999)
+        int configuredRoom = Bot.Config!.Get<int>("privateRoomNumber");
+        if (configuredRoom >= 1000 && configuredRoom <= 99999)
+        {
+            Core.PrivateRoomNumber = configuredRoom;
+        }
+        else
+        {
+            Core.Logger($"Invalid private room number '{configuredRoom}'. Generating a fallback room number.");
             Core.PrivateRoomNumber = sArmy.getRoomNr();
-        Core.Logger($"Army mode: {sArmy.Players().Length} accounts, private room #{Core.PrivateRoomNumber}.");
+        }
+
+        Core.Logger($"Army mode enabled: {sArmy.Players().Length} accounts, private room #{Core.PrivateRoomNumber}.");
 
         autoEnhance   = Bot.Config!.Get<bool>("autoEnhance");
         autoGetEnrage = Bot.Config.Get<bool>("autoGetEnrage");
         oracleClassTauntReset = Bot.Config.Get<bool>("oracleClassTauntReset");
 
+        Core.Logger(
+            $"[Setup] Role={SafeRoleName()}, " +
+            $"AutoEnhance={autoEnhance}, AutoGetEnrage={autoGetEnrage}, OracleReset={oracleClassTauntReset}, " +
+            $"PrivateRoom={Core.PrivateRoomNumber}."
+        );
+
         SetupPartyFromPlayer1();
 
         EquipArmyClasses();
+
+        Core.Logger($"[Setup] {SafeRoleName()} current class after equip: {Bot.Player.CurrentClass?.Name ?? "none"}.");
 
         if (autoEnhance)
             ApplyEnhancements();
@@ -182,7 +220,7 @@ public class AscendEclipseTest
         ArmyKillStarWithDeerCleanse("ascendeclipse", "Enter", "Left", $"{runCheckpoint}_01");
 
         // r1 — everyone rotates taunt on Suffocated Light
-        ArmyKillMonsterWithRotatingAuraTaunt("ascendeclipse", "r1", "Left", "Suffocated Light", "Gathering Light", $"{runCheckpoint}_03", "Imprisoned Fairy");
+        ArmyKillMonsterWithRotatingAuraTaunt("ascendeclipse", "r1", "Left", SuffocatedLight, GatheringLight, $"{runCheckpoint}_03", ImprisonedFairy);
 
         // r2 — SC focuses/taunts Sunset Knight, everyone else attacks Moon Haze with LR taunting it
         ArmyKillRoom2SplitTaunt("ascendeclipse", "r2", "Left", $"{runCheckpoint}_05");
@@ -238,6 +276,8 @@ public class AscendEclipseTest
         string assignedClass = GetConfiguredClassForCurrentAccount();
         string logPrefix = $"[Taunt Setup {checkpoint}]";
 
+        Core.Logger($"[Oracle Reset] {SafeRoleName()} preparing for {checkpoint}. AssignedClass={assignedClass}.");
+
         SyncArmy($"{checkpoint}_oracle_reset_ready.sync");
 
         if (oracleClassTauntReset)
@@ -254,7 +294,7 @@ public class AscendEclipseTest
         EnsureTauntItemEquipped(logPrefix);
 
         SyncArmy($"{checkpoint}_oracle_reset_done.sync");
-        Core.Logger($"[Oracle Reset] Class state reset complete before {checkpoint}.");
+        Core.Logger($"[Oracle Reset] Taunt setup complete before {checkpoint}.");
     }
 
     void EnsureTauntItemEquipped(string logPrefix)
@@ -272,9 +312,9 @@ public class AscendEclipseTest
         }
 
         if (Bot.Inventory.IsEquipped(TauntItem))
-            Core.Logger($"{logPrefix} {TauntItem} equipped.");
+            Core.Logger($"{logPrefix} [{SafeRoleName()}] {TauntItem} equipped.");
         else
-            Core.Logger($"{logPrefix} Tried to equip {TauntItem}, but it is not showing as equipped.");
+            Core.Logger($"{logPrefix} [{SafeRoleName()}] Tried to equip {TauntItem}, but it is not showing as equipped.");
     }
 
     // ── Army helpers ──────────────────────────────────────────────────────────
@@ -307,7 +347,7 @@ public class AscendEclipseTest
             : $"{midnight.HP}/{midnight.MaxHP} ({GetHpPercent(midnight.HP, midnight.MaxHP):0.0}%)";
 
         Core.Logger(
-            $"[r3 Status] HP: Solstice={solsticeText}, Midnight={midnightText}; " +
+            $"[r3 Status] {SafeRoleName()} HP: Solstice={solsticeText}, Midnight={midnightText}; " +
             $"Me: HP={Bot.Player.Health}, Alive={Bot.Player.Alive}, Cell={Bot.Player.Cell}, " +
             $"HasTarget={Bot.Player.HasTarget}"
         );
@@ -355,7 +395,7 @@ public class AscendEclipseTest
             }
 
             bool isDeerFocusPlayer = IsConfiguredAccount(Bot.Config!.Get<string>("player4") ?? "");
-            bool hasSolarFlare = Bot.Self.HasActiveAura("Solar Flare");
+            bool hasSolarFlare = Bot.Self.HasActiveAura(SolarFlare);
 
             string target = PickEnterRoomTarget(isDeerFocusPlayer, hasSolarFlare, cell);
 
@@ -363,8 +403,8 @@ public class AscendEclipseTest
             UseClassSkills();
             Bot.Sleep(400);
 
-            bool fallenStarAlive = MonsterAvailable("Fallen Star", cell);
-            bool blesslessDeerAlive = MonsterAvailable("Blessless Deer", cell);
+            bool fallenStarAlive = MonsterAvailable(FallenStar, cell);
+            bool blesslessDeerAlive = MonsterAvailable(BlesslessDeer, cell);
 
             if (!fallenStarAlive && !blesslessDeerAlive)
             {
@@ -395,30 +435,22 @@ public class AscendEclipseTest
 
     string PickEnterRoomTarget(bool isDeerFocusPlayer, bool hasSolarFlare, string cell)
     {
-        bool fallenStarAlive = MonsterAvailable("Fallen Star", cell);
-        bool blesslessDeerAlive = MonsterAvailable("Blessless Deer", cell);
+        bool fallenStarAlive = MonsterAvailable(FallenStar, cell);
+        bool blesslessDeerAlive = MonsterAvailable(BlesslessDeer, cell);
 
         if (!fallenStarAlive && !blesslessDeerAlive)
             return "";
 
         if (isDeerFocusPlayer && blesslessDeerAlive)
-            return "Blessless Deer";
+            return BlesslessDeer;
 
         if (hasSolarFlare && blesslessDeerAlive)
-            return "Blessless Deer";
+            return BlesslessDeer;
 
         if (fallenStarAlive)
-            return "Fallen Star";
+            return FallenStar;
 
-        return "Blessless Deer";
-    }
-
-    void ArmyKillMonster(string map, string cell, string pad, string monster, string checkpoint)
-    {
-        JoinAndFocus(map, cell, pad);
-        SyncArmy($"{checkpoint}_ready.sync");
-        KillFocusedMonster(monster, cell, pad);
-        SyncArmy($"{checkpoint}_done.sync");
+        return BlesslessDeer;
     }
 
     void ArmyKillMonsterWithRotatingAuraTaunt(string map, string cell, string pad, string monster, string auraName, string checkpoint, string? nextMonster = null)
@@ -429,16 +461,6 @@ public class AscendEclipseTest
 
         KillFocusedMonsterWithLrApAuraTaunt(monster, auraName, cell, pad, nextMonster);
 
-        SyncArmy($"{checkpoint}_done.sync");
-    }
-
-    void ArmyKillWithDelayedTaunt(string map, string cell, string pad, string monster, string checkpoint, bool sunSide, string enrageMessage, int tauntOffsetSeconds = 6)
-    {
-        JoinAndFocus(map, cell, pad);
-        SyncArmy($"{checkpoint}_ready.sync");
-        bool isTaunter = sunSide ? IsSunTaunter() : IsMoonTaunter();
-        string startingTaunterConfig = sunSide ? "player1" : "player3";
-        BossFight(monster, cell, enrageMessage, isTaunter, tauntOffsetSeconds, startingTaunterConfig);
         SyncArmy($"{checkpoint}_done.sync");
     }
 
@@ -679,7 +701,7 @@ public class AscendEclipseTest
 
         void RequestDeathReset()
         {
-            Core.Logger("[r3 Death Reset] I died; requesting r3 reset.");
+            Core.Logger($"[r3 Death Reset] {SafeRoleName()} died; requesting r3 reset.");
 
             WriteSyncLines(
                 deathResetPath,
@@ -1016,157 +1038,7 @@ public class AscendEclipseTest
 
         return solsticePct >= midnightPct ? AscendedSolstice : AscendedMidnight;
     }
-    string PickHigherHpBoss(string cell)
-    {
-        var solstice = Bot.Monsters.MapMonsters.FirstOrDefault(m =>
-            m != null
-            && string.Equals(m.Name, AscendedSolstice, StringComparison.OrdinalIgnoreCase)
-            && string.Equals(m.Cell, cell, StringComparison.OrdinalIgnoreCase)
-            && m.Alive);
 
-        var midnight = Bot.Monsters.MapMonsters.FirstOrDefault(m =>
-            m != null
-            && string.Equals(m.Name, AscendedMidnight, StringComparison.OrdinalIgnoreCase)
-            && string.Equals(m.Cell, cell, StringComparison.OrdinalIgnoreCase)
-            && m.Alive);
-
-        if (solstice == null && midnight == null) return "";
-        if (solstice == null) return AscendedMidnight;
-        if (midnight == null) return AscendedSolstice;
-
-        float solsticePct = solstice.MaxHP > 0 ? (float)solstice.HP / solstice.MaxHP : 0f;
-        float midnightPct = midnight.MaxHP > 0 ? (float)midnight.HP / midnight.MaxHP : 0f;
-
-        return solsticePct >= midnightPct ? AscendedSolstice : AscendedMidnight;
-    }
-
-    // ── Single-target boss fight (r2 taunt bosses) ────────────────────────────
-
-    void BossFight(string monster, string cell, string enrageMessage, bool isTaunter, int tauntOffsetSeconds = 0, string startingTaunterConfig = "player2")
-    {
-        bool needsEnrage    = false;
-        bool usedEnrage     = false;
-        bool usedLastEnrage = isTaunter &&
-            Bot.Player.Username.Equals(Bot.Config!.Get<string>(startingTaunterConfig) ?? "", StringComparison.OrdinalIgnoreCase);
-        DateTimeOffset tauntTime   = DateTimeOffset.MinValue;
-        long noTargetSince = 0;
-        bool fightSpawnSet = false;
-
-        Bot.Flash.FlashCall += Listener;
-        try
-        {
-            while (!Bot.ShouldExit)
-            {
-                if (!Bot.Player.Alive) { Bot.Wait.ForTrue(() => Bot.Player.Alive, 20); ReturnToFightCell(cell); Bot.Sleep(500); continue; }
-
-                ReturnToFightCell(cell);
-
-                if (isTaunter && needsEnrage && !usedEnrage)
-                {
-                    if (!usedLastEnrage && Bot.Player.HasTarget &&
-                        (tauntOffsetSeconds <= 0 || DateTimeOffset.Now > tauntTime))
-                    {
-                        Core.Logger($"[Taunt] '{enrageMessage}' — my turn, applying Scroll of Enrage...");
-                        Bot.Skills.Pause();
-                        while (!Bot.ShouldExit && Bot.Player.HasTarget && needsEnrage && !usedEnrage)
-                        {
-                            Bot.Combat.CancelAutoAttack();
-                            Core.UsePotion();
-                            Bot.Sleep(200);
-                            if (Bot.Player.HasTarget &&
-                                (Bot.Target.Auras.Any(x => x.Name.Equals("Focus",    StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4) ||
-                                 Bot.Target.Auras.Any(x => x.Name.Equals("Reckless", StringComparison.OrdinalIgnoreCase) && x.RemainingTime > 4)))
-                            {
-                                usedEnrage = true; needsEnrage = false; usedLastEnrage = true;
-                                Core.Logger("[Taunt] Enrage confirmed!");
-                            }
-                            else { Bot.Sleep(200); }
-                        }
-                        Bot.Skills.Resume();
-                    }
-                    else if (usedLastEnrage)
-                    {
-                        Core.Logger($"[Taunt] '{enrageMessage}' — other taunter's turn.");
-                        usedEnrage = true; needsEnrage = false; usedLastEnrage = false;
-                    }
-                }
-
-                if (!needsEnrage || usedEnrage || !Bot.Player.HasTarget)
-                    {
-                        Bot.Combat.Attack(monster);
-                        UseClassSkills();
-                    }
-
-                Bot.Sleep(300);
-
-                if (Bot.Player.HasTarget) { noTargetSince = 0; }
-                else if (!MonsterAvailable(monster, cell))
-                {
-                    noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
-                    if (Environment.TickCount64 - noTargetSince > 1800) break;
-                }
-                else { noTargetSince = 0; }
-            }
-        }
-        finally { Bot.Flash.FlashCall -= Listener; }
-
-        void ReturnToFightCell(string targetCell)
-        {
-            if (string.Equals(Bot.Player.Cell, targetCell, StringComparison.OrdinalIgnoreCase))
-            {
-                if (!fightSpawnSet) { Bot.Player.SetSpawnPoint(); fightSpawnSet = true; }
-                return;
-            }
-            Core.Logger($"[Recover] Returning to {targetCell} after respawn/desync.");
-            Bot.Map.Jump(targetCell, "Left", autoCorrect: false);
-            Bot.Wait.ForCellChange(targetCell);
-            Bot.Player.SetSpawnPoint();
-            fightSpawnSet = true;
-            Bot.Sleep(500);
-        }
-
-        void Listener(string name, object[] args)
-        {
-            try
-            {
-                dynamic? data = null;
-                if (name == "pext")
-                {
-                    var packet = JsonConvert.DeserializeObject<dynamic>((string)args[0])!;
-                    if (packet?["params"]?["type"]?.ToString() == "json")
-                        data = packet["params"]["dataObj"];
-                }
-                else if (name == "packetFromServer")
-                {
-                    var packet = JsonConvert.DeserializeObject<dynamic>((string)args[0])!;
-                    data = packet?["b"]?["o"];
-                }
-
-                if (data == null || data["cmd"]?.ToString() != "ct") return;
-
-                bool triggered = false;
-                if (data["anims"] != null)
-                    foreach (var a in data.anims)
-                        if (a?.msg != null && ((string)a.msg).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0)
-                        { triggered = true; break; }
-
-                if (!triggered && data["a"] != null)
-                    foreach (var a in data.a)
-                        if (a != null && a["cmd"]?.ToString() == "aura+" && a["auras"] != null)
-                            foreach (var aura in a["auras"])
-                                if (aura?.msgOn != null &&
-                                    ((string)aura.msgOn).IndexOf(enrageMessage, StringComparison.OrdinalIgnoreCase) >= 0 &&
-                                    (bool)aura.isNew)
-                                { triggered = true; break; }
-
-                if (!triggered) return;
-                needsEnrage = true; usedEnrage = false;
-                if (tauntOffsetSeconds > 0) tauntTime = DateTimeOffset.Now.AddSeconds(tauntOffsetSeconds);
-                Core.Logger($"[Taunt] '{enrageMessage}' — {(tauntOffsetSeconds > 0 ? $"enraging in {tauntOffsetSeconds}s" : "enraging now")}.");
-            }
-            catch { }
-        }
-    }
 
     // ── Infrastructure ────────────────────────────────────────────────────────
     void SetupPartyFromPlayer1()
@@ -1193,8 +1065,6 @@ public class AscendEclipseTest
             if (IsConfiguredAccount(player1))
             {
                 Core.Logger("[Party] I am player1; inviting the other accounts.");
-
-                //PartyOn();
 
                 PartyInvite(player2);
                 Bot.Sleep(750);
@@ -1240,7 +1110,7 @@ public class AscendEclipseTest
         if (name.Equals(Core.Username(), StringComparison.OrdinalIgnoreCase))
             return;
 
-        Core.Logger($"[Party] Inviting {name}.");
+        Core.Logger($"[Party] Inviting {SafeConfiguredRoleName(name)}.");
         Bot.Send.Packet($"%xt%zm%gp%1%pi%{name}%");
     }
 
@@ -1249,12 +1119,7 @@ public class AscendEclipseTest
         Bot.Send.Packet($"%xt%zm%gp%1%pa%{partyID}%");
     }
 
-    void PartyOn()
-    {
-        Bot.Send.Packet("%xt%zm%cmd%1%partyon%");
-    }
-
-    void PartyInviteListener(string name, object[] args)
+void PartyInviteListener(string name, object[] args)
     {
         try
         {
@@ -1477,50 +1342,7 @@ public class AscendEclipseTest
         }
     }
 
-    void UseStrictSkillRotation(int[] skillList, ref int skillIndex)
-    {
-        if (Bot.Player.HasTarget && Bot.Player.Target?.HP > 0)
-        {
-            int skill = skillList[skillIndex];
-
-            if (Bot.Skills.CanUseSkill(skill))
-            {
-                Bot.Skills.UseSkill(skill);
-                skillIndex = (skillIndex + 1) % skillList.Length;
-            }
-        }
-    }
-
-    void KillFocusedMonster(string monster, string cell, string pad)
-    {
-        long noTargetSince = 0;
-        while (!Bot.ShouldExit)
-        {
-            if (!Bot.Player.Alive)
-            {
-                Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                if (Bot.Player.Cell != cell) { Bot.Map.Jump(cell, pad, autoCorrect: false); Bot.Wait.ForCellChange(cell); }
-                Bot.Player.SetSpawnPoint();
-                Bot.Sleep(500);
-                continue;
-            }
-            if (Bot.Player.Cell != cell) { Bot.Map.Jump(cell, pad, autoCorrect: false); Bot.Wait.ForCellChange(cell); }
-
-            Bot.Combat.Attack(monster);
-            UseClassSkills();
-            Bot.Sleep(400);
-
-            if (Bot.Player.HasTarget) { noTargetSince = 0; continue; }
-            if (!MonsterAvailable(monster, cell))
-            {
-                noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
-                if (Environment.TickCount64 - noTargetSince > 1800) break;
-            }
-            else { noTargetSince = 0; Bot.Sleep(300); }
-        }
-    }
-
-    void KillRoom2SplitTaunt(string cell, string pad)
+void KillRoom2SplitTaunt(string cell, string pad)
     {
         long noTargetSince = 0;
 
@@ -1560,26 +1382,26 @@ public class AscendEclipseTest
 
             bool isLegionRevenant = string.Equals(Bot.Player.CurrentClass?.Name, "Legion Revenant", StringComparison.OrdinalIgnoreCase);
 
-            bool sunsetKnightAlive = MonsterAvailable("Sunset Knight", cell);
-            bool moonHazeAlive = MonsterAvailable("Moon Haze", cell);
+            bool sunsetKnightAlive = MonsterAvailable(SunsetKnight, cell);
+            bool moonHazeAlive = MonsterAvailable(MoonHaze, cell);
 
             string target;
 
             if (isStoneCrusher)
             {
-                target = sunsetKnightAlive ? "Sunset Knight" : "Moon Haze";
+                target = sunsetKnightAlive ? SunsetKnight : MoonHaze;
             }
             else
             {
-                target = moonHazeAlive ? "Moon Haze" : "Sunset Knight";
+                target = moonHazeAlive ? MoonHaze : SunsetKnight;
             }
 
             if (!string.IsNullOrWhiteSpace(target))
                 Bot.Combat.Attack(target);
 
-            if (isLegionRevenant && target == "Moon Haze" && moonHazeAlive)
+            if (isLegionRevenant && target == MoonHaze && moonHazeAlive)
             {
-                bool moonlightGazeActive = Bot.Self.HasActiveAura("Moonlight Gaze");
+                bool moonlightGazeActive = Bot.Self.HasActiveAura(MoonlightGaze);
 
                 if (moonlightGazeActive && !lrMoonlightGazeArmed)
                 {
@@ -1591,7 +1413,13 @@ public class AscendEclipseTest
 
                 if (lrMoonlightGazeArmed && !lrMoonlightGazeTaunted && Environment.TickCount64 >= lrTauntAt)
                 {
-                    lrMoonlightGazeTaunted = TauntCurrentTarget("[r2 LR Taunt]", "Moon Haze");
+                    Core.Logger($"[r2 LR Taunt] {SafeRoleName()} firing Moon Haze taunt. MoonHazeAlive={moonHazeAlive}, HasTarget={Bot.Player.HasTarget}.");
+                    bool confirmed = TauntCurrentTarget("[r2 LR Taunt]", MoonHaze);
+
+                    lrMoonlightGazeTaunted = true;
+
+                    if (!confirmed)
+                        Core.Logger("[r2 LR Taunt] Failed after max attempts; marking this Moonlight Gaze cycle as handled.");
                 }
                 else
                 {
@@ -1606,9 +1434,9 @@ public class AscendEclipseTest
                     lrTauntAt = 0;
                 }
             }
-            else if (isStoneCrusher && target == "Sunset Knight" && sunsetKnightAlive)
+            else if (isStoneCrusher && target == SunsetKnight && sunsetKnightAlive)
             {
-                bool sunsWarmthActive = Bot.Self.HasActiveAura("Sun's Warmth");
+                bool sunsWarmthActive = Bot.Self.HasActiveAura(SunsWarmth);
 
                 if (sunsWarmthActive && !scSunsWarmthArmed)
                 {
@@ -1620,7 +1448,13 @@ public class AscendEclipseTest
 
                 if (scSunsWarmthArmed && !scSunsWarmthTaunted && Environment.TickCount64 >= scTauntAt)
                 {
-                    scSunsWarmthTaunted = TauntCurrentTarget("[r2 SC Taunt]", "Sunset Knight");
+                    Core.Logger($"[r2 SC Taunt] {SafeRoleName()} firing Sunset Knight taunt. SunsetKnightAlive={sunsetKnightAlive}, HasTarget={Bot.Player.HasTarget}.");
+                    bool confirmed = TauntCurrentTarget("[r2 SC Taunt]", SunsetKnight);
+
+                    scSunsWarmthTaunted = true;
+
+                    if (!confirmed)
+                        Core.Logger("[r2 SC Taunt] Failed after max attempts; marking this Sun's Warmth cycle as handled.");
                 }
                 else
                 {
@@ -1661,6 +1495,14 @@ public class AscendEclipseTest
         {
             Bot.Sleep(300);
             return false;
+        }
+
+        if (Bot.Target == null ||
+            !Bot.Target.Name.Equals(expectedTarget, StringComparison.OrdinalIgnoreCase))
+        {
+            Core.Logger($"{logPrefix} Expected target {expectedTarget}, but current target is {Bot.Target?.Name ?? "none"}. Retargeting before taunt.");
+            Bot.Combat.Attack(expectedTarget);
+            Bot.Sleep(250);
         }
 
         Core.Logger($"{logPrefix} Targeting {expectedTarget} for Scroll of Enrage.");
@@ -1859,7 +1701,7 @@ public class AscendEclipseTest
             return;
 
         int count = GetInventoryQuantity(TauntItem);
-        Core.Logger($"[Taunt] {context}: {count} {TauntItem} remaining.");
+        Core.Logger($"[Taunt] [{SafeRoleName()}] {context}: {count} {TauntItem} remaining.");
 
         if (count >= minimumCount)
             return;
@@ -1914,6 +1756,42 @@ public class AscendEclipseTest
             Bot.Sleep(250);
     }
 
+    // ── Safe logging helpers ──────────────────────────────────────────────────
+
+    string SafeRoleName()
+    {
+        int slot = GetMyPlayerSlot();
+
+        return slot switch
+        {
+            1 => "player1/LR",
+            2 => "player2/SC",
+            3 => "player3/AP",
+            4 => "player4/LoO",
+            _ => "unmatched"
+        };
+    }
+
+    string SafeConfiguredRoleName(string account)
+    {
+        if (string.IsNullOrWhiteSpace(account))
+            return "empty";
+
+        if (account.Equals(Bot.Config!.Get<string>("player1"), StringComparison.OrdinalIgnoreCase))
+            return "player1/LR";
+
+        if (account.Equals(Bot.Config.Get<string>("player2"), StringComparison.OrdinalIgnoreCase))
+            return "player2/SC";
+
+        if (account.Equals(Bot.Config.Get<string>("player3"), StringComparison.OrdinalIgnoreCase))
+            return "player3/AP";
+
+        if (account.Equals(Bot.Config.Get<string>("player4"), StringComparison.OrdinalIgnoreCase))
+            return "player4/LoO";
+
+        return "unknown";
+    }
+
     // ── Taunter checks ────────────────────────────────────────────────────────
 
     bool IsSunTaunter() =>
@@ -1942,7 +1820,7 @@ public class AscendEclipseTest
         else if (username.Equals(p2, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player2Class);
         else if (username.Equals(p3, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player3Class);
         else if (username.Equals(p4, StringComparison.OrdinalIgnoreCase)) EquipClassByName(player4Class);
-        else Core.Logger($"{username} was not matched to a player slot — keeping current class.");
+        else Core.Logger("[Setup] Current account was not matched to a player slot — keeping current class.");
     }
 
     void EquipClassByName(string className)
@@ -1957,12 +1835,12 @@ public class AscendEclipseTest
             if (className.Equals("StoneCrusher", StringComparison.OrdinalIgnoreCase) &&
                 Core.CheckInventory("Infinity Titan"))
             {
-                Core.Logger($"{Core.Username()} is assigned to use StoneCrusher, but StoneCrusher is missing. Using Infinity Titan instead.");
+                Core.Logger($"[{SafeRoleName()}] Assigned StoneCrusher, but StoneCrusher is missing. Using Infinity Titan instead.");
                 classToEquip = "Infinity Titan";
             }
             else
             {
-                Core.Logger($"{Core.Username()} missing {className}.", stopBot: true);
+                Core.Logger($"[{SafeRoleName()}] Missing {className}.", stopBot: true);
                 return;
             }
         }
@@ -1974,7 +1852,7 @@ public class AscendEclipseTest
             Bot.Sleep(1000);
         }
 
-        Core.Logger($"{Core.Username()} equipped {classToEquip}; using custom skill rotation.");
+        Core.Logger($"[{SafeRoleName()}] Equipped {classToEquip}; using custom skill rotation.");
     }
 
     bool IsClassEquipped(string className) =>
@@ -1984,7 +1862,7 @@ public class AscendEclipseTest
     void ApplyEnhancements()
     {
         string className = Bot.Player.CurrentClass?.Name ?? "";
-        Core.Logger($"{Core.Username()} applying enhancements for {className}...");
+        Core.Logger($"[{SafeRoleName()}] Applying enhancements for {className}...");
 
         switch (className.ToLower())
         {
@@ -2035,7 +1913,7 @@ public class AscendEclipseTest
     {
         string className = Bot.Player.CurrentClass?.Name ?? "";
 
-        Core.Logger($"{Core.Username()} using potions for {className}...");
+        Core.Logger($"[{SafeRoleName()}] Using potions for {className}...");
 
         switch (className.ToLower())
         {
@@ -2093,20 +1971,20 @@ public class AscendEclipseTest
     {
         if (autoGetEnrage)
         {
-            Core.Logger($"{Core.Username()} auto-crafting {TauntItem}...");
+            Core.Logger($"[{SafeRoleName()}] Auto-crafting {TauntItem}...");
             Ultra.GetScrollOfEnrage();
         }
 
         if (!Core.CheckInventory(TauntItem))
         {
-            Core.Logger($"{Core.Username()} has no {TauntItem} — boss charges will NOT be redirected.");
+            Core.Logger($"[{SafeRoleName()}] Has no {TauntItem} — boss charges will NOT be redirected.");
             return;
         }
 
         if (!Bot.Inventory.IsEquipped(TauntItem))
             Bot.Inventory.EquipUsableItem(TauntItem);
 
-        Core.Logger($"{Core.Username()} has {TauntItem} equipped.");
+        Core.Logger($"[{SafeRoleName()}] Has {TauntItem} equipped.");
     }
 }
 
