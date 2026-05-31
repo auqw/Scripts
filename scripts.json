@@ -8148,6 +8148,102 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/ElegyofMadness(Darkon)/8GenesisGarden.cs"
   },
   {
+    "name": "DuatPalace Story",
+    "description": "This will finish the Duat Palace Story.",
+    "tags": [
+      "story",
+      "quest",
+      "duat palace",
+      "duatpalace"
+    ],
+    "path": "Story/Oasis/01DuatPalace.cs",
+    "size": 1143,
+    "sha256": "1bcb8c4d4f30b8abe3334d92eecf72dce7f38f77a353f6244fd71bd591848489",
+    "fileName": "01DuatPalace.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/01DuatPalace.cs"
+  },
+  {
+    "name": "MeresankhChambers Story",
+    "description": "This will finish the MeresankhChambers Story.",
+    "tags": [
+      "story",
+      "quest",
+      "crulon wed",
+      "meresankhchambers"
+    ],
+    "path": "Story/Oasis/04MeresankhChambers.cs",
+    "size": 1176,
+    "sha256": "df0dbaf2104370a712d24cc803ec6163fbb2d83dbd955f427184acfa0d45835e",
+    "fileName": "04MeresankhChambers.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/04MeresankhChambers.cs"
+  },
+  {
+    "name": "CrulonWed Story",
+    "description": "This will finish the CrulonWed Story.",
+    "tags": [
+      "story",
+      "quest",
+      "crulon wed",
+      "crulonwed"
+    ],
+    "path": "Story/Oasis/03CrulonWed.cs",
+    "size": 1136,
+    "sha256": "bb7760f046f5fae5e152090d6c5a39272d89a41ed32ba25541f8de1aaecaa69d",
+    "fileName": "03CrulonWed.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/03CrulonWed.cs"
+  },
+  {
+    "name": "null",
+    "description": "null",
+    "tags": [
+      "null"
+    ],
+    "path": "Story/Oasis/CoreOasis.cs",
+    "size": 6360,
+    "sha256": "06cdef3a72b8a872b83104deae36b74d6a1fd69eef22f2a4845ff2839d0b9d6e",
+    "fileName": "CoreOasis.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/CoreOasis.cs"
+  },
+  {
+    "name": "CrocRiver Story",
+    "description": "This will finish the Duat Palace Story.",
+    "tags": [
+      "story",
+      "quest",
+      "croc river",
+      "crocriver"
+    ],
+    "path": "Story/Oasis/02CrocRiver.cs",
+    "size": 1138,
+    "sha256": "e71d8901b93ea18bf757f733fd418bc258aa29782ccb7d8f6ec87fa5c4c25f02",
+    "fileName": "02CrocRiver.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/02CrocRiver.cs"
+  },
+  {
+    "name": "OasisDoaAll",
+    "description": "This will finish the Duat Palace Story.",
+    "tags": [
+      "story",
+      "quest",
+      "duat palace",
+      "oasis",
+      "do",
+      "all",
+      "0doall",
+      "do all",
+      "oasis do all",
+      "duatpalace",
+      "crocriver",
+      "crulonwed",
+      "meresankhchambers"
+    ],
+    "path": "Story/Oasis/0Doall.cs",
+    "size": 1221,
+    "sha256": "b7e2a327cbb8cc958ccd8257312047f3beb728e0106317df133e3637e6ac7af3",
+    "fileName": "0Doall.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Story/Oasis/0Doall.cs"
+  },
+  {
     "name": "null",
     "description": "null",
     "tags": [
@@ -23699,6 +23795,26 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/ChaosLabMerge.cs"
   },
   {
+    "name": "Faizas Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Faizas Merge [2726] in /duatpalace",
+    "tags": [
+      "faizas",
+      "merge",
+      "duatpalace",
+      "sandsea",
+      "lorekeeper",
+      "wise",
+      "tome",
+      "lore",
+      "book"
+    ],
+    "path": "Other/MergeShops/FaizasMerge.cs",
+    "size": 4276,
+    "sha256": "d1b1de491ee2fafaf8dad03e3c4de6b17da35a19c68ab1cd391fc812200e2242",
+    "fileName": "FaizasMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FaizasMerge.cs"
+  },
+  {
     "name": "Yulgar's Dual Wield Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Yulgar’s Dual Wield Merge [1311] in /nostalgiaquest",
     "tags": [
@@ -24862,6 +24978,33 @@
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/FelixsGildedGearMerge.cs"
   },
   {
+    "name": "Swordhaven Chevaliers Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Swordhaven Chevaliers Merge [2712] in /swordhavengardens",
+    "tags": [
+      "swordhaven",
+      "chevaliers",
+      "merge",
+      "swordhavengardens",
+      "corroded",
+      "chevalier",
+      "gilded",
+      "rebels",
+      "relic",
+      "reavers",
+      "armaments",
+      "reawakened",
+      "visor",
+      "armet",
+      "reaver",
+      "lance"
+    ],
+    "path": "Other/MergeShops/SwordhavenChevaliersMerge.cs",
+    "size": 7878,
+    "sha256": "8dce9fe47f51127fa2be199ecbd721354c4c26875815b5d4f74c3df720bae557",
+    "fileName": "SwordhavenChevaliersMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/SwordhavenChevaliersMerge.cs"
+  },
+  {
     "name": "Bocklin Grove Merge",
     "description": "This bot will farm the items belonging to the selected mode for the Bocklin Grove Merge [2576] in /bocklingrove",
     "tags": [
@@ -24927,6 +25070,25 @@
     "sha256": "a22f806840de75dc4e12eb15f16aa06f8040eef7f2bdd3b0a14800ec5236bc28",
     "fileName": "EaglesReachArmoryMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/EaglesReachArmoryMerge.cs"
+  },
+  {
+    "name": "Crulons Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Crulons Merge [2725] in /duatpalace",
+    "tags": [
+      "crulons",
+      "merge",
+      "duatpalace",
+      "sandsea",
+      "cleric",
+      "morph",
+      "scepter",
+      "sedjem"
+    ],
+    "path": "Other/MergeShops/CrulonsMerge.cs",
+    "size": 4134,
+    "sha256": "0c94e8b725b120f196f9d9aed14197a3aa38a9f76187e8786439b814ba2f0726",
+    "fileName": "CrulonsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CrulonsMerge.cs"
   },
   {
     "name": "Astro Seer Merge",
@@ -26742,6 +26904,42 @@
     "sha256": "b5aed06543897a2c29780eb66d8c1d88b030a6ec6ae42ba61f7b67b6b9813c0a",
     "fileName": "InfernalCelestialFinaleMerge.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/InfernalCelestialFinaleMerge.cs"
+  },
+  {
+    "name": "Castle Uniforms Merge",
+    "description": "This bot will farm the items belonging to the selected mode for the Castle Uniforms Merge [2717] in /swordhavengardens",
+    "tags": [
+      "castle",
+      "uniforms",
+      "merge",
+      "swordhavengardens",
+      "darkovia",
+      "dusk",
+      "steward",
+      "duskfall",
+      "eagle",
+      "familiar",
+      "wolfsbane",
+      "silverware",
+      "set",
+      "dacian",
+      "wolf",
+      "darkovian",
+      "dainty",
+      "silver",
+      "meatcarvers",
+      "butler",
+      "morph",
+      "maid",
+      "broom",
+      "besom",
+      "meatcarver"
+    ],
+    "path": "Other/MergeShops/CastleUniformsMerge.cs",
+    "size": 6051,
+    "sha256": "c79e3022296e43edf61b00418d8638791adb56f0ccabea58fa9d9c2a8e9823a8",
+    "fileName": "CastleUniformsMerge.cs",
+    "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/MergeShops/CastleUniformsMerge.cs"
   },
   {
     "name": "DreadspaceReplicatorMerge",
