@@ -43,6 +43,14 @@ public class AscendEclipseTest
         new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""), 
         new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
         new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
+
+        new Option<int>(
+            "privateRoomNumber",
+            "Private Room Number (IMPORTANT)",
+            "Private room number used by all 4 accounts. Set the same number on every account!",
+            69420
+        ),
+        
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
         new Option<bool>(
@@ -124,9 +132,18 @@ public class AscendEclipseTest
         }
         
         Core.PrivateRooms = true;
-        if (Core.PrivateRoomNumber < 1000 || Core.PrivateRoomNumber > 99999)
+        int configuredRoom = Bot.Config!.Get<int>("privateRoomNumber");
+        if (configuredRoom >= 1000 && configuredRoom <= 99999)
+        {
+            Core.PrivateRoomNumber = configuredRoom;
+        }
+        else
+        {
+            Core.Logger($"Invalid private room number '{configuredRoom}'. Generating a fallback room number.");
             Core.PrivateRoomNumber = sArmy.getRoomNr();
-        Core.Logger($"Army mode: {sArmy.Players().Length} accounts, private room #{Core.PrivateRoomNumber}.");
+        }
+
+        Core.Logger($"Army mode enabled: {sArmy.Players().Length} accounts, private room #{Core.PrivateRoomNumber}.");
 
         autoEnhance   = Bot.Config!.Get<bool>("autoEnhance");
         autoGetEnrage = Bot.Config.Get<bool>("autoGetEnrage");
