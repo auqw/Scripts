@@ -49,8 +49,10 @@ public class SolsticeMoonTest
             "autoEnhance",
             "Auto-Apply Enhancements",
             "ON: each account automatically applies the correct enhancements for its fixed class.\n" +
-            "Slot 1 (LR): Wizard/Pneuma/Ravenous/Vainglory  Slot 2 (SC): Fighter/Anima/Ravenous/Absolution\n" +
-            "Slot 3 (AP): Lucky/Forge/Ravenous/Penitence     Slot 4 (LoO): Lucky/Forge/ArcanasConcerto/Penitence",
+            "Slot 1 (LR): Wizard/Wizard Helm/Elysium/Penitence\n" +
+            "Slot 2 (SC): Fighter/Fighter Helm/Valiance/Absolution\n" +
+            "Slot 3 (AP): Lucky/Lucky Helm/Valiance/Penitence\n" +
+            "Slot 4 (LoO): Lucky/Lucky Helm/Valiance/Penitence",
             true
         ),
         new Option<bool>(
@@ -1175,43 +1177,43 @@ public class SolsticeMoonTest
         {
             case "legion revenant":
                 Adv.EnhanceEquipped(
-                    type:     EnhancementType.Wizard,
-                    hSpecial: HelmSpecial.Pneuma,
-                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Awe_Blast,
-                    cSpecial: CapeSpecial.Vainglory
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: Adv.uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Awe_Blast,
+                    cSpecial: CapeSpecial.Penitence
                 );
                 break;
 
             case "stonecrusher":
             case "infinity titan":
                 Adv.EnhanceEquipped(
-                    type:     EnhancementType.Fighter,
-                    hSpecial: HelmSpecial.Anima,
-                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance,
+                    type: EnhancementType.Fighter,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Absolution
                 );
                 break;
 
             case "archpaladin":
                 Adv.EnhanceEquipped(
-                    type:     EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Forge,
-                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Awe_Blast,
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Penitence
                 );
                 break;
 
             case "lord of order":
                 Adv.EnhanceEquipped(
-                    type:     EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Forge,
-                    wSpecial: Adv.uArcanasConcerto() ? WeaponSpecial.Arcanas_Concerto : WeaponSpecial.Awe_Blast,
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Penitence
                 );
                 break;
 
             default:
-                Core.Logger($"[Enhance] No enhancement profile for '{className}' — skipping.");
+                Core.Logger($"[Enhance] No profile for '{className}' — skipping.");
                 break;
         }
     }
