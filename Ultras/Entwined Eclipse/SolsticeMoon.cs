@@ -43,14 +43,25 @@ public class SolsticeMoonTest
         new Option<string>("player2", "SC Account", "Name of the account that will use StoneCrusher.", ""), 
         new Option<string>("player3", "AP Account", "Name of the account that will use ArchPaladin.", ""),
         new Option<string>("player4", "LoO Account", "Name of the account that will use Lord Of Order.", ""),
+
+        new Option<int>(
+            "privateRoomNumber",
+            "Private Room Number (IMPORTANT)",
+            "Private room number used by all 4 accounts. Set the same number on every account!",
+            69420
+        ),
+        
         sArmy.packetDelay,
         CoreBots.Instance.SkipOptions,
+
         new Option<bool>(
             "autoEnhance",
             "Auto-Apply Enhancements",
             "ON: each account automatically applies the correct enhancements for its fixed class.\n" +
-            "Slot 1 (LR): Wizard/Pneuma/Ravenous/Vainglory  Slot 2 (SC): Fighter/Anima/Ravenous/Absolution\n" +
-            "Slot 3 (AP): Lucky/Forge/Ravenous/Penitence     Slot 4 (LoO): Lucky/Forge/ArcanasConcerto/Penitence",
+            "Slot 1 (LR): Wizard/Wizard Helm/Elysium/Penitence\n" +
+            "Slot 2 (SC): Fighter/Fighter Helm/Valiance/Absolution\n" +
+            "Slot 3 (AP): Lucky/Lucky Helm/Valiance/Penitence\n" +
+            "Slot 4 (LoO): Lucky/Lucky Helm/Valiance/Penitence",
             true
         ),
         new Option<bool>(
@@ -154,8 +165,17 @@ public class SolsticeMoonTest
         }
 
         Core.PrivateRooms = true;
-        if (Core.PrivateRoomNumber < 1000 || Core.PrivateRoomNumber > 99999)
+        int configuredRoom = Bot.Config!.Get<int>("privateRoomNumber");
+        if (configuredRoom >= 1000 && configuredRoom <= 99999)
+        {
+            Core.PrivateRoomNumber = configuredRoom;
+        }
+        else
+        {
+            Core.Logger($"Invalid private room number '{configuredRoom}'. Generating a fallback room number.");
             Core.PrivateRoomNumber = sArmy.getRoomNr();
+        }
+
         Core.Logger($"Army mode enabled: {sArmy.Players().Length} accounts, private room #{Core.PrivateRoomNumber}.");
 
 
@@ -1175,43 +1195,43 @@ public class SolsticeMoonTest
         {
             case "legion revenant":
                 Adv.EnhanceEquipped(
-                    type:     EnhancementType.Wizard,
-                    hSpecial: HelmSpecial.Pneuma,
-                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Awe_Blast,
-                    cSpecial: CapeSpecial.Vainglory
+                    type: EnhancementType.Wizard,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: Adv.uElysium() ? WeaponSpecial.Elysium : WeaponSpecial.Awe_Blast,
+                    cSpecial: CapeSpecial.Penitence
                 );
                 break;
 
             case "stonecrusher":
             case "infinity titan":
                 Adv.EnhanceEquipped(
-                    type:     EnhancementType.Fighter,
-                    hSpecial: HelmSpecial.Anima,
-                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Valiance,
+                    type: EnhancementType.Fighter,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Absolution
                 );
                 break;
 
             case "archpaladin":
                 Adv.EnhanceEquipped(
-                    type:     EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Forge,
-                    wSpecial: Adv.uRavenous() ? WeaponSpecial.Ravenous : WeaponSpecial.Awe_Blast,
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Penitence
                 );
                 break;
 
             case "lord of order":
                 Adv.EnhanceEquipped(
-                    type:     EnhancementType.Lucky,
-                    hSpecial: HelmSpecial.Forge,
-                    wSpecial: Adv.uArcanasConcerto() ? WeaponSpecial.Arcanas_Concerto : WeaponSpecial.Awe_Blast,
+                    type: EnhancementType.Lucky,
+                    hSpecial: HelmSpecial.None,
+                    wSpecial: WeaponSpecial.Valiance,
                     cSpecial: CapeSpecial.Penitence
                 );
                 break;
 
             default:
-                Core.Logger($"[Enhance] No enhancement profile for '{className}' — skipping.");
+                Core.Logger($"[Enhance] No profile for '{className}' — skipping.");
                 break;
         }
     }
