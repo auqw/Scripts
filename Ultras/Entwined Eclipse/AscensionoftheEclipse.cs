@@ -62,6 +62,13 @@ public class AscendEclipseTest
             "OFF: scroll requirement is skipped.",
             true
         ),
+        new Option<bool>(
+            "oracleClassTauntReset",
+            "Oracle Class Taunt Reset",
+            "ON: swaps to Oracle then back before taunt fights to clear the class taunt bug.\n" +
+            "OFF: skips the Oracle swap and only ensures Scroll of Enrage is equipped.",
+            true
+        ),
     };
 
     // Fixed 4-class lineup
@@ -84,6 +91,7 @@ public class AscendEclipseTest
 
     bool autoEnhance;
     bool autoGetEnrage;
+    bool oracleClassTauntReset;
     int runCount;
     int syncCount;
     bool syncFilesClearedOnStartup;
@@ -122,6 +130,7 @@ public class AscendEclipseTest
 
         autoEnhance   = Bot.Config!.Get<bool>("autoEnhance");
         autoGetEnrage = Bot.Config.Get<bool>("autoGetEnrage");
+        oracleClassTauntReset = Bot.Config.Get<bool>("oracleClassTauntReset");
 
         SetupPartyFromPlayer1();
 
@@ -173,8 +182,7 @@ public class AscendEclipseTest
         ArmyKillStarWithDeerCleanse("ascendeclipse", "Enter", "Left", $"{runCheckpoint}_01");
 
         // r1 — everyone rotates taunt on Suffocated Light
-        ArmyKillMonsterWithRotatingAuraTaunt("ascendeclipse", "r1", "Left", "Suffocated Light", "Gathering Light", $"{runCheckpoint}_03");
-        ArmyKillMonster("ascendeclipse", "r1", "Left", "Imprisoned Fairy", $"{runCheckpoint}_04");
+        ArmyKillMonsterWithRotatingAuraTaunt("ascendeclipse", "r1", "Left", "Suffocated Light", "Gathering Light", $"{runCheckpoint}_03", "Imprisoned Fairy");
 
         // r2 — SC focuses/taunts Sunset Knight, everyone else attacks Moon Haze with LR taunting it
         ArmyKillRoom2SplitTaunt("ascendeclipse", "r2", "Left", $"{runCheckpoint}_05");
@@ -230,10 +238,19 @@ public class AscendEclipseTest
         string assignedClass = GetConfiguredClassForCurrentAccount();
         string logPrefix = $"[Taunt Setup {checkpoint}]";
 
-        Core.Logger($"[Oracle Reset] Resetting class state before {checkpoint}: Oracle -> {assignedClass}.");
         SyncArmy($"{checkpoint}_oracle_reset_ready.sync");
 
-        ResetClassStateWithOracle(assignedClass);
+        if (oracleClassTauntReset)
+        {
+            Core.Logger($"[Oracle Reset] Resetting class state before {checkpoint}: Oracle -> {assignedClass}.");
+            ResetClassStateWithOracle(assignedClass);
+            Core.Logger($"[Oracle Reset] Class state reset complete before {checkpoint}.");
+        }
+        else
+        {
+            Core.Logger($"[Oracle Reset] Skipped before {checkpoint}; option is OFF.");
+        }
+
         EnsureTauntItemEquipped(logPrefix);
 
         SyncArmy($"{checkpoint}_oracle_reset_done.sync");
@@ -404,13 +421,13 @@ public class AscendEclipseTest
         SyncArmy($"{checkpoint}_done.sync");
     }
 
-    void ArmyKillMonsterWithRotatingAuraTaunt(string map, string cell, string pad, string monster, string auraName, string checkpoint)
+    void ArmyKillMonsterWithRotatingAuraTaunt(string map, string cell, string pad, string monster, string auraName, string checkpoint, string? nextMonster = null)
     {
         JoinAndFocus(map, cell, pad);
         SyncArmy($"{checkpoint}_ready.sync");
         OracleResetBeforeRoomFight(checkpoint);
 
-        KillFocusedMonsterWithLrApAuraTaunt(monster, auraName, cell, pad);
+        KillFocusedMonsterWithLrApAuraTaunt(monster, auraName, cell, pad, nextMonster);
 
         SyncArmy($"{checkpoint}_done.sync");
     }
@@ -436,16 +453,29 @@ public class AscendEclipseTest
     /// </summary>
     void ArmyKillDualBoss(string map, string cell, string pad, string checkpoint)
     {
-        JoinAndFocus(map, cell, pad);
-        SyncArmy($"{checkpoint}_ready.sync");
-        OracleResetBeforeRoomFight(checkpoint);
-        DualBossFight(cell, pad);
+        int resetCount = 0;
+
+        while (!Bot.ShouldExit)
+        {
+            string attemptCheckpoint = resetCount == 0 ? checkpoint : $"{checkpoint}_retry_{resetCount}";
+            JoinAndFocus(map, cell, pad);
+            SyncArmy($"{attemptCheckpoint}_ready.sync");
+            OracleResetBeforeRoomFight(attemptCheckpoint);
+
+            if (DualBossFight(cell, pad, attemptCheckpoint))
+                break;
+
+            resetCount++;
+            Core.Logger($"[r3 Reset] Player death detected; resetting dual boss fight. Attempt #{resetCount}.");
+            ResetR3Fight(map, "r3a", "Left", cell, pad, $"{attemptCheckpoint}_soft_reset");
+        }
+
         SyncArmy($"{checkpoint}_done.sync");
     }
 
     // ── Dual boss fight ───────────────────────────────────────────────────────
 
-    void DualBossFight(string cell, string pad)
+    bool DualBossFight(string cell, string pad, string checkpoint)
     {
         // r3 uses local convergence-cycle ownership instead of "last taunter" memory.
         // Sun cycle odd/even: player2(SC) / player3(AP)
@@ -471,6 +501,7 @@ public class AscendEclipseTest
         bool fightSpawnSet = false;
         long noTargetSince = 0;
         long solsticeFocusUntil = Environment.TickCount64 + 0;
+        string deathResetPath = SyncGroupPath($"{checkpoint}_death_reset.signal");
         bool splitPhaseAnnounced = false;
 
         Core.Logger("[r3 Focus] No all-Solstice opener; using split target with HP balance guard.");
@@ -480,12 +511,17 @@ public class AscendEclipseTest
         {
             while (!Bot.ShouldExit)
             {
+                if (DeathResetRequested())
+                {
+                    Core.Logger("[r3 Reset] Another player died; resetting dual boss fight.");
+                    return false;
+                }
+
                 if (!Bot.Player.Alive)
                 {
+                    RequestDeathReset();
                     Bot.Wait.ForTrue(() => Bot.Player.Alive, 20);
-                    ReturnToFightCell();
-                    Bot.Sleep(500);
-                    continue;
+                    return false;
                 }
 
                 ReturnToFightCell();
@@ -502,7 +538,7 @@ public class AscendEclipseTest
                     noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
 
                     if (Environment.TickCount64 - noTargetSince > 500)
-                        break;
+                        return true;
                 }
                 else
                 {
@@ -626,7 +662,7 @@ public class AscendEclipseTest
                 {
                     noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
                     if (Environment.TickCount64 - noTargetSince > 1800)
-                        break;
+                        return true;
                 }
                 else
                 {
@@ -637,6 +673,34 @@ public class AscendEclipseTest
         finally
         {
             Bot.Flash.FlashCall -= Listener;
+        }
+
+        return false;
+
+        void RequestDeathReset()
+        {
+            Core.Logger("[r3 Death Reset] I died; requesting r3 reset.");
+
+            WriteSyncLines(
+                deathResetPath,
+                ReadSyncLines(deathResetPath)
+                    .Where(l => !l.StartsWith($"{checkpoint}:", StringComparison.OrdinalIgnoreCase))
+                    .Append($"{checkpoint}:{Core.Username().ToLower()}:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}")
+                    .ToArray()
+            );
+        }
+
+        bool DeathResetRequested()
+        {
+            long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+            return ReadSyncLines(deathResetPath)
+                .Select(l => l.Split(':'))
+                .Any(p =>
+                    p.Length >= 3
+                    && p[0].Equals(checkpoint, StringComparison.OrdinalIgnoreCase)
+                    && long.TryParse(p[2], out long ts)
+                    && now - ts <= 120);
         }
 
         void ReturnToFightCell()
@@ -816,6 +880,72 @@ public class AscendEclipseTest
 
             Core.Logger($"{logPrefix} Scroll force-use attempts failed; Enrage was not confirmed on {bossName}.");
             return false;
+        }
+        finally
+        {
+            Bot.Skills.Resume();
+        }
+    }
+
+    void ResetR3Fight(string map, string safeCell, string safePad, string bossCell, string bossPad, string checkpoint)
+    {
+        Bot.Skills.Pause();
+
+        try
+        {
+            Core.Logger($"[r3 Death Reset] Stopping combat and moving to {safeCell}.");
+
+            Bot.Combat.CancelAutoAttack();
+
+            if (!Bot.Player.Alive)
+            {
+                Core.Logger("[r3 Death Reset] I am dead; waiting to respawn before moving to safe cell.");
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 30);
+                Bot.Sleep(1000);
+            }
+
+            if (!string.Equals(Bot.Map.Name, map, StringComparison.OrdinalIgnoreCase))
+                JoinShrineDungeon(map, safeCell, safePad);
+
+            if (!string.Equals(Bot.Player.Cell, safeCell, StringComparison.OrdinalIgnoreCase))
+            {
+                Bot.Map.Jump(safeCell, safePad, autoCorrect: false);
+                Bot.Wait.ForCellChange(safeCell);
+            }
+
+            Bot.Player.SetSpawnPoint();
+
+            Core.Logger($"[r3 Death Reset] Reached {safeCell}; waiting for all accounts.");
+            SyncArmy($"{checkpoint}_all_in_safe_cell.sync");
+
+            if (!Bot.Player.Alive)
+            {
+                Core.Logger("[r3 Death Reset] I died during retreat; waiting to respawn again.");
+                Bot.Wait.ForTrue(() => Bot.Player.Alive, 30);
+                Bot.Sleep(1000);
+
+                if (!string.Equals(Bot.Player.Cell, safeCell, StringComparison.OrdinalIgnoreCase))
+                {
+                    Bot.Map.Jump(safeCell, safePad, autoCorrect: false);
+                    Bot.Wait.ForCellChange(safeCell);
+                }
+
+                Bot.Player.SetSpawnPoint();
+            }
+
+            SyncArmy($"{checkpoint}_all_alive_safe.sync");
+
+            Core.Logger($"[r3 Death Reset] Everyone synced in {safeCell}; returning to {bossCell}.");
+
+            Bot.Map.Jump(bossCell, bossPad, autoCorrect: false);
+            Bot.Wait.ForCellChange(bossCell);
+            Bot.Player.SetSpawnPoint();
+
+            Bot.Sleep(1000);
+
+            SyncArmy($"{checkpoint}_all_returned_to_r3.sync");
+
+            Core.Logger("[r3 Death Reset] r3 retry ready.");
         }
         finally
         {
@@ -1058,11 +1188,13 @@ public class AscendEclipseTest
         {
             SyncArmy("party_setup_ready.sync");
 
+            EnsurePartyInvites();
+
             if (IsConfiguredAccount(player1))
             {
                 Core.Logger("[Party] I am player1; inviting the other accounts.");
 
-                PartyOn();
+                //PartyOn();
 
                 PartyInvite(player2);
                 Bot.Sleep(750);
@@ -1086,6 +1218,20 @@ public class AscendEclipseTest
             Bot.Flash.FlashCall -= PartyInviteListener;
         }
     }
+    bool EnsurePartyInvites()
+    {
+        bool partyEnabled = Bot.Flash.GetGameObject<bool>("uoPref.bParty");
+        if (!partyEnabled)
+        {
+            Core.Logger("Party invites enabled");
+            Bot.Send.Packet("%xt%zm%cmd%1%uopref%bParty%true%");
+            Bot.Sleep(500);
+            return true;
+        }
+        Core.Logger("Party invites already enabled");
+        return true;
+    }
+
     void PartyInvite(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
@@ -1532,7 +1678,7 @@ public class AscendEclipseTest
 
                 Core.UsePotion();
 
-                long confirmEnd = Environment.TickCount64 + 1000;
+                long confirmEnd = Environment.TickCount64 + 500;
 
                 while (!Bot.ShouldExit && Environment.TickCount64 < confirmEnd)
                 {
@@ -1550,7 +1696,7 @@ public class AscendEclipseTest
                     }
                 }
 
-                Bot.Sleep(500);
+                Bot.Sleep(150);
             }
 
             Core.Logger($"{logPrefix} Scroll force-use attempts failed; Enrage was not confirmed on {expectedTarget}.");
@@ -1562,7 +1708,7 @@ public class AscendEclipseTest
         }
     }
 
-    void KillFocusedMonsterWithLrApAuraTaunt(string monster, string auraName, string cell, string pad)
+    void KillFocusedMonsterWithLrApAuraTaunt(string monster, string auraName, string cell, string pad, string? nextMonster = null)
     {
         long noTargetSince = 0;
         bool auraWasActive = false;
@@ -1592,13 +1738,34 @@ public class AscendEclipseTest
                 Bot.Player.SetSpawnPoint();
             }
 
-            Bot.Combat.Attack(monster);
+            bool mainAlive = MonsterAvailable(monster, cell);
+            bool nextAlive = !string.IsNullOrWhiteSpace(nextMonster)
+                && MonsterAvailable(nextMonster, cell);
 
-            bool auraActive = Bot.Player.HasTarget
+            if (!mainAlive && !nextAlive)
+            {
+                noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
+
+                if (Environment.TickCount64 - noTargetSince > 1800)
+                    break;
+
+                Bot.Sleep(300);
+                continue;
+            }
+
+            noTargetSince = 0;
+
+            string target = mainAlive ? monster : nextMonster!;
+            Bot.Combat.Attack(target);
+
+            bool fightingMainMonster = target.Equals(monster, StringComparison.OrdinalIgnoreCase);
+
+            bool auraActive = fightingMainMonster
+                && Bot.Player.HasTarget
                 && Bot.Target != null
                 && Bot.Target.Auras.Any(a => a.Name.Equals(auraName, StringComparison.OrdinalIgnoreCase));
 
-            if (auraActive && !auraWasActive)
+            if (fightingMainMonster && auraActive && !auraWasActive)
             {
                 auraWasActive = true;
                 auraCycle++;
@@ -1634,28 +1801,9 @@ public class AscendEclipseTest
 
             if (!auraActive)
                 auraWasActive = false;
-
-            if (Bot.Player.HasTarget)
-            {
-                noTargetSince = 0;
-                continue;
-            }
-
-            if (!MonsterAvailable(monster, cell))
-            {
-                noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
-
-                if (Environment.TickCount64 - noTargetSince > 1800)
-                    break;
-            }
-            else
-            {
-                noTargetSince = 0;
-                Bot.Sleep(300);
-            }
         }
     }
-
+    
     int GetMyPlayerSlot()
     {
         string username = Core.Username();
