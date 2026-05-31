@@ -158,13 +158,11 @@ public class MidnightSunTest
 
         ResetDungeonInstance("midnightsun", runCheckpoint);
 
-        // Enter: everyone focuses Dying Light first, then Shining Star after Dying Light dies.
-        ArmyKillMonsterWithRotatingAuraTaunt("midnightsun", "Enter", "Left", "Dying Light", "Gathering Light", $"{runCheckpoint}_01");
-        ArmyKillMonster("midnightsun", "Enter", "Left", "Shining Star", $"{runCheckpoint}_02");
+        // Enter: Dying Light first, then Shining Star after Dying Light dies.
+        ArmyKillMonsterWithRotatingAuraTaunt("midnightsun", "Enter", "Left", "Dying Light", "Gathering Light", $"{runCheckpoint}_01", "Shining Star");
 
-        // r1: everyone focuses Dawn Knight first, then Shining Star after Dawn Knight dies.
-        ArmyKillMonsterWithSelfAuraDelayedTaunt("midnightsun", "r1", "Left", "Dawn Knight", "Sun's Warmth", $"{runCheckpoint}_03");
-        ArmyKillMonster("midnightsun", "r1", "Left", "Shining Star", $"{runCheckpoint}_04");
+        // r1: Dawn Knight first, then Shining Star after Dawn Knight dies.
+        ArmyKillMonsterWithSelfAuraDelayedTaunt("midnightsun", "r1", "Left", "Dawn Knight", "Sun's Warmth", $"{runCheckpoint}_03", "Shining Star");
 
         // r2: SC focuses/taunts Dawn Knight, everyone else focuses Dying Light.
         // Once either mob dies, all accounts swap to whichever mob is still alive.
@@ -184,22 +182,22 @@ public class MidnightSunTest
         SyncArmy($"{checkpoint}_done.sync");
     }
 
-    void ArmyKillMonsterWithRotatingAuraTaunt(string map, string cell, string pad, string monster, string auraName, string checkpoint)
+    void ArmyKillMonsterWithRotatingAuraTaunt(string map, string cell, string pad, string monster, string auraName, string checkpoint, string? nextMonster = null)
     {
         JoinAndFocus(map, cell, pad);
         SyncArmy($"{checkpoint}_ready.sync");
 
-        KillFocusedMonsterWithLrApAuraTaunt(monster, auraName, cell, pad);
+        KillFocusedMonsterWithLrApAuraTaunt(monster, auraName, cell, pad, nextMonster);
 
         SyncArmy($"{checkpoint}_done.sync");
     }
 
-    void ArmyKillMonsterWithSelfAuraDelayedTaunt(string map, string cell, string pad, string monster, string auraName, string checkpoint, int tauntDelayMs = 6000)
+    void ArmyKillMonsterWithSelfAuraDelayedTaunt(string map, string cell, string pad, string monster, string auraName, string checkpoint, string? nextMonster = null, int tauntDelayMs = 6000)
     {
         JoinAndFocus(map, cell, pad);
         SyncArmy($"{checkpoint}_ready.sync");
 
-        KillFocusedMonsterWithSunSelfAuraDelayedTaunt(monster, auraName, cell, pad, tauntDelayMs);
+        KillFocusedMonsterWithSunSelfAuraDelayedTaunt(monster, auraName, cell, pad, nextMonster, tauntDelayMs);
 
         SyncArmy($"{checkpoint}_done.sync");
     }
@@ -425,7 +423,7 @@ public class MidnightSunTest
         }
     }
 
-    void KillFocusedMonsterWithLrApAuraTaunt(string monster, string auraName, string cell, string pad)
+    void KillFocusedMonsterWithLrApAuraTaunt(string monster, string auraName, string cell, string pad, string? nextMonster = null)
     {
         long noTargetSince = 0;
         bool auraWasActive = false;
@@ -455,13 +453,34 @@ public class MidnightSunTest
                 Bot.Player.SetSpawnPoint();
             }
 
-            Bot.Combat.Attack(monster);
+            bool mainAlive = MonsterAvailable(monster, cell);
+            bool nextAlive = !string.IsNullOrWhiteSpace(nextMonster)
+                && MonsterAvailable(nextMonster, cell);
 
-            bool auraActive = Bot.Player.HasTarget
+            if (!mainAlive && !nextAlive)
+            {
+                noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
+
+                if (Environment.TickCount64 - noTargetSince > 1800)
+                    break;
+
+                Bot.Sleep(300);
+                continue;
+            }
+
+            noTargetSince = 0;
+
+            string target = mainAlive ? monster : nextMonster!;
+            Bot.Combat.Attack(target);
+
+            bool fightingMainMonster = target.Equals(monster, StringComparison.OrdinalIgnoreCase);
+
+            bool auraActive = fightingMainMonster
+                && Bot.Player.HasTarget
                 && Bot.Target != null
                 && Bot.Target.Auras.Any(a => a.Name.Equals(auraName, StringComparison.OrdinalIgnoreCase));
 
-            if (auraActive && !auraWasActive)
+            if (fightingMainMonster && auraActive && !auraWasActive)
             {
                 auraWasActive = true;
                 auraCycle++;
@@ -497,29 +516,10 @@ public class MidnightSunTest
 
             if (!auraActive)
                 auraWasActive = false;
-
-            if (Bot.Player.HasTarget)
-            {
-                noTargetSince = 0;
-                continue;
-            }
-
-            if (!MonsterAvailable(monster, cell))
-            {
-                noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
-
-                if (Environment.TickCount64 - noTargetSince > 1800)
-                    break;
-            }
-            else
-            {
-                noTargetSince = 0;
-                Bot.Sleep(300);
-            }
         }
     }
 
-    void KillFocusedMonsterWithSunSelfAuraDelayedTaunt(string monster, string auraName, string cell, string pad, int tauntDelayMs = 6000)
+    void KillFocusedMonsterWithSunSelfAuraDelayedTaunt(string monster, string auraName, string cell, string pad, string? nextMonster = null, int tauntDelayMs = 6000)
     {
         long noTargetSince = 0;
         bool auraWasActive = false;
@@ -552,9 +552,28 @@ public class MidnightSunTest
                 Bot.Player.SetSpawnPoint();
             }
 
-            Bot.Combat.Attack(monster);
+            bool mainAlive = MonsterAvailable(monster, cell);
+            bool nextAlive = !string.IsNullOrWhiteSpace(nextMonster)
+                && MonsterAvailable(nextMonster, cell);
 
-            bool auraActive = Bot.Self.HasActiveAura(auraName);
+            if (!mainAlive && !nextAlive)
+            {
+                noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
+
+                if (Environment.TickCount64 - noTargetSince > 1800)
+                    break;
+
+                Bot.Sleep(300);
+                continue;
+            }
+
+            noTargetSince = 0;
+
+            string target = mainAlive ? monster : nextMonster!;
+            Bot.Combat.Attack(target);
+
+            bool fightingMainMonster = target.Equals(monster, StringComparison.OrdinalIgnoreCase);
+            bool auraActive = fightingMainMonster && Bot.Self.HasActiveAura(auraName);
 
             if (auraActive && !auraWasActive)
             {
@@ -599,25 +618,6 @@ public class MidnightSunTest
                     tauntAttempted = false;
                     tauntAt = 0;
                 }
-            }
-
-            if (Bot.Player.HasTarget)
-            {
-                noTargetSince = 0;
-                continue;
-            }
-
-            if (!MonsterAvailable(monster, cell))
-            {
-                noTargetSince = noTargetSince == 0 ? Environment.TickCount64 : noTargetSince;
-
-                if (Environment.TickCount64 - noTargetSince > 1800)
-                    break;
-            }
-            else
-            {
-                noTargetSince = 0;
-                Bot.Sleep(300);
             }
         }
     }
