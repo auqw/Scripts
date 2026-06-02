@@ -183,7 +183,8 @@ public class CoreBots
 
         RunSync(() => SkuaVersionCheckerAsync());
 
-        Bot.UltraBossHelper.EnableCounterAttack();
+        // Clear Handlers incase script starts a 2nd time somehow whilst the script is running 
+        Bot.Handlers.Clear();
 
         if (changeTo)
         {
@@ -262,11 +263,11 @@ public class CoreBots
                 return;
             }
 
-            Bot.Wait.ForTrue(() => Bot.Player?.Loaded == true, 10);
         }
 
-        if (!Bot.Player.LoggedIn)
-            Bot.StopSync();
+        // Anti-Counter atk Measures for mobs
+        Bot.UltraBossHelper.EnableCounterAttack();
+
         /* Test Server IPs:
             Twilly ServerTest  
             Artix ServerTest 
@@ -276,10 +277,12 @@ public class CoreBots
         {
             if (Bot.Player.ServerIP == "sockpuppet.aq.com")
             {
-                Bot.Log("You're current on a test server!! This will cause issues with scripts\n" + "please logout and login to a non-test server manually\n" + "*or* set your manager to a non-Test server");
-                Bot.StopAsync();
+                Logger("You're current on a test server!! This will cause issues with scripts\n" + "please logout and login to a non-test server manually\n" + "*or* set your manager to a non-Test server", stopBot: true );
             }
         }
+
+        //Ensure player avatar is loaded ( not a flame) 
+        Bot.Wait.ForTrue(() => Bot.Player.Loaded, 10);
 
         ReadCBO();
         #region Social Privacy Options
@@ -359,7 +362,6 @@ public class CoreBots
         Bot.Lite.SmoothBackground = true;
         Bot.Lite.ShowMonsterType = true;
         Bot.Lite.CustomDropsUI = true;
-        Bot.Lite.DraggableDrops = false;
         Bot.Lite.AurasUI = true;
         Bot.Lite.QuantityWarnings = false;
         Bot.Lite.VisualSkillCooldowns = true;
@@ -369,6 +371,7 @@ public class CoreBots
 
         // Drop Options
         Bot.Drops.RejectElse = changeTo;
+        Bot.Drops.StopAsync();
         Bot.Drops.Clear();
         Bot.Drops.Start();
 
