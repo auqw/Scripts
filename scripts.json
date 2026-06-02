@@ -54,8 +54,8 @@
       "null"
     ],
     "path": "CoreBots.cs",
-    "size": 438253,
-    "sha256": "b200cc5a729ddfe4067b8e55b91fea41af284a63b85384239499e1fe84ebf048",
+    "size": 438381,
+    "sha256": "b0639760d155d2856a62217148425549a010d9b6a6608fbd2e389306d094752e",
     "fileName": "CoreBots.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/CoreBots.cs"
   },
@@ -27243,8 +27243,8 @@
       "null"
     ],
     "path": "Other/FarmJoeKits/CoreFarmerJoe.cs",
-    "size": 53960,
-    "sha256": "8a6ba14e4fb50920a9f5d1c09ba58cd1c79d135a5cd5111fe68aa902c33a8c81",
+    "size": 53791,
+    "sha256": "84db572b854e2c9f5f8f7bfb01e48adf714096265816fac0a68490a31bccca16",
     "fileName": "CoreFarmerJoe.cs",
     "downloadUrl": "https://raw.githubusercontent.com/auqw/Scripts/Skua/Other/FarmJoeKits/CoreFarmerJoe.cs"
   },
