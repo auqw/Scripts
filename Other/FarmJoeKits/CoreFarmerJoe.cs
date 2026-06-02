@@ -1141,11 +1141,15 @@ public class CoreFarmerJoe
     void BeginnerItems()
     {
         // Combined skip logic: skip if EITHER high-tier classes exist OR both beginner classes are rank 10+
-        bool hasHighTier = Core.CheckInventory(soloClasses.Except("Assassin", "Ninja Warrior", "Ninja"), any: true, toInv: false) && Core.CheckInventory(farmClasses.Except("Mage", "Mage (rare)"), any: true, toInv: false);
-        bool hasBothRank10Beginners = Core.CheckInventory(new[] { "Assassin", "Ninja Warrior", "Ninja" }, any: true, toInv: false)
-            && ClassNinja?.Quantity >= RANK_10_CLASS_POINTS
+        bool hasHighTier =
+            Core.CheckInventory(soloClasses.Except("Assassin", "Ninja Warrior", "Ninja"), any: true, toInv: false)
+            && Core.CheckInventory(farmClasses.Except("Mage", "Mage (rare)"), any: true, toInv: false);
+
+        bool hasBothRank10Beginners =
+            Core.CheckInventory(new[] { "Assassin", "Ninja Warrior", "Ninja" }, any: true, toInv: false)
+            && (ClassNinja?.Quantity ?? 0) >= RANK_10_CLASS_POINTS
             && Core.CheckInventory(new[] { "Mage (Rare)", "Mage" }, any: true, toInv: false)
-            && ClassMage?.Quantity >= RANK_10_CLASS_POINTS
+            && (ClassMage?.Quantity ?? 0) >= RANK_10_CLASS_POINTS
             && Bot.Player.Level >= 30;
 
         if (hasHighTier || hasBothRank10Beginners)
@@ -1161,8 +1165,8 @@ public class CoreFarmerJoe
         foreach (ItemCategory category in Enum.GetValues(typeof(ItemCategory)))
         {
             InventoryItem? equippedItem = Bot.Inventory.Items.Find(i =>
-                i.Equipped && i.Category == category
-            );
+                i.Equipped && i.Category == category);
+
             switch (category)
             {
                 case ItemCategory.Helm:
@@ -1193,52 +1197,46 @@ public class CoreFarmerJoe
                 case ItemCategory.Wand:
                 case ItemCategory.Mace:
                 case ItemCategory.Polearm:
-                    ItemBase? DefaultWep = Bot.Inventory.Items.Find(x =>
-                        x.Name.StartsWith("Default")
-                    );
-                    if (DefaultWep != null && Core.CheckInventory(DefaultWep.ID))
+                    ItemBase? defaultWep = Bot.Inventory.Items.Find(x =>
+                        x.Name.StartsWith("Default"));
+
+                    if (defaultWep != null && Core.CheckInventory(defaultWep.ID))
                     {
                         Core.BuyItem("classhalla", 299, "Battle Oracle Battlestaff");
                         Core.Equip("Battle Oracle Battlestaff");
-                        Bot.Shops.SellItem(DefaultWep.ID);
-                        Bot.Wait.ForTrue(() => !Bot.Inventory.Contains(DefaultWep.ID), 20);
+                        Bot.Shops.SellItem(defaultWep.ID);
+                        Bot.Wait.ForTrue(() => !Bot.Inventory.Contains(defaultWep.ID), 20);
                     }
-                    break;
-
-                default:
                     break;
             }
         }
 
-        Core.Logger("Starting out acc:\n" + "\tGoals: Ninja class & Mage Class");
+        Core.Logger("Starting out acc:\n\tGoals: Ninja class & Mage Class");
 
         Farm.Experience(10);
+
         Core.Logger("Getting Started: Beginner Levels/Equipment");
-        if (
-            !Core.CheckInventory(new[] { "Rogue (Rare)", "Rogue" }, any: true, toInv: false)
-            && ClassRogue?.Quantity < RANK_10_CLASS_POINTS
-        )
+
+        // Buy Rogue if we don't already own it.
+        if (!Core.CheckInventory(new[] { "Rogue (Rare)", "Rogue" }, any: true, toInv: false))
         {
             Core.Logger(
-                "Getting rogue.. so we can get ninja (thers a 10k hp \"boss\" to kill during the \"Hit Job\" quest.)"
-            );
+                "Getting rogue.. so we can get ninja (there's a 10k hp \"boss\" to kill during the \"Hit Job\" quest.)");
+
             Adv.BuyItem("classhalla", 172, "Rogue");
         }
 
-        if (
-            !Core.CheckInventory(
-                new[] { "Assassin", "Ninja Warrior", "Ninja" },
-                any: true,
-                toInv: false
-            )
-        )
+        if (!Core.CheckInventory(new[] { "Assassin", "Ninja Warrior", "Ninja" }, any: true, toInv: false))
         {
             Core.Logger("Getting starter Dodge class (Ninja)");
+
             Adv.RankUpClass("Rogue");
             Farm.Experience(25);
             SetClass();
-            //ninja requires a few quets.. its ok tho
+
+            // Ninja requires a few quests.
             Mazumi.MazumiQuests();
+
             Core.BuyItem("classhalla", 178, "Ninja");
         }
 
@@ -1249,6 +1247,7 @@ public class CoreFarmerJoe
             Core.Logger("Getting Starter Farm class (Mage)");
             Adv.BuyItem("classhalla", 174, 15653, shopItemID: 9845);
         }
+
         SetClass();
     }
     #endregion Extra:
